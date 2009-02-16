@@ -1,0 +1,127 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[load 'fu2/cardgame.fu2']
+
+[defunk choose [k seq]
+  [let [[len [length seq]]]
+    [define-funk choose_len
+      [funk [k seq len]
+	    [if [= k 0]
+		[list nil]
+	      [if [= k len]
+		  [list seq]
+		[append [parcar [funk [rest_seq]
+				      [cons [car seq] rest_seq]]
+				[choose_len [- k 1] [cdr seq] [- len 1]]]
+			[choose_len k [cdr seq] [- len 1]]]]]]]
+    [choose_len k seq len]]]
+
+[defunk choose-map-incr_indices [indices j k len]
+  [if [< [elt indices j] [- len [- k j]]]
+      [prog [set-elt indices j [+ [elt indices j] 1]]
+	    t]
+    [if [> j 0]
+	[if [choose-map-incr_indices indices [- j 1] k len]
+	    [let [[new_value [+ [elt indices [- j 1]] 1]]]
+	      [set-elt indices j new_value]
+	      t]
+	  nil]
+      nil]]]
+
+[defunk choose-map [proc k seq]
+  [let [[len [length seq]]
+	[indices [array k]]]
+    [partimes [i k]
+	      [set-elt indices i i]]
+    [define-funk choose-map-helper
+      [funk []
+	    [let [[subseq nil]]
+	      [dotimes [a k]
+		[set subseq [cons [elt seq [elt indices [- [- k 1] a]]] subseq]]]
+	      [apply proc [list subseq]]
+	      [if [choose-map-incr_indices indices [- k 1] k len]
+		  [choose-map-helper]]]]]
+    [choose-map-helper]]]
+
+[defunk card_pairs-property_different [property pairs]
+  [if [null pairs]
+      t
+    [let [[first_pair [car pairs]]]
+      [let [[card_a [first  first_pair]]
+	    [card_b [second first_pair]]]
+	[if [eq [act-dynamic property card_a]
+		[act-dynamic property card_b]]
+	    nil
+	  [card_pairs-property_different property [cdr pairs]]]]]]]
+
+[defunk cards-are_property_setlike [cards card_pairs property]
+  [let [[first_card [car cards]]]
+    [let [[same_property [act-dynamic property first_card]]]
+      [parc [funk [card]
+		  [if [not [eq same_property [act-dynamic property card]]]
+		      [set same_property nil]]]
+	    [cdr cards]]
+      [if [null same_property]
+	  [card_pairs-property_different property card_pairs]
+	t]]]]
+
+[defunk cards-are_set [cards]
+  [if [null cards]
+      nil
+    [let [[card_pairs [choose 2 cards]]]
+      [and [cards-are_property_setlike cards card_pairs `color]
+	   [cards-are_property_setlike cards card_pairs `number]
+	   [cards-are_property_setlike cards card_pairs `shape]
+	   ]]]]
+
+[defunk cards-find_sets [cards]
+  [let [[sets nil]]
+    [choose-map [funk [triple]
+		      [if [cards-are_set triple]
+			  [prog [format stdout '\nfound set: ']
+				[format stdout triple]
+				[set sets [cons triple sets]]]]]
+		3
+		cards]
+    sets]]
+
+[defunk game-find_sets [game]
+  [cards-find_sets [act cards game]]]
+
+[defunk cardgame-ai-test [width height]
+  [let [[game [new-game width height]]]
+    [format stdout '\ngame:']
+    [act print game]
+    [format stdout '\ncalculating solution sets...']
+    [let [[sets [game-find_sets game]]]
+      [mapc [funk [cards]
+		  [format stdout '\n\nset:']
+		  [mapc [funk [card]
+			      [act print card]]
+			cards]]
+	    sets]
+      [list game sets]]]]
+
+
+
+
+

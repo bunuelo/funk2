@@ -1,0 +1,150 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk > [x y]
+  [if [and [integer? x] [integer? y]] [integer-greater_than x y]
+    [if [and [pointer? x] [pointer? y]] [pointer-greater_than x y]
+      [error `runtime-error `type-check-failure]]]]
+
+[defunk < [x y]
+  [if [and [integer? x] [integer? y]] [integer-less_than x y]
+    [if [and [pointer? x] [pointer? y]] [pointer-less_than x y]
+      [error `runtime-error `type-check-failure]]]]
+
+
+'addition'
+
+[defunk binary-add [x y]
+  [if [and [integer? x] [integer? y]] [integer-add x y]
+    [if [and [pointer? x] [integer? y]] [pointer-add_integer x y]
+      [if [and [double? x] [double? y]] [double-add_double x y]
+	[if [and [double? x] [integer? y]] [double-add_integer x y]
+	  [if [and [integer? x] [double? y]] [integer-add_double x y]
+	    [error `runtime-error `type-check-failure]]]]]]]
+
+[defunk + [x :rest rest]
+  [if [null rest]
+      x
+    [binary-add x [apply &+ rest]]]]
+
+
+'subtraction'
+
+[defunk binary-subtract [x y]
+  [if [and [integer? x] [integer? y]] [integer-subtract x y]
+    [if [and [pointer? x] [pointer? y]] [pointer-subtract x y]
+      [if [and [double? x] [double? y]] [double-subtract_double x y]
+	[if [and [double? x] [integer? y]] [double-subtract_integer x y]
+	  [if [and [integer? x] [double? y]] [integer-subtract_double x y]
+	    [error `runtime-error `type-check-failure]]]]]]]
+
+[defunk negative [x]
+  [binary-subtract 0 x]]
+
+[defunk - [x :rest rest]
+  [if [null rest]
+      [negative x]
+    [binary-subtract x [apply &+ rest]]]]
+
+
+'multiplication'
+
+[defunk binary-multiply [x y]
+  [if [and [integer? x] [integer? y]] [integer-multiply x y]
+    [if [and [integer? x] [double? y]] [unsafe:double-multiply_by_integer y x]
+      [if [and [double? x] [double? y]] [unsafe:double-multiply_by_double x y]
+	[if [and [double? x] [integer? y]] [unsafe:double-multiply_by_integer x y]
+	  [error `runtime-error `type-check-failure]]]]]]
+
+[defunk * [x :rest rest]
+  [if [null rest]
+      x
+    [binary-multiply x [apply &* rest]]]]
+
+
+'division'
+
+[defunk binary-divide [x y]
+  [if [and [integer? x] [integer? y]] [integer-divide_by_integer x y]
+    [if [and [integer? x] [double? y]] [integer-divide_by_double x y]
+      [if [and [double? x] [double? y]] [double-divide_by_double x y]
+	[if [and [double? x] [integer? y]] [double-divide_by_integer x y]
+	  [error `runtime-error `type-check-failure]]]]]]
+
+[defunk inverse [x]
+  [binary-divide 1 x]]
+
+[defunk / [x :rest rest]
+  [if [null rest]
+      [inverse x]
+    [binary-divide x [apply &* rest]]]]
+
+
+[defunk = [x y]
+  [if [and [integer? x] [integer? y]] [integer-equal_sign x y]
+    [if [and [pointer? x] [pointer? y]] [pointer-equal_sign x y]
+      [error `runtime-error `type-check-failure]]]]
+
+[defunk != [x y]
+  [if [and [integer? x] [integer? y]] [integer-not_equal_sign x y]
+    [if [and [pointer? x] [pointer? y]] [pointer-not_equal_sign x y]
+      [error `runtime-error `type-check-failure]]]]
+
+'bitshift-left'
+
+[defunk << [x y]
+  [if [and [integer? x] [integer? y]] [integer-bitshift_left x y]
+    [error `runtime-error `type-check-failure]]]
+
+'bitshift-right'
+
+[defunk >> [x y]
+  [if [and [integer? x] [integer? y]] [integer-bitshift_right x y]
+    [error `runtime-error `type-check-failure]]]
+
+[defunk bit_and [x y]
+  [if [and [integer? x] [integer? y]] [integer-bit_and x y]
+    [error `runtime-error `type-check-failure]]]
+
+[defunk bit_or [x y]
+  [if [and [integer? x] [integer? y]] [integer-bit_or x y]
+    [error `runtime-error `type-check-failure]]]
+
+[defunk bit_xor [x y]
+  [if [and [integer? x] [integer? y]] [integer-bit_xor x y]
+    [error `runtime-error `type-check-failure]]]
+
+[defunk bit_not [x]
+  [if [integer? x] [integer-bit_not x]
+    [error `runtime-error `type-check-failure]]]
+
+
+[defunk <= [x y]
+  [or [< x y]
+      [= x y]]]
+
+[defunk >= [x y]
+  [or [> x y]
+      [= x y]]]
+
+[print 'done with bootstrap-math.fu2']
+
+

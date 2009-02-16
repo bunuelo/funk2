@@ -1,0 +1,52 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[print 'beginning bootstrap-boot.fu2']
+
+[globalize user-boot-commands []]
+
+[defunk boot []
+  [thread-critics-set [this-thread] &default-larva-critic]
+  [if user-boot-commands
+      [prog [mapc [funk [user-boot-command]
+			[format stdout '\nuser-boot-command: ' user-boot-command]
+			[eval user-boot-command]]
+		  user-boot-commands]
+	    ]]
+  [format stdout
+	  '\n'
+	  '\n*************************'
+	  '\n**                     **'
+	  '\n**  ' `Welcome ' ' `to ' ' `funk2 '!  **'
+	  '\n**                     **'
+	  '\n*************************'
+	  '\n']
+  `[funk2_node_handler-know_of_node [system-gethostname] [system-peer_command_server-port_num]]
+   [send_request_register_peer 0 [system-node_id] (0 0 0 0) [system-peer_command_server-port_num]]
+   [repl]
+  ]
+
+[defunk boot-add_user_command [user_command]
+  [set user-boot-commands [append user-boot-commands
+				  [cons user_command nil]]]]
+
+
+

@@ -1,0 +1,99 @@
+' 
+ Copyright (c) 2007 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk   neuralmom-brain_area-new      [name inputs outputs comments body]  [array `neuralmom-brain_area name inputs outputs comments body]]
+[defmetro neuralmom-brain_area-name     [this]                              `[array-elt ,this 1]]
+[defmetro neuralmom-brain_area-inputs   [this]                              `[array-elt ,this 2]]
+[defmetro neuralmom-brain_area-outputs  [this]                              `[array-elt ,this 3]]
+[defmetro neuralmom-brain_area-comments [this]                              `[array-elt ,this 4]]
+[defmetro neuralmom-brain_area-body     [this]                              `[array-elt ,this 5]]
+
+[globalize *neuralmom-brain_area-hashtable* [hashtable-new 4]]
+
+[defmetro define-brain_area [name inputs outputs :rest body]
+  [format stdout '\ndefine-brain_area ' name ' ' inputs ' ' outputs]
+  [let [[comments  nil]
+	[rest_body body]]
+    'Strip comment strings off of the beginning of the body.  Note that a string at the end of the body is a return value and not a comment.'
+    [while [let [[car [car rest_body]]]
+	     [if [and [string? car] [cdr rest_body]]
+		 [prog [set comments  [append comments [list car]]]
+		       [set rest_body [cdr rest_body]]
+		       t]
+	       nil]]]
+    `[hashtable-add_keyvalue_pair *neuralmom-brain_area-hashtable* [quote ,name] [neuralmom-brain_area-new [quote ,name] [quote ,inputs] [quote ,outputs] [quote ,comments] [quote ,rest_body]]]]]
+
+[defunk   hashtable_iter-new        [hashtable index iter] [array `hashtable_iter hashtable index iter]]
+[defmetro hashtable_iter-hashtable  [this] `[array-elt ,this 1]] 
+[defmetro hashtable_iter-index      [this] `[array-elt ,this 2]] 
+[defmetro hashtable_iter-iter       [this] `[array-elt ,this 3]] 
+
+[defunk hashtable_iter-key_value_pair [this] [car [hashtable_iter-iter           this]]]
+[defunk hashtable_iter-key            [this] [car [hashtable_iter-key_value_pair this]]]
+[defunk hashtable_iter-value          [this] [cdr [hashtable_iter-key_value_pair this]]]
+
+[defunk hashtable_iter-next [this] 
+  [let [[hashtable          [hashtable_iter-hashtable this]]
+	[index              [hashtable_iter-index     this]]
+	[iter               [hashtable_iter-iter      this]]
+	[new_hashtable_iter nil]]
+    [if [null iter]
+	[let [[bin_array [hashtable-bin_array hashtable]]]
+	  [let [[bin_array__length [array-length bin_array]]]
+	    [let [[index__next [+ 1 index]]]
+	      [if [>= index__next bin_array__length]
+		  nil
+		[set new_hashtable_iter [hashtable_iter-new hashtable index__next [array-elt bin_array index__next]]]]]]]
+      [set new_hashtable_iter [hashtable_iter-new hashtable index [cdr iter]]]]
+    [let [[new_iter [hashtable_iter-iter new_hashtable_iter]]]
+      [if new_iter
+	  new_hashtable_iter
+	[hashtable_iter-next new_hashtable_iter]]]]]
+
+[defunk hashtable-new_iter [this] [hashtable_iter-next [hashtable_iter-new this 0 [array-elt [hashtable-bin_array this] 0]]]]
+
+[defunk for_each-brain_area [funk]
+  [let [[hashtable_iter [hashtable-new_iter *neuralmom-brain_area-hashtable*]]]
+    [while hashtable_iter
+      [apply funk [cons [hashtable_iter-value hashtable_iter] nil]]
+      [set hashtable_iter [hashtable_iter-next hashtable_iter]]]]]
+
+[defunk step_all_brain_areas []
+  [for_each-brain_area
+   [funk [brain_area]
+	 [let [[name    [neuralmom-brain_area-name      brain_area]]
+	       [inputs  [neuralmom-brain_area-inputs    brain_area]]
+	       [outputs [neuralmom-brain_area-outputs   brain_area]]
+	       [comments [neuralmom-brain_area-comments brain_area]]
+	       [body     [neuralmom-brain_area-body     brain_area]]]
+	   [format stdout '\nstepping brain area: ' brain_area]]]]]
+
+[defunk launch_all_brain_areas [still_running_funk]
+  [dotimes [i 10]
+    [for_each-brain_area
+     [funk [brain_area]
+	   [thread [funk [brain_area]
+			 [while [apply still_running_funk []]
+			   [format stdout '\nbrain_area ' [neuralmom-brain_area-name brain_area] ' here (' i ').']
+			   [brainviz-update_volume]
+			   ]]
+		   [cons brain_area nil]]]]]]
+

@@ -1,0 +1,170 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk compile-funk                []          [cons [bytecode `bytecode:funk    nil nil] nil]]
+[defunk compile-cons                []          [cons [bytecode `bytecode-cons    nil nil] nil]]
+[defunk compile-car                 []          [cons [bytecode `bytecode-car     nil nil] nil]]
+[defunk compile-cdr                 []          [cons [bytecode `bytecode-cdr     nil nil] nil]]
+[defunk compile-set_car             []          [cons [bytecode `bytecode-set_car nil nil] nil]]
+[defunk compile-set_cdr             []          [cons [bytecode `bytecode-set_cdr nil nil] nil]]
+[defunk compile-set                 [reg exp]   [cons [bytecode `bytecode-set     reg exp] nil]]
+[defunk compile-set_value           [exp]       [compile-set `thread-value_reg exp]]
+[defunk compile-set_iter            [exp]       [compile-set `thread-iter_reg  exp]]
+[defunk compile-set_args            [exp]       [compile-set `thread-args_reg  exp]]
+[defunk compile-set_env             [exp]       [compile-set `thread-env_reg   exp]]
+[defunk compile-swap                [reg0 reg1] [cons [bytecode `bytecode-swap-symbol reg0 reg1] nil]]
+[defunk compile-swap_value_and_iter []          [compile-swap `thread-value_reg `thread-iter_reg]]
+[defunk compile-swap_value_and_args []          [compile-swap `thread-value_reg `thread-args_reg]]
+[defunk compile-push                [reg]       [cons [bytecode `bytecode-push-symbol reg nil] nil]]
+[defunk compile-push_value          []          [compile-push `thread-value_reg]]
+[defunk compile-push_iter           []          [compile-push `thread-iter_reg]]
+[defunk compile-push_args           []          [compile-push `thread-args_reg]]
+[defunk compile-push_env            []          [compile-push `thread-env_reg]]
+[defunk compile-push_return         []          [compile-push `thread-return_reg]]
+[defunk compile-pop                 [reg]       [cons [bytecode `bytecode-pop reg nil] nil]]
+[defunk compile-pop_value           []          [compile-pop `thread-value_reg]]
+[defunk compile-pop_iter            []          [compile-pop `thread-iter_reg]]
+[defunk compile-pop_args            []          [compile-pop `thread-args_reg]]
+[defunk compile-pop_env             []          [compile-pop `thread-env_reg]]
+[defunk compile-pop_return          []          [compile-pop `thread-return_reg]]
+[defunk compile-copy                [reg0 reg1] [cons [bytecode `bytecode-copy reg0 reg1] nil]]
+[defunk compile-copy_value_to_args  []          [compile-copy `thread-value_reg           `thread-args_reg]]
+[defunk compile-copy_value_to_iter  []          [compile-copy `thread-value_reg           `thread-iter_reg]]
+[defunk compile-copy_iter_to_value  []          [compile-copy `thread-iter_reg            `thread-value_reg]]
+[defunk compile-copy_iter_to_args   []          [compile-copy `thread-iter_reg            `thread-args_reg]]
+[defunk compile-copy_args_to_value  []          [compile-copy `thread-args_reg            `thread-value_reg]]
+[defunk compile-copy_args_to_iter   []          [compile-copy `thread-args_reg            `thread-iter_reg]]
+[defunk compile-copy_pc_to_return   []          [compile-copy `thread-program_counter_reg `thread-return_reg]]
+[defunk compile-copy_return_to_pc   []          [compile-copy `thread-return_reg          `thread-program_counter_reg]]
+[defunk compile-lookup_var          [exp]       [cons [bytecode `bytecode-lookup_var        exp    nil] nil]]
+[defunk compile-lookup_funkvar      [exp]       [cons [bytecode `bytecode-lookup_funkvar    exp    nil] nil]]
+[defunk compile-define_funkvar      [var]       [cons [bytecode `bytecode-define_funkvar    var    nil] nil]]
+[defunk compile-define_var          [var]       [cons [bytecode `bytecode-define_var        var    nil] nil]]
+[defunk compile-set_funkvar         [var]       [cons [bytecode `bytecode-set_funkvar       var    nil] nil]]
+[defunk compile-set_var             [var]       [cons [bytecode `bytecode-set_var           var    nil] nil]]
+[defunk compile-globalize_funkvar   [var]       [cons [bytecode `bytecode-globalize_funkvar var    nil] nil]]
+[defunk compile-globalize_var       [var]       [cons [bytecode `bytecode-globalize_var     var    nil] nil]]
+[defunk compile-jump                [new_pc]    [cons [bytecode `bytecode-jump              new_pc nil] nil]]
+[defunk compile-else_jump           [new_pc]    [cons [bytecode `bytecode-else_jump         new_pc nil] nil]]
+[defunk compile-nop                 []          [cons [bytecode `bytecode-nop               nil    nil] nil]]
+[defunk compile-return              []          [compile-copy `thread-return_reg `thread-program_counter_reg]]
+[defunk compile-debug               [value]     [cons [bytecode `bytecode-debug value nil] nil]]
+[defunk compile-trace               [value]     [cons [bytecode `bytecode-trace value nil] nil]]
+
+
+[defunk compile-symbol [exp] [compile-lookup_var exp]]
+
+[defunk set-list-cdr [seq cdr-value]
+  [if [cdr seq]
+      [set-list-cdr [cdr seq] cdr-value]
+    [prog [set-cdr seq cdr-value]
+	  seq]]]
+
+[defunk wrong_argument_number [] [print 'this is like an interrupt pointer... (nil causes thread to stop abruptly)']]
+
+[defunk compile-lambda [thread lambda]
+  [let [[lambda_bcs [compile-set_value lambda]]]
+    [if [lambda-body_bytecodes lambda]
+	lambda_bcs
+      [let [[full_bcs                     [compile-push_return]]]
+	'save return and environment registers'
+	[let [[iter full_bcs]]
+	  [set iter [set-list-cdr iter [compile-push_env]]]
+	  'define args in lambda environment'
+	  [setf iter [set-list-cdr iter [compile-copy_args_to_iter]]]
+	  [let [[var_iter [f2lambda-args lambda]]]
+	    [define-funk var_iter-loop
+	      [funk []
+		    [if var_iter
+			[let [[var [car var_iter]]
+			      [cdr [cdr var_iter]]]
+			  [if [eq var `:rest]
+			      [prog [set iter [set-list-cdr iter [compile-copy_iter_to_value]]]
+				    [set iter [set-list-cdr iter [compile-define_var [car cdr]]]]
+				    [set var_iter nil]]
+			    [prog [set iter [set-list-cdr iter [compile-copy_iter_to_value]]]
+				  [set iter [set-list-cdr iter [compile-else_jump &wrong_argument_number]]]
+				  
+				  [set iter [set-list-cdr iter [compile-car]]]
+				  [set iter [set-list-cdr iter [compile-define_var var]]]
+				  
+				  [if cdr
+				      [prog [set iter [set-list-cdr iter [compile-cdr]]]
+					    [set iter [set-list-cdr iter [compile-copy_value_to_iter]]]]]
+				  [set var_iter cdr]]]
+			  [var_iter-loop]]]]]
+	    [var_iter-loop]
+	    
+	    'execute lambda body'
+	    [let [[body_bcs [compile-rawcode thread [lambda-body lambda]]]]
+	      [set iter [set-list-cdr iter body_bcs]]
+	      
+	      'restore return and environment registers'
+	      [set iter [set-list-cdr iter [compile-pop_env]]]
+	      [set iter [set-list-cdr iter [compile-pop_env]]] 'this is pushed in f2_bytecodes.c'
+	      [set iter [set-list-cdr iter [compile-pop_return]]]
+	      [set iter [set-list-cdr iter [compile-copy_return_to_pc]]]
+	      
+	      [lambda-set_body_bytecodes lambda full_bcs]
+	      
+	      lambda_bcs]]]]]]]
+
+
+[defunk compile-cons_exp [rte exp]
+  [let [[car [car exp]]
+	[env [thread-env rte]]]
+    [let [[funkvar_binding_value [if [env-funkvar_defined env car]
+				     [env-lookup_funkvar env car]
+				   nil]]]
+      [cond [[metro? funkvar_binding_value]  [compile rte [apply-metro rte funkvar_binding_value [cdr exp]]]]
+	    [[eq car `quote]                 [compile-set_value [car [cdr exp]]]]
+	    [[eq car `backquote-list]        [compile-backquote_exp rte exp]]
+	    [[eq car `backquote-list_append] [compile-backquote_append_exp rte exp]]
+	    [[eq car `if]                    [compile-if_exp rte exp]]
+	    [[eq car `apply]                 [compile-apply_exp rte exp]]
+	    [[eq car `funkvar]               [compile-lookup_funkvar_exp exp]]
+	    [[eq car `define_funk]           [compile-define_funk_exp rte exp]]
+	    [[eq car `define]                [compile-define_exp rte exp]]
+	    [[eq car `setfunk]               [compile-setfunk_exp rte exp]]
+	    [[eq car `set]                   [compile-set_exp rte exp]]
+	    [[eq car `globalize]             [compile-globalize_var_exp rte exp]]
+	    [[eq car `globalize-funk]        [compile-globalize_funkvar_exp rte exp]]
+	    [[symbol? car]                   [compile-funkvar_call rte exp]]
+	    [t                               [prog [write '\ntried to compile: '] [write exp]
+						   [write '\ndon\'t know how to compile type.']
+						   nil]]]]]]
+
+[defunk compile [rte exp]
+  [cond [[null        exp] [compile-set_value nil]]
+	[[integer?    exp] [compile-set_value exp]]
+	[[pointer?    exp] [compile-set_value exp]]
+	[[string?     exp] [compile-set_value exp]]
+	[[symbol?     exp] [compile-symbol    exp]]
+	[[cons?       exp] [compile-cons_exp  rte exp]]
+	[[array?      exp] [compile-set_value exp]]
+	[[funk?       exp] [compile-set_value exp]]
+	[[lambda?     exp] [compile-lambda    rte exp]]
+	[[metro?      exp] [compile-metro     rte exp]]
+	[[exceptionp? exp] [compile-set_value exp]]
+	[[bytecode?   exp] [compile-set_value exp]]
+	[t                 [error 'unrecognized type in compile.']]]]
+
+

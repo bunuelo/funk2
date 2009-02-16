@@ -1,0 +1,39 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[globalize -gmodule-brainviz- nil]
+
+[defunk brainviz-init_library []
+  [if [null -gmodule-brainviz-]
+      [prog [set -gmodule-brainviz- [gmodule-open [gmodule-build_path '/usr/local/lib' 'brainviz'] 0]]
+	    [if [null -gmodule-brainviz-] [error `loading-gmodule 'loading brainviz dynamic library']]]]]
+
+[defunk brainviz__render-cfunk_ptr [] [gmodule-symbol -gmodule-brainviz- 'brainviz__render']]
+
+[defunk-alien -gmodule-brainviz- brainviz-render_volume-get_current pointer 'brainviz__render_volume__get_current' []]
+[defunk-alien -gmodule-brainviz- brainviz-render_volume-xres        integer 'brainviz__render_volume__xres'        []]
+[defunk-alien -gmodule-brainviz- brainviz-render_volume-yres        integer 'brainviz__render_volume__yres'        []]
+[defunk-alien -gmodule-brainviz- brainviz-render_volume-zres        integer 'brainviz__render_volume__zres'        []]
+
+[defunk-alien -gmodule-brainviz- brainviz-render                       nil 'brainviz__render'                    []]
+[defunk-alien -gmodule-brainviz- brainviz-generate_volume_thread-start nil 'generate_volume_thread__start'       []]
+[defunk-alien -gmodule-brainviz- brainviz-generate_volume_thread-stop  nil 'generate_volume_thread__stop'        []]
+[defunk-alien -gmodule-brainviz- brainviz-update_volume                nil 'brainviz__update_volume'             []]

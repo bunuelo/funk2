@@ -1,0 +1,167 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[format stdout
+	'\nIn EM-ONE, I have used the term "architecture" to refer to the /structure and arrangement of commonsense knowledge and processes./  '
+	'\nThere is an analogue in biology.  '
+	'\nEvery cell has an architecture that is at some level common across all cells and even to some extent across all living organisms.  '
+	'\nBut to make up a person, these cells need to be organized into larger groups forming the various organs and systems of the body, each which possesses its own special ways to arrange cells.  '
+	'\nThe brain in particular seems to be divided into hundreds of distinct centers.  ']
+
+[defunk roboverse-simulation-pick_place_robot-lookup [name]
+  [if [not [string? name]] [error `run-time `argument-type]
+    [roboverse-simulation-pick_place_robot-lookup_by_name [string-to_new_raw_c_string name]]]]
+
+[defunk   pick_place_robot-new        [id camera_id x y z angle x_goal y_goal z_goal angle_goal]  [array `pick_place_robot id camera_id x y z angle x_goal y_goal z_goal angle_goal]]
+[defmetro pick_place_robot-id         [this]                                                     `[array-elt ,this  1]]
+[defmetro pick_place_robot-camera_id  [this]                                                     `[array-elt ,this  2]]
+[defmetro pick_place_robot-x          [this]                                                     `[array-elt ,this  3]]
+[defmetro pick_place_robot-y          [this]                                                     `[array-elt ,this  4]]
+[defmetro pick_place_robot-z          [this]                                                     `[array-elt ,this  5]]
+[defmetro pick_place_robot-angle      [this]                                                     `[array-elt ,this  6]]
+[defmetro pick_place_robot-x_goal     [this]                                                     `[array-elt ,this  7]]
+[defmetro pick_place_robot-y_goal     [this]                                                     `[array-elt ,this  8]]
+[defmetro pick_place_robot-z_goal     [this]                                                     `[array-elt ,this  9]]
+[defmetro pick_place_robot-angle_goal [this]                                                     `[array-elt ,this 10]]
+
+[defunk pick_place_robot-update [this]
+  [let [[id [pick_place_robot-id this]]]
+    [put [roboverse-pick_place_robot-position-x     id] [pick_place_robot-x     this]]
+    [put [roboverse-pick_place_robot-position-y     id] [pick_place_robot-y     this]]
+    [put [roboverse-pick_place_robot-position-z     id] [pick_place_robot-z     this]]
+    [put [roboverse-pick_place_robot-rotation-angle id] [pick_place_robot-angle this]]
+    this]]
+
+[defunk pick_place_robot-apply [this]
+  [roboverse-pick_place_robot-position_goal-go          [pick_place_robot-id this] [pick_place_robot-x_goal     this] [pick_place_robot-y_goal this] [pick_place_robot-z_goal this]]
+  [roboverse-pick_place_robot-rotation_goal-go_to_angle [pick_place_robot-id this] [pick_place_robot-angle_goal this]]
+  this]
+
+[defunk pick_place_robot-new_from_lookup [name]
+  [let [[id         [roboverse-simulation-pick_place_robot-lookup name]]
+        [camera_id  nil]
+        [x          nil]
+        [y          nil]
+        [z          nil]
+        [angle      nil]
+        [x_goal     [integer-to_double 10]]
+        [y_goal     [integer-to_double 10]]
+        [z_goal     [integer-to_double  5]]
+        [angle_goal [integer-to_double  0]]]
+    [let [[this [pick_place_robot-new id camera_id x y z angle x_goal y_goal z_goal angle_goal]]]
+      [put [roboverse-pick_place_robot-camera [pick_place_robot-id this]] [pick_place_robot-camera_id this]]
+      [pick_place_robot-update this]
+      this]]]
+
+[defunk pick_place_robot-to_frame [this]
+  `[pick_place_robot :id                  ,[pick_place_robot-id         this]
+		      :camera_id          ,[pick_place_robot-camera_id  this]
+		       :x                 ,[pick_place_robot-x          this]
+			:y                ,[pick_place_robot-y          this]
+			 :z               ,[pick_place_robot-z          this]
+			  :angle          ,[pick_place_robot-angle      this]
+			   :x_goal        ,[pick_place_robot-x_goal     this]
+			    :y_goal       ,[pick_place_robot-y_goal     this]
+			     :z_goal      ,[pick_place_robot-z_goal     this]
+			      :angle_goal ,[pick_place_robot-angle_goal this]]]
+
+[defunk   blocks_world:object-new  [name id x y z]  [array `blocks_world:object name id x y z]]
+[defmetro blocks_world:object-name [this]          `[array-elt ,this 1]]
+[defmetro blocks_world:object-id   [this]          `[array-elt ,this 2]]
+[defmetro blocks_world:object-x    [this]          `[array-elt ,this 3]]
+[defmetro blocks_world:object-y    [this]          `[array-elt ,this 4]]
+[defmetro blocks_world:object-z    [this]          `[array-elt ,this 5]]
+
+[defunk blocks_world:object-new_from_name [name]
+  [let [[name-raw_c_string [string-to_new_raw_c_string name]]]
+    [let [[id [roboverse-simulation-object-lookup_by_name name-raw_c_string]]]
+      [let [[x [roboverse-object-position-x id]]
+	    [y [roboverse-object-position-y id]]
+	    [z [roboverse-object-position-z id]]]
+	[blocks_world:object-new name id x y z]]]]]
+
+[defunk blocks_world:object-update [this]
+  [let [[id [blocks_world:object-id this]]]
+    [put [roboverse-object-position-x id] [blocks_world:object-x this]]
+    [put [roboverse-object-position-y id] [blocks_world:object-y this]]
+    [put [roboverse-object-position-z id] [blocks_world:object-z this]]]]
+
+[globalize *blocks_world-object_names* `['block0' 'block1' 'block2' 'block3' 'block4']]
+
+[globalize one_half [/ [integer-to_double 1] [integer-to_double 2]]]
+
+[defunk demo-run []
+  [roboverse-init_library]
+  [roboverse-start 0 1]
+  [roboverse-simulation_window-set_num_subwindows 3 1]
+  [format stdout '\nsimulation started.']
+  [let [[pick_place_robot [pick_place_robot-new_from_lookup 'pick_place']]
+	[camera-xres      64]
+	[camera-yres      64]
+	[objects          [mapcar &blocks_world:object-new_from_name *blocks_world-object_names*]]
+	[object_knowledge nil]]
+    [format stdout '\nobjects = ' objects]
+    [format stdout '\npick_place_robot = ' [pick_place_robot-to_frame pick_place_robot]]
+    [let [[still_running     t]
+	  [camera-rgb_memory [f2-malloc [* 3 camera-xres camera-yres]]]]
+      [while still_running
+	[let [[key [roboverse-simulation_window-check_keypress]]]
+	  [format stdout '\nkey: '] [format stdout key] 
+	  [cond [[= key 113] [prog [format stdout '\nuser-command: Q - quit']
+				   [set still_running nil]]]
+		[[= key 97]  [prog [format stdout '\nuser-command: A - [set x [+ x 1]]']
+				   [put [+ [pick_place_robot-x_goal pick_place_robot] 1] [pick_place_robot-x_goal pick_place_robot]]]]
+		[[= key 98]  [prog [format stdout '\nuser-command: B - [set x [- x 1]]']
+				   [put [- [pick_place_robot-x_goal pick_place_robot] 1] [pick_place_robot-x_goal pick_place_robot]]]]
+		[t           [prog [format stdout ' looping...']
+				   [pick_place_robot-update pick_place_robot]
+				   [mapc &blocks_world:object-update objects]
+				   [set object_knowledge nil]
+				   [mapc [funk [object_a]
+					       [let [[object_a-x [blocks_world:object-x object_a]]
+						     [object_a-y [blocks_world:object-y object_a]]
+						     [object_a-z [blocks_world:object-z object_a]]]
+						 [mapc [funk [object_b]
+							     [let [[object_b-x [blocks_world:object-x object_b]]
+								   [object_b-y [blocks_world:object-y object_b]]
+								   [object_b-z [blocks_world:object-z object_b]]]
+							       [let [[dx [- object_a-x object_b-x]]
+								     [dy [- object_a-y object_b-y]]
+								     [dz [- object_a-z object_b-z]]]
+								 [if [and [> dx [- one_half]] [< dx one_half]
+									  [> dy [- one_half]] [< dy one_half]]
+								     [set object_knowledge [cons `[blocks_in_same_area ,[blocks_world:object-name block_a] ,[blocks_world:object-name block_b]]
+												  object_knowledge]]]]]]
+						       objects]]]
+					 objects]
+				   [pick_place_robot-apply pick_place_robot]
+				   [roboverse-camera-render_bitmap [pick_place_robot-camera_id pick_place_robot] camera-xres camera-yres camera-rgb_memory]
+				   [roboverse-user_gui-subwindow-display_bitmap 0 0 camera-xres camera-yres camera-rgb_memory]
+				   [format stdout '\npick_place_robot = ' [pick_place_robot-to_frame pick_place_robot]]
+				   [format stdout '\nobjects = ' objects]
+				   [format stdout '\nobject_knowledge = ' object_knowledge]
+				   [roboverse-simulation_thread-step_time [/ [integer-to_double 1] [integer-to_double 2]]]
+				   ]]]]]]]
+  [roboverse-stop]
+  [print 'demo done.']]
+
+[format stdout '\ndone loading roboverse-blocks_world.fu2.']
+

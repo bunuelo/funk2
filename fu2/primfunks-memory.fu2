@@ -1,0 +1,42 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[globalize-funk f2-malloc                   &primfunk:f2__malloc]
+[globalize-funk f2-free                     &primfunk:f2__free]
+[globalize-funk f2-new_alloc                &primfunk:f2__new_alloc]
+[globalize-funk assert_failed               &primfunk:assert_failed]
+[globalize-funk exp-gc_touch_all_referenced &primfunk:exp__gc_touch_all_referenced]
+[globalize-funk pool-pause_gc               &primfunk:pool__pause_gc]
+[globalize-funk pool-resume_gc              &primfunk:pool__resume_gc]
+[globalize-funk pool-try_gc                 &primfunk:pool__try_gc]
+[globalize-funk pool-should_run_gc          &primfunk:pool__should_run_gc]
+[globalize-funk pause_gc                    &primfunk:pause_gc]
+[globalize-funk resume_gc                   &primfunk:resume_gc]
+[globalize-funk try_gc                      &primfunk:try_gc]
+[globalize-funk should_run_gc               &primfunk:should_run_gc]
+[globalize-funk gc-is_disabled              &primfunk:gc__is_disabled]
+[globalize-funk global_environment-set      &primfunk:global_environment__set]
+[globalize-funk global_envioronment         &primfunk:global_envioronment]
+[globalize-funk print_gc_stats              &primfunk:print_gc_stats]
+[globalize-funk f2-memory-initialize        &primfunk:f2__memory__initialize]
+[globalize-funk f2-memory_image-save        &primfunk:f2__memory_image__save]
+[globalize-funk f2-memory_image-load        &primfunk:f2__memory_image__load]
+

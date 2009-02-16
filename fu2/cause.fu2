@@ -1,0 +1,55 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk cause-of [exp]
+  [if [null exp]
+      nil
+    [ptype-cause exp]]]
+
+[defunk cause-elt [exp index]
+  [if [> index 0]
+      [let [[cause [cause-of exp]]]
+	[if [cause? cause]
+	    [cause-elt [cause-args cause] [- index 1]]
+	  [cause-elt cause [- index 1]]]]
+    exp]]
+
+[defunk   reinforcable_choice-new             [seen_situations states actions]  [array seen_situations states actions]]
+[defmetro reinforcable_choice-seen_situations [this]                           `[elt ,this 0]]
+[defmetro reinforcable_choice-states          [this]                           `[elt ,this 1]]
+[defmetro reinforcable_choice-actions         [this]                           `[elt ,this 2]]
+
+[defmetro defunk_reinforceable_choice [name states :rest actions]
+  `[prog [globalize-funk ,name nil]
+	 [let [[action_funks [list @[mapcar [funk [action]
+						  `[funk []
+							 [let [[states [list @states]]]
+							   ,action]]]
+					    actions]]]]
+	   [defunk ,name []
+	     [apply [elt action_funks [random [length action_funks]]] []]]]]]
+
+[defunk reinforce-reward [value]
+  nil]
+
+[defmetro reinforce-failure [] `[reinforce-reward -1]]
+[defmetro reinforce-success [] `[reinforce-reward  1]]
+

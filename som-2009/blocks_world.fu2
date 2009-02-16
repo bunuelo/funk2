@@ -1,0 +1,120 @@
+
+
+
+
+
+[defunk blocks_world_color? [exp]
+  [and exp
+       [array? exp]
+       [> [array-length exp] 0]
+       [eq `blocks_world_color [array-elt exp 0]]]]
+
+[defunk   blocks_world_color-new  [name]  [array `blocks_world_color `:name name]]
+[defmetro blocks_world_color-name [this] `[array-elt ,this 2]]
+
+[defunk blocks_world_color-render [this]
+  [let [[name [blocks_world_color-name this]]]
+    [cond [[eq name `red]   [ansi-stream-foreground stdout 12]]
+	  [[eq name `green] [ansi-stream-foreground stdout 10]]
+	  [[eq name `blue]  [ansi-stream-foreground stdout 11]]
+	  [[eq name `white] [ansi-stream-foreground stdout 15]]
+	  [t                [ansi-stream-foreground stdout 15]]]]]
+
+[defunk blocks_world_position? [exp]
+  [and exp
+       [array? exp]
+       [> [array-length exp] 0]
+       [eq `blocks_world_position [array-elt exp 0]]]]
+
+[defunk   blocks_world_position-new [x y]   [array `blocks_world_position `:x x `:y y]]
+[defmetro blocks_world_position-x   [this] `[array-elt ,this 2]]
+[defmetro blocks_world_position-y   [this] `[array-elt ,this 4]]
+
+
+[defunk blocks_world_size? [exp]
+  [and exp
+       [array? exp]
+       [> [array-length exp] 0]
+       [eq `blocks_world_size [array-elt exp 0]]]]
+
+[defunk   blocks_world_size-new [x y]   [array `blocks_world_size `:x x `:y y]]
+[defmetro blocks_world_size-x   [this] `[array-elt ,this 2]]
+[defmetro blocks_world_size-y   [this] `[array-elt ,this 4]]
+
+
+[defunk blocks_world_object? [exp]
+  [and exp
+       [array? exp]
+       [> [array-length exp] 0]
+       [eq `blocks_world_object [array-elt exp 0]]]]
+
+[defunk   blocks_world_object-new      [type position size color]  [array `blocks_world_object `:type type `:position position `:size size `:color color]]
+[defmetro blocks_world_object-type     [this]                     `[array-elt ,this 2]]
+[defmetro blocks_world_object-position [this]                     `[array-elt ,this 4]]
+[defmetro blocks_world_object-size     [this]                     `[array-elt ,this 6]]
+[defmetro blocks_world_object-color    [this]                     `[array-elt ,this 8]]
+
+[defunk blocks_world_object-render [this]
+  [let [[type [blocks_world_object-type this]]]
+    [let [[render_str [cond [[eq type `table] '-']
+			    [[eq type `block] '*']
+			    [t                '?']]]]
+      [let [[pos [blocks_world_object-position this]]]
+	[let [[x_start [blocks_world_position-x pos]]
+	      [y_start [blocks_world_position-y pos]]]
+	  [let [[size [blocks_world_object-size this]]]
+	    [let [[x_size [blocks_world_size-x size]]
+		  [y_size [blocks_world_size-y size]]]
+	      [let [[color [blocks_world_object-color this]]]
+		[blocks_world_color-render color]
+		[dotimes [y_iter y_size]
+		  [ansi-stream-move_cursor stdout [+ x_start 1] [- 25 [+ y_start y_iter]]]
+		  [dotimes [x_iter x_size]
+		    [format stdout render_str]]]
+		[ansi-stream-foreground stdout 15]
+		]]]]]]]]
+
+
+[defunk blocks_world? [exp]
+  [and exp
+       [array? exp]
+       [> [array-length exp] 0]
+       [eq `blocks_world [array-elt exp 0]]]]
+
+[defunk   blocks_world-new     [objects]  [array `blocks_world `:objects objects]]
+[defmetro blocks_world-objects [this]    `[array-elt ,this 2]]
+
+
+[defunk blocks_world-render [this]
+  [ansi-stream-clear_screen stdout]
+  [mapc [funk [object]
+	      [blocks_world_object-render object]]
+	[blocks_world-objects this]]
+  [ansi-stream-move_cursor stdout 1 26]]
+
+
+[defunk blocks_world-repl [this]
+  [blocks_world-render this]
+  [format stdout '\nblocks-world-in->']
+  [let [[exp [read stdin]]]
+    [cond [[or [eq exp `quit] [eq exp `exit]] nil]
+	  [t                  [prog [format stdout '\n'
+					    'blocks world error: unknown command ' exp '\n'
+					    'try quit or exit.\n']
+				    [blocks_world-repl this]]]]]]
+
+[defunk blocks_world-test []
+  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table [blocks_world_position-new  0 0] [blocks_world_size-new 50 2] [blocks_world_color-new `white]]
+					      [blocks_world_object-new `block [blocks_world_position-new 10 1] [blocks_world_size-new  5 5] [blocks_world_color-new `blue]]
+					      [blocks_world_object-new `block [blocks_world_position-new 20 1] [blocks_world_size-new  5 5] [blocks_world_color-new `green]]
+					      [blocks_world_object-new `block [blocks_world_position-new 30 1] [blocks_world_size-new 10 5] [blocks_world_color-new `red]]]]]]
+    [blocks_world-repl blocks_world]
+    blocks_world]]
+
+
+'9:00 Tanjore'
+'10:00 Finale reservation'
+'10:30 walk to T'
+'10:15 get on T'
+'10:55 coraline'
+

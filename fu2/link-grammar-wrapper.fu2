@@ -1,0 +1,538 @@
+' 
+ Copyright (c) 2007-2009 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[globalize -gmodule-link_grammar- nil]
+
+[globalize -gmodule-link_grammar-dynamic_library-directory- './extern/link-grammar-4.4.2/link-grammar/.libs/']
+[globalize -gmodule-link_grammar-dynamic_library-name-      'link-grammar']
+
+[defunk link_grammar-init_library []
+  [if [null -gmodule-link_grammar-]
+      [prog [set -gmodule-link_grammar- [gmodule-open [gmodule-build_path -gmodule-link_grammar-dynamic_library-directory- -gmodule-link_grammar-dynamic_library-name-] 0]]
+	    [if [null -gmodule-link_grammar-] [error `loading-gmodule 'loading link-parser dynamic library']]]]]
+
+
+
+'/**********************************************************************'
+'*'
+'* System initialization'
+'*'
+'***********************************************************************/'
+
+'const char* linkgrammar_get_version(void);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkgrammar_get_version pointer 'linkgrammar_get_version' []]
+
+
+'/**********************************************************************'
+'*'
+'* Functions to manipulate Dictionaries'
+'*'
+'***********************************************************************/'
+
+'typedef struct Dictionary_s * Dictionary;'
+
+'Dictionary dictionary_create(char * dict_name, char * pp_name, char * cons_name, char * affix_name);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_create pointer 'dictionary_create' [[char* dict_name] [char* pp_name] [char* cons_name] [char* affix_name]]]
+
+'Dictionary dictionary_create_lang(const char * lang);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_create_lang pointer 'dictionary_create_lang' [[char* lang]]]
+
+'Dictionary dictionary_create_default_lang(void);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_create_default_lang pointer 'dictionary_create_default_lang' []]
+
+
+'int dictionary_delete(Dictionary dict);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_delete integer 'dictionary_delete' [[pointer dict]]]
+
+'int dictionary_get_max_cost(Dictionary dict);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_get_max_cost integer 'dictionary_get_max_cost' [[pointer dict]]]
+
+
+'void dictionary_set_data_dir(const char * path);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_set_data_dir nil 'dictionary_set_data_dir' [[char* path]]]
+
+'char* dictionary_get_data_dir(void);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_get_data_dir pointer 'dictionary_get_data_dir' []]
+
+
+'int dictionary_is_past_tense_form(Dictionary dict, const char * str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_is_past_tense_form integer 'dictionary_is_past_tense_form' [[pointer dict] [char* str]]]
+
+'int dictionary_is_entity(Dictionary dict, const char * str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:dictionary_is_entity integer 'dictionary_is_entity' [[pointer dict] [char* str]]]
+
+
+'/**********************************************************************'
+'*'
+'* Functions to manipulate Parse Options'
+'*'
+'***********************************************************************/'
+
+'typedef struct Parse_Options_s * Parse_Options;'
+
+'Parse_Options parse_options_create(void);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_create pointer 'parse_options_create' []]
+
+'int parse_options_delete(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_delete integer 'parse_options_delete' [[pointer opts]]]
+
+'void parse_options_set_verbosity(Parse_Options opts, int verbosity);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_verbosity nil 'parse_options_set_verbosity' [[pointer opts] [integer verbosity]]]
+
+'int parse_options_get_verbosity(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_verbosity integer 'parse_options_get_verbosity' [[pointer opts]]]
+
+'void parse_options_set_linkage_limit(Parse_Options opts, int linkage_limit);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_linkage_limit nil 'parse_options_set_linkage_limit' [[pointer opts] [integer linkage_limit]]]
+
+'int parse_options_get_linkage_limit(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_linkage_limit integer 'parse_options_get_linkage_limit' [[pointer opts]]]
+
+'void parse_options_set_disjunct_cost(Parse_Options opts, int disjunct_cost);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_disjunct_cost nil 'parse_options_set_disjunct_cost' [[pointer opts] [integer disjunct_cost]]]
+
+'int parse_options_get_disjunct_cost(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_disjunct_cost integer 'parse_options_get_disjunct_cost' [[pointer opts]]]
+
+'void parse_options_set_min_null_count(Parse_Options opts, int null_count);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_min_null_count nil 'parse_options_set_min_null_count' [[pointer opts] [integer null_count]]]
+
+'int parse_options_get_min_null_count(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_min_null_count integer 'parse_options_get_min_null_count' [[pointer opts]]]
+
+'void parse_options_set_max_null_count(Parse_Options opts, int null_count);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_max_null_count nil 'parse_options_set_max_null_count' [[pointer opts] [integer null_count]]]
+
+'int parse_options_get_max_null_count(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_max_null_count integer 'parse_options_get_max_null_count' [[pointer opts]]]
+
+'void parse_options_set_null_block(Parse_Options opts, int null_block);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_null_block nil 'parse_options_set_null_block' [[pointer opts] [integer null_block]]]
+
+'int parse_options_get_null_block(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_null_block integer 'parse_options_get_null_block' [[pointer opts]]]
+
+'void parse_options_set_islands_ok(Parse_Options opts, int islands_ok);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_islands_ok nil 'parse_options_set_islands_ok' [[pointer opts] [integer islands_ok]]]
+
+'int parse_options_get_islands_ok(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_islands_ok integer 'parse_options_get_islands_ok' [[pointer opts]]]
+
+'void parse_options_set_short_length(Parse_Options opts, int short_length);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_short_length nil 'parse_options_set_short_length' [[pointer opts] [integer short_length]]]
+
+'int parse_options_get_short_length(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_short_length integer 'parse_options_get_short_length' [[pointer opts]]]
+
+'void parse_options_set_max_memory(Parse_Options  opts, int mem);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_max_memory nil 'parse_options_set_max_memory' [[pointer opts] [integer mem]]]
+
+'int parse_options_get_max_memory(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_max_memory integer 'parse_options_get_max_memory' [[pointer opts]]]
+
+'void parse_options_set_max_sentence_length(Parse_Options  opts, int len);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_max_sentence_length nil 'parse_options_set_max_sentence_length' [[pointer opts] [integer len]]]
+
+'int parse_options_get_max_sentence_length(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_max_sentence_length integer 'parse_options_get_max_sentence_length' [[pointer opts]]]
+
+'void parse_options_set_max_parse_time(Parse_Options  opts, int secs);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_max_parse_time nil 'parse_options_set_max_parse_time' [[pointer opts] [integer secs]]]
+
+'int parse_options_get_max_parse_time(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_max_parse_time integer 'parse_options_get_max_parse_time' [[pointer opts]]]
+
+'void parse_options_set_cost_model_type(Parse_Options opts, int cm);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_cost_model_type nil 'parse_options_set_cost_model_type' [[pointer opts] [integer cm]]]
+
+'int parse_options_get_cost_model_type(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_cost_model_type integer 'parse_options_get_cost_model_type' [[pointer opts]]]
+
+'int parse_options_timer_expired(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_timer_expired integer 'parse_options_timer_expired' [[pointer opts]]]
+
+'int parse_options_memory_exhausted(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_memory_exhausted integer 'parse_options_memory_exhausted' [[pointer opts]]]
+
+'int parse_options_resources_exhausted(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_resources_exhausted integer 'parse_options_resources_exhausted' [[pointer opts]]]
+
+'void parse_options_set_screen_width(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_screen_width nil 'parse_options_set_screen_width' [[pointer opts] [integer val]]]
+
+'int parse_options_get_screen_width(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_screen_width integer 'parse_options_get_screen_width' [[pointer opts]]]
+
+'void parse_options_set_allow_null(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_allow_null nil 'parse_options_set_allow_null' [[pointer opts] [integer val]]]
+
+'int parse_options_get_allow_null(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_allow_null integer 'parse_options_get_allow_null' [[pointer opts]]]
+
+'void parse_options_set_display_walls(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_walls nil 'parse_options_set_display_walls' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_walls(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_walls integer 'parse_options_get_display_walls' [[pointer opts]]]
+
+'void parse_options_set_all_short_connectors(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_all_short_connectors nil 'parse_options_set_all_short_connectors' [[pointer opts] [integer val]]]
+
+'int parse_options_get_all_short_connectors(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_all_short_connectors integer 'parse_options_get_all_short_connectors' [[pointer opts]]]
+
+'void parse_options_reset_resources(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_reset_resources nil 'parse_options_reset_resources' [[pointer opts]]]
+
+
+
+'/**********************************************************************'
+'*'
+'* The following Parse_Options functions do not directly affect the'
+'* operation of the parser, but they can be useful for organizing the'
+'* search, or displaying the results.  They were included as switches for'
+'* convenience in implementing the "standard" version of the link parser'
+'* using the API.'
+'*'
+'***********************************************************************/'
+
+'void parse_options_set_batch_mode(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_batch_mode nil 'parse_options_set_batch_mode' [[pointer opts] [integer val]]]
+
+'int parse_options_get_batch_mode(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_batch_mode integer 'parse_options_get_batch_mode' [[pointer opts]]]
+
+'void parse_options_set_panic_mode(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_panic_mode nil 'parse_options_set_panic_mode' [[pointer opts] [integer val]]]
+
+'int parse_options_get_panic_mode(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_panic_mode integer 'parse_options_get_panic_mode' [[pointer opts]]]
+
+'void parse_options_set_display_on(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_on nil 'parse_options_set_display_on' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_on(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_on integer 'parse_options_get_display_on' [[pointer opts]]]
+
+'void parse_options_set_display_postscript(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_postscript nil 'parse_options_set_display_postscript' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_postscript(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_postscript integer 'parse_options_get_display_postscript' [[pointer opts]]]
+
+'void parse_options_set_display_constituents(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_constituents nil 'parse_options_set_display_constituents' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_constituents(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_constituents integer 'parse_options_get_display_constituents' [[pointer opts]]]
+
+'void parse_options_set_display_bad(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_bad nil 'parse_options_set_display_bad' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_bad(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_bad integer 'parse_options_get_display_bad' [[pointer opts]]]
+
+'void parse_options_set_display_links(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_links nil 'parse_options_set_display_links' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_links(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_links integer 'parse_options_get_display_links' [[pointer opts]]]
+
+'void parse_options_set_display_senses(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_senses nil 'parse_options_set_display_senses' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_senses(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_senses integer 'parse_options_get_display_senses' [[pointer opts]]]
+
+'void parse_options_set_display_union(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_display_union nil 'parse_options_set_display_union' [[pointer opts] [integer val]]]
+
+'int parse_options_get_display_union(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_display_union integer 'parse_options_get_display_union' [[pointer opts]]]
+
+'void parse_options_set_echo_on(Parse_Options opts, int val);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_set_echo_on nil 'parse_options_set_echo_on' [[pointer opts] [integer val]]]
+
+'int parse_options_get_echo_on(Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:parse_options_get_echo_on integer 'parse_options_get_echo_on' [[pointer opts]]]
+
+
+'/**********************************************************************'
+'*'
+'* Functions to manipulate Sentences'
+'*'
+'***********************************************************************/'
+
+'typedef struct Sentence_s * Sentence;'
+
+'Sentence sentence_create(char *input_string, Dictionary dict);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_create pointer 'sentence_create' [[char *input_string] [pointer dict]]]
+
+'void sentence_delete(Sentence sent);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_delete nil 'sentence_delete' [[pointer sent]]]
+
+'int sentence_parse(Sentence sent, Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_parse integer 'sentence_parse' [[pointer sent] [pointer opts]]]
+
+'int sentence_length(Sentence sent);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_length integer 'sentence_length' [[pointer sent]]]
+
+'char* sentence_get_word(Sentence sent, int wordnum);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_get_word pointer 'sentence_get_word' [[pointer sent] [integer wordnum]]]
+
+'int sentence_null_count(Sentence sent);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_null_count integer 'sentence_null_count' [[pointer sent]]]
+
+'int sentence_num_linkages_found(Sentence sent);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_num_linkages_found integer 'sentence_num_linkages_found' [[pointer sent]]]
+
+'int sentence_num_valid_linkages(Sentence sent);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_num_valid_linkages integer 'sentence_num_valid_linkages' [[pointer sent]]]
+
+'int sentence_num_linkages_post_processed(Sentence sent);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_num_linkages_post_processed integer 'sentence_num_linkages_post_processed' [[pointer sent]]]
+
+'int sentence_num_violations(Sentence sent, int i);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_num_violations integer 'sentence_num_violations' [[pointer sent] [integer i]]]
+
+'int sentence_and_cost(Sentence sent, int i);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_and_cost integer 'sentence_and_cost' [[pointer sent] [integer i]]]
+
+'int sentence_disjunct_cost(Sentence sent, int i);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_disjunct_cost integer 'sentence_disjunct_cost' [[pointer sent] [integer i]]]
+
+'int sentence_link_cost(Sentence sent, int i);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_link_cost integer 'sentence_link_cost' [[pointer sent] [integer i]]]
+
+
+'char* sentence_get_nth_word(Sentence sent, int i);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_get_nth_word pointer 'sentence_get_nth_word' [[pointer sent] [integer i]]]
+
+'int sentence_nth_word_has_disjunction(Sentence sent, int i);'
+[defunk-alien -gmodule-link_grammar- link_grammar:sentence_nth_word_has_disjunction integer 'sentence_nth_word_has_disjunction' [[pointer sent] [integer i]]]
+
+
+'/**********************************************************************'
+'*'
+'* Functions that create and manipulate Linkages.'
+'* When a Linkage is requested, the user is given a'
+'* copy of all of the necessary information, and is responsible'
+'* for freeing up the storage when he/she is finished, using'
+'* the routines provided below.'
+'*'
+'***********************************************************************/'
+
+'typedef struct Linkage_s * Linkage;'
+
+'Linkage linkage_create(int index, Sentence sent, Parse_Options opts);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_create pointer 'linkage_create' [[integer index] [pointer sent] [pointer opts]]]
+
+'int linkage_get_current_sublinkage(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_current_sublinkage integer 'linkage_get_current_sublinkage' [[pointer linkage]]]
+
+'int linkage_set_current_sublinkage(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_set_current_sublinkage integer 'linkage_set_current_sublinkage' [[pointer linkage] [integer index]]]
+
+'void linkage_delete(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_delete nil 'linkage_delete' [[pointer linkage]]]
+
+'Sentence linkage_get_sentence(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_sentence pointer 'linkage_get_sentence' [[pointer linkage]]]
+
+'int linkage_get_num_sublinkages(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_num_sublinkages integer 'linkage_get_num_sublinkages' [[pointer linkage]]]
+
+'int linkage_get_num_words(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_num_words integer 'linkage_get_num_words' [[pointer linkage]]]
+
+'int linkage_get_num_links(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_num_links integer 'linkage_get_num_links' [[pointer linkage]]]
+
+'int linkage_get_link_lword(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_lword integer 'linkage_get_link_lword' [[pointer linkage] [integer index]]]
+
+'int linkage_get_link_rword(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_rword integer 'linkage_get_link_rword' [[pointer linkage] [integer index]]]
+
+'int linkage_get_link_length(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_length integer 'linkage_get_link_length' [[pointer linkage] [integer index]]]
+
+'const char* linkage_get_link_label(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_label pointer 'linkage_get_link_label' [[pointer linkage] [integer index]]]
+
+'const char* linkage_get_link_llabel(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_llabel pointer 'linkage_get_link_llabel' [[pointer linkage] [integer index]]]
+
+'const char* linkage_get_link_rlabel(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_rlabel pointer 'linkage_get_link_rlabel' [[pointer linkage] [integer index]]]
+
+'int linkage_get_link_num_domains(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_num_domains integer 'linkage_get_link_num_domains' [[pointer linkage] [integer index]]]
+
+'const char** linkage_get_link_domain_names(Linkage linkage, int index);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_link_domain_names pointer 'linkage_get_link_domain_names' [[pointer linkage] [integer index]]]
+
+'const char** linkage_get_words(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_words pointer 'linkage_get_words' [[pointer linkage]]]
+
+'const char* linkage_get_disjunct(Linkage linkage, int w);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_disjunct pointer 'linkage_get_disjunct' [[pointer linkage] [integer w]]]
+
+'const char* linkage_get_word(Linkage linkage, int w);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_word pointer 'linkage_get_word' [[pointer linkage] [integer w]]]
+
+'char* linkage_print_links_and_domains(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_print_links_and_domains pointer 'linkage_print_links_and_domains' [[pointer linkage]]]
+
+'void linkage_free_links_and_domains(char *str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_free_links_and_domains nil 'linkage_free_links_and_domains' [[char* str]]]
+
+'char* linkage_print_senses(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_print_senses pointer 'linkage_print_senses' [[pointer linkage]]]
+
+'void linkage_free_senses(char *str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_free_senses nil 'linkage_free_senses' [[char* str]]]
+
+'char* linkage_print_constituent_tree(Linkage linkage, int mode);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_print_constituent_tree pointer 'linkage_print_constituent_tree' [[pointer linkage] [integer mode]]]
+
+'void linkage_free_constituent_tree_str(char *str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_free_constituent_tree_str nil 'linkage_free_constituent_tree_str' [[char* str]]]
+
+'char* linkage_print_postscript(Linkage linkage, int mode);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_print_postscript pointer 'linkage_print_postscript' [[pointer linkage] [integer mode]]]
+
+'void linkage_free_postscript(char * str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_free_postscript nil 'linkage_free_postscript' [[char* str]]]
+
+'char* linkage_print_diagram(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_print_diagram pointer 'linkage_print_diagram' [[pointer linkage]]]
+
+'void linkage_free_diagram(char * str);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_free_diagram nil 'linkage_free_diagram' [[char* str]]]
+
+'int linkage_compute_union(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_compute_union integer 'linkage_compute_union' [[pointer linkage]]]
+
+'int linkage_unused_word_cost(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_unused_word_cost integer 'linkage_unused_word_cost' [[pointer linkage]]]
+
+'int linkage_disjunct_cost(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_disjunct_cost integer 'linkage_disjunct_cost' [[pointer linkage]]]
+
+'int linkage_and_cost(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_and_cost integer 'linkage_and_cost' [[pointer linkage]]]
+
+'int linkage_link_cost(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_link_cost integer 'linkage_link_cost' [[pointer linkage]]]
+
+'double linkage_corpus_cost(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_corpus_cost double 'linkage_corpus_cost' [[pointer linkage]]]
+
+'int linkage_is_canonical(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_is_canonical integer 'linkage_is_canonical' [[pointer linkage]]]
+
+'int linkage_is_improper(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_is_improper integer 'linkage_is_improper' [[pointer linkage]]]
+
+'int linkage_has_inconsistent_domains(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_has_inconsistent_domains integer 'linkage_has_inconsistent_domains' [[pointer linkage]]]
+
+'const char* linkage_get_violation_name(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_get_violation_name pointer 'linkage_get_violation_name' [[pointer linkage]]]
+
+
+
+'/**********************************************************************'
+'*'
+'* Functions that allow special-purpose post-processing of linkages'
+'*'
+'***********************************************************************/'
+
+'typedef struct Postprocessor_s PostProcessor;'
+
+'PostProcessor* post_process_open(char *path);'
+[defunk-alien -gmodule-link_grammar- link_grammar:post_process_open pointer 'post_process_open' [[char* path]]]
+
+'void post_process_close(PostProcessor *);'
+[defunk-alien -gmodule-link_grammar- link_grammar:post_process_close nil 'post_process_close' [[pointer post_processor]]]
+
+'void linkage_post_process(Linkage, PostProcessor *);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_post_process nil 'linkage_post_process' [[pointer linkage] [pointer post_processor]]]
+
+
+'/**********************************************************************'
+'*'
+'* Constituent node'
+'*'
+'***********************************************************************/'
+
+'typedef struct CNode_s CNode;'
+
+'CNode* linkage_constituent_tree(Linkage linkage);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_constituent_tree pointer 'linkage_constituent_tree' [[pointer linkage]]]
+
+'void linkage_free_constituent_tree(CNode * n);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_free_constituent_tree nil 'linkage_free_constituent_tree' [[pointer n]]]
+
+'char* linkage_constituent_node_get_label(const CNode *n);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_constituent_node_get_label pointer 'linkage_constituent_node_get_label' [[pointer n]]]
+
+'CNode* linkage_constituent_node_get_child(const CNode *n);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_constituent_node_get_child pointer 'linkage_constituent_node_get_child' [[pointer n]]]
+
+'CNode* linkage_constituent_node_get_next(const CNode *n);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_constituent_node_get_next pointer 'linkage_constituent_node_get_next' [[pointer n]]]
+
+'int linkage_constituent_node_get_start(const CNode *n);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_constituent_node_get_start integer 'linkage_constituent_node_get_start' [[pointer n]]]
+
+'int linkage_constituent_node_get_end(const CNode *n);'
+[defunk-alien -gmodule-link_grammar- link_grammar:linkage_constituent_node_get_end integer 'linkage_constituent_node_get_end' [[pointer n]]]
+
+
+
+'Below this point is where we define a user friendly interface to the link parser.'
+
+[defunk link_grammar-test []
+  [link_grammar-init_library]
+  [let [[input_strings [list [string-to_new_raw_c_string 'Grammar is useless because there is nothing to say -- Gertrude Stein.']
+			     [string-to_new_raw_c_string 'Computers are useless; they can only give you answers -- Pablo Picasso.']]]
+	[lang_string [string-to_new_raw_c_string 'en']]]
+    [locale:setlocale locale:lc_all '']
+    [let [[opts [link_grammar:parse_options_create]]
+	  [dict [link_grammar:dictionary_create_lang lang_string]]]
+      [if [eq dict #x0]
+	  [prog [format stdout 'Fatal error: Unable to open the dictionary\n']
+		`failure]
+	[prog [dotimes [i 2]
+		[let [[sent         [link_grammar:sentence_create [elt input_strings i] dict]]
+		      [num_linkages [link_grammar:sentence_parse sent opts]]]
+		  [if [> num_linkages 0]
+		      [let [[linkage [link_grammar:linkage_create 0 sent opts]]
+			    [diagram [link_grammar:linkage_print_diagram linkage]]]
+			[format stdout [string-new_from_raw_c_string diagram] '\n']
+			[link_grammar:linkage_free_diagram diagram]
+			[link_grammar:linkage_delete       linkage]]]
+		  [link_grammar:sentence_delete sent]]]]
+	[link_grammar:dictionary_delete    dict]]
+      [link_grammar:parse_options_delete opts]]]]
+

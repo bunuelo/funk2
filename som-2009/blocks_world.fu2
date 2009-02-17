@@ -1,5 +1,33 @@
 
-[defunk ansi-stream-bordered_rectangle [stream ux0 uy0 ux1 uy1 background_char]
+[defunk ansi-stream-bordered_rectangle [stream x0 y0 x1 y1 background_char]
+  [ansi-stream-move_cursor stream x0 y0] [format stdout '/']
+  [ansi-stream-move_cursor stream x1 y0] [format stdout '\\']
+  [ansi-stream-move_cursor stream x0 y1] [format stdout '\\']
+  [ansi-stream-move_cursor stream x1 y1] [format stdout '/']
+  [if [> [- x1 x0] 1]
+      [prog [ansi-stream-rectangle stream [+ x0 1]    y0    [- x1 1]    y0    [string-elt '-' 0]] 
+	    [ansi-stream-rectangle stream [+ x0 1]    y1    [- x1 1]    y1    [string-elt '-' 0]] ]]
+  [if [> [- y1 y0] 1]
+      [prog [ansi-stream-rectangle stream    x0    [+ y0 1]    x0    [- y1 1] [string-elt '|' 0]] 
+	    [ansi-stream-rectangle stream    x1    [+ y0 1]    x1    [- y1 1] [string-elt '|' 0]] ]]
+  [if [and [> [- x1 x0] 1]
+	   [> [- y1 y0] 1]]
+      [ansi-stream-rectangle stream [+ x0 1] [+ y0 1] [- x1 1] [- y1 1] background_char]]]
+
+
+[defunk blocks_world_rectangle? [exp]
+  [and exp
+       [array? exp]
+       [> [array-length exp] 0]
+       [eq `blocks_world_rectangle [array-elt exp 0]]]]
+
+[defunk   blocks_world_rectangle-new [x0 y0 x1 y1]  [array `blocks_world_rectangle `:x0 x0 `:y0 y0 `:x1 x1 `:y1 y1]]
+[defmetro blocks_world_rectangle-x0  [this] `[array-elt ,this 2]]
+[defmetro blocks_world_rectangle-y0  [this] `[array-elt ,this 4]]
+[defmetro blocks_world_rectangle-x1  [this] `[array-elt ,this 6]]
+[defmetro blocks_world_rectangle-y1  [this] `[array-elt ,this 8]]
+
+[defunk blocks_world_rectangle-create [ux0 uy0 ux1 uy1]
   [let [[x0 nil]
 	[x1 nil]
 	[y0 nil]
@@ -14,20 +42,33 @@
 	      [set y1 uy1]]
       [prog [set y0 uy1]
 	    [set y1 uy0]]]
-    [ansi-stream-move_cursor stream x0 y0] [format stdout '/']
-    [ansi-stream-move_cursor stream x1 y0] [format stdout '\\']
-    [ansi-stream-move_cursor stream x0 y1] [format stdout '\\']
-    [ansi-stream-move_cursor stream x1 y1] [format stdout '/']
-    [if [> [- x1 x0] 1]
-	[prog [ansi-stream-rectangle stream [+ x0 1]    y0    [- x1 1]    y0    [string-elt '-' 0]] 
-	      [ansi-stream-rectangle stream [+ x0 1]    y1    [- x1 1]    y1    [string-elt '-' 0]] ]]
-    [if [> [- y1 y0] 1]
-	[prog [ansi-stream-rectangle stream    x0    [+ y0 1]    x0    [- y1 1] [string-elt '|' 0]] 
-	      [ansi-stream-rectangle stream    x1    [+ y0 1]    x1    [- y1 1] [string-elt '|' 0]] ]]
-    [if [and [> [- x1 x0] 1]
-	     [> [- y1 y0] 1]]
-	[ansi-stream-rectangle stream [+ x0 1] [+ y0 1] [- x1 1] [- y1 1] background_char]]]]
+    [blocks_world_rectangle-new x0 y0 x1 y1]]]
 
+[defunk blocks_world_rectangle-render [this background_char]
+  [ansi-stream-bordered_rectangle stdout [blocks_world_rectangle-x0 this] [blocks_world_rectangle-y0 this] [blocks_world_rectangle-x1 this] [blocks_world_rectangle-y1 this] background_char]]
+
+[defunk blocks_world_rectangle-x_size [this] [+ [- [blocks_world_rectangle-x1 this] [blocks_world_rectangle-x0 this]] 1]]
+[defunk blocks_world_rectangle-y_size [this] [+ [- [blocks_world_rectangle-y1 this] [blocks_world_rectangle-y0 this]] 1]]
+
+[defunk blocks_world_rectangle-translate [this dx dy]
+  [put [+ [blocks_world_rectangle-x0 this] dx] [blocks_world_rectangle-x0 this]]
+  [put [+ [blocks_world_rectangle-y0 this] dy] [blocks_world_rectangle-y0 this]]
+  [put [+ [blocks_world_rectangle-x1 this] dx] [blocks_world_rectangle-x1 this]]
+  [put [+ [blocks_world_rectangle-y1 this] dy] [blocks_world_rectangle-y1 this]]]
+
+[defunk blocks_world_rectangle-overlaps [this that]
+  [if [not [blocks_world_rectangle? that]]
+      [error `run-time `[blocks_world_rectangle-overlaps 'that is not blocks_world_rectangle' ,this ,that]]]
+  [let [[a_x0 [blocks_world_rectangle-x0 this]]
+	[a_y0 [blocks_world_rectangle-y0 this]]
+	[a_x1 [blocks_world_rectangle-x0 this]]
+	[a_y1 [blocks_world_rectangle-y0 this]]
+	[b_x0 [blocks_world_rectangle-x0 that]]
+	[b_y0 [blocks_world_rectangle-y0 that]]
+	[b_x1 [blocks_world_rectangle-x0 that]]
+	[b_y1 [blocks_world_rectangle-y0 that]]]
+    [and [<= a_x0 b_x1] [>= a_x1 b_x0]
+	 [<= a_y0 b_y1] [>= a_y1 b_y0]]]]
 
 [defunk blocks_world_color? [exp]
   [and exp
@@ -46,27 +87,6 @@
 	  [[eq name `white] [ansi-stream-foreground stdout 15]]
 	  [t                [ansi-stream-foreground stdout 15]]]]]
 
-[defunk blocks_world_position? [exp]
-  [and exp
-       [array? exp]
-       [> [array-length exp] 0]
-       [eq `blocks_world_position [array-elt exp 0]]]]
-
-[defunk   blocks_world_position-new [x y]   [array `blocks_world_position `:x x `:y y]]
-[defmetro blocks_world_position-x   [this] `[array-elt ,this 2]]
-[defmetro blocks_world_position-y   [this] `[array-elt ,this 4]]
-
-
-[defunk blocks_world_size? [exp]
-  [and exp
-       [array? exp]
-       [> [array-length exp] 0]
-       [eq `blocks_world_size [array-elt exp 0]]]]
-
-[defunk   blocks_world_size-new [x y]   [array `blocks_world_size `:x x `:y y]]
-[defmetro blocks_world_size-x   [this] `[array-elt ,this 2]]
-[defmetro blocks_world_size-y   [this] `[array-elt ,this 4]]
-
 
 [defunk blocks_world_object? [exp]
   [and exp
@@ -74,33 +94,23 @@
        [> [array-length exp] 0]
        [eq `blocks_world_object [array-elt exp 0]]]]
 
-[defunk   blocks_world_object-new      [type position size color]  [array `blocks_world_object `:type type `:position position `:size size `:color color]]
-[defmetro blocks_world_object-type     [this]                     `[array-elt ,this 2]]
-[defmetro blocks_world_object-position [this]                     `[array-elt ,this 4]]
-[defmetro blocks_world_object-size     [this]                     `[array-elt ,this 6]]
-[defmetro blocks_world_object-color    [this]                     `[array-elt ,this 8]]
+[defunk   blocks_world_object-new       [type rectangle color]  [array `blocks_world_object `:type type `:rectangle rectangle `:color color]]
+[defmetro blocks_world_object-type      [this]                 `[array-elt ,this 2]]
+[defmetro blocks_world_object-rectangle [this]                 `[array-elt ,this 4]]
+[defmetro blocks_world_object-color     [this]                 `[array-elt ,this 6]]
 
 [defunk blocks_world_object-render [this lower_left__x lower_left__y]
   [let [[type [blocks_world_object-type this]]]
     [let [[render_char [cond [[eq type `table] [string-elt '-' 0]]
 			     [[eq type `block] [string-elt '*' 0]]
 			     [t                [string-elt '?' 0]]]]]
-      [let [[pos [blocks_world_object-position this]]]
-	[let [[x_start [blocks_world_position-x pos]]
-	      [y_start [blocks_world_position-y pos]]]
-	  [let [[size [blocks_world_object-size this]]]
-	    [let [[x_size [blocks_world_size-x size]]
-		  [y_size [blocks_world_size-y size]]]
-	      [let [[color [blocks_world_object-color this]]]
-		[blocks_world_color-render color]
-		[ansi-stream-bordered_rectangle stdout
-						[+ lower_left__x x_start]
-						[- lower_left__y y_start]
-						[+ lower_left__x [- [+ x_start x_size] 1]]
-						[- lower_left__y [- [+ y_start y_size] 1]]
-						render_char]
-		[ansi-stream-foreground stdout 15]
-		]]]]]]]]
+      [let [[rectangle [blocks_world_object-rectangle this]]]
+	[let [[color [blocks_world_object-color this]]]
+	  [blocks_world_color-render color]
+	  [blocks_world_rectangle-render rectangle render_char]
+	  [ansi-stream-foreground stdout 15]
+	  ]]]]]
+
 
 
 [defunk blocks_world? [exp]
@@ -146,10 +156,10 @@
       ]]]
 
 [defunk blocks_world-test []
-  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table [blocks_world_position-new  0 0] [blocks_world_size-new 50 2] [blocks_world_color-new `white]]
-					      [blocks_world_object-new `block [blocks_world_position-new 10 1] [blocks_world_size-new  5 5] [blocks_world_color-new `blue]]
-					      [blocks_world_object-new `block [blocks_world_position-new 20 1] [blocks_world_size-new  5 5] [blocks_world_color-new `green]]
-					      [blocks_world_object-new `block [blocks_world_position-new 30 1] [blocks_world_size-new 10 5] [blocks_world_color-new `red]]]]]]
+  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table [blocks_world_rectangle-create  0 0 [+  0 50] [+ 0 2]] [blocks_world_color-new `white]]
+					      [blocks_world_object-new `block [blocks_world_rectangle-create 10 2 [+ 10  5] [+ 2 5]] [blocks_world_color-new `blue]]
+					      [blocks_world_object-new `block [blocks_world_rectangle-create 20 2 [+ 20  5] [+ 2 5]] [blocks_world_color-new `green]]
+					      [blocks_world_object-new `block [blocks_world_rectangle-create 30 2 [+ 30 10] [+ 2 5]] [blocks_world_color-new `red]]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 

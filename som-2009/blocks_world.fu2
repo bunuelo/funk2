@@ -50,7 +50,8 @@
 				    [+ 10 [blocks_world_rectangle-x0 this]]
 				    [- screen_height [+ 10 [blocks_world_rectangle-y0 this]]]
 				    [+ 10 [blocks_world_rectangle-x1 this]]
-				    [- screen_height [+ 10 [blocks_world_rectangle-y1 this] background_char]]]]]
+				    [- screen_height [+ 10 [blocks_world_rectangle-y1 this]]]
+				    background_char]]]
 
 [defunk blocks_world_rectangle-x_size [this] [+ [- [blocks_world_rectangle-x1 this] [blocks_world_rectangle-x0 this]] 1]]
 [defunk blocks_world_rectangle-y_size [this] [+ [- [blocks_world_rectangle-y1 this] [blocks_world_rectangle-y0 this]] 1]]

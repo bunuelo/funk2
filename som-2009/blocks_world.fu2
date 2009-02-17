@@ -213,12 +213,14 @@
       [ansi-stream-foreground stdout 15]
       [format stdout 'blocks-world-out> ']
       [apply &format [cons stdout last_results]]
+      [set last_results nil]
       
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 2]]
       [ansi-stream-foreground stdout 15]
       [format stdout 'blocks-world-in-> ']
       
-      [let [[exp [read stdin]]]
+      [let [[exp             [read stdin]]
+	    [command_failure nil]]
 	[ansi-stream-foreground stdout 15]
 	[if [not [cons? exp]]
 	    [set command_failure t]
@@ -227,7 +229,7 @@
 		  [[eq command `sim]  [prog [blocks_world-simulate this ]
 					    [set last_results [list 'Done simulating blocks world.']]]]
 		  [[eq command `eval] [prog [if [!= [length exp] 2]
-						[set last_ressult [list 'eval only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
+						[set last_results [list 'eval only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
 					      [set last_results [list 'Evalulation result is ' [eval [second exp]] '.']]]]]
 		  [t                  [set command_failure t]]]]]
 	[if command_failure

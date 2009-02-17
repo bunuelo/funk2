@@ -115,11 +115,12 @@
 
 [defunk blocks_world_color-render [this]
   [let [[name [blocks_world_color-name this]]]
-    [cond [[eq name `red]   [ansi-stream-foreground stdout 12]]
-	  [[eq name `green] [ansi-stream-foreground stdout 10]]
-	  [[eq name `blue]  [ansi-stream-foreground stdout 11]]
-	  [[eq name `white] [ansi-stream-foreground stdout 15]]
-	  [t                [ansi-stream-foreground stdout 15]]]]]
+    [cond [[eq name `red]     [ansi-stream-foreground stdout 12]]
+	  [[eq name `green]   [ansi-stream-foreground stdout 10]]
+	  [[eq name `blue]    [ansi-stream-foreground stdout 11]]
+	  [[eq name `white]   [ansi-stream-foreground stdout 15]]
+	  [[eq name `magenta] [ansi-stream-foreground stdout 13]]
+	  [t                  [ansi-stream-foreground stdout 15]]]]]
 
 
 [defunk blocks_world_object? [exp]
@@ -227,10 +228,11 @@
       ]]]
 
 [defunk blocks_world-test []
-  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table [blocks_world_rectangle-create  0 0 [+  0 50] [- [+ 0 2] 1]] [blocks_world_color-new `white]]
-					      [blocks_world_object-new `block [blocks_world_rectangle-create 10 2 [+ 10  5] [- [+ 2 5] 1]] [blocks_world_color-new `blue]]
-					      [blocks_world_object-new `block [blocks_world_rectangle-create 20 5 [+ 20  5] [- [+ 5 5] 1]] [blocks_world_color-new `green]]
-					      [blocks_world_object-new `block [blocks_world_rectangle-create 30 2 [+ 30 10] [- [+ 2 5] 1]] [blocks_world_color-new `red]]]]]]
+  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table        [blocks_world_rectangle-create  0  0 [+  0 50] [- [+  0 2] 1]] [blocks_world_color-new `white]]
+					      [blocks_world_object-new `robot_magnet [blocks_world_rectangle-create 21 10 [+ 21  3] [- [+ 10 3] 1]] [blocks_world_color-new `magenta]]
+					      [blocks_world_object-new `block        [blocks_world_rectangle-create 10  2 [+ 10  5] [- [+  2 5] 1]] [blocks_world_color-new `blue]]
+					      [blocks_world_object-new `block        [blocks_world_rectangle-create 20  5 [+ 20  5] [- [+  5 5] 1]] [blocks_world_color-new `green]]
+					      [blocks_world_object-new `block        [blocks_world_rectangle-create 30  2 [+ 30 10] [- [+  2 5] 1]] [blocks_world_color-new `red]]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 

@@ -356,14 +356,14 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
       (! raw__integerp(x1, cause)) ||
       (! raw__integerp(y0, cause)) ||
       (! raw__integerp(y1, cause)) ||
-      (! raw__characterp(ch, cause))) {
+      (! raw__charp(ch, cause))) {
     return f2larva__new(cause, 1);
   }
   u64 raw_x0 = f2integer__i(x0, cause);
   u64 raw_y0 = f2integer__i(y0, cause);
   u64 raw_x1 = f2integer__i(x1, cause);
   u64 raw_y1 = f2integer__i(y1, cause);
-  u8  raw_ch = f2character__ch(ch, cause);
+  u8  raw_ch = f2char__ch(ch, cause);
   raw__ansi__stream__rectangle(cause, stream, raw_x0, raw_y0, raw_x1, raw_y1, raw_ch);
   return nil;
 }

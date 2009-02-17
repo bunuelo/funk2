@@ -55,7 +55,7 @@
 [defunk blocks_world_object-render [this lower_left__x lower_left__y]
   [let [[type [blocks_world_object-type this]]]
     [let [[render_char [cond [[eq type `table] [string-elt '-' 0]]
-			     [[eq type `block] [string-elt '█' 0]]
+			     [[eq type `block] [string-elt '*' 0]]
 			     [t                [string-elt '?' 0]]]]]
       [let [[pos [blocks_world_object-position this]]]
 	[let [[x_start [blocks_world_position-x pos]]
@@ -95,7 +95,7 @@
 
 [defunk blocks_world-repl [this]
   [blocks_world-render this 20 [- [termios-height] 10]]
-  [ansi-move-cursor stdout 1 [- [termios-height] 8]]
+  [ansi-move_cursor stdout 1 [- [termios-height] 8]]
   [ansi-stream-foreground stdout 15]
   [format stdout 'blocks-world-in-> ']
   [let [[exp [read stdin]]]

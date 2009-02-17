@@ -1,5 +1,5 @@
 
-Copyright (c) 2007-2008 Bo Morgan.
+Copyright (c) 2007-2009 Bo Morgan.
 All rights reserved.
 
 Author: Bo Morgan
@@ -65,7 +65,33 @@ file must be found in the following relative directory:
 
 --
 
-Heppy coding!  --Bo Morgan <bo@mit.edu>
+ 3. INSTALLING EMACS FUNK-MODE
 
-[last_modified 2008_09_23]
+ In order to install the emacs major mode for editing Funk2 files
+ (*.fu2), copy the funk-mode.el file to your user's home directory
+ (/home/username/), like this:
+
+   cp funk-mode.el /home/username/
+
+ Now, you'll need to add the following lines to your ~/.emacs file:
+
+   (add-to-list 'load-path "/home/username/")
+   (autoload 'funk-mode "funk-mode" "Funk Mode." t)
+   (add-to-list 'auto-mode-alist '("\\.funk\\'" . funk-mode))
+   (add-to-list 'auto-mode-alist '("\\.fu\\'" . funk-mode))
+   (add-to-list 'auto-mode-alist '("\\.fu2\\'" . funk-mode))
+   (add-to-list 'interpreter-mode-alist '("funk" . funk-mode))
+
+ That should allow you to use [Meta-X, funk-mode] in order to load the
+ Funk2 major editing mode.  Now, in order to enable syntax
+ highlighting for *.fu2 files automatically, add the following line to
+ your .emacs file as well:
+
+   (global-font-lock-mode t)
+
+--
+
+Happy coding!  --Bo Morgan <bo@mit.edu>
+
+[last_modified 2009_02_17]
 

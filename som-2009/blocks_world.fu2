@@ -164,6 +164,7 @@
 		  [prog [set found_overlap t]
 			[set object_iter   nil]]
 		[set object_iter [cdr object_iter]]]]]]
+	[format stdout '\ndebug 8']
 	found_overlap]]]]
 
 [defunk blocks_world_object-translate [this dx dy]

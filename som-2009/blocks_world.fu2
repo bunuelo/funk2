@@ -207,12 +207,13 @@
       [let [[exp [read stdin]]]
 	[ansi-stream-foreground stdout 15]
 	[cond [[or [eq exp `quit] [eq exp `exit]] [set done t]]
-	      [[eq exp `sim]]     [blocks_world-simulate this]
-	      [t                  [prog [ansi-stream-foreground stdout 15]
-					[set last_results [list '\n'
-								'blocks world error: unknown command ' exp '\n'
-								'try quit or exit.\n']]
-					]]]]
+	      [[eq exp `sim]                      [prog [blocks_world-simulate this]
+							[set last_results [list 'simulated blocks world.']]]]
+	      [t                                  [prog [ansi-stream-foreground stdout 15]
+							[set last_results [list '\n'
+										'blocks world error: unknown command ' exp '\n'
+										'try quit or exit.\n']]
+							]]]]
       ]]]
 
 [defunk blocks_world-test []

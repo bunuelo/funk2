@@ -94,15 +94,15 @@
 
 
 [defunk blocks_world-repl [this]
-  [let [[last_result 'Welcome to Blocks World v2.2']
-	[done        nil]]
+  [let [[last_results [list 'Welcome to Blocks World v2.2']]
+	[done         nil]]
     [while [not done]
       [blocks_world-render this 20 [- [termios-height] 10]]
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
       [ansi-stream-foreground stdout 15]
       [format stdout 'blocks-world-out> ']
       [ansi-stream-foreground stdout 10]
-      [format stdout last_result]
+      [apply &format [cons stdout last_results]]
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 2]]
       [ansi-stream-foreground stdout 15]
       [format stdout 'blocks-world-in-> ']
@@ -111,9 +111,9 @@
 	[ansi-stream-foreground stdout 15]
 	[cond [[or [eq exp `quit] [eq exp `exit]] [set done t]]
 	      [t                  [prog [ansi-stream-foreground stdout 15]
-					[format stdout '\n'
-						'blocks world error: unknown command ' exp '\n'
-						'try quit or exit.\n']
+					[set last_results [list '\n'
+								'blocks world error: unknown command ' exp '\n'
+								'try quit or exit.\n']]
 					]]]]
       ]]]
 

@@ -201,7 +201,7 @@
   [ansi-stream-move_cursor stdout 1 26]]
 
 [defunk blocks_world-repl [this]
-  [let [[last_results [list 'Welcome to Blocks World v2.2']]
+  [let [[last_results [list 'Welcome to Blocks World v2.2  (valid commands: quit, sim)']]
 	[done         nil]]
     [while [not done]
       [blocks_world-render this 20 [- [termios-height] 10]]
@@ -222,7 +222,7 @@
 	      [t                                  [prog [ansi-stream-foreground stdout 15]
 							[set last_results [list '\n'
 										'blocks world error: unknown command ' exp '\n'
-										'try quit or exit.\n']]
+										'try one of these commands: quit, exit, or sim.\n']]
 							]]]]
       ]]]
 

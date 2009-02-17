@@ -45,7 +45,12 @@
     [blocks_world_rectangle-new x0 y0 x1 y1]]]
 
 [defunk blocks_world_rectangle-render [this background_char]
-  [ansi-stream-bordered_rectangle stdout [blocks_world_rectangle-x0 this] [blocks_world_rectangle-y0 this] [blocks_world_rectangle-x1 this] [blocks_world_rectangle-y1 this] background_char]]
+  [let [[screen_height [termios-height]]]
+    [ansi-stream-bordered_rectangle stdout
+				    [+ 10 [blocks_world_rectangle-x0 this]]
+				    [- screen_height [+ 10 [blocks_world_rectangle-y0 this]]]
+				    [+ 10 [blocks_world_rectangle-x1 this]]
+				    [- screen_height [+ 10 [blocks_world_rectangle-y1 this] background_char]]]]]
 
 [defunk blocks_world_rectangle-x_size [this] [+ [- [blocks_world_rectangle-x1 this] [blocks_world_rectangle-x0 this]] 1]]
 [defunk blocks_world_rectangle-y_size [this] [+ [- [blocks_world_rectangle-y1 this] [blocks_world_rectangle-y0 this]] 1]]

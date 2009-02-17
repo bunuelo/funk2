@@ -206,7 +206,7 @@
 
 [defunk blocks_world-repl [this]
   [ansi-stream-clear_screen stdout]
-  [let [[last_results  [list 'Welcome to Blocks World v2.2  (valid commands: quit, sim)']]
+  [let [[last_results  [list 'Welcome to Blocks World v2.2  (a few commands: [exit], [sim])']]
 	[done          nil]
 	[need_rerender t]]
     [while [not done]

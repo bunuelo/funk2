@@ -120,6 +120,7 @@
 	  [[eq name `blue]    [ansi-stream-foreground stdout 11]]
 	  [[eq name `white]   [ansi-stream-foreground stdout 15]]
 	  [[eq name `magenta] [ansi-stream-foreground stdout 13]]
+	  [[eq name `yellow]  [ansi-stream-foreground stdout 14]]
 	  [t                  [ansi-stream-foreground stdout 15]]]]]
 
 
@@ -233,6 +234,7 @@
 					      [blocks_world_object-new `block        [blocks_world_rectangle-create 10  2 [+ 10  5] [- [+  2 5] 1]] [blocks_world_color-new `blue]]
 					      [blocks_world_object-new `block        [blocks_world_rectangle-create 20  5 [+ 20  5] [- [+  5 5] 1]] [blocks_world_color-new `green]]
 					      [blocks_world_object-new `block        [blocks_world_rectangle-create 30  2 [+ 30 10] [- [+  2 5] 1]] [blocks_world_color-new `red]]]]]]
+					      [blocks_world_object-new `block        [blocks_world_rectangle-create 30 10 [+ 30  5] [- [+ 10 5] 1]] [blocks_world_color-new `yellow]]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 

@@ -94,7 +94,8 @@
 
 
 [defunk blocks_world-repl [this]
-  [let [[last_result 'Welcome to Blocks World v2.2']]
+  [let [[last_result 'Welcome to Blocks World v2.2']
+	[done        nil]]
     [while [not done]
       [blocks_world-render this 20 [- [termios-height] 10]]
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]

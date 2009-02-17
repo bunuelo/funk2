@@ -297,7 +297,14 @@ def_pcfunk1(stringp, x, return f2__stringp(this_cause, x));
 f2ptr f2__string__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2string__length(x, cause));}
 def_pcfunk1(string__length, x, return f2__string__length(this_cause, x));
 
-f2ptr f2__string__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2string__elt(x, y, cause);}
+f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  if ((! raw__stringp(this, cause)) ||
+      (! raw__integerp(index, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 raw_index = f2integer__i(index, cause);
+  return f2string__elt(this, raw_index, cause);
+}
 def_pcfunk2(string__elt, x, y, return f2__string__elt(this_cause, x, y));
 
 f2ptr f2__string__eq(f2ptr cause, f2ptr x, f2ptr y) {

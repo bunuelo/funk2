@@ -27,9 +27,41 @@ int raw__termios__height() {
   return winsize_arg.ws_row;
 }
 
+f2ptr f2__termios__height(f2ptr cause) {
+  return f2integer__new(cause, raw__termios__height());
+}
+def_pcfunk0(termios__height, return f2__termios__height(this_cause));
+
 int raw__termios__width() {
   struct winsize winsize_arg;
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &winsize_arg);
   return winsize_arg.ws_col;
 }
+
+f2ptr f2__termios__width(f2ptr cause) {
+  return f2integer__new(cause, raw__termios__width());
+}
+def_pcfunk0(termios__width, return f2__termios__width(this_cause));
+
+// **
+
+void f2__termios__reinitialize_globalvars() {
+  //f2ptr cause = f2_termios_c__cause__new(initial_cause());
+  // set global (funk2_t) __funk2 variables
+}
+
+void f2__termios__initialize() {
+  pause_gc();
+  
+  //f2ptr cause = f2_termios_c__cause__new(initial_cause());
+  
+  f2__termios__reinitialize_globalvars();
+  
+  f2__primcfunk__init(termios__width);
+  f2__primcfunk__init(termios__height);
+  
+  resume_gc();
+  try_gc();
+}
+
 

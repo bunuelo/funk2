@@ -27,6 +27,9 @@
 [load 'fu2/bootstrap-ansi.fu2']
 [print 'done loading bootstrap-ansi.fu2']
 
+[load 'fu2/bootstrap-termios.fu2']
+[print 'done loading bootstrap-termios.fu2']
+
 [parload 'fu2/miscfunks.fu2'
 	 'fu2/cause.fu2'
 	 ]

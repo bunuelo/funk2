@@ -25,5 +25,10 @@
 int raw__termios__height();
 int raw__termios__width();
 
+// **
+
+void f2__termios__reinitialize_globalvars();
+void f2__termios__initialize();
+
 #endif // F2__TERMIOS__H
 

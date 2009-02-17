@@ -92,10 +92,12 @@
 
 [defunk blocks_world-repl [this]
   [blocks_world-render this]
-  [format stdout '\nblocks-world-in->']
+  [ansi-stream-foreground stdout 15]
+  [format stdout '\nblocks-world-in-> ']
   [let [[exp [read stdin]]]
     [cond [[or [eq exp `quit] [eq exp `exit]] nil]
-	  [t                  [prog [format stdout '\n'
+	  [t                  [prog [ansi-stream-foreground stdout 15]
+				    [format stdout '\n'
 					    'blocks world error: unknown command ' exp '\n'
 					    'try quit or exit.\n']
 				    [blocks_world-repl this]]]]]]

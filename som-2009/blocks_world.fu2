@@ -133,7 +133,10 @@
 [defmetro blocks_world_object-rectangle [this]                 `[array-elt ,this 4]]
 [defmetro blocks_world_object-color     [this]                 `[array-elt ,this 6]]
 
-[defunk blocks_world_object-render [this lower_left__x lower_left__y]
+[globalize blocks_world-lower_left-x 20]
+[globalize blocks_world-lower_left-y [- [termios-height] 10]]
+
+[defunk blocks_world_object-render [this]
   [let [[type [blocks_world_object-type this]]]
     [let [[render_char [cond [[eq type `table] [string-elt '-' 0]]
 			     [[eq type `block] [string-elt '*' 0]]
@@ -202,13 +205,12 @@
 	[if [not an_object_moved]
 	    [set done t]]]]]]
 
-[defunk blocks_world-render [this lower_left__x lower_left__y]
+[defunk blocks_world-render [this]
   [ansi-stream-clear_screen stdout]
   [mapc [funk [object]
-	      [blocks_world_object-render object lower_left__x lower_left__y]]
+	      [blocks_world_object-render object]]
 	[blocks_world-objects this]]
   [ansi-stream-move_cursor stdout 1 26]]
-
 
 [defunk blocks_world-repl [this]
   [let [[last_results [list 'Welcome to Blocks World v2.2']]
@@ -227,7 +229,7 @@
       [let [[exp [read stdin]]]
 	[ansi-stream-foreground stdout 15]
 	[cond [[or [eq exp `quit] [eq exp `exit]] [set done t]]
-	      [[eq exp `sim]                      [prog [blocks_world-simulate this]
+	      [[eq exp `sim]                      [prog [blocks_world-simulate this ]
 							[set last_results [list 'simulated blocks world.']]]]
 	      [t                                  [prog [ansi-stream-foreground stdout 15]
 							[set last_results [list '\n'

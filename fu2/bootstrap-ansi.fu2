@@ -61,3 +61,4 @@
 [globalize-funk ansi-stream-beep                                   &primfunk:ansi__stream__beep]
 [globalize-funk ansi-stream-foreground                             &primfunk:ansi__stream__foreground]
 [globalize-funk ansi-stream-background                             &primfunk:ansi__stream__background]
+[globalize-funk ansi-stream-rectangle                              &primfunk:ansi__stream__rectangle]

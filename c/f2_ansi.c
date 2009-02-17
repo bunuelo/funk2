@@ -338,6 +338,37 @@ f2ptr f2__ansi__stream__background(f2ptr cause, f2ptr stream, f2ptr color) {
 }
 def_pcfunk2(ansi__stream__background, stream, color, return f2__ansi__stream__background(this_cause, stream, color));
 
+void raw__ansi__stream__rectangle(f2ptr cause, f2ptr stream, u32 x0, u32 y0, u32 x1, u32 y1, u8 ch) {
+  if (y0 > y1) {u32 swap = y0; y0 = y1; y1 = swap;}
+  if (x0 > x1) {u32 swap = x0; x0 = x1; x1 = swap;}
+  u32 y;
+  for (y = y0; y <= y1; y ++) {
+    raw__ansi__stream__move_cursor(cause, stream, x0, y);
+    u32 x;
+    for (x = x0; x <= x1; x ++) {
+      raw__stream__writef(cause, stream, "%c", ch);
+    }
+  }
+}
+
+f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1, f2ptr ch) {
+  if ((! raw__integerp(x0, cause)) ||
+      (! raw__integerp(x1, cause)) ||
+      (! raw__integerp(y0, cause)) ||
+      (! raw__integerp(y1, cause)) ||
+      (! raw__characterp(ch, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 raw_x0 = f2integer__i(x0, cause);
+  u64 raw_y0 = f2integer__i(y0, cause);
+  u64 raw_x1 = f2integer__i(x1, cause);
+  u64 raw_y1 = f2integer__i(y1, cause);
+  u8  raw_ch = f2character__ch(ch, cause);
+  raw__ansi__stream__rectangle(cause, stream, raw_x0, raw_y0, raw_x1, raw_y1, raw_ch);
+  return nil;
+}
+def_pcfunk5(ansi__stream__rectangle, x0, y0, x1, y1, ch, return f2__ansi__stream__rectangle(cause, stream, x0, y0, x1, y1, ch));
+
 // **
 
 void f2__ansi__reinitialize_globalvars() {
@@ -392,6 +423,7 @@ void f2__ansi__initialize() {
   f2__primcfunk__init(ansi__stream__beep);
   f2__primcfunk__init(ansi__stream__foreground);
   f2__primcfunk__init(ansi__stream__background);
+  f2__primcfunk__init(ansi__stream__rectangle);
   
   resume_gc();
   try_gc();

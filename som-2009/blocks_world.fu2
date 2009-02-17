@@ -198,7 +198,7 @@
 	    [set done t]]]]]]
 
 [defunk blocks_world-render [this]
-  [ansi-stream-bordered_rectangle stdout 1 1 [- [termios-width] 1] [- [termios-height] 10] [string-elt ' ' 0]]
+  [ansi-stream-rectangle stdout 1 1 [- [termios-width] 1] [- [termios-height] 10] [string-elt ' ' 0]]
   [mapc [funk [object]
 	      [blocks_world_object-render object]]
 	[blocks_world-objects this]]
@@ -214,7 +214,7 @@
 	  [prog [blocks_world-render this 20 [- [termios-height] 10]]
 		[set need_rerender nil]]]
       
-      [ansi-stream-bordered_rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
+      [ansi-stream-rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
       
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
       [ansi-stream-foreground stdout 15]

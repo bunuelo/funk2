@@ -233,7 +233,7 @@
 					      [blocks_world_object-new `robot_magnet [blocks_world_rectangle-create 21 10 [+ 21  3] [- [+ 10 3] 1]] [blocks_world_color-new `magenta]]
 					      [blocks_world_object-new `block        [blocks_world_rectangle-create 10  2 [+ 10  5] [- [+  2 5] 1]] [blocks_world_color-new `blue]]
 					      [blocks_world_object-new `block        [blocks_world_rectangle-create 20  5 [+ 20  5] [- [+  5 5] 1]] [blocks_world_color-new `green]]
-					      [blocks_world_object-new `block        [blocks_world_rectangle-create 30  2 [+ 30 10] [- [+  2 5] 1]] [blocks_world_color-new `red]]]]]]
+					      [blocks_world_object-new `block        [blocks_world_rectangle-create 30  2 [+ 30 10] [- [+  2 5] 1]] [blocks_world_color-new `red]]
 					      [blocks_world_object-new `block        [blocks_world_rectangle-create 30 10 [+ 30  5] [- [+ 10 5] 1]] [blocks_world_color-new `yellow]]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]

@@ -303,7 +303,7 @@ f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
     return f2larva__new(cause, 1);
   }
   u64 raw_index = f2integer__i(index, cause);
-  return f2string__elt(this, raw_index, cause);
+  return f2char__new(cause, f2string__elt(this, raw_index, cause));
 }
 def_pcfunk2(string__elt, x, y, return f2__string__elt(this_cause, x, y));
 

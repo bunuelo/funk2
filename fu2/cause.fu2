@@ -32,24 +32,3 @@
 	  [cause-elt cause [- index 1]]]]
     exp]]
 
-[defunk   reinforcable_choice-new             [seen_situations states actions]  [array seen_situations states actions]]
-[defmetro reinforcable_choice-seen_situations [this]                           `[elt ,this 0]]
-[defmetro reinforcable_choice-states          [this]                           `[elt ,this 1]]
-[defmetro reinforcable_choice-actions         [this]                           `[elt ,this 2]]
-
-[defmetro defunk_reinforceable_choice [name states :rest actions]
-  `[prog [globalize-funk ,name nil]
-	 [let [[action_funks [list @[mapcar [funk [action]
-						  `[funk []
-							 [let [[states [list @states]]]
-							   ,action]]]
-					    actions]]]]
-	   [defunk ,name []
-	     [apply [elt action_funks [random [length action_funks]]] []]]]]]
-
-[defunk reinforce-reward [value]
-  nil]
-
-[defmetro reinforce-failure [] `[reinforce-reward -1]]
-[defmetro reinforce-success [] `[reinforce-reward  1]]
-

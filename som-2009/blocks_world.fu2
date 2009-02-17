@@ -225,12 +225,15 @@
 	  [let [[command [car exp]]]
 	    [cond [[eq command `exit] [set done t]]
 		  [[eq command `sim]  [prog [blocks_world-simulate this ]
-					    [set last_results [list 'simulated blocks world.']]]]
+					    [set last_results [list 'Done simulating blocks world.']]]]
+		  [[eq command `eval] [prog [if [!= [length exp] 2]
+						[set last_ressult [list 'eval only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
+					      [set last_results [list 'Evalulation result is ' [eval [second exp]] '.']]]]]
 		  [t                  [set command_failure t]]]]]
 	[if command_failure
 	    [prog [ansi-stream-foreground stdout 15]
 		  [set last_results [list 'Blocks world command failure, ' exp '.\n'
-					  'Try one of these commands: ' `[exit] ', or ' `[sim] '.\n']]]]]
+					  'Try one of these commands: ' `[exit] ', ' `[sim] ', or ' `[eval [+ 1 2]] '.\n']]]]]
       
       ]]]
 

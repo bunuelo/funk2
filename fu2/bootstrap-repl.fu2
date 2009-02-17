@@ -645,6 +645,17 @@
      @[mapcar [funk [funkdef]
 		    `[defmutexfunk defunks_mutex-mutex @funkdef]]]]]
 
+[defunk remove [element sequence]
+  [let [[new_sequence [cons nil nil]]]
+    [let [[new_sequence_iter new_sequence]]
+      [mapc [funk [sequence_element]
+		  [if [not [eq element sequence_element]]
+		      [let [[new_cons [cons sequence_element nil]]]
+			[put new_cons [cdr new_sequence_iter]]
+			[set new_sequence_iter new_cons]]]]
+	    sequence]
+      [cdr new_sequence]]]]
+
 [defunk memblock-set_init_render_xyz   [x y z]        [if [and [float? x] [float? y] [float? z]] [unsafe:memblock-set_init_render_xyz x y z] [error `type-error [list `memblock-set_init_render_xyz x y z]]]]
 [defunk memblock-set_init_render_on    [render_on]    [if [integer? render_on] [unsafe:memblock-set_init_render_on render_on] [error `type-error [list `memblock-set_init_render_on render_on]]]]
 [defunk memblock-set_init_render_noise [render_noise] [if [float? render_noise] [unsafe:memblock-set_init_render_noise render_noise] [error `type-error [list `memblock-set_init_render_noise render_noise]]]]

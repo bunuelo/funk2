@@ -1,14 +1,6 @@
 
-[defunk remove [element sequence]
-  [let [[new_sequence [cons nil nil]]]
-    [let [[new_sequence_iter new_sequence]]
-      [mapc [funk [sequence_element]
-		  [if [not [eq element sequence_element]]
-		      [let [[new_cons [cons sequence_element nil]]]
-			[put new_cons [cdr new_sequence_iter]]
-			[set new_sequence_iter new_cons]]]]
-	    sequence]
-      [cdr new_sequence]]]]
+[globalize blocks_world-lower_left-x 20]
+[globalize blocks_world-lower_left-y [- [termios-height] 10]]
 
 [defunk ansi-stream-bordered_rectangle [stream x0 y0 x1 y1 background_char]
   [ansi-stream-move_cursor stream x0 y0] [format stdout '/']
@@ -135,9 +127,6 @@
 [defmetro blocks_world_object-rectangle [this]                 `[array-elt ,this 4]]
 [defmetro blocks_world_object-color     [this]                 `[array-elt ,this 6]]
 
-[globalize blocks_world-lower_left-x 20]
-[globalize blocks_world-lower_left-y [- [termios-height] 10]]
-
 [defunk blocks_world_object-render [this]
   [let [[type [blocks_world_object-type this]]]
     [let [[render_char [cond [[eq type `table]   [string-elt '-' 0]]
@@ -167,6 +156,18 @@
 
 [defunk blocks_world_object-translate [this dx dy]
   [blocks_world_rectangle-translate [blocks_world_object-rectangle this] dx dy]]
+
+[defunk blocks_world_object-create [type x0 y0 x_size y_size color]
+  [blocks_world_object-new type [blocks_world_rectangle-create x0 y0 [- [+ x0 x_size] 1] [- [+ y0 y_size] 1]] [blocks_world_color-new color]]]
+
+[defunk blocks_world_object-new_block [x0 y0 x_size y_size color]
+  [blocks_world_object-create `block x0 y0 x_size y_size color]]
+
+[defunk blocks_world_object-new_table [x0 y0 x_size y_size color]
+  [blocks_world_object-create `table x0 y0 x_size y_size color]]
+
+[defunk blocks_world_object-new_gripper [x0 y0 x_size y_size color]
+  [blocks_world_object-create `gripper x0 y0 x_size y_size color]]
 
 [defunk blocks_world? [exp]
   [and exp
@@ -230,12 +231,12 @@
       ]]]
 
 [defunk blocks_world-test []
-  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table   [blocks_world_rectangle-create  0  0 [+  0 50] [- [+  0 2] 1]] [blocks_world_color-new `white]]
-					      [blocks_world_object-new `gripper [blocks_world_rectangle-create 21 10 [+ 21  3] [- [+ 10 3] 1]] [blocks_world_color-new `magenta]]
-					      [blocks_world_object-new `block   [blocks_world_rectangle-create 10  2 [+ 10  5] [- [+  2 5] 1]] [blocks_world_color-new `blue]]
-					      [blocks_world_object-new `block   [blocks_world_rectangle-create 20  5 [+ 20  5] [- [+  5 5] 1]] [blocks_world_color-new `green]]
-					      [blocks_world_object-new `block   [blocks_world_rectangle-create 30  2 [+ 30 10] [- [+  2 5] 1]] [blocks_world_color-new `red]]
-					      [blocks_world_object-new `block   [blocks_world_rectangle-create 30 10 [+ 30  5] [- [+ 10 5] 1]] [blocks_world_color-new `yellow]]]]]]
+  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new_table    0  0 50  2 `white]
+					      [blocks_world_object-new_gripper 21 10  3  3 `magenta]
+					      [blocks_world_object-new_block   10  2  5  5 `blue]
+					      [blocks_world_object-new_block   20  5  5  5 `green]
+					      [blocks_world_object-new_block   30  2 10  5 `red]
+					      [blocks_world_object-new_block   30 10  5  5 `yellow]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 

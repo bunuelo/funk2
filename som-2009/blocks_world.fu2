@@ -164,7 +164,7 @@
 		  [prog [set found_overlap t]
 			[set object_iter   nil]]
 		[set object_iter [cdr object_iter]]]]]]
-	[format stdout '\ndebug 8']
+	[format stdout '\ndebug 8: found_overlap=' found_overlap]
 	found_overlap]]]]
 
 [defunk blocks_world_object-translate [this dx dy]
@@ -192,10 +192,13 @@
 	      [let [[object_type [blocks_world_object-type object]]]
 		[if [eq object_type `block]
 		    [if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
-			[prog [blocks_world_object-translate object 0 -1]
+			[prog [format stdout '\nmoving object: ' object]
+			      [blocks_world_object-translate object 0 -1]
+			      [format stdout '\nnew object position: ' object]
 			      [blocks_world_object-render object]
 			      [set an_object_moved t]]]]]]
 	    [set object_iter [cdr object_iter]]]]
+	[format stdout '\nan_object_moved=' an_object_moved]
 	[if [not an_object_moved]
 	    [set done t]]]]]]
 

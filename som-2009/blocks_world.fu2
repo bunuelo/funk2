@@ -1,8 +1,6 @@
 
 
 
-
-
 [defunk blocks_world_color? [exp]
   [and exp
        [array? exp]
@@ -54,7 +52,7 @@
 [defmetro blocks_world_object-size     [this]                     `[array-elt ,this 6]]
 [defmetro blocks_world_object-color    [this]                     `[array-elt ,this 8]]
 
-[defunk blocks_world_object-render [this]
+[defunk blocks_world_object-render [this lower_left__x lower_left__y]
   [let [[type [blocks_world_object-type this]]]
     [let [[render_char [cond [[eq type `table] [string-elt '-' 0]]
 			     [[eq type `block] [string-elt '█' 0]]
@@ -67,7 +65,12 @@
 		  [y_size [blocks_world_size-y size]]]
 	      [let [[color [blocks_world_object-color this]]]
 		[blocks_world_color-render color]
-		[ansi-stream-rectangle stdout x_start y_start [- [+ x_start x_size] 1] [- [+ y_start y_size] 1] render_char]
+		[ansi-stream-rectangle stdout
+				       [+ lower_left__x x_start]
+				       [- lower_left__y y_start]
+				       [+ lower_left__x [- [+ x_start x_size] 1]]
+				       [- lower_left__y [- [+ y_start y_size] 1]]
+				       render_char]
 		[ansi-stream-foreground stdout 15]
 		]]]]]]]]
 
@@ -82,18 +85,19 @@
 [defmetro blocks_world-objects [this]    `[array-elt ,this 2]]
 
 
-[defunk blocks_world-render [this]
+[defunk blocks_world-render [this lower_left__x lower_left__y]
   [ansi-stream-clear_screen stdout]
   [mapc [funk [object]
-	      [blocks_world_object-render object]]
+	      [blocks_world_object-render object lower_left__x lower_left__y]]
 	[blocks_world-objects this]]
   [ansi-stream-move_cursor stdout 1 26]]
 
 
 [defunk blocks_world-repl [this]
-  [blocks_world-render this]
+  [blocks_world-render this 20 [- [termios-height] 10]]
+  [ansi-move-cursor stdout 1 [- [termios-height] 8]]
   [ansi-stream-foreground stdout 15]
-  [format stdout '\nblocks-world-in-> ']
+  [format stdout 'blocks-world-in-> ']
   [let [[exp [read stdin]]]
     [cond [[or [eq exp `quit] [eq exp `exit]] nil]
 	  [t                  [prog [ansi-stream-foreground stdout 15]

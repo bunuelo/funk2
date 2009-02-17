@@ -1,4 +1,15 @@
 
+[defunk remove [element sequence]
+  [let [[new_sequence [cons nil nil]]]
+    [let [[new_sequence_iter new_sequence]]
+      [mapc [funk [sequence_element]
+		  [if [not [eq element sequence_element]]
+		      [let [[new_cons [cons sequence_element nil]]]
+			[put new_cons [cdr new_sequence_iter]]
+			[set new_sequence_iter new_cons]]]]
+	    sequence]
+      [cdr new_sequence]]]]
+
 [defunk ansi-stream-bordered_rectangle [stream x0 y0 x1 y1 background_char]
   [ansi-stream-move_cursor stream x0 y0] [format stdout '/']
   [ansi-stream-move_cursor stream x1 y0] [format stdout '\\']
@@ -26,6 +37,12 @@
 [defmetro blocks_world_rectangle-y0  [this] `[array-elt ,this 4]]
 [defmetro blocks_world_rectangle-x1  [this] `[array-elt ,this 6]]
 [defmetro blocks_world_rectangle-y1  [this] `[array-elt ,this 8]]
+
+[defunk blocks_world_rectangle-new_copy [this]
+  [blocks_world_rectangle-new [blocks_world_rectangle-x0 this]
+			      [blocks_world_rectangle-y0 this]
+			      [blocks_world_rectangle-x1 this]
+			      [blocks_world_rectangle-y1 this]]]
 
 [defunk blocks_world_rectangle-create [ux0 uy0 ux1 uy1]
   [let [[x0 nil]
@@ -61,6 +78,11 @@
   [put [+ [blocks_world_rectangle-y0 this] dy] [blocks_world_rectangle-y0 this]]
   [put [+ [blocks_world_rectangle-x1 this] dx] [blocks_world_rectangle-x1 this]]
   [put [+ [blocks_world_rectangle-y1 this] dy] [blocks_world_rectangle-y1 this]]]
+
+[defunk blocks_world_rectangle-new_translate [this dx dy]
+  [let [[new_rectangle [blocks_world_rectangle-new_copy this]]]
+    [blocks_world_rectangle-translate new_rectangle dx dy]
+    new_rectangle]]
 
 [defunk blocks_world_rectangle-overlaps [this that]
   [if [not [blocks_world_rectangle? that]]
@@ -117,7 +139,22 @@
 	  [ansi-stream-foreground stdout 15]
 	  ]]]]]
 
+[defunk blocks_world_object-translate_overlaps_objects [this dx dy objects]
+  [let [[rectangle [blocks_world_object-rectangle this]]]
+    [let [[translate_rectangle [blocks_world_rectangle-new_translate rectangle dx dy]]]
+      [let [[object_iter   objects]
+	    [found_overlap nil]]
+	[while object_iter
+	  [let [[object [car object_iter]]]
+	    [let [[object_rectangle [blocks_world_object-rectangle object]]]
+	      [if [blocks_world_rectangle-overlaps translate_rectangle object_rectangle]
+		  [prog [set found_overlap t]
+			[set object_iter   nil]]
+		[set object_iter [cdr object_iter]]]]]]
+	found_overlap]]]]
 
+[defunk blocks_world_object-translate [this dx dy]
+  [blocks_world_rectangle-translate [blocks_world_object-rectangle this] dx dy]]
 
 [defunk blocks_world? [exp]
   [and exp
@@ -128,6 +165,22 @@
 [defunk   blocks_world-new     [objects]  [array `blocks_world `:objects objects]]
 [defmetro blocks_world-objects [this]    `[array-elt ,this 2]]
 
+
+[defunk blocks_world-simulate [this]
+  [let [[done    nil]
+	[objects [blocks_world-objects this]]]
+    [while [not done]
+      [let [[an_object_moved nil]]
+	[let [[object_iter objects]]
+	  [while object_iter
+	    [let [[object [car object_iter]]]
+	      [if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
+		  [prog [blocks_world_object-translate object 0 -1]
+			[blocks_world_object-render object]
+			[set an_object_moved t]]]]
+	    [set object_iter [cdr object_iter]]]]
+	[if [not an_object_moved]
+	    [set done t]]]]]]
 
 [defunk blocks_world-render [this lower_left__x lower_left__y]
   [ansi-stream-clear_screen stdout]

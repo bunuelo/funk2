@@ -210,7 +210,11 @@
 	[need_rerender t]]
     [while [not done]
       [if need_rerender
-	  [blocks_world-render this 20 [- [termios-height] 10]]]
+	  [prog [blocks_world-render this 20 [- [termios-height] 10]]
+		[set need_rerender nil]]]
+      
+      [ansi-stream-bordered_rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
+      
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
       [ansi-stream-foreground stdout 15]
       [format stdout 'blocks-world-out> ']

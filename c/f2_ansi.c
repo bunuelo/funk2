@@ -367,7 +367,7 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
   raw__ansi__stream__rectangle(cause, stream, raw_x0, raw_y0, raw_x1, raw_y1, raw_ch);
   return nil;
 }
-def_pcfunk5(ansi__stream__rectangle, x0, y0, x1, y1, ch, return f2__ansi__stream__rectangle(this_cause, stream, x0, y0, x1, y1, ch));
+def_pcfunk6(ansi__stream__rectangle, stream, x0, y0, x1, y1, ch, return f2__ansi__stream__rectangle(this_cause, stream, x0, y0, x1, y1, ch));
 
 // **
 

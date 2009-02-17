@@ -220,14 +220,18 @@
       
       [let [[exp [read stdin]]]
 	[ansi-stream-foreground stdout 15]
-	[cond [[or [eq exp `quit] [eq exp `exit]] [set done t]]
-	      [[eq exp `sim]                      [prog [blocks_world-simulate this ]
-							[set last_results [list 'simulated blocks world.']]]]
-	      [t                                  [prog [ansi-stream-foreground stdout 15]
-							[set last_results [list '\n'
-										'blocks world error: unknown command ' exp '\n'
-										'try one of these commands: quit, exit, or sim.\n']]
-							]]]]
+	[if [not [cons? exp]]
+	    [set command_failure t]
+	  [let [[command [car exp]]]
+	    [cond [[eq command `exit] [set done t]]
+		  [[eq command `sim]  [prog [blocks_world-simulate this ]
+					    [set last_results [list 'simulated blocks world.']]]]
+		  [t                  [set command_failure t]]]]]
+	[if command_failure
+	    [prog [ansi-stream-foreground stdout 15]
+		  [set last_results [list 'Blocks world command failure, ' exp '.\n'
+					  'Try one of these commands: ' `[exit] ', or ' `[sim] '.\n']]]]]
+      
       ]]]
 
 [defunk blocks_world-test []

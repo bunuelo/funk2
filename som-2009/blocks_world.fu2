@@ -57,7 +57,7 @@
 [defunk blocks_world_object-render [this]
   [let [[type [blocks_world_object-type this]]]
     [let [[render_char [cond [[eq type `table] [string-elt '-' 0]]
-			     [[eq type `block] [string-elt '*' 0]]
+			     [[eq type `block] [string-elt '█' 0]]
 			     [t                [string-elt '?' 0]]]]]
       [let [[pos [blocks_world_object-position this]]]
 	[let [[x_start [blocks_world_position-x pos]]

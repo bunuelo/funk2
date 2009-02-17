@@ -94,17 +94,27 @@
 
 
 [defunk blocks_world-repl [this]
-  [blocks_world-render this 20 [- [termios-height] 10]]
-  [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
-  [ansi-stream-foreground stdout 15]
-  [format stdout 'blocks-world-in-> ']
-  [let [[exp [read stdin]]]
-    [cond [[or [eq exp `quit] [eq exp `exit]] nil]
-	  [t                  [prog [ansi-stream-foreground stdout 15]
-				    [format stdout '\n'
-					    'blocks world error: unknown command ' exp '\n'
-					    'try quit or exit.\n']
-				    [blocks_world-repl this]]]]]]
+  [let [[last_result 'Welcome to Blocks World v2.2']]
+    [while [not done]
+      [blocks_world-render this 20 [- [termios-height] 10]]
+      [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
+      [ansi-stream-foreground stdout 15]
+      [format stdout 'blocks-world-out> ']
+      [ansi-stream-foreground stdout 10]
+      [format stdout last_result]
+      [ansi-stream-move_cursor stdout 1 [- [termios-height] 2]]
+      [ansi-stream-foreground stdout 15]
+      [format stdout 'blocks-world-in-> ']
+      [ansi-stream-foreground stdout 12]
+      [let [[exp [read stdin]]]
+	[ansi-stream-foreground stdout 15]
+	[cond [[or [eq exp `quit] [eq exp `exit]] [set done t]]
+	      [t                  [prog [ansi-stream-foreground stdout 15]
+					[format stdout '\n'
+						'blocks world error: unknown command ' exp '\n'
+						'try quit or exit.\n']
+					]]]]
+      ]]]
 
 [defunk blocks_world-test []
   [let [[blocks_world [blocks_world-new [list [blocks_world_object-new `table [blocks_world_position-new  0 0] [blocks_world_size-new 50 2] [blocks_world_color-new `white]]

@@ -33,8 +33,8 @@ typedef unsigned int  bool;
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)
 
-#define scheduler_processor_num 1
-//#define scheduler_processor_num (1<<processor_num_power)
+//#define scheduler_processor_num 1
+#define scheduler_processor_num (1<<processor_num_power)
 
 #define memory_pool_num scheduler_processor_num
 

@@ -284,6 +284,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (! raw__charp(read_ch, cause)) {
+	  return f2larva__new(cause, 19);
+	}
 	char ch = f2char__ch(read_ch, cause);
 	if ((ch < '0' || ch > '9') &&
 	    (ch < 'a' || ch > 'f') &&
@@ -322,6 +325,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (! raw__charp(read_ch, cause)) {
+	  return f2larva__new(cause, 19);
+	}
 	char ch = f2char__ch(read_ch, cause);
 	if ((ch < '0' || ch > '9') &&
 	    (ch < 'a' || ch > 'f') &&
@@ -360,6 +366,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (! raw__charp(read_ch, cause)) {
+	  return f2larva__new(cause, 19);
+	}
 	char ch = f2char__ch(stream, cause);
 	if (ch < '0' || ch > '9') {
 	  f2__stream__ungetc(cause, stream, read_ch);
@@ -440,11 +449,17 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
       if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+      if (! raw__charp(read_ch, cause)) {
+	return f2larva__new(cause, 19);
+      }
       char ch = f2char__ch(read_ch, cause);
       if (ch == __string_quote_char) {break;}
       if (ch == __escape_char_char) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (! raw__charp(read_ch, cause)) {
+	  return f2larva__new(cause, 19);
+	}
 	ch = f2char__ch(read_ch, cause);
 	if      (ch == __string_escape_newline_char)   {ch = '\n';}
 	else if (ch == __string_escape_return_char)    {ch = '\r';}
@@ -473,12 +488,18 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
       if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+      if (! raw__charp(read_ch, cause)) {
+	return f2larva__new(cause, 19);
+      }
       char ch = f2char__ch(read_ch, cause);
       if (ch == __symbol_quote_char) {break;}
       if (ch == __symbol_escape_char) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (! raw__charp(read_ch, cause)) {
+	  return f2larva__new(cause, 19);
+	}
 	ch = f2char__ch(read_ch, cause);
       }
       str[i] = ch;
@@ -503,6 +524,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
       if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+      if (! raw__charp(read_ch, cause)) {
+	return f2larva__new(cause, 19);
+      }
       char ch = f2char__ch(read_ch, cause);
       if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' ||
 	  ch == __left_paren_char            || ch == __right_paren_char ||
@@ -515,6 +539,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (! raw__charp(read_ch, cause)) {
+	  return f2larva__new(cause, 19);
+	}
 	ch = f2char__ch(read_ch, cause);
       }
       str[i] = ch;

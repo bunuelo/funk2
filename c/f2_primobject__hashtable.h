@@ -44,14 +44,14 @@ defprimobject__static_slot__prototype(hashtable__bin_array);
 #define f2hashtable__bin_array__trace(     this, cause)        primobject__static_slot__trace(     this, hashtable__bin_array, cause)
 #define f2hashtable__bin_array__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, hashtable__bin_array, cause)
 
-extern f2ptr f2__hashtable__new                 (f2ptr cause, f2ptr bin_num_power);
-extern f2ptr f2__hashtablep                     (f2ptr this, f2ptr cause);
-extern void  f2__hashtable__add_keyvalue_pair   (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
-extern f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
-extern f2ptr f2__hashtable__lookup_value        (f2ptr this, f2ptr cause, f2ptr key);
+f2ptr f2__hashtable__new                 (f2ptr cause, f2ptr bin_num_power);
+f2ptr f2__hashtablep                     (f2ptr this, f2ptr cause);
+f2ptr f2__hashtable__add_keyvalue_pair   (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
+f2ptr f2__hashtable__lookup_value        (f2ptr this, f2ptr cause, f2ptr key);
 
-extern void f2__primobject_hashtable__reinitialize_globalvars();
-extern void f2__primobject_hashtable__initialize();
+void f2__primobject_hashtable__reinitialize_globalvars();
+void f2__primobject_hashtable__initialize();
 
 #endif // F2__PRIMOBJECT__HASHTABLE__H
 

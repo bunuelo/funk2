@@ -70,7 +70,7 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
   return this;
 }
 
-void f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add_keyvalue_pair assert failed: f2__hashtable__valid(this)");
   if(! raw__symbolp(key, cause)) {
     return f2larva__new(cause, 1);

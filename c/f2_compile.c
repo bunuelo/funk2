@@ -850,7 +850,7 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, bool tracewrap, f2ptr 
   if (car == __funk2.globalenv.globalize__symbol)              {return bcs_valid(f2__compile__globalize_var_exp(cause, tracewrap, rte, exp));}
   if (car == __funk2.globalenv.globalize_funk__symbol)         {return bcs_valid(f2__compile__globalize_funkvar_exp(cause, tracewrap, rte, exp));}
   if (car == __funk2.globalenv.yield__symbol)                  {return bcs_valid(f2__compile__yield(cause, tracewrap));}
-  printf("tried to compile special symbol exp: "); f2__write(rte, exp); fflush(stdout);
+  printf("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   printf("isn't a special symbol expression."); // should throw exception...
   error(nil, "f2__compile__special_symbol_exp error: expression is not special symbol expression.");
 }
@@ -893,7 +893,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr
   if (raw__metrop(funkvar_value, cause))  {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL));}
   if (f2__is_compile_special_symbol(car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   if (raw__symbolp(car, cause))           {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
-  printf("tried to compile: "); f2__write(rte, exp); fflush(stdout);
+  printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
   printf("don't know how to compile type."); // should throw exception...
   return f2larva__new(cause, 16);
 }
@@ -917,7 +917,7 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr thread, 
   if (car == __funk2.globalenv.globalize__symbol)              {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.globalize_funk__symbol)         {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.yield__symbol)                  {return f2cons__new(cause, nil, exp);}
-  printf("tried to compile special symbol exp: "); f2__write(thread, exp); fflush(stdout);
+  printf("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   printf("isn't a special symbol expression."); // should throw exception...
   error(nil, "f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");
 }

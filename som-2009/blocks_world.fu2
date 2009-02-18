@@ -183,19 +183,19 @@
   [let [[done    nil]
 	[objects [blocks_world-objects this]]]
     [while [not done]
-      [let [[an_object_moved nil]]
-	[let [[object_iter objects]]
-	  [while object_iter
-	    [let [[object [car object_iter]]]
-	      [let [[object_type [blocks_world_object-type object]]]
-		[if [eq object_type `block]
-		    [if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
-			[prog [blocks_world_object-translate object 0 -1]
-			      [blocks_world_object-render object]
-			      [set an_object_moved t]]]]]]
-	    [set object_iter [cdr object_iter]]]]
-	[if [not an_object_moved]
-	    [set done t]]]]]]
+      [let [[an_object_moved nil]
+	    [object_iter     objects]]
+	[while object_iter
+	  [let* [[object      [car object_iter]]
+		 [object_type [blocks_world_object-type object]]]
+	    [if [eq object_type `block]
+		[if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
+		    [prog [blocks_world_object-translate object 0 -1]
+			  [blocks_world_object-render object]
+			  [set an_object_moved t]]]]]
+	  [set object_iter [cdr object_iter]]]]
+      [if [not an_object_moved]
+	  [set done t]]]]]
 
 [defunk blocks_world-render [this]
   [ansi-stream-rectangle stdout 1 1 [- [termios-width] 1] [- [termios-height] 10] [string-elt ' ' 0]]
@@ -203,6 +203,11 @@
 	      [blocks_world_object-render object]]
 	[blocks_world-objects this]]
   [ansi-stream-move_cursor stdout 1 26]]
+
+[defunk blocks_world-generate_perceptions [this]
+  [let [[objects [blocks_world-objects this]]]
+    [mapc [funk [object_a]
+		[
 
 [defunk blocks_world-repl [this]
   [ansi-stream-clear_screen stdout]
@@ -246,6 +251,8 @@
 					  'Try one of these commands: ' `[exit] ', ' `[sim] ', or ' `[eval [+ 1 2]] '.\n']]]]]
       
       ]]]
+
+
 
 [defunk blocks_world-test []
   [let [[blocks_world [blocks_world-new [list [blocks_world_object-new_table    0  0 50  2 `white]

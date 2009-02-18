@@ -59,7 +59,9 @@ bool raw__hashtable__valid(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
-  release__assert(raw__integerp(bin_num_power, cause), nil, "f2__hashtable__new assert failed: raw__integerp(bin_num_power)");
+  if(! raw__integerp(bin_num_power, cause)) {
+    return f2larva__new(cause, 1);
+  }
   pause_gc();
   f2ptr bin_array = raw__array__new(cause, 1ll << f2integer__i(bin_num_power, cause));
   f2ptr this = f2hashtable__new(cause, bin_num_power, bin_array);
@@ -70,7 +72,9 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
 
 void f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  release__assert(raw__symbolp(key, cause), nil, "f2__hashtable__add_keyvalue_pair: key must be symbol.");
+  if(! raw__symbolp(key, cause)) {
+    return f2larva__new(cause, 1);
+  }
   pause_gc();
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -101,7 +105,9 @@ void f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr 
 
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  release__assert(raw__symbolp(key, cause), nil, "f2__hashtable__lookup_keyvalue_pair: key must be symbol.");
+  if(! raw__symbolp(key, cause)) {
+    return f2larva__new(cause, 1);
+  }
   pause_gc();
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);

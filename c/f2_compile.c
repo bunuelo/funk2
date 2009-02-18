@@ -706,7 +706,7 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
     return bcs_valid(full_bcs);
   }
   error(nil, "shouldn't get here.");
-  return nil;
+  return f2larva__new(cause, 16);
 }
 
 int __total_apply_metro_count = 0;
@@ -895,7 +895,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr
   if (raw__symbolp(car, cause))           {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   printf("tried to compile: "); f2__write(rte, exp); fflush(stdout);
   printf("don't know how to compile type."); // should throw exception...
-  return nil;
+  return f2larva__new(cause, 16);
 }
 
 f2ptr __f2__demetropolize__special_symbol_exp__symbol = -1;

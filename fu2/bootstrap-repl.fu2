@@ -645,6 +645,9 @@
      @[mapcar [funk [funkdef]
 		    `[defmutexfunk defunks_mutex-mutex @funkdef]]]]]
 
+[defmetro rest [exp]
+  `[cdr ,exp]]
+
 [defunk remove [element sequence]
   [let [[new_sequence [cons nil nil]]]
     [let [[new_sequence_iter new_sequence]]

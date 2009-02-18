@@ -101,6 +101,7 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
   resume_gc();
+  return nil;
 }
 
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {

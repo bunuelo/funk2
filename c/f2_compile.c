@@ -902,8 +902,8 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr
   if (f2__is_compile_special_symbol(car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   if (raw__symbolp(car, cause))           {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
-  printf("don't know how to compile type."); // should throw exception...
-  return f2larva__new(cause, 16);
+  printf("don't know how to compile type."); // should throw exception... (or return larva)
+  return nil;
 }
 
 f2ptr __f2__demetropolize__special_symbol_exp__symbol = -1;

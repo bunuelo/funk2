@@ -259,8 +259,8 @@ clean-o:
 	rm -f c/*.o
 
 clean-swp:
-	echo "Removing:"; ls /tmp/*.f2swp; echo ""
-	rm -f /tmp/*.f2swp
+	echo "Removing:"; ls f2swp/*.f2swp; echo ""
+	rm -f f2swp/*.f2swp
 
 clean-trace:
 	eccho "Removing:"; ls funk2_trace.log; echo ""
@@ -306,8 +306,7 @@ install-silent: $(compile__funk2)
 	chmod a+r $(install__include__dir)*.h
 	ln -fs $(install__include__dir)*.h $(install__system_include__dir)
 
-clean:     clean2
-sclean:    clean1
+clean:     clean1
 uninstall: clean0
 
 install:

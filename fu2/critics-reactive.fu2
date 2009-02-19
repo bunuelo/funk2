@@ -20,10 +20,15 @@
 '
 
 
-[defunk critic-reactive-unknown_bug [x]
-  [format stdout '\ncritic-reactive-unknown_bug here.']
-  [format stdout '\n  x = ' x]
-  [format stdout '\nBeginning user debug repl...']
+[defunk critic-reactive-unknown_bug [thread]
+  [let [[bug [thread-value thread]]]
+    [format stdout
+	    '\n' 'critic-reactive-unknown_bug here.'
+	    '\n' 
+	    '\n' '  bug = ' bug
+	    '\n' 
+	    '\n' 'Beginning user debug repl.'
+	    '\n']]
   [repl]
   ]
 

@@ -34,10 +34,12 @@
 	 'fu2/cause.fu2'
 	 ]
 
+[load 'fu2/critics-reactive.fu2']
+[print 'done loading critics-reactive.fu2']
+
 `[seqload 'fu2/actor.fu2']
 
 'fu2/x86-compile.fu2'
-'fu2/critics-reactive.fu2'
 
 [globalize load-utilities nil]
 

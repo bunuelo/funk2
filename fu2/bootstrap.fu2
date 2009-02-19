@@ -30,6 +30,9 @@
 [load 'fu2/bootstrap-termios.fu2']
 [print 'done loading bootstrap-termios.fu2']
 
+[load 'fu2/bootstrap-boot.fu2']
+[print 'done loading bootstrap-boot.fu2']
+
 [parload 'fu2/miscfunks.fu2'
 	 'fu2/cause.fu2'
 	 ]
@@ -78,8 +81,6 @@
 	     'fu2/serialize.fu2']
     
     ]
-
-[seqload 'fu2/bootstrap-boot.fu2']
 
 [globalize load-basic-ai nil]
 

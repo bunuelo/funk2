@@ -659,6 +659,16 @@
 	    sequence]
       [cdr new_sequence]]]]
 
+[defmetro let* [var_value_pairs :rest body]
+  [if [null var_value_pairs]
+      `[prog @body]
+    [let [[var_value_pair [car var_value_pairs]]]
+      [let [[var   [first  var_value_pair]]
+	    [value [second var_value_pair]]]
+	`[let [[,var ,value]]
+	   [let* ,[cdr var_value_pairs]
+	     @body]]]]]]
+
 [defunk memblock-set_init_render_xyz   [x y z]        [if [and [float? x] [float? y] [float? z]] [unsafe:memblock-set_init_render_xyz x y z] [error `type-error [list `memblock-set_init_render_xyz x y z]]]]
 [defunk memblock-set_init_render_on    [render_on]    [if [integer? render_on] [unsafe:memblock-set_init_render_on render_on] [error `type-error [list `memblock-set_init_render_on render_on]]]]
 [defunk memblock-set_init_render_noise [render_noise] [if [float? render_noise] [unsafe:memblock-set_init_render_noise render_noise] [error `type-error [list `memblock-set_init_render_noise render_noise]]]]

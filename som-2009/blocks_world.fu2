@@ -178,7 +178,6 @@
 [defunk   blocks_world-new     [objects]  [array `blocks_world `:objects objects]]
 [defmetro blocks_world-objects [this]    `[array-elt ,this 2]]
 
-
 [defunk blocks_world-simulate [this]
   [let [[done    nil]
 	[objects [blocks_world-objects this]]]

@@ -21,7 +21,7 @@
 
 [print 'beginning bootstrap-boot.fu2']
 
-[globalize user-boot-commands []]
+[globalize user-boot-commands nil]
 
 [defunk boot []
   [thread-critics-set [this-thread] &default-larva-critic]

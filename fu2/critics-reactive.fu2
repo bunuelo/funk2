@@ -37,7 +37,7 @@
 [defunk thread-enable_reactive_critics [this]
   [thread-critics-set &critic-reactive-unknown_bug]]
 
-[boot-add_user_command `[thread-enable_reactive_critics [this-thread]]]
+`[boot-add_user_command `[thread-enable_reactive_critics [this-thread]]]
 
 
 

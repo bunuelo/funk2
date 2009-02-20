@@ -129,9 +129,6 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__thread__bytecode__newenv(            thread);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)       {f2__thread__bytecode__machine_code(      thread, f2bytecode__arg0(bytecode, cause));}
   else {
-    f2__print(thread, command);
-    fflush(stdout);
-    error(nil, "unrecognized bytecode command.");
     f2thread__value__set(thread, cause, f2larva__new(cause, 21));
   }
 }

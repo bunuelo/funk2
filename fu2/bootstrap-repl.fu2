@@ -33,11 +33,11 @@
 
 [globalize-funk funk-unlabeled [make-metro -trace_all_compiles- `funk-unlabeled `[name args :rest body]
 					   `[[define demetroed    [exps-demetropolize_full body]]
-					     [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- `funk-unlabeled args
+					     [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- name args
 											       demetroed
 											       body
 											       nil]
-									  3]]
+									  4]]
 					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
@@ -47,7 +47,7 @@
 
 [globalize-funk metro [make-metro -trace_all_compiles- `metro `[name args :rest body]
 				  `[[define demetroed    [exps-demetropolize_full body]]
-				    [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- `metro args
+				    [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- name args
 										      demetroed
 										      body
 										      nil]

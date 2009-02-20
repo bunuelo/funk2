@@ -60,7 +60,7 @@
 				   nil]]
 
 [globalize-funk defmetro
-		[metro [name args :rest body]
+		[metro `defmetro [name args :rest body]
 		       [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
 		       `[globalize-funk ,name [metro ,name ,args
 						      @body]]]]

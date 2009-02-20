@@ -29,6 +29,7 @@
 		      The best that we can do at this point is to give you an English description of the bug and a new Read-Eval-Print-Loop:]
 		   [bug-english_sentence_list bug]]
 	  '\n\n']
+  [globalize last-error-thread thread]
   `bug_not_handled]
 
 [defunk critic-reactive-unknown_bug [thread]

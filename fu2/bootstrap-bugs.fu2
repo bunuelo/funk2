@@ -34,24 +34,24 @@
 
 [defunk bug-english_sentence_list [this]
   [let [[symbolic_type [bug-symbolic_type this]]]
-    [cond [[eq symbolic_type `function_argument_does_not_have_correct_type-bug_type] [list Bug is from primitive virtual machine larva.
+    [cond [[eq symbolic_type `function_argument_does_not_have_correct_type-bug_type] `[Bug is from primitive virtual machine larva.
 											   The larva signifies that a function argument did not have the correct type.
 											   ]]
-	  [[eq symbolic_type `tried_to_funk_object_that_is_not_funkable-bug_type]    [list Bug is from primitive virtual machine larva.
+	  [[eq symbolic_type `tried_to_funk_object_that_is_not_funkable-bug_type]    `[Bug is from primitive virtual machine larva.
 											   The larva signifies that the thread tried to execute an object that was not an executable object.
 											   ]]
-	  [[eq symbolic_type `unspecified_error_occured-bug_type]                    [list Bug is from primitive virtual machine larva.
+	  [[eq symbolic_type `unspecified_error_occured-bug_type]                    `[Bug is from primitive virtual machine larva.
 											   The larva signifies that an unspecified error occured.
 											   ]]
-	  [[eq symbolic_type `unknown-bug_type]                                      [list Bug is from primitive virtual machine larva that was not recognized.
+	  [[eq symbolic_type `unknown-bug_type]                                      `[Bug is from primitive virtual machine larva that was not recognized.
 											   Unknown category of bug type has occured.
 											   ]]
-	  [[eq symbolic_type `not-bug]                                               [list We are trying to print an english description of a bug that is not a bug.
-											   A meta bug has occured in trying to print bug.
-											   Unknown category of bug type has occured.
-											   ]]
-	  [t                                                                         [list Meta error recognizing symbolic bug type [a meta bug in bug-print_human_readable].
-											   ]]]]]
+	  [[eq symbolic_type `not-bug]                                               `[We are trying to print an english description of a bug that is not a bug.
+											  A meta bug has occured in trying to print bug.
+											  Unknown category of bug type has occured.
+											  ]]
+	  [t                                                                         `[Meta error recognizing symbolic bug type [a meta bug in bug-print_human_readable].]]
+	  ]]]
 
 [defunk bug-print_english_sentence [this]
   [ansi-stream-foreground stdout 15]

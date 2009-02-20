@@ -209,7 +209,7 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
   }
   f2ptr retval = f2larva__new(cause, 18);
   //f2__expression_not_funkable__exception__new(cause, funktion);
-  printf("\n"); f2__print(nil, retval); fflush(stdout); printf("\n");
+  //printf("\n"); f2__print(nil, retval); fflush(stdout); printf("\n");
   //error(thread, "error: expression not funkable");
   f2thread__value__set(thread, cause, retval);
   return 1;

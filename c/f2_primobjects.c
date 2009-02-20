@@ -203,17 +203,19 @@ void f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause, f
 
 // cfunk
 
-defprimobject__static_slot(cfunk__args,     0);
-defprimobject__static_slot(cfunk__cfunkptr, 1);
-defprimobject__static_slot(cfunk__env,      2);
+defprimobject__static_slot(cfunk__name,     0);
+defprimobject__static_slot(cfunk__args,     1);
+defprimobject__static_slot(cfunk__cfunkptr, 2);
+defprimobject__static_slot(cfunk__env,      3);
 
 f2ptr __cfunk__symbol = -1;
 
-f2ptr f2cfunk__new(f2ptr cause, f2ptr args, f2ptr cfunkptr, f2ptr env) {
+f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env) {
   /*pause_gc();*/
   release__assert(__cfunk__symbol != -1, nil, "f2cfunk__new error: used before primobjects initialized.");
   if (!cfunkptr) {return primobject_error("cfunk-cfunkptr cannot be nil.");}
-  f2ptr this = f2__primobject__new(cause, __cfunk__symbol, 3, nil);
+  f2ptr this = f2__primobject__new(cause, __cfunk__symbol, 4, nil);
+  f2cfunk__name__set(    this, cause, name);
   f2cfunk__args__set(    this, cause, args);
   f2cfunk__cfunkptr__set(this, cause, cfunkptr);
   f2cfunk__env__set(     this, cause, env);
@@ -223,17 +225,19 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr args, f2ptr cfunkptr, f2ptr env) {
 
 // metrocfunk
 
-defprimobject__static_slot(metrocfunk__args,     0);
-defprimobject__static_slot(metrocfunk__cfunkptr, 1);
-defprimobject__static_slot(metrocfunk__env,      2);
+defprimobject__static_slot(metrocfunk__name,     0);
+defprimobject__static_slot(metrocfunk__args,     1);
+defprimobject__static_slot(metrocfunk__cfunkptr, 2);
+defprimobject__static_slot(metrocfunk__env,      3);
 
 f2ptr __metrocfunk__symbol = -1;
 
-f2ptr f2metrocfunk__new(f2ptr cause, f2ptr args, f2ptr cfunkptr, f2ptr env) {
+f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env) {
   /*pause_gc();*/
   release__assert(__metrocfunk__symbol != -1, nil, "f2metrocfunk__new error: used before primobjects initialized.");
   if (!cfunkptr) {return primobject_error("metrocfunk-cfunkptr cannot be nil.");}
-  f2ptr this = f2__primobject__new(cause, __metrocfunk__symbol, 3, nil);
+  f2ptr this = f2__primobject__new(cause, __metrocfunk__symbol, 4, nil);
+  f2metrocfunk__name__set(    this, cause, name);
   f2metrocfunk__args__set(    this, cause, args);
   f2metrocfunk__cfunkptr__set(this, cause, cfunkptr);
   f2metrocfunk__env__set(     this, cause, env);
@@ -244,19 +248,21 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr args, f2ptr cfunkptr, f2ptr env) {
 
 // funk
 
-defprimobject__static_slot(funk__body_bytecodes,      0);
-defprimobject__static_slot(funk__args,                1);
-defprimobject__static_slot(funk__demetropolized_body, 2);
-defprimobject__static_slot(funk__body,                3);
-defprimobject__static_slot(funk__env,                 4);
-defprimobject__static_slot(funk__machine_code,        5);
+defprimobject__static_slot(funk__name,                0);
+defprimobject__static_slot(funk__body_bytecodes,      1);
+defprimobject__static_slot(funk__args,                2);
+defprimobject__static_slot(funk__demetropolized_body, 3);
+defprimobject__static_slot(funk__body,                4);
+defprimobject__static_slot(funk__env,                 5);
+defprimobject__static_slot(funk__machine_code,        6);
 
 f2ptr __funk__symbol = -1;
 
-f2ptr f2funk__new(f2ptr cause, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code) {
+f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code) {
   /*pause_gc();*/
   release__assert(__funk__symbol != -1, nil, "f2funk__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __funk__symbol, 6, nil);
+  f2ptr this = f2__primobject__new(cause, __funk__symbol, 7, nil);
+  f2funk__name__set(               this, cause, name);
   f2funk__body_bytecodes__set(     this, cause, body_bytecodes);
   f2funk__args__set(               this, cause, args);
   f2funk__demetropolized_body__set(this, cause, demetropolized_body);
@@ -270,19 +276,21 @@ f2ptr f2funk__new(f2ptr cause, f2ptr body_bytecodes, f2ptr args, f2ptr demetropo
 
 // metro
 
-defprimobject__static_slot(metro__body_bytecodes,      0);
-defprimobject__static_slot(metro__args,                1);
-defprimobject__static_slot(metro__demetropolized_body, 2);
-defprimobject__static_slot(metro__body,                3);
-defprimobject__static_slot(metro__env,                 4);
-defprimobject__static_slot(metro__machine_code,        5);
+defprimobject__static_slot(metro__name,                0);
+defprimobject__static_slot(metro__body_bytecodes,      1);
+defprimobject__static_slot(metro__args,                2);
+defprimobject__static_slot(metro__demetropolized_body, 3);
+defprimobject__static_slot(metro__body,                4);
+defprimobject__static_slot(metro__env,                 5);
+defprimobject__static_slot(metro__machine_code,        6);
 
 f2ptr __metro__symbol = -1;
 
-f2ptr f2metro__new(f2ptr cause, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code) {
+f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code) {
   /*pause_gc();*/
   release__assert(__metro__symbol != -1, nil, "f2metro__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __metro__symbol, 6, nil);
+  f2ptr this = f2__primobject__new(cause, __metro__symbol, 7, nil);
+  f2metro__name__set(               this, cause, name);
   f2metro__body_bytecodes__set(     this, cause, body_bytecodes);
   f2metro__args__set(               this, cause, args);
   f2metro__demetropolized_body__set(this, cause, demetropolized_body);

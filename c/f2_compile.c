@@ -209,9 +209,11 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   if (f2funk__body_bytecodes(funk, cause)) {return bcs_valid(funk_bcs);}
   
   // save return and environment registers
-  f2ptr full_bcs =                      f2__compile__push_return(cause, tracewrap); f2ptr iter = full_bcs;  
-  iter = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
-  iter = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
+  f2ptr full_bcs =                                f2__compile__push_iter(cause, tracewrap); f2ptr iter = full_bcs;  
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
   
   // define args in funk environment
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause, tracewrap));
@@ -274,9 +276,11 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   if (f2metro__body_bytecodes(metro, cause)) {return bcs_valid(metro_bcs);}
   
   // save return and environment registers
-  f2ptr full_bcs =                      f2__compile__push_return(cause, tracewrap); f2ptr iter = full_bcs;  
-  iter = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
-  iter = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
+  f2ptr full_bcs =                                f2__compile__push_iter(cause, tracewrap); f2ptr iter = full_bcs;  
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
   
   // define args in metro environment
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause, tracewrap));

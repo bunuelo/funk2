@@ -51,7 +51,7 @@
 										      demetroed
 										      body
 										      nil]
-								 3]]
+								 4]]
 				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
 						  [quote ,demetroed]
 						  [quote ,body]

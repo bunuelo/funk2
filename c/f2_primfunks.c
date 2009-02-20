@@ -729,6 +729,7 @@ f2ptr f2__thread(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunk
 				   parent_thread,
 				   parent_env,
 				   f2mutex__new(cause),
+				   nil,
 				   nil);
   
   f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
@@ -758,6 +759,7 @@ f2ptr f2__thread_serial(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2pt
 				   parent_thread,
 				   parent_env,
 				   f2mutex__new(cause),
+				   nil,
 				   nil);
   
   f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
@@ -1708,6 +1710,7 @@ f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f
 					   parent_thread,
 					   parent_env,
 					   f2mutex__new(cause),
+					   nil,
 					   nil);
   f2ptr event_buffer       = raw__circular_buffer__new_empty(cause, 1024);
   f2ptr event_buffer_mutex = f2mutex__new(cause);

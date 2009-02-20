@@ -144,79 +144,81 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     f2ptr thread = f2cons__car(thread_iter, cause);
     int   prev_thread_iter__already_set = 0;
     bool  need_to_launch_larva_handling_critic_thread = 0;
-    if(f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) { // successful lock
-      int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-      release__assert(pool_index == this_pthread__pool_index(), thread, "f2processor__execute_next_bytecodes: pool_index != this_pthread__pool_index().");
-      f2ptr popped_thread = __funk2.operating_system.pthread__current_thread[pool_index];
-      __funk2.operating_system.pthread__current_thread[pool_index] = thread;
-      //printf("\n  got thread lock.");
-      if (raw__larvap(f2thread__value(thread, cause), cause)) {
-	//printf("\nthread paused due to larva in value register.");
-      } else {
-	if ((! f2thread__is_complete(thread, cause))) {
-	  //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing thread 0x%X", (int)thread); fflush(stdout);
-	  
-	  did_something = __funk2.globalenv.true__symbol;
-	  
-	  enum exit_reason_e {
-	    exit_reason__none = 0,
-	    exit_reason__is_complete,
-	    exit_reason__too_many_loops,
-	    exit_reason__reached_yield,
-	    exit_reason__found_larva
-	  } exit_reason = exit_reason__none;
-	  
-	  int i = 200;
-	  while (! exit_reason) {
-	    if(i == 0) {
-	      exit_reason = exit_reason__too_many_loops;
-	      break;
-	    } else if (f2__thread__execute_next_bytecode(cause, thread)) {
-	      exit_reason = exit_reason__reached_yield;
-	      break;
-	    } else if (raw__larvap(f2thread__value(thread, cause), cause)) {
-	      f2ptr larva = f2thread__value(thread, cause);
-	      f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
-	      exit_reason = exit_reason__found_larva;
-	      //printf("larva found in thread value register."); fflush(stdout);
-	      break;
-	    } else if (f2thread__is_complete(thread, cause)) {
-	      exit_reason = exit_reason__is_complete;
-	      break;
-	    } 
-	    i --;
-	  }
-	  
-	  if(exit_reason == exit_reason__found_larva) {
-	    need_to_launch_larva_handling_critic_thread = 1;
-	  }
-	  
-	  //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
+    if (f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) { // successful lock
+      if (! f2thread__paused(thread, cause)) {
+	int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+	release__assert(pool_index == this_pthread__pool_index(), thread, "f2processor__execute_next_bytecodes: pool_index != this_pthread__pool_index().");
+	f2ptr popped_thread = __funk2.operating_system.pthread__current_thread[pool_index];
+	__funk2.operating_system.pthread__current_thread[pool_index] = thread;
+	//printf("\n  got thread lock.");
+	if (raw__larvap(f2thread__value(thread, cause), cause)) {
+	  //printf("\nthread paused due to larva in value register.");
 	} else {
-	  f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);
-	  //printf("\n  thread completed.");
-	  if (! f2thread__keep_undead(thread, cause)) {
-	    // Removing a thread is not thread-safe.  It breaks things, so it needs to be fixed.
-	    f2ptr processor__active_threads_mutex;
-	    int lock_failed;
-	    do {
-	      //f2__global_scheduler__execute_mutex__lock(cause);
-	      processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-	      lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
-	      //f2__global_scheduler__execute_mutex__unlock(cause);
-	    } while (lock_failed);
-	    if (prev_thread_iter) {
-	      f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
-	    } else {
-	      f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+	  if ((! f2thread__is_complete(thread, cause))) {
+	    //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing thread 0x%X", (int)thread); fflush(stdout);
+	    
+	    did_something = __funk2.globalenv.true__symbol;
+	    
+	    enum exit_reason_e {
+	      exit_reason__none = 0,
+	      exit_reason__is_complete,
+	      exit_reason__too_many_loops,
+	      exit_reason__reached_yield,
+	      exit_reason__found_larva
+	    } exit_reason = exit_reason__none;
+	    
+	    int i = 200;
+	    while (! exit_reason) {
+	      if(i == 0) {
+		exit_reason = exit_reason__too_many_loops;
+		break;
+	      } else if (f2__thread__execute_next_bytecode(cause, thread)) {
+		exit_reason = exit_reason__reached_yield;
+		break;
+	      } else if (raw__larvap(f2thread__value(thread, cause), cause)) {
+		f2ptr larva = f2thread__value(thread, cause);
+		f2thread__paused__set(thread, cause, __true__symbol);
+		f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+		exit_reason = exit_reason__found_larva;
+		//printf("larva found in thread value register."); fflush(stdout);
+		break;
+	      } else if (f2thread__is_complete(thread, cause)) {
+		exit_reason = exit_reason__is_complete;
+		break;
+	      } 
+	      i --;
 	    }
-	    f2mutex__unlock(processor__active_threads_mutex, cause);
+	    
+	    if(exit_reason == exit_reason__found_larva) {
+	      need_to_launch_larva_handling_critic_thread = 1;
+	    }
+	    
+	    //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
+	  } else {
+	    f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);
+	    //printf("\n  thread completed.");
+	    if (! f2thread__keep_undead(thread, cause)) {
+	      // Removing a thread is not thread-safe.  It breaks things, so it needs to be fixed.
+	      f2ptr processor__active_threads_mutex;
+	      int lock_failed;
+	      do {
+		//f2__global_scheduler__execute_mutex__lock(cause);
+		processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
+		lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+		//f2__global_scheduler__execute_mutex__unlock(cause);
+	      } while (lock_failed);
+	      if (prev_thread_iter) {
+		f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
+	      } else {
+		f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+	      }
+	      f2mutex__unlock(processor__active_threads_mutex, cause);
+	    }
+	    prev_thread_iter__already_set = 1;
 	  }
-	  prev_thread_iter__already_set = 1;
 	}
+	__funk2.operating_system.pthread__current_thread[pool_index] = popped_thread;
       }
-      __funk2.operating_system.pthread__current_thread[pool_index] = popped_thread;
-      
       f2mutex__unlock(f2thread__execute_mutex(thread, cause), cause);
     } else {
       //printf("\nthread locked couldn't execute...");

@@ -459,6 +459,7 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr parent_thread,
 		    f2ptr parent_env,
 		    f2ptr execute_mutex,
+		    f2ptr paused,
 		    f2ptr last_executed_time);
 
 #define f2primobject__is_thread(                 this, cause)        raw__eq(cause, f2primobject__type(this, cause), __thread__symbol)
@@ -567,6 +568,13 @@ defprimobject__static_slot__prototype(thread__execute_mutex);
 #define f2thread__execute_mutex__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, thread__execute_mutex, cause)
 #define f2thread__execute_mutex__trace(          this, cause)        primobject__static_slot__trace(     this, thread__execute_mutex, cause)
 #define f2thread__execute_mutex__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, thread__execute_mutex, cause)
+
+defprimobject__static_slot__prototype(thread__paused);
+#define f2thread__paused(                   this, cause)        primobject__static_slot__accessor(         this, thread__paused, cause)
+#define f2thread__paused__set(              this, cause, value) primobject__static_slot__set(              this, thread__paused, cause, value)
+#define f2thread__paused__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, thread__paused, cause)
+#define f2thread__paused__trace(            this, cause)        primobject__static_slot__trace(            this, thread__paused, cause)
+#define f2thread__paused__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, thread__paused, cause)
 
 defprimobject__static_slot__prototype(thread__last_executed_time);
 #define f2thread__last_executed_time(            this, cause)        primobject__static_slot__accessor(  this, thread__last_executed_time, cause)

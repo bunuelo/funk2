@@ -351,7 +351,8 @@ defprimobject__static_slot(thread__is_zombie,          11);
 defprimobject__static_slot(thread__parent_thread,      12);
 defprimobject__static_slot(thread__parent_env,         13);
 defprimobject__static_slot(thread__execute_mutex,      14);
-defprimobject__static_slot(thread__last_executed_time, 15);
+defprimobject__static_slot(thread__paused,             15);
+defprimobject__static_slot(thread__last_executed_time, 16);
 
 f2ptr __thread__symbol = -1;
 
@@ -371,10 +372,11 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr parent_thread,
 		    f2ptr parent_env,
 		    f2ptr execute_mutex,
+		    f2ptr paused,
 		    f2ptr last_executed_time) {
   /*pause_gc();*/
   release__assert(__thread__symbol != -1, nil, "f2thread__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __thread__symbol, 16, nil);
+  f2ptr this = f2__primobject__new(cause, __thread__symbol, 17, nil);
   f2thread__program_counter__set(   this, cause, program_counter);
   f2thread__stack__set(             this, cause, stack);
   f2thread__iter__set(              this, cause, iter);
@@ -390,6 +392,7 @@ f2ptr f2thread__new(f2ptr cause,
   f2thread__parent_thread__set(     this, cause, parent_thread);
   f2thread__parent_env__set(        this, cause, parent_env);
   f2thread__execute_mutex__set(     this, cause, execute_mutex);
+  f2thread__last_executed_time__set(this, cause, paused);
   f2thread__last_executed_time__set(this, cause, last_executed_time);
   /*resume_gc();*/
   return this;

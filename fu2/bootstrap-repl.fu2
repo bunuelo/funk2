@@ -31,28 +31,28 @@
 
 [define -current_env_name- `global-environment]
 
-[globalize-funk funk-unlabeled [make-metro -trace_all_compiles- `[args :rest body]
+[globalize-funk funk-unlabeled [make-metro -trace_all_compiles- `funk-unlabeled `[name args :rest body]
 					   `[[define demetroed    [exps-demetropolize_full body]]
-					     [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- args
+					     [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- `funk-unlabeled args
 											       demetroed
 											       body
 											       nil]
 									  3]]
-					     `[make-funk ,-trace_all_compiles- [quote ,args]
+					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
 							  [quote ,compiled_bcs]]]
 					    nil
 					    nil]]
 
-[globalize-funk metro [make-metro -trace_all_compiles- `[args :rest body]
+[globalize-funk metro [make-metro -trace_all_compiles- `metro `[name args :rest body]
 				  `[[define demetroed    [exps-demetropolize_full body]]
-				    [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- args
+				    [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- `metro args
 										      demetroed
 										      body
 										      nil]
 								 3]]
-				    `[make-metro ,-trace_all_compiles- [quote ,args]
+				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
 						  [quote ,demetroed]
 						  [quote ,body]
 						  [quote ,compiled_bcs]]]
@@ -62,7 +62,7 @@
 [globalize-funk defmetro
 		[metro [name args :rest body]
 		       [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
-		       `[globalize-funk ,name [metro ,args
+		       `[globalize-funk ,name [metro ,name ,args
 						      @body]]]]
 
 [globalize -name_environments-  nil]
@@ -72,7 +72,7 @@
 [defmetro trace_env []     [if -trace_environments- `[trace `[trace_env ,-current_env_name-]]]]
 
 [defmetro prog [:rest body]
-  `[funk-apply [funk-unlabeled []
+  `[funk-apply [funk-unlabeled `prog []
 			       [env_name `[prog]]
 			       @body] []]]
 
@@ -87,7 +87,7 @@
     `[funk-apply ,proc ,args]]]
 
 [defmetro funk [args :rest body]
-  `[funk-unlabeled ,args
+  `[funk-unlabeled `funk ,args
 		    [env_name [cons `funk [quote ,args]]]
 		    [trace_env]
 		    @body]]
@@ -97,7 +97,7 @@
 [defmetro defunk [name args :rest body]
   [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
   `[globalize-funk ,name
-		    [funk-unlabeled ,args
+		    [funk-unlabeled ,name ,args
 				     [env_name [cons [quote ,name] [quote ,args]]]
 				     [trace_env]
 				     @body]]]
@@ -108,7 +108,7 @@
 
 
 [defunk eval [exp]
-  [funk-apply [make-funk -trace_all_compiles- []
+  [funk-apply [make-funk -trace_all_compiles- `eval []
 			 [cons exp nil]
 			 [cons exp nil]
 			 nil]
@@ -160,7 +160,7 @@
 
 [defmetro label [name args :rest body]
   `[define-funk ,name
-     [funk-unlabeled ,args
+     [funk-unlabeled `label ,args
 		      [env_name [cons [quote ,name] [quote ,args]]]
 		      @body]]]
 
@@ -220,7 +220,7 @@
 
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  `[apply [funk-unlabeled ,let-vars
+  `[apply [funk-unlabeled `let ,let-vars
 			   [env_name [cons `let [quote ,let-vars]]]
 			   @body]
 	  [list @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
@@ -395,7 +395,7 @@
 
 [defmetro while [cond :rest body]
   `[prog [define-funk while-loop
-	   [funk-unlabeled []
+	   [funk-unlabeled `while []
 			   [env_name `[while]]
 			   [if ,cond
 			       [prog [prog @body]

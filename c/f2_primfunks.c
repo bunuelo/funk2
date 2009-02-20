@@ -1156,26 +1156,26 @@ def_pcfunk3(compile, tracewrap, exp, protect_environment, return f2__compile(thi
 f2ptr f2__identity(f2ptr cause, f2ptr exp) {return exp;}
 def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
 
-f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes) {
+f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes) {
   //f2__print_prompt("make-funk args: ", args);
   //f2__print_prompt("  body        : ", body);
   //f2__print_prompt("  env         : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap   : ", tracewrap);
-  f2ptr funk = f2funk__new(cause, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil);
+  f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil);
   f2__compile__funk(cause, (tracewrap != nil), thread, funk);
 #ifdef F2__ARCH_BIT32
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
 #endif
   return funk;
 }
-def_pcfunk5(make_funk, tracewrap, args, demetropolized_body, body, bytecodes, return f2__make_funk(this_cause, simple_thread, tracewrap, args, demetropolized_body, body, bytecodes));
+def_pcfunk6(make_funk, tracewrap, name, args, demetropolized_body, body, bytecodes, return f2__make_funk(this_cause, simple_thread, tracewrap, name, args, demetropolized_body, body, bytecodes));
 
-f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes) {
+f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes) {
   //f2__print_prompt("make-metro args: ", args);
   //f2__print_prompt("  body         : ", body);
   //f2__print_prompt("  env          : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap    : ", tracewrap);
-  f2ptr metro = f2metro__new(cause, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil);
+  f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil);
   f2__compile__metro(cause, (tracewrap != nil), thread, metro);
   
 #ifdef F2__ARCH_BIT32
@@ -1185,7 +1185,7 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr args, f2p
   
   return metro;
 }
-def_pcfunk5(make_metro, tracewrap, args, demetropolized_body, body, bytecodes, return f2__make_metro(this_cause, simple_thread, tracewrap, args, demetropolized_body, body, bytecodes));
+def_pcfunk6(make_metro, tracewrap, name, args, demetropolized_body, body, bytecodes, return f2__make_metro(this_cause, simple_thread, tracewrap, name, args, demetropolized_body, body, bytecodes));
 
 f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args) {
   release__assert(raw__cfunkp(cfunk, cause),        nil, "cfunk failed type assertion.");

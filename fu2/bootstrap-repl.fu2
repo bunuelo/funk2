@@ -65,15 +65,8 @@
 		       `[globalize-funk ,name [metro ,name ,args
 						      @body]]]]
 
-[globalize -name_environments-  nil]
-[globalize -trace_environments- nil]
-
-[defmetro env_name  [name] [if -name_environments-  `[define -current_env_name- ,name]]]
-[defmetro trace_env []     [if -trace_environments- `[trace `[trace_env ,-current_env_name-]]]]
-
 [defmetro prog [:rest body]
   `[funk-apply [funk-unlabeled `prog []
-			       [env_name `[prog]]
 			       @body] []]]
 
 [defmetro apply [proc args]
@@ -88,8 +81,6 @@
 
 [defmetro funk [args :rest body]
   `[funk-unlabeled `funk ,args
-		    [env_name [cons `funk [quote ,args]]]
-		    [trace_env]
 		    @body]]
 
 [exp-format stdout '\ndefining defunk\n']
@@ -98,8 +89,6 @@
   [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
   `[globalize-funk ,name
 		    [funk-unlabeled ,name ,args
-				     [env_name [cons [quote ,name] [quote ,args]]]
-				     [trace_env]
 				     @body]]]
 
 [exp-format stdout '\ndone defining defunk\n']
@@ -161,7 +150,6 @@
 [defmetro label [name args :rest body]
   `[define-funk ,name
      [funk-unlabeled `label ,args
-		      [env_name [cons [quote ,name] [quote ,args]]]
 		      @body]]]
 
 [defunk mapc [proc seq]
@@ -221,7 +209,6 @@
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
   `[apply [funk-unlabeled `let ,let-vars
-			   [env_name [cons `let [quote ,let-vars]]]
 			   @body]
 	  [list @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
@@ -396,7 +383,6 @@
 [defmetro while [cond :rest body]
   `[prog [define-funk while-loop
 	   [funk-unlabeled `while []
-			   [env_name `[while]]
 			   [if ,cond
 			       [prog [prog @body]
 				     [while-loop]]]]]

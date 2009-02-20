@@ -49,7 +49,7 @@
 	    [format stdout
 		    '\n' 'This should be a bug.  Instead we got: ' value
 		    '\n']]]
-    [if [not bug_handled]
+    [if bug_handled
 	[prog [ansi-stream-foreground stdout 10]
 	      [format stdout
 		      '\n' 

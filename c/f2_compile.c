@@ -254,6 +254,8 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   if (!popped_env_and_return) {
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump value
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump iter
     //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
   }
   
@@ -311,6 +313,8 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   if (!popped_env_and_return) {
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump value
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump iter
   }
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause, tracewrap));
@@ -470,6 +474,8 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
 	iter = true_bcs = f2__compile__pop_env(cause, tracewrap);
       }
       iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
+      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump value
+      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump iter
     }
     
     if (!false__popped_env_and_return) {
@@ -481,6 +487,8 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
 	iter = false_bcs = f2__compile__pop_env(cause, tracewrap);
       }
       iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
+      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump value
+      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump iter
     }
   }
   
@@ -658,13 +666,19 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
     //iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump value
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump iter
   }
   if (protect_environment) {
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_iter(cause, tracewrap));
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__funk_bc(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump value
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap)); // dump iter
   } else {
     //printf("\ntail recursion optimized!"); fflush(stdout);
     //iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));

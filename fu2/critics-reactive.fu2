@@ -21,6 +21,11 @@
 
 
 [defunk critic-reactive-unknown_bug [thread]
+  [ansi-stream-foreground stdout 10]
+  [format stdout
+	  '\n' 
+	  '\n' 'Reactive Critic Fired: We have paused a buggy thread and are now running in a new thread, handling an unhandled bug type.'
+	  '\n']
   [let [[value [thread-value thread]]]
     [if [bug? value]
 	[let [[bug value]]
@@ -39,6 +44,11 @@
 		    '\n']]]
     ]
   [ansi-stream-foreground stdout 10]
+  [format stdout
+	  '\n' 
+	  '\n' 'Enabling reactive critics for this new thread now.'
+	  '\n']
+  [thread-enable_reactive_critics [this-thread]]
   [format stdout
 	  '\n' 
 	  '\n' 'Beginning new user debug repl now.'

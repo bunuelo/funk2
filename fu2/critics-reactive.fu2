@@ -21,22 +21,29 @@
 
 
 [defunk critic-reactive-unknown_bug [thread]
-  [let [[bug [thread-value thread]]]
-    [ansi-stream-foreground stdout 12]
-    [format stdout
-	    '\n' 'A bug has occured that could not be automatically debugged by any of the reflective bug-handling critics.  '
-	    '\n' 'We have paused the thread that has produced this bug, so that it may be debugged and continue executing under the control of reflective critics.  '
-	    '\n' 'This bug type does not have any reflective critics assigned to it.  '
-	    '\n' 'The best that we can do at this point is to give you an English description of the bug and a new Read-Eval-Print-Loop: '
-	    '\n'
-	    '\n' '  ']
-    [bug-print_english_sentence bug]]
+  [let [[value [thread-value thread]]]
+    [if [bug? value]
+	[let [[bug value]]
+	  [ansi-stream-foreground stdout 12]
+	  [format stdout
+		  '\n' 'A bug has occured that could not be automatically debugged by any of the reflective bug-handling critics.  '
+		  '\n' 'We have paused the thread that has produced this bug, so that it may be debugged and continue executing under the control of reflective critics.  '
+		  '\n' 'This bug type does not have any reflective critics assigned to it.  '
+		  '\n' 'The best that we can do at this point is to give you an English description of the bug and a new Read-Eval-Print-Loop: '
+		  '\n'
+		  '\n' '  ']
+	  [bug-print_english_sentence bug]]
+      [prog [ansi-stream-foreground stdout 12]
+	    [format stdout
+		    '\n' 'This should be a bug.  Instead we got: ' value
+		    '\n']]]
+    ]
   [ansi-stream-foreground stdout 10]
   [format stdout
 	  '\n' 
 	  '\n' 'Beginning new user debug repl now.'
 	  '\n']
-  [ansi-stream-foreground stdout 15]
+  [ansi-stream-reset stdout]
   [repl]]
 
 [globalize thread:-environment_critics- [list &critic-reactive-unknown_bug]]

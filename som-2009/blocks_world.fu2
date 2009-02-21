@@ -203,10 +203,11 @@
 	[blocks_world-objects this]]
   [ansi-stream-move_cursor stdout 1 26]]
 
-[defunk blocks_world-generate_perceptions [this]
-  [let [[objects [blocks_world-objects this]]]
-    [mapc [funk [object_a]
-		[
+`[defunk blocks_world-generate_perceptions [this]
+   [let [[objects [blocks_world-objects this]]]
+     [mapc [funk [object_a]
+		 [
+		  ]]]]]
 
 [defunk blocks_world-repl [this]
   [ansi-stream-clear_screen stdout]
@@ -260,5 +261,6 @@
 					      [blocks_world_object-new_block   30 10  5  5 `yellow]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
+
 
 

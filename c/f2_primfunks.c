@@ -695,10 +695,10 @@ void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args
 }
 
 bool raw__funkablep(f2ptr exp, f2ptr cause) {
-  return (exp && (raw__funkp(      cfunkable, cause)  ||
-		  raw__metrop(     cfunkable, cause) ||
-		  raw__cfunkp(     cfunkable, cause) ||
-		  raw__metrocfunkp(cfunkable, cause)));
+  return (exp && (raw__funkp(      exp, cause) ||
+		  raw__metrop(     exp, cause) ||
+		  raw__cfunkp(     exp, cause) ||
+		  raw__metrocfunkp(exp, cause)));
 }
 
 // returns larva on error

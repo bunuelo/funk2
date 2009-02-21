@@ -603,7 +603,7 @@ void f2__reader__reinitialize_globalvars() {
   symbol_str = "reader:invalid_argument_type-exception";       __invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
   symbol_str = "reader:illegal_escape_reader_metro-exception"; __illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
   symbol_str = "reader:gfunkptr_read-exception";               __gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-
+  
   __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof");
   
   __char__space                  = f2char__new(cause, ' ');
@@ -632,7 +632,6 @@ void f2__reader__reinitialize_globalvars() {
 }
 
 void f2__reader__initialize() {
-  f2__reader__reinitialize_globalvars();
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   char* symbol_str;
   f2ptr symbol;
@@ -644,6 +643,8 @@ void f2__reader__initialize() {
   symbol_str = "reader:invalid_argument_type-exception"; symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __invalid_argument_type_exception          = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __invalid_argument_type_exception);
   symbol_str = "reader:illegal_escape_metro-exception";  symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __illegal_escape_reader_metro_exception    = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __illegal_escape_reader_metro_exception);
   symbol_str = "reader:gfunkptr_read-exception";         symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __gfunkptr_read__exception                 = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __gfunkptr_read__exception);
+  
+  f2__reader__reinitialize_globalvars();
   
   __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof"); environment__add_var_value(cause, global_environment(), __eof__symbol, __eof__symbol);
   

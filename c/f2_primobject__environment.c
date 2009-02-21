@@ -58,7 +58,8 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
     env = f2environment__parent_env(env, cause);
   }
   //printf ("\nvariable not defined: "); f2__write(nil, var); fflush(stdout);
-  f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
+  //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
+  f2ptr rv = f2larva__new(cause, 23);
   resume_gc(); return rv;
 }
 
@@ -75,7 +76,8 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
     env = f2environment__parent_env(env, cause);
   }
   //printf ("\nvariable not defined: "); f2__write(nil, var); fflush(stdout);
-  f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
+  //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
+  f2ptr rv = f2larva__new(cause, 23);
   resume_gc(); return rv;
 }
 
@@ -100,7 +102,8 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
     env = f2environment__parent_env(env, cause);
   }
   printf ("\nset-var not defined: "); f2__write(nil, var); fflush(stdout);
-  f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
+  //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
+  f2ptr rv = f2larva__new(cause, 23);
   resume_gc(); return rv;
 }
 

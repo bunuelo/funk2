@@ -696,21 +696,23 @@ void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args
 
 void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
-  f2ptr env;
-  if      (raw__funkp(cfunkable, cause))       {env = f2funk__env(cfunkable, cause);}
-  else if (raw__metrop(cfunkable, cause))      {env = f2metro__env(cfunkable, cause);}
-  else if (raw__cfunkp(cfunkable, cause))      {env = f2thread__env(thread, cause);}
-  else if (raw__metrocfunkp(cfunkable, cause)) {env = f2thread__env(thread, cause);}
-  else                                         {
-    status("f2thread__force_funk error: cfunkable must be funk or metro.");
-    f2thread__value__set(thread, cause, f2larva__new(cause, 24));
-    return;
-  }
-  
-  f2thread__env__set(  thread, cause, env);
-  f2thread__args__set( thread, cause, args);
+
+  f2thread__args__set(thread, cause, args);
   f2thread__value__set(thread, cause, cfunkable);
   f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause, nil));
+  
+  {
+    f2ptr env;
+    if      (raw__funkp(cfunkable, cause))       {env = f2funk__env(cfunkable, cause);}
+    else if (raw__metrop(cfunkable, cause))      {env = f2metro__env(cfunkable, cause);}
+    else if (raw__cfunkp(cfunkable, cause))      {env = f2thread__env(thread, cause);}
+    else if (raw__metrocfunkp(cfunkable, cause)) {env = f2thread__env(thread, cause);}
+    else                                         {
+      status("[ERROR] f2thread__force_funk error: cfunkable must be funk or metro.");
+      f2thread__value__set(thread, cause, f2larva__new(cause, 24));
+    }
+    f2thread__env__set(thread, cause, env);
+  }
   
   resume_gc();
 }

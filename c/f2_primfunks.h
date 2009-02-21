@@ -709,6 +709,12 @@ bool raw__threadp(f2ptr x, f2ptr cause);
 
 // primobject exception
 
+
+// interface funkable (includes types: funk, metro, cfunk, metrocfunk)
+
+bool raw__funkablep(f2ptr exp, f2ptr cause);
+  
+  
 bool raw__exceptionp(f2ptr x, f2ptr cause);
 f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value);
 f2ptr f2__format(f2ptr cause, f2ptr fptr, f2ptr exp);

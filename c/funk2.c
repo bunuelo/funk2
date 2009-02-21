@@ -147,7 +147,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   // try to find a boot function
   f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));
-  if (raw__exceptionp(boot_funk, cause)) {
+  if (! raw__funkablep(boot_funk, cause)) {
     printf("\nfunk2 warning: no boot function defined.");
     
     // load file specified by user on command line
@@ -155,11 +155,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // try to find a nice user-friendly load
       f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
-      if (raw__exceptionp(load_funk, cause)) {
+      if (! raw__funkablep(load_funk, cause)) {
 	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
 	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
       }
-      release__assert(! raw__exceptionp(load_funk, cause), nil, "funk2 main (! raw__exceptionp(load_funk)) assertion failed.");
+      release__assert(raw__funkablep(load_funk, cause), nil, "funk2 main (raw__funkablep(load_funk)) assertion failed.");
       
       f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
       
@@ -174,11 +174,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // try to find a nice user-friendly repl
       f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
-      if (raw__exceptionp(repl_funk, cause)) {
+      if (raw__funkablenp(repl_funk, cause)) {
 	// if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
 	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:repl"), (u8*)"primfunk:repl"));
       }
-      release__assert(! raw__exceptionp(repl_funk, cause), nil, "funk2 main (! raw__exceptionp(repl_funk)) assertion failed.");
+      release__assert(raw__funkablep(repl_funk, cause), nil, "funk2 main (raw__funkablep(repl_funk)) assertion failed.");
       
       // start a thread executing the user read-eval-print loop
       f2__thread(cause,

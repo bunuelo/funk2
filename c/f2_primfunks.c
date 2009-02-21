@@ -718,7 +718,7 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause, nil));
   
   if (raw__funkablep(cfunkable, cause)) {
-    f2ptr env = raw__funkable__env(cause, thread, cfunkable);
+    f2ptr env = raw__funkable__env(cause, cfunkable);
     if (env) {
       f2thread__env__set(thread, cause, env);
     }

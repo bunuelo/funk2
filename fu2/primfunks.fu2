@@ -37,7 +37,7 @@
 [globalize-funk unsafe:memblock-set_init_render_xyz         &primfunk:memblock__set_init_render_xyz]
 [globalize-funk unsafe:memblock-set_init_render_on          &primfunk:memblock__set_init_render_on]
 [globalize-funk unsafe:memblock-set_init_render_noise       &primfunk:memblock__set_init_render_noise]
-[globalize-funk memblock-creation_microseconds_since_1970   &primfunk:memblock__creation_microseconds_since_1970]
+`[globalize-funk memblock-creation_microseconds_since_1970   &primfunk:memblock__creation_microseconds_since_1970]
 
 [globalize-funk ptype-raw                                   &primfunk:ptype__raw]
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]

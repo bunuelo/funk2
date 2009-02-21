@@ -34,7 +34,7 @@
 [globalize-funk should_run_gc               &primfunk:should_run_gc]
 [globalize-funk gc-is_disabled              &primfunk:gc__is_disabled]
 [globalize-funk global_environment-set      &primfunk:global_environment__set]
-[globalize-funk global_envioronment         &primfunk:global_envioronment]
+[globalize-funk global_envioronment         &primfunk:global_environment]
 [globalize-funk print_gc_stats              &primfunk:print_gc_stats]
 [globalize-funk f2-memory-initialize        &primfunk:f2__memory__initialize]
 [globalize-funk f2-memory_image-save        &primfunk:f2__memory_image__save]

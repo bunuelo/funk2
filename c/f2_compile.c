@@ -921,7 +921,6 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__cons_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
   f2ptr car = f2cons__car(exp, cause);
-  bool  car_is_special_symbol = 
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), car);
   if (raw__metrop(funkvar_value, cause))  {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL));}
   if (f2__is_compile_special_symbol(car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}

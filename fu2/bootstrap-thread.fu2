@@ -29,7 +29,16 @@
 [defmetro thread_stack-return_reg [this] `[car                [cdr ,this]]]
 [defmetro thread_stack-value_reg  [this] `[car           [cdr [cdr ,this]]]]
 [defmetro thread_stack-iter_reg   [this] `[car      [cdr [cdr [cdr ,this]]]]]
-[defmetro thread_stack-rest       [this]      `[cdr [cdr [cdr [cdr ,this]]]]]
+
+[defunk thread_stack-get_rest [this]
+  [if [cons? this]
+      [let [[cdr1 [cdr this]]]
+	[if [cons? cdr1]
+	    [let [[cdr2 [cdr cdr1]]]
+	      [if [cons? cdr2]
+		  [let [[cdr3 [cdr cdr2]]]
+		    [if [cons? cdr3]
+			[cdr cdr3]]]]]]]]]
 
 [defunk thread-stream_backtrace [this stream]
   [let [[stack [thread-stack this]]]
@@ -55,7 +64,7 @@
 												[t                 `<>]]]
 						    ]
 	  [ansi-stream-reset      stream]]
-	[set stack_iter [thread_stack-rest stack_iter]]]]]]
+	[set stack_iter [thread_stack-get_rest stack_iter]]]]]]
 
 [defunk thread-print_backtrace [this]
   [thread-stream_backtrace this stdout]]

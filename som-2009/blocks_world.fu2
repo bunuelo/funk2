@@ -212,7 +212,7 @@
 	[perceptions nil]]
     [mapc [funk [object_a]
 		[let [[on_object [blocks_world_object-is_on_objects object_a [remove object_a objects]]]]
-		  [push `[on ,object_a ,on_object] perceptions]]]
+		  [push `[on ,[blocks_world_object-name object_a] ,[blocks_world_object-name on_object]] perceptions]]]
 	  objects]
     perceptions]]
 

@@ -710,6 +710,10 @@ f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
   return f2larva__new(cause, 1);
 }
 
+void debug__f2thread__funk__unfunkable_error() {
+  status("debug__f2thread__funk__unfunkable_error here.");
+}
+
 void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   
@@ -727,6 +731,7 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
     printf("\n[ERROR] f2thread__force_funk error: cfunkable must be funk or metro.\n"); fflush(stdout);
     printf("\n[ERROR] cfunkable="); fflush(stdout); f2__print(cause, cfunkable); fflush(stdout); printf("\n"); fflush(stdout);
     f2thread__value__set(thread, cause, f2larva__new(cause, 24));
+    debug__f2thread__funk__unfunkable_error();
   }
   
   resume_gc();

@@ -596,13 +596,13 @@ void f2__reader__reinitialize_globalvars() {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   char* symbol_str;
   
-  symbol_str = "reader:end_parens-exception";                  __end_parens_exception                  = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:array_end_parens-exception";            __array_end_parens_exception            = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:doublelink_end_parens-exception";       __doublelink_end_parens_exception       = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:end_of_file-exception";                 __end_of_file_exception                 = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:invalid_argument_type-exception";       __invalid_argument_type_exception       = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:illegal_escape_reader_metro-exception"; __illegal_escape_reader_metro_exception = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:gfunkptr_read-exception";               __gfunkptr_read__exception              = environment__lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:end_parens-exception";                  __end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:array_end_parens-exception";            __array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:doublelink_end_parens-exception";       __doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:end_of_file-exception";                 __end_of_file_exception                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:invalid_argument_type-exception";       __invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:illegal_escape_reader_metro-exception"; __illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  symbol_str = "reader:gfunkptr_read-exception";               __gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
 
   __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof");
   

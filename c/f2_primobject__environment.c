@@ -81,6 +81,14 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   resume_gc(); return rv;
 }
 
+f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr result = environment__lookup_type_var_value(cause, this, type, var);
+  if (raw__larvap(result, cause)) {
+    error(nil, "environment__safe_lookup_type_var_value failed to lookup variable.");
+  }
+  return result;
+}
+
 f2ptr environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   pause_gc();
   release__assert(raw__environmentp(this, cause), nil, "this is not environment.");

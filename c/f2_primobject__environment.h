@@ -61,16 +61,19 @@ f2ptr raw__environmentp(f2ptr this, f2ptr cause);
 void  environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 
 #define environment__add_var_value(cause, this, var, value)        environment__add_type_var_value(cause, this, __frame__variable_type__symbol, var, value)
 #define environment__lookup_var_value(cause, this, var)            environment__lookup_type_var_value(cause, this, __frame__variable_type__symbol, var)
+#define environment__safe_lookup_var_value(cause, this, var)       environment__safe_lookup_type_var_value(cause, this, __frame__variable_type__symbol, var)
 #define environment__define_var_value(cause, this, var, value)     environment__define_type_var_value(cause, this, __frame__variable_type__symbol, var, value)
 #define environment__var_value__set(cause, this, var, value)       environment__type_var_value__set(cause, this, __frame__variable_type__symbol, var, value)
 
 #define environment__add_funkvar_value(cause, this, var, value)    environment__add_type_var_value(cause, this, __frame__funk_variable_type__symbol, var, value)
 #define environment__lookup_funkvar_value(cause, this, var)        environment__lookup_type_var_value(cause, this, __frame__funk_variable_type__symbol, var)
+#define environment__safe_lookup_funkvar_value(cause, this, var)   environment__safe_lookup_type_var_value(cause, this, __frame__funk_variable_type__symbol, var)
 #define environment__define_funkvar_value(cause, this, var, value) environment__define_type_var_value(cause, this, __frame__funk_variable_type__symbol, var, value)
 #define environment__funkvar_value__set(cause, this, var, value)   environment__type_var_value__set(cause, this, __frame__funk_variable_type__symbol, var, value)
 

@@ -25,12 +25,13 @@
 '  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));'
 
 
+[defmetro thread_stack-rest       [this]      `[cdr [cdr [cdr [cdr ,this]]]]]
 [defmetro thread_stack-env_reg    [this] `[car                     ,this]]
 [defmetro thread_stack-return_reg [this] `[car                [cdr ,this]]]
 [defmetro thread_stack-value_reg  [this] `[car           [cdr [cdr ,this]]]]
 [defmetro thread_stack-iter_reg   [this] `[car      [cdr [cdr [cdr ,this]]]]]
 
-[defunk thread_stack-get_rest [this]
+[defunk thread_stack-is_complete [this]
   [if [cons? this]
       [let [[cdr1 [cdr this]]]
 	[if [cons? cdr1]
@@ -38,7 +39,12 @@
 	      [if [cons? cdr2]
 		  [let [[cdr3 [cdr cdr2]]]
 		    [if [cons? cdr3]
-			[cdr cdr3]]]]]]]]]
+			t]]]]]]]]
+
+[defunk thread_stack-get_rest [this]
+  [let [[rest [thread_stack-rest this]]]
+    [if [thread_stack-is_complete rest]
+	rest]]]
 
 [defunk thread-stream_backtrace [this stream]
   [let [[stack [thread-stack this]]]

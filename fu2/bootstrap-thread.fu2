@@ -29,7 +29,7 @@
 [defmetro thread_stack-env_reg    [this] `[car                     ,this]]
 [defmetro thread_stack-return_reg [this] `[car                [cdr ,this]]]
 [defmetro thread_stack-value_reg  [this] `[car           [cdr [cdr ,this]]]]
-[defmetro thread_stack-iter_reg   [this] `[car      [cdr [cdr [cdr ,this]]]]]
+[defmetro thread_stack-args_reg   [this] `[car      [cdr [cdr [cdr ,this]]]]]
 
 [defunk thread_stack-is_complete [this]
   [if [cons? this]
@@ -53,13 +53,13 @@
 	[let [[env_reg    [thread_stack-env_reg    stack_iter]]
 	      [return_reg [thread_stack-return_reg stack_iter]]
 	      [value_reg  [thread_stack-value_reg  stack_iter]]
-	      [iter_reg   [thread_stack-iter_reg   stack_iter]]]
+	      [args_reg   [thread_stack-args_reg   stack_iter]]]
 	  [ansi-stream-foreground stream 9] [format stream '\n' 'Thread Funktion Call Stack'
 						    '\n'
 						    '\n' '  :env    ' [brief env_reg]]
 	  [ansi-stream-foreground stream 9] [format stream '\n' '  :return ' [brief return_reg]]
 	  [ansi-stream-foreground stream 9] [format stream '\n' '  :value  ' [brief value_reg]]
-	  [ansi-stream-foreground stream 9] [format stream '\n' '  :iter   ' [brief iter_reg]]
+	  [ansi-stream-foreground stream 9] [format stream '\n' '  :args   ' [brief args_reg]]
 	  [format stream '\n']
 	  ]
 	[set stack_iter [thread_stack-get_rest stack_iter]]]]]]

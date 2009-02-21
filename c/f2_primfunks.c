@@ -701,7 +701,11 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   else if (raw__metrop(cfunkable, cause))      {env = f2metro__env(cfunkable, cause);}
   else if (raw__cfunkp(cfunkable, cause))      {env = f2thread__env(thread, cause);}
   else if (raw__metrocfunkp(cfunkable, cause)) {env = f2thread__env(thread, cause);}
-  else                                         {error(nil, "f2thread__force_funk error: cfunkable must be funk or metro.");}
+  else                                         {
+    //error(nil, "f2thread__force_funk error: cfunkable must be funk or metro.");
+    f2thread__value__set(thread, cause, f2larva__new(cause, 24));
+    return;
+  }
   
   f2thread__env__set(  thread, cause, env);
   f2thread__args__set( thread, cause, args);

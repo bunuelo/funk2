@@ -67,7 +67,7 @@
 [globalize-funk symbol?                                     &primfunk:symbolp]
 [globalize-funk unsafe:symbol-length                        &primfunk:symbol__length]
 [globalize-funk unsafe:symbol-elt                           &primfunk:symbol__elt]
-[globalize-funk unsafe:symbol-equals                        &primfunk:symbol__equals]
+[globalize-funk unsafe:symbol-equals                        &primfunk:symbol__eq]
 
 [globalize-funk chunk?                                      &primfunk:chunkp]
 [globalize-funk chunk                                       &primfunk:chunk]

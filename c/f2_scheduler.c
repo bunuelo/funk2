@@ -344,7 +344,6 @@ void f2__scheduler__initialize() {
   pthread_mutex_init(&(__funk2.operating_system.scheduler__execute_mutex), NULL);
   f2__global_scheduler__execute_mutex__lock(initial_cause());
   
-  f2__scheduler__reinitialize_globalvars();
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
   f2ptr processors = raw__array__new(cause, scheduler_processor_num);
@@ -372,6 +371,8 @@ void f2__scheduler__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol, scheduler);
   
   __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+  
+  f2__scheduler__reinitialize_globalvars();
   
   f2__global_scheduler__execute_mutex__unlock(cause);
   

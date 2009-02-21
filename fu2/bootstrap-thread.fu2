@@ -69,7 +69,8 @@
 															 iter_reg]]
 												[t                 `<>]]]
 						    ]
-	  [ansi-stream-reset      stream]]
+	  [format stream '\n']
+	  ]
 	[set stack_iter [thread_stack-get_rest stack_iter]]]]]]
 
 [defunk thread-print_backtrace [this]

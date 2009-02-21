@@ -154,7 +154,7 @@
 		[set object_iter [cdr object_iter]]]]]]
 	found_overlap_object]]]]
 
-[defunk blocks_world_object-is_on_objects [this dx dy objects]
+[defunk blocks_world_object-is_on_objects [this objects]
   [blocks_world_object-translate_overlaps_objects this 0 -1 objects]]
 
 [defunk blocks_world_object-translate [this dx dy]

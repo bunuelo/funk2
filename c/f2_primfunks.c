@@ -1367,7 +1367,7 @@ def_pcfunk3(compile__special_symbol_exp, tracewrap, exp, protect_environment,
 
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value) {
   f2ptr value = environment__lookup_funkvar_value(cause, env, funkvar);
-  if (raw__type_variable_not_defined__exceptionp(value, cause)) {return undefined_value;}
+  if (raw__larvap(value, cause)) {return undefined_value;}
   return value;
 }
 def_pcfunk2(lookup_funkvar, funkvar, undefined_value, return f2__lookup_funkvar(this_cause, simple_env, funkvar, undefined_value));

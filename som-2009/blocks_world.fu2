@@ -251,8 +251,6 @@
       
       ]]]
 
-
-
 [defunk blocks_world-test []
   [let [[blocks_world [blocks_world-new [list [blocks_world_object-new_table    0  0 50  2 `white]
 					      [blocks_world_object-new_gripper 21 15  3  3 `magenta]

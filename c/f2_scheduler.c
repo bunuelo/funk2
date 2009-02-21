@@ -337,7 +337,7 @@ void f2__scheduler__reinitialize_globalvars() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
   __funk2.operating_system.scheduler__symbol = f2symbol__new(cause, strlen("scheduler:global_scheduler"), (u8*)"scheduler:global_scheduler");
-  __funk2.operating_system.scheduler         = environment__lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+  __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
 }
 
 void f2__scheduler__initialize() {
@@ -371,7 +371,7 @@ void f2__scheduler__initialize() {
   
   environment__add_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol, scheduler);
   
-  __funk2.operating_system.scheduler = environment__lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+  __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
   
   f2__global_scheduler__execute_mutex__unlock(cause);
   

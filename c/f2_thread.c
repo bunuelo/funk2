@@ -138,6 +138,9 @@ void f2__print_environment_stack(f2ptr cause, f2ptr thread, f2ptr env) {
   f2ptr current_env_name__symbol = f2symbol__new(initial_cause(), strlen("-current_env_name-"), (u8*)"-current_env_name-");
   f2ptr env_name = environment__lookup_var_value(initial_cause(), env, current_env_name__symbol);
   resume_gc();
+  if (raw__larvap(env_name, cause)) {
+    error(nil, "f2__print_environment_stack found larva.");
+  }
   
   printf("\nenv name: ");
   f2__write(thread, env_name);

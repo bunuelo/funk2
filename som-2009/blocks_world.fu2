@@ -122,10 +122,11 @@
        [> [array-length exp] 0]
        [eq `blocks_world_object [array-elt exp 0]]]]
 
-[defunk   blocks_world_object-new       [type rectangle color]  [array `blocks_world_object `:type type `:rectangle rectangle `:color color]]
-[defmetro blocks_world_object-type      [this]                 `[array-elt ,this 2]]
-[defmetro blocks_world_object-rectangle [this]                 `[array-elt ,this 4]]
-[defmetro blocks_world_object-color     [this]                 `[array-elt ,this 6]]
+[defunk   blocks_world_object-new       [name type rectangle color]  [array `blocks_world_object `:name name `:type type `:rectangle rectangle `:color color]]
+[defmetro blocks_world_object-name      [this]                      `[array-elt ,this 2]]
+[defmetro blocks_world_object-type      [this]                      `[array-elt ,this 4]]
+[defmetro blocks_world_object-rectangle [this]                      `[array-elt ,this 6]]
+[defmetro blocks_world_object-color     [this]                      `[array-elt ,this 8]]
 
 [defunk blocks_world_object-render [this]
   [let [[type [blocks_world_object-type this]]]
@@ -160,17 +161,17 @@
 [defunk blocks_world_object-translate [this dx dy]
   [blocks_world_rectangle-translate [blocks_world_object-rectangle this] dx dy]]
 
-[defunk blocks_world_object-create [type x0 y0 x_size y_size color]
-  [blocks_world_object-new type [blocks_world_rectangle-create x0 y0 [- [+ x0 x_size] 1] [- [+ y0 y_size] 1]] [blocks_world_color-new color]]]
+[defunk blocks_world_object-create [name type x0 y0 x_size y_size color]
+  [blocks_world_object-new name type [blocks_world_rectangle-create x0 y0 [- [+ x0 x_size] 1] [- [+ y0 y_size] 1]] [blocks_world_color-new color]]]
 
-[defunk blocks_world_object-new_block [x0 y0 x_size y_size color]
-  [blocks_world_object-create `block x0 y0 x_size y_size color]]
+[defunk blocks_world_object-new_block [name x0 y0 x_size y_size color]
+  [blocks_world_object-create name `block x0 y0 x_size y_size color]]
 
-[defunk blocks_world_object-new_table [x0 y0 x_size y_size color]
-  [blocks_world_object-create `table x0 y0 x_size y_size color]]
+[defunk blocks_world_object-new_table [name x0 y0 x_size y_size color]
+  [blocks_world_object-create name `table x0 y0 x_size y_size color]]
 
-[defunk blocks_world_object-new_gripper [x0 y0 x_size y_size color]
-  [blocks_world_object-create `gripper x0 y0 x_size y_size color]]
+[defunk blocks_world_object-new_gripper [name x0 y0 x_size y_size color]
+  [blocks_world_object-create name `gripper x0 y0 x_size y_size color]]
 
 [defunk blocks_world? [exp]
   [and exp
@@ -260,12 +261,12 @@
       ]]]
 
 [defunk blocks_world-test []
-  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new_table    0  0 50  2 `white]
-					      [blocks_world_object-new_gripper 21 15  3  3 `magenta]
-					      [blocks_world_object-new_block   10  2  5  5 `blue]
-					      [blocks_world_object-new_block   20  5  5  5 `green]
-					      [blocks_world_object-new_block   30  2 10  5 `red]
-					      [blocks_world_object-new_block   30 10  5  5 `yellow]]]]]
+  [let [[blocks_world [blocks_world-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
+					      [blocks_world_object-new_gripper `the-gripper      21 15  3  3 `magenta]
+					      [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
+					      [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
+					      [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
+					      [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 

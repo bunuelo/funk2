@@ -219,9 +219,12 @@
 
 [defunk blocks_world-repl [this]
   [ansi-stream-clear_screen stdout]
-  [let [[last_results  [list 'Welcome to ' `Blocks ' ' `World ' ' `v2.2 '  (a few commands: ' `[exit] ', ' `[sim] ', ' `[look] ')']]
-	[done          nil]
-	[need_rerender t]]
+  [let* [[help_message    [list '  (a few commands: ' `[exit] ', ' `[sim] ', ' `[look] ')']]
+	 [welcome_message [append [list 'Welcome to ' `Blocks ' ' `World ' ' `v2.2]
+				  help_message]]
+	 [last_results    welcome_message]
+	 [done            nil]
+	 [need_rerender   t]]
     [while [not done]
       [if need_rerender
 	  [prog [blocks_world-render this 20 [- [termios-height] 10]]
@@ -256,8 +259,8 @@
 		  [t                      [set command_failure t]]]]]
 	[if command_failure
 	    [prog [ansi-stream-foreground stdout 15]
-		  [set last_results [list 'Blocks world command failure, ' exp '.\n'
-					  'Try one of these commands: ' `[exit] ', ' `[sim] ', or ' `[eval [+ 1 2]] '.\n']]]]]
+		  [set last_results [append [list 'Blocks world command failure, ' exp '.\n']
+					    help_message]]]]]
       
       ]]]
 

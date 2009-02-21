@@ -54,8 +54,8 @@
 [globalize-funk socket:f2-hostent-h_length       &primfunk:f2__hostent__h_length]
 [globalize-funk socket:f2-hostent-h_addr_list    &primfunk:f2__hostent__h_addr_list]
 
-[globalize-funk socket:f2-socket-ioctl-siocinq   &primfunk:f2__socket__ioctl__siocinq]
-[globalize-funk socket:f2-socket-ioctl-siocoutq  &primfunk:f2__socket__ioctl__siocoutq]
+`[globalize-funk socket:f2-socket-ioctl-siocinq   &primfunk:f2__socket__ioctl__siocinq]
+`[globalize-funk socket:f2-socket-ioctl-siocoutq  &primfunk:f2__socket__ioctl__siocoutq]
 
 [globalize-funk socket:f2-h_errno                &primfunk:f2__h_errno]
 [globalize-funk socket:f2-h_errno-host_not_found &primfunk:f2__h_errno__host_not_found]

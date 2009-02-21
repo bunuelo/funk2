@@ -72,7 +72,7 @@
 [globalize-funk chunk?                                      &primfunk:chunkp]
 [globalize-funk chunk                                       &primfunk:chunk]
 [globalize-funk unsafe:chunk-length                         &primfunk:chunk__length]
-[globalize-funk unsafe:chunk-bytes                          &primfunk:chunk__bytes]
+`[globalize-funk unsafe:chunk-bytes                          &primfunk:chunk__bytes]
 [globalize-funk unsafe:chunk-copy                           &primfunk:chunk__copy]
 [globalize-funk unsafe:chunk-read_8bit                      &primfunk:chunk__read_8bit]
 [globalize-funk unsafe:chunk-write_8bit_integer             &primfunk:chunk__write_8bit_integer]

@@ -724,6 +724,7 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
     }
   } else {
     status("[ERROR] f2thread__force_funk error: cfunkable must be funk or metro.");
+    printf("[ERROR] f2thread__force_funk error: cfunkable must be funk or metro."); fflush(stdout);
     f2thread__value__set(thread, cause, f2larva__new(cause, 24));
   }
   

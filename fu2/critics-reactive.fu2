@@ -38,6 +38,7 @@
 	  '\n' 
 	  '\n' 'Reactive Critic Fired: We have paused a buggy thread and are now running in a new thread, handling an unhandled bug type.'
 	  '\n']
+  [thread-print_backtrace thread]
   [let [[value       [thread-value thread]]
 	[bug_handled nil]]
     [if [bug? value]

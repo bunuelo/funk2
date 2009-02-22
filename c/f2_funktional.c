@@ -46,7 +46,7 @@ bool raw__exp__is_immutable(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__exp__is_immutable(f2ptr cause, f2ptr this) {
-  return f2bool__new(raw__exp__is_funktional(cause, this));
+  return f2bool__new(raw__exp__is_immutable(cause, this));
 }
 
 
@@ -67,7 +67,7 @@ bool raw__funkable__is_funktional(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__funkable__is_funktional(f2ptr cause, f2ptr this) {
-  if (! raw__funkable(this, cause)) {
+  if (! raw__funkablep(this, cause)) {
     return f2larva__new(cause, 1);
   }
   return f2bool__new(raw__funkable__is_funktional(cause, this));

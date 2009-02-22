@@ -698,14 +698,19 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
 }
 
 f2ptr __f2__compile__funkvar_call__symbol = -1;
-f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return) {
+f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
   release__assert(__f2__compile__funkvar_call__symbol != -1, nil, "__f2__compile__funkvar_call__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__funkvar_call__symbol, exps);
+  
+  if (is_funktional) {
+    // allowing this to be remain true for funktional funkables would allow great optimization.
+    *is_funktional = false;
+  }
   
   f2ptr funkvar = f2cons__car(exps, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), funkvar);
   if (raw__metrocfunkp(funkvar_value, cause)) {
-    return bcs_valid(raw__compile(cause, tracewrap, rte, f2__metrocfunk__apply(cause, funkvar_value, rte, f2cons__cdr(exps, cause)), true, false, NULL, NULL));
+    return bcs_valid(raw__compile(cause, tracewrap, rte, f2__metrocfunk__apply(cause, funkvar_value, rte, f2cons__cdr(exps, cause)), true, false, NULL, is_funktional));
   } else {
     f2ptr full_bcs = f2__compile__eval_args(cause, tracewrap, rte, f2cons__cdr(exps, cause)); f2ptr iter = full_bcs;
     iter           = f2__list_cdr__set(cause, iter, f2__compile__lookup_funkvar(cause, tracewrap, funkvar));
@@ -864,24 +869,24 @@ f2ptr f2__is_compile_special_symbol(f2ptr exp) {
 }
 
 f2ptr __f2__compile__special_symbol_exp__symbol = -1;
-f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return) {
+f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
   release__assert(__f2__compile__special_symbol_exp__symbol != -1, nil, "__f2__compile__special_symbol_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__special_symbol_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
   f2ptr car = f2cons__car(exp, cause);
-  if (car == __funk2.globalenv.quote__symbol)                  {return bcs_valid(f2__compile__value__set(cause, tracewrap, f2cons__car(f2cons__cdr(exp, cause), cause)));}
-  if (car == __funk2.globalenv.backquote__list__symbol)        {return bcs_valid(f2__compile__backquote_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.backquote__list_append__symbol) {return bcs_valid(f2__compile__backquote_append_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.if__symbol)                     {return bcs_valid(f2__compile__if_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
-  if (car == __funk2.globalenv.apply__symbol)                  {return bcs_valid(f2__compile__apply_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
-  if (car == __funk2.globalenv.funkvar__symbol)                {return bcs_valid(f2__compile__lookup_funkvar_exp(cause, tracewrap, exp));}
-  if (car == __funk2.globalenv.define_funk__symbol)            {return bcs_valid(f2__compile__define_funk_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.define__symbol)                 {return bcs_valid(f2__compile__define_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.setfunk__symbol)                {return bcs_valid(f2__compile__setfunk_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.set__symbol)                    {return bcs_valid(f2__compile__set_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.globalize__symbol)              {return bcs_valid(f2__compile__globalize_var_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.globalize_funk__symbol)         {return bcs_valid(f2__compile__globalize_funkvar_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.yield__symbol)                  {return bcs_valid(f2__compile__yield(cause, tracewrap));}
+  if (car == __funk2.globalenv.quote__symbol)                                                               {return bcs_valid(f2__compile__value__set(cause, tracewrap, f2cons__car(f2cons__cdr(exp, cause), cause)));}
+  if (car == __funk2.globalenv.backquote__list__symbol)        {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__backquote_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.backquote__list_append__symbol) {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__backquote_append_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.if__symbol)                     {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__if_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
+  if (car == __funk2.globalenv.apply__symbol)                  {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__apply_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
+  if (car == __funk2.globalenv.funkvar__symbol)                {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, tracewrap, exp));}
+  if (car == __funk2.globalenv.define_funk__symbol)            {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__define_funk_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.define__symbol)                 {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__define_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.setfunk__symbol)                {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__setfunk_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.set__symbol)                    {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__set_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.globalize__symbol)              {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__globalize_var_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.globalize_funk__symbol)         {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__globalize_funkvar_exp(cause, tracewrap, rte, exp));}
+  if (car == __funk2.globalenv.yield__symbol)                  {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__yield(cause, tracewrap));}
   printf("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   printf("isn't a special symbol expression."); // should throw exception...
   error(nil, "f2__compile__special_symbol_exp error: expression is not special symbol expression.");
@@ -922,9 +927,9 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr
   
   f2ptr car = f2cons__car(exp, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), car);
-  if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL, NULL));}
-  if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
-  if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
+  if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL, is_funktional));}
+  if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional));}
+  if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional));}
   printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
   printf("don't know how to compile type."); // should throw exception... (or return larva)
   return funkvar_value;

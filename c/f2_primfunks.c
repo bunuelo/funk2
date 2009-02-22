@@ -1809,52 +1809,52 @@ void f2__primcfunks__initialize() {
   
   // system
   
-  f2__primcfunk__init(system__node_id);
-  f2__primcfunk__init(system__environment);
+  f2__funktional_primcfunk__init(system__node_id);
+  f2__funktional_primcfunk__init(system__environment);
   
   // funk2 pointer (f2ptr)
   
-  f2__primcfunk__init(pointer);
-  f2__primcfunk__init(deref_pointer);
+  f2__funktional_primcfunk__init(pointer);
+  f2__funktional_primcfunk__init(deref_pointer);
   
   // ptype
   
   f2__primcfunk__init(memblock__set_init_render_xyz);
   f2__primcfunk__init(memblock__set_init_render_on);
   f2__primcfunk__init(memblock__set_init_render_noise);
-  f2__primcfunk__init(memblock__creation_microseconds_since_1970);
+  f2__funktional_primcfunk__init(memblock__creation_microseconds_since_1970);
   
   // ptype
   
-  f2__primcfunk__init(ptype__raw);
+  f2__funktional_primcfunk__init(ptype__raw);
   f2__primcfunk__init(ptype__cause);
   f2__primcfunk__init(ptype__cause__set);
   
   // integer
   
-  f2__primcfunk__init(integerp);
+  f2__funktional_primcfunk__init(integerp);
   
   // double
   
-  f2__primcfunk__init(doublep);
+  f2__funktional_primcfunk__init(doublep);
   
   // float
   
-  f2__primcfunk__init(floatp);
+  f2__funktional_primcfunk__init(floatp);
   
   // pointer
   
-  f2__primcfunk__init(pointerp);
+  f2__funktional_primcfunk__init(pointerp);
   
   // gfunkptr
   
   f2__primcfunk__init(gfunkptr);
   f2__primcfunk__init(gfunkptr__new_from_pointer);
-  f2__primcfunk__init(gfunkptrp);
+  f2__funktional_primcfunk__init(gfunkptrp);
   
   // mutex
   
-  f2__primcfunk__init(mutexp);
+  f2__funktional_primcfunk__init(mutexp);
   f2__primcfunk__init(mutex);
   f2__primcfunk__init(mutex__lock);
   f2__primcfunk__init(mutex__unlock);
@@ -1862,25 +1862,25 @@ void f2__primcfunks__initialize() {
   
   // string
   
-  f2__primcfunk__init(stringp);
-  f2__primcfunk__init(string__length);
-  f2__primcfunk__init(string__elt);
-  f2__primcfunk__init(string__equals);
+  f2__funktional_primcfunk__init(stringp);
+  f2__funktional_primcfunk__init(string__length);
+  f2__funktional_primcfunk__init(string__elt);
+  f2__funktional_primcfunk__init(string__equals);
   f2__primcfunk__init(string__new_raw_c_string);
   f2__primcfunk__init(string__new_from_raw_c_string);
   
   // symbol
   
-  f2__primcfunk__init(symbolp);
-  f2__primcfunk__init(symbol__length);
-  f2__primcfunk__init(symbol__elt);
-  f2__primcfunk__init(symbol__eq);
+  f2__funktional_primcfunk__init(symbolp);
+  f2__funktional_primcfunk__init(symbol__length);
+  f2__funktional_primcfunk__init(symbol__elt);
+  f2__funktional_primcfunk__init(symbol__eq);
   
   // chunk
   
-  f2__primcfunk__init(chunkp);
+  f2__funktional_primcfunk__init(chunkp);
   f2__primcfunk__init(chunk);
-  f2__primcfunk__init(chunk__length);
+  f2__funktional_primcfunk__init(chunk__length);
   //f2__primcfunk__init(chunk__bytes);
   f2__primcfunk__init(chunk__copy);
   f2__primcfunk__init(chunk__read_bit8);
@@ -1896,15 +1896,15 @@ void f2__primcfunks__initialize() {
   
   // simple_array
   
-  f2__primcfunk__init(simple_arrayp);
-  f2__primcfunk__init(simple_array__length);
+  f2__funktional_primcfunk__init(simple_arrayp);
+  f2__funktional_primcfunk__init(simple_array__length);
   f2__primcfunk__init(simple_array__elt);
   f2__primcfunk__init(simple_array__elt__set);
   
   // traced_array
   
-  f2__primcfunk__init(traced_arrayp);
-  f2__primcfunk__init(traced_array__length);
+  f2__funktional_primcfunk__init(traced_arrayp);
+  f2__funktional_primcfunk__init(traced_array__length);
   f2__primcfunk__init(traced_array__elt);
   f2__primcfunk__init(traced_array__elt__set);
   f2__primcfunk__init(traced_array__elt__tracing_on);
@@ -1916,10 +1916,10 @@ void f2__primcfunks__initialize() {
   
   // array
   
-  f2__primcfunk__init(arrayp);
+  f2__funktional_primcfunk__init(arrayp);
   f2__primcfunk__init(array__new_1d);
   f2__primcfunk__init(array);
-  f2__primcfunk__init(array__length);
+  f2__funktional_primcfunk__init(array__length);
   f2__primcfunk__init(array__elt);
   f2__primcfunk__init(array__elt__set);
   f2__primcfunk__init(array__elt__tracing_on);
@@ -1932,13 +1932,13 @@ void f2__primcfunks__initialize() {
   // place
   
   f2__primcfunk__init(place);
-  f2__primcfunk__init(placep);
+  f2__funktional_primcfunk__init(placep);
   f2__primcfunk__init(place__thing);
   f2__primcfunk__init(place__thing__set);
   
   // cons
   
-  f2__primcfunk__init(consp);
+  f2__funktional_primcfunk__init(consp);
   f2__primcfunk__init(cons);
   f2__primcfunk__init(cons__car);
   f2__primcfunk__init(cons__car__set);
@@ -1948,7 +1948,7 @@ void f2__primcfunks__initialize() {
   // doublelink
   
   f2__primcfunk__init(doublelink);
-  f2__primcfunk__init(doublelinkp);
+  f2__funktional_primcfunk__init(doublelinkp);
   f2__primcfunk__init(doublelink__prev);
   f2__primcfunk__init(doublelink__prev__set);
   f2__primcfunk__init(doublelink__next);
@@ -1958,7 +1958,7 @@ void f2__primcfunks__initialize() {
   
   // circular_buffer
   
-  f2__primcfunk__init(circular_bufferp);
+  f2__funktional_primcfunk__init(circular_bufferp);
   f2__primcfunk__init(circular_buffer);
   f2__primcfunk__init(circular_buffer__add);
   f2__primcfunk__init(circular_buffer__remove);
@@ -1970,33 +1970,33 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(thread);
   
   f2__primcfunk__init(length);
-  f2__primcfunk__init(integer__greater_than);
-  f2__primcfunk__init(integer__less_than);
-  f2__primcfunk__init(integer__add);
-  f2__primcfunk__init(integer__subtract);
-  f2__primcfunk__init(integer__multiply);
-  f2__primcfunk__init(integer__add_double);
-  f2__primcfunk__init(integer__subtract_double);
-  f2__primcfunk__init(integer__divide_by_integer);
-  f2__primcfunk__init(integer__divide_by_double);
-  f2__primcfunk__init(integer__equal_sign);
-  f2__primcfunk__init(integer__not_equal_sign);
-  f2__primcfunk__init(integer__bitshift_left);
-  f2__primcfunk__init(integer__bitshift_right);
-  f2__primcfunk__init(integer__bit_and);
-  f2__primcfunk__init(integer__bit_or);
-  f2__primcfunk__init(integer__bit_xor);
-  f2__primcfunk__init(integer__bit_not);
-  f2__primcfunk__init(pointer__greater_than);
-  f2__primcfunk__init(pointer__less_than);
-  f2__primcfunk__init(pointer__add_integer);
-  f2__primcfunk__init(pointer__subtract);
-  f2__primcfunk__init(pointer__equal_sign);
-  f2__primcfunk__init(pointer__not_equal_sign);
-  f2__primcfunk__init(null);
-  f2__primcfunk__init(not);
+  f2__funktional_primcfunk__init(integer__greater_than);
+  f2__funktional_primcfunk__init(integer__less_than);
+  f2__funktional_primcfunk__init(integer__add);
+  f2__funktional_primcfunk__init(integer__subtract);
+  f2__funktional_primcfunk__init(integer__multiply);
+  f2__funktional_primcfunk__init(integer__add_double);
+  f2__funktional_primcfunk__init(integer__subtract_double);
+  f2__funktional_primcfunk__init(integer__divide_by_integer);
+  f2__funktional_primcfunk__init(integer__divide_by_double);
+  f2__funktional_primcfunk__init(integer__equal_sign);
+  f2__funktional_primcfunk__init(integer__not_equal_sign);
+  f2__funktional_primcfunk__init(integer__bitshift_left);
+  f2__funktional_primcfunk__init(integer__bitshift_right);
+  f2__funktional_primcfunk__init(integer__bit_and);
+  f2__funktional_primcfunk__init(integer__bit_or);
+  f2__funktional_primcfunk__init(integer__bit_xor);
+  f2__funktional_primcfunk__init(integer__bit_not);
+  f2__funktional_primcfunk__init(pointer__greater_than);
+  f2__funktional_primcfunk__init(pointer__less_than);
+  f2__funktional_primcfunk__init(pointer__add_integer);
+  f2__funktional_primcfunk__init(pointer__subtract);
+  f2__funktional_primcfunk__init(pointer__equal_sign);
+  f2__funktional_primcfunk__init(pointer__not_equal_sign);
+  f2__funktional_primcfunk__init(null);
+  f2__funktional_primcfunk__init(not);
   
-  f2__primcfunk__init(eq);
+  f2__funktional_primcfunk__init(eq);
   
   f2__primcfunk__init(quit);
   
@@ -2023,7 +2023,7 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init(system_microseconds_since_1970);
   
-  f2__primcfunk__init(identity);
+  f2__funktional_primcfunk__init(identity);
   
   f2__primcfunk__init(demetropolize_once);
   f2__primcfunk__init(demetropolize_full);
@@ -2031,7 +2031,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(compile__special_symbol_exp);
   f2__primcfunk__init(lookup_funkvar);  
   f2__primcfunk__init(jump_to_chunk);
-  f2__primcfunk__init(coerce_to_int);
+  f2__funktional_primcfunk__init(coerce_to_int);
   
   f2__primcfunk__init(wrong_argument_number_error__set);
   
@@ -2148,20 +2148,20 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(gmodule__close);
   f2__primcfunk__init(gmodule__error);
   
-  f2__primcfunk__init(integer__to_float);
-  f2__primcfunk__init(integer__to_double);
-  f2__primcfunk__init(double__to_integer);
-  f2__primcfunk__init(double__to_float);
-  f2__primcfunk__init(double__add_double);
-  f2__primcfunk__init(double__subtract_double);
-  f2__primcfunk__init(double__multiply_by_double);
-  f2__primcfunk__init(double__divide_by_double);
-  f2__primcfunk__init(double__add_integer);
-  f2__primcfunk__init(double__subtract_integer);
-  f2__primcfunk__init(double__multiply_by_integer);
-  f2__primcfunk__init(double__divide_by_integer);
-  f2__primcfunk__init(float__to_integer);
-  f2__primcfunk__init(float__to_double);
+  f2__funktional_primcfunk__init(integer__to_float);
+  f2__funktional_primcfunk__init(integer__to_double);
+  f2__funktional_primcfunk__init(double__to_integer);
+  f2__funktional_primcfunk__init(double__to_float);
+  f2__funktional_primcfunk__init(double__add_double);
+  f2__funktional_primcfunk__init(double__subtract_double);
+  f2__funktional_primcfunk__init(double__multiply_by_double);
+  f2__funktional_primcfunk__init(double__divide_by_double);
+  f2__funktional_primcfunk__init(double__add_integer);
+  f2__funktional_primcfunk__init(double__subtract_integer);
+  f2__funktional_primcfunk__init(double__multiply_by_integer);
+  f2__funktional_primcfunk__init(double__divide_by_integer);
+  f2__funktional_primcfunk__init(float__to_integer);
+  f2__funktional_primcfunk__init(float__to_double);
   
   f2__primcfunk__init(repl);
   

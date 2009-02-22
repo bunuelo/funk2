@@ -515,7 +515,7 @@ f2ptr f2__compile__lookup_funkvar_exp(f2ptr simple_cause, bool tracewrap, f2ptr 
 
 f2ptr __f2__compile__eval_args__symbol = -1;
 f2ptr __f2__compile__eval_args__current_arg__symbol = -1;
-f2ptr f2__compile__eval_args(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr args) {
+f2ptr f2__compile__eval_args(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr args, bool* is_funktional) {
   release__assert(__f2__compile__eval_args__symbol              != -1, nil, "__f2__compile__eval_args__symbol not yet defined.");
   release__assert(__f2__compile__eval_args__current_arg__symbol != -1, nil, "__f2__compile__eval_args__current_arg__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__eval_args__symbol, args);
@@ -530,7 +530,7 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
     exp_bcs     = f2__compile__push_iter(arg_cause, tracewrap);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     exp_bcs     = f2__compile__push_args(arg_cause, tracewrap);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
-    exp_bcs     = raw__compile(arg_cause, tracewrap, rte, current_arg, true, false, NULL, NULL);
+    exp_bcs     = raw__compile(arg_cause, tracewrap, rte, current_arg, true, false, NULL, is_funktional);
     if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
@@ -702,17 +702,27 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
   release__assert(__f2__compile__funkvar_call__symbol != -1, nil, "__f2__compile__funkvar_call__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__funkvar_call__symbol, exps);
   
-  if (is_funktional) {
-    // allowing this to be remain true for funktional funkables would allow great optimization.
-    *is_funktional = false;
-  }
-  
   f2ptr funkvar = f2cons__car(exps, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), funkvar);
   if (raw__metrocfunkp(funkvar_value, cause)) {
     return bcs_valid(raw__compile(cause, tracewrap, rte, f2__metrocfunk__apply(cause, funkvar_value, rte, f2cons__cdr(exps, cause)), true, false, NULL, is_funktional));
   } else {
-    f2ptr full_bcs = f2__compile__eval_args(cause, tracewrap, rte, f2cons__cdr(exps, cause)); f2ptr iter = full_bcs;
+    if (is_funktional) {
+      if (*is_funktional) {
+	if (raw__cfunkp(funkvar_value, cause) ||
+	    raw__funkp(funkvar_value, cause)) {
+	  if (! raw__funkable__is_funktional(cause, funkvar_value)) {
+	    *is_funktional = false;
+	  }
+	} else {
+	  *is_funktional = false;
+	}
+      }
+    }
+    f2ptr full_bcs = f2__compile__eval_args(cause, tracewrap, rte, f2cons__cdr(exps, cause), is_funktional); f2ptr iter = full_bcs;
+    if (is_funktional && (*is_funktional)) {
+      printf("\nfound funktional optimization opportunity!");
+    }
     iter           = f2__list_cdr__set(cause, iter, f2__compile__lookup_funkvar(cause, tracewrap, funkvar));
     if (optimize_tail_recursion) {
       if (popped_env_and_return) {

@@ -198,7 +198,7 @@
 			    [let [[x0 [blocks_world_rectangle-x0 rectangle]]
 				  [x1 [blocks_world_rectangle-x1 rectangle]]
 				  [y0 [blocks_world_rectangle-y0 rectangle]]]
-			      [ansi-stream-rectangle stream x0 y0 x1 y0 [string-elt ' ' 0]]]]
+			      [ansi-stream-rectangle stdout x0 y0 x1 y0 [string-elt ' ' 0]]]]
 			  [blocks_world_object-render object]
 			  [set an_object_moved t]]]]]
 	  [set object_iter [cdr object_iter]]]

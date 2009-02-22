@@ -62,6 +62,16 @@
 				    [- screen_height [+ 10 [blocks_world_rectangle-y0 this]]]
 				    background_char]]]
 
+[defunk blocks_world_rectangle-clear_line_above [this]
+  [let [[screen_height [termios-height]]]
+    [let [[y0 [- [- screen_height [+ 10 [blocks_world_rectangle-y0 this]]] 1]]]
+      [ansi-stream-rectangle stdout
+			     [+ 10 [blocks_world_rectangle-x0 this]]
+			     y0
+			     [+ 10 [blocks_world_rectangle-x1 this]]
+			     y0
+			     [string-elt ' ' 0]]]]]
+
 [defunk blocks_world_rectangle-x_size [this] [+ [- [blocks_world_rectangle-x1 this] [blocks_world_rectangle-x0 this]] 1]]
 [defunk blocks_world_rectangle-y_size [this] [+ [- [blocks_world_rectangle-y1 this] [blocks_world_rectangle-y0 this]] 1]]
 
@@ -194,11 +204,7 @@
 	    [if [eq object_type `block]
 		[if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
 		    [prog [blocks_world_object-translate object 0 -1]
-			  [let [[rectangle [blocks_world_object-rectangle object]]]
-			    [let [[x0 [blocks_world_rectangle-x0 rectangle]]
-				  [x1 [blocks_world_rectangle-x1 rectangle]]
-				  [y0 [blocks_world_rectangle-y0 rectangle]]]
-			      [ansi-stream-rectangle stdout x0 y0 x1 y0 [string-elt ' ' 0]]]]
+			  [blocks_world_rectangle-clear_line_above [blocks_world_object-rectangle object]]
 			  [blocks_world_object-render object]
 			  [set an_object_moved t]]]]]
 	  [set object_iter [cdr object_iter]]]

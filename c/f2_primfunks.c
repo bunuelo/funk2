@@ -1363,7 +1363,7 @@ def_pcfunk1(exps_demetropolize_full, exp,
 	    return f2__exps_demetropolize_full(this_cause, simple_thread, simple_env, exp));
 
 def_pcfunk3(compile__special_symbol_exp, tracewrap, exp, protect_environment,
-	    return f2__compile__special_symbol_exp(this_cause, tracewrap, simple_thread, exp, (protect_environment != nil), (protect_environment == nil), NULL));
+	    return f2__compile__special_symbol_exp(this_cause, tracewrap, simple_thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL));
 
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value) {
   f2ptr value = environment__lookup_funkvar_value(cause, env, funkvar);

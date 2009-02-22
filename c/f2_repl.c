@@ -23,7 +23,7 @@
 
 int f2__repl(f2ptr cause, f2ptr thread) {
   printf("\nfunk2 warning: garbage collection is disabled in this repl.");
-  f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil);
+  f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil);
   f2ptr repl_funk_bcs = f2__compile__funk(cause, environment__safe_lookup_var_value(cause, global_environment(), __funk2.globalenv.trace_all_compiles__symbol), thread, repl_funk);
   f2ptr repl_thread   = f2__thread_serial(cause, thread, f2thread__env(thread, cause), repl_funk, nil);
   while (1) {
@@ -35,7 +35,7 @@ int f2__repl(f2ptr cause, f2ptr thread) {
     } else {
       pause_gc();
       
-      repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil);
+      repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil);
       repl_funk_bcs = f2__compile__funk(cause, environment__safe_lookup_var_value(cause, global_environment(), __funk2.globalenv.trace_all_compiles__symbol), thread, repl_funk);
       if(raw__larvap(repl_funk_bcs, cause)) {
 	f2thread__value__set(thread, cause, repl_funk_bcs);

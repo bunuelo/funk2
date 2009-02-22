@@ -916,7 +916,7 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr en
 }
 
 f2ptr __f2__compile__cons_exp__symbol = -1;
-f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return) {
+f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
   release__assert(__f2__compile__cons_exp__symbol != -1, nil, "__f2__compile__cons_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__cons_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
@@ -1044,7 +1044,7 @@ f2ptr   raw__compile(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, b
   else if (raw__gfunkptrp(exp, cause))  {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__stringp(exp, cause))    {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__symbolp(exp, cause))    {result_bcs = f2__compile__symbol(    cause, tracewrap, exp);}
-  else if (raw__consp(exp, cause))      {result_bcs = f2__compile__cons_exp(  cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return);}
+  else if (raw__consp(exp, cause))      {result_bcs = f2__compile__cons_exp(  cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional);}
   else if (raw__arrayp(exp, cause))     {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__cfunkp(exp, cause))     {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__funkp(exp, cause))      {result_bcs = f2__compile__funk(      cause, tracewrap, rte, exp);}

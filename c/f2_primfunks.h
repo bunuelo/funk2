@@ -445,7 +445,7 @@
   f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 0); \
 }
 
-#define f2__funktional_primcfunk__init(is_funktional, name) { \
+#define f2__funktional_primcfunk__init(name) { \
   f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 1); \
 }
 

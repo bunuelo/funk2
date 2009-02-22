@@ -1175,7 +1175,7 @@ f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
 def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
 
 f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr exp, f2ptr protect_environment) {
-  return raw__compile(cause, thread, (tracewrap != nil), exp, (protect_environment != nil), (protect_environment == nil), NULL);
+  return raw__compile(cause, thread, (tracewrap != nil), exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL);
 }
 def_pcfunk3(compile, tracewrap, exp, protect_environment, return f2__compile(this_cause, simple_thread, tracewrap, exp, protect_environment));
 

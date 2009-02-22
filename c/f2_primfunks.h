@@ -441,7 +441,7 @@
     environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), c_cfunk_var); \
   }
 
-#define f2__primcfunk__init(is_funktional, name) { \
+#define f2__primcfunk__init(name) { \
   f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 0); \
 }
 

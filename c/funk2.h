@@ -57,6 +57,7 @@
 #include "f2_critic.h"
 #include "f2_event_router.h"
 #include "f2_funk2_node.h"
+#include "f2_funktional.h"
 #include "f2_globalenv.h"
 #include "f2_html.h"
 #include "f2_load.h"

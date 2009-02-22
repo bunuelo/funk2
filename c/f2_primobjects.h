@@ -231,7 +231,7 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 // cfunk
 
 extern f2ptr __cfunk__symbol;
-f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env);
+f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional);
 
 #define f2primobject__is_cfunk(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cfunk__symbol)
 
@@ -263,11 +263,18 @@ defprimobject__static_slot__prototype(cfunk__env);
 #define f2cfunk__env__trace(          this, cause)        primobject__static_slot__trace(     this, cfunk__env, cause)
 #define f2cfunk__env__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, cfunk__env, cause)
 
+defprimobject__static_slot__prototype(cfunk__is_funktional);
+#define f2cfunk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__env, cause)
+#define f2cfunk__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__env, cause, value)
+#define f2cfunk__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__env, cause)
+#define f2cfunk__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__env, cause)
+#define f2cfunk__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__env, cause)
+
 
 // metrocfunk
 
 extern f2ptr __metrocfunk__symbol;
-f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env);
+f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional);
 
 #define f2primobject__is_metrocfunk(       this, cause)        raw__eq(cause, f2primobject__type(this, cause), __metrocfunk__symbol)
 
@@ -299,11 +306,18 @@ defprimobject__static_slot__prototype(metrocfunk__env);
 #define f2metrocfunk__env__trace(          this, cause)        primobject__static_slot__trace(     this, metrocfunk__env, cause)
 #define f2metrocfunk__env__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, metrocfunk__env, cause)
 
+defprimobject__static_slot__prototype(metrocfunk__is_funktional);
+#define f2metrocfunk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, metrocfunk__is_funktional, cause)
+#define f2metrocfunk__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, metrocfunk__is_funktional, cause, value)
+#define f2metrocfunk__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metrocfunk__is_funktional, cause)
+#define f2metrocfunk__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, metrocfunk__is_funktional, cause)
+#define f2metrocfunk__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metrocfunk__is_funktional, cause)
+
 
 // funk
 
 extern f2ptr __funk__symbol;
-f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code);
+f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional);
 
 #define f2primobject__is_funk(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __funk__symbol)
 
@@ -356,10 +370,18 @@ defprimobject__static_slot__prototype(funk__machine_code);
 #define f2funk__machine_code__trace(       this, cause)        primobject__static_slot__trace(     this, funk__machine_code, cause)
 #define f2funk__machine_code__imagination_frame(       this, cause)        primobject__static_slot__imagination_frame(     this, funk__machine_code, cause)
 
+defprimobject__static_slot__prototype(funk__is_funktional);
+#define f2funk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, funk__is_funktional, cause)
+#define f2funk__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, funk__is_funktional, cause, value)
+#define f2funk__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, funk__is_funktional, cause)
+#define f2funk__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, funk__is_funktional, cause)
+#define f2funk__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, funk__is_funktional, cause)
+
+
 // metro
 
 extern f2ptr __metro__symbol;
-f2ptr f2metro__new(f2ptr context, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code);
+f2ptr f2metro__new(f2ptr context, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional);
 
 #define f2primobject__is_metro(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __metro__symbol)
 
@@ -411,6 +433,14 @@ defprimobject__static_slot__prototype(metro__machine_code);
 #define f2metro__machine_code__tracing_on(  this, cause)        primobject__static_slot__tracing_on(this, metro__machine_code, cause)
 #define f2metro__machine_code__trace(       this, cause)        primobject__static_slot__trace(     this, metro__machine_code, cause)
 #define f2metro__machine_code__imagination_frame(       this, cause)        primobject__static_slot__imagination_frame(     this, metro__machine_code, cause)
+
+defprimobject__static_slot__prototype(metro__is_funktional);
+#define f2metro__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, metro__is_funktional, cause)
+#define f2metro__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, metro__is_funktional, cause, value)
+#define f2metro__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metro__is_funktional, cause)
+#define f2metro__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, metro__is_funktional, cause)
+#define f2metro__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metro__is_funktional, cause)
+
 
 // exception
 

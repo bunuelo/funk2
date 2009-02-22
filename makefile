@@ -59,6 +59,7 @@ funk2_server_objs = \
   c/f2_globalenv.o \
   c/f2_gmodule.o \
   c/f2_funk2_node.o \
+  c/f2_funktional.o \
   c/f2_html.o \
   c/f2_load.o \
   c/f2_memory.o \
@@ -115,6 +116,7 @@ funk2_headers = \
   c/f2_globalenv.h \
   c/f2_gmodule.h \
   c/f2_funk2_node.h \
+  c/f2_funktional.h \
   c/f2_html.h \
   c/f2_load.h \
   c/f2_peer_command_server.h \

@@ -1275,7 +1275,7 @@ int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) 
   
   f2ptr tracewrap           = __funk2.globalenv.true__symbol;
   f2ptr protect_environment = __funk2.globalenv.true__symbol;
-  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL));
+  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, NULL));
   return 0;
 }
 
@@ -1286,7 +1286,7 @@ int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
   
   f2ptr tracewrap           = __funk2.globalenv.true__symbol;
   f2ptr protect_environment = nil;
-  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL));
+  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, NULL));
   return 0;
 }
 
@@ -1297,7 +1297,7 @@ int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
   
   f2ptr tracewrap           = nil;
   f2ptr protect_environment = __funk2.globalenv.true__symbol;
-  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL));
+  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, NULL));
   return 0;
 }
 
@@ -1308,7 +1308,7 @@ int f2__thread__bytecode__compile__nil__nil(f2ptr thread) {
   
   f2ptr tracewrap           = nil;
   f2ptr protect_environment = nil;
-  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL));
+  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, NULL));
   return 0;
 }
 

@@ -1187,7 +1187,7 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr name, f2pt
   //f2__print_prompt("  body        : ", body);
   //f2__print_prompt("  env         : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap   : ", tracewrap);
-  f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil);
+  f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, nil);
   f2__compile__funk(cause, (tracewrap != nil), thread, funk);
 #ifdef F2__ARCH_BIT32
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
@@ -1201,7 +1201,7 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr name, f2p
   //f2__print_prompt("  body         : ", body);
   //f2__print_prompt("  env          : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap    : ", tracewrap);
-  f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil);
+  f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, nil);
   f2__compile__metro(cause, (tracewrap != nil), thread, metro);
   
 #ifdef F2__ARCH_BIT32

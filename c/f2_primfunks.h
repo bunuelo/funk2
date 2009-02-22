@@ -442,12 +442,16 @@
   }
 
 #define f2__primcfunk__init(is_funktional, name) { \
-  f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var); \
+  f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 0); \
+}
+
+#define f2__funktional_primcfunk__init(is_funktional, name) { \
+  f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 1); \
 }
 
 #define f2__primmetro__init(is_funktional, name) { \
   def_pcfunk__symbolvar__init(name); \
-  environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), f2metrocfunk__new(initial_cause(), nil, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__metrovar(name))), global_environment())); \
+  environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), f2metrocfunk__new(initial_cause(), nil, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__metrovar(name))), global_environment(), nil)); \
 }
 
 #include "f2_memory.h"

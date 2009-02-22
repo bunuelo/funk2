@@ -221,7 +221,7 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr en
   f2cfunk__args__set(         this, cause, args);
   f2cfunk__cfunkptr__set(     this, cause, cfunkptr);
   f2cfunk__env__set(          this, cause, env);
-  f2cfunk__is_funktional__set(this, cause, env);
+  f2cfunk__is_funktional__set(this, cause, is_funktional);
   /*resume_gc();*/
   return this;
 }

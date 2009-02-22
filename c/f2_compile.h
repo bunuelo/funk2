@@ -46,7 +46,7 @@ extern f2ptr f2__compile__rawcode(f2ptr context, bool tracewrap, f2ptr thread, f
 extern f2ptr f2__demetropolize_once(f2ptr context, f2ptr thread, f2ptr env, f2ptr exp);
 extern f2ptr f2__demetropolize_full__with_status(f2ptr context, f2ptr thread, f2ptr env, f2ptr exp);
 extern f2ptr f2__compile__special_symbol_exp(f2ptr context, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return);
-extern f2ptr raw__compile(f2ptr context, bool tracewrap, f2ptr thread, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return);
+extern f2ptr raw__compile(f2ptr context, bool tracewrap, f2ptr thread, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional);
 
 extern void f2__compile__initialize();
 

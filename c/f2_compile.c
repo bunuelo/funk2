@@ -442,11 +442,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   {
     bool exp__is_funktional = true;
     do {
-      full_bcs = raw__compile(cause, tracewrap, thread, f2cons__car(exps, cause), protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
+      f2ptr exp = f2cons__car(exps, cause);
+      full_bcs  = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
       if (full_bcs && (! raw__consp(full_bcs, cause))) {return full_bcs;}
       exps = f2cons__cdr(exps, cause);
       if (full_bcs && exp__is_funktional) {
 	printf("\nfound funktional body_exp that can be eliminated!");
+	f2__print(cause, exp);
       }
     } while (0/*full_bcs && exp__is_funktional*/);
     if (! exp__is_funktional) {
@@ -466,11 +468,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
     {
       bool exp__is_funktional = true;
       do {
-	f2ptr exp_bcs = raw__compile(cause, tracewrap, thread, f2cons__car(exps, cause), protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, is_funktional);
+	f2ptr exp     = f2cons__car(exps, cause);
+	f2ptr exp_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, is_funktional);
 	if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
 	exps = f2cons__cdr(exps, cause);
 	if (exp_bcs && exp__is_funktional) {
 	  printf("\nfound funktional body_exp that can be eliminated!");
+	  f2__print(cause, exp);
 	}
       } while (0/*exp_bcs && exp__is_funktional*/);
       if (! exp__is_funktional) {

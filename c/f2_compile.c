@@ -703,6 +703,8 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
   return bcs_valid(full_bcs);
 }
 
+f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr thread, f2ptr funk, f2ptr args);
+
 f2ptr __f2__compile__funkvar_call__symbol = -1;
 f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
   release__assert(__f2__compile__funkvar_call__symbol != -1, nil, "__f2__compile__funkvar_call__symbol not yet defined.");

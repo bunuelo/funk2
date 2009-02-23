@@ -760,9 +760,9 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
     f2ptr full_bcs = f2__compile__eval_args(cause, tracewrap, rte, f2cons__cdr(exps, cause), is_funktional); f2ptr iter = full_bcs;
     if (is_funktional && (*is_funktional)) {
       printf("\nfound funktional optimization opportunity!");
-      f2ptr funk_apply__result = raw__apply_funk(cause, rte, funkvar_value, f2cons__cdr(exps, cause));
-      full_bcs = f2__compile__value__set(cause, tracewrap, funk_apply__result); iter = full_bcs;
-    } else {
+      //f2ptr funk_apply__result = raw__apply_funk(cause, rte, funkvar_value, f2cons__cdr(exps, cause));
+      //full_bcs = f2__compile__value__set(cause, tracewrap, funk_apply__result); iter = full_bcs;
+    } //else {
       iter     = f2__list_cdr__set(cause, iter, f2__compile__lookup_funkvar(cause, tracewrap, funkvar));
       if (optimize_tail_recursion) {
 	if (popped_env_and_return) {
@@ -789,7 +789,7 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
 	//iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
 	//iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
       }
-    }
+      //}
     return bcs_valid(full_bcs);
   }
   error(nil, "shouldn't get here.");

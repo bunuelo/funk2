@@ -450,7 +450,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
     }
     if (exp__is_funktional) {
       printf("\noptimizing funktional beginning of rawcode!");
-      f2__print(cause, exp);
+      //f2__print(cause, exp);
       full_bcs = nil;
       exps     = f2cons__cdr(exps, cause);
     }

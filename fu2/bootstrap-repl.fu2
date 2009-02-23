@@ -81,14 +81,14 @@
 
 [defmetro funk [args :rest body]
   `[funk-unlabeled `funk ,args
-		   @body]]
+		    @body]]
 
 [exp-format stdout '\ndefining defunk\n']
 
 [defmetro defunk [name args :rest body]
   [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
   `[globalize-funk ,name
-		    [funk-unlabeled [quote ,name] ,args
+		    [funk-unlabeled ,name ,args
 				     @body]]]
 
 [exp-format stdout '\ndone defining defunk\n']
@@ -150,7 +150,7 @@
 [defmetro label [name args :rest body]
   `[define-funk ,name
      [funk-unlabeled `label ,args
-		     @body]]]
+		      @body]]]
 
 [defunk mapc [proc seq]
   [if [null seq]
@@ -209,7 +209,7 @@
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
   `[apply [funk-unlabeled `let ,let-vars
-			  @body]
+			   @body]
 	  [list @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
 [defmetro parlet [varpairs :rest body]

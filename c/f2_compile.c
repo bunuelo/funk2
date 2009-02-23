@@ -439,10 +439,10 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   bool optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
   
   f2ptr full_bcs = nil;
+  bool  exp__is_funktional = true;
   do {
     f2ptr exp                = f2cons__car(exps, cause);
     f2ptr next               = f2cons__cdr(exps, cause);
-    bool  exp__is_funktional = true;
     full_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
     if (! exp__is_funktional) {
       if (is_funktional) {

@@ -458,7 +458,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
     }
   } while(exp__is_funktional && next);
   if (!exps) {
-    return nil;
+    return full_bcs;
   }
   if (full_bcs && (! raw__consp(full_bcs, cause))) {return full_bcs;}
   exps = f2cons__cdr(exps, cause);
@@ -471,16 +471,30 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
     }
     protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
     optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
+    
     f2ptr exp_bcs = nil;
-    {
-      f2ptr exp                = f2cons__car(exps, cause);
-      bool  exp__is_funktional = true;
+    bool  exp__is_funktional = true;
+    f2ptr next = nil;
+    do {
+      f2ptr exp = f2cons__car(exps, cause);
+      next      = f2cons__cdr(exps, cause);
       exp_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
       if (! exp__is_funktional) {
 	if (is_funktional) {
 	  *is_funktional = false;
 	}
       }
+      
+      if (exp__is_funktional && next) {
+	printf("\noptimizing funktional middle of rawcode!");
+	//f2__print(cause, exp);
+	exp_bcs = nil;
+	exps    = next;
+      }
+      
+    } while(exp__is_funktional && next);
+    if (!exps) {
+      return full_bcs;
     }
     if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     exps = f2cons__cdr(exps, cause);

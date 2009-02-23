@@ -1145,6 +1145,7 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__compile__apply_exp";                __f2__compile__apply_exp__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__funkvar_call";             __f2__compile__funkvar_call__symbol             = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:raw__apply_metro";                      __raw__apply_metro__symbol                      = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "compile:raw__apply_funk";                       __raw__apply_funk__symbol                       = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__backquote_exp";            __f2__compile__backquote_exp__symbol            = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__backquote_append_exp";     __f2__compile__backquote_append_exp__symbol     = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__special_symbol_exp";       __f2__compile__special_symbol_exp__symbol       = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -1182,6 +1183,7 @@ void f2__compile__initialize() {
   environment__add_var_value(cause, global_environment(), __f2__compile__apply_exp__symbol,                nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__funkvar_call__symbol,             nil);
   environment__add_var_value(cause, global_environment(), __raw__apply_metro__symbol,                      nil);
+  environment__add_var_value(cause, global_environment(), __raw__apply_funk__symbol,                       nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__backquote_exp__symbol,            nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__backquote_append_exp__symbol,     nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__special_symbol_exp__symbol,       nil);

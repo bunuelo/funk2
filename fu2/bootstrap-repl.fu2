@@ -62,7 +62,7 @@
 [globalize-funk defmetro
 		[metro `defmetro [name args :rest body]
 		       [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
-		       `[globalize-funk ,name [metro ,name ,args
+		       `[globalize-funk ,name [metro [quote ,name] ,args
 						      @body]]]]
 
 [defmetro prog [:rest body]

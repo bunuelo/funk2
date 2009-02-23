@@ -275,7 +275,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause, tracewrap));
   
-  f2funk__is_funktional__set(funk, cause, funk__is_funktional : __funk2.globalenv.true__symbol : nil);
+  f2funk__is_funktional__set(funk, cause, funk__is_funktional ? __funk2.globalenv.true__symbol : nil);
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
   return bcs_valid(funk_bcs);
 }

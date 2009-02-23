@@ -288,6 +288,8 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   f2ptr metro_bcs = f2__compile__value__set(cause, tracewrap, metro);
   if (f2metro__body_bytecodes(metro, cause)) {return bcs_valid(metro_bcs);}
   
+  bool metro__is_funktional = true;
+  
   // save return and environment registers
   f2ptr full_bcs =                                f2__compile__push_debug_funk_call(cause, tracewrap); f2ptr iter = full_bcs;
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
@@ -322,7 +324,7 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   }
   
   bool popped_env_and_return = false;
-  f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2metro__demetropolized_body(metro, cause), false, true, &popped_env_and_return);
+  f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2metro__demetropolized_body(metro, cause), false, true, &popped_env_and_return, &metro__is_funktional);
   if (body_bcs && (! raw__consp(body_bcs, cause))) {return body_bcs;}
   iter = f2__list_cdr__set(cause, iter, body_bcs);
   
@@ -334,6 +336,7 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause, tracewrap));
   
+  f2metro__is_funktional__set(metro, cause, metro__is_funktional ? __funk2.globalenv.true__symbol : nil);
   f2metro__body_bytecodes__set(metro, cause, full_bcs);
   //f2metro__machine_code__set(metro, cause, f2chunk__new_compiled_from_metro(cause, metro));
   return bcs_valid(metro_bcs);

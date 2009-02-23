@@ -442,13 +442,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   {
     bool exp__is_funktional = true;
     full_bcs = raw__compile(cause, tracewrap, thread, f2cons__car(exps, cause), protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
-    if (full_bcs && (! raw__consp(full_bcs, cause))) {return full_bcs;}
     if (! exp__is_funktional) {
       if (is_funktional) {
 	*is_funktional = false;
       }
     }
   }
+  if (full_bcs && (! raw__consp(full_bcs, cause))) {return full_bcs;}
   exps = f2cons__cdr(exps, cause);
   
   f2ptr iter     = full_bcs;
@@ -463,13 +463,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
     {
       bool exp__is_funktional = true;
       exp_bcs = raw__compile(cause, tracewrap, thread, f2cons__car(exps, cause), protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
-      if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
       if (! exp__is_funktional) {
 	if (is_funktional) {
 	  *is_funktional = false;
 	}
       }
     }
+    if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     exps = f2cons__cdr(exps, cause);
     iter = f2__list_cdr__set(cause, iter, exp_bcs);
   }

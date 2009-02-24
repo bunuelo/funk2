@@ -779,7 +779,7 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
 	}
       }
     }
-    f2ptr full_bcs = f2__compile__eval_args(cause, tracewrap, rte, f2cons__cdr(exps, cause), is_funktional); f2ptr iter = full_bcs;
+    f2ptr full_bcs = f2__compile__eval_args(cause, tracewrap, rte, f2cons__cdr(exps, cause), is_funktional, local_variables); f2ptr iter = full_bcs;
     if (is_funktional && (*is_funktional)) {
       printf("\nfound funktional optimization opportunity!");
       f2ptr funk_apply__result = raw__apply_funk(cause, rte, funkvar_value, f2cons__cdr(exps, cause));
@@ -1031,7 +1031,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), car);
   if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL, is_funktional, local_variables));}
   if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables));}
-  if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional));}
+  if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables));}
   printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
   printf("don't know how to compile type."); // should throw exception... (or return larva)
   return funkvar_value;

@@ -81,6 +81,22 @@ f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rect
 }
 
 
+// blocks_world
+
+defprimobject__static_slot(blocks_world__objects, 0);
+
+f2ptr __blocks_world__symbol = -1;
+
+f2ptr f2blocks_world__new(f2ptr cause, f2ptr objects) {
+  /*pause_gc();*/
+  release__assert(__blocks_world__symbol != -1, nil, "f2blocks_world__new error: used before primobjects initialized.");
+  f2ptr this = f2__primobject__new(cause, __blocks_world__symbol, 1, nil);
+  f2blocks_world__objects__set(this, cause, objects);
+  /*resume_gc();*/
+  return this;
+}
+
+
 // **
 
 void f2__blocks_world__reinitialize_globalvars() {
@@ -89,6 +105,7 @@ void f2__blocks_world__reinitialize_globalvars() {
   __blocks_world_rectangle__symbol = f2symbol__new(cause, strlen("blocks_world_rectangle"), (u8*)"blocks_world_rectangle");
   __blocks_world_color__symbol     = f2symbol__new(cause, strlen("blocks_world_color"),     (u8*)"blocks_world_color");
   __blocks_world_object__symbol    = f2symbol__new(cause, strlen("blocks_world_object"),    (u8*)"blocks_world_object");
+  __blocks_world__symbol           = f2symbol__new(cause, strlen("blocks_world"),           (u8*)"blocks_world");
 }
 
 void f2__blocks_world__initialize() {
@@ -99,6 +116,7 @@ void f2__blocks_world__initialize() {
   environment__add_var_value(cause, global_environment(), __blocks_world_rectangle__symbol, nil);
   environment__add_var_value(cause, global_environment(), __blocks_world_color__symbol,     nil);
   environment__add_var_value(cause, global_environment(), __blocks_world_object__symbol,    nil);
+  environment__add_var_value(cause, global_environment(), __blocks_world__symbol,           nil);
   
   resume_gc();
   try_gc();

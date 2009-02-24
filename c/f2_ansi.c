@@ -462,6 +462,7 @@ void f2__ansi__initialize() {
   f2__primcfunk__init(ansi__stream__foreground);
   f2__primcfunk__init(ansi__stream__background);
   f2__primcfunk__init(ansi__stream__rectangle);
+  f2__primcfunk__init(ansi__stream__bordered_rectangle);
   
   resume_gc();
   try_gc();

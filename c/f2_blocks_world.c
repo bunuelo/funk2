@@ -322,6 +322,101 @@ bool raw__blocks_world_objectp(f2ptr this, f2ptr cause) {
   return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_object(this, cause));
 }
 
+/*
+[defunk blocks_world_object-render [this]
+  [let [[type [blocks_world_object-type this]]]
+    [let [[render_char [cond [[eq type `table]   [string-elt '-' 0]]
+			     [[eq type `block]   [string-elt '*' 0]]
+			     [[eq type `gripper] [string-elt '~' 0]]
+			     [t                  [string-elt '?' 0]]]]]
+      [let [[rectangle [blocks_world_object-rectangle this]]]
+	[let [[color [blocks_world_object-color this]]]
+	  [blocks_world_color-render color]
+	  [blocks_world_rectangle-render rectangle render_char]
+	  [ansi-stream-foreground stdout 15]
+	  ]]]]]
+*/
+
+f2ptr f2__blocks_world_object__render(f2ptr cause, f2ptr this) {
+  if (! raw__blocks_world_objectp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr type = f2blocks_world_object__type(this, cause);
+  char render_char;
+  if      (type == __funk2.globalenv.blocks_world.table__symbol)   {render_char = '-';}
+  else if (type == __funk2.globalenv.blocks_world.block__symbol)   {render_char = '*';}
+  else if (type == __funk2.globalenv.blocks_world.gripper__symbol) {render_char = '~';}
+  else                                                             {render_char = '?';}
+  f2ptr rectangle = f2blocks_world_object__rectangle(this, cause);
+  f2ptr color     = f2blocks_world_object__color(this, cause);
+  if (raw__larvap(f2__blocks_world_color__render(cause, color), cause)) {
+    return f2larva__new(cause, 2);
+  }
+  if (raw__larvap(f2__blocks_world_rectangle__render(cause, rectangle), cause)) {
+    return f2larva__new(cause, 2);
+  }
+  raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 7);
+  return nil;
+}
+def_pcfunk1(blocks_world_object__render, this, return f2__blocks_world_object__render(this_cause, this));
+
+/*
+[defunk blocks_world_object-translate_overlaps_objects [this dx dy objects]
+  [let [[rectangle [blocks_world_object-rectangle this]]]
+    [let [[translate_rectangle [blocks_world_rectangle-new_translate rectangle dx dy]]]
+      [let [[object_iter          objects]
+	    [found_overlap_object nil]]
+	[while object_iter
+	  [let [[object [car object_iter]]]
+	    [let [[object_rectangle [blocks_world_object-rectangle object]]]
+	      [if [blocks_world_rectangle-overlaps translate_rectangle object_rectangle]
+		  [prog [set found_overlap_object object]
+			[set object_iter          nil]]
+		[set object_iter [cdr object_iter]]]]]]
+	found_overlap_object]]]]
+ */
+
+f2ptr raw__blocks_world_object__translate_overlaps_objects(f2ptr cause, f2ptr this, s64 dx, s64 dy, f2ptr objects) {
+  if (! raw__blocks_world_objectp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr rectangle           = f2blocks_world_object__rectangle(this, cause);
+  f2ptr translate_rectangle = raw__blocks_world_rectangle__new_translate(cause, rectangle, dx, dy);
+
+  bool  found_overlap_object = false;
+  f2ptr object_iter = objects;
+  while (object_iter) {
+    if (! raw__consp(object_iter, cause)) {
+      return f2larva__new(cause, 1);
+    }
+    f2ptr object = f2cons__car(object_iter, cause);
+    if (! raw__blocks_world_objectp(object, cause)) {
+      return f2larva__new(cause, 1);
+    }
+    f2ptr object_rectangle = f2blocks_world_object__rectangle(object, cause);
+    f2ptr overlaps_result = f2__blocks_world_rectangle__overlaps(cause, translate_rectangle, object_rectangle);
+    if (raw__larvap(overlaps_result, cause)) {
+      return overlaps_result; // propogate error larva
+    }
+    if (overlaps_result) {
+      return object;
+    }
+    object_iter = f2cons__cdr(object_iter, cause);
+  }
+  return nil;
+}
+
+f2ptr f2__blocks_world_object__translate_overlaps_objects(f2ptr cause, f2ptr this, f2ptr dx, f2ptr dy, f2ptr objects) {
+  if ((! raw__integerp(dx, cause)) ||
+      (! raw__integerp(dy, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  s64 raw_dx = f2integer__i(dx, cause);
+  s64 raw_dy = f2integer__i(dy, cause);
+  return raw__blocks_world_object__translate_overlaps_objects(cause, this, raw_dx, raw_dy, objects);
+}
+def_pcfunk4(blocks_world_object__translate_overlaps_objects, this, dx, dy, objects, return f2__blocks_world_object__translate_overlaps_objects(this_cause, this, dx, dy, objects));
+
 
 // blocks_world
 
@@ -377,6 +472,21 @@ void f2__blocks_world__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.white__symbol,   nil);
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.magenta__symbol, nil);
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.yellow__symbol,  nil);
+  
+  f2__primcfunk__init(blocks_world__lower_left__x);
+  f2__primcfunk__init(blocks_world__lower_left__y);
+  
+  f2__primcfunk__init(blocks_world_rectangle__create);
+  f2__primcfunk__init(blocks_world_rectangle__render);
+  f2__primcfunk__init(blocks_world_rectangle__clear_line_above);
+  f2__primcfunk__init(blocks_world_rectangle__translate);
+  f2__primcfunk__init(blocks_world_rectangle__new_translate);
+  f2__primcfunk__init(blocks_world_rectangle__overlaps);
+  
+  f2__primcfunk__init(blocks_world_color__render);
+  
+  f2__primcfunk__init(blocks_world_object__render);
+  f2__primcfunk__init(blocks_world_object__translate_overlaps_objects);
   
   resume_gc();
   try_gc();

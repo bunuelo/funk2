@@ -60,3 +60,5 @@
 [globalize-funk ansi-stream-foreground                             &primfunk:ansi__stream__foreground]
 [globalize-funk ansi-stream-background                             &primfunk:ansi__stream__background]
 [globalize-funk ansi-stream-rectangle                              &primfunk:ansi__stream__rectangle]
+[globalize-funk ansi-stream-bordered_rectangle                     &primfunk:ansi__stream__bordered_rectangle]
+

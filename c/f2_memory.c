@@ -1411,6 +1411,7 @@ void f2__primfunks__ioctl__reinitialize_globalvars();           // defined in f2
 void f2__primfunks__locale__reinitialize_globalvars();          // defined in f2_primfunks__locale.c
 void f2__ansi__reinitialize_globalvars();                       // defined in f2_ansi.c
 void f2__termios__reinitialize_globalvars();                    // defined in f2_termios.c
+void f2__blocks_world__reinitialize_globalvars();               // defined in f2_blocks_world.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -1524,6 +1525,7 @@ void rebuild_memory_info_from_image() {
     f2__peer_command_server__reinitialize_globalvars();
     f2__ansi__reinitialize_globalvars();
     f2__termios__reinitialize_globalvars();
+    f2__blocks_world__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

@@ -22,6 +22,46 @@
 #ifndef F2__BLOCKS_WORLD__H
 #define F2__BLOCKS_WORLD__H
 
+// blocks_world_object
+
+extern f2ptr __blocks_world_object__symbol;
+f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color);
+
+#define f2primobject__is__blocks_world_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_object__symbol)
+
+defprimobject__static_slot__prototype(blocks_world_object__name);
+#define f2blocks_world_object__name(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__name, cause)
+#define f2blocks_world_object__name__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_object__name, cause, value)
+#define f2blocks_world_object__name__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__name, cause)
+#define f2blocks_world_object__name__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__name, cause)
+#define f2blocks_world_object__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__name, cause)
+
+defprimobject__static_slot__prototype(blocks_world_object__type);
+#define f2blocks_world_object__type(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__type, cause)
+#define f2blocks_world_object__type__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_object__type, cause, value)
+#define f2blocks_world_object__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__type, cause)
+#define f2blocks_world_object__type__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__type, cause)
+#define f2blocks_world_object__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__type, cause)
+
+defprimobject__static_slot__prototype(blocks_world_object__rectangle);
+#define f2blocks_world_object__rectangle(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__rectangle, cause)
+#define f2blocks_world_object__rectangle__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_object__rectangle, cause, value)
+#define f2blocks_world_object__rectangle__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__rectangle, cause)
+#define f2blocks_world_object__rectangle__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__rectangle, cause)
+#define f2blocks_world_object__rectangle__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__rectangle, cause)
+
+defprimobject__static_slot__prototype(blocks_world_object__color);
+#define f2blocks_world_object__color(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__color, cause)
+#define f2blocks_world_object__color__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_object__color, cause, value)
+#define f2blocks_world_object__color__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__color, cause)
+#define f2blocks_world_object__color__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__color, cause)
+#define f2blocks_world_object__color__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__color, cause)
+
+
+// **
+
+void f2__blocks_world__reinitialize_globalvars();
+void f2__blocks_world__initialize();
 
 
 #endif // F2__BLOCKS_WORLD__H

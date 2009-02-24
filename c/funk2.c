@@ -78,6 +78,7 @@ void f2__initialize() {
   pause_gc(); f2__ansi__initialize();                       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__termios__initialize();                    resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__ptypes__initialize__object_slots();       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__blocks_world__initialize();               resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

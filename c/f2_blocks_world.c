@@ -115,7 +115,7 @@ f2ptr raw__blocks_world_rectangle__render(f2ptr cause, f2ptr this, char backgrou
   if ((! raw__blocks_world_rectanglep(this, cause))) {
     return f2larva__new(cause, 1);
   }
-  u64 lower_left__x = raw__blocks_world__lower_left__x(cause);
+  //u64 lower_left__x = raw__blocks_world__lower_left__x(cause);
   u64 lower_left__y = raw__blocks_world__lower_left__y(cause);
   u64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
   u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);

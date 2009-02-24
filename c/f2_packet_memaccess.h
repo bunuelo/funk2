@@ -316,6 +316,18 @@
 #endif
 
 #if defined(F2__MEMACCESS__PTYPE)
+#  define f2simple_array__immutable pfunk2__f2simple_array__immutable
+#else
+#  define f2simple_array__immutable funk2__f2simple_array__immutable
+#endif
+
+#if defined(F2__MEMACCESS__PTYPE)
+#  define f2simple_array__immutable__set pfunk2__f2simple_array__immutable__set
+#else
+#  define f2simple_array__immutable__set funk2__f2simple_array__immutable__set
+#endif
+
+#if defined(F2__MEMACCESS__PTYPE)
 #  define f2simple_array__length pfunk2__f2simple_array__length
 #else
 #  define f2simple_array__length funk2__f2simple_array__length
@@ -343,6 +355,18 @@
 #  define f2traced_array__new_copy pfunk2__f2traced_array__new_copy
 #else
 #  define f2traced_array__new_copy funk2__f2traced_array__new_copy
+#endif
+
+#if defined(F2__MEMACCESS__PTYPE)
+#  define f2traced_array__immutable pfunk2__f2traced_array__immutable
+#else
+#  define f2traced_array__immutable funk2__f2traced_array__immutable
+#endif
+
+#if defined(F2__MEMACCESS__PTYPE)
+#  define f2traced_array__immutable__set pfunk2__f2traced_array__immutable__set
+#else
+#  define f2traced_array__immutable__set funk2__f2traced_array__immutable__set
 #endif
 
 #if defined(F2__MEMACCESS__PTYPE)

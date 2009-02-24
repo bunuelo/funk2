@@ -147,6 +147,10 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2simple_array__new                        ,
   funk2_packet_type__pcs_request__f2simple_array__new_copy                   , //f2ptr            (f2ptr cause, u64 length, f2ptr init_array);
   funk2_packet_type__pcs_respond__f2simple_array__new_copy                   ,
+  funk2_packet_type__pcs_request__f2simple_array__immutable                  , //u8               (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2simple_array__immutable                  ,
+  funk2_packet_type__pcs_request__f2simple_array__immutable__set             , //void             (f2ptr cause, f2ptr this, u8 value);
+  funk2_packet_type__pcs_respond__f2simple_array__immutable__set             ,
   funk2_packet_type__pcs_request__f2simple_array__length                     , //u64              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2simple_array__length                     ,
   funk2_packet_type__pcs_request__f2simple_array__elt                        , //f2ptr            (f2ptr cause, f2ptr this, u64 index);
@@ -157,6 +161,10 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2traced_array__new                        ,
   funk2_packet_type__pcs_request__f2traced_array__new_copy                   , //f2ptr            (f2ptr cause, u64 length, f2ptr init_array);
   funk2_packet_type__pcs_respond__f2traced_array__new_copy                   ,
+  funk2_packet_type__pcs_request__f2traced_array__immutable                  , //u8               (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2traced_array__immutable                  ,
+  funk2_packet_type__pcs_request__f2traced_array__immutable__set             , //void             (f2ptr cause, f2ptr this, u8 value);
+  funk2_packet_type__pcs_respond__f2traced_array__immutable__set             ,
   funk2_packet_type__pcs_request__f2traced_array__length                     , //u64              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2traced_array__length                     ,
   funk2_packet_type__pcs_request__f2traced_array__elt                        , //f2ptr            (f2ptr cause, f2ptr this, u64 index);
@@ -2389,6 +2397,84 @@ f2ptr funk2_node__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_
 f2ptr funk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
 
 
+//  funk2_packet_type__pcs_request__f2simple_array__immutable                               = 0x3B, //u8            (f2ptr this, f2ptr cause);
+
+// request f2simple_array__immutable
+
+struct pcs_packet_payload_request__f2simple_array__immutable_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2simple_array__immutable_s pcs_packet_payload_request__f2simple_array__immutable_t;
+
+struct pcs_request__f2simple_array__immutable_s {
+  funk2_packet_header_t                                   header;
+  pcs_packet_payload_request__f2simple_array__immutable_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2simple_array__immutable_s pcs_request__f2simple_array__immutable_t;
+
+// respond f2simple_array__immutable
+
+struct pcs_packet_payload_respond__f2simple_array__immutable_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  u8                                                 immutable;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2simple_array__immutable_s pcs_packet_payload_respond__f2simple_array__immutable_t;
+
+struct pcs_respond__f2simple_array__immutable_s {
+  funk2_packet_header_t                             header;
+  pcs_packet_payload_respond__f2simple_array__elt_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2simple_array__immutable_s pcs_respond__f2simple_array__immutable_t;
+
+void send_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void recv_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, pcs_request__f2simple_array__immutable_t* packet);
+void send_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 immutable);
+void recv_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, pcs_respond__f2simple_array__immutable_t* packet);
+
+f2ptr funk2_node__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+f2ptr funk2__f2simple_array__immutable(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2simple_array__immutable__set                          = 0x3D, //void            (f2ptr cause, f2ptr this, u8 value);
+
+// request f2simple_array__immutable__set
+
+struct pcs_packet_payload_request__f2simple_array__immutable__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u8                                                 value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2simple_array__immutable__set_s pcs_packet_payload_request__f2simple_array__immutable__set_t;
+
+struct pcs_request__f2simple_array__immutable__set_s {
+  funk2_packet_header_t                                        header;
+  pcs_packet_payload_request__f2simple_array__immutable__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2simple_array__immutable__set_s pcs_request__f2simple_array__immutable__set_t;
+
+// respond f2simple_array__immutable__set
+
+struct pcs_packet_payload_respond__f2simple_array__immutable__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2simple_array__immutable__set_s pcs_packet_payload_respond__f2simple_array__immutable__set_t;
+
+struct pcs_respond__f2simple_array__immutable__set_s {
+  funk2_packet_header_t                                        header;
+  pcs_packet_payload_respond__f2simple_array__immutable__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2simple_array__immutable__set_s pcs_respond__f2simple_array__immutable__set_t;
+
+void send_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void recv_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__elt__set_t* packet);
+void send_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void recv_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__elt__set_t* packet);
+
+void funk2_node__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void funk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
+
+
 //  funk2_packet_type__pcs_request__f2simple_array__length                            = 0x3A, //u64              (f2ptr cause, f2ptr this);
 
 // request f2simple_array__length
@@ -2587,6 +2673,84 @@ void recv_packet__respond__f2traced_array__new_copy(funk2_node_t* funk2_node, pc
 
 f2ptr funk2_node__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, f2ptr init_array);
 f2ptr funk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__immutable                               = 0x3B, //u8            (f2ptr this, f2ptr cause);
+
+// request f2traced_array__immutable
+
+struct pcs_packet_payload_request__f2traced_array__immutable_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__immutable_s pcs_packet_payload_request__f2traced_array__immutable_t;
+
+struct pcs_request__f2traced_array__immutable_s {
+  funk2_packet_header_t                                   header;
+  pcs_packet_payload_request__f2traced_array__immutable_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__immutable_s pcs_request__f2traced_array__immutable_t;
+
+// respond f2traced_array__immutable
+
+struct pcs_packet_payload_respond__f2traced_array__immutable_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  u8                                                 immutable;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__immutable_s pcs_packet_payload_respond__f2traced_array__immutable_t;
+
+struct pcs_respond__f2traced_array__immutable_s {
+  funk2_packet_header_t                             header;
+  pcs_packet_payload_respond__f2traced_array__elt_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__immutable_s pcs_respond__f2traced_array__immutable_t;
+
+void send_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void recv_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, pcs_request__f2traced_array__immutable_t* packet);
+void send_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 immutable);
+void recv_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, pcs_respond__f2traced_array__immutable_t* packet);
+
+f2ptr funk2_node__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+f2ptr funk2__f2traced_array__immutable(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__immutable__set                          = 0x3D, //void            (f2ptr cause, f2ptr this, u8 value);
+
+// request f2traced_array__immutable__set
+
+struct pcs_packet_payload_request__f2traced_array__immutable__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u8                                                 value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__immutable__set_s pcs_packet_payload_request__f2traced_array__immutable__set_t;
+
+struct pcs_request__f2traced_array__immutable__set_s {
+  funk2_packet_header_t                                        header;
+  pcs_packet_payload_request__f2traced_array__immutable__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__immutable__set_s pcs_request__f2traced_array__immutable__set_t;
+
+// respond f2traced_array__immutable__set
+
+struct pcs_packet_payload_respond__f2traced_array__immutable__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__immutable__set_s pcs_packet_payload_respond__f2traced_array__immutable__set_t;
+
+struct pcs_respond__f2traced_array__immutable__set_s {
+  funk2_packet_header_t                                        header;
+  pcs_packet_payload_respond__f2traced_array__immutable__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__immutable__set_s pcs_respond__f2traced_array__immutable__set_t;
+
+void send_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void recv_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__set_t* packet);
+void send_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void recv_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__set_t* packet);
+
+void funk2_node__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void funk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
 
 
 //  funk2_packet_type__pcs_request__f2traced_array__length                            = 0x3A, //u64              (f2ptr cause, f2ptr this);

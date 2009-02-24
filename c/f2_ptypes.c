@@ -1261,6 +1261,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   //debug__assert(!cause || valid_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_memblock_ptr(cause) failed");
   simple_array_block->ptype.ptype = ptype_simple_array;
   simple_array_block->ptype.cause = cause;
+  simple_array_block->immutable   = 0;
   simple_array_block->length      = length;
   if (f2ptr_ptr) {memcpy(simple_array_block->f2ptr_data, from_ptr(f2ptr_ptr), data_byte_num);}
   else {
@@ -1292,6 +1293,21 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
   }
 #endif // F2__PTYPE__TYPE_CHECK
   return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->f2ptr_data));
+}
+
+u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
+  int pool_index = __f2ptr__pool_index(this);
+  ptype_access_num__incr(pool_index);
+  u8 retval = __pure__f2simple_array__immutable__set(this);
+  ptype_access_num__decr(pool_index);
+  return retval;
+}
+
+void pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  int pool_index = __f2ptr__pool_index(this);
+  ptype_access_num__incr(pool_index);
+  __pure__f2simple_array__immutable__set(this, value);
+  ptype_access_num__decr(pool_index);
 }
 
 u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
@@ -1458,6 +1474,21 @@ f2ptr pfunk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
   }
 #endif // F2__PTYPE__TYPE_CHECK
   return f2traced_array__new(cause, length, to_ptr(((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->dptr_data));
+}
+
+u8 pfunk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
+  int pool_index = __f2ptr__pool_index(this);
+  ptype_access_num__incr(pool_index);
+  u8 retval = __pure__f2traced_array__immutable__set(this);
+  ptype_access_num__decr(pool_index);
+  return retval;
+}
+
+void pfunk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  int pool_index = __f2ptr__pool_index(this);
+  ptype_access_num__incr(pool_index);
+  __pure__f2traced_array__immutable__set(this, value);
+  ptype_access_num__decr(pool_index);
 }
 
 u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {

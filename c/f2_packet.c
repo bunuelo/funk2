@@ -378,6 +378,10 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2simple_array__new:                         recv_packet__respond__f2simple_array__new(funk2_node, (pcs_respond__f2simple_array__new_t*)packet);                                                 break;
   case funk2_packet_type__pcs_request__f2simple_array__new_copy:                    recv_packet__request__f2simple_array__new_copy(funk2_node, (pcs_request__f2simple_array__new_copy_t*)packet);                                       break;
   case funk2_packet_type__pcs_respond__f2simple_array__new_copy:                    recv_packet__respond__f2simple_array__new_copy(funk2_node, (pcs_respond__f2simple_array__new_copy_t*)packet);                                       break;
+  case funk2_packet_type__pcs_request__f2simple_array__immutable:                   recv_packet__request__f2simple_array__immutable(funk2_node, (pcs_request__f2simple_array__immutable_t*)packet);                                     break;
+  case funk2_packet_type__pcs_respond__f2simple_array__immutable:                   recv_packet__respond__f2simple_array__immutable(funk2_node, (pcs_respond__f2simple_array__immutable_t*)packet);                                     break;
+  case funk2_packet_type__pcs_request__f2simple_array__immutable__set:              recv_packet__request__f2simple_array__immutable__set(funk2_node, (pcs_request__f2simple_array__immutable__set_t*)packet);                           break;
+  case funk2_packet_type__pcs_respond__f2simple_array__immutable__set:              recv_packet__respond__f2simple_array__immutable__set(funk2_node, (pcs_respond__f2simple_array__immutable__set_t*)packet);                           break;
   case funk2_packet_type__pcs_request__f2simple_array__length:                      recv_packet__request__f2simple_array__length(funk2_node, (pcs_request__f2simple_array__length_t*)packet);                                           break;
   case funk2_packet_type__pcs_respond__f2simple_array__length:                      recv_packet__respond__f2simple_array__length(funk2_node, (pcs_respond__f2simple_array__length_t*)packet);                                           break;
   case funk2_packet_type__pcs_request__f2simple_array__elt:                         recv_packet__request__f2simple_array__elt(funk2_node, (pcs_request__f2simple_array__elt_t*)packet);                                                 break;
@@ -388,6 +392,10 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2traced_array__new:                         recv_packet__respond__f2traced_array__new(funk2_node, (pcs_respond__f2traced_array__new_t*)packet);                                                 break;
   case funk2_packet_type__pcs_request__f2traced_array__new_copy:                    recv_packet__request__f2traced_array__new_copy(funk2_node, (pcs_request__f2traced_array__new_copy_t*)packet);                                       break;
   case funk2_packet_type__pcs_respond__f2traced_array__new_copy:                    recv_packet__respond__f2traced_array__new_copy(funk2_node, (pcs_respond__f2traced_array__new_copy_t*)packet);                                       break;
+  case funk2_packet_type__pcs_request__f2traced_array__immutable:                   recv_packet__request__f2traced_array__immutable(funk2_node, (pcs_request__f2traced_array__immutable_t*)packet);                                     break;
+  case funk2_packet_type__pcs_respond__f2traced_array__immutable:                   recv_packet__respond__f2traced_array__immutable(funk2_node, (pcs_respond__f2traced_array__immutable_t*)packet);                                     break;
+  case funk2_packet_type__pcs_request__f2traced_array__immutable__set:              recv_packet__request__f2traced_array__immutable__set(funk2_node, (pcs_request__f2traced_array__immutable__set_t*)packet);                           break;
+  case funk2_packet_type__pcs_respond__f2traced_array__immutable__set:              recv_packet__respond__f2traced_array__immutable__set(funk2_node, (pcs_respond__f2traced_array__immutable__set_t*)packet);                           break;
   case funk2_packet_type__pcs_request__f2traced_array__length:                      recv_packet__request__f2traced_array__length(funk2_node, (pcs_request__f2traced_array__length_t*)packet);                                           break;
   case funk2_packet_type__pcs_respond__f2traced_array__length:                      recv_packet__respond__f2traced_array__length(funk2_node, (pcs_respond__f2traced_array__length_t*)packet);                                           break;
   case funk2_packet_type__pcs_request__f2traced_array__elt:                         recv_packet__request__f2traced_array__elt(funk2_node, (pcs_request__f2traced_array__elt_t*)packet);                                                 break;
@@ -3563,7 +3571,7 @@ void recv_packet__request__f2simple_array__new(funk2_node_t* funk2_node, pcs_req
     }
   }
   funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
-  f2ptr new = pfunk2__f2traced_array__new(cause, packet->payload.length, to_ptr(f2ptr_array));
+  f2ptr new = pfunk2__f2simple_array__new(cause, packet->payload.length, to_ptr(f2ptr_array));
   send_packet__respond__f2simple_array__new(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause, new);
 }
 
@@ -3602,7 +3610,7 @@ f2ptr funk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_array) {
 
 void send_packet__request__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, f2ptr init_array) {
   packet_status("send_packet__request__f2simple_array__new_copy: executing.");
-  pcs_request__f2traced_array__new_copy_t packet;
+  pcs_request__f2simple_array__new_copy_t packet;
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
   packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2simple_array__new_copy;
   packet.payload.action_payload_header.cause               = cause;
@@ -3613,7 +3621,7 @@ void send_packet__request__f2simple_array__new_copy(funk2_node_t* funk2_node, f2
 }
 
 void recv_packet__request__f2simple_array__new_copy(funk2_node_t* funk2_node, pcs_request__f2simple_array__new_copy_t* packet) {
-  packet_status("recv_packet__request__f2traced_array__new_copy: executing.");
+  packet_status("recv_packet__request__f2simple_array__new_copy: executing.");
   f2ptr cause      = rf2_to_lf2(packet->payload.action_payload_header.cause);
   f2ptr thread     = rf2_to_lf2(packet->payload.action_payload_header.thread);
   f2ptr init_array = rf2_to_lf2(packet->payload.init_array);
@@ -3649,6 +3657,130 @@ f2ptr funk2_node__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_
 
 f2ptr funk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
   return pfunk2__f2simple_array__new_copy(cause, length, init_array);
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2simple_array__immutable: executing.");
+  pcs_request__f2simple_array__immutable_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2simple_array__immutable;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, pcs_request__f2simple_array__immutable_t* packet) {
+  packet_status("recv_packet__request__f2simple_array__immutable: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
+  u8 immutable = pfunk2__f2simple_array__immutable(this, cause);
+  send_packet__respond__f2simple_array__immutable(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause, immutable);
+}
+
+void send_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr immutable) {
+  packet_status("send_packet__respond__f2simple_array__immutable: executing.");
+  pcs_respond__f2simple_array__immutable_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2simple_array__immutable;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.immutable                                 = immutable;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, pcs_respond__f2simple_array__immutable_t* packet) {
+  packet_status("recv_packet__respond__f2simple_array__immutable: executing.");
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this) {
+  send_packet__request__f2simple_array__immutable(funk2_node, this_thread, cause, this);
+  pcs_respond__f2simple_array__immutable_t* packet = (pcs_respond__f2simple_array__immutable_t*)funk2_node_handler__wait_for_new_thread_packet(&(__funk2.node_handler), this_thread);
+  packet_status("funk2_node__f2simple_array__immutable: packet->payload.immutable = " f2ptr__fstr, packet->payload.immutable);
+  f2ptr immutable = rf2_to_lf2(packet->payload.immutable);
+  packet_status("funk2_node__f2simple_array__immutable: rf2_to_lf2(packet->payload.immutable) = " f2ptr__fstr, immutable);
+  f2__free(to_ptr(packet));
+  return immutable;
+}
+
+f2ptr funk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2simple_array__immutable(this, cause);
+  } else {
+    f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2simple_array__immutable(funk2_node, thread, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value) {
+  packet_status("send_packet__request__f2simple_array__immutable__set: executing.");
+  pcs_request__f2simple_array__immutable__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2simple_array__immutable__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.this                                      = this;
+  packet.payload.value                                     = value;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__immutable__set_t* packet) {
+  packet_status("recv_packet__request__f2simple_array__immutable__set: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  u8    value  = rf2_to_lf2(packet->payload.value);
+  funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
+  pfunk2__f2simple_array__immutable__set(this, cause, value);
+  send_packet__respond__f2simple_array__immutable__set(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause);
+}
+
+void send_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause) {
+  packet_status("send_packet__respond__f2simple_array__immutable__set: executing.");
+  pcs_respond__f2simple_array__immutable__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2simple_array__immutable__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__immutable__set_t* packet) {
+  packet_status("recv_packet__respond__f2simple_array__immutable__set: executing.");
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value) {
+  packet_status("funk2_node__f2simple_array__immutable__set: executing.");
+  send_packet__request__f2simple_array__immutable__set(funk2_node, this_thread, cause, this, value);
+  pcs_respond__f2simple_array__immutable__set_t* packet = (pcs_respond__f2simple_array__immutable__set_t*)funk2_node_handler__wait_for_new_thread_packet(&(__funk2.node_handler), this_thread);
+  f2__free(to_ptr(packet));
+}
+
+void funk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    pfunk2__f2simple_array__immutable__set(this, cause, value);
+  } else {
+    f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    funk2_node__f2simple_array__immutable__set(funk2_node, thread, cause, this, value);
+  }
 }
 
 // ******************************************************
@@ -3782,7 +3914,7 @@ f2ptr funk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
 
 void send_packet__request__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value) {
   packet_status("send_packet__request__f2simple_array__elt__set: executing.");
-  pcs_request__f2traced_array__elt__set_t packet;
+  pcs_request__f2simple_array__elt__set_t packet;
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
   packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2simple_array__elt__set;
   packet.payload.action_payload_header.cause               = cause;
@@ -3963,6 +4095,130 @@ f2ptr funk2_node__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_
 
 f2ptr funk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
   return pfunk2__f2traced_array__new_copy(cause, length, init_array);
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2traced_array__immutable: executing.");
+  pcs_request__f2traced_array__immutable_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2traced_array__immutable;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, pcs_request__f2traced_array__immutable_t* packet) {
+  packet_status("recv_packet__request__f2traced_array__immutable: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
+  u8 immutable = pfunk2__f2traced_array__immutable(this, cause);
+  send_packet__respond__f2traced_array__immutable(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause, immutable);
+}
+
+void send_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr immutable) {
+  packet_status("send_packet__respond__f2traced_array__immutable: executing.");
+  pcs_respond__f2traced_array__immutable_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2traced_array__immutable;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.immutable                                 = immutable;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, pcs_respond__f2traced_array__immutable_t* packet) {
+  packet_status("recv_packet__respond__f2traced_array__immutable: executing.");
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this) {
+  send_packet__request__f2traced_array__immutable(funk2_node, this_thread, cause, this);
+  pcs_respond__f2traced_array__immutable_t* packet = (pcs_respond__f2traced_array__immutable_t*)funk2_node_handler__wait_for_new_thread_packet(&(__funk2.node_handler), this_thread);
+  packet_status("funk2_node__f2traced_array__immutable: packet->payload.immutable = " f2ptr__fstr, packet->payload.immutable);
+  f2ptr immutable = rf2_to_lf2(packet->payload.immutable);
+  packet_status("funk2_node__f2traced_array__immutable: rf2_to_lf2(packet->payload.immutable) = " f2ptr__fstr, immutable);
+  f2__free(to_ptr(packet));
+  return immutable;
+}
+
+f2ptr funk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2traced_array__immutable(this, cause);
+  } else {
+    f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2traced_array__immutable(funk2_node, thread, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value) {
+  packet_status("send_packet__request__f2traced_array__immutable__set: executing.");
+  pcs_request__f2traced_array__immutable__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2traced_array__immutable__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.this                                      = this;
+  packet.payload.value                                     = value;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__immutable__set_t* packet) {
+  packet_status("recv_packet__request__f2traced_array__immutable__set: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  u8    value  = rf2_to_lf2(packet->payload.value);
+  funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
+  pfunk2__f2traced_array__immutable__set(this, cause, value);
+  send_packet__respond__f2traced_array__immutable__set(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause);
+}
+
+void send_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause) {
+  packet_status("send_packet__respond__f2traced_array__immutable__set: executing.");
+  pcs_respond__f2traced_array__immutable__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2traced_array__immutable__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__immutable__set_t* packet) {
+  packet_status("recv_packet__respond__f2traced_array__immutable__set: executing.");
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value) {
+  packet_status("funk2_node__f2traced_array__immutable__set: executing.");
+  send_packet__request__f2traced_array__immutable__set(funk2_node, this_thread, cause, this, value);
+  pcs_respond__f2traced_array__immutable__set_t* packet = (pcs_respond__f2traced_array__immutable__set_t*)funk2_node_handler__wait_for_new_thread_packet(&(__funk2.node_handler), this_thread);
+  f2__free(to_ptr(packet));
+}
+
+void funk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    pfunk2__f2traced_array__immutable__set(this, cause, value);
+  } else {
+    f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    funk2_node__f2traced_array__immutable__set(funk2_node, thread, cause, this, value);
+  }
 }
 
 // ******************************************************

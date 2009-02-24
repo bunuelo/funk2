@@ -250,6 +250,7 @@ void dptr__init(dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagi
 
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
+  u8            immutable;
   u64           length;
   f2ptr         f2ptr_data[0];
 } __attribute__((__packed__));
@@ -258,6 +259,8 @@ typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
 ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
 
 #define __pure__f2simple_array__new(pool_index, cause, len, f2ptr_ptr) ptype_simple_array__new(pool_index, cause, len, f2ptr_ptr)
+#define __pure__f2simple_array__immutable(this)                        (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable)
+#define __pure__f2simple_array__immutable__set(this, value)            (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
 #define __pure__f2simple_array__length(this)                           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2simple_array__elt(this, index)                       (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f2ptr_data[index])
 #define __pure__f2simple_array__elt__set(this, index, value)           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f2ptr_data[index] = (value))
@@ -266,6 +269,7 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 
 struct ptype_traced_array_block_s {
   ptype_block_t ptype;
+  u8            immutable;
   u64           length;
   dptr_t        dptr_data[0];
 } __attribute__((__packed__));
@@ -275,6 +279,8 @@ ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr 
 
 #define __pure__f2traced_array__new(pool_index, cause, len, dptr_ptr)              ptype_traced_array__new(pool_index, cause, len, dptr_ptr)
 #define __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, len, f2ptr_ptr) ptype_traced_array__new_from_f2ptrs(pool_index, cause, len, f2ptr_ptr)
+#define __pure__f2traced_array__immutable(this)                                    (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable)
+#define __pure__f2traced_array__immutable__set(this, value)                        (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
 #define __pure__f2traced_array__length(this)                                       (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2traced_array__elt_dptr(this, index)                              (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->dptr_data[index])
 #define __pure__f2traced_array__elt(this, index)                                   dptr__p(&(__pure__f2traced_array__elt_dptr(this, index)))

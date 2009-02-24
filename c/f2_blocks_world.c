@@ -121,7 +121,7 @@ f2ptr raw__blocks_world_rectangle__render(f2ptr cause, f2ptr this, char backgrou
   u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
   u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
   u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
-  raw__stream__bordered_rectangle(cause, __funk2.globalenv.stdout__stream,
+  raw__stream__bordered_rectangle(cause, __funk2.globalenv.stdout_stream,
 				  (rect__x0 + 10),
 				  (lower_left__y - rect__y1),
 				  (rect__x1 + 10),
@@ -162,7 +162,7 @@ f2ptr f2__blocks_world_rectangle__clear_line_above(f2ptr cause, f2ptr this) {
   u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
   u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
   u64 y1 = lower_left__y - rect__y1 - 1;
-  raw__ansi__stream__rectangle(__funk2.globalenv.stdout, rect__x0 + 10, y1, rect__x1 + 10, y1, ' ');
+  raw__ansi__stream__rectangle(__funk2.globalenv.stdout_stream, rect__x0 + 10, y1, rect__x1 + 10, y1, ' ');
   return nil;
 }
 def_pcfunk1(blocks_world_rectangle__clear_line_above, this, return f2__blocks_world_rectangle__clear_line_above(this_cause, this));
@@ -285,13 +285,13 @@ f2ptr f2__blocks_world_color__render(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1);
   }
   f2ptr name = f2blocks_world_color__name(this, cause);
-  if      (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.red__symbol))     {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 12);}
-  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.green__symbol))   {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 10);}
-  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.blue__symbol))    {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 11);}
-  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.white__symbol))   {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 15);}
-  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.magenta__symbol)) {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 13);}
-  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.yellow__symbol))  {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 14);}
-  else                                                                                  {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout, 7);}
+  if      (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.red__symbol))     {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 12);}
+  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.green__symbol))   {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 10);}
+  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.blue__symbol))    {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 11);}
+  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.white__symbol))   {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 15);}
+  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.magenta__symbol)) {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 13);}
+  else if (f2__symbol__eq(cause, name, __funk2.globalenv.blocks_world.yellow__symbol))  {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 14);}
+  else                                                                                  {raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 7);}
   return nil;
 }
 def_pcfunk1(blocks_world_color__render, this, return f2__blocks_world_color__render(this_cause, this));

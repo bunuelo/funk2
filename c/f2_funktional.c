@@ -23,6 +23,9 @@
 
 
 bool raw__exp__is_immutable(f2ptr cause, f2ptr this) {
+  if (! this) {
+    return true;
+  }
   ptype_t ptype = f2ptype__raw(this, cause);
   switch(ptype) {
   case ptype_integer:

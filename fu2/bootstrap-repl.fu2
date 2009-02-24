@@ -132,7 +132,8 @@
        ,[funk-apply &and [unsafe:cons-cdr conds]]]]]
 
 [defunk error [type value]
-  [print [exception `error [cons type [cons value nil]]]]]
+  [larva 63]]
+`[print [exception `error [cons type [cons value nil]]]]]
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 

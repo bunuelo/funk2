@@ -334,6 +334,8 @@
 [globalize-funk funk2_node_handler-know_of_node             &primfunk:funk2_node_handler__know_of_node]
 [globalize-funk send_request_register_peer                  &primfunk:send_request_register_peer]
 
+[globalize-funk larva                                       &primfunk:larva]
+
 [globalize-funk publish_event                               &primfunk:publish_event]
 [globalize-funk event_subscriber                            &primfunk:event_subscriber]
 [globalize-funk subscribe                                   &primfunk:subscribe]

@@ -1694,6 +1694,16 @@ f2ptr f2__send_request_register_peer(f2ptr cause, f2ptr computer_id, f2ptr node_
 }
 def_pcfunk4(send_request_register_peer, computer_id, node_id, ip_addr, port_num, return f2__send_request_register_peer(this_cause, computer_id, node_id, ip_addr, port_num););
 
+f2ptr f2__larva(f2ptr cause, f2ptr type) {
+  if (! raw__integerp(type, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  u32 raw_type = f2integer__i(type, cause);
+  return f2larva__new(cause, raw_type);
+}
+
+def_pcfunk1(larva, type, return f2__larva(this_cause, type));
+
 // events
 
 f2ptr f2__publish_event(f2ptr cause, f2ptr type, f2ptr data) {
@@ -2184,6 +2194,8 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init(system__peer_command_server__port_num);
   f2__primcfunk__init(system__gethostname);
+  
+  f2__funktional_primcfunk__init(larva);
   
   f2__primcfunk__init(publish_event);
   f2__primcfunk__init(event_subscriber);

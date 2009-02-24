@@ -22,6 +22,8 @@
 #ifndef F2__BLOCKS_WORLD__H
 #define F2__BLOCKS_WORLD__H
 
+#include "f2_primfunks.h"
+
 // blocks_world_rectangle
 
 extern f2ptr __blocks_world_rectangle__symbol;

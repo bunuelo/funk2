@@ -178,7 +178,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      } else if (raw__larvap(f2thread__value(thread, cause), cause)) {
 		f2ptr larva = f2thread__value(thread, cause);
 		f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
-		f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+		f2ptr critics = f2thread__critics(thread, cause);
+		if (critics) {
+		  f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+		}
 		exit_reason = exit_reason__found_larva;
 		//printf("larva found in thread value register."); fflush(stdout);
 		break;
@@ -229,10 +232,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       if (critics) {
 	f2__thread_serial(cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
       } else {
-	printf("\nlarva found in thread and thread has no critics, so starting primitive repl."); fflush(stdout);
+	printf("\nlarva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
 	printf("\n  thread-value=");
 	f2__print(cause, f2thread__value(thread, cause));
-	f2__repl(cause, thread);
+	//f2__repl(cause, thread);
       }
     }
     

@@ -222,10 +222,20 @@ f2ptr raw__blocks_world_rectangle__translate(f2ptr cause, f2ptr this, s64 dx, s6
   if ((! raw__blocks_world_rectanglep(this, cause))) {
     return f2larva__new(cause, 1);
   }
-  s64 x0 = f2blocks_world_rectangle__x0(this, cause) + dx;
-  s64 y0 = f2blocks_world_rectangle__y0(this, cause) + dy;
-  s64 x1 = f2blocks_world_rectangle__x1(this, cause) + dx;
-  s64 y1 = f2blocks_world_rectangle__y1(this, cause) + dy;
+  f2ptr rect_x0 = f2blocks_world_rectangle__x0(this, cause);
+  f2ptr rect_y0 = f2blocks_world_rectangle__y0(this, cause);
+  f2ptr rect_x1 = f2blocks_world_rectangle__x1(this, cause);
+  f2ptr rect_y1 = f2blocks_world_rectangle__y1(this, cause);
+  if ((! raw__integerp(rect_x0, cause)) ||
+      (! raw__integerp(rect_y0, cause)) ||
+      (! raw__integerp(rect_x1, cause)) ||
+      (! raw__integerp(rect_y1, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  s64 x0 = f2integer__i(rect_x0, cause) + dx;
+  s64 y0 = f2integer__i(rect_y0, cause) + dy;
+  s64 x1 = f2integer__i(rect_x1, cause) + dx;
+  s64 y1 = f2integer__i(rect_y1, cause) + dy;
   f2blocks_world_rectangle__x0__set(this, cause, x0);
   f2blocks_world_rectangle__y0__set(this, cause, y0);
   f2blocks_world_rectangle__x1__set(this, cause, x1);

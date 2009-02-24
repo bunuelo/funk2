@@ -214,7 +214,7 @@ f2ptr f2__blocks_world_rectangle__clear_line_above(f2ptr cause, f2ptr this) {
   f2ptr rect__x1 = f2blocks_world_rectangle__x1(this, cause);
   f2ptr rect__y1 = f2blocks_world_rectangle__y1(this, cause);
   if ((! raw__integerp(rect__x0, cause)) ||
-      (! raw__integerp(rect__y0, cause)) ||
+      //(! raw__integerp(rect__y0, cause)) ||
       (! raw__integerp(rect__x1, cause)) ||
       (! raw__integerp(rect__y1, cause))) {
     return f2larva__new(cause, 1);

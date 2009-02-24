@@ -684,11 +684,11 @@
 [defunk memblock-set_init_render_noise [render_noise] [if [float? render_noise] [unsafe:memblock-set_init_render_noise render_noise] [error `type-error [list `memblock-set_init_render_noise render_noise]]]]
 
 'redefining error in a better way.'
-[defunk error [type value]
-  [let [[except [exception `error [cons type [cons value nil]]]]]
-    [print `[error ,except]]
-    `[print `[this-thread: ,[this-thread]]]
-     except]]
+`[defunk error [type value]
+   [let [[except [exception `error [cons type [cons value nil]]]]]
+     [print `[error ,except]]
+     `[print `[this-thread: ,[this-thread]]]
+      except]]
 
 `[format stdout '\ncompiling thought_process.fu2']
 `[load 'fu2/thought_process.fu2']

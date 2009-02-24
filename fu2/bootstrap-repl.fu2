@@ -39,17 +39,17 @@
 											       nil
 											       nil]
 									  4]]
-					     [define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
-												demetroed
-												body
-												nil
-												nil]
-									  10]]
-					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
+					     `[define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
+												 demetroed
+												 body
+												 nil
+												 nil]
+									    10]]
+					      `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
 							  [quote ,compiled_bcs]
-							  [quote ,is_funktional]]]
+							  nil]]
 					    nil
 					    nil]]
 
@@ -61,17 +61,17 @@
 										      nil
 										      nil]
 								 4]]
-				    [define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
-										       demetroed
-										       body
-										       nil
-										       nil]
-								 10]]
-				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
+				    `[define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
+											demetroed
+											body
+											nil
+											nil]
+								   10]]
+				     `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
 						  [quote ,demetroed]
 						  [quote ,body]
 						  [quote ,compiled_bcs]
-						  [quote ,is_funktional]]]
+						  nil]]
 				   nil
 				   nil]]
 

@@ -352,7 +352,7 @@ f2ptr f2__blocks_world_object__render(f2ptr cause, f2ptr this) {
   if (raw__larvap(f2__blocks_world_color__render(cause, color), cause)) {
     return f2larva__new(cause, 2);
   }
-  if (raw__larvap(f2__blocks_world_rectangle__render(cause, rectangle), cause)) {
+  if (raw__larvap(raw__blocks_world_rectangle__render(cause, rectangle, render_char), cause)) {
     return f2larva__new(cause, 2);
   }
   raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 7);

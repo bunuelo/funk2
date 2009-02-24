@@ -223,7 +223,8 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   f2ptr funk_bcs = f2__compile__value__set(cause, tracewrap, funk);
   if (f2funk__body_bytecodes(funk, cause)) {return bcs_valid(funk_bcs);}
   
-  bool funk__is_funktional = true;
+  bool  funk__is_funktional = true;
+  f2ptr local_variables     = f2funk__args(funk, cause);
   
   // save return and environment registers
   f2ptr full_bcs =                                f2__compile__push_debug_funk_call(cause, tracewrap); f2ptr iter = full_bcs;
@@ -262,7 +263,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   }
   
   bool popped_env_and_return = false;
-  f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2funk__demetropolized_body(funk, cause), false, true, &popped_env_and_return, &funk__is_funktional);
+  f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2funk__demetropolized_body(funk, cause), false, true, &popped_env_and_return, &funk__is_funktional, local_variables);
   if (body_bcs && (! raw__consp(body_bcs, cause))) {return body_bcs;}
   
   //body_bcs = f2__compile__funk__optimize_body_bytecodes(cause, tracewrap, funk, body_bcs);
@@ -291,7 +292,8 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   f2ptr metro_bcs = f2__compile__value__set(cause, tracewrap, metro);
   if (f2metro__body_bytecodes(metro, cause)) {return bcs_valid(metro_bcs);}
   
-  bool metro__is_funktional = true;
+  bool  metro__is_funktional = true;
+  f2ptr local_variables      = f2metro__args(metro, cause);
   
   // save return and environment registers
   f2ptr full_bcs =                                f2__compile__push_debug_funk_call(cause, tracewrap); f2ptr iter = full_bcs;
@@ -327,7 +329,7 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   }
   
   bool popped_env_and_return = false;
-  f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2metro__demetropolized_body(metro, cause), false, true, &popped_env_and_return, &metro__is_funktional);
+  f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2metro__demetropolized_body(metro, cause), false, true, &popped_env_and_return, &metro__is_funktional, local_variables);
   if (body_bcs && (! raw__consp(body_bcs, cause))) {return body_bcs;}
   iter = f2__list_cdr__set(cause, iter, body_bcs);
   
@@ -428,7 +430,7 @@ f2ptr f2__compile__if(f2ptr simple_cause, bool tracewrap, f2ptr cond_bcs, f2ptr 
 }
 
 f2ptr __f2__compile__rawcode__symbol = -1;
-f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
+f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables) {
   release__assert(__f2__compile__rawcode__symbol != -1, nil, "__f2__compile__rawcode__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__rawcode__symbol, exps);
   
@@ -447,7 +449,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   do {
     f2ptr exp = f2cons__car(exps, cause);
     next      = f2cons__cdr(exps, cause);
-    full_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
+    full_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional, local_variables);
     if (! exp__is_funktional) {
       if (is_funktional) {
 	*is_funktional = false;
@@ -481,7 +483,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
     do {
       f2ptr exp = f2cons__car(exps, cause);
       next      = f2cons__cdr(exps, cause);
-      exp_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional);
+      exp_bcs = raw__compile(cause, tracewrap, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional, local_variables);
       if (! exp__is_funktional) {
 	if (is_funktional) {
 	  *is_funktional = false;
@@ -507,7 +509,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
 }
 
 f2ptr __f2__compile__if_exp__symbol = -1;
-f2ptr f2__compile__if_exp(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
+f2ptr f2__compile__if_exp(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables) {
   release__assert(__f2__compile__if_exp__symbol != -1, nil, "__f2__compile__if_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__if_exp__symbol, exps);
   
@@ -519,15 +521,15 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   f2ptr false_exps = exps;
   if (false_exps && (! raw__consp(false_exps, cause))) {return false_exps;}
   
-  f2ptr cond_bcs   = raw__compile(cause, tracewrap, thread, cond_exp, true, false, NULL, is_funktional);
+  f2ptr cond_bcs   = raw__compile(cause, tracewrap, thread, cond_exp, true, false, NULL, is_funktional, local_variables);
   if (cond_bcs && (! raw__consp(cond_bcs, cause))) {return cond_bcs;}
   
   bool true__popped_env_and_return = false;
-  f2ptr true_bcs   = raw__compile(cause, tracewrap, thread, true_exp, protect_environment, optimize_tail_recursion, &true__popped_env_and_return, is_funktional);
+  f2ptr true_bcs   = raw__compile(cause, tracewrap, thread, true_exp, protect_environment, optimize_tail_recursion, &true__popped_env_and_return, is_funktional, local_variables);
   if (true_bcs && (! raw__consp(true_bcs, cause))) {return true_bcs;}
   
   bool false__popped_env_and_return = false;
-  f2ptr false_bcs = f2__compile__rawcode(cause, tracewrap, thread, false_exps, protect_environment, optimize_tail_recursion, &false__popped_env_and_return, is_funktional);
+  f2ptr false_bcs = f2__compile__rawcode(cause, tracewrap, thread, false_exps, protect_environment, optimize_tail_recursion, &false__popped_env_and_return, is_funktional, local_variables);
   if (false_bcs && (! raw__consp(false_bcs, cause))) {return false_bcs;}
   
   if (true__popped_env_and_return || false__popped_env_and_return) {
@@ -571,7 +573,7 @@ f2ptr f2__compile__lookup_funkvar_exp(f2ptr simple_cause, bool tracewrap, f2ptr 
 
 f2ptr __f2__compile__eval_args__symbol = -1;
 f2ptr __f2__compile__eval_args__current_arg__symbol = -1;
-f2ptr f2__compile__eval_args(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr args, bool* is_funktional) {
+f2ptr f2__compile__eval_args(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr args, bool* is_funktional, f2ptr local_variables) {
   release__assert(__f2__compile__eval_args__symbol              != -1, nil, "__f2__compile__eval_args__symbol not yet defined.");
   release__assert(__f2__compile__eval_args__current_arg__symbol != -1, nil, "__f2__compile__eval_args__current_arg__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__eval_args__symbol, args);
@@ -586,7 +588,7 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
     exp_bcs     = f2__compile__push_iter(arg_cause, tracewrap);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     exp_bcs     = f2__compile__push_args(arg_cause, tracewrap);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
-    exp_bcs     = raw__compile(arg_cause, tracewrap, rte, current_arg, true, false, NULL, is_funktional);
+    exp_bcs     = raw__compile(arg_cause, tracewrap, rte, current_arg, true, false, NULL, is_funktional, local_variables);
     if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
@@ -613,7 +615,7 @@ f2ptr   f2__compile__define_funk_exp(f2ptr simple_cause, bool tracewrap, f2ptr r
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
-  f2ptr value_bcs          = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL);
+  f2ptr value_bcs          = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL, nil);
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr define_funkvar_bcs = f2__compile__define_funkvar(cause, tracewrap, funkvar);
   
@@ -629,7 +631,7 @@ f2ptr   f2__compile__define_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
-  f2ptr value_bcs      = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL);
+  f2ptr value_bcs      = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL, nil);
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr define_var_bcs = f2__compile__define_var(cause, tracewrap, var);
   
@@ -645,7 +647,7 @@ f2ptr f2__compile__set_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr 
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
-  f2ptr value_bcs = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL);
+  f2ptr value_bcs = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL, nil);
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr var_set__bcs = f2__compile__var__set(cause, tracewrap, var);
   
@@ -661,7 +663,7 @@ f2ptr f2__compile__setfunk_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
-  f2ptr value_bcs       = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL);
+  f2ptr value_bcs       = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL, nil);
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr funkvar_set__bcs = f2__compile__funkvar__set(cause, tracewrap, funkvar);
   
@@ -677,7 +679,7 @@ f2ptr f2__compile__globalize_var_exp(f2ptr simple_cause, bool tracewrap, f2ptr r
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
-  f2ptr value_bcs = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL);
+  f2ptr value_bcs = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL, nil);
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr var_set__bcs = f2__compile__globalize_var(cause, tracewrap, var);
   
@@ -693,7 +695,7 @@ f2ptr f2__compile__globalize_funkvar_exp(f2ptr simple_cause, bool tracewrap, f2p
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
-  f2ptr value_bcs       = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL);
+  f2ptr value_bcs       = raw__compile(cause, tracewrap, rte, value_exp, true, false, NULL, NULL, nil);
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr funkvar_set__bcs = f2__compile__globalize_funkvar(cause, tracewrap, funkvar);
   
@@ -710,14 +712,14 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
   exps = f2cons__cdr(exps, cause); if (! raw__consp(exps, cause)) {return __compile__exception;} f2ptr funk_exp = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! raw__consp(exps, cause)) {return __compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
   
-  f2ptr full_bcs = raw__compile(cause, tracewrap, rte, funk_exp, true, false, NULL, NULL);
+  f2ptr full_bcs = raw__compile(cause, tracewrap, rte, funk_exp, true, false, NULL, NULL, nil);
   if (full_bcs && (! raw__consp(full_bcs, cause))) {
     return full_bcs;
   }
   f2ptr iter = full_bcs;
   
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));
-  f2ptr exp_bcs  = raw__compile(cause, tracewrap, rte, args_exp, true, false, NULL, NULL);
+  f2ptr exp_bcs  = raw__compile(cause, tracewrap, rte, args_exp, true, false, NULL, NULL, nil);
   if (exp_bcs && (! raw__consp(exp_bcs, cause))) {
     return exp_bcs;
   }
@@ -756,14 +758,14 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
 f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr thread, f2ptr funk, f2ptr args);
 
 f2ptr __f2__compile__funkvar_call__symbol = -1;
-f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
+f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables) {
   release__assert(__f2__compile__funkvar_call__symbol != -1, nil, "__f2__compile__funkvar_call__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__funkvar_call__symbol, exps);
   
   f2ptr funkvar = f2cons__car(exps, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), funkvar);
   if (raw__metrocfunkp(funkvar_value, cause)) {
-    return bcs_valid(raw__compile(cause, tracewrap, rte, f2__metrocfunk__apply(cause, funkvar_value, rte, f2cons__cdr(exps, cause)), true, false, NULL, is_funktional));
+    return bcs_valid(raw__compile(cause, tracewrap, rte, f2__metrocfunk__apply(cause, funkvar_value, rte, f2cons__cdr(exps, cause)), true, false, NULL, is_funktional, local_variables));
   } else {
     if (is_funktional) {
       if (*is_funktional) {
@@ -889,7 +891,7 @@ f2ptr f2__compile__backquote_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, 
     exp_bcs     = f2__compile__push_iter(cause, tracewrap);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     exp_bcs     = f2__compile__push_args(cause, tracewrap);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
-    exp_bcs     = raw__compile(cause, tracewrap, rte, f2cons__car(args, cause), true, false, NULL, NULL);
+    exp_bcs     = raw__compile(cause, tracewrap, rte, f2cons__car(args, cause), true, false, NULL, NULL, nil);
     if(exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
@@ -923,7 +925,7 @@ f2ptr f2__compile__backquote_append_exp(f2ptr simple_cause, bool tracewrap, f2pt
     exp_bcs     = f2__compile__push_iter(cause, tracewrap);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     exp_bcs     = f2__compile__push_args(cause, tracewrap);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
-    exp_bcs     = raw__compile(cause, tracewrap, rte, f2cons__car(args, cause), true, false, NULL, NULL);
+    exp_bcs     = raw__compile(cause, tracewrap, rte, f2cons__car(args, cause), true, false, NULL, NULL, nil);
     if(exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
@@ -969,7 +971,7 @@ f2ptr f2__is_compile_special_symbol(f2ptr exp) {
 }
 
 f2ptr __f2__compile__special_symbol_exp__symbol = -1;
-f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
+f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables) {
   release__assert(__f2__compile__special_symbol_exp__symbol != -1, nil, "__f2__compile__special_symbol_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__special_symbol_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
@@ -977,7 +979,7 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, bool tracewrap, f2ptr 
   if (car == __funk2.globalenv.quote__symbol)                                                               {return bcs_valid(f2__compile__value__set(cause, tracewrap, f2cons__car(f2cons__cdr(exp, cause), cause)));}
   if (car == __funk2.globalenv.backquote__list__symbol)        {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__backquote_exp(cause, tracewrap, rte, exp));}
   if (car == __funk2.globalenv.backquote__list_append__symbol) {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__backquote_append_exp(cause, tracewrap, rte, exp));}
-  if (car == __funk2.globalenv.if__symbol)                     {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__if_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional));}
+  if (car == __funk2.globalenv.if__symbol)                     {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__if_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables));}
   if (car == __funk2.globalenv.apply__symbol)                  {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__apply_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   if (car == __funk2.globalenv.funkvar__symbol)                {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, tracewrap, exp));}
   if (car == __funk2.globalenv.define_funk__symbol)            {if (is_funktional) {*is_funktional = false;} return bcs_valid(f2__compile__define_funk_exp(cause, tracewrap, rte, exp));}
@@ -1021,14 +1023,14 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr en
 }
 
 f2ptr __f2__compile__cons_exp__symbol = -1;
-f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional) {
+f2ptr f2__compile__cons_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables) {
   release__assert(__f2__compile__cons_exp__symbol != -1, nil, "__f2__compile__cons_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__cons_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
   f2ptr car = f2cons__car(exp, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(rte, cause), car);
-  if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL, is_funktional));}
-  if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional));}
+  if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, tracewrap, rte, raw__apply_metro(cause, rte, funkvar_value, f2cons__cdr(exp, cause)), true, false, NULL, is_funktional, local_variables));}
+  if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables));}
   if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional));}
   printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
   printf("don't know how to compile type."); // should throw exception... (or return larva)
@@ -1129,7 +1131,7 @@ void enter_compile_debug() {
 }
 
 f2ptr __raw__compile__symbol = -1;
-f2ptr   raw__compile(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional) {
+f2ptr   raw__compile(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional, f2ptr local_variables) {
   release__assert(__raw__compile__symbol != -1, nil, "__raw__compile__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __raw__compile__symbol, f2cons__new(simple_cause, exp, nil));
 #ifdef DEBUG_COMPILE
@@ -1149,7 +1151,7 @@ f2ptr   raw__compile(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, b
   else if (raw__gfunkptrp(exp, cause))  {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__stringp(exp, cause))    {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__symbolp(exp, cause))    {result_bcs = f2__compile__symbol(    cause, tracewrap, exp, is_funktional);}
-  else if (raw__consp(exp, cause))      {result_bcs = f2__compile__cons_exp(  cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional);}
+  else if (raw__consp(exp, cause))      {result_bcs = f2__compile__cons_exp(  cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables);}
   else if (raw__arrayp(exp, cause))     {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__cfunkp(exp, cause))     {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__funkp(exp, cause))      {result_bcs = f2__compile__funk(      cause, tracewrap, rte, exp);}

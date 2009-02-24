@@ -181,6 +181,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		f2ptr critics = f2thread__critics(thread, cause);
 		if (critics) {
 		  f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+		} else {
+		  f2thread__program_counter__set(thread, cause, nil);
 		}
 		exit_reason = exit_reason__found_larva;
 		//printf("larva found in thread value register."); fflush(stdout);

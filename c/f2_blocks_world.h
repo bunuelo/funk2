@@ -22,6 +22,43 @@
 #ifndef F2__BLOCKS_WORLD__H
 #define F2__BLOCKS_WORLD__H
 
+// blocks_world_rectangle
+
+extern f2ptr __blocks_world_rectangle__symbol;
+f2ptr f2blocks_world_rectangle__new(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1);
+
+#define f2primobject__is__blocks_world_rectangle(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_rectangle__symbol)
+
+defprimobject__static_slot__prototype(blocks_world_rectangle__x0);
+#define f2blocks_world_rectangle__x0(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_rectangle__x0, cause)
+#define f2blocks_world_rectangle__x0__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_rectangle__x0, cause, value)
+#define f2blocks_world_rectangle__x0__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_rectangle__x0, cause)
+#define f2blocks_world_rectangle__x0__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_rectangle__x0, cause)
+#define f2blocks_world_rectangle__x0__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_rectangle__x0, cause)
+
+defprimobject__static_slot__prototype(blocks_world_rectangle__y0);
+#define f2blocks_world_rectangle__y0(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_rectangle__y0, cause)
+#define f2blocks_world_rectangle__y0__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_rectangle__y0, cause, value)
+#define f2blocks_world_rectangle__y0__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_rectangle__y0, cause)
+#define f2blocks_world_rectangle__y0__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_rectangle__y0, cause)
+#define f2blocks_world_rectangle__y0__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_rectangle__y0, cause)
+
+defprimobject__static_slot__prototype(blocks_world_rectangle__x1);
+#define f2blocks_world_rectangle__x1(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_rectangle__x1, cause)
+#define f2blocks_world_rectangle__x1__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_rectangle__x1, cause, value)
+#define f2blocks_world_rectangle__x1__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_rectangle__x1, cause)
+#define f2blocks_world_rectangle__x1__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_rectangle__x1, cause)
+#define f2blocks_world_rectangle__x1__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_rectangle__x1, cause)
+
+defprimobject__static_slot__prototype(blocks_world_rectangle__y1);
+#define f2blocks_world_rectangle__y1(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_rectangle__y1, cause)
+#define f2blocks_world_rectangle__y1__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_rectangle__y1, cause, value)
+#define f2blocks_world_rectangle__y1__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_rectangle__y1, cause)
+#define f2blocks_world_rectangle__y1__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_rectangle__y1, cause)
+#define f2blocks_world_rectangle__y1__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_rectangle__y1, cause)
+
+
+
 // blocks_world_object
 
 extern f2ptr __blocks_world_object__symbol;

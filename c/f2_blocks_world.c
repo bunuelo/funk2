@@ -162,7 +162,7 @@ f2ptr f2__blocks_world_rectangle__clear_line_above(f2ptr cause, f2ptr this) {
   u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
   u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
   u64 y1 = lower_left__y - rect__y1 - 1;
-  raw__ansi__stream__rectangle(__funk2.globalenv.stdout_stream, rect__x0 + 10, y1, rect__x1 + 10, y1, ' ');
+  raw__ansi__stream__rectangle(cause, __funk2.globalenv.stdout_stream, rect__x0 + 10, y1, rect__x1 + 10, y1, ' ');
   return nil;
 }
 def_pcfunk1(blocks_world_rectangle__clear_line_above, this, return f2__blocks_world_rectangle__clear_line_above(this_cause, this));

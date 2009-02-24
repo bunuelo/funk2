@@ -62,6 +62,11 @@ f2ptr f2blocks_world_rectangle__new(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr x1, f
   return this;
 }
 
+bool raw__blocks_world_rectanglep(f2ptr this, f2ptr cause) {
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_rectangle(this, cause));
+}
+
+
 f2ptr f2__blocks_world_rectangle__new_copy(f2ptr cause, f2ptr this) {
   if (! raw__blocks_world_rectanglep(this, cause)) {
     return f2larva__new(cause, 1);
@@ -270,6 +275,11 @@ f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name) {
   return this;
 }
 
+bool raw__blocks_world_colorp(f2ptr this, f2ptr cause) {
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_colorp(this, cause));
+}
+
+
 f2ptr f2__blocks_world_color__render(f2ptr cause, f2ptr this) {
   if (! raw__blocks_world_colorp(this, cause)) {
     return f2larva__new(cause, 1);
@@ -308,6 +318,10 @@ f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rect
   return this;
 }
 
+bool raw__blocks_world_objectp(f2ptr this, f2ptr cause) {
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_objectp(this, cause));
+}
+
 
 // blocks_world
 
@@ -322,6 +336,10 @@ f2ptr f2blocks_world__new(f2ptr cause, f2ptr objects) {
   f2blocks_world__objects__set(this, cause, objects);
   /*resume_gc();*/
   return this;
+}
+
+bool raw__blocks_worldp(f2ptr this, f2ptr cause) {
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_worldp(this, cause));
 }
 
 

@@ -26,6 +26,7 @@
 
 extern f2ptr __blocks_world_rectangle__symbol;
 f2ptr f2blocks_world_rectangle__new(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1);
+bool  raw__blocks_world_rectanglep(f2ptr this, f2ptr cause);
 
 #define f2primobject__is__blocks_world_rectangle(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_rectangle__symbol)
 
@@ -63,6 +64,7 @@ defprimobject__static_slot__prototype(blocks_world_rectangle__y1);
 
 extern f2ptr __blocks_world_color__symbol;
 f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name);
+bool raw__blocks_world_colorp(f2ptr this, f2ptr cause);
 
 #define f2primobject__is__blocks_world_color(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_color__symbol)
 
@@ -79,6 +81,7 @@ defprimobject__static_slot__prototype(blocks_world_color__name);
 
 extern f2ptr __blocks_world_object__symbol;
 f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color);
+bool raw__blocks_world_objectp(f2ptr this, f2ptr cause);
 
 #define f2primobject__is__blocks_world_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_object__symbol)
 
@@ -116,6 +119,7 @@ defprimobject__static_slot__prototype(blocks_world_object__color);
 
 extern f2ptr __blocks_world__symbol;
 f2ptr f2blocks_world__new(f2ptr cause, f2ptr objects);
+bool raw__blocks_worldp(f2ptr this, f2ptr cause);
 
 #define f2primobject__is__blocks_world(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world__symbol)
 

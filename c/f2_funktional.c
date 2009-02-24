@@ -41,8 +41,9 @@ bool raw__exp__is_immutable(f2ptr cause, f2ptr this) {
     return true;
   case ptype_chunk:
   case ptype_simple_array:
+    return (f2simple_array__immutable(this, cause) != 0);
   case ptype_traced_array:
-    return false;
+    return (f2traced_array__immutable(this, cause) != 0);
   default:
     error(nil, "raw__exp__is_funktional: shouldn't get here.");
   }

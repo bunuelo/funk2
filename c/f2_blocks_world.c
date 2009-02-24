@@ -53,7 +53,7 @@ f2ptr __blocks_world_rectangle__symbol = -1;
 f2ptr f2blocks_world_rectangle__new(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1) {
   /*pause_gc();*/
   release__assert(__blocks_world_rectangle__symbol != -1, nil, "f2blocks_world_rectangle__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 4, nil);
+  f2ptr this = f2__primobject__new(cause, __blocks_world_rectangle__symbol, 4, nil);
   f2blocks_world_rectangle__x0__set(this, cause, x0);
   f2blocks_world_rectangle__y0__set(this, cause, y0);
   f2blocks_world_rectangle__x1__set(this, cause, x1);
@@ -310,7 +310,7 @@ f2ptr __blocks_world_color__symbol = -1;
 f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name) {
   /*pause_gc();*/
   release__assert(__blocks_world_color__symbol != -1, nil, "f2blocks_world_color__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 1, nil);
+  f2ptr this = f2__primobject__new(cause, __blocks_world_color__symbol, 1, nil);
   f2blocks_world_color__name__set(this, cause, name);
   /*resume_gc();*/
   return this;

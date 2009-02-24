@@ -1212,7 +1212,7 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr tracewrap, f2ptr name, f2p
   
   return metro;
 }
-def_pcfunk6(make_metro, tracewrap, name, args, demetropolized_body, body, bytecodes, return f2__make_metro(this_cause, simple_thread, tracewrap, name, args, demetropolized_body, body, bytecodes));
+def_pcfunk7(make_metro, tracewrap, name, args, demetropolized_body, body, bytecodes, is_funktional, return f2__make_metro(this_cause, simple_thread, tracewrap, name, args, demetropolized_body, body, bytecodes, is_funktional));
 
 f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args) {
   release__assert(raw__cfunkp(cfunk, cause),        nil, "cfunk failed type assertion.");

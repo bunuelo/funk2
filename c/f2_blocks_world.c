@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-u64 raw__blocks_world__lower_left__x(f2ptr cause) {
+s64 raw__blocks_world__lower_left__x(f2ptr cause) {
   return 20;
 }
 
@@ -31,7 +31,7 @@ f2ptr f2__blocks_world__lower_left__x(f2ptr cause) {
 def_pcfunk0(blocks_world__lower_left__x, return f2__blocks_world__lower_left__x(this_cause));
 
 
-u64 raw__blocks_world__lower_left__y(f2ptr cause) {
+s64 raw__blocks_world__lower_left__y(f2ptr cause) {
   return raw__termios__height() - 10;
 }
 
@@ -119,9 +119,9 @@ f2ptr f2__blocks_world_rectangle__new_copy(f2ptr cause, f2ptr this) {
 def_pcfunk1(blocks_world_rectangle__new_copy, this, return f2__blocks_world_rectangle__new_copy(this_cause, this));
 
 
-f2ptr raw__blocks_world_rectangle__create(f2ptr cause, u64 x0, u64 y0, u64 x1, u64 y1) {
-  u64 min_x; u64 max_x; if (x0 < x1) {min_x = x0; max_x = x1;} else {min_x = x1; max_x = x0;}
-  u64 min_y; u64 max_y; if (y0 < y1) {min_y = y0; max_y = y1;} else {min_y = y1; max_y = y0;}
+f2ptr raw__blocks_world_rectangle__create(f2ptr cause, s64 x0, s64 y0, s64 x1, s64 y1) {
+  s64 min_x; s64 max_x; if (x0 < x1) {min_x = x0; max_x = x1;} else {min_x = x1; max_x = x0;}
+  s64 min_y; s64 max_y; if (y0 < y1) {min_y = y0; max_y = y1;} else {min_y = y1; max_y = y0;}
   return f2blocks_world_rectangle__new(cause, f2integer__new(cause, min_x), f2integer__new(cause, min_y), f2integer__new(cause, max_x), f2integer__new(cause, max_y));
 }
 
@@ -132,10 +132,10 @@ f2ptr f2__blocks_world_rectangle__create(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr 
       (! raw__integerp(y1, cause))) {
     return f2larva__new(cause, 1);
   }
-  u64 raw_x0 = f2integer__i(x0, cause);
-  u64 raw_y0 = f2integer__i(y0, cause);
-  u64 raw_x1 = f2integer__i(x1, cause);
-  u64 raw_y1 = f2integer__i(y1, cause);
+  s64 raw_x0 = f2integer__i(x0, cause);
+  s64 raw_y0 = f2integer__i(y0, cause);
+  s64 raw_x1 = f2integer__i(x1, cause);
+  s64 raw_y1 = f2integer__i(y1, cause);
   return raw__blocks_world_rectangle__create(cause, raw_x0, raw_y0, raw_x1, raw_y1);
 }
 def_pcfunk4(blocks_world_rectangle__create, x0, y0, x1, y1, return f2__blocks_world_rectangle__create(simple_cause, x0, y0, x1, y1));
@@ -156,12 +156,12 @@ f2ptr raw__blocks_world_rectangle__render(f2ptr cause, f2ptr this, char backgrou
   if ((! raw__blocks_world_rectanglep(this, cause))) {
     return f2larva__new(cause, 1);
   }
-  //u64 lower_left__x = raw__blocks_world__lower_left__x(cause);
-  u64 lower_left__y = raw__blocks_world__lower_left__y(cause);
-  u64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
-  u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
-  u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
-  u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
+  //s64 lower_left__x = raw__blocks_world__lower_left__x(cause);
+  s64 lower_left__y = raw__blocks_world__lower_left__y(cause);
+  s64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
+  s64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
+  s64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
+  s64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
   raw__ansi__stream__bordered_rectangle(cause, __funk2.globalenv.stdout_stream,
 					(rect__x0 + 10),
 					(lower_left__y - rect__y1),
@@ -196,13 +196,13 @@ f2ptr f2__blocks_world_rectangle__clear_line_above(f2ptr cause, f2ptr this) {
   if ((! raw__blocks_world_rectanglep(this, cause))) {
     return f2larva__new(cause, 1);
   }
-  //u64 lower_left__x = raw__blocks_world__lower_left__x(cause);
-  u64 lower_left__y = raw__blocks_world__lower_left__y(cause);
-  u64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
-  //u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
-  u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
-  u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
-  u64 y1 = lower_left__y - rect__y1 - 1;
+  //s64 lower_left__x = raw__blocks_world__lower_left__x(cause);
+  s64 lower_left__y = raw__blocks_world__lower_left__y(cause);
+  s64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
+  //s64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
+  s64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
+  s64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
+  s64 y1 = lower_left__y - rect__y1 - 1;
   raw__ansi__stream__rectangle(cause, __funk2.globalenv.stdout_stream, rect__x0 + 10, y1, rect__x1 + 10, y1, ' ');
   return nil;
 }

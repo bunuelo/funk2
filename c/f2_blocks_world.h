@@ -59,6 +59,22 @@ defprimobject__static_slot__prototype(blocks_world_rectangle__y1);
 
 
 
+// blocks_world_color
+
+extern f2ptr __blocks_world_color__symbol;
+f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name);
+
+#define f2primobject__is__blocks_world_color(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_color__symbol)
+
+defprimobject__static_slot__prototype(blocks_world_color__name);
+#define f2blocks_world_color__name(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_color__name, cause)
+#define f2blocks_world_color__name__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_color__name, cause, value)
+#define f2blocks_world_color__name__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_color__name, cause)
+#define f2blocks_world_color__name__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_color__name, cause)
+#define f2blocks_world_color__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_color__name, cause)
+
+
+
 // blocks_world_object
 
 extern f2ptr __blocks_world_object__symbol;

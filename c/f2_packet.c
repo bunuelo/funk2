@@ -4122,7 +4122,7 @@ void recv_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, p
   send_packet__respond__f2traced_array__immutable(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause, immutable);
 }
 
-void send_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr immutable) {
+void send_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 immutable) {
   packet_status("send_packet__respond__f2traced_array__immutable: executing.");
   pcs_respond__f2traced_array__immutable_t packet;
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));

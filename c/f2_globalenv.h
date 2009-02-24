@@ -26,6 +26,7 @@
 #include "f2_ptypes.h"
 #include "f2_primfunks.h"
 #include "f2_object.h"
+#include "f2_blocks_world.h"
 
 typedef struct funk2_globalenv_s {
   

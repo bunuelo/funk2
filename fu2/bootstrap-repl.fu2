@@ -116,6 +116,7 @@
   [funk-apply [make-funk -trace_all_compiles- `eval []
 			 [cons exp nil]
 			 [cons exp nil]
+			 nil
 			 nil]
 	      nil]]
 

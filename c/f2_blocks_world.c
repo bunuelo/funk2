@@ -237,14 +237,14 @@ f2ptr f2__blocks_world_rectangle__overlaps(f2ptr cause, f2ptr this, f2ptr rectan
       (! raw__blocks_world_rectanglep(rectangle, cause))) {
     return f2larva__new(cause, 1);
   }
-  s64 a_x0 = f2blocks_world_rectangle__x0(this, cause);
-  s64 a_y0 = f2blocks_world_rectangle__y0(this, cause);
-  s64 a_x1 = f2blocks_world_rectangle__x1(this, cause);
-  s64 a_y1 = f2blocks_world_rectangle__y1(this, cause);
-  s64 b_x0 = f2blocks_world_rectangle__x0(that, cause);
-  s64 b_y0 = f2blocks_world_rectangle__y0(that, cause);
-  s64 b_x1 = f2blocks_world_rectangle__x1(that, cause);
-  s64 b_y1 = f2blocks_world_rectangle__y1(that, cause);
+  s64 a_x0 = f2blocks_world_rectangle__x0(this,      cause);
+  s64 a_y0 = f2blocks_world_rectangle__y0(this,      cause);
+  s64 a_x1 = f2blocks_world_rectangle__x1(this,      cause);
+  s64 a_y1 = f2blocks_world_rectangle__y1(this,      cause);
+  s64 b_x0 = f2blocks_world_rectangle__x0(rectangle, cause);
+  s64 b_y0 = f2blocks_world_rectangle__y0(rectangle, cause);
+  s64 b_x1 = f2blocks_world_rectangle__x1(rectangle, cause);
+  s64 b_y1 = f2blocks_world_rectangle__y1(rectangle, cause);
   if ((((b_x0 <= a_x0) && (b_x1 >= a_x1)) ||
        ((a_x0 <= b_x0) && (a_x1 >= b_x1)) ||
        ((a_x0 <= b_x0) && (a_x1 >= b_x0)) ||

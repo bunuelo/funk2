@@ -28,7 +28,7 @@ u64 raw__blocks_world__lower_left__x(f2ptr cause) {
 f2ptr f2__blocks_world__lower_left__x(f2ptr cause) {
   return f2integer__new(cause, raw__blocks_world__lower_left__x(cause));
 }
-def__pcfunk0(blocks_world__lower_left__x, return f2__blocks_world__lower_left__x(this_cause));
+def_pcfunk0(blocks_world__lower_left__x, return f2__blocks_world__lower_left__x(this_cause));
 
 
 u64 raw__blocks_world__lower_left__y(f2ptr cause) {
@@ -38,7 +38,7 @@ u64 raw__blocks_world__lower_left__y(f2ptr cause) {
 f2ptr f2__blocks_world__lower_left__y(f2ptr cause) {
   return f2integer__new(cause, raw__blocks_world__lower_left__y(cause));
 }
-def__pcfunk0(blocks_world__lower_left__y, return f2__blocks_world__lower_left__y(this_cause));
+def_pcfunk0(blocks_world__lower_left__y, return f2__blocks_world__lower_left__y(this_cause));
 
 
 // blocks_world_rectangle

@@ -40,10 +40,10 @@
 	  [if [and [integer? x] [double? y]] [integer-add_double x y]
 	    [error `runtime-error `type-check-failure]]]]]]]
 
-[defunk + [x :rest rest]
+[defmetro + [x :rest rest]
   [if [null rest]
       x
-    [binary-add x [apply &+ rest]]]]
+    `[binary-add ,x ,[apply &+ rest]]]]
 
 
 'subtraction'
@@ -59,10 +59,10 @@
 [defunk negative [x]
   [binary-subtract 0 x]]
 
-[defunk - [x :rest rest]
+[defmetro - [x :rest rest]
   [if [null rest]
-      [negative x]
-    [binary-subtract x [apply &+ rest]]]]
+      `[negative ,x]
+    `[binary-subtract ,x ,[apply &+ rest]]]]
 
 
 'multiplication'
@@ -74,10 +74,10 @@
 	[if [and [double? x] [integer? y]] [unsafe:double-multiply_by_integer x y]
 	  [error `runtime-error `type-check-failure]]]]]]
 
-[defunk * [x :rest rest]
+[defmetro * [x :rest rest]
   [if [null rest]
       x
-    [binary-multiply x [apply &* rest]]]]
+    `[binary-multiply ,x ,[apply &* rest]]]]
 
 
 'division'
@@ -92,10 +92,10 @@
 [defunk inverse [x]
   [binary-divide 1 x]]
 
-[defunk / [x :rest rest]
+[defmetro / [x :rest rest]
   [if [null rest]
-      [inverse x]
-    [binary-divide x [apply &* rest]]]]
+      `[inverse ,x]
+    `[binary-divide ,x ,[apply &* rest]]]]
 
 
 [defunk = [x y]

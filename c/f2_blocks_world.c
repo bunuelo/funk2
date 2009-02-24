@@ -382,8 +382,7 @@ f2ptr raw__blocks_world_object__translate_overlaps_objects(f2ptr cause, f2ptr th
   }
   f2ptr rectangle           = f2blocks_world_object__rectangle(this, cause);
   f2ptr translate_rectangle = raw__blocks_world_rectangle__new_translate(cause, rectangle, dx, dy);
-
-  bool  found_overlap_object = false;
+  
   f2ptr object_iter = objects;
   while (object_iter) {
     if (! raw__consp(object_iter, cause)) {

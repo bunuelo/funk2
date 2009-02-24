@@ -276,7 +276,7 @@ f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name) {
 }
 
 bool raw__blocks_world_colorp(f2ptr this, f2ptr cause) {
-  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_colorp(this, cause));
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_color(this, cause));
 }
 
 
@@ -319,7 +319,7 @@ f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rect
 }
 
 bool raw__blocks_world_objectp(f2ptr this, f2ptr cause) {
-  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_objectp(this, cause));
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_object(this, cause));
 }
 
 
@@ -339,7 +339,7 @@ f2ptr f2blocks_world__new(f2ptr cause, f2ptr objects) {
 }
 
 bool raw__blocks_worldp(f2ptr this, f2ptr cause) {
-  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_worldp(this, cause));
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world(this, cause));
 }
 
 

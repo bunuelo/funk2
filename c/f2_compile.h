@@ -42,11 +42,11 @@ extern f2ptr f2__compile__funk_bc(f2ptr cause, bool tracewrap);
 
 extern f2ptr f2__compile__funk(f2ptr context, bool tracewrap, f2ptr thread, f2ptr metro);
 extern f2ptr f2__compile__metro(f2ptr context, bool tracewrap, f2ptr thread, f2ptr metro);
-extern f2ptr f2__compile__rawcode(f2ptr context, bool tracewrap, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional);
+extern f2ptr f2__compile__rawcode(f2ptr context, bool tracewrap, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables);
 extern f2ptr f2__demetropolize_once(f2ptr context, f2ptr thread, f2ptr env, f2ptr exp);
 extern f2ptr f2__demetropolize_full__with_status(f2ptr context, f2ptr thread, f2ptr env, f2ptr exp);
-extern f2ptr f2__compile__special_symbol_exp(f2ptr context, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional);
-extern f2ptr raw__compile(f2ptr context, bool tracewrap, f2ptr thread, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional);
+extern f2ptr f2__compile__special_symbol_exp(f2ptr context, bool tracewrap, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional, f2ptr local_variables);
+extern f2ptr raw__compile(f2ptr context, bool tracewrap, f2ptr thread, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional, f2ptr local_variables);
 
 extern void f2__compile__initialize();
 

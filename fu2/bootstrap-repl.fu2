@@ -33,18 +33,13 @@
 
 [globalize-funk funk-unlabeled [make-metro -trace_all_compiles- `funk-unlabeled `[name args :rest body]
 					   `[[define demetroed    [exps-demetropolize_full body]]
-					     [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- name args
-											       demetroed
-											       body
-											       nil
-											       nil]
-									  4]]
-					     [define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
-												demetroed
-												body
-												nil
-												nil]
-									   10]]
+					     [define compiled_funk [make-funk -trace_all_compiles- name args
+									      demetroed
+									      body
+									      nil
+									      nil]]
+					     [define compiled_bcs  [unsafe:array-elt compiled_funk  4]]
+					     [define is_funktional [unsafe:array-elt compiled_funk 10]]
 					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
@@ -56,18 +51,13 @@
 
 [globalize-funk metro [make-metro -trace_all_compiles- `metro `[name args :rest body]
 				  `[[define demetroed    [exps-demetropolize_full body]]
-				    [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- name args
-										      demetroed
-										      body
-										      nil
-										      nil]
-								 4]]
-				    [define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
-										       demetroed
-										       body
-										       nil
-										       nil]
-								  10]]
+				    [define compiled_funk [make-funk -trace_all_compiles- name args
+								     demetroed
+								     body
+								     nil
+								     nil]]
+				    [define compiled_bcs  [unsafe:array-elt compiled_funk  4]]
+				    [define is_funktional [unsafe:array-elt compiled_funk 10]]
 				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
 						  [quote ,demetroed]
 						  [quote ,body]

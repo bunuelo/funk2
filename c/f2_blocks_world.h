@@ -22,7 +22,7 @@
 #ifndef F2__BLOCKS_WORLD__H
 #define F2__BLOCKS_WORLD__H
 
-#include "f2_primfunks.h"
+#include "f2_primobjects.h"
 
 // blocks_world_rectangle
 

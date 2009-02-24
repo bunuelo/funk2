@@ -114,9 +114,21 @@ f2ptr f2__compile__funkvar__set(f2ptr cause, bool tracewrap, f2ptr var) {return 
 f2ptr f2__compile__globalize_var(f2ptr cause, bool tracewrap, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, tracewrap, __frame__variable_type__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, bool tracewrap, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, tracewrap, __frame__funk_variable_type__symbol, var));}
 
-f2ptr f2__compile__symbol(f2ptr cause, bool tracewrap, f2ptr exp, bool* is_funktional) {
-  if (is_funktional) {
-    *is_funktional = false;
+f2ptr f2__compile__symbol(f2ptr cause, bool tracewrap, f2ptr exp, bool* is_funktional, f2ptr local_variables) {
+  bool exp__is_local_variable = false;
+  f2ptr iter = local_variables;
+  while (iter) {
+    f2ptr local_variable = f2cons__car(iter, cause);
+    if (f2__symbol__eq(cause, exp, local_variable)) {
+      exp__is_local_variable = true;
+      break;
+    }
+    iter = f2cons__cdr(iter, cause);
+  }
+  if (! exp__is_local_variable) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
   }
   return bcs_valid(f2__compile__lookup_var(cause, tracewrap, exp));
 }
@@ -1150,7 +1162,7 @@ f2ptr   raw__compile(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2ptr exp, b
   else if (raw__doublep(exp, cause))    {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__gfunkptrp(exp, cause))  {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__stringp(exp, cause))    {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
-  else if (raw__symbolp(exp, cause))    {result_bcs = f2__compile__symbol(    cause, tracewrap, exp, is_funktional);}
+  else if (raw__symbolp(exp, cause))    {result_bcs = f2__compile__symbol(    cause, tracewrap, exp, is_funktional, local_variables);}
   else if (raw__consp(exp, cause))      {result_bcs = f2__compile__cons_exp(  cause, tracewrap, rte, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables);}
   else if (raw__arrayp(exp, cause))     {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}
   else if (raw__cfunkp(exp, cause))     {result_bcs = f2__compile__value__set(cause, tracewrap, exp);}

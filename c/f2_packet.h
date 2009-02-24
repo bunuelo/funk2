@@ -2467,9 +2467,9 @@ struct pcs_respond__f2simple_array__immutable__set_s {
 typedef struct pcs_respond__f2simple_array__immutable__set_s pcs_respond__f2simple_array__immutable__set_t;
 
 void send_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
-void recv_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__elt__set_t* packet);
+void recv_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__immutable__set_t* packet);
 void send_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
-void recv_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__elt__set_t* packet);
+void recv_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__immutable__set_t* packet);
 
 void funk2_node__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
 void funk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value);

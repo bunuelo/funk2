@@ -72,9 +72,6 @@
 			     y1
 			     [string-elt ' ' 0]]]]]
 
-[defunk blocks_world_rectangle-x_size [this] [+ [- [blocks_world_rectangle-x1 this] [blocks_world_rectangle-x0 this]] 1]]
-[defunk blocks_world_rectangle-y_size [this] [+ [- [blocks_world_rectangle-y1 this] [blocks_world_rectangle-y0 this]] 1]]
-
 [defunk blocks_world_rectangle-translate [this dx dy]
   [put [+ [blocks_world_rectangle-x0 this] dx] [blocks_world_rectangle-x0 this]]
   [put [+ [blocks_world_rectangle-y0 this] dy] [blocks_world_rectangle-y0 this]]

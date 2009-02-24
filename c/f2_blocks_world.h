@@ -127,6 +127,15 @@ defprimobject__static_slot__prototype(blocks_world__objects);
 #define f2blocks_world__objects__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world__objects, cause)
 
 
+typedef struct funk2_blocks_world_s {
+  f2ptr red__symbol;
+  f2ptr green__symbol;
+  f2ptr blue__symbol;
+  f2ptr white__symbol;
+  f2ptr magenta__symbol;
+  f2ptr yellow__symbol;
+} funk2_blocks_world_t;
+
 
 // **
 

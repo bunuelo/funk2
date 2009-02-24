@@ -369,6 +369,44 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
 }
 def_pcfunk6(ansi__stream__rectangle, stream, x0, y0, x1, y1, ch, return f2__ansi__stream__rectangle(this_cause, stream, x0, y0, x1, y1, ch));
 
+
+void raw__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, int x0, int y0, int x1, int y1, char background_char) {
+  raw__ansi__stream__move_cursor(cause, stream, x0, y0); raw__stream__writef(cause, stream, "/");
+  raw__ansi__stream__move_cursor(cause, stream, x1, y0); raw__stream__writef(cause, stream, "\\");
+  raw__ansi__stream__move_cursor(cause, stream, x0, y1); raw__stream__writef(cause, stream, "\\");
+  raw__ansi__stream__move_cursor(cause, stream, x1, y1); raw__stream__writef(cause, stream, "/");
+  if ((x1 - x0) > 1) {
+    raw__ansi__stream__rectangle(cause, stream, (x0 + 1), y0, (x1 - 1), y0, '-');
+    raw__ansi__stream__rectangle(cause, stream, (x0 + 1), y1, (x1 - 1), y1, '-');
+  }
+  if ((y1 - y0) > 1) {
+    raw__ansi__stream__rectangle(cause, stream, x0, (y0 + 1), x0, (y1 - 1), '|');
+    raw__ansi__stream__rectangle(cause, stream, x1, (y0 + 1), x1, (y1 - 1), '|');
+  }
+  if (((x1 - x0) > 1) &&
+      ((y1 - y0) > 1)) {
+    raw__ansi__stream__rectangle(cause, stream, (x0 + 1), (y0 + 1), (x1 - 1), (y1 - 1), background_char);
+  }
+}
+
+f2ptr f2__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1, f2ptr background_char) {
+  if ((! raw__integerp(x0, cause)) ||
+      (! raw__integerp(y0, cause)) ||
+      (! raw__integerp(x1, cause)) ||
+      (! raw__integerp(y1, cause)) ||
+      (! raw__charp(background_char, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 raw_x0              = f2integer__i(x0, cause);
+  u64 raw_y0              = f2integer__i(y0, cause);
+  u64 raw_x1              = f2integer__i(x1, cause);
+  u64 raw_y1              = f2integer__i(y1, cause);
+  u8  raw_background_char = f2char__ch(background_char, cause);
+  raw__ansi__stream__bordered_rectangle(cause, stream, raw_x0, raw_y0, raw_x1, raw_y1, raw_background_char);
+  return nil;
+}
+def_pcfunk6(ansi__stream__bordered_rectangle, stream, x0, y0, x1, y1, background_char, return f2__ansi__stream__bordered_rectangle(this_cause, stream, x0, y0, x1, y1, background_char));
+
 // **
 
 void f2__ansi__reinitialize_globalvars() {

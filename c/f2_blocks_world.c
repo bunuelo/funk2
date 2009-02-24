@@ -158,7 +158,7 @@ f2ptr f2__blocks_world_rectangle__clear_line_above(f2ptr cause, f2ptr this) {
   //u64 lower_left__x = raw__blocks_world__lower_left__x(cause);
   u64 lower_left__y = raw__blocks_world__lower_left__y(cause);
   u64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
-  u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
+  //u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
   u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
   u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
   u64 y1 = lower_left__y - rect__y1 - 1;

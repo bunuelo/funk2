@@ -51,6 +51,7 @@
 							  [quote ,compiled_bcs]
 							  nil]]
 					    nil
+					    nil
 					    nil]]
 
 [globalize-funk metro [make-metro -trace_all_compiles- `metro `[name args :rest body]
@@ -72,6 +73,7 @@
 						  [quote ,body]
 						  [quote ,compiled_bcs]
 						  nil]]
+				   nil
 				   nil
 				   nil]]
 

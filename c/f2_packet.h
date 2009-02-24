@@ -2700,8 +2700,8 @@ struct pcs_packet_payload_respond__f2traced_array__immutable_s {
 typedef struct pcs_packet_payload_respond__f2traced_array__immutable_s pcs_packet_payload_respond__f2traced_array__immutable_t;
 
 struct pcs_respond__f2traced_array__immutable_s {
-  funk2_packet_header_t                             header;
-  pcs_packet_payload_respond__f2traced_array__elt_t payload;
+  funk2_packet_header_t                                   header;
+  pcs_packet_payload_respond__f2traced_array__immutable_t payload;
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__immutable_s pcs_respond__f2traced_array__immutable_t;
 

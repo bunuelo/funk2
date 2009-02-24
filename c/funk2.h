@@ -47,6 +47,8 @@
 #include <unistd.h>
 #include <gmodule.h>
 
+#include "f2_ansi.h"
+#include "f2_blocks_world.h"
 #include "f2_buffered_file.h"
 #include "f2_buffered_socket.h"
 #include "f2_bytecodes.h"

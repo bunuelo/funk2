@@ -47,6 +47,7 @@ gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
 
 funk2_server_objs = \
   c/f2_ansi.o \
+  c/f2_blocks_world.o \
   c/f2_buffered_file.o \
   c/f2_buffered_socket.o \
   c/f2_bytecodes.o \
@@ -105,6 +106,7 @@ funk2_server_objs = \
   c/funk2.o
 funk2_headers = \
   c/f2_ansi.h \
+  c/f2_blocks_world.h \
   c/f2_buffered_file.h \
   c/f2_buffered_socket.h \
   c/f2_bytecodes.h \

@@ -158,15 +158,25 @@ f2ptr raw__blocks_world_rectangle__render(f2ptr cause, f2ptr this, char backgrou
   }
   //s64 lower_left__x = raw__blocks_world__lower_left__x(cause);
   s64 lower_left__y = raw__blocks_world__lower_left__y(cause);
-  s64 rect__x0 = f2blocks_world_rectangle__x0(this, cause);
-  s64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
-  s64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
-  s64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
+  f2ptr rect__x0 = f2blocks_world_rectangle__x0(this, cause);
+  f2ptr rect__y0 = f2blocks_world_rectangle__y0(this, cause);
+  f2ptr rect__x1 = f2blocks_world_rectangle__x1(this, cause);
+  f2ptr rect__y1 = f2blocks_world_rectangle__y1(this, cause);
+  if ((! raw__integerp(rect__x0, cause)) ||
+      (! raw__integerp(rect__y0, cause)) ||
+      (! raw__integerp(rect__x1, cause)) ||
+      (! raw__integerp(rect__y1, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  s64 raw__rect__x0 = f2integer__i(rect__x0, cause);
+  s64 raw__rect__y0 = f2integer__i(rect__y0, cause);
+  s64 raw__rect__x1 = f2integer__i(rect__x1, cause);
+  s64 raw__rect__y1 = f2integer__i(rect__y1, cause);
   raw__ansi__stream__bordered_rectangle(cause, __funk2.globalenv.stdout_stream,
-					(rect__x0 + 10),
-					(lower_left__y - rect__y1),
-					(rect__x1 + 10),
-					(lower_left__y - rect__y0),
+					(raw__rect__x0 + 10),
+					(lower_left__y - raw__rect__y1),
+					(raw__rect__x1 + 10),
+					(lower_left__y - raw__rect__y0),
 					background_char);
   return nil;
 }

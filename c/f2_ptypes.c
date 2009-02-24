@@ -1298,7 +1298,7 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
 u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
   ptype_access_num__incr(pool_index);
-  u8 retval = __pure__f2simple_array__immutable__set(this);
+  u8 retval = __pure__f2simple_array__immutable(this);
   ptype_access_num__decr(pool_index);
   return retval;
 }

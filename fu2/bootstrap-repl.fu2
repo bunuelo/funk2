@@ -36,12 +36,20 @@
 					     [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- name args
 											       demetroed
 											       body
+											       nil
 											       nil]
 									  4]]
+					     [define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
+												demetroed
+												body
+												nil
+												nil]
+									  8]]
 					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
-							  [quote ,compiled_bcs]]]
+							  [quote ,compiled_bcs]
+							  ,is_funktional]]
 					    nil
 					    nil]]
 
@@ -50,12 +58,20 @@
 				    [define compiled_bcs [unsafe:array-elt [make-funk -trace_all_compiles- name args
 										      demetroed
 										      body
+										      nil
 										      nil]
 								 4]]
+				    [define is_funktional [unsafe:array-elt [make-funk -trace_all_compiles- name args
+										       demetroed
+										       body
+										       nil
+										       nil]
+								 8]]
 				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
 						  [quote ,demetroed]
 						  [quote ,body]
-						  [quote ,compiled_bcs]]]
+						  [quote ,compiled_bcs]
+						  ,is_funktional]]
 				   nil
 				   nil]]
 

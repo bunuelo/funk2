@@ -44,7 +44,7 @@
 												body
 												nil
 												nil]
-									  8]]
+									  10]]
 					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
@@ -66,7 +66,7 @@
 										       body
 										       nil
 										       nil]
-								 8]]
+								 10]]
 				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
 						  [quote ,demetroed]
 						  [quote ,body]

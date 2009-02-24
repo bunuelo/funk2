@@ -473,7 +473,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
       }
     }
     if (exp__is_funktional && next) {
-      printf("\noptimizing funktional beginning of rawcode!");
+      status("optimizing funktional beginning of rawcode!");
       //f2__print(cause, exp);
       full_bcs = nil;
       exps     = next;
@@ -508,7 +508,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
       }
       
       if (exp__is_funktional && next) {
-	printf("\noptimizing funktional middle of rawcode!");
+	status("optimizing funktional middle of rawcode!");
 	//f2__print(cause, exp);
 	exp_bcs = nil;
 	exps    = next;
@@ -808,7 +808,7 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
       }
     }
     if (is_funktional && (*is_funktional) && all_args_are_immutable) {
-      printf("\nfound funktional optimization opportunity!");
+      status("found funktional optimization opportunity!");
       f2ptr funk_apply__result = raw__apply_funk(cause, rte, funkvar_value, f2cons__cdr(exps, cause));
       full_bcs = f2__compile__value__set(cause, tracewrap, funk_apply__result); iter = full_bcs;
     } else {

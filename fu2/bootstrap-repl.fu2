@@ -119,14 +119,14 @@
   [if [null conds]
       nil
     `[if ,[unsafe:cons-car conds]
-	 t
+	 `t
        ,[funk-apply &or [unsafe:cons-cdr conds]]]]]
 
 [exp-format stdout '\ndone defining or\n']
 
 [defmetro and [:rest conds]
   [if [null conds]
-      `t
+      ``t
     `[if [null ,[unsafe:cons-car conds]]
 	 nil
        ,[funk-apply &and [unsafe:cons-cdr conds]]]]]

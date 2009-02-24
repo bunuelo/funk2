@@ -454,6 +454,10 @@ void f2__blocks_world__reinitialize_globalvars() {
   __funk2.globalenv.blocks_world.white__symbol   = f2symbol__new(cause, strlen("white"),   (u8*)"white");
   __funk2.globalenv.blocks_world.magenta__symbol = f2symbol__new(cause, strlen("magenta"), (u8*)"magenta");
   __funk2.globalenv.blocks_world.yellow__symbol  = f2symbol__new(cause, strlen("yellow"),  (u8*)"yellow");
+
+  __funk2.globalenv.blocks_world.table__symbol   = f2symbol__new(cause, strlen("table"),   (u8*)"table");
+  __funk2.globalenv.blocks_world.block__symbol   = f2symbol__new(cause, strlen("block"),   (u8*)"block");
+  __funk2.globalenv.blocks_world.gripper__symbol = f2symbol__new(cause, strlen("gripper"), (u8*)"gripper");
 }
 
 void f2__blocks_world__initialize() {
@@ -472,6 +476,10 @@ void f2__blocks_world__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.white__symbol,   nil);
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.magenta__symbol, nil);
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.yellow__symbol,  nil);
+  
+  environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.table__symbol,   nil);
+  environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.block__symbol,   nil);
+  environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.gripper__symbol, nil);
   
   f2__primcfunk__init(blocks_world__lower_left__x);
   f2__primcfunk__init(blocks_world__lower_left__y);

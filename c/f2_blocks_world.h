@@ -140,6 +140,10 @@ typedef struct funk2_blocks_world_s {
   f2ptr white__symbol;
   f2ptr magenta__symbol;
   f2ptr yellow__symbol;
+  
+  f2ptr table__symbol;
+  f2ptr block__symbol;
+  f2ptr gripper__symbol;
 } funk2_blocks_world_t;
 
 

@@ -49,7 +49,7 @@
 							  [quote ,demetroed]
 							  [quote ,body]
 							  [quote ,compiled_bcs]
-							  ,is_funktional]]
+							  [quote ,is_funktional]]]
 					    nil
 					    nil]]
 
@@ -71,7 +71,7 @@
 						  [quote ,demetroed]
 						  [quote ,body]
 						  [quote ,compiled_bcs]
-						  ,is_funktional]]
+						  [quote ,is_funktional]]]
 				   nil
 				   nil]]
 

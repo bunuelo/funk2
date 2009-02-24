@@ -121,7 +121,7 @@ f2ptr raw__blocks_world_rectangle__render(f2ptr cause, f2ptr this, char backgrou
   u64 rect__y0 = f2blocks_world_rectangle__y0(this, cause);
   u64 rect__x1 = f2blocks_world_rectangle__x1(this, cause);
   u64 rect__y1 = f2blocks_world_rectangle__y1(this, cause);
-  raw__stream__bordered_rectangle(cause, __funk2.globalenv.stdout,
+  raw__stream__bordered_rectangle(cause, __funk2.globalenv.stdout__stream,
 				  (rect__x0 + 10),
 				  (lower_left__y - rect__y1),
 				  (rect__x1 + 10),

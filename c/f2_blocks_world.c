@@ -80,7 +80,7 @@ f2ptr f2__blocks_world_rectangle__new_copy(f2ptr cause, f2ptr this) {
 
 f2ptr raw__blocks_world_rectangle__create(f2ptr cause, u64 x0, u64 y0, u64 x1, u64 y1) {
   u64 min_x; u64 max_x; if (x0 < x1) {min_x = x0; max_x = x1;} else {min_x = x1; max_x = x0;}
-  u64 min_y; u64 max_y; if (y0 < y1) {min_y = y0; max_y = y1;} else {min_y = xy; max_y = xy;}
+  u64 min_y; u64 max_y; if (y0 < y1) {min_y = y0; max_y = y1;} else {min_y = y1; max_y = y0;}
   return f2blocks_world_rectangle__new(cause, f2integer__new(cause, min_x), f2integer__new(cause, min_y), f2integer__new(cause, max_x), f2integer__new(cause, max_y));
 }
 

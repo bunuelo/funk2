@@ -23,8 +23,6 @@
 #define F2__MEMORY__H
 
 #include "f2_global.h"
-#include "f2_time.h"
-//#include "f2_gfunkptr.h"
 
 #define nil ((f2ptr)0)
 
@@ -68,6 +66,9 @@ typedef enum ptype_e {
   ptype_traced_array    = 13,
   ptype_larva           = 14,
 } ptype_t;
+
+#include "f2_time.h"
+//#include "f2_gfunkptr.h"
 
 extern ptr  f2__malloc(f2size_t byte_num);
 extern void f2__free(ptr this);

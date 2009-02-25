@@ -215,7 +215,7 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
   return 1;
 }
 
-int f2__thread__bytecode__jump_funk(f2ptr thread) {
+int f2__thread__bytecode__jump_funk(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   f2__thread__increment_pc(thread, cause);
   
@@ -233,7 +233,7 @@ int f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr c
 }
 
 
-int f2__thread__bytecode__funk(f2ptr thread) {
+int f2__thread__bytecode__funk(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   f2__thread__increment_pc(thread, cause);
   return f2__thread__bytecode_helper__funk__no_increment_pc_reg(thread, cause);
@@ -242,7 +242,7 @@ int f2__thread__bytecode__funk(f2ptr thread) {
 
 // bytecode array [length]
 
-int f2__thread__bytecode__array(f2ptr thread, f2ptr length) {
+int f2__thread__bytecode__array(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr length) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -258,7 +258,7 @@ int f2__thread__bytecode__array(f2ptr thread, f2ptr length) {
 
 // bytecode cons []
 
-int f2__thread__bytecode__cons(f2ptr thread) {
+int f2__thread__bytecode__cons(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -272,7 +272,7 @@ int f2__thread__bytecode__cons(f2ptr thread) {
 
 // bytecode car []
 
-int f2__thread__bytecode__car(f2ptr thread) {
+int f2__thread__bytecode__car(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -284,7 +284,7 @@ int f2__thread__bytecode__car(f2ptr thread) {
 
 // bytecode cdr []
 
-int f2__thread__bytecode__cdr(f2ptr thread) {
+int f2__thread__bytecode__cdr(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -296,7 +296,7 @@ int f2__thread__bytecode__cdr(f2ptr thread) {
 
 // bytecode car__set []
 
-int f2__thread__bytecode__car__set(f2ptr thread) {
+int f2__thread__bytecode__car__set(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -308,7 +308,7 @@ int f2__thread__bytecode__car__set(f2ptr thread) {
 
 // bytecode cdr__set []
 
-int f2__thread__bytecode__cdr__set(f2ptr thread) {
+int f2__thread__bytecode__cdr__set(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -320,7 +320,7 @@ int f2__thread__bytecode__cdr__set(f2ptr thread) {
 
 // bytecode array_elt [array index]
 
-int f2__thread__bytecode__array_elt(f2ptr thread, f2ptr array, f2ptr index) {
+int f2__thread__bytecode__array_elt(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr array, f2ptr index) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -332,7 +332,7 @@ int f2__thread__bytecode__array_elt(f2ptr thread, f2ptr array, f2ptr index) {
 
 // bytecode set [reg f2ptr]
 
-int f2__thread__bytecode__set__value_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -341,7 +341,7 @@ int f2__thread__bytecode__set__value_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -354,7 +354,7 @@ int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr exp) {
   return 1;
 }
 
-int f2__thread__bytecode__set__iter_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -363,7 +363,7 @@ int f2__thread__bytecode__set__iter_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-int f2__thread__bytecode__set__args_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -372,7 +372,7 @@ int f2__thread__bytecode__set__args_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-int f2__thread__bytecode__set__return_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -381,7 +381,7 @@ int f2__thread__bytecode__set__return_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-int f2__thread__bytecode__set__env_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -401,7 +401,7 @@ bytecode_jump__f2ptr_t f2__compile__bytecode__set(f2ptr cause, f2ptr reg) {
   return NULL;
 }
 
-int f2__thread__bytecode__set(f2ptr thread, f2ptr reg, f2ptr exp) {
+int f2__thread__bytecode__set(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr reg, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   return (f2__compile__bytecode__set(cause, reg))(thread, exp);
@@ -410,7 +410,7 @@ int f2__thread__bytecode__set(f2ptr thread, f2ptr reg, f2ptr exp) {
 
 // bytecode nop []
 
-int f2__thread__bytecode__nop(f2ptr thread) {
+int f2__thread__bytecode__nop(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -421,7 +421,7 @@ int f2__thread__bytecode__nop(f2ptr thread) {
 
 // bytecode swap [reg reg]
 
-int f2__thread__bytecode__swap__return_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -432,7 +432,7 @@ int f2__thread__bytecode__swap__return_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__return_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -443,7 +443,7 @@ int f2__thread__bytecode__swap__return_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__return_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -454,7 +454,7 @@ int f2__thread__bytecode__swap__return_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__swap__return_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -465,7 +465,7 @@ int f2__thread__bytecode__swap__return_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__return_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -477,7 +477,7 @@ int f2__thread__bytecode__swap__return_reg__args_reg(f2ptr thread) {
 }
 
 
-int f2__thread__bytecode__swap__value_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -488,7 +488,7 @@ int f2__thread__bytecode__swap__value_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__value_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -499,7 +499,7 @@ int f2__thread__bytecode__swap__value_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__swap__value_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -510,7 +510,7 @@ int f2__thread__bytecode__swap__value_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__value_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -521,7 +521,7 @@ int f2__thread__bytecode__swap__value_reg__args_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__iter_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__iter_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -532,7 +532,7 @@ int f2__thread__bytecode__swap__iter_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__swap__iter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__iter_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -543,7 +543,7 @@ int f2__thread__bytecode__swap__iter_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__iter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__iter_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -554,7 +554,7 @@ int f2__thread__bytecode__swap__iter_reg__args_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__swap__program_counter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__program_counter_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -565,7 +565,7 @@ int f2__thread__bytecode__swap__program_counter_reg__env_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__swap__program_counter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__program_counter_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -576,7 +576,7 @@ int f2__thread__bytecode__swap__program_counter_reg__args_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__swap__env_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__env_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -641,7 +641,7 @@ bytecode_jump_t f2__compile__bytecode__swap(f2ptr cause, f2ptr reg0, f2ptr reg1)
 							     return (bytecode_jump_t)NULL;}
 }
 
-int f2__thread__bytecode__swap(f2ptr thread, f2ptr reg0, f2ptr reg1) {
+int f2__thread__bytecode__swap(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr reg0, f2ptr reg1) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   return (f2__compile__bytecode__swap(cause, reg0, reg1))(thread);
@@ -650,7 +650,7 @@ int f2__thread__bytecode__swap(f2ptr thread, f2ptr reg0, f2ptr reg1) {
 
 // bytecode push [reg]
 
-int f2__thread__bytecode__push__return_reg(f2ptr thread) {
+int f2__thread__bytecode__push__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -659,7 +659,7 @@ int f2__thread__bytecode__push__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__push__env_reg(f2ptr thread) {
+int f2__thread__bytecode__push__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -668,7 +668,7 @@ int f2__thread__bytecode__push__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__push__value_reg(f2ptr thread) {
+int f2__thread__bytecode__push__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -677,7 +677,7 @@ int f2__thread__bytecode__push__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__push__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__push__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -686,7 +686,7 @@ int f2__thread__bytecode__push__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__push__args_reg(f2ptr thread) {
+int f2__thread__bytecode__push__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -695,7 +695,7 @@ int f2__thread__bytecode__push__args_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__push__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__push__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -717,7 +717,7 @@ bytecode_jump_t f2__compile__bytecode__push(f2ptr cause, f2ptr reg) {
   }
 }
 
-int f2__thread__bytecode__push(f2ptr thread, f2ptr reg) {
+int f2__thread__bytecode__push(f2ptr cause, f2ptr thread, f2ptr reg, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   return (f2__compile__bytecode__push(cause, reg))(thread);
@@ -725,7 +725,7 @@ int f2__thread__bytecode__push(f2ptr thread, f2ptr reg) {
 
 // bytecode pop [reg]
 
-int f2__thread__bytecode__pop__return_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -734,7 +734,7 @@ int f2__thread__bytecode__pop__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__pop__env_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -747,7 +747,7 @@ int f2__thread__bytecode__pop__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__pop__value_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -756,7 +756,7 @@ int f2__thread__bytecode__pop__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__pop__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -765,7 +765,7 @@ int f2__thread__bytecode__pop__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__pop__args_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -774,7 +774,7 @@ int f2__thread__bytecode__pop__args_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__pop__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -783,7 +783,7 @@ int f2__thread__bytecode__pop__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__pop__nil(f2ptr thread) {
+int f2__thread__bytecode__pop__nil(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -806,7 +806,7 @@ bytecode_jump_t f2__compile__bytecode__pop(f2ptr cause, f2ptr reg) {
   }
 }
 
-int f2__thread__bytecode__pop(f2ptr thread, f2ptr reg) {
+int f2__thread__bytecode__pop(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr reg) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   return (f2__compile__bytecode__pop(cause, reg))(thread);
@@ -815,7 +815,7 @@ int f2__thread__bytecode__pop(f2ptr thread, f2ptr reg) {
 
 // bytecode copy [reg reg]
 
-int f2__thread__bytecode__copy__return_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -824,7 +824,7 @@ int f2__thread__bytecode__copy__return_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__return_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -833,7 +833,7 @@ int f2__thread__bytecode__copy__return_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__return_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -842,7 +842,7 @@ int f2__thread__bytecode__copy__return_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__copy__return_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -851,7 +851,7 @@ int f2__thread__bytecode__copy__return_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__return_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -861,7 +861,7 @@ int f2__thread__bytecode__copy__return_reg__args_reg(f2ptr thread) {
 }
 
 
-int f2__thread__bytecode__copy__value_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -870,7 +870,7 @@ int f2__thread__bytecode__copy__value_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__value_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -879,7 +879,7 @@ int f2__thread__bytecode__copy__value_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__value_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -888,7 +888,7 @@ int f2__thread__bytecode__copy__value_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__copy__value_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -897,7 +897,7 @@ int f2__thread__bytecode__copy__value_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__value_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -907,7 +907,7 @@ int f2__thread__bytecode__copy__value_reg__args_reg(f2ptr thread) {
 }
 
 
-int f2__thread__bytecode__copy__iter_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -916,7 +916,7 @@ int f2__thread__bytecode__copy__iter_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__iter_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -925,7 +925,7 @@ int f2__thread__bytecode__copy__iter_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__iter_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -934,7 +934,7 @@ int f2__thread__bytecode__copy__iter_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__copy__iter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -943,7 +943,7 @@ int f2__thread__bytecode__copy__iter_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__iter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -953,7 +953,7 @@ int f2__thread__bytecode__copy__iter_reg__args_reg(f2ptr thread) {
 }
 
 
-int f2__thread__bytecode__copy__program_counter_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -962,7 +962,7 @@ int f2__thread__bytecode__copy__program_counter_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -971,7 +971,7 @@ int f2__thread__bytecode__copy__program_counter_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, nil);
@@ -980,7 +980,7 @@ int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -989,7 +989,7 @@ int f2__thread__bytecode__copy__program_counter_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -999,7 +999,7 @@ int f2__thread__bytecode__copy__program_counter_reg__args_reg(f2ptr thread) {
 }
 
 
-int f2__thread__bytecode__copy__env_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1008,7 +1008,7 @@ int f2__thread__bytecode__copy__env_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__env_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1017,7 +1017,7 @@ int f2__thread__bytecode__copy__env_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__env_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1026,7 +1026,7 @@ int f2__thread__bytecode__copy__env_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__env_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1035,7 +1035,7 @@ int f2__thread__bytecode__copy__env_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__copy__env_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__args_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1045,7 +1045,7 @@ int f2__thread__bytecode__copy__env_reg__args_reg(f2ptr thread) {
 }
 
 
-int f2__thread__bytecode__copy__args_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__return_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1054,7 +1054,7 @@ int f2__thread__bytecode__copy__args_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__args_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__value_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1063,7 +1063,7 @@ int f2__thread__bytecode__copy__args_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__args_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__iter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1072,7 +1072,7 @@ int f2__thread__bytecode__copy__args_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__copy__args_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1081,7 +1081,7 @@ int f2__thread__bytecode__copy__args_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-int f2__thread__bytecode__copy__args_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__env_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1144,16 +1144,16 @@ bytecode_jump_t f2__compile__bytecode__copy(f2ptr cause, f2ptr reg0, f2ptr reg1)
 							     return (bytecode_jump_t)NULL;}
 }
 
-int f2__thread__bytecode__copy(f2ptr thread, f2ptr src_reg, f2ptr dest_reg) {
+int f2__thread__bytecode__copy(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr src_reg, f2ptr dest_reg) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
-  return (f2__compile__bytecode__copy(cause, src_reg, dest_reg))(thread);
+  return (f2__compile__bytecode__copy(cause, src_reg, dest_reg))(cause, thread, tracing_on);
 }
 
 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
-int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__lookup_type_var(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1166,7 +1166,7 @@ int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr type, f2ptr var) {
 
 // bytecode define_type_var [f2ptr f2ptr]
 
-int f2__thread__bytecode__define_type_var(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__define_type_var(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1180,7 +1180,7 @@ int f2__thread__bytecode__define_type_var(f2ptr thread, f2ptr type, f2ptr var) {
 
 // bytecode type_var__set [f2ptr f2ptr]
 
-int f2__thread__bytecode__type_var__set(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__type_var__set(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1194,7 +1194,7 @@ int f2__thread__bytecode__type_var__set(f2ptr thread, f2ptr type, f2ptr var) {
 
 // bytecode globalize_type_var [f2ptr f2ptr]
 
-int f2__thread__bytecode__globalize_type_var(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__globalize_type_var(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1207,7 +1207,7 @@ int f2__thread__bytecode__globalize_type_var(f2ptr thread, f2ptr type, f2ptr var
 
 // bytecode jump [f2ptr]
 
-int f2__thread__bytecode__jump(f2ptr thread, f2ptr new_program_counter) {
+int f2__thread__bytecode__jump(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr new_program_counter) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1223,7 +1223,7 @@ int f2__thread__bytecode__jump(f2ptr thread, f2ptr new_program_counter) {
 
 // bytecode else_jump [f2ptr]
 
-int f2__thread__bytecode__else_jump(f2ptr thread, f2ptr new_program_counter) {
+int f2__thread__bytecode__else_jump(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr new_program_counter) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1241,7 +1241,7 @@ int f2__thread__bytecode__else_jump(f2ptr thread, f2ptr new_program_counter) {
 
 // bytecode debug [f2ptr]
 
-int f2__thread__bytecode__debug(f2ptr thread, f2ptr value) {
+int f2__thread__bytecode__debug(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr value) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1253,7 +1253,7 @@ int f2__thread__bytecode__debug(f2ptr thread, f2ptr value) {
 
 // bytecode trace [f2ptr]
 
-int f2__thread__bytecode__trace(f2ptr thread, f2ptr value) {
+int f2__thread__bytecode__trace(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr value) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1270,7 +1270,7 @@ int f2__thread__bytecode__trace(f2ptr thread, f2ptr value) {
 
 // bytecode compile [bool bool]
 
-int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) {
+int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1282,7 +1282,7 @@ int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) 
   return 0;
 }
 
-int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
+int f2__thread__bytecode__compile__tracewrap__nil(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1294,7 +1294,7 @@ int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
+int f2__thread__bytecode__compile__nil__protect_environment(f2ptr cause, f2ptr thread, f2ptr tracing_in) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1306,7 +1306,7 @@ int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
   return 0;
 }
 
-int f2__thread__bytecode__compile__nil__nil(f2ptr thread) {
+int f2__thread__bytecode__compile__nil__nil(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1334,12 +1334,12 @@ bytecode_jump_t f2__compile__bytecode__compile(f2ptr tracewrap, f2ptr protect_en
   }
 }
 
-int f2__thread__bytecode__compile(f2ptr thread, f2ptr tracewrap, f2ptr protect_environment) {return (f2__compile__bytecode__compile(tracewrap, protect_environment))(thread);}
+int f2__thread__bytecode__compile(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr tracewrap, f2ptr protect_environment) {return (f2__compile__bytecode__compile(tracewrap, protect_environment))(cause, thread, tracing_on);}
 
 
 // bytecode yield []
 
-int f2__thread__bytecode__yield(f2ptr thread) {
+int f2__thread__bytecode__yield(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1351,7 +1351,7 @@ int f2__thread__bytecode__yield(f2ptr thread) {
 
 // bytecode newenv []
 
-int f2__thread__bytecode__newenv(f2ptr thread) {
+int f2__thread__bytecode__newenv(f2ptr cause, f2ptr thread, f2ptr tracing_on) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
@@ -1370,7 +1370,7 @@ int f2__thread__bytecode__newenv(f2ptr thread) {
 
 // bytecode machine_code [chunk]
 
-int f2__thread__bytecode__machine_code(f2ptr thread, f2ptr chunk) {
+int f2__thread__bytecode__machine_code(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr chunk) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   return f2chunk__bytecode_jump(chunk, cause, thread);

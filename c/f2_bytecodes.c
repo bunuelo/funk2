@@ -224,7 +224,9 @@ int f2__thread__bytecode__jump_funk(f2ptr thread) {
 
 
 // bytecode funk []
-
+//
+//   note: this is where we set the return register (f2_compile.c assumes that this happens atomically with this bytecode).
+//
 int f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr cause) {
   f2thread__return__set(thread, cause, f2thread__program_counter(thread, cause)); // f2__thread__bytecode__copy(thread, __thread__program_counter_reg__symbol, __thread__return_reg__symbol);
   return f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(thread, cause);

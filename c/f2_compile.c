@@ -245,7 +245,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   // save return and environment registers
   f2ptr full_bcs =                                f2__compile__push_return(cause, tracewrap); f2ptr iter = full_bcs;
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
+  //iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
   iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
   
   // define args in funk environment
@@ -277,6 +277,8 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
       var_iter = cdr;
     }
   }
+  
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
   
   bool popped_env_and_return = false;
   f2ptr body_bcs = f2__compile__rawcode(cause, tracewrap, thread, f2funk__demetropolized_body(funk, cause), false, true, &popped_env_and_return, &funk__is_funktional, local_variables, &funk__is_locally_funktional);
@@ -750,7 +752,7 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
   iter           = f2__list_cdr__set(cause, iter, f2__compile__copy_value_to_args(cause, tracewrap));
   iter           = f2__list_cdr__set(cause, iter, f2__compile__pop_value(cause, tracewrap));
   if (optimize_tail_recursion) {
-    if (popped_env_and_return) {
+    if (popped_env_and_return != NULL) {
       //printf("\npopped env and return!"); fflush(stdout);
       *popped_env_and_return = true;
     }

@@ -328,4 +328,13 @@ tags:
 link-grammar:
 	cd extern/link-grammar-4.4.2/; ./configure; make
 
+# RL-Glue Libraries  http://glue.rl-community.org
+# 
+
+rlglue:
+	cd rlglue
+	./configure --with-rl-glue=/path/to/rlglue
+	--prefix=rlglue; make install
+    
+
 

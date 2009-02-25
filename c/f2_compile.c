@@ -243,9 +243,9 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   bool  funk__is_locally_funktional = true;
   
   // save return and environment registers
-  f2ptr full_bcs =                                f2__compile__push_debug_funk_call(cause, tracewrap); f2ptr iter = full_bcs;
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
+  f2ptr full_bcs =                                f2__compile__push_return(cause, tracewrap); f2ptr iter = full_bcs;
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
   iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
   
   // define args in funk environment
@@ -287,9 +287,9 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
   iter = f2__list_cdr__set(cause, iter, body_bcs);
   
   if (!popped_env_and_return) {
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
   }
   
@@ -313,9 +313,9 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   bool  metro__is_locally_funktional = true;
   
   // save return and environment registers
-  f2ptr full_bcs =                                f2__compile__push_debug_funk_call(cause, tracewrap); f2ptr iter = full_bcs;
-  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
+  f2ptr full_bcs =                                f2__compile__push_return(cause, tracewrap); f2ptr iter = full_bcs;
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
+  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
   iter           = f2__list_cdr__set(cause, iter, f2__compile__newenv(cause, tracewrap));
   
   // define args in metro environment
@@ -351,9 +351,9 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2p
   iter = f2__list_cdr__set(cause, iter, body_bcs);
   
   if (!popped_env_and_return) {
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
   }
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause, tracewrap));
@@ -555,25 +555,31 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, bool tracewrap, f2ptr thread, f2pt
     if (!true__popped_env_and_return) {
       // add pop env and pop return to true_bcs
       f2ptr iter;
-      if (true_bcs) {
-	iter = f2__list_cdr__set(cause, true_bcs, f2__compile__pop_env(cause, tracewrap));
-      } else {
-	iter = true_bcs = f2__compile__pop_env(cause, tracewrap);
+      {
+	f2ptr compile_pop = f2__compile__pop_debug_funk_call(cause, tracewrap);
+	if (true_bcs) {
+	  iter = f2__list_cdr__set(cause, true_bcs, compile_pop);
+	} else {
+	  iter = true_bcs = compile_pop;
+	}
       }
+      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
       iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     }
     
     if (!false__popped_env_and_return) {
       // add pop env and pop return to false_bcs
       f2ptr iter;
-      if (false_bcs) {
-	iter = f2__list_cdr__set(cause, false_bcs, f2__compile__pop_env(cause, tracewrap));
-      } else {
-	iter = false_bcs = f2__compile__pop_env(cause, tracewrap);
+      {
+	f2ptr compile_pop = f2__compile__pop_debug_funk_call(cause, tracewrap);
+	if (false_bcs) {
+	  iter = f2__list_cdr__set(cause, false_bcs, compile_pop);
+	} else {
+	  iter = false_bcs = compile_pop;
+	}
       }
+      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
       iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     }
   }
   
@@ -749,18 +755,18 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, bool tracewrap, f2ptr rte, f2pt
       *popped_env_and_return = true;
     }
     //iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap));
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
   }
   if (protect_environment) {
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__funk_bc(cause, tracewrap));
+    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
     iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-    iter         = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
   } else {
     //printf("\ntail recursion optimized!"); fflush(stdout);
     //iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
@@ -818,18 +824,18 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, bool tracewrap, f2ptr rte, f
 	  //printf("\npopped env and return!"); fflush(stdout);
 	  *popped_env_and_return = true;
 	}
+	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
       }
       if (protect_environment) {
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));
+	iter   = f2__list_cdr__set(cause, iter, f2__compile__push_debug_funk_call(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__funk_bc(cause, tracewrap));
+	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause, tracewrap));
 	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause, tracewrap));
-	iter   = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause, tracewrap));
       } else {
 	//printf("\ntail recursion optimized!"); fflush(stdout);
 	//iter         = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));

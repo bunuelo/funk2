@@ -1108,9 +1108,9 @@ f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
   }
 }
 
-def_pcfunk4(bytecode, command, arg0, arg1, arg2,
+def_pcfunk5(bytecode, tracing_on, command, arg0, arg1, arg2,
 	    printf("\ncreating user bytecode! "); fflush(stdout);
-	    return f2bytecode__new(this_cause, command, arg0, arg1, arg2));
+	    return f2bytecode__new(this_cause, tracing_on, command, arg0, arg1, arg2));
 
 def_pcfunk1(debug, value,
 	   printf("\ndebug: "); f2__write(nil, value); fflush(stdout);

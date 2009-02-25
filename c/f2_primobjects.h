@@ -467,9 +467,9 @@ defprimobject__static_slot__prototype(exception__value);
 // bytecode
 
 extern f2ptr __bytecode__symbol;
-extern f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2);
+f2ptr f2bytecode__new(f2ptr cause, f2ptr tracing_on, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2);
 
-#define f2primobject__is_bytecode(      this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bytecode__symbol)
+#define f2primobject__is_bytecode(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode__symbol)
 
 defprimobject__static_slot__prototype(bytecode__tracing_on);
 #define f2bytecode__tracing_on(                   this, cause)        primobject__static_slot__accessor(         this, bytecode__tracing_on, cause)

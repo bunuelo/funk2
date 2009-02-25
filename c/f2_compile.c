@@ -143,13 +143,13 @@ f2ptr __wrong_argument_number__bcs = nil; // this is like an interrupt pointer..
 f2ptr f2__compile__push_debug_funk_call(f2ptr cause, bool tracewrap) {
   f2ptr full_bcs =                      f2__compile__push_args( cause, tracewrap); f2ptr iter = full_bcs;
   iter = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));
-  return iter;
+  return full_bcs;
 }
 
 f2ptr f2__compile__pop_debug_funk_call(f2ptr cause, bool tracewrap) {
   f2ptr full_bcs =                      f2__compile__pop_nil(cause, tracewrap); f2ptr iter = full_bcs;
   iter = f2__list_cdr__set(cause, iter, f2__compile__pop_nil(cause, tracewrap));
-  return iter;
+  return full_bcs;
 }
 
 //

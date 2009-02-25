@@ -336,8 +336,7 @@ link-grammar:
 # 
 
 rlglue:
-	cd $(source__rlglue_core_dir)
-	./configure --prefix=$(install__rlglue_dir)
+	cd $(source__rlglue_core_dir); ./configure --prefix=$(install__rlglue_dir)
 	make
 	make install	
 	cd $(source__rlglue_c_codec_dir)

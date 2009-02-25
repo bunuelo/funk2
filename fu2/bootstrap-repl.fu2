@@ -674,7 +674,7 @@
 
 [defunk brief [exp]
   [if exp [cond [[funk? exp] `[funk ,[funk-name exp] ,[funk-args exp]]]
-		[[list? exp]  [mapc [funk [arg]
+		[[cons? exp]  [mapc [funk [arg]
 					  [brief arg]]
 				    exp]]
 		[t                 `<>]]]]

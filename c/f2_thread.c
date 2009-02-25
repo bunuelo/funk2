@@ -134,8 +134,8 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   debug__assert((! cause) || raw__causep(cause, nil), nil, "thread type assertion failed.");
   //f2ptr cause = f2thread__execute_bytecode__cause__new(f2thread__cause_reg(thread), thread, f2thread__env(thread), bytecode);
   //f2thread__cause_reg__set(thread, cause, cause);
-  f2ptr tracing_on = f2bytecode__command(bytecode, cause);
-  if (tracing_on) {
+  f2ptr tracing_on = f2bytecode__tracing_on(bytecode, cause);
+  if (tracing_on != nil) {
     raw__bytecode__thread_trace(cause, bytecode, thread);
   }
   f2ptr command = f2bytecode__command(bytecode, cause);

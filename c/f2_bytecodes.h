@@ -103,7 +103,7 @@ typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr cause, f2ptr thread, f2ptr tra
 // bytecode definitions (and bytecode_jump compiling functions)
 
 int                    f2__thread__bytecode__funk(                            f2ptr cause, f2ptr thread, f2ptr tracing_on);
-int                    f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr cause);
+int                    f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr cause);
 int                    f2__thread__bytecode__jump_funk(                       f2ptr cause, f2ptr thread, f2ptr tracing_on);
 int                    f2__thread__bytecode__array(                           f2ptr cause, f2ptr thread, f2ptr length, f2ptr tracing_on);
 int                    f2__thread__bytecode__cons(                            f2ptr cause, f2ptr thread, f2ptr tracing_on);

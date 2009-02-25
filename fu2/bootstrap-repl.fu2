@@ -74,7 +74,7 @@
 						      @body]]]]
 
 [defmetro prog [:rest body]
-  `[funk-apply [funk-unlabeled `prog []
+  `[funk-apply [funk-unlabeled prog []
 			       @body] []]]
 
 [defmetro apply [proc args]
@@ -88,8 +88,8 @@
     `[funk-apply ,proc ,args]]]
 
 [defmetro funk [args :rest body]
-  `[funk-unlabeled `funk ,args
-		    @body]]
+  `[funk-unlabeled funk ,args
+		   @body]]
 
 [exp-format stdout '\ndefining defunk\n']
 
@@ -159,8 +159,8 @@
 
 [defmetro label [name args :rest body]
   `[define-funk ,name
-     [funk-unlabeled `label ,args
-		      @body]]]
+     [funk-unlabeled label ,args
+		     @body]]]
 
 [defunk mapc [proc seq]
   [if [null seq]
@@ -218,8 +218,8 @@
 
 [defmetro let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  `[apply [funk-unlabeled `let ,let-vars
-			   @body]
+  `[apply [funk-unlabeled let ,let-vars
+			  @body]
 	  [list @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
 [defmetro parlet [varpairs :rest body]
@@ -392,7 +392,7 @@
 
 [defmetro while [cond :rest body]
   `[prog [define-funk while-loop
-	   [funk-unlabeled `while []
+	   [funk-unlabeled while []
 			   [if ,cond
 			       [prog [prog @body]
 				     [while-loop]]]]]

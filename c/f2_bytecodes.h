@@ -95,9 +95,9 @@ void f2__thread__stack__pop_trace(f2ptr thread, f2ptr cause);
 
 // bytecode_jump_t is used for compiling bytecodes to machine code jump pointers
 
-typedef int (*bytecode_jump_t)(f2ptr cause, f2ptr thread, f2ptr tracing_on);
-typedef int (*bytecode_jump__f2ptr_t)(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr arg0);
-typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr cause, f2ptr thread, f2ptr tracing_on, f2ptr arg0, f2ptr arg1);
+typedef int (*bytecode_jump_t)(             f2ptr thread);
+typedef int (*bytecode_jump__f2ptr_t)(      f2ptr thread, f2ptr arg0);
+typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr thread, f2ptr arg0, f2ptr arg1);
 
 
 // bytecode definitions (and bytecode_jump compiling functions)

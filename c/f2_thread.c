@@ -94,6 +94,40 @@ void print_bytecode_stats__cfunk(FILE* fptr) {
 //  return f2__cause__new(cause, nil, nil);//thread, env, __thread__execute_bytecode__cause__symbol, bytecode, nil);
 //}
 
+void raw__bytecode__thread_trace(f2ptr cause, f2ptr bytecode, f2ptr thread) {
+  f2ptr command = f2bytecode__command(bytecode, cause);
+  if      (command == __funk2.bytecode.bytecode__push__symbol)               {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__pop__symbol)                {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__copy__symbol)               {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__swap__symbol)               {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__array__symbol)              {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__cons__symbol)               {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__car__set__symbol)           {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__funk__symbol)               {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)          {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__set__symbol)                {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)           {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__array_elt__symbol)          {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)    {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)    {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)          {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__car__symbol)                {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__type_var__set__symbol)      {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol) {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__jump__symbol)               {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__nop__symbol)                {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__debug__symbol)              {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__trace__symbol)              {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__compile__symbol)            {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__yield__symbol)              {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__print(cause, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)       {f2__print(cause, bytecode);}
+  else {
+    f2thread__value__set(thread, cause, f2larva__new(cause, 21));
+  }
+}
+
 void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   debug__assert(raw__threadp(thread, nil), nil, "thread type assertion failed.");
   debug__assert(raw__bytecodep(bytecode, nil), nil, "bytecode type assertion failed.");

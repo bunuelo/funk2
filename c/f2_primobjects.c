@@ -331,21 +331,23 @@ f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
 
 // bytecode
 
-defprimobject__static_slot(bytecode__command, 0);
-defprimobject__static_slot(bytecode__arg0,    1);
-defprimobject__static_slot(bytecode__arg1,    2);
-defprimobject__static_slot(bytecode__arg2,    3);
+defprimobject__static_slot(bytecode__tracing_on, 0);
+defprimobject__static_slot(bytecode__command,    1);
+defprimobject__static_slot(bytecode__arg0,       2);
+defprimobject__static_slot(bytecode__arg1,       3);
+defprimobject__static_slot(bytecode__arg2,       4);
 
 f2ptr __bytecode__symbol = -1;
 
-f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {
+f2ptr f2bytecode__new(f2ptr cause, f2ptr tracing_on, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {
   /*pause_gc();*/
   release__assert(__bytecode__symbol != -1, nil, "f2bytecode__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __bytecode__symbol, 4, nil);
-  f2bytecode__command__set(this, cause, command);
-  f2bytecode__arg0__set(   this, cause, arg0);
-  f2bytecode__arg1__set(   this, cause, arg1);
-  f2bytecode__arg2__set(   this, cause, arg2);
+  f2ptr this = f2__primobject__new(cause, __bytecode__symbol, 5, nil);
+  f2bytecode__tracing_on__set(this, cause, tracing_on);
+  f2bytecode__command__set(   this, cause, command);
+  f2bytecode__arg0__set(      this, cause, arg0);
+  f2bytecode__arg1__set(      this, cause, arg1);
+  f2bytecode__arg2__set(      this, cause, arg2);
   /*resume_gc();*/
   return this;
 }

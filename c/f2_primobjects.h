@@ -120,6 +120,7 @@ defprimobject__static_slot__prototype(cons__cdr);
 #define f2cons__cdr__trace(            this, cause)                     primobject__static_slot__trace(            this, cons__cdr, cause)
 #define f2cons__cdr__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, cons__cdr, cause)
 
+
 // deprecated cons macros
 
 #define f2list1__new(cause, elt0)                         f2cons__new(cause, elt0, nil)
@@ -470,6 +471,13 @@ extern f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1,
 
 #define f2primobject__is_bytecode(      this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bytecode__symbol)
 
+defprimobject__static_slot__prototype(bytecode__tracing_on);
+#define f2bytecode__tracing_on(                   this, cause)        primobject__static_slot__accessor(         this, bytecode__tracing_on, cause)
+#define f2bytecode__tracing_on__set(              this, cause, value) primobject__static_slot__set(              this, bytecode__tracing_on, cause, value)
+#define f2bytecode__tracing_on__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bytecode__tracing_on, cause)
+#define f2bytecode__tracing_on__trace(            this, cause)        primobject__static_slot__trace(            this, bytecode__tracing_on, cause)
+#define f2bytecode__tracing_on__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bytecode__tracing_on, cause)
+
 defprimobject__static_slot__prototype(bytecode__command);
 #define f2bytecode__command(            this, cause)        primobject__static_slot__accessor(  this, bytecode__command, cause)
 #define f2bytecode__command__set(       this, cause, value) primobject__static_slot__set(       this, bytecode__command, cause, value)
@@ -497,6 +505,7 @@ defprimobject__static_slot__prototype(bytecode__arg2);
 #define f2bytecode__arg2__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg2, cause)
 #define f2bytecode__arg2__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg2, cause)
 #define f2bytecode__arg2__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg2, cause)
+
 
 // thread
 

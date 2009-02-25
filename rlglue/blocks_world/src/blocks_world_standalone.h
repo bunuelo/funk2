@@ -33,7 +33,7 @@ void runEnvironmentEventLoop(int theConnection);
 
 /***  BLOCKS WORLD COMMANDS ******/
 
-#include "../../../c/f2_primobjects.h"
+#include "funk2_primobjects_lite.h"
 
 // blocks_world_rectangle
 

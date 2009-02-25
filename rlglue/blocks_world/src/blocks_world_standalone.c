@@ -15,11 +15,8 @@
  */
 #include <stdio.h>
 
-#include "../../c/blocks_world_standalone.h"
-
-
-
-#include "funk2.h"
+#include "blocks_world_standalone.h"
+//#include "funk2.h"
 
 s64 raw__blocks_world__lower_left__x(f2ptr cause) {
   return 20;

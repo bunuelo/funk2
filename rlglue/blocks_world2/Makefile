@@ -5,7 +5,7 @@
 #This is what you would use if you installed the C/C++ Codec with:
 # ./configure --prefix=/Users/btanner/rl-glue
 
-EXTRA_CFLAGS = -I../include/rlglue
+EXTRA_CFLAGS = -I../include
 EXTRA_LDFLAGS =-L../lib 
 
 all: 	

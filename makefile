@@ -19,6 +19,8 @@
 # rights to redistribute these changes.
 # 
 
+current_dir                  = $(shell pwd | sed -e 's=^/tmp_mnt/=/=')
+
 source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
@@ -43,7 +45,7 @@ install__bootstrap__img      = $(install__img__dir)bootstrap.img
 install__system_bin__dir     = /usr/local/bin/
 install__system_include__dir = /usr/local/include/funk2/
 install__funk2__system_link  = $(install__system_bin__dir)funk2
-install__rlglue_dir          = $(source__funk2_dir)rlglue/
+install__rlglue_dir          = $(current_dir)/rlglue/installed
 
 default: $(compile__funk2) $(compile__bootstrap__img)
 
@@ -337,12 +339,9 @@ link-grammar:
 
 rlglue:
 	cd $(source__rlglue_core_dir); ./configure --prefix=$(install__rlglue_dir)
-	make
-	make install	
-	cd $(source__rlglue_c_codec_dir)
-	./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir)
-	make
-	make install
-    
-
+ 	echo "FINISHED configuring"	
+	make -s
+	cd $(source__rlglue_core_dir); make install
+	cd $(source__rlglue_c_codec_dir); ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make install
+	echo "   installed rlglue into $(install__rlglue_dir)"
 

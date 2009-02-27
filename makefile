@@ -25,9 +25,6 @@ source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
 source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
-source__rlglue_dir           = $(source__funk2__dir)rlglue/
-source__rlglue_core_dir      = $(source__rlglue_dir)rlglue-3.02/
-source__rlglue_c_codec_dir   = $(source__rlglue_dir)c-codec-2.0/
 
 compile__funk2__dir           = $(source__funk2__dir)
 compile__bin__dir             = $(compile__funk2__dir)bin/
@@ -45,7 +42,7 @@ install__bootstrap__img      = $(install__img__dir)bootstrap.img
 install__system_bin__dir     = /usr/local/bin/
 install__system_include__dir = /usr/local/include/funk2/
 install__funk2__system_link  = $(install__system_bin__dir)funk2
-install__rlglue_dir          = $(current_dir)/rlglue
+install__rlglue_dir          = $(current_dir)/extern
 
 default: $(compile__funk2) $(compile__bootstrap__img)
 
@@ -335,10 +332,12 @@ link-grammar:
 	cd extern/link-grammar-4.4.2/; ./configure; make
 
 # RL-Glue Libraries  http://glue.rl-community.org
-# 
+rlglue:
+	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue_dir); make; make install
+	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make; make install
 
-rlglue: makefile
-	cd $(source__rlglue_core_dir); ./configure --prefix=$(install__rlglue_dir)
+srlglue: makefile
+	cd $(source__rlglue_core_dir); ./configure 
 	cd $(source__rlglue_core_dir); make install
 	cd $(source__rlglue_c_codec_dir); ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make install
 	echo "   installed rlglue into $(install__rlglue_dir)"

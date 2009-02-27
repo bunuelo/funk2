@@ -334,11 +334,6 @@ link-grammar:
 # RL-Glue Libraries  http://glue.rl-community.org
 rlglue:
 	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue_dir); make; make install
-	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make; make install
+	#cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make; make install
 
-srlglue: makefile
-	cd $(source__rlglue_core_dir); ./configure 
-	cd $(source__rlglue_core_dir); make install
-	cd $(source__rlglue_c_codec_dir); ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make install
-	echo "   installed rlglue into $(install__rlglue_dir)"
 

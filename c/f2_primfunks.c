@@ -1786,15 +1786,17 @@ f2ptr f2__subscribe(f2ptr cause, f2ptr thread, f2ptr event_types, f2ptr funkable
 def_pcfunk2(subscribe, event_type, funkable, return f2__subscribe(this_cause, simple_thread, event_type, funkable));
 
 f2ptr f2__thread__subversion_cause(f2ptr cause, f2ptr thread, f2ptr name) {
-  f2ptr tracing_on            = nil;
+  f2ptr bytecode_tracing_on   = nil;
+  f2ptr memory_tracing_on     = nil;
   f2ptr subscribers           = nil;
   f2ptr old_imagination_stack = nil;
   if (cause) {
-    tracing_on            = f2cause__tracing_on(cause, cause);
+    bytecode_tracing_on   = f2cause__bytecode_tracing_on(cause, cause);
+    memory_tracing_on     = f2cause__memory_tracing_on(cause, cause);
     subscribers           = f2cause__subscribers(cause, cause);
     old_imagination_stack = f2cause__imagination_stack(cause, cause);
   }
-  f2ptr new_cause   = f2__cause__new(cause, tracing_on, subscribers, f2cons__new(cause, name, old_imagination_stack));
+  f2ptr new_cause = f2__cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers, f2cons__new(cause, name, old_imagination_stack));
   f2thread__cause_reg__set(thread, cause, new_cause);
   return new_cause;
 }

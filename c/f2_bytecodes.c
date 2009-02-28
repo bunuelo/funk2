@@ -1846,7 +1846,7 @@ int f2__thread__bytecode__trace(f2ptr thread, f2ptr value) {
 // bytecode compile [bool bool]
 
 void raw__thread__bytecode_trace__compile__tracewrap__protect_environment(f2ptr cause, f2ptr thread) {
-  status("bytecode trace: [compile tracewrap protect_environment]", value);
+  status("bytecode trace: [compile tracewrap protect_environment]");
 }
 
 int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) {
@@ -1865,7 +1865,7 @@ int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) 
 }
 
 void raw__thread__bytecode_trace__compile__tracewrap__nil(f2ptr cause, f2ptr thread) {
-  status("bytecode trace: [compile tracewrap nil]", value);
+  status("bytecode trace: [compile tracewrap nil]");
 }
 
 int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
@@ -1884,7 +1884,7 @@ int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
 }
 
 void raw__thread__bytecode_trace__compile__nil__protect_environment(f2ptr cause, f2ptr thread) {
-  status("bytecode trace: [compile nil protect_environment]", value);
+  status("bytecode trace: [compile nil protect_environment]");
 }
 
 int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
@@ -1903,7 +1903,7 @@ int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
 }
 
 void raw__thread__bytecode_trace__compile__nil__nil(f2ptr cause, f2ptr thread) {
-  status("bytecode trace: [compile nil nil]", value);
+  status("bytecode trace: [compile nil nil]");
 }
 
 int f2__thread__bytecode__compile__nil__nil(f2ptr thread) {
@@ -1943,7 +1943,7 @@ int f2__thread__bytecode__compile(f2ptr thread, f2ptr tracewrap, f2ptr protect_e
 // bytecode yield []
 
 void raw__thread__bytecode_trace__yield(f2ptr cause, f2ptr thread) {
-  status("bytecode trace: [yield]", value);
+  status("bytecode trace: [yield]");
 }
 
 int f2__thread__bytecode__yield(f2ptr thread) {
@@ -1962,7 +1962,7 @@ int f2__thread__bytecode__yield(f2ptr thread) {
 // bytecode newenv []
 
 void raw__thread__bytecode_trace__newenv(f2ptr cause, f2ptr thread) {
-  status("bytecode trace: [newenv]", value);
+  status("bytecode trace: [newenv]");
 }
 
 int f2__thread__bytecode__newenv(f2ptr thread) {

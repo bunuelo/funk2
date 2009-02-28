@@ -182,7 +182,7 @@ bool raw__cause__is_traced(f2ptr cause, f2ptr this) {
     return nil;
   }
   debug__assert(raw__causep(this, cause), nil, "raw__cause__is_traced !raw__causep(this, cause)");
-  return f2cause__tracing_on(this, cause);
+  return f2cause__memory_tracing_on(this, cause);
 }
 
 void debug__cause__is_imaginary() {

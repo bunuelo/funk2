@@ -496,26 +496,28 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr thread, f2pt
 
 // cause
 
-defprimobject__static_slot(cause__tracing_on,        0);
-defprimobject__static_slot(cause__subscribers_mutex, 1);
-defprimobject__static_slot(cause__subscribers,       2);
-defprimobject__static_slot(cause__imagination_stack, 3);
+defprimobject__static_slot(cause__bytecode_tracing_on, 0);
+defprimobject__static_slot(cause__memory_tracing_on,   1);
+defprimobject__static_slot(cause__subscribers_mutex,   2);
+defprimobject__static_slot(cause__subscribers,         3);
+defprimobject__static_slot(cause__imagination_stack,   4);
 
 f2ptr __cause__symbol = -1;
 
-f2ptr f2cause__new(f2ptr cause, f2ptr tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack) {
+f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack) {
   release__assert(__cause__symbol != -1, nil, "f2cause__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __cause__symbol, 4, nil);
-  f2cause__tracing_on__set(       this, cause, tracing_on);
-  f2cause__subscribers_mutex__set(this, cause, subscribers_mutex);
-  f2cause__subscribers__set(      this, cause, subscribers);
-  f2cause__imagination_stack__set(this, cause, imagination_stack);
+  f2ptr this = f2__primobject__new(cause, __cause__symbol, 5, nil);
+  f2cause__bytecode_tracing_on__set(this, cause, bytecode_tracing_on);
+  f2cause__memory_tracing_on__set(  this, cause, memory_tracing_on);
+  f2cause__subscribers_mutex__set(  this, cause, subscribers_mutex);
+  f2cause__subscribers__set(        this, cause, subscribers);
+  f2cause__imagination_stack__set(  this, cause, imagination_stack);
   return this;
 }
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr tracing_on, f2ptr subscribers, f2ptr imagination_name) {
+f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name) {
   f2ptr subscribers_mutex = f2mutex__new(cause);
-  return f2cause__new(cause, tracing_on, subscribers_mutex, subscribers, imagination_name);
+  return f2cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name);
 }
 
 // transframe

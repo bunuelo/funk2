@@ -164,6 +164,10 @@ void f2__thread__increment_pc(f2ptr thread, f2ptr cause) {
 
 // bytecode jump_funk []
 
+void raw__thread__bytecode_trace__jump_funk(f2ptr cause, f2ptr thread) {
+  status("bytecode trace: jump_funk");
+}
+
 int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2ptr cause) {
   f2ptr funktion = f2thread__value(thread, cause);
   //assert(funktion != nil, thread, "f2__thread__bytecode__funk assertion failed: funktion is null.");
@@ -217,6 +221,11 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
 
 int f2__thread__bytecode__jump_funk(f2ptr thread) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
+  
+  if (f2cause__bytecode_tracing_on(cause, cause)) {
+    raw__thread__bytecode_trace__jump_funk(f2ptr cause, f2ptr thread);
+  }
+  
   f2__thread__increment_pc(thread, cause);
   
   return f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(thread, cause);

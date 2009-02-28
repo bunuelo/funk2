@@ -143,8 +143,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     }
   }
   
-  bool traced_cause = true;
-  cause = f2__cause__new(cause, traced_cause ? __funk2.globalenv.true__symbol : nil, nil, nil);
+  bool bytecode_tracing_on = false;
+  bool memory_tracing_on   = true;
+  cause = f2__cause__new(cause, f2bool__new(bytecode_tracing_on), f2bool__new(memory_tracing_on), nil, nil);
   
   // try to find a boot function
   f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));

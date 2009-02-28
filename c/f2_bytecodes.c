@@ -794,7 +794,7 @@ void raw__thread__bytecode_trace__swap__env_reg__args_reg(f2ptr cause, f2ptr thr
 int f2__thread__bytecode__swap__env_reg__args_reg(f2ptr thread) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__env_reg__args_reg(f2ptr cause, f2ptr thread);
+    raw__thread__bytecode_trace__swap__env_reg__args_reg(cause, thread);
   }
   
   f2__thread__increment_pc(thread, cause);

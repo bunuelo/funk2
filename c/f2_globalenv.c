@@ -233,33 +233,38 @@ f2ptr __stdtrace__pointer              = -1;
 f2ptr __trace_all_compiles__symbol     = -1;
 */
 
-f2ptr              f2_globalenv_c__cause__new(f2ptr cause) {release__assert(             __funk2.globalenv.f2_globalenv_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,              __funk2.globalenv.f2_globalenv_c__cause__symbol, nil, nil);}
-f2ptr                   f2_ansi_c__cause__new(f2ptr cause) {release__assert(                  __funk2.globalenv.f2_ansi_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}
-f2ptr              f2_bytecodes_c__cause__new(f2ptr cause) {release__assert(             __funk2.globalenv.f2_bytecodes_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,              __funk2.globalenv.f2_bytecodes_c__cause__symbol, nil, nil);}
-f2ptr                f2_compile_c__cause__new(f2ptr cause) {release__assert(               __funk2.globalenv.f2_compile_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                __funk2.globalenv.f2_compile_c__cause__symbol, nil, nil);}
-f2ptr                f2_gmodule_c__cause__new(f2ptr cause) {release__assert(               __funk2.globalenv.f2_gmodule_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                __funk2.globalenv.f2_gmodule_c__cause__symbol, nil, nil);}
-f2ptr                   f2_load_c__cause__new(f2ptr cause) {release__assert(                  __funk2.globalenv.f2_load_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                   __funk2.globalenv.f2_load_c__cause__symbol, nil, nil);}
-f2ptr                 f2_memory_c__cause__new(f2ptr cause) {release__assert(                __funk2.globalenv.f2_memory_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                 __funk2.globalenv.f2_memory_c__cause__symbol, nil, nil);}
-f2ptr              f2_primfunks_c__cause__new(f2ptr cause) {release__assert(             __funk2.globalenv.f2_primfunks_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,              __funk2.globalenv.f2_primfunks_c__cause__symbol, nil, nil);}
-f2ptr f2_primobject_environment_c__cause__new(f2ptr cause) {release__assert(__funk2.globalenv.f2_primobject_environment_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env, __funk2.globalenv.f2_primobject_environment_c__cause__symbol, nil, nil);}
-f2ptr       f2_primobject_frame_c__cause__new(f2ptr cause) {release__assert(      __funk2.globalenv.f2_primobject_frame_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,       __funk2.globalenv.f2_primobject_frame_c__cause__symbol, nil, nil);}
-f2ptr   f2_primobject_hashtable_c__cause__new(f2ptr cause) {release__assert(  __funk2.globalenv.f2_primobject_hashtable_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,   __funk2.globalenv.f2_primobject_hashtable_c__cause__symbol, nil, nil);}
-f2ptr            f2_primobjects_c__cause__new(f2ptr cause) {release__assert(           __funk2.globalenv.f2_primobjects_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,            __funk2.globalenv.f2_primobjects_c__cause__symbol, nil, nil);}
-f2ptr                  f2_print_c__cause__new(f2ptr cause) {release__assert(                 __funk2.globalenv.f2_print_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                  __funk2.globalenv.f2_print_c__cause__symbol, nil, nil);}
-f2ptr                f2_pthread_c__cause__new(f2ptr cause) {release__assert(               __funk2.globalenv.f2_pthread_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                __funk2.globalenv.f2_pthread_c__cause__symbol, nil, nil);}
-f2ptr                 f2_ptypes_c__cause__new(f2ptr cause) {release__assert(                __funk2.globalenv.f2_ptypes_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                 __funk2.globalenv.f2_ptypes_c__cause__symbol, nil, nil);}
-f2ptr                 f2_reader_c__cause__new(f2ptr cause) {release__assert(                __funk2.globalenv.f2_reader_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                 __funk2.globalenv.f2_reader_c__cause__symbol, nil, nil);}
-f2ptr           f2_redblacktree_c__cause__new(f2ptr cause) {release__assert(          __funk2.globalenv.f2_redblacktree_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,           __funk2.globalenv.f2_redblacktree_c__cause__symbol, nil, nil);}
-f2ptr                   f2_repl_c__cause__new(f2ptr cause) {release__assert(                  __funk2.globalenv.f2_repl_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                   __funk2.globalenv.f2_repl_c__cause__symbol, nil, nil);}
-f2ptr              f2_scheduler_c__cause__new(f2ptr cause) {release__assert(             __funk2.globalenv.f2_scheduler_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,              __funk2.globalenv.f2_scheduler_c__cause__symbol, nil, nil);}
-f2ptr                 f2_signal_c__cause__new(f2ptr cause) {release__assert(                __funk2.globalenv.f2_signal_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                 __funk2.globalenv.f2_signal_c__cause__symbol, nil, nil);}
-f2ptr                 f2_socket_c__cause__new(f2ptr cause) {release__assert(                __funk2.globalenv.f2_socket_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                 __funk2.globalenv.f2_socket_c__cause__symbol, nil, nil);}
-f2ptr             f2_swapmemory_c__cause__new(f2ptr cause) {release__assert(            __funk2.globalenv.f2_swapmemory_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,             __funk2.globalenv.f2_swapmemory_c__cause__symbol, nil, nil);}
-f2ptr                 f2_thread_c__cause__new(f2ptr cause) {release__assert(                __funk2.globalenv.f2_thread_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                 __funk2.globalenv.f2_thread_c__cause__symbol, nil, nil);}
-f2ptr                   f2_time_c__cause__new(f2ptr cause) {release__assert(                  __funk2.globalenv.f2_time_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                   __funk2.globalenv.f2_time_c__cause__symbol, nil, nil);}
-f2ptr                  f2_trace_c__cause__new(f2ptr cause) {release__assert(                 __funk2.globalenv.f2_trace_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                  __funk2.globalenv.f2_trace_c__cause__symbol, nil, nil);}
-f2ptr              f2_serialize_c__cause__new(f2ptr cause) {release__assert(             __funk2.globalenv.f2_serialize_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,              __funk2.globalenv.f2_serialize_c__cause__symbol, nil, nil);}
-f2ptr                     funk2_c__cause__new(f2ptr cause) {release__assert(                    __funk2.globalenv.funk2_c__cause__symbol != -1, nil, "failed"); return f2__cause__new(cause, nil, nil, nil);}//thread, env,                     __funk2.globalenv.funk2_c__cause__symbol, nil, nil);}
+f2ptr raw__c_source_file__cause__new(f2ptr cause, char* filename) {
+  // we should use filename in a source-file cause type...
+  return f2__cause__new(cause, nil, nil, nil, nil);
+}
+
+f2ptr              f2_globalenv_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_globalenv.c");}
+f2ptr                   f2_ansi_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_ansi.c");}
+f2ptr              f2_bytecodes_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_bytecodes.c");}
+f2ptr                f2_compile_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_compile.c");}
+f2ptr                f2_gmodule_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_gmodule.c");}
+f2ptr                   f2_load_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_load.c");}
+f2ptr                 f2_memory_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_memory.c");}
+f2ptr              f2_primfunks_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primfunks.c");}
+f2ptr f2_primobject_environment_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primobject_environment.c");}
+f2ptr       f2_primobject_frame_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primobject_frame.c");}
+f2ptr   f2_primobject_hashtable_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primobject_hashtable.c");}
+f2ptr            f2_primobjects_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_primobjects.c");}
+f2ptr                  f2_print_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_print.c");}
+f2ptr                f2_pthread_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_pthread.c");}
+f2ptr                 f2_ptypes_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_ptypes.c");}
+f2ptr                 f2_reader_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_reader.c");}
+f2ptr           f2_redblacktree_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_redblacktree.c");}
+f2ptr                   f2_repl_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_repl.c");}
+f2ptr              f2_scheduler_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_scheduler.c");}
+f2ptr                 f2_signal_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_signal.c");}
+f2ptr                 f2_socket_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_socket.c");}
+f2ptr             f2_swapmemory_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_swapmemory.c");}
+f2ptr                 f2_thread_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_thread.c");}
+f2ptr                   f2_time_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_time.c");}
+f2ptr                  f2_trace_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_trace.c");}
+f2ptr              f2_serialize_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_serialize.c");}
+f2ptr                     funk2_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "funk2.c");}
 
 f2ptr f2bool__new(uint raw_value) {return raw_value ? __funk2.globalenv.true__symbol : nil;}
 

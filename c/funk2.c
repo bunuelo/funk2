@@ -144,7 +144,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   }
   
   bool bytecode_tracing_on = false;
-  bool memory_tracing_on   = true;
+  bool memory_tracing_on   = false;
   cause = f2__cause__new(cause, f2bool__new(bytecode_tracing_on), f2bool__new(memory_tracing_on), nil, nil);
   
   // try to find a boot function

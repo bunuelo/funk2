@@ -521,10 +521,10 @@ void raw__thread__bytecode_trace__nop(f2ptr cause, f2ptr bytecode, f2ptr thread)
   status("bytecode trace: [nop]");
 }
 
-int f2__thread__bytecode__nop(f2ptr thread) {
+int f2__thread__bytecode__nop(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__nop(cause, thread);
+    raw__thread__bytecode_trace__nop(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -535,14 +535,14 @@ int f2__thread__bytecode__nop(f2ptr thread) {
 
 // bytecode swap [reg reg]
 
-void raw__thread__bytecode_trace__swap__return_reg__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__return_reg__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap return value]");
 }
 
-int f2__thread__bytecode__swap__return_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__return_reg__value_reg(cause, thread);  
+    raw__thread__bytecode_trace__swap__return_reg__value_reg(cause, bytecode, thread);  
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -553,14 +553,14 @@ int f2__thread__bytecode__swap__return_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__return_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__return_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap return iter]");
 }
 
-int f2__thread__bytecode__swap__return_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__return_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__return_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -571,14 +571,14 @@ int f2__thread__bytecode__swap__return_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__return_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__return_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap return program_counter]");
 }
 
-int f2__thread__bytecode__swap__return_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__return_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__return_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -589,14 +589,14 @@ int f2__thread__bytecode__swap__return_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__swap__return_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__return_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap return env]");
 }
 
-int f2__thread__bytecode__swap__return_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__return_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__return_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -607,14 +607,14 @@ int f2__thread__bytecode__swap__return_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__return_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__return_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap return args]");
 }
 
-int f2__thread__bytecode__swap__return_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__return_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__return_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__return_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -626,14 +626,14 @@ int f2__thread__bytecode__swap__return_reg__args_reg(f2ptr thread) {
 }
 
 
-void raw__thread__bytecode_trace__swap__value_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__value_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap value iter]");
 }
 
-int f2__thread__bytecode__swap__value_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__value_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__value_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -644,14 +644,14 @@ int f2__thread__bytecode__swap__value_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__value_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__value_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap value program_counter]");
 }
 
-int f2__thread__bytecode__swap__value_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__value_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__value_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -662,14 +662,14 @@ int f2__thread__bytecode__swap__value_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__swap__value_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__value_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap value env]");
 }
 
-int f2__thread__bytecode__swap__value_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__value_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__value_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -680,14 +680,14 @@ int f2__thread__bytecode__swap__value_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__value_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__value_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap value args]");
 }
 
-int f2__thread__bytecode__swap__value_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__value_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__value_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__value_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -698,14 +698,14 @@ int f2__thread__bytecode__swap__value_reg__args_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__iter_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__iter_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap iter program_counter]");
 }
 
-int f2__thread__bytecode__swap__iter_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__iter_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__iter_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__iter_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -716,14 +716,14 @@ int f2__thread__bytecode__swap__iter_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__swap__iter_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__iter_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap iter env]");
 }
 
-int f2__thread__bytecode__swap__iter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__iter_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__iter_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__iter_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -734,14 +734,14 @@ int f2__thread__bytecode__swap__iter_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__iter_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__iter_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap iter args]");
 }
 
-int f2__thread__bytecode__swap__iter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__iter_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__iter_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__iter_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -752,14 +752,14 @@ int f2__thread__bytecode__swap__iter_reg__args_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__swap__program_counter_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__program_counter_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap program_counter env]");
 }
 
-int f2__thread__bytecode__swap__program_counter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__program_counter_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__program_counter_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__program_counter_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -770,14 +770,14 @@ int f2__thread__bytecode__swap__program_counter_reg__env_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__swap__program_counter_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__program_counter_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap program_counter args]");
 }
 
-int f2__thread__bytecode__swap__program_counter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__program_counter_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__program_counter_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__program_counter_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -788,14 +788,14 @@ int f2__thread__bytecode__swap__program_counter_reg__args_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__swap__env_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__swap__env_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [swap env args]");
 }
 
-int f2__thread__bytecode__swap__env_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__swap__env_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__swap__env_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__swap__env_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -860,23 +860,23 @@ bytecode_jump_t f2__compile__bytecode__swap(f2ptr cause, f2ptr reg0, f2ptr reg1)
 							     return (bytecode_jump_t)NULL;}
 }
 
-int f2__thread__bytecode__swap(f2ptr thread, f2ptr reg0, f2ptr reg1) {
+int f2__thread__bytecode__swap(f2ptr thread, f2ptr bytecode, f2ptr reg0, f2ptr reg1) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
-  return (f2__compile__bytecode__swap(cause, reg0, reg1))(thread);
+  return (f2__compile__bytecode__swap(cause, reg0, reg1))(thread, bytecode);
 }
 
 
 // bytecode push [reg]
 
-void raw__thread__bytecode_trace__push__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__push__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [push return]");
 }
 
-int f2__thread__bytecode__push__return_reg(f2ptr thread) {
+int f2__thread__bytecode__push__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__push__return_reg(cause, thread);
+    raw__thread__bytecode_trace__push__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -885,14 +885,14 @@ int f2__thread__bytecode__push__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__push__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__push__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [push env]");
 }
 
-int f2__thread__bytecode__push__env_reg(f2ptr thread) {
+int f2__thread__bytecode__push__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__push__env_reg(cause, thread);
+    raw__thread__bytecode_trace__push__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -901,14 +901,14 @@ int f2__thread__bytecode__push__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__push__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__push__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [push value]");
 }
 
-int f2__thread__bytecode__push__value_reg(f2ptr thread) {
+int f2__thread__bytecode__push__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__push__value_reg(cause, thread);
+    raw__thread__bytecode_trace__push__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -917,14 +917,14 @@ int f2__thread__bytecode__push__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__push__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__push__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [push iter]");
 }
 
-int f2__thread__bytecode__push__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__push__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__push__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__push__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -933,14 +933,14 @@ int f2__thread__bytecode__push__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__push__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__push__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [push args]");
 }
 
-int f2__thread__bytecode__push__args_reg(f2ptr thread) {
+int f2__thread__bytecode__push__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__push__args_reg(cause, thread);
+    raw__thread__bytecode_trace__push__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -949,14 +949,14 @@ int f2__thread__bytecode__push__args_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__push__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__push__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [push program_counter]");
 }
 
-int f2__thread__bytecode__push__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__push__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__push__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__push__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -978,22 +978,22 @@ bytecode_jump_t f2__compile__bytecode__push(f2ptr cause, f2ptr reg) {
   }
 }
 
-int f2__thread__bytecode__push(f2ptr thread, f2ptr reg) {
+int f2__thread__bytecode__push(f2ptr thread, f2ptr bytecode, f2ptr reg) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
-  return (f2__compile__bytecode__push(cause, reg))(thread);
+  return (f2__compile__bytecode__push(cause, reg))(thread, bytecode);
 }
 
 // bytecode pop [reg]
 
-void raw__thread__bytecode_trace__pop__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop return]");
 }
 
-int f2__thread__bytecode__pop__return_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__return_reg(cause, thread);
+    raw__thread__bytecode_trace__pop__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1002,14 +1002,14 @@ int f2__thread__bytecode__pop__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__pop__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop env]");
 }
 
-int f2__thread__bytecode__pop__env_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__env_reg(cause, thread);
+    raw__thread__bytecode_trace__pop__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1022,14 +1022,14 @@ int f2__thread__bytecode__pop__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__pop__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop value]");
 }
 
-int f2__thread__bytecode__pop__value_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__value_reg(cause, thread);
+    raw__thread__bytecode_trace__pop__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1038,14 +1038,14 @@ int f2__thread__bytecode__pop__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__pop__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop iter]");
 }
 
-int f2__thread__bytecode__pop__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__pop__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1054,14 +1054,14 @@ int f2__thread__bytecode__pop__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__pop__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop args]");
 }
 
-int f2__thread__bytecode__pop__args_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__args_reg(cause, thread);
+    raw__thread__bytecode_trace__pop__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1070,14 +1070,14 @@ int f2__thread__bytecode__pop__args_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__pop__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop program_counter]");
 }
 
-int f2__thread__bytecode__pop__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__pop__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__pop__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1086,14 +1086,14 @@ int f2__thread__bytecode__pop__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__pop__nil(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__pop__nil(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [pop nil]");
 }
 
-int f2__thread__bytecode__pop__nil(f2ptr thread) {
+int f2__thread__bytecode__pop__nil(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__nil(cause, thread);
+    raw__thread__bytecode_trace__pop__nil(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1116,23 +1116,23 @@ bytecode_jump_t f2__compile__bytecode__pop(f2ptr cause, f2ptr reg) {
   }
 }
 
-int f2__thread__bytecode__pop(f2ptr thread, f2ptr reg) {
+int f2__thread__bytecode__pop(f2ptr thread, f2ptr bytecode, f2ptr reg) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
-  return (f2__compile__bytecode__pop(cause, reg))(thread);
+  return (f2__compile__bytecode__pop(cause, reg))(thread, bytecode);
 }
 
 
 // bytecode copy [reg reg]
 
-void raw__thread__bytecode_trace__copy__return_reg__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__return_reg__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy return value]");
 }
 
-int f2__thread__bytecode__copy__return_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__return_reg__value_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__return_reg__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1141,14 +1141,14 @@ int f2__thread__bytecode__copy__return_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__return_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__return_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy return iter]");
 }
 
-int f2__thread__bytecode__copy__return_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__return_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__return_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1157,14 +1157,14 @@ int f2__thread__bytecode__copy__return_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__return_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__return_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy return program_counter]");
 }
 
-int f2__thread__bytecode__copy__return_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__return_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__return_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1173,14 +1173,14 @@ int f2__thread__bytecode__copy__return_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__copy__return_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__return_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy return env]");
 }
 
-int f2__thread__bytecode__copy__return_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__return_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__return_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1189,14 +1189,14 @@ int f2__thread__bytecode__copy__return_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__return_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__return_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy return args]");
 }
 
-int f2__thread__bytecode__copy__return_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__return_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__return_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__return_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1206,14 +1206,14 @@ int f2__thread__bytecode__copy__return_reg__args_reg(f2ptr thread) {
 }
 
 
-void raw__thread__bytecode_trace__copy__value_reg__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__value_reg__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy value return]");
 }
 
-int f2__thread__bytecode__copy__value_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__value_reg__return_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__value_reg__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1222,14 +1222,14 @@ int f2__thread__bytecode__copy__value_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__value_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__value_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy value iter]");
 }
 
-int f2__thread__bytecode__copy__value_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__value_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__value_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1238,14 +1238,14 @@ int f2__thread__bytecode__copy__value_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__value_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__value_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy value program_counter]");
 }
 
-int f2__thread__bytecode__copy__value_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__value_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__value_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1254,14 +1254,14 @@ int f2__thread__bytecode__copy__value_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__copy__value_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__value_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy value env]");
 }
 
-int f2__thread__bytecode__copy__value_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__value_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__value_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1270,14 +1270,14 @@ int f2__thread__bytecode__copy__value_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__value_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__value_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy value args]");
 }
 
-int f2__thread__bytecode__copy__value_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__value_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__value_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__value_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1287,14 +1287,14 @@ int f2__thread__bytecode__copy__value_reg__args_reg(f2ptr thread) {
 }
 
 
-void raw__thread__bytecode_trace__copy__iter_reg__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__iter_reg__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy iter value]");
 }
 
-int f2__thread__bytecode__copy__iter_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__iter_reg__value_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__iter_reg__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1303,14 +1303,14 @@ int f2__thread__bytecode__copy__iter_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__iter_reg__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__iter_reg__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy iter return]");
 }
 
-int f2__thread__bytecode__copy__iter_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__iter_reg__return_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__iter_reg__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1319,14 +1319,14 @@ int f2__thread__bytecode__copy__iter_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__iter_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__iter_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy iter program_counter]");
 }
 
-int f2__thread__bytecode__copy__iter_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__iter_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__iter_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1335,14 +1335,14 @@ int f2__thread__bytecode__copy__iter_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__copy__iter_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__iter_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy iter env]");
 }
 
-int f2__thread__bytecode__copy__iter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__iter_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__iter_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1351,14 +1351,14 @@ int f2__thread__bytecode__copy__iter_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__iter_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__iter_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy iter args]");
 }
 
-int f2__thread__bytecode__copy__iter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__iter_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__iter_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__iter_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1368,14 +1368,14 @@ int f2__thread__bytecode__copy__iter_reg__args_reg(f2ptr thread) {
 }
 
 
-void raw__thread__bytecode_trace__copy__program_counter_reg__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__program_counter_reg__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy program_counter return]");
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__program_counter_reg__return_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__program_counter_reg__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1384,14 +1384,14 @@ int f2__thread__bytecode__copy__program_counter_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__program_counter_reg__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__program_counter_reg__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy program_counter value]");
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__program_counter_reg__value_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__program_counter_reg__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1400,11 +1400,11 @@ int f2__thread__bytecode__copy__program_counter_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__program_counter_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__program_counter_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy program_counter iter]");
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
     raw__thread__bytecode_trace__copy__program_counter_reg__iter_reg(cause, thread);
@@ -1416,14 +1416,14 @@ int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__program_counter_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__program_counter_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy program_counter env]");
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__program_counter_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__program_counter_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1432,14 +1432,14 @@ int f2__thread__bytecode__copy__program_counter_reg__env_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__program_counter_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__program_counter_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy program_counter args]");
 }
 
-int f2__thread__bytecode__copy__program_counter_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__program_counter_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__program_counter_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__program_counter_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1449,14 +1449,14 @@ int f2__thread__bytecode__copy__program_counter_reg__args_reg(f2ptr thread) {
 }
 
 
-void raw__thread__bytecode_trace__copy__env_reg__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__env_reg__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy env return]");
 }
 
-int f2__thread__bytecode__copy__env_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__env_reg__return_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__env_reg__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1465,14 +1465,14 @@ int f2__thread__bytecode__copy__env_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__env_reg__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__env_reg__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy env value]");
 }
 
-int f2__thread__bytecode__copy__env_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__env_reg__value_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__env_reg__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1481,14 +1481,14 @@ int f2__thread__bytecode__copy__env_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__env_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__env_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy env iter]");
 }
 
-int f2__thread__bytecode__copy__env_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__env_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__env_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1497,14 +1497,14 @@ int f2__thread__bytecode__copy__env_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__env_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__env_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy env program_counter]");
 }
 
-int f2__thread__bytecode__copy__env_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__env_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__env_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1513,14 +1513,14 @@ int f2__thread__bytecode__copy__env_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__copy__env_reg__args_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__env_reg__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy env args]");
 }
 
-int f2__thread__bytecode__copy__env_reg__args_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__env_reg__args_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__env_reg__args_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__env_reg__args_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1530,14 +1530,14 @@ int f2__thread__bytecode__copy__env_reg__args_reg(f2ptr thread) {
 }
 
 
-void raw__thread__bytecode_trace__copy__args_reg__return_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__args_reg__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy args return]");
 }
 
-int f2__thread__bytecode__copy__args_reg__return_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__return_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__args_reg__return_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__args_reg__return_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1546,14 +1546,14 @@ int f2__thread__bytecode__copy__args_reg__return_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__args_reg__value_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__args_reg__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy args value]");
 }
 
-int f2__thread__bytecode__copy__args_reg__value_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__args_reg__value_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__args_reg__value_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1562,14 +1562,14 @@ int f2__thread__bytecode__copy__args_reg__value_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__args_reg__iter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__args_reg__iter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy args iter]");
 }
 
-int f2__thread__bytecode__copy__args_reg__iter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__args_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__args_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1578,14 +1578,14 @@ int f2__thread__bytecode__copy__args_reg__iter_reg(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__copy__args_reg__program_counter_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__args_reg__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy args program_counter]");
 }
 
-int f2__thread__bytecode__copy__args_reg__program_counter_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__program_counter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__args_reg__program_counter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__args_reg__program_counter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1594,14 +1594,14 @@ int f2__thread__bytecode__copy__args_reg__program_counter_reg(f2ptr thread) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__copy__args_reg__env_reg(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__copy__args_reg__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [copy args env]");
 }
 
-int f2__thread__bytecode__copy__args_reg__env_reg(f2ptr thread) {
+int f2__thread__bytecode__copy__args_reg__env_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__args_reg__env_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__args_reg__env_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1664,23 +1664,23 @@ bytecode_jump_t f2__compile__bytecode__copy(f2ptr cause, f2ptr reg0, f2ptr reg1)
 							     return (bytecode_jump_t)NULL;}
 }
 
-int f2__thread__bytecode__copy(f2ptr thread, f2ptr src_reg, f2ptr dest_reg) {
+int f2__thread__bytecode__copy(f2ptr thread, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
-  return (f2__compile__bytecode__copy(cause, src_reg, dest_reg))(thread);
+  return (f2__compile__bytecode__copy(cause, src_reg, dest_reg))(thread, bytecode);
 }
 
 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
-void raw__thread__bytecode_trace__lookup_type_var(f2ptr cause, f2ptr thread, f2ptr type, f2ptr var) {
+void raw__thread__bytecode_trace__lookup_type_var(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr type, f2ptr var) {
   status("bytecode trace: [lookup_type_var " f2ptr__fstr " " f2ptr__fstr "]", type, var);
 }
 
-int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__lookup_type_var(cause, thread, type, var);
+    raw__thread__bytecode_trace__lookup_type_var(cause, bytecode, thread, type, var);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1693,14 +1693,14 @@ int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr type, f2ptr var) {
 
 // bytecode define_type_var [f2ptr f2ptr]
 
-void raw__thread__bytecode_trace__define_type_var(f2ptr cause, f2ptr thread, f2ptr type, f2ptr var) {
+void raw__thread__bytecode_trace__define_type_var(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr type, f2ptr var) {
   status("bytecode trace: [define_type_var " f2ptr__fstr " " f2ptr__fstr "]", type, var);
 }
 
-int f2__thread__bytecode__define_type_var(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__define_type_var(f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__define_type_var(cause, thread, type, var);
+    raw__thread__bytecode_trace__define_type_var(cause, bytecode, thread, type, var);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1714,14 +1714,14 @@ int f2__thread__bytecode__define_type_var(f2ptr thread, f2ptr type, f2ptr var) {
 
 // bytecode type_var__set [f2ptr f2ptr]
 
-void raw__thread__bytecode_trace__type_var__set(f2ptr cause, f2ptr thread, f2ptr type, f2ptr var) {
+void raw__thread__bytecode_trace__type_var__set(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr type, f2ptr var) {
   status("bytecode trace: [type_var-set " f2ptr__fstr " " f2ptr__fstr "]", type, var);
 }
 
-int f2__thread__bytecode__type_var__set(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__type_var__set(f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__type_var__set(cause, thread, type, var);
+    raw__thread__bytecode_trace__type_var__set(cause, bytecode, thread, type, var);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1735,14 +1735,14 @@ int f2__thread__bytecode__type_var__set(f2ptr thread, f2ptr type, f2ptr var) {
 
 // bytecode globalize_type_var [f2ptr f2ptr]
 
-void raw__thread__bytecode_trace__globalize_type_var(f2ptr cause, f2ptr thread, f2ptr type, f2ptr var) {
+void raw__thread__bytecode_trace__globalize_type_var(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr type, f2ptr var) {
   status("bytecode trace: [globalize_type_var " f2ptr__fstr " " f2ptr__fstr "]", type, var);
 }
 
-int f2__thread__bytecode__globalize_type_var(f2ptr thread, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__globalize_type_var(f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__globalize_type_var(cause, thread, type, var);
+    raw__thread__bytecode_trace__globalize_type_var(cause, bytecode, thread, type, var);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1755,14 +1755,14 @@ int f2__thread__bytecode__globalize_type_var(f2ptr thread, f2ptr type, f2ptr var
 
 // bytecode jump [f2ptr]
 
-void raw__thread__bytecode_trace__jump(f2ptr cause, f2ptr thread, f2ptr new_program_counter) {
+void raw__thread__bytecode_trace__jump(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr new_program_counter) {
   status("bytecode trace: [jump " f2ptr__fstr "]", new_program_counter);
 }
 
-int f2__thread__bytecode__jump(f2ptr thread, f2ptr new_program_counter) {
+int f2__thread__bytecode__jump(f2ptr thread, f2ptr bytecode, f2ptr new_program_counter) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__jump(cause, thread, new_program_counter);
+    raw__thread__bytecode_trace__jump(cause, bytecode, thread, new_program_counter);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1778,14 +1778,14 @@ int f2__thread__bytecode__jump(f2ptr thread, f2ptr new_program_counter) {
 
 // bytecode else_jump [f2ptr]
 
-void raw__thread__bytecode_trace__else_jump(f2ptr cause, f2ptr thread, f2ptr new_program_counter) {
+void raw__thread__bytecode_trace__else_jump(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr new_program_counter) {
   status("bytecode trace: [else_jump " f2ptr__fstr "]", new_program_counter);
 }
 
-int f2__thread__bytecode__else_jump(f2ptr thread, f2ptr new_program_counter) {
+int f2__thread__bytecode__else_jump(f2ptr thread, f2ptr bytecode, f2ptr new_program_counter) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__else_jump(cause, thread, new_program_counter);
+    raw__thread__bytecode_trace__else_jump(cause, bytecode, thread, new_program_counter);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1803,14 +1803,14 @@ int f2__thread__bytecode__else_jump(f2ptr thread, f2ptr new_program_counter) {
 
 // bytecode debug [f2ptr]
 
-void raw__thread__bytecode_trace__debug(f2ptr cause, f2ptr thread, f2ptr value) {
+void raw__thread__bytecode_trace__debug(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr value) {
   status("bytecode trace: [debug " f2ptr__fstr "]", value);
 }
 
-int f2__thread__bytecode__debug(f2ptr thread, f2ptr value) {
+int f2__thread__bytecode__debug(f2ptr thread, f2ptr bytecode, f2ptr value) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__debug(cause, thread, value);
+    raw__thread__bytecode_trace__debug(cause, bytecode, thread, value);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1822,14 +1822,14 @@ int f2__thread__bytecode__debug(f2ptr thread, f2ptr value) {
 
 // bytecode trace [f2ptr]
 
-void raw__thread__bytecode_trace__trace(f2ptr cause, f2ptr thread, f2ptr value) {
+void raw__thread__bytecode_trace__trace(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr value) {
   status("bytecode trace: [trace " f2ptr__fstr "]", value);
 }
 
-int f2__thread__bytecode__trace(f2ptr thread, f2ptr value) {
+int f2__thread__bytecode__trace(f2ptr thread, f2ptr bytecode, f2ptr value) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__trace(cause, thread, value);
+    raw__thread__bytecode_trace__trace(cause, bytecode, thread, value);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1846,14 +1846,14 @@ int f2__thread__bytecode__trace(f2ptr thread, f2ptr value) {
 
 // bytecode compile [bool bool]
 
-void raw__thread__bytecode_trace__compile__tracewrap__protect_environment(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__compile__tracewrap__protect_environment(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [compile tracewrap protect_environment]");
 }
 
-int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) {
+int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__tracewrap__protect_environment(cause, thread);
+    raw__thread__bytecode_trace__compile__tracewrap__protect_environment(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1865,14 +1865,14 @@ int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread) 
   return 0;
 }
 
-void raw__thread__bytecode_trace__compile__tracewrap__nil(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__compile__tracewrap__nil(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [compile tracewrap nil]");
 }
 
-int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
+int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__tracewrap__nil(cause, thread);
+    raw__thread__bytecode_trace__compile__tracewrap__nil(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1884,14 +1884,14 @@ int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__compile__nil__protect_environment(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__compile__nil__protect_environment(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [compile nil protect_environment]");
 }
 
-int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
+int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__nil__protect_environment(cause, thread);
+    raw__thread__bytecode_trace__compile__nil__protect_environment(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1903,14 +1903,14 @@ int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__compile__nil__nil(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__compile__nil__nil(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [compile nil nil]");
 }
 
-int f2__thread__bytecode__compile__nil__nil(f2ptr thread) {
+int f2__thread__bytecode__compile__nil__nil(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__nil__nil(cause, thread);
+    raw__thread__bytecode_trace__compile__nil__nil(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1938,19 +1938,21 @@ bytecode_jump_t f2__compile__bytecode__compile(f2ptr tracewrap, f2ptr protect_en
   }
 }
 
-int f2__thread__bytecode__compile(f2ptr thread, f2ptr tracewrap, f2ptr protect_environment) {return (f2__compile__bytecode__compile(tracewrap, protect_environment))(thread);}
+int f2__thread__bytecode__compile(f2ptr thread, f2ptr bytecode, f2ptr tracewrap, f2ptr protect_environment) {
+  return (f2__compile__bytecode__compile(tracewrap, protect_environment))(thread, bytecode);
+}
 
 
 // bytecode yield []
 
-void raw__thread__bytecode_trace__yield(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__yield(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [yield]");
 }
 
-int f2__thread__bytecode__yield(f2ptr thread) {
+int f2__thread__bytecode__yield(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__yield(cause, thread);
+    raw__thread__bytecode_trace__yield(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1962,11 +1964,11 @@ int f2__thread__bytecode__yield(f2ptr thread) {
 
 // bytecode newenv []
 
-void raw__thread__bytecode_trace__newenv(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__newenv(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [newenv]");
 }
 
-int f2__thread__bytecode__newenv(f2ptr thread) {
+int f2__thread__bytecode__newenv(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
     raw__thread__bytecode_trace__newenv(cause, thread);
@@ -1978,7 +1980,7 @@ int f2__thread__bytecode__newenv(f2ptr thread) {
   f2ptr new_env    = f2environment__new(cause,
 					frame__new_empty(cause),
 					parent_env,
-					f2symbol__new(cause, strlen("bytecode:push-env"), (u8*)"bytecode:push-env"));
+					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
   release__assert(new_env, thread, "new_env is nil");
   release__assert(raw__environmentp(new_env, cause), thread, "new_env is not environment");
   f2thread__env__set(thread, cause, new_env);
@@ -2035,7 +2037,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__newenv__symbol             = f2symbol__new(cause, strlen("newenv"),             (u8*)"newenv");
   __funk2.bytecode.bytecode__machine_code__symbol       = f2symbol__new(cause, strlen("machine_code"),       (u8*)"machine_code");
   
-  __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("bytecode:expression-not-funkable"), (u8*)"bytecode:expression-not-funkable");
+  __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("expression-not-funkable"), (u8*)"expression-not-funkable");
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
 }
 
@@ -2047,114 +2049,114 @@ void f2__bytecodes__initialize() {
   f2ptr new_symbol;
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__jump_funk__symbol, nil);
-  str = "bytecode:jump_funk-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "jump_funk-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__jump_funk)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__funk__symbol, nil);
-  str = "bytecode:funk-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "funk-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__funk)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__array__symbol, nil);
-  str = "bytecode:array-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "array-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__array)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__cons__symbol, nil);
-  str = "bytecode:cons-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "cons-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__cons)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__car__symbol, nil);
-  str = "bytecode:car-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "car-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__car)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__cdr__symbol, nil);
-  str = "bytecode:cdr-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "cdr-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__cdr)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__car__set__symbol, nil);
-  str = "bytecode:car-set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "car-set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__car__set)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__cdr__set__symbol, nil);
-  str = "bytecode:cdr-set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "cdr-set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__cdr__set)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__array_elt__symbol, nil);
-  str = "bytecode:array_elt-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "array_elt-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__array_elt)));
   
   //environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__set__symbol, nil);
-  //str = "bytecode:set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  //str = "set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   //environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__set)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__swap__symbol, nil);
-  str = "bytecode:swap-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "swap-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__swap)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__push__symbol, nil);
-  str = "bytecode:push-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "push-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__push)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__pop__symbol, nil);
-  str = "bytecode:pop-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "pop-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__pop)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__copy__symbol, nil);
-  str = "bytecode:copy-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "copy-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__copy)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__lookup_type_var__symbol, nil);
-  str = "bytecode:lookup_type_var-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "lookup_type_var-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__lookup_type_var)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__define_type_var__symbol, nil);
-  str = "bytecode:define_type_var-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "define_type_var-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__define_type_var)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__type_var__set__symbol, nil);
-  str = "bytecode:type_var-set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "type_var-set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__type_var__set)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__globalize_type_var__symbol, nil);
-  str = "bytecode:globalize_type_var-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "globalize_type_var-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__globalize_type_var)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__jump__symbol, nil);
-  str = "bytecode:jump-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "jump-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__jump)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__else_jump__symbol, nil);
-  str = "bytecode:else_jump-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "else_jump-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__else_jump)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__nop__symbol, nil);
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__debug__symbol, nil);
-  str = "bytecode:debug-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "debug-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__debug)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__trace__symbol, nil);
-  str = "bytecode:trace-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "trace-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__trace)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__compile__symbol, nil);
-  str = "bytecode:compile-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "compile-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__compile)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__yield__symbol, nil);
-  str = "bytecode:yield-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "yield-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__yield)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__newenv__symbol, nil);
-  str = "bytecode:newenv-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "newenv-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__newenv)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__machine_code__symbol, nil);
-  str = "bytecode:machine_code-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  str = "machine_code-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__machine_code)));
   
   // exceptions
   
-  __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("bytecode:expression-not-funkable"), (u8*)"bytecode:expression-not-funkable");
+  __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("expression-not-funkable"), (u8*)"expression-not-funkable");
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.expression_not_funkable__exception__tag, __funk2.bytecode.expression_not_funkable__exception);
 }

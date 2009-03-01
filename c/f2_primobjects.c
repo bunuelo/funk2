@@ -608,6 +608,26 @@ f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr
 }
 
 
+// bytecode_event
+
+defprimobject__static_slot(bytecode_event__bytecode, 0);
+defprimobject__static_slot(bytecode_event__context,  1);
+
+f2ptr __bytecode_event__symbol = -1;
+
+f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr context, int trace_depth) {
+  release__assert(__bytecode_event__symbol != -1, nil, "f2bytecode_event__new error: used before primobjects initialized.");
+  f2ptr this = f2__primobject__new__trace_depth(cause, __bytecode_event__symbol, 2, nil, trace_depth);
+  f2bytecode_event__bytecode__set__trace_depth(this, cause, bytecode, trace_depth);
+  f2bytecode_event__context__set__trace_depth( this, cause, bytecode, trace_depth);
+  return this;
+}
+
+f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
+  return f2bytecode_event__new__trace_depth(cause, bytecode, context, 1);
+}
+
+
 // **
 
 void f2__primobjects__reinitialize_globalvars() {

@@ -164,8 +164,9 @@ void f2__thread__increment_pc(f2ptr thread, f2ptr cause) {
 
 // bytecode jump_funk []
 
-void raw__thread__bytecode_trace__jump_funk(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__jump_funk(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [jump_funk]");
+  //f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode
 }
 
 int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2ptr cause) {
@@ -219,10 +220,10 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
   return 1;
 }
 
-int f2__thread__bytecode__jump_funk(f2ptr thread) {
+int f2__thread__bytecode__jump_funk(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__jump_funk(cause, thread);
+    raw__thread__bytecode_trace__jump_funk(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -240,14 +241,14 @@ int f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr c
   return f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(thread, cause);
 }
 
-void raw__thread__bytecode_trace__funk(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__funk(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [funk]");
 }
 
-int f2__thread__bytecode__funk(f2ptr thread) {
+int f2__thread__bytecode__funk(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__funk(cause, thread);
+    raw__thread__bytecode_trace__funk(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -257,14 +258,14 @@ int f2__thread__bytecode__funk(f2ptr thread) {
 
 // bytecode array [length]
 
-void raw__thread__bytecode_trace__array(f2ptr cause, f2ptr thread, f2ptr length) {
+void raw__thread__bytecode_trace__array(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr length) {
   status("bytecode trace: [array " u64__fstr "]", f2integer__i(length, cause));
 }
 
-int f2__thread__bytecode__array(f2ptr thread, f2ptr length) {
+int f2__thread__bytecode__array(f2ptr thread, f2ptr bytecode, f2ptr length) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__array(cause, thread, length);
+    raw__thread__bytecode_trace__array(cause, bytecode, thread, length);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -280,14 +281,14 @@ int f2__thread__bytecode__array(f2ptr thread, f2ptr length) {
 
 // bytecode cons []
 
-void raw__thread__bytecode_trace__cons(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__cons(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [cons]");
 }
 
-int f2__thread__bytecode__cons(f2ptr thread) {
+int f2__thread__bytecode__cons(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__cons(cause, thread);
+    raw__thread__bytecode_trace__cons(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -301,14 +302,14 @@ int f2__thread__bytecode__cons(f2ptr thread) {
 
 // bytecode car []
 
-void raw__thread__bytecode_trace__car(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__car(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [car]");
 }
 
-int f2__thread__bytecode__car(f2ptr thread) {
+int f2__thread__bytecode__car(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__car(cause, thread);
+    raw__thread__bytecode_trace__car(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -320,14 +321,14 @@ int f2__thread__bytecode__car(f2ptr thread) {
 
 // bytecode cdr []
 
-void raw__thread__bytecode_trace__cdr(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__cdr(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [cdr]");
 }
 
-int f2__thread__bytecode__cdr(f2ptr thread) {
+int f2__thread__bytecode__cdr(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__cdr(cause, thread);
+    raw__thread__bytecode_trace__cdr(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -339,14 +340,14 @@ int f2__thread__bytecode__cdr(f2ptr thread) {
 
 // bytecode car__set []
 
-void raw__thread__bytecode_trace__car__set(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__car__set(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [car-set]");
 }
 
-int f2__thread__bytecode__car__set(f2ptr thread) {
+int f2__thread__bytecode__car__set(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__car__set(cause, thread);
+    raw__thread__bytecode_trace__car__set(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -358,14 +359,14 @@ int f2__thread__bytecode__car__set(f2ptr thread) {
 
 // bytecode cdr__set []
 
-void raw__thread__bytecode_trace__cdr__set(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__cdr__set(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [cdr-set]");
 }
 
-int f2__thread__bytecode__cdr__set(f2ptr thread) {
+int f2__thread__bytecode__cdr__set(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__cdr__set(cause, thread);
+    raw__thread__bytecode_trace__cdr__set(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -377,14 +378,14 @@ int f2__thread__bytecode__cdr__set(f2ptr thread) {
 
 // bytecode array_elt [array index]
 
-void raw__thread__bytecode_trace__array__elt(f2ptr cause, f2ptr thread, f2ptr array, f2ptr index) {
+void raw__thread__bytecode_trace__array__elt(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr array, f2ptr index) {
   status("bytecode trace: [array-elt " f2ptr__fstr " " u64__fstr "]", array, f2integer__i(index, cause));
 }
 
-int f2__thread__bytecode__array_elt(f2ptr thread, f2ptr array, f2ptr index) {
+int f2__thread__bytecode__array_elt(f2ptr thread, f2ptr bytecode, f2ptr array, f2ptr index) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__array__elt(cause, thread, array, index);
+    raw__thread__bytecode_trace__array__elt(cause, bytecode, thread, array, index);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -396,14 +397,14 @@ int f2__thread__bytecode__array_elt(f2ptr thread, f2ptr array, f2ptr index) {
 
 // bytecode set [reg f2ptr]
 
-void raw__thread__bytecode_trace__set__value_reg(f2ptr cause, f2ptr thread, f2ptr exp) {
+void raw__thread__bytecode_trace__set__value_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
   status("bytecode trace: [set value " f2ptr__fstr "]", exp);
 }
 
-int f2__thread__bytecode__set__value_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__value_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__value_reg(cause, thread, exp);
+    raw__thread__bytecode_trace__set__value_reg(cause, bytecode, thread, exp);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -412,14 +413,14 @@ int f2__thread__bytecode__set__value_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__set__program_counter_reg(f2ptr cause, f2ptr thread, f2ptr exp) {
+void raw__thread__bytecode_trace__set__program_counter_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
   status("bytecode trace: [set program_counter " f2ptr__fstr "]", exp);
 }
 
-int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__program_counter_reg(cause, thread, exp);
+    raw__thread__bytecode_trace__set__program_counter_reg(cause, bytecode, thread, exp);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -432,14 +433,14 @@ int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr exp) {
   return 1;
 }
 
-void raw__thread__bytecode_trace__set__cause_reg(f2ptr cause, f2ptr thread, f2ptr exp) {
+void raw__thread__bytecode_trace__set__cause_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
   status("bytecode trace: [set cause " f2ptr__fstr "]", exp);
 }
 
-int f2__thread__bytecode__set__iter_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__iter_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__cause_reg(cause, thread, exp);
+    raw__thread__bytecode_trace__set__cause_reg(cause, bytecode, thread, exp);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -448,14 +449,14 @@ int f2__thread__bytecode__set__iter_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__set__args_reg(f2ptr cause, f2ptr thread, f2ptr exp) {
+void raw__thread__bytecode_trace__set__args_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
   status("bytecode trace: [set args " f2ptr__fstr "]", exp);
 }
 
-int f2__thread__bytecode__set__args_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__args_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__args_reg(cause, thread, exp);
+    raw__thread__bytecode_trace__set__args_reg(cause, bytecode, thread, exp);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -464,14 +465,14 @@ int f2__thread__bytecode__set__args_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__set__return_reg(f2ptr cause, f2ptr thread, f2ptr exp) {
+void raw__thread__bytecode_trace__set__return_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
   status("bytecode trace: [set return " f2ptr__fstr "]", exp);
 }
 
-int f2__thread__bytecode__set__return_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__return_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__return_reg(cause, thread, exp);
+    raw__thread__bytecode_trace__set__return_reg(cause, bytecode, thread, exp);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -480,14 +481,14 @@ int f2__thread__bytecode__set__return_reg(f2ptr thread, f2ptr exp) {
   return 0;
 }
 
-void raw__thread__bytecode_trace__set__env_reg(f2ptr cause, f2ptr thread, f2ptr exp) {
+void raw__thread__bytecode_trace__set__env_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
   status("bytecode trace: [set env " f2ptr__fstr "]", exp);
 }
 
-int f2__thread__bytecode__set__env_reg(f2ptr thread, f2ptr exp) {
+int f2__thread__bytecode__set__env_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__env_reg(cause, thread, exp);
+    raw__thread__bytecode_trace__set__env_reg(cause, bytecode, thread, exp);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -507,16 +508,16 @@ bytecode_jump__f2ptr_t f2__compile__bytecode__set(f2ptr cause, f2ptr reg) {
   return NULL;
 }
 
-int f2__thread__bytecode__set(f2ptr thread, f2ptr reg, f2ptr exp) {
+int f2__thread__bytecode__set(f2ptr thread, f2ptr bytecode, f2ptr reg, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
-  return (f2__compile__bytecode__set(cause, reg))(thread, exp);
+  return (f2__compile__bytecode__set(cause, reg))(thread, bytecode, exp);
 }
 
 
 // bytecode nop []
 
-void raw__thread__bytecode_trace__nop(f2ptr cause, f2ptr thread) {
+void raw__thread__bytecode_trace__nop(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [nop]");
 }
 
@@ -2006,33 +2007,33 @@ int f2__thread__bytecode__machine_code(f2ptr thread, f2ptr chunk) {
 void f2__bytecodes__reinitialize_globalvars() {
   f2ptr cause = f2_bytecodes_c__cause__new(initial_cause());
   
-  __funk2.bytecode.bytecode__jump_funk__symbol          = f2symbol__new(cause, strlen("bytecode:jump-funk"),          (u8*)"bytecode:jump-funk");
-  __funk2.bytecode.bytecode__funk__symbol               = f2symbol__new(cause, strlen("bytecode:funk"),               (u8*)"bytecode:funk");
-  __funk2.bytecode.bytecode__array__symbol              = f2symbol__new(cause, strlen("bytecode:array"),              (u8*)"bytecode:array");
-  __funk2.bytecode.bytecode__cons__symbol               = f2symbol__new(cause, strlen("bytecode:cons"),               (u8*)"bytecode:cons");
-  __funk2.bytecode.bytecode__car__symbol                = f2symbol__new(cause, strlen("bytecode:car"),                (u8*)"bytecode:car");
-  __funk2.bytecode.bytecode__cdr__symbol                = f2symbol__new(cause, strlen("bytecode:cdr"),                (u8*)"bytecode:cdr");
-  __funk2.bytecode.bytecode__car__set__symbol           = f2symbol__new(cause, strlen("bytecode:car-set"),            (u8*)"bytecode:car-set");
-  __funk2.bytecode.bytecode__cdr__set__symbol           = f2symbol__new(cause, strlen("bytecode:cdr-set"),            (u8*)"bytecode:cdr-set");
-  __funk2.bytecode.bytecode__array_elt__symbol          = f2symbol__new(cause, strlen("bytecode:array_elt"),          (u8*)"bytecode:array_elt");
-  __funk2.bytecode.bytecode__set__symbol                = f2symbol__new(cause, strlen("bytecode:set"),                (u8*)"bytecode:set");
-  __funk2.bytecode.bytecode__swap__symbol               = f2symbol__new(cause, strlen("bytecode:swap"),               (u8*)"bytecode:swap");
-  __funk2.bytecode.bytecode__push__symbol               = f2symbol__new(cause, strlen("bytecode:push"),               (u8*)"bytecode:push");
-  __funk2.bytecode.bytecode__pop__symbol                = f2symbol__new(cause, strlen("bytecode:pop"),                (u8*)"bytecode:pop");
-  __funk2.bytecode.bytecode__copy__symbol               = f2symbol__new(cause, strlen("bytecode:copy"),               (u8*)"bytecode:copy");
-  __funk2.bytecode.bytecode__lookup_type_var__symbol    = f2symbol__new(cause, strlen("bytecode:lookup-type_var"),    (u8*)"bytecode:lookup-type_var");
-  __funk2.bytecode.bytecode__define_type_var__symbol    = f2symbol__new(cause, strlen("bytecode:define-type_var"),    (u8*)"bytecode:define-type_var");
-  __funk2.bytecode.bytecode__type_var__set__symbol      = f2symbol__new(cause, strlen("bytecode:type_var-set"),       (u8*)"bytecode:type_var-set");
-  __funk2.bytecode.bytecode__globalize_type_var__symbol = f2symbol__new(cause, strlen("bytecode:globalize-type_var"), (u8*)"bytecode:globalize-type_var");
-  __funk2.bytecode.bytecode__jump__symbol               = f2symbol__new(cause, strlen("bytecode:jump"),               (u8*)"bytecode:jump");
-  __funk2.bytecode.bytecode__else_jump__symbol          = f2symbol__new(cause, strlen("bytecode:else-jump"),          (u8*)"bytecode:else-jump");
-  __funk2.bytecode.bytecode__nop__symbol                = f2symbol__new(cause, strlen("bytecode:nop"),                (u8*)"bytecode:nop");
-  __funk2.bytecode.bytecode__debug__symbol              = f2symbol__new(cause, strlen("bytecode:debug"),              (u8*)"bytecode:debug");
-  __funk2.bytecode.bytecode__trace__symbol              = f2symbol__new(cause, strlen("bytecode:trace"),              (u8*)"bytecode:trace");
-  __funk2.bytecode.bytecode__compile__symbol            = f2symbol__new(cause, strlen("bytecode:compile"),            (u8*)"bytecode:compile");
-  __funk2.bytecode.bytecode__yield__symbol              = f2symbol__new(cause, strlen("bytecode:yield"),              (u8*)"bytecode:yield");
-  __funk2.bytecode.bytecode__newenv__symbol             = f2symbol__new(cause, strlen("bytecode:newenv"),             (u8*)"bytecode:newenv");
-  __funk2.bytecode.bytecode__machine_code__symbol       = f2symbol__new(cause, strlen("bytecode:machine_code"),       (u8*)"bytecode:machine_code");
+  __funk2.bytecode.bytecode__jump_funk__symbol          = f2symbol__new(cause, strlen("jump-funk"),          (u8*)"jump-funk");
+  __funk2.bytecode.bytecode__funk__symbol               = f2symbol__new(cause, strlen("funk"),               (u8*)"funk");
+  __funk2.bytecode.bytecode__array__symbol              = f2symbol__new(cause, strlen("array"),              (u8*)"array");
+  __funk2.bytecode.bytecode__cons__symbol               = f2symbol__new(cause, strlen("cons"),               (u8*)"cons");
+  __funk2.bytecode.bytecode__car__symbol                = f2symbol__new(cause, strlen("car"),                (u8*)"car");
+  __funk2.bytecode.bytecode__cdr__symbol                = f2symbol__new(cause, strlen("cdr"),                (u8*)"cdr");
+  __funk2.bytecode.bytecode__car__set__symbol           = f2symbol__new(cause, strlen("car-set"),            (u8*)"car-set");
+  __funk2.bytecode.bytecode__cdr__set__symbol           = f2symbol__new(cause, strlen("cdr-set"),            (u8*)"cdr-set");
+  __funk2.bytecode.bytecode__array_elt__symbol          = f2symbol__new(cause, strlen("array_elt"),          (u8*)"array_elt");
+  //__funk2.bytecode.bytecode__set__symbol                = f2symbol__new(cause, strlen("set"),                (u8*)"set");
+  __funk2.bytecode.bytecode__swap__symbol               = f2symbol__new(cause, strlen("swap"),               (u8*)"swap");
+  __funk2.bytecode.bytecode__push__symbol               = f2symbol__new(cause, strlen("push"),               (u8*)"push");
+  __funk2.bytecode.bytecode__pop__symbol                = f2symbol__new(cause, strlen("pop"),                (u8*)"pop");
+  __funk2.bytecode.bytecode__copy__symbol               = f2symbol__new(cause, strlen("copy"),               (u8*)"copy");
+  __funk2.bytecode.bytecode__lookup_type_var__symbol    = f2symbol__new(cause, strlen("lookup"),             (u8*)"lookup");
+  __funk2.bytecode.bytecode__define_type_var__symbol    = f2symbol__new(cause, strlen("define"),             (u8*)"define");
+  __funk2.bytecode.bytecode__type_var__set__symbol      = f2symbol__new(cause, strlen("set"),                (u8*)"set");
+  __funk2.bytecode.bytecode__globalize_type_var__symbol = f2symbol__new(cause, strlen("globalize-type_var"), (u8*)"globalize-type_var");
+  __funk2.bytecode.bytecode__jump__symbol               = f2symbol__new(cause, strlen("jump"),               (u8*)"jump");
+  __funk2.bytecode.bytecode__else_jump__symbol          = f2symbol__new(cause, strlen("else-jump"),          (u8*)"else-jump");
+  __funk2.bytecode.bytecode__nop__symbol                = f2symbol__new(cause, strlen("nop"),                (u8*)"nop");
+  __funk2.bytecode.bytecode__debug__symbol              = f2symbol__new(cause, strlen("debug"),              (u8*)"debug");
+  __funk2.bytecode.bytecode__trace__symbol              = f2symbol__new(cause, strlen("trace"),              (u8*)"trace");
+  __funk2.bytecode.bytecode__compile__symbol            = f2symbol__new(cause, strlen("compile"),            (u8*)"compile");
+  __funk2.bytecode.bytecode__yield__symbol              = f2symbol__new(cause, strlen("yield"),              (u8*)"yield");
+  __funk2.bytecode.bytecode__newenv__symbol             = f2symbol__new(cause, strlen("newenv"),             (u8*)"newenv");
+  __funk2.bytecode.bytecode__machine_code__symbol       = f2symbol__new(cause, strlen("machine_code"),       (u8*)"machine_code");
   
   __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("bytecode:expression-not-funkable"), (u8*)"bytecode:expression-not-funkable");
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);

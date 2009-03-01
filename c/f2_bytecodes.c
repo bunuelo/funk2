@@ -168,7 +168,7 @@ void raw__thread__bytecode_trace__jump_funk(f2ptr cause, f2ptr bytecode, f2ptr t
   status("bytecode trace: [jump_funk]");
   f2ptr value = f2thread__value(thread, cause);
   f2ptr args  = f2thread__args(thread, cause);
-  f2ptr value_args = f2array__new(cause, 2, NULL);
+  f2ptr value_args = raw__array__new(cause, 2);
   f2array__elt__set(value_args, 0, cause, value);
   f2array__elt__set(value_args, 1, cause, args);
   f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, value_args);

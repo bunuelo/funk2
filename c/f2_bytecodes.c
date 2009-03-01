@@ -1990,7 +1990,7 @@ int f2__thread__bytecode__newenv(f2ptr thread, f2ptr bytecode) {
 
 // bytecode machine_code [chunk]
 
-void raw__thread__bytecode_trace__machine_code(f2ptr cause, f2ptr thread, f2ptr chunk) {
+void raw__thread__bytecode_trace__machine_code(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr chunk) {
   status("bytecode trace: [machine_code " f2ptr__fstr "]", chunk);
 }
 

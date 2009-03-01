@@ -71,6 +71,17 @@
 	    [ansi-stream-reset stdout]
 	    [repl]]]]]
 
+[defmetro bytecode_trace [exp]
+  `[let [[this-cause [this-cause]]]
+     [cause-bytecode_tracing_on-set this-cause t]
+     ,exp
+     [cause-bytecode_tracing_on-set this-cause nil]
+     [let [[event_buffer_first [cause-event_buffer_first this-cause]]]
+       [cause-event_buffer_first-set this-cause nil]
+       [cause-event_buffer_last-set  this-cause nil]
+       event_buffer_first]]]
+
+
 [globalize thread:-environment_critics- [list &critic-reactive-unknown_bug]]
 
 [defmetro criticize [var code :rest body]

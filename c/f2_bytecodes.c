@@ -31,7 +31,7 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__car__set__symbol           = -1;
   this->bytecode__cdr__set__symbol           = -1;
   this->bytecode__array_elt__symbol          = -1;
-  this->bytecode__set__symbol                = -1;
+  //this->bytecode__set__symbol                = -1;
   this->bytecode__swap__symbol               = -1;
   this->bytecode__push__symbol               = -1;
   this->bytecode__pop__symbol                = -1;
@@ -2082,9 +2082,9 @@ void f2__bytecodes__initialize() {
   str = "bytecode:array_elt-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__array_elt)));
   
-  environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__set__symbol, nil);
-  str = "bytecode:set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
-  environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__set)));
+  //environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__set__symbol, nil);
+  //str = "bytecode:set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  //environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__set)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__swap__symbol, nil);
   str = "bytecode:swap-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);

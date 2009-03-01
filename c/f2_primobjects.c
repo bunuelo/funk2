@@ -632,7 +632,7 @@ f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr cont
   release__assert(__bytecode_event__symbol != -1, nil, "f2bytecode_event__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new__trace_depth(cause, __bytecode_event__symbol, 2, nil, trace_depth);
   f2bytecode_event__bytecode__set__trace_depth(this, cause, bytecode, trace_depth);
-  f2bytecode_event__context__set__trace_depth( this, cause, bytecode, trace_depth);
+  f2bytecode_event__context__set__trace_depth( this, cause, context,  trace_depth);
   return this;
 }
 

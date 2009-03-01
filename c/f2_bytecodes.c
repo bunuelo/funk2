@@ -249,6 +249,13 @@ int f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr c
 
 void raw__thread__bytecode_trace__funk(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [funk]");
+  f2ptr value = f2thread__value(thread, cause);
+  f2ptr args  = f2thread__args(thread, cause);
+  f2ptr value_args = raw__array__new(cause, 2);
+  raw__array__elt__set(cause, value_args, 0, value);
+  raw__array__elt__set(cause, value_args, 1, args);
+  f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, value_args);
+  raw__cause__event_buffer__add(cause, bytecode_event);
 }
 
 int f2__thread__bytecode__funk(f2ptr thread, f2ptr bytecode) {

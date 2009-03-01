@@ -666,6 +666,7 @@ void f2__primobjects__reinitialize_globalvars() {
   __bug__symbol              = f2symbol__new(cause, strlen("bug"),              (u8*)"bug");
   __size_2d__symbol          = f2symbol__new(cause, strlen("size_2d"),          (u8*)"size_2d");
   __event__symbol            = f2symbol__new(cause, strlen("event"),            (u8*)"event");
+  __bytecode_event__symbol   = f2symbol__new(cause, strlen("bytecode_event"),   (u8*)"bytecode_event");
 }
 
 void f2__primobjects__initialize() {
@@ -693,6 +694,7 @@ void f2__primobjects__initialize() {
   environment__add_var_value(cause, global_environment(), __bug__symbol,              nil);
   environment__add_var_value(cause, global_environment(), __size_2d__symbol,          nil);
   environment__add_var_value(cause, global_environment(), __event__symbol,            nil);
+  environment__add_var_value(cause, global_environment(), __bytecode_event__symbol,   nil);
   
   resume_gc();
   try_gc();

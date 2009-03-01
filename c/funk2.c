@@ -144,7 +144,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   }
   
   bool memory_tracing_on = false; // allocates all arrays as traced_array rather than simple_array (requires approx 4x system memory for allocation).
-  cause = f2__cause__new(cause, nil, f2bool__new(memory_tracing_on), nil, nil);
+  cause = f2__cause__new(cause, nil, f2bool__new(memory_tracing_on), nil, nil, nil, nil);
   
   // try to find a boot function
   f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));

@@ -37,7 +37,7 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__car__set__symbol;
   f2ptr bytecode__cdr__set__symbol;
   f2ptr bytecode__array_elt__symbol;
-  //f2ptr bytecode__set__symbol;
+  f2ptr bytecode__set__symbol;
   f2ptr bytecode__swap__symbol;
   f2ptr bytecode__push__symbol;
   f2ptr bytecode__pop__symbol;

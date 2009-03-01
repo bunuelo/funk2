@@ -827,11 +827,39 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__consp(seq, cause)) {
-      int count = 0;
+      u64 count = 0;
       f2ptr iter = seq;
-      while(iter) {
+      while(iter && raw__consp(iter, cause)) {
 	count ++;
 	iter = f2cons__cdr(iter, cause);
+      }
+      if (iter) {
+	count += f2__length(cause, iter);
+      }
+      return f2integer__new(cause, count);
+    } else if (raw__doublelinkp(seq, cause)) {
+      u64 count = 0;
+      if (seq) {
+	{
+	  f2ptr iter = seq;
+	  while (iter && raw__doublelinkp(iter, cause)) {
+	    count ++;
+	    iter = f2doublelink__prev(iter, cause);
+	  }
+	  if (iter) {
+	    count += f2__length(cause, iter);
+	  }
+	}
+	{
+	  f2ptr iter = f2doublelink__next(seq, cause);
+	  while (iter && raw__doublelinkp(iter, cause)) {
+	    count ++;
+	    iter = f2doublelink__next(iter, cause);
+	  }
+	  if (iter) {
+	    count += f2__length(cause, iter);
+	  }
+	}
       }
       return f2integer__new(cause, count);
     } else {
@@ -839,10 +867,7 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
     }
   case ptype_chunk: return f2integer__new(cause, f2chunk__length(seq, cause));
   default:
-    printf ("\nlength error: argument must be list, array, or chunk."); fflush(stdout); 
-    return f2larva__new(cause, 1);
-    //return __argument_type_check_failure__exception;
-    break;
+    return f2integer__new(cause, 1);
   }
 }
 def_pcfunk1(length, seq, return f2__length(this_cause, seq));

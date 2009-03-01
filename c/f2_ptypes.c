@@ -1167,7 +1167,8 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
   bytecode_jump_t jump = (bytecode_jump_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
   /*memblock__unlock(this);*/ ptype_access_num__decr(pool_index);
   //printf("\nchunk-bytecode_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
-  return jump(thread);
+  f2ptr bytecode = nil;
+  return jump(thread, bytecode);
 }
 
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {

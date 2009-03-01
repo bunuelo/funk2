@@ -808,6 +808,7 @@ defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
 f2ptr __cause__symbol;
 f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr bmemory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last);
 f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last);
+
 #define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
 
 defprimobject__static_slot__prototype(cause__bytecode_tracing_on);
@@ -860,7 +861,8 @@ defprimobject__static_slot__prototype(cause__event_buffer_last);
 #define f2cause__event_buffer_last__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__event_buffer_last, cause)
 
 
-void raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
+f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
+void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 
 
 // transframe

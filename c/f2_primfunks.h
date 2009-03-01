@@ -32,15 +32,16 @@
    f2ptr this_symbol = def_pcfunk__symbolvar(name); \
    this_symbol = this_symbol;
 
-#define PCFUNK__CREATE_THIS_CAUSE
 
-#ifdef PCFUNK__CREATE_THIS_CAUSE
 //#  define def_pcfunk__this_cause__define(name) 
 //     f2ptr this_cause = f2cause__new(simple_cause, simple_thread, simple_env, def_pcfunk__symbolvar(name), simple_args, nil); 
 //     this_cause = this_cause;
 //#  define def_pcfunk__this_cause__define(name) 
 //     f2ptr this_cause = f2__cause__new(simple_cause, nil); 
 //     this_cause = this_cause;
+
+#define PCFUNK__PROPOGATE_THIS_CAUSE
+#ifdef  PCFUNK__PROPOGATE_THIS_CAUSE
 #  define def_pcfunk__this_cause__define(name) \
      f2ptr this_cause = simple_cause; \
      this_cause = this_cause;

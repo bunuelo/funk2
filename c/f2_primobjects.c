@@ -524,6 +524,13 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracin
   return f2cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last);
 }
 
+f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
+  if (this && (! raw__causep(this, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  return (this ? f2cause__bytecode_tracing_on(this, cause) : nil);
+}
+
 void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
   f2ptr event_buffer_last     = f2cause__event_buffer_first(cause, cause);
   f2ptr new_event_buffer_node = f2doublelink__new(cause, event_buffer_last, nil, event);

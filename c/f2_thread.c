@@ -215,13 +215,13 @@ void f2__thread__reinitialize_globalvars() {
   f2ptr cause = f2_thread_c__cause__new(initial_cause());
   char* symbol_str;
   
-  symbol_str = "thread:program-counter-reg";    __thread__program_counter_reg__symbol     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "thread:iter-reg";               __thread__iter_reg__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "thread:env-reg";                __thread__env_reg__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "thread:args-reg";               __thread__args_reg__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "thread:return-reg";             __thread__return_reg__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "thread:value-reg";              __thread__value_reg__symbol               = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "thread:-environment_critics-";  __thread__environment_critics__symbol     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "program_counter";              __thread__program_counter_reg__symbol     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "iter";                         __thread__iter_reg__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "env";                          __thread__env_reg__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "args";                         __thread__args_reg__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "return";                       __thread__return_reg__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "value";                        __thread__value_reg__symbol               = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "thread:-environment_critics-"; __thread__environment_critics__symbol     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   //symbol_str = "thread:execute_bytecode-cause"; __thread__execute_bytecode__cause__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
 }
 

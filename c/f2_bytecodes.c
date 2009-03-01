@@ -1407,7 +1407,7 @@ void raw__thread__bytecode_trace__copy__program_counter_reg__iter_reg(f2ptr caus
 int f2__thread__bytecode__copy__program_counter_reg__iter_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__copy__program_counter_reg__iter_reg(cause, thread);
+    raw__thread__bytecode_trace__copy__program_counter_reg__iter_reg(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, nil);
@@ -1971,7 +1971,7 @@ void raw__thread__bytecode_trace__newenv(f2ptr cause, f2ptr bytecode, f2ptr thre
 int f2__thread__bytecode__newenv(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__newenv(cause, thread);
+    raw__thread__bytecode_trace__newenv(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -1994,10 +1994,10 @@ void raw__thread__bytecode_trace__machine_code(f2ptr cause, f2ptr thread, f2ptr 
   status("bytecode trace: [machine_code " f2ptr__fstr "]", chunk);
 }
 
-int f2__thread__bytecode__machine_code(f2ptr thread, f2ptr chunk) {
+int f2__thread__bytecode__machine_code(f2ptr thread, f2ptr bytecode, f2ptr chunk) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__machine_code(cause, thread, chunk);
+    raw__thread__bytecode_trace__machine_code(cause, bytecode, thread, chunk);
   }
   
   return f2chunk__bytecode_jump(chunk, cause, thread);
@@ -2018,14 +2018,14 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__car__set__symbol           = f2symbol__new(cause, strlen("car-set"),            (u8*)"car-set");
   __funk2.bytecode.bytecode__cdr__set__symbol           = f2symbol__new(cause, strlen("cdr-set"),            (u8*)"cdr-set");
   __funk2.bytecode.bytecode__array_elt__symbol          = f2symbol__new(cause, strlen("array_elt"),          (u8*)"array_elt");
-  //__funk2.bytecode.bytecode__set__symbol                = f2symbol__new(cause, strlen("set"),                (u8*)"set");
+  __funk2.bytecode.bytecode__set__symbol                = f2symbol__new(cause, strlen("set"),                (u8*)"set");
   __funk2.bytecode.bytecode__swap__symbol               = f2symbol__new(cause, strlen("swap"),               (u8*)"swap");
   __funk2.bytecode.bytecode__push__symbol               = f2symbol__new(cause, strlen("push"),               (u8*)"push");
   __funk2.bytecode.bytecode__pop__symbol                = f2symbol__new(cause, strlen("pop"),                (u8*)"pop");
   __funk2.bytecode.bytecode__copy__symbol               = f2symbol__new(cause, strlen("copy"),               (u8*)"copy");
   __funk2.bytecode.bytecode__lookup_type_var__symbol    = f2symbol__new(cause, strlen("lookup"),             (u8*)"lookup");
   __funk2.bytecode.bytecode__define_type_var__symbol    = f2symbol__new(cause, strlen("define"),             (u8*)"define");
-  __funk2.bytecode.bytecode__type_var__set__symbol      = f2symbol__new(cause, strlen("set"),                (u8*)"set");
+  __funk2.bytecode.bytecode__type_var__set__symbol      = f2symbol__new(cause, strlen("set-type_var"),       (u8*)"set-type_var");
   __funk2.bytecode.bytecode__globalize_type_var__symbol = f2symbol__new(cause, strlen("globalize-type_var"), (u8*)"globalize-type_var");
   __funk2.bytecode.bytecode__jump__symbol               = f2symbol__new(cause, strlen("jump"),               (u8*)"jump");
   __funk2.bytecode.bytecode__else_jump__symbol          = f2symbol__new(cause, strlen("else-jump"),          (u8*)"else-jump");
@@ -2084,9 +2084,9 @@ void f2__bytecodes__initialize() {
   str = "array_elt-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
   environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__array_elt)));
   
-  //environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__set__symbol, nil);
-  //str = "set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
-  //environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__set)));
+  environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__set__symbol, nil);
+  str = "set-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+  environment__add_var_value(cause, global_environment(), new_symbol, f2pointer__new(cause, to_ptr(f2__thread__bytecode__set)));
   
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.bytecode__swap__symbol, nil);
   str = "swap-machine_code_ptr"; new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);

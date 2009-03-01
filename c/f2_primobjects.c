@@ -529,6 +529,8 @@ void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
   f2ptr new_event_buffer_node = f2doublelink__new(cause, event_buffer_last, nil, event);
   if (event_buffer_last == nil) {
     f2cause__event_buffer_first__set(cause, cause, new_event_buffer_node);
+  } else {
+    f2doublelink__next__set(event_buffer_last, cause, new_event_buffer_node);
   }
   f2cause__event_buffer_last__set(cause, cause, new_event_buffer_node);
 }

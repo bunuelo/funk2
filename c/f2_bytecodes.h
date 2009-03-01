@@ -95,42 +95,42 @@ void f2__thread__stack__pop_trace(f2ptr thread, f2ptr cause);
 
 // bytecode_jump_t is used for compiling bytecodes to machine code jump pointers
 
-typedef int (*bytecode_jump_t)(             f2ptr thread);
-typedef int (*bytecode_jump__f2ptr_t)(      f2ptr thread, f2ptr arg0);
-typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr thread, f2ptr arg0, f2ptr arg1);
+typedef int (*bytecode_jump_t)(             f2ptr thread, f2ptr bytecode);
+typedef int (*bytecode_jump__f2ptr_t)(      f2ptr thread, f2ptr bytecode, f2ptr arg0);
+typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr thread, f2ptr bytecode, f2ptr arg0, f2ptr arg1);
 
 
 // bytecode definitions (and bytecode_jump compiling functions)
 
-int                    f2__thread__bytecode__funk(                            f2ptr thread);
-int                    f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr cause);
-int                    f2__thread__bytecode__jump_funk(                       f2ptr thread);
-int                    f2__thread__bytecode__array(                           f2ptr thread, f2ptr length);
-int                    f2__thread__bytecode__cons(                            f2ptr thread);
-int                    f2__thread__bytecode__car(                             f2ptr thread);
-int                    f2__thread__bytecode__cdr(                             f2ptr thread);
-int                    f2__thread__bytecode__car__set(                        f2ptr thread);
-int                    f2__thread__bytecode__cdr__set(                        f2ptr thread);
-int                    f2__thread__bytecode__array_elt(                       f2ptr thread, f2ptr array, f2ptr index);
-int                    f2__thread__bytecode__array_elt__set(                  f2ptr thread, f2ptr array, f2ptr index);
-int                    f2__thread__bytecode__set(                             f2ptr thread, f2ptr reg, f2ptr exp);
-int                    f2__thread__bytecode__nop(                             f2ptr thread);
-int                    f2__thread__bytecode__swap(                            f2ptr thread, f2ptr reg0, f2ptr reg1);
-int                    f2__thread__bytecode__push(                            f2ptr thread, f2ptr reg);
-int                    f2__thread__bytecode__pop(                             f2ptr thread, f2ptr reg);
-int                    f2__thread__bytecode__copy(                            f2ptr thread, f2ptr src_reg, f2ptr dest_reg);
-int                    f2__thread__bytecode__lookup_type_var(                 f2ptr thread, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__define_type_var(                 f2ptr thread, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__type_var__set(                   f2ptr thread, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__globalize_type_var(              f2ptr thread, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__jump(                            f2ptr thread, f2ptr new_program_counter);
-int                    f2__thread__bytecode__else_jump(                       f2ptr thread, f2ptr new_program_counter);
-int                    f2__thread__bytecode__debug(                           f2ptr thread, f2ptr value);
-int                    f2__thread__bytecode__trace(                           f2ptr thread, f2ptr value);
-int                    f2__thread__bytecode__compile(                         f2ptr thread, f2ptr tracewrap, f2ptr protect_environment);
-int                    f2__thread__bytecode__yield(                           f2ptr thread);
-int                    f2__thread__bytecode__newenv(                          f2ptr thread);
-int                    f2__thread__bytecode__machine_code(                    f2ptr thread, f2ptr chunk);
+int                    f2__thread__bytecode__funk(                            f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr bytecode, f2ptr cause);
+int                    f2__thread__bytecode__jump_funk(                       f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__array(                           f2ptr thread, f2ptr bytecode, f2ptr length);
+int                    f2__thread__bytecode__cons(                            f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__car(                             f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__cdr(                             f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__car__set(                        f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__cdr__set(                        f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__array_elt(                       f2ptr thread, f2ptr bytecode, f2ptr array, f2ptr index);
+int                    f2__thread__bytecode__array_elt__set(                  f2ptr thread, f2ptr bytecode, f2ptr array, f2ptr index);
+int                    f2__thread__bytecode__set(                             f2ptr thread, f2ptr bytecode, f2ptr reg, f2ptr exp);
+int                    f2__thread__bytecode__nop(                             f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__swap(                            f2ptr thread, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
+int                    f2__thread__bytecode__push(                            f2ptr thread, f2ptr bytecode, f2ptr reg);
+int                    f2__thread__bytecode__pop(                             f2ptr thread, f2ptr bytecode, f2ptr reg);
+int                    f2__thread__bytecode__copy(                            f2ptr thread, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);
+int                    f2__thread__bytecode__lookup_type_var(                 f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__thread__bytecode__define_type_var(                 f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__thread__bytecode__type_var__set(                   f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__thread__bytecode__globalize_type_var(              f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__thread__bytecode__jump(                            f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__thread__bytecode__else_jump(                       f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__thread__bytecode__debug(                           f2ptr thread, f2ptr bytecode, f2ptr value);
+int                    f2__thread__bytecode__trace(                           f2ptr thread, f2ptr bytecode, f2ptr value);
+int                    f2__thread__bytecode__compile(                         f2ptr thread, f2ptr bytecode, f2ptr tracewrap, f2ptr protect_environment);
+int                    f2__thread__bytecode__yield(                           f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__newenv(                          f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__machine_code(                    f2ptr thread, f2ptr bytecode, f2ptr chunk);
 
 bytecode_jump__f2ptr_t f2__compile__bytecode__set(    f2ptr cause, f2ptr reg);
 bytecode_jump_t        f2__compile__bytecode__swap(   f2ptr cause, f2ptr reg0, f2ptr reg1);

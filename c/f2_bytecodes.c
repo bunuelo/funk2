@@ -166,7 +166,13 @@ void f2__thread__increment_pc(f2ptr thread, f2ptr cause) {
 
 void raw__thread__bytecode_trace__jump_funk(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   status("bytecode trace: [jump_funk]");
-  //f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode
+  f2ptr value = f2thread__value(thread, cause);
+  f2ptr args  = f2thread__args(thread, cause);
+  f2ptr value_args = f2array__new(cause, 2, NULL);
+  f2array__elt__set(value_args, 0, cause, value);
+  f2array__elt__set(value_args, 1, cause, args);
+  f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, value_args);
+  raw__cause__event_buffer__add(cause, bytecode_event);
 }
 
 int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2ptr cause) {

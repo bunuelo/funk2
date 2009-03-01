@@ -532,7 +532,7 @@ f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
 }
 
 void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
-  f2ptr event_buffer_last     = f2cause__event_buffer_first(cause, cause);
+  f2ptr event_buffer_last     = f2cause__event_buffer_last(cause, cause);
   f2ptr new_event_buffer_node = f2doublelink__new(cause, event_buffer_last, nil, event);
   if (event_buffer_last == nil) {
     f2cause__event_buffer_first__set(cause, cause, new_event_buffer_node);

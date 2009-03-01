@@ -235,7 +235,7 @@ f2ptr __trace_all_compiles__symbol     = -1;
 
 f2ptr raw__c_source_file__cause__new(f2ptr cause, char* filename) {
   // we should use filename in a source-file cause type...
-  return f2__cause__new(cause, nil, nil, nil, nil);
+  return f2__cause__new(cause, nil, nil, nil, nil, nil, nil);
 }
 
 f2ptr              f2_globalenv_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_globalenv.c");}

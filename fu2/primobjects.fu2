@@ -446,7 +446,7 @@
 
 
 'we need a technique for this variable to be have local scope!  (compiler metros?)'
-[globalize *compile-type-checking* t]
+[globalize *compile-type-checking* nil]
 
 [defmetro integer-to_double          [x]     `[,[if *compile-type-checking* `safe:integer-to_double          `unsafe:integer-to_double]          ,x]]
 [defmetro integer-to_float           [x]     `[,[if *compile-type-checking* `safe:integer-to_float           `unsafe:integer-to_float]           ,x]]

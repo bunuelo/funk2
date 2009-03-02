@@ -865,7 +865,9 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
     } else {
       return f2__array__length(cause, seq);
     }
-  case ptype_chunk: return f2integer__new(cause, f2chunk__length(seq, cause));
+  case ptype_chunk:  return f2integer__new(cause, f2chunk__length(seq, cause));
+  case ptype_string: return f2integer__new(cause, f2string__length(seq, cause));
+  case ptype_symbol: return f2integer__new(cause, f2symbol__length(seq, cause));
   default:
     return f2integer__new(cause, 1);
   }
@@ -1889,6 +1891,31 @@ f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value) {
 }
 def_pcfunk2(prev__set, exp, value, return f2__prev__set(this_cause, exp, value));
 
+f2ptr raw__str_copy(f2ptr cause, f2ptr object, char* str) {
+  if (raw__stringp(object, cause)) {
+    f2string__str_copy(cause, object, str);
+  } else if (raw__symbolp(object, cause)) {
+    f2symbol__str_copy(cause, object, str);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+
+f2ptr f2__colonize(f2ptr cause, f2ptr name) {
+  if ((! raw__stringp(name, cause)) &&
+      (! raw__symbolp(name, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 length = raw__length(cause, name);
+  char* str = alloca(length + 2);
+  str[0] = ':';
+  raw__str_copy(cause, name, str + 1);
+  str[length + 1] = 0;
+  f2ptr colonized = f2symbol__new(cause, length + 1, str);
+  return colonized;
+}
+def_pcfunk1(colonize, name, return f2__colonize(this_cause, name));
+
 void f2__primcfunks__reinitialize_globalvars() {
   f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
@@ -2297,6 +2324,8 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(next__set);
   f2__funktional_primcfunk__init(prev);
   f2__funktional_primcfunk__init(prev__set);
+  
+  f2__funktional_primcfunk__init__1(colonize, name);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);

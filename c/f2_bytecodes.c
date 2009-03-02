@@ -363,7 +363,7 @@ void raw__thread__bytecode_trace__cdr(f2ptr cause, f2ptr bytecode, f2ptr thread)
     f2ptr value = f2thread__value(thread, cause);
     f2ptr iter  = f2thread__iter(thread, cause);
     f2ptr value_iter = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, value);
+    raw__array__elt__set(cause, value_iter, 0, value);
     raw__array__elt__set(cause, value_iter, 1, iter);
     context = value_iter;
   }
@@ -393,7 +393,7 @@ void raw__thread__bytecode_trace__car__set(f2ptr cause, f2ptr bytecode, f2ptr th
     f2ptr value = f2thread__value(thread, cause);
     f2ptr iter  = f2thread__iter(thread, cause);
     f2ptr value_iter = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, value);
+    raw__array__elt__set(cause, value_iter, 0, value);
     raw__array__elt__set(cause, value_iter, 1, iter);
     context = value_iter;
   }
@@ -423,7 +423,7 @@ void raw__thread__bytecode_trace__cdr__set(f2ptr cause, f2ptr bytecode, f2ptr th
     f2ptr value = f2thread__value(thread, cause);
     f2ptr iter  = f2thread__iter(thread, cause);
     f2ptr value_iter = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, value);
+    raw__array__elt__set(cause, value_iter, 0, value);
     raw__array__elt__set(cause, value_iter, 1, iter);
     context = value_iter;
   }
@@ -626,7 +626,7 @@ void raw__thread__bytecode_trace__swap__return_reg__value_reg(f2ptr cause, f2ptr
     f2ptr reg0_exp = f2thread__return(thread, cause);
     f2ptr reg1_exp = f2thread__value(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -655,7 +655,7 @@ void raw__thread__bytecode_trace__swap__return_reg__iter_reg(f2ptr cause, f2ptr 
     f2ptr reg0_exp = f2thread__return(thread, cause);
     f2ptr reg1_exp = f2thread__iter(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -684,7 +684,7 @@ void raw__thread__bytecode_trace__swap__return_reg__program_counter_reg(f2ptr ca
     f2ptr reg0_exp = f2thread__return(thread, cause);
     f2ptr reg1_exp = f2thread__program_counter(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -713,7 +713,7 @@ void raw__thread__bytecode_trace__swap__return_reg__env_reg(f2ptr cause, f2ptr b
     f2ptr reg0_exp = f2thread__return(thread, cause);
     f2ptr reg1_exp = f2thread__env(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -742,7 +742,7 @@ void raw__thread__bytecode_trace__swap__return_reg__args_reg(f2ptr cause, f2ptr 
     f2ptr reg0_exp = f2thread__return(thread, cause);
     f2ptr reg1_exp = f2thread__args(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -772,7 +772,7 @@ void raw__thread__bytecode_trace__swap__value_reg__iter_reg(f2ptr cause, f2ptr b
     f2ptr reg0_exp = f2thread__value(thread, cause);
     f2ptr reg1_exp = f2thread__iter(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -801,7 +801,7 @@ void raw__thread__bytecode_trace__swap__value_reg__program_counter_reg(f2ptr cau
     f2ptr reg0_exp = f2thread__value(thread, cause);
     f2ptr reg1_exp = f2thread__program_counter(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -830,7 +830,7 @@ void raw__thread__bytecode_trace__swap__value_reg__env_reg(f2ptr cause, f2ptr by
     f2ptr reg0_exp = f2thread__value(thread, cause);
     f2ptr reg1_exp = f2thread__env(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -859,7 +859,7 @@ void raw__thread__bytecode_trace__swap__value_reg__args_reg(f2ptr cause, f2ptr b
     f2ptr reg0_exp = f2thread__value(thread, cause);
     f2ptr reg1_exp = f2thread__args(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -888,7 +888,7 @@ void raw__thread__bytecode_trace__swap__iter_reg__program_counter_reg(f2ptr caus
     f2ptr reg0_exp = f2thread__iter(thread, cause);
     f2ptr reg1_exp = f2thread__program_counter(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -917,7 +917,7 @@ void raw__thread__bytecode_trace__swap__iter_reg__env_reg(f2ptr cause, f2ptr byt
     f2ptr reg0_exp = f2thread__iter(thread, cause);
     f2ptr reg1_exp = f2thread__env(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -946,7 +946,7 @@ void raw__thread__bytecode_trace__swap__iter_reg__args_reg(f2ptr cause, f2ptr by
     f2ptr reg0_exp = f2thread__iter(thread, cause);
     f2ptr reg1_exp = f2thread__args(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -975,7 +975,7 @@ void raw__thread__bytecode_trace__swap__program_counter_reg__env_reg(f2ptr cause
     f2ptr reg0_exp = f2thread__program_counter(thread, cause);
     f2ptr reg1_exp = f2thread__env(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -1004,7 +1004,7 @@ void raw__thread__bytecode_trace__swap__program_counter_reg__args_reg(f2ptr caus
     f2ptr reg0_exp = f2thread__program_counter(thread, cause);
     f2ptr reg1_exp = f2thread__args(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }
@@ -1033,7 +1033,7 @@ void raw__thread__bytecode_trace__swap__env_reg__args_reg(f2ptr cause, f2ptr byt
     f2ptr reg0_exp = f2thread__env(thread, cause);
     f2ptr reg1_exp = f2thread__args(thread, cause);
     f2ptr reg0_reg1 = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, reg0_exp);
+    raw__array__elt__set(cause, value_iter, 0, reg0_exp);
     raw__array__elt__set(cause, value_iter, 1, reg1_exp);
     context = reg0_reg1;
   }

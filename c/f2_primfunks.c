@@ -1908,79 +1908,78 @@ void f2__primcfunks__initialize() {
   
   // system
   
-  f2__funktional_primcfunk__init(system__node_id);
-  f2__funktional_primcfunk__init(system__environment);
+  f2__funktional_primcfunk__init__0(system__node_id);
+  f2__funktional_primcfunk__init__0(system__environment);
   
   // funk2 pointer (f2ptr)
   
-  f2__funktional_primcfunk__init(pointer);
-  f2__funktional_primcfunk__init(deref_pointer);
+  f2__funktional_primcfunk__init__1(pointer, exp);
+  f2__funktional_primcfunk__init__1(deref_pointer, pointer);
   
   // ptype
   
-  f2__primcfunk__init(memblock__set_init_render_xyz);
-  f2__primcfunk__init(memblock__set_init_render_on);
-  f2__primcfunk__init(memblock__set_init_render_noise);
-  f2__funktional_primcfunk__init(memblock__creation_microseconds_since_1970);
+  f2__primcfunk__init__4(           memblock__set_init_render_xyz,              this, x, y, z);
+  f2__primcfunk__init__2(           memblock__set_init_render_on,               this, value);
+  f2__primcfunk__init__2(           memblock__set_init_render_noise,            this, value);
+  f2__funktional_primcfunk__init__1(memblock__creation_microseconds_since_1970, this);
   
   // ptype
   
-  f2__funktional_primcfunk__init(ptype__raw);
-  f2__primcfunk__init(ptype__cause);
-  f2__primcfunk__init(ptype__cause__set);
+  f2__funktional_primcfunk__init__1(ptype__raw,        this);
+  f2__primcfunk__init__1(           ptype__cause,      this);
+  f2__primcfunk__init__2(           ptype__cause__set, this, value);
   
   // integer
   
-  f2__funktional_primcfunk__init(integerp);
+  f2__funktional_primcfunk__init__1(integerp, exp);
   
   // double
   
-  f2__funktional_primcfunk__init(doublep);
+  f2__funktional_primcfunk__init__1(doublep, exp);
   
   // float
   
-  f2__funktional_primcfunk__init(floatp);
+  f2__funktional_primcfunk__init__1(floatp, exp);
   
   // pointer
   
-  f2__funktional_primcfunk__init(pointerp);
+  f2__funktional_primcfunk__init__1(pointerp, exp);
   
   // gfunkptr
   
-  f2__primcfunk__init(gfunkptr);
-  f2__primcfunk__init(gfunkptr__new_from_pointer);
-  f2__funktional_primcfunk__init(gfunkptrp);
+  f2__primcfunk__init__3(           gfunkptr,                   computer_id, pool_index, pool_address);
+  f2__primcfunk__init__1(           gfunkptr__new_from_pointer, pointer);
+  f2__funktional_primcfunk__init__1(gfunkptrp,                  exp);
   
   // mutex
   
-  f2__funktional_primcfunk__init(mutexp);
-  f2__primcfunk__init(mutex);
-  f2__primcfunk__init(mutex__lock);
-  f2__primcfunk__init(mutex__unlock);
-  f2__primcfunk__init(mutex__trylock);
+  f2__funktional_primcfunk__init__1(mutexp,         exp);
+  f2__primcfunk__init__0(           mutex);
+  f2__primcfunk__init__1(           mutex__lock,    this);
+  f2__primcfunk__init__1(           mutex__unlock,  this);
+  f2__primcfunk__init__1(           mutex__trylock, this);
   
   // string
   
-  f2__funktional_primcfunk__init(stringp);
-  f2__funktional_primcfunk__init(string__length);
-  f2__funktional_primcfunk__init(string__elt);
-  f2__funktional_primcfunk__init(string__equals);
-  f2__primcfunk__init(string__new_raw_c_string);
-  f2__primcfunk__init(string__new_from_raw_c_string);
+  f2__funktional_primcfunk__init__1(stringp,                       exp);
+  f2__funktional_primcfunk__init__1(string__length,                this);
+  f2__funktional_primcfunk__init__2(string__elt,                   this, index);
+  f2__funktional_primcfunk__init__2(string__equals,                this, that);
+  f2__primcfunk__init__1(           string__new_raw_c_string,      this);
+  f2__primcfunk__init__1(           string__new_from_raw_c_string, c_string);
   
   // symbol
   
-  f2__funktional_primcfunk__init(symbolp);
-  f2__funktional_primcfunk__init(symbol__length);
-  f2__funktional_primcfunk__init(symbol__elt);
-  f2__funktional_primcfunk__init(symbol__eq);
+  f2__funktional_primcfunk__init__1(symbolp,        exp);
+  f2__funktional_primcfunk__init__1(symbol__length, this);
+  f2__funktional_primcfunk__init__2(symbol__elt,    this, index);
+  f2__funktional_primcfunk__init__2(symbol__eq,     this, that);
   
   // chunk
   
-  f2__funktional_primcfunk__init(chunkp);
-  f2__primcfunk__init(chunk);
-  f2__funktional_primcfunk__init(chunk__length);
-  //f2__primcfunk__init(chunk__bytes);
+  f2__funktional_primcfunk__init__1(chunkp,        exp);
+  f2__primcfunk__init__1(           chunk,         length);
+  f2__funktional_primcfunk__init__1(chunk__length, this);
   f2__primcfunk__init(chunk__copy);
   f2__primcfunk__init(chunk__read_bit8);
   f2__primcfunk__init(chunk__write_bit8_integer);
@@ -1995,23 +1994,23 @@ void f2__primcfunks__initialize() {
   
   // simple_array
   
-  f2__funktional_primcfunk__init(simple_arrayp);
-  f2__funktional_primcfunk__init(simple_array__length);
-  f2__primcfunk__init(simple_array__elt);
-  f2__primcfunk__init(simple_array__elt__set);
+  f2__funktional_primcfunk__init__1(simple_arrayp,          exp);
+  f2__funktional_primcfunk__init__1(simple_array__length,   this);
+  f2__primcfunk__init__2(           simple_array__elt,      this, index);
+  f2__primcfunk__init__3(           simple_array__elt__set, this, index, value);
   
   // traced_array
   
-  f2__funktional_primcfunk__init(traced_arrayp);
-  f2__funktional_primcfunk__init(traced_array__length);
-  f2__primcfunk__init(traced_array__elt);
-  f2__primcfunk__init(traced_array__elt__set);
-  f2__primcfunk__init(traced_array__elt__tracing_on);
-  f2__primcfunk__init(traced_array__elt__tracing_on__set);
-  f2__primcfunk__init(traced_array__elt__trace);
-  f2__primcfunk__init(traced_array__elt__trace__set);
-  f2__primcfunk__init(traced_array__elt__imagination_frame);
-  f2__primcfunk__init(traced_array__elt__imagination_frame__set);
+  f2__funktional_primcfunk__init__1(traced_arrayp,                             exp);
+  f2__funktional_primcfunk__init__1(traced_array__length,                      this);
+  f2__primcfunk__init__2(           traced_array__elt,                         this, index);
+  f2__primcfunk__init__3(           traced_array__elt__set,                    this, index, value);
+  f2__primcfunk__init__2(           traced_array__elt__tracing_on,             this, index);
+  f2__primcfunk__init__3(           traced_array__elt__tracing_on__set,        this, index, value);
+  f2__primcfunk__init__2(           traced_array__elt__trace,                  this, index);
+  f2__primcfunk__init__3(           traced_array__elt__trace__set,             this, index, value);
+  f2__primcfunk__init__2(           traced_array__elt__imagination_frame,      this, index);
+  f2__primcfunk__init__3(           traced_array__elt__imagination_frame__set, this, index, value);
   
   // array
   

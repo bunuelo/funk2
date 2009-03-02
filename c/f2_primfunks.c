@@ -1872,9 +1872,7 @@ f2ptr f2__next__set(f2ptr cause, f2ptr exp, f2ptr value) {
 def_pcfunk2(next__set, exp, value, return f2__next__set(this_cause, exp, value));
 
 f2ptr f2__prev(f2ptr cause, f2ptr exp) {
-  if (raw__consp(exp, cause)) {
-    return f2cons__cir(exp, cause);
-  } else if (raw__doublelinkp(exp, cause)) {
+  if (raw__doublelinkp(exp, cause)) {
     return f2doublelink__prev(exp, cause);
   } else {
     return f2larva__new(cause, 1);

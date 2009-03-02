@@ -342,6 +342,17 @@
 
 [globalize-funk thread-subversion_cause                     &primfunk:thread__subversion_cause]
 
+[globalize-funk first                                       &primfunk:first]
+[globalize-funk first-set                                   &primfunk:first__set]
+[globalize-funk next                                        &primfunk:next]
+[globalize-funk next-set                                    &primfunk:next__set]
+[globalize-funk prev                                        &primfunk:prev]
+[globalize-funk prev-set                                    &primfunk:prev__set]
+
+
+'end of f2_primfunks.c'
+
+
 [globalize-funk system-gethostname                          &primfunk:system__gethostname]
 [globalize-funk system-peer_command_server-port_num         &primfunk:system__peer_command_server__port_num]
 

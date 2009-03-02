@@ -118,18 +118,18 @@
 [defmetro or [:rest conds]
   [if [null conds]
       nil
-    `[if ,[unsafe:cons-car conds]
+    `[if ,[first conds]
 	 `t
-       ,[funk-apply &or [unsafe:cons-cdr conds]]]]]
+       ,[funk-apply &or [next conds]]]]]
 
 [exp-format stdout '\ndone defining or\n']
 
 [defmetro and [:rest conds]
   [if [null conds]
       ``t
-    `[if [null ,[unsafe:cons-car conds]]
+    `[if [null ,[first conds]]
 	 nil
-       ,[funk-apply &and [unsafe:cons-cdr conds]]]]]
+       ,[funk-apply &and [next conds]]]]]
 
 [defunk error [type value]
   [larva 63]]
@@ -145,10 +145,12 @@
 [defmetro chunk-write_16bit [x y z] `[chunk-write_16bit_integer ,x ,y [coerce-to-int ,z]]]
 [defmetro chunk-write_32bit [x y z] `[chunk-write_32bit_integer ,x ,y [coerce-to-int ,z]]]
 
-[defmetro car     [x]   `[cons-car     ,x]]
-[defmetro car-set [x y] `[cons-car-set ,x ,y]]
-[defmetro cdr     [x]   `[cons-cdr     ,x]]
-[defmetro cdr-set [x y] `[cons-cdr-set ,x ,y]]
+[defmetro car     [x]   `[first     ,x]]
+[defmetro car-set [x y] `[first-set ,x ,y]]
+[defmetro cdr     [x]   `[next      ,x]]
+[defmetro cdr-set [x y] `[next-set  ,x ,y]]
+[defmetro cir     [x]   `[prev      ,x]]
+[defmetro cir-set [x y] `[prev-set  ,x ,y]]
 
 [defunk list [:rest seq]
   [if [null seq]

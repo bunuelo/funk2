@@ -1827,6 +1827,70 @@ f2ptr f2__thread__subversion_cause(f2ptr cause, f2ptr thread, f2ptr name) {
 }
 def_pcfunk2(thread__subversion_cause, thread, name, return f2__thread__subversion_cause(this_cause, thread, name));
 
+f2ptr f2__first(f2ptr cause, f2ptr exp) {
+  if (raw__consp(exp, cause)) {
+    return f2cons__car(exp, cause);
+  } else if (raw__doublelinkp(exp, cause)) {
+    return f2doublelink__value(exp, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+def_pcfunk1(first, exp, return f2__first(this_cause, exp));
+
+f2ptr f2__first__set(f2ptr cause, f2ptr exp, f2ptr value) {
+  if (raw__consp(exp, cause)) {
+    return f2cons__car__set(exp, cause, value);
+  } else if (raw__doublelinkp(exp, cause)) {
+    return f2doublelink__value__set(exp, cause, value);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+def_pcfunk2(first__set, exp, value, return f2__first(this_cause, exp, value));
+
+f2ptr f2__next(f2ptr cause, f2ptr exp) {
+  if (raw__consp(exp, cause)) {
+    return f2cons__cdr(exp, cause);
+  } else if (raw__doublelinkp(exp, cause)) {
+    return f2doublelink__next(exp, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+def_pcfunk1(next, exp, return f2__next(this_cause, exp));
+
+f2ptr f2__next__set(f2ptr cause, f2ptr exp, f2ptr value) {
+  if (raw__consp(exp, cause)) {
+    return f2cons__cdr__set(exp, cause, value);
+  } else if (raw__doublelinkp(exp, cause)) {
+    return f2doublelink__next__set(exp, cause, value);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+def_pcfunk2(next__set, exp, value, return f2__next__set(this_cause, exp, value));
+
+f2ptr f2__prev(f2ptr cause, f2ptr exp) {
+  if (raw__consp(exp, cause)) {
+    return f2cons__cir(exp, cause);
+  } else if (raw__doublelinkp(exp, cause)) {
+    return f2doublelink__prev(exp, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+def_pcfunk1(prev, exp, return f2__prev(this_cause, exp));
+
+f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value) {
+  if (raw__doublelinkp(exp, cause)) {
+    return f2doublelink__prev__set(exp, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+}
+def_pcfunk2(prev__set, exp, value, return f2__prev__set(this_cause, exp, value));
+
 void f2__primcfunks__reinitialize_globalvars() {
   f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
@@ -2229,6 +2293,13 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(subscribe);
   
   f2__primcfunk__init(thread__subversion_cause);
+  
+  f2__funktional_primcfunk__init(first);
+  f2__funktional_primcfunk__init(first__set);
+  f2__funktional_primcfunk__init(next);
+  f2__funktional_primcfunk__init(next__set);
+  f2__funktional_primcfunk__init(prev);
+  f2__funktional_primcfunk__init(prev__set);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);

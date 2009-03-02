@@ -1894,11 +1894,12 @@ def_pcfunk2(prev__set, exp, value, return f2__prev__set(this_cause, exp, value))
 f2ptr raw__str_copy(f2ptr cause, f2ptr object, u8* str) {
   if (raw__stringp(object, cause)) {
     f2string__str_copy(cause, object, str);
+    return nil;
   } else if (raw__symbolp(object, cause)) {
     f2symbol__str_copy(cause, object, str);
-  } else {
-    return f2larva__new(cause, 1);
+    return nil;
   }
+  return f2larva__new(cause, 1);
 }
 
 f2ptr f2__colonize(f2ptr cause, f2ptr name) {

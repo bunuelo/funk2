@@ -1847,7 +1847,7 @@ f2ptr f2__first__set(f2ptr cause, f2ptr exp, f2ptr value) {
     return f2larva__new(cause, 1);
   }
 }
-def_pcfunk2(first__set, exp, value, return f2__first(this_cause, exp, value));
+def_pcfunk2(first__set, exp, value, return f2__first__set(this_cause, exp, value));
 
 f2ptr f2__next(f2ptr cause, f2ptr exp) {
   if (raw__consp(exp, cause)) {

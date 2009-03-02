@@ -531,10 +531,10 @@
                                                                                                                          f2symbol__new(initial_cause(), strlen(#arg5),     (u8*)#arg5) \
 													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
 
-#define f2__primcfunk__init__with_c_cfunk_var(name, arg0, c_cfunk_var, is_funktional) \
+#define f2__primcfunk__init__with_c_cfunk_var(name, c_cfunk_var, is_funktional) \
   f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional)
 
-#define f2__primcfunk__init__1_arg(name) { \
+#define f2__primcfunk__init(name) { \
   f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 0); \
 }
 

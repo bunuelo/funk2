@@ -2014,18 +2014,18 @@ void f2__primcfunks__initialize() {
   
   // array
   
-  f2__funktional_primcfunk__init(arrayp);
-  f2__primcfunk__init(array__new_1d);
-  f2__primcfunk__init(array);
-  f2__funktional_primcfunk__init(array__length);
-  f2__primcfunk__init(array__elt);
-  f2__primcfunk__init(array__elt__set);
-  f2__primcfunk__init(array__elt__tracing_on);
-  f2__primcfunk__init(array__elt__tracing_on__set);
-  f2__primcfunk__init(array__elt__trace);
-  f2__primcfunk__init(array__elt__trace__set);
-  f2__primcfunk__init(array__elt__imagination_frame);
-  f2__primcfunk__init(array__elt__imagination_frame__set);
+  f2__funktional_primcfunk__init__1(arrayp,                             exp);
+  f2__primcfunk__init__1(           array__new_1d,                      length);
+  f2__primcfunk__init__0_and_rest(  array,                              elts);
+  f2__funktional_primcfunk__init__1(array__length,                      this);
+  f2__primcfunk__init__2(           array__elt,                         this, index);
+  f2__primcfunk__init__3(           array__elt__set,                    this, index, value);
+  f2__primcfunk__init__2(           array__elt__tracing_on,             this, index);
+  f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value);
+  f2__primcfunk__init__2(           array__elt__trace,                  this, index);
+  f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value);
+  f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index);
+  f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value);
   
   // place
   
@@ -2067,38 +2067,38 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(make_metro);
   f2__primcfunk__init(thread);
   
-  f2__primcfunk__init(length);
-  f2__funktional_primcfunk__init(integer__greater_than);
-  f2__funktional_primcfunk__init(integer__less_than);
-  f2__funktional_primcfunk__init(integer__add);
-  f2__funktional_primcfunk__init(integer__subtract);
-  f2__funktional_primcfunk__init(integer__multiply);
-  f2__funktional_primcfunk__init(integer__add_double);
-  f2__funktional_primcfunk__init(integer__subtract_double);
-  f2__funktional_primcfunk__init(integer__divide_by_integer);
-  f2__funktional_primcfunk__init(integer__divide_by_double);
-  f2__funktional_primcfunk__init(integer__equal_sign);
-  f2__funktional_primcfunk__init(integer__not_equal_sign);
-  f2__funktional_primcfunk__init(integer__bitshift_left);
-  f2__funktional_primcfunk__init(integer__bitshift_right);
-  f2__funktional_primcfunk__init(integer__bit_and);
-  f2__funktional_primcfunk__init(integer__bit_or);
-  f2__funktional_primcfunk__init(integer__bit_xor);
-  f2__funktional_primcfunk__init(integer__bit_not);
-  f2__funktional_primcfunk__init(pointer__greater_than);
-  f2__funktional_primcfunk__init(pointer__less_than);
-  f2__funktional_primcfunk__init(pointer__add_integer);
-  f2__funktional_primcfunk__init(pointer__subtract);
-  f2__funktional_primcfunk__init(pointer__equal_sign);
-  f2__funktional_primcfunk__init(pointer__not_equal_sign);
-  f2__funktional_primcfunk__init(null);
-  f2__funktional_primcfunk__init(not);
+  f2__primcfunk__init__1(           length,                     seq);
+  f2__funktional_primcfunk__init__2(integer__greater_than,      x, y);
+  f2__funktional_primcfunk__init__2(integer__less_than,         x, y);
+  f2__funktional_primcfunk__init__2(integer__add,               x, y);
+  f2__funktional_primcfunk__init__2(integer__subtract,          x, y);
+  f2__funktional_primcfunk__init__2(integer__multiply,          x, y);
+  f2__funktional_primcfunk__init__2(integer__add_double,        x, y);
+  f2__funktional_primcfunk__init__2(integer__subtract_double,   x, y);
+  f2__funktional_primcfunk__init__2(integer__divide_by_integer, x, y);
+  f2__funktional_primcfunk__init__2(integer__divide_by_double,  x, y);
+  f2__funktional_primcfunk__init__2(integer__equal_sign,        x, y);
+  f2__funktional_primcfunk__init__2(integer__not_equal_sign,    x, y);
+  f2__funktional_primcfunk__init__2(integer__bitshift_left,     x, y);
+  f2__funktional_primcfunk__init__2(integer__bitshift_right,    x, y);
+  f2__funktional_primcfunk__init__2(integer__bit_and,           x, y);
+  f2__funktional_primcfunk__init__2(integer__bit_or,            x, y);
+  f2__funktional_primcfunk__init__2(integer__bit_xor,           x, y);
+  f2__funktional_primcfunk__init__1(integer__bit_not,           x);
+  f2__funktional_primcfunk__init__2(pointer__greater_than,      x, y);
+  f2__funktional_primcfunk__init__2(pointer__less_than,         x, y);
+  f2__funktional_primcfunk__init__2(pointer__add_integer,       x, y);
+  f2__funktional_primcfunk__init__2(pointer__subtract,          x, y);
+  f2__funktional_primcfunk__init__2(pointer__equal_sign,        x, y);
+  f2__funktional_primcfunk__init__2(pointer__not_equal_sign,    x, y);
+  f2__funktional_primcfunk__init__1(null,                       x);
+  f2__funktional_primcfunk__init__1(not,                        x);
   
-  f2__funktional_primcfunk__init(eq);
+  f2__funktional_primcfunk__init__2(eq,                         x, y);
   
-  f2__primcfunk__init(quit);
+  f2__primcfunk__init__0(quit);
   
-  f2__primcfunk__init(exp__print);
+  f2__primcfunk__init__1(exp__print, exp);
   f2__primcfunk__init(write);
   f2__primcfunk__init(fwrite);
   f2__primcfunk__init(exp__format);
@@ -2112,10 +2112,10 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(fopen);
   f2__primcfunk__init(fclose);
   
-  f2__primcfunk__init(this__cause);
-  f2__primcfunk__init(this__thread);
-  f2__primcfunk__init(this__env);
-  f2__primcfunk__init(this__args);
+  f2__primcfunk__init__0(this__cause);
+  f2__primcfunk__init__0(this__thread);
+  f2__primcfunk__init__0(this__env);
+  f2__primcfunk__init__0(this__args);
   
   f2__primcfunk__init(random);
   

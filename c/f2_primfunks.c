@@ -1891,7 +1891,7 @@ f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value) {
 }
 def_pcfunk2(prev__set, exp, value, return f2__prev__set(this_cause, exp, value));
 
-f2ptr raw__str_copy(f2ptr cause, f2ptr object, char* str) {
+f2ptr raw__str_copy(f2ptr cause, f2ptr object, u8* str) {
   if (raw__stringp(object, cause)) {
     f2string__str_copy(cause, object, str);
   } else if (raw__symbolp(object, cause)) {
@@ -1907,8 +1907,8 @@ f2ptr f2__colonize(f2ptr cause, f2ptr name) {
     return f2larva__new(cause, 1);
   }
   u64 length = raw__length(cause, name);
-  char* str = alloca(length + 2);
-  str[0] = ':';
+  u8* str = alloca(length + 2);
+  str[0] = (u8)':';
   raw__str_copy(cause, name, str + 1);
   str[length + 1] = 0;
   f2ptr colonized = f2symbol__new(cause, length + 1, str);

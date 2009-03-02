@@ -1910,7 +1910,7 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
     return f2larva__new(cause, 1);
   }
   u64 length = raw__length(cause, exp);
-  printf("\ncolonize length=" u64__fstr, length); fflush(stdout);
+  status("\ncolonize length=" u64__fstr, length); fflush(stdout);
   u8* str = alloca(length + 2);
   str[0] = (u8)':';
   raw__str_copy(cause, exp, str + 1);

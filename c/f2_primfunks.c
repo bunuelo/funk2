@@ -814,7 +814,7 @@ u64 raw__length(f2ptr cause, f2ptr seq) {
     } else {
       return raw__array__length(cause, seq);
     }
-  case ptype_chunk:  return f2chunk__length(seq, cause);
+  case ptype_chunk:  return f2chunk__length( seq, cause);
   case ptype_symbol: return f2symbol__length(seq, cause);
   case ptype_string: return f2string__length(seq, cause);
   default:
@@ -1910,6 +1910,7 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
     return f2larva__new(cause, 1);
   }
   u64 length = raw__length(cause, exp);
+  printf("\ncolonize length=" u64__fstr, length); fflush(stdout);
   u8* str = alloca(length + 2);
   str[0] = (u8)':';
   raw__str_copy(cause, exp, str + 1);

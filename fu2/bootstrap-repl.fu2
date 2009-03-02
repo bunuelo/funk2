@@ -699,7 +699,6 @@
 		[[string?      exp]  exp]
 		[[double?      exp]  exp]
 		[[float?       exp]  exp]
-		[[char?        exp]  exp]
 		[[pointer?     exp]  exp]
 		[[funk?        exp] `[funk       ,[funk-name exp]       ,[funk-args exp]]]
 		[[metro?       exp] `[metro      ,[metro-name exp]      ,[metro-args exp]]]

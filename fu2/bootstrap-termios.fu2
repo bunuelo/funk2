@@ -19,7 +19,11 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk termios-width  &primfunk:termios__width]
-[globalize-funk termios-height &primfunk:termios__height]
+[globalize-funk termios-width   &primfunk:termios__width]
+[globalize-funk termios-height  &primfunk:termios__height]
+[globalize-funk termios-noecho  &primfunk:termios__noecho]
+[globalize-funk termios-echo    &primfunk:termios__echo]
+[globalize-funk termios-nocanon &primfunk:termios__nocanon]
+[globalize-funk termios-canon   &primfunk:termios__canon]
 
 

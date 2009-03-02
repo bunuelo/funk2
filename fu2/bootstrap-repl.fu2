@@ -693,6 +693,13 @@
        [cause-event_buffer_last-set  this-cause nil]
        event_buffer_first]]]
 
+[defunk maparray [map_proc exp]
+  [let [[length [length exp]]]
+    [let [[new_array [array-new length]]]
+      [dotimes [i length]
+	[array-elt-set new_array i [funkall map_proc [cons [array-elt exp i] nil]]]]
+      new_array]]]
+
 [defunk brief [exp]
   [if exp [cond [[integer?     exp]  exp]
 		[[symbol?      exp]  exp]
@@ -704,9 +711,9 @@
 		[[metro?       exp] `[metro      ,[metro-name exp]      ,[metro-args exp]]]
 		[[cfunk?       exp] `[cfunk      ,[cfunk-name exp]      ,[cfunk-args exp]]]
 		[[metrocfunk?  exp] `[metrocfunk ,[metrocfunk-name exp] ,[metrocfunk-args exp]]]
-		[[cons?        exp]  [mapc [funk [arg]
-						 [brief arg]]
-					  exp]]
+		[[cons?        exp]  [mapcar [funk [arg]
+						   [brief arg]]
+					     exp]]
 		[[environment? exp] `environment]
 		[t                  `<>]]]]
 

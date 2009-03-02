@@ -43,6 +43,56 @@ f2ptr f2__termios__width(f2ptr cause) {
 }
 def_pcfunk0(termios__width, return f2__termios__width(this_cause));
 
+int raw__termios__noecho() {
+  struct termios t;
+  tcgetattr(STDIN_FILENO, &t);
+  t.c_lflag &= ~ECHO;
+  return tcsetattr(STDIN_FILENO, TCSANOW, &t);
+}
+
+f2ptr f2__termios__noecho(f2ptr cause) {
+  return f2integer__new(cause, raw__termios__noecho());
+}
+def_pcfunk0(termios__noecho, return f2__termios__noecho(this_cause));
+
+int raw__termios__echo() {
+  struct termios t;
+  tcgetattr(STDIN_FILENO, &t);
+  t.c_lflag |= ECHO;
+  return tcsetattr(STDIN_FILENO, TCSANOW, &t);
+}
+
+f2ptr f2__termios__echo(f2ptr cause) {
+  return f2integer__new(cause, raw__termios__echo());
+}
+def_pcfunk0(termios__echo, return f2__termios__echo(this_cause));
+
+
+int raw__termios__nocanon() {
+  struct termios t;
+  tcgetattr(STDIN_FILENO, &t);
+  t.c_lflag &= ~ICANON;
+  return tcsetattr(STDIN_FILENO, &t);
+}
+
+f2ptr f2__termios__nocanon(f2ptr cause) {
+  return f2integer__new(cause, raw__termios__nocanon());
+}
+def_pcfunk0(termios__nocanon, return f2__termios__nocanon(this_cause));
+
+
+int raw__termios__canon() {
+  struct termios t;
+  tcgetattr(STDIN_FILENO, &t);
+  t.c_lflag |= ICANON;
+  return tcsetattr(STDIN_FILENO, &t);
+}
+
+f2ptr f2__termios__canon(f2ptr cause) {
+  return f2integer__new(cause, raw__termios__canon());
+}
+def_pcfunk0(termios__canon, return f2__termios__canon(this_cause));
+
 // **
 
 void f2__termios__reinitialize_globalvars() {
@@ -59,6 +109,10 @@ void f2__termios__initialize() {
   
   f2__primcfunk__init(termios__width);
   f2__primcfunk__init(termios__height);
+  f2__primcfunk__init(termios__noecho);
+  f2__primcfunk__init(termios__echo);
+  f2__primcfunk__init(termios__nocanon);
+  f2__primcfunk__init(termios__canon);
   
   resume_gc();
   try_gc();

@@ -38,5 +38,31 @@
 [defmetro gmodule-make_resident [x]   `[,[if *compile-type-checking* `safe:gmodule-make_resident `unsafe:gmodule-make_resident] ,x]]
 [defmetro gmodule-close         [x]   `[,[if *compile-type-checking* `safe:gmodule-close         `unsafe:gmodule-close]         ,x]]
 
+[globalize -gmodule-name-hash- [hashtable-new 10]]
+
+[defunk   gmodule-new                    [name library_file_directory library_file_name system_gmodule]  [array `gmodule name library_file_directory library_file_name system_gmodule]]
+[defmetro gmodule-name                   [this]                                                         `[array-elt ,this 1]]
+[defmetro gmodule-library_file_directory [this]                                                         `[array-elt ,this 2]]
+[defmetro gmodule-library_file_name      [this]                                                         `[array-elt ,this 3]]
+[defmetro gmodule-system_gmodule         [this]                                                         `[array-elt ,this 4]]
+
+[defunk gmodule-lookup [name]
+  [hashtable-lookup_value -gmodule-hash-name- name]]
+
+[defunk gmodule-init_library [name]
+  [let [[gmodule [gmodule-lookup name]]]
+    [if [null [gmodule-system_gmodule gmodule]]
+	[let [[library_file_directory [gmodule-library_file_directory gmodule]]
+	      [library_file_name      [gmodule-library_file_name      gmodule]]]
+	  [let [[system_gmodule [gmodule-open [gmodule-build_path library_file_directory library_file_name] 0]]]
+	    [put system_gmodule [gmodule-system_gmodule gmodule]]
+	    [if [null system_gmodule] [error `loading-gmodule `[loading ncurses dynamic library]]]]]]]]
+
+[defmetro defgmodule [name library_file_directory library_file_name]
+  [let [[gmodule [gmodule-new name library_file_directory library_file_name nil]]]
+    [hashtable-add_keyvalue_pair -gmodule-name-hash- name gmodule]]]
+
+[defmetro defalien [name gmodule_name return_type c_name argument_name_type_pairs]
+  `[defunk-alien [gmodule-lookup gmodule_name] ,name ,return_type ,c_name ,argument_type_name_pairs]]
 
 [print 'done with gmodule.fu2']

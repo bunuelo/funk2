@@ -133,13 +133,13 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     if (raw__memory_image__load(compile__bootstrap_img__filename)) {
       // if we can't load the default system-wide bootstrap image or a local bootstrap image, then we are in the middle of compiling and depending on compiling progress we can load this intermediate image.
       if (raw__memory_image__load(compile__bootstrap_repl_img__filename)) {
-	printf("\nfunk2 error: couldn't load \"%s\" or \"%s\".", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
-	printf("\nfunk2 warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
+	status("warning: couldn't load \"%s\" or \"%s\".", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
+	status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
       } else {
-	printf("\nfunk2 note: we must be in a compile process because couldn't load \"%s\" so reverted to loading \"%s\"", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
+	status("warning: we must be in a compile process because couldn't load \"%s\" so reverted to loading \"%s\"", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
       }
     } else {
-      status("couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
+      status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
     }
   }
   
@@ -149,7 +149,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   // try to find a boot function
   f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));
   if (! raw__funkablep(boot_funk, cause)) {
-    printf("\nfunk2 warning: no boot function defined.");
+    status("warning: no boot function defined.");
     
     // load file specified by user on command line
     if (this->command_line.load_source_filename != NULL) {

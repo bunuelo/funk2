@@ -333,7 +333,7 @@ void raw__thread__bytecode_trace__car(f2ptr cause, f2ptr bytecode, f2ptr thread)
     f2ptr value = f2thread__value(thread, cause);
     f2ptr iter  = f2thread__iter(thread, cause);
     f2ptr value_iter = raw__array__new(cause, 2);
-    raw__array__elt__set(cause, value_iter  0, value);
+    raw__array__elt__set(cause, value_iter, 0, value);
     raw__array__elt__set(cause, value_iter, 1, iter);
     context = value_iter;
   }

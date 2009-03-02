@@ -592,7 +592,7 @@ extern f2ptr __argument_number_check_failure__exception;
 f2ptr f2__argument_type_check_failure__exception__new(f2ptr cause, f2ptr value);
 f2ptr f2__argument_number_check_failure__exception__new(f2ptr cause, f2ptr funk_symbol, int min_arg_num, f2ptr args);
 
-int raw__length(f2ptr cause, f2ptr seq);
+u64 raw__length(f2ptr cause, f2ptr seq);
 f2ptr f2__length(f2ptr cause, f2ptr seq);
 f2ptr f2__integer__greater_than(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__integer__less_than(f2ptr cause, f2ptr x, f2ptr y);

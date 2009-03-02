@@ -798,7 +798,7 @@ f2ptr f2__thread_serial(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2pt
 
 // sequence (array, list, doublelist, etc.)
 
-int raw__length(f2ptr cause, f2ptr seq) {
+u64 raw__length(f2ptr cause, f2ptr seq) {
   if (!seq) {return 0;}
   switch (f2ptype__raw(seq, cause)) {
   case ptype_simple_array:
@@ -814,7 +814,9 @@ int raw__length(f2ptr cause, f2ptr seq) {
     } else {
       return raw__array__length(cause, seq);
     }
-  case ptype_chunk: return f2chunk__length(seq, cause);
+  case ptype_chunk:  return f2chunk__length(seq, cause);
+  case ptype_symbol: return f2symbol__length(seq, cause);
+  case ptype_string: return f2string__length(seq, cause);
   default:
     error(nil, "raw__length error: invalid type");
     break;

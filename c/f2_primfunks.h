@@ -436,12 +436,10 @@
   }
 
 #define f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, cfunk_args_code) \
-  f2ptr c_cfunk_var  = nil; \
+  f2ptr c_cfunk_var = nil; \
   { \
     f2ptr c_cfunk_args = cfunk_args_code; \
     c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil); \
-  } \
-  { \
     def_pcfunk__symbolvar__init(name); \
     environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), c_cfunk_var); \
   }
@@ -531,7 +529,7 @@
                                                                                                                          f2symbol__new(initial_cause(), strlen(#arg5),     (u8*)#arg5) \
 													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
 
-#define f2__primcfunk__init__with_c_cfunk_var(name, c_cfunk_var, is_funktional) { f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional); }
+#define f2__primcfunk__init__with_c_cfunk_var(name, c_cfunk_var, is_funktional) f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional);
 
 #define f2__primcfunk__init__0(         name)                                               { f2__primcfunk__init__with_c_cfunk_var__0_arg(         name,                                               temp_c_cfunk_var, 0); }
 #define f2__primcfunk__init__0_and_rest(name, and_rest)                                     { f2__primcfunk__init__with_c_cfunk_var__0_arg_and_rest(name, and_rest,                                     temp_c_cfunk_var, 0); }

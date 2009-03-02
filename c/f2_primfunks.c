@@ -1882,7 +1882,7 @@ def_pcfunk1(prev, exp, return f2__prev(this_cause, exp));
 
 f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value) {
   if (raw__doublelinkp(exp, cause)) {
-    return f2doublelink__prev__set(exp, cause);
+    return f2doublelink__prev__set(exp, cause, value);
   } else {
     return f2larva__new(cause, 1);
   }

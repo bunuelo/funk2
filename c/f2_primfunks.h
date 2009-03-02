@@ -435,14 +435,106 @@
     def_body; \
   }
 
-#define f2__primcfunk__init__with_c_cfunk_var(name, c_cfunk_var, is_funktional) \
-  f2ptr c_cfunk_var = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), nil, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil); \
+#define f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, cfunk_args_code) \
+  f2ptr c_cfunk_var  = nil; \
+  { \
+    f2ptr c_cfunk_args = cfunk_args_code; \\
+    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil); \
+  } \
   { \
     def_pcfunk__symbolvar__init(name); \
     environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), c_cfunk_var); \
   }
 
-#define f2__primcfunk__init(name) { \
+#define f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, nil)
+
+#define f2__primcfunk__init__with_c_cfunk_var__0_arg_and_rest(name, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list2__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"), (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__1_arg(name, arg0, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list1__new(initial_cause(), f2symbol__new(initial_cause(), strlen(#arg0), (u8*)#arg0)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__1_arg_and_rest(name, arg0, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list3__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"),   (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg0),     (u8*)#arg0) \
+													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__2_arg(name, arg0, arg1, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list2__new(initial_cause(), f2symbol__new(initial_cause(), strlen(#arg0), (u8*)#arg0), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1), (u8*)#arg1)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__2_arg_and_rest(name, arg0, arg1, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list4__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"),   (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg0),     (u8*)#arg0) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1),     (u8*)#arg1) \
+													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__3_arg(name, arg0, arg1, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list3__new(initial_cause(), f2symbol__new(initial_cause(), strlen(#arg0), (u8*)#arg0), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1), (u8*)#arg1), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2), (u8*)#arg2)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__3_arg_and_rest(name, arg0, arg1, arg2, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list5__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"),   (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg0),     (u8*)#arg0) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1),     (u8*)#arg1) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2),     (u8*)#arg2) \
+													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__4_arg(name, arg0, arg1, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list4__new(initial_cause(), f2symbol__new(initial_cause(), strlen(#arg0), (u8*)#arg0), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1), (u8*)#arg1), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2), (u8*)#arg2), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg3), (u8*)#arg3)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__4_arg_and_rest(name, arg0, arg1, arg2, arg3, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list6__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"),   (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg0),     (u8*)#arg0) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1),     (u8*)#arg1) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2),     (u8*)#arg2) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg3),     (u8*)#arg3) \
+													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__5_arg(name, arg0, arg1, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list5__new(initial_cause(), f2symbol__new(initial_cause(), strlen(#arg0), (u8*)#arg0), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1), (u8*)#arg1), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2), (u8*)#arg2), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg3), (u8*)#arg3), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg4), (u8*)#arg4)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__5_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list7__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"),   (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg0),     (u8*)#arg0) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1),     (u8*)#arg1) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2),     (u8*)#arg2) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg3),     (u8*)#arg3) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg4),     (u8*)#arg4) \
+													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__6_arg(name, arg0, arg1, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list6__new(initial_cause(), f2symbol__new(initial_cause(), strlen(#arg0), (u8*)#arg0), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1), (u8*)#arg1), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2), (u8*)#arg2), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg3), (u8*)#arg3), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg4), (u8*)#arg4)))
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg5), (u8*)#arg5)))
+
+#define f2__primcfunk__init__with_c_cfunk_var__6_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, and_rest, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, f2list7__new(initial_cause(), f2symbol__new(initial_cause(), strlen(":rest"),   (u8*)":rest"), \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg0),     (u8*)#arg0) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg1),     (u8*)#arg1) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg2),     (u8*)#arg2) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg3),     (u8*)#arg3) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg4),     (u8*)#arg4) \
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg5),     (u8*)#arg5) \
+													                 f2symbol__new(initial_cause(), strlen(#and_rest), (u8*)#and_rest)))
+
+#define f2__primcfunk__init__with_c_cfunk_var(name, arg0, c_cfunk_var, is_funktional) \
+  f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional)
+
+#define f2__primcfunk__init__1_arg(name) { \
   f2__primcfunk__init__with_c_cfunk_var(name, temp_c_cfunk_var, 0); \
 }
 

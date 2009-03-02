@@ -81,7 +81,6 @@
        [cause-event_buffer_last-set  this-cause nil]
        event_buffer_first]]]
 
-
 [globalize thread:-environment_critics- [list &critic-reactive-unknown_bug]]
 
 [defmetro criticize [var code :rest body]

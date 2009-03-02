@@ -438,6 +438,10 @@
 [defunk safe:matrix-data                [x]     [if [matrix?     x] [unsafe:matrix-data                x]     [error `run-time `[safe:matrix-data                type-check-failure]]]]
 [defunk safe:matrix-data-set            [x y]   [if [matrix?     x] [unsafe:matrix-data-set            x y]   [error `run-time `[safe:matrix-data-set            type-check-failure]]]]
 
+[defunk safe:bytecode_event-bytecode     [x]   [if [bytecode_event? x] [unsafe:bytecode_event-bytecode     x]   [error `run-time `[safe:bytecode_event-bytecode     type-check-failure]]]]
+[defunk safe:bytecode_event-bytecode-set [x y] [if [bytecode_event? x] [unsafe:bytecode_event-bytecode-set x y] [error `run-time `[safe:bytecode_event-bytecode-set type-check-failure]]]]
+[defunk safe:bytecode_event-context      [x]   [if [bytecode_event? x] [unsafe:bytecode_event-context      x]   [error `run-time `[safe:bytecode_event-context      type-check-failure]]]]
+[defunk safe:bytecode_event-context-set  [x y] [if [bytecode_event? x] [unsafe:bytecode_event-context-set  x y] [error `run-time `[safe:bytecode_event-context-set  type-check-failure]]]]
 
 
 
@@ -677,13 +681,17 @@
 [defmetro size_2d-y     [x]   `[,[if *compile-type-checking* `safe:size_2d-y     `unsafe:size_2d-y]     ,x]]
 [defmetro size_2d-y-set [x y] `[,[if *compile-type-checking* `safe:size_2d-y-set `unsafe:size_2d-y-set] ,x ,y]]
 
-[defmetro matrix-xres                [x]     `[,[if *compile-type-checking* `safe:matrix-xres                `unsafe:cause-thread]               ,x]]
-[defmetro matrix-xres-set            [x y]   `[,[if *compile-type-checking* `safe:matrix-xres-set            `unsafe:cause-thread-set]           ,x ,y]]
-[defmetro matrix-yres                [x]     `[,[if *compile-type-checking* `safe:matrix-yres                `unsafe:cause-env]                  ,x]]
-[defmetro matrix-yres-set            [x y]   `[,[if *compile-type-checking* `safe:matrix-yres-set            `unsafe:cause-env-set]              ,x ,y]]
-[defmetro matrix-data                [x]     `[,[if *compile-type-checking* `safe:matrix-data                `unsafe:cause-name]                 ,x]]
-[defmetro matrix-data-set            [x y]   `[,[if *compile-type-checking* `safe:matrix-data-set            `unsafe:cause-name-set]             ,x ,y]]
+[defmetro matrix-xres     [x]   `[,[if *compile-type-checking* `safe:matrix-xres     `unsafe:matrix-xres]     ,x]]
+[defmetro matrix-xres-set [x y] `[,[if *compile-type-checking* `safe:matrix-xres-set `unsafe:matrix-xres-set] ,x ,y]]
+[defmetro matrix-yres     [x]   `[,[if *compile-type-checking* `safe:matrix-yres     `unsafe:matrix-yres]     ,x]]
+[defmetro matrix-yres-set [x y] `[,[if *compile-type-checking* `safe:matrix-yres-set `unsafe:matrix-yres-set] ,x ,y]]
+[defmetro matrix-data     [x]   `[,[if *compile-type-checking* `safe:matrix-data     `unsafe:matrix-data]     ,x]]
+[defmetro matrix-data-set [x y] `[,[if *compile-type-checking* `safe:matrix-data-set `unsafe:matrix-data-set] ,x ,y]]
 
+[defmetro bytecode_event-bytecode     [x]   `[,[if *compile-type-checking* `safe:bytecode_event-bytecode     `unsafe:bytecode_event-bytecode]     ,x]]
+[defmetro bytecode_event-bytecode-set [x y] `[,[if *compile-type-checking* `safe:bytecode_event-bytecode-set `unsafe:bytecode_event-bytecode-set] ,x ,y]]
+[defmetro bytecode_event-context      [x]   `[,[if *compile-type-checking* `safe:bytecode_event-context      `unsafe:bytecode_event-context]     ,x]]
+[defmetro bytecode_event-context-set  [x y] `[,[if *compile-type-checking* `safe:bytecode_event-context-set  `unsafe:bytecode_event-context-set] ,x ,y]]
 
 
 

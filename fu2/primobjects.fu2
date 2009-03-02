@@ -198,6 +198,13 @@
 [defmetro unsafe:matrix-data     [x]              `[unsafe:primobject-slot     ,x 3]]
 [defmetro unsafe:matrix-data-set [x y]            `[unsafe:primobject-slot-set ,x 3 ,y]]
 
+[defmetro bytecode_event                     [bytecode context] `[array `primobject `bytecode_event nil ,bytecode ,context]]
+[defunk   bytecode_event?                    [x]                 [and [primobject? x] [eq [unsafe:primobject-type x] `bytecode_event]]]
+[defmetro unsafe:bytecode_event-bytecode     [x]                `[unsafe:primobject-slot     ,x 1]]
+[defmetro unsafe:bytecode_event-bytecode-set [x y]              `[unsafe:primobject-slot-set ,x 1 ,y]]
+[defmetro unsafe:bytecode_event-context      [x]                `[unsafe:primobject-slot     ,x 2]]
+[defmetro unsafe:bytecode_event-context-set  [x y]              `[unsafe:primobject-slot-set ,x 2 ,y]]
+
 'Define safe versions of unsafe functions here.'
 
 [defunk safe:integer-to_double [x] [if [integer? x] [unsafe:integer-to_double x] [error `run-time `[safe:integer-to_double type-check-failure]]]]

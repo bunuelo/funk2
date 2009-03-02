@@ -518,7 +518,7 @@
                                                                                                                          f2symbol__new(initial_cause(), strlen(#arg1), (u8*)#arg1), \
                                                                                                                          f2symbol__new(initial_cause(), strlen(#arg2), (u8*)#arg2), \
                                                                                                                          f2symbol__new(initial_cause(), strlen(#arg3), (u8*)#arg3), \
-                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg4), (u8*)#arg4)))
+                                                                                                                         f2symbol__new(initial_cause(), strlen(#arg4), (u8*)#arg4), \
                                                                                                                          f2symbol__new(initial_cause(), strlen(#arg5), (u8*)#arg5)))
 
 #define f2__primcfunk__init__with_c_cfunk_var__6_arg_and_rest(name, arg0, arg1, arg2, arg3, arg4, arg5, and_rest, c_cfunk_var, is_funktional) \

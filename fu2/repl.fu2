@@ -49,7 +49,7 @@
 `[does nothing for now]
 
 [defunk abstract [exp]
-  exp]
+  [brief exp]]
 
 [defunk repl-io [input-stream output-stream html tutorial]
   [define-funk afwrite-maybe_html      [if html &afwrite_html &afwrite]]
@@ -87,7 +87,7 @@
 			   '\n            restarting repl.\n']
 	      [repl-html]]]]]
 
-[defunk load [filename]
+[defunk load1 [filename]
   [format stdout '\nloading ' filename]
   [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]
     [if [null file-stream]
@@ -96,22 +96,22 @@
 	[stream-close file-stream]
 	result]]]]
 
+[defunk load [:rest filenames]
+  [print filenames]
+  [mapc [funk [filename]
+	      [format stdout '\nCompiling ' filename]
+	      [let [[result [load1 filename]]]
+		[format stdout '\ndone compiling ' filename]
+		[print result]]]
+	filenames]]
+
 [defunk parload [:rest filenames]
   [format stdout '\nCompiling in parallel:']
   [mapc [funk [filename]
 	      [format stdout ' ' filename]]
 	filenames]
   [parc [funk [filename]
-	      [let [[result [load filename]]]
-		[print result]]]
-	filenames]]
-
-[defunk seqload [:rest filenames]
-  [print filenames]
-  [mapc [funk [filename]
-	      [format stdout '\nCompiling ' filename]
-	      [let [[result [load filename]]]
-		[format stdout '\ndone compiling ' filename]
+	      [let [[result [load1 filename]]]
 		[print result]]]
 	filenames]]
 

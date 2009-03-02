@@ -72,7 +72,7 @@ int raw__termios__nocanon() {
   struct termios t;
   tcgetattr(STDIN_FILENO, &t);
   t.c_lflag &= ~ICANON;
-  return tcsetattr(STDIN_FILENO, &t);
+  return tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }
 
 f2ptr f2__termios__nocanon(f2ptr cause) {
@@ -85,7 +85,7 @@ int raw__termios__canon() {
   struct termios t;
   tcgetattr(STDIN_FILENO, &t);
   t.c_lflag |= ICANON;
-  return tcsetattr(STDIN_FILENO, &t);
+  return tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }
 
 f2ptr f2__termios__canon(f2ptr cause) {

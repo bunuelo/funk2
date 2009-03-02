@@ -804,7 +804,7 @@ u64 raw__length(f2ptr cause, f2ptr seq) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__consp(seq, cause)) {
-      int count = 0;
+      u64 count = 0;
       f2ptr iter = seq;
       while(iter) {
 	count ++;
@@ -1904,20 +1904,20 @@ f2ptr raw__str_copy(f2ptr cause, f2ptr object, u8* str) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__colonize(f2ptr cause, f2ptr name) {
-  if ((! raw__stringp(name, cause)) &&
-      (! raw__symbolp(name, cause))) {
+f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
+  if ((! raw__stringp(exp, cause)) &&
+      (! raw__symbolp(exp, cause))) {
     return f2larva__new(cause, 1);
   }
-  u64 length = raw__length(cause, name);
+  u64 length = raw__length(cause, exp);
   u8* str = alloca(length + 2);
   str[0] = (u8)':';
-  raw__str_copy(cause, name, str + 1);
+  raw__str_copy(cause, exp, str + 1);
   str[length + 1] = 0;
   f2ptr colonized = f2symbol__new(cause, length + 1, str);
   return colonized;
 }
-def_pcfunk1(colonize, name, return f2__colonize(this_cause, name));
+def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
 void f2__primcfunks__reinitialize_globalvars() {
   f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
@@ -2328,7 +2328,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(prev);
   f2__funktional_primcfunk__init(prev__set);
   
-  f2__funktional_primcfunk__init__1(colonize, name);
+  f2__funktional_primcfunk__init__1(colonize, exp);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);

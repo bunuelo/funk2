@@ -438,7 +438,7 @@
 #define f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, cfunk_args_code) \
   f2ptr c_cfunk_var  = nil; \
   { \
-    f2ptr c_cfunk_args = cfunk_args_code; \\
+    f2ptr c_cfunk_args = cfunk_args_code; \
     c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil); \
   } \
   { \

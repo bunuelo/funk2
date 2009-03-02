@@ -721,7 +721,7 @@
 				      [[eq command `jump-funk] [let [[context [bytecode_event-context bytecode_event]]]
 								 [let [[value [elt context 0]]
 								       [args  [elt context 1]]]
-								   `[jump-funk ,[funkable-name value] :args ,args]]]]
+								   `[jump-funk-event ,[funkable-name value] :args ,args]]]]
 				      [t                       nil]]]]]
 		  [if result [print result]]
 		  result]]

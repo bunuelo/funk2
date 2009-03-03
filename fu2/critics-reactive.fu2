@@ -75,6 +75,9 @@
 	    [ansi-stream-reset stdout]
 	    [repl]]]]]
 
+[defunk critic-reactive-primitive_response [thread]
+  [critic-reactive-unknown_bug thread]]
+
 [globalize thread:-environment_critics- [list &critic-reactive-unknown_bug]]
 
 [defmetro criticize [var code :rest body]
@@ -83,7 +86,7 @@
 	 @body]]
 
 [defunk thread-enable_reactive_critics [this]
-  [thread-critics-set this &critic-reactive-unknown_bug]]
+  [thread-critics-set this &critic-reactive-primitive_response]]
 
 [boot-add_user_command `[thread-enable_reactive_critics [this-thread]]]
 

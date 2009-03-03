@@ -91,7 +91,7 @@
     
     ]
 
-[globalize load-basic-ai nil]
+[globalize load-basic-ai t]
 
 [defunk load-basic-ai []
   [format stdout
@@ -105,8 +105,12 @@
 	  ]
   '\n* funk2: Compiling Basic A.I. Library Interfaces *'
   
-  [load 'fu2/link-grammar-wrapper.fu2']
-  ]
+  `[load 'fu2/link-grammar-wrapper.fu2']
+   `[print 'done loading link-grammar-wrapper.fu2']
+    
+    [load 'som-2009/blocks_world.fu2']
+    [print 'done loading som-2009/blocks_world.fu2']
+    ]
 
 [if load-basic-ai [load-basic-ai]]
 

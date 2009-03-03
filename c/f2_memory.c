@@ -38,8 +38,9 @@ ptr malloc_executable(size_t required_bytes) {
   size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
   void* p = mmap(NULL, alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, 0, 0);
   if (p == MAP_FAILED) {
-    perror("malloc_executable");
-    return to_ptr(NULL);
+    perror("malloc_executable() mmap");
+    error(nil, "malloc_executable mmap failed.");
+    //return to_ptr(NULL);
   }
   return to_ptr(p);
 }

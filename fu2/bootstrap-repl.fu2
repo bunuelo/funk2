@@ -717,6 +717,8 @@
 		[[environment? exp] `environment]
 		[t                  `<>]]]]
 
+[defunk funkable? [exp] [or [cfunk? exp] [metrocfunk? exp] [funk? exp] [metro? exp]]]
+
 [defunk funkable-name [exp]
   [cond [[funk?       exp] [funk-name       exp]]
 	[[metro?      exp] [metro-name      exp]]

@@ -38,7 +38,6 @@
 	  '\n' 
 	  '\n' 'Reactive Critic Fired: We have paused a buggy thread and are now running in a new thread, handling an unhandled bug type.'
 	  '\n']
-  [thread-print_backtrace thread]
   [let [[value       [thread-value thread]]
 	[bug_handled nil]]
     [if [bug? value]
@@ -64,6 +63,11 @@
 		    '\n' 'Enabling reactive critics for this new thread now.'
 		    '\n']
 	    [thread-enable_reactive_critics [this-thread]]
+	    [format stdout
+		    '\n' 
+		    '\n' 'Printing backtrace for buggy thread now.'
+		    '\n']
+	    [thread-print_backtrace thread]
 	    [format stdout
 		    '\n' 
 		    '\n' 'Beginning new user debug repl now.'

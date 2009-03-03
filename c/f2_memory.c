@@ -24,19 +24,17 @@
 void assert_failed(f2ptr thread, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
-  if (thread) {
-    printf("\n  current thread: "); f2__write(thread, thread);
-    print_environment_backtrace(f2thread__env(thread, f2thread__cause_reg(thread, nil)));
-  }
-  f2__print_threads_stacks();
-  print_gc_stats();
   exit(-1);
 }
 
 ptr malloc_executable(size_t required_bytes) {
   size_t page_size   = getpagesize();
   size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
+#ifdef __APPLE__
+  void* p = mmap(0, alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE,  MAP_ANON ,-1,0);
+#else
   void* p = mmap(NULL, alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, 0, 0);
+#endif
   if (p == MAP_FAILED) {
     perror("malloc_executable() mmap");
     error(nil, "malloc_executable mmap failed.");

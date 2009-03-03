@@ -33,9 +33,10 @@ def_pcfunk0(f2__socket__pf_inet,      return f2__socket__pf_inet(this_cause));
 f2ptr f2__socket__pf_inet6(f2ptr cause) {return f2integer__new(cause, PF_INET6);}
 def_pcfunk0(f2__socket__pf_inet6,     return f2__socket__pf_inet6(this_cause));
 
-f2ptr f2__socket__pf_ipx(f2ptr cause) {return f2integer__new(cause, PF_IPX);}
+f2ptr f2__socket__pf_ipx(f2ptr cause) {	return f2integer__new(cause, PF_IPX);}
 def_pcfunk0(f2__socket__pf_ipx,       return f2__socket__pf_ipx(this_cause));
 
+/*
 f2ptr f2__socket__pf_netlink(f2ptr cause) {return f2integer__new(cause, PF_NETLINK);}
 def_pcfunk0(f2__socket__pf_netlink,   return f2__socket__pf_netlink(this_cause));
 
@@ -48,11 +49,17 @@ def_pcfunk0(f2__socket__pf_ax25,      return f2__socket__pf_ax25(this_cause));
 f2ptr f2__socket__pf_atmpvc(f2ptr cause) {return f2integer__new(cause, PF_ATMPVC);}
 def_pcfunk0(f2__socket__pf_atmpvc,    return f2__socket__pf_atmpvc(this_cause));
 
+f2ptr f2__socket__pf_packet(f2ptr cause) {return f2integer__new(cause, PF_PACKET);}
+def_pcfunk0(f2__socket__pf_packet,    return f2__socket__pf_packet(this_cause));
+
+f2ptr f2__socket__sock_packet(f2ptr cause) {return f2integer__new(cause, SOCK_PACKET);}
+def_pcfunk0(f2__socket__sock_packet,    return f2__socket__sock_packet(this_cause));
+
+*/
+
 f2ptr f2__socket__pf_appletalk(f2ptr cause) {return f2integer__new(cause, PF_APPLETALK);}
 def_pcfunk0(f2__socket__pf_appletalk, return f2__socket__pf_appletalk(this_cause));
 
-f2ptr f2__socket__pf_packet(f2ptr cause) {return f2integer__new(cause, PF_PACKET);}
-def_pcfunk0(f2__socket__pf_packet,    return f2__socket__pf_packet(this_cause));
 
 f2ptr f2__socket__sock_stream(f2ptr cause) {return f2integer__new(cause, SOCK_STREAM);}
 def_pcfunk0(f2__socket__sock_stream,    return f2__socket__sock_stream(this_cause));
@@ -69,8 +76,6 @@ def_pcfunk0(f2__socket__sock_raw,       return f2__socket__sock_raw(this_cause))
 f2ptr f2__socket__sock_rdm(f2ptr cause) {return f2integer__new(cause, SOCK_RDM);}
 def_pcfunk0(f2__socket__sock_rdm,       return f2__socket__sock_rdm(this_cause));
 
-f2ptr f2__socket__sock_packet(f2ptr cause) {return f2integer__new(cause, SOCK_PACKET);}
-def_pcfunk0(f2__socket__sock_packet,    return f2__socket__sock_packet(this_cause));
 
 f2ptr f2__inaddr_any(f2ptr cause) {
   int sockaddr_len = sizeof(struct sockaddr);
@@ -316,19 +321,20 @@ void f2__socket__initialize() {
   f2__primcfunk__init(f2__socket__pf_inet);
   f2__primcfunk__init(f2__socket__pf_inet6);
   f2__primcfunk__init(f2__socket__pf_ipx);
+/*
   f2__primcfunk__init(f2__socket__pf_netlink);
   f2__primcfunk__init(f2__socket__pf_x25);
   f2__primcfunk__init(f2__socket__pf_ax25);
   f2__primcfunk__init(f2__socket__pf_atmpvc);
-  f2__primcfunk__init(f2__socket__pf_appletalk);
   f2__primcfunk__init(f2__socket__pf_packet);
-  
-  f2__primcfunk__init(f2__socket__sock_stream);
+  f2__primcfunk__init(f2__socket__sock_packet);
+*/
+  f2__primcfunk__init(f2__socket__pf_appletalk);
   f2__primcfunk__init(f2__socket__sock_dgram);
   f2__primcfunk__init(f2__socket__sock_seqpacket);
   f2__primcfunk__init(f2__socket__sock_raw);
   f2__primcfunk__init(f2__socket__sock_rdm);
-  f2__primcfunk__init(f2__socket__sock_packet);
+  f2__primcfunk__init(f2__socket__sock_stream);
   
   f2__primcfunk__init(f2__gethostbyname);
   

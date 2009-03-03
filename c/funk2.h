@@ -24,8 +24,19 @@
 
 #define _GNU_SOURCE
 
+// temporary definition for os x compile
 
 #ifdef __APPLE__
+#define MAP_ANONYMOUS MAP_ANON
+// see: http://www.osxfaq.com/man/4/tty.ws
+#define SIOCOUTQ TIOCOUTQ
+#define SIOCINQ TIOCSTI
+
+//#define O_NOFOLLOW 0
+//#define O_DIRECT 0
+//#define O_NOATIME 0
+//#define O_LARGEFILE 1
+
 #include <sys/sockio.h>
 #else
 #include <linux/sockios.h>

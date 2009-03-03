@@ -29,13 +29,15 @@ f2ptr f2__socket__pf_local(f2ptr cause);
 f2ptr f2__socket__pf_inet(f2ptr cause);
 f2ptr f2__socket__pf_inet6(f2ptr cause);
 f2ptr f2__socket__pf_ipx(f2ptr cause);
+/*
 f2ptr f2__socket__pf_netlink(f2ptr cause);
 f2ptr f2__socket__pf_x25(f2ptr cause);
 f2ptr f2__socket__pf_ax25(f2ptr cause);
 f2ptr f2__socket__pf_atmpvc(f2ptr cause);
-f2ptr f2__socket__pf_appletalk(f2ptr cause);
 f2ptr f2__socket__pf_packet(f2ptr cause);
 f2ptr f2__socket__sock_stream(f2ptr cause);
+*/
+f2ptr f2__socket__pf_appletalk(f2ptr cause);
 f2ptr f2__socket__sock_dgram(f2ptr cause);
 f2ptr f2__socket__sock_seqpacket(f2ptr cause);
 f2ptr f2__socket__sock_raw(f2ptr cause);

@@ -57,6 +57,7 @@ int file_descriptor__set_nonblocking(int fd, bool value) {
 }
 
 int socket_file_descriptor__set_bind_device(int fd, char* device) {
+#if defined(SO_BINDTODEVICE)
   struct ifreq ifr;
   memset(&ifr, 0, sizeof(ifr));
   strncpy(ifr.ifr_ifrn.ifrn_name, device, IFNAMSIZ);
@@ -68,9 +69,15 @@ int socket_file_descriptor__set_bind_device(int fd, char* device) {
     return -1;
   }
   return 0;
+#else
+  // Fixme: implement binding on OS X
+	printf("\nsocket_file_descriptor__set_bind_device() not supported on this platform.\n");
+	return -1;
+#endif
 }
 
 int socket_file_descriptor__get_bind_device(int fd, char* device_name, int max_len) {
+#if defined(SO_BINDTODEVICE)
   struct ifreq ifr;
   memset(&ifr, 0, sizeof(ifr));
   socklen_t socklen;
@@ -91,6 +98,11 @@ int socket_file_descriptor__get_bind_device(int fd, char* device_name, int max_l
   memset(device_name, 0, max_len);
   strncpy(device_name, ifr.ifr_ifrn.ifrn_name, max_len < IFNAMSIZ ? max_len : IFNAMSIZ);
   return 0;
+#else
+  // Fixme: implement binding on OS X
+	printf("\nsocket_file_descriptor__get_bind_device() not supported on this platform.\n");
+	return -1;
+#endif
 }
 
 void socket_file_descriptor__set_rebindable(int fd) {

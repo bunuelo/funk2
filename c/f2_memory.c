@@ -840,14 +840,14 @@ void memory_mutex__lock(int pool_index) {
   switch(result) {
   case 0: break;
   case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
-  case EDEADLK: error(nil, "the mutex is already locked by the calling thread (’¡Æ’¡Æerror checking’¡Ç’¡Ç mutexes only)."); break;
+  case EDEADLK: error(nil, "the mutex is already locked by the calling thread (\"error checking\" mutexes only)."); break;
   }
 }
 int  memory_mutex__try_lock(int pool_index) {
   int result = pthread_mutex_trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
   switch(result) {
   case 0: break;
-  case EBUSY: error(nil, "the mutex could not be acquired because it was currently locked."); break;
+  case EBUSY: break;
   case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
   }
   return result;
@@ -857,7 +857,7 @@ void memory_mutex__unlock(int pool_index) {
   switch(result) {
   case 0: break;
   case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
-  case EPERM: error(nil, "the calling thread does not own the mutex (’¡Æ’¡Æerror checking’¡Ç’¡Ç mutexes only)."); break;
+  case EPERM: error(nil, "the calling thread does not own the mutex (\"error checking\" mutexes only)."); break;
   }
   if(result) {error(nil, "error unlocking mutex.");}
 }

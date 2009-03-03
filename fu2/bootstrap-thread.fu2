@@ -77,7 +77,7 @@
 		  [set stack_iter [cdr stack_iter]]
 		  [let [[arg_iter   args]
 			[arg_values [car stack_iter]]]
-		    [format '\n' '  '
+		    [format stream '\n' '  '
 			    `[funk ,name [mapcar [funk [arg_value]
 						       [let [[arg [car arg_iter]]]
 							 [let [[arg_value_pair [list [colonize arg] arg_value]]]

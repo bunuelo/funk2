@@ -24,10 +24,16 @@
 
 #define _GNU_SOURCE
 
+
+#ifdef __APPLE__
+#include <sys/sockio.h>
+#else
+#include <linux/sockios.h>
+#endif
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <linux/sockios.h>
 #include <locale.h>
 #include <net/if.h>
 #include <netdb.h>

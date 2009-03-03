@@ -74,7 +74,16 @@
 	      [let [[funkable stack_exp]]
 		[let [[name [funkable-name funkable]]
 		      [args [funkable-args funkable]]]
-		  [format stream '\n' '  ' [brief stack_exp]]]]
+		  [set stack_iter [cdr stack_iter]]
+		  [let [[arg_iter   args]
+			[arg_values [car stack_iter]]]
+		    [format '\n' '  '
+			    `[funk ,name [mapcar [funk [arg_value]
+						       [let [[arg [car arg_iter]]]
+							 [let [[arg_value_pair [list [colonize arg] arg_value]]]
+							   [set arg_iter [cdr arg_iter]]
+							   arg_value_pair]]]
+						 arg_values]]]]]]
 	    [prog [format stream '\n' '  ' [brief stack_exp]]]]
 	  [set stack_iter [cdr stack_iter]]]]]]]
 

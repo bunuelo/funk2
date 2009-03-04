@@ -21,8 +21,6 @@
 
 #include "funk2.h"
 #include <stdio.h>
-#include <readline.h>
-
 
 f2ptr __end_parens_exception                  = -1;
 f2ptr __unmatched_begin_paren_exception       = -1;

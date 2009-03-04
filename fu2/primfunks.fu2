@@ -360,7 +360,9 @@
 [globalize-funk peer_command_server-active_client_info      &primfunk:peer_command_server__active_client_info]
 
 'defined in f2_primobject__stream.c'
-[globalize-funk stream                                      &primfunk:stream]
+[globalize-funk file_stream-new                             &primfunk:file_stream__new]
+[globalize-funk string_stream-new                           &primfunk:string_stream__new]
+[globalize-funk string_stream                               &primfunk:string_stream]
 [globalize-funk stream-new_open_file                        &primfunk:stream__new_open_file]
 [globalize-funk stream-close                                &primfunk:stream__close]
 [globalize-funk stream-file_mode-rdonly                     &primfunk:stream__file_mode__rdonly]

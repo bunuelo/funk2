@@ -27,7 +27,7 @@ int f2__repl(f2ptr cause, f2ptr thread) {
   f2ptr repl_funk_bcs = f2__compile__funk(cause, environment__safe_lookup_var_value(cause, global_environment(), __funk2.globalenv.trace_all_compiles__symbol), thread, repl_funk);
   f2ptr repl_thread   = f2__thread_serial(cause, thread, f2thread__env(thread, cause), repl_funk, nil);
   while (1) {
-    
+
     printf ("\nF-In-> "); fflush(stdout);
     f2ptr read_exp = raw__read(cause, __funk2.globalenv.stdin_stream);
     

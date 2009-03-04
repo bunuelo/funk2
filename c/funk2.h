@@ -24,7 +24,6 @@
 
 #define _GNU_SOURCE
 
-// temporary definition for os x compile
 
 #ifdef __APPLE__
 #define MAP_ANONYMOUS MAP_ANON

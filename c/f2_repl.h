@@ -35,4 +35,4 @@
 
 int f2__repl(f2ptr cause, f2ptr thread);
 
-#endif // F2__REPL__H
+#endif //F2__REPL__H

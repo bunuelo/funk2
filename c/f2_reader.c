@@ -79,7 +79,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   //  int   fd = f2integer__i(file_descriptor, cause);
   //  if (fd == 0) {
   //    printf("\nfd=0 getc: ");
-  //    f2__print(cause, read_ch);
+  //    f2__print(cause, read_ch); 
   //  }
   //}
   return read_ch;

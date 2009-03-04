@@ -23,19 +23,43 @@
 
 // stream primobject definition
 
-defprimobject__static_slot(stream__file_descriptor, 0);
+defprimobject__static_slot(stream__type,            0);
 defprimobject__static_slot(stream__ungetc_stack,    1);
+defprimobject__static_slot(stream__file_descriptor, 2);
+defprimobject__static_slot(stream__string,          3);
+defprimobject__static_slot(stream__index,           4);
 
-f2ptr __stream__symbol = -1;
+f2ptr __stream__symbol        = -1;
+f2ptr __file_stream__symbol   = -1;
+f2ptr __string_stream__symbol = -1;
 
-f2ptr f2stream__new(f2ptr cause, f2ptr file_descriptor, f2ptr ungetc_stack) {
+f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_descriptor, f2ptr string, f2ptr index) {
   if (__stream__symbol == -1) {__stream__symbol = f2symbol__new(cause, strlen("stream"), (u8*)"stream");}
-  f2ptr this = f2__primobject__new(cause, __stream__symbol, 2, nil);
-  f2stream__file_descriptor__set(this, cause, file_descriptor);
+  f2ptr this = f2__primobject__new(cause, __stream__symbol, 5, nil);
+  f2stream__type__set(           this, cause, type);
   f2stream__ungetc_stack__set(   this, cause, ungetc_stack);
+  f2stream__file_descriptor__set(this, cause, file_descriptor);
+  f2stream__string__set(         this, cause, string);
+  f2stream__index__set(          this, cause, index);
   return this;
 }
-def_pcfunk1(stream, file_descriptor, return f2stream__new(this_cause, file_descriptor, nil));
+
+f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
+  if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
+  return f2stream__new(cause, __file_stream__symbol, nil, file_descriptor, nil, nil);
+}
+def_pcfunk1(file_stream__new, file_descriptor, return f2__file_stream__new(this_cause, file_descriptor));
+
+f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
+  if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
+  return f2stream__new(cause, __string_stream__symbol, nil, nil, string, index);
+}
+def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(this_cause, string, index));
+
+f2ptr f2__string_stream(f2ptr cause, f2ptr string) {
+  return f2__string_stream__new(cause, string, f2integer__new(cause, 0));
+}
+def_pcfunk1(string_stream, string, return f2__string_stream(this_cause, string));
 
 bool raw__streamp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__stream(this, cause));}
 f2ptr f2__streamp(f2ptr this, f2ptr cause) {return f2boolean__new(cause, raw__streamp(this, cause));}
@@ -45,7 +69,7 @@ f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
   if (fd == -1) {
     return nil;
   }
-  return f2stream__new(cause, f2integer__new(cause, fd), nil);
+  return f2__file_stream__new(cause, f2integer__new(cause, fd));
 }
 
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
@@ -162,7 +186,9 @@ def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_char
 void f2__primobject__stream__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  __stream__symbol = f2symbol__new(cause, strlen("stream"), (u8*)"stream");
+  __stream__symbol        = f2symbol__new(cause, strlen("stream"),        (u8*)"stream");
+  __file_stream__symbol   = f2symbol__new(cause, strlen("file_stream"),   (u8*)"file_stream");
+  __string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");
 }
 
 void f2__primobject__stream__initialize() {
@@ -170,7 +196,9 @@ void f2__primobject__stream__initialize() {
   f2__primobject__stream__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  environment__add_var_value(cause, global_environment(), __stream__symbol,           nil);
+  environment__add_var_value(cause, global_environment(), __stream__symbol,        nil);
+  environment__add_var_value(cause, global_environment(), __file_stream__symbol,   nil);
+  environment__add_var_value(cause, global_environment(), __string_stream__symbol, nil);
   
   f2__primcfunk__init(stream);
   f2__primcfunk__init(stream__new_open_file);

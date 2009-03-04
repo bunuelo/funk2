@@ -27,8 +27,22 @@
 // stream
 
 extern f2ptr __stream__symbol;
-f2ptr f2stream__new(f2ptr cause, f2ptr integer_value, f2ptr ungetc_stack);
+f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_descriptor, f2ptr string, f2ptr index);
 #define      f2primobject__is__stream(this, cause) raw__eq(cause, f2primobject__type(this, cause), __stream__symbol)
+
+defprimobject__static_slot__prototype(stream__type);
+#define      f2stream__type(                   this, cause)        primobject__static_slot__accessor(         this, stream__type, cause)
+#define      f2stream__type__set(              this, cause, value) primobject__static_slot__set(              this, stream__type, cause, value)
+#define      f2stream__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__type, cause)
+#define      f2stream__type__trace(            this, cause)        primobject__static_slot__trace(            this, stream__type, cause)
+#define      f2stream__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__file_descriptor, cause)
+
+defprimobject__static_slot__prototype(stream__ungetc_stack);
+#define      f2stream__ungetc_stack(            this, cause)        primobject__static_slot__accessor(  this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack__set(       this, cause, value) primobject__static_slot__set(       this, stream__ungetc_stack, cause, value)
+#define      f2stream__ungetc_stack__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack__trace(     this, cause)        primobject__static_slot__trace(     this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, stream__ungetc_stack, cause)
 
 defprimobject__static_slot__prototype(stream__file_descriptor);
 #define      f2stream__file_descriptor(            this, cause)        primobject__static_slot__accessor(  this, stream__file_descriptor, cause)
@@ -37,12 +51,19 @@ defprimobject__static_slot__prototype(stream__file_descriptor);
 #define      f2stream__file_descriptor__trace(     this, cause)        primobject__static_slot__trace(     this, stream__file_descriptor, cause)
 #define      f2stream__file_descriptor__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, stream__file_descriptor, cause)
 
-defprimobject__static_slot__prototype(stream__ungetc_stack);
-#define      f2stream__ungetc_stack(            this, cause)        primobject__static_slot__accessor(  this, stream__ungetc_stack, cause)
-#define      f2stream__ungetc_stack__set(       this, cause, value) primobject__static_slot__set(       this, stream__ungetc_stack, cause, value)
-#define      f2stream__ungetc_stack__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, stream__ungetc_stack, cause)
-#define      f2stream__ungetc_stack__trace(     this, cause)        primobject__static_slot__trace(     this, stream__ungetc_stack, cause)
-#define      f2stream__ungetc_stack__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, stream__ungetc_stack, cause)
+defprimobject__static_slot__prototype(stream__string);
+#define      f2stream__string(                   this, cause)        primobject__static_slot__accessor(         this, stream__string, cause)
+#define      f2stream__string__set(              this, cause, value) primobject__static_slot__set(              this, stream__string, cause, value)
+#define      f2stream__string__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__string, cause)
+#define      f2stream__string__trace(            this, cause)        primobject__static_slot__trace(            this, stream__string, cause)
+#define      f2stream__string__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__string, cause)
+
+defprimobject__static_slot__prototype(stream__index);
+#define      f2stream__index(                   this, cause)        primobject__static_slot__accessor(         this, stream__index, cause)
+#define      f2stream__index__set(              this, cause, value) primobject__static_slot__set(              this, stream__index, cause, value)
+#define      f2stream__index__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__index, cause)
+#define      f2stream__index__trace(            this, cause)        primobject__static_slot__trace(            this, stream__index, cause)
+#define      f2stream__index__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__index, cause)
 
 bool raw__streamp(f2ptr this, f2ptr cause);
 f2ptr f2__streamp(f2ptr this, f2ptr cause);
@@ -56,9 +77,9 @@ f2ptr f2__stream__file_mode__rdwr(f2ptr cause);
 f2ptr f2__stream__new_open_file__rdonly(f2ptr cause, f2ptr filename);
 f2ptr f2__stream__new_open_file__rdwr(f2ptr cause, f2ptr filename);
 
-f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character);
+f2ptr  f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character);
 void  raw__stream__ungetc(f2ptr cause, f2ptr this, char ch);
-f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this);
+f2ptr  f2__stream__try_read_character(f2ptr cause, f2ptr this);
 
 // **
 

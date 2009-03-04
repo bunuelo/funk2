@@ -48,12 +48,18 @@
 [primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
 
 [primfunk:load 'fu2/primfunks.fu2']
+[primfunk:load 'fu2/primfunks-memory.fu2']
+[primfunk:load 'fu2/primfunks-socket.fu2']
+[primfunk:load 'fu2/primfunks-errno.fu2']
+[primfunk:load 'fu2/primfunks-fcntl.fu2']
+[primfunk:load 'fu2/primfunks-ioctl.fu2']
+[primfunk:load 'fu2/primfunks-trace.fu2']
+[primfunk:load 'fu2/primfunks-serialize.fu2']
+[primfunk:load 'fu2/primfunks-locale.fu2']
 
 [globalize stdin-stream  [stream 0]]
 [globalize stdout-stream [stream 1]]
 [globalize stderr-stream [stream 2]]
-
-[exp-format stdout '\nDone compiling primfunks.fu2']
 
 [define -current_env_name- `global-environment]
 

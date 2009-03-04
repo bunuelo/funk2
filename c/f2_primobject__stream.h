@@ -68,8 +68,15 @@ defprimobject__static_slot__prototype(stream__index);
 bool raw__streamp(f2ptr this, f2ptr cause);
 f2ptr f2__streamp(f2ptr this, f2ptr cause);
 
+bool raw__file_streamp(f2ptr this, f2ptr cause);
+f2ptr f2__file_streamp(f2ptr this, f2ptr cause);
+
+bool raw__string_streamp(f2ptr this, f2ptr cause);
+f2ptr f2__string_streamp(f2ptr this, f2ptr cause);
+
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode);
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode);
+f2ptr f2__file_stream__close(f2ptr cause, f2ptr this);
 f2ptr f2__stream__close(f2ptr cause, f2ptr this);
 f2ptr f2__stream__file_mode__rdonly(f2ptr cause);
 f2ptr f2__stream__file_mode__creat(f2ptr cause);

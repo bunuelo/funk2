@@ -157,8 +157,8 @@ def_pcfunk0(frame__new, return frame__new_empty(this_cause));
 f2ptr frame__new_empty_globalsize(f2ptr cause) {
   pause_gc();
   f2ptr this = f2frame__new(cause,
-			    f2__hashtable__new(cause, f2integer__new(cause, 14)),
-			    f2__hashtable__new(cause, f2integer__new(cause, 14)));
+			    f2__hashtable__new(cause, f2integer__new(cause, 24)),
+			    f2__hashtable__new(cause, f2integer__new(cause, 24)));
   resume_gc();
   return this;
 }

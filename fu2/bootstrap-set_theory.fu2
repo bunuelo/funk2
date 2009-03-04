@@ -1,0 +1,123 @@
+'set operations'
+
+[globalize f nil]
+
+[globalize-funk size &length]
+
+'hierarchical equal'
+[defunk equal? [x y]
+  [or [eq x y]
+      [and [cons? x] [cons? y] [equal? [car x] [car y]] [equal? [cdr x] [cdr y]]]
+
+[defunk member? [x list]
+	[if [null list] f
+			[or [equal? [car list] x]   
+					[member? x [cdr list]]
+			]]]
+
+' make-equal
+
+  pred(arg)  pred2(arg2)
+  equal 
+    [map generalize-args pred pred2]
+'
+
+[defunk remove-duplicates [x]
+  [if [null x]
+      nil
+    [let [[car_x [car x]]]
+      [if [member? car_x [cdr x]]
+          [remove-duplicates [cdr x]]
+        [cons car_x [remove-duplicates [cdr x]]]]]]]
+
+[defunk list-to-set [x] [remove-duplicates x]]
+
+[defunk union [a b]
+  [if [null a]
+      b
+    [let [[car_a [car a]]]
+      [if [member? car_a b]
+          [union [cdr a] b]
+        [cons car_a [union [cdr a] b]]]]]]
+
+[defunk intersect [a b]
+  [if [or [null a] [null b]] 
+      nil
+    [let [[car_a [car a]]]
+      [if [member? car_a b]
+        [cons car_a [intersect [cdr a] b]]
+        [intersect [cdr a] b]]]]]
+
+'[let [[y 0]] [mapc [funk [x] [set y [+ x y]]] [list 0 1 2 3 4]] y]'
+
+'[mapcar [y 0] [funk [x,y] [+= y x] ] ]'
+
+
+'tree functions'
+[defunk branch? [x] [cons? x]]
+[defunk leaf? [x] [not [branch? x]]]
+
+
+[defunk maptree [proc tree]
+  [if [null tree] nil
+      [if [branch? tree]
+          [mapc [funk [x]
+                  [maptree proc x]]
+                tree]
+        [funkall proc tree]]]]
+
+[defunk mapcartree [proc tree]
+  [if [null tree] nil
+    [if [branch? tree]
+        [mapcar [funk [x]
+                  [mapcartree proc x]]
+                tree]
+      [funkall proc tree]]]]
+
+
+
+' [least-general-subsumer [schwinn seven-series]] => vehicle'
+
+
+        
+'[funkall &append [list 1] [list 2] [list 3]]'
+'[apply &append [list [list 1] [list 2] [list 3]]]'
+
+
+[defunk power-set [a]
+  [let [[results [list nil]]]
+    [mapc [funk [x]
+            [let [[old_results results]]
+              [set results nil]
+              [mapc [funk [y]
+                      [set results [cons [cons x y] results]]
+                      [set results [cons y results]]]
+                    old_results]]]
+          a]
+    results]]
+    
+    
+
+'
+[defunk sense []
+  [blocks_world-perceive]]
+
+[defunk act [command]
+  [cond [[eq [car command] [quote pick-up]]]
+        [t [error [quote run-time] \'no such function\']]]]
+
+[defunk simulate []
+  [blocks_world-simulate]]
+    
+[defunk agent [sense]
+   [act [plan sense]]]
+'
+
+        
+[globalize a [list 1 2 3]]
+[globalize b [list 6 7 8 5]]
+
+[format stdout '\n remote-dups: ' a ' => ' [remove-duplicates a]]
+[format stdout '\n union      : ' [union a b]]
+[format stdout '\n intersect  : ' [intersect a b]]
+[format stdout '\n power-set  : ' [power-set a]]

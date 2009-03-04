@@ -715,6 +715,7 @@
 						   [brief arg]]
 					     exp]]
 		[[environment? exp] `environment]
+		[[graph?       exp]  [graph-brief exp]]
 		[t                  `<>]]]]
 
 [defunk funkable? [exp]

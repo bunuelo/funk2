@@ -24,6 +24,12 @@
 [load 'fu2/bootstrap-math.fu2']
 [print 'done loading bootstrap-math.fu2']
 
+[load 'fu2/bootstrap-set_theory.fu2']
+[print 'done loading bootstrap-set_theory.fu2']
+
+[load 'fu2/bootstrap-graph.fu2']
+[print 'done loading bootstrap-graph.fu2']
+
 [load 'fu2/bootstrap-ansi.fu2']
 [print 'done loading bootstrap-ansi.fu2']
 

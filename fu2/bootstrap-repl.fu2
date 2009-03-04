@@ -19,15 +19,17 @@
  rights to redistribute these changes.
 ']
 
+[primfunk:ansi__stream__foreground stdout 9]
 [primfunk:exp__format stdout '
 
-  /------------------------------------\\
-  |                                    |
-  | funk2 bootstrap.img compiling now. |
-  |                                    |
-  \\------------------------------------/
+  /----------------------------------------\\
+  |                                        |
+  | funk2 img/bootstrap.img compiling now. |
+  |                                        |
+  \\----------------------------------------/
 
 ']
+[primfunk:ansi__stream__reset stdout]
 
 [primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
 

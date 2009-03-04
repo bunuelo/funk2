@@ -248,10 +248,10 @@ f2ptr raw__blocks_world_rectangle__translate(f2ptr cause, f2ptr this, s64 dx, s6
   s64 y0 = f2integer__i(rect_y0, cause) + dy;
   s64 x1 = f2integer__i(rect_x1, cause) + dx;
   s64 y1 = f2integer__i(rect_y1, cause) + dy;
-  f2blocks_world_rectangle__x0__set(this, cause, x0);
-  f2blocks_world_rectangle__y0__set(this, cause, y0);
-  f2blocks_world_rectangle__x1__set(this, cause, x1);
-  f2blocks_world_rectangle__y1__set(this, cause, y1);
+  f2blocks_world_rectangle__x0__set(this, cause, f2integer__new(cause, x0));
+  f2blocks_world_rectangle__y0__set(this, cause, f2integer__new(cause, y0));
+  f2blocks_world_rectangle__x1__set(this, cause, f2integer__new(cause, x1));
+  f2blocks_world_rectangle__y1__set(this, cause, f2integer__new(cause, y1));
   return nil;
 }
 

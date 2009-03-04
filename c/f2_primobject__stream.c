@@ -205,7 +205,7 @@ f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) 
   }
   f2ptr string = f2stream__string(this, cause);
   f2ptr index  = f2stream__index( this, cause);
-  u64 string_length = raw__string__length(string, cause);
+  u64 string_length = f2string__length(string, cause);
   u64 raw_index     = f2integer__i(index, cause);
   f2ptr return_value = nil;
   if (raw_index < string_length) {

@@ -44,11 +44,17 @@ f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_desc
   return this;
 }
 
+bool raw__streamp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__stream(this, cause));}
+f2ptr f2__streamp(f2ptr this, f2ptr cause) {return f2boolean__new(cause, raw__streamp(this, cause));}
+
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
   return f2stream__new(cause, __file_stream__symbol, nil, file_descriptor, nil, nil);
 }
 def_pcfunk1(file_stream__new, file_descriptor, return f2__file_stream__new(this_cause, file_descriptor));
+
+bool raw__file_streamp(f2ptr this, f2ptr cause) {return (raw__streamp(this, cause) && f2__symbol__eq(cause, f2stream__type(this, cause), __file_stream__symbol));}
+f2ptr f2__file_streamp(f2ptr this, f2ptr cause) {return f2boolean__new(cause, raw__file_streamp(this, cause));}
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
@@ -56,13 +62,13 @@ f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
 }
 def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(this_cause, string, index));
 
+bool raw__string_streamp(f2ptr this, f2ptr cause) {return (raw__streamp(this, cause) && f2__symbol__eq(cause, f2stream__type(this, cause), __string_stream__symbol));}
+f2ptr f2__string_streamp(f2ptr this, f2ptr cause) {return f2boolean__new(cause, raw__string_streamp(this, cause));}
+
 f2ptr f2__string_stream(f2ptr cause, f2ptr string) {
   return f2__string_stream__new(cause, string, f2integer__new(cause, 0));
 }
 def_pcfunk1(string_stream, string, return f2__string_stream(this_cause, string));
-
-bool raw__streamp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__stream(this, cause));}
-f2ptr f2__streamp(f2ptr this, f2ptr cause) {return f2boolean__new(cause, raw__streamp(this, cause));}
 
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
   int fd = open(filename, mode);
@@ -86,8 +92,8 @@ f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
 }
 def_pcfunk2(stream__new_open_file, filename, mode, return f2__stream__new_open_file(this_cause, filename, mode));
 
-f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
-  if ((! raw__streamp(this, cause))) {
+f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
+  if ((! raw__file_streamp(this, cause))) {
     return f2larva__new(cause, 1);
   }
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
@@ -100,6 +106,15 @@ f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
     return nil;
   }
   return f2integer__new(cause, result);
+}
+
+f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
+  if (raw__file_streamp(this, cause)) {
+    return f2__file_stream__close(cause, this);
+  } else if (raw__string_streamp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2larva__new(cause, 1);
 }
 def_pcfunk1(stream__close, this, return f2__stream__close(this_cause, this));
 
@@ -122,8 +137,16 @@ f2ptr f2__stream__new_open_file__rdwr(f2ptr cause, f2ptr filename) {
   return f2__stream__new_open_file(cause, filename, mode);
 }
 
-int raw__stream__nonblocking__set(f2ptr cause, f2ptr this, bool value) {
-  if (! raw__streamp(this, cause)) {return f2larva__new(cause, 1);}
+int raw__file_stream__nonblocking__set(f2ptr cause, f2ptr this, bool value) {
+  if (! raw__file_streamp(this, cause)) {return f2larva__new(cause, 1);}
+  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
+  if (! raw__integerp(file_descriptor, cause)) {return f2larva__new(cause, 1);}
+  u64 fd = f2integer__i(file_descriptor, cause);
+  return file_descriptor__set_nonblocking(fd, value);
+}
+
+int raw__file_stream__nonblocking__set(f2ptr cause, f2ptr this, bool value) {
+  if (! raw__file_streamp(this, cause)) {return f2larva__new(cause, 1);}
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
   if (! raw__integerp(file_descriptor, cause)) {return f2larva__new(cause, 1);}
   u64 fd = f2integer__i(file_descriptor, cause);
@@ -150,13 +173,9 @@ void raw__stream__ungetc(f2ptr cause, f2ptr this, char ch) {
   f2__stream__ungetc(cause, this, character);
 }
 
-f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
-  if (! raw__streamp(this, cause)) {return f2larva__new(cause, 1);}
-  f2ptr ungetc_stack    = f2stream__ungetc_stack(this, cause);
-  if (ungetc_stack) {
-    f2ptr character = f2cons__car(ungetc_stack, cause);
-    f2stream__ungetc_stack__set(this, cause, f2cons__cdr(ungetc_stack, cause));
-    return character;
+f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
+  if (! raw__file_streamp(this, cause)) {
+    return f2larva__new(cause, 1);
   }
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
   if (! raw__integerp(file_descriptor, cause)) {return f2larva__new(cause, 17);}
@@ -178,6 +197,44 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
     break;
   }
   return nil;
+}
+
+f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
+  if (! raw__string_streamp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr string = f2stream__string(this, cause);
+  f2ptr index  = f2stream__index( this, cause);
+  u64 string_length = raw__string__length(string, cause);
+  u64 raw_index     = f2integer__i(index, cause);
+  f2ptr return_value = nil;
+  if (raw_index < string_length) {
+    f2ptr return_value = f2char__new(cause, f2string__elt(string, raw_index));
+    raw_index ++;
+    f2stream__index__set(this, cause, f2integer__new(cause, raw_index));
+  } else {
+    return f2symbol__new(cause, strlen("eof"), (u8*)"eof");
+  }
+  return return_value;
+}
+
+f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
+  if (! raw__streamp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr ungetc_stack    = f2stream__ungetc_stack(this, cause);
+  if (ungetc_stack) {
+    f2ptr character = f2cons__car(ungetc_stack, cause);
+    f2stream__ungetc_stack__set(this, cause, f2cons__cdr(ungetc_stack, cause));
+    return character;
+  }
+  if (raw__file_streamp(this, cause)) {
+    return f2__file_stream__try_ungetcless_read_character(cause, this);
+  } else if (raw__string_streamp(this, cause)) {
+    return f2__string_stream__try_ungetcless_read_character(cause, this);
+  } else {
+    return nil;
+  }
 }
 def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_character(this_cause, stream));
 

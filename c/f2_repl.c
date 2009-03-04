@@ -30,7 +30,8 @@ int f2__repl(f2ptr cause, f2ptr thread) {
     
     printf ("\nF-In-> "); fflush(stdout);
     f2ptr read_exp = raw__read(cause, __funk2.globalenv.stdin_stream);
-    if (raw__exceptionp(read_exp, cause)) {
+    
+		if (raw__exceptionp(read_exp, cause)) {
       printf("\nrepl exception: "); f2__write(thread, read_exp); fflush(stdout);
     } else {
       pause_gc();

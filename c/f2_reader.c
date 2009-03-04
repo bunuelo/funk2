@@ -20,6 +20,9 @@
 // 
 
 #include "funk2.h"
+#include <stdio.h>
+#include <readline.h>
+
 
 f2ptr __end_parens_exception                  = -1;
 f2ptr __unmatched_begin_paren_exception       = -1;
@@ -166,7 +169,13 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   if (!stream) {printf("\nraw__read: stream is nil."); return __invalid_argument_type_exception;}
   if (! raw__streamp(stream, cause)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); return __invalid_argument_type_exception;}
   f2ptr first_char;
-  // skip to first non-whitespace char
+
+  //char * line = readline (">>>");
+  //if (strlen(line) > 0)
+  //  add_history (line);
+  // skip to first non-whitespace char  
+
+
   do {first_char = f2__stream__getc(cause, stream);} while (raw__eq(cause, first_char, __char__space)   ||
 							    raw__eq(cause, first_char, __char__tab)     ||
 							    raw__eq(cause, first_char, __char__newline) ||

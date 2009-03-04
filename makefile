@@ -331,6 +331,9 @@ tags:
 link-grammar:
 	cd extern/link-grammar-4.4.2/; ./configure; make
 
+readline:
+	cd extern/readline-6.0; ./configure; make
+
 # RL-Glue Libraries  http://glue.rl-community.org
 rlglue:
 	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue_dir); make; make install

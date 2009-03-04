@@ -1,4 +1,4 @@
-' 
+[globalize -funk2-bootstrap-copyright- ' 
  Copyright (c) 2007-2008 Bo Morgan.
  All rights reserved.
  
@@ -17,7 +17,22 @@
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.
-'
+']
+
+[exp-format stdout '
+
+  /------------------------------------\\
+  |                                    |
+  | funk2 bootstrap.img compiling now. |
+  |                                    |
+  \\------------------------------------/
+
+Here is the copyright for the code used to generate the funk2
+bootstrap image:
+
+']
+
+[exp-format stdout -funk2-bootstrap-copyright-]
 
 [primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
 
@@ -27,7 +42,7 @@
 [globalize stdout-stream [stream 1]]
 [globalize stderr-stream [stream 2]]
 
-[exp-print '\nDone compiling primfunks.fu2']
+[exp-format stdout '\nDone compiling primfunks.fu2']
 
 [define -current_env_name- `global-environment]
 
@@ -794,8 +809,15 @@
 [format stdout '\ncompiling repl.fu2']
 [load 'fu2/repl.fu2']
 
-[format stdout '\ndone compiling bootstrap-repl.fu2']
+[format stdout '\n'
+	'Done compiling fu2/bootstrap-repl.fu2.' '\n'
+	'Saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
 
 [primfunk:memory_image__save 'img/bootstrap-repl.img']
 
+[format stdout '\n'
+	'Done saving half-baked memory_image.' '\n'
+	'\n']
+
 [quit]
+

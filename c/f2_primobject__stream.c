@@ -208,7 +208,7 @@ f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) 
   u64 string_length = f2string__length(string, cause);
   u64 raw_index     = f2integer__i(index, cause);
   if (raw_index < string_length) {
-    f2ptr return_value = f2char__new(cause, f2string__elt(string, raw_index));
+    f2ptr return_value = f2char__new(cause, f2string__elt(string, raw_index, cause));
     raw_index ++;
     f2stream__index__set(this, cause, f2integer__new(cause, raw_index));
     return return_value;

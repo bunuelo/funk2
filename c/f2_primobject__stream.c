@@ -200,7 +200,8 @@ void f2__primobject__stream__initialize() {
   environment__add_var_value(cause, global_environment(), __file_stream__symbol,   nil);
   environment__add_var_value(cause, global_environment(), __string_stream__symbol, nil);
   
-  f2__primcfunk__init(stream);
+  f2__primcfunk__init(file_stream);
+  f2__primcfunk__init(string_stream);
   f2__primcfunk__init(stream__new_open_file);
   f2__primcfunk__init(stream__close);
   f2__primcfunk__init(stream__file_mode__rdonly);

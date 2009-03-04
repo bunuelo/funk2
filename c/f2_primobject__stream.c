@@ -144,8 +144,7 @@ int raw__file_stream__nonblocking__set(f2ptr cause, f2ptr this, bool value) {
 }
 
 f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if ((! raw__file_streamp(this, cause)) ||
-      (! raw__integerp(file_descriptor, cause))) {
+  if (! raw__file_streamp(this, cause)) {
     return f2larva__new(cause, 1);
   }
   return raw__file_stream__nonblocking__set(cause, this, (value != nil));

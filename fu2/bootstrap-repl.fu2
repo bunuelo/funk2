@@ -117,7 +117,7 @@
   `[funk-unlabeled funk ,args
 		   @body]]
 
-[exp-format stdout '\ndefining defunk\n']
+`[exp-format stdout '\ndefining defunk\n']
 
 [defmetro defunk [name args :rest body]
   [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
@@ -125,8 +125,8 @@
 		    [funk-unlabeled ,name ,args
 				     @body]]]
 
-[exp-format stdout '\ndone defining defunk\n']
-[exp-format stdout '\ndefining eval\n']
+`[exp-format stdout '\ndone defining defunk\n']
+`[exp-format stdout '\ndefining eval\n']
 
 
 
@@ -138,8 +138,8 @@
 			 nil]
 	      nil]]
 
-[exp-format stdout '\ndone defining eval\n']
-[exp-format stdout '\ndefining or\n']
+`[exp-format stdout '\ndone defining eval\n']
+`[exp-format stdout '\ndefining or\n']
 
 [defmetro or [:rest conds]
   [if [null conds]
@@ -148,7 +148,7 @@
 	 `t
        ,[funk-apply &or [next conds]]]]]
 
-[exp-format stdout '\ndone defining or\n']
+`[exp-format stdout '\ndone defining or\n']
 
 [defmetro and [:rest conds]
   [if [null conds]

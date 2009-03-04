@@ -97,7 +97,7 @@
 	result]]]]
 
 [defunk load [:rest filenames]
-  [print filenames]
+  [print [cons `load filenames]]
   [mapc [funk [filename]
 	      [format stdout '\nCompiling ' filename]
 	      [let [[result [load1 filename]]]

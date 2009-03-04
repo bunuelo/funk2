@@ -50,7 +50,9 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
     
     read_exp = raw__read(cause, stream);
     if (read_exp != __end_of_file_exception) {
+#ifdef DEBUG_LOAD
       f2__print_prompt(cause, "Load-F-In-> ", read_exp); fflush(stdout);
+#endif
       if (raw__exceptionp(read_exp, cause)) {
 	printf("\nload exception: "); f2__write(thread, read_exp); fflush(stdout);
       } else {
@@ -80,7 +82,9 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 	  f2__stream__close(cause, stream);
 	  return f2integer__new(f2thread__cause_reg(load_thread, cause), 1);
 	}
+#ifdef DEBUG_LOAD
 	printf ("\nLoad-F-Out> "); f2__write(cause, eval_exp); fflush(stdout);
+#endif
 	resume_gc();
 	try_gc();
       }

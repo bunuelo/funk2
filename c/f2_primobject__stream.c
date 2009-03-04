@@ -207,15 +207,13 @@ f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) 
   f2ptr index  = f2stream__index( this, cause);
   u64 string_length = f2string__length(string, cause);
   u64 raw_index     = f2integer__i(index, cause);
-  f2ptr return_value = nil;
   if (raw_index < string_length) {
     f2ptr return_value = f2char__new(cause, f2string__elt(string, raw_index));
     raw_index ++;
     f2stream__index__set(this, cause, f2integer__new(cause, raw_index));
-  } else {
-    return f2symbol__new(cause, strlen("eof"), (u8*)"eof");
+    return return_value;
   }
-  return return_value;
+  return f2symbol__new(cause, strlen("eof"), (u8*)"eof");
 }
 
 f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {

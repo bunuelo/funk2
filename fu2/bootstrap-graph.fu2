@@ -1,6 +1,6 @@
                                                                      
                                                                      
-                                                                    
+                                              
 [defunk   graph?      [exp] [and exp [array? exp] [eq [array-elt exp 0] `graph]]]
 [defunk   graph-new   [name nodes edges]  [array `graph name nodes edges]]
 [defmetro graph-name  [this]             `[elt ,this 1]]

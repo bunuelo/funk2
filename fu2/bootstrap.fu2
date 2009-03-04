@@ -24,6 +24,8 @@
 [load 'fu2/bootstrap-math.fu2']
 [print 'done loading bootstrap-math.fu2']
 
+
+[print 'starting loading bootstrap-set_theory.fu2']
 [load 'fu2/bootstrap-set_theory.fu2']
 [print 'done loading bootstrap-set_theory.fu2']
 

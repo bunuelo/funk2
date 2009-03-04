@@ -1,13 +1,11 @@
 'set operations'
-
 [globalize f nil]
 
 [globalize-funk size &length]
 
-'hierarchical equal'
 [defunk equal? [x y]
   [or [eq x y]
-      [and [cons? x] [cons? y] [equal? [car x] [car y]] [equal? [cdr x] [cdr y]]]
+      [and [cons? x] [cons? y] [equal? [car x] [car y]] [equal? [cdr x] [cdr y]]]]]
 
 [defunk member? [x list]
 	[if [null list] f
@@ -15,12 +13,6 @@
 					[member? x [cdr list]]
 			]]]
 
-' make-equal
-
-  pred(arg)  pred2(arg2)
-  equal 
-    [map generalize-args pred pred2]
-'
 
 [defunk remove-duplicates [x]
   [if [null x]
@@ -95,25 +87,8 @@
                     old_results]]]
           a]
     results]]
-    
-    
 
-'
-[defunk sense []
-  [blocks_world-perceive]]
 
-[defunk act [command]
-  [cond [[eq [car command] [quote pick-up]]]
-        [t [error [quote run-time] \'no such function\']]]]
-
-[defunk simulate []
-  [blocks_world-simulate]]
-    
-[defunk agent [sense]
-   [act [plan sense]]]
-'
-
-        
 [globalize a [list 1 2 3]]
 [globalize b [list 6 7 8 5]]
 
@@ -121,3 +96,4 @@
 [format stdout '\n union      : ' [union a b]]
 [format stdout '\n intersect  : ' [intersect a b]]
 [format stdout '\n power-set  : ' [power-set a]]
+

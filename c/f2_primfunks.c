@@ -1212,7 +1212,7 @@ def_pcfunk2(compile, exp, protect_environment, return f2__compile(this_cause, si
 f2ptr f2__identity(f2ptr cause, f2ptr exp) {return exp;}
 def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
 
-f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr bytecode_tracing_on, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional) {
+f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional) {
   //f2__print_prompt("make-funk args: ", args);
   //f2__print_prompt("  body        : ", body);
   //f2__print_prompt("  env         : ", f2thread__env(simple_thread));
@@ -1226,7 +1226,7 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr bytecode_tracing_on, f2ptr 
 }
 def_pcfunk6(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, return f2__make_funk(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional));
 
-f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr bytecode_tracing_on, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional) {
+f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional) {
   //f2__print_prompt("make-metro args: ", args);
   //f2__print_prompt("  body         : ", body);
   //f2__print_prompt("  env          : ", f2thread__env(simple_thread));

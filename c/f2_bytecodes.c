@@ -2244,7 +2244,7 @@ void raw__thread__bytecode_trace__compile__protect_environment(f2ptr cause, f2pt
 int f2__thread__bytecode__compile__protect_environment(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__nil__protect_environment(cause, bytecode, thread);
+    raw__thread__bytecode_trace__compile__protect_environment(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);

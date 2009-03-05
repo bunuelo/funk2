@@ -28,72 +28,6 @@ f2ptr __thread__args_reg__symbol;
 f2ptr __thread__return_reg__symbol;
 f2ptr __thread__value_reg__symbol;
 
-int bytecode__pop__count                = 0;
-int bytecode__push__count               = 0;
-int bytecode__copy__count               = 0;
-int bytecode__swap__count               = 0;
-int bytecode__array__count              = 0;
-int bytecode__cons__count               = 0;
-int bytecode__car__set__count           = 0;
-int bytecode__funk__count               = 0;
-int bytecode__jump_funk__count          = 0;
-int bytecode__set__count                = 0;
-int bytecode__lookup_funkvar__count     = 0;
-int bytecode__cdr__set__count           = 0;
-int bytecode__array_elt__count          = 0;
-int bytecode__else_jump__count          = 0;
-int bytecode__car__count                = 0;
-int bytecode__cdr__count                = 0;
-int bytecode__lookup_type_var__count    = 0;
-int bytecode__define_type_var__count    = 0;
-int bytecode__type_var__set__count      = 0;
-int bytecode__globalize_type_var__count = 0;
-int bytecode__jump__count               = 0;
-int bytecode__nop__count                = 0;
-int bytecode__debug__count              = 0;
-int bytecode__trace__count              = 0;
-int bytecode__compile__count            = 0;
-int bytecode__yield__count              = 0;
-int bytecode__newenv__count             = 0;
-int bytecode__machine_code__count       = 0;
-
-void print_bytecode_stats__cfunk(FILE* fptr) {
-  fprintf(fptr, "\nbytecode__pop__count                = %d", bytecode__pop__count);
-  fprintf(fptr, "\nbytecode__push__count               = %d", bytecode__push__count);
-  fprintf(fptr, "\nbytecode__copy__count               = %d", bytecode__copy__count);
-  fprintf(fptr, "\nbytecode__swap__count               = %d", bytecode__swap__count);
-  fprintf(fptr, "\nbytecode__array__count              = %d", bytecode__array__count);
-  fprintf(fptr, "\nbytecode__cons__count               = %d", bytecode__cons__count);
-  fprintf(fptr, "\nbytecode__car__set__count           = %d", bytecode__car__set__count);
-  fprintf(fptr, "\nbytecode__funk__count               = %d", bytecode__funk__count);
-  fprintf(fptr, "\nbytecode__jump_funk__count          = %d", bytecode__jump_funk__count);
-  fprintf(fptr, "\nbytecode__set__count                = %d", bytecode__set__count);
-  fprintf(fptr, "\nbytecode__cdr__set__count           = %d", bytecode__cdr__set__count);
-  fprintf(fptr, "\nbytecode__array_elt__count          = %d", bytecode__array_elt__count);
-  fprintf(fptr, "\nbytecode__lookup_type_var__count    = %d", bytecode__lookup_type_var__count);
-  fprintf(fptr, "\nbytecode__define_type_var__count    = %d", bytecode__define_type_var__count);
-  fprintf(fptr, "\nbytecode__else_jump__count          = %d", bytecode__else_jump__count);
-  fprintf(fptr, "\nbytecode__car__count                = %d", bytecode__car__count);
-  fprintf(fptr, "\nbytecode__cdr__count                = %d", bytecode__cdr__count);
-  fprintf(fptr, "\nbytecode__type_var__set__count      = %d", bytecode__type_var__set__count);
-  fprintf(fptr, "\nbytecode__globalize_type_var__count = %d", bytecode__globalize_type_var__count);
-  fprintf(fptr, "\nbytecode__jump__count               = %d", bytecode__jump__count);
-  fprintf(fptr, "\nbytecode__nop__count                = %d", bytecode__nop__count);
-  fprintf(fptr, "\nbytecode__debug__count              = %d", bytecode__debug__count);
-  fprintf(fptr, "\nbytecode__trace__count              = %d", bytecode__trace__count);
-  fprintf(fptr, "\nbytecode__compile__count            = %d", bytecode__compile__count);
-  fprintf(fptr, "\nbytecode__yield__count              = %d", bytecode__yield__count);
-  fprintf(fptr, "\nbytecode__newenv__count             = %d", bytecode__newenv__count);
-  fprintf(fptr, "\nbytecode__machine_code__count       = %d", bytecode__machine_code__count);
-}
-
-//f2ptr __thread__execute_bytecode__cause__symbol = -1;
-
-//f2ptr f2thread__execute_bytecode__cause__new(f2ptr cause, f2ptr thread, f2ptr env, f2ptr bytecode) {
-//  if (__thread__execute_bytecode__cause__symbol == -1) {error(thread, "__thread__execute_bytecode__cause__symbol is not yet defined.");}
-//  return f2__cause__new(cause, nil, nil);//thread, env, __thread__execute_bytecode__cause__symbol, bytecode, nil);
-//}
-
 void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   debug__assert(raw__threadp(thread, nil), nil, "thread type assertion failed.");
   debug__assert(raw__bytecodep(bytecode, nil), nil, "bytecode type assertion failed.");
@@ -101,33 +35,35 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   //f2ptr cause = f2thread__execute_bytecode__cause__new(f2thread__cause_reg(thread), thread, f2thread__env(thread), bytecode);
   //f2thread__cause_reg__set(thread, cause, cause);
   f2ptr command = f2bytecode__command(bytecode, cause);
-  if      (command == __funk2.bytecode.bytecode__push__symbol)               {f2__thread__bytecode__push(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__pop__symbol)                {f2__thread__bytecode__pop(               thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__copy__symbol)               {f2__thread__bytecode__copy(              thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__swap__symbol)               {f2__thread__bytecode__swap(              thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__array__symbol)              {f2__thread__bytecode__array(             thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cons__symbol)               {f2__thread__bytecode__cons(              thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__car__set__symbol)           {f2__thread__bytecode__car__set(          thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__funk__symbol)               {f2__thread__bytecode__funk(              thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)          {f2__thread__bytecode__jump_funk(         thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__set__symbol)                {f2__thread__bytecode__set(               thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)           {f2__thread__bytecode__cdr__set(          thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__array_elt__symbol)          {f2__thread__bytecode__array_elt(         thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)    {f2__thread__bytecode__lookup_type_var(   thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)    {f2__thread__bytecode__define_type_var(   thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)          {f2__thread__bytecode__else_jump(         thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__car__symbol)                {f2__thread__bytecode__car(               thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                {f2__thread__bytecode__cdr(               thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__type_var__set__symbol)      {f2__thread__bytecode__type_var__set(     thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol) {f2__thread__bytecode__globalize_type_var(thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__jump__symbol)               {f2__thread__bytecode__jump(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__nop__symbol)                {f2__thread__bytecode__nop(               thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__debug__symbol)              {f2__thread__bytecode__debug(             thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__trace__symbol)              {f2__thread__bytecode__trace(             thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__compile__symbol)            {f2__thread__bytecode__compile(           thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__yield__symbol)              {}
-  else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__thread__bytecode__newenv(            thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)       {f2__thread__bytecode__machine_code(      thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  if      (command == __funk2.bytecode.bytecode__push__symbol)                {f2__thread__bytecode__push(               thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__pop__symbol)                 {f2__thread__bytecode__pop(                thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__copy__symbol)                {f2__thread__bytecode__copy(               thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__swap__symbol)                {f2__thread__bytecode__swap(               thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__array__symbol)               {f2__thread__bytecode__array(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol)      {f2__thread__bytecode__reg_array__elt(     thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol) {f2__thread__bytecode__reg_array__elt__set(thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cons__symbol)                {f2__thread__bytecode__cons(               thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__car__set__symbol)            {f2__thread__bytecode__car__set(           thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__funk__symbol)                {f2__thread__bytecode__funk(               thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)           {f2__thread__bytecode__jump_funk(          thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__set__symbol)                 {f2__thread__bytecode__set(                thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)            {f2__thread__bytecode__cdr__set(           thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__array_elt__symbol)           {f2__thread__bytecode__array_elt(          thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)     {f2__thread__bytecode__lookup_type_var(    thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)     {f2__thread__bytecode__define_type_var(    thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)           {f2__thread__bytecode__else_jump(          thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__car__symbol)                 {f2__thread__bytecode__car(                thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                 {f2__thread__bytecode__cdr(                thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__type_var__set__symbol)       {f2__thread__bytecode__type_var__set(      thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)  {f2__thread__bytecode__globalize_type_var( thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__jump__symbol)                {f2__thread__bytecode__jump(               thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__nop__symbol)                 {f2__thread__bytecode__nop(                thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__debug__symbol)               {f2__thread__bytecode__debug(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__trace__symbol)               {f2__thread__bytecode__trace(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__compile__symbol)             {f2__thread__bytecode__compile(            thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__yield__symbol)               {}
+  else if (command == __funk2.bytecode.bytecode__newenv__symbol)              {f2__thread__bytecode__newenv(             thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)        {f2__thread__bytecode__machine_code(       thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else {
     f2thread__value__set(thread, cause, f2larva__new(cause, 21));
   }

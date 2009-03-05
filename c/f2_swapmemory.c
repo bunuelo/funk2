@@ -19,15 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "f2_swapmemory.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "funk2.h"
 
 void swapmemory_filename__generate(char* str) {
   int fd = -1;
@@ -94,6 +86,7 @@ void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
 
 // bug: doesn't shorten file size
 void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
+  status("f2swapmemory__resize: byte_num=" f2size_t__fstr, byte_num);
   f2size_t sought_offset = (f2size_t)(f2__lseek(this->fd, byte_num + 1, SEEK_SET));
   if (sought_offset != byte_num + 1) {
     printf("\nf2swapmemory__resize error: sought_offset=" f2size_t__fstr ", byte_num=" f2size_t__fstr, sought_offset, byte_num);
@@ -124,6 +117,7 @@ void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
 #define F2SWAPMEMORY__REALLOC_IS_RESIZE
 
 void f2swapmemory__realloc(f2swapmemory_t* new_swapmemory, f2swapmemory_t* old_swapmemory, f2size_t byte_num) {
+  status("f2swapmemory__realloc: byte_num=" f2size_t__fstr, byte_num);
 #ifdef F2SWAPMEMORY__REALLOC_IS_RESIZE
   f2swapmemory__resize(new_swapmemory, byte_num);
 #else

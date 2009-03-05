@@ -30,18 +30,18 @@
 
 #define SYMBOL_HASH__INITIAL_ARRAY_LENGTH 1024 // must be power of 2
 #define PRIME_NUMBER__16_BIT 65521
-#define PRIME_NUMBER__32_BIT 3267000013
+#define PRIME_NUMBER__32_BIT 3267000013u
 
 // length must be greater than zero.
 //#define chararray__hash_value(length, str) ((((uint)((str)[0])) + (((uint)((str)[(length)>>3]))<<8) + (((uint)((str)[(length)>>2]))<<16) + (((uint)((str)[(length)>>1]))<<24)) * PRIME_NUMBER__16_BIT)
 
 #define chararray__hash_value(length, str)    \
   ((*((uint*)(((u8*)(str))+(0))))           * \
-   (*((uint*)(((u8*)(str))+((length)>>4)))) * \
-   (*((uint*)(((u8*)(str))+((length)>>3)))) * \
-   (*((uint*)(((u8*)(str))+((length)>>2)))) * \
-   (*((uint*)(((u8*)(str))+((length)>>1)))) * \
-   PRIME_NUMBER__32_BIT)
+   (*((uint*)(((u8*)(str))+(((uint)(length))>>4)))) * \
+   (*((uint*)(((u8*)(str))+(((uint)(length))>>3)))) * \
+   (*((uint*)(((u8*)(str))+(((uint)(length))>>2)))) * \
+   (*((uint*)(((u8*)(str))+(((uint)(length))>>1)))) * \
+   ((uint)PRIME_NUMBER__32_BIT))
 
 typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
 

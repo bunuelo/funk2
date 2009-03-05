@@ -77,6 +77,7 @@ f2ptr f2__string_streamp(f2ptr this, f2ptr cause);
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode);
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode);
 f2ptr f2__file_stream__close(f2ptr cause, f2ptr this);
+f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor);
 f2ptr f2__stream__close(f2ptr cause, f2ptr this);
 f2ptr f2__stream__file_mode__rdonly(f2ptr cause);
 f2ptr f2__stream__file_mode__creat(f2ptr cause);

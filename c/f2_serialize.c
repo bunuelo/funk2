@@ -172,12 +172,20 @@ f2ptr raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int
     exp = f2integer__new(cause, i);
   } break;
   case ptype_double: {
-    u64 i = f2chunk__bit64__elt(chunk, index, cause); index += 8;
-    exp = f2double__new(cause, *((double*)(&i)));
+    union {
+      u64    i;
+      double d;
+    } u;
+    u.i = f2chunk__bit64__elt(chunk, index, cause); index += 8;
+    exp = f2double__new(cause, u.d);
   } break;
   case ptype_float: {
-    u32 i = f2chunk__bit32__elt(chunk, index, cause); index += 4;
-    exp = f2float__new(cause, *((float*)(&i)));
+    union {
+      u32   i;
+      float f;
+    } u;
+    u.i = f2chunk__bit32__elt(chunk, index, cause); index += 4;
+    exp = f2float__new(cause, u.f);
   } break;
   case ptype_pointer: {
     u64 i = f2chunk__bit64__elt(chunk, index, cause); index += 8;

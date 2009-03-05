@@ -1367,6 +1367,20 @@ f2ptr global_environment() {
   return retval;
 }
 
+void safe_fwrite(void* ptr, size_t object_size, size_t object_num, FILE* fptr) {
+  int result = fwrite(ptr, object_size, object_num, fptr);
+  if (result != object_num) {
+    error(nil, "safe_fwrite error.");
+  }
+}
+
+void safe_fread(void* ptr, size_t object_size, size_t object_num, FILE* fptr) {
+  int result = fread(ptr, object_size, object_num, fptr);
+  if (result != object_num) {
+    error(nil, "safe_fwrite error.");
+  }
+}
+
 int raw__memory_image__save(char* filename) {
   //#ifdef DEBUG_MEMORY
   status("saving memory image.");
@@ -1384,14 +1398,14 @@ int raw__memory_image__save(char* filename) {
   f2ptr    f2_i;
   f2size_t size_i;
   int      i;
-  i = 0xfaded;                            fwrite(&i, sizeof(int), 1, fptr);
-  i = F2__COMPILE_TIME_ID;                fwrite(&i, sizeof(int), 1, fptr);
+  i = 0xfaded;             safe_fwrite(&i, sizeof(int), 1, fptr);
+  i = F2__COMPILE_TIME_ID; safe_fwrite(&i, sizeof(int), 1, fptr);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    size_i = __funk2.memory.pool[pool_index].total_global_memory;      fwrite(&size_i, sizeof(f2size_t), 1, fptr);
-    size_i = __funk2.memory.pool[pool_index].next_unique_block_id;     fwrite(&size_i, sizeof(f2size_t), 1, fptr);
-    fwrite(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
+    size_i = __funk2.memory.pool[pool_index].total_global_memory;      safe_fwrite(&size_i, sizeof(f2size_t), 1, fptr);
+    size_i = __funk2.memory.pool[pool_index].next_unique_block_id;     safe_fwrite(&size_i, sizeof(f2size_t), 1, fptr);
+    {size_t result = fwrite(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr); if (result != 1) {error(nil, "raw__memory_image__save fwrite error.");}}
   }
-  f2_i = __funk2.memory.global_environment_f2ptr; fwrite(&f2_i, sizeof(f2ptr), 1, fptr);
+  f2_i = __funk2.memory.global_environment_f2ptr; safe_fwrite(&f2_i, sizeof(f2ptr), 1, fptr);
   fclose(fptr);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__unlock(pool_index);
@@ -1584,7 +1598,7 @@ int raw__memory_image__load(char* filename) {
       int      i;
       f2ptr    f2_i;
       f2size_t size_i;
-      fread(&i, sizeof(int), 1, fptr);
+      safe_fread(&i, sizeof(int), 1, fptr);
       if (i != 0xfaded) {
 	//#ifdef DEBUG_MEMORY
 	status("load_image_from_disk failure: file is not a funk memory image.");
@@ -1593,7 +1607,7 @@ int raw__memory_image__load(char* filename) {
 	break;
       }
       
-      fread(&i, sizeof(int), 1, fptr);
+      safe_fread(&i, sizeof(int), 1, fptr);
       if (i != F2__COMPILE_TIME_ID) {
 	//#ifdef DEBUG_MEMORY
 	status("load_image_from_disk failure: file is saved from a different version of funk2.");
@@ -1603,25 +1617,25 @@ int raw__memory_image__load(char* filename) {
       }
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	fread(&size_i, sizeof(f2size_t), 1, fptr);
+	safe_fread(&size_i, sizeof(f2size_t), 1, fptr);
 	__funk2.memory.pool[pool_index].total_global_memory = size_i;
 	
-	fread(&size_i, sizeof(f2size_t), 1, fptr);
+	safe_fread(&size_i, sizeof(f2size_t), 1, fptr);
 	__funk2.memory.pool[pool_index].next_unique_block_id = size_i;
 	
 #ifdef SWAP_MEMORY
 	f2swapmemory_t old_swap_memory; memcpy(&old_swap_memory, &(__funk2.memory.pool[pool_index].swap_memory), sizeof(f2swapmemory_t));
 	f2swapmemory__realloc(&(__funk2.memory.pool[pool_index].swap_memory), &old_swap_memory, __funk2.memory.pool[pool_index].total_global_memory);
-	fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
+	safe_fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
 #endif // SWAP_MEMORY
 
 #ifdef STATIC_MEMORY
-	fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
+	safe_fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
 #endif // STATIC_MEMORY
 	
       }
       
-      fread(&f2_i, sizeof(f2ptr), 1, fptr);
+      safe_fread(&f2_i, sizeof(f2ptr), 1, fptr);
       f2ptr global_environment_f2ptr = f2_i;
       
       //#ifdef DEBUG_MEMORY

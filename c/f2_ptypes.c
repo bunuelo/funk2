@@ -741,7 +741,9 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  int retval = chararray__hash_value(__pure__f2string__length(this), __pure__f2string__str(this));
+  u64 len = __pure__f2string__length(this);
+  u8* str = __pure__f2string__str(this);
+  int retval = (int)chararray__hash_value(len, str);
   __pure__memblock__render_read_activated__set(this, 1);
   ptype_access_num__decr(pool_index);
   return retval;
@@ -823,7 +825,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   ptype_symbol_block_t* symbol_block = NULL;
   
   // search for chararray in hashed symbols
-  uint bin_index = chararray__hash_value(length, str) & __symbol_hash.hash_value_bit_mask;
+  uint bin_index = (uint)((uint)chararray__hash_value(length, str) & (uint)__symbol_hash.hash_value_bit_mask);
   symbol_hash_node_t* node = __symbol_hash.array[bin_index];
   while (node) {
     symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(node->symbol));
@@ -848,7 +850,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   if (str) {memcpy(symbol_block->str, str, length);}
   else     {bzero(symbol_block->str, length);}
   symbol_block->str[length] = 0x00;
-  symbol_block->hash_value  = chararray__hash_value(length, str);
+  symbol_block->hash_value  = (u64)((uint)chararray__hash_value(length, str));
   
   // and add new symbol to hash table
   symbol_hash__add_symbol(symbol_f2ptr);

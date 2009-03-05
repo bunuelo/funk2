@@ -44,6 +44,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <gmodule.h>
 #include <locale.h>
 #include <net/if.h>
 #include <netdb.h>
@@ -58,11 +59,9 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
-
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
-#include <gmodule.h>
 
 #include "f2_ansi.h"
 #include "f2_blocks_world.h"
@@ -115,6 +114,7 @@
 #include "f2_socket_client.h"
 #include "f2_socket_server.h"
 #include "f2_status.h"
+#include "f2_swapmemory.h"
 #include "f2_termios.h"
 #include "f2_thought_process.h"
 #include "f2_thread.h"

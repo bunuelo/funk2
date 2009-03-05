@@ -62,9 +62,9 @@ f2ptr f2__tensorp(f2ptr this, f2ptr cause) {return f2bool__new(raw__arrayp(this,
 
 f2ptr f2tensor__elt_from_array_of_integer_indices(f2ptr this, f2ptr indices, f2ptr cause) {
   f2ptr dimensions         = f2tensor__dimensions(this, cause);
-  int   dimensions__length = raw__array__length(cause, dimensions);
+  //int   dimensions__length = raw__array__length(cause, dimensions);
   f2ptr data               = f2tensor__data(this, cause);
-  int   data__length       = raw__array__length(cause, data);
+  //int   data__length       = raw__array__length(cause, data);
   int   indices__length    = raw__array__length(cause, indices);
   release__assert(indices__length == dimensions__length, nil, "f2tensor__elt_from_array_of_integer_indices release assertion failed: [= indices__length dimensions__length].");
   int i;

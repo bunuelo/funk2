@@ -19,6 +19,8 @@
  rights to redistribute these changes.
 '
 
+[print 'Beginning to load bootstrap-ansi.fu2.']
+
 [globalize-funk ansi-stream-begin_command                          &primfunk:ansi__stream__begin_command]
 [globalize-funk ansi-stream-print_code                             &primfunk:ansi__stream__print_code]
 [globalize-funk ansi-stream-reset                                  &primfunk:ansi__stream__reset]
@@ -61,4 +63,6 @@
 [globalize-funk ansi-stream-background                             &primfunk:ansi__stream__background]
 [globalize-funk ansi-stream-rectangle                              &primfunk:ansi__stream__rectangle]
 [globalize-funk ansi-stream-bordered_rectangle                     &primfunk:ansi__stream__bordered_rectangle]
+
+[print 'Finished loading bootstrap-ansi.fu2.']
 

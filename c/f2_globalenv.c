@@ -76,15 +76,15 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->if__symbol                     = f2symbol__new(cause, strlen("if"),                    (u8*)"if");
 
   this->stdin_stream__symbol  = f2symbol__new(cause, strlen("stdin"), (u8*)"stdin");
-  this->stdin_stream = f2__file_stream__new(cause, f2integer__new(cause, STDIN_FILENO), nil);
+  this->stdin_stream = f2__file_stream__new(cause, f2integer__new(cause, STDIN_FILENO));
   environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
   
   this->stdout_stream__symbol  = f2symbol__new(cause, strlen("stdout"), (u8*)"stdout");
-  this->stdout_stream = f2__file_stream__new(cause, f2integer__new(cause, STDOUT_FILENO), nil);
+  this->stdout_stream = f2__file_stream__new(cause, f2integer__new(cause, STDOUT_FILENO));
   environment__add_var_value(cause, global_environment(), this->stdout_stream__symbol, this->stdout_stream);
   
   this->stderr_stream__symbol  = f2symbol__new(cause, strlen("stderr"), (u8*)"stderr");
-  this->stderr_stream = f2__file_stream__new(cause, f2integer__new(cause, STDERR_FILENO), nil);
+  this->stderr_stream = f2__file_stream__new(cause, f2integer__new(cause, STDERR_FILENO));
   environment__add_var_value(cause, global_environment(), this->stderr_stream__symbol, this->stderr_stream);
   
   this->trace_all_compiles__symbol  = f2symbol__new(cause, strlen("-trace_all_compiles-"),  (u8*)"-trace_all_compiles-");

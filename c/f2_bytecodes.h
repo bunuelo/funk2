@@ -134,6 +134,8 @@ int                    f2__thread__bytecode__compile(                         f2
 int                    f2__thread__bytecode__yield(                           f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__newenv(                          f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__machine_code(                    f2ptr thread, f2ptr bytecode, f2ptr chunk);
+int                    f2__thread__bytecode__reg_array__elt(                  f2ptr thread, f2ptr bytecode, f2ptr reg);
+int                    f2__thread__bytecode__reg_array__elt__set(             f2ptr thread, f2ptr bytecode, f2ptr reg);
 
 bytecode_jump__f2ptr_t f2__compile__bytecode__set(    f2ptr cause, f2ptr reg);
 bytecode_jump_t        f2__compile__bytecode__swap(   f2ptr cause, f2ptr reg0, f2ptr reg1);

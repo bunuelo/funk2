@@ -2252,7 +2252,7 @@ int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread, 
   f2ptr tracewrap           = __funk2.globalenv.true__symbol;
   f2ptr protect_environment = __funk2.globalenv.true__symbol;
   bool  is_funktional       = true;
-  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
+  f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
   return 0;
 }
 
@@ -2274,7 +2274,7 @@ int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread, f2ptr bytecode) 
   f2ptr tracewrap           = __funk2.globalenv.true__symbol;
   f2ptr protect_environment = nil;
   bool  is_funktional       = true;
-  f2thread__value__set(thread, cause, raw__compile(cause, (tracewrap != nil), thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
+  f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
   return 0;
 }
 

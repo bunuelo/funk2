@@ -95,7 +95,7 @@ f2ptr f2__compile__nop(f2ptr cause)                                             
 f2ptr f2__compile__return(f2ptr cause)                                                {return bcs_valid(f2__compile__copy( cause, __thread__return_reg__symbol, __thread__program_counter_reg__symbol));}
 f2ptr f2__compile__debug(f2ptr cause, f2ptr value)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__debug__symbol, value, nil, nil), nil));}
 f2ptr f2__compile__trace(f2ptr cause, f2ptr value)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__trace__symbol, value, nil, nil), nil));}
-f2ptr f2__compile__compile(f2ptr cause, f2ptr protect_environment, f2ptr tw_compiled) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__compile__symbol, tw_compiled, protect_environment, nil), nil));}
+f2ptr f2__compile__compile(f2ptr cause, f2ptr protect_environment)                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__compile__symbol, protect_environment, nil, nil), nil));}
 f2ptr f2__compile__yield(f2ptr cause)                                                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__yield__symbol, nil, nil, nil), nil));}
 f2ptr f2__compile__newenv(f2ptr cause)                                                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__newenv__symbol, nil, nil, nil), nil));}
 

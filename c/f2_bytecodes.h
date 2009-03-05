@@ -130,7 +130,7 @@ int                    f2__thread__bytecode__jump(                            f2
 int                    f2__thread__bytecode__else_jump(                       f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__thread__bytecode__debug(                           f2ptr thread, f2ptr bytecode, f2ptr value);
 int                    f2__thread__bytecode__trace(                           f2ptr thread, f2ptr bytecode, f2ptr value);
-int                    f2__thread__bytecode__compile(                         f2ptr thread, f2ptr bytecode, f2ptr tracewrap, f2ptr protect_environment);
+int                    f2__thread__bytecode__compile(                         f2ptr thread, f2ptr bytecode, f2ptr protect_environment);
 int                    f2__thread__bytecode__yield(                           f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__newenv(                          f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__machine_code(                    f2ptr thread, f2ptr bytecode, f2ptr chunk);
@@ -142,7 +142,7 @@ bytecode_jump_t        f2__compile__bytecode__swap(   f2ptr cause, f2ptr reg0, f
 bytecode_jump_t        f2__compile__bytecode__push(   f2ptr cause, f2ptr reg);
 bytecode_jump_t        f2__compile__bytecode__pop(    f2ptr cause, f2ptr reg);
 bytecode_jump_t        f2__compile__bytecode__copy(   f2ptr cause, f2ptr reg0, f2ptr reg1);
-bytecode_jump_t        f2__compile__bytecode__compile(f2ptr tracewrap, f2ptr protect_environment);
+bytecode_jump_t        f2__compile__bytecode__compile(f2ptr protect_environment);
 
 void                   f2__bytecodes__initialize();
 

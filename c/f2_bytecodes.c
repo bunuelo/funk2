@@ -2232,60 +2232,16 @@ int f2__thread__bytecode__trace(f2ptr thread, f2ptr bytecode, f2ptr value) {
 }
 
 
-// bytecode compile [bool bool]
+// bytecode compile [bool]
 
-void raw__thread__bytecode_trace__compile__tracewrap__protect_environment(f2ptr cause, f2ptr bytecode, f2ptr thread) {
-  bytecode_status("bytecode trace: [compile tracewrap protect_environment]");
-  f2ptr context = f2thread__value(thread, cause);
-  f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, context);
-  raw__cause__event_buffer__add(cause, bytecode_event);
-}
-
-int f2__thread__bytecode__compile__tracewrap__protect_environment(f2ptr thread, f2ptr bytecode) {
-  f2ptr cause = f2thread__cause_reg(thread, nil);
-  if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__tracewrap__protect_environment(cause, bytecode, thread);
-  }
-  
-  f2__thread__increment_pc(thread, cause);
-  
-  f2ptr tracewrap           = __funk2.globalenv.true__symbol;
-  f2ptr protect_environment = __funk2.globalenv.true__symbol;
-  bool  is_funktional       = true;
-  f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
-  return 0;
-}
-
-void raw__thread__bytecode_trace__compile__tracewrap__nil(f2ptr cause, f2ptr bytecode, f2ptr thread) {
-  bytecode_status("bytecode trace: [compile tracewrap nil]");
-  f2ptr context = f2thread__value(thread, cause);
-  f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, context);
-  raw__cause__event_buffer__add(cause, bytecode_event);
-}
-
-int f2__thread__bytecode__compile__tracewrap__nil(f2ptr thread, f2ptr bytecode) {
-  f2ptr cause = f2thread__cause_reg(thread, nil);
-  if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__tracewrap__nil(cause, bytecode, thread);
-  }
-  
-  f2__thread__increment_pc(thread, cause);
-  
-  f2ptr tracewrap           = __funk2.globalenv.true__symbol;
-  f2ptr protect_environment = nil;
-  bool  is_funktional       = true;
-  f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
-  return 0;
-}
-
-void raw__thread__bytecode_trace__compile__nil__protect_environment(f2ptr cause, f2ptr bytecode, f2ptr thread) {
+void raw__thread__bytecode_trace__compile__protect_environment(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   bytecode_status("bytecode trace: [compile nil protect_environment]");
   f2ptr context = f2thread__value(thread, cause);
   f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, context);
   raw__cause__event_buffer__add(cause, bytecode_event);
 }
 
-int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread, f2ptr bytecode) {
+int f2__thread__bytecode__compile__protect_environment(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2__cause__bytecode_tracing_on(cause, cause)) {
     raw__thread__bytecode_trace__compile__nil__protect_environment(cause, bytecode, thread);
@@ -2293,53 +2249,43 @@ int f2__thread__bytecode__compile__nil__protect_environment(f2ptr thread, f2ptr 
   
   f2__thread__increment_pc(thread, cause);
   
-  f2ptr tracewrap           = nil;
   f2ptr protect_environment = __funk2.globalenv.true__symbol;
   bool  is_funktional       = true;
   f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
   return 0;
 }
 
-void raw__thread__bytecode_trace__compile__nil__nil(f2ptr cause, f2ptr bytecode, f2ptr thread) {
+void raw__thread__bytecode_trace__compile__nil(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   bytecode_status("bytecode trace: [compile nil nil]");
   f2ptr context = f2thread__value(thread, cause);
   f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, context);
   raw__cause__event_buffer__add(cause, bytecode_event);
 }
 
-int f2__thread__bytecode__compile__nil__nil(f2ptr thread, f2ptr bytecode) {
+int f2__thread__bytecode__compile__nil(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__compile__nil__nil(cause, bytecode, thread);
+    raw__thread__bytecode_trace__compile__nil(cause, bytecode, thread);
   }
   
   f2__thread__increment_pc(thread, cause);
   
-  f2ptr tracewrap           = nil;
   f2ptr protect_environment = nil;
   bool  is_funktional       = true;
   f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
   return 0;
 }
 
-bytecode_jump_t f2__compile__bytecode__compile(f2ptr tracewrap, f2ptr protect_environment) {
-  if (tracewrap != nil) {
-    if (protect_environment != nil) {
-      return &f2__thread__bytecode__compile__tracewrap__protect_environment;
-    } else {
-      return &f2__thread__bytecode__compile__tracewrap__nil;
-    }
+bytecode_jump_t f2__compile__bytecode__compile(f2ptr protect_environment) {
+  if (protect_environment != nil) {
+    return &f2__thread__bytecode__compile__protect_environment;
   } else {
-    if (protect_environment != nil) {
-      return &f2__thread__bytecode__compile__nil__protect_environment;
-    } else {
-      return &f2__thread__bytecode__compile__nil__nil;
-    }
+    return &f2__thread__bytecode__compile__nil;
   }
 }
 
-int f2__thread__bytecode__compile(f2ptr thread, f2ptr bytecode, f2ptr tracewrap, f2ptr protect_environment) {
-  return (f2__compile__bytecode__compile(tracewrap, protect_environment))(thread, bytecode);
+int f2__thread__bytecode__compile(f2ptr thread, f2ptr bytecode, f2ptr protect_environment) {
+  return (f2__compile__bytecode__compile(protect_environment))(thread, bytecode);
 }
 
 

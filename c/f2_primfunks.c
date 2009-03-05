@@ -719,7 +719,7 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   
   f2thread__args__set(           thread, cause, args);
   f2thread__value__set(          thread, cause, cfunkable);
-  f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause, nil));
+  f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause));
   
   if (raw__funkablep(cfunkable, cause)) {
     f2ptr env = raw__funkable__env(cause, cfunkable);
@@ -1203,11 +1203,11 @@ f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
 }
 def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
 
-f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr bytecode_tracing_on, f2ptr exp, f2ptr protect_environment) {
+f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr exp, f2ptr protect_environment) {
   bool is_funktional = true;
-  return raw__compile(cause, thread, (bytecode_tracing_on != nil), exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
+  return raw__compile(cause, thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
 }
-def_pcfunk3(compile, bytecode_tracing_on, exp, protect_environment, return f2__compile(this_cause, simple_thread, bytecode_tracing_on, exp, protect_environment));
+def_pcfunk3(compile, exp, protect_environment, return f2__compile(this_cause, simple_thread, exp, protect_environment));
 
 f2ptr f2__identity(f2ptr cause, f2ptr exp) {return exp;}
 def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
@@ -1218,7 +1218,7 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr bytecode_tracing_on, f2ptr 
   //f2__print_prompt("  env         : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap   : ", tracewrap);
   f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional);
-  f2__compile__funk(cause, (bytecode_tracing_on != nil), thread, funk);
+  f2__compile__funk(cause, thread, funk);
 #ifdef F2__ARCH_BIT32
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
 #endif
@@ -1232,7 +1232,7 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr bytecode_tracing_on, f2ptr
   //f2__print_prompt("  env          : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap    : ", tracewrap);
   f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional);
-  f2__compile__metro(cause, (bytecode_tracing_on != nil), thread, metro);
+  f2__compile__metro(cause, thread, metro);
   
 #ifdef F2__ARCH_BIT32
   // metro machine code compiling bug...  temporarily disabled.
@@ -1392,8 +1392,8 @@ f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr thread, f2ptr env, f2ptr ex
 def_pcfunk1(exps_demetropolize_full, exp,
 	    return f2__exps_demetropolize_full(this_cause, simple_thread, simple_env, exp));
 
-def_pcfunk3(compile__special_symbol_exp, bytecode_tracing_on, exp, protect_environment,
-	    return f2__compile__special_symbol_exp(this_cause, bytecode_tracing_on, simple_thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
+def_pcfunk3(compile__special_symbol_exp, exp, protect_environment,
+	    return f2__compile__special_symbol_exp(this_cause, simple_thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
 
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value) {
   f2ptr value = environment__lookup_funkvar_value(cause, env, funkvar);

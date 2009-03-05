@@ -42,7 +42,7 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
   try_gc();
   
   f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil);
-  f2ptr load_funk_bcs = f2__compile__funk(cause, environment__safe_lookup_var_value(cause, global_environment(), __funk2.globalenv.trace_all_compiles__symbol), thread, load_funk);
+  f2ptr load_funk_bcs = f2__compile__funk(cause, thread, load_funk);
   f2ptr load_thread   = f2__thread_serial(cause, thread, f2thread__env(thread, cause), load_funk, nil);
   f2ptr read_exp      = nil;
   
@@ -60,7 +60,6 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 	
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil);
 	load_funk_bcs = f2__compile__funk(cause,
-					  environment__safe_lookup_var_value(cause, global_environment(), __funk2.globalenv.trace_all_compiles__symbol),
 					  thread, load_funk);
 	if(raw__exceptionp(load_funk_bcs, cause)) {
 	  f2thread__value__set(thread, cause, load_funk_bcs);

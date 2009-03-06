@@ -23,7 +23,7 @@
 
 #include "funk2.h"
 
-//#define F2__PTYPE__TYPE_CHECK
+#define F2__PTYPE__TYPE_CHECK
 
 pthread_mutex_t __global_ptype_incr_mutex[memory_pool_num];
 

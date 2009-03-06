@@ -20,13 +20,13 @@
 '
 
 [defmetro unsafe:array-elt [x y]
-  [if [prog `[integer? y] nil]
+  [if nil
       `[rawcode ,x
 		 [bytecode reg_array-elt value ,y nil]]
     [print `[primfunk:array__elt ,x ,y]]]]
 
 [defmetro unsafe:array-elt-set [x y z]
-  [if [prog `[integer? y] nil]
+  [if nil
       `[rawcode ,x
 		 [bytecode push              iter  nil  nil]
 		 [bytecode copy              value iter nil]

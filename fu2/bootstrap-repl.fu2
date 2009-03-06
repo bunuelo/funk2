@@ -683,7 +683,7 @@
       [mapc [funk [sequence_element]
 		  [if [not [eq element sequence_element]]
 		      [let [[new_cons [cons sequence_element nil]]]
-			[put new_cons [cdr new_sequence_iter]]
+			[cons-cdr-set new_sequence_iter new_cons]
 			[set new_sequence_iter new_cons]]]]
 	    sequence]
       [cdr new_sequence]]]]

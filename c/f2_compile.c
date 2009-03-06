@@ -448,7 +448,7 @@ f2ptr f2__compile__if(f2ptr simple_cause, f2ptr cond_bcs, f2ptr true_bcs, f2ptr 
 }
 
 f2ptr __f2__compile__rawcode__symbol = -1;
-f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional, bool optimize_unused_beginning) {
+f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional, bool optimize_unused) {
   release__assert(__f2__compile__rawcode__symbol != -1, nil, "__f2__compile__rawcode__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__rawcode__symbol, exps);
   
@@ -476,12 +476,12 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
     if (exp__is_funktional && next) {
       status("optimizing funktional beginning of rawcode!");
       //f2__print(cause, exp);
-      if (optimize_unused_beginning) {
+      if (optimize_unused) {
 	full_bcs = nil;
       }
       exps     = next;
     }
-  } while(exp__is_funktional && next);
+  } while(optimize_unused && exp__is_funktional && next);
   if (!exps) {
     return full_bcs;
   }
@@ -513,11 +513,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
       if (exp__is_funktional && next) {
 	status("optimizing funktional middle of rawcode!");
 	//f2__print(cause, exp);
-	exp_bcs = nil;
+	if (optimize_unused) {
+	  exp_bcs = nil;
+	}
 	exps    = next;
       }
       
-    } while(exp__is_funktional && next);
+    } while(optimize_unused && exp__is_funktional && next);
     if (!exps) {
       return full_bcs;
     }

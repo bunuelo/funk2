@@ -70,8 +70,8 @@
 									      body
 									      nil
 									      nil]]
-					     [define compiled_bcs  [unsafe:array-elt compiled_funk  4]]
-					     [define is_funktional [unsafe:array-elt compiled_funk 10]]
+					     [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+					     [define is_funktional [primfunk:array__elt compiled_funk 10]]
 					     `[make-funk [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
@@ -88,8 +88,8 @@
 								     body
 								     nil
 								     nil]]
-				    [define compiled_bcs  [unsafe:array-elt compiled_funk  4]]
-				    [define is_funktional [unsafe:array-elt compiled_funk 10]]
+				    [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+				    [define is_funktional [primfunk:array__elt compiled_funk 10]]
 				    `[make-metro [quote ,name] [quote ,args]
 						 [quote ,demetroed]
 						 [quote ,body]

@@ -82,6 +82,7 @@ typedef struct funk2_globalenv_s {
   f2ptr globalize_funk__symbol;
   f2ptr yield__symbol;
   f2ptr if__symbol;
+  f2ptr bytecode__symbol;
   
   f2ptr trace_all_compiles__symbol;
   

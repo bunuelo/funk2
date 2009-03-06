@@ -74,7 +74,8 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->globalize_funk__symbol         = f2symbol__new(cause, strlen("globalize-funk"),        (u8*)"globalize-funk");
   this->yield__symbol                  = f2symbol__new(cause, strlen("yield"),                 (u8*)"yield");
   this->if__symbol                     = f2symbol__new(cause, strlen("if"),                    (u8*)"if");
-
+  this->bytecode__symbol               = f2symbol__new(cause, strlen("bytecode"),              (u8*)"bytecode");
+  
   this->stdin_stream__symbol  = f2symbol__new(cause, strlen("stdin"), (u8*)"stdin");
   this->stdin_stream = f2__file_stream__new(cause, f2integer__new(cause, STDIN_FILENO));
   environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
@@ -163,6 +164,7 @@ void funk2_globalenv__init(funk2_globalenv_t* this) {
   environment__add_var_value(cause, global_environment(), this->globalize_funk__symbol,                     nil);
   environment__add_var_value(cause, global_environment(), this->yield__symbol,                              nil);
   environment__add_var_value(cause, global_environment(), this->if__symbol,                                 nil);
+  environment__add_var_value(cause, global_environment(), this->bytecode__symbol,                           nil);
   
   environment__add_var_value(cause, global_environment(), this->trace_all_compiles__symbol,                 trace_all_compiles__value);
 

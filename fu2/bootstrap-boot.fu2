@@ -25,6 +25,10 @@
 
 [print 'debug 1']
 
+[defunk boot []
+  [repl]
+  ]
+
 `[defunk boot []
   [if user-boot-commands
       [mapc [funk [user-boot-command]

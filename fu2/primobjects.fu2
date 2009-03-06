@@ -532,7 +532,7 @@
 [defmetro array-elt-set [x y z]
   [if [integer? y]
       `[rawcode ,x
-		 [bytecode copy value iter]
+		 [bytecode copy value iter nil]
 		 ,z
 		  [bytecode reg_array-elt-set iter ,y nil]]
     `[array-elt-set-var_index ,x ,y ,z]]]

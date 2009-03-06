@@ -473,12 +473,10 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
 	*is_funktional = false;
       }
     }
-    if (exp__is_funktional && next) {
+    if (optimize_unused && exp__is_funktional && next) {
       status("optimizing funktional beginning of rawcode!");
       //f2__print(cause, exp);
-      if (optimize_unused) {
-	full_bcs = nil;
-      }
+      full_bcs = nil;
       exps     = next;
     }
   } while(optimize_unused && exp__is_funktional && next);
@@ -510,12 +508,10 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
 	}
       }
       
-      if (exp__is_funktional && next) {
+      if (optimize_unused && exp__is_funktional && next) {
 	status("optimizing funktional middle of rawcode!");
 	//f2__print(cause, exp);
-	if (optimize_unused) {
-	  exp_bcs = nil;
-	}
+	exp_bcs = nil;
 	exps    = next;
       }
       

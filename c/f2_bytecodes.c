@@ -2550,7 +2550,8 @@ void raw__thread__bytecode_helper__reg_array__elt__set(f2ptr cause, f2ptr byteco
 	if (raw_index < 0 || raw_index >= length) {
 	  elt =  f2larva__new(cause, 2);
 	} else {
-	  elt = raw__array__elt__set(cause, reg_value, raw_index, f2thread__value(thread, cause));
+	  raw__array__elt__set(cause, reg_value, raw_index, f2thread__value(thread, cause));
+	  //elt = nil;
 	}
       }
     }

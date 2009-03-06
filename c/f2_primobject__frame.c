@@ -171,8 +171,8 @@ void f2__primobject_frame__reinitialize_globalvar__exceptions() {
   f2ptr cause = initial_cause(); //f2_primobject_frame_c__cause__new(initial_cause(), nil, global_environment());
   char* symbol_str;
   
-  symbol_str = "primobject:frame-variable";                  __frame__variable_type__symbol      = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "primobject:frame-funk_variable";             __frame__funk_variable_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "variable";                                   __frame__variable_type__symbol      = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "funk_variable";                              __frame__funk_variable_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "primobject:frame-type_variable_not_defined"; __type_variable_not_defined__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   
   if (raw__environmentp(global_environment(), cause)) {

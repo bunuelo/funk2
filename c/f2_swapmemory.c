@@ -71,19 +71,19 @@ void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num) {
 
 int safe_close(int fd) {
   do {
-    int result = close(this->fd);
+    int result = close(fd);
     if (result == -1) {
       switch(errno) {
       case EBADF:
 	perror("close");
-	printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\" (fd isn't a valid open file descriptor).\n", this->filename);
+	printf("\nf2swapmemory__destroy_and_free error: couldn't close file (fd isn't a valid open file descriptor).\n");
 	error(nil, "f2swapmemory__destroy_and_free error: couldn't close file (fd isn't a valid open file descriptor).");
 	break;
       case EINTR:
 	break;
       case EIO:
 	perror("close");
-	printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\" (An I/O error occurred).\n", this->filename);
+	printf("\nf2swapmemory__destroy_and_free error: couldn't close file (An I/O error occurred).\n");
 	error(nil, "f2swapmemory__destroy_and_free error: couldn't close file (An I/O error occurred).");
 	break;
       }

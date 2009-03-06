@@ -1026,7 +1026,7 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr thread, f2ptr ex
   if (car == __funk2.globalenv.globalize__symbol)              {if (is_funktional) {*is_funktional = false;} if (is_locally_funktional) {*is_locally_funktional = false;} return bcs_valid(f2__compile__globalize_var_exp(cause, thread, exp));}
   if (car == __funk2.globalenv.globalize_funk__symbol)         {if (is_funktional) {*is_funktional = false;} if (is_locally_funktional) {*is_locally_funktional = false;} return bcs_valid(f2__compile__globalize_funkvar_exp(cause, thread, exp));}
   if (car == __funk2.globalenv.yield__symbol)                  {if (is_funktional) {*is_funktional = false;} if (is_locally_funktional) {*is_locally_funktional = false;} return bcs_valid(f2__compile__yield(cause));}
-  if (car == __funk2.globalenv.bytecode__symbol)               {if (is_funktional) {*is_funktional = false;} if (is_locally_funktional) {*is_locally_funktional = false;} return bcs_valid(f2__compile__bytecode_exp(cause, exp));}
+  if (car == __funk2.globalenv.bytecode__symbol)               {return bcs_valid(f2__compile__bytecode_exp(cause, exp, is_funktional, local_variables, is_locally_funktional));}
   if (car == __funk2.globalenv.rawcode__symbol)                {if (is_funktional) {*is_funktional = false;} if (is_locally_funktional) {*is_locally_funktional = false;} return bcs_valid(f2__compile__rawcode_exp(cause, exp, thread, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   printf("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   printf("isn't a special symbol expression."); // should throw exception...
@@ -1076,7 +1076,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, bool pr
   return funkvar_value;
 }
 
-f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp) {
+f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional) {
   if (! raw__consp(exp, cause)) {
     return f2larva__new(cause, 1);
   }
@@ -1088,6 +1088,123 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp) {
   if (! raw__symbolp(command, cause)) {
     return f2larva__new(cause, 1);
   }
+
+  if        (command == __funk2.bytecode.bytecode__push__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__pop__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__copy__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__swap__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__array__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__cons__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__car__set__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__funk__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__jump_funk__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__set__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__cdr__set__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__array_elt__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__define_type_var__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__else_jump__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__car__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__cdr__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__type_var__set__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__jump__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else if (command == __funk2.bytecode.bytecode__nop__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__debug__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__trace__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__compile__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__yield__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__newenv__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__machine_code__symbol) {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  } else {
+    if (is_funktional) {
+      *is_funktional = false;
+    }
+    if (is_locally_funktional) {
+      *is_locally_funktional = false;
+    }
+  }
+  
   f2ptr args    = f2cons__cdr(exp_iter, cause);
   if (! raw__consp(args, cause)) {
     return f2larva__new(cause, 1);

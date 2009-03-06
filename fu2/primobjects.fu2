@@ -108,7 +108,7 @@
 [defmetro unsafe:exception-value     [x]         `[unsafe:primobject-slot     ,x 2]]
 [defmetro unsafe:exception-value-set [x y]       `[unsafe:primobject-slot-set ,x 2 ,y]]
 
-[defmetro bytecode                    [command arg0 arg1] `[array `primobject `bytecode nil ,command ,arg0 ,arg1]]
+`[defmetro bytecode                    [command arg0 arg1] `[array `primobject `bytecode nil ,command ,arg0 ,arg1]]
 [defunk   bytecode?                   [x]                  [and [primobject? x] [eq [unsafe:primobject-type x] `bytecode]]]
 [defmetro unsafe:bytecode-command     [x]                 `[unsafe:primobject-slot     ,x 1]]
 [defmetro unsafe:bytecode-command-set [x y]               `[unsafe:primobject-slot-set ,x 1 ,y]]

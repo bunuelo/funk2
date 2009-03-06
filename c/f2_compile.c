@@ -1117,7 +1117,7 @@ f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr thread, bool protec
     return f2larva__new(cause, 1);
   }
   //f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional) {
-  bool optimized_unused_beginning = false;
+  bool optimize_unused_beginning = false;
   return f2__compile__rawcode(cause, thread, exps, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
 }
 

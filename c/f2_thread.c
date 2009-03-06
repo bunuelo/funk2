@@ -60,7 +60,7 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   else if (command == __funk2.bytecode.bytecode__nop__symbol)                 {f2__thread__bytecode__nop(                thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__debug__symbol)               {f2__thread__bytecode__debug(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__trace__symbol)               {f2__thread__bytecode__trace(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__compile__symbol)             {f2__thread__bytecode__compile(            thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__compile__symbol)             {f2__thread__bytecode__compile(            thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__yield__symbol)               {}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)              {f2__thread__bytecode__newenv(             thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)        {f2__thread__bytecode__machine_code(       thread, bytecode, f2bytecode__arg0(bytecode, cause));}

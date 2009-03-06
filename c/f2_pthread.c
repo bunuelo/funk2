@@ -53,10 +53,12 @@ int this_pthread__pool_index() {
 
 void pthread_list__destroy_all_others() {
   pthread_t this__tid = pthread_self();
+  status("pthread_list__destroy_all_others() note: this__tid=" u64__fstr ".", (u64)this__tid);
   int i;
   for (i = 0; i < __pthread_list__length; i ++) {
     pthread_t tid = __pthread_list[i];
     if (tid != this__tid) {
+      status("pthread_list__destroy_all_others() note: pthread_cancel(tid=" u64__fstr ").", (u64)tid);
       pthread_cancel(tid);
     }
   }

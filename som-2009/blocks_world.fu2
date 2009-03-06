@@ -27,7 +27,7 @@
 	  [let* [[object      [car object_iter]]
 		 [object_type [blocks_world_object-type object]]]
 	    [if [eq object_type `block]
-		[if [not [blocks_world_object-translate_overlaps_objects [print object] 0 -1 [print [remove object objects]]]]
+		[if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
 		    [prog [blocks_world_object-translate object 0 -1]
 			  [blocks_world_rectangle-clear_line_above [blocks_world_object-rectangle object]]
 			  [blocks_world_object-render object]

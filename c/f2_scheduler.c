@@ -133,9 +133,11 @@ f2ptr f2__scheduler__pthread_current_thread(int pool_index) {
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   pool__pause_gc(this_pthread__pool_index());
   f2ptr did_something    = nil;
-  //f2__global_scheduler__execute_mutex__lock(cause);
+  {
+    f2__global_scheduler__execute_mutex__lock(cause);
+    f2__global_scheduler__execute_mutex__unlock(cause);
+  }
   f2ptr thread_iter      = f2processor__active_threads(processor, cause);
-  //f2__global_scheduler__execute_mutex__unlock(cause);
   f2ptr prev_thread_iter = nil;
   int thread_num         = 0;
   while (thread_iter) {
@@ -336,6 +338,8 @@ void f2__scheduler__start_processors() {
 
 void f2__scheduler__stop_processors() {
   status("f2__scheduler__stop_processors note: doing nothing (pthread_cancel locks up on Athena, should have soft lock?).");
+  f2__global_scheduler__execute_mutex__lock(cause); // unlock to restart...
+  //f2__global_scheduler__execute_mutex__unlock(cause);
   //pthread_list__destroy_all_others();  
 }
 

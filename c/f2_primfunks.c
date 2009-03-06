@@ -1919,6 +1919,13 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
+f2ptr f2__funktionalp(f2ptr cause, f2ptr thread, f2ptr exp) {
+  bool exp__is_funktional = true;
+  raw__compile(cause, thread, exp, false, false, NULL, &exp__is_funktional, nil, NULL);
+  return f2bool__new(exp__is_funktional);
+}
+def_pcfunk1(funktionalp, exp, return f2__funktionalp(this_cause, simple_thread, exp));
+
 void f2__primcfunks__reinitialize_globalvars() {
   f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
@@ -2329,6 +2336,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(prev__set);
   
   f2__funktional_primcfunk__init__1(colonize, exp);
+  f2__funktional_primcfunk__init__1(funktionalp);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);

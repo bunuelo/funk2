@@ -342,6 +342,7 @@
 [globalize-funk prev-set                                    &primfunk:prev__set]
 
 [globalize-funk colonize                                    &primfunk:colonize]
+[globalize-funk funktional?                                 &primfunk:funktionalp]
 
 'end of f2_primfunks.c'
 

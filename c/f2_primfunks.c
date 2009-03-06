@@ -2336,7 +2336,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(prev__set);
   
   f2__funktional_primcfunk__init__1(colonize, exp);
-  f2__funktional_primcfunk__init__1(funktionalp);
+  f2__funktional_primcfunk__init__1(funktionalp, exp);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);

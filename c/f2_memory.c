@@ -1377,7 +1377,7 @@ void safe_fwrite(void* ptr, size_t object_size, size_t object_num, FILE* fptr) {
 void safe_fread(void* ptr, size_t object_size, size_t object_num, FILE* fptr) {
   int result = fread(ptr, object_size, object_num, fptr);
   if (result != object_num) {
-    error(nil, "safe_fwrite error.");
+    error(nil, "safe_fread error.");
   }
 }
 

@@ -42,7 +42,7 @@
   [set user-boot-commands [append user-boot-commands
 				  [cons user_command nil]]]]
 
-'
+' bug: this creates a segmentation fault...
 `[defunk boot []
   [if user-boot-commands
       [mapc [funk [user-boot-command]

@@ -395,7 +395,7 @@ void f2__scheduler__initialize() {
 
 void f2__scheduler__destroy() {
   f2__scheduler__stop_processors();
-  f2__global_scheduler__execute_mutex__lock(cause); // unlock to restart...
+  f2__global_scheduler__execute_mutex__lock(initial_cause()); // unlock to restart...
 }
 
 

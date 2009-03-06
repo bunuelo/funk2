@@ -19,7 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "f2_pthread.h"
+#include "funk2.h"
 
 int       __pthread_list__length = 0;
 pthread_t __pthread_list[memory_pool_num + 1];

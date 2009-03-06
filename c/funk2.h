@@ -104,6 +104,7 @@
 #include "f2_primobject__tensor.h"
 #include "f2_primobjects.h"
 #include "f2_print.h"
+#include "f2_pthread.h"
 #include "f2_reader.h"
 #include "f2_redblacktree.h"
 #include "f2_repl.h"

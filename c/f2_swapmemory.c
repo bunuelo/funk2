@@ -74,10 +74,25 @@ void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
     printf("\nf2swapmemory__destroy_and_free error: couldn't unmap file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__destroy_and_free error: couldn't unmap file");
   }
-  if (close(this->fd) == -1) {
-    printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\".\n", this->filename);
-    error(nil, "f2swapmemory__destroy_and_free error: couldn't close file");
-  }
+  do {
+    int result = close(this->fd);
+    if (result == -1) {
+      switch(errno) {
+      case EBADF:
+	perror("close");
+	printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\" (fd isn't a valid open file descriptor).\n", this->filename);
+	error(nil, "f2swapmemory__destroy_and_free error: couldn't close file (fd isn't a valid open file descriptor).");
+	break;
+      case EINTR:
+	break;
+      case EIO:
+	perror("close");
+	printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\" (An I/O error occurred).\n", this->filename);
+	error(nil, "f2swapmemory__destroy_and_free error: couldn't close file (An I/O error occurred).");
+	break;
+      }
+    }
+  } while (result == -1 && errno == EINTR);
   if (unlink(this->filename) == -1) {
     printf("\nf2swapmemory__destroy_and_free error: couldn't unlink file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__destroy_and_free error: couldn't unlink file");

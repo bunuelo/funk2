@@ -20,13 +20,13 @@
 '
 
 [defmetro unsafe:array-elt [x y]
-  [if [integer? y]
+  [if [prog `[integer? y] nil]
       `[rawcode ,x
 		 [bytecode reg_array-elt value ,y nil]]
     `[unsafe:array-elt-var_index ,x ,y]]]
 
 [defmetro unsafe:array-elt-set [x y z]
-  [if [integer? y]
+  [if [prog `[integer? y] nil]
       `[rawcode ,x
 		 [bytecode push              iter  nil  nil]
 		 [bytecode copy              value iter nil]

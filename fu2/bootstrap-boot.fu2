@@ -25,13 +25,12 @@
 
 [print 'debug 1']
 
-[defunk boot []
+`[defunk boot []
   [if user-boot-commands
-      [prog [mapc [funk [user-boot-command]
-			[format stdout '\nuser-boot-command: ' user-boot-command]
-			[eval user-boot-command]]
-		  user-boot-commands]
-	    ]]
+      [mapc [funk [user-boot-command]
+		  [format stdout '\nuser-boot-command: ' user-boot-command]
+		  [eval user-boot-command]]
+	    user-boot-commands]]
   [format stdout
 	  '\n'
 	  '\n*************************'

@@ -55,7 +55,6 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__yield__symbol;
   f2ptr bytecode__newenv__symbol;
   f2ptr bytecode__machine_code__symbol;
-  
   f2ptr bytecode__reg_array__elt__symbol;
   f2ptr bytecode__reg_array__elt__set__symbol;
   

@@ -195,7 +195,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   //    printf("\neq(return)      = ");  f2__print(cause, f2bool__new(raw__eq(cause, first_char, __char__return)));
   //  }
   //}
-  if (f2__eq(cause, first_char, __eof__symbol)) {return __end_of_file_exception;}
+  if (f2__eq(cause, first_char, __eof__symbol)) {status("raw_read() note: eof_except."); return __end_of_file_exception;}
   // check all posibilities for first_char
   if (raw__eq(cause, first_char, __char__right_paren))            {return __end_parens_exception;}
   if (raw__eq(cause, first_char, __char__array_right_paren))      {return __array_end_parens_exception;}
@@ -286,7 +286,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   }
   if (raw__eq(cause, first_char, __char__escape)) {
     f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-    if (f2__eq(cause, read_ch, __eof__symbol)) {return __end_of_file_exception;}
+    if (f2__eq(cause, read_ch, __eof__symbol)) {status("raw_read() note: eof_except."); return __end_of_file_exception;}
     // read hex pointer
     if (raw__eq(cause, read_ch, __char__escape_hex)) {
       int buf_size = 10; // not bigint, so no more buffer really needed
@@ -295,7 +295,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
 	if (! raw__charp(read_ch, cause)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -336,7 +336,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
 	if (! raw__charp(read_ch, cause)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -377,7 +377,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
 	if (! raw__charp(read_ch, cause)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -460,7 +460,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+      if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
       if (! raw__charp(read_ch, cause)) {
 	return f2larva__new(cause, 19);
       }
@@ -468,7 +468,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == __string_quote_char) {break;}
       if (ch == __escape_char_char) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
 	if (! raw__charp(read_ch, cause)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -499,7 +499,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+      if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
       if (! raw__charp(read_ch, cause)) {
 	return f2larva__new(cause, 19);
       }
@@ -508,7 +508,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == __symbol_escape_char) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
 	if (! raw__charp(read_ch, cause)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -535,7 +535,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+      if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
       if (! raw__charp(read_ch, cause)) {
 	return f2larva__new(cause, 19);
       }
@@ -550,7 +550,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == '\\') {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); return __end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __end_of_file_exception;}
 	if (! raw__charp(read_ch, cause)) {
 	  return f2larva__new(cause, 19);
 	}

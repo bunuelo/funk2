@@ -335,7 +335,8 @@ void f2__scheduler__start_processors() {
 }
 
 void f2__scheduler__stop_processors() {
-  pthread_list__destroy_all_others();  
+  status("f2__scheduler__stop_processors note: doing nothing (pthread_cancel locks up on Athena, should have soft lock?).");
+  //pthread_list__destroy_all_others();  
 }
 
 void f2__scheduler__reinitialize_globalvars() {

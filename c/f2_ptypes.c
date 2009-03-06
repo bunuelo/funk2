@@ -577,26 +577,36 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   int lock_failed;
   do {
+    int pool_index = __f2ptr__pool_index(this);
+    ptype_access_num__incr(pool_index);
     lock_failed = pthread_mutex_trylock(ptype_mutex__m(this, cause));
+    ptype_access_num__decr(pool_index);
   } while (lock_failed);
 }
 
 void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
+  int pool_index = __f2ptr__pool_index(this);
+  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
   pthread_mutex_unlock(ptype_mutex__m(this, cause));
+  ptype_access_num__decr(pool_index);
 }
 
 int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
+  int pool_index = __f2ptr__pool_index(this);
+  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  return pthread_mutex_trylock(ptype_mutex__m(this, cause));
+  int return_value = pthread_mutex_trylock(ptype_mutex__m(this, cause));
+  ptype_access_num__decr(pool_index);
+  return return_value;
 }
 
 def_pcfunk0(mutex__new__slot_funk, return f2mutex__new(this_cause));
@@ -1056,7 +1066,7 @@ void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 val
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
-  __pure__f2chunk__bit8__elt__set(this, index, value);
+  __pure__f2chunk__bit8__elt__se(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
   ptype_access_num__decr(pool_index);
 }

@@ -23,7 +23,7 @@
   [if [prog `[integer? y] nil]
       `[rawcode ,x
 		 [bytecode reg_array-elt value ,y nil]]
-    `[unsafe:array-elt-var_index ,x ,y]]]
+    `[primfunk:array__elt ,x ,y]]]
 
 [defmetro unsafe:array-elt-set [x y z]
   [if [prog `[integer? y] nil]
@@ -34,8 +34,7 @@
 		  [bytecode reg_array-elt-set iter  ,y   nil]
 		  [bytecode pop               iter  nil  nil]
 		  ]
-    `[unsafe:array-elt-set-var_index ,x ,y ,z]]]
-
+    `[primfunk:array__elt__set ,x ,y ,z]]]
 
 [defunk   primobject?                [x]      [and x [array? x] [unsafe:integer-greater_than [unsafe:array-length x] 1] [eq [array-elt x 0] `primobject]]]
 [defmetro unsafe:primobject-slot     [x y]   `[array-elt     ,x [unsafe:integer-add 2 ,y]]]

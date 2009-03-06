@@ -1066,7 +1066,7 @@ void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 val
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
-  __pure__f2chunk__bit8__elt__se(this, index, value);
+  __pure__f2chunk__bit8__elt__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
   ptype_access_num__decr(pool_index);
 }

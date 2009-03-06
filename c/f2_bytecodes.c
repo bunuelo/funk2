@@ -2365,7 +2365,7 @@ void raw__thread__bytecode_helper__reg_array__elt(f2ptr cause, f2ptr bytecode, f
   if (! raw__arrayp(reg_value, cause)) {
     elt = f2larva__new(cause, 1);
   } else {
-    u64 length = f2__array__length(reg_value, cause);
+    u64 length = f2__array__length(cause, reg_value);
     f2ptr index = f2bytecode__arg1(bytecode, cause);
     if (! raw__integerp(index, cause)) {
       elt =  f2larva__new(cause, 1);
@@ -2538,7 +2538,7 @@ void raw__thread__bytecode_helper__reg_array__elt__set(f2ptr cause, f2ptr byteco
   if (! raw__arrayp(reg_value, cause)) {
     elt = f2larva__new(cause, 1);
   } else {
-    u64 length = f2__array__length(reg_value, cause);
+    u64 length = f2__array__length(cause, reg_value);
     f2ptr index = f2bytecode__arg1(bytecode, cause);
     if (! raw__integerp(index, cause)) {
       elt =  f2larva__new(cause, 1);

@@ -199,10 +199,8 @@
 [defunk mapc [proc seq]
   [if [null seq]
       nil
-    [prog [define mapc-result [apply proc [cons [car seq] nil]]]
-	  [if [exception? mapc-result]
-	      mapc-result
-	    [mapc proc [cdr seq]]]]]]
+    [prog [apply proc [cons [car seq] nil]]
+	  [mapc  proc [cdr seq]]]]]
 
 [defunk parseq [proc seq]
   [if [null seq]

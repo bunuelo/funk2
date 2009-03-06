@@ -1092,7 +1092,7 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp) {
     return f2larva__new(cause, 1);
   }
   f2ptr arg2 = f2cons__car(cddr_args, cause);
-  return f2cons__new(cause, f2bytecode__new(cause, command, arg0, arg1, arg2));
+  return f2cons__new(cause, f2bytecode__new(cause, command, arg0, arg1, arg2), nil);
 }
 
 f2ptr __f2__demetropolize__special_symbol_exp__symbol = -1;

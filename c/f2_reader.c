@@ -60,6 +60,31 @@ const char __symbol_key_char              = ':';
 
 const bool __reader__all_caps = 0;
 
+f2ptr __char__space   = -1;
+f2ptr __char__tab     = -1;
+f2ptr __char__newline = -1;
+f2ptr __char__return  = -1;
+f2ptr __eof__symbol   = -1;
+
+f2ptr __char__left_paren             = -1;
+f2ptr __char__right_paren            = -1;
+f2ptr __char__array_left_paren       = -1;
+f2ptr __char__array_right_paren      = -1;
+f2ptr __char__doublelink_right_paren = -1;
+f2ptr __char__doublelink_left_paren  = -1;
+f2ptr __char__quote                  = -1;
+f2ptr __char__backquote              = -1;
+f2ptr __char__comma                  = -1;
+f2ptr __char__cdr_comma              = -1;
+f2ptr __char__funktion               = -1;
+f2ptr __char__escape                 = -1;
+f2ptr __char__escape_hex             = -1;
+f2ptr __char__escape_hex_char        = -1;
+f2ptr __char__escape_larva           = -1;
+f2ptr __char__escape_gfunkptr        = -1;
+f2ptr __char__string_quote           = -1;
+f2ptr __char__symbol_quote           = -1;
+
 //char __fgetc(FILE* fptr) {
 //  //if (__received_signal__sigint) {return 0;}
 //  return fgetc(fptr);
@@ -139,31 +164,6 @@ f2ptr comma_filter_backquoted_exp(f2ptr cause, f2ptr exp) {
   }
   return exp;
 }
-
-f2ptr __char__space   = -1;
-f2ptr __char__tab     = -1;
-f2ptr __char__newline = -1;
-f2ptr __char__return  = -1;
-f2ptr __eof__symbol   = -1;
-
-f2ptr __char__left_paren             = -1;
-f2ptr __char__right_paren            = -1;
-f2ptr __char__array_left_paren       = -1;
-f2ptr __char__array_right_paren      = -1;
-f2ptr __char__doublelink_right_paren = -1;
-f2ptr __char__doublelink_left_paren  = -1;
-f2ptr __char__quote                  = -1;
-f2ptr __char__backquote              = -1;
-f2ptr __char__comma                  = -1;
-f2ptr __char__cdr_comma              = -1;
-f2ptr __char__funktion               = -1;
-f2ptr __char__escape                 = -1;
-f2ptr __char__escape_hex             = -1;
-f2ptr __char__escape_hex_char        = -1;
-f2ptr __char__escape_larva           = -1;
-f2ptr __char__escape_gfunkptr        = -1;
-f2ptr __char__string_quote           = -1;
-f2ptr __char__symbol_quote           = -1;
 
 f2ptr raw__read(f2ptr cause, f2ptr stream) {
   // basic type checking for stream argument

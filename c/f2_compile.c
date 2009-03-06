@@ -1073,11 +1073,11 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp) {
   if (! raw__consp(exp, cause)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr command = f2cons__car(exp);
+  f2ptr command = f2cons__car(exp, cause);
   if (! raw__symbolp(command, cause)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr args    = f2cons__cdr(exp);
+  f2ptr args    = f2cons__cdr(exp, cause);
   if (! raw__consp(args, cause)) {
     return f2larva__new(cause, 1);
   }

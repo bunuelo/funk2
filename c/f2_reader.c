@@ -80,6 +80,9 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   //    f2__print(cause, read_ch); 
   //  }
   //}
+  if (raw__eq(cause, read_ch, __eof__symbol)) {
+    status("f2__stream__getc() note: eof reached.");
+  }
   return read_ch;
 }
 
@@ -172,8 +175,8 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   //if (strlen(line) > 0)
   //  add_history (line);
   // skip to first non-whitespace char  
-
-
+  
+  
   do {first_char = f2__stream__getc(cause, stream);} while (raw__eq(cause, first_char, __char__space)   ||
 							    raw__eq(cause, first_char, __char__tab)     ||
 							    raw__eq(cause, first_char, __char__newline) ||

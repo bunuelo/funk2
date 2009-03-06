@@ -165,7 +165,8 @@
 
 [defunk error [type value]
   [larva 63]]
-`[print [exception `error [cons type [cons value nil]]]]]
+
+`[exception `error [cons type [cons value nil]]]
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 

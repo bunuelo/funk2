@@ -19,11 +19,7 @@
  rights to redistribute these changes.
 '
 
-[print 'beginning bootstrap-boot.fu2']
-
 [globalize user-boot-commands nil]
-
-[print 'debug 1']
 
 [defunk boot []
   [if user-boot-commands
@@ -42,17 +38,9 @@
   [repl]
   ]
 
-
-[print 'debug 2']
-
 [defunk boot-add_user_command [user_command]
   [set user-boot-commands [append user-boot-commands
 				  [cons user_command nil]]]]
-
-[print 'ending bootstrap-boot.fu2']
-
-
-[print 'horraay']
 
 '
 `[defunk boot []

@@ -63,16 +63,16 @@
 
 [define -current_env_name- `global-environment]
 
-[globalize-funk funk-unlabeled [make-metro -trace_all_compiles- `funk-unlabeled `[name args :rest body]
+[globalize-funk funk-unlabeled [make-metro `funk-unlabeled `[name args :rest body]
 					   `[[define demetroed    [exps-demetropolize_full body]]
-					     [define compiled_funk [make-funk -trace_all_compiles- name args
+					     [define compiled_funk [make-funk name args
 									      demetroed
 									      body
 									      nil
 									      nil]]
 					     [define compiled_bcs  [unsafe:array-elt compiled_funk  4]]
 					     [define is_funktional [unsafe:array-elt compiled_funk 10]]
-					     `[make-funk ,-trace_all_compiles- [quote ,name] [quote ,args]
+					     `[make-funk [quote ,name] [quote ,args]
 							  [quote ,demetroed]
 							  [quote ,body]
 							  [quote ,compiled_bcs]
@@ -81,20 +81,20 @@
 					    nil
 					    nil]]
 
-[globalize-funk metro [make-metro -trace_all_compiles- `metro `[name args :rest body]
+[globalize-funk metro [make-metro `metro `[name args :rest body]
 				  `[[define demetroed    [exps-demetropolize_full body]]
-				    [define compiled_funk [make-funk -trace_all_compiles- name args
+				    [define compiled_funk [make-funk name args
 								     demetroed
 								     body
 								     nil
 								     nil]]
 				    [define compiled_bcs  [unsafe:array-elt compiled_funk  4]]
 				    [define is_funktional [unsafe:array-elt compiled_funk 10]]
-				    `[make-metro ,-trace_all_compiles- [quote ,name] [quote ,args]
-						  [quote ,demetroed]
-						  [quote ,body]
-						  [quote ,compiled_bcs]
-						  ,is_funktional]]
+				    `[make-metro [quote ,name] [quote ,args]
+						 [quote ,demetroed]
+						 [quote ,body]
+						 [quote ,compiled_bcs]
+						 ,is_funktional]]
 				   nil
 				   nil
 				   nil]]
@@ -137,7 +137,7 @@
 
 
 [defunk eval [exp]
-  [funk-apply [make-funk -trace_all_compiles- `eval []
+  [funk-apply [make-funk `eval []
 			 [cons exp nil]
 			 [cons exp nil]
 			 nil
@@ -628,14 +628,6 @@
 				       [[float?   exp]                    exp]
 				       [t [error `cannot-coerce-type-to-integer [type exp]]]]]
 	     [t                  [error `cannot-coerce-to-type type]]]]]]
-
-[defmetro trace-on [:rest body]
-  `[let [[-trace_all_compiles- t]]
-     @body]]
-
-[defmetro trace-off [:rest body]
-  `[let [[-trace_all_compiles- nil]]
-     @body]]
 
 [defmetro with-critic [critic :rest body]
   `[let [[this-thread [this-thread]]]

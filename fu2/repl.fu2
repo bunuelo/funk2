@@ -99,7 +99,9 @@
   [print [cons `load filenames]]
   [mapc [funk [filename]
 	      [load1 filename]]
-	filenames]]
+	filenames]
+  nil
+  ]
 
 [defunk parload [:rest filenames]
   [print [cons `parload filenames]]

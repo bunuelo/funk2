@@ -525,16 +525,16 @@
 
 [defmetro array-elt [x y]
   [if [integer? y]
-      [exp-print `[rawcode ,x
-			    [bytecode reg_array-elt value ,y nil]]]
+      `[rawcode ,x
+		 [bytecode reg_array-elt value ,y nil]]
     `[array-elt-var_index ,x ,y]]]
 
 [defmetro array-elt-set [x y z]
   [if [integer? y]
-      [exp-print `[rawcode ,x
-			    [bytecode copy value iter nil]
-			    ,z
-			     [bytecode reg_array-elt-set iter ,y nil]]]
+      `[rawcode ,x
+		 [bytecode copy value iter nil]
+		 ,z
+		  [bytecode reg_array-elt-set iter ,y nil]]
     `[array-elt-set-var_index ,x ,y ,z]]]
 
 [defmetro array-elt-tracing_on            [x y]   `[,[if *compile-type-checking* `safe:array-elt-tracing_on            `unsafe:array-elt-tracing_on]            ,x ,y]]

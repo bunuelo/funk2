@@ -2315,7 +2315,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(array__tracing_on__set);
   
   f2__primcfunk__init(funk2_node_handler__know_of_node);
-  f2__primcfunk__init(send_request_register_peer);
+  f2__primcfunk__init__4(send_request_register_peer, computer_id, node_id, ip_addr, port_num);
   
   f2__primcfunk__init(system__peer_command_server__port_num);
   f2__primcfunk__init(system__gethostname);

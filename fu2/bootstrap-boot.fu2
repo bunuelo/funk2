@@ -53,8 +53,9 @@
 	  '\n*************************'
 	  '\n']
   `[funk2_node_handler-know_of_node [system-gethostname] [system-peer_command_server-port_num]]
-  [repl]
-  ]
+   [send_request_register_peer 0 [system-node_id] (0 0 0 0) [system-peer_command_server-port_num]]
+   [repl]
+   ]
 
 
 [print 'horraay']

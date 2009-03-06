@@ -25,7 +25,7 @@
 
 [print 'debug 1']
 
-[defunk boot []
+`[defunk boot []
   [if user-boot-commands
       [mapc [funk [user-boot-command]
 		  [format stdout '\nuser-boot-command: ' user-boot-command]

@@ -65,7 +65,8 @@
 		  [if [eq name object_name]
 		      [set object obj]]]]
 	  objects]
-    [if [null object]
+    [if [or [null gripper]
+	    [null object]]
 	`failure
       [let [[x0 [blocks_world_object-x0 gripper]]
 	    [x1 [blocks_world_object-x1 gripper]]]

@@ -476,7 +476,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
     if (exp__is_funktional && next) {
       status("optimizing funktional beginning of rawcode!");
       //f2__print(cause, exp);
-      if (optimize_usused_beginning) {
+      if (optimize_unused_beginning) {
 	full_bcs = nil;
       }
       exps     = next;

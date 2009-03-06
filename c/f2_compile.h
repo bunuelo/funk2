@@ -42,7 +42,7 @@ f2ptr f2__compile__funk_bc(f2ptr cause);
 
 f2ptr f2__compile__funk(f2ptr cause, f2ptr thread, f2ptr metro);
 f2ptr f2__compile__metro(f2ptr cause, f2ptr thread, f2ptr metro);
-f2ptr f2__compile__rawcode(f2ptr cause, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional);
+f2ptr f2__compile__rawcode(f2ptr cause, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional, bool optimize_unused_beginning);
 f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp);
 f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr thread, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional);
 f2ptr f2__demetropolize_once(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp);

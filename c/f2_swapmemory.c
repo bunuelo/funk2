@@ -69,11 +69,7 @@ void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num) {
   }
 }
 
-void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
-  if (munmap(this->ptr, this->byte_num) == -1) {
-    printf("\nf2swapmemory__destroy_and_free error: couldn't unmap file \"%s\".\n", this->filename);
-    error(nil, "f2swapmemory__destroy_and_free error: couldn't unmap file");
-  }
+int safe_close(int fd) {
   do {
     int result = close(this->fd);
     if (result == -1) {
@@ -93,6 +89,18 @@ void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
       }
     }
   } while (result == -1 && errno == EINTR);
+  return result;
+}
+
+void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
+  if (munmap(this->ptr, this->byte_num) == -1) {
+    printf("\nf2swapmemory__destroy_and_free error: couldn't unmap file \"%s\".\n", this->filename);
+    error(nil, "f2swapmemory__destroy_and_free error: couldn't unmap file");
+  }
+  if (safe_close(this->fd) == -1) {
+    printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\".\n", this->filename);
+    error(nil, "f2swapmemory__destroy_and_free error: couldn't close file.");
+  }
   if (unlink(this->filename) == -1) {
     printf("\nf2swapmemory__destroy_and_free error: couldn't unlink file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__destroy_and_free error: couldn't unlink file");

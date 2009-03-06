@@ -125,6 +125,8 @@ void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
     printf("\nf2swapmemory__resize error: couldn't unmap file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__resize error: couldn't unmap file");
   }
+  u64 old_byte_num = this->byte_num;
+  ptr old_ptr      = to_ptr(this->ptr);
   this->byte_num = byte_num;
   this->ptr = f2__mmap(NULL,
 		       byte_num,
@@ -132,6 +134,9 @@ void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
 		       MAP_SHARED,
 		       this->fd,
 		       0);
+  status("f2__mmap from " u64__fstr " bytes at address " ptr__fstr " to " u64__fstr " bytes at address " ptr__fstr ".",
+	 old_byte_num,   old_ptr,
+	 this->byte_num, this->ptr);
   if (this->ptr == MAP_FAILED ||
       this->ptr == NULL) { // should never return NULL, so this would definately be an unexpected error.
     printf("\nf2swapmemory__resize error: couldn't mmap file \"%s\".\n", this->filename);

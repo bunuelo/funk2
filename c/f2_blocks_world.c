@@ -306,7 +306,7 @@ def_pcfunk3(blocks_world_rectangle__new_translate, this, dx, dy, return f2__bloc
 */
 
 f2ptr f2__blocks_world_rectangle__overlaps(f2ptr cause, f2ptr this, f2ptr rectangle) {
-  if ((! raw__blocks_world_rectanglep(this, cause)) ||
+  if ((! raw__blocks_world_rectanglep(this,      cause)) ||
       (! raw__blocks_world_rectanglep(rectangle, cause))) {
     return f2larva__new(cause, 1);
   }

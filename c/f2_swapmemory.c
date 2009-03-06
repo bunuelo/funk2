@@ -70,8 +70,9 @@ void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num) {
 }
 
 int safe_close(int fd) {
+  int result = -1;
   do {
-    int result = close(fd);
+    result = close(fd);
     if (result == -1) {
       switch(errno) {
       case EBADF:

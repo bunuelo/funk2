@@ -465,7 +465,7 @@
 
 [defunk hashtable-new [bin_num_power] [hashtable bin_num_power [array-new [<< 1 bin_num_power]]]]
 
-[defmetro put [value place]
+`[defmetro put [value place]
   [let [[dplace [demetropolize_full place]]]
     [cond [[symbol? dplace] `[set ,dplace ,value]]
 	  [[cons?   dplace] [let [[car [car dplace]]]
@@ -559,7 +559,7 @@
 				    [t [error `compile-time 'unrecognized accessor to convert to mutator']]]]]
 	  [t [error `compile-time 'unrecognized type of demetropolized place.']]]]]
 
-[defmetro push [element place]
+`[defmetro push [element place]
   `[let [[element_value ,element]]
      [put [cons element_value ,place] ,place]]]
 

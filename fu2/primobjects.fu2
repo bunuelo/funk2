@@ -19,13 +19,13 @@
  rights to redistribute these changes.
 '
 
-[defmetro unsafe:array-elt [x y]
+`[defmetro unsafe:array-elt [x y]
   [if [prog `[integer? y] nil]
       `[rawcode ,x
 		 [bytecode reg_array-elt value ,y nil]]
     `[primfunk:array__elt ,x ,y]]]
 
-[defmetro unsafe:array-elt-set [x y z]
+`[defmetro unsafe:array-elt-set [x y z]
   [if [prog `[integer? y] nil]
       `[rawcode ,x
 		 [bytecode push              iter  nil  nil]

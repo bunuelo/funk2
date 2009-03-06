@@ -181,7 +181,13 @@ bool raw__cause__is_traced(f2ptr cause, f2ptr this) {
   if (! this) {
     return nil;
   }
-  debug__assert(raw__causep(this, cause), nil, "raw__cause__is_traced !raw__causep(this, cause)");
+#ifdef F2__PTYPE__TYPE_CHECK
+  if(! raw__causep(this, cause)) {
+    status("raw__cause__is_traced !raw__causep(this, cause)");
+    f2__print(nil, this); fflush(stdout);
+    error(nil, "raw__cause__is_traced !raw__causep(this, cause)");
+  }
+#endif
   return f2cause__memory_tracing_on(this, cause);
 }
 
@@ -193,7 +199,13 @@ bool raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
   if (! this) {
     return nil;
   }
-  debug__assert(raw__causep(this, cause), nil, "raw__cause__is_imaginary !raw__causep(this, cause)");
+#ifdef F2__PTYPE__TYPE_CHECK
+  if(! raw__causep(this, cause)) {
+    status("raw__cause__is_imaginary !raw__causep(this, cause)");
+    f2__print(nil, this); fflush(stdout);
+    error(nil, "raw__cause__is_imaginary !raw__causep(this, cause)");
+  }
+#endif
   bool return_value = (f2cause__imagination_stack(this, cause) != nil);
   if (return_value) {
     debug__cause__is_imaginary();

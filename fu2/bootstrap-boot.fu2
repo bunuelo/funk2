@@ -23,6 +23,8 @@
 
 [globalize user-boot-commands nil]
 
+[print 'debug 1']
+
 [defunk boot []
   [if user-boot-commands
       [prog [mapc [funk [user-boot-command]
@@ -42,6 +44,8 @@
    [send_request_register_peer 0 [system-node_id] (0 0 0 0) [system-peer_command_server-port_num]]
    [repl]
    ]
+
+[print 'debug 2']
 
 [defunk boot-add_user_command [user_command]
   [set user-boot-commands [append user-boot-commands

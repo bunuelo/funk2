@@ -99,6 +99,7 @@ void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
     error(nil, "f2swapmemory__destroy_and_free error: couldn't unmap file");
   }
   if (safe_close(this->fd) == -1) {
+    perror("safe_close");
     printf("\nf2swapmemory__destroy_and_free error: couldn't close file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__destroy_and_free error: couldn't close file.");
   }

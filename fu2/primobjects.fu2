@@ -19,6 +19,24 @@
  rights to redistribute these changes.
 '
 
+[defmetro unsafe:array-elt [x y]
+  [if [integer? y]
+      `[rawcode ,x
+		 [bytecode reg_array-elt value ,y nil]]
+    `[unsafe:array-elt-var_index ,x ,y]]]
+
+[defmetro unsafe:array-elt-set [x y z]
+  [if [integer? y]
+      `[rawcode ,x
+		 [bytecode push              iter  nil  nil]
+		 [bytecode copy              value iter nil]
+		 ,z
+		  [bytecode reg_array-elt-set iter  ,y   nil]
+		  [bytecode pop               iter  nil  nil]
+		  ]
+    `[unsafe:array-elt-set-var_index ,x ,y ,z]]]
+
+
 [defunk   primobject?                [x]      [and x [array? x] [unsafe:integer-greater_than [unsafe:array-length x] 1] [eq [array-elt x 0] `primobject]]]
 [defmetro unsafe:primobject-slot     [x y]   `[array-elt     ,x [unsafe:integer-add 2 ,y]]]
 [defmetro unsafe:primobject-slot-set [x y z] `[array-elt-set ,x [unsafe:integer-add 2 ,y] ,z]]
@@ -519,27 +537,9 @@
 [defmetro string-to_new_raw_c_string   [x]     `[,[if *compile-type-checking* `safe:string-to_new_raw_c_string   `unsafe:string-to_new_raw_c_string]   ,x]]
 [defmetro string-new_from_raw_c_string [x]     `[,[if *compile-type-checking* `safe:string-new_from_raw_c_string `unsafe:string-new_from_raw_c_string] ,x]]
 
-[defmetro array-length            [x]     `[,[if *compile-type-checking* `safe:array-length                    `unsafe:array-length]                    ,x]]
-[defmetro array-elt-var_index     [x y]   `[,[if *compile-type-checking* `safe:array-elt                       `unsafe:array-elt]                       ,x ,y]]
-[defmetro array-elt-set-var_index [x y z] `[,[if *compile-type-checking* `safe:array-elt-set                   `unsafe:array-elt-set]                   ,x ,y ,z]]
-
-[defmetro array-elt [x y]
-  [if [integer? y]
-      `[rawcode ,x
-		[bytecode reg_array-elt value ,y nil]]
-    `[array-elt-var_index ,x ,y]]]
-
-[defmetro array-elt-set [x y z]
-  [if [integer? y]
-      `[rawcode ,x
-		[bytecode push              iter  nil  nil]
-		[bytecode copy              value iter nil]
-		,z
-		[bytecode reg_array-elt-set iter  ,y   nil]
-		[bytecode pop               iter  nil  nil]
-		]
-    `[array-elt-set-var_index ,x ,y ,z]]]
-
+[defmetro array-length  [x]     `[,[if *compile-type-checking* `safe:array-length                    `unsafe:array-length]                    ,x]]
+[defmetro array-elt     [x y]   `[,[if *compile-type-checking* `safe:array-elt                       `unsafe:array-elt]                       ,x ,y]]
+[defmetro array-elt-set [x y z] `[,[if *compile-type-checking* `safe:array-elt-set                   `unsafe:array-elt-set]                   ,x ,y ,z]]
 [defmetro array-elt-tracing_on            [x y]   `[,[if *compile-type-checking* `safe:array-elt-tracing_on            `unsafe:array-elt-tracing_on]            ,x ,y]]
 [defmetro array-elt-tracing_on-set        [x y z] `[,[if *compile-type-checking* `safe:array-elt-tracing_on-set        `unsafe:array-elt-tracing_on-set]        ,x ,y ,z]]
 [defmetro array-elt-trace                 [x y]   `[,[if *compile-type-checking* `safe:array-elt-trace                 `unsafe:array-elt-trace]                 ,x ,y]]

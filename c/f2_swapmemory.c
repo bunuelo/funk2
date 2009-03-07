@@ -57,13 +57,14 @@ void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num) {
   }
   this->byte_num = byte_num;
   
-  this->ptr = f2__mmap(NULL,
-		       byte_num,
-		       PROT_EXEC | PROT_READ | PROT_WRITE,
-		       MAP_SHARED,
-		       this->fd,
-		       0);
-  if (this->ptr == NULL) {
+  this->ptr = to_ptr(f2__mmap(NULL,
+			      byte_num,
+			      PROT_EXEC | PROT_READ | PROT_WRITE,
+			      MAP_SHARED,
+			      this->fd,
+			      0));
+  if (from_ptr(this->ptr) == MAP_FAILED ||
+      from_ptr(this->ptr) == NULL) {
     printf("\nf2swapmemory__init_and_alloc error: couldn't mmap file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__init_and_alloc error: couldn't mmap file");
   }
@@ -128,17 +129,17 @@ void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
   u64 old_byte_num = this->byte_num;
   ptr old_ptr      = to_ptr(this->ptr);
   this->byte_num = byte_num;
-  this->ptr = f2__mmap(NULL,
-		       byte_num,
-		       PROT_EXEC | PROT_READ | PROT_WRITE,
-		       MAP_SHARED,
-		       this->fd,
-		       0);
+  this->ptr = to_ptr(f2__mmap(NULL,
+			      byte_num,
+			      PROT_EXEC | PROT_READ | PROT_WRITE,
+			      MAP_SHARED,
+			      this->fd,
+			      0));
   status("f2__mmap from " u64__fstr " bytes at address " ptr__fstr " to " u64__fstr " bytes at address " ptr__fstr ".",
 	 old_byte_num,   (ptr)(old_ptr),
 	 this->byte_num, (ptr)(this->ptr));
-  if (this->ptr == MAP_FAILED ||
-      this->ptr == NULL) { // should never return NULL, so this would definately be an unexpected error.
+  if (from_ptr(this->ptr) == MAP_FAILED ||
+      from_ptr(this->ptr) == NULL) { // should never return NULL, so this would definately be an unexpected error.
     printf("\nf2swapmemory__resize error: couldn't mmap file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__resize error: couldn't mmap file");
   }

@@ -167,9 +167,9 @@ void memorypool__init(memorypool_t* pool) {
   pool->total_free_memory = pool->total_global_memory;
   
   //pool->global_memory_block_data = f2__malloc(sizeof(memblock_t) + F2__INITIAL_MEMORY);
-  pool->global_f2ptr_offset = to_ptr((char*)(memorypool__memory__ptr(pool)) - 1);
+  pool->global_f2ptr_offset = to_ptr(memorypool__memory__ptr(pool) - 1);
   //pool->global_f2ptr_offset = pool->global_memory_block_data - 1;
-  memblock_t* block = (memblock_t*)(memorypool__memory__ptr(pool));
+  memblock_t* block = (memblock_t*)from_ptr(memorypool__memory__ptr(pool));
   memblock__init(block, pool->total_global_memory, 0, 0);
   
   rbt_tree__init(&(pool->free_memory_tree), NULL);

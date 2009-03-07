@@ -418,7 +418,7 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
   f2swapmemory_t old_swap_memory; memcpy(&old_swap_memory, &(__funk2.memory.pool[pool_index].swap_memory), sizeof(f2swapmemory_t));
   //__funk2.memory.pool[pool_index].global_memory_block_data = f2__new_alloc(__funk2.memory.pool[pool_index].global_memory_block_data, old_total_global_memory, byte_num);
   f2swapmemory__realloc(&(__funk2.memory.pool[pool_index].swap_memory), &old_swap_memory, byte_num);
-  __funk2.memory.pool[pool_index].global_f2ptr_offset = to_ptr((char*)(__funk2.memory.pool[pool_index].swap_memory.ptr) - 1);
+  __funk2.memory.pool[pool_index].global_f2ptr_offset = __funk2.memory.pool[pool_index].swap_memory.ptr - 1;
   __funk2.memory.pool[pool_index].total_global_memory = byte_num;
   if (__funk2.memory.pool[pool_index].swap_memory.ptr != old_swap_memory.ptr) {
     // need to fix pointers (globals, memblock__next(block))

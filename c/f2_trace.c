@@ -50,7 +50,9 @@ f2ptr __do_not_remember__symbol = -1;
 f2ptr raw__trace__remember__microseconds_since_1970(f2ptr cause, f2ptr this, u64 microseconds_since_1970, f2ptr* remember_value) {
   release__assert(__do_not_remember__symbol != -1, nil, "raw__trace__remember__microseconds_since_1970 assertion failed: __do_not_remember__symbol != -1");
   if (! this) {return __do_not_remember__symbol;}
-  u64 this__microseconds_since_1970 = memblock__creation_microseconds_since_1970(this, cause);
+  error(nil, "we can't use creation microseconds of block for this...  this funktionn is not fully implemented...");
+  // we can't use creation microseconds of block for this...
+  // u64 this__microseconds_since_1970 = memblock__creation_microseconds_since_1970(this, cause);
   if (microseconds_since_1970 > this__microseconds_since_1970) {
     *remember_value = raw__array__elt(cause, f2cons__car( f2transframe__symbol_old_news( f2doublelink__value( this, cause), cause), cause), 2);
     return this; // used for continued tracing from this location.

@@ -27,7 +27,7 @@
 [defunk slotdef-default_exp [exp]
   [cond [[symbol? exp] nil]
 	[[cons?   exp] [second exp]]
-	[t             [error `compile-time `[slotdef-name ,exp]]]]]
+	[t             [error `compile-time `[slotdef-default_exp ,exp]]]]]
 
 [globalize -primobject_type-name-hash- [hashtable-new 10]]
 

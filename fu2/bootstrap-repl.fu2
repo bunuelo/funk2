@@ -475,7 +475,7 @@
 	[if cdr [dotimes [i length] [array-elt-set a i [apply &array-new cdr]]]]
 	a]]]]
 
-[defunk hashtable-new [bin_num_power] [hashtable bin_num_power [array-new [<< 1 bin_num_power]]]]
+[defunk hashtable-new [bin_num_power] [hashtable bin_num_power [array-new [integer-bitshift_left 1 bin_num_power]]]]
 
 `[defmetro put [value place]
   [let [[dplace [demetropolize_full place]]]

@@ -62,14 +62,14 @@
 
 'fu2/x86-compile.fu2'
 
+[load 'fu2/gmodule.fu2'
+      'fu2/alien.fu2']
+
 [globalize load-utilities nil]
 
 [defunk load-utilities []
   
   [parload 'fu2/remember.fu2']
-  
-  [parload 'fu2/gmodule.fu2'
-	   'fu2/alien.fu2']
   
   [seqload 'fu2/errno.fu2'
 	   'fu2/socket.fu2'

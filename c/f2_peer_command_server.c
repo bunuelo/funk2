@@ -114,8 +114,6 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   switch(payload_header->type) {
   case funk2_packet_type__pcs_request__system__environment:
   case funk2_packet_type__pcs_respond__system__environment:
-  case funk2_packet_type__pcs_request__memblock__creation_microseconds_since_1970:
-  case funk2_packet_type__pcs_respond__memblock__creation_microseconds_since_1970:
   case funk2_packet_type__pcs_request__f2ptype__raw:
   case funk2_packet_type__pcs_respond__f2ptype__raw:
   case funk2_packet_type__pcs_request__f2ptype__cause:

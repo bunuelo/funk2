@@ -178,7 +178,7 @@ extern f2ptr fast__ptr_to_f2ptr(ptr   p);
 
 typedef struct funk2_memory_s {
   memorypool_t pool[memory_pool_num];
-  memblock_t*  global_environment_ptr;
+  ptr          global_environment_ptr;
   f2ptr        global_environment_f2ptr;
   float        memblock__last_x;
   float        memblock__last_y;

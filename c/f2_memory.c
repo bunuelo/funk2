@@ -49,7 +49,7 @@ void free_executable(ptr p) {
 // funk2_memory
 
 void funk2_memory__init(funk2_memory_t* this) {
-  this->global_environment_ptr   = NULL;
+  this->global_environment_ptr   = to_ptr(NULL);
   this->global_environment_f2ptr = nil;
   
   this->memblock__last_x       =  0.0;
@@ -1348,7 +1348,7 @@ void global_environment__set(f2ptr global_environment) {
     memory_mutex__lock(pool_index);
   }
   __funk2.memory.global_environment_f2ptr = global_environment;
-  __funk2.memory.global_environment_ptr   = (memblock_t*)from_ptr(raw__f2ptr_to_ptr(global_environment));
+  __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__unlock(pool_index);
   }
@@ -1647,7 +1647,7 @@ int raw__memory_image__load(char* filename) {
       }
       
       __funk2.memory.global_environment_f2ptr = global_environment_f2ptr;
-      __funk2.memory.global_environment_ptr   = (memblock_t*)from_ptr(raw__f2ptr_to_ptr(global_environment_f2ptr));
+      __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
       
       // rebuild auxilary memory info from image
       rebuild_memory_info_from_image();

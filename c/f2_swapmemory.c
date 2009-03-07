@@ -95,7 +95,7 @@ int safe_close(int fd) {
 }
 
 void f2swapmemory__destroy_and_free(f2swapmemory_t* this) {
-  if (munmap(this->ptr, this->byte_num) == -1) {
+  if (munmap(from_ptr(this->ptr), this->byte_num) == -1) {
     printf("\nf2swapmemory__destroy_and_free error: couldn't unmap file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__destroy_and_free error: couldn't unmap file");
   }

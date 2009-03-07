@@ -422,7 +422,7 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
   __funk2.memory.pool[pool_index].total_global_memory = byte_num;
   if (__funk2.memory.pool[pool_index].swap_memory.ptr != old_swap_memory.ptr) {
     // need to fix pointers (globals, memblock__next(block))
-    s64 byte_diff = (s64)(((u8*)__funk2.memory.pool[pool_index].swap_memory.ptr) - ((u8*)old_swap_memory.ptr));
+    s64 byte_diff = (s64)(__funk2.memory.pool[pool_index].swap_memory.ptr - old_swap_memory.ptr);
     if (__funk2.memory.pool[pool_index].used_memory_tree.head)  {__funk2.memory.pool[pool_index].used_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].used_memory_tree.head) + byte_diff);}
     if (__funk2.memory.pool[pool_index].free_memory_tree.head)  {__funk2.memory.pool[pool_index].free_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].free_memory_tree.head) + byte_diff);}
     if ((u8*)__funk2.memory.global_environment_ptr >=  (u8*)old_swap_memory.ptr &&

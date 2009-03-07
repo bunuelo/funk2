@@ -25,7 +25,7 @@ void swapmemory_filename__generate(char* str) {
   int fd = -1;
   do {
     if (fd != -1) {close(fd);}
-    sprintf(str, "f2swp/----------------------.f2swp");
+    sprintf(str, "/tmp/----------------------.f2swp");
     int i;
     for (i = 0; str[i] != '-'; i++); // get to first -
     for (; str[i] == '-'; i++) { // replace all consecutive -s

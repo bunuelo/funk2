@@ -62,20 +62,53 @@ typedef unsigned int  bool;
 #define error(thread, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(thread, __FILE__, __LINE__, str); exit(-1);}
 
 
-typedef u64 f2ptr;
-#define f2ptr__fstr X64__fstr
+#define CRUNCH_BIT_CONFIGURATION
+#ifdef CRUNCH_BIT_CONFIGURATION
+typedef                         u32 f2ptr;
+#  define f2ptr__fstr           X32__fstr
+#  define f2ptr__bit_num         32
 
-typedef u32 computer_id_t;
-#define computer_id__fstr X32__fstr
+typedef                          u8 computer_id_t;
+#  define computer_id__fstr      X8__fstr
+#  define computer_id__bit_num    1
 
-typedef u8 pool_index_t;
-#define pool_index__fstr X8__fstr
+typedef                          u8 pool_index_t;
+#  define pool_index__fstr       X8__fstr
+#  define pool_index__bit_num     3
 
-typedef u64 pool_address_t;
-#define pool_address__fstr X64__fstr
+typedef                         u64 pool_address_t;
+#  define pool_address__fstr    X64__fstr
+#  define pool_address__bit_num  28
+
+#else
+
+typedef                         u64 f2ptr;
+#  define f2ptr__fstr           X64__fstr
+#  define f2ptr__bit_num         64
+
+typedef                         u32 computer_id_t;
+#  define computer_id__fstr     X32__fstr
+#  define computer_id__bit_num   17
+
+typedef                          u8 pool_index_t;
+#  define pool_index__fstr       X8__fstr
+#  define pool_index__bit_num     5
+
+typedef                         u64 pool_address_t;
+#  define pool_address__fstr    X64__fstr
+#  define pool_address__bit_num  42
+
+#endif
+
+
+
 
 typedef u64 event_id_t;
 #define event_id__fstr "#x" X64__fstr
+
+#if (f2ptr__bit_num != (computer_id__bit_num + pool_index__bit_num + pool_address__bit_num))
+#  error (f2ptr__bit_num != (computer_id__bit_num + pool_index__bit_num + pool_address__bit_num))
+#endif
 
 #endif // F2__GLOBAL__H
 

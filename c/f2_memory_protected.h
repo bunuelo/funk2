@@ -39,18 +39,12 @@
 
 #define maximum_generation_num 7
 
-//#define ptype__total_num 14
-//#define ptype__min_bits   4
-
 struct memblock_s {
   rbt_node_t rbt_node;
-  u16        used           : 1;
-  u16        gc_touch       : 1;
-  u16        generation_num : 3;
-  u16        ptype          : ptype__min_bits;
-#ifdef MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-  u64        creation_microseconds_since_1970;
-#endif // MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
+  u8         used           : 1;
+  u8         gc_touch       : 1;
+  u8         generation_num : 3;
+  u8         ptype          : ptype__min_bits;
 #ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
   float      render_position[3];
   u8         render_create_activated : 1;
@@ -111,10 +105,9 @@ extern void memory_mutex__lock(int pool_index);
 extern int  memory_mutex__try_lock(int pool_index);
 extern void memory_mutex__unlock(int pool_index);
 
-#define f2ptr__bit_num               64
-#define f2ptr__computer_id__bit_num  17
-#define f2ptr__pool_index__bit_num   5
-#define f2ptr__pool_address__bit_num 42
+#define f2ptr__computer_id__bit_num  computer_id__bit_num
+#define f2ptr__pool_index__bit_num   pool_index__bit_num
+#define f2ptr__pool_address__bit_num pool_address__bit_num
 
 #define f2ptr__computer_id__max_value  ((((f2ptr)1)<<(f2ptr__computer_id__bit_num)) -1)
 #define f2ptr__pool_index__max_value   ((((f2ptr)1)<<(f2ptr__pool_index__bit_num))  -1)

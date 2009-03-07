@@ -48,9 +48,9 @@
 [load 'fu2/bootstrap-blocks_world.fu2']
 [print 'done loading bootstrap-blocks_world.fu2']
 
-[parload 'fu2/miscfunks.fu2'
-	 'fu2/cause.fu2'
-	 ]
+`[parload 'fu2/miscfunks.fu2'
+	  'fu2/cause.fu2'
+	  ]
 
 [load 'fu2/critics-reactive.fu2']
 [print 'done loading critics-reactive.fu2']

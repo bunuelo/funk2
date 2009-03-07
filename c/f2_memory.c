@@ -158,7 +158,7 @@ void memorypool__init(memorypool_t* pool) {
 #if defined(SWAP_MEMORY)
   pool->total_global_memory = sizeof(memblock_t) + F2__INITIAL_MEMORY;
   {
-    char swap_directory = (__funk2.command_line.swap_directory != NULL) ? __funk2.command_line.swap_directory : "./f2swp/";
+    char* swap_directory = (__funk2.command_line.swap_directory != NULL) ? __funk2.command_line.swap_directory : "./f2swp/";
     f2swapmemory__init_and_alloc(&(pool->swap_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY, swap_directory);
   }
 #elif defined(STATIC_MEMORY)

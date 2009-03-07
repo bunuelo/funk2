@@ -335,8 +335,8 @@ void memory_test__swap_memory(int pool_index) {
 }
 
 void memory_test__byte_num_zero(int pool_index) {
-  memblock_t* iter = (memblock_t*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
-  memblock_t* end_of_blocks = (memblock_t*)(((u8*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) + __funk2.memory.pool[pool_index].total_global_memory);
+  memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
+  memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   while(iter < end_of_blocks) {
     release__assert(memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
     iter = (memblock_t*)(((u8*)iter) + memblock__byte_num(iter));
@@ -346,7 +346,7 @@ void memory_test__byte_num_zero(int pool_index) {
 
 void memory_test__all_known_types(int pool_index) {
   memblock_t* iter = (memblock_t*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
-  memblock_t* end_of_blocks = (memblock_t*)(((u8*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) + __funk2.memory.pool[pool_index].total_global_memory);
+  memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used) {
       ptype_block_t* ptype_block = (ptype_block_t*)iter;

@@ -549,8 +549,8 @@ u8 defragment_free_memory_blocks_in_place(int pool_index) {
   status("defragmenting __funk2.memory.pool[%d]", pool_index);
   //#endif // DEBUG_MEMORY
   u8 did_something = 0;
-  memblock_t* iter = (memblock_t*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]));
-  memblock_t* end_of_blocks = (memblock_t*)(((u8*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) + __funk2.memory.pool[pool_index].total_global_memory);
+  memblock_t* iter = (memblock_t*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
+  memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   memblock_t* segment_first_free_block = NULL;
   rbt_tree__init(&(__funk2.memory.pool[pool_index].free_memory_tree), NULL);
   while(iter < end_of_blocks) {

@@ -10,12 +10,6 @@
 #endif
 
 #if defined(F2__MEMACCESS__PTYPE)
-#  define memblock__creation_microseconds_since_1970 pfunk2__memblock__creation_microseconds_since_1970
-#else
-#  define memblock__creation_microseconds_since_1970 funk2__memblock__creation_microseconds_since_1970
-#endif
-
-#if defined(F2__MEMACCESS__PTYPE)
 #  define f2ptype__raw pfunk2__f2ptype__raw
 #else
 #  define f2ptype__raw funk2__f2ptype__raw

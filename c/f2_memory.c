@@ -1064,7 +1064,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
   ptr block_ptr = to_ptr(block);
-  u64 pool_address = __ptr__pool_address(pool_index, p);
+  u64 pool_address = __ptr__pool_address(pool_index, block);
   if (pool_address >= (((u64)1) << pool_address__bit_num) - 1) {
     status("pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", pool_address, (((u64)1) << pool_address__bit_num) - 1);
     error(nil, "pool_address is out of range.");

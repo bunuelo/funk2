@@ -429,8 +429,8 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
 	__funk2.memory.global_environment_ptr <  old_swap_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
-    memblock_t* iter = __funk2.memory.pool[pool_index].swap_memory.ptr;
-    memblock_t* end_of_blocks = (memblock_t*)(((u8*)__funk2.memory.pool[pool_index].swap_memory.ptr) + old_total_global_memory);
+    memblock_t* iter = from_ptr(__funk2.memory.pool[pool_index].swap_memory.ptr);
+    memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].swap_memory.ptr)) + old_total_global_memory);
     memblock_t* last = NULL;
     while(iter < end_of_blocks) {
       if (iter->rbt_node.parent) {iter->rbt_node.parent = (rbt_node_t*)(((u8*)(iter->rbt_node.parent) + byte_diff));}

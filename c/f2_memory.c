@@ -190,9 +190,9 @@ void pool__destroy(int pool_index) {
 bool valid_memblock_ptr(ptr p) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memblock_t* iter = (memblock_t*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
+    memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
     //memblock_t* iter = __funk2.memory.pool[pool_index].global_memory_block_data;
-    memblock_t* end_of_blocks = (memblock_t*)(((u8*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
+    memblock_t* end_of_blocks = (memblock_t*)(((u8*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))))) + __funk2.memory.pool[pool_index].total_global_memory);
     int byte_num;
     while(iter < end_of_blocks) {
       if ((to_ptr(iter)) == p) {return 1;}

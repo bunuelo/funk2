@@ -45,8 +45,6 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_request__client_request_received                    , // internal router packet wrapper packet
   funk2_packet_type__pcs_request__system__environment                        ,
   funk2_packet_type__pcs_respond__system__environment                        ,
-  funk2_packet_type__pcs_request__memblock__creation_microseconds_since_1970 , //u64              (f2ptr this);
-  funk2_packet_type__pcs_respond__memblock__creation_microseconds_since_1970 ,
   funk2_packet_type__pcs_request__f2ptype__raw                               , //ptype_t          (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2ptype__raw                               ,
   funk2_packet_type__pcs_request__f2ptype__cause                             , //f2ptr            (f2ptr cause, f2ptr this);
@@ -382,45 +380,6 @@ void recv_packet__respond__system__environment(funk2_node_t* funk2_node, pcs_res
 
 f2ptr funk2_node__system__environment(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
 f2ptr funk2__system__environment(f2ptr cause, node_id_t node_id);
-
-
-//  funk2_packet_type__pcs_request__memblock__creation_microseconds_since_1970 = 0x05, //u64              (f2ptr cause, f2ptr this);
-
-// request memblock__creation_microseconds_since_1970
-
-struct pcs_packet_payload_request__memblock__creation_microseconds_since_1970_s {
-  pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  f2ptr                                              this;
-} __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__memblock__creation_microseconds_since_1970_s pcs_packet_payload_request__memblock__creation_microseconds_since_1970_t;
-
-struct pcs_request__memblock__creation_microseconds_since_1970_s {
-  funk2_packet_header_t                                                    header;
-  pcs_packet_payload_request__memblock__creation_microseconds_since_1970_t payload;
-} __attribute__((__packed__));
-typedef struct pcs_request__memblock__creation_microseconds_since_1970_s pcs_request__memblock__creation_microseconds_since_1970_t;
-
-// respond memblock__creation_microseconds_since_1970
-
-struct pcs_packet_payload_respond__memblock__creation_microseconds_since_1970_s {
-  pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u64                                                creation_microseconds_since_1970;
-} __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__memblock__creation_microseconds_since_1970_s pcs_packet_payload_respond__memblock__creation_microseconds_since_1970_t;
-
-struct pcs_respond__memblock__creation_microseconds_since_1970_s {
-  funk2_packet_header_t                     header;
-  pcs_packet_payload_respond__memblock__creation_microseconds_since_1970_t payload;
-} __attribute__((__packed__));
-typedef struct pcs_respond__memblock__creation_microseconds_since_1970_s pcs_respond__memblock__creation_microseconds_since_1970_t;
-
-void send_packet__request__memblock__creation_microseconds_since_1970(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
-void recv_packet__request__memblock__creation_microseconds_since_1970(funk2_node_t* funk2_node, pcs_request__memblock__creation_microseconds_since_1970_t* packet);
-void send_packet__respond__memblock__creation_microseconds_since_1970(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 creation_microseconds_since_1970);
-void recv_packet__respond__memblock__creation_microseconds_since_1970(funk2_node_t* funk2_node, pcs_respond__memblock__creation_microseconds_since_1970_t* packet);
-
-u64 funk2_node__memblock__creation_microseconds_since_1970(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
-u64 funk2__memblock__creation_microseconds_since_1970(f2ptr this, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2ptype__raw                                 = 0x06, //ptype_t          (f2ptr cause, f2ptr this);

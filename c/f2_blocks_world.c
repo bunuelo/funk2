@@ -416,7 +416,7 @@ f2ptr __blocks_world_object__symbol = -1;
 f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color, f2ptr ignore_gravity, f2ptr holding_object) {
   /*pause_gc();*/
   release__assert(__blocks_world_object__symbol != -1, nil, "f2blocks_world_object__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 5, nil);
+  f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 6, nil);
   f2blocks_world_object__name__set(          this, cause, name);
   f2blocks_world_object__type__set(          this, cause, type);
   f2blocks_world_object__rectangle__set(     this, cause, rectangle);

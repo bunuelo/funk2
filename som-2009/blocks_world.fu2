@@ -9,7 +9,7 @@
   [blocks_world_rectangle-translate [blocks_world_object-rectangle this] dx dy]]
 
 [defunk blocks_world_object-create [name type x0 y0 x_size y_size color]
-  [blocks_world_object-new name type [blocks_world_rectangle-create x0 y0 [- [+ x0 x_size] 1] [- [+ y0 y_size] 1]] [blocks_world_color-new color]]]
+  [blocks_world_object-new name type [blocks_world_rectangle-create x0 y0 [- [+ x0 x_size] 1] [- [+ y0 y_size] 1]] [blocks_world_color-new color] nil nil]]
 
 [defunk blocks_world_object-new_block [name x0 y0 x_size y_size color]
   [blocks_world_object-create name `block x0 y0 x_size y_size color]]
@@ -101,20 +101,30 @@
     [if [or [null gripper]
 	    [null object]]
 	`failure
-      [let [[rect [blocks_world_object-rectangle gripper]]]
-	[let [[x0 [blocks_world_rectangle-x0 rect]]
-	      [x1 [blocks_world_rectangle-x1 rect]]]
-	  [let [[avg_x [/ [+ x0 x1] 2]]]
-	    [let [[object_rect [blocks_world_object-rectangle object]]]
-	      [let [[gx0 [blocks_world_rectangle-x0 object_rect]]
-		    [gx1 [blocks_world_rectangle-x1 object_rect]]]
-		[let [[avg_gx [/ [+ gx0 gx1] 2]]]
-		  [let [[dx [- avg_gx avg_x]]]
-		    [if [!= dx 0]
-			`failure
-		      [if [blocks_world_object-is_under_objects object [remove object objects]]
+      [if [blocks_world_object-holding_object gripper]
+	  `failure
+	[let [[rect [blocks_world_object-rectangle gripper]]]
+	  [let [[x0 [blocks_world_rectangle-x0 rect]]
+		[x1 [blocks_world_rectangle-x1 rect]]]
+	    [let [[avg_x [/ [+ x0 x1] 2]]]
+	      [let [[object_rect [blocks_world_object-rectangle object]]]
+		[let [[gx0 [blocks_world_rectangle-x0 object_rect]]
+		      [gx1 [blocks_world_rectangle-x1 object_rect]]]
+		  [let [[avg_gx [/ [+ gx0 gx1] 2]]]
+		    [let [[dx [- avg_gx avg_x]]]
+		      [if [!= dx 0]
 			  `failure
-			`okay]]]]]]]]]]]]
+			[if [blocks_world_object-is_under_objects object [remove object objects]]
+			    `failure
+			  [let [[y0  [blocks_world_rectangle-y0 rect]]
+				[gy1 [blocks_world_rectangle-y1 object_rect]]]
+			    [let [[dy [- [- y0 gy1] 1]]]
+			      [blocks_world_object-ignore_gravity-set object  t]
+			      [blocks_world_object-holding_object-set gripper object]
+			      [dotimes [iy dy]
+				[blocks_world_object-translate object 0 1]
+				[blocks_world_object-render object]
+				]]]]]]]]]]]]]]]]
 
 [defunk blocks_world-repl [this]
   [ansi-stream-clear_screen stdout]

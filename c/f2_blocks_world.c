@@ -404,25 +404,29 @@ def_pcfunk1(blocks_world_color__render, this, return f2__blocks_world_color__ren
 
 // blocks_world_object
 
-defprimobject__static_slot(blocks_world_object__name,      0);
-defprimobject__static_slot(blocks_world_object__type,      1);
-defprimobject__static_slot(blocks_world_object__rectangle, 2);
-defprimobject__static_slot(blocks_world_object__color,     3);
+defprimobject__static_slot(blocks_world_object__name,           0);
+defprimobject__static_slot(blocks_world_object__type,           1);
+defprimobject__static_slot(blocks_world_object__rectangle,      2);
+defprimobject__static_slot(blocks_world_object__color,          3);
+defprimobject__static_slot(blocks_world_object__ignore_gravity, 4);
+defprimobject__static_slot(blocks_world_object__holding_object, 5);
 
 f2ptr __blocks_world_object__symbol = -1;
 
-f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color) {
+f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color, f2ptr ignore_gravity, f2ptr holding_object) {
   /*pause_gc();*/
   release__assert(__blocks_world_object__symbol != -1, nil, "f2blocks_world_object__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 4, nil);
-  f2blocks_world_object__name__set(     this, cause, name);
-  f2blocks_world_object__type__set(     this, cause, type);
-  f2blocks_world_object__rectangle__set(this, cause, rectangle);
-  f2blocks_world_object__color__set(    this, cause, color);
+  f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 5, nil);
+  f2blocks_world_object__name__set(          this, cause, name);
+  f2blocks_world_object__type__set(          this, cause, type);
+  f2blocks_world_object__rectangle__set(     this, cause, rectangle);
+  f2blocks_world_object__color__set(         this, cause, color);
+  f2blocks_world_object__ignore_gravity__set(this, cause, ignore_gravity);
+  f2blocks_world_object__holding_object__set(this, cause, holding_object);
   /*resume_gc();*/
   return this;
 }
-def_pcfunk4(blocks_world_object__new, name, type, rectangle, color, return f2blocks_world_object__new(this_cause, name, type, rectangle, color));
+def_pcfunk6(blocks_world_object__new, name, type, rectangle, color, ignore_gravity, holding_object, return f2blocks_world_object__new(this_cause, name, type, rectangle, color, ignore_gravity, holding_object));
 
 bool raw__blocks_world_objectp(f2ptr this, f2ptr cause) {
   return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_object(this, cause));
@@ -465,6 +469,38 @@ f2ptr f2__blocks_world_object__color(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(blocks_world_object__color, this, return f2__blocks_world_object__color(this_cause, this));
 
+f2ptr f2__blocks_world_object__ignore_gravity(f2ptr cause, f2ptr this) {
+  if (! raw__blocks_world_objectp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2blocks_world_object__ignore_gravity(this, cause);
+}
+def_pcfunk1(blocks_world_object__ignore_gravity, this, return f2__blocks_world_object__ignore_gravity(this_cause, this));
+
+f2ptr f2__blocks_world_object__ignore_gravity__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__blocks_world_objectp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2blocks_world_object__ignore_gravity__set(this, cause, value);
+}
+def_pcfunk2(blocks_world_object__ignore_gravity__set, this, value, return f2__blocks_world_object__ignore_gravity__set(this_cause, this, value));
+
+f2ptr f2__blocks_world_object__holding_object(f2ptr cause, f2ptr this) {
+  if (! raw__blocks_world_objectp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2blocks_world_object__holding_object(this, cause);
+}
+def_pcfunk1(blocks_world_object__holding_object, this, return f2__blocks_world_object__holding_object(this_cause, this));
+
+f2ptr f2__blocks_world_object__holding_object__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__blocks_world_objectp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2blocks_world_object__holding_object__set(this, cause, value);
+}
+def_pcfunk2(blocks_world_object__holding_object__set, this, value, return f2__blocks_world_object__holding_object__set(this_cause, this, value));
+
 
 /*
 [defunk blocks_world_object-render [this]
@@ -487,10 +523,23 @@ f2ptr f2__blocks_world_object__render(f2ptr cause, f2ptr this) {
   }
   f2ptr type = f2blocks_world_object__type(this, cause);
   char render_char;
-  if      (type == __funk2.globalenv.blocks_world.table__symbol)   {render_char = '-';}
-  else if (type == __funk2.globalenv.blocks_world.block__symbol)   {render_char = '*';}
-  else if (type == __funk2.globalenv.blocks_world.gripper__symbol) {render_char = '~';}
-  else                                                             {render_char = '?';}
+  if (type == __funk2.globalenv.blocks_world.table__symbol) {
+    render_char = '-';
+  } else if (type == __funk2.globalenv.blocks_world.block__symbol) {
+    if (f2blocks_world_object__ignore_gravity(this, cause)) {
+      render_char = '+';
+    } else {
+      render_char = '*';
+    }
+  } else if (type == __funk2.globalenv.blocks_world.gripper__symbol) {
+    if (f2blocks_world_object__holding_object(this, cause)) {
+      render_char = '-';
+    } else {
+      render_char = '~';
+    }
+  } else {
+    render_char = '?';
+  }
   f2ptr rectangle = f2blocks_world_object__rectangle(this, cause);
   f2ptr color     = f2blocks_world_object__color(this, cause);
   if (raw__larvap(f2__blocks_world_color__render(cause, color), cause)) {
@@ -665,6 +714,10 @@ void f2__blocks_world__initialize() {
   f2__primcfunk__init(blocks_world_object__type);
   f2__primcfunk__init(blocks_world_object__rectangle);
   f2__primcfunk__init(blocks_world_object__color);
+  f2__primcfunk__init(blocks_world_object__ignore_gravity);
+  f2__primcfunk__init(blocks_world_object__ignore_gravity__set);
+  f2__primcfunk__init(blocks_world_object__holding_object);
+  f2__primcfunk__init(blocks_world_object__holding_object__set);
   f2__primcfunk__init(blocks_world_object__render);
   f2__primcfunk__init(blocks_world_object__translate_overlaps_objects);
   

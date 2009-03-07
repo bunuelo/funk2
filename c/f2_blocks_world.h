@@ -82,7 +82,7 @@ defprimobject__static_slot__prototype(blocks_world_color__name);
 // blocks_world_object
 
 extern f2ptr __blocks_world_object__symbol;
-f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color);
+f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color, f2ptr ignore_gravity, f2ptr holding_object);
 bool raw__blocks_world_objectp(f2ptr this, f2ptr cause);
 
 #define f2primobject__is__blocks_world_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_object__symbol)
@@ -114,6 +114,20 @@ defprimobject__static_slot__prototype(blocks_world_object__color);
 #define f2blocks_world_object__color__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__color, cause)
 #define f2blocks_world_object__color__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__color, cause)
 #define f2blocks_world_object__color__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__color, cause)
+
+defprimobject__static_slot__prototype(blocks_world_object__ignore_gravity);
+#define f2blocks_world_object__ignore_gravity(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__ignore_gravity, cause)
+#define f2blocks_world_object__ignore_gravity__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_object__ignore_gravity, cause, value)
+#define f2blocks_world_object__ignore_gravity__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__ignore_gravity, cause)
+#define f2blocks_world_object__ignore_gravity__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__ignore_gravity, cause)
+#define f2blocks_world_object__ignore_gravity__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__ignore_gravity, cause)
+
+defprimobject__static_slot__prototype(blocks_world_object__holding_object);
+#define f2blocks_world_object__holding_object(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_object__holding_object, cause)
+#define f2blocks_world_object__holding_object__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_object__holding_object, cause, value)
+#define f2blocks_world_object__holding_object__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_object__holding_object, cause)
+#define f2blocks_world_object__holding_object__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_object__holding_object, cause)
+#define f2blocks_world_object__holding_object__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_object__holding_object, cause)
 
 
 

@@ -1063,9 +1063,30 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   //pthread_mutex_init(&(block->mutex), NULL);
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
+  ptr block_ptr = to_ptr(block);
+  u64 pool_address = __ptr__pool_address(pool_index, p);
+  if (pool_address >= (((u64)1) << pool_address__bit_num) - 1) {
+    status("pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", pool_address, (((u64)1) << pool_address__bit_num) - 1);
+    error(nil, "pool_address is out of range.");
+  }
   f2ptr block_f2ptr = ptr_to_f2ptr(pool_index, to_ptr(block)); // this should be the only use of ptr_to_f2ptr in the whole program...
-  //gfunkptr__init_from_f2ptr(&(block->gfunkptr), block_f2ptr);
   memory_mutex__unlock(pool_index);
+  u64 computer_id  = f2ptr__computer_id(block_f2ptr);
+  if (computer_id != 0) {
+    status("[ERROR] computer_id must be zero for a local memory allocation.");
+    error(nil, "computer_id must be zero for a local memory allocation.");
+  }
+  u64 pool_index   = f2ptr__pool_index(block_f2ptr);
+  if (pool_index >= (((u64)1) << pool_index__bit_num) - 1) {
+    status("[ERROR] pool_index is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", pool_index, (((u64)1) << pool_index__bit_num) - 1);
+    error(nil, "pool_index is out of range.");
+  }
+  pool_address = f2ptr__pool_address(block_f2ptr);
+  if (pool_address >= (((u64)1) << pool_address__bit_num) - 1) {
+    status("[ERROR] pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", pool_address, (((u64)1) << pool_address__bit_num) - 1);
+    error(nil, "pool_address is out of range.");
+  }
+  //gfunkptr__init_from_f2ptr(&(block->gfunkptr), block_f2ptr);
   return block_f2ptr;
 }
 

@@ -124,8 +124,10 @@ extern void memory_mutex__unlock(int pool_index);
 #define __f2ptr__pool_index__set(f2p, pool_index)     f2ptr__new(__f2ptr__computer_id(f2p),          pool_index,      __f2ptr__pool_address(f2p))
 #define __f2ptr__pool_address__set(f2p, pool_address) f2ptr__new(__f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p),          pool_address)
 
+#define   __ptr__pool_address(pool_index, p) (to_ptr(p) - __funk2.memory.pool[pool_index].global_f2ptr_offset)
+
 #define __f2ptr_to_ptr(f2p)             ((((f2ptr)(f2p)) !=    ((f2ptr)0))  ?  ((to_ptr((__f2ptr__pool_address(f2p))        + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
-#define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))    != (to_ptr(NULL))) ? ((f2ptr) (f2ptr__new(0, pool_index, to_ptr(p) - __funk2.memory.pool[pool_index].global_f2ptr_offset)))               : ((f2ptr)0))
+#define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))    != (to_ptr(NULL))) ? ((f2ptr) (f2ptr__new(0, pool_index, __ptr__pool_address(pool_index, p))))               : ((f2ptr)0))
 
 #ifdef DEBUG_MEMORY_POINTERS
 #  define      f2ptr_to_ptr(f2p) debug__used_f2ptr_to_ptr(f2p)

@@ -1488,8 +1488,8 @@ void rebuild_memory_info_from_image() {
     rbt_tree__init(&(__funk2.memory.pool[pool_index].used_memory_tree), NULL);
     
     {
-      memblock_t* iter = (memblock_t*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]));
-      memblock_t* end_of_blocks = (memblock_t*)(((u8*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) + __funk2.memory.pool[pool_index].total_global_memory);
+      memblock_t* iter = (memblock_t*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
+      memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
       while(iter < end_of_blocks) {
 	debug__assert(memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
 	if (iter->used) {

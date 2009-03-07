@@ -1073,6 +1073,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, bool pr
   if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
   printf("don't know how to compile type."); // should throw exception... (or return larva)
+  error(nil, "don't know how to compile type.");
   return funkvar_value;
 }
 

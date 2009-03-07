@@ -132,7 +132,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
 	parse_error = true;
 	break;
       }
-    if (strcmp(argv[index], "--swap-directory") == 0) {
+    } else if (strcmp(argv[index], "--swap-directory") == 0) {
       index ++;
       if (index >= argc) {
 	parse_error = true;

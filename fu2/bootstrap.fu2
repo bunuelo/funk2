@@ -21,6 +21,9 @@
 
 [print 'beginning bootstrap.fu2']
 
+[load 'fu2/bootstrap-primobject_type.fu2']
+[print 'done loading bootstrap-primobject_type.fu2']
+
 [load 'fu2/bootstrap-thread.fu2']
 [print 'done loading bootstrap-thread.fu2']
 

@@ -122,7 +122,7 @@ void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
     printf("\nf2swapmemory__resize error: write failed.");
     error(nil, "f2swapmemory__resize error: write failed.");
   }
-  if (munmap(this->ptr, this->byte_num) == -1) {
+  if (munmap(from_ptr(this->ptr), this->byte_num) == -1) {
     printf("\nf2swapmemory__resize error: couldn't unmap file \"%s\".\n", this->filename);
     error(nil, "f2swapmemory__resize error: couldn't unmap file");
   }

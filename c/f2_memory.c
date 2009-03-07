@@ -345,7 +345,7 @@ void memory_test__byte_num_zero(int pool_index) {
 }
 
 void memory_test__all_known_types(int pool_index) {
-  memblock_t* iter = (memblock_t*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
+  memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
   memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used) {

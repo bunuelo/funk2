@@ -1626,7 +1626,7 @@ int raw__memory_image__load(char* filename) {
 #ifdef SWAP_MEMORY
 	f2swapmemory_t old_swap_memory; memcpy(&old_swap_memory, &(__funk2.memory.pool[pool_index].swap_memory), sizeof(f2swapmemory_t));
 	f2swapmemory__realloc(&(__funk2.memory.pool[pool_index].swap_memory), &old_swap_memory, __funk2.memory.pool[pool_index].total_global_memory);
-	safe_fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
+	safe_fread(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
 #endif // SWAP_MEMORY
 
 #ifdef STATIC_MEMORY

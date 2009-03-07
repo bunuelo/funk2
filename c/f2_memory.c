@@ -460,7 +460,7 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
     }
   } else {
     if (byte_num > old_total_global_memory) {
-      memblock_t* block = (memblock_t*)(((u8*)__funk2.memory.pool[pool_index].swap_memory.ptr) + old_total_global_memory);
+      memblock_t* block = (memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].swap_memory.ptr)) + old_total_global_memory);
       memblock__byte_num(block) = (byte_num - old_total_global_memory);
       block->used     = 0;
       block->gc_touch = 0;

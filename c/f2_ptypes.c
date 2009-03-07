@@ -112,10 +112,6 @@ f2ptr pfunk2__system__environment(f2ptr cause) {
 
 // memblock
 
-#ifdef MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-u64 pfunk2__memblock__creation_microseconds_since_1970(f2ptr this, f2ptr cause) {int pool_index = __f2ptr__pool_index(this); ptype_access_num__incr(pool_index); u64 retval = __pure__memblock__creation_microseconds_since_1970(this); ptype_access_num__decr(pool_index); return retval;}
-#endif // MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-
 #ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
 void memblock__set_render_position_relative_to(f2ptr this, f2ptr relative) {
   if (! relative) {return;}

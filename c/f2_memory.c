@@ -861,8 +861,8 @@ void memory_mutex__unlock(int pool_index) {
 }
 
 void pool__touch_all_referenced_from_generation(int pool_index, int touch_generation_num) {
-  memblock_t* iter = (memblock_t*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
-  memblock_t* end_of_blocks = (memblock_t*)(((u8*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) + __funk2.memory.pool[pool_index].total_global_memory);
+  memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
+  memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used && iter->generation_num == touch_generation_num) {
       exp__gc_touch_all_referenced(to_ptr(iter));
@@ -872,8 +872,8 @@ void pool__touch_all_referenced_from_generation(int pool_index, int touch_genera
 }
 
 void pool__increment_generation(int pool_index) {
-  memblock_t* iter = (memblock_t*)(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
-  memblock_t* end_of_blocks = (memblock_t*)(((u8*)memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) + __funk2.memory.pool[pool_index].total_global_memory);
+  memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
+  memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used) {
       if (iter->generation_num < maximum_generation_num) {

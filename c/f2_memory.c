@@ -425,9 +425,9 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
     s64 byte_diff = (s64)(__funk2.memory.pool[pool_index].swap_memory.ptr - old_swap_memory.ptr);
     if (__funk2.memory.pool[pool_index].used_memory_tree.head)  {__funk2.memory.pool[pool_index].used_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].used_memory_tree.head) + byte_diff);}
     if (__funk2.memory.pool[pool_index].free_memory_tree.head)  {__funk2.memory.pool[pool_index].free_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].free_memory_tree.head) + byte_diff);}
-    if ((u8*)__funk2.memory.global_environment_ptr >=  (u8*)old_swap_memory.ptr &&
-	(u8*)__funk2.memory.global_environment_ptr <  ((u8*)old_swap_memory.ptr) + old_total_global_memory) {
-      if (__funk2.memory.global_environment_ptr)                {__funk2.memory.global_environment_ptr     = (memblock_t*)(((u8*)__funk2.memory.global_environment_ptr)     + byte_diff);}
+    if (__funk2.memory.global_environment_ptr >= old_swap_memory.ptr &&
+	__funk2.memory.global_environment_ptr <  old_swap_memory.ptr + old_total_global_memory) {
+      if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
     memblock_t* iter = __funk2.memory.pool[pool_index].swap_memory.ptr;
     memblock_t* end_of_blocks = (memblock_t*)(((u8*)__funk2.memory.pool[pool_index].swap_memory.ptr) + old_total_global_memory);

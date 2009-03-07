@@ -24,7 +24,7 @@
 void f2__print_usage() {
   printf("\n\nfunk2: causally reflective programming language"
 	 "\n"
-	 "\n  funk2 [-x <command>] [-p <portnum>] [--swap-dir <swap-directory>] [<source.fu2>]"
+	 "\n  funk2 [-x <command>] [-p <portnum>] [--swap-directory <swap-directory>] [<source.fu2>]"
 	 "\n"
 	 "\n    <source.fu2>"
 	 "\n"

@@ -92,15 +92,6 @@ f2ptr f2__memblock__set_init_render_noise(f2ptr cause, f2ptr render_noise) {
 }
 def_pcfunk1(memblock__set_init_render_noise, render_noise, return f2__memblock__set_init_render_noise(this_cause, render_noise));
 
-f2ptr f2__memblock__creation_microseconds_since_1970(f2ptr cause, f2ptr x) {
-#ifdef MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-  return f2integer__new(cause, memblock__creation_microseconds_since_1970(x, cause));
-#else
-  x; return nil;
-#endif // MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-}
-def_pcfunk1(memblock__creation_microseconds_since_1970, x, return f2__memblock__creation_microseconds_since_1970(this_cause, x));
-
 // ptype
 
 f2ptr f2__ptype__raw(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2ptype__raw(x, cause));}
@@ -1958,7 +1949,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__4(           memblock__set_init_render_xyz,              this, x, y, z);
   f2__primcfunk__init__2(           memblock__set_init_render_on,               this, value);
   f2__primcfunk__init__2(           memblock__set_init_render_noise,            this, value);
-  f2__funktional_primcfunk__init__1(memblock__creation_microseconds_since_1970, this);
   
   // ptype
   

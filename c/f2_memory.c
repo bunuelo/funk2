@@ -1446,8 +1446,8 @@ f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
   int i;
   for (i = 0; i < memory_pool_num; i ++) {
-    if ((u8*)from_ptr(p) >= (u8*)memorypool__memory__ptr(&(__funk2.memory.pool[i])) &&
-	(u8*)from_ptr(p) <  (u8*)memorypool__memory__ptr(&(__funk2.memory.pool[i])) + __funk2.memory.pool[i].total_global_memory) {
+    if (p >= memorypool__memory__ptr(&(__funk2.memory.pool[i])) &&
+	p <  memorypool__memory__ptr(&(__funk2.memory.pool[i])) + __funk2.memory.pool[i].total_global_memory) {
       return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(__funk2.memory.pool[i].global_f2ptr_offset)));
     }
   }

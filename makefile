@@ -267,6 +267,7 @@ clean-o:
 
 clean-swp:
 	echo "Removing:"; ls f2swp/*.f2swp; echo ""
+	rm -f /tmp/*.f2swp
 	rm -f f2swp/*.f2swp
 
 clean-trace:

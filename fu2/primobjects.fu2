@@ -36,6 +36,62 @@
 		  ]
     `[primfunk:array__elt__set ,x ,y ,z]]]
 
+[defunk slotdef-name [exp]
+  [cond [[symbol? exp] exp]
+	[[cons?   exp] [first exp]]
+	[t             [error `compile-time `[slotdef-name ,exp]]]]]
+
+[defunk slotdef-default_exp [exp]
+  [cond [[symbol? exp] nil]
+	[[cons?   exp] [second exp]]
+	[t             [error `compile-time `[slotdef-name ,exp]]]]]
+
+[globalize -primobject_type-name-hash- [hashtable-new 10]]
+
+[defunk   primobject_slot_type-new         [name type default_exp array_index]  [array `primobject_slot_type type default_exp array_index]]
+[defmetro primobject_slot_type-name        [this]                              `[array-elt ,this 1]]
+[defmetro primobject_slot_type-default_exp [this]                              `[array-elt ,this 2]]
+[defmetro primobject_slot_type-array_index [this]                              `[array-elt ,this 3]]
+
+[defunk   primobject_type-new                  [name slot_type_frame initial_array_length]  [array `primobject_type name slot_type_frame initial_array_length]]
+[defmetro primobject_type-name                 [this]                                      `[array-elt ,this 1]]
+[defmetro primobject_type-slot_type_frame      [this]                                      `[array-elt ,this 2]]
+[defmetro primobject_type-initial_array_length [this]                                      `[array-elt ,this 3]]
+
+[defunk primobject_type-lookup [name]
+  [hashtable-lookup_value -primobject_type-name-hash- name]]
+
+[defunk primobject_type_frame-new_from_slotdefs [slotdefs]
+  [let [[this        [frame-new]]
+	[array_index 3]]
+    [mapc [funk [slotdef]
+		[let [[name        [slotdef-name        slotdef]]
+		      [default_exp [slotdef-default_exp slotdef]]]
+		  [let [[slot_type [primobject_slot_type-new name default_exp array_index]]]
+		    [frame-add_var_value this name slot_type]
+		    [set array_index [+ array_index 1]]]]]
+	  slotdefs]
+    this]]
+
+'
+  f2__primcfunk__init(frame__add_var_value);
+  f2__primcfunk__init(frame__lookup_var_value);
+  f2__primcfunk__init(frame__var_value__set);
+  f2__primcfunk__init(frame__add_funkvar_value);
+  f2__primcfunk__init(frame__lookup_funkvar_value);
+  f2__primcfunk__init(frame__funkvar_value__set);
+'
+
+[defmetro defprimobject [type_name :rest slotdefs]
+  [let [[primobject_type [primobject_type-new type_name
+					      [primobject_type_frame-new_from_slotdefs slotdefs]
+					      [+ 3 [length slotdefs]]]]]
+    [hashtable-add_keyvalue_pair -primobject_type-name-hash- type_name primobject_type]
+    nil
+    ]]
+
+
+
 [defunk   primobject?                [x]      [and x [array? x] [unsafe:integer-greater_than [unsafe:array-length x] 1] [eq [unsafe:array-elt x 0] `primobject]]]
 [defmetro unsafe:primobject-slot     [x y]   `[unsafe:array-elt     ,x [unsafe:integer-add 2 ,y]]]
 [defmetro unsafe:primobject-slot-set [x y z] `[unsafe:array-elt-set ,x [unsafe:integer-add 2 ,y] ,z]]

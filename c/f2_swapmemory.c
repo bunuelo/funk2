@@ -135,8 +135,8 @@ void f2swapmemory__resize(f2swapmemory_t* this, f2size_t byte_num) {
 		       this->fd,
 		       0);
   status("f2__mmap from " u64__fstr " bytes at address " ptr__fstr " to " u64__fstr " bytes at address " ptr__fstr ".",
-	 old_byte_num,   old_ptr,
-	 this->byte_num, this->ptr);
+	 old_byte_num,   (ptr)(old_ptr),
+	 this->byte_num, (ptr)(this->ptr));
   if (this->ptr == MAP_FAILED ||
       this->ptr == NULL) { // should never return NULL, so this would definately be an unexpected error.
     printf("\nf2swapmemory__resize error: couldn't mmap file \"%s\".\n", this->filename);

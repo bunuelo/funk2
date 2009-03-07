@@ -29,7 +29,7 @@ typedef struct f2swapmemory_s {
   char     filename[1024];
   f2size_t byte_num;
   int      fd;
-  void*    ptr;
+  ptr      ptr;
 } f2swapmemory_t;
 
 void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num);

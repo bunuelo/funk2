@@ -121,11 +121,7 @@ void memblock__init(memblock_t* block, f2size_t byte_num, int used, int gc_touch
   block->used                             = used;
   block->gc_touch                         = gc_touch;
   block->generation_num                   = 0;
-
-#ifdef MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-  block->creation_microseconds_since_1970 = raw__system_microseconds_since_1970();
-#endif // MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-
+  
 #ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
   float dx = (__funk2.memory.memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
   float dy = (__funk2.memory.memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);

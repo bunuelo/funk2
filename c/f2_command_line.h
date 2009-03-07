@@ -28,6 +28,7 @@ typedef struct funk2_command_line_s {
   char*  load_source_filename;
   char*  user_command;
   int    peer_command_server__port_num;
+  char*  swap_directory;
 } funk2_command_line_t;
 
 void f2__print_usage();

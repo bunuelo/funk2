@@ -21,11 +21,11 @@
 
 #include "funk2.h"
 
-void swapmemory_filename__generate(char* str) {
+void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_directory) {
   int fd = -1;
   do {
     if (fd != -1) {close(fd);}
-    sprintf(str, "/tmp/----------------------.f2swp");
+    sprintf(str, "%s/----------------------.f2swp", swap_directory);
     int i;
     for (i = 0; str[i] != '-'; i++); // get to first -
     for (; str[i] == '-'; i++) { // replace all consecutive -s
@@ -40,8 +40,12 @@ void swapmemory_filename__generate(char* str) {
   } while ((fd = open(str, O_RDONLY)) != -1); // assure opening the random filename fails before returning
 }
 
-void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num) {
-  swapmemory_filename__generate(this->filename);
+void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num, char* swap_directory) {
+  u64 swap_directory__length = strlen(swap_directory);
+  if (swap_directory__length + 1 < sizeof(this->swap_directory)) {
+    memcpy(this->swap_directory, swap_directory, swap_directory__length + 1);
+  }
+  swapmemory_filename__generate_from_swap_directory(this->filename, this->swap_directory);
   this->fd       = open(this->filename, O_RDWR | O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO);
   if (this->fd == -1) {
     printf("\nf2swapmemory__init_and_alloc error: couldn't open file \"%s\".\n", this->filename);

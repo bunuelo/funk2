@@ -26,13 +26,14 @@
 #include "f2_archconfig.h"
 
 typedef struct f2swapmemory_s {
+  char     swap_directory[1024];
   char     filename[1024];
   f2size_t byte_num;
   int      fd;
   ptr      ptr;
 } f2swapmemory_t;
 
-void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num);
+void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num, char* swap_directory);
 void f2swapmemory__destroy_and_free(f2swapmemory_t* this);
 void f2swapmemory__realloc(f2swapmemory_t* new_swapmemory, f2swapmemory_t* old_swapmemory, f2size_t byte_num);
 

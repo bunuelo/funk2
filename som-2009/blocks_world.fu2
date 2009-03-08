@@ -30,7 +30,8 @@
 	  [let* [[object      [car object_iter]]
 		 [object_type [blocks_world_object-type object]]]
 	    [if [eq object_type `block]
-		[if [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]
+		[if [and [not [blocks_world_object-ignore_gravity             object]]
+			 [not [blocks_world_object-translate_overlaps_objects object 0 -1 [remove object objects]]]]
 		    [prog [blocks_world_object-translate object 0 -1]
 			  [blocks_world_rectangle-clear_line_above [blocks_world_object-rectangle object]]
 			  [blocks_world_object-render object]
@@ -133,11 +134,16 @@
 				  help_message]]
 	 [last_results    welcome_message]
 	 [done            nil]
-	 [need_rerender   t]]
+	 [need_rerender   t]
+	 [need_simulate   t]]
     [while [not done]
       [if need_rerender
 	  [prog [blocks_world-render this 20 [- [termios-height] 10]]
 		[set need_rerender nil]]]
+      [if need_simulate
+	  [prog [blocks_world-simulate this]
+		[set need_rerender t]
+		[set need_simulate nil]]]
       
       [ansi-stream-rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
       

@@ -1042,6 +1042,12 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   //printf ("\nmemblock_new byte_num = %d", (int)byte_num); fflush(stdout);
   debug_memory_test(pool_index, 3);
   memblock_t* block = (memblock_t*)from_ptr(find_or_create_free_splittable_memblock_and_unfree(pool_index, byte_num));
+#ifdef DEBUG_MEMORY
+  if (block == NULL) {
+    status("shouldn't ever get a NULL pointer here.");
+    error(nil, "shouldn't ever get a NULL pointer here.");
+  }
+#endif
   if (memblock__byte_num(block) > byte_num + sizeof(memblock_t)) {
     memblock_t* new_block           = (memblock_t*)(((u8*)(block)) + byte_num);
     int         new_block__byte_num = memblock__byte_num(block) - byte_num;
@@ -1074,6 +1080,9 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     s64 check_pool_address = __ptr__pool_address(pool_index, to_ptr(block_ptr));
     if (check_pool_address < 0 || check_pool_address > f2ptr__pool_address__max_value) {
       status("pool_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
+      status("  pool_index = " pool_index__fstr, (pool_index_t)pool_index);
+      status("  block_ptr  = " ptr__fstr,        (ptr)block_ptr);
+      print_gc_stats();
       error(nil, "pool_address is out of range.");
     }
   }
@@ -1085,16 +1094,19 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     u64 check_computer_id  = __f2ptr__computer_id(block_f2ptr);
     if (check_computer_id != 0) {
       status("[ERROR] computer_id must be zero for a local memory allocation.");
+      print_gc_stats();
       error(nil, "computer_id must be zero for a local memory allocation.");
     }
     u64 check_pool_index   = __f2ptr__pool_index(block_f2ptr);
     if (check_pool_index > f2ptr__pool_index__max_value) {
       status("[ERROR] pool_index is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_index, f2ptr__pool_index__max_value);
+      print_gc_stats();
       error(nil, "pool_index is out of range.");
     }
     u64 check_pool_address = __f2ptr__pool_address(block_f2ptr);
     if (check_pool_address > f2ptr__pool_address__max_value) {
       status("[ERROR] pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
+      print_gc_stats();
       error(nil, "pool_address is out of range.");
     }
   }

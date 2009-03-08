@@ -1067,7 +1067,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
 #ifdef DEBUG_MEMORY
   {
     s64 check_pool_address = __ptr__pool_address(pool_index, block_ptr);
-    if (check_pool_addresss < 0 || check_pool_address > f2ptr__pool_address__max_value) {
+    if (check_pool_address < 0 || check_pool_address > f2ptr__pool_address__max_value) {
       status("pool_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
       error(nil, "pool_address is out of range.");
     }

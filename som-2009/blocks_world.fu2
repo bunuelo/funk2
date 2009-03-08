@@ -178,7 +178,7 @@
       [ansi-stream-foreground stdout 15]
       [format stdout 'blocks-world-out> ']
       [apply &format [cons stdout last_results]]
-      [format stdout '\n' 'Perceptions: ' perceptions]
+      [format stdout '\n' '\n' 'perceptions: ' perceptions]
       [set last_results nil]
       
       [ansi-stream-move_cursor stdout 1 [- [termios-height] 2]]

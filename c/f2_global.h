@@ -33,11 +33,6 @@ typedef unsigned int  bool;
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)
 
-//#define scheduler_processor_num 1
-#define scheduler_processor_num (1<<processor_num_power)
-
-#define memory_pool_num scheduler_processor_num
-
 #define F2__INITIAL_MEMORY 1024
 
 #ifdef F2__ASSERTIONS__DEBUG
@@ -74,7 +69,7 @@ typedef                          u8 computer_id_t;
 
 typedef                          u8 pool_index_t;
 #  define pool_index__fstr       X8__fstr
-#  define pool_index__bit_num     3
+#  define pool_index__bit_num     1
 
 typedef                         u64 pool_address_t;
 #  define pool_address__fstr    X64__fstr
@@ -99,6 +94,19 @@ typedef                         u64 pool_address_t;
 #  define pool_address__bit_num  42
 
 #endif
+
+
+//#define scheduler_processor_num 1
+#define ideal_scheduler_processor_num (1<<processor_num_power)
+
+#if (ideal_scheduler_processor_num > (1<<pool_index__bit_num))
+#  define scheduler_processor_num ideal_scheduler_processor_num
+#else
+#  define scheduler_processor_num (1<<pool_index__bit_num)
+#endif
+
+#define memory_pool_num scheduler_processor_num
+
 
 
 

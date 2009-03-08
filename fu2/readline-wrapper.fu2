@@ -1,5 +1,5 @@
 
-[defgmodule readline './extern/readline-5.0/' 'readline']
+[defgmodule readline './extern/readline-6.0/shlib/' 'readline']
 
 [defalien readline:readline readline char* 'readline' [[char* prompt_str]]]
 

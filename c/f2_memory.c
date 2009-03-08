@@ -1064,6 +1064,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
   ptr block_ptr = to_ptr(block);
+#ifdef DEBUG_MEMORY
   {
     u64 check_pool_address = __ptr__pool_address(pool_index, block);
     if (check_pool_address > (((u64)1) << pool_address__bit_num) - 1) {
@@ -1071,8 +1072,10 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
       error(nil, "pool_address is out of range.");
     }
   }
+#endif
   f2ptr block_f2ptr = ptr_to_f2ptr(pool_index, to_ptr(block)); // this should be the only use of ptr_to_f2ptr in the whole program...
   memory_mutex__unlock(pool_index);
+#ifdef DEBUG_MEMORY
   {
     u64 check_computer_id  = __f2ptr__computer_id(block_f2ptr);
     if (check_computer_id != 0) {
@@ -1090,6 +1093,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
       error(nil, "pool_address is out of range.");
     }
   }
+#endif
   //gfunkptr__init_from_f2ptr(&(block->gfunkptr), block_f2ptr);
   return block_f2ptr;
 }

@@ -64,7 +64,7 @@ typedef                         u32 f2ptr;
 
 typedef                          u8 computer_id_t;
 #  define computer_id__fstr      X8__fstr
-#  define computer_id__bit_num    0
+#  define computer_id__bit_num    1
 
 typedef                          u8 pool_index_t;
 #  define pool_index__fstr       X8__fstr
@@ -72,7 +72,7 @@ typedef                          u8 pool_index_t;
 
 typedef                         u64 pool_address_t;
 #  define pool_address__fstr    X64__fstr
-#  define pool_address__bit_num  31
+#  define pool_address__bit_num  30
 
 #else
 

@@ -35,14 +35,14 @@ typedef  __uint8_t  u8; //                        0 to 255
 typedef       char  s8; //                     -128 to 127
 
 #if int__bit_num == pointer__bit_num
-#  define   to_ptr(value)        ((ptr)(int)(value))
-#  define from_ptr(value) ((void*)(int)(ptr)(value))
+#  define   to_ptr(value)        ((ptr)(unsigned int)(value))
+#  define from_ptr(value) ((void*)(unsigned int)(ptr)(value))
 #elif long__bit_num == pointer__bit_num
-#  define   to_ptr(value)        ((ptr)(long)(value))
+#  define   to_ptr(value)        ((ptr)(unsigned long)(value))
 #  define from_ptr(value) ((void*)(long)(ptr)(value))
 #elif long_long__bit_num == pointer__bit_num
-#  define   to_ptr(value)        ((ptr)(long long)(value))
-#  define from_ptr(value) ((void*)(long long)(ptr)(value))
+#  define   to_ptr(value)        ((ptr)(unsigned long long)(value))
+#  define from_ptr(value) ((void*)(unsigned long long)(ptr)(value))
 #else
 #  error "can't find same sized integer for pointer conversion to integer."
 #endif

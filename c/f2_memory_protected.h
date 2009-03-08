@@ -109,9 +109,9 @@ void memory_mutex__unlock(int pool_index);
 #define f2ptr__pool_index__bit_num   pool_index__bit_num
 #define f2ptr__pool_address__bit_num pool_address__bit_num
 
-#define f2ptr__computer_id__max_value  ((((u64)1)<<((f2ptr__computer_id__bit_num - 1)))  - 1)
-#define f2ptr__pool_index__max_value   ((((u64)1)<<((f2ptr__pool_index__bit_num - 1)))   - 1)
-#define f2ptr__pool_address__max_value ((((u64)1)<<((f2ptr__pool_address__bit_num - 1))) - 1)
+#define f2ptr__computer_id__max_value  ((((u64)1)<<(f2ptr__computer_id__bit_num))  - 1)
+#define f2ptr__pool_index__max_value   ((((u64)1)<<(f2ptr__pool_index__bit_num))   - 1)
+#define f2ptr__pool_address__max_value ((((u64)1)<<(f2ptr__pool_address__bit_num)) - 1)
 
 #define f2ptr__new(computer_id, pool_index, pool_address)  ((((u64)(computer_id)) << (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num)) | \
 							    (((u64)(pool_index))  <<  f2ptr__pool_address__bit_num) | \

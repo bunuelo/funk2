@@ -81,7 +81,10 @@ f2ptr f2tensor__elt_from_array_of_integer_indices(f2ptr this, f2ptr indices, f2p
     data_index            += (data_index_multiplier * raw_index);
     data_index_multiplier *= raw_dimension;
   }
-  release__assert(data_index < data__length, nil, "f2tensor__elt_from_array_of_integer_indices release assertion failed: [< data_index data__length]");
+  if (data_index >= data__length) {
+    status("f2tensor__elt_from_array_of_integer_indices release assertion failed: [< data_index data__length]");
+    error(nil, "f2tensor__elt_from_array_of_integer_indices release assertion failed: [< data_index data__length]");
+  }
   f2ptr element = raw__array__elt(cause, data, data_index);
   return element;
 }

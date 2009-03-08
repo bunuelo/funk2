@@ -19,68 +19,52 @@
  rights to redistribute these changes.
 '
 
-[print 'beginning bootstrap.fu2']
-
 [load 'fu2/bootstrap-primobject_type.fu2']
-[print 'done loading bootstrap-primobject_type.fu2']
-
 [load 'fu2/bootstrap-thread.fu2']
-[print 'done loading bootstrap-thread.fu2']
-
 [load 'fu2/bootstrap-bugs.fu2']
-[print 'done loading bootstrap-bugs.fu2']
-
 [load 'fu2/bootstrap-boot.fu2']
-[print 'done loading bootstrap-boot.fu2']
-
 [load 'fu2/bootstrap-graph.fu2']
-[print 'done loading bootstrap-graph.fu2']
-
 [load 'fu2/bootstrap-math.fu2']
-[print 'done loading bootstrap-math.fu2']
-
 [load 'fu2/bootstrap-set_theory.fu2']
-[print 'done loading bootstrap-set_theory.fu2']
-
 [load 'fu2/bootstrap-ansi.fu2']
-[print 'done loading bootstrap-ansi.fu2']
-
 [load 'fu2/bootstrap-termios.fu2']
-[print 'done loading bootstrap-termios.fu2']
-
 [load 'fu2/bootstrap-blocks_world.fu2']
-[print 'done loading bootstrap-blocks_world.fu2']
-
-`[parload 'fu2/miscfunks.fu2'
-	  'fu2/cause.fu2'
-	  ]
-
 [load 'fu2/critics-reactive.fu2']
-[print 'done loading critics-reactive.fu2']
-
-`[seqload 'fu2/actor.fu2']
-
-'fu2/x86-compile.fu2'
-
-[load 'fu2/gmodule.fu2'
-      'fu2/alien.fu2']
+[load 'fu2/gmodule.fu2']
+[load 'fu2/alien.fu2']
 
 [globalize load-utilities nil]
-
 [defunk load-utilities []
-  
-  [parload 'fu2/remember.fu2']
-  
-  [seqload 'fu2/errno.fu2'
-	   'fu2/socket.fu2'
-	   'fu2/fcntl.fu2'
-	   'fu2/ioctl.fu2']
-  ]
-
+  [load 'fu2/remember.fu2']
+  [load 'fu2/errno.fu2']
+  [load 'fu2/socket.fu2']
+  [load 'fu2/fcntl.fu2']
+  [load 'fu2/ioctl.fu2']]
 [if load-utilities [load-utilities]]
+
+[globalize load-basic-ai t]
+[defunk load-basic-ai []
+  `[load 'fu2/link-grammar-wrapper.fu2']
+   [load 'som-2009/blocks_world.fu2']
+   ]
+[if load-basic-ai [load-basic-ai]]
+
+[memory_image-save 'img/bootstrap.img']
+
+[quit]
+
+
 
 `[prog
   
+  `[parload 'fu2/miscfunks.fu2'
+	    'fu2/cause.fu2'
+	    ]
+   
+   `[seqload 'fu2/actor.fu2']
+    
+    'fu2/x86-compile.fu2'
+    
   [parload 'fu2/socket-client.fu2'
 	   'fu2/socket-server.fu2']
   
@@ -100,29 +84,3 @@
     
     ]
 
-[globalize load-basic-ai t]
-
-[defunk load-basic-ai []
-  [format stdout
-	  '\n'
-	  '\n**************************************************'
-	  '\n*                                                *'
-	  '\n* ' `funk2 ': ' `Compiling ' ' `Basic ' ' `A '.' `I '. ' `Library ' ' `Interfaces ' *'
-	  '\n*                                                *'
-	  '\n**************************************************'
-	  '\n'
-	  ]
-  '\n* funk2: Compiling Basic A.I. Library Interfaces *'
-  
-  `[load 'fu2/link-grammar-wrapper.fu2']
-   `[print 'done loading link-grammar-wrapper.fu2']
-    
-    [load 'som-2009/blocks_world.fu2']
-    [print 'done loading som-2009/blocks_world.fu2']
-    ]
-
-[if load-basic-ai [load-basic-ai]]
-
-[memory_image-save 'img/bootstrap.img']
-
-[quit]

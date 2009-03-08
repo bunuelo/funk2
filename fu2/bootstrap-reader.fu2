@@ -19,8 +19,6 @@
  rights to redistribute these changes.
 '
 
-[print 'beginning bootstrap-reader.fu2']
-
 [globalize char:enter #cA]
 
 [defunk stream-read_character [stream]

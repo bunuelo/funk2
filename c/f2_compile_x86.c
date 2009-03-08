@@ -1005,8 +1005,8 @@ void f2__chunk__compile_x86__jump_bytecode(f2ptr this, uint index, f2ptr cause, 
 void f2__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, uint index, f2ptr cause, uint* next_index,
 						  bytecode_jump__f2ptr_t jump_bytecode,
 						  f2ptr arg0) {
-  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(arg0 & 0xffffffff), x86_reg__esp, 0x08); index = *next_index;
-  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(arg0 >> 32),        x86_reg__esp, 0x0C); index = *next_index;
+  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg0) & 0xffffffff), x86_reg__esp, 0x08); index = *next_index;
+  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg0) >> 32),        x86_reg__esp, 0x0C); index = *next_index;
   
   f2__chunk__compile_x86__mov_const_to_reg(this, index, cause, next_index, (u32)to_ptr(jump_bytecode), x86_reg__eax); index = *next_index;
   f2__chunk__compile_x86__call_eax(        this, index, cause, next_index);
@@ -1034,10 +1034,10 @@ void f2__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, uint index, f2ptr 
 // **
 
 void f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(f2ptr this, uint index, f2ptr cause, uint* next_index, bytecode_jump__f2ptr_f2ptr_t jump_bytecode, f2ptr arg0, f2ptr arg1) {
-  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(arg1 & 0xffffffff), x86_reg__esp, 0x10); index = *next_index;
-  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(arg1 >> 32),        x86_reg__esp, 0x14); index = *next_index;
-  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(arg0 & 0xffffffff), x86_reg__esp, 0x08); index = *next_index;
-  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(arg0 >> 32),        x86_reg__esp, 0x0C); index = *next_index;
+  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg1) & 0xffffffff), x86_reg__esp, 0x10); index = *next_index;
+  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg1) >> 32),        x86_reg__esp, 0x14); index = *next_index;
+  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg0) & 0xffffffff), x86_reg__esp, 0x08); index = *next_index;
+  f2__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg0) >> 32),        x86_reg__esp, 0x0C); index = *next_index;
   
   f2__chunk__compile_x86__mov_const_to_reg(this, index, cause, next_index, (u32)to_ptr(jump_bytecode), x86_reg__eax); index = *next_index;
   f2__chunk__compile_x86__call_eax(        this, index, cause, next_index);

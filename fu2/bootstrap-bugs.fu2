@@ -19,8 +19,6 @@
  rights to redistribute these changes.
 '
 
-[print 'beginning fu2/bootstrap-bugs.fu2']
-
 [defunk bug-symbolic_type [this]
   [if [not [bug? this]]
       `not-bug
@@ -66,6 +64,4 @@
 [defunk bug-print_english_sentence [this]
   [ansi-stream-foreground stdout 15]
   [apply &format [cons stdout [bug-english_sentence_list this]]]]
-
-[print 'finishing fu2/bootstrap-bugs.fu2']
 

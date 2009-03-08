@@ -248,16 +248,6 @@ void dptr__init(dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagi
 
 // simple_array
 
-#define CRUNCH_SPACE
-#ifdef  CRUNCH_SPACE
-struct ptype_simple_array_block_s {
-  ptype_block_t ptype;
-  u32           immutable : 1;
-  u32           length    : 31;
-  f2ptr         f2ptr_data[0];
-} __attribute__((__packed__));
-typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
-#else
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
   u8            immutable:1;
@@ -265,7 +255,6 @@ struct ptype_simple_array_block_s {
   f2ptr         f2ptr_data[0];
 } __attribute__((__packed__));
 typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
-#endif
 
 ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
 

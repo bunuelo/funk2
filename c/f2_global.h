@@ -73,7 +73,7 @@ typedef                          u8 pool_index_t;
 
 typedef                         u64 pool_address_t;
 #  define pool_address__fstr    X64__fstr
-#  define pool_address__bit_num  29
+#  define pool_address__bit_num  31
 
 #else
 

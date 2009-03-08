@@ -93,37 +93,37 @@ typedef struct memorypool_s {
 #define memblock__lock(this)                   {if(pthread_mutex_lock(&(((memblock_t*)f2ptr_to_ptr(this))->mutex)))   {error(nil, "memblock_lock failed.");}}
 #define memblock__unlock(this)                 {if(pthread_mutex_unlock(&(((memblock_t*)f2ptr_to_ptr(this))->mutex))) {error(nil, "memblock_unlock failed.");}}
 
-extern f2ptr       pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
-extern f2ptr       pool__memblock_f2ptr__new(int pool_index, f2size_t byte_num);
-extern f2ptr       memblock_f2ptr__new(f2size_t byte_num);
-extern memblock_t* pool__memblock__new(int pool_index, f2size_t byte_num);
-extern memblock_t* memblock__new(f2size_t byte_num);
+f2ptr       pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
+f2ptr       pool__memblock_f2ptr__new(int pool_index, f2size_t byte_num);
+f2ptr       memblock_f2ptr__new(f2size_t byte_num);
+memblock_t* pool__memblock__new(int pool_index, f2size_t byte_num);
+memblock_t* memblock__new(f2size_t byte_num);
 
-extern bool valid_memblock_ptr(ptr p);
+bool valid_memblock_ptr(ptr p);
 
-extern void memory_mutex__lock(int pool_index);
-extern int  memory_mutex__try_lock(int pool_index);
-extern void memory_mutex__unlock(int pool_index);
+void memory_mutex__lock(int pool_index);
+int  memory_mutex__try_lock(int pool_index);
+void memory_mutex__unlock(int pool_index);
 
 #define f2ptr__computer_id__bit_num  computer_id__bit_num
 #define f2ptr__pool_index__bit_num   pool_index__bit_num
 #define f2ptr__pool_address__bit_num pool_address__bit_num
 
-#define f2ptr__computer_id__max_value  ((((f2ptr)1)<<(f2ptr__computer_id__bit_num)) -1)
-#define f2ptr__pool_index__max_value   ((((f2ptr)1)<<(f2ptr__pool_index__bit_num))  -1)
-#define f2ptr__pool_address__max_value ((((f2ptr)1)<<(f2ptr__pool_address__bit_num))-1)
+#define f2ptr__computer_id__max_value  ((((u64)1)<<(f2ptr__computer_id__bit_num)) -1)
+#define f2ptr__pool_index__max_value   ((((u64)1)<<(f2ptr__pool_index__bit_num))  -1)
+#define f2ptr__pool_address__max_value ((((u64)1)<<(f2ptr__pool_address__bit_num))-1)
 
-#define f2ptr__new(computer_id, pool_index, pool_address)  ((((f2ptr)(computer_id)) << (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num)) | \
-							    (((f2ptr)(pool_index))  <<  f2ptr__pool_address__bit_num) | \
-							    ( (f2ptr)(pool_address)))
+#define f2ptr__new(computer_id, pool_index, pool_address)  ((((u64)(computer_id)) << (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num)) | \
+							    (((u64)(pool_index))  <<  f2ptr__pool_address__bit_num) | \
+							    ( (u64)(pool_address)))
 
 #if (computer_id__bit_num == 0)
 #  define __f2ptr__computer_id(f2p)                        0
 #else
-#  define __f2ptr__computer_id(f2p)                        (((f2ptr)(f2p)) >> (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num))
+#  define __f2ptr__computer_id(f2p)                        (((u64)(f2p)) >> (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num))
 #endif
-#define __f2ptr__pool_index(f2p)                          ((((f2ptr)(f2p)) >> f2ptr__pool_address__bit_num) & f2ptr__pool_index__max_value)
-#define __f2ptr__pool_address(f2p)                         (((f2ptr)(f2p)) & f2ptr__pool_address__max_value)
+#define __f2ptr__pool_index(f2p)                          ((((u64)(f2p)) >> f2ptr__pool_address__bit_num) & f2ptr__pool_index__max_value)
+#define __f2ptr__pool_address(f2p)                         (((u64)(f2p)) & f2ptr__pool_address__max_value)
 
 #if (computer_id__bit_num == 0)
 #  define __f2ptr__computer_id__set(f2p, computer_id) (f2p)
@@ -135,8 +135,8 @@ extern void memory_mutex__unlock(int pool_index);
 
 #define   __ptr__pool_address(pool_index, p) (to_ptr(p) - __funk2.memory.pool[pool_index].global_f2ptr_offset)
 
-#define __f2ptr_to_ptr(f2p)             ((((f2ptr)(f2p)) !=    ((f2ptr)0))  ?  ((to_ptr((__f2ptr__pool_address(f2p))        + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
-#define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))    != (to_ptr(NULL))) ? ((f2ptr) (f2ptr__new(0, pool_index, __ptr__pool_address(pool_index, p))))               : ((f2ptr)0))
+#define __f2ptr_to_ptr(f2p)             ((((u64)(f2p)) !=       ((u64)0)) ? ((to_ptr((__f2ptr__pool_address(f2p))        + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
+#define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_address(pool_index, p))))                                           : ((u64)0))
 
 #ifdef DEBUG_MEMORY_POINTERS
 #  define      f2ptr_to_ptr(f2p) debug__used_f2ptr_to_ptr(f2p)

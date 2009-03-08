@@ -57,7 +57,7 @@ typedef unsigned int  bool;
 #define error(thread, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(thread, __FILE__, __LINE__, str); exit(-1);}
 
 
-#ifdef SINGLE_USER_32BIT_VERSION
+#ifdef F2__SINGLE_USER_32BIT_VERSION
 typedef                         u32 f2ptr;
 #  define f2ptr__fstr           X32__fstr
 #  define f2ptr__bit_num         32

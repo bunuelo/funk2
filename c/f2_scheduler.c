@@ -236,10 +236,19 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       if (critics) {
 	f2__thread_serial(cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
       } else {
-	printf("\nlarva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
-	printf("\n  thread-value=");
-	f2__print(cause, f2thread__value(thread, cause));
-	//f2__repl(cause, thread);
+	status("larva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
+	f2ptr larva = f2thread__value(thread, cause);
+	if (! raw__larvap(larva, cause)) {
+	  status("  larva is not a larva.");
+	} else {
+	  f2ptr type  = f2larva__type(larva, cause);
+	  if (! raw__integerp(type, cause)) {
+	    status("larva type is not an integer.");
+	  } else {
+	    u64 raw_type = f2integer__i(type, cause);
+	    status("  larva type=" u64__fstr, raw_type);
+	  }
+	}
       }
     }
     

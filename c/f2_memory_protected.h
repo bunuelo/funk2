@@ -116,11 +116,20 @@ extern void memory_mutex__unlock(int pool_index);
 #define f2ptr__new(computer_id, pool_index, pool_address)  ((((f2ptr)(computer_id)) << (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num)) | \
 							    (((f2ptr)(pool_index))  <<  f2ptr__pool_address__bit_num) | \
 							    ( (f2ptr)(pool_address)))
-#define __f2ptr__computer_id(f2p)                          (((f2ptr)(f2p)) >> (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num))
+
+#if (computer_id__bit_num == 0)
+#  define __f2ptr__computer_id(f2p)                        0
+#else
+#  define __f2ptr__computer_id(f2p)                        (((f2ptr)(f2p)) >> (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num))
+#endif
 #define __f2ptr__pool_index(f2p)                          ((((f2ptr)(f2p)) >> f2ptr__pool_address__bit_num) & f2ptr__pool_index__max_value)
 #define __f2ptr__pool_address(f2p)                         (((f2ptr)(f2p)) & f2ptr__pool_address__max_value)
 
-#define __f2ptr__computer_id__set(f2p, computer_id)   f2ptr__new(         computer_id,      __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p))
+#if (computer_id__bit_num == 0)
+#  define __f2ptr__computer_id__set(f2p, computer_id) (f2p)
+#else
+#  define __f2ptr__computer_id__set(f2p, computer_id) f2ptr__new(         computer_id,      __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p))
+#endif
 #define __f2ptr__pool_index__set(f2p, pool_index)     f2ptr__new(__f2ptr__computer_id(f2p),          pool_index,      __f2ptr__pool_address(f2p))
 #define __f2ptr__pool_address__set(f2p, pool_address) f2ptr__new(__f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p),          pool_address)
 

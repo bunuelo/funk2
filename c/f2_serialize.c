@@ -75,9 +75,12 @@ void raw__serialize_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int *new
     } break;
     case ptype_gfunkptr: {
       printf("\nserialize gfunkptr"); fflush(stdout);
-      f2ptr g = f2gfunkptr__gfunkptr(exp, cause);
-      u64   i = *((u64*)(&g));
-      if (chunk) {f2chunk__bit64__elt__set(chunk, index, cause, i);} index += 8;
+      union {
+	f2ptr g;
+	u64   i;
+      } u;
+      u.g = f2gfunkptr__gfunkptr(exp, cause);
+      if (chunk) {f2chunk__bit64__elt__set(chunk, index, cause, u.i);} index += 8;
     } break;
     case ptype_mutex: {
       printf("\nserialize mutex"); fflush(stdout);

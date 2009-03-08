@@ -407,6 +407,11 @@ void memory_test(int pool_index) {
 #if defined(SWAP_MEMORY) // can't resize static memory configurations at all.
 
 void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
+  if(((u64)byte_num) > ((u64)f2ptr__pool_address__max_value)) {
+    status("pool__change_total_memory_available error: tried to allocate more memory than is able to be addressed ((u64)byte_num) > ((u64)f2ptr__pool_address__max_value), ((u64)" u64__fstr ") > ((u64)" u64__fstr ").",
+	   ((u64)byte_num), ((u64)f2ptr__pool_address__max_value));
+    error(nil, "pool__change_total_memory_available error: tried to allocate more memory than is able to be addressed (are you using a 32 bit version still?).");
+  }
   //#ifdef DEBUG_MEMORY
   status("pool__change_total_memory_available(%d, " f2size_t__fstr ")", pool_index, byte_num); fflush(stdout);
   //#endif // DEBUG_MEMORY

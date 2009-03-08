@@ -19,9 +19,6 @@
  rights to redistribute these changes.
 '
 
-[print 'beginning bootstrap-blocks_world.fu2']
-
-
 [globalize-funk system-node_id &primfunk:system__node_id]
 
 [globalize-funk blocks_world-lower_left-x                      &primfunk:blocks_world__lower_left__x]

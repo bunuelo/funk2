@@ -89,11 +89,12 @@
     results]]
 
 
-[globalize a [list 1 2 3]]
-[globalize b [list 6 7 8 5]]
-
-[format stdout '\n remote-dups: ' a ' => ' [remove-duplicates a]]
-[format stdout '\n union      : ' [union a b]]
-[format stdout '\n intersect  : ' [intersect a b]]
-[format stdout '\n power-set  : ' [power-set a]]
+`[prog [globalize a [list 1 2 3]]
+       [globalize b [list 6 7 8 5]]
+       
+       [format stdout '\n remote-dups: ' a ' => ' [remove-duplicates a]]
+       [format stdout '\n union      : ' [union a b]]
+       [format stdout '\n intersect  : ' [intersect a b]]
+       [format stdout '\n power-set  : ' [power-set a]]
+       ]
 

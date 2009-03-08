@@ -161,9 +161,6 @@
 	 [need_simulate   t]
 	 [need_perceive   t]]
     [while [not done]
-      [if need_perceive
-	  [prog [set perceptions [blocks_world-generate_perceptions this]]
-		[set need_perceive nil]]]
       [if need_rerender
 	  [prog [blocks_world-render this 20 [- [termios-height] 10]]
 		[set need_rerender nil]]]
@@ -171,6 +168,9 @@
 	  [prog [blocks_world-simulate this]
 		[set need_rerender t]
 		[set need_simulate nil]]]
+      [if need_perceive
+	  [prog [set perceptions [blocks_world-generate_perceptions this]]
+		[set need_perceive nil]]]
       
       [ansi-stream-rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
       

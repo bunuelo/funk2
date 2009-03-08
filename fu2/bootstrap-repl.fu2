@@ -819,23 +819,17 @@
      `[print `[this-thread: ,[this-thread]]]
       except]]
 
-`[format stdout '\ncompiling thought_process.fu2']
-`[load 'fu2/thought_process.fu2']
-
-[format stdout '\ncompiling bootstrap-reader.fu2']
 [load 'fu2/bootstrap-reader.fu2']
-
-[format stdout '\ncompiling repl.fu2']
 [load 'fu2/repl.fu2']
 
 [format stdout '\n'
-	'Done compiling fu2/bootstrap-repl.fu2.' '\n'
-	'Saving half-baked memory_image to img/bootstrap-repl.img.']
+	'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'
+	'funk2: saving half-baked memory_image to img/bootstrap-repl.img.']
 
 [primfunk:memory_image__save 'img/bootstrap-repl.img']
 
 [format stdout '\n'
-	'Done saving half-baked memory_image.' '\n'
+	'funk2: done saving half-baked memory_image.' '\n'
 	'\n']
 
 [quit]

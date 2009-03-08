@@ -65,4 +65,3 @@
 [defmetro defalien [name gmodule_name return_type c_name argument_name_type_pairs]
   `[defunk-alien [gmodule-lookup gmodule_name] ,name ,return_type ,c_name ,argument_type_name_pairs]]
 
-[print 'done with gmodule.fu2']

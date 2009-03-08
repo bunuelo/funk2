@@ -1067,7 +1067,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
 #ifdef DEBUG_MEMORY
   {
     u64 check_pool_address = __ptr__pool_address(pool_index, block_ptr);
-    if (check_pool_address > (((u64)1) << pool_address__bit_num) - 1) {
+    if (check_pool_address > f2ptr__pool_address__max_value) {
       status("pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_address, (((u64)1) << pool_address__bit_num) - 1);
       error(nil, "pool_address is out of range.");
     }
@@ -1083,12 +1083,12 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
       error(nil, "computer_id must be zero for a local memory allocation.");
     }
     u64 check_pool_index   = __f2ptr__pool_index(block_f2ptr);
-    if (check_pool_index > (((u64)1) << pool_index__bit_num) - 1) {
+    if (check_pool_index > f2ptr__pool_index__max_value) {
       status("[ERROR] pool_index is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_index, (((u64)1) << pool_index__bit_num) - 1);
       error(nil, "pool_index is out of range.");
     }
     u64 check_pool_address = __f2ptr__pool_address(block_f2ptr);
-    if (check_pool_address > (((u64)1) << pool_address__bit_num) - 1) {
+    if (check_pool_address > f2ptr__pool_address__max_value) {
       status("[ERROR] pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_address, (((u64)1) << pool_address__bit_num) - 1);
       error(nil, "pool_address is out of range.");
     }

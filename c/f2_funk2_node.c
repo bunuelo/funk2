@@ -139,7 +139,7 @@ computer_id_t funk2_node__remote_computer_id_to_local_computer_id(funk2_node_t* 
   if (this->computer_id == 0) { // remote is local
     return remote_computer_id;
   }
-  if (remote_computer_id < 0 || remote_computer_id >= f2ptr__computer_id__max_value) {
+  if (remote_computer_id >= f2ptr__computer_id__max_value) {
     error(nil, "funk2_node__remote_computer_id_to_local_computer_id error: remote computer_id out of range");
   }
   computer_id_t local_computer_id = this->remote_computer_id_to_local_computer_id[remote_computer_id];
@@ -285,7 +285,7 @@ computer_id_t funk2_node_handler__add_node(funk2_node_handler_t* this, node_id_t
   funk2_node__init(&(new_node_list->node), node_id, computer_id, client_id, this->new_node__send_buffer_byte_num, this->new_node__recv_buffer_byte_num);
   new_node_list->next = this->node_list;
   this->node_list = new_node_list;
-  if (computer_id < 0 || computer_id > f2ptr__computer_id__max_value) {
+  if (computer_id > f2ptr__computer_id__max_value) {
     error(nil, "computer_id out of range.");
   }
   if (this->funk2_node_by_computer_id_array[computer_id] != NULL) {
@@ -328,7 +328,7 @@ computer_id_t funk2_node_handler__lookup_computer_id_from_node_id(funk2_node_han
 }
 
 funk2_node_t* funk2_node_handler__lookup_node_by_computer_id(funk2_node_handler_t* this, computer_id_t computer_id) {
-  if (computer_id < 0 || computer_id > f2ptr__computer_id__max_value) {
+  if (computer_id > f2ptr__computer_id__max_value) {
     error(nil, "computer_id out of range.");
   }
   return this->funk2_node_by_computer_id_array[computer_id];

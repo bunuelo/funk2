@@ -1074,9 +1074,9 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   //pthread_mutex_init(&(block->mutex), NULL);
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
-  ptr block_ptr = to_ptr(block);
 #ifdef DEBUG_MEMORY
   {
+    ptr block_ptr = to_ptr(block);
     s64 check_pool_address = __ptr__pool_address(pool_index, to_ptr(block_ptr));
     if (check_pool_address < 0 || check_pool_address > f2ptr__pool_address__max_value) {
       status("pool_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);

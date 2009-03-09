@@ -74,4 +74,12 @@
     ]]
 
 
+`[defunk primobject-brief [this]
+   [let [[type_name [unsafe:primobject-type this]]]
+     [let [[type [hashtable-lookup_var_value -primobject_type-name-hash- type_name]]]
+       [let [[frame [frame-new]]]
+	 [mapc [funk [slot]
+		     [frame-add_var_value frame [primobject_slot_type-name slot] [brief [array-elt this [primobject_slot_type-array_index type]]]]]
+	       [hashtable-values [frame-var_hashtable [primobject_type-slot_type_frame type]]]]
+	 frame]]]]
 

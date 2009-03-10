@@ -22,9 +22,11 @@
 #include "funk2.h"
 
 void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_directory) {
-  int fd = -1;
+  int  fd                 = -1;
+  int  total_tries_so_far = 0;
+  bool try_again          = false;
   do {
-    if (fd != -1) {close(fd);}
+    total_tries_so_far ++;
     sprintf(str, "%s----------------------.f2swp", swap_directory);
     int i;
     for (i = 0; str[i] != '-'; i++); // get to first -
@@ -37,7 +39,74 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
 	 ((j - 26) + 'A') :
 	 ((j - 52) + '0'));
     }
-  } while ((fd = open(str, O_RDONLY)) != -1); // assure opening the random filename fails before returning
+    fd = open(str, O_RDONLY);
+    if (fd != -1) {
+      close(fd);
+      try_again = true; // success means file exists.
+    } else {
+      try_again = false;
+      switch(errno) {
+      case EACCES:
+	status("The requested access to the file is not allowed, or search permission is denied for one of the directories in the path prefix of pathname, or the file did not exist yet and write access to the parent directory is  not  allowed.   (See  also  path_resolu’¡¾"
+	       "tion(7).)");
+	break;
+      case EEXIST:
+	status("pathname already exists and O_CREAT and O_EXCL were used.");
+	break;
+      case EFAULT:
+	status("pathname points outside your accessible address space.");
+	break;
+      case EFBIG:
+	status("pathname refers to a regular file, too large to be opened; see O_LARGEFILE above.  (POSIX.1-2001 specifies the error EOVERFLOW for this case.)");
+	break;
+      case EISDIR:
+	status("pathname refers to a directory and the access requested involved writing (that is, O_WRONLY or O_RDWR is set).");
+	break;
+      case ELOOP:
+	status("Too many symbolic links were encountered in resolving pathname, or O_NOFOLLOW was specified but pathname was a symbolic link.");
+	break;
+      case EMFILE:
+	status("The process already has the maximum number of files open.");
+	break;
+      case ENAMETOOLONG:
+	status("pathname was too long.");
+	break;
+      case ENFILE:
+	status("The system limit on the total number of open files has been reached.");
+	break;
+      case ENODEV:
+	status("pathname refers to a device special file and no corresponding device exists.  (This is a Linux kernel bug; in this situation ENXIO must be returned.)");
+	break;
+      case ENOENT:
+	status("O_CREAT is not set and the named file does not exist.  Or, a directory component in pathname does not exist or is a dangling symbolic link.");
+	break;
+      case ENOMEM:
+	status("Insufficient kernel memory was available.");
+	break;
+      case ENOSPC:
+	status("pathname was to be created but the device containing pathname has no room for the new file.");
+	break;
+      case ENOTDIR:
+	status("A component used as a directory in pathname is not, in fact, a directory, or O_DIRECTORY was specified and pathname was not a directory.");
+	break;
+      case ENXIO:
+	status("O_NONBLOCK | O_WRONLY is set, the named file is a FIFO and no process has the file open for reading.  Or, the file is a device special file and no corresponding device exists.");
+	break;
+      case EPERM:
+	status("The O_NOATIME flag was specified, but the effective user ID of the caller did not match the owner of the file and the caller was not privileged (CAP_FOWNER).");
+	break;
+      case EROFS:
+	status("pathname refers to a file on a read-only file system and write access was requested.");
+	break;
+      case ETXTBSY:
+	status("pathname refers to an executable image which is currently being executed and write access was requested.");
+	break;
+      case EWOULDBLOCK:
+	status("The O_NONBLOCK flag was specified, and an incompatible lease was held on the file (see fcntl(2)).");
+	break;
+      }
+    }
+  } while (try_again && total_tries_so_far < 100); // assure opening the random filename fails before returning
 }
 
 void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num, char* swap_directory) {

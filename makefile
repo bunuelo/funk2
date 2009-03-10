@@ -73,6 +73,7 @@ funk2_server_objs = \
   c/f2_primobjects.o \
   c/f2_primobject__boolean.o \
   c/f2_primobject__char_pointer.o \
+  c/f2_primobject__dynamic_library.o \
   c/f2_primobject__environment.o \
   c/f2_primobject__frame.o \
   c/f2_primobject__hashtable.o \
@@ -131,6 +132,7 @@ funk2_headers = \
   c/f2_primobjects.h \
   c/f2_primobject__boolean.h \
   c/f2_primobject__char_pointer.h \
+  c/f2_primobject__dynamic_library.h \
   c/f2_primobject__environment.h \
   c/f2_primobject__frame.h \
   c/f2_primobject__hashtable.h \

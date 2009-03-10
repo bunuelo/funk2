@@ -64,13 +64,7 @@ void raw__serialize_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int *new
     } break;
     case ptype_pointer: {
       printf("\nserialize pointer"); fflush(stdout);
-#if defined(F2__ARCH_64BIT)
       u64 i = (u64)f2pointer__p(exp, cause);
-#elif defined(F2__ARCH_32BIT)
-      u64 i = (u64)(u32)f2pointer__p(exp, cause);
-#else
-#  error must define either F2__ARCH_32BIT or F2__ARCH_64BIT
-#endif
       if (chunk) {f2chunk__bit64__elt__set(chunk, index, cause, i);} index += 8;
     } break;
     case ptype_gfunkptr: {
@@ -192,11 +186,7 @@ f2ptr raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int
   } break;
   case ptype_pointer: {
     u64 i = f2chunk__bit64__elt(chunk, index, cause); index += 8;
-#if defined(F2__ARCH_64BIT)
     void* p = (void*)i;
-#elif defined(F2__ARCH_32BIT)
-    void* p = (void*)(u32)i;
-#endif
     exp = f2pointer__new(cause, to_ptr(p));
   } break;
   case ptype_gfunkptr: {

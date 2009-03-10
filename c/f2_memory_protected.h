@@ -30,10 +30,8 @@
 #  include "f2_staticmemory.h"
 #endif // F2__ARCH_SENSOR_NODE
 
-#if defined(F2__ARCH_64BIT) || defined(F2__ARCH_32BIT)
-#  include "f2_swapmemory.h"
-#  include <pthread.h>
-#endif 
+#include "f2_swapmemory.h"
+#include <pthread.h>
 
 //#include "f2_gfunkptr.h"
 

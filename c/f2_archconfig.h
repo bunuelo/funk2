@@ -119,14 +119,6 @@ typedef u64 f2size_t;
 
 #define f2size_t__fstr u64__fstr
 
-// ****************************************
-// *********** F2__ARCH_64BIT *************
-// ****************************************
-#ifdef F2__ARCH_64BIT
-#define F2__ARCH_DEFINED
-
-// for lseek64 headers
-//#define _LARGEFILE64_SOURCE
 
 // function mappings
 #define f2__mmap  mmap
@@ -137,25 +129,6 @@ typedef u64 f2size_t;
 #define SWAP_MEMORY
 #define GMODULE_PRIMFUNKS
 
-#endif // F2__64BIT
-
-
-// ****************************************
-// *********** F2__ARCH_32BIT *************
-// ****************************************
-#ifdef F2__ARCH_32BIT
-#define F2__ARCH_DEFINED
-
-// function mappings
-#define f2__mmap  mmap
-#define f2__lseek lseek
-
-//#define MEMORY_OPTION__MEMBLOCK__RENDER_DATA
-#define MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-#define SWAP_MEMORY
-#define GMODULE_PRIMFUNKS
-
-#endif // F2__ARCH_32BIT
 
 
 // **********************************************
@@ -178,9 +151,5 @@ typedef u64 f2size_t;
 
 #endif // F2__ARCH_SENSOR_NODE
 
-
-#ifndef F2__ARCH_DEFINED
-#  error "F2__ARCH_DEFINED error: architecture must be defined."
-#endif // F2__ARCH_DEFINED
 
 #endif // F2__ARCHCONFIG__H

@@ -22,6 +22,8 @@
 #ifndef F2__PRIMOBJECT__ENVIRONMENT__H
 #define F2__PRIMOBJECT__ENVIRONMENT__H
 
+#include "f2_primobjects.h"
+
 // dynamic_library
 
 extern f2ptr __dynamic_library__symbol;

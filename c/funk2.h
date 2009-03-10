@@ -102,6 +102,7 @@
 #include "f2_primobject__object_type.h"
 #include "f2_primobject__stream.h"
 #include "f2_primobject__tensor.h"
+#include "f2_primobject__dynamic_library.h"
 #include "f2_primobjects.h"
 #include "f2_print.h"
 #include "f2_pthread.h"

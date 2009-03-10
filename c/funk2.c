@@ -48,37 +48,38 @@ void f2__initialize() {
   // ** 
   // **********************************************************************************************************************************************************************************
   
-  pause_gc(); f2__primobjects__initialize();                resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primobject_tensor__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primobject_object__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primobject_object_type__initialize();     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primobject_circular_buffer__initialize(); resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primobject__stream__initialize();         resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primcfunks__initialize();                 resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primfunks__memory__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__reader__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__compile__initialize();                    resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__thread__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__bytecodes__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__signal__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__load__initialize();                       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__socket__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__trace__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__serialize__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__thought_process__initialize();            resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primfunks__errno__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primfunks__fcntl__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primfunks__ioctl__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__scheduler__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__funk2_node__initialize();                 resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__peer_command_server__initialize();        resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__status__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primfunks__ioctl__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__primfunks__locale__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__ansi__initialize();                       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__termios__initialize();                    resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__ptypes__initialize__object_slots();       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__blocks_world__initialize();               resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobjects__initialize();                 resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject_tensor__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject_object__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject_object_type__initialize();      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject_circular_buffer__initialize();  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject__stream__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primcfunks__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primfunks__memory__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__reader__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__compile__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__thread__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__bytecodes__initialize();                   resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__signal__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__load__initialize();                        resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__socket__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__trace__initialize();                       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__serialize__initialize();                   resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__thought_process__initialize();             resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primfunks__errno__initialize();            resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primfunks__fcntl__initialize();            resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primfunks__ioctl__initialize();            resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__scheduler__initialize();                   resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__funk2_node__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__peer_command_server__initialize();         resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__status__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primfunks__ioctl__initialize();            resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primfunks__locale__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__ansi__initialize();                        resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__termios__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__ptypes__initialize__object_slots();        resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__blocks_world__initialize();                resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject__dynamic_library__initialize(); resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

@@ -154,7 +154,7 @@ void memorypool__init(memorypool_t* pool) {
 #if defined(SWAP_MEMORY)
   pool->total_global_memory = sizeof(memblock_t) + F2__INITIAL_MEMORY;
   {
-    char* swap_directory = (__funk2.command_line.swap_directory != NULL) ? __funk2.command_line.swap_directory : "./f2swp/";
+    char* swap_directory = (__funk2.command_line.swap_directory != NULL) ? __funk2.command_line.swap_directory : "/tmp/";
     f2swapmemory__init_and_alloc(&(pool->swap_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY, swap_directory);
   }
 #elif defined(STATIC_MEMORY)
@@ -1458,34 +1458,35 @@ int raw__memory_image__save(char* filename) {
   return 0;
 }
 
-void f2__thought_process__reinitialize_globalvars();            // defined in f2_thought_process.c
-void f2__env__reinitialize_globalvars();                        // defined in f2_env.c
-void f2__funk2_node__reinitialize_globalvars();                 // defined in f2_funk2_node.c
-void f2__globalenv__reinitialize_globalvars();                  // defined in f2_globalenv.c
-void f2__peer_command_server__reinitialize_globalvars();        // defined in f2_peer_command_server.c
-void f2__primobjects__reinitialize_globalvars();                // defined in f2_primobjects.c
-void f2__primobject_tensor__reinitialize_globalvars();          // defined in f2_primobject__tensor.c
-void f2__primobject_object__reinitialize_globalvars();          // defined in f2_primobject__object.c
-void f2__primobject_object_type__reinitialize_globalvars();     // defined in f2_primobject__object_type.c
-void f2__primobject_circular_buffer__reinitialize_globalvars(); // defined in f2_primobject__circular_buffer.c
+void f2__thought_process__reinitialize_globalvars();             // defined in f2_thought_process.c
+void f2__env__reinitialize_globalvars();                         // defined in f2_env.c
+void f2__funk2_node__reinitialize_globalvars();                  // defined in f2_funk2_node.c
+void f2__globalenv__reinitialize_globalvars();                   // defined in f2_globalenv.c
+void f2__peer_command_server__reinitialize_globalvars();         // defined in f2_peer_command_server.c
+void f2__primobjects__reinitialize_globalvars();                 // defined in f2_primobjects.c
+void f2__primobject_tensor__reinitialize_globalvars();           // defined in f2_primobject__tensor.c
+void f2__primobject_object__reinitialize_globalvars();           // defined in f2_primobject__object.c
+void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
+void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f2_primobject__circular_buffer.c
 void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
-void f2__primcfunks__reinitialize_globalvars();                 // defined in f2_primfunks.c
-void f2__reader__reinitialize_globalvars();                     // defined in f2_reader.c
-void f2__compile__reinitialize_globalvars();                    // defined in f2_compile.c
-void f2__thread__reinitialize_globalvars();                     // defined in f2_thread.c
-void f2__bytecodes__reinitialize_globalvars();                  // defined in f2_bytecodes.c
-void f2__signal__reinitialize_globalvars();                     // defined in f2_signal.c
-void f2__scheduler__reinitialize_globalvars();                  // defined in f2_scheduler.c
-void f2__socket__reinitialize_globalvars();                     // defined in f2_socket.c
-void f2__trace__reinitialize_globalvars();                      // defined in f2_trace.c
-void f2__serialize__reinitialize_globalvars();                  // defined in f2_serialize.c
-void f2__primfunks__errno__reinitialize_globalvars();           // defined in f2_primfunks__errno.c
-void f2__primfunks__fcntl__reinitialize_globalvars();           // defined in f2_primfunks__fcntl.c
-void f2__primfunks__ioctl__reinitialize_globalvars();           // defined in f2_primfunks__ioctl.c
-void f2__primfunks__locale__reinitialize_globalvars();          // defined in f2_primfunks__locale.c
-void f2__ansi__reinitialize_globalvars();                       // defined in f2_ansi.c
-void f2__termios__reinitialize_globalvars();                    // defined in f2_termios.c
-void f2__blocks_world__reinitialize_globalvars();               // defined in f2_blocks_world.c
+void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
+void f2__reader__reinitialize_globalvars();                      // defined in f2_reader.c
+void f2__compile__reinitialize_globalvars();                     // defined in f2_compile.c
+void f2__thread__reinitialize_globalvars();                      // defined in f2_thread.c
+void f2__bytecodes__reinitialize_globalvars();                   // defined in f2_bytecodes.c
+void f2__signal__reinitialize_globalvars();                      // defined in f2_signal.c
+void f2__scheduler__reinitialize_globalvars();                   // defined in f2_scheduler.c
+void f2__socket__reinitialize_globalvars();                      // defined in f2_socket.c
+void f2__trace__reinitialize_globalvars();                       // defined in f2_trace.c
+void f2__serialize__reinitialize_globalvars();                   // defined in f2_serialize.c
+void f2__primfunks__errno__reinitialize_globalvars();            // defined in f2_primfunks__errno.c
+void f2__primfunks__fcntl__reinitialize_globalvars();            // defined in f2_primfunks__fcntl.c
+void f2__primfunks__ioctl__reinitialize_globalvars();            // defined in f2_primfunks__ioctl.c
+void f2__primfunks__locale__reinitialize_globalvars();           // defined in f2_primfunks__locale.c
+void f2__ansi__reinitialize_globalvars();                        // defined in f2_ansi.c
+void f2__termios__reinitialize_globalvars();                     // defined in f2_termios.c
+void f2__blocks_world__reinitialize_globalvars();                // defined in f2_blocks_world.c
+void f2__primobject__dynamic_library__reinitialize_globalvars(); // defined in f2_primobject__dynamic_library.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}

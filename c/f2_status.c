@@ -28,7 +28,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   vsprintf(temp_msg, msg, args);
   va_end(args);
   pthread_mutex_lock(&(__funk2.status.trace_mutex));
-  FILE* trace_fptr = fopen("funk2_trace.log", "a+");
+  FILE* trace_fptr = fopen("/tmp/funk2_trace.log", "a+");
   if (! trace_fptr) {
     error(nil, "funk2_status couldn't open funk2_trace.log");
   }

@@ -125,6 +125,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   char* install__bootstrap_img__filename      = F2__INSTALL__BOOTSTRAP_IMG__FILENAME;
   char* compile__bootstrap_img__filename      = F2__COMPILE__BOOTSTRAP_IMG__FILENAME;
   char* compile__bootstrap_repl_img__filename = F2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME;
+  char* other__bootstrap_repl_img__filename   = "/mit/6.868/funk2/img/bootstrap.img";
   
   f2__initialize();
   
@@ -140,7 +141,13 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	status("warning: we must be in a compile process because couldn't load \"%s\" so reverted to loading \"%s\"", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
       }
     } else {
-      status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
+      // try to load the other bootstrap image
+      if (raw__memory_image__load(other__bootstrap_img__filename)) {
+	status("warning: couldn't load \"%s\" or \"%s\".", install__bootstrap_img__filename, other__bootstrap_img__filename);
+	status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
+      } else {
+	status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
+      }
     }
   }
   

@@ -40,6 +40,16 @@
         [cons car_a [intersect [cdr a] b]]
         [intersect [cdr a] b]]]]]
 
+
+[defunk difference [a b]
+  [if [or [null a] [null b]]
+      nil
+    [let [[car_a [car a]]]
+      [if [member? car_a b]
+          [difference [cdr a] b]
+        [cons car_a [difference [cdr a] b]]]]]]
+
+
 '[let [[y 0]] [mapc [funk [x] [set y [+ x y]]] [list 0 1 2 3 4]] y]'
 
 '[mapcar [y 0] [funk [x,y] [+= y x] ] ]'

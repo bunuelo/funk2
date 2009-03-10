@@ -1,18 +1,24 @@
 
-[defgmodule readline './extern/readline-6.0/shlib/' 'readline']
+[globalize -gmodule-readline- nil]
 
-[defalien readline:readline readline char* 'readline' [[char* prompt_str]]]
 
 [defunk readline-init_library []
-  [gmodule-init_library `readline]]
+  [if [null -gmodule-readline-]
+      [prog [set -gmodule-readline- [gmodule-open [gmodule-build_path './extern/readline-6.0/shlib' 'readline'] 0]]
+	    [if [null -gmodule-readline-] [error `loading-gmodule 'loading readline dynamic library']]]]]
+
+
+
+[defunk-alien -gmodule-readline- readline:rl_initialize null 'rl_initialize' []]
+
+[defunk-alien -gmodule-readline- readline:readline pointer 'readline' [char* str]]
 
 [defunk string-new_from_readline [prompt_str]
-  [let [[prompt_str-c_str [string-new_raw_c_string prompt_str]]]
+  [let [[prompt_str-c_str [string-to_new_raw_c_string prompt_str]]]
     [let [[readline_string-c_ptr [readline:readline prompt_str-c_str]]]
       [f2-free prompt_str-c_str]
-      [let [[readline_string [string-new_from_c_string readline_string-c_ptr]]]
-	[f2-free readline_string-c_ptr]
-	readline_string]]]]
+      [let [[readline_string [string-to_new_raw_c_string readline_string-c_ptr]]]
+	[f2-free readline_string-c_ptr]	readline_string]]]]
 
 [defunk readline-read [prompt_str]
   [let [[readline_string [string-new_from_readline prompt_str]]]
@@ -20,5 +26,5 @@
       [read readline_string_stream]]]]
 
 
-
   
+[readline:readline [string-to_new_raw_c_string 'test']]

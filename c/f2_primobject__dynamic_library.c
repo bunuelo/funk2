@@ -32,7 +32,7 @@ f2ptr __dynamic_library__symbol = -1;
 f2ptr f2dynamic_library__new__trace_depth(f2ptr cause, f2ptr type, f2ptr directory, f2ptr name, int trace_depth) {
   release__assert(__dynamic_library__symbol != -1, nil, "f2dynamic_library__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new__trace_depth(cause, __dynamic_library__symbol, 3, nil, trace_depth);
-  f2dynamic_library__type__set__trace_depth     (this, cause, type,      trace_depth);
+  f2dynamic_library__type__set__trace_depth(     this, cause, type,      trace_depth);
   f2dynamic_library__directory__set__trace_depth(this, cause, directory, trace_depth);
   f2dynamic_library__name__set__trace_depth(     this, cause, name,      trace_depth);
   return this;

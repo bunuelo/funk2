@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__PRIMOBJECT__ENVIRONMENT__H
-#define F2__PRIMOBJECT__ENVIRONMENT__H
+#ifndef F2__PRIMOBJECT__DYNAMIC_LIBRARY__H
+#define F2__PRIMOBJECT__DYNAMIC_LIBRARY__H
 
 #include "f2_primobjects.h"
 

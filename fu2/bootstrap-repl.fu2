@@ -359,7 +359,7 @@
   [let [[rest_indices [cdr indices]]]
     [if [null rest_indices]
 	[elt-1d collection [car indices]]
-      [apply &elt [cons `[elt collection [car indices]] rest_indices]]]]]
+      [apply &elt [cons [elt collection [car indices]] rest_indices]]]]]
 
 [defunk elt-1d-seq-set [seq index value]
   [cond [[null seq]                   [error `run-time `list-index-too-big]]

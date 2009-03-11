@@ -28,8 +28,8 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   vsprintf(temp_msg, msg, args);
   va_end(args);
   pthread_mutex_lock(&(__funk2.status.trace_mutex));
-  FILE* trace_fptr = fopen("/tmp/funk2_trace.log", "a+");
-  if (! trace_fptr) {
+  int trace_fd = open("/tmp/funk2_trace.log", O_CREAT | O_APPEND, S_IRWXU | S_IRWXG | S_IRWXO);
+  if (trace_fd == -1) {
     error(nil, "funk2_status couldn't open funk2_trace.log");
   }
   u64 microseconds_since_1970    = raw__system_microseconds_since_1970();
@@ -43,8 +43,10 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   u64 seconds      = seconds_since_1970      - (minutes_since_1970         * 60);
   u64 milliseconds = milliseconds_since_1970 - (seconds_since_1970         * 1000);
   u64 microseconds = microseconds_since_1970 - (milliseconds_since_1970    * 1000);
-  fprintf(trace_fptr, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d.%03d,%03d funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (int)milliseconds, (int)microseconds, temp_msg);
-  fclose(trace_fptr);
+  char temp_msg2[2048];
+  sprintf(temp_msg2, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d.%03d,%03d funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (int)milliseconds, (int)microseconds, temp_msg);
+  write(temp_msg2, strlen(temp_msg2) + 1, trace_fd);
+  close(trace_fd);
   pthread_mutex_unlock(&(__funk2.status.trace_mutex));
 }
 

@@ -33,6 +33,7 @@
 [load 'fu2/bootstrap-dlfcn.fu2']
 [load 'fu2/bootstrap-gmodule.fu2']
 [load 'fu2/bootstrap-alien.fu2']
+[load 'fu2/bootstrap-dynamic_library.fu2']
 
 [globalize load-utilities nil]
 [defunk load-utilities []

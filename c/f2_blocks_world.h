@@ -131,20 +131,20 @@ defprimobject__static_slot__prototype(blocks_world_object__holding_object);
 
 
 
-// blocks_world
+// blocks_world_physics
 
-extern f2ptr __blocks_world__symbol;
-f2ptr f2blocks_world__new(f2ptr cause, f2ptr objects);
-bool raw__blocks_worldp(f2ptr this, f2ptr cause);
+extern f2ptr __blocks_world_physics__symbol;
+f2ptr f2blocks_world_physics__new(f2ptr cause, f2ptr objects);
+bool raw__blocks_world_physicsp(f2ptr this, f2ptr cause);
 
-#define f2primobject__is__blocks_world(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world__symbol)
+#define f2primobject__is__blocks_world_physics(this, cause) raw__eq(cause, f2primobject__type(this, cause), __blocks_world_physics__symbol)
 
-defprimobject__static_slot__prototype(blocks_world__objects);
-#define f2blocks_world__objects(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world__objects, cause)
-#define f2blocks_world__objects__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world__objects, cause, value)
-#define f2blocks_world__objects__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world__objects, cause)
-#define f2blocks_world__objects__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world__objects, cause)
-#define f2blocks_world__objects__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world__objects, cause)
+defprimobject__static_slot__prototype(blocks_world_physics__objects);
+#define f2blocks_world_physics__objects(                   this, cause)        primobject__static_slot__accessor(         this, blocks_world_physics__objects, cause)
+#define f2blocks_world_physics__objects__set(              this, cause, value) primobject__static_slot__set(              this, blocks_world_physics__objects, cause, value)
+#define f2blocks_world_physics__objects__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, blocks_world_physics__objects, cause)
+#define f2blocks_world_physics__objects__trace(            this, cause)        primobject__static_slot__trace(            this, blocks_world_physics__objects, cause)
+#define f2blocks_world_physics__objects__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, blocks_world_physics__objects, cause)
 
 
 typedef struct funk2_blocks_world_s {

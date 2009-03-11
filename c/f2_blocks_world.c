@@ -612,36 +612,36 @@ def_pcfunk4(blocks_world_object__translate_overlaps_objects, this, dx, dy, objec
 
 // blocks_world
 
-defprimobject__static_slot(blocks_world__objects, 0);
+defprimobject__static_slot(blocks_world_physics__objects, 0);
 
-f2ptr __blocks_world__symbol = -1;
+f2ptr __blocks_world_physics__symbol = -1;
 
-f2ptr f2blocks_world__new(f2ptr cause, f2ptr objects) {
+f2ptr f2blocks_world_physics__new(f2ptr cause, f2ptr objects) {
   /*pause_gc();*/
-  release__assert(__blocks_world__symbol != -1, nil, "f2blocks_world__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __blocks_world__symbol, 1, nil);
-  f2blocks_world__objects__set(this, cause, objects);
+  release__assert(__blocks_world_physics__symbol != -1, nil, "f2blocks_world_physics__new error: used before primobjects initialized.");
+  f2ptr this = f2__primobject__new(cause, __blocks_world_physics__symbol, 1, nil);
+  f2blocks_world_physics__objects__set(this, cause, objects);
   /*resume_gc();*/
   return this;
 }
-def_pcfunk1(blocks_world__new, objects, return f2blocks_world__new(this_cause, objects));
+def_pcfunk1(blocks_world_physics__new, objects, return f2blocks_world_physics__new(this_cause, objects));
 
-f2ptr f2__blocks_world__objects(f2ptr cause, f2ptr this) {
-  if (! raw__blocks_worldp(this, cause)) {
+f2ptr f2__blocks_world_physics__objects(f2ptr cause, f2ptr this) {
+  if (! raw__blocks_world_physicsp(this, cause)) {
     return f2larva__new(cause, 1);
   }
   return f2blocks_world__objects(this, cause);
 }
-def_pcfunk1(blocks_world__objects, this, return f2__blocks_world__objects(this_cause, this));
+def_pcfunk1(blocks_world_physics__objects, this, return f2__blocks_world_physics__objects(this_cause, this));
 
-bool raw__blocks_worldp(f2ptr this, f2ptr cause) {
-  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world(this, cause));
+bool raw__blocks_world_physicsp(f2ptr this, f2ptr cause) {
+  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_physics(this, cause));
 }
 
-f2ptr f2__blocks_worldp(f2ptr this, f2ptr cause) {
-  return f2bool__new(raw__blocks_worldp(this, cause));
+f2ptr f2__blocks_world_physicsp(f2ptr this, f2ptr cause) {
+  return f2bool__new(raw__blocks_world_physicsp(this, cause));
 }
-def_pcfunk1(blocks_worldp, this, return f2__blocks_worldp(this, this_cause));
+def_pcfunk1(blocks_world_physicsp, this, return f2__blocks_world_physicsp(this, this_cause));
 
 // **
 
@@ -651,7 +651,7 @@ void f2__blocks_world__reinitialize_globalvars() {
   __blocks_world_rectangle__symbol = f2symbol__new(cause, strlen("blocks_world_rectangle"), (u8*)"blocks_world_rectangle");
   __blocks_world_color__symbol     = f2symbol__new(cause, strlen("blocks_world_color"),     (u8*)"blocks_world_color");
   __blocks_world_object__symbol    = f2symbol__new(cause, strlen("blocks_world_object"),    (u8*)"blocks_world_object");
-  __blocks_world__symbol           = f2symbol__new(cause, strlen("blocks_world"),           (u8*)"blocks_world");
+  __blocks_world_physics__symbol   = f2symbol__new(cause, strlen("blocks_world_physics"),   (u8*)"blocks_world_physics");
   
   __funk2.globalenv.blocks_world.red__symbol     = f2symbol__new(cause, strlen("red"),     (u8*)"red");
   __funk2.globalenv.blocks_world.green__symbol   = f2symbol__new(cause, strlen("green"),   (u8*)"green");
@@ -721,9 +721,9 @@ void f2__blocks_world__initialize() {
   f2__primcfunk__init(blocks_world_object__render);
   f2__primcfunk__init(blocks_world_object__translate_overlaps_objects);
   
-  f2__primcfunk__init(blocks_world__new);
-  f2__primcfunk__init(blocks_worldp);
-  f2__primcfunk__init(blocks_world__objects);
+  f2__primcfunk__init(blocks_world_physics__new);
+  f2__primcfunk__init(blocks_world_physicsp);
+  f2__primcfunk__init(blocks_world_physics__objects);
   
   resume_gc();
   try_gc();

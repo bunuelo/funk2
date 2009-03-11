@@ -481,7 +481,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
       exps     = next;
     }
 #endif
-  } while(optimize_unused && exp__is_funktional && next);
+  } while(
+#if 0
+	  optimize_unused && 
+#else
+	  nil &&
+#endif
+	  exp__is_funktional && next);
   if (!exps) {
     return full_bcs;
   }
@@ -517,7 +523,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
 	exps    = next;
       }
 #endif 
-    } while(optimize_unused && exp__is_funktional && next);
+    } while(
+#if 0
+	    optimize_unused &&
+#else
+	    nil &&
+#endif
+	    exp__is_funktional && next);
     if (!exps) {
       return full_bcs;
     }

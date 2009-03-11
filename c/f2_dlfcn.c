@@ -21,8 +21,6 @@
 
 #include "funk2.h"
 
-#define F2__DLFCN__SUPPORTED
-
 bool raw__dlfcn__supported() {
 #ifdef F2__DLFCN__SUPPORTED
   return true;

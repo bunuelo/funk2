@@ -190,7 +190,7 @@
 				  help_message]]
 	 [last_results    welcome_message]
 	 [done            nil]
-	 [perceptions     nil]
+	 [perceptions     `no-percept]
 	 [need_rerender   t]
 	 [need_simulate   t]
 	 [need_perceive   t]]

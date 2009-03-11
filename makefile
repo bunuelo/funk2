@@ -223,7 +223,7 @@ $(compile__bootstrap__repl__img): $(compile__funk2) $(funk2_fu2s)
 #	echo "run $(source__bootstrap__repl__fu2)" >> compile_bootstrap_repl_img.gdb
 #	echo "quit"                                >> compile_bootstrap_repl_img.gdb
 #	gdb -x compile_bootstrap_repl_img.gdb $(compile__funk2)
-	$(compile__funk2) --swap-directory /tmp/ $(source__bootstrap__repl__fu2)
+	$(compile__funk2) $(source__bootstrap__repl__fu2)
 
 # bootstrap the funk2 processor from a basic repl-prompt.
 $(compile__bootstrap__img): $(compile__bootstrap__repl__img) $(funk2_fu2s)
@@ -231,7 +231,7 @@ $(compile__bootstrap__img): $(compile__bootstrap__repl__img) $(funk2_fu2s)
 #	echo "run $(source__bootstrap__fu2)" >> compile_bootstrap_img.gdb
 #	echo "quit"                          >> compile_bootstrap_img.gdb
 #	gdb -x compile_bootstrap_img.gdb $(compile__funk2)
-	$(compile__funk2) --swap-directory /tmp/ $(source__bootstrap__fu2)
+	$(compile__funk2) $(source__bootstrap__fu2)
 
 # objdump/test.objdump is for reverse engineering a machine code compiler from c/test.c (it would be relatively easy to automate this; it would be nice to have our machine code compiler be machine independent)
 

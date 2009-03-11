@@ -50,8 +50,8 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
     return f2larva__new(cause, 1);
   }
   int filename__length = f2string__length(filename, cause);
-  char* raw_filename = (char*)alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, to_ptr(raw_filename));
+  u8* raw_filename = (u8*)alloca(filename__length + 1);
+  f2string__str_copy(filename, cause, raw_filename);
   raw_filename[filename__length] = 0;
   int raw_flag = f2integer__i(flag, cause);
   return f2pointer__new(cause, raw__dlfcn__dlopen(raw_filename, raw_flag));
@@ -90,7 +90,7 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
   }
   ptr raw_handle = f2pointer__p(handle, cause);
   int symbol__length = f2string__length(symbol, cause);
-  char* raw_symbol = (char*)alloca(symbol__length + 1);
+  u8* raw_symbol = (u8*)alloca(symbol__length + 1);
   f2string__str_copy(symbol, cause, raw_symbol);
   raw_symbol[symbol__length] = 0;
   ptr result = raw__dlfcn__dlsym(from_ptr(raw_handle), raw_symbol);

@@ -57,7 +57,7 @@ f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
   u8* module_name__str    = alloca(module_name__length + 1);
   f2string__str_copy(module_name, cause, module_name__str);
   module_name__str[module_name__length] = 0;
-  char* new_path_str = g_module_build_path(directory__str, module_name__str);
+  char* new_path_str = raw__gmodule__build_path(directory__str, module_name__str);
   if (new_path_str == NULL) {
     return nil;
   }

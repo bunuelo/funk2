@@ -68,7 +68,7 @@ f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
 def_pcfunk2(gmodule__build_path, directory, module_name, return f2__gmodule__build_path(this_cause, directory, module_name));
 
 //GModule* g_module_open(const gchar *file_name, GModuleFlags flags);
-ptr raw__gmodule__open(u8 filename, u64 flags) {
+ptr raw__gmodule__open(u8* filename, u64 flags) {
 #ifdef F2__GMODULE__SUPPORTED
   return to_ptr(g_module_open((char*)filename, flags));
 #else

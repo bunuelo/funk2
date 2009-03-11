@@ -179,7 +179,7 @@ f2ptr f2__gmodule__close(f2ptr cause, f2ptr module) {
     return f2larva__new(cause, 1);
   }
   ptr raw_module = f2pointer__p(module, cause);
-  return f2bool__new(raw__gmodule__close(raw_modulle));
+  return f2bool__new(raw__gmodule__close(raw_module));
 }
 def_pcfunk1(gmodule__close, module, return f2__gmodule__close(this_cause, module));
 

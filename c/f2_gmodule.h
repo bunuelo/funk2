@@ -37,5 +37,10 @@ void  f2__g_module_make_resident(f2ptr cause, f2ptr module);
 f2ptr f2__g_module_close        (f2ptr cause, f2ptr module);
 f2ptr f2__g_module_error        (f2ptr cause);
 
+// **
+
+void f2__gmodule__reinitialize_globalvars();
+void f2__gmodule__initialize();
+
 #endif // F2__GMODULE__H
 

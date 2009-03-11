@@ -118,6 +118,97 @@ f2ptr f2__dlfcn__dlclose(f2ptr cause, f2ptr handle) {
 }
 def_pcfunk1(dlfcn__dlclose, handle, return f2__dlfcn__dlclose(this_cause, handle));
 
+u64 raw__dlfcn__rtld_lazy() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_LAZY;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_lazy(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_lazy());
+}
+def_pcfunk0(dlfcn__rtld_lazy, return f2__dlfcn__rtld_lazy(this_cause));
+
+u64 raw__dlfcn__rtld_now() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_NOW;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_now(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_now());
+}
+def_pcfunk0(dlfcn__rtld_now, return f2__dlfcn__rtld_now(this_cause));
+
+u64 raw__dlfcn__rtld_global() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_GLOBAL;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_global(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_global());
+}
+def_pcfunk0(dlfcn__rtld_global, return f2__dlfcn__rtld_global(this_cause));
+
+u64 raw__dlfcn__rtld_local() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_LOCAL;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_local(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_local());
+}
+def_pcfunk0(dlfcn__rtld_local, return f2__dlfcn__rtld_local(this_cause));
+
+u64 raw__dlfcn__rtld_nodelete() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_NODELETE;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_nodelete(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_nodelete());
+}
+def_pcfunk0(dlfcn__rtld_nodelete, return f2__dlfcn__rtld_nodelete(this_cause));
+
+u64 raw__dlfcn__rtld_noload() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_NOLOAD;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_noload(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_noload());
+}
+def_pcfunk0(dlfcn__rtld_noload, return f2__dlfcn__rtld_noload(this_cause));
+
+u64 raw__dlfcn__rtld_deepbind() {
+#ifdef F2__DLFCN__SUPPORTED
+  return (u64)RTLD_DEEPBIND;
+#else
+  return 0;
+#endif
+}
+
+f2ptr f2__dlfcn__rtld_deepbind(f2ptr cause) {
+  return f2integer__new(cause, raw__dlfcn__rtld_deepbind());
+}
+def_pcfunk0(dlfcn__rtld_deepbind, return f2__dlfcn__rtld_deepbind(this_cause));
+
 // **
 
 void f2__dlfcn__reinitialize_globalvars() {
@@ -135,6 +226,13 @@ void f2__dlfcn__initialize() {
   f2__primcfunk__init__0(           dlfcn__dlerror);
   f2__primcfunk__init__2(           dlfcn__dlsym, handle, symbol);
   f2__primcfunk__init__1(           dlfcn__dlclose, handle);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_lazy);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_now);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_global);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_local);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_nodelete);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_noload);
+  f2__funktional_primcfunk__init__0(dlfcn__rtld_deepbind);
   
   resume_gc();
   try_gc();

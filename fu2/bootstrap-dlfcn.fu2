@@ -19,10 +19,17 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk dlfcn-supported &primfunk:dlfcn__supported]
-[globalize-funk dlfcn-dlopen    &primfunk:dlfcn__dlopen]
-[globalize-funk dlfcn-dlerror   &primfunk:dlfcn__dlerror]
-[globalize-funk dlfcn-dlsym     &primfunk:dlfcn__dlsym]
-[globalize-funk dlfcn-dlclose   &primfunk:dlfcn__dlclose]
+[globalize-funk dlfcn-supported     &primfunk:dlfcn__supported]
+[globalize-funk dlfcn-dlopen        &primfunk:dlfcn__dlopen]
+[globalize-funk dlfcn-dlerror       &primfunk:dlfcn__dlerror]
+[globalize-funk dlfcn-dlsym         &primfunk:dlfcn__dlsym]
+[globalize-funk dlfcn-dlclose       &primfunk:dlfcn__dlclose]
 
+[globalize-funk dlfcn-rtld_lazy     &primfunk:dlfcn__rtld_lazy]
+[globalize-funk dlfcn-rtld_now      &primfunk:dlfcn__rtld_now]
+[globalize-funk dlfcn-rtld_global   &primfunk:dlfcn__rtld_global]
+[globalize-funk dlfcn-rtld_local    &primfunk:dlfcn__rtld_local]
+[globalize-funk dlfcn-rtld_nodelete &primfunk:dlfcn__rtld_nodelete]
+[globalize-funk dlfcn-rtld_noload   &primfunk:dlfcn__rtld_noload]
+[globalize-funk dlfcn-rtld_deepbind &primfunk:dlfcn__rtld_deepbind]
 

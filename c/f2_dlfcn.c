@@ -32,7 +32,7 @@ bool raw__dlfcn__supported() {
 }
 
 f2ptr f2__dlfcn__supported(f2ptr cause) {
-  return f2bool__new(raw__dlfcn__supported);
+  return f2bool__new(raw__dlfcn__supported());
 }
 def_pcfunk0(dlfcn__supported, return f2__dlfcn__supported(this_cause));
 

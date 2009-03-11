@@ -28,6 +28,11 @@ u8*  raw__dlfcn__dlerror();
 ptr  raw__dlfcn__dlsym(ptr handle, u8* symbol);
 int  raw__dlfcn__dlclose(ptr handle);
 
+// **
+
+void f2__dlfcn__reinitialize_globalvars();
+void f2__dlfcn__initialize();
+
 #endif // F2__DLFCN__H
 
 

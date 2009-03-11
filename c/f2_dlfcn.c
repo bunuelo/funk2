@@ -54,7 +54,7 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   f2string__str_copy(filename, cause, raw_filename);
   raw_filename[filename__length] = 0;
   int raw_flag = f2integer__i(flag, cause);
-  return f2pointer__new(cause, raw__dlfcn__dlopen(raw_filename, raw_flag));
+  return f2pointer__new(cause, to_ptr(raw__dlfcn__dlopen(raw_filename, raw_flag)));
 }
 def_pcfunk2(dlfcn__dlopen, filename, flag, return f2__dlfcn__dlopen(this_cause, filename, flag));
 

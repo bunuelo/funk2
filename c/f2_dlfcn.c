@@ -128,7 +128,7 @@ void f2__dlfcn__reinitialize_globalvars() {
 void f2__dlfcn__initialize() {
   pause_gc();
   f2__dlfcn__reinitialize_globalvars();
-  f2ptr cause = initial_cause(); //f2_dlfcn_c__cause__new(initial_cause(), nil, nil);
+  //f2ptr cause = initial_cause(); //f2_dlfcn_c__cause__new(initial_cause(), nil, nil);
   
   f2__funktional_primcfunk__init__0(dlfcn__supported);
   f2__primcfunk__init__2(           dlfcn__dlopen, filename, flag);

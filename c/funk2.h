@@ -42,6 +42,7 @@
 #endif
 
 #include <arpa/inet.h>
+#include <dlcfn.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <gmodule.h>
@@ -73,6 +74,7 @@
 #include "f2_compile.h"
 #include "f2_compile_x86.h"
 #include "f2_critic.h"
+#include "f2_dlfcn.h"
 #include "f2_event_router.h"
 #include "f2_funk2_node.h"
 #include "f2_funktional.h"

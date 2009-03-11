@@ -29,9 +29,9 @@
 [load 'fu2/bootstrap-ansi.fu2']
 [load 'fu2/bootstrap-termios.fu2']
 [load 'fu2/bootstrap-blocks_world.fu2']
-[load 'fu2/bootstrap-alien.fu2']
 [load 'fu2/bootstrap-critics-reactive.fu2']
-[load 'fu2/gmodule.fu2']
+[load 'fu2/bootstrap-dlfcn.fu2']
+[load 'fu2/bootstrap-alien.fu2']
 
 [globalize load-utilities nil]
 [defunk load-utilities []
@@ -57,6 +57,8 @@
 
 `[prog
   
+  `[load 'fu2/gmodule.fu2']
+   
   `[parload 'fu2/miscfunks.fu2'
 	    'fu2/cause.fu2'
 	    ]

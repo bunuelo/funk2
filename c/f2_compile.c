@@ -295,7 +295,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr thread, f2ptr funk) {
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
   
-  f2funk__is_funktional__set(funk, cause, funk__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
+  //f2funk__is_funktional__set(funk, cause, funk__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
   return bcs_valid(funk_bcs);
 }
@@ -473,20 +473,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
 	*is_funktional = false;
       }
     }
-#if 0
     if (optimize_unused && exp__is_funktional && next) {
       status("optimizing funktional beginning of rawcode!");
       //f2__print(cause, exp);
       full_bcs = nil;
       exps     = next;
     }
-#endif
-  } while(
-#if 0
-	  optimize_unused && 
-#else
-	  nil &&
-#endif
+  } while(optimize_unused && 
 	  exp__is_funktional && next);
   if (!exps) {
     return full_bcs;
@@ -515,20 +508,13 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, bool pr
 	  *is_funktional = false;
 	}
       }
-#if 0      
       if (optimize_unused && exp__is_funktional && next) {
 	status("optimizing funktional middle of rawcode!");
 	//f2__print(cause, exp);
 	exp_bcs = nil;
 	exps    = next;
       }
-#endif 
-    } while(
-#if 0
-	    optimize_unused &&
-#else
-	    nil &&
-#endif
+    } while(optimize_unused &&
 	    exp__is_funktional && next);
     if (!exps) {
       return full_bcs;

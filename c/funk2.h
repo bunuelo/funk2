@@ -24,6 +24,8 @@
 
 #define _GNU_SOURCE
 
+//#define F2__GMODULE__SUPPORTED
+//#define F2__DLFCN__SUPPORTED
 
 #ifdef __APPLE__
 #define MAP_ANONYMOUS MAP_ANON
@@ -42,10 +44,14 @@
 #endif
 
 #include <arpa/inet.h>
-#include <dlfcn.h>
+#ifdef F2__DLFCN__SUPPORTED
+#  include <dlfcn.h>
+#endif
 #include <errno.h>
 #include <fcntl.h>
-#include <gmodule.h>
+#ifdef F2__GMODULE__SUPPORTED
+#  include <gmodule.h>
+#endif
 #include <locale.h>
 #include <net/if.h>
 #include <netdb.h>

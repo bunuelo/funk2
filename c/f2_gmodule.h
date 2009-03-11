@@ -22,29 +22,6 @@
 #ifndef F2__GMODULE__H
 #define F2__GMODULE__H
 
-/*
-                    GModule;
-gboolean            g_module_supported                  (void);
-gchar*              g_module_build_path                 (const gchar *directory,
-                                                         const gchar *module_name);
-GModule*            g_module_open                       (const gchar *file_name,
-                                                         GModuleFlags flags);
-enum                GModuleFlags;
-gboolean            g_module_symbol                     (GModule *module,
-                                                         const gchar *symbol_name,
-                                                         gpointer *symbol);
-const gchar*        g_module_name                       (GModule *module);
-void                g_module_make_resident              (GModule *module);
-gboolean            g_module_close                      (GModule *module);
-const gchar*        g_module_error                      (void);
-
-const gchar*        (*GModuleCheckInit)                 (GModule *module);
-void                (*GModuleUnload)                    (GModule *module);
-#define             G_MODULE_SUFFIX
-#define             G_MODULE_EXPORT
-#define             G_MODULE_IMPORT
-*/
-
 #include "f2_memory.h"
 #include "f2_ptypes.h"
 #include "f2_primobject__environment.h"

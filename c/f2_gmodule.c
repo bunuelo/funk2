@@ -22,62 +22,209 @@
 #include "funk2.h"
 
 //gboolean g_module_supported();
-f2ptr f2__g_module_supported() {
-  return f2bool__new(g_module_supported());
+bool raw__gmodule__supported() {
+#ifdef F2__GMODULE__SUPPORTED
+  return (bool)g_module_supported();
+#else
+  return false;
+#endif
 }
 
+f2ptr f2__gmodule__supported(f2ptr cause) {
+  return f2bool__new(raw__gmodule__supported());
+}
+def_pcfunk0(gmodule__supported, return f2__gmodule__supported(this_cause));
+
 //gchar* g_module_build_path(const gchar *directory, const gchar *module_name);
-f2ptr f2__g_module_build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
-  char* directory__str   = (directory ? (char*)from_ptr(f2__malloc(f2string__length(directory, cause))) : NULL); if (directory__str) {f2string__str_copy(directory, cause, (u8*)directory__str);}
-  char* module_name__str = (char*)from_ptr(f2__malloc(f2string__length(module_name, cause))); f2string__str_copy(module_name, cause, (u8*)module_name__str);
-  char* new_path_str     = g_module_build_path(directory__str, module_name__str);
+u8* raw__gmodule__build_path(u8* directory, u8* module_name) {
+#ifdef F2__GMODULE__SUPPORTED
+  return g_module_build_path(directory__str, module_name__str);
+#else
+  return NULL;
+#endif
+}
+
+f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
+  if ((! raw__stringp(directory, cause)) ||
+      (! raw__stringp(module_name, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  int directory__length = f2string__length(directory, cause);
+  u8* directory__str    = alloca(directory__length + 1);
+  f2string__copy_str(directory, cause, directory__str);
+  directory__str[directory__length] = 0;
+  int module_name__length = f2string__length(module_name, cause);
+  u8* module_name__str    = alloca(module_name__length + 1);
+  f2string__copy_str(module_name, cause, module_name__str);
+  module_name__str[module_name__length] = 0;
+  char* new_path_str = g_module_build_path(directory__str, module_name__str);
+  if (new_path_str == NULL) {
+    return nil;
+  }
   f2ptr new_path = f2string__new(cause, strlen(new_path_str), (u8*)new_path_str);
-  f2__free(to_ptr(directory__str));
-  f2__free(to_ptr(module_name__str));
   free(new_path_str);
   return new_path;
 }
+def_pcfunk2(gmodule__build_path, directory, module_name, return f2__gmodule__build_path(this_cause, directory, module_name));
 
 //GModule* g_module_open(const gchar *file_name, GModuleFlags flags);
-f2ptr f2__g_module_open(f2ptr cause, f2ptr file_name, f2ptr flags) {
-  char* file_name__str = (char*)from_ptr(f2__malloc(f2string__length(file_name, cause))); f2string__str_copy(file_name, cause, (u8*)file_name__str);
-  ptr module_ptr = to_ptr(g_module_open(file_name__str, f2integer__i(flags, cause)));
-  f2ptr module = (module_ptr ? f2pointer__new(cause, module_ptr) : nil);
-  f2__free(to_ptr(file_name__str));
-  if (! module) {
-    printf("\nf2__g_module_open error: g_module_error() = '%s'", g_module_error()); fflush(stdout);
-  }
-  return module;
+ptr raw__gmodule__open(u8 filename, u64 flags) {
+#ifdef F2__GMODULE__SUPPORTED
+  return to_ptr(g_module_open((char*)filename, flags));
+#else
+  return to_ptr(NULL);
+#endif
 }
+
+f2ptr f2__gmodule__open(f2ptr cause, f2ptr filename, f2ptr flags) {
+  if ((! raw__stringp(filename, cause)) ||
+      (! raw__integerp(flags, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  int filename__length = f2string__length(filename, cause);
+  u8* filename__str    = (u8*)alloca(filename__length + 1);
+  f2string__str_copy(filename, cause, filename__str);
+  u64 raw_flags = f2integer__i(flags, cause);
+  ptr module_ptr = raw__gmodule__open(filename__str, raw_flags);
+  if (module_ptr == to_ptr(NULL)) {
+    status("f2__g_module_open error: g_module_error() = '%s'", g_module_error());
+    return nil;
+  }
+  return f2pointer__new(cause, module_ptr);
+}
+def_pcfunk2(gmodule__open, filename, flags, return f2__gmodule__open(this_cause, filename, flags));
 
 //gboolean g_module_symbol(GModule *module, const gchar *symbol_name, gpointer *symbol);
-f2ptr f2__g_module_symbol(f2ptr cause, f2ptr module, f2ptr symbol_name) {
-  char* symbol_name__str = (char*)from_ptr(f2__malloc(f2string__length(symbol_name, cause))); f2string__str_copy(symbol_name, cause, (u8*)symbol_name__str);
-  void* os_symbol_ptr; f2ptr result = nil; if (g_module_symbol(from_ptr(f2pointer__p(module, cause)), symbol_name__str, &os_symbol_ptr)) {result = f2pointer__new(cause, to_ptr(os_symbol_ptr));}
-  f2__free(to_ptr(symbol_name__str));
-  return result;
+ptr raw__gmodule__symbol(ptr module, u8* symbol_name) {
+#ifdef F2__GMODULE__SUPPORTED
+  gpointer symbol_pointer = NULL;
+  bool result = g_module_symbol(from_ptr(module), (char*)symbol_name, &symbol_pointer);
+  if (! result) {
+    return to_ptr(NULL);
+  }
+  return to_ptr(symbol_pointer);
+#else
+  return to_ptr(NULL);
+#endif
 }
+
+f2ptr f2__gmodule__symbol(f2ptr cause, f2ptr module, f2ptr symbol_name) {
+  if ((! raw__pointerp(module, cause)) ||
+      (! raw__stringp(symbol_name, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  ptr raw_module = f2pointer__p(module, cause);
+  int symbol_name__length = f2string__length(symbol_name, cause);
+  u8* symbol_name__str    = (u8*)alloca(symbol_name__length + 1);
+  f2string__str_copy(symbol_name, cause, symbol_name__str);
+  symbol_name__str[symbol_name__length] = 0;
+  ptr symbol_pointer = raw__gmodule__symbol(raw_module, symbol_name__str);
+  if (symbol_pointer == to_ptr(NULL)) {
+    return nil;
+  }
+  return f2pointer__new(cause, symbol_pointer);
+}
+def_pcfunk2(gmodule__symbol, module, symbol_name, return f2__gmodule__symbol(this_cause, module, symbol_name));
 
 //const gchar* g_module_name(GModule *module);
-f2ptr f2__g_module_name(f2ptr cause, f2ptr module) {
-  char* module_name_str = (char*)g_module_name(from_ptr(f2pointer__p(module, cause)));
+u8* raw__gmodule__name(ptr module) {
+#ifdef F2__GMODULE__SUPPORTED
+  return g_module_name(from_ptr(module));
+#else
+  return (u8*)NULL;
+#endif  
+}
+
+f2ptr f2__gmodule__name(f2ptr cause, f2ptr module) {
+  if (! raw__pointerp(module, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  ptr raw_module = f2pointer__p(module, cause);
+  u8* module_name_str = raw__gmodule__name(raw_module);
+  if (module_name_str == NULL) {
+    return nil;
+  }
   return f2string__new(cause, strlen(module_name_str), (u8*)module_name_str);
 }
+def_pcfunk1(gmodule__name, module, return f2__gmodule__name(this_cause, module));
 
 //void g_module_make_resident(GModule *module);
-void f2__g_module_make_resident(f2ptr cause, f2ptr module) {
-  g_module_make_resident(from_ptr(f2pointer__p(module, cause)));
+void raw__gmodule__make_resident(ptr module) {
+#ifdef F2__GMODULE__SUPPORTED
+  g_module_make_resident(from_ptr(module));
+#else
+#endif
 }
+
+f2ptr f2__gmodule__make_resident(f2ptr cause, f2ptr module) {
+  if (! raw__pointerp(module, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  ptr raw_module = f2pointer__p(module, cause);
+  raw__gmodule__make_resident(raw_module);
+  return nil;
+}
+def_pcfunk1(gmodule__make_resident, module, return f2__gmodule__make_resident(this_cause, module));
 
 //gboolean g_module_close(GModule *module);
-f2ptr f2__g_module_close(f2ptr cause, f2ptr module) {
-  return f2bool__new(g_module_close(from_ptr(f2pointer__p(module, cause))));
+bool raw__gmodule__close(ptr module) {
+#ifdef F2__GMODULE__SUPPORTED
+  return (bool)g_module_close(from_ptr(module));
+#else
+  return false;
+#endif  
 }
+
+f2ptr f2__gmodule__close(f2ptr cause, f2ptr module) {
+  if (! raw__pointerp(module, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  ptr raw_module = f2pointer__p(module, cause);
+  return f2bool__new(raw__gmodule__close(raw_modulle));
+}
+def_pcfunk1(gmodule__close, module, return f2__gmodule__close(this_cause, module));
 
 //const gchar* g_module_error();
-f2ptr f2__g_module_error(f2ptr cause) {
-  char* error_str = (char*)g_module_error();
-  return error_str ? f2string__new(cause, strlen(error_str), (u8*)error_str) : nil;
+u8* raw__gmodule__error() {
+#ifdef F2__GMODULE__SUPPORTED
+  return (u8*)g_module_error();
+#else
+  return (u8*)NULL;
+#endif  
 }
 
+f2ptr f2__gmodule__error(f2ptr cause) {
+  u8* error_str = raw__gmodule__error();
+  if (error_str == NULL) {
+    return nil;
+  }
+  return f2string__new(cause, strlen((char*)error_str), error_str);
+}
+def_pcfunk0(gmodule__error, return f2__gmodule__error(this_cause));
+
+
+// **
+
+void f2__gmodule__reinitialize_globalvars() {
+  //f2ptr cause = initial_cause(); //f2_gmodule_c__cause__new(initial_cause(), nil, nil);
+  
+}
+
+void f2__gmodule__initialize() {
+  pause_gc();
+  f2__gmodule__reinitialize_globalvars();
+  //f2ptr cause = initial_cause(); //f2_gmodule_c__cause__new(initial_cause(), nil, nil);
+  
+  f2__funktional_primcfunk__init__0(gmodule__supported);
+  f2__primcfunk__init__2(           gmodule__build_path, directory, module_name);
+  f2__primcfunk__init__2(           gmodule__open, filename, flags);
+  f2__primcfunk__init__2(           gmodule__symbol, module, symbol_name);
+  f2__primcfunk__init__1(           gmodule__name, module);
+  f2__primcfunk__init__1(           gmodule__make_resident, module);
+  f2__primcfunk__init__1(           gmodule__close, module);
+  f2__primcfunk__init__0(           gmodule__error);
+  
+  resume_gc();
+  try_gc();
+}
 

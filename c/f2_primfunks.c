@@ -1558,67 +1558,6 @@ def_pcfunk3(funkall__raw_c_funk__p__pp,     cfunk_ptr, a0, a1,                 r
 def_pcfunk4(funkall__raw_c_funk__p__ppp,    cfunk_ptr, a0, a1, a2,             return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))))));
 def_pcfunk5(funkall__raw_c_funk__p__pppp,   cfunk_ptr, a0, a1, a2, a3,         return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))))));
 
-// beginning of gmodule primfunks
-
-def_pcfunk0(gmodule__supported,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_supported();
-#else
-	    return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk2(gmodule__build_path,    x, y,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_build_path(this_cause, x, y);
-#else
-	    x; y; return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk2(gmodule__open,          x, y,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_open(this_cause, x, y);
-#else
-	    x; y; return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk2(gmodule__symbol,        x, y,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_symbol(this_cause, x, y);
-#else
-	    x; y; return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk1(gmodule__name,          x,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_name(this_cause, x);
-#else
-	    x; return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk1(gmodule__make_resident, x,
-#if defined(GMODULE_PRIMFUNKS)
-	    f2__g_module_make_resident(this_cause, x); return nil;
-#else
-	    x; return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk1(gmodule__close,         x,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_close(this_cause, x);
-#else
-	    x; return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-def_pcfunk0(gmodule__error,
-#if defined(GMODULE_PRIMFUNKS)
-	    return f2__g_module_error(this_cause);
-#else
-	    return nil;
-#endif // defined(GMODULE_PRIMFUNKS)
-	    );
-
-// end of gmodule primfunks
-
 def_pcfunk0(repl, return f2integer__new(this_cause, f2__repl(this_cause, simple_thread)));
 
 def_pcfunk2(tensor__new_from_array_of_integer_dimensions, dimensions, fill_element, return f2__tensor__new_from_array_of_integer_dimensions(this_cause, dimensions, fill_element));
@@ -2263,15 +2202,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(funkall__raw_c_funk__p__pp);
   f2__primcfunk__init(funkall__raw_c_funk__p__ppp);
   f2__primcfunk__init(funkall__raw_c_funk__p__pppp);
-  
-  f2__primcfunk__init(gmodule__supported);
-  f2__primcfunk__init(gmodule__build_path);
-  f2__primcfunk__init(gmodule__open);
-  f2__primcfunk__init(gmodule__symbol);
-  f2__primcfunk__init(gmodule__name);
-  f2__primcfunk__init(gmodule__make_resident);
-  f2__primcfunk__init(gmodule__close);
-  f2__primcfunk__init(gmodule__error);
   
   f2__funktional_primcfunk__init(integer__to_float);
   f2__funktional_primcfunk__init(integer__to_double);

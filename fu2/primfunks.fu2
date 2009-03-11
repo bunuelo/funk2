@@ -290,15 +290,6 @@
 [globalize-funk funkall-raw_c_funk-p-ppp                    &primfunk:funkall__raw_c_funk__p__ppp]
 [globalize-funk funkall-raw_c_funk-p-pppp                   &primfunk:funkall__raw_c_funk__p__pppp]
 
-[globalize-funk gmodule-supported                           &primfunk:gmodule__supported]
-[globalize-funk unsafe:gmodule-build_path                   &primfunk:gmodule__build_path]
-[globalize-funk unsafe:gmodule-open                         &primfunk:gmodule__open]
-[globalize-funk unsafe:gmodule-symbol                       &primfunk:gmodule__symbol]
-[globalize-funk unsafe:gmodule-name                         &primfunk:gmodule__name]
-[globalize-funk unsafe:gmodule-make_resident                &primfunk:gmodule__make_resident]
-[globalize-funk unsafe:gmodule-close                        &primfunk:gmodule__close]
-[globalize-funk unsafe:gmodule-error                        &primfunk:gmodule__error]
-
 [globalize-funk unsafe:integer-to_float                     &primfunk:integer__to_float]
 [globalize-funk unsafe:integer-to_double                    &primfunk:integer__to_double]
 [globalize-funk unsafe:double-to_integer                    &primfunk:double__to_integer]

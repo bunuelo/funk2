@@ -59,6 +59,7 @@
 #include <netinet/tcp.h>
 #include <pthread.h>
 #include <sched.h>
+#include <stdarg.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>

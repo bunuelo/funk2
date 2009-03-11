@@ -175,6 +175,7 @@
 [defmetro blocks_world-done              [this]       `[array-elt     ,this 4]]
 [defmetro blocks_world-done-set          [this value] `[array-elt-set ,this 4 ,value]]
 [defmetro blocks_world-perceptions       [this]       `[array-elt     ,this 5]]
+[defmetro blocks_world-perceptions-set   [this value] `[array-elt-set ,this 5 ,value]]
 [defmetro blocks_world-need_rerender     [this]       `[array-elt     ,this 6]]
 [defmetro blocks_world-need_rerender-set [this value] `[array-elt-set ,this 6 ,value]]
 [defmetro blocks_world-need_simulate     [this]       `[array-elt     ,this 7]]

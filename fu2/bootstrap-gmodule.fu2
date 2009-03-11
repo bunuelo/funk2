@@ -19,12 +19,12 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk gmodule-supported     &primfunK:gmodule__supported]
-[globalize-funk gmodule-build_path    &primfunK:gmodule__build_path]
-[globalize-funk gmodule-open          &primfunK:gmodule__open]
-[globalize-funk gmodule-symbol        &primfunK:gmodule__symbol]
-[globalize-funk gmodule-name          &primfunK:gmodule__name]
-[globalize-funk gmodule-make_resident &primfunK:gmodule__make_resident]
-[globalize-funk gmodule-close         &primfunK:gmodule__close]
-[globalize-funk gmodule-error         &primfunK:gmodule__error]
+[globalize-funk gmodule-supported     &primfunk:gmodule__supported]
+[globalize-funk gmodule-build_path    &primfunk:gmodule__build_path]
+[globalize-funk gmodule-open          &primfunk:gmodule__open]
+[globalize-funk gmodule-symbol        &primfunk:gmodule__symbol]
+[globalize-funk gmodule-name          &primfunk:gmodule__name]
+[globalize-funk gmodule-make_resident &primfunk:gmodule__make_resident]
+[globalize-funk gmodule-close         &primfunk:gmodule__close]
+[globalize-funk gmodule-error         &primfunk:gmodule__error]
 

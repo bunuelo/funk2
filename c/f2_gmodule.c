@@ -87,7 +87,6 @@ f2ptr f2__gmodule__open(f2ptr cause, f2ptr filename, f2ptr flags) {
   u64 raw_flags = f2integer__i(flags, cause);
   ptr module_ptr = raw__gmodule__open(filename__str, raw_flags);
   if (module_ptr == to_ptr(NULL)) {
-    status("f2__g_module_open error: g_module_error() = '%s'", g_module_error());
     return nil;
   }
   return f2pointer__new(cause, module_ptr);

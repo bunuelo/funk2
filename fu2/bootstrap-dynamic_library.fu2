@@ -26,9 +26,9 @@
 [defmetro dynamic_library-library_file_directory [this]                                                                      `[array-elt     ,this 2]]
 [defmetro dynamic_library-library_file_name      [this]                                                                      `[array-elt     ,this 3]]
 [defmetro dynamic_library-system_dlfcn           [this]                                                                      `[array-elt     ,this 4]]
-[defmetro dynamic_library-system_dlfcn-set       [this value]                                                                `[array-elt-set ,this 4]]
+[defmetro dynamic_library-system_dlfcn-set       [this value]                                                                `[array-elt-set ,this 4 ,value]]
 [defmetro dynamic_library-system_gmodule         [this]                                                                      `[array-elt     ,this 5]]
-[defmetro dynamic_library-system_gmodule-set     [this value]                                                                `[array-elt-set ,this 5]]
+[defmetro dynamic_library-system_gmodule-set     [this value]                                                                `[array-elt-set ,this 5 ,value]]
 
 [defunk dynamic_library-lookup [name]
   [hashtable-lookup_value -dynamic_library-hash-name- name]]

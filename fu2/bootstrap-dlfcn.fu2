@@ -31,5 +31,4 @@
 [globalize-funk dlfcn-rtld_local    &primfunk:dlfcn__rtld_local]
 [globalize-funk dlfcn-rtld_nodelete &primfunk:dlfcn__rtld_nodelete]
 [globalize-funk dlfcn-rtld_noload   &primfunk:dlfcn__rtld_noload]
-[globalize-funk dlfcn-rtld_deepbind &primfunk:dlfcn__rtld_deepbind]
 

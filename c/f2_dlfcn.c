@@ -194,19 +194,6 @@ f2ptr f2__dlfcn__rtld_noload(f2ptr cause) {
 }
 def_pcfunk0(dlfcn__rtld_noload, return f2__dlfcn__rtld_noload(this_cause));
 
-u64 raw__dlfcn__rtld_deepbind() {
-#ifdef F2__DLFCN__SUPPORTED
-  return (u64)RTLD_DEEPBIND;
-#else
-  return 0;
-#endif
-}
-
-f2ptr f2__dlfcn__rtld_deepbind(f2ptr cause) {
-  return f2integer__new(cause, raw__dlfcn__rtld_deepbind());
-}
-def_pcfunk0(dlfcn__rtld_deepbind, return f2__dlfcn__rtld_deepbind(this_cause));
-
 // **
 
 void f2__dlfcn__reinitialize_globalvars() {
@@ -230,7 +217,6 @@ void f2__dlfcn__initialize() {
   f2__funktional_primcfunk__init__0(dlfcn__rtld_local);
   f2__funktional_primcfunk__init__0(dlfcn__rtld_nodelete);
   f2__funktional_primcfunk__init__0(dlfcn__rtld_noload);
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_deepbind);
   
   resume_gc();
   try_gc();

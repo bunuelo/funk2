@@ -77,7 +77,7 @@ def_pcfunk0(dlfcn__dlerror, return f2__dlfcn__dlerror(this_cause));
 
 ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 #ifdef F2__DLFCN__SUPPORTED
-  return to_ptr(dlsym(handle, (char*)symbol));
+  return to_ptr(dlsym(from_ptr(handle), (char*)symbol));
 #else
   return to_ptr(NULL);
 #endif

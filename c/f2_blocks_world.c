@@ -673,7 +673,7 @@ void f2__blocks_world__initialize() {
   environment__add_var_value(cause, global_environment(), __blocks_world_rectangle__symbol, nil);
   environment__add_var_value(cause, global_environment(), __blocks_world_color__symbol,     nil);
   environment__add_var_value(cause, global_environment(), __blocks_world_object__symbol,    nil);
-  environment__add_var_value(cause, global_environment(), __blocks_world__symbol,           nil);
+  environment__add_var_value(cause, global_environment(), __blocks_world_physics__symbol,   nil);
   
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.red__symbol,     nil);
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.green__symbol,   nil);

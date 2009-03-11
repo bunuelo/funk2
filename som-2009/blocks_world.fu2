@@ -149,12 +149,41 @@
 		[blocks_world_object-ignore_gravity-set holding_object nil]
 		`success]]]]]]
 
-[defunk   blocks_world-new     [physics]  [array `blocks_world physics]]
-[defmetro blocks_world-physics [this]    `[array-elt ,this 1]]
+[defunk blocks_world-new [help_message
+			  welcome_message
+			  last_results
+			  done
+			  perceptions
+			  need_rerender
+			  need_simulate
+			  need_perceive
+			  physics] 
+  [array `blocks_world
+	  help_message
+	  welcome_message
+	  last_results
+	  done
+	  perceptions
+	  need_rerender
+	  need_simulate
+	  need_perceive
+	  physics]]
+[defmetro blocks_world-help_message      [this]       `[array-elt     ,this 1]]
+[defmetro blocks_world-welcome_message   [this]       `[array-elt     ,this 2]]
+[defmetro blocks_world-last_results      [this]       `[array-elt     ,this 3]]
+[defmetro blocks_world-last_results-set  [this value] `[array-elt-set ,this 3 ,value]]
+[defmetro blocks_world-done              [this]       `[array-elt     ,this 4]]
+[defmetro blocks_world-done-set          [this value] `[array-elt-set ,this 4 ,value]]
+[defmetro blocks_world-perceptions       [this]       `[array-elt     ,this 5]]
+[defmetro blocks_world-need_rerender     [this]       `[array-elt     ,this 6]]
+[defmetro blocks_world-need_rerender-set [this value] `[array-elt-set ,this 6 ,value]]
+[defmetro blocks_world-need_simulate     [this]       `[array-elt     ,this 7]]
+[defmetro blocks_world-need_simulate-set [this value] `[array-elt-set ,this 7 ,value]]
+[defmetro blocks_world-need_perceive     [this]       `[array-elt     ,this 8]]
+[defmetro blocks_world-need_perceive-set [this value] `[array-elt-set ,this 8 ,value]]
+[defmetro blocks_world-physics           [this]       `[array-elt     ,this 9]]
 
-
-[defunk blocks_world-repl [this]
-  [ansi-stream-clear_screen stdout]
+[defunk blocks_world-create [physics]
   [let* [[help_message    [list '  (a few commands: ' `[exit] ', ' `[sim] ', ' `[look] ', ' `[move-to <object>] ', ' `[pick-up <object>]  ', ' `[drop] ')']]
 	 [welcome_message [append [list 'Welcome to ' `Blocks ' ' `World ' ' `v2.2]
 				  help_message]]
@@ -163,80 +192,97 @@
 	 [perceptions     nil]
 	 [need_rerender   t]
 	 [need_simulate   t]
-	 [need_perceive   t]
-	 [physics         [blocks_world-physics this]]]
-    [while [not done]
-      [if need_rerender
-	  [prog [blocks_world_physics-render physics 20 [- [termios-height] 10]]
-		[set need_rerender nil]]]
-      [if need_simulate
-	  [prog [blocks_world_physics-simulate physics]
-		[set need_rerender t]
-		[set need_simulate nil]]]
-      [if need_perceive
-	  [prog [set perceptions [blocks_world_physics-generate_perceptions physics]]
-		[set need_perceive nil]]]
-      
-      [ansi-stream-rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
-      
-      [ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
-      [ansi-stream-foreground stdout 15]
-      [format stdout 'blocks-world-out> ']
-      [apply &format [cons stdout last_results]]
-      [format stdout '\n' '\n' 'perceptions: ' perceptions]
-      [set last_results nil]
-      
-      [ansi-stream-move_cursor stdout 1 [- [termios-height] 2]]
-      [ansi-stream-foreground stdout 15]
-      [format stdout 'blocks-world-in-> ']
-      
-      [let [[exp             [read stdin]]
-	    [command_failure nil]]
+	 [need_perceive   t]]
+    [blocks_world-new help_message
+		      welcome_message
+		      last_results
+		      done
+		      perceptions
+		      need_rerender
+		      need_simulate
+		      need_perceive
+		      physics]]]
+
+[defunk blocks_world-rep [this exp]
+  [if [not [blocks_world-done this]]
+      [let [[physics [blocks_world-physics this]]]
+	[if [blocks_world-need_rerender this]
+	    [prog [blocks_world_physics-render physics 20 [- [termios-height] 10]]
+		  [blocks_world-need_rerender-set this nil]]]
+	[if [blocks_world-need_simulate this]
+	    [prog [blocks_world_physics-simulate physics]
+		  [blocks_world-need_rerender-set this t]
+		  [blocks_world-need_simulate-set this nil]]]
+	[if [blocks_world-need_perceive this]
+	    [prog [blocks_world-perceptions-set   this [blocks_world_physics-generate_perceptions physics]]
+		  [blocks_world-need_perceive-set this nil]]]
+	
+	[ansi-stream-rectangle stdout 1 [- [termios-height] 8] [- [termios-width] 1] [- [termios-height] 1] [string-elt ' ' 0]]
+	
+	[ansi-stream-move_cursor stdout 1 [- [termios-height] 8]]
 	[ansi-stream-foreground stdout 15]
-	[if [not [cons? exp]]
-	    [set command_failure t]
-	  [let [[command [car exp]]]
-	    [cond [[eq command `exit]     [set done t]]
-		  [[eq command `sim]      [prog [blocks_world_physics-simulate physics]
-						[set need_rerender t]
-						[set need_perceive t]
-						[set last_results [list 'Done simulating blocks world.']]]]
-		  [[eq command `eval]     [prog [if [!= [length exp] 2]
-						    [set last_results [list 'eval only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
-						  [set last_results [list 'Evalulation result is ' [eval [eval [second exp]]] '.']]]]]
-		  [[eq command `look]     [prog [set last_results [list 'Perceptions: ' [blocks_world_physics-generate_perceptions physics]]]]]
-		  [[eq command `move-to]  [prog [if [!= [length exp] 2]
-						    [set last_results [list 'move-to only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
-						  [let [[object_name [second exp]]]
-						    [set need_rerender t]
-						    [set last_results [list 'move-to result: ' [blocks_world_physics-move_to physics object_name]]]
-						    ]]]]
-		  [[eq command `pick-up]  [prog [if [!= [length exp] 2]
-						    [set last_results [list 'pick-up only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
-						  [let [[object_name [second exp]]]
-						    [set need_perceive t]
-						    [set need_rerender t]
-						    [set last_results [list 'pick-up result: ' [blocks_world_physics-pick_up physics object_name]]]
-						    ]]]]
-		  [[eq command `drop]     [prog [set last_results [list 'drop result: ' [blocks_world_physics-drop physics]]]
-						[blocks_world_physics-simulate physics]
-						[set need_perceive t]
-						[set need_rerender t]]]
-		  [t                      [set command_failure t]]]]]
-	[if command_failure
-	    [prog [ansi-stream-foreground stdout 15]
-		  [set last_results [append [list 'Blocks world command failure, ' exp '.\n']
-					    help_message]]]]]
-      
-      ]]]
+	[format stdout 'blocks-world-out> ']
+	[apply &format [cons stdout [blocks_world-last_results this]]]
+	[format stdout '\n' '\n' 'perceptions: ' [blocks_world-perceptions this]]
+	[blocks_world-last_results-set this nil]
+	
+	[ansi-stream-move_cursor stdout 1 [- [termios-height] 2]]
+	[ansi-stream-foreground stdout 15]
+	[format stdout 'blocks-world-in-> ']
+	
+	[let [[exp             [read stdin]]
+	      [command_failure nil]]
+	  [ansi-stream-foreground stdout 15]
+	  [if [not [cons? exp]]
+	      [set command_failure t]
+	    [let [[command [car exp]]]
+	      [cond [[eq command `exit]     [blocks_world-done-set this t]]
+		    [[eq command `sim]      [prog [blocks_world_physics-simulate physics]
+						  [blocks_world-need_rerender-set this t]
+						  [blocks_world-need_perceive-set this t]
+						  [blocks_world-last_results-set  this [list 'Done simulating blocks world.']]]]
+		    [[eq command `eval]     [prog [if [!= [length exp] 2]
+						      [blocks_world-last_results-set this [list 'eval only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
+						    [blocks_world-last_results-set   this [list 'Evalulation result is ' [eval [eval [second exp]]] '.']]]]]
+		    [[eq command `look]     [prog [blocks_world-last_results-set this [list 'Perceptions: ' [blocks_world_physics-generate_perceptions physics]]]]]
+		    [[eq command `move-to]  [prog [if [!= [length exp] 2]
+						      [blocks_world-last_results-set this [list 'move-to only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
+						    [let [[object_name [second exp]]]
+						      [blocks_world-need_rerender-set this t]
+						      [blocks_world-last_results-set  this [list 'move-to result: ' [blocks_world_physics-move_to physics object_name]]]
+						      ]]]]
+		    [[eq command `pick-up]  [prog [if [!= [length exp] 2]
+						      [blocks_world-last_results-set this [list 'pick-up only takes one argument and you gave ' [length exp] ' arguments (you entered ' exp ').']]
+						    [let [[object_name [second exp]]]
+						      [blocks_world-need_perceive-set this t]
+						      [blocks_world-need_rerender-set this t]
+						      [blocks_world-last_results-set  this [list 'pick-up result: ' [blocks_world_physics-pick_up physics object_name]]]
+						      ]]]]
+		    [[eq command `drop]     [prog [blocks_world-last_results-set [list 'drop result: ' [blocks_world_physics-drop physics]]]
+						  [blocks_world_physics-simulate physics]
+						  [blocks_world-need_perceive-set this t]
+						  [blocks_world-need_rerender-set this t]]]
+		    [t                      [set command_failure t]]]]]
+	  [if command_failure
+	      [prog [ansi-stream-foreground stdout 15]
+		    [set last_results [append [list 'Blocks world command failure, ' exp '.\n']
+					      [blocks_world-help_message this]]]]]
+	  
+	  ]]]]
+
+[defunk blocks_world-repl [this]
+  [ansi-stream-clear_screen stdout]
+  [while [not [blocks_world-done this]]
+    [blocks_world-rep this]
+    ]]
 
 [defunk blocks_world-test []
-  [let [[blocks_world [blocks_world-new [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
-									[blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
-									[blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
-									[blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
-									[blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
-									[blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
+  [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
+									   [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
+									   [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
+									   [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
+									   [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
+									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 

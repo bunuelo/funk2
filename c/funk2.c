@@ -125,7 +125,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   char* install__bootstrap_img__filename      = F2__INSTALL__BOOTSTRAP_IMG__FILENAME;
   char* compile__bootstrap_img__filename      = F2__COMPILE__BOOTSTRAP_IMG__FILENAME;
   char* compile__bootstrap_repl_img__filename = F2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME;
-  char* other__bootstrap_repl_img__filename   = "/mit/6.868/funk2/img/bootstrap.img";
+  char* other__bootstrap_img__filename        = "/mit/6.868/funk2/img/bootstrap.img";
   
   f2__initialize();
   

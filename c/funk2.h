@@ -42,7 +42,7 @@
 #endif
 
 #include <arpa/inet.h>
-#include <dlcfn.h>
+#include <dlfcn.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <gmodule.h>

@@ -103,7 +103,7 @@ def_pcfunk2(dlfcn__dlsym, handle, symbol, return f2__dlfcn__dlsym(this_cause, ha
 
 int raw__dlfcn__dlclose(ptr handle) {
 #ifdef F2__DLFCN__SUPPORTED
-  return dlclose(handle);
+  return dlclose(from_ptr(handle));
 #else
   return -1;
 #endif

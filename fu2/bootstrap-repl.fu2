@@ -346,7 +346,7 @@
 	 ,[apply &cond [cdr clauses]]]]]]
 
 [defunk elt-1d-seq [seq index]
-  [cond [[null seq]  [error `run-time `list-index-too-big]]
+  [cond [[null seq]                   [error `run-time `list-index-too-big]]
 	[[integer-equal_sign index 0] [car seq]]
 	[t                            [elt-1d-seq [cdr seq] [- index 1]]]]]
 
@@ -359,7 +359,7 @@
   [let [[rest_indices [cdr indices]]]
     [if [null rest_indices]
 	[elt-1d collection [car indices]]
-      [apply &elt [cons [elt collection [car indices]] rest_indices]]]]]
+      [funkall &elt [elt-1d collection [car indices]] rest_indices]]]]
 
 [defunk elt-1d-seq-set [seq index value]
   [cond [[null seq]                   [error `run-time `list-index-too-big]]

@@ -143,7 +143,7 @@ f2ptr f2__gmodule__name(f2ptr cause, f2ptr module) {
   if (module_name_str == NULL) {
     return nil;
   }
-  return f2string__new(cause, strlen(module_name_str), (u8*)module_name_str);
+  return f2string__new(cause, strlen((char*)module_name_str), module_name_str);
 }
 def_pcfunk1(gmodule__name, module, return f2__gmodule__name(this_cause, module));
 

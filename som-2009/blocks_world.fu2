@@ -260,7 +260,7 @@
 						      [blocks_world-need_rerender-set this t]
 						      [blocks_world-last_results-set  this [list 'pick-up result: ' [blocks_world_physics-pick_up physics object_name]]]
 						      ]]]]
-		    [[eq command `drop]     [prog [blocks_world-last_results-set [list 'drop result: ' [blocks_world_physics-drop physics]]]
+		    [[eq command `drop]     [prog [blocks_world-last_results-set this [list 'drop result: ' [blocks_world_physics-drop physics]]]
 						  [blocks_world_physics-simulate physics]
 						  [blocks_world-need_perceive-set this t]
 						  [blocks_world-need_rerender-set this t]]]

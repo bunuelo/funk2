@@ -51,7 +51,7 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   }
   int filename__length = f2string__length(filename, cause);
   char* raw_filename = (char*)alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, raw_filename);
+  f2string__str_copy(filename, cause, to_ptr(raw_filename));
   raw_filename[filename__length] = 0;
   int raw_flag = f2integer__i(flag, cause);
   return f2pointer__new(cause, raw__dlfcn__dlopen(raw_filename, raw_flag));

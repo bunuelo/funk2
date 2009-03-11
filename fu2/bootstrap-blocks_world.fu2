@@ -57,7 +57,7 @@
 [globalize-funk blocks_world_object-render                     &primfunk:blocks_world_object__render]
 [globalize-funk blocks_world_object-translate_overlaps_objects &primfunk:blocks_world_object__translate_overlaps_objects]
 
-[globalize-funk blocks_world-new                               &primfunk:blocks_world__new]
-[globalize-funk blocks_world?                                  &primfunk:blocks_worldp]
-[globalize-funk blocks_world-objects                           &primfunk:blocks_world__objects]
+[globalize-funk blocks_world_physics-new                       &primfunk:blocks_world_physics__new]
+[globalize-funk blocks_world_physics?                          &primfunk:blocks_world_physicsp]
+[globalize-funk blocks_world_physics-objects                   &primfunk:blocks_world_physics__objects]
 

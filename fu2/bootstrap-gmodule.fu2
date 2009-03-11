@@ -28,3 +28,7 @@
 [globalize-funk gmodule-close         &primfunk:gmodule__close]
 [globalize-funk gmodule-error         &primfunk:gmodule__error]
 
+[globalize -gmodule-bind_lazy-  1]
+[globalize -gmodule-bind_local- 2]
+[globalize -gmodule-bind_mask-  3]
+

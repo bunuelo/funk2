@@ -36,11 +36,11 @@ f2ptr f2__dlfcn__supported(f2ptr cause) {
 }
 def_pcfunk0(dlfcn__supported, return f2__dlfcn__supported(this_cause));
 
-void* raw__dlfcn__dlopen(char* filename, int flag) {
+ptr raw__dlfcn__dlopen(u8* filename, int flag) {
 #ifdef F2__DLFCN__SUPPORTED
-  return dlopen(filename, flag);
+  return to_ptr(dlopen((char*)filename, flag));
 #else
-  return NULL;
+  return to_ptr(NULL);
 #endif
 }
 
@@ -58,28 +58,28 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
 }
 def_pcfunk2(dlfcn__dlopen, filename, flag, return f2__dlfcn__dlopen(this_cause, filename, flag));
 
-char* raw__dlfcn__dlerror() {
+u8* raw__dlfcn__dlerror() {
 #ifdef F2__DLFCN__SUPPORTED
-  return dlerror();
+  return (u8*)dlerror();
 #else
-  return NULL;
+  return (u8*)NULL;
 #endif
 }
 
 f2ptr f2__dlfcn__dlerror(f2ptr cause) {
-  char* str = raw__dlfcn__dlerror();
+  u8* str = raw__dlfcn__dlerror();
   if (str == NULL) {
     return nil;
   }
-  return f2string__new(cause, strlen(str), str);
+  return f2string__new(cause, strlen((char*)str), str);
 }
 def_pcfunk0(dlfcn__dlerror, return f2__dlfcn__dlerror(this_cause));
 
-void* raw__dlfcn__dlsym(void* handle, char* symbol) {
+ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 #ifdef F2__DLFCN__SUPPORTED
-  return dlsym(handle, symbol);
+  return to_ptr(dlsym(handle, (char*)symbol));
 #else
-  return NULL;
+  return to_ptr(NULL);
 #endif
 }
 
@@ -93,7 +93,7 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
   u8* raw_symbol = (u8*)alloca(symbol__length + 1);
   f2string__str_copy(symbol, cause, raw_symbol);
   raw_symbol[symbol__length] = 0;
-  ptr result = raw__dlfcn__dlsym(from_ptr(raw_handle), raw_symbol);
+  ptr result = raw__dlfcn__dlsym(raw_handle, raw_symbol);
   if (result == to_ptr(NULL)) {
     return nil;
   }
@@ -101,7 +101,7 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
 }
 def_pcfunk2(dlfcn__dlsym, handle, symbol, return f2__dlfcn__dlsym(this_cause, handle, symbol));
 
-int raw__dlfcn__dlclose(void* handle) {
+int raw__dlfcn__dlclose(ptr handle) {
 #ifdef F2__DLFCN__SUPPORTED
   return dlclose(handle);
 #else
@@ -114,7 +114,7 @@ f2ptr f2__dlfcn__dlclose(f2ptr cause, f2ptr handle) {
     return f2larva__new(cause, 1);
   }
   ptr raw_handle = f2pointer__p(handle, cause);
-  return f2integer__new(cause, raw__dlfcn__dlclose(from_ptr(raw_handle)));
+  return f2integer__new(cause, raw__dlfcn__dlclose(raw_handle));
 }
 def_pcfunk1(dlfcn__dlclose, handle, return f2__dlfcn__dlclose(this_cause, handle));
 

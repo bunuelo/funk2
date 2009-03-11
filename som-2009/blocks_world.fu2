@@ -207,6 +207,7 @@
 [defunk blocks_world-rep [this]
   [if [not [blocks_world-done this]]
       [let [[physics [blocks_world-physics this]]]
+	[print this]
 	[if [blocks_world-need_rerender this]
 	    [prog [blocks_world_physics-render physics 20 [- [termios-height] 10]]
 		  [blocks_world-need_rerender-set this nil]]]
@@ -266,8 +267,8 @@
 		    [t                      [set command_failure t]]]]]
 	  [if command_failure
 	      [prog [ansi-stream-foreground stdout 15]
-		    [set last_results [append [list 'Blocks world command failure, ' exp '.\n']
-					      [blocks_world-help_message this]]]]]
+		    [blocks_world-last_results-set this [append [list 'Blocks world command failure, ' exp '.\n']
+								[blocks_world-help_message this]]]]]
 	  
 	  ]]]]
 

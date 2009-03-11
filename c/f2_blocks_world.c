@@ -630,7 +630,7 @@ f2ptr f2__blocks_world_physics__objects(f2ptr cause, f2ptr this) {
   if (! raw__blocks_world_physicsp(this, cause)) {
     return f2larva__new(cause, 1);
   }
-  return f2blocks_world__objects(this, cause);
+  return f2blocks_world_physics__objects(this, cause);
 }
 def_pcfunk1(blocks_world_physics__objects, this, return f2__blocks_world_physics__objects(this_cause, this));
 

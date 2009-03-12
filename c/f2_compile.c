@@ -113,7 +113,7 @@ f2ptr f2__compile__funkvar__set(f2ptr cause, f2ptr var) {return bcs_valid(f2__co
 f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __frame__variable_type__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __frame__funk_variable_type__symbol, var));}
 
-f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_tean_t* is_locally_funktional) {
+f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   if (is_locally_funktional) {
     boolean_t exp__is_local_variable = boolean__false;
     f2ptr iter = local_variables;

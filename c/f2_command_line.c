@@ -68,10 +68,10 @@ boolean_t string__parse_integer(char* this, int* return_value) {
 				  end_ptr[0] != '\r' &&
 				  end_ptr[0] != '\n')))) {
     printf("\n  error parsing integer: \"%s\".", this);
-    return true; // parse error
+    return boolean__true; // parse error
   }
   *return_value = value;
-  return false;
+  return boolean__false;
 }
 
 boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* port_num) {
@@ -79,7 +79,7 @@ boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, 
   for (first_colon_index = 0; this[first_colon_index] != ':' && this[first_colon_index] != 0; first_colon_index++);
   if (this[first_colon_index] == 0) {
     printf("\n  error parsing <hostname>:<port_num>: couldn't find first colon, \"%s\".", this);
-    return true; // parse error
+    return boolean__true; // parse error
   }
   char *new_hostname = (char*)malloc(first_colon_index + 1);
   memcpy(new_hostname, this, first_colon_index);
@@ -87,20 +87,20 @@ boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, 
   int user_port_num;
   if (string__parse_integer(this + first_colon_index + 1, &user_port_num)) {
     printf("\n  error parsing <hostname>:<port_num>: couldn't find port_num after first colon, \"%s\".", this + first_colon_index + 1);
-    return true;
+    return boolean__true;
   }
   *hostname = new_hostname;
   *port_num = user_port_num;
-  return false; // no parse error
+  return boolean__false; // no parse error
 }
 
 boolean_t string__filename_exists(char* this) {
   int fd = open(this, 0);
   if (fd == -1) {
-    return false;
+    return boolean__false;
   }
   close(fd);
-  return true;
+  return boolean__true;
 }
 
 void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv) {
@@ -113,36 +113,36 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->swap_directory                  = NULL;
   
   int index;
-  boolean_t parse_error = false;
+  boolean_t parse_error = boolean__false;
   for (index = 1; index < argc; index ++) {
     if (strcmp(argv[index], "-x") == 0) {
       index ++;
       if (index >= argc) {
-	parse_error = true;
+	parse_error = boolean__true;
 	break;
       }
       this->user_command = argv[index];
     } else if (strcmp(argv[index], "-p") == 0) {
       index ++;
       if (index >= argc) {
-	parse_error = true;
+	parse_error = boolean__true;
 	break;
       }
       if (string__parse_integer(argv[index], &(this->peer_command_server__port_num))) {
-	parse_error = true;
+	parse_error = boolean__true;
 	break;
       }
     } else if (strcmp(argv[index], "--swap-directory") == 0) {
       index ++;
       if (index >= argc) {
-	parse_error = true;
+	parse_error = boolean__true;
 	break;
       }
       this->swap_directory = argv[index];
     } else {
       if (! string__filename_exists(argv[index])) {
 	printf("\n  error parsing <source.fu2>: filename does not exist, \"%s\".", argv[index]);
-	parse_error = true;
+	parse_error = boolean__true;
 	break;
       } else {
 	this->load_source_filename = argv[index];

@@ -50,7 +50,7 @@ void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
 }
 
 boolean_t f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
-  boolean_t found_and_removed_thread = false;
+  boolean_t found_and_removed_thread = boolean__false;
   f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads_iter = f2processor__active_threads(this, cause);
@@ -64,7 +64,7 @@ boolean_t f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thr
       } else {
 	f2processor__active_threads__set(this, cause, active_threads_next);
       }
-      found_and_removed_thread = true;
+      found_and_removed_thread = boolean__true;
     }
     active_threads_iter = active_threads_next;
   }
@@ -291,7 +291,7 @@ void f2__scheduler__yield(f2ptr cause) {
   if(! f2processor__execute_next_bytecodes(processor, cause)) {
     //f2ptr processor = f2__global_scheduler__this_processor();
     //printf("\nscheduler__yield: processor %d (%d) sleeping (thread_num: %d)", this_pthread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
-    //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns true)?
+    //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
     sched_yield();
     pool__try_gc(this_pthread__pool_index());
   }

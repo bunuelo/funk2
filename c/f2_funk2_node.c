@@ -116,7 +116,7 @@ void funk2_node__init(funk2_node_t* this, node_id_t node_id, computer_id_t compu
   socket_client__init(&(this->socket_client), "", hostname, client_id->port_num, send_buffer_byte_num, recv_buffer_byte_num);
   this->node_id                                     = node_id;
   this->computer_id                                 = computer_id;
-  this->sent_register_request                       = false;
+  this->sent_register_request                       = boolean__false;
   this->last_try_reconnect__microseconds_since_1970 = 0;
   int i;
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {
@@ -124,7 +124,7 @@ void funk2_node__init(funk2_node_t* this, node_id_t node_id, computer_id_t compu
     this->local_computer_id_to_remote_computer_id[i] = f2ptr__computer_id__max_value;
   }
   this->last_sent_packet__stream_iter = 123; // by definition, not the first packet to be received.
-  this->last_sent_packet__is_valid    = false;
+  this->last_sent_packet__is_valid    = boolean__false;
   this->last_known_event              = 0;
 }
 
@@ -207,7 +207,7 @@ void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_hand
       if (! (this->sent_register_request)) {
 	u8 ip_addr[4] = {0, 0, 0, 0};
 	rpc_socket_layer__send_packet__request__register_peer(this, __funk2.node_id, ip_addr, __funk2.command_line.peer_command_server__port_num);
-	this->sent_register_request = true;
+	this->sent_register_request = boolean__true;
       }
     }
   }
@@ -224,7 +224,7 @@ void funk2_node__send_packet(f2ptr cause, funk2_node_t* this, funk2_packet_t* pa
   packet->header.stream_iter = this->last_sent_packet__stream_iter;
   u64 packet__size = funk2_packet__sizeof(packet);
   memcpy(&(this->last_sent_packet), packet, packet__size);
-  this->last_sent_packet__is_valid = true;
+  this->last_sent_packet__is_valid = boolean__true;
   funk2_packet__send_to_socket(cause, packet, &(this->socket_client.socket));
   pthread_mutex_unlock(&(this->socket_client_mutex));
 }
@@ -235,7 +235,7 @@ void socket_rpc_layer__funk2_node__send_packet(funk2_node_t* this, funk2_packet_
   packet->header.stream_iter = this->last_sent_packet__stream_iter;
   u64 packet__size = funk2_packet__sizeof(packet);
   memcpy(&(this->last_sent_packet), packet, packet__size);
-  this->last_sent_packet__is_valid = true;
+  this->last_sent_packet__is_valid = boolean__true;
   socket_rpc_layer__funk2_packet__send_to_socket(packet, &(this->socket_client.socket));
   pthread_mutex_unlock(&(this->socket_client_mutex));
 }
@@ -418,9 +418,9 @@ boolean_t funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this,
     error(nil, "funk2_node_handler__already_know_of_node_event error: invalid node_id.");
   }
   if (event_id <= node->last_known_event) {
-    return true;
+    return boolean__true;
   }
-  return false;
+  return boolean__false;
 }
 
 boolean_t funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
@@ -429,7 +429,7 @@ boolean_t funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2p
     error(nil, "funk2_node_handler__already_know_of_node_event error: invalid node_id.");
   }
   if (event_id <= event_node->last_known_event) {
-    return true;
+    return boolean__true;
   }
   // so that we don't skip events... (this may cause us to find duplicate events as new, but better than missing events...)
   if (event_id == event_node->last_known_event + 1) {
@@ -453,7 +453,7 @@ boolean_t funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2p
     }
     iter = iter->next;
   }
-  return false;
+  return boolean__false;
 }
 
 

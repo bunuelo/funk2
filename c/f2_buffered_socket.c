@@ -2,7 +2,7 @@
 
 void buffered_socket__init(buffered_socket_t* this, int socket_fd, u32 recv_buffer__byte_num, u32 send_buffer__byte_num) {
   this->socket_fd    = socket_fd;
-  this->disconnected = false;
+  this->disconnected = boolean__false;
   circular_buffer__init(&(this->recv_buffer), recv_buffer__byte_num);
   circular_buffer__init(&(this->send_buffer), send_buffer__byte_num);
 }
@@ -19,7 +19,7 @@ buffered_socket__error_type_t buffered_socket__flush(buffered_socket_t* this) {
       switch(recv_result) {
       case circular_buffer__socket_recv_result__disconnected:
 	status("buffered_socket__flush error: disconnected on recv!");
-	this->disconnected = true;
+	this->disconnected = boolean__true;
 	return buffered_socket__error_type__disconnected;
       case circular_buffer__socket_recv_result__connected:
 	break;
@@ -29,7 +29,7 @@ buffered_socket__error_type_t buffered_socket__flush(buffered_socket_t* this) {
 	switch(send_result) {
 	case circular_buffer__socket_send_result__disconnected:
 	  status("buffered_socket__flush error: disconnected on send!");
-	  this->disconnected = true;
+	  this->disconnected = boolean__true;
 	  return buffered_socket__error_type__disconnected;
 	case circular_buffer__socket_send_result__connected:
 	  break;

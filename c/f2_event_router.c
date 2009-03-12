@@ -23,7 +23,7 @@
 
 void funk2_event_router__init(funk2_event_router_t* this, u32 input_buffer__byte_num) {
   this->last_checked_event_buffers__microseconds_since_1970 = 0;
-  this->distributed_event_last_tick                         = false;
+  this->distributed_event_last_tick                         = boolean__false;
 }
 
 void funk2_event_router__destroy(funk2_event_router_t* this) {
@@ -94,7 +94,7 @@ f2ptr f2__scheduler__handle_input_events(f2ptr cause, f2ptr scheduler) {
 void funk2_event_router__handle_subscriber_scheduling(f2ptr cause, funk2_event_router_t* this) {
   u64 microseconds_since_1970 = raw__system_microseconds_since_1970();
   if (this->distributed_event_last_tick || (microseconds_since_1970 - this->last_checked_event_buffers__microseconds_since_1970) >= 100000) {
-    this->distributed_event_last_tick = false;
+    this->distributed_event_last_tick = boolean__false;
     f2ptr cause = initial_cause();
     f2ptr scheduler = __global__scheduler;
     f2ptr event_subscriber_iter = f2scheduler__event_subscribers(scheduler, cause);
@@ -115,7 +115,7 @@ void funk2_event_router__handle_subscriber_scheduling(f2ptr cause, funk2_event_r
 	      f2ptr args     = f2cons__new(cause, event, nil);
 	      f2thread__funk(thread, cause, funkable, args);
 	      f2__global_scheduler__add_thread_parallel(cause, thread);
-	      this->distributed_event_last_tick = true;
+	      this->distributed_event_last_tick = boolean__true;
 	    }
 	    f2mutex__unlock(thread_execute_mutex, cause);
 	  }

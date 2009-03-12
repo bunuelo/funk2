@@ -143,9 +143,9 @@ socket_server_init_result_t socket_server__init(socket_server_t* this, char* bin
     return socket_server_init_result__socket_failure;
   }
   
-  file_descriptor__set_nonblocking(this->socket_fd, true);
+  file_descriptor__set_nonblocking(this->socket_fd, boolean__true);
   socket_file_descriptor__set_rebindable(this->socket_fd);
-  if (socket_file_descriptor__set_keepalive(this->socket_fd, true) < 0) {
+  if (socket_file_descriptor__set_keepalive(this->socket_fd, boolean__true) < 0) {
     printf("\nsocket_server__init error: cannot create set keepalive on socket");
     return socket_server_init_result__socket_failure;
   }
@@ -204,11 +204,11 @@ int socket_server__accept(socket_server_t* this, client_id_t* client_id) {
     return -1;
   }
   
-  if (socket_file_descriptor__set_keepalive(connect_socket_fd, true) < 0) {
+  if (socket_file_descriptor__set_keepalive(connect_socket_fd, boolean__true) < 0) {
     printf("\nsocket_server__accept error: cannot create set keepalive on socket");
     return -1;
   }
-  file_descriptor__set_nonblocking(connect_socket_fd, true);
+  file_descriptor__set_nonblocking(connect_socket_fd, boolean__true);
   
   u32 ip_addr__long  = ntohl(client_address.sin_addr.s_addr);
   u8  ip_addr[4];

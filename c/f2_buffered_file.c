@@ -2,7 +2,7 @@
 
 void buffered_file__init(buffered_file_t* this, int fd, u32 read_buffer__byte_num, u32 write_buffer__byte_num) {
   this->fd          = fd;
-  this->end_of_file = false;
+  this->end_of_file = boolean__false;
   circular_buffer__init(&(this->read_buffer),  read_buffer__byte_num);
   circular_buffer__init(&(this->write_buffer), write_buffer__byte_num);
 }
@@ -16,14 +16,14 @@ void buffered_file__flush(buffered_file_t* this) {
   if (! this->end_of_file) {
     circular_buffer__file_read_result_t read_result = circular_buffer__file_read(&(this->read_buffer), this->fd);
     switch(read_result) {
-    case circular_buffer__file_read_result__end_of_file: this->end_of_file = true; break;
-    case circular_buffer__file_read_result__success:                               break;
+    case circular_buffer__file_read_result__end_of_file: this->end_of_file = boolean__true; break;
+    case circular_buffer__file_read_result__success:                                        break;
     }
     if (! this->end_of_file) {
       circular_buffer__file_write_result_t write_result = circular_buffer__file_write(&(this->write_buffer), this->fd);
       switch(write_result) {
-      case circular_buffer__file_write_result__end_of_file: this->end_of_file = true; break;
-      case circular_buffer__file_write_result__success:                               break;
+      case circular_buffer__file_write_result__end_of_file: this->end_of_file = boolean__true; break;
+      case circular_buffer__file_write_result__success:                                        break;
       }
     }
   }

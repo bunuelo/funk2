@@ -13,7 +13,7 @@ void socket_client__init(socket_client_t* this, char* bind_device, char* hostnam
   
   int socket_fd = -1;
   buffered_socket__init(&(this->socket), socket_fd, recv_buffer_byte_num, send_buffer_byte_num);
-  this->socket.disconnected = true;
+  this->socket.disconnected = boolean__true;
 }
 
 void socket_client__destroy(socket_client_t* this) {
@@ -49,9 +49,9 @@ socket_client_connect_result_t socket_client__try_reconnect(socket_client_t* thi
     return socket_client_connect_result__socket_failure;
   }
   
-  file_descriptor__set_nonblocking(socket_fd, true);
+  file_descriptor__set_nonblocking(socket_fd, boolean__true);
   
-  if (socket_file_descriptor__set_keepalive(socket_fd, true) < 0) {
+  if (socket_file_descriptor__set_keepalive(socket_fd, boolean__true) < 0) {
     printf("\nsocket_server__accept error: cannot create set keepalive on socket");
     return socket_client_connect_result__socket_failure;
   }
@@ -83,7 +83,7 @@ socket_client_connect_result_t socket_client__try_reconnect(socket_client_t* thi
   }
   
   this->socket.socket_fd    = socket_fd;
-  this->socket.disconnected = false;
+  this->socket.disconnected = boolean__false;
   
   return socket_client_connect_result__success;
 }

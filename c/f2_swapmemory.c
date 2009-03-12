@@ -24,7 +24,7 @@
 void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_directory) {
   int       fd                 = -1;
   int       total_tries_so_far = 0;
-  boolean_t try_again          = false;
+  boolean_t try_again          = boolean__false;
   do {
     total_tries_so_far ++;
     sprintf(str, "%s----------------------.f2swp", swap_directory);
@@ -42,18 +42,18 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
     fd = open(str, O_RDONLY);
     if (fd != -1) {
       close(fd);
-      try_again = true; // success means file exists.
+      try_again = boolean__true; // success means file exists.
     } else {
-      try_again = false;
+      try_again = boolean__false;
       switch(errno) {
       case EACCES:
 	status("The requested access to the file is not allowed, or search permission is denied for one of the directories in the path prefix of pathname, or the file did not exist yet and write access to the parent directory is  not  allowed.   (See  also  path_resolu’¡¾"
 	       "tion(7).)");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EEXIST:
 	status("pathname already exists and O_CREAT and O_EXCL were used.");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EFAULT:
 	status("pathname points outside your accessible address space.");
@@ -61,15 +61,15 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
 	break;
       case EFBIG:
 	status("pathname refers to a regular file, too large to be opened; see O_LARGEFILE above.  (POSIX.1-2001 specifies the error EOVERFLOW for this case.)");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EISDIR:
 	status("pathname refers to a directory and the access requested involved writing (that is, O_WRONLY or O_RDWR is set).");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case ELOOP:
 	status("Too many symbolic links were encountered in resolving pathname, or O_NOFOLLOW was specified but pathname was a symbolic link.");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EMFILE:
 	status("The process already has the maximum number of files open.");
@@ -85,7 +85,7 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
 	break;
       case ENODEV:
 	status("pathname refers to a device special file and no corresponding device exists.  (This is a Linux kernel bug; in this situation ENXIO must be returned.)");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case ENOENT:
 	status("O_CREAT is not set and the named file does not exist.  Or, a directory component in pathname does not exist or is a dangling symbolic link.");
@@ -100,27 +100,27 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
 	break;
       case ENOTDIR:
 	status("A component used as a directory in pathname is not, in fact, a directory, or O_DIRECTORY was specified and pathname was not a directory.");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case ENXIO:
 	status("O_NONBLOCK | O_WRONLY is set, the named file is a FIFO and no process has the file open for reading.  Or, the file is a device special file and no corresponding device exists.");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EPERM:
 	status("The O_NOATIME flag was specified, but the effective user ID of the caller did not match the owner of the file and the caller was not privileged (CAP_FOWNER).");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EROFS:
 	status("pathname refers to a file on a read-only file system and write access was requested.");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case ETXTBSY:
 	status("pathname refers to an executable image which is currently being executed and write access was requested.");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       case EWOULDBLOCK:
 	status("The O_NONBLOCK flag was specified, and an incompatible lease was held on the file (see fcntl(2)).");
-	try_again = true;
+	try_again = boolean__true;
 	break;
       }
     }

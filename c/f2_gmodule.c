@@ -26,7 +26,7 @@ boolean_t raw__gmodule__supported() {
 #ifdef F2__GMODULE__SUPPORTED
   return (boolean_t)g_module_supported();
 #else
-  return false;
+  return boolean__false;
 #endif
 }
 
@@ -170,7 +170,7 @@ boolean_t raw__gmodule__close(ptr module) {
 #ifdef F2__GMODULE__SUPPORTED
   return (boolean_t)g_module_close(from_ptr(module));
 #else
-  return false;
+  return boolean__false;
 #endif  
 }
 

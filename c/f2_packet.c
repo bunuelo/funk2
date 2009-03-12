@@ -43,14 +43,14 @@ funk2_packet_t* funk2_packet__copy(funk2_packet_t* this) {
 funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer_t* buffer, u32* peek_byte_num, boolean_t* invalid_packet_found) {
   funk2_packet_t  temp_packet;
   funk2_packet_t* new_packet;
-  boolean_t            valid_packet_found = false;
-  *invalid_packet_found = false;
+  boolean_t       valid_packet_found = boolean__false;
+  *invalid_packet_found = boolean__false;
   *peek_byte_num        = 0;
   if (circular_buffer__get_used_byte_num(buffer) >= sizeof(funk2_packet_header_t)) {
     circular_buffer__peek_read(buffer, &temp_packet, sizeof(funk2_packet_header_t), NULL);
     if (temp_packet.header.start_of_packet_byte != funk2_start_of_packet_byte ||
 	temp_packet.header.channel              != funk2_channel_byte) {
-      *invalid_packet_found = true; // should scan one byte ahead
+      *invalid_packet_found = boolean__true; // should scan one byte ahead
     } else {
       // start magic found
       if (circular_buffer__get_used_byte_num(buffer) >= sizeof(funk2_packet_header_t) + temp_packet.header.payload_length + 2) {
@@ -60,10 +60,10 @@ funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer
 	if (end_of_packet_packet_bytes[0] != funk2_end_of_packet_byte0 ||
 	    end_of_packet_packet_bytes[1] != funk2_end_of_packet_byte1) {
 	  f2__free(to_ptr(new_packet)); new_packet = NULL;
-	  *invalid_packet_found = true;
+	  *invalid_packet_found = boolean__true;
 	} else {
 	  *peek_byte_num = sizeof(funk2_packet_header_t) + temp_packet.header.payload_length + 2;
-	  valid_packet_found = true;
+	  valid_packet_found = boolean__true;
 	}
       }
     }
@@ -98,15 +98,15 @@ funk2_packet_t* funk2_packet__read_valid_new_from_circular_buffer(circular_buffe
 funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket_t* socket, u32* peek_byte_num, boolean_t* invalid_packet_found) {
   funk2_packet_t  temp_packet;
   funk2_packet_t* new_packet;
-  boolean_t            valid_packet_found = false;
-  *invalid_packet_found = false;
+  boolean_t       valid_packet_found = boolean__false;
+  *invalid_packet_found = boolean__false;
   *peek_byte_num        = 0;
   buffered_socket__flush(socket);
   if (buffered_socket__recv_bytes_buffered(socket) >= sizeof(funk2_packet_header_t)) {
     buffered_socket__peek_recv(socket, &temp_packet, sizeof(funk2_packet_header_t));
     if (temp_packet.header.start_of_packet_byte != funk2_start_of_packet_byte ||
 	temp_packet.header.channel              != funk2_channel_byte) {
-      *invalid_packet_found = true; // should scan one byte ahead
+      *invalid_packet_found = boolean__true; // should scan one byte ahead
     } else {
       // start magic found
       if (buffered_socket__recv_bytes_buffered(socket) >= sizeof(funk2_packet_header_t) + temp_packet.header.payload_length + 2) {
@@ -116,17 +116,17 @@ funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket
 	if (end_of_packet_packet_bytes[0] != funk2_end_of_packet_byte0 ||
 	    end_of_packet_packet_bytes[1] != funk2_end_of_packet_byte1) {
 	  f2__free(to_ptr(new_packet)); new_packet = NULL;
-	  *invalid_packet_found = true;
+	  *invalid_packet_found = boolean__true;
 	} else {
 	  *peek_byte_num = sizeof(funk2_packet_header_t) + temp_packet.header.payload_length + 2;
-	  valid_packet_found = true;
+	  valid_packet_found = boolean__true;
 	}
       }
     }
   }
   if (! valid_packet_found) {
     if (socket->disconnected) {
-      *invalid_packet_found = true;
+      *invalid_packet_found = boolean__true;
     }
     return NULL;
   }
@@ -135,7 +135,7 @@ funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket
 
 funk2_packet_t* funk2_packet__recv_new_valid_from_buffered_socket(buffered_socket_t* socket) {
   u32                peek_byte_num = 0;
-  boolean_t               invalid_packet_found = false;
+  boolean_t               invalid_packet_found = boolean__false;
   buffered_socket__flush(socket);  
   funk2_packet_t* recv_packet = funk2_packet__peek_recv_new_from_buffered_socket(socket, &peek_byte_num, &invalid_packet_found);
   if (invalid_packet_found) {
@@ -157,14 +157,14 @@ funk2_packet_t* funk2_packet__recv_new_valid_from_buffered_socket(buffered_socke
 funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* file, u32* peek_byte_num, boolean_t* invalid_packet_found) {
   funk2_packet_t  temp_packet;
   funk2_packet_t* new_packet;
-  boolean_t               valid_packet_found = false;
-  *invalid_packet_found = false;
+  boolean_t               valid_packet_found = boolean__false;
+  *invalid_packet_found = boolean__false;
   *peek_byte_num        = 0;
   if (buffered_file__read_bytes_buffered(file) >= sizeof(funk2_packet_header_t)) {
     buffered_file__peek_read(file, &temp_packet, sizeof(funk2_packet_header_t));
     if (temp_packet.header.start_of_packet_byte != funk2_start_of_packet_byte ||
 	temp_packet.header.channel              != funk2_channel_byte) {
-      *invalid_packet_found = true; // should scan one byte ahead
+      *invalid_packet_found = boolean__true; // should scan one byte ahead
     } else {
       // start magic found
       if (buffered_file__read_bytes_buffered(file) >= sizeof(funk2_packet_header_t) + temp_packet.header.payload_length + 2) {
@@ -174,17 +174,17 @@ funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* 
 	if (end_of_packet_packet_bytes[0] != funk2_end_of_packet_byte0 ||
 	    end_of_packet_packet_bytes[1] != funk2_end_of_packet_byte1) {
 	  f2__free(to_ptr(new_packet)); new_packet = NULL;
-	  *invalid_packet_found = true;
+	  *invalid_packet_found = boolean__true;
 	} else {
 	  *peek_byte_num = sizeof(funk2_packet_header_t) + temp_packet.header.payload_length + 2;
-	  valid_packet_found = true;
+	  valid_packet_found = boolean__true;
 	}
       }
     }
   }
   if (! valid_packet_found) {
     if (file->end_of_file) {
-      *invalid_packet_found = true;
+      *invalid_packet_found = boolean__true;
     }
     return NULL;
   }
@@ -193,7 +193,7 @@ funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* 
 
 funk2_packet_t* funk2_packet__read_new_valid_from_buffered_file(buffered_file_t* file) {
   u32                peek_byte_num = 0;
-  boolean_t               invalid_packet_found = false;
+  boolean_t          invalid_packet_found = boolean__false;
   buffered_file__flush(file);  
   funk2_packet_t* read_packet = funk2_packet__peek_read_new_from_buffered_file(file, &peek_byte_num, &invalid_packet_found);
   if (invalid_packet_found) {
@@ -3486,7 +3486,7 @@ void send_packet__request__f2simple_array__new(funk2_node_t* funk2_node, f2ptr t
   packet->payload.action_payload_header.cause               = cause;
   packet->payload.action_payload_header.thread              = this_thread;
   packet->payload.length                                    = length;
-  packet->payload.f2ptr_array__defined                      = f2ptr_array ? true : false;
+  packet->payload.f2ptr_array__defined                      = f2ptr_array ? boolean__true : boolean__false;
   if (f2ptr_array) {
     memcpy(packet->payload.f2ptr_array, from_ptr(f2ptr_array), f2ptr_array__size);
   }
@@ -3920,7 +3920,7 @@ void send_packet__request__f2traced_array__new(funk2_node_t* funk2_node, f2ptr t
   packet->payload.action_payload_header.cause               = cause;
   packet->payload.action_payload_header.thread              = this_thread;
   packet->payload.length                                    = length;
-  packet->payload.dptr_array__defined                       = dptr_array ? true : false;
+  packet->payload.dptr_array__defined                       = dptr_array ? boolean__true : boolean__false;
   if (dptr_array) {
     memcpy(packet->payload.dptr_array, from_ptr(dptr_array), dptr_array__size);
   }

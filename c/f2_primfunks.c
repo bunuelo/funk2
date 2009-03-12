@@ -357,20 +357,20 @@ def_pcfunk2(symbol__elt, x, y, return f2__symbol__elt(this_cause, x, y));
 //}
 
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__symbolp(this, cause)) || (! raw__symbolp(that, cause))) {return false;}
+  if ((! raw__symbolp(this, cause)) || (! raw__symbolp(that, cause))) {return boolean__false;}
   u64 this__length = f2symbol__length(this, cause);
   u64 that__length = f2symbol__length(that, cause);
   if (this__length != that__length) {
-    return false;
+    return boolean__false;
   }
   char* this__str = (char*)alloca(this__length + 1);
   char* that__str = (char*)alloca(that__length + 1);
   f2symbol__str_copy(this, cause, (u8*)this__str);
   f2symbol__str_copy(that, cause, (u8*)that__str);
   if (memcmp(this__str, that__str, this__length) != 0) {
-    return false;
+    return boolean__false;
   }
-  return true;
+  return boolean__true;
 }
 
 f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__symbol__eq(cause, x, y));}
@@ -1195,7 +1195,7 @@ f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
 def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
 
 f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr exp, f2ptr protect_environment) {
-  boolean_t is_funktional = true;
+  boolean_t is_funktional = boolean__true;
   return raw__compile(cause, thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
 }
 def_pcfunk2(compile, exp, protect_environment, return f2__compile(this_cause, simple_thread, exp, protect_environment));
@@ -1850,8 +1850,8 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
 f2ptr f2__funktionalp(f2ptr cause, f2ptr thread, f2ptr exp) {
-  boolean_t exp__is_funktional = true;
-  raw__compile(cause, thread, exp, false, false, NULL, &exp__is_funktional, nil, NULL);
+  boolean_t exp__is_funktional = boolean__true;
+  raw__compile(cause, thread, exp, boolean__false, boolean__false, NULL, &exp__is_funktional, nil, NULL);
   return f2bool__new(exp__is_funktional);
 }
 def_pcfunk1(funktionalp, exp, return f2__funktionalp(this_cause, simple_thread, exp));

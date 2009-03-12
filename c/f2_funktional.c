@@ -24,7 +24,7 @@
 
 boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this) {
   if (! this) {
-    return true;
+    return boolean__true;
   }
   ptype_t ptype = f2ptype__raw(this, cause);
   switch(ptype) {
@@ -38,7 +38,7 @@ boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this) {
   case ptype_string:
   case ptype_symbol:
   case ptype_larva:
-    return true;
+    return boolean__true;
   case ptype_chunk:
   case ptype_simple_array:
     return (f2simple_array__immutable(this, cause) != 0);

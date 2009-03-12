@@ -1,6 +1,6 @@
 \newcommand{\gen}{\preceq_{G}}
 
-**Rev.** 1.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Wednesday, Mar 18 2009, 7:00pm.
+**Rev.** 2.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Wednesday, Mar 18 2009, 7:00pm.
 
 
 ## Goals
@@ -209,11 +209,11 @@ Which one of those rules is better (define what *better* means)?  Explain why th
 
 \label{sec:ifdothen}
 
-Now we want to extend our action descriptions to also include a description of their effects.
+Now we want to extend our action descriptions to also include a description of their effects. (This question has been removed from the lab.)
 
 # Learning Knowledge Representations for Problem Solving
 \begin{quote}
-"Cases where the situation is different... require particular consideration if they are not to plunge all our hard-won distinctions back into confusion." -- Edmund Husserl
+``Cases where the situation is different... require particular consideration if they are not to plunge all our hard-won distinctions back into confusion." -- Edmund Husserl
 \end{quote}
 
 A **knowledge representation** (KR) is a data encoding denoting something that is believed by an agent.  Although KRs are used to varying extents in all areas of AI, unfortunately, the area does not have clearly defined goals, and consequently there are many different ways to say the same ideas and some irrelevant distinctions where there should not be.  Knowledge representations are tightly related to **reasoning** or **inference** techniques (often these are representations themselves), that can be used to derive new knowledge from existing knowledge.  Knowledge representations are also related to **machine learning**, which deals with learning representations or assigning values to variables.  This description of learning overlaps with that of inference^[In logics, for example, the distinctions between these types of learning procedures have their own names: *deduction*, using inference rules to produce new assertions, and *induction*, creating new rules that cover and extend the observed examples] and in the problem solvers we would like to build, learning processes will involve background knowledge and themselves be representations that are subject to reasoning and learning.
@@ -245,7 +245,7 @@ Each of these assertions is represented by a propositional symbol (\eg \textsf{p
 
 A semantic interpretation involves assigning a truth value, \{*true*, *false*\}, or equivalently, \{*1*, *0*\},\footnote{Assigning binary numbers to propositions can make automated inference easier. $\neg$(\textsf{p}) = 1-\textsf{p}, $\land$(\textsf{p, q}) = \texttt{min}(\textsf{p, q}) and $\lor$(\textsf{p, q}) = \texttt{max}(\textsf{p, q}). } to every proposition.  For the example above, one interpretation is \textsf{p} = 0, and \textsf{q} = 1.  \marginpar[right]{$|S|$ denotes the size of a given set $S$.  The size of a power set $|\mathscr{P}(S)|= 2^{|S|}$.  You could think of $2^n$ as the generative process of asking $n$ sequential `yes' or `no' questions about whether or not each component is in the set, \ie $|\{yes,no\}|^n$. }
 
-In general, if there are $n$ propositions, then there are $2^n$ possible interpretations---unique ways to assign *true* or *false* to the propositions. In other words, each member of the power-set of the proposition symbols represents all of the *true* propositions in one possible configuration of our world state.  We say a state $s_1$ is *more general* than $s_2$, denoted $s_1 \gen s_2$, if $s_1$ is a *subset* of $s_2$.   For example, the set \{a,b\} is more general than the set \{a,b,c\}, and the empty-set \{\} is the most-general category of them all.  We can add domain theories to restrict our interpretation or introduce new propositions into the world.
+In general, if there are $n$ propositions, then there are $2^n$ possible interpretations---unique ways to assign *true* or *false* to the propositions. In other words, each member of the power-set of the proposition symbols represents all of the *true* propositions in one possible configuration of our world state.  We say a hypothesis/state $s_1$ is *more general* than $s_2$, denoted $s_1 \gen s_2$, if $s_1$ is a *subset* of $s_2$.   For example, the set \{a,b\} is more general than the set \{a,b,c\}, and the empty-set \{\} is the most-general category of them all.  We can add domain theories to restrict our interpretation or introduce new propositions into the world.
 
 \begin{table}[h!]
 
@@ -261,14 +261,14 @@ F	&	T	& 	T	&	F 	&  	T	& 	T	&  F \\
 F	&	F	& 	T	& 	F 	&  	F	& 	T	&  T \\
 \hline
 \end{tabular}
-\caption{Sentential connectives, in infix notation, along with the the \textbf{truth table} for two propositions, \textsf{p} and \textsf{q}.}
+\caption{Sentential connectives, in infix notation, along with the \textbf{truth table} for two propositions, \textsf{p} and \textsf{q}.}
 \end{center}
 \end{table}
 
 
 The operators in the table above are used to define relations between propositions, to build larger units like \textsf{p} $\land$ \textsf{q} and \textsf{p} $\rightarrow$ \textsf{q}.  These larger units themselves resolve to truth values, which percolate up from their constituents.  One interpretation is commonly confused: the $\rightarrow$ implication operator defines a relationship that is only *false* when the antecedent is true and the consequence is false. So \textsf{p} $\rightarrow$ \textsf{q} is completely the same (has the same constraints on the interpretation models) as $\neg\textsf{p} \lor \textsf{q}$.  Therefore, if \textsf{p} = "$1+1=3$", then \textsf{p} $\rightarrow$ \textsf{q} always evaluates to *true* because no models should claim $1+1=3$.
 
-We can use these *sentential connectives* to form a Boolean hypothesis space, $\mathcal{H}_{bool}$, to describe all of the possible combinations of world states -- with a size of ${2^2}^n$.   As discussed later in section \ref{sec:scope}, we can shift our description level and start treating our objects as *features* and our sentential connectives as a simple kind of relation between these features, and then form *larger* "objects" out of them! This, again, is the problem of *concept learning*.  If we limit ourselves to conjunctions (the and: $\land$), our hypothesis space $\mathcal{H}_{\land}$ allows us to make only $2^n$ different concepts.  This hypothesis space could not express concept descriptions like "blue or not green".  However, by using the relational *connectives* we can combine our $n$ proposition symbols and our hypothesis space, $\mathcal{H}_{bool}$ can now form ${2^2}^n$ different concepts: the power-set of the power-set of $n$.
+We can use these *sentential connectives* to form a Boolean hypothesis space, $\mathcal{H}_{bool}$, to describe all of the possible combinations of world states -- with a size of ${2^2}^n$.   As discussed later in section \ref{sec:scope}, we can shift our description level and start treating our objects as *features* and our sentential connectives as a simple kind of relation between these features, and then form *larger* "objects" out of them! This, again, is the problem of *concept learning*.  If we limit ourselves to conjunctions (the and: $\land$), our hypothesis space $\mathcal{H}_{\land}$ allows us to make only $2^n$ different concepts.  Unfortunately, this hypothesis space could not express concept descriptions like "blue or not green".  However, by using *all* of the relational connectives we can combine our $n$ proposition symbols and our hypothesis space, $\mathcal{H}_{bool}$ can now form ${2^2}^n$ different concepts: the power-set of the power-set of $n$.
 
 ### Inference in logic
 Inference rules in logic take a very similar form as the knowledge: they are represented with variable symbols and sentential connectives.  However, they are part of a **meta-logic** system, and are used to detect patterns between sentences and to then perform *'truth-preserving transformations*' in order to *deduce* new logical assertions.  \marginpar[right]{If you do not know the difference between \textbf{deduction} and \textbf{induction}, see \href{http://philosophy.lander.edu/logic/ded_ind.html}{this}.}
@@ -313,12 +313,12 @@ First-order logic has three kinds of symbols: predicates, functors, and variable
 The size of the set of world states `S` is based on `P` and `C`:
 
 \begin{eqnarray}
-|S| & = &  \prod_{i=1}^{n}{(2^{|\texttt{C}|})}^{\alpha_i}
+|\texttt{S}| & = &  \prod_{i=1}^{n}{(2^{|\texttt{C}|})}^{\alpha_i}
 \end{eqnarray}
 
 A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. **Constant symbols**, the set of which is denoted `C`, are the common case of functor with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}.
 
-Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and this should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
+Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
  For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
 
 Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own category using combinations of properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
@@ -338,10 +338,8 @@ Equation 3 uses the results of equation 2 and is a convoluted (logical) way of s
 
 A representation of the world would be:
 
-	S1:
 		on(red-block,table)
 		on(blue-block,table)
-		on(green-block,table)
 		on(yellow-block,blue-block)
 
 
@@ -365,27 +363,27 @@ However the term has a shared history in psychology as well as AI.  This section
  
 ## Concept learning in cognitive sciences
 
-In the 1950s, Bruner et al \cite{Bruner:1986p2941} studied human subjects' ability to learn concepts after being shown positive and negative instances of the concept.  Instances were cards that had four combinations of features: \textsc{Borders} = $\{1,2,3\}$, \textsc{Shape} = $\{cross,circle,square\}$, \textsc{Number} = $\{1,2,3\}$ and \textsc{Color} = $\{black,red,blue\}$.  A training example would be a card and being told whether the card was 'in' the concept or not.  A subject was revealed a sequence of training examples, after each they were given a moment to update their concept definition.
+In the 1950s, Bruner et al \cite{Bruner:1986p2941} studied human subjects' ability to learn concepts given positive and negative examples of the concept.  Instances were cards containing combinations of four features: \textsc{Borders} = $\{1,2,3\}$, \textsc{Shape} = $\{cross,circle,square\}$, \textsc{Number} = $\{1,2,3\}$ and \textsc{Color} = $\{black,red,blue\}$.  A training example is a card and being told whether the card was in the concept or not.  A subject is given a sequence of examples and time to update their description.
 
-From studies on concept learning, researchers learned that conjunctive concepts were generally easier to learn than disjunctive concepts.  Although this is generally the case, exceptions have been found (Pazzani 1991) where disjunctive concepts are easier to learn when they are supported by background knowledge.
+Bruner et al learned that conjunctive concepts were generally easier to learn than disjunctive concepts.  Although this is generally true, exceptions have been found where disjunctive concepts are easier if biased by background knowledge (Pazzani 1991).
 
 \begin{figure}[h!] \centerline{ \mbox{\includegraphics[width=4in]{bruner.png}} }  \caption{The perceptual world of 81 distinct items that Bruner et al. studied. $\vert$\textsc{Borders}$\vert \times \vert$\textsc{Shapes}$\vert \times \vert$\textsc{Number}$\vert \times \vert$\textsc{Color}$\vert = 3\times 3\times 3\times 3 = 81$.} \end{figure}
 
-What could be concluded about concept learning from these experiments?  This early work was criticized for being artificial, assuming that every category was represented by a set of necessary and sufficient features (e.g., a logical hypothesis space) and ignoring real world concepts.
-
-\question You are a subject of Jerome Bruner.  He has presented you *sequentially* with the example concept instances in Figure \ref{fig:bc} and told you whether they are examples of the concept or not.  For both concepts, come up with a concept description. Afterwards, try to comment on the *hypothesis space* from which your description was generated.
+What could be concluded about concept learning from these experiments?  This early work was criticized for being artificial, assuming that every category was represented by a set of necessary and sufficient features (a logical hypothesis space) and that the concepts are artificial.
 
 \begin{figure}[h!]  \centerline{ \mbox{\includegraphics[width=1.5in]{bruner_concepts.png}} }  
 \caption{Example training data, and two columns for different concepts.}
 \label{fig:bc} 
 \end{figure}
 
+\question You are a subject of Jerome Bruner who presents you with the example concept instances in Figure \ref{fig:bc} and told you whether they are examples of the concept or not.  Learn a concept description for C1 and C2. To correctly simulate the experiment, imagine that you are presented with each example (reading the column top to bottom) sequentially, and are given a moment to re-construct your description of the concept based on the label "yes" it is an example of the concept or "no".  After, try to comment on the *hypothesis space* from which your description was generated.
+
 
 ## Inheritance and the Representation-Inference Trade-Off
 
 In the late 1960s, Ross Quillian developed a taxonomic semantic network, a hierarchical model of human memory.  His computer program would efficiently organize knowledge using the idea of *inheritance*: properties can be stored at one location -- their most general categories, and then 'inherited' to their more specific category members by an inference process when needed.  For example, the property \prop{canFly}{.} would only be located at \textsf{birds}, and then be *deduced* to the members of the category when needed:  Does a robin fly?  \prop{canFly}{bird} $\land$ \pred{isA}{robin}{bird} $\rightarrow$ \prop{canFly}{robin}. 
 
-This organization of semantic memory [explained] many experimental findings.  For example, people take longer to answer questions like "Does a robin have a spine?" than they do with questions that rely on local features like "Does a robin fly?".   In addition, people were faster at accessing words when they had been primed with a semantically similar word.
+Qulllian's taxonomic model of semantic memory explained many experimental findings.  For example, people take longer to answer questions like "Does a robin have a spine?" than they do with questions that rely on local features like "Does a robin fly?".   In addition, people were faster at accessing words when they had been primed with a semantically similar word.
 
 
 ## The typicality effect and prototypes
@@ -403,6 +401,7 @@ What happened next?  See an overview of the problem of representing concepts in 
 
 ## Reasoning about actions
 
+\label{sec:actions}
 Events change the state of the world -- after an event, predicates can switch from true to false or false to true.  Logics have some problems expressing this change, including:
 
 **The Frame Problem.**
@@ -414,7 +413,7 @@ Events change the state of the world -- after an event, predicates can switch fr
 **The Qualification Problem**.
 :	Actions have preconditions and, like the effects of actions, these are hard to learn and author by hand.
 
-**Key point:** These problems all point to the issue of determining which knowledge is relevant *relevant* to the task.   As the knowledge-base expands and we move outside of toy domains, irrelevant features become more of a problem for learning and reasoning.  It is helpful to know, for example, that picking up an object will not affect the items color, weight, or size.  Consequently, learned knowledge should be retrieved by causal relevance to the particular events that it can affect.  To give the agent a reasonable learning bias, we can assume events are only represented by the agent when they are involved with predicting the outcome of some goal-driven plan.
+**Key point:** These problems all point to the issue of determining which knowledge is *relevant* to the task.   As the knowledge-base expands and we move outside of toy domains, irrelevant features become more of a problem for learning and reasoning.  It is helpful to know, for example, that picking up an object will not affect the items color, weight, or size.  Consequently, learned knowledge should be retrieved by causal relevance to the particular events that it can affect.  To give the agent a reasonable learning bias, we can assume events are only represented by the agent when they are involved with predicting the outcome of some goal-driven plan.
 
 ## Scoping of knowledge representations
 
@@ -432,10 +431,10 @@ Ignoring these object barriers can lead to absurd mistakes.  OpenMind\footnote{O
 
 \vspace{15pt}
 
-**Key point:** When you compare the semantics of (non-logical) programming languages, you will see a lot of them deal with issues of scope: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the power of logic, a declarative representation, is that it is self contained (modular) and easily understood.  We can simply copy the FOL predicates from one KB and plop them in another.   Human knowledge, however, is much more context sensitive.  This relates to the previous problem where knowledge is organized by affect on events, which are learned in order to represent conditions to engage actions.
+**Key point:** When you look into the semantics of most common programming languages, many of pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Ponder about how this relates to the problem in section \ref{sec:actions}.
 
 
 
 
 \bibliographystyle{acm}
-\bibliography{/Users/dustin/Documents/Classes/6.868/lab1/lab}
+\bibliography{/Users/dustin/Documents/Classes/6.868/funk2/som-2009/lab1/lab}

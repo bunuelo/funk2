@@ -149,6 +149,29 @@
 		[blocks_world_object-ignore_gravity-set holding_object nil]
 		`success]]]]]]
 
+[globalize -blocks_world_agent_type_name_hash-               [hashtable-new 10]]
+[defunk     blocks_world_agent_type-lookup [name]            [hashtable-lookup_key_value -blocks_world_agent_type_name_hash- name]]
+[defunk     blocks_world_agent_type-define [name agent_type] [hashtable-add_keyvalue_pair -blocks_world_agent_type_name_hash- name agent_type]]
+
+[defunk   blocks_world_agent_type-new                [name agent_execute_funk]  [array `blocks_world_agent name agent_execute_funk]]
+[defmetro blocks_world_agent_type-name               [this]                    `[array-elt ,this 1]]
+[defmetro blocks_world_agent_type-agent_execute_funk [this]                    `[array-elt ,this 2]]
+
+[defmetro defblocks_world_agent [type_name :rest agent_execute_funk_body]
+  `[blocks_world_agent_type-define type_name [funk [this-agent]
+						   @agent_execute_funk_body]]]
+
+[defunk   blocks_world_agent?             [exp]                     [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `blocks_world_agent]]]
+[defunk   blocks_world_agent-new          [type_name blocks_world]  [array `blocks_world_agent type_name blocks_world]]
+[defmetro blocks_world_agent-type_name    [this]                   `[array-elt ,this 1]]
+[defmetro blocks_world_agent-blocks_world [this]                   `[array-elt ,this 2]]
+
+[defunk blocks_world_agent-execute [this]
+  [if [not [blocks_world_agent? this]]
+      [error `run-time `[expected this to be blocks_world_agent type object]]
+    [let [[agent_type [blocks_world_agent_type-lookup [blocks_world_agent-type_name this]]]]
+      [funkall [blocks_world_agent_type-agent_execute_funk agent_type] this]]]]
+
 [defunk blocks_world-new [help_message
 			  welcome_message
 			  last_results
@@ -157,7 +180,8 @@
 			  need_rerender
 			  need_simulate
 			  need_perceive
-			  physics] 
+			  physics
+			  agent]
   [array `blocks_world
 	  help_message
 	  welcome_message
@@ -167,7 +191,8 @@
 	  need_rerender
 	  need_simulate
 	  need_perceive
-	  physics]]
+	  physics
+	  agent]]
 [defmetro blocks_world-help_message      [this]       `[array-elt     ,this 1]]
 [defmetro blocks_world-welcome_message   [this]       `[array-elt     ,this 2]]
 [defmetro blocks_world-last_results      [this]       `[array-elt     ,this 3]]
@@ -183,8 +208,9 @@
 [defmetro blocks_world-need_perceive     [this]       `[array-elt     ,this 8]]
 [defmetro blocks_world-need_perceive-set [this value] `[array-elt-set ,this 8 ,value]]
 [defmetro blocks_world-physics           [this]       `[array-elt     ,this 9]]
+[defmetro blocks_world-agent             [this]       `[array-elt     ,this 10]]
 
-[defunk blocks_world-create [physics]
+[defunk blocks_world-create [physics agent]
   [let* [[help_message    [list '  (a few commands: ' `[exit] ', ' `[sim] ', ' `[look] ', ' `[move-to <object>] ', ' `[pick-up <object>]  ', ' `[drop] ')']]
 	 [welcome_message [append [list 'Welcome to ' `Blocks ' ' `World ' ' `v2.2]
 				  help_message]]
@@ -202,7 +228,8 @@
 		      need_rerender
 		      need_simulate
 		      need_perceive
-		      physics]]]
+		      physics
+		      agent]]]
 
 [defunk blocks_world-rep [this]
   [if [not [blocks_world-done this]]
@@ -265,6 +292,14 @@
 						  [blocks_world_physics-simulate physics]
 						  [blocks_world-need_perceive-set this t]
 						  [blocks_world-need_rerender-set this t]]]
+		    [[eq command `agent]    [let [[agent [blocks_world-agent this]]]
+					      [if [null agent]
+						  [prog [blocks_world-last_results-set this [list 'agent result: agent is null.']]
+							]
+						[prog [blocks_world_agent-execute agent]
+						      [blocks_world-need_perceive-set this t]
+						      [blocks_world-need_rerender-set this t]
+						      ]]]]
 		    [t                      [set command_failure t]]]]]
 	  [if command_failure
 	      [prog [ansi-stream-foreground stdout 15]
@@ -279,15 +314,19 @@
     [blocks_world-rep this]
     ]]
 
-[defunk blocks_world-test []
+[defunk blocks_world-run [agent]
   [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
 									   [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
 									   [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
 									   [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
 									   [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
-									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
+									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]
+					   agent]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
+
+[defunk blocks_world-test []
+  [blocks_world-run nil]]
 
 
 

@@ -1,1 +1,5 @@
 
+[defblocks_world_agent propositional_agent
+  [print 'propositional agent here.']
+  ]
+

@@ -54,6 +54,9 @@ typedef unsigned char boolean_t;
 #define boolean__false ((boolean_t)0)
 #define boolean__true  (! boolean__false)
 
+#define true  boolean__true
+#define false boolean__false
+
 #define error(thread, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(thread, __FILE__, __LINE__, str); exit(-1);}
 
 

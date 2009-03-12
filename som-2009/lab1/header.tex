@@ -84,6 +84,7 @@
 \usepackage{bbding}
 %\newcommand{\righthand}{\marginpar{\Huge\leftpointright}\normalsize}
 \newcommand{\hand}{\marginpar{\Huge\HandLeft}\normalsize}
+\newcommand{\downhand}{\marginpar{\vspace{2pt}\Huge\HandLeft}\normalsize}
 \newcommand{\handpen}{\marginpar{\Huge\HandPencilLeft}\normalsize}
 
 \newcommand{\prop}[2]{\texttt{#1(}\textsf{#2}\texttt{)}}
@@ -126,7 +127,7 @@
 
 \newcounter{questionnum}
 \stepcounter{questionnum}
-\newcommand{\question}{\vspace{10pt}\noindent {\bf \S\ \underline{\textsc{Question \arabic{questionnum}}}} \addtocounter{questionnum}{1} \hand}
+\newcommand{\question}{\vspace{10pt}\noindent {\bf \S\ \underline{\textsc{Question \arabic{questionnum}}}} \addtocounter{questionnum}{1} \downhand}
 \newcommand{\questionset}[1]{\vspace{10pt} \noindent {\bf \S\ \underline{\textsc{Question \arabic{questionnum}.#1}}}  }
 
 \newcommand{\eg}{\textit{e.g.}, }

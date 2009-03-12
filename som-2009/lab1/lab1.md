@@ -161,7 +161,8 @@ After you have installed Funk2 and are in the REPL loop, you can initiate the bl
 There are three commands in the relational (FOL) blocks world `[pick-up X]`, `[drop]` and `[move-to X]`.  (To exit the blocks World REPL, type `[exit]`).  
 
 \question
-Experiment with blocks world.  Find a command that fails to perform your action, and find one that successes.  Describe the conditions under which the command fails and those under which it succeeds.
+
+Experiment with blocks world.  Find a command that fails to perform your action, and find one that succeeds.  Describe the conditions under which the command fails and those under which it succeeds.
 
 ## Reactive Agents
 
@@ -290,7 +291,7 @@ An argument in logic is a set of premises from which a conclusion logically foll
 
 \questionset{2}
 
-Go through the previous list and test whether the argument is *valid*, by comparing its structure to propositional logic's \href{http://www.iep.utm.edu/p/prop-log.htm#SH5b}{inference rules}.  An argument if valid if and only if the premises are true then the conclusion is always true.  In other words, you are evaluating the structure, not the semantic content, of the variables. 
+Go through the previous list and test whether the argument is *valid*, by comparing its structure to propositional logic's \href{http://www.iep.utm.edu/p/prop-log.htm#SH5b}{inference rules}.  An argument if valid if and only if the premises are true then the conclusion is always true.  You are evaluating the structure, not the semantic content, of the variables. 
 
 \addtocounter{questionnum}{1}
 
@@ -316,10 +317,9 @@ The size of the set of world states `S` is based on `P` and `C`:
 |\texttt{S}| & = &  \prod_{i=1}^{n}{(2^{|\texttt{C}|})}^{\alpha_i}
 \end{eqnarray}
 
-A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. **Constant symbols**, the set of which is denoted `C`, are the common case of functor with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}.
+A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. **Constant symbols**, the set of which is denoted `C`, are the common case of functor with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
 
 Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
- For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
 
 Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own category using combinations of properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
 
@@ -431,7 +431,7 @@ Ignoring these object barriers can lead to absurd mistakes.  OpenMind\footnote{O
 
 \vspace{15pt}
 
-**Key point:** When you look into the semantics of most common programming languages, many of pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Ponder about how this relates to the problem in section \ref{sec:actions}.
+**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Ponder about how this relates to the problem in section \ref{sec:actions}.
 
 
 

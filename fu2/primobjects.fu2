@@ -26,15 +26,19 @@
     `[primfunk:array__elt ,x ,y]]]
 
 [defmetro unsafe:array-elt-set [x y z]
-  [if [funktional? y]
-      `[rawcode ,x
-		 [bytecode push              iter  nil  nil]
-		 [bytecode copy              value iter nil]
-		 ,z
-		  [bytecode reg_array-elt-set iter  ,[eval y]   nil]
-		  [bytecode pop               iter  nil  nil]
-		  ]
-    `[primfunk:array__elt__set ,x ,y ,z]]]
+  `[primfunk:array__elt__set ,x ,y ,z]]
+
+`[there is a bug with this optimizing too agressively]
+`[defmetro unsafe:array-elt-set [x y z]
+   [if [funktional? y]
+       `[rawcode ,x
+		  [bytecode push              iter  nil  nil]
+		  [bytecode copy              value iter nil]
+		  ,z
+		   [bytecode reg_array-elt-set iter  ,[eval y]   nil]
+		   [bytecode pop               iter  nil  nil]
+		   ]
+     `[primfunk:array__elt__set ,x ,y ,z]]]
 
 
 [defunk   primobject?                [x]      [and x [array? x] [unsafe:integer-greater_than [unsafe:array-length x] 1] [eq [unsafe:array-elt x 0] `primobject]]]

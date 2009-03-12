@@ -31,7 +31,7 @@
 extern f2ptr    __type_variable_not_defined__symbol;
 
 f2ptr    f2type_variable_not_defined__exception__new(f2ptr cause, f2ptr variable);
-bool  raw__type_variable_not_defined__exceptionp    (f2ptr exp, f2ptr cause);
+boolean_t  raw__type_variable_not_defined__exceptionp    (f2ptr exp, f2ptr cause);
 
 // default variable types
 
@@ -41,7 +41,7 @@ extern f2ptr __frame__funk_variable_type__symbol;
 // frame
 
 extern f2ptr __frame__symbol;
-extern f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable);
+f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable);
 #define f2primobject__is_frame(this, cause) raw__eq(cause, f2primobject__type(this, cause), __frame__symbol)
 
 defprimobject__static_slot__prototype(frame__type_hashtable);

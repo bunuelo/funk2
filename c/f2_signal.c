@@ -22,8 +22,8 @@
 #include <signal.h>
 #include "f2_signal.h"
 
-bool __received_signal__sigint     = 0;
-bool __received_segmentation_fault = 0;
+boolean_t __received_signal__sigint     = 0;
+boolean_t __received_segmentation_fault = 0;
 
 void f2__receive_signal(int sig) {
   switch(sig) {

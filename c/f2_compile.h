@@ -42,13 +42,13 @@ f2ptr f2__compile__funk_bc(f2ptr cause);
 
 f2ptr f2__compile__funk(f2ptr cause, f2ptr thread, f2ptr metro);
 f2ptr f2__compile__metro(f2ptr cause, f2ptr thread, f2ptr metro);
-f2ptr f2__compile__rawcode(f2ptr cause, f2ptr thread, f2ptr exps, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional, bool optimize_unused_beginning);
-f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional);
-f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr thread, bool protect_environment, bool optimize_tail_recursion, bool* popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional);
+f2ptr f2__compile__rawcode(f2ptr cause, f2ptr thread, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional, boolean_t optimize_unused_beginning);
+f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional);
+f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr thread, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional);
 f2ptr f2__demetropolize_once(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp);
 f2ptr f2__demetropolize_full__with_status(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp);
-f2ptr f2__compile__special_symbol_exp(f2ptr cause, f2ptr rte, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional);
-f2ptr raw__compile(f2ptr context_on, f2ptr thread, f2ptr exp, bool protect_environment, bool optimize_tail_recursion, bool *popped_env_and_return, bool* is_funktional, f2ptr local_variables, bool* is_locally_funktional);
+f2ptr f2__compile__special_symbol_exp(f2ptr cause, f2ptr rte, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional);
+f2ptr raw__compile(f2ptr context_on, f2ptr thread, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional);
 
 void f2__compile__initialize();
 

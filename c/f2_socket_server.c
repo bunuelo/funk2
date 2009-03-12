@@ -31,11 +31,11 @@ client_id_t* client_id__new_copy(client_id_t* client_id) {
   return this;
 }
 
-bool client_id__equals(client_id_t* this, client_id_t* client_id) {
+boolean_t client_id__equals(client_id_t* this, client_id_t* client_id) {
   return (memcmp(this, client_id, sizeof(client_id_t)) == 0);
 }
 
-int file_descriptor__set_nonblocking(int fd, bool value) {
+int file_descriptor__set_nonblocking(int fd, boolean_t value) {
   int flags;
   // If they have O_NONBLOCK, use the Posix way to do it
 #if defined(O_NONBLOCK)
@@ -122,7 +122,7 @@ int socket_file_descriptor__get_keepalive(int fd) {
   return optval;
 }
 
-int socket_file_descriptor__set_keepalive(int fd, bool keepalive) {
+int socket_file_descriptor__set_keepalive(int fd, boolean_t keepalive) {
   int       optval;
   socklen_t optlen = sizeof(optval);
   /* Set the option active */

@@ -52,14 +52,14 @@ void global_critics__set(f2ptr critics);
 
 //extern f2ptr __global__user_thread;
 
-extern void print_bytecode_stats__cfunk(FILE* fptr);
+void print_bytecode_stats__cfunk(FILE* fptr);
 
-extern void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
+void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 
-extern void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode);
-extern bool f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread);
+void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode);
+boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread);
 
-extern void f2__thread__initialize();
+void f2__thread__initialize();
 
 //#define global_user_thread() __global__user_thread
 

@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 
-bool raw__exp__is_immutable(f2ptr cause, f2ptr this) {
+boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this) {
   if (! this) {
     return true;
   }
@@ -54,7 +54,7 @@ f2ptr f2__exp__is_immutable(f2ptr cause, f2ptr this) {
 }
 
 
-bool raw__funkable__is_funktional(f2ptr cause, f2ptr this) {
+boolean_t raw__funkable__is_funktional(f2ptr cause, f2ptr this) {
   if (raw__cfunkp(this, cause)) {
     return (f2cfunk__is_funktional(this, cause) != nil);
   }

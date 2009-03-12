@@ -3,10 +3,10 @@
 
 #include "f2_buffered_socket.h"
 
-int file_descriptor__set_nonblocking(int fd, bool value);
+int file_descriptor__set_nonblocking(int fd, boolean_t value);
 
 int socket_file_descriptor__get_keepalive(int fd);
-int socket_file_descriptor__set_keepalive(int fd, bool keepalive);
+int socket_file_descriptor__set_keepalive(int fd, boolean_t keepalive);
 
 struct client_id_s {
   u8  bind_device[16]; // e.g. "eth0"
@@ -19,7 +19,7 @@ void         client_id__init(client_id_t* this, u8* bind_device, u8* ip_addr, u1
 client_id_t* client_id__new(u8* bind_device, u8* ip_addr, u16 port_num);
 void         client_id__copy(client_id_t* this, client_id_t* client_id);
 client_id_t* client_id__new_copy(client_id_t* client_id);
-bool         client_id__equals(client_id_t* this, client_id_t* client_id);
+boolean_t    client_id__equals(client_id_t* this, client_id_t* client_id);
 
 typedef struct socket_server_client_s {
   buffered_socket_t socket;

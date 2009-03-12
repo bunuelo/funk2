@@ -97,7 +97,7 @@ f2ptr       memblock_f2ptr__new(f2size_t byte_num);
 memblock_t* pool__memblock__new(int pool_index, f2size_t byte_num);
 memblock_t* memblock__new(f2size_t byte_num);
 
-bool valid_memblock_ptr(ptr p);
+boolean_t valid_memblock_ptr(ptr p);
 
 void memory_mutex__lock(int pool_index);
 int  memory_mutex__try_lock(int pool_index);

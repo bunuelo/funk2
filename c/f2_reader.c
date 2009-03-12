@@ -58,7 +58,7 @@ const char __symbol_quote_char            = '|';
 const char __symbol_escape_char           = '\\';
 const char __symbol_key_char              = ':';
 
-const bool __reader__all_caps = 0;
+const boolean_t __reader__all_caps = 0;
 
 f2ptr __char__space   = -1;
 f2ptr __char__tab     = -1;
@@ -111,7 +111,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   return read_ch;
 }
 
-bool contains_comma(f2ptr cause, f2ptr exp) {
+boolean_t contains_comma(f2ptr cause, f2ptr exp) {
   if (raw__consp(exp, cause)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr cdr = f2cons__cdr(exp, cause);
@@ -123,7 +123,7 @@ bool contains_comma(f2ptr cause, f2ptr exp) {
   return 0;
 }
 
-bool contains_cdr_comma(f2ptr cause, f2ptr exp) {
+boolean_t contains_cdr_comma(f2ptr cause, f2ptr exp) {
   if (raw__consp(exp, cause)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr cdr = f2cons__cdr(exp, cause);
@@ -135,7 +135,7 @@ bool contains_cdr_comma(f2ptr cause, f2ptr exp) {
   return 0;
 }
 
-bool contains_cdr_comma_at_this_level(f2ptr cause, f2ptr exp) {
+boolean_t contains_cdr_comma_at_this_level(f2ptr cause, f2ptr exp) {
   if (raw__consp(exp, cause)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr cdr = f2cons__cdr(exp, cause);
@@ -568,8 +568,8 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     } while(1);
   }
   // see if is partly and completely a number
-  bool has_numeric = 0;
-  bool all_numeric = 1;
+  boolean_t has_numeric = 0;
+  boolean_t all_numeric = 1;
   {
     int j;
     char ch;

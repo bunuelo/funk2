@@ -32,7 +32,7 @@ void funk2_event_router__destroy(funk2_event_router_t* this) {
 // this is called from socket rpc layer, so must not access any memory on a remote machine (i.e. scheduler, event_buffer_mutex, and event_buffer are assumed to be local objects)
 f2ptr funk2_event_router__know_of_event(funk2_event_router_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
   status("funk2_event_router__know_of_event: here.");
-  bool already_known = funk2_node_handler__node_event_id_is_known(&(__funk2.node_handler), node_id, event_id);
+  boolean_t already_known = funk2_node_handler__node_event_id_is_known(&(__funk2.node_handler), node_id, event_id);
   f2ptr result = nil;
   if (! already_known) {
     f2ptr event = f2event__new(event_cause, f2pointer__new(event_cause, node_id), f2pointer__new(event_cause, event_id), type, data);

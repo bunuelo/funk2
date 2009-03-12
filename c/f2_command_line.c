@@ -48,7 +48,7 @@ void f2__print_usage() {
 	 "\n\n");
 }
 
-bool string__parse_integer(char* this, int* return_value) {
+boolean_t string__parse_integer(char* this, int* return_value) {
   errno = 0;
   char* end_ptr = 0;
   int value = strtol(this, &end_ptr, 10);
@@ -74,7 +74,7 @@ bool string__parse_integer(char* this, int* return_value) {
   return false;
 }
 
-bool string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* port_num) {
+boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* port_num) {
   int first_colon_index;
   for (first_colon_index = 0; this[first_colon_index] != ':' && this[first_colon_index] != 0; first_colon_index++);
   if (this[first_colon_index] == 0) {
@@ -94,7 +94,7 @@ bool string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* 
   return false; // no parse error
 }
 
-bool string__filename_exists(char* this) {
+boolean_t string__filename_exists(char* this) {
   int fd = open(this, 0);
   if (fd == -1) {
     return false;
@@ -113,7 +113,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->swap_directory                  = NULL;
   
   int index;
-  bool parse_error = false;
+  boolean_t parse_error = false;
   for (index = 1; index < argc; index ++) {
     if (strcmp(argv[index], "-x") == 0) {
       index ++;

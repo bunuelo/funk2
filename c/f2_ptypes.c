@@ -175,7 +175,7 @@ void ptype_trace_write(int pool_index, f2ptr cause, f2ptr location, f2ptr value)
   //pool__resume_gc(pool_index);
 }
 
-bool raw__cause__is_traced(f2ptr cause, f2ptr this) {
+boolean_t raw__cause__is_traced(f2ptr cause, f2ptr this) {
   if (! this) {
     return nil;
   }
@@ -193,7 +193,7 @@ void debug__cause__is_imaginary() {
   printf("\ndebug__cause__is_imaginary here.");
 }
 
-bool raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
+boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
   if (! this) {
     return nil;
   }
@@ -204,7 +204,7 @@ bool raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
     error(nil, "raw__cause__is_imaginary !raw__causep(this, cause)");
   }
 #endif
-  bool return_value = (f2cause__imagination_stack(this, cause) != nil);
+  boolean_t return_value = (f2cause__imagination_stack(this, cause) != nil);
   if (return_value) {
     debug__cause__is_imaginary();
   }
@@ -807,7 +807,7 @@ typedef struct symbol_hash_s {
   int                  total_symbol_num;
   int                  array_length;
 } symbol_hash_t;
-bool          __symbol_hash__initialized = 0;
+boolean_t     __symbol_hash__initialized = 0;
 symbol_hash_t __symbol_hash;
 
 void symbol_hash__initialize() {

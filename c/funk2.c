@@ -153,7 +153,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     }
   }
   
-  bool memory_tracing_on = false; // allocates all arrays as traced_array rather than simple_array (requires approx 4x system memory for allocation).
+  boolean_t memory_tracing_on = false; // allocates all arrays as traced_array rather than simple_array (requires approx 4x system memory for allocation).
   cause = f2__cause__new(cause, nil, f2bool__new(memory_tracing_on), nil, nil, nil, nil);
   
   // try to find a boot function
@@ -250,7 +250,7 @@ void funk2__destroy(funk2_t* this) {
   pthread_mutex_destroy(&(this->event_id_mutex));
 }
 
-bool funk2__handle_clients(funk2_t* this) {
+boolean_t funk2__handle_clients(funk2_t* this) {
   funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
   funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
   funk2_node_handler__handle_nodes(&(this->node_handler));
@@ -265,7 +265,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   funk2__init(this, argc, argv);
   
   while (1) {
-    bool did_something = funk2__handle_clients(this);
+    boolean_t did_something = funk2__handle_clients(this);
     if (! did_something) {
       f2__sleep(1000000);
     }

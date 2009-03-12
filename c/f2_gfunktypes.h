@@ -63,20 +63,20 @@ char gf2__char__ch(gfunkptr_t* this);
 
 // string
 
-void  f2string__new(gfunkptr_t* result, gfunkptr_t* cause, uint length, char* init);
-uint  gf2__string__length(gfunkptr_t* this);
-s8    gf2__string__elt(gfunkptr_t* this, int index);
-bool  gf2__string__equals(gfunkptr_t* this, f2ptr that);
-void  gf2__string__str_copy(gfunkptr_t* this, char* str);
-int   gf2__string__hash_value(gfunkptr_t* this);
+void      f2string__new(gfunkptr_t* result, gfunkptr_t* cause, uint length, char* init);
+uint      gf2__string__length(gfunkptr_t* this);
+s8        gf2__string__elt(gfunkptr_t* this, int index);
+boolean_t gf2__string__equals(gfunkptr_t* this, f2ptr that);
+void      gf2__string__str_copy(gfunkptr_t* this, char* str);
+int       gf2__string__hash_value(gfunkptr_t* this);
 
 // symbol
 
-void  f2symbol__new(gfunkptr_t* result, gfunkptr_t* cause, uint length, s8* init);
-uint  gf2__symbol__length(gfunkptr_t* this);
-s8    gf2__symbol__elt(gfunkptr_t* this, int index);
-bool  gf2__symbol__equals(gfunkptr_t* this, gfunkptr_t* that);
-void  gf2__symbol__str_copy(gfunkptr_t* this, char* str);
+void      f2symbol__new(gfunkptr_t* result, gfunkptr_t* cause, uint length, s8* init);
+uint      gf2__symbol__length(gfunkptr_t* this);
+s8        gf2__symbol__elt(gfunkptr_t* this, int index);
+boolean_t gf2__symbol__equals(gfunkptr_t* this, gfunkptr_t* that);
+void      gf2__symbol__str_copy(gfunkptr_t* this, char* str);
 
 // chunk
 

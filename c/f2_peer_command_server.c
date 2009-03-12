@@ -458,7 +458,7 @@ void funk2_peer_command_server__reset_status_counters(funk2_peer_command_server_
   }
 }
 
-void funk2_peer_command_server__flush_command_input_buffer(funk2_peer_command_server_t* this, bool log_everything) {
+void funk2_peer_command_server__flush_command_input_buffer(funk2_peer_command_server_t* this, boolean_t log_everything) {
   funk2_packet_t* packet = funk2_peer_command_server__new_request_packet_from_buffer(this);
   while (packet) {
     funk2_peer_command_server__execute_funk2_packet(this, packet);

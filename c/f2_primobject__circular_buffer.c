@@ -37,7 +37,7 @@ f2ptr f2circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_arra
   return this;
 }
 
-bool raw__circular_bufferp(f2ptr this, f2ptr cause) {
+boolean_t raw__circular_bufferp(f2ptr this, f2ptr cause) {
   return raw__arrayp(this, cause) && f2primobject__is_circular_buffer(this, cause);
 }
 
@@ -83,7 +83,7 @@ f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value) {
   return nil;
 }
 
-bool raw__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
+boolean_t raw__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
   f2ptr start = f2circular_buffer__start(this, cause);
   f2ptr end   = f2circular_buffer__end(this, cause);
   u64 raw_start = f2integer__i(start, cause);

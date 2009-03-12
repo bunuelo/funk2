@@ -25,10 +25,10 @@
 #include "f2_global.h"
 #include "f2_repl.h"
 
-extern bool __received_signal__sigint;
+extern boolean_t __received_signal__sigint;
 
-extern void f2__receive_signal(int sig);
-extern void f2__signal__initialize();
+void f2__receive_signal(int sig);
+void f2__signal__initialize();
 
 #endif // F2__SIGNAL__H
 

@@ -22,9 +22,9 @@
 #include "funk2.h"
 
 void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_directory) {
-  int  fd                 = -1;
-  int  total_tries_so_far = 0;
-  bool try_again          = false;
+  int       fd                 = -1;
+  int       total_tries_so_far = 0;
+  boolean_t try_again          = false;
   do {
     total_tries_so_far ++;
     sprintf(str, "%s----------------------.f2swp", swap_directory);

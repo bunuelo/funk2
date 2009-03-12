@@ -30,12 +30,12 @@
 // void  exp__gc_touch_all_referenced(ptr start_block_ptr)
 // void  pool__pause_gc              (int pool_index)
 // void  pool__resume_gc             (int pool_index)
-// bool  pool__try_gc                (int pool_index)
-// bool  pool__should_run_gc         (int pool_index)
+// boolean_t  pool__try_gc                (int pool_index)
+// boolean_t  pool__should_run_gc         (int pool_index)
 // void  pause_gc                    ()
 // void  resume_gc                   ()
-// bool  try_gc                      ()
-// bool  should_run_gc               ()
+// boolean_t  try_gc                      ()
+// boolean_t  should_run_gc               ()
 // int   gc__is_disabled             ()
 // void  global_environment__set     (f2ptr global_environment)
 // f2ptr global_environment          ()
@@ -66,10 +66,10 @@ def_pcfunk1(pool__pause_gc, pool_index, pool__pause_gc(f2integer__i(pool_index, 
 // void  pool__resume_gc             (int pool_index)
 def_pcfunk1(pool__resume_gc, pool_index, pool__resume_gc(f2integer__i(pool_index, this_cause)); return nil);
 
-// bool  pool__try_gc                (int pool_index)
+// boolean_t  pool__try_gc                (int pool_index)
 def_pcfunk1(pool__try_gc, pool_index, return f2boolean__new(this_cause, pool__try_gc(f2integer__i(pool_index, this_cause))));
 
-// bool  pool__should_run_gc         (int pool_index)
+// boolean_t  pool__should_run_gc         (int pool_index)
 def_pcfunk1(pool__should_run_gc, pool_index, return f2boolean__new(this_cause, f2integer__new(this_cause, pool__should_run_gc(f2integer__i(pool_index, this_cause)))));
 
 // void  pause_gc                    ()
@@ -78,10 +78,10 @@ def_pcfunk0(pause_gc, pause_gc(); return nil);
 // void  resume_gc                   ()
 def_pcfunk0(resume_gc, resume_gc(); return nil);
 
-// bool  try_gc                      ()
+// boolean_t  try_gc                      ()
 def_pcfunk0(try_gc, return f2boolean__new(this_cause, f2integer__new(this_cause, try_gc())));
 
-// bool  should_run_gc               ()
+// boolean_t  should_run_gc               ()
 def_pcfunk0(should_run_gc, return f2boolean__new(this_cause, f2integer__new(this_cause, should_run_gc())));
 
 // int   gc__is_disabled             ()

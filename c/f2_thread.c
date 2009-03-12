@@ -89,7 +89,7 @@ void f2__print_environment_stack(f2ptr cause, f2ptr thread, f2ptr env) {
 
 f2ptr __thread__environment_critics__symbol = -1;
 
-bool f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
+boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
   debug__assert(raw__threadp(thread, nil), nil, "thread type assertion failed.");
   debug__assert((! cause) || raw__causep(cause, nil), nil, "thread type assertion failed.");
   
@@ -99,7 +99,7 @@ bool f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
   f2ptr bytecode = f2cons__car(pc_reg, cause);
   debug__assert(raw__bytecodep(bytecode, cause), thread, "f2__thread__execute_next_bytecode error: assertion failed (raw__bytecodep(bytecode)).");
   
-  bool bytecode_is_yield = 0;
+  boolean_t bytecode_is_yield = 0;
   if (f2bytecode__command(bytecode, cause) == __funk2.bytecode.bytecode__yield__symbol) {
     bytecode_is_yield = 1;
     f2thread__program_counter__set(thread, f2thread__cause_reg(thread, cause), f2cons__cdr(pc_reg, cause));

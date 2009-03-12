@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-bool raw__dlfcn__supported() {
+boolean_t raw__dlfcn__supported() {
 #ifdef F2__DLFCN__SUPPORTED
   return true;
 #else

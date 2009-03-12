@@ -186,7 +186,7 @@ void pool__destroy(int pool_index) {
 #endif
 }
 
-bool valid_memblock_ptr(ptr p) {
+boolean_t valid_memblock_ptr(ptr p) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
@@ -604,7 +604,7 @@ typedef struct gc_touch_circle_buffer_s {
   memblock_t** end;
 } gc_touch_circle_buffer_t;
 
-bool                     __gc_touch_circle_buffer__initialized = 0;
+boolean_t                     __gc_touch_circle_buffer__initialized = 0;
 gc_touch_circle_buffer_t __gc_touch_circle_buffer;
 
 void gc_touch_circle_buffer__init() {
@@ -1236,7 +1236,7 @@ int gc__is_disabled() {
 //
 // bug: pool__try_gc has thread lock conditions with find_or_create_free_splittable_memblock_and_unfree.
 //
-bool pool__try_gc(int pool_index) {
+boolean_t pool__try_gc(int pool_index) {
   u8 result = 0;
   int disable_gc    = 0;
   int should_run_gc = 0;
@@ -1263,7 +1263,7 @@ bool pool__try_gc(int pool_index) {
 
 /*
 // use this after pausing and resuming garbage collection
-bool pool__try_gc(int pool_index) {
+boolean_t pool__try_gc(int pool_index) {
   u8 result = 0;
   ptype_access__lockout_access(pool_index, 0);
   memory_mutex__lock(pool_index);
@@ -1299,8 +1299,8 @@ bool pool__try_gc(int pool_index) {
 }
 */
 
-bool try_gc() {
-  bool did_something = 0;
+boolean_t try_gc() {
+  boolean_t did_something = 0;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     did_something |= pool__try_gc(pool_index);
@@ -1310,7 +1310,7 @@ bool try_gc() {
 
 /*
 // use this after pausing and resuming garbage collection
-bool pool__try_gc(int pool_index) {
+boolean_t pool__try_gc(int pool_index) {
   u8 result = 0;
   ptype_access__lockout_access(pool_index, 0);
   memory_mutex__lock(pool_index);
@@ -1359,8 +1359,8 @@ bool pool__try_gc(int pool_index) {
   return result;
 }
 
-bool try_gc() {
-  bool did_something = 0;
+boolean_t try_gc() {
+  boolean_t did_something = 0;
   //int pool_index;
   //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
   //did_something |= pool__try_gc(pool_index);
@@ -1370,14 +1370,14 @@ bool try_gc() {
 }
 */
 
-bool pool__should_run_gc(int pool_index) {
+boolean_t pool__should_run_gc(int pool_index) {
   memory_mutex__lock(pool_index);
-  bool should_gc = (__funk2.memory.pool[pool_index].should_run_gc != 0);
+  boolean_t should_gc = (__funk2.memory.pool[pool_index].should_run_gc != 0);
   memory_mutex__unlock(pool_index);
   return should_gc;
 }
 
-bool should_run_gc() {
+boolean_t should_run_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     if (pool__should_run_gc(pool_index)) {

@@ -96,7 +96,7 @@ f2ptr f2__blocks_world_rectangle__y1(f2ptr cause, f2ptr this) {
 def_pcfunk1(blocks_world_rectangle__y1, this, return f2__blocks_world_rectangle__y1(this_cause, this));
 
 
-bool raw__blocks_world_rectanglep(f2ptr this, f2ptr cause) {
+boolean_t raw__blocks_world_rectanglep(f2ptr this, f2ptr cause) {
   return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_rectangle(this, cause));
 }
 
@@ -367,7 +367,7 @@ f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name) {
 }
 def_pcfunk1(blocks_world_color__new, name, return f2blocks_world_color__new(this_cause, name));
 
-bool raw__blocks_world_colorp(f2ptr this, f2ptr cause) {
+boolean_t raw__blocks_world_colorp(f2ptr this, f2ptr cause) {
   return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_color(this, cause));
 }
 
@@ -428,7 +428,7 @@ f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rect
 }
 def_pcfunk6(blocks_world_object__new, name, type, rectangle, color, ignore_gravity, holding_object, return f2blocks_world_object__new(this_cause, name, type, rectangle, color, ignore_gravity, holding_object));
 
-bool raw__blocks_world_objectp(f2ptr this, f2ptr cause) {
+boolean_t raw__blocks_world_objectp(f2ptr this, f2ptr cause) {
   return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_object(this, cause));
 }
 
@@ -634,7 +634,7 @@ f2ptr f2__blocks_world_physics__objects(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(blocks_world_physics__objects, this, return f2__blocks_world_physics__objects(this_cause, this));
 
-bool raw__blocks_world_physicsp(f2ptr this, f2ptr cause) {
+boolean_t raw__blocks_world_physicsp(f2ptr this, f2ptr cause) {
   return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_physics(this, cause));
 }
 

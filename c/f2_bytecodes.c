@@ -2232,7 +2232,7 @@ int f2__thread__bytecode__trace(f2ptr thread, f2ptr bytecode, f2ptr value) {
 }
 
 
-// bytecode compile [bool]
+// bytecode compile [boolean_t]
 
 void raw__thread__bytecode_trace__compile__protect_environment(f2ptr cause, f2ptr bytecode, f2ptr thread) {
   bytecode_status("bytecode trace: [compile nil protect_environment]");
@@ -2250,7 +2250,7 @@ int f2__thread__bytecode__compile__protect_environment(f2ptr thread, f2ptr bytec
   f2__thread__increment_pc(thread, cause);
   
   f2ptr protect_environment = __funk2.globalenv.true__symbol;
-  bool  is_funktional       = true;
+  boolean_t  is_funktional       = true;
   f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
   return 0;
 }
@@ -2271,7 +2271,7 @@ int f2__thread__bytecode__compile__nil(f2ptr thread, f2ptr bytecode) {
   f2__thread__increment_pc(thread, cause);
   
   f2ptr protect_environment = nil;
-  bool  is_funktional       = true;
+  boolean_t  is_funktional       = true;
   f2thread__value__set(thread, cause, raw__compile(cause, thread, f2thread__value(thread, cause), (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL));
   return 0;
 }

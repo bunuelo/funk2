@@ -44,7 +44,7 @@ defprimobject__static_slot__prototype(object_type__frame);
 #define f2object_type__frame__trace(     this, cause)        primobject__static_slot__trace(     this, object_type__frame, cause)
 #define f2object_type__frame__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, object_type__frame, cause)
 
-bool raw__object_typep(f2ptr this, f2ptr cause);
+boolean_t raw__object_typep(f2ptr this, f2ptr cause);
 f2ptr f2__object_typep(f2ptr this, f2ptr cause);
 
 f2ptr object_type__new(f2ptr cause);

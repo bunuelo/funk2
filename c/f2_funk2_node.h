@@ -55,13 +55,13 @@ struct funk2_node_s {
   computer_id_t    computer_id;
   pthread_mutex_t  socket_client_mutex;
   socket_client_t  socket_client;
-  bool             sent_register_request;
+  boolean_t             sent_register_request;
   u64              last_try_reconnect__microseconds_since_1970;
   computer_id_t    remote_computer_id_to_local_computer_id[f2ptr__computer_id__max_value + 1];
   computer_id_t    local_computer_id_to_remote_computer_id[f2ptr__computer_id__max_value + 1];
   stream_iter_t    last_recv_packet__stream_iter;
   stream_iter_t    last_sent_packet__stream_iter;
-  bool             last_sent_packet__is_valid;
+  boolean_t             last_sent_packet__is_valid;
   union {
     funk2_packet_t last_sent_packet;
     u8             last_sent_packet_bytes[max_funk2_packet_size];
@@ -115,8 +115,8 @@ funk2_node_t*   funk2_node_handler__lookup_thread_execution_node(funk2_node_hand
 funk2_node_t*   funk2_node_handler__pop_thread_execution_node(funk2_node_handler_t* this, f2ptr thread);
 void            funk2_node_handler__report_thread_response_packet(funk2_node_handler_t* this, f2ptr thread, funk2_packet_t* packet);
 funk2_packet_t* funk2_node_handler__wait_for_new_thread_packet(funk2_node_handler_t* this, f2ptr thread);
-bool            funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this, node_id_t node_id, event_id_t event_id);
-bool            funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data);
+boolean_t            funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this, node_id_t node_id, event_id_t event_id);
+boolean_t            funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data);
 
 
 

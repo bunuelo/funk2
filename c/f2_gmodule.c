@@ -22,9 +22,9 @@
 #include "funk2.h"
 
 //gboolean g_module_supported();
-bool raw__gmodule__supported() {
+boolean_t raw__gmodule__supported() {
 #ifdef F2__GMODULE__SUPPORTED
-  return (bool)g_module_supported();
+  return (boolean_t)g_module_supported();
 #else
   return false;
 #endif
@@ -97,7 +97,7 @@ def_pcfunk2(gmodule__open, filename, flags, return f2__gmodule__open(this_cause,
 ptr raw__gmodule__symbol(ptr module, u8* symbol_name) {
 #ifdef F2__GMODULE__SUPPORTED
   gpointer symbol_pointer = NULL;
-  bool result = g_module_symbol(from_ptr(module), (char*)symbol_name, &symbol_pointer);
+  boolean_t result = g_module_symbol(from_ptr(module), (char*)symbol_name, &symbol_pointer);
   if (! result) {
     return to_ptr(NULL);
   }
@@ -166,9 +166,9 @@ f2ptr f2__gmodule__make_resident(f2ptr cause, f2ptr module) {
 def_pcfunk1(gmodule__make_resident, module, return f2__gmodule__make_resident(this_cause, module));
 
 //gboolean g_module_close(GModule *module);
-bool raw__gmodule__close(ptr module) {
+boolean_t raw__gmodule__close(ptr module) {
 #ifdef F2__GMODULE__SUPPORTED
-  return (bool)g_module_close(from_ptr(module));
+  return (boolean_t)g_module_close(from_ptr(module));
 #else
   return false;
 #endif  

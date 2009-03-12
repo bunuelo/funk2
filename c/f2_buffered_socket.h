@@ -5,7 +5,7 @@
 
 typedef struct buffered_socket_s {
   int               socket_fd;
-  bool              disconnected;
+  boolean_t         disconnected;
   circular_buffer_t recv_buffer;
   circular_buffer_t send_buffer;
 } buffered_socket_t;

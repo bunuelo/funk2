@@ -5,7 +5,7 @@
 
 typedef struct buffered_file_s {
   int               fd;
-  bool              end_of_file;
+  boolean_t         end_of_file;
   circular_buffer_t read_buffer;
   circular_buffer_t write_buffer;
 } buffered_file_t;

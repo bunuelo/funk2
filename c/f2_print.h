@@ -29,7 +29,7 @@
 #include "f2_primobject__environment.h"
 #include "f2_reader.h"
 
-void f2__fwrite__raw_char  (f2ptr cause, f2ptr fptr, char ch, int return_size[2], bool use_html);
+void f2__fwrite__raw_char  (f2ptr cause, f2ptr fptr, char ch, int return_size[2], boolean_t use_html);
 void f2__fwrite__raw_string(f2ptr cause, f2ptr fptr, f2ptr str, f2ptr use_html);
 
 f2ptr f2__fwrite_html     (f2ptr cause, f2ptr fptr, f2ptr exp);

@@ -24,10 +24,10 @@
 
 #include "f2_primfunks.h"
 
-bool raw__exp__is_immutable(f2ptr cause, f2ptr this);
-f2ptr f2__exp__is_immutable(f2ptr cause, f2ptr this);
-bool raw__funkable__is_funktional(f2ptr cause, f2ptr this);
-f2ptr f2__funkable__is_funktional(f2ptr cause, f2ptr this);
+boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this);
+f2ptr      f2__exp__is_immutable(f2ptr cause, f2ptr this);
+boolean_t raw__funkable__is_funktional(f2ptr cause, f2ptr this);
+f2ptr      f2__funkable__is_funktional(f2ptr cause, f2ptr this);
 
 #endif // F2__FUNKTIONAL__H
 

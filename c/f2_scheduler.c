@@ -49,8 +49,8 @@ void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
   f2mutex__unlock(active_threads_mutex, cause);
 }
 
-bool f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
-  bool found_and_removed_thread = false;
+boolean_t f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  boolean_t found_and_removed_thread = false;
   f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads_iter = f2processor__active_threads(this, cause);
@@ -145,7 +145,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     thread_num ++;
     f2ptr thread = f2cons__car(thread_iter, cause);
     int   prev_thread_iter__already_set = 0;
-    bool  need_to_launch_larva_handling_critic_thread = 0;
+    boolean_t  need_to_launch_larva_handling_critic_thread = 0;
     if (f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) { // successful lock
       if (! f2thread__paused(thread, cause)) {
 	int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
@@ -298,7 +298,7 @@ void f2__scheduler__yield(f2ptr cause) {
 }
 
 void f2__scheduler__complete_thread(f2ptr cause, f2ptr thread) {
-  bool complete = 0;
+  boolean_t complete = 0;
   do {
     if(f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) {
       if(f2thread__is_complete(thread, cause)) {

@@ -22,11 +22,11 @@
 #ifndef F2__DLFCN__H
 #define F2__DLFCN__H
 
-bool raw__dlfcn__supported();
-ptr  raw__dlfcn__dlopen(u8* filename, int flag);
-u8*  raw__dlfcn__dlerror();
-ptr  raw__dlfcn__dlsym(ptr handle, u8* symbol);
-int  raw__dlfcn__dlclose(ptr handle);
+boolean_t raw__dlfcn__supported();
+ptr       raw__dlfcn__dlopen(u8* filename, int flag);
+u8*       raw__dlfcn__dlerror();
+ptr       raw__dlfcn__dlsym(ptr handle, u8* symbol);
+int       raw__dlfcn__dlclose(ptr handle);
 
 // **
 

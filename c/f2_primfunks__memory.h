@@ -5,6 +5,6 @@
 #include "f2_primobject__boolean.h"
 #include "f2_primobject__char_pointer.h"
 
-extern void f2__primfunks__memory__initialize();
+void f2__primfunks__memory__initialize();
 
 #endif // F2__PRIMFUNKS_MEMORY__H

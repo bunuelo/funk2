@@ -617,9 +617,9 @@ f2ptr f2__pointer__equal_sign(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__pointer__not_equal_sign(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__pointer__add_integer(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y);
-bool raw__null(f2ptr x);
+boolean_t raw__null(f2ptr x);
 f2ptr f2__null(f2ptr cause, f2ptr x);
-bool raw__not(f2ptr x);
+boolean_t raw__not(f2ptr x);
 f2ptr f2__not(f2ptr cause, f2ptr x);
 
 // funk2 pointer (f2ptr)
@@ -642,14 +642,14 @@ f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value);
 
 // integer
 
-bool raw__integerp(f2ptr x, f2ptr cause);
+boolean_t raw__integerp(f2ptr x, f2ptr cause);
 f2ptr f2__integerp(f2ptr cause, f2ptr x);
 f2ptr f2__integer__to_double(f2ptr cause, f2ptr x);
 f2ptr f2__integer__to_float(f2ptr cause, f2ptr x);
 
 // double
 
-bool raw__doublep(f2ptr x, f2ptr cause);
+boolean_t raw__doublep(f2ptr x, f2ptr cause);
 f2ptr f2__doublep(f2ptr cause, f2ptr x);
 f2ptr f2__double__to_integer(f2ptr cause, f2ptr x);
 f2ptr f2__double__to_float(f2ptr cause, f2ptr x);
@@ -664,26 +664,26 @@ f2ptr f2__double__divide_by_integer(f2ptr cause, f2ptr x, f2ptr y);
 
 // float
 
-bool raw__floatp(f2ptr x, f2ptr cause);
+boolean_t raw__floatp(f2ptr x, f2ptr cause);
 f2ptr f2__floatp(f2ptr cause, f2ptr x);
 f2ptr f2__float__to_integer(f2ptr cause, f2ptr x);
 f2ptr f2__float__to_double(f2ptr cause, f2ptr x);
 
 // pointer
 
-bool raw__pointerp(f2ptr x, f2ptr cause);
+boolean_t raw__pointerp(f2ptr x, f2ptr cause);
 f2ptr f2__pointerp(f2ptr cause, f2ptr x);
 
 // gfunkptr
 
-bool raw__gfunkptrp(f2ptr x, f2ptr cause);
+boolean_t raw__gfunkptrp(f2ptr x, f2ptr cause);
 f2ptr f2__gfunkptr(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x);
 f2ptr f2__gfunkptrp(f2ptr cause, f2ptr x);
 
 // mutex
 
-bool raw__mutexp(f2ptr x, f2ptr cause);
+boolean_t raw__mutexp(f2ptr x, f2ptr cause);
 f2ptr f2__mutex(f2ptr cause);
 f2ptr f2__mutexp(f2ptr cause, f2ptr x);
 f2ptr f2__mutex__lock(f2ptr cause, f2ptr x);
@@ -692,11 +692,11 @@ f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x);
 
 // char
 
-bool raw__charp(f2ptr x, f2ptr cause);
+boolean_t raw__charp(f2ptr x, f2ptr cause);
 
 // string
 
-bool raw__stringp(f2ptr x, f2ptr cause);
+boolean_t raw__stringp(f2ptr x, f2ptr cause);
 f2ptr f2__stringp(f2ptr cause, f2ptr x);
 f2ptr f2__string__length(f2ptr cause, f2ptr x);
 f2ptr f2__string__elt(f2ptr cause, f2ptr x, f2ptr y);
@@ -705,19 +705,19 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
 
 // symbol
 
-bool  raw__symbolp(f2ptr x, f2ptr cause);
+boolean_t  raw__symbolp(f2ptr x, f2ptr cause);
 f2ptr f2__symbolp(f2ptr cause, f2ptr x);
 f2ptr f2__symbol__length(f2ptr cause, f2ptr x);
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
-bool  raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t  raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 
 // array
 
-bool  raw__cause_is_traced(f2ptr cause);
+boolean_t  raw__cause_is_traced(f2ptr cause);
 f2ptr raw__array__new(f2ptr cause, u64 length);
 f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init);
-bool  raw__arrayp(f2ptr x, f2ptr cause);
+boolean_t  raw__arrayp(f2ptr x, f2ptr cause);
 f2ptr f2__arrayp(f2ptr cause, f2ptr x);
 u64   raw__array__length(f2ptr cause, f2ptr x);
 f2ptr f2__array__length(f2ptr cause, f2ptr x);
@@ -741,11 +741,11 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 
 // larva
 
-bool raw__larvap(f2ptr x, f2ptr cause);
+boolean_t raw__larvap(f2ptr x, f2ptr cause);
 
 // place
 
-bool raw__placep(f2ptr x, f2ptr cause);
+boolean_t raw__placep(f2ptr x, f2ptr cause);
 f2ptr f2__place(f2ptr cause, f2ptr x);
 f2ptr f2__placep(f2ptr cause, f2ptr x);
 f2ptr f2__place__thing(f2ptr cause, f2ptr x);
@@ -753,7 +753,7 @@ f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y);
 
 // cons
 
-bool raw__consp(f2ptr x, f2ptr cause);
+boolean_t raw__consp(f2ptr x, f2ptr cause);
 f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__consp(f2ptr cause, f2ptr x);
 f2ptr f2__cons__car(f2ptr cause, f2ptr x);
@@ -763,7 +763,7 @@ f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
 
 // doublelink
 
-bool raw__doublelinkp(f2ptr x, f2ptr cause);
+boolean_t raw__doublelinkp(f2ptr x, f2ptr cause);
 f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 f2ptr f2__doublelinkp(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x);
@@ -776,7 +776,7 @@ f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y);
 // chunk
 
 f2ptr f2__chunk(f2ptr cause, f2ptr length);
-bool raw__chunkp(f2ptr x, f2ptr cause);
+boolean_t raw__chunkp(f2ptr x, f2ptr cause);
 f2ptr f2__chunkp(f2ptr cause, f2ptr x);
 f2ptr f2__chunk__length(f2ptr cause, f2ptr x);
 f2ptr f2__chunk__bytes(f2ptr cause, f2ptr x);
@@ -786,7 +786,7 @@ f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x);
 
 // primobject thought_process
 
-bool raw__thought_processp(f2ptr x, f2ptr cause);
+boolean_t raw__thought_processp(f2ptr x, f2ptr cause);
 
 // primobject thread
 
@@ -801,41 +801,41 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);
 
 // primobject cfunk
 
-bool raw__cfunkp(f2ptr x, f2ptr cause);
+boolean_t raw__cfunkp(f2ptr x, f2ptr cause);
 
 // primobject funk
 
-bool raw__funkp(f2ptr x, f2ptr cause);
+boolean_t raw__funkp(f2ptr x, f2ptr cause);
 
 // primobject metro
 
-bool raw__metrop(f2ptr x, f2ptr cause);
+boolean_t raw__metrop(f2ptr x, f2ptr cause);
 
 // primobject metrocfunk
 
-bool raw__metrocfunkp(f2ptr x, f2ptr cause);
+boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause);
 
 // primobject bytecode
 
-bool raw__bytecodep(f2ptr x, f2ptr cause);
+boolean_t raw__bytecodep(f2ptr x, f2ptr cause);
 
 // primobject cause
 
-bool raw__causep(f2ptr x, f2ptr cause);
+boolean_t raw__causep(f2ptr x, f2ptr cause);
 
 // primobject thread
 
-bool raw__threadp(f2ptr x, f2ptr cause);
+boolean_t raw__threadp(f2ptr x, f2ptr cause);
 
 // primobject exception
 
 
 // interface funkable (includes types: funk, metro, cfunk, metrocfunk)
 
-bool raw__funkablep(f2ptr exp, f2ptr cause);
+boolean_t raw__funkablep(f2ptr exp, f2ptr cause);
   
   
-bool raw__exceptionp(f2ptr x, f2ptr cause);
+boolean_t raw__exceptionp(f2ptr x, f2ptr cause);
 f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value);
 f2ptr f2__format(f2ptr cause, f2ptr fptr, f2ptr exp);
 f2ptr f2__format__html(f2ptr cause, f2ptr fptr, f2ptr exp);
@@ -843,7 +843,7 @@ f2ptr f2__list(f2ptr cause, f2ptr seq);
 void raw__exit(int value);
 f2ptr f2__quit(f2ptr cause, f2ptr value);
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value);
-bool raw__eq(f2ptr cause, f2ptr x, f2ptr y);
+boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode);
 f2ptr f2__fclose(f2ptr cause, f2ptr fptr);

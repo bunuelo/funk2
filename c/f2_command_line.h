@@ -32,9 +32,9 @@ typedef struct funk2_command_line_s {
 } funk2_command_line_t;
 
 void f2__print_usage();
-bool string__parse_integer(char* this, int* return_value);
-bool string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* port_num);
-bool string__filename_exists(char* this);
+boolean_t string__parse_integer(char* this, int* return_value);
+boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* port_num);
+boolean_t string__filename_exists(char* this);
 void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv);
 void funk2_command_line__destroy(funk2_command_line_t* this);
 void string__print_quote_protected(char* this);

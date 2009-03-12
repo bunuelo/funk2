@@ -30,7 +30,7 @@ f2ptr f2type_variable_not_defined__exception__new(f2ptr cause, f2ptr variable) {
   return f2exception__new(cause, __type_variable_not_defined__symbol, variable);
 }
 
-bool raw__type_variable_not_defined__exceptionp(f2ptr exp, f2ptr cause) {
+boolean_t raw__type_variable_not_defined__exceptionp(f2ptr exp, f2ptr cause) {
   release__assert(__type_variable_not_defined__symbol != -1, nil, "raw__type_variable_not_defined__exceptionp assert failed: __type_variable_not_defined__symbol != -1.");
   return (raw__exceptionp(exp, cause) && f2exception__tag(exp, cause) == __type_variable_not_defined__symbol);
 }

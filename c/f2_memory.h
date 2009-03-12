@@ -84,18 +84,18 @@ extern float memblock__render_noise;
 
 extern void exp__gc_touch_all_referenced(ptr start_block_ptr);
 
-extern void pool__pause_gc(int pool_index);
-extern int  pool__try_pause_gc(int pool_index);
-extern void pool__resume_gc(int pool_index);
-extern bool pool__try_gc(int pool_index);
-extern bool pool__should_run_gc(int pool_index);
+extern void      pool__pause_gc(int pool_index);
+extern int       pool__try_pause_gc(int pool_index);
+extern void      pool__resume_gc(int pool_index);
+extern boolean_t pool__try_gc(int pool_index);
+extern boolean_t pool__should_run_gc(int pool_index);
 
-extern void pause_gc();
-extern int  try_pause_gc();
-extern void resume_gc();
-extern bool try_gc();
-extern bool should_run_gc();
-extern int gc__is_disabled();
+extern void      pause_gc();
+extern int       try_pause_gc();
+extern void      resume_gc();
+extern boolean_t try_gc();
+extern boolean_t should_run_gc();
+extern int       gc__is_disabled();
 
 void  global_environment__set(f2ptr global_environment);
 f2ptr global_environment();

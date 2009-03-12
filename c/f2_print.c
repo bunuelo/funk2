@@ -27,7 +27,7 @@
 #define chunk__begin_char __left_paren_char
 #define chunk__end_char   __right_paren_char
 
-f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], bool try_wide, bool wide_success[1], bool show_slot_causes, bool use_ansi_colors, bool use_html);
+f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html);
 
 ansi_color_t print__ansi__default__foreground       = ansi_color__white;
 ansi_color_t print__ansi__integer__foreground       = ansi_color__light_blue;
@@ -46,26 +46,26 @@ ansi_color_t print__ansi__larva__foreground         = ansi_color__dark_red;
 ansi_color_t print__ansi__end_recursion__foreground = ansi_color__white;
 ansi_color_t print__ansi__error__foreground         = ansi_color__dark_red;
 
-void f2__write__ansi_color(f2ptr cause, f2ptr stream, ansi_color_t color, bool use_ansi_colors, bool use_html) {
+void f2__write__ansi_color(f2ptr cause, f2ptr stream, ansi_color_t color, boolean_t use_ansi_colors, boolean_t use_html) {
   if (use_ansi_colors && stream) {f2__ansi__stream__reset(cause, stream); raw__ansi__stream__foreground(cause, stream, color);}
   if (use_html        && stream) {html__stream__ansi_foreground(cause, stream, color);}
 }
 
-void f2__write__space(f2ptr cause, f2ptr stream, bool use_html) {
+void f2__write__space(f2ptr cause, f2ptr stream, boolean_t use_html) {
   if (stream) {
     if (! use_html) {raw__stream__writef(cause, stream, " ");}
     else            {raw__stream__writef(cause, stream, "&nbsp;");}
   }
 }
 
-void f2__write__line_break(f2ptr cause, f2ptr stream, bool use_html) {
+void f2__write__line_break(f2ptr cause, f2ptr stream, boolean_t use_html) {
   if (stream) {
     if (use_html) {raw__stream__writef(cause, stream, "<br>");}
     raw__stream__writef(cause, stream, "\n");
   }
 }
 
-void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2], bool use_html) {
+void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2], boolean_t use_html) {
   int width    = 0;
   int height   = 0;
   switch(ch) {
@@ -95,11 +95,11 @@ void f2__fwrite__raw_string(f2ptr cause, f2ptr stream, f2ptr str, f2ptr use_html
 
 void f2__write_pretty__dptr(f2ptr cause, f2ptr stream,
 			    f2ptr exp, f2ptr exp__tracing_on, f2ptr exp__prev, f2ptr exp__cause,
-			    int recursion_depth, int indent_space_num, int available_width, int return_size[2], bool try_wide, bool wide_success[1], bool show_slot_causes, bool use_ansi_colors, bool use_html) {
+			    int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html) {
   if (try_wide) {
     if(stream) {
       int  test_size[2];
-      bool test__wide_success[1] = {1};
+      boolean_t test__wide_success[1] = {1};
       f2__write_pretty__dptr(cause, nil,
 			     exp, exp__tracing_on, exp__prev, exp__cause,
 			     recursion_depth, indent_space_num, available_width, test_size, 1, test__wide_success, show_slot_causes, use_ansi_colors, use_html);
@@ -169,7 +169,7 @@ void f2__write_pretty__dptr(f2ptr cause, f2ptr stream,
 
 void f2__write_pretty__slot_key_and_value(char* slot_name, int max_slot_name_length, f2ptr cause, f2ptr stream,
 					  f2ptr exp, f2ptr exp__tracing_on, f2ptr exp__prev, f2ptr exp__cause,
-					  int recursion_depth, int indent_space_num, int available_width, int return_size[2], bool try_wide, bool wide_success[1], bool show_slot_causes, bool use_ansi_colors, bool use_html) {
+					  int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html) {
   int width    = 0;
   int height   = 0;
   int subexp_size[2];
@@ -199,11 +199,11 @@ void f2__write_pretty__slot_key_and_value(char* slot_name, int max_slot_name_len
   f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
 }
 
-f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], bool try_wide, bool wide_success[1], bool show_slot_causes, bool use_ansi_colors, bool use_html) {
+f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html) {
   if (try_wide) {
     if(stream) {
       int  test_size[2];
-      bool test__wide_success[1] = {1};
+      boolean_t test__wide_success[1] = {1};
       f2__write_pretty(cause, nil, exp, recursion_depth, indent_space_num, available_width, test_size, 1, test__wide_success, show_slot_causes, use_ansi_colors, use_html);
       if ((! test__wide_success[0]) ||
 	  (test_size[0] > available_width)) {
@@ -343,7 +343,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	char* temp_str_buf = (char*)alloca(length + 1); f2symbol__str_copy(exp, cause, (u8*)temp_str_buf); temp_str_buf[length] = 0;
 	char ch;
 	int  subexp_size[2];
-	bool all_cool = 1;
+	boolean_t all_cool = 1;
 	for (i = 0; i < length; i ++) {
 	  ch = temp_str_buf[i];
 	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char) {
@@ -470,7 +470,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		  if (write_car_with_space) {
 		    //int car__try_wide = try_wide;
 		    
-		    bool subexp__wide_success[1] = {1};
+		    boolean_t subexp__wide_success[1] = {1};
 		    f2__write_pretty(cause, nil, car, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, subexp__wide_success, show_slot_causes, use_ansi_colors, use_html);
 		    
 		    if (width < available_width && subexp__wide_success[0]) {
@@ -524,7 +524,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	      int   write_value_with_space = 0;
 	      if (stream) {raw__stream__writef(cause, stream, "%c", __doublelink_left_paren_char);} indent_space_num ++; available_width --;
 	      f2ptr iter__prev = f2doublelink__prev(iter, cause);
-	      bool prev__exists = 0;
+	      boolean_t prev__exists = 0;
 	      while (iter__prev) {
 		prev__exists = 1;
 		iter = iter__prev;
@@ -538,7 +538,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		  
 		  //if(fptr) {
 		  //  int  test_size[2];
-		  //  bool test__wide_success[1] = {1};
+		  //  boolean_t test__wide_success[1] = {1};
 		  //  f2__write_pretty(cause, nil, value, recursion_depth, indent_space_num, available_width, test_size, 1, test__wide_success, show_slot_causes);
 		  //  if ((! test__wide_success[0]) ||
 		  //      (test_size[0] > available_width)) {
@@ -957,7 +957,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    if (write_car_with_space) {
 	      //int car__try_wide = try_wide;
 	      
-	      bool subexp__wide_success[1] = {1};
+	      boolean_t subexp__wide_success[1] = {1};
 	      f2__write_pretty(cause, nil, car, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, subexp__wide_success, show_slot_causes, use_ansi_colors, use_html);
 	      
 	      if (width < available_width && subexp__wide_success[0]) {
@@ -1000,7 +1000,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    f2ptr elt = raw__array__elt(cause, exp, i);
 	    
 	    if (write_elt_with_space) {
-	      bool subexp__wide_success[1] = {1};
+	      boolean_t subexp__wide_success[1] = {1};
 	      f2__write_pretty(cause, nil, elt, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, subexp__wide_success, show_slot_causes, use_ansi_colors, use_html);
 	      
 	      if (width < available_width && subexp__wide_success[0]) {
@@ -1030,7 +1030,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    
 	    //if(fptr) {
 	    //  int  test_size[2];
-	    //  bool test__wide_success[1] = {1};
+	    //  boolean_t test__wide_success[1] = {1};
 	    //  f2__write_pretty(cause, nil, elt, recursion_depth, indent_space_num, available_width, test_size, 1, test__wide_success, show_slot_causes);
 	    //  if ((! test__wide_success[0]) ||
 	    //	  (test_size[0] > available_width)) {

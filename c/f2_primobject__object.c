@@ -36,7 +36,7 @@ f2ptr f2__object__new(f2ptr cause, f2ptr types, f2ptr frame) {
   return this;
 }
 
-bool raw__objectp(f2ptr this, f2ptr cause) {return raw__arrayp(this, cause) && f2primobject__is_object(this, cause);}
+boolean_t raw__objectp(f2ptr this, f2ptr cause) {return raw__arrayp(this, cause) && f2primobject__is_object(this, cause);}
 f2ptr f2__objectp(f2ptr this, f2ptr cause) {return f2bool__new(raw__objectp(this, cause));}
 
 f2ptr object__new(f2ptr cause) {

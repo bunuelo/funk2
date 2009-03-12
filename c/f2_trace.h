@@ -61,7 +61,7 @@ f2ptr raw__trace__remember__microseconds_since_1970(f2ptr cause, f2ptr this, u64
 f2ptr raw__array__elt__remember__microseconds_since_1970(f2ptr cause, f2ptr this, uint index, u64 microseconds_since_1970);
 f2ptr raw__exp__remember__microseconds_since_1970(f2ptr cause, f2ptr exp, u64 microseconds_since_1970);
 f2ptr raw__exp__remember__trans__microseconds_since_1970(f2ptr cause, f2ptr exp, u64 initial_microseconds, u64 final_microseconds);
-void  raw__array__tracing_on__set(f2ptr cause, f2ptr this, bool tracing_on);
+void  raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on);
 
 
 void f2__trace__reinitialize_globalvars();

@@ -28,7 +28,7 @@
 #include "f2_debug_macros.h"
 
 typedef unsigned int  uint;
-typedef unsigned int  bool;
+typedef unsigned char boolean_t;
 
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)
@@ -51,8 +51,8 @@ typedef unsigned int  bool;
 #  define release__assert_and_on_failure(cond, thread, desc, on_failure)
 #endif
 
-#define false 0
-#define true  (!false)
+#define boolean__false ((boolean_t)0)
+#define boolean__true  (! boolean__false)
 
 #define error(thread, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(thread, __FILE__, __LINE__, str); exit(-1);}
 

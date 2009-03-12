@@ -64,7 +64,7 @@ void                                        funk2_peer_command_server__destroy(f
 funk2_peer_command_server_new_port_result_t funk2_peer_command_server__add_new_server_port(funk2_peer_command_server_t* this, char* bind_device, u8* ip_addr, u16 port_num, u32 recv_buffer__byte_num, u32 send_buffer__byte_num);
 void                                        funk2_peer_command_server__handle_clients(funk2_peer_command_server_t* this);
 void                                        funk2_peer_command_server__reset_status_counters(funk2_peer_command_server_t* this);
-void                                        funk2_peer_command_server__flush_command_input_buffer(funk2_peer_command_server_t* this, bool log_everything);
+void                                        funk2_peer_command_server__flush_command_input_buffer(funk2_peer_command_server_t* this, boolean_t log_everything);
 void                                        funk2_peer_command_server__command_input_buffer__write(funk2_peer_command_server_t* this, void* data, u32 byte_num);
 void                                        funk2_peer_command_server__buffer_request_packet(funk2_peer_command_server_t* this, funk2_packet_t* packet);
 void                                        funk2_peer_command_server__buffer_client_request_packet(funk2_peer_command_server_t* this, client_id_t* client_id, u64 microseconds_since_1970, funk2_packet_t* request);

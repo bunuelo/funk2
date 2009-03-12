@@ -120,7 +120,7 @@ uint  gf2__string__length(gfunkptr_t* this) {
 s8    gf2__string__elt(gfunkptr_t* this, int index) {
 }
 
-bool  gf2__string__equals(gfunkptr_t* this, f2ptr that) {
+boolean_t  gf2__string__equals(gfunkptr_t* this, f2ptr that) {
 }
 
 void  gf2__string__str_copy(gfunkptr_t* this, char* str) {
@@ -141,7 +141,7 @@ uint  gf2__symbol__length(gfunkptr_t* this) {
 s8    gf2__symbol__elt(gfunkptr_t* this, int index) {
 }
 
-bool  gf2__symbol__equals(gfunkptr_t* this, gfunkptr_t* that) {
+boolean_t  gf2__symbol__equals(gfunkptr_t* this, gfunkptr_t* that) {
 }
 
 void  gf2__symbol__str_copy(gfunkptr_t* this, char* str) {

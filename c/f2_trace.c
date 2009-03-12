@@ -66,7 +66,7 @@ f2ptr raw__trace__remember__trans__microseconds_since_1970(f2ptr cause, f2ptr th
   release__assert(__do_not_remember__symbol != -1, nil, "raw__trace__remember__trans__microseconds_since_1970 assertion failed: __do_not_remember__symbol != -1");
   if (! this) {return __do_not_remember__symbol;} // couldn't remember one or both values
   u64 past_microseconds, future_microseconds;
-  bool initial_before_final = (initial_microseconds < final_microseconds);
+  boolean_t initial_before_final = (initial_microseconds < final_microseconds);
   if (initial_before_final) {
     past_microseconds   = initial_microseconds;
     future_microseconds = final_microseconds;
@@ -170,7 +170,7 @@ f2ptr raw__exp__remember__trans__microseconds_since_1970(f2ptr cause, f2ptr exp,
   return nil;
 }
 
-void raw__array__tracing_on__set(f2ptr cause, f2ptr this, bool tracing_on) {
+void raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on) {
   int this__length = raw__array__length(cause, this);
   int i;
   for (i = this__length - 1; i != 0; i --) {

@@ -44,7 +44,7 @@ defprimobject__static_slot__prototype(object__frame);
 #define f2object__frame__trace(     this, cause)        primobject__static_slot__trace(     this, object__frame, cause)
 #define f2object__frame__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, object__frame, cause)
 
-bool raw__objectp(f2ptr this, f2ptr cause);
+boolean_t raw__objectp(f2ptr this, f2ptr cause);
 f2ptr f2__objectp(f2ptr this, f2ptr cause);
 
 f2ptr object__lookup_local_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);

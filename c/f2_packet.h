@@ -332,11 +332,11 @@ typedef struct pcs_action_packet_s pcs_action_packet_t;
 void            funk2_packet_header__init(funk2_packet_header_t* this, u16 payload_length);
 u32             funk2_packet__sizeof(funk2_packet_t* this);
 funk2_packet_t* funk2_packet__copy(funk2_packet_t* this);
-funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer_t* buffer, u32* peek_byte_num, bool* invalid_packet_found);
+funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer_t* buffer, u32* peek_byte_num, boolean_t* invalid_packet_found);
 funk2_packet_t* funk2_packet__read_valid_new_from_circular_buffer(circular_buffer_t* buffer);
-funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket_t* socket, u32* peek_byte_num, bool* invalid_packet_found);
+funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket_t* socket, u32* peek_byte_num, boolean_t* invalid_packet_found);
 funk2_packet_t* funk2_packet__recv_new_valid_from_buffered_socket(buffered_socket_t* socket);
-funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* file, u32* peek_byte_num, bool* invalid_packet_found);
+funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* file, u32* peek_byte_num, boolean_t* invalid_packet_found);
 funk2_packet_t* funk2_packet__read_new_valid_from_buffered_file(buffered_file_t* file);
 void            socket_rpc_layer__funk2_packet__send_to_socket(funk2_packet_t* packet, buffered_socket_t* socket);
 void            funk2_packet__send_to_socket(f2ptr cause, funk2_packet_t* packet, buffered_socket_t* socket);
@@ -2282,7 +2282,7 @@ f2ptr funk2__f2chunk__recv(f2ptr cause, f2ptr this, int start, int length, int f
 struct pcs_packet_payload_request__f2simple_array__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   u64                                                length;
-  bool                                               f2ptr_array__defined;
+  boolean_t                                               f2ptr_array__defined;
   f2ptr                                              f2ptr_array[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2simple_array__new_s pcs_packet_payload_request__f2simple_array__new_t;
@@ -2560,7 +2560,7 @@ void funk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr v
 struct pcs_packet_payload_request__f2traced_array__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   u64                                                length;
-  bool                                               dptr_array__defined;
+  boolean_t                                               dptr_array__defined;
   dptr_t                                             dptr_array[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2traced_array__new_s pcs_packet_payload_request__f2traced_array__new_t;

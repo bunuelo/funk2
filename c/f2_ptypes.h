@@ -59,8 +59,8 @@ f2ptr initial_cause();
 
 // cause helper functions
 
-bool raw__cause__is_traced(f2ptr cause, f2ptr this);
-bool raw__cause__is_imaginary(f2ptr cause, f2ptr this);
+boolean_t raw__cause__is_traced(f2ptr cause, f2ptr this);
+boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this);
 
 // this.system
 

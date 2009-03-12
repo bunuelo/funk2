@@ -61,7 +61,7 @@ f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
 f2ptr f2__circular_bufferp(f2ptr this, f2ptr cause);
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr f2__circular_buffer__remove(f2ptr cause, f2ptr this);
-bool  raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);
+boolean_t  raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);
 
 void f2__primobject_circular_buffer__reinitialize_globalvars();
 void f2__primobject_circular_buffer__initialize();

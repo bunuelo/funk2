@@ -412,7 +412,7 @@ funk2_packet_t* funk2_node_handler__wait_for_new_thread_packet(funk2_node_handle
   return response_packet;
 }
 
-bool funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this, node_id_t node_id, event_id_t event_id) {
+boolean_t funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this, node_id_t node_id, event_id_t event_id) {
   funk2_node_t* node = funk2_node_handler__lookup_node_by_node_id(this, node_id);
   if (! node) {
     error(nil, "funk2_node_handler__already_know_of_node_event error: invalid node_id.");
@@ -423,7 +423,7 @@ bool funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this, node
   return false;
 }
 
-bool funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
+boolean_t funk2_node_handler__know_of_node_event(funk2_node_handler_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data) {
   funk2_node_t* event_node = funk2_node_handler__lookup_node_by_node_id(this, node_id);
   if (! event_node) {
     error(nil, "funk2_node_handler__already_know_of_node_event error: invalid node_id.");

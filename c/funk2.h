@@ -153,7 +153,7 @@ typedef struct funk2_s {
   funk2_primobject_circular_buffer_t primobject__circular_buffer;
 } funk2_t;
 
-bool funk2__handle_clients(funk2_t* this);
+boolean_t funk2__handle_clients(funk2_t* this);
 
 extern funk2_t __funk2;
 

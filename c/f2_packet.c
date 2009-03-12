@@ -40,10 +40,10 @@ funk2_packet_t* funk2_packet__copy(funk2_packet_t* this) {
   return new;
 }
 
-funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer_t* buffer, u32* peek_byte_num, bool* invalid_packet_found) {
+funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer_t* buffer, u32* peek_byte_num, boolean_t* invalid_packet_found) {
   funk2_packet_t  temp_packet;
   funk2_packet_t* new_packet;
-  bool            valid_packet_found = false;
+  boolean_t            valid_packet_found = false;
   *invalid_packet_found = false;
   *peek_byte_num        = 0;
   if (circular_buffer__get_used_byte_num(buffer) >= sizeof(funk2_packet_header_t)) {
@@ -76,7 +76,7 @@ funk2_packet_t* funk2_packet__peek_read_new_from_circular_buffer(circular_buffer
 
 funk2_packet_t* funk2_packet__read_valid_new_from_circular_buffer(circular_buffer_t* buffer) {
   u32             peek_byte_num;
-  bool            invalid_packet_found;
+  boolean_t            invalid_packet_found;
   funk2_packet_t* recv_packet = funk2_packet__peek_read_new_from_circular_buffer(buffer, &peek_byte_num, &invalid_packet_found);
   
   if (invalid_packet_found) {
@@ -95,10 +95,10 @@ funk2_packet_t* funk2_packet__read_valid_new_from_circular_buffer(circular_buffe
   return recv_packet; // could return NULL if buffer doesn't have enough data.
 }
 
-funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket_t* socket, u32* peek_byte_num, bool* invalid_packet_found) {
+funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket_t* socket, u32* peek_byte_num, boolean_t* invalid_packet_found) {
   funk2_packet_t  temp_packet;
   funk2_packet_t* new_packet;
-  bool            valid_packet_found = false;
+  boolean_t            valid_packet_found = false;
   *invalid_packet_found = false;
   *peek_byte_num        = 0;
   buffered_socket__flush(socket);
@@ -135,7 +135,7 @@ funk2_packet_t* funk2_packet__peek_recv_new_from_buffered_socket(buffered_socket
 
 funk2_packet_t* funk2_packet__recv_new_valid_from_buffered_socket(buffered_socket_t* socket) {
   u32                peek_byte_num = 0;
-  bool               invalid_packet_found = false;
+  boolean_t               invalid_packet_found = false;
   buffered_socket__flush(socket);  
   funk2_packet_t* recv_packet = funk2_packet__peek_recv_new_from_buffered_socket(socket, &peek_byte_num, &invalid_packet_found);
   if (invalid_packet_found) {
@@ -154,10 +154,10 @@ funk2_packet_t* funk2_packet__recv_new_valid_from_buffered_socket(buffered_socke
   return recv_packet;
 }
 
-funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* file, u32* peek_byte_num, bool* invalid_packet_found) {
+funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* file, u32* peek_byte_num, boolean_t* invalid_packet_found) {
   funk2_packet_t  temp_packet;
   funk2_packet_t* new_packet;
-  bool               valid_packet_found = false;
+  boolean_t               valid_packet_found = false;
   *invalid_packet_found = false;
   *peek_byte_num        = 0;
   if (buffered_file__read_bytes_buffered(file) >= sizeof(funk2_packet_header_t)) {
@@ -193,7 +193,7 @@ funk2_packet_t* funk2_packet__peek_read_new_from_buffered_file(buffered_file_t* 
 
 funk2_packet_t* funk2_packet__read_new_valid_from_buffered_file(buffered_file_t* file) {
   u32                peek_byte_num = 0;
-  bool               invalid_packet_found = false;
+  boolean_t               invalid_packet_found = false;
   buffered_file__flush(file);  
   funk2_packet_t* read_packet = funk2_packet__peek_read_new_from_buffered_file(file, &peek_byte_num, &invalid_packet_found);
   if (invalid_packet_found) {

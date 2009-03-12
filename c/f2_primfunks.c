@@ -31,14 +31,14 @@ f2ptr f2__argument_number_check_failure__exception__new(f2ptr cause, f2ptr funk_
 
 // nil
 
-bool raw__null(f2ptr x) {return !x;}
+boolean_t raw__null(f2ptr x) {return !x;}
 
 f2ptr f2__null(f2ptr cause, f2ptr x) {return f2bool__new(raw__null(x));}
 def_pcfunk1(null, x, return f2__null(this_cause, x));
 
 // logic
 
-bool raw__not(f2ptr x) {return !x;}
+boolean_t raw__not(f2ptr x) {return !x;}
 
 f2ptr f2__not(f2ptr cause, f2ptr x) {return f2bool__new(raw__not(x));}
 def_pcfunk1(not, x, return f2__not(this_cause, x));
@@ -105,7 +105,7 @@ def_pcfunk2(ptype__cause__set, x, value, return f2__ptype__cause__set(this_cause
 
 // integer
 
-bool raw__integerp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_integer);}
+boolean_t raw__integerp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_integer);}
 
 f2ptr f2__integerp(f2ptr cause, f2ptr x) {return f2bool__new(raw__integerp(x, cause));}
 def_pcfunk1(integerp, x, return f2__integerp(this_cause, x));
@@ -169,7 +169,7 @@ def_pcfunk2(integer__divide_by_double, x, y, return f2__integer__divide_by_doubl
 
 // double
 
-bool raw__doublep(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_double);}
+boolean_t raw__doublep(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_double);}
 
 f2ptr f2__doublep(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublep(x, cause));}
 def_pcfunk1(doublep, x, return f2__doublep(this_cause, x));
@@ -206,7 +206,7 @@ def_pcfunk2(double__divide_by_integer, x, y, return f2__double__divide_by_intege
 
 // float
 
-bool raw__floatp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_float);}
+boolean_t raw__floatp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_float);}
 
 f2ptr f2__floatp(f2ptr cause, f2ptr x) {return f2bool__new(raw__floatp(x, cause));}
 def_pcfunk1(floatp, x, return f2__floatp(this_cause, x));
@@ -219,7 +219,7 @@ def_pcfunk1(float__to_double, x, return f2__float__to_double(this_cause, x));
 
 // pointer
 
-bool raw__pointerp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_pointer);}
+boolean_t raw__pointerp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_pointer);}
 
 f2ptr f2__pointerp(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointerp(x, cause));}
 def_pcfunk1(pointerp, x, return f2__pointerp(this_cause, x));
@@ -244,7 +244,7 @@ def_pcfunk2(pointer__subtract, x, y, return f2__pointer__subtract(this_cause, x,
 
 // gfunkptr
 
-bool raw__gfunkptrp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);}
+boolean_t raw__gfunkptrp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);}
 
 f2ptr f2__gfunkptr(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2gfunkptr__new(cause, f2integer__i(x, cause), f2integer__i(y, cause), f2integer__i(z, cause));}
 def_pcfunk3(gfunkptr, x, y, z, return f2__gfunkptr(this_cause, x, y, z));
@@ -257,7 +257,7 @@ def_pcfunk1(gfunkptrp, x, return f2__gfunkptrp(this_cause, x));
 
 // mutex
 
-bool raw__mutexp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
+boolean_t raw__mutexp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
 
 f2ptr f2__mutex(f2ptr cause) {return f2mutex__new(cause);}
 def_pcfunk0(mutex, return f2__mutex(this_cause));
@@ -276,11 +276,11 @@ def_pcfunk1(mutex__trylock, x, return f2__mutex__trylock(this_cause, x));
 
 // char
 
-bool raw__charp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_char);}
+boolean_t raw__charp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_char);}
 
 // string
 
-bool raw__stringp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_string);}
+boolean_t raw__stringp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_string);}
 
 f2ptr f2__stringp(f2ptr cause, f2ptr x) {return f2bool__new(raw__stringp(x, cause));}
 def_pcfunk1(stringp, x, return f2__stringp(this_cause, x));
@@ -330,7 +330,7 @@ def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_
 
 // symbol
 
-bool raw__symbolp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_symbol);}
+boolean_t raw__symbolp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_symbol);}
 
 f2ptr f2__symbolp(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbolp(x, cause));}
 def_pcfunk1(symbolp, x, return f2__symbolp(this_cause, x));
@@ -341,7 +341,7 @@ def_pcfunk1(symbol__length, x, return f2__symbol__length(this_cause, x));
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
 def_pcfunk2(symbol__elt, x, y, return f2__symbol__elt(this_cause, x, y));
 
-//bool  pfunk2__f2symbol__equals(f2ptr this, f2ptr cause, f2ptr that) {
+//boolean_t  pfunk2__f2symbol__equals(f2ptr this, f2ptr cause, f2ptr that) {
 //  int pool_index = __f2ptr__pool_index(this);
 //  ptype_access_num__incr(pool_index);
 //  __pure__memblock__render_read_activated__set(this, 1);
@@ -351,12 +351,12 @@ def_pcfunk2(symbol__elt, x, y, return f2__symbol__elt(this_cause, x, y));
 //    ptype_access_num__decr(pool_index);
 //    return 0;
 //  }
-//  bool retval = (! memcmp(__pure__f2symbol__str(this), __pure__f2symbol__str(that), this_length));
+//  boolean_t retval = (! memcmp(__pure__f2symbol__str(this), __pure__f2symbol__str(that), this_length));
 //  ptype_access_num__decr(pool_index);
 //  return retval;
 //}
 
-bool raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
+boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__symbolp(this, cause)) || (! raw__symbolp(that, cause))) {return false;}
   u64 this__length = f2symbol__length(this, cause);
   u64 that__length = f2symbol__length(that, cause);
@@ -378,7 +378,7 @@ def_pcfunk2(symbol__eq, x, y, return f2__symbol__eq(this_cause, x, y));
 
 // simple_array
 
-bool raw__simple_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}
+boolean_t raw__simple_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}
 
 f2ptr f2__simple_arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_arrayp(x, cause));}
 def_pcfunk1(simple_arrayp, x, return f2__simple_arrayp(this_cause, x));
@@ -395,7 +395,7 @@ def_pcfunk3(simple_array__elt__set, x, y, z, return f2__simple_array__elt__set(t
 
 // traced_array
 
-bool raw__traced_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
+boolean_t raw__traced_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
 
 f2ptr f2__traced_arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_arrayp(x, cause));}
 def_pcfunk1(traced_arrayp, x, return f2__traced_arrayp(this_cause, x));
@@ -445,7 +445,7 @@ f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init) {
   }
 }
 
-bool raw__arrayp(f2ptr x, f2ptr cause) {return (raw__simple_arrayp(x, cause) || raw__traced_arrayp(x, cause));}
+boolean_t raw__arrayp(f2ptr x, f2ptr cause) {return (raw__simple_arrayp(x, cause) || raw__traced_arrayp(x, cause));}
 
 f2ptr f2__arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__arrayp(x, cause));}
 def_pcfunk1(arrayp, x, return f2__arrayp(this_cause, x));
@@ -563,11 +563,11 @@ def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__
 
 // larva
 
-bool raw__larvap(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
+boolean_t raw__larvap(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
 
 // place
 
-bool raw__placep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_place(x, cause));}
+boolean_t raw__placep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_place(x, cause));}
 
 f2ptr f2__place(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}
 def_pcfunk1(place, x, return f2__place(this_cause, x));
@@ -583,7 +583,7 @@ def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x,
 
 // cons
 
-bool raw__consp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cons(x, cause));}
+boolean_t raw__consp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cons(x, cause));}
 
 f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
 def_pcfunk2(cons, x, y, return f2__cons(this_cause, x, y));
@@ -605,7 +605,7 @@ def_pcfunk2(cons__cdr__set, x, y, return f2__cons__cdr__set(this_cause, x, y));
 
 // doublelink
 
-bool raw__doublelinkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
+boolean_t raw__doublelinkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
 
 f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
 def_pcfunk3(doublelink, x, y, z, return f2__doublelink(this_cause, x, y, z));
@@ -644,7 +644,7 @@ f2ptr f2__chunk(f2ptr cause, f2ptr length) {
 }
 def_pcfunk1(chunk, length, return f2__chunk(this_cause, length));
 
-bool raw__chunkp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_chunk);}
+boolean_t raw__chunkp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_chunk);}
 
 f2ptr f2__chunkp(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunkp(x, cause));}
 def_pcfunk1(chunkp, x, return f2__chunkp(this_cause, x));
@@ -685,7 +685,7 @@ void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args
   resume_gc();
 }
 
-bool raw__funkablep(f2ptr exp, f2ptr cause) {
+boolean_t raw__funkablep(f2ptr exp, f2ptr cause) {
   return (exp && (raw__funkp(      exp, cause) ||
 		  raw__metrop(     exp, cause) ||
 		  raw__cfunkp(     exp, cause) ||
@@ -925,41 +925,41 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
 
 // primobject cfunk
 
-bool raw__cfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cfunk(x, cause));}
+boolean_t raw__cfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cfunk(x, cause));}
 
 // primobject funk
 
-bool raw__funkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_funk(x, cause));}
+boolean_t raw__funkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_funk(x, cause));}
 
 // primobject metro
 
-bool raw__metrop(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metro(x, cause));}
+boolean_t raw__metrop(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metro(x, cause));}
 
 // primobject metrocfunk
 
-bool raw__metrocfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metrocfunk(x, cause));}
+boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metrocfunk(x, cause));}
 
 // primobject bytecode
 
-bool raw__bytecodep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_bytecode(x, cause));}
+boolean_t raw__bytecodep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_bytecode(x, cause));}
 
 // primobject cause
 
-bool raw__causep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cause(x, cause));}
+boolean_t raw__causep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cause(x, cause));}
 
 // primobject hashtable
 
 // primobject thought_process
 
-bool raw__thought_processp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thought_process(x, cause));}
+boolean_t raw__thought_processp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thought_process(x, cause));}
 
 // primobject thread
 
-bool raw__threadp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thread(x, cause));}
+boolean_t raw__threadp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thread(x, cause));}
 
 // primobject exception
 
-bool raw__exceptionp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_exception(x, cause));}
+boolean_t raw__exceptionp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_exception(x, cause));}
 
 f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
 def_pcfunk2(exception, tag, value, return f2__exception(this_cause, tag, value));
@@ -1140,7 +1140,7 @@ def_pcfunk1(trace, value,
 	   f2thread__trace__set(simple_thread, this_cause, f2cons__new(this_cause, value, f2thread__trace(simple_thread, this_cause)));
 	   return value);
 
-bool raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
+boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {return 1;}
   if (!x || !y) {return 0;}
   if (f2ptype__raw(x, cause) != f2ptype__raw(y, cause)) {return 0;}
@@ -1195,7 +1195,7 @@ f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
 def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
 
 f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr exp, f2ptr protect_environment) {
-  bool is_funktional = true;
+  boolean_t is_funktional = true;
   return raw__compile(cause, thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
 }
 def_pcfunk2(compile, exp, protect_environment, return f2__compile(this_cause, simple_thread, exp, protect_environment));
@@ -1850,7 +1850,7 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
 f2ptr f2__funktionalp(f2ptr cause, f2ptr thread, f2ptr exp) {
-  bool exp__is_funktional = true;
+  boolean_t exp__is_funktional = true;
   raw__compile(cause, thread, exp, false, false, NULL, &exp__is_funktional, nil, NULL);
   return f2bool__new(exp__is_funktional);
 }

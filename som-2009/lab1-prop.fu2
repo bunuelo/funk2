@@ -3,3 +3,18 @@
   [print 'propositional agent here.']
   ]
 
+[defunk lab1_agent_type-test [agent_type_name]
+  [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
+									   [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
+									   [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
+									   [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
+									   [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
+									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
+    [let [[agent [blocks_world_agent-new agent_type_name blocks_world]]]
+      [blocks_world-agent-set blocks_world agent]
+      [blocks_world-repl      blocks_world]
+      blocks_world]]]
+
+[defunk lab1-prop-test []
+  [lab1_agent_type-test `propositional_agent]]
+

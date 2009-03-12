@@ -158,8 +158,8 @@
 [defmetro blocks_world_agent_type-agent_execute_funk [this]                    `[array-elt ,this 2]]
 
 [defmetro defblocks_world_agent [type_name :rest agent_execute_funk_body]
-  `[blocks_world_agent_type-define type_name [funk [this-agent]
-						   @agent_execute_funk_body]]]
+  `[blocks_world_agent_type-define [quote ,type_name] [funk [this-agent]
+							    @agent_execute_funk_body]]]
 
 [defunk   blocks_world_agent?             [exp]                     [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `blocks_world_agent]]]
 [defunk   blocks_world_agent-new          [type_name blocks_world]  [array `blocks_world_agent type_name blocks_world]]
@@ -209,8 +209,9 @@
 [defmetro blocks_world-need_perceive-set [this value] `[array-elt-set ,this 8 ,value]]
 [defmetro blocks_world-physics           [this]       `[array-elt     ,this 9]]
 [defmetro blocks_world-agent             [this]       `[array-elt     ,this 10]]
+[defmetro blocks_world-agent-set         [this value] `[array-elt-set ,this 10 ,value]]
 
-[defunk blocks_world-create [physics agent]
+[defunk blocks_world-create [physics]
   [let* [[help_message    [list '  (a few commands: ' `[exit] ', ' `[sim] ', ' `[look] ', ' `[move-to <object>] ', ' `[pick-up <object>]  ', ' `[drop] ')']]
 	 [welcome_message [append [list 'Welcome to ' `Blocks ' ' `World ' ' `v2.2]
 				  help_message]]
@@ -229,7 +230,7 @@
 		      need_simulate
 		      need_perceive
 		      physics
-		      agent]]]
+		      nil]]]
 
 [defunk blocks_world-rep [this]
   [if [not [blocks_world-done this]]
@@ -314,19 +315,16 @@
     [blocks_world-rep this]
     ]]
 
-[defunk blocks_world-run [agent]
+[defunk blocks_world-test []
   [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
 									   [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
 									   [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
 									   [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
 									   [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
-									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]
-					   agent]]]
+									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
     [blocks_world-repl blocks_world]
     blocks_world]]
 
-[defunk blocks_world-test []
-  [blocks_world-run nil]]
 
 
 

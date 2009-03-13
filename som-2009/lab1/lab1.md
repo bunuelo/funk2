@@ -297,7 +297,12 @@ Go through the previous list and test whether the argument is *valid*, by compar
 
 ## Relational Logic
 
-Propositional logic is clearly limited for the kind of expressions we want in the blocks world.  We want to be able to easily transfer knowledge about what we have learned from dealing with the *red block* to blocks with other colors.  Some people \cite{deRaedt:2009p22134} find it helpful to think of propositional logic as the analog of a single table in a database (attribute-value representations can be mapped to propositions) and first-order logic as the same representation as relational databases. Relational logics allow us to talk about objects, their properties, and relations.
+Propositional logic is clearly limited for the kind of expressions we want in the blocks world.  We want to be able to easily transfer knowledge about what we have learned from dealing with the *red block* to blocks with other colors.  
+
+
+There is a strong association between logical representations and databases.  In a relational database, a relation is a tuple.
+
+Some people \cite{deRaedt:2009p22134} find it helpful to think of propositional logic as the analog of a single table in a database (attribute-value representations can be mapped to propositions) and first-order logic as the same representation as relational databases. Relational logics allow us to talk about objects, their properties, and relations.
 
 There are many kinds of relational logics.  One of them is **First-order logic** (FOL), also called **predicate calculus**, and it has become something of a standard.  FOL has its origin in work by Frege (1879) and was designed to formalize all of mathematics.  Since the work of John McCarthy \cite{McCarthy:1959p2752}, it has been used in AI.  Restricted forms of FOL, like **clausal logic** allow deductions to be easily made with automated theorem provers\footnote{Prolog is a standard logic programming language that uses clausal logic, the technique of \textit{unification} to fill variables in with constants and \textit{resolution} to make inferences.}.
 
@@ -305,19 +310,19 @@ FOL is worth learning about because it is a widely used, expressive and well-und
 
 ### First-order Logic
 
-First-order logic has three kinds of symbols: predicates, functors, and variables.  A set of **predicate symbols**, `P` = \{\texttt{p}$_i/\alpha_i,...,$\texttt{p}$_n/\alpha_n\}$, along with their *arities* (the number of *terms* they take) describes *relationships* between constants and can be assigned *true* or *false* values.  For example, the predicate `on/2` and `heavy/1` can be used to assert that \pred{on}{blue-block}{table} and \prop{heavy}{blue-block}.  When a predicate is "true" we say the relationship "holds".  There are special names for predicates with arities 0, 1 and 2:
+First-order logic has three kinds of symbols: predicates, functors, and variables.  A set of **predicate symbols**, `P` = \{\texttt{p}$_i/\alpha_i,...,$\texttt{p}$_n/\alpha_n\}$, along with their *arities* (the number of *terms* they take) describes *relationships* between constants and can be assigned *true* or *false* values.  For example, the predicate `on/2` and `heavy/1` can be used to assert that \pred{on}{blue-block}{table} and \prop{heavy}{blue-block}.  When a predicate is true we say the relationship "holds".  There are special names for predicates with arities 0, 1 and 2:
 
   * 0-term predicates are the same as **propositions**. (Yes, FOL is an extension of propositional logic.)
   * 1-term predicates are called **properties** or *unary* relations, like \prop{heavy}{blue-block}.
   * 2-term predicates are *binary* relations, like \pred{on}{blue-block}{table}.
 
-The size of the set of world states `S` is based on `P` and `C`:
+The size of the set of possible world states `S` is based on `P` and `C`:
 
 \begin{eqnarray}
 |\texttt{S}| & = &  \prod_{i=1}^{n}{(2^{|\texttt{C}|})}^{\alpha_i}
 \end{eqnarray}
 
-A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. **Constant symbols**, the set of which is denoted `C`, are the common case of functor with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
+A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. **Constant symbols**, the set of which is denoted `C`, are the common case of functors with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
 
 Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
 
@@ -336,7 +341,7 @@ Equation 2 makes a claim about all blocks, telling us that if the block is in th
 
 Equation 3 uses the results of equation 2 and is a convoluted (logical) way of saying "only one block can be in the gripper at once", ruling out all interpretations of models where there there are two distinct constant symbols that have the `inGripper/1` property simultaneously.  
 
-A representation of the world would be:
+A FOL representation of one state of blocks world looks like:
 
 		on(red-block,table)
 		on(blue-block,table)
@@ -345,10 +350,10 @@ A representation of the world would be:
 
 \question
 
-Using the notation of FOL, write down a) **antecedents** (preconditions) and b) the **effects** for the actions:
+Using the notation of FOL, write down the a) **antecedents** (preconditions) and the b) **effects** for the actions:
 
-   1. \prop{pick-up}{X} $\land$ \prop{block}{X}
-   2. \prop{drop}{X} $\land$ \prop{block}{X}
+   1. \prop{pick-up}{X}
+   2. \prop{drop}{X}
 
 # Concept Learning
 
@@ -369,14 +374,14 @@ Bruner et al learned that conjunctive concepts were generally easier to learn th
 
 \begin{figure}[h!] \centerline{ \mbox{\includegraphics[width=4in]{bruner.png}} }  \caption{The perceptual world of 81 distinct items that Bruner et al. studied. $\vert$\textsc{Borders}$\vert \times \vert$\textsc{Shapes}$\vert \times \vert$\textsc{Number}$\vert \times \vert$\textsc{Color}$\vert = 3\times 3\times 3\times 3 = 81$.} \end{figure}
 
-What could be concluded about concept learning from these experiments?  This early work was criticized for being artificial, assuming that every category was represented by a set of necessary and sufficient features (a logical hypothesis space) and that the concepts are artificial.
+Do Bruner's results generalize to all concepts?  This work is criticized assuming that every category was represented by a set of necessary and sufficient features (a logical hypothesis space) and for not studying real-world concepts.
 
 \begin{figure}[h!]  \centerline{ \mbox{\includegraphics[width=1.5in]{bruner_concepts.png}} }  
 \caption{Example training data, and two columns for different concepts.}
 \label{fig:bc} 
 \end{figure}
 
-\question You are a subject of Jerome Bruner who presents you with the example concept instances in Figure \ref{fig:bc} and told you whether they are examples of the concept or not.  Learn a concept description for C1 and C2. To correctly simulate the experiment, imagine that you are presented with each example (reading the column top to bottom) sequentially, and are given a moment to re-construct your description of the concept based on the label "yes" it is an example of the concept or "no".  After, try to comment on the *hypothesis space* from which your description was generated.
+\question You are a subject of Jerome Bruner who presents you with the example concept instances in Figure \ref{fig:bc} and tells you whether they are examples of the concept or not.  Learn a concept description for C1 and C2. To correctly simulate the experiment, imagine that you are presented with each example (reading the column top to bottom) sequentially, and are given a moment to re-construct your description of the concept based on the label "yes" it is an example of the concept or "no".  After, try to comment on the *hypothesis space* from which your description was generated.
 
 
 ## Inheritance and the Representation-Inference Trade-Off
@@ -388,7 +393,7 @@ Qulllian's taxonomic model of semantic memory explained many experimental findin
 
 ## The typicality effect and prototypes
 
-People are more quick to affirm that \pred{IsA}{robbin}{bird} than \pred{IsA}{chicken}{bird}, and this is called the **typicality effect**.  (Robins are more representative of birds than chickens.) How can this be if both \textsf{chicken} and \textsf{robin} both have features that match the definition of the \textsf{bird} category?  A similar problem was pointed out by Wittgenstein; he used the concept of a \textsf{game} as an example where he could not think of a logical combination of sufficient and necessary features that sufficiently describes the wide class of activities that could be called games (Try it!).  Rosch \cite{Rosch:1999p2919} showed how **prototypes** could be used to explain this graded membership.  
+People are more quick to affirm that \pred{IsA}{robbin}{bird} than \pred{IsA}{chicken}{bird}, and this is called the **typicality effect**.  (Robins are more representative of birds than are chickens.) How can this be if both \textsf{chicken} and \textsf{robin} both have features that match the definition of the \textsf{bird} category?  A similar problem was pointed out by Wittgenstein; he used the concept of a \textsf{game} as an example where he could not think of a logical combination of sufficient and necessary features that describe the wide class of activities that could be called games (Try it!).  Rosch \cite{Rosch:1999p2919} showed how **prototypes** could be used to explain this graded membership.  
 
   - the **prototype** view holds that each category has a representative *prototype* that new objects are compared with when they are being classified. 
   - **exemplars** are like the prototype system, except for that there are multiple representative members of each category.
@@ -418,20 +423,20 @@ Events change the state of the world -- after an event, predicates can switch fr
 ## Scoping of knowledge representations
 
 \begin{quote}
-	After seeing the classrooms, the student center, the dorms, and the dining hall, the confused tourist asked ``I see these buildings, but where where is \emph{the} university?''  -- paraphrase of W.V.O. Quine's category problem.
+	After seeing the classrooms, the student center, the dorms, and the dining hall, the confused tourist asked ``I see these buildings, but where is \emph{the} university?''  -- paraphrase of W.V.O. Quine's category problem.
 \end{quote}
 
 \label{sec:scope}
 
 Humans naturally think about the world in terms of objects and relationships between the objects.  Imagine you are walking around Memorial and Massachusetts Ave.  The *things* you encounter include buildings, trucks and people, and you can reason about their properties and relationships:  *Gerry is standing in front of the student center.  An ambulance is parked behind the Greek food truck.*   When you enter building 5, the environment changes: the *things* you encounter are now class rooms, offices, and people.  You enter an office and now the things you represent are desks, papers, chairs, etc.  You look in an administrator's drawer and now you start representing items like pens, white-out, rubber cement and paperclips.
 
-The above scenario illustrates that way you can shift representations.  At one point, you are reasoning about items and relationships between them, and then next moment, the you are reasoning about *things inside* those items!  When you are outside of the item, it is helpful to hide most of the details and deal with the item as if you were acting through an interface.  People familiar with *object-oriented programming* will understand this concept---the inter details of a data structure can be hidden from the programmer who is using the object. 
+The above scenario illustrates that way you can shift representations.  At one point, you are reasoning about items and relationships between them, and the next moment, the you are reasoning about *things inside* those items!  When you are outside of the item, it is helpful to hide most of the details and deal with the item as if you were acting through an interface.  People familiar with *object-oriented programming* will understand this concept---the inter details of a data structure can be hidden from the programmer who is using the object. 
 
 Ignoring these object barriers can lead to absurd mistakes.  OpenMind\footnote{OpenMind commons: \url{http://commons.media.mit.edu}} once deduced "a toe is part of society", making an inference on the transitive relations \pred{PartOf}{toe}{person} and \pred{PartOf}{person}{society}.  You could think of an item as some combination of its properties/features, and then go on to talk about relationships between items.  But each of those properties/features could also be reasoned about as if it were an item. 
 
 \vspace{15pt}
 
-**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Ponder about how this relates to the problem in section \ref{sec:actions}.
+**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Think about how this relates to the problem in section \ref{sec:actions}.
 
 
 

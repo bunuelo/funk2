@@ -348,7 +348,7 @@
 [defunk elt-1d-seq [seq index]
   [cond [[null seq]                   [error `run-time `list-index-too-big]]
 	[[integer-equal_sign index 0] [car seq]]
-	[t                            [elt-1d-seq [cdr seq] [- index 1]]]]]
+	[t                            [elt-1d-seq [cdr seq] [integer-subtract index 1]]]]]
 
 [defunk elt-1d [collection index]
   [cond [[cons?  collection] [elt-1d-seq collection index]]
@@ -360,12 +360,6 @@
     [if [null rest_indices]
 	[elt-1d collection [car indices]]
       [funkall &elt [elt-1d collection [car indices]] rest_indices]]]]
-
-'This is a bug: duplicate definition should not be necessary here...'
-[defunk elt-1d-seq [seq index]
-  [cond [[null seq]                   [error `run-time `list-index-too-big]]
-	[[integer-equal_sign index 0] [car seq]]
-	[t                            [elt-1d-seq [cdr seq] [- index 1]]]]]
 
 [defunk elt-1d-seq-set [seq index value]
   [cond [[null seq]                   [error `run-time `list-index-too-big]]

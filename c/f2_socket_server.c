@@ -62,16 +62,16 @@ int socket_file_descriptor__set_bind_device(int fd, char* device) {
   memset(&ifr, 0, sizeof(ifr));
   strncpy(ifr.ifr_ifrn.ifrn_name, device, IFNAMSIZ);
   if(setsockopt(fd, SOL_SOCKET, SO_BINDTODEVICE, &ifr, sizeof(ifr))) {
-    printf("\ncan't bind to interface [%s]: %s", device, strerror(errno));
+    status("can't bind to interface [%s]: %s", device, strerror(errno));
     if (errno == EPERM) {
-      printf("\nfunk2: Make sure you are root!");
+      status("funk2: Make sure you are root!");
     }
     return -1;
   }
   return 0;
 #else
   // Fixme: implement binding on OS X
-	printf("\nsocket_file_descriptor__set_bind_device() not supported on this platform.\n");
+	status("socket_file_descriptor__set_bind_device() not supported on this platform.");
 	return -1;
 #endif
 }
@@ -85,14 +85,14 @@ int socket_file_descriptor__get_bind_device(int fd, char* device_name, int max_l
     device_name[0] = 0;
   }
   if(getsockopt(fd, SOL_SOCKET, SO_BINDTODEVICE, &ifr, &socklen)) {
-    printf("\nsocket_file_descriptor__get_bind_device error: can't get interface: %s", strerror(errno));
+    status("socket_file_descriptor__get_bind_device error: can't get interface: %s", strerror(errno));
     if (errno == EPERM) {
-      printf("\nfunk2: Make sure you are root!");
+      status("funk2: Make sure you are root!");
     }
     return -1;
   }
   if (socklen != sizeof(ifr)) {
-    printf("\nsocket_file_descriptor__get_bind_device error: socklen != sizeof(ifr)");
+    status("socket_file_descriptor__get_bind_device error: socklen != sizeof(ifr)");
     return -1;
   }
   memset(device_name, 0, max_len);
@@ -100,7 +100,7 @@ int socket_file_descriptor__get_bind_device(int fd, char* device_name, int max_l
   return 0;
 #else
   // Fixme: implement binding on OS X
-	printf("\nsocket_file_descriptor__get_bind_device() not supported on this platform.\n");
+	status("socket_file_descriptor__get_bind_device() not supported on this platform.");
 	return -1;
 #endif
 }
@@ -139,14 +139,14 @@ socket_server_init_result_t socket_server__init(socket_server_t* this, char* bin
   
   this->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
   if (this->socket_fd < 0) {
-    printf("\nsocket_server__init error: cannot create listen socket");
+    status("socket_server__init error: cannot create listen socket");
     return socket_server_init_result__socket_failure;
   }
   
   file_descriptor__set_nonblocking(this->socket_fd, boolean__true);
   socket_file_descriptor__set_rebindable(this->socket_fd);
   if (socket_file_descriptor__set_keepalive(this->socket_fd, boolean__true) < 0) {
-    printf("\nsocket_server__init error: cannot create set keepalive on socket");
+    status("socket_server__init error: cannot create set keepalive on socket");
     return socket_server_init_result__socket_failure;
   }
   
@@ -161,7 +161,7 @@ socket_server_init_result_t socket_server__init(socket_server_t* this, char* bin
   server_address.sin_port        = htons(port_num);
   
   if (bind(this->socket_fd, (struct sockaddr *) &server_address, sizeof(server_address)) < 0) {
-    printf("\nsocket_server__init error: cannot bind socket");
+    status("socket_server__init error: cannot bind socket");
     return socket_server_init_result__bind_failure;
   }
   
@@ -205,7 +205,7 @@ int socket_server__accept(socket_server_t* this, client_id_t* client_id) {
   }
   
   if (socket_file_descriptor__set_keepalive(connect_socket_fd, boolean__true) < 0) {
-    printf("\nsocket_server__accept error: cannot create set keepalive on socket");
+    status("\nsocket_server__accept error: cannot create set keepalive on socket");
     return -1;
   }
   file_descriptor__set_nonblocking(connect_socket_fd, boolean__true);

@@ -103,7 +103,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     funk2_peer_command_server__init(&(this->peer_command_server), buffer__byte_num);
     funk2_peer_command_server_new_port_result_t result = funk2_peer_command_server__add_new_server_port(&(this->peer_command_server), "", ip_addr, port_num, buffer__byte_num, buffer__byte_num);
     if (result != funk2_peer_command_server_new_port_result__success) {
-      printf("\nerror setting up peer command server port.");
+      status("error setting up peer command server port.");
       //exit(-1);
     }
     client_id_t client_id;

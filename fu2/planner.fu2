@@ -1,6 +1,20 @@
-[print 'loading planner.']
 
-'[defunk action-new [
+[defunk   planner_condition-new [exp]   [array `planner_condition exp]]
+[defmetro planner_condition-exp [this] `[array-elt ,this 1]]
 
-[defunk planner-new [actions] '
+[defunk   planner_action-new            [exp preconditions postconditions]  [array `planner_action exp preconditions postconditions]]
+[defmetro planner_action-exp            [this]                             `[array-elt ,this 1]]
+[defmetro planner_action-preconditions  [this]                             `[array-elt ,this 2]]
+[defmetro planner_action-postconditions [this]                             `[array-elt ,this 3]]
+
+[defunk   planner-new     [actions]  [array `planner actions]]
+[defmetro planner-actions [this]    `[array-elt ,this 1]]
+
+[defunk   plan-new [exp]   [array `plan exp]]
+[defmetro plan-exp [this] `[array-elt ,this 1]]
+
+
+
+[defunk plan_exp-eval_in_blocks_world [this blocks_world]
+  [
 

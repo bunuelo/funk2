@@ -186,7 +186,7 @@ f2ptr raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int
   } break;
   case ptype_pointer: {
     u64 i = f2chunk__bit64__elt(chunk, index, cause); index += 8;
-    void* p = (void*)i;
+    void* p = from_ptr((ptr)i);
     exp = f2pointer__new(cause, to_ptr(p));
   } break;
   case ptype_gfunkptr: {

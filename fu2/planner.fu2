@@ -15,6 +15,15 @@
 
 
 
-[defunk plan_exp-eval_in_blocks_world [this blocks_world]
-  [
+[defunk plan_exp-eval_in_blocks_world [exp blocks_world]
+  [cond [[cons? exp] [let [[command [car exp]]]
+		       [cond [[eq command `drop]    [blocks_world-drop blocks_world]]
+			     [[eq command `move-to] [blocks_world-move_to blocks_world [second exp]]]
+			     [[eq command `pick-up] [blocks_world-pick_up blocks_world [second exp]]]]]]
+	[t           [error `run-time `[plan_exp-eval_in_blocks_world exp is not recognized]]]]]
+
+[defunk plan-eval_in_blocks_world [this blocks_world]
+  [plan_exp-eval_in_blocks_world [plan-exp this] blocks_world]]
+
+
 

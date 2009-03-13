@@ -211,6 +211,15 @@
 [defmetro blocks_world-agent             [this]       `[array-elt     ,this 10]]
 [defmetro blocks_world-agent-set         [this value] `[array-elt-set ,this 10 ,value]]
 
+[defunk blocks_world-drop [this]
+  [blocks_world_physics-drop [blocks_world-physics this]]]
+
+[defunk blocks_world-move_to [this object_name]
+  [blocks_world_physics-move_to [blocks_world-physics this] object_name]]
+
+[defunk blocks_world-pick_up [this object_name]
+  [blocks_world_physics-pick_up [blocks_world-physics this] object_name]]
+
 [defunk blocks_world-create [physics]
   [let* [[help_message    [list '  (a few commands: ' `[exit] ', ' `[sim] ', ' `[look] ', ' `[move-to <object>] ', ' `[pick-up <object>]  ', ' `[drop] ')']]
 	 [welcome_message [append [list 'Welcome to ' `Blocks ' ' `World ' ' `v2.2]

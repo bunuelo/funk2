@@ -39,7 +39,7 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
 	 ((j - 26) + 'A') :
 	 ((j - 52) + '0'));
     }
-    fd = open(str, O_RDONLY);
+    fd = open(str, O_RDWR);
     if (fd != -1) {
       close(fd);
       try_again = boolean__true; // success means file exists.

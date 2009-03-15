@@ -1117,6 +1117,10 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr en
   return f2cons__new(cause, did_something, demetro_exp);
 }
 
+void dont_know_how_to_compile() {
+  status("don't know how to compile [breakpoint].");
+}
+
 f2ptr __f2__compile__cons_exp__symbol = -1;
 f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   release__assert(__f2__compile__cons_exp__symbol != -1, nil, "__f2__compile__cons_exp__symbol not yet defined.");
@@ -1129,6 +1133,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean
   if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile: "); f2__write(cause, exp); fflush(stdout);
   status("don't know how to compile type."); // should throw exception... (or return larva)
+  dont_know_how_to_compile();
   return f2larva__new(cause, 125);
   //error(nil, "don't know how to compile type.");
   //return funkvar_value;

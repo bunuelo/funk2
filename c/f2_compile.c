@@ -474,6 +474,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean
     f2ptr exp = f2cons__car(exps, cause);
     next      = f2cons__cdr(exps, cause);
     full_bcs = raw__compile(cause, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional, local_variables, is_locally_funktional);
+    if (raw__larvap(full_bcs, cause)) {
+      return full_bcs;
+    }
     if (! exp__is_funktional) {
       if (is_funktional) {
 	*is_funktional = boolean__false;
@@ -509,6 +512,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean
       f2ptr exp = f2cons__car(exps, cause);
       next      = f2cons__cdr(exps, cause);
       exp_bcs = raw__compile(cause, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional, local_variables, is_locally_funktional);
+      if (raw__larvap(exp_bcs, cause)) {
+	return exp_bcs;
+      }
       if (! exp__is_funktional) {
 	if (is_funktional) {
 	  *is_funktional = boolean__false;
@@ -546,10 +552,16 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean_
   if (false_exps && (! raw__consp(false_exps, cause))) {return false_exps;}
   
   f2ptr cond_bcs   = raw__compile(cause, thread, cond_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+  if (raw__larvap(cond_bcs, cause)) {
+    return cond_bcs;
+  }
   if (cond_bcs && (! raw__consp(cond_bcs, cause))) {return cond_bcs;}
   
   boolean_t true__popped_env_and_return = boolean__false;
   f2ptr true_bcs   = raw__compile(cause, thread, true_exp, protect_environment, optimize_tail_recursion, &true__popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
+  if (raw__larvap(true_bcs, cause)) {
+    return true_bcs;
+  }
   if (true_bcs && (! raw__consp(true_bcs, cause))) {return true_bcs;}
   
   boolean_t false__popped_env_and_return = boolean__false;
@@ -620,6 +632,9 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr thread, f2ptr args, boole
     exp_bcs     = f2__compile__push_args(arg_cause);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
     exp_bcs     = raw__compile(arg_cause, thread, current_arg, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+    if (raw__larvap(exp_bcs, cause)) {
+      return exp_bcs;
+    }
     if (exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
@@ -647,6 +662,9 @@ f2ptr   f2__compile__define_funk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs          = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr define_funkvar_bcs = f2__compile__define_funkvar(cause, funkvar);
   
@@ -663,6 +681,9 @@ f2ptr   f2__compile__define_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs      = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr define_var_bcs = f2__compile__define_var(cause, var);
   
@@ -679,6 +700,9 @@ f2ptr f2__compile__set_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr var_set__bcs = f2__compile__var__set(cause, var);
   
@@ -695,6 +719,9 @@ f2ptr f2__compile__setfunk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs       = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr funkvar_set__bcs = f2__compile__funkvar__set(cause, funkvar);
   
@@ -711,6 +738,9 @@ f2ptr f2__compile__globalize_var_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr var_set__bcs = f2__compile__globalize_var(cause, var);
   
@@ -727,6 +757,9 @@ f2ptr f2__compile__globalize_funkvar_exp(f2ptr simple_cause, f2ptr thread, f2ptr
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs       = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
   f2ptr funkvar_set__bcs = f2__compile__globalize_funkvar(cause, funkvar);
   
@@ -744,6 +777,9 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boole
   exps = f2cons__cdr(exps, cause); if (! raw__consp(exps, cause)) {return __compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
   
   f2ptr full_bcs = raw__compile(cause, thread, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(value_bcs, cause)) {
+    return value_bcs;
+  }
   if (full_bcs && (! raw__consp(full_bcs, cause))) {
     return full_bcs;
   }
@@ -751,6 +787,9 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boole
   
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause));
   f2ptr exp_bcs  = raw__compile(cause, thread, args_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larvap(exp_bcs, cause)) {
+    return exp_bcs;
+  }
   if (exp_bcs && (! raw__consp(exp_bcs, cause))) {
     return exp_bcs;
   }
@@ -796,7 +835,11 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr exps, 
   f2ptr funkvar = f2cons__car(exps, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), funkvar);
   if (raw__metrocfunkp(funkvar_value, cause)) {
-    return bcs_valid(raw__compile(cause, thread, f2__metrocfunk__apply(cause, funkvar_value, thread, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional));
+    f2ptr exp_bcs = raw__compile(cause, thread, f2__metrocfunk__apply(cause, funkvar_value, thread, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+    if (raw__larvap(exp_bcs, cause)) {
+      return exp_bcs;
+    }
+    return bcs_valid(exp_bcs);
   } else {
     if ((! (raw__cfunkp(funkvar_value, cause) ||
 	    raw__funkp(funkvar_value, cause))) ||
@@ -933,6 +976,9 @@ f2ptr f2__compile__backquote_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
     exp_bcs     = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
     exp_bcs     = raw__compile(cause, thread, f2cons__car(args, cause), boolean__true, boolean__false, NULL, NULL, nil, NULL);
+    if (raw__larvap(exp_bcs, cause)) {
+      return exp_bcs;
+    }
     if(exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
@@ -967,6 +1013,9 @@ f2ptr f2__compile__backquote_append_exp(f2ptr simple_cause, f2ptr thread, f2ptr 
     exp_bcs     = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
     exp_bcs     = raw__compile(cause, thread, f2cons__car(args, cause), boolean__true, boolean__false, NULL, NULL, nil, NULL);
+    if (raw__larvap(exp_bcs, cause)) {
+      return exp_bcs;
+    }
     if(exp_bcs && (! raw__consp(exp_bcs, cause))) {return exp_bcs;}
     iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
@@ -1075,7 +1124,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean
   
   f2ptr car = f2cons__car(exp, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), car);
-  if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, thread, raw__apply_metro(cause, thread, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional));}
+  if (raw__metrop(funkvar_value, cause))    {return raw__compile(cause, thread, raw__apply_metro(cause, thread, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);}
   if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile: "); f2__write(cause, exp); fflush(stdout);

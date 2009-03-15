@@ -46,8 +46,6 @@ install__rlglue_dir          = $(current_dir)/extern
 
 default: $(compile__funk2) $(compile__bootstrap__img)
 
-gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
-
 funk2_server_objs = \
   c/f2_ansi.o \
   c/f2_blocks_world.o \
@@ -215,7 +213,7 @@ configure-append-defines:
 	echo ""
 
 $(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
-	gcc $(cc_flags) $(type_bits_flags) $(funk2_objs) $(libs) $(gmodule_linker_flags) -o $@
+	gcc $(cc_flags) $(type_bits_flags) $(funk2_objs) $(libs) $(dynamic_library_linker_flags) -o $@
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
 $(compile__bootstrap__repl__img): $(compile__funk2) $(funk2_fu2s)
@@ -342,6 +340,6 @@ readline:
 # RL-Glue Libraries  http://glue.rl-community.org
 rlglue:
 	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue_dir); make; make install
-	#cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make; make install
+#	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make; make install
 
 

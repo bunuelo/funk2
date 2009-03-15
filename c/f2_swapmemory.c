@@ -47,8 +47,7 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
       try_again = boolean__false;
       switch(errno) {
       case EACCES:
-	status("The requested access to the file is not allowed, or search permission is denied for one of the directories in the path prefix of pathname, or the file did not exist yet and write access to the parent directory is  not  allowed.   (See  also  path_resolu’¡¾"
-	       "tion(7).)");
+	status("The requested access to the file is not allowed, or search permission is denied for one of the directories in the path prefix of pathname, or the file did not exist yet and write access to the parent directory is  not  allowed.   (See  also  path_resolution(7).)");
 	try_again = boolean__true;
 	break;
       case EEXIST:
@@ -124,7 +123,7 @@ void swapmemory_filename__generate_from_swap_directory(char* str, char* swap_dir
 	break;
       }
     }
-  } while (try_again && total_tries_so_far < 100); // assure opening the random filename fails before returning
+  } while (try_again && total_tries_so_far < 10000); // assure opening the random filename fails before returning
 }
 
 void f2swapmemory__init_and_alloc(f2swapmemory_t* this, f2size_t byte_num, char* swap_directory) {

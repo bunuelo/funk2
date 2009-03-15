@@ -3,8 +3,9 @@
   [blocks_world-generate_perceptions blocks_world]]
 
 [defunk plan [perceptions]
-  `[prog [move-to the-red-block]
-	 [pick-up the-red-block]
+  `[prog [move-to the-yellow-block]
+	 [pick-up the-yellow-block]
+	 [move-to the-blue-block]
 	 [drop]]]
 
 [defunk act [blocks_world plan]

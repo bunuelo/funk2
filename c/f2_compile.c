@@ -231,8 +231,14 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr thread, f2ptr funk) {
   release__assert(__f2__compile__funk__symbol != -1, nil, "__f2__compile__funk__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__funk__symbol, f2cons__new(simple_cause, funk, nil));
   
-  if (!funk) {error(thread, "\nf2__compile__funk error: funk is nil.");}
-  if (!raw__funkp(funk, cause)) {error(thread, "\nf2__compile__funk error: !raw__funkp(funk): funk variable value is not of type funk.");}
+  if (!funk) {
+    status("f2__compile__funk error: funk is nil.");
+    return f2larva__new(cause, 129);
+  }
+  if (!raw__funkp(funk, cause)) {
+    status("f2__compile__funk error: !raw__funkp(funk): funk variable value is not of type funk.");
+    return f2larva__new(cause, 130);
+  }
   
   f2ptr funk_bcs = f2__compile__value__set(cause, funk);
   if (f2funk__body_bytecodes(funk, cause)) {return bcs_valid(funk_bcs);}
@@ -849,7 +855,7 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr exps, 
     }
     return bcs_valid(full_bcs);
   }
-  error(nil, "shouldn't get here.");
+  status("shouldn't get here.");
   return f2larva__new(cause, 16);
 }
 
@@ -1028,9 +1034,10 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr thread, f2ptr ex
   if (car == __funk2.globalenv.yield__symbol)                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__yield(cause));}
   if (car == __funk2.globalenv.bytecode__symbol)               {return bcs_valid(f2__compile__bytecode_exp(cause, exp, is_funktional, local_variables, is_locally_funktional));}
   if (car == __funk2.globalenv.rawcode__symbol)                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__rawcode_exp(cause, exp, thread, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
-  printf("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
-  printf("isn't a special symbol expression."); // should throw exception...
-  error(nil, "f2__compile__special_symbol_exp error: expression is not special symbol expression.");
+  status("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
+  status("isn't a special symbol expression."); // should throw exception...
+  //error(nil, "f2__compile__special_symbol_exp error: expression is not special symbol expression.");
+  return f2larva__new(cause, 127);
 }
 
 f2ptr __f2__demetropolize__funkvar_call__symbol = -1;
@@ -1071,8 +1078,8 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean
   if (raw__metrop(funkvar_value, cause))    {return bcs_valid(raw__compile(cause, thread, raw__apply_metro(cause, thread, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional));}
   if (f2__is_compile_special_symbol(car))   {return bcs_valid(f2__compile__special_symbol_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbolp(car, cause))             {return bcs_valid(f2__compile__funkvar_call(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
-  printf("tried to compile: "); f2__write(cause, exp); fflush(stdout);
-  printf("don't know how to compile type."); // should throw exception... (or return larva)
+  status("tried to compile: "); f2__write(cause, exp); fflush(stdout);
+  status("don't know how to compile type."); // should throw exception... (or return larva)
   return f2larva__new(cause, 125);
   //error(nil, "don't know how to compile type.");
   //return funkvar_value;
@@ -1259,9 +1266,10 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr thread, 
   if (car == __funk2.globalenv.yield__symbol)                  {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.bytecode__symbol)               {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.rawcode__symbol)                {return f2cons__new(cause, nil, exp);}
-  printf("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
-  printf("isn't a special symbol expression."); // should throw exception...
-  error(nil, "f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");
+  status("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
+  status("isn't a special symbol expression."); // should throw exception...
+  status("f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");
+  return f2larva__new(cause, 126);
 }
 
 f2ptr __f2__demetropolize_once__symbol = -1;
@@ -1364,7 +1372,8 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t prot
   else if (raw__larvap(exp, cause))     {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__charp(exp, cause))      {result_bcs = f2__compile__value__set(cause, exp);}
   else {
-    error(nil, "unrecognized type in compile.");
+    status("unrecognized type in compile.");
+    return f2larva__new(cause, 128);
   }
   if (! raw__larvap(result_bcs, cause)) {
     result_bcs = bcs_valid(result_bcs);

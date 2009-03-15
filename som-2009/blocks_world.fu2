@@ -222,6 +222,9 @@
 [defunk blocks_world-pick_up [this object_name]
   [blocks_world_physics-pick_up [blocks_world-physics this] object_name]]
 
+[defunk blocks_world-simulate [this]
+  [blocks_world_physics-simulate [blocks_world-physics this]]]
+
 [defunk blocks_world-generate_perceptions [this]
   [blocks_world_physics-generate_perceptions [blocks_world-physics this]]]
 
@@ -255,7 +258,7 @@
 						      nil]
 					      [let [[object_name [second exp]]]
 						[blocks_world-need_rerender-set this t]
-						[blocks_world-last_results-set  this [list 'move-to result: ' [blocks_world_physics-move_to physics object_name]]]
+						[blocks_world-last_results-set  this [list 'move-to result: ' [blocks_world-move_to this object_name]]]
 						nil
 						]]]]
 	      [[eq command `pick-up]  [prog [if [!= [length exp] 2]
@@ -264,11 +267,11 @@
 					      [let [[object_name [second exp]]]
 						[blocks_world-need_perceive-set this t]
 						[blocks_world-need_rerender-set this t]
-						[blocks_world-last_results-set  this [list 'pick-up result: ' [blocks_world_physics-pick_up physics object_name]]]
+						[blocks_world-last_results-set  this [list 'pick-up result: ' [blocks_world-pick_up this object_name]]]
 						nil
 						]]]]
-	      [[eq command `drop]     [prog [blocks_world-last_results-set this [list 'drop result: ' [blocks_world_physics-drop physics]]]
-					    [blocks_world_physics-simulate physics]
+	      [[eq command `drop]     [prog [blocks_world-last_results-set this [list 'drop result: ' [blocks_world-drop this]]]
+					    [blocks_world-simulate this]
 					    [blocks_world-need_perceive-set this t]
 					    [blocks_world-need_rerender-set this t]
 					    nil]]

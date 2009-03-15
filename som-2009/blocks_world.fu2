@@ -150,7 +150,7 @@
 		`success]]]]]]
 
 [globalize -blocks_world_agent_type_name_hash-               [hashtable-new 10]]
-[defunk     blocks_world_agent_type-lookup [name]            [hashtable-lookup_key_value -blocks_world_agent_type_name_hash- name]]
+[defunk     blocks_world_agent_type-lookup [name]            [hashtable-lookup_value -blocks_world_agent_type_name_hash- name]]
 [defunk     blocks_world_agent_type-define [name agent_type] [hashtable-add_keyvalue_pair -blocks_world_agent_type_name_hash- name agent_type]]
 
 [defunk   blocks_world_agent_type-new                [name agent_execute_funk]  [array `blocks_world_agent name agent_execute_funk]]

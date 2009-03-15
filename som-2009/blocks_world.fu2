@@ -158,8 +158,10 @@
 [defmetro blocks_world_agent_type-agent_execute_funk [this]                    `[array-elt ,this 2]]
 
 [defmetro defblocks_world_agent [type_name :rest agent_execute_funk_body]
-  `[blocks_world_agent_type-define [quote ,type_name] [funk [this-agent]
-							    @agent_execute_funk_body]]]
+  `[blocks_world_agent_type-define [quote ,type_name]
+				   [blocks_world_agent_type-new [quote ,type_name]
+								[funk [this-agent]
+								      @agent_execute_funk_body]]]]
 
 [defunk   blocks_world_agent?             [exp]                     [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `blocks_world_agent]]]
 [defunk   blocks_world_agent-new          [type_name blocks_world]  [array `blocks_world_agent type_name blocks_world]]
@@ -167,10 +169,12 @@
 [defmetro blocks_world_agent-blocks_world [this]                   `[array-elt ,this 2]]
 
 [defunk blocks_world_agent-execute [this]
+  [print [list `blocks_world_agent-execute [brief this]]]
   [if [not [blocks_world_agent? this]]
       [error `run-time `[expected this to be blocks_world_agent type object]]
-    [let [[agent_type [blocks_world_agent_type-lookup [blocks_world_agent-type_name this]]]]
-      [funkall [blocks_world_agent_type-agent_execute_funk agent_type] this]]]]
+    [let [[agent_type [print [blocks_world_agent_type-lookup [print [blocks_world_agent-type_name this]]]]]]
+      [print 'debug 2']
+      [funkall [print [blocks_world_agent_type-agent_execute_funk agent_type]] this]]]]
 
 [defunk blocks_world-new [help_message
 			  welcome_message

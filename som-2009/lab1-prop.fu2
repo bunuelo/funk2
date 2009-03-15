@@ -11,8 +11,8 @@
   [blocks_world-eval plan]]
 
 [defblocks_world_agent propositional_agent
+  [print 'propositional agent here.']
   [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
-    [print 'propositional agent here.']
     [act [plan [sense blocks_world]]]]]
 
 [defunk lab1_agent_type-test [agent_type_name]

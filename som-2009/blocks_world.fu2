@@ -250,7 +250,7 @@
 		      nil]]]
 
 [defunk blocks_world-eval [this exp]
-  [print `[blocks_world-eval ,[brief exp]]]
+  `[print `[blocks_world-eval ,[brief exp]]]
   [if [cons? exp]
       [let [[command [first exp]]]
 	[cond [[eq command `move-to]  [prog [if [!= [length exp] 2]

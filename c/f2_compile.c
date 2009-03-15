@@ -286,6 +286,9 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr thread, f2ptr funk) {
   boolean_t popped_env_and_return     = boolean__false;
   boolean_t optimize_unused_beginning = boolean__true;
   f2ptr body_bcs = f2__compile__rawcode(cause, thread, f2funk__demetropolized_body(funk, cause), boolean__false, boolean__true, &popped_env_and_return, &funk__is_funktional, local_variables, &funk__is_locally_funktional, optimize_unused_beginning);
+  if (raw__larvap(body_bcs, cause)) {
+    return body_bcs;
+  }
   if (body_bcs && (! raw__consp(body_bcs, cause))) {return body_bcs;}
   
   //body_bcs = f2__compile__funk__optimize_body_bytecodes(cause, bytecode_tracing_on, funk, body_bcs);

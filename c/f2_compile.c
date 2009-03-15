@@ -1366,7 +1366,9 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t prot
   else {
     error(nil, "unrecognized type in compile.");
   }
-  result_bcs = bcs_valid(result_bcs);
+  if (! raw__larvap(result_bcs, cause)) {
+    result_bcs = bcs_valid(result_bcs);
+  }
   resume_gc();
   __compile__recursion_count --;
 #ifdef DEBUG_COMPILE

@@ -777,8 +777,8 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boole
   exps = f2cons__cdr(exps, cause); if (! raw__consp(exps, cause)) {return __compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
   
   f2ptr full_bcs = raw__compile(cause, thread, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
-    return value_bcs;
+  if (raw__larvap(full_bcs, cause)) {
+    return full_bcs;
   }
   if (full_bcs && (! raw__consp(full_bcs, cause))) {
     return full_bcs;

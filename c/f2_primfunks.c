@@ -1209,10 +1209,11 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr dem
   //f2__print_prompt("  env         : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap   : ", tracewrap);
   f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional);
-  f2__compile__funk(cause, thread, funk);
-#ifdef F2__ARCH_BIT32
+  f2ptr result = f2__compile__funk(cause, thread, funk);
+  if (raw__larvap(result, cause)) {
+    return result;
+  }
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
-#endif
   return funk;
 }
 def_pcfunk6(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, return f2__make_funk(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional));
@@ -1223,12 +1224,13 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr de
   //f2__print_prompt("  env          : ", f2thread__env(simple_thread));
   //f2__print_prompt("  tracewrap    : ", tracewrap);
   f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional);
-  f2__compile__metro(cause, thread, metro);
+  f2ptr result = f2__compile__metro(cause, thread, metro);
+  if (raw__larvap(result, cause)) {
+    return result;
+  }
   
-#ifdef F2__ARCH_BIT32
   // metro machine code compiling bug...  temporarily disabled.
   //f2metro__machine_code__set(metro, this_cause, f2chunk__new_compiled_from_metro(this_cause, metro));
-#endif
   
   return metro;
 }

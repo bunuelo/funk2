@@ -1,7 +1,19 @@
 
+[defunk sense [blocks_world]
+  [blocks_world-generate_perceptions blocks_world]]
+
+[defunk plan [perceptions]
+  `[prog [move-to the-red-block]
+	 [pick-up the-red-block]
+	 [drop]]]
+
+[defunk act [plan]
+  [blocks_world-eval plan]]
+
 [defblocks_world_agent propositional_agent
-  [print 'propositional agent here.']
-  ]
+  [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
+    [print 'propositional agent here.']
+    [act [plan [sense blocks_world]]]]]
 
 [defunk lab1_agent_type-test [agent_type_name]
   [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]

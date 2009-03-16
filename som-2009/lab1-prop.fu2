@@ -30,34 +30,68 @@
 
 
 
+
 [defunk lab1-31-test []
   [lab1_agent_type-test `propositional_agent]]
 
 
+' 3.2   Not complete. '
 
-`[prog
-  
-  [globalize bw [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
-								     [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
-								     [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
-								     [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
-								     [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
-								     [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]
-  
-  
-  [defunk blocks_world_physics-generate_perceptions2 [this]
-    [let [[objects     [blocks_world_physics-objects this]]
-	  [perceptions nil]]
-      [mapc [funk [object_a]
-		  [let [[on_object [blocks_world_object-is_on_objects object_a [remove object_a objects]]
-				   [in_gripper [and [eq `gripper [blocks_world_object-type object_a]] [ blocks_world_object-is-on]]
-					       ]]
-			[if on_object
-			    [set perceptions [cons `[on ,[blocks_world_object-name object_a] ,[blocks_world_object-name on_object]] perceptions]]]]]
-		  objects]
-	    perceptions]]
-    
-    [blocks_world_physics-generate_perceptions [blocks_world-physics bw]]
-    
-    ]]
+[defunk learner [current past]
+	[if [eq [size past] 0]
+		[set past current]
+		[set past [intersection past current]]]]
 
+
+[defunk learn-from-experience [perceptions result positive negative]
+	[if [eq result 'success']	
+		[learner perceptions positive]
+	  [learner perceptions negative]]]
+	
+
+[defunk print-rule [pos neg]
+	[print [difference [pos neg]]]]
+
+[globalize learning-exploration-1
+ [quote [prog [move-to the-yellow-block] [pick-up the-yellow-block] [move-to the-blue-block] [drop]]]
+ [quote [prog [move-to the-red-block] [pick-up the-red-block] [move-to the-blue-block] [drop]]]
+ [quote [prog [move-to the-yellow-block] [pick-up the-red-block] [move-to the-blue-block] [drop]]]]
+	
+[globalize learning-exploration-2
+[quote [prog [move-to the-yellow-block] [pick-up the-red-block] [move-to the-blue-block] [drop]]]
+[quote [prog [move-to the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]
+[quote [prog [move-to the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]
+[quote [prog [move-to the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]
+[quote [prog [move-to the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]]
+
+
+[defunk plan [perceptions]
+  [let [[positive [list nil]] [negative [list nil]]]
+  `[prog [move-to the-yellow-block]
+	 [pick-up the-yellow-block]
+	 [move-to the-blue-block]
+	 [drop]]]]
+
+[defunk act_and_observe [blocks_world plan]
+  [blocks_world-eval blocks_world plan]]
+
+[defblocks_world_agent learning_agent
+  [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
+    [act blocks_world [plan [sense blocks_world]]]]]
+
+[defunk lab1_agent_type-test [agent_type_name]
+  [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
+									   [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
+									   [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
+									   [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
+									   [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
+									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
+    [let [[agent [blocks_world_agent-new agent_type_name blocks_world]]]
+      [blocks_world-agent-set blocks_world agent]
+      [blocks_world-repl      blocks_world]
+      blocks_world]]]
+
+
+
+[defunk lab1-32-test []
+  [lab1_agent_type-test `propositional_agent]]

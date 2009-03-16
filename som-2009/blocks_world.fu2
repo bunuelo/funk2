@@ -47,7 +47,7 @@
 	[blocks_world_physics-objects this]]
   [ansi-stream-move_cursor stdout 1 26]]
 
-[defunk blocks_world_physics-generate_perceptions [this]
+`[defunk blocks_world_physics-generate_perceptions [this]
   [let [[objects     [blocks_world_physics-objects this]]
 	[perceptions nil]]
     [mapc [funk [object_a]
@@ -56,6 +56,18 @@
 		      [set perceptions [cons `[on ,[blocks_world_object-name object_a] ,[blocks_world_object-name on_object]] perceptions]]]]]
 	  objects]
     perceptions]]
+
+[defunk blocks_world_physics-generate_perceptions [this]
+  [let [[objects     [blocks_world_physics-objects this]]
+	[perceptions nil]]
+	[if [blocks_world_object-holding_object [elt objects 1]]
+		[set perceptions [cons `[gripper-holding-something] perceptions]]]
+	    [mapc [funk [object_a]
+			[let [[on_object [blocks_world_object-is_on_objects object_a [remove object_a objects]]]]
+			  [if on_object
+			      [set perceptions [cons `[on ,[blocks_world_object-name object_a] ,[blocks_world_object-name on_object]] perceptions]]]]]
+		  objects]
+	    perceptions]]
 
 [defunk blocks_world_physics-move_to [this object_name]
   [let [[objects [blocks_world_physics-objects this]]

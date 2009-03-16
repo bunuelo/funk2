@@ -1,25 +1,25 @@
 '3.1  Modify the plan method for the agent so that it has the preconditions to only pick up the red block.  To run the agent, type [lab1-31-test] and then, in the blocksworld REPL, type [agent] to run one sense, plan, act cycle. '
 
-[defunk sense [blocks_world]
+[defunk propositional_agent-sense [blocks_world]
   [blocks_world-generate_perceptions blocks_world]]
 
-[defunk plan [perceptions]
+[defunk propositional_agent-plan [perceptions]
   [if [member? `[on the-yellow-block the-red-block] perceptions]
       `[prog [move-to the-yellow-block]
 	     [pick-up the-yellow-block]
 	     [move-to the-blue-block]
-	     [drop]]]
-  `[prog [move-to the-red-block]
-	 [pick-up the-red-block]
-	 [move-to the-yellow-block]
-	 [drop]]]
+	     [drop]]
+    `[prog [move-to the-red-block]
+	   [pick-up the-red-block]
+	   [move-to the-yellow-block]
+	   [drop]]]]
 
-[defunk act [blocks_world plan]
+[defunk propositional_agent-act [blocks_world plan]
   [blocks_world-eval blocks_world plan]]
 
 [defblocks_world_agent propositional_agent
   [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
-    [act blocks_world [plan [sense blocks_world]]]]]
+    [propositional_agent-act blocks_world [propositional_agent-plan [propositional_agent-sense blocks_world]]]]]
 
 [defunk lab1_agent_type-test [agent_type_name]
   [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
@@ -71,19 +71,19 @@
 		 [quote [prog [move-to  the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]]]
 
 
-[defunk plan [perceptions]
+[defunk learning_agent-plan [perceptions]
   [let [[positive [list nil]] [negative [list nil]]]
     `[prog [move-to the-yellow-block]
 	   [pick-up the-yellow-block]
 	   [move-to the-blue-block]
 	   [drop]]]]
 
-[defunk act_and_observe [blocks_world plan]
+[defunk learning_agent-act [blocks_world plan]
   [blocks_world-eval blocks_world plan]]
 
 [defblocks_world_agent learning_agent
   [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
-    [act blocks_world [plan [sense blocks_world]]]]]
+    [learning_agent-act blocks_world [learning_agent-plan [learning_agent-sense blocks_world]]]]]
 
 
 [defunk lab1-32-test []

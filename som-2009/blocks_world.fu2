@@ -392,6 +392,7 @@
     [blocks_world-repl blocks_world]
     blocks_world]]
 
+[load 'som-2009/lab1-prop.fu2']
 
 
 

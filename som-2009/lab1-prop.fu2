@@ -43,6 +43,7 @@
 		[set past [intersection past current]]]]
 
 
+
 [defunk learn-from-experience [perceptions result positive negative]
 	[if [eq result 'success']	
 		[learner perceptions positive]

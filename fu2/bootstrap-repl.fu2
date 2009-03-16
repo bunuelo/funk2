@@ -424,6 +424,11 @@
 	[prog [list-set_cdr first_seq_copy [apply &append rest_seqs]]
 	      first_seq_copy]]]]]
 
+[defunk merge [:rest sets]
+  [if [null sets]
+      nil
+    [apply &append sets]]]
+
 [defunk format [stream :rest exps]
   [mapc [funk [exp] [exp-format stream exp]] exps]]
 

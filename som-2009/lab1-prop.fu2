@@ -60,13 +60,15 @@
 [defunk print-rule [pos neg]
   [print [difference [pos neg]]]]
 
-[defunk   learning_agent_plan?                           [exp]                                                 [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `learning_agent_plan]]]
-[defunk   learning_agent_plan-new                        [plan negative_prepost_pairs positive_prepost_pairs]  [array `learning_agent_plan plan negative_prepost_pairs positive_prepost_pairs]]
-[defmetro learning_agent_plan-plan                       [this]                                               `[array-elt     ,this 1]]
-[defmetro learning_agent_plan-negative_prepost_pairs     [this]                                               `[array-elt     ,this 2]]
-[defmetro learning_agent_plan-negative_prepost_pairs-set [this value]                                         `[array-elt-set ,this 2 ,value]]
-[defmetro learning_agent_plan-positive_prepost_pairs     [this]                                               `[array-elt     ,this 3]]
-[defmetro learning_agent_plan-positive_prepost_pairs-set [this value]                                         `[array-elt-set ,this 3 ,value]]
+[defunk   learning_agent_plan?                           [exp]                                                                  [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `learning_agent_plan]]]
+[defunk   learning_agent_plan-new                        [plan negative_prepost_pairs positive_prepost_pairs conjunctive_rule]  [array `learning_agent_plan plan negative_prepost_pairs positive_prepost_pairs conjunctive_rule]]
+[defmetro learning_agent_plan-plan                       [this]                                                                `[array-elt     ,this 1]]
+[defmetro learning_agent_plan-negative_prepost_pairs     [this]                                                                `[array-elt     ,this 2]]
+[defmetro learning_agent_plan-negative_prepost_pairs-set [this value]                                                          `[array-elt-set ,this 2 ,value]]
+[defmetro learning_agent_plan-positive_prepost_pairs     [this]                                                                `[array-elt     ,this 3]]
+[defmetro learning_agent_plan-positive_prepost_pairs-set [this value]                                                          `[array-elt-set ,this 3 ,value]]
+[defmetro learning_agent_plan-conjunctive_rule           [this]                                                                `[array-elt     ,this 4]]
+[defmetro learning_agent_plan-conjunctive_rule-set       [this value]                                                          `[array-elt-set ,this 4 ,value]]
 
 [defunk learning_agent_plan-brief [this]
   [list :plan           [learning_agent_plan-plan                   this]
@@ -99,7 +101,6 @@
   [blocks_world-eval blocks_world plan]]
 
 [defunk learning_agent-explore [blocks_world exploration_plans]
-  [print 'learning_agent-explore']
   [mapc [funk [learning_agent_plan]
 	      [let [[precondition [learning_agent-sense blocks_world]]]
 		[let [[result [learning_agent-act blocks_world [learning_agent_plan-plan learning_agent_plan]]]]
@@ -120,7 +121,6 @@
     [apply &append sets]]]
 
 [defunk learning_agent-learn_conjunctive_rules [exploration_plans]
-  [print 'learning_agent-learn_conjunctive_rules']
   [mapc [funk [exploration_plan]
 	      [let [[negative_preconditions [mapcar [funk [pair] [first pair]] [learning_agent_plan-negative_prepost_pairs exploration_plan]]]
 		    [positive_preconditions [mapcar [funk [pair] [first pair]] [learning_agent_plan-positive_prepost_pairs exploration_plan]]]]
@@ -135,10 +135,10 @@
 		      [mapc [funk [precondition]
 				  [set conjunctive_negative_preconditions [intersect precondition conjunctive_positive_preconditions]]]
 			    positive_preconditions]
-		      [print [append conjunctive_positive_preconditions
-				     [mapcar [funk [precondition]
-						   `[not ,precondition]]
-					     conjunctive_negative_preconditions]]]]]]]]
+		      [learning_agent_plan-conjunctive_rule-set exploration_plan [append conjunctive_positive_preconditions
+											 [mapcar [funk [precondition]
+												       `[not ,precondition]]
+												 conjunctive_negative_preconditions]]]]]]]]
 	exploration_plans]]
 
 [defunk learning_agent-plan [perceptions]

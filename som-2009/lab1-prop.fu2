@@ -99,6 +99,7 @@
   [blocks_world-eval blocks_world plan]]
 
 [defunk learning_agent-explore [blocks_world exploration_plans]
+  [print 'learning_agent-explore']
   [mapc [funk [learning_agent_plan]
 	      [let [[precondition [learning_agent-sense blocks_world]]]
 		[let [[result [learning_agent-act blocks_world [learning_agent_plan-plan learning_agent_plan]]]]
@@ -119,6 +120,7 @@
     [apply &append sets]]]
 
 [defunk learning_agent-learn_conjunctive_rules [exploration_plans]
+  [print 'learning_agent-learn_conjunctive_rules']
   [mapc [funk [exploration_plan]
 	      [let [[negative_preconditions [mapcar [funk [pair] [first pair]] [learning_agent_plan-negative_prepost_pairs exploration_plan]]]
 		    [positive_preconditions [mapcar [funk [pair] [first pair]] [learning_agent_plan-positive_prepost_pairs exploration_plan]]]]

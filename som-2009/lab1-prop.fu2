@@ -17,6 +17,7 @@
   [blocks_world-generate_perceptions blocks_world]]
 
 [defunk propositional_agent-plan [perceptions]
+  [print perceptions]
   [let [[policy [compile_propositional_reaction [[[on the-yellow-block the-red-block]] [prog [move-to the-yellow-block]
 											     [pick-up the-yellow-block]
 											     [move-to the-blue-block]

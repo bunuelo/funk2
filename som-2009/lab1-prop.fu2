@@ -1,3 +1,4 @@
+'3.1  Modify the plan method for the agent so that it has the preconditions to only picks up the red block.  To run the agent, type [lab1-31-test] and then, in the blocksworld REPL, type [agent] to run one sense, plan, act cycle. '
 
 [defunk sense [blocks_world]
   [blocks_world-generate_perceptions blocks_world]]
@@ -29,7 +30,7 @@
 
 
 
-[defunk lab1-prop-test []
+[defunk lab1-31-test []
   [lab1_agent_type-test `propositional_agent]]
 
 

@@ -1,6 +1,6 @@
 \newcommand{\gen}{\preceq_{G}}
 
-**Rev.** 2.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Wednesday, Mar 18 2009, 7:00pm.
+**Rev.** 3.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Wednesday, Mar 18 2009, 7:00pm.
 
 
 ## Goals
@@ -11,7 +11,7 @@ In this first laboratory, you will learn about ways to represent, learn and use 
 
 ## Setting up the Lab
 
-This project will use the \href{http://neuromin.de/rct/funk2.html}{Funk 2} programming language, which is similar in syntax and semantics to Scheme.  This section will walk you through running and using the language.  Funk has the following properties: 
+This project will use the \href{http://neuromin.de/rct/funk2.html}{Funk 2} programming language, developed by teaching assistant Bo Morgan.  This section will walk you through running and using the language.  Funk has the following properties: 
 
 
 **Causal tracing of the events while executing multiple processes.**
@@ -34,7 +34,7 @@ The second command will execute funk (it takes a while to start up).
 
 ### Installing and configuring Funk 2 on your computer.
 
-If you want to run Funk2 from your own computer, you must be running a Linux or OS X based operating system to use funk with 2Gb of free disk space. 
+If you want to run Funk2 from your own computer, you must be running a Linux or OS X based operating system and 2Gb of free disk space. 
 
   1. To obtain Funk 2, download the latest version and extract the tarball: 
 
@@ -153,7 +153,7 @@ Following Papert's advice, we will think about thinking about problems in the fa
 
 \begin{figure}[h!] \centerline{\mbox{\includegraphics[width=2.5in]{blocksworld.pdf}} } \label{bw} \caption{Blocks World is a highly constrained microworld that still is rich enough to allow us to think about planning problems.} \end{figure}
 
-After you have installed Funk2 and are in the REPL loop, you can initiate the blocks world REPL loop by typing:
+After you have installed Funk2, you can initiate the blocks world REPL loop by typing:
 
 \vspace{10pt}
 \funk{[blocks\_world-test]}
@@ -186,14 +186,14 @@ At first in this lab, our plans will barely be representations at all:  we will 
 
 In this section of the lab, we are going to learn the \textsc{If-Do} rules of a reactive agent.  Much of the discipline of machine learning is focused on learning problems that are similar to our problem of learning an action-selection function; it falls into the general problem of learning a *classifier* that maps between an input vector (sensations) onto a set of category labels (actions).^[In machine learning terminology, *discriminative classifiers* learn the decision rule, the conditional probability, without representing the rule's antecedent. *Generative classifiers* learn the entire joint probability distribution, which includes a description of the underlying rule.]
 
-If we limit ourselves to the task of learning a rule *to classify* "relevant" versus "not relevant" preconditions for an action to take place, then we do not really need a description of the rule's antecedent.  In fact, we could *throw away* the representation and focus only on the data's behavior, by learning a *discriminative classifier*.  Instead, we will learn the full function, not just the description, so that we can reason about this knowledge later.
+If we limit ourselves to the task of learning a rule to classify "relevant" versus "not relevant" preconditions for an action to take place, then we do not really need a description of the rule's antecedent.  In fact, we could throw away the representation and focus only on the data's behavior, by learning a *discriminative classifier*.  Instead, we will learn the full function, not just the description, so that we can reason about this knowledge later.
 
-We are not learning a rule to select *the best action* from a set of actions, we are learning a rule for *each* action that determines whether or not it is relevant.  This is a problem of **concept learning**, \marginpar[right]{This lab is interdisciplinary and sometimes non-linear.  You can skip to section X to learn more about concept learning.} learning a binary valued function from examples of *input* and *output* pairs.  Later in section \ref{sec:conceptlearning} lab, you will learn more details about concept learning. 
+We are not learning a rule to select the best action from a set of actions, we are learning a rule for *each* action that determines whether or not it is relevant.  This is a problem of **concept learning**, \marginpar[right]{This lab is interdisciplinary and sometimes non-linear.  You can skip to section X to learn more about concept learning.} learning a binary valued function from examples of *input* and *output* pairs.  Later in section \ref{sec:conceptlearning} lab, you will learn more details about concept learning. 
 
 
 \questionset{1}
 
-Using the limited propositional representation, modify the code in `som-2009/lab1-prop.fu2` to make an agent learn the conditions to \hand engage in `[pick-up the-red-block]` action.  Blocks World will tell you when the action fails, and you imagine the agent gets punished when it does the action at the wrong time and fails (\ie a huge cost on performing this action that is only outweighed by the action's success).
+Using the limited propositional representation, modify the code in `som-2009/lab1-prop.fu2` to given an agent the enabling conditions for the \hand `[pick-up the-red-block]` action.  Blocks World will tell you when the action fails, and you imagine the agent gets punished when it does the action at the wrong time and fails (\ie a huge cost on performing this action that is only outweighed by the action's success).
 
 \questionset{2}
 
@@ -278,7 +278,7 @@ Inference rules in logic take a very similar form as the knowledge: they are rep
 
 An argument in logic is a set of premises from which a conclusion logically follows. Propositional Logic is far from being as expressive as a natural language, like English.  When translating an English statement to propositional sentences, a lot of \hand information is lost. For example, all of the subtle distinctions between connectors "while", "because", "is", "since", "although" are replaced by the same conjunctive $\land$ operator. Translate these English statements into logical expression.  Suggested propositional symbols are given at the end (in parenthesis).
    
-  1. If each man had a definite set of rules of conduct by which he regulated his life he would be no better than a machine.  But there are no such rules, so man cannot be machines. -- A.M. Turing, "Computing Machinery and Intelligence", Mind Vol. 59 1950. (\textsf{m,r,b})
+  1. If each man had a definite set of rules of conduct by which he regulated his life he would be no better than a machine.  But there are no such rules, so man cannot be machines. -- A.M. Turing, "Computing Machinery and Intelligence", Mind Vol. 59 1950. (\textsf{rules,manmachine,b})
 
   2. Either logic is difficult, or not many students like it.  If mathematics is easy, then logic is not difficult.  Therefore, if many students like logic, mathematics is not easy. (\textsf{d,l,m})
 
@@ -368,13 +368,13 @@ However the term has a shared history in psychology as well as AI.  This section
  
 ## Concept learning in cognitive sciences
 
-In the 1950s, Bruner et al \cite{Bruner:1986p2941} studied human subjects' ability to learn concepts given positive and negative examples of the concept.  Instances were cards containing combinations of four features: \textsc{Borders} = $\{1,2,3\}$, \textsc{Shape} = $\{cross,circle,square\}$, \textsc{Number} = $\{1,2,3\}$ and \textsc{Color} = $\{black,red,blue\}$.  A training example is a card and being told whether the card was in the concept or not.  A subject is given a sequence of examples and time to update their description.
+In the 1950s, Bruner et al \cite{Bruner:1986p2941} studied human subjects' ability to learn concepts given positive and negative examples of the concept.  Instances were cards containing combinations of four features: \textsc{Borders} = $\{1,2,3\}$, \textsc{Shape} = $\{cross,circle,square\}$, \textsc{Number} = $\{1,2,3\}$ and \textsc{Color} = $\{black,red,blue\}$.  A training example is a card and being told whether the card was in the concept or not.  A subject is given a sequence of examples and time after each to describe the concept.
 
-Bruner et al learned that conjunctive concepts were generally easier to learn than disjunctive concepts.  Although this is generally true, exceptions have been found where disjunctive concepts are easier if biased by background knowledge (Pazzani 1991).
+Bruner et al. learned that conjunctive concepts were generally easier to learn than disjunctive concepts.  Although this is generally true, exceptions have been found where disjunctive concepts are easier to learn when background knowledge is salient (Pazzani 1991).
 
 \begin{figure}[h!] \centerline{ \mbox{\includegraphics[width=4in]{bruner.png}} }  \caption{The perceptual world of 81 distinct items that Bruner et al. studied. $\vert$\textsc{Borders}$\vert \times \vert$\textsc{Shapes}$\vert \times \vert$\textsc{Number}$\vert \times \vert$\textsc{Color}$\vert = 3\times 3\times 3\times 3 = 81$.} \end{figure}
 
-Do Bruner's results generalize to all concepts?  This work is criticized assuming that every category was represented by a set of necessary and sufficient features (a logical hypothesis space) and for not studying real-world concepts.
+Do Bruner's results generalize to all concepts?  This work is criticized for assuming that every category was represented by a set of necessary and sufficient features (a logical hypothesis space) and for not studying real-world concepts.
 
 \begin{figure}[h!]  \centerline{ \mbox{\includegraphics[width=1.5in]{bruner_concepts.png}} }  
 \caption{Example training data, and two columns for different concepts.}
@@ -436,7 +436,7 @@ Ignoring these object barriers can lead to absurd mistakes.  OpenMind\footnote{O
 
 \vspace{15pt}
 
-**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  Most (all?) logics avoid this important issue.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Think about how this relates to the problem in section \ref{sec:actions}.
+**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Think about how this relates to the problem in section \ref{sec:actions}.
 
 
 

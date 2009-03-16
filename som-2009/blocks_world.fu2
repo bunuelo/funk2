@@ -225,6 +225,20 @@
 [defmetro blocks_world-agent             [this]       `[array-elt     ,this 10]]
 [defmetro blocks_world-agent-set         [this value] `[array-elt-set ,this 10 ,value]]
 
+[defmetro compile_propositional_reactive_policy [:rest trigger_percepts__reactive_plan__pairs]
+  `[funk [perceptions]
+	 ,[cons `cond
+		 [append [mapcar [funk [trigger_percepts__reactive_plan]
+				       [let [[trigger_percepts [first  trigger_percepts__reactive_plan]]
+					     [reactive_plan    [second trigger_percepts__reactive_plan]]]
+					 `[[and @[mapcar [funk [trigger_percept]
+							       `[member? [quote ,trigger_percept] perceptions]]
+							 trigger_percepts]]
+					   [quote ,reactive_plan]]]]
+				 trigger_percepts__reactive_plan__pairs]
+			 [list `[t nil]]]]]]
+
+
 [defunk blocks_world-drop [this]
   [blocks_world_physics-drop [blocks_world-physics this]]]
 

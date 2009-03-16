@@ -64,9 +64,9 @@
 [defunk   learning_agent_plan-new                        [plan negative_prepost_pairs positive_prepost_pairs]  [array `learning_agent_plan plan negative_prepost_pairs positive_prepost_pairs]]
 [defmetro learning_agent_plan-plan                       [this]                                               `[array-elt     ,this 1]]
 [defmetro learning_agent_plan-negative_prepost_pairs     [this]                                               `[array-elt     ,this 2]]
-[defmetro learning_agent_plan-negative_prepost_pairs-set [this]                                               `[array-elt-set ,this 2 ,value]]
+[defmetro learning_agent_plan-negative_prepost_pairs-set [this value]                                         `[array-elt-set ,this 2 ,value]]
 [defmetro learning_agent_plan-positive_prepost_pairs     [this]                                               `[array-elt     ,this 3]]
-[defmetro learning_agent_plan-positive_prepost_pairs-set [this]                                               `[array-elt-set ,this 3 ,value]]
+[defmetro learning_agent_plan-positive_prepost_pairs-set [this value]                                         `[array-elt-set ,this 3 ,value]]
 
 [defunk learning_agent_plan-brief [this]
   [list :plan           [learning_agent_plan-plan                   this]

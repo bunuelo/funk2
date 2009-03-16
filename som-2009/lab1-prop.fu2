@@ -71,15 +71,17 @@
 [defmetro learning_agent_plan-conjunctive_rule-set       [this value]                                                          `[array-elt-set ,this 4 ,value]]
 
 [defunk learning_agent_plan-brief [this]
-  [list :plan           [learning_agent_plan-plan                   this]
-        :negative_pairs [learning_agent_plan-negative_prepost_pairs this]
-	:positive_pairs [learning_agent_plan-positive_prepost_pairs this]]]
+  [list `:plan           [learning_agent_plan-plan                   this]
+	  `:negative_pairs [learning_agent_plan-negative_prepost_pairs this]
+	    `:positive_pairs [learning_agent_plan-positive_prepost_pairs this]]]
 
 [defunk learning_agent_plan-create [plan] [learning_agent_plan-new plan nil nil]]
 
 [defunk learning_agent-sense [blocks_world]
   [blocks_world-generate_perceptions blocks_world]]
 
+
+[print 'debug 1']
 [globalize learning-exploration-1
 	   [let [[special_plan [learning_agent_plan-create `[pick-up the-red-block]]]]
 	     [list special_plan
@@ -89,6 +91,7 @@
 		   special_plan
 		   ]]]
 
+[print 'debug 2']
 [globalize learning-exploration-2
 	   [let [[special_plan [learning_agent_plan-create `[pick-up the-red-block]]]]
 	     [list special_plan

@@ -75,7 +75,7 @@
 	  `:negative_pairs [learning_agent_plan-negative_prepost_pairs this]
 	    `:positive_pairs [learning_agent_plan-positive_prepost_pairs this]]]
 
-[defunk learning_agent_plan-create [plan] [learning_agent_plan-new plan nil nil]]
+[defunk learning_agent_plan-create [plan] [learning_agent_plan-new plan nil nil nil]]
 
 [defunk learning_agent-sense [blocks_world]
   [blocks_world-generate_perceptions blocks_world]]

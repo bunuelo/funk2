@@ -60,6 +60,7 @@
 [defunk print-rule [pos neg]
   [print [difference [pos neg]]]]
 
+[defunk   learning_agent_plan?                           [exp]                                                 [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `learning_agent_plan]]]
 [defunk   learning_agent_plan-new                        [plan negative_prepost_pairs positive_prepost_pairs]  [array `learning_agent_plan plan negative_prepost_pairs positive_prepost_pairs]]
 [defmetro learning_agent_plan-plan                       [this]                                               `[array-elt     ,this 1]]
 [defmetro learning_agent_plan-negative_prepost_pairs     [this]                                               `[array-elt     ,this 2]]
@@ -67,19 +68,29 @@
 [defmetro learning_agent_plan-positive_prepost_pairs     [this]                                               `[array-elt     ,this 3]]
 [defmetro learning_agent_plan-positive_prepost_pairs-set [this]                                               `[array-elt-set ,this 3 ,value]]
 
+[defunk learning_agent_plan-brief [this]
+  [list :plan           [learning_agent_plan-plan                   this]
+        :negative_pairs [learning_agent_plan-negative_prepost_pairs this]
+	:positive_pairs [learning_agent_plan-positive_prepost_pairs this]]]
+
 [defunk learning_agent_plan-create [plan] [learning_agent_plan-new plan nil nil]]
 
 [globalize learning-exploration-1
-	   [list [learning_agent_plan-create `[prog [move-to the-yellow-block] [pick-up the-yellow-block] [move-to the-blue-block] [drop]]]
-		 [learning_agent_plan-create `[prog [move-to    the-red-block] [pick-up    the-red-block] [move-to the-blue-block] [drop]]]
-		 [learning_agent_plan-create `[prog [move-to the-yellow-block] [pick-up    the-red-block] [move-to the-blue-block] [drop]]]]]
+	   [let [[special_plan [learning_agent_plan-create `[pick-up the-red-block]]]]
+	     [list special_plan
+		   [learning_agent_plan-create `[prog [move-to the-yellow-block] [pick-up the-yellow-block] [move-to the-blue-block] [drop]]]
+		   special_plan
+		   [learning_agent_plan-create `[move-to the-red-block]]
+		   special_plan
+		   ]]]
 
 [globalize learning-exploration-2
-	   [list [learning_agent_plan-create `[prog [move-to the-yellow-block] [pick-up   the-red-block] [move-to the-blue-block] [drop]]]
-		 [learning_agent_plan-create `[prog [move-to  the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]
-		 [learning_agent_plan-create `[prog [move-to  the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]
-		 [learning_agent_plan-create `[prog [move-to  the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]
-		 [learning_agent_plan-create `[prog [move-to  the-green-block] [pick-up the-green-block] [move-to the-blue-block] [drop]]]]]
+	   [let [[special_plan [learning_agent_plan-create `[pick-up the-red-block]]]]
+	     [list special_plan
+		   [learning_agent_plan-create `[prog [move-to the-yellow-block] [pick-up   the-red-block] [move-to the-green-block] [drop]]]
+		   special_plan
+		   [learning_agent_plan-create `[move-to the-red-block]]
+		   special_plan]]]
 
 [defunk learning_agent-act [blocks_world plan]
   [blocks_world-eval blocks_world plan]]
@@ -99,14 +110,41 @@
 	exploration_plans]
   nil]
 
+[defunk merge [:rest sets]
+  [if [null sets]
+      nil
+    [apply &append sets]]]
+
+[defunk learning_agent-learn_conjunctive_rules [exploration_plans]
+  [mapc [funk [exploration_plan]
+	      [let [[negative_preconditions [mapcar [funk [pair] [first pair]] [learning_agent_plan-negative_prepost_pairs exploration_plan]]]
+		    [positive_preconditions [mapcar [funk [pair] [first pair]] [learning_agent_plan-positive_prepost_pairs exploration_plan]]]]
+		[let [[all_negative_preconditions [list-to-set [apply &merge negative_preconditions]]]
+		      [all_positive_preconditions [list-to-set [apply &merge positive_preconditions]]]]
+		  [let [[all_states [list-to-set [merge all_negative_preconditions all_positive_preconditions]]]]
+		    [let [[conjunctive_negative_preconditions all_states]
+			  [conjunctive_positive_preconditions all_states]]
+		      [mapc [funk [precondition]
+				  [set conjunctive_negative_preconditions [intersect precondition conjunctive_negative_preconditions]]]
+			    negative_preconditions]
+		      [mapc [funk [precondition]
+				  [set conjunctive_negative_preconditions [intersect precondition conjunctive_positive_preconditions]]]
+			    positive_preconditions]
+		      [print [append conjunctive_positive_preconditions
+				     [mapcar [funk [precondition]
+						   `[not ,precondition]]
+					     conjunctive_negative_preconditions]]]]]]]]
+	exploration_plans]]
+
 [defunk learning_agent-plan [perceptions]
   nil]
 
 [defblocks_world_agent learning_agent
   [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
-    [learning_agent-explore blocks_world learning-exploration-1]
-    
-    [learning_agent-act blocks_world [learning_agent-plan blocks_world [learning_agent-sense blocks_world]]]]]
+    [let [[exploration_plans learning-exploration-1]]
+      [learning_agent-explore                 blocks_world exploration_plans]
+      [learning_agent-learn_conjunctive_rules              exploration_plans]
+      [learning_agent-act blocks_world [learning_agent-plan blocks_world [learning_agent-sense blocks_world]]]]]]
 
 
 [defunk lab1-32-test []

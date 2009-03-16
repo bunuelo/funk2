@@ -85,28 +85,28 @@
   [blocks_world-eval blocks_world plan]]
 
 [defunk learning_agent-explore [blocks_world exploration_plans]
-  [let [[positive nil]
-	[negative nil]]
-    [mapc [funk [plan]
-		[let [[precondition [learning_agent-sense blocks_world]]]
-		  [let [[result [learning_agent-act blocks_world plan]]]
-		    [let [[postcondition [learning_agent-sense blocks_world]]]
-		      [if [eq `failure result]
-			  [set negative [cons [list plan precondition postcondition] negative]]
-			[set positive [cons [list plan precondition postcondition] positive]]]]]]]
-	  exploration_plans]
-    [list positive negative]]]
+  [mapc [funk [learning_agent_plan]
+	      [let [[precondition [learning_agent-sense blocks_world]]]
+		[let [[result [learning_agent-act blocks_world [learning_agent_plan-plan learning_agent_plan]]]]
+		  [let [[postcondition [learning_agent-sense blocks_world]]]
+		    [if [eq `failure result]
+			[learning_agent_plan-negative_prepost_pairs-set learning_agent_plan
+									[cons [list precondition postcondition]
+									      [learning_agent_plan-negative_prepost_pairs learning_agent_plan]]]
+		      [learning_agent_plan-positive_prepost_pairs-set learning_agent_plan
+								      [cons [list precondition postcondition]
+									    [learning_agent_plan-positive_prepost_pairs learning_agent_plan]]]]]]]]
+	exploration_plans]
+  nil]
 
 [defunk learning_agent-plan [perceptions]
   nil]
 
 [defblocks_world_agent learning_agent
   [let [[blocks_world [blocks_world_agent-blocks_world this-agent]]]
-    [let [[positive_negative_plans [learning_agent-explore blocks_world learning-exploration-1]]]
-      [let [[positive [first  positive_negative_plans]]
-	    [negative [second positive_negative_plans]]]
-	
-	[learning_agent-act blocks_world [learning_agent-plan blocks_world [learning_agent-sense blocks_world]]]]]]]
+    [learning_agent-explore blocks_world learning-exploration-1]
+    
+    [learning_agent-act blocks_world [learning_agent-plan blocks_world [learning_agent-sense blocks_world]]]]]
 
 
 [defunk lab1-32-test []

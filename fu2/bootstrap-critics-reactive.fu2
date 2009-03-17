@@ -47,7 +47,7 @@
 	       [type [bug-type bug]]]
 	  [if [eq `bug_handled [cond [[integer? type] [critic-reactive-integer_type_bug thread bug]]
 				     [t               `bug_not_handled]]]
-	      [set bug_handled t]]]
+	      [= bug_handled t]]]
       [prog [ansi-stream-foreground stdout]
 	    [format stdout
 		    '\n' 'This should be a bug.  Instead we got: ' value

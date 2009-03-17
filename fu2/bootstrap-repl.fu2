@@ -818,6 +818,7 @@
 [defunk memblock-set_init_render_noise [render_noise] [if [float? render_noise] [unsafe:memblock-set_init_render_noise render_noise] [error `type-error [list `memblock-set_init_render_noise render_noise]]]]
 
 `[defmetro set [var value] `[mutate ,var ,value]]
+[defmetro = [var value] `[mutate ,var ,value]]
 
 'redefining error in a better way.'
 `[defunk error [type value]

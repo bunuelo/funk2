@@ -54,7 +54,7 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   else if (command == __funk2.bytecode.bytecode__else_jump__symbol)           {f2__thread__bytecode__else_jump(          thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__car__symbol)                 {f2__thread__bytecode__car(                thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__cdr__symbol)                 {f2__thread__bytecode__cdr(                thread, bytecode);}
-  else if (command == __funk2.bytecode.bytecode__type_var__set__symbol)       {f2__thread__bytecode__type_var__set(      thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)    {f2__thread__bytecode__type_var__mutate(   thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol)  {f2__thread__bytecode__globalize_type_var( thread, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__jump__symbol)                {f2__thread__bytecode__jump(               thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__nop__symbol)                 {f2__thread__bytecode__nop(                thread, bytecode);}

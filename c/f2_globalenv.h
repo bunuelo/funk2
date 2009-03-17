@@ -74,8 +74,8 @@ typedef struct funk2_globalenv_s {
   
   f2ptr define_funk__symbol;
   f2ptr define__symbol;
-  f2ptr setfunk__symbol;
-  f2ptr set__symbol;
+  f2ptr mutatefunk__symbol;
+  f2ptr mutate__symbol;
   f2ptr and_rest__symbol;
   f2ptr apply__symbol;
   f2ptr globalize__symbol;

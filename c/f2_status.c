@@ -21,6 +21,10 @@
 
 #include "funk2.h"
 
+void error_writing_status_message() {
+  // a debugging breakpoint
+}
+
 void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_list args;
   char temp_msg[2048];
@@ -46,7 +50,11 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   u64 microseconds = microseconds_since_1970 - (milliseconds_since_1970    * 1000);
   char temp_msg2[2048];
   sprintf(temp_msg2, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d.%03d,%03d funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (int)milliseconds, (int)microseconds, temp_msg);
-  write(trace_fd, temp_msg2, strlen(temp_msg2) + 1);
+  size_t size_to_write = strlen(temp_msg2) + 1;
+  size_t size_written  = write(trace_fd, temp_msg2, size_to_write);
+  if (size_written != size_to_write) {
+    error_writing_status_message();
+  }
   close(trace_fd);
   pthread_mutex_unlock(&(__funk2.status.trace_mutex));
 }

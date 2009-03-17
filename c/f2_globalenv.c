@@ -65,9 +65,9 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
 
   this->funkvar__symbol                = f2symbol__new(cause, strlen("funkvar"),               (u8*)"funkvar");
   this->define_funk__symbol            = f2symbol__new(cause, strlen("define-funk"),           (u8*)"define-funk");
-  this->setfunk__symbol                = f2symbol__new(cause, strlen("setfunk"),               (u8*)"setfunk");
+  this->mutatefunk__symbol             = f2symbol__new(cause, strlen("mutatefunk"),            (u8*)"mutatefunk");
   this->define__symbol                 = f2symbol__new(cause, strlen("define"),                (u8*)"define");
-  this->set__symbol                    = f2symbol__new(cause, strlen("set"),                   (u8*)"set");
+  this->mutate__symbol                 = f2symbol__new(cause, strlen("mutate"),                (u8*)"mutate");
   this->and_rest__symbol               = f2symbol__new(cause, strlen(":rest"),                 (u8*)":rest");
   this->apply__symbol                  = f2symbol__new(cause, strlen("funk-apply"),            (u8*)"funk-apply");
   this->globalize__symbol              = f2symbol__new(cause, strlen("globalize"),             (u8*)"globalize");
@@ -156,9 +156,9 @@ void funk2_globalenv__init(funk2_globalenv_t* this) {
   environment__add_var_value(cause, global_environment(), this->cdr_comma__symbol,                          nil);
   environment__add_var_value(cause, global_environment(), this->funkvar__symbol,                            nil);
   environment__add_var_value(cause, global_environment(), this->define_funk__symbol,                        nil);
-  environment__add_var_value(cause, global_environment(), this->setfunk__symbol,                            nil);
+  environment__add_var_value(cause, global_environment(), this->mutatefunk__symbol,                         nil);
   environment__add_var_value(cause, global_environment(), this->define__symbol,                             nil);
-  environment__add_var_value(cause, global_environment(), this->set__symbol,                                nil);
+  environment__add_var_value(cause, global_environment(), this->mutate__symbol,                             nil);
   environment__add_var_value(cause, global_environment(), this->and_rest__symbol,                           nil);
   environment__add_var_value(cause, global_environment(), this->apply__symbol,                              nil);
   environment__add_var_value(cause, global_environment(), this->globalize__symbol,                          nil);
@@ -177,65 +177,6 @@ void funk2_globalenv__init(funk2_globalenv_t* this) {
 
 void funk2_globalenv__destroy(funk2_globalenv_t* this) {
 }
-
-/*
-f2ptr              __f2_globalenv_c__cause__symbol = -1;
-f2ptr              __f2_bytecodes_c__cause__symbol = -1;
-f2ptr                __f2_compile_c__cause__symbol = -1;
-f2ptr                __f2_gmodule_c__cause__symbol = -1;
-f2ptr                   __f2_load_c__cause__symbol = -1;
-f2ptr                 __f2_memory_c__cause__symbol = -1;
-f2ptr              __f2_primfunks_c__cause__symbol = -1;
-f2ptr __f2_primobject_environment_c__cause__symbol = -1;
-f2ptr       __f2_primobject_frame_c__cause__symbol = -1;
-f2ptr   __f2_primobject_hashtable_c__cause__symbol = -1;
-f2ptr            __f2_primobjects_c__cause__symbol = -1;
-f2ptr                  __f2_print_c__cause__symbol = -1;
-f2ptr                __f2_pthread_c__cause__symbol = -1;
-f2ptr                 __f2_ptypes_c__cause__symbol = -1;
-f2ptr                 __f2_reader_c__cause__symbol = -1;
-f2ptr           __f2_redblacktree_c__cause__symbol = -1;
-f2ptr                   __f2_repl_c__cause__symbol = -1;
-f2ptr              __f2_scheduler_c__cause__symbol = -1;
-f2ptr                 __f2_signal_c__cause__symbol = -1;
-f2ptr                 __f2_socket_c__cause__symbol = -1;
-f2ptr             __f2_swapmemory_c__cause__symbol = -1;
-f2ptr                 __f2_thread_c__cause__symbol = -1;
-f2ptr                   __f2_time_c__cause__symbol = -1;
-f2ptr                  __f2_trace_c__cause__symbol = -1;
-f2ptr              __f2_serialize_c__cause__symbol = -1;
-f2ptr                     __funk2_c__cause__symbol = -1;
-
-f2ptr __true__symbol                   = nil; // used in f2_ptypes.c
-f2ptr __quote__symbol                  = -1;
-
-f2ptr __backquote__list__symbol        = -1;
-f2ptr __backquote__list_append__symbol = -1;
-f2ptr __comma__symbol                  = -1;
-f2ptr __cdr_comma__symbol              = -1;
-
-f2ptr __funkvar__symbol                = -1;
-f2ptr __define_funk__symbol            = -1;
-f2ptr __setfunk__symbol                = -1;
-f2ptr __define__symbol                 = -1;
-f2ptr __set__symbol                    = -1;
-f2ptr __and_rest__symbol               = -1;
-f2ptr __apply__symbol                  = -1;
-f2ptr __globalize__symbol              = -1;
-f2ptr __globalize_funk__symbol         = -1;
-f2ptr __yield__symbol                  = -1;
-
-f2ptr __stdin__symbol                  = -1;
-f2ptr __stdin__pointer                 = -1;
-
-f2ptr __stdout__symbol                 = -1;
-f2ptr __stdout__pointer                = -1;
-
-f2ptr __stdtrace__symbol               = -1;
-f2ptr __stdtrace__pointer              = -1;
-
-f2ptr __trace_all_compiles__symbol     = -1;
-*/
 
 f2ptr raw__c_source_file__cause__new(f2ptr cause, char* filename) {
   // we should use filename in a source-file cause type...

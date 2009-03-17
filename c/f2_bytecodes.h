@@ -44,7 +44,7 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__copy__symbol;
   f2ptr bytecode__lookup_type_var__symbol;
   f2ptr bytecode__define_type_var__symbol;
-  f2ptr bytecode__type_var__set__symbol;
+  f2ptr bytecode__type_var__mutate__symbol;
   f2ptr bytecode__globalize_type_var__symbol;
   f2ptr bytecode__jump__symbol;
   f2ptr bytecode__else_jump__symbol;
@@ -123,7 +123,7 @@ int                    f2__thread__bytecode__pop(                             f2
 int                    f2__thread__bytecode__copy(                            f2ptr thread, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);
 int                    f2__thread__bytecode__lookup_type_var(                 f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
 int                    f2__thread__bytecode__define_type_var(                 f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__type_var__set(                   f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__thread__bytecode__type_var__mutate(                f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
 int                    f2__thread__bytecode__globalize_type_var(              f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
 int                    f2__thread__bytecode__jump(                            f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__thread__bytecode__else_jump(                       f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);

@@ -31,14 +31,13 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__car__set__symbol           = -1;
   this->bytecode__cdr__set__symbol           = -1;
   this->bytecode__array_elt__symbol          = -1;
-  //this->bytecode__set__symbol                = -1;
   this->bytecode__swap__symbol               = -1;
   this->bytecode__push__symbol               = -1;
   this->bytecode__pop__symbol                = -1;
   this->bytecode__copy__symbol               = -1;
   this->bytecode__lookup_type_var__symbol    = -1;
   this->bytecode__define_type_var__symbol    = -1;
-  this->bytecode__type_var__set__symbol      = -1;
+  this->bytecode__type_var__mutate__symbol   = -1;
   this->bytecode__globalize_type_var__symbol = -1;
   this->bytecode__jump__symbol               = -1;
   this->bytecode__else_jump__symbol          = -1;
@@ -63,29 +62,11 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->push_pop_env_difference             = 0;
   this->push_pop_trace_difference           = 0;
   
-  // push registers
-  
   this->bytecode_trace__print_depth = 3;
 }
 
 void funk2_bytecode__destroy(funk2_bytecode_t* this) {
 }
-
-//void f2__thread__push_value(f2ptr cause, f2ptr thread)           {f2ptr reg = f2thread__value_register(thread);           if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause, nil/*f2cons__car(reg)*/, reg);} f2thread__set_value_register(thread, reg);}
-//void f2__thread__push_iter(f2ptr cause, f2ptr thread)            {f2ptr reg = f2thread__iter_register(thread);            if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause, nil/*f2cons__car(reg)*/, reg);} f2thread__set_iter_register(thread, reg);}
-//void f2__thread__push_program_counter(f2ptr cause, f2ptr thread) {f2ptr reg = f2thread__program_counter_register(thread); if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause,      f2cons__car(reg),   reg);} f2thread__set_program_counter_register(thread, reg);}
-//void f2__thread__push_args(f2ptr cause, f2ptr thread)            {f2ptr reg = f2thread__args_register(thread);            if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause, nil/*f2cons__car(reg)*/, reg);} f2thread__set_args_register(thread, reg);}
-//void f2__thread__push_return(f2ptr cause, f2ptr thread)          {f2ptr reg = f2thread__return_register(thread);          if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause, nil/*f2cons__car(reg)*/, reg);} f2thread__set_return_register(thread, reg);}
-//void f2__thread__push_env(f2ptr cause, f2ptr thread)             {f2ptr reg = f2thread__env_register(thread);             if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause, nil/*f2cons__car(reg)*/, reg);} f2thread__set_env_register(thread, reg);}
-//void f2__thread__push_trace(f2ptr cause, f2ptr thread)           {f2ptr reg = f2thread__trace_register(thread);           if (!reg) {reg = f2cons__new(cause, nil, nil);} else {reg = f2cons__new(cause, nil/*f2cons__car(reg)*/, reg);} f2thread__set_trace_register(thread, reg);}
-
-//void f2__thread__pop_value(f2ptr thread)           {f2ptr reg = f2thread__value_register(thread);           if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_value_register(thread, reg);}
-//void f2__thread__pop_iter(f2ptr thread)            {f2ptr reg = f2thread__iter_register(thread);            if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_iter_register(thread, reg);}
-//void f2__thread__pop_program_counter(f2ptr thread) {f2ptr reg = f2thread__program_counter_register(thread); if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_program_counter_register(thread, reg);}
-//void f2__thread__pop_args(f2ptr thread)            {f2ptr reg = f2thread__args_register(thread);            if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_args_register(thread, reg);}
-//void f2__thread__pop_return(f2ptr thread)          {f2ptr reg = f2thread__return_register(thread);          if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_return_register(thread, reg);}
-//void f2__thread__pop_env(f2ptr thread)             {f2ptr reg = f2thread__env_register(thread);             if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_env_register(thread, reg);}
-//void f2__thread__pop_trace(f2ptr thread)           {f2ptr reg = f2thread__trace_register(thread);           if (!reg) {reg = nil;} else {reg = f2cons__cdr(reg);} f2thread__set_trace_register(thread, reg);}
 
 void f2__thread__stack__push_value(f2ptr cause, f2ptr thread) {
   pause_gc();
@@ -2087,18 +2068,18 @@ int f2__thread__bytecode__define_type_var(f2ptr thread, f2ptr bytecode, f2ptr ty
 }
 
 
-// bytecode type_var__set [f2ptr f2ptr]
+// bytecode type_var__mutate [f2ptr f2ptr]
 
-void raw__thread__bytecode_trace__type_var__set(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr type, f2ptr var) {
-  bytecode_status("bytecode trace: [type_var-set " f2ptr__fstr " " f2ptr__fstr "]", type, var);
+void raw__thread__bytecode_trace__type_var__mutate(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr type, f2ptr var) {
+  bytecode_status("bytecode trace: [type_var-mutate " f2ptr__fstr " " f2ptr__fstr "]", type, var);
   f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, nil);
   raw__cause__event_buffer__add(cause, bytecode_event);
 }
 
-int f2__thread__bytecode__type_var__set(f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var) {
+int f2__thread__bytecode__type_var__mutate(f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__type_var__set(cause, bytecode, thread, type, var);
+    raw__thread__bytecode_trace__type_var__mutate(cause, bytecode, thread, type, var);
   }
   
   f2__thread__increment_pc(thread, cause);
@@ -2726,7 +2707,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__copy__symbol                = f2symbol__new(cause, strlen("copy"),               (u8*)"copy");
   __funk2.bytecode.bytecode__lookup_type_var__symbol     = f2symbol__new(cause, strlen("lookup"),             (u8*)"lookup");
   __funk2.bytecode.bytecode__define_type_var__symbol     = f2symbol__new(cause, strlen("define"),             (u8*)"define");
-  __funk2.bytecode.bytecode__type_var__set__symbol       = f2symbol__new(cause, strlen("set-type_var"),       (u8*)"set-type_var");
+  __funk2.bytecode.bytecode__type_var__mutate__symbol    = f2symbol__new(cause, strlen("mutate-type_var"),    (u8*)"mutate-type_var");
   __funk2.bytecode.bytecode__globalize_type_var__symbol  = f2symbol__new(cause, strlen("globalize-type_var"), (u8*)"globalize-type_var");
   __funk2.bytecode.bytecode__jump__symbol                = f2symbol__new(cause, strlen("jump"),               (u8*)"jump");
   __funk2.bytecode.bytecode__else_jump__symbol           = f2symbol__new(cause, strlen("else-jump"),          (u8*)"else-jump");

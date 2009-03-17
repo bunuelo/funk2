@@ -89,7 +89,7 @@ f2ptr f2bytecode__lookup_type_var__type(f2ptr this, f2ptr cause) {return f2bytec
 f2ptr f2bytecode__lookup_type_var__var(f2ptr this, f2ptr cause)  {return f2bytecode__arg1(this, cause);}
 
 f2ptr f2__compile__define_type_var(f2ptr cause, f2ptr type, f2ptr var)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__define_type_var__symbol, type, var, nil), nil));}
-f2ptr f2__compile__type_var__set(f2ptr cause, f2ptr type, f2ptr var)                  {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__type_var__set__symbol, type, var, nil), nil));}
+f2ptr f2__compile__type_var__mutate(f2ptr cause, f2ptr type, f2ptr var)               {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__type_var__mutate__symbol, type, var, nil), nil));}
 f2ptr f2__compile__globalize_type_var(f2ptr cause, f2ptr type, f2ptr var)             {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__globalize_type_var__symbol, type, var, nil), nil));}
 f2ptr f2__compile__jump(f2ptr cause, f2ptr new_pc)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__jump__symbol, new_pc, nil, nil), nil));}
 f2ptr f2__compile__else_jump(f2ptr cause, f2ptr new_pc)                               {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__else_jump__symbol, new_pc, nil, nil), nil));}
@@ -107,8 +107,8 @@ f2ptr f2__compile__lookup_funkvar(f2ptr cause, f2ptr funkvar) {return bcs_valid(
 f2ptr f2__compile__define_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__define_type_var(cause, __frame__variable_type__symbol,      var));}
 f2ptr f2__compile__define_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__define_type_var(cause, __frame__funk_variable_type__symbol, var));}
 
-f2ptr f2__compile__var__set(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__type_var__set(cause, __frame__variable_type__symbol,      var));}
-f2ptr f2__compile__funkvar__set(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__type_var__set(cause, __frame__funk_variable_type__symbol, var));}
+f2ptr f2__compile__var__mutate(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__type_var__mutate(cause, __frame__variable_type__symbol,      var));}
+f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__type_var__mutate(cause, __frame__funk_variable_type__symbol, var));}
 
 f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __frame__variable_type__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __frame__funk_variable_type__symbol, var));}
@@ -695,10 +695,10 @@ f2ptr   f2__compile__define_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   return bcs_valid(value_bcs);
 }
 
-f2ptr __f2__compile__set_exp__symbol = -1;
-f2ptr f2__compile__set_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
-  release__assert(__f2__compile__set_exp__symbol != -1, nil, "__f2__compile__set_exp__symbol not yet defined.");
-  f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__set_exp__symbol, exps);
+f2ptr __f2__compile__mutate_exp__symbol = -1;
+f2ptr f2__compile__mutate_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
+  release__assert(__f2__compile__mutate_exp__symbol != -1, nil, "__f2__compile__mutate_exp__symbol not yet defined.");
+  f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__mutate_exp__symbol, exps);
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
@@ -707,17 +707,17 @@ f2ptr f2__compile__set_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
     return value_bcs;
   }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
-  f2ptr var_set__bcs = f2__compile__var__set(cause, var);
+  f2ptr var_mutate__bcs = f2__compile__var__mutate(cause, var);
   
   f2ptr iter = value_bcs;
-  iter = f2__list_cdr__set(cause, iter, var_set__bcs);
+  iter = f2__list_cdr__set(cause, iter, var_mutate__bcs);
   return bcs_valid(value_bcs);
 }
 
-f2ptr __f2__compile__setfunk_exp__symbol = -1;
-f2ptr f2__compile__setfunk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
-  release__assert(__f2__compile__setfunk_exp__symbol != -1, nil, "__f2__compile__setfunk_exp__symbol not yet defined.");
-  f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__setfunk_exp__symbol, exps);
+f2ptr __f2__compile__mutatefunk_exp__symbol = -1;
+f2ptr f2__compile__mutatefunk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
+  release__assert(__f2__compile__mutatefunk_exp__symbol != -1, nil, "__f2__compile__mutatefunk_exp__symbol not yet defined.");
+  f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__mutatefunk_exp__symbol, exps);
   
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
@@ -726,10 +726,10 @@ f2ptr f2__compile__setfunk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
     return value_bcs;
   }
   if (value_bcs && (! raw__consp(value_bcs, cause))) {return value_bcs;}
-  f2ptr funkvar_set__bcs = f2__compile__funkvar__set(cause, funkvar);
+  f2ptr funkvar_mutate__bcs = f2__compile__funkvar__mutate(cause, funkvar);
   
   f2ptr iter = value_bcs;
-  iter = f2__list_cdr__set(cause, iter, funkvar_set__bcs);
+  iter = f2__list_cdr__set(cause, iter, funkvar_mutate__bcs);
   return bcs_valid(value_bcs);
 }
 
@@ -1056,8 +1056,8 @@ f2ptr f2__is_compile_special_symbol(f2ptr exp) {
 	  (exp == __funk2.globalenv.funkvar__symbol)                ||
 	  (exp == __funk2.globalenv.define_funk__symbol)            ||
 	  (exp == __funk2.globalenv.define__symbol)                 ||
-	  (exp == __funk2.globalenv.setfunk__symbol)                ||
-	  (exp == __funk2.globalenv.set__symbol)                    ||
+	  (exp == __funk2.globalenv.mutatefunk__symbol)             ||
+	  (exp == __funk2.globalenv.mutate__symbol)                 ||
 	  (exp == __funk2.globalenv.globalize__symbol)              ||
 	  (exp == __funk2.globalenv.globalize_funk__symbol)         ||
 	  (exp == __funk2.globalenv.yield__symbol)                  ||
@@ -1079,8 +1079,8 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr thread, f2ptr ex
   if (car == __funk2.globalenv.funkvar__symbol)                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, exp));}
   if (car == __funk2.globalenv.define_funk__symbol)            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_funk_exp(cause, thread, exp));}
   if (car == __funk2.globalenv.define__symbol)                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.setfunk__symbol)                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__setfunk_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.set__symbol)                    {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__set_exp(cause, thread, exp));}
+  if (car == __funk2.globalenv.mutatefunk__symbol)             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__mutatefunk_exp(cause, thread, exp));}
+  if (car == __funk2.globalenv.mutate__symbol)                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__mutate_exp(cause, thread, exp));}
   if (car == __funk2.globalenv.globalize__symbol)              {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__globalize_var_exp(cause, thread, exp));}
   if (car == __funk2.globalenv.globalize_funk__symbol)         {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__globalize_funkvar_exp(cause, thread, exp));}
   if (car == __funk2.globalenv.yield__symbol)                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__yield(cause));}
@@ -1228,7 +1228,7 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
     }
   } else if (command == __funk2.bytecode.bytecode__car__symbol) {
   } else if (command == __funk2.bytecode.bytecode__cdr__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__type_var__set__symbol) {
+  } else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
@@ -1316,8 +1316,8 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr thread, 
   if (car == __funk2.globalenv.funkvar__symbol)                {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.define_funk__symbol)            {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.define__symbol)                 {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.setfunk__symbol)                {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.set__symbol)                    {return f2cons__new(cause, nil, exp);}
+  if (car == __funk2.globalenv.mutatefunk__symbol)             {return f2cons__new(cause, nil, exp);}
+  if (car == __funk2.globalenv.mutate__symbol)                 {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.globalize__symbol)              {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.globalize_funk__symbol)         {return f2cons__new(cause, nil, exp);}
   if (car == __funk2.globalenv.yield__symbol)                  {return f2cons__new(cause, nil, exp);}
@@ -1461,8 +1461,8 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__compile__eval_args__current_arg";   __f2__compile__eval_args__current_arg__symbol   = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__define_funk_exp";          __f2__compile__define_funk_exp__symbol          = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__define_exp";               __f2__compile__define_exp__symbol               = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {char* str = "compile:f2__compile__set_exp";                  __f2__compile__set_exp__symbol                  = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {char* str = "compile:f2__compile__setfunk_exp";              __f2__compile__setfunk_exp__symbol              = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "compile:f2__compile__mutate_exp";               __f2__compile__mutate_exp__symbol               = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "compile:f2__compile__mutatefunk_exp";           __f2__compile__mutatefunk_exp__symbol           = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__globalize_var_exp";        __f2__compile__globalize_var_exp__symbol        = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__globalize_funkvar_exp";    __f2__compile__globalize_funkvar_exp__symbol    = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__apply_exp";                __f2__compile__apply_exp__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -1499,8 +1499,8 @@ void f2__compile__initialize() {
   environment__add_var_value(cause, global_environment(), __f2__compile__eval_args__current_arg__symbol,   nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__define_funk_exp__symbol,          nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__define_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __f2__compile__set_exp__symbol,                  nil);
-  environment__add_var_value(cause, global_environment(), __f2__compile__setfunk_exp__symbol,              nil);
+  environment__add_var_value(cause, global_environment(), __f2__compile__mutate_exp__symbol,               nil);
+  environment__add_var_value(cause, global_environment(), __f2__compile__mutatefunk_exp__symbol,           nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__globalize_var_exp__symbol,        nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__globalize_funkvar_exp__symbol,    nil);
   environment__add_var_value(cause, global_environment(), __f2__compile__apply_exp__symbol,                nil);

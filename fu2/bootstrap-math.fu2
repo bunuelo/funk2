@@ -98,7 +98,7 @@
     `[binary-divide ,x ,[apply &* rest]]]]
 
 
-[defunk = [x y]
+[defunk == [x y]
   [if [and [integer? x] [integer? y]] [integer-equal_sign x y]
     [if [and [pointer? x] [pointer? y]] [pointer-equal_sign x y]
       [error `runtime-error `type-check-failure]]]]
@@ -139,10 +139,10 @@
 
 [defunk <= [x y]
   [or [< x y]
-      [= x y]]]
+      [== x y]]]
 
 [defunk >= [x y]
   [or [> x y]
-      [= x y]]]
+      [== x y]]]
 
 

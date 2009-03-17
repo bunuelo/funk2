@@ -23,7 +23,7 @@
 [defunk test-actor []
   [let [[a [let [[name 'Actorina']]
 	     [actor [name        []  name]
-		    [change-name [x] [= name x]]
+		    [change-name [x] [== name x]]
 		    [say         [x] [print [list [act name this] 'says'         x]]]
 		    [yell        [x] [print [list [act name this] 'loudly says:' x]]]]]]]
     [parog [prog [act say         a 'hello']

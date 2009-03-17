@@ -1145,14 +1145,22 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   if (!x || !y) {return 0;}
   if (f2ptype__raw(x, cause) != f2ptype__raw(y, cause)) {return 0;}
   switch(f2ptype__raw(x, cause)) {
-  case ptype_symbol:       return f2__symbol__eq(cause, x, y);
-  case ptype_integer:      return (f2integer__i(x, cause) == f2integer__i(y, cause));
-  case ptype_pointer:      return (f2pointer__p(x, cause) == f2pointer__p(y, cause));
-  case ptype_char:         return (f2char__ch(x, cause) == f2char__ch(y, cause));
-  case ptype_string:       return f2__string__eq(cause, x, y);
-  case ptype_simple_array: return (x == y);
-  case ptype_traced_array: return (x == y);
-  case ptype_chunk:        return (x == y);
+  case ptype_symbol:
+    return f2__symbol__eq(cause, x, y);
+  case ptype_integer:
+    return (f2integer__i(x, cause) == f2integer__i(y, cause));
+  case ptype_pointer:
+    return (f2pointer__p(x, cause) == f2pointer__p(y, cause));
+  case ptype_char:
+    return (f2char__ch(x, cause) == f2char__ch(y, cause));
+  case ptype_string:
+    return f2__string__eq(cause, x, y);
+  case ptype_simple_array:
+    return (x == y);
+  case ptype_traced_array:
+    return (x == y);
+  case ptype_chunk:
+    return (x == y);
   default:
     error(nil, "shouldn't ever get here.");
   }

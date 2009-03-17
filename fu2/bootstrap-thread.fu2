@@ -63,7 +63,7 @@
 	  [ansi-stream-foreground stream 9] [format stream '\n' '  :args   ' [brief args_reg]]
 	  [format stream '\n']
 	  ]
-	[set stack_iter [thread_stack-get_rest stack_iter]]]]]]
+	[= stack_iter [thread_stack-get_rest stack_iter]]]]]]
 
 [defunk thread-stream_backtrace [this stream]
   [let [[stack [thread-stack this]]]
@@ -76,7 +76,7 @@
 		      [args [funkable-args funkable]]]
 		  [if [not [cons? stack_iter]]
 		      [format stream '\nerror: stack_iter is not cons.']
-		    [prog [set stack_iter [cdr stack_iter]]
+		    [prog [= stack_iter [cdr stack_iter]]
 			  [if [not [eq name `prog]]
 			      [let [[arg_iter   [if [cons? args]
 						    args
@@ -101,15 +101,15 @@
 														 `unknown-argument-name]]
 													 [brief arg_value]]]]
 									       [if [cons? arg_iter]
-										   [set arg_iter [cdr arg_iter]]
+										   [= arg_iter [cdr arg_iter]]
 										 [prog [format stream '\nerror: arg_iter is not cons.']
-										       [set arg_iter nil]]]
+										       [= arg_iter nil]]]
 									       arg_value_pair]]]
 								     [if [cons? arg_values]
 									 arg_values
 								       [prog [format stream '\nerror: arg_values is not cons.']
 									     nil]]]]]]]]]]]]]
-	  [set stack_iter [cdr stack_iter]]]]]]]
+	  [= stack_iter [cdr stack_iter]]]]]]]
 
 [defunk thread-print_backtrace [this]
   [thread-stream_backtrace this stdout]]

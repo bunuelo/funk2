@@ -23,7 +23,7 @@
 
 [defunk roboverse-init_library []
   [if [null -gmodule-roboverse-]
-      [prog [set -gmodule-roboverse- [gmodule-open [gmodule-build_path '/usr/local/lib' 'roboverse'] 0]]
+      [prog [= -gmodule-roboverse- [gmodule-open [gmodule-build_path '/usr/local/lib' 'roboverse'] 0]]
 	    [if [null -gmodule-roboverse-] [error `loading-gmodule 'loading roboverse dynamic library']]]]]
 
 'EXPORT void            roboverse__start(int build_table_scene, int paused);'

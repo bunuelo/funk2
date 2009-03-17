@@ -39,8 +39,8 @@
   ]
 
 [defunk boot-add_user_command [user_command]
-  [set user-boot-commands [append user-boot-commands
-				  [cons user_command nil]]]]
+  [= user-boot-commands [append user-boot-commands
+				[cons user_command nil]]]]
 
 ' bug: this creates a segmentation fault...
 `[defunk boot []

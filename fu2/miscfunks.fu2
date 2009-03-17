@@ -63,7 +63,7 @@
     [let [[bin_array [hashtable-bin_array this]]]
       [dotimes [i [array-length bin_array]]
 	[mapc [funk [key_value_pair]
-		    [set keys [cons [car key_value_pair] keys]]]
+		    [= keys [cons [car key_value_pair] keys]]]
 	      [array-elt bin_array i]]]]
     keys]]
 
@@ -72,7 +72,7 @@
     [let [[bin_array [hashtable-bin_array this]]]
       [dotimes [i [array-length bin_array]]
 	[mapc [funk [key_value_pair]
-		    [set values [cons [cdr key_value_pair] values]]]
+		    [= values [cons [cdr key_value_pair] values]]]
 	      [array-elt bin_array i]]]]
     values]]
 

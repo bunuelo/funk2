@@ -119,25 +119,25 @@
     [let [[exp_bcs [compile-cons tracewrap]]]
       [let [[full_bcs exp_bcs]
 	    [iter     exp_bcs]]
-	[set iter [list-set_cdr iter [compile-copy_iter_to_args tracewrap]]]
+	[= iter [list-set_cdr iter [compile-copy_iter_to_args tracewrap]]]
 	
 	[while args
-	  [set iter [list-set_cdr iter [compile-push_iter tracewrap]]]
-	  [set iter [list-set_cdr iter [compile-push_args tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-push_iter tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-push_args tracewrap]]]
 	  
-	  [set iter [list-set_cdr iter [compile-exp       tracewrap [car args]]]]
+	  [= iter [list-set_cdr iter [compile-exp       tracewrap [car args]]]]
 	  
-	  [set iter [list-set_cdr iter [compile-pop_iter  tracewrap]]]
-	  [set iter [list-set_cdr iter [compile-pop_args  tracewrap]]]
-	  [set iter [list-set_cdr iter [compile-set_car   tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-pop_iter  tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-pop_args  tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-set_car   tracewrap]]]
 	  
-	  [set args [cdr args]]
+	  [= args [cdr args]]
 	  [if args
-	      [prog [set iter [list-set_cdr iter [compile-copy_iter_to_value  tracewrap]]]
-		    [set iter [list-set_cdr iter [compile-cons                tracewrap]]]
-		    [set iter [list-set_cdr iter [compile-swap_value_and_iter tracewrap]]]
-		    [set iter [list-set_cdr iter [compile-set_cdr             tracewrap]]]
-		    [set iter [list-set_cdr iter [compile-swap_value_and_iter tracewrap]]]
+	      [prog [= iter [list-set_cdr iter [compile-copy_iter_to_value  tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-cons                tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-swap_value_and_iter tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-set_cdr             tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-swap_value_and_iter tracewrap]]]
 		    ]]]
 	[bcs-valid full_bcs]]]]]
 
@@ -148,9 +148,9 @@
 	  [bcs-valid [compile-exp tracewrap [apply funkvar_value [cdr exps]]]]
 	[let [[full_bcs [compile-eval_args tracewrap [cdr exps]]]]
 	  [let [[iter full_bcs]]
-	    [set iter [list-set_cdr iter [compile-lookup_funkvar    tracewrap funkvar]]]
-	    [set iter [list-set_cdr iter [compile-copy_pc_to_return tracewrap]]]
-	    [set iter [list-set_cdr iter [compile-funk_bytecode     tracewrap]]]
+	    [= iter [list-set_cdr iter [compile-lookup_funkvar    tracewrap funkvar]]]
+	    [= iter [list-set_cdr iter [compile-copy_pc_to_return tracewrap]]]
+	    [= iter [list-set_cdr iter [compile-funk_bytecode     tracewrap]]]
 	    [bcs-valid full_bcs]]]]]]]
 
 [defunk compile-cons_exp [tracewrap exp]
@@ -171,43 +171,43 @@
 	  [prog 'save return and environment registers'
 		[let [[full_bcs [compile-push_return tracewrap]]]
 		  [let [[iter full_bcs]]
-		    [set iter [list-set_cdr iter [compile-push_env tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-push_env tracewrap]]]
 		    
 		    'define args in funk environment'
-		    [set iter [list-set_cdr iter [compile-copy_args_to_iter tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-copy_args_to_iter tracewrap]]]
 		    [let [[var_iter [funk-args funk]]]
 		      [while var_iter
 			
 			[let [[var [car var_iter]]
 			      [cdr [cdr var_iter]]]
 			  [if [eq var `:rest]
-			      [prog [set iter [list-set_cdr iter [compile-copy_iter_to_value tracewrap]]]
-				    [set iter [list-set_cdr iter [compile-define_var tracewrap [car cdr]]]]
-				    [set var_iter nil]]
-			    [prog [set iter [list-set_cdr iter [compile-copy_iter_to_value tracewrap]]]
-				  [set iter [list-set_cdr iter [compile-else_jump tracewrap wrong_argument_number-bcs]]]
+			      [prog [= iter [list-set_cdr iter [compile-copy_iter_to_value tracewrap]]]
+				    [= iter [list-set_cdr iter [compile-define_var tracewrap [car cdr]]]]
+				    [= var_iter nil]]
+			    [prog [= iter [list-set_cdr iter [compile-copy_iter_to_value tracewrap]]]
+				  [= iter [list-set_cdr iter [compile-else_jump tracewrap wrong_argument_number-bcs]]]
 				  
-				  [set iter [list-set_cdr iter [compile-car tracewrap]]]
-				  [set iter [list-set_cdr iter [compile-define_var tracewrap var]]]
+				  [= iter [list-set_cdr iter [compile-car tracewrap]]]
+				  [= iter [list-set_cdr iter [compile-define_var tracewrap var]]]
 				  
 				  [if cdr
-				      [prog [set iter [list-set_cdr iter [compile-cdr tracewrap]]]
-					    [set iter [list-set_cdr iter [compile-copy_value_to_iter tracewrap]]]
+				      [prog [= iter [list-set_cdr iter [compile-cdr tracewrap]]]
+					    [= iter [list-set_cdr iter [compile-copy_value_to_iter tracewrap]]]
 					    ]]
 				  
-				  [set var_iter cdr]]]]]
+				  [= var_iter cdr]]]]]
 		      
 		      'execute funk body'
 		      [let [[body_bcs [compile-rawcode tracewrap [funk-body funk]]]]
 			[if [exception? body_bcs]
 			    [bcs-valid body_bcs]
-			  [prog [set iter [list-set_cdr iter body_bcs]]
+			  [prog [= iter [list-set_cdr iter body_bcs]]
 				
 				'restore return and environment registers'
-				[set iter [list-set_cdr iter [compile-pop_env           tracewrap]]]
-				[set iter [list-set_cdr iter [compile-pop_env           tracewrap]]] 'this is pushed in f2_bytecodes.c'
-				[set iter [list-set_cdr iter [compile-pop_return        tracewrap]]]
-				[set iter [list-set_cdr iter [compile-copy_return_to_pc tracewrap]]]
+				[= iter [list-set_cdr iter [compile-pop_env           tracewrap]]]
+				[= iter [list-set_cdr iter [compile-pop_env           tracewrap]]] 'this is pushed in f2_bytecodes.c'
+				[= iter [list-set_cdr iter [compile-pop_return        tracewrap]]]
+				[= iter [list-set_cdr iter [compile-copy_return_to_pc tracewrap]]]
 				
 				[funk-set_body_bytecodes funk full_bcs]
 				[bcs-valid funk_bcs]
@@ -237,8 +237,8 @@
 	  [exps_iter [cdr exps]]]
       [let [[bcs_iter full_bcs]]
 	[while exps_iter
-	  [set bcs_iter  [list-set_cdr bcs_iter [compile-exp tracewrap [car exps_iter]]]]
-	  [set exps_iter [cdr exps_iter]]]
+	  [= bcs_iter  [list-set_cdr bcs_iter [compile-exp tracewrap [car exps_iter]]]]
+	  [= exps_iter [cdr exps_iter]]]
 	full_bcs]]]]
 
 `[let [[a [thread-set_program_counter [this-thread] [compile-exp nil `[funk [x] [print x]]]]

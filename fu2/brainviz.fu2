@@ -23,7 +23,7 @@
 
 [defunk brainviz-init_library []
   [if [null -gmodule-brainviz-]
-      [prog [set -gmodule-brainviz- [gmodule-open [gmodule-build_path '/usr/local/lib' 'brainviz'] 0]]
+      [prog [= -gmodule-brainviz- [gmodule-open [gmodule-build_path '/usr/local/lib' 'brainviz'] 0]]
 	    [if [null -gmodule-brainviz-] [error `loading-gmodule 'loading brainviz dynamic library']]]]]
 
 [defunk brainviz__render-cfunk_ptr [] [gmodule-symbol -gmodule-brainviz- 'brainviz__render']]

@@ -23,7 +23,7 @@
 
 [globalize *active_critics_type_hash* nil]
 
-[defmetro critics-deactivate_all [] `[set *active_critics_type_hash* [hashtable-new 5]]]
+[defmetro critics-deactivate_all [] `[= *active_critics_type_hash* [hashtable-new 5]]]
 
 [critics-deactivate_all]
 

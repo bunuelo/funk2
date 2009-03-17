@@ -87,7 +87,7 @@
       [let [[full_bcs                     [compile-push_return]]]
 	'save return and environment registers'
 	[let [[iter full_bcs]]
-	  [set iter [set-list-cdr iter [compile-push_env]]]
+	  [= iter [set-list-cdr iter [compile-push_env]]]
 	  'define args in lambda environment'
 	  [setf iter [set-list-cdr iter [compile-copy_args_to_iter]]]
 	  [let [[var_iter [f2lambda-args lambda]]]
@@ -97,31 +97,31 @@
 			[let [[var [car var_iter]]
 			      [cdr [cdr var_iter]]]
 			  [if [eq var `:rest]
-			      [prog [set iter [set-list-cdr iter [compile-copy_iter_to_value]]]
-				    [set iter [set-list-cdr iter [compile-define_var [car cdr]]]]
-				    [set var_iter nil]]
-			    [prog [set iter [set-list-cdr iter [compile-copy_iter_to_value]]]
-				  [set iter [set-list-cdr iter [compile-else_jump &wrong_argument_number]]]
+			      [prog [= iter [set-list-cdr iter [compile-copy_iter_to_value]]]
+				    [= iter [set-list-cdr iter [compile-define_var [car cdr]]]]
+				    [= var_iter nil]]
+			    [prog [= iter [set-list-cdr iter [compile-copy_iter_to_value]]]
+				  [= iter [set-list-cdr iter [compile-else_jump &wrong_argument_number]]]
 				  
-				  [set iter [set-list-cdr iter [compile-car]]]
-				  [set iter [set-list-cdr iter [compile-define_var var]]]
+				  [= iter [set-list-cdr iter [compile-car]]]
+				  [= iter [set-list-cdr iter [compile-define_var var]]]
 				  
 				  [if cdr
-				      [prog [set iter [set-list-cdr iter [compile-cdr]]]
-					    [set iter [set-list-cdr iter [compile-copy_value_to_iter]]]]]
-				  [set var_iter cdr]]]
+				      [prog [= iter [set-list-cdr iter [compile-cdr]]]
+					    [= iter [set-list-cdr iter [compile-copy_value_to_iter]]]]]
+				  [= var_iter cdr]]]
 			  [var_iter-loop]]]]]
 	    [var_iter-loop]
 	    
 	    'execute lambda body'
 	    [let [[body_bcs [compile-rawcode thread [lambda-body lambda]]]]
-	      [set iter [set-list-cdr iter body_bcs]]
+	      [= iter [set-list-cdr iter body_bcs]]
 	      
 	      'restore return and environment registers'
-	      [set iter [set-list-cdr iter [compile-pop_env]]]
-	      [set iter [set-list-cdr iter [compile-pop_env]]] 'this is pushed in f2_bytecodes.c'
-	      [set iter [set-list-cdr iter [compile-pop_return]]]
-	      [set iter [set-list-cdr iter [compile-copy_return_to_pc]]]
+	      [= iter [set-list-cdr iter [compile-pop_env]]]
+	      [= iter [set-list-cdr iter [compile-pop_env]]] 'this is pushed in f2_bytecodes.c'
+	      [= iter [set-list-cdr iter [compile-pop_return]]]
+	      [= iter [set-list-cdr iter [compile-copy_return_to_pc]]]
 	      
 	      [lambda-set_body_bytecodes lambda full_bcs]
 	      

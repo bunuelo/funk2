@@ -32,12 +32,12 @@
 
 [defunk rlglue-init_library []
   [if [null -gmodule-rlglue-]
-      [prog [set -gmodule-rlglue- [gmodule-open [gmodule-build_path -gmodule-rlglue-dynamic_library-directory- -gmodule-rlglue-dynamic_library-name-] 0]]
+      [prog [= -gmodule-rlglue- [gmodule-open [gmodule-build_path -gmodule-rlglue-dynamic_library-directory- -gmodule-rlglue-dynamic_library-name-] 0]]
 	    [if [null -gmodule-rlglue-] [error `loading-gmodule 'loading rlglue dynamic library']]]]]
 
 [defunk rlglue_agent-init_library []
   [if [null -gmodule-rlglue_agent-]
-      [prog [set -gmodule-rlglue_agent- [gmodule-open [gmodule-build_path -gmodule-rlglue_agent-dynamic_library-directory- -gmodule-rlglue_agent-dynamic_library-name-] 0]]
+      [prog [= -gmodule-rlglue_agent- [gmodule-open [gmodule-build_path -gmodule-rlglue_agent-dynamic_library-directory- -gmodule-rlglue_agent-dynamic_library-name-] 0]]
 	    [if [null -gmodule-rlglue_agent-] [error `loading-gmodule 'loading rlglue_agent dynamic library']]]]]
 
 

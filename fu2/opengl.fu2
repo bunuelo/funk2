@@ -23,7 +23,7 @@
 
 [defunk opengl-init_library []
   [if [null -gmodule-opengl-]
-      [prog [set -gmodule-opengl- [gmodule-open [gmodule-build_path '/usr/X11R6/lib64' 'GL'] 0]]
+      [prog [= -gmodule-opengl- [gmodule-open [gmodule-build_path '/usr/X11R6/lib64' 'GL'] 0]]
 	    [if [null -gmodule-opengl-] [error `loading-gmodule 'loading opengl dynamic library']]]]]
 
 [defunk-alien -gmodule-opengl- gl_begin            nil     'glBegin'          [[integer type]]]

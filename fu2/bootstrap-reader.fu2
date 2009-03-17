@@ -24,7 +24,7 @@
 [defunk stream-read_character [stream]
   [let [[ch nil]]
     [while [not ch]
-      [set ch [stream-try_read_character stream]]]
+      [= ch [stream-try_read_character stream]]]
     ch]]
 
 [defunk read_character []
@@ -36,7 +36,7 @@
     [while [not done]
       [let [[read_ch [stream-read_character stream]]]
 	[if [eq read_ch char:enter]
-	    [set done t]
-	  [set seq [cons read_ch seq]]]]]
+	    [= done t]
+	  [= seq [cons read_ch seq]]]]]
     seq]]
 

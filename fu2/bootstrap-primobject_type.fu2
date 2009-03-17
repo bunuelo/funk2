@@ -52,7 +52,7 @@
 		      [default_exp [slotdef-default_exp slotdef]]]
 		  [let [[slot_type [primobject_slot_type-new name default_exp array_index]]]
 		    [frame-add_var_value this name slot_type]
-		    [set array_index [+ array_index 1]]]]]
+		    [= array_index [+ array_index 1]]]]]
 	  slotdefs]
     this]]
 

@@ -49,7 +49,7 @@
 			     @[mapcar [funk [node_name]
 					    [let [[node [graph-find_node this node_name]]]
 					      [if [null node]
-						  [prog [set node [graph_node-new node_name nil]]
+						  [prog [= node [graph_node-new node_name nil]]
 							[push node [graph-nodes this]]]]
 					      node]]
 				      node_names]]]]

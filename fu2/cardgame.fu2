@@ -72,7 +72,7 @@
 			       [dotimes [y row-num]
 				 [dotimes [x column-num]
 				   [format stdout '\n(x, y) = ('] [format stdout x] [format stdout ', '] [format stdout y] [format stdout ')']
-				   [set cards [cons [elt space-2d y x] cards]]]]
+				   [= cards [cons [elt space-2d y x] cards]]]]
 			       cards]]
 	   [print      []    [prog [dotimes [y row-num]
 				     [format stdout '\n']

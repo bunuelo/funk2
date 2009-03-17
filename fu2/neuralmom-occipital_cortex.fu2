@@ -34,9 +34,9 @@
 [let [[last_camera_input nil]]
   `[define-brain_area left_retina [camera_input] [red_green_map blue_yellow_map edge_map motion_map]
      'visual filters, local edge detection, local motion detection, red-green and blue-yellow red-green-blue dimension reduction'
-     [set red_green_map   [camera_input-to__red_green_map   camera_input]]
-     [set blue_yellow_map [camera_input-to__blue_yellow_map camera_input]]
-     [set motion_map      [camera_input-to__motion_map      camera_input]]
+     [= red_green_map   [camera_input-to__red_green_map   camera_input]]
+     [= blue_yellow_map [camera_input-to__blue_yellow_map camera_input]]
+     [= motion_map      [camera_input-to__motion_map      camera_input]]
      nil]
    ]
 
@@ -46,9 +46,9 @@
 [let [[last_camera_input nil]]
   `[define-brain_area right_retina [camera_input] [red_green_map blue_yellow_map edge_map motion_map]
      'visual filters, local edge detection, local motion detection, red-green and blue-yellow red-green-blue dimension reduction'
-     [set red_green_map   [camera_input-to__red_green_map   camera_input]]
-     [set blue_yellow_map [camera_input-to__blue_yellow_map camera_input]]
-     [set motion_map      [camera_input-to__motion_map      camera_input]]
+     [= red_green_map   [camera_input-to__red_green_map   camera_input]]
+     [= blue_yellow_map [camera_input-to__blue_yellow_map camera_input]]
+     [= motion_map      [camera_input-to__motion_map      camera_input]]
      nil]
    ]
 
@@ -57,10 +57,10 @@
 
 `[define-brain_area superior_colliculus [red_green_map-input blue_yellow_map-input edge_map motion_map-input] [red_green_map-output blue_yellow_map-output edge_map motion_map-output]
    '2D visual input buffer'
-   [set red_green_map-outut   reg_green_map-input] 
-   [set blue_yellow_map-outut blue_yellow_map-input] 
-   [set edge_map-outut        edge_map-input] 
-   [set motion_map-outut      motion_map-input] 
+   [= red_green_map-outut   reg_green_map-input] 
+   [= blue_yellow_map-outut blue_yellow_map-input] 
+   [= edge_map-outut        edge_map-input] 
+   [= motion_map-outut      motion_map-input] 
    nil]
 
 [defunk visual_object_recognition-to__visual_object_knowledge [visual_object_recognition]
@@ -68,6 +68,6 @@
 
 [define-brain_area occipital_cortex [visual_object_recognition] [visual_object_knowledge]
   '2D visual processing'
-  [set visual_object_knowledge [visual_object_recognition-to__visual_object_knowledge visual_object_recognition]]
+  [= visual_object_knowledge [visual_object_recognition-to__visual_object_knowledge visual_object_recognition]]
   nil]
 

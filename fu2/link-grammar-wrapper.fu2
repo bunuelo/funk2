@@ -26,7 +26,7 @@
 
 [defunk link_grammar-init_library []
   [if [null -gmodule-link_grammar-]
-      [prog [set -gmodule-link_grammar- [gmodule-open [gmodule-build_path -gmodule-link_grammar-dynamic_library-directory- -gmodule-link_grammar-dynamic_library-name-] 0]]
+      [prog [= -gmodule-link_grammar- [gmodule-open [gmodule-build_path -gmodule-link_grammar-dynamic_library-directory- -gmodule-link_grammar-dynamic_library-name-] 0]]
 	    [if [null -gmodule-link_grammar-] [error `loading-gmodule 'loading link-parser dynamic library']]]]]
 
 

@@ -23,7 +23,7 @@
   `[let [[thought-slot_value ,value]
 	 [this              ,this]]
      [primfunk:thought_process__read_funk__put  this ,name [funk []           thought-slot_value]]
-     [primfunk:thought_process__write_funk__put this ,name [funk [value] [set thought-slot_value value]]]]]
+     [primfunk:thought_process__write_funk__put this ,name [funk [value] [= thought-slot_value value]]]]]
 
 [defmetro thought-defunk_slot [this slot args :body body]
   `[primfunk:thought_process__execute_funk__put ,this ,slot [funk ,[cons `this args] @body]]]  
@@ -38,7 +38,7 @@
   `[let [[this [primfunk:thought_process]]]
      [let [[thought-name-slot_value [quote ,name]]]
        [primfunk:thought_process__read_funk__put  this `name [funk []           thought-name-slot_value]]
-       [primfunk:thought_process__write_funk__put this `name [funk [value] [set thought-name-slot_value value]]]]
+       [primfunk:thought_process__write_funk__put this `name [funk [value] [= thought-name-slot_value value]]]]
      [prog @[mapcar [funk [body_exp]
 			  [cond [[cons? body_exp] [let [[command [car body_exp]]]
 						    [let [[command_mapped [cond [[eq command `define] `thought_with_body-define]
@@ -64,10 +64,10 @@
       [let [[parents_iter [primfunk:thought_process__read_funk this `parent_types]]]
 	[while parents_iter
 	  [let [[parent [car parents_iter]]]
-	    [set this__read_funk [thought_process-read_funk-lookup parent slot]]
+	    [= this__read_funk [thought_process-read_funk-lookup parent slot]]
 	    [if this__read_funk
-		[set parents_iter nil]
-	      [set parents_iter [cdr parents_iter]]]]]]]
+		[= parents_iter nil]
+	      [= parents_iter [cdr parents_iter]]]]]]]
     [if this__read_funk
 	this__read_funk
       [exception `run-time `[thought_process-read_slot ,[thought-name this] ,slot]]]]]
@@ -79,10 +79,10 @@
       [let [[parents_iter [primfunk:thought_process__write_funk this `parent_types]]]
 	[while parents_iter
 	  [let [[parent [car parents_iter]]]
-	    [set this__write_funk [thought_process-read_write-lookup parent slot]]
+	    [= this__write_funk [thought_process-read_write-lookup parent slot]]
 	    [if this__write_funk
-		[set parents_iter nil]
-	      [set parents_iter [cdr parents_iter]]]]]]]
+		[= parents_iter nil]
+	      [= parents_iter [cdr parents_iter]]]]]]]
     [if this__write_funk
 	this__write_funk
       [exception `run-time `[thought_process-write_slot ,[thought-name this] ,slot]]]]]
@@ -94,10 +94,10 @@
       [let [[parents_iter [primfunk:thought_process__execute_funk this `parent_types]]]
 	[while parents_iter
 	  [let [[parent [car parents_iter]]]
-	    [set this__execute_funk [thought_process-execute_funk-lookup parent slot]]
+	    [= this__execute_funk [thought_process-execute_funk-lookup parent slot]]
 	    [if this__execute_funk
-		[set parents_iter nil]
-	      [set parents_iter [cdr parents_iter]]]]]]]
+		[= parents_iter nil]
+	      [= parents_iter [cdr parents_iter]]]]]]]
     [if this__execute_funk
 	this__execute_funk
       [exception `run-time `[thought_process-execute_slot ,[thought-name this] ,slot]]]]]
@@ -264,7 +264,7 @@
   [let [[this         [primfunk:thought_process]]
 	[parent_types [list type]]]
     [primfunk:thought_process__read_funk__put  this `parent_types [funk []           parent_types]]
-    [primfunk:thought_process__write_funk__put this `parent_types [funk [value] [set parent_types value]]]
+    [primfunk:thought_process__write_funk__put this `parent_types [funk [value] [= parent_types value]]]
     [primfunk:thought_process__read_funk__put  this `real_value   [funk []           exp]]
     this]]
 

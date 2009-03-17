@@ -125,37 +125,37 @@
 
 '80483d1:	c3                   	ret    '
 [defunk x86_ret-x86_compile [chunk index]
-  [set index [x86_8bit-x86_compile chunk index #xC3]]
+  [= index [x86_8bit-x86_compile chunk index #xC3]]
   index]
 
 'x86 call function'
 
 '80483ff:	e8 b0 ff ff ff       	call   80483b4 <test1>'
 [defunk x86_call_relative-x86_compile [chunk index value]
-  [set index [x86_8bit-x86_compile  chunk index #xE8]]
-  [set index [x86_32bit-x86_compile chunk index value]]
+  [= index [x86_8bit-x86_compile  chunk index #xE8]]
+  [= index [x86_32bit-x86_compile chunk index value]]
   index]
 
 'x86 add function'
 
 '804840e:	83 c4 10             	add    $0x10,%esp'
 [defunk x86_add_const_to_esp-x86_compile [chunk index value]
-  [set index [x86_16bit-x86_compile chunk index #xC483]]
-  [set index [x86_8bit-x86_compile  chunk index value]]
+  [= index [x86_16bit-x86_compile chunk index #xC483]]
+  [= index [x86_8bit-x86_compile  chunk index value]]
   index]
 
 'x86 subtract function'
 
 '80483d6:	83 ec 10             	sub    $0x10,%esp'
 [defunk x86_sub_8bit_from_esp-x86_compile [chunk index value]
-  [set index [x86_16bit-x86_compile chunk index #xEC83]]
-  [set index [x86_8bit-x86_compile  chunk index value]]
+  [= index [x86_16bit-x86_compile chunk index #xEC83]]
+  [= index [x86_8bit-x86_compile  chunk index value]]
   index]
 
 'x86 leave function'
 
 '80483da:	c9                   	leave  '
 [defunk x86_leave-x86_compile [chunk index]
-  [set index [x86_8bit-x86_compile chunk index #xC9]]
+  [= index [x86_8bit-x86_compile chunk index #xC9]]
   index]
 

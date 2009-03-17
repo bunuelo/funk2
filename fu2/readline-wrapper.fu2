@@ -4,7 +4,7 @@
 
 [defunk readline-init_library []
   [if [null -gmodule-readline-]
-      [prog [set -gmodule-readline- [gmodule-open [gmodule-build_path './extern/readline-6.0/shlib' 'readline'] 0]]
+      [prog [= -gmodule-readline- [gmodule-open [gmodule-build_path './extern/readline-6.0/shlib' 'readline'] 0]]
 	    [if [null -gmodule-readline-] [error `loading-gmodule 'loading readline dynamic library']]]]]
 
 

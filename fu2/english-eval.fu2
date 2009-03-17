@@ -45,11 +45,11 @@
     [while exp_iter
       [if [or [and [cons? this_exp] [potree-is_strictly_contained_in_potree this_exp [car exp_iter]]]
 	      [eq this_exp [car exp_iter]]]
-	  [prog [set this_iter [cdr this_iter]]
+	  [prog [= this_iter [cdr this_iter]]
 		[if this_iter
-		    [set this_exp [car this_iter]]
-		  [set exp_iter [cons nil nil]]]]]
-      [set exp_iter  [cdr exp_iter]]]
+		    [= this_exp [car this_iter]]
+		  [= exp_iter [cons nil nil]]]]]
+      [= exp_iter  [cdr exp_iter]]]
     [null this_iter]]]
 
 [defunk potree-is_greedily_contained_in_sequence-helper [this sequence_iter_place]
@@ -59,17 +59,17 @@
     [while sequence_iter
       [let [[found_match nil]]
 	[if [and [cons? this_exp] [potree-is_greedily_contained_in_sequence-helper this_exp sequence_iter_place]]
-	    [prog [set found_match t]
-		  [set sequence_iter [place-thing sequence_iter_place]]]
+	    [prog [= found_match t]
+		  [= sequence_iter [place-thing sequence_iter_place]]]
 	  [prog [place-thing-set sequence_iter_place sequence_iter]
 		[if [eq this_exp [car sequence_iter]]
-		    [set found_match t]]]]
+		    [= found_match t]]]]
 	[if found_match
-	    [prog [set this_iter [cdr this_iter]]
+	    [prog [= this_iter [cdr this_iter]]
 		  [if this_iter
-		      [set this_exp [car this_iter]]
-		    [set sequence_iter [cons nil nil]]]]]]
-      [set sequence_iter [cdr sequence_iter]]
+		      [= this_exp [car this_iter]]
+		    [= sequence_iter [cons nil nil]]]]]]
+      [= sequence_iter [cdr sequence_iter]]
       [place-thing-set sequence_iter_place sequence_iter]]
     [null this_iter]]]
 
@@ -77,9 +77,9 @@
   [let [[retval nil]]
     [while sequence
       [if [potree-is_greedily_contained_in_sequence-helper this [place sequence]]
-	  [prog [set retval   t]
-		[set sequence nil]]]
-      [set sequence [cdr sequence]]]
+	  [prog [= retval   t]
+		[= sequence nil]]]
+      [= sequence [cdr sequence]]]
     retval]]
 
 [defunk critic-matches [this sequence]
@@ -92,8 +92,8 @@
   [let [[keyvalue_pair [hashtable-lookup_keyvalue_pair *english-eval:knowledge_atom_hash* knowledge]]
 	[nodes         []]]
     [if keyvalue_pair
-	[set nodes [cdr keyvalue_pair]]]
-    [potree-foreach_node_in_first_layer [english_pattern-potree knowledge] [funk [node] [set nodes [cons nodes value]]]]
+	[= nodes [cdr keyvalue_pair]]]
+    [potree-foreach_node_in_first_layer [english_pattern-potree knowledge] [funk [node] [= nodes [cons nodes value]]]]
     [hashtable-add_keyvalue_pair *english-eval:knowledge_atom_hash* nodes]
     knowledge]]
 

@@ -35,8 +35,8 @@
     'Strip comment strings off of the beginning of the body.  Note that a string at the end of the body is a return value and not a comment.'
     [while [let [[car [car rest_body]]]
 	     [if [and [string? car] [cdr rest_body]]
-		 [prog [set comments  [append comments [list car]]]
-		       [set rest_body [cdr rest_body]]
+		 [prog [= comments  [append comments [list car]]]
+		       [= rest_body [cdr rest_body]]
 		       t]
 	       nil]]]
     `[hashtable-add_keyvalue_pair *neuralmom-brain_area-hashtable* [quote ,name] [neuralmom-brain_area-new [quote ,name] [quote ,inputs] [quote ,outputs] [quote ,comments] [quote ,rest_body]]]]]
@@ -61,8 +61,8 @@
 	    [let [[index__next [+ 1 index]]]
 	      [if [>= index__next bin_array__length]
 		  nil
-		[set new_hashtable_iter [hashtable_iter-new hashtable index__next [array-elt bin_array index__next]]]]]]]
-      [set new_hashtable_iter [hashtable_iter-new hashtable index [cdr iter]]]]
+		[= new_hashtable_iter [hashtable_iter-new hashtable index__next [array-elt bin_array index__next]]]]]]]
+      [= new_hashtable_iter [hashtable_iter-new hashtable index [cdr iter]]]]
     [let [[new_iter [hashtable_iter-iter new_hashtable_iter]]]
       [if new_iter
 	  new_hashtable_iter
@@ -74,7 +74,7 @@
   [let [[hashtable_iter [hashtable-new_iter *neuralmom-brain_area-hashtable*]]]
     [while hashtable_iter
       [apply funk [cons [hashtable_iter-value hashtable_iter] nil]]
-      [set hashtable_iter [hashtable_iter-next hashtable_iter]]]]]
+      [= hashtable_iter [hashtable_iter-next hashtable_iter]]]]]
 
 [defunk step_all_brain_areas []
   [for_each-brain_area

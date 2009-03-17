@@ -40,7 +40,7 @@
 
 [define-brain_area frontal_central_sulcus [motor_deliberation] [cortical_motor_control]
   'primary motor control processing'
-  [set cortical_motor_control [motor_deeliberation-to__corical_motor_control motor_deliberation]]
+  [= cortical_motor_control [motor_deeliberation-to__corical_motor_control motor_deliberation]]
   nil]
 
 
@@ -51,7 +51,7 @@
 
 [define-brain_area parietal_central_sulcus [temperature_body_map pressure_body_map stretch_body_map cell_damage_body_map ] [somatosensory_objects]
   'primary somatosensory processing'
-  [set somatosensory_objects [body_maps-to_somatorsensory_objects temperative_body_map pressure_body_map stretch_body_map cell_daamage_body_map]]
+  [= somatosensory_objects [body_maps-to_somatorsensory_objects temperative_body_map pressure_body_map stretch_body_map cell_daamage_body_map]]
   nil]
 
 
@@ -62,7 +62,7 @@
 
 `[define-brain_area prefrontal_cortex [motor_planning] [motor_deliberation]
    'motor control buffer (imagination) processing'
-   [set motor_deliberation [motor_planning-to_motor_deliberation motor_planning]]
+   [= motor_deliberation [motor_planning-to_motor_deliberation motor_planning]]
    nil]
 
 

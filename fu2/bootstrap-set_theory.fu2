@@ -50,7 +50,7 @@
         [cons car_a [difference [cdr a] b]]]]]]
 
 
-'[let [[y 0]] [mapc [funk [x] [set y [+ x y]]] [list 0 1 2 3 4]] y]'
+'[let [[y 0]] [mapc [funk [x] [= y [+ x y]]] [list 0 1 2 3 4]] y]'
 
 '[mapcar [y 0] [funk [x,y] [+= y x] ] ]'
 
@@ -90,10 +90,10 @@
   [let [[results [list nil]]]
     [mapc [funk [x]
             [let [[old_results results]]
-              [set results nil]
+              [= results nil]
               [mapc [funk [y]
-                      [set results [cons [cons x y] results]]
-                      [set results [cons y results]]]
+                      [= results [cons [cons x y] results]]
+                      [= results [cons y results]]]
                     old_results]]]
           a]
     results]]

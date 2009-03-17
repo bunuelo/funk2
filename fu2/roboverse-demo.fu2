@@ -27,8 +27,8 @@
   [let [[slotvalue_iter  slotvalues]
 	[slotvalue_pairs nil]]
     [while slotvalue_iter
-      [set slotvalue_pairs [cons [cons [car slotvalue_iter] [cadr slotvalue_iter]] slotvalue_pairs]]
-      [set slotvalue_iter [cddr slotvalue_iter]]]
+      [= slotvalue_pairs [cons [cons [car slotvalue_iter] [cadr slotvalue_iter]] slotvalue_pairs]]
+      [= slotvalue_iter [cddr slotvalue_iter]]]
     [let [[this [array-new 3]]]
       [put `roboframe      [array-elt this 0]]
       [put type            [array-elt this 1]]
@@ -44,9 +44,9 @@
 	[return_value        nil]]
     [while slotvalue_pair_iter
       [if [eq slot [roboframe-slotvalue_pair-slot [car slotvalue_pair_iter]]]
-	  [prog [set return_value [roboframe-slotvalue_pair-value [car slotvalue_pair_iter]]]
-		[set slotvalue_pair_iter nil]]
-	[set slotvalue_pair_iter [cdr slotvalue_pair_iter]]]]
+	  [prog [= return_value [roboframe-slotvalue_pair-value [car slotvalue_pair_iter]]]
+		[= slotvalue_pair_iter nil]]
+	[= slotvalue_pair_iter [cdr slotvalue_pair_iter]]]]
     return_value]]
 
 [defmetro xy_position [x y] `[roboframe `location_frame-xy_position `:x ,x `:y ,y]]
@@ -95,8 +95,8 @@
      [trace-off [while still_running
 		  [format stdout '\nrobot (' [robot-name robot] ') here.']
 		  [roboverse-robot-move_to [robot-id robot] [integer-to_double x] [integer-to_double y] [integer-to_double z]] 
-		  [set x [- x]]
-		  [set y [- y]]
+		  [= x [- x]]
+		  [= y [- y]]
 		  ]
 		[format stdout '\nexiting (' [robot-name robot] ') robot loop.']]]]
 
@@ -108,7 +108,7 @@
 		    [let [[current_trace [thread-trace reactive_thread]]]
 		      [if [not [eq current_trace last_seen_trace]]
 			  [prog [print '\nnew trace!']
-				[set last_seen_trace current_trace]]
+				[= last_seen_trace current_trace]]
 			[print '\nold trace...']]]]]]]]
 
 [format stdout
@@ -154,7 +154,7 @@
 			      
 			      [loop]]]]]]
 	  [loop]
-	  [set still_running nil]]]]]
+	  [= still_running nil]]]]]
   [roboverse-stop]
   [print 'Demo done.']]
 

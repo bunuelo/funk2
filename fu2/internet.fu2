@@ -24,16 +24,16 @@
 		    'rct.media.mit.edu']]]
   
   [defunks-mutex [mutex]
-    [integer:funk_hosts-add [name] [set funk_hosts [cons name funk_hosts]]]
+    [integer:funk_hosts-add [name] [= funk_hosts [cons name funk_hosts]]]
     [integer:funk_hosts     []     funk_hosts]]]
 
 [globalize grid:goals `[download_known_funk_hosts]]
 
 [let [[is_on nil]]
   [label grid-startup []
-	 [set is_on t]]
+	 [= is_on t]]
   [label grid-shutdown []
-	 [set is_on nil]]
+	 [= is_on nil]]
   [defunks-mutex [mutex]
     [internet:grid-is_on    [] is_on]
     [internet:grid-turn_on  [] [if [not is_on] [grid-startup]]]

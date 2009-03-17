@@ -241,13 +241,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	if (! raw__larvap(larva, cause)) {
 	  status("  larva is not a larva.");
 	} else {
-	  f2ptr type  = f2larva__type(larva, cause);
-	  if (! raw__integerp(type, cause)) {
-	    status("larva type is not an integer.");
-	  } else {
-	    u64 raw_type = f2integer__i(type, cause);
-	    status("  larva type=" u64__fstr, raw_type);
-	  }
+	  u64 raw_type = f2larva__type(larva, cause);
+	  status("  larva type=" u64__fstr, raw_type);
 	}
       }
     }

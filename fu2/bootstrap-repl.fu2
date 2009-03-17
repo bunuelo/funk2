@@ -168,7 +168,7 @@
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 
-[load 'fu2/primobjects.fu2']
+[primfunk:load 'fu2/primobjects.fu2']
 
 'primitive accessors and mututators completely defined at this point.'
 
@@ -229,7 +229,7 @@
 	  [mapc [funk [elt]
 		      [define new_cons [cons [apply proc [cons elt nil]] nil]]
 		      [cdr-set iter new_cons]
-		      [set iter [cdr iter]]]
+		      [mutate iter [cdr iter]]]
 		[cdr seq]]
 	  cons_result]]]
 
@@ -386,7 +386,7 @@
        [define-funk dotimes-loop
 	 [funk []
 	       [prog @body]
-	       [set ,var [integer-add ,var 1]]
+	       [mutate ,var [integer-add ,var 1]]
 	       [if [integer-less_than ,var max_index]
 		   [dotimes-loop]]]]
        [if [integer-less_than ,var max_index]
@@ -484,7 +484,7 @@
 
 `[defmetro put [value place]
   [let [[dplace [demetropolize_full place]]]
-    [cond [[symbol? dplace] `[set ,dplace ,value]]
+    [cond [[symbol? dplace] `[mutate ,dplace ,value]]
 	  [[cons?   dplace] [let [[car [car dplace]]]
 			      [cond [[eq car   `safe:cons-car]                     `[safe:cons-car-set               ,[cadr dplace] ,value]]
 				    [[eq car `unsafe:cons-car]                   `[unsafe:cons-car-set               ,[cadr dplace] ,value]]
@@ -701,7 +701,7 @@
 		  [if [not [eq element sequence_element]]
 		      [let [[new_cons [cons sequence_element nil]]]
 			[cons-cdr-set new_sequence_iter new_cons]
-			[set new_sequence_iter new_cons]]]]
+			[mutate new_sequence_iter new_cons]]]]
 	    sequence]
       [cdr new_sequence]]]]
 
@@ -791,7 +791,7 @@
 															    [mapcar [funk [arg]
 																	  [if [cons? arg_value_iter]
 																	      [let [[arg_value [car arg_value_iter]]]
-																		[set arg_value_iter [cdr arg_value_iter]]
+																		[mutate arg_value_iter [cdr arg_value_iter]]
 																		[list [colonize arg] [brief arg_value]]]
 																	    [list [colonize arg] `?]]]
 																    [funkable-args value]]]]]]]]
@@ -805,7 +805,7 @@
 															  [let [[arg_value_iter args]]
 															    [mapcar [funk [arg]
 																	  [let [[arg_value [car arg_value_iter]]]
-																	    [set arg_value_iter [cdr arg_value_iter]]
+																	    [mutate arg_value_iter [cdr arg_value_iter]]
 																	    [list [colonize arg] [brief arg_value]]]]
 																    [funkable-args value]]]]]]]]
 				      [t                       nil]]]]]
@@ -817,6 +817,8 @@
 [defunk memblock-set_init_render_on    [render_on]    [if [integer? render_on] [unsafe:memblock-set_init_render_on render_on] [error `type-error [list `memblock-set_init_render_on render_on]]]]
 [defunk memblock-set_init_render_noise [render_noise] [if [float? render_noise] [unsafe:memblock-set_init_render_noise render_noise] [error `type-error [list `memblock-set_init_render_noise render_noise]]]]
 
+[defmetro set [var value] `[mutate ,var ,value]]
+
 'redefining error in a better way.'
 `[defunk error [type value]
    [let [[except [exception `error [cons type [cons value nil]]]]]
@@ -824,8 +826,8 @@
      `[print `[this-thread: ,[this-thread]]]
       except]]
 
-[load 'fu2/bootstrap-reader.fu2']
-[load 'fu2/repl.fu2']
+[primfunk:load 'fu2/bootstrap-reader.fu2']
+[primfunk:load 'fu2/repl.fu2']
 
 [format stdout '\n'
 	'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'

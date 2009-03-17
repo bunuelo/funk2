@@ -77,10 +77,10 @@
 		    [let [[conjunctive_negative_preconditions all_states]
 			  [conjunctive_positive_preconditions all_states]]
 		      [mapc [funk [precondition]
-				  [set conjunctive_negative_preconditions [intersect precondition conjunctive_negative_preconditions]]]
+				  [= conjunctive_negative_preconditions [intersect precondition conjunctive_negative_preconditions]]]
 			    negative_preconditions]
 		      [mapc [funk [precondition]
-				  [set conjunctive_negative_preconditions [intersect precondition conjunctive_positive_preconditions]]]
+				  [= conjunctive_negative_preconditions [intersect precondition conjunctive_positive_preconditions]]]
 			    positive_preconditions]
 		      [learning_agent_plan-conjunctive_rule-set exploration_plan [append conjunctive_positive_preconditions
 											 [mapcar [funk [precondition]

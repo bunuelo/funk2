@@ -167,16 +167,16 @@ f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr 
     f2ptr bytecode = f2cons__car(iter, cause);
     next           = f2cons__cdr(iter, cause);
     f2ptr bytecode__command = f2bytecode__command(bytecode, cause);
-    if (bytecode__command == __funk2.bytecode.bytecode__lookup_type_var__symbol) {
+    if (f2__symbol__eq(cause, bytecode__command, __funk2.bytecode.bytecode__lookup_type_var__symbol)) {
       f2ptr type = f2bytecode__lookup_type_var__type(bytecode, cause);
       f2ptr var  = f2bytecode__lookup_type_var__var(bytecode, cause);
-      if (type == __frame__variable_type__symbol) {
+      if (f2__symbol__eq(cause, type, __frame__variable_type__symbol)) {
 	f2ptr funk__args = f2funk__args(funk, cause);
 	boolean_t var_is_funk_arg = 0;
 	f2ptr funk_arg_iter = funk__args;
 	while(funk_arg_iter) {
 	  f2ptr funk_arg = f2cons__car(funk_arg_iter, cause);
-	  if (var == funk_arg) {
+	  if (f2__symbol__eq(cause, var, funk_arg)) {
 	    var_is_funk_arg = 1;
 	  }
 	  funk_arg_iter = f2cons__cdr(funk_arg_iter, cause);
@@ -199,7 +199,7 @@ f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr 
 	    printf("\ncouldn't optimize variable!");
 	  }
 	}
-      } else if (type == __frame__funk_variable_type__symbol) {
+      } else if (f2__symbol__eq(cause, type, __frame__funk_variable_type__symbol)) {
 	f2ptr funkvar_assignment_cons = environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __frame__funk_variable_type__symbol, var);
 	if (raw__consp(funkvar_assignment_cons, cause)) {
 	  f2ptr replacement_bcs = f2__compile__array_elt(cause, funkvar_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
@@ -260,7 +260,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr thread, f2ptr funk) {
     
     f2ptr var = f2cons__car(var_iter, cause);
     f2ptr cdr = f2cons__cdr(var_iter, cause);
-    if (var == __funk2.globalenv.and_rest__symbol) {
+    if (raw__symbol__eq(cause, var, __funk2.globalenv.and_rest__symbol)) {
       
       iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
       iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
@@ -334,7 +334,7 @@ f2ptr   f2__compile__metro(f2ptr simple_cause, f2ptr thread, f2ptr metro) {
     
     f2ptr var = f2cons__car(var_iter, cause);
     f2ptr cdr = f2cons__cdr(var_iter, cause);
-    if (var == __funk2.globalenv.and_rest__symbol) {
+    if (f2__symbol__eq(cause, var, __funk2.globalenv.and_rest__symbol)) {
       
       iter = f2__list_cdr__set(cause, iter, f2__compile__copy_iter_to_value(cause));
       iter = f2__list_cdr__set(cause, iter, f2__compile__define_var(cause, f2cons__car(cdr, cause)));
@@ -1048,21 +1048,21 @@ f2ptr f2__compile__backquote_append_exp(f2ptr simple_cause, f2ptr thread, f2ptr 
 }
 
 f2ptr f2__is_compile_special_symbol(f2ptr exp) {
-  return ((exp == __funk2.globalenv.quote__symbol)                  ||
-	  (exp == __funk2.globalenv.backquote__list__symbol)        ||
-	  (exp == __funk2.globalenv.backquote__list_append__symbol) ||
-	  (exp == __funk2.globalenv.if__symbol)                     ||
-	  (exp == __funk2.globalenv.apply__symbol)                  ||
-	  (exp == __funk2.globalenv.funkvar__symbol)                ||
-	  (exp == __funk2.globalenv.define_funk__symbol)            ||
-	  (exp == __funk2.globalenv.define__symbol)                 ||
-	  (exp == __funk2.globalenv.mutatefunk__symbol)             ||
-	  (exp == __funk2.globalenv.mutate__symbol)                 ||
-	  (exp == __funk2.globalenv.globalize__symbol)              ||
-	  (exp == __funk2.globalenv.globalize_funk__symbol)         ||
-	  (exp == __funk2.globalenv.yield__symbol)                  ||
-	  (exp == __funk2.globalenv.bytecode__symbol)               ||
-	  (exp == __funk2.globalenv.rawcode__symbol));
+  return ((f2__symbol__eq(cause, exp, __funk2.globalenv.quote__symbol))                  ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))        ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol)) ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                     ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                  ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))            ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.define__symbol))                 ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.mutatefunk__symbol))             ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.mutate__symbol))                 ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.globalize__symbol))              ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.globalize_funk__symbol))         ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.yield__symbol))                  ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.bytecode__symbol))               ||
+	  (f2__symbol__eq(cause, exp, __funk2.globalenv.rawcode__symbol)));
 }
 
 f2ptr __f2__compile__special_symbol_exp__symbol = -1;
@@ -1071,21 +1071,21 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr thread, f2ptr ex
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__special_symbol_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
   f2ptr car = f2cons__car(exp, cause);
-  if (car == __funk2.globalenv.quote__symbol)                                                                                                                            {return bcs_valid(f2__compile__value__set(cause, f2cons__car(f2cons__cdr(exp, cause), cause)));}
-  if (car == __funk2.globalenv.backquote__list__symbol)        {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__backquote_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.backquote__list_append__symbol) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__backquote_append_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.if__symbol)                                                                                                                               {return bcs_valid(f2__compile__if_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
-  if (car == __funk2.globalenv.apply__symbol)                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__apply_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
-  if (car == __funk2.globalenv.funkvar__symbol)                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, exp));}
-  if (car == __funk2.globalenv.define_funk__symbol)            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_funk_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.define__symbol)                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.mutatefunk__symbol)             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__mutatefunk_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.mutate__symbol)                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__mutate_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.globalize__symbol)              {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__globalize_var_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.globalize_funk__symbol)         {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__globalize_funkvar_exp(cause, thread, exp));}
-  if (car == __funk2.globalenv.yield__symbol)                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__yield(cause));}
-  if (car == __funk2.globalenv.bytecode__symbol)               {return bcs_valid(f2__compile__bytecode_exp(cause, exp, is_funktional, local_variables, is_locally_funktional));}
-  if (car == __funk2.globalenv.rawcode__symbol)                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__rawcode_exp(cause, exp, thread, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                                                                                                                            {return bcs_valid(f2__compile__value__set(cause, f2cons__car(f2cons__cdr(exp, cause), cause)));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))        {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__backquote_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__backquote_append_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                                                                                                                               {return bcs_valid(f2__compile__if_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__apply_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_funk_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__mutatefunk_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__mutate_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))              {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__globalize_var_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))         {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__globalize_funkvar_exp(cause, thread, exp));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__yield(cause));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return bcs_valid(f2__compile__bytecode_exp(cause, exp, is_funktional, local_variables, is_locally_funktional));}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__rawcode_exp(cause, exp, thread, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   //error(nil, "f2__compile__special_symbol_exp error: expression is not special symbol expression.");
@@ -1155,107 +1155,107 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
     return f2larva__new(cause, 1);
   }
 
-  if        (command == __funk2.bytecode.bytecode__push__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__pop__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__copy__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__swap__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__array__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol) {
+  if        (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__push__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__pop__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__copy__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__swap__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__array__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__reg_array__elt__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__reg_array__elt__set__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__cons__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__car__set__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__cons__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__car__set__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__funk__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__funk__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__jump_funk__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__jump_funk__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__set__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__set__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__cdr__set__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__cdr__set__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__array_elt__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__array_elt__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__lookup_type_var__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__define_type_var__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__define_type_var__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__else_jump__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__car__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__cdr__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__car__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__cdr__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__type_var__mutate__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__globalize_type_var__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__jump__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (command == __funk2.bytecode.bytecode__nop__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__debug__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__trace__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__compile__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__yield__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__newenv__symbol) {
-  } else if (command == __funk2.bytecode.bytecode__machine_code__symbol) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__nop__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__debug__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__trace__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__compile__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__yield__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__newenv__symbol)) {
+  } else if (f2__symbol__eq(cause, command, __funk2.bytecode.bytecode__machine_code__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
@@ -1308,21 +1308,21 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr thread, 
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__demetropolize__special_symbol_exp__symbol, f2cons__new(simple_cause, exp, nil));
   
   f2ptr car = f2cons__car(exp, cause);
-  if (car == __funk2.globalenv.quote__symbol)                  {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.backquote__list__symbol)        {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
-  if (car == __funk2.globalenv.backquote__list_append__symbol) {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
-  if (car == __funk2.globalenv.if__symbol)                     {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
-  if (car == __funk2.globalenv.apply__symbol)                  {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
-  if (car == __funk2.globalenv.funkvar__symbol)                {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.define_funk__symbol)            {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.define__symbol)                 {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.mutatefunk__symbol)             {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.mutate__symbol)                 {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.globalize__symbol)              {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.globalize_funk__symbol)         {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.yield__symbol)                  {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.bytecode__symbol)               {return f2cons__new(cause, nil, exp);}
-  if (car == __funk2.globalenv.rawcode__symbol)                {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                  {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))        {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                     {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {return f2__demetropolize__funkvar_call(cause, thread, env, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))             {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))              {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))         {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                  {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return f2cons__new(cause, nil, exp);}
+  if (f2__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {return f2cons__new(cause, nil, exp);}
   status("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   status("f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");

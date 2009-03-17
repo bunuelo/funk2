@@ -24,6 +24,8 @@
 
 [defunk list-to-set [x] [remove-duplicates x]]
 
+[defunk set [:rest elts] [apply &remove-duplicates elts]]
+
 [defunk union [a b]
   [if [null a]
       b

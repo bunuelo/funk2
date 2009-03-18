@@ -22,7 +22,6 @@
 #include "funk2.h"
 
 void f2__initialize() {
-  f2__status__initialize();
   f2__redblacktree__initialize();
   f2__memory__initialize();
   f2__ptypes__initialize();
@@ -87,6 +86,8 @@ void f2__initialize() {
 #define u64_large_prime ((u64)12764787846358441471ull)
 
 void funk2__init(funk2_t* this, int argc, char** argv) {
+  f2__status__initialize();
+  
   this->node_id  = raw__system_microseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
   pthread_mutex_init(&(this->event_id_mutex), NULL);

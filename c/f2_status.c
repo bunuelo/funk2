@@ -35,6 +35,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   int trace_fd = open("/tmp/funk2_trace.log", O_CREAT | O_APPEND | O_WRONLY, S_IRWXU | S_IRWXG | S_IRWXO);
   if (trace_fd == -1) {
     printf("[WARNING] funk2_status couldn't open funk2_trace.log");
+    pthread_mutex_unlock(&(__funk2.status.trace_mutex));
     return;
   }
   u64 microseconds_since_1970    = raw__system_microseconds_since_1970();

@@ -1,6 +1,6 @@
 \newcommand{\gen}{\preceq_{G}}
 
-**Rev.** 3.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Wednesday, Mar 18 2009, 7:00pm.
+**Rev.** 4.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Friday, Mar 20 2009, Midnight.
 
 
 ## Goals
@@ -197,11 +197,11 @@ Using the limited propositional representation, modify the code in `som-2009/lab
 
 \questionset{2}
 
-Not all learning experiences are equal.  There are two 5 step learning experiences (precondition state, result) that the agent may take when learning the \textsc{If-Do} rule for `[pick-up the-red-block]`.  They both result in very different learned problems. Given the two learning sequences of actions in `learning-exploration-1` and `learning-exploration-2`, what are the different kinds of antecedent rules learned by the program?  
+**Removed from Lab 1**. Not all learning experiences are equal.  There are two 5 step learning experiences (precondition state, result) that the agent may take when learning the \textsc{If-Do} rule for `[pick-up the-red-block]`.  They both result in very different learned problems. Given the two learning sequences of actions in `learning-exploration-1` and `learning-exploration-2`, what are the different kinds of antecedent rules learned by the program?  
 
 \questionset{3}
 
-Which one of those rules is better (define what *better* means)?  Explain why these learning experiences, both an equal number of events, have lead to very different learned rules.
+**Removed from Lab 1**. Which one of those rules is better (define what *better* means)?  Explain why these learning experiences, both an equal number of events, have lead to very different learned rules.
 
 
 \addtocounter{questionnum}{1}
@@ -278,7 +278,7 @@ Inference rules in logic take a very similar form as the knowledge: they are rep
 
 An argument in logic is a set of premises from which a conclusion logically follows. Propositional Logic is far from being as expressive as a natural language, like English.  When translating an English statement to propositional sentences, a lot of \hand information is lost. For example, all of the subtle distinctions between connectors "while", "because", "is", "since", "although" are replaced by the same conjunctive $\land$ operator. Translate these English statements into logical expression.  Suggested propositional symbols are given at the end (in parenthesis).
    
-  1. If each man had a definite set of rules of conduct by which he regulated his life he would be no better than a machine.  But there are no such rules, so man cannot be machines. -- A.M. Turing, "Computing Machinery and Intelligence", Mind Vol. 59 1950. (\textsf{rules,manmachine,b})
+  1. If each man had a definite set of rules of conduct by which he regulated his life he would be no better than a machine.  But there are no such rules, so man cannot be machines. -- A.M. Turing, "Computing Machinery and Intelligence", Mind Vol. 59 1950. (\textsf{rules,manmachine})
 
   2. Either logic is difficult, or not many students like it.  If mathematics is easy, then logic is not difficult.  Therefore, if many students like logic, mathematics is not easy. (\textsf{d,l,m})
 

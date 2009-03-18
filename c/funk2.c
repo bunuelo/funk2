@@ -22,6 +22,7 @@
 #include "funk2.h"
 
 void f2__initialize() {
+  f2__status__initialize();
   f2__redblacktree__initialize();
   f2__memory__initialize();
   f2__ptypes__initialize();
@@ -72,7 +73,6 @@ void f2__initialize() {
   pause_gc(); f2__scheduler__initialize();                   resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__funk2_node__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__peer_command_server__initialize();         resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__status__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primfunks__ioctl__initialize();            resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primfunks__locale__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__ansi__initialize();                        resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");

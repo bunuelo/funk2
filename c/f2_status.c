@@ -25,8 +25,13 @@ void error_writing_status_message() {
   // a debugging breakpoint
 }
 
+bool __funk2_status_disabled = false;
+
 void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_list args;
+  if (__funk2_status_disabled) {
+    return;
+  }
   char temp_msg[2048];
   va_start(args, msg);
   vsprintf(temp_msg, msg, args);
@@ -34,6 +39,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   pthread_mutex_lock(&(__funk2.status.trace_mutex));
   int trace_fd = open("/tmp/funk2_trace.log", O_CREAT | O_APPEND | O_WRONLY, S_IRWXU | S_IRWXG | S_IRWXO);
   if (trace_fd == -1) {
+    __funk2_status_disabled = true;
     printf("[WARNING] funk2_status couldn't open funk2_trace.log");
     pthread_mutex_unlock(&(__funk2.status.trace_mutex));
     return;

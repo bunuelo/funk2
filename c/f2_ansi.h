@@ -88,7 +88,7 @@ f2ptr raw__ansi__stream__foreground(f2ptr cause, f2ptr stream, ansi_color_t colo
 f2ptr f2__ansi__stream__foreground(f2ptr cause, f2ptr stream, f2ptr color);
 f2ptr raw__ansi__stream__background(f2ptr cause, f2ptr stream, ansi_color_t color);
 f2ptr f2__ansi__stream__background(f2ptr cause, f2ptr stream, f2ptr color);
-void raw__ansi__stream__rectangle(f2ptr cause, f2ptr stream, u32 x0, u32 y0, u32 x1, u32 y1, u8 ch);
+void raw__ansi__stream__rectangle(f2ptr cause, f2ptr stream, s64 x0, s64 y0, s64 x1, s64 y1, u8 ch);
 f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1, f2ptr ch);
 void raw__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, int x0, int y0, int x1, int y1, char background_char);
 f2ptr f2__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1, f2ptr background_char);

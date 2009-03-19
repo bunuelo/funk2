@@ -254,6 +254,9 @@ f2ptr f2__ansi__stream__set_caps_lock_led(f2ptr cause, f2ptr stream) {
 def_pcfunk1(ansi__stream__set_caps_lock_led, stream, return f2__ansi__stream__set_caps_lock_led(this_cause, stream));
 
 void raw__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, int x, int y) {
+  if (x < 0 || y < 0) {
+    return;
+  }
   f2__ansi__stream__begin_command(cause, stream);
   raw__stream__writef(cause, stream, "%d;%dH", y, x);
 }
@@ -338,13 +341,13 @@ f2ptr f2__ansi__stream__background(f2ptr cause, f2ptr stream, f2ptr color) {
 }
 def_pcfunk2(ansi__stream__background, stream, color, return f2__ansi__stream__background(this_cause, stream, color));
 
-void raw__ansi__stream__rectangle(f2ptr cause, f2ptr stream, u32 x0, u32 y0, u32 x1, u32 y1, u8 ch) {
+void raw__ansi__stream__rectangle(f2ptr cause, f2ptr stream, s64 x0, s64 y0, s64 x1, s64 y1, u8 ch) {
   if (y0 > y1) {u32 swap = y0; y0 = y1; y1 = swap;}
   if (x0 > x1) {u32 swap = x0; x0 = x1; x1 = swap;}
-  u32 y;
+  s64 y;
   for (y = y0; y <= y1; y ++) {
     raw__ansi__stream__move_cursor(cause, stream, x0, y);
-    u32 x;
+    s64 x;
     for (x = x0; x <= x1; x ++) {
       raw__stream__writef(cause, stream, "%c", ch);
     }
@@ -359,10 +362,10 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
       (! raw__charp(ch, cause))) {
     return f2larva__new(cause, 1);
   }
-  u64 raw_x0 = f2integer__i(x0, cause);
-  u64 raw_y0 = f2integer__i(y0, cause);
-  u64 raw_x1 = f2integer__i(x1, cause);
-  u64 raw_y1 = f2integer__i(y1, cause);
+  s64 raw_x0 = f2integer__i(x0, cause);
+  s64 raw_y0 = f2integer__i(y0, cause);
+  s64 raw_x1 = f2integer__i(x1, cause);
+  s64 raw_y1 = f2integer__i(y1, cause);
   u8  raw_ch = f2char__ch(ch, cause);
   raw__ansi__stream__rectangle(cause, stream, raw_x0, raw_y0, raw_x1, raw_y1, raw_ch);
   return nil;
@@ -397,10 +400,10 @@ f2ptr f2__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, f2ptr x0, 
       (! raw__charp(background_char, cause))) {
     return f2larva__new(cause, 1);
   }
-  u64 raw_x0              = f2integer__i(x0, cause);
-  u64 raw_y0              = f2integer__i(y0, cause);
-  u64 raw_x1              = f2integer__i(x1, cause);
-  u64 raw_y1              = f2integer__i(y1, cause);
+  s64 raw_x0              = f2integer__i(x0, cause);
+  s64 raw_y0              = f2integer__i(y0, cause);
+  s64 raw_x1              = f2integer__i(x1, cause);
+  s64 raw_y1              = f2integer__i(y1, cause);
   u8  raw_background_char = f2char__ch(background_char, cause);
   raw__ansi__stream__bordered_rectangle(cause, stream, raw_x0, raw_y0, raw_x1, raw_y1, raw_background_char);
   return nil;

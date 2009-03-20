@@ -1,0 +1,119 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk   thought-new    [name thread]  [array `thought name thread]]
+[defunk   thought?       [exp]          [and [array? exp] [eq `thought [array-elt exp 0]]]]
+[defmetro thought-name   [this]        `[array-elt ,this 1]]
+[defmetro thought-thread [this]        `[array-elt ,this 2]]
+
+[print 'test 1']
+
+[defunk thought-start_new [name proc]
+  [let [[this [thought-new name nil]]]
+    [put [thread proc [cons this nil]] [thought-thread this]]
+    this]]
+
+[print 'test 2']
+
+[defunk   layer-new      [name thoughts]  [array `layer name thoughts]]
+[defunk   layer?         [exp]            [and [array? exp] [eq `layer [array-elt exp 0]]]]
+[defmetro layer-name     [this]          `[array-elt ,this 1]]
+[defmetro layer-thoughts [this]          `[array-elt ,this 2]]
+
+[print 'test 3']
+
+[defunk   emotionmachine-new                        [instinctive_reactive_layer
+						     learned_reactive_layer
+						     deliberative_layer
+						     reflective_layer
+						     self_reflective_layer
+						     self_conscious_layer]  [array `emotionmachine
+										    instinctive_reactive_layer
+										    learned_reactive_layer
+										    deliberative_layer
+										    reflective_layer
+										    self_reflective_layer
+										    self_conscious_layer]]
+[defunk   emotionmachine?                           [exp]                   [and [array? exp] [eq `emotionmachine [array-elt exp 0]]]]
+[defmetro emotionmachine-instinctive_reactive_layer [this]                 `[array-elt ,this 1]]
+[defmetro emotionmachine-learned_reactive_layer     [this]                 `[array-elt ,this 2]]
+[defmetro emotionmachine-deliberative_layer         [this]                 `[array-elt ,this 3]]
+[defmetro emotionmachine-reflective_layer           [this]                 `[array-elt ,this 4]]
+[defmetro emotionmachine-self_reflective_layer      [this]                 `[array-elt ,this 5]]
+[defmetro emotionmachine-self_conscious_layer       [this]                 `[array-elt ,this 6]]
+
+[print 'test 4']
+
+[defunk emotionmachine-new_human [sex]
+  [let [[this [emotionmachine-new nil nil nil nil nil nil]]]
+    [put [layer-new `instinctive_reactive
+		     [list [thought-new `see-red                     [funk [thought]
+									   [emotionmachine-think this `feel-fear]
+									   [emotionmachine-think this `feel-hot]
+									   [emotionmachine-think this `feel-anger]
+									   [emotionmachine-think this `feel-anxious]
+									   [emotionmachine-think this `imagine-blood]]]
+			   [thought-new `see-green                   [funk [thought]
+									   [emotionmachine-think this `feel-calm]
+									   [emotionmachine-think this `feel-cool]
+									   [emotionmachine-think this `imagine-plants]]]
+			   [thought-new `feel-burning_left_hand      [funk [thought]
+									   [emotionmachine-think this `do-withdraw_left_hand]]]
+			   [thought-new `feel-burning_right_hand     [funk [thought]
+									   [emotionmachine-think this `do-withdraw_right_hand]]]
+			   [thought-new `see-close_right_fast_motion [funk [thought]
+									   [emotionmachine-think this `do-wince_left]]]
+			   [thought-new `see-close_left_fast_motion  [funk [thought]
+									   [emotionmachine-think this `do-wince_right]]]
+			   [thought-new `see-predator                [funk [thought]
+									   [emotionmachine-think this `do-flee_predator]]]
+			   [thought-new `see-prey                    [funk [thought]
+									   [emotionmachine-think this `do-hunt_prey]]]
+			   [thought-new `smell-male_pheromone        [cond [[eq sex `female] [funk [thought]
+												   [emotionmachine-think this `feel-sexually_offensive]]]
+									   [[eq sex `male]   [funk [thought]
+												   [emotionmachine-think this `feel-sexually_defensive]]]]]
+			   [thought-new `smell-female_pheromone      [cond [[eq sex `female] [funk [thought]
+												   [emotionmachine-think this `feel-sexually_offensive]]]
+									   [[eq sex `male]   [funk [thought]
+												   [emotionmachine-think this `feel-sexually_defensive]]]]]]]
+	 [emotionmachine-instinctive_reactive_layer this]]
+    [put [layer-new `learned_reactive
+		     nil]
+	 [emotionmachine-learned_reactive_layer this]]
+    [put [layer-new `deliberative
+		     nil]
+	 [emotionmachine-deliberative_layer this]]
+    [put [layer-new `reflective
+		     nil]
+	 [emotionmachine-reflective_layer this]]
+    [put [layer-new `self_reflective
+		     nil]
+	 [emotionmachine-self_reflective_layer this]]
+    [put [layer-new `self_conscious
+		     nil]
+	 [emotionmachine-self_conscious_layer this]]
+    this]]
+
+[print 'test 5']
+
+
+	

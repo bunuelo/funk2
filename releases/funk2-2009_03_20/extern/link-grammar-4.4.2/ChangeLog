@@ -1,0 +1,150 @@
+Version 4.4.2 (15 January 2009) includes the following changes:
+ * Fix: 'The keys are gone', 'It is a gone desire'
+ * Fix: 'He poured me a glass', 'He wired me the money', etc.
+ * Initial rough-in of corpus statistics based parse ranking.
+ * Initial rough-in of corpus-guided word-sense identification.
+ * Fix for googlecode bugs 38, 39 (Java, Ruby failure to load)
+ * Add new API routine to return disjunct string.
+
+Version 4.4.1 (15 December 2008) includes the following changes:
+ * Balance the dictionary tree; this speeds word-lookup slightly.
+ * New MSVC6 build files from Evgenii Philippov.
+ * Fix java server classes to pass along the link-grammar version number.
+
+Version 4.4.0 (7 December 2008) includes the following changes:
+ * fix: recognize curly-single-quote ’ where straight quote can be used.
+ * recognize and explicitly ignore emoticon types.
+ * Include MSVC6 build files.
+ * Apply patch needed for Ruby bindings.
+ * fix: "Where did they come from?", per Viswanath IIIT
+ * fix: "Where did they go to?"
+ * fix: "It gives me peace of mind."
+ * fix: many, many incorrectly identified mass nouns.
+ * fix: ladle.v "molten hot" "piping hot"
+ * fix: "It's a shame that...", "The crux of the plan is that..."
+ * Performance improvements (about 11%) to prunce.c from Bruce Wilcox
+ * fix: "He eats with me nightly."
+ * Add new public api function: linkgrammar_get_version()
+ * MSVC9 build files from Borislav Iordanov
+ * Java network-efficient client-server classes from Borislav Iordanov
+
+Version 4.3.9 (8 October 2008) includes the following changes:
+ * Issue 13: "John is altogether amazingly quick."
+ * Nonstandard spelling "unequivocably"
+ * Dictionary fixes for 'marginally', etc. "That one is marginally better"
+ * Issue 7: Dictionary fixes for 'done': "I am done working"
+ * dictionary entries for walk-up drivethru car-wash
+ * dictionary: "I am through being mad", "It was a through flight", etc.
+ * Issue 11: "You are doing well"
+ * Issue 3: "I asked Jim a question", "I told Jim a story"
+ * Passive subjects with objects: "I was told that crap, too" "...was asked..."
+ * Fixes for Apple Mac OSX (crash on non-executable stack)
+ * Early version of Filip Maric's boolean SAT solver
+ * fix: "He talked quietly of revolt." 
+ * fix: "It consists mostly of sand.", "He talks, mostly of revolution."
+ * fix: "He talked mostly to Ann.", "He talks a lot."
+ * fix: than_usual: "He is taking longer than usual."
+ * fix: a batch of new verbs from Roman Khlupin
+ * fix: Fix crash on Apple Macintosh by correctly identifying the platform.
+ * fix: "San Gabriel" "Block Island" "Great Southern Bank" "de la Rente"
+ * fix: "I biked Johnson Creek."
+
+Version 4.3.8 (14 August 2008) includes the following changes:
+ * Build fixes for Windows (missing bzero and thread-safe rand)
+ * Fix several mem leaks, one in the Java jni code.
+ * Fix crash of java6 jvm, due to blown stack limits.
+
+Version 4.3.7 (8 August 2008) includes the following changes:
+ * Expanded list of given names to include those from 2005 US Census
+ * Export a new java jni function, to get the inflected word.
+ * Add a TO+ connector so that "I tend to agree" parses correctly.
+ * Makefile fixes for OS/X Leopard.
+
+Version 4.3.6 (21 July 2008) includes the following changes:
+ * Fixes for Windows MS Visual-C builds.
+ * Fix parsing of "He walked the dog.", "He sailed the boat."
+ * Add support for right-apostrophe (’) which is a non-ASCII UTF8 char.
+ * Add support for other non-ASCII UTF8 punctuation.
+ * Fix crash on printing constituent tree of certain long sentences.
+ * Avoid recursive error reporting for UTF8 dictionary errors.
+ * Clarify error logging and error printing.
+ * Add java getVersion() to return link-grammar version string.
+ * Add more numbers to dict (e.g. twenty-seven, bazillion, half-dozen, etc.)
+ * Foodstuffs: bagels, lox, tacos, guacamole, roe, neufchatel, mayo, etc.
+ * Weights and measures: megabytes, °C, km² etc.
+ * Performance improvements in printing of link-tree.
+ * Convert assert into warning when no canonical linkages can be found.
+ * Convert assert into warning when constituent andlist overflows.
+ * Provide additional checks for constituent overflows.
+ * Convert most error printfs into a formal error reporting system.
+ * Remove all globals, library is now thread-safe.
+ * Fix crash when sentence has square bracket, and doing constituents.
+
+Version 4.3.5 (29 April 2008) includes the following changes:
+ * Added ant build file to create the link-grammar jar file.
+ * Fix regression in command-line client of multiple-parse display.
+ * Use MB_LEN_MAX, not MB_CUR_MAX for UTF8 support.
+ * Fix a WIN32 compiler regression (no inline support in Windows).
+ * Fix error in handling of UTF8 dictionaries.
+ * Fix strncat() misuse in error.c
+ * Fix capitalization errors in country names.
+ * Fix parsing of "he angled left, he dodged left, he turned left".
+ * Don't build the JNI library if Java isn't found. Fixes build on Windows.
+ * Fix install bug for NetBSD systems.
+ * Pre-detected entities cannot participate in G links.
+ * There is no UTF8 support in windows, so stub it out.
+ * Fix crash in constituent output, bug #22 in googlecode bugtacker.
+ * Some small steps taken to eventually make library thread-safe.
+ * There are three constituent string styles, enable all three.
+ * Make the command-line flag errors less cyrptic.
+ * Add readline (BSD editline) support.
+ * Rename "grammar-parse" to the more logical "link-parser".
+ * Small man page updates.
+ * Export and cost, link cost via public API.
+
+Version 4.3.4 (16 March 2008) includes the following changes:
+ * Fix regression of handling of capitalization at the start of sentences.
+ * Fix dictionary search path so that it respects command-line input.
+ * Fix rare but nasty crash when parsing long sentences in panic mode.
+ * Add a method to set the dictionary path.
+ * Fix all remaining compiler warnings.
+ * Make parser capable of handling UTF8 strings and dictionaries.
+ * Ongoing minor expansion of the Lithuanian (lt) dictionary.
+
+Version 4.3.3 (27 February 2008) includes the following changes:
+ * Missing java is a warning, not an error.
+ * man page for grammar-parse.
+ * Removed cruft from the dictionary open routines.
+ * configure tries to guess some non-standard jni.h locations.
+ * Split up java library exports, should help cygwin builds.
+ * Fix java library pre-linking bug.
+ * Minor English dictionary additions.
+ * Prototype Lithuanian (lt) dictionary.
+
+Version 4.3.2 (2 February 2008) includes the following changes:
+ * Compile fixes for WIN32
+ * Dictionary fixes for given names. (Fixes a serious problem with 4.3.1)
+
+Version 4.3.1 (31 Jaunary 2008) includes the following changes:
+ * A merger of significant parts of the "medical terms" dictionary
+   from Peter Szolovits.  This includes thousands of additional words.
+
+Version 4.3.0 (30 January 2008) includes the following changes:
+ * New link types (Ct, Cta, Rn, Rw) for comparatives, so as to link
+   relative clauses: "John is bigger than Dave is", "John wants more
+   cookies than Dave wants". The Rw link is used to link question words
+   to the relative clauses that follow them.
+ * Dictionary Fixes for "Expresso is a coffee drink", "Teach me fetch",
+   "I am pooped" as synonym for "I am tired", "Mother likes her", 
+   "Mommy loves me" and related. Also, directives involving "go":
+   "Go play ball", "Go take a walk", "You and Rover go play with the
+   ball."
+ * Dictionary support for external entity markup. This includes the
+   recognizition of personID0..personID60, dateID0..dateID60,
+   organizationID0..organizationID60 and locationID0..locationID60
+   as appropriate words.
+ * Fixes of numerous compile-time warnings.
+ * Simple Java (JNI) bindings.
+
+Version 4.2.5 (11 November 2007) includes the following changes:
+ * Security fix for a buffer overflow. CVE-2007-5395

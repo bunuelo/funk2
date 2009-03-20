@@ -81,7 +81,6 @@ funk2_server_objs = \
   c/f2_primobject__object_type.o \
   c/f2_primobject__circular_buffer.o \
   c/f2_primobject__stream.o \
-  c/f2_primobject__text_buffer.o \
   c/f2_print.o \
   c/f2_primfunks.o \
   c/f2_primfunks__errno.o \
@@ -142,7 +141,6 @@ funk2_headers = \
   c/f2_primobject__object_type.h \
   c/f2_primobject__circular_buffer.h \
   c/f2_primobject__stream.h \
-  c/f2_primobject__text_buffer.h \
   c/f2_print.h \
   c/f2_primfunks.h \
   c/f2_primfunks__errno.h \

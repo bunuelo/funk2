@@ -1469,7 +1469,7 @@ void f2__primobject_object__reinitialize_globalvars();           // defined in f
 void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
 void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f2_primobject__circular_buffer.c
 void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
-void f2__primobject__text_buffer__reinitialize_globalvars()      // defined in f2_primobject__text_buffer.c
+void f2__primobject__text_buffer__reinitialize_globalvars();     // defined in f2_primobject__text_buffer.c
 void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
 void f2__reader__reinitialize_globalvars();                      // defined in f2_reader.c
 void f2__compile__reinitialize_globalvars();                     // defined in f2_compile.c

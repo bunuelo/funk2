@@ -87,6 +87,8 @@ f2ptr      f2__text_bufferp(f2ptr this, f2ptr cause);
 
 // **
 
+// **
+
 void f2__primobject__text_buffer__reinitialize_globalvars();
 void f2__primobject__text_buffer__initialize();
 

@@ -1,6 +1,6 @@
 \newcommand{\gen}{\preceq_{G}}
 
-**Rev.** 4.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Friday, Mar 20 2009, Midnight.
+**Rev.** 3.  **Released:**  Wednesday, Mar 11 2009.  **Due:** Wednesday, Mar 18 2009, 7:00pm.
 
 
 ## Goals
@@ -188,7 +188,7 @@ In this section of the lab, we are going to learn the \textsc{If-Do} rules of a 
 
 If we limit ourselves to the task of learning a rule to classify "relevant" versus "not relevant" preconditions for an action to take place, then we do not really need a description of the rule's antecedent.  In fact, we could throw away the representation and focus only on the data's behavior, by learning a *discriminative classifier*.  Instead, we will learn the full function, not just the description, so that we can reason about this knowledge later.
 
-We are not learning a rule to select the best action from a set of actions, we are learning a rule for *each* action that determines whether or not it is relevant.  This is a problem of **concept learning**, \marginpar[right]{This lab is interdisciplinary and sometimes non-linear.  You can skip to section \ref{sec:conceptlearning} to learn more about concept learning.} learning a binary valued function from examples of *input* and *output* pairs.  Later in section \ref{sec:conceptlearning} lab, you will learn more details about concept learning. 
+We are not learning a rule to select the best action from a set of actions, we are learning a rule for *each* action that determines whether or not it is relevant.  This is a problem of **concept learning**, \marginpar[right]{This lab is interdisciplinary and sometimes non-linear.  You can skip to section X to learn more about concept learning.} learning a binary valued function from examples of *input* and *output* pairs.  Later in section \ref{sec:conceptlearning} lab, you will learn more details about concept learning. 
 
 
 \questionset{1}
@@ -197,11 +197,11 @@ Using the limited propositional representation, modify the code in `som-2009/lab
 
 \questionset{2}
 
-**Removed from Lab 1**. Not all learning experiences are equal.  There are two 5 step learning experiences (precondition state, result) that the agent may take when learning the \textsc{If-Do} rule for `[pick-up the-red-block]`.  They both result in very different learned problems. Given the two learning sequences of actions in `learning-exploration-1` and `learning-exploration-2`, what are the different kinds of antecedent rules learned by the program?  
+Not all learning experiences are equal.  There are two 5 step learning experiences (precondition state, result) that the agent may take when learning the \textsc{If-Do} rule for `[pick-up the-red-block]`.  They both result in very different learned problems. Given the two learning sequences of actions in `learning-exploration-1` and `learning-exploration-2`, what are the different kinds of antecedent rules learned by the program?  
 
 \questionset{3}
 
-**Removed from Lab 1**. Which one of those rules is better (define what *better* means)?  Explain why these learning experiences, both an equal number of events, have lead to very different learned rules.
+Which one of those rules is better (define what *better* means)?  Explain why these learning experiences, both an equal number of events, have lead to very different learned rules.
 
 
 \addtocounter{questionnum}{1}
@@ -278,7 +278,7 @@ Inference rules in logic take a very similar form as the knowledge: they are rep
 
 An argument in logic is a set of premises from which a conclusion logically follows. Propositional Logic is far from being as expressive as a natural language, like English.  When translating an English statement to propositional sentences, a lot of \hand information is lost. For example, all of the subtle distinctions between connectors "while", "because", "is", "since", "although" are replaced by the same conjunctive $\land$ operator. Translate these English statements into logical expression.  Suggested propositional symbols are given at the end (in parenthesis).
    
-  1. If each man had a definite set of rules of conduct by which he regulated his life he would be no better than a machine.  But there are no such rules, so man cannot be machines. -- A.M. Turing, "Computing Machinery and Intelligence", Mind Vol. 59 1950. (\textsf{rules,manmachine})
+  1. If each man had a definite set of rules of conduct by which he regulated his life he would be no better than a machine.  But there are no such rules, so man cannot be machines. -- A.M. Turing, "Computing Machinery and Intelligence", Mind Vol. 59 1950. (\textsf{rules,manmachine,b})
 
   2. Either logic is difficult, or not many students like it.  If mathematics is easy, then logic is not difficult.  Therefore, if many students like logic, mathematics is not easy. (\textsf{d,l,m})
 
@@ -324,9 +324,9 @@ The size of the set of possible world states `S` is based on `P` and `C`:
 
 A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. **Constant symbols**, the set of which is denoted `C`, are the common case of functors with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
 
-Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A predicate with no variables is called a *ground atom*.
+Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
 
-Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own ad-hoc categories by combining properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
+Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own category using combinations of properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
 
 \begin{equation}
 \forall \textsf{X}\ \prop{block}{X}\ \land \pred{on}{X}{gripper} \rightarrow \prop{inGripper}{X} \\
@@ -362,7 +362,7 @@ Using the notation of FOL, write down the a) **antecedents** (preconditions) and
 
    - Membership function that maps to *true* or *false*.
    - Cognitive representation that divides the world into *things in the concept* versus *things outside the concept*.
-   - Intensional definition of a set, \eg \{\textsf{x} : \prop{blue}{x} $\land$ \pred{has}{x}{feathers}\}.
+   - Intentional definition of a set, \eg \{\textsf{x} : \prop{blue}{x} $\land$ \pred{has}{x}{feathers}\}.
 
 However the term has a shared history in psychology as well as AI.  This section will cover human concept learning. 
  
@@ -396,7 +396,7 @@ Qulllian's taxonomic model of semantic memory explained many experimental findin
 People are more quick to affirm that \pred{IsA}{robbin}{bird} than \pred{IsA}{chicken}{bird}, and this is called the **typicality effect**.  (Robins are more representative of birds than are chickens.) How can this be if both \textsf{chicken} and \textsf{robin} both have features that match the definition of the \textsf{bird} category?  A similar problem was pointed out by Wittgenstein; he used the concept of a \textsf{game} as an example where he could not think of a logical combination of sufficient and necessary features that describe the wide class of activities that could be called games (Try it!).  Rosch \cite{Rosch:1999p2919} showed how **prototypes** could be used to explain this graded membership.  
 
   - the **prototype** view holds that each category has a representative *prototype* that new objects are compared with when they are being classified. 
-  - **exemplars** are like the prototype system, except for that there are multiple representative members of each category that are  used for classification (a nearest-neighbor classification scheme).
+  - **exemplars** are like the prototype system, except for that there are multiple representative members of each category.
 
 Rosch, unlike Quillian, did not come up with a representation to support her prototype theory.  Maybe the solution is in the index?  AI researchers presented **decision trees**, which were a way to learn a sequential classification rule by using criteria to pick the most salient attributes at each step in the classification process.  In other words, this does away with the idea of having all knowledge at the global scope. 
 
@@ -436,7 +436,7 @@ Ignoring these object barriers can lead to absurd mistakes.  OpenMind\footnote{O
 
 \vspace{15pt}
 
-**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols do not conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Think about how this relates to the problem in section \ref{sec:actions}.
+**Key point:** When you look into the semantics of most common programming languages, many of them pay significant attention to scoping issues: reusing/overloading symbols and hiding most of details when possible.  One of the powers of logic stems from the fact that it is a declarative representation: each fact is self contained (modular) and comprehensible.  We can simply copy the FOL predicates from one KB and plop them in another -- so long as their symbols conflict in a way that causes rules to contradict each other.   Human knowledge is much more context sensitive than logic: symbols have different meanings depending on the problem solving context.  Knowledge depends on hidden assumptions about the context. For example, take the assertion "birds fly": what about penguins, ostriches, dead birds, toy birds, caged birds, gestures involving the middle finger, badminton targets, Larry Bird, and Charlie Parker?  They don't fly; yet this knowledge is still useful for our default reasoning.  Think about how this relates to the problem in section \ref{sec:actions}.
 
 
 

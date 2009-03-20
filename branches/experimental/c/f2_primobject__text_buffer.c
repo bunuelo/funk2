@@ -62,7 +62,31 @@ f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr buffer) {
 boolean_t raw__text_bufferp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_buffer(this, cause));}
 f2ptr f2__text_bufferp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_bufferp(this, cause));}
 
+f2ptr raw__text_buffer__create(f2ptr cause, s64 width, s64 height) {
+  if (width <= 0 || height <= 0) {
+    return f2larva__new(cause, 56);
+  }
+  f2ptr characters = raw__array__new(cause, width * height);
+  s64 x, y;
+  for (y = 0; y < height; y ++) {
+    for (x = 0; x < width; x ++) {
+      raw__array__elt__set(cause, characters, y * width + x, f2text_buffer_character__new(cause, f2char__new(cause, ' '), nil, nil));
+    }
+  }
+  f2ptr text_buffer = f2text_buffer__new(cause, f2integer__new(cause, width), f2integer__new(cause, height), characters);
+  return text_buffer; 
+}
 
+f2ptr f2__text_buffer__create(f2ptr cause, f2ptr width, f2ptr height) {
+  if ((! raw__integerp(width, cause)) || 
+      (! raw__integerp(height, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  s64 raw_width  = f2integer__i(width,  cause);
+  s64 raw_height = f2integer__i(height, cause);
+  return raw__text_buffer__create(cause, raw_width, raw_height);
+}
+def_pcfunk2(text_buffer__create, width, height, return f2__text_buffer__create(this_cause, width, height));
 
 // **
 
@@ -81,7 +105,7 @@ void f2__primobject__text_buffer__initialize() {
   environment__add_var_value(cause, global_environment(), __text_buffer_character__symbol, nil);
   environment__add_var_value(cause, global_environment(), __text_buffer__symbol,           nil);
   
-  //f2__primcfunk__init(file_text_buffer__new);
+  f2__primcfunk__init__2(text_buffer__create, width, height);
   
   resume_gc();
   try_gc();

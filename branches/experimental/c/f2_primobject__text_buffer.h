@@ -58,7 +58,7 @@ f2ptr      f2__text_buffer_characterp(f2ptr this, f2ptr cause);
 // text_buffer
 
 extern f2ptr __text_buffer__symbol;
-f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr buffer);
+f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters);
 #define      f2primobject__is__text_buffer(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_buffer__symbol)
 
 defprimobject__static_slot__prototype(text_buffer__width);
@@ -75,12 +75,12 @@ defprimobject__static_slot__prototype(text_buffer__height);
 #define      f2text_buffer__height__trace(            this, cause)        primobject__static_slot__trace(            this, text_buffer__height, cause)
 #define      f2text_buffer__height__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_buffer__height, cause)
 
-defprimobject__static_slot__prototype(text_buffer__buffer);
-#define      f2text_buffer__buffer(                   this, cause)        primobject__static_slot__accessor(         this, text_buffer__buffer, cause)
-#define      f2text_buffer__buffer__set(              this, cause, value) primobject__static_slot__set(              this, text_buffer__buffer, cause, value)
-#define      f2text_buffer__buffer__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_buffer__buffer, cause)
-#define      f2text_buffer__buffer__trace(            this, cause)        primobject__static_slot__trace(            this, text_buffer__buffer, cause)
-#define      f2text_buffer__buffer__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_buffer__buffer, cause)
+defprimobject__static_slot__prototype(text_buffer__characters);
+#define      f2text_buffer__characters(                   this, cause)        primobject__static_slot__accessor(         this, text_buffer__characters, cause)
+#define      f2text_buffer__characters__set(              this, cause, value) primobject__static_slot__set(              this, text_buffer__characters, cause, value)
+#define      f2text_buffer__characters__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_buffer__characters, cause)
+#define      f2text_buffer__characters__trace(            this, cause)        primobject__static_slot__trace(            this, text_buffer__characters, cause)
+#define      f2text_buffer__characters__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_buffer__characters, cause)
 
 boolean_t raw__text_bufferp(f2ptr this, f2ptr cause);
 f2ptr      f2__text_bufferp(f2ptr this, f2ptr cause);

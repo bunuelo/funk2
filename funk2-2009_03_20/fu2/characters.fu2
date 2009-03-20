@@ -1,0 +1,40 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk   character-new       [name knowledge]  [array `character name knowledge]]
+[defunk   character?          [exp]             [and [array? exp] [eq `character [array-elt exp 0]]]]
+[defmetro character-name      [this]           `[array-elt ,this 1]]
+[defmetro character-knowledge [this]           `[array-elt ,this 2]]
+
+[defunk   and-new     [clauses] [cons `and clauses]]
+[defunk   and?        [exp]  [and [cons? exp] [eq `and [car exp]]]]
+[defmetro and-clauses [this] `[cdr ,this]]
+
+[defunk character-conjoin_knowledge [this new_knowledge]
+  [let [[current_knowledge [character-knowledge this]]]
+    [put [cond [[null current_knowledge] new_knowledge]
+	       [[and? current_knowledge] [if [and? new_knowledge]
+					     [and-new [append [and-clauses new_knowledge] [and-clauses current_knowledge]]]
+					   [and-new [cons new_knowledge [and-clauses current_knowledge]]]]]
+	       [[and? new_knowledge]     [and-new [cons current_knowledge [and-clauses new_knowledge]]]]
+	       [t                        [and-new [list new_knowledge current_knowledge]]]]
+	 [character-knowledge this]]]]
+

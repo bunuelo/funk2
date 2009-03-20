@@ -1,0 +1,249 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+
+[defunk check-bcs-valid [bytecodes]
+  [if bytecodes
+      [prog [if [not [cons? bytecodes]]           [error `compile-time 'bytecodes not cons.']]
+	    [if [not [bytecode? [car bytecodes]]] [error `compile-time 'bytecode type is not correct.']]
+	    [check-bcs-valid [cdr bytecodes]]]]
+  bytecodes]
+
+[globalize assembler-check_all_bcs t]
+
+[defmetro bcs-valid [bytecodes]
+  [if assembler-check_all_bcs
+      `[check-bcs-valid ,bytecodes]
+    bytecodes]]
+
+[defunk compile-tracewrap [value bcs]     [cons [bytecode `bytecode:trace value nil] bcs]]
+[defunk tracewrap-bcs     [tracewrap bcs] [if tracewrap [compile-tracewrap bcs bcs] bcs]]
+
+[defunk compile-funk_bytecode       [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:funk    nil  nil]  nil]]]]
+[defunk compile-cons                [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:cons    nil  nil]  nil]]]]
+[defunk compile-car                 [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:car     nil  nil]  nil]]]]
+[defunk compile-cdr                 [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:cdr     nil  nil]  nil]]]]
+[defunk compile-set_car             [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:set-car nil  nil]  nil]]]]
+[defunk compile-set_cdr             [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:set-cdr nil  nil]  nil]]]]
+
+[defunk compile-set                 [tracewrap reg exp]     [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:set     reg  exp]  nil]]]]
+[defunk compile-set_value           [tracewrap exp]         [bcs-valid [compile-set   tracewrap `thread:value-reg exp]]]
+[defunk compile-set_iter            [tracewrap exp]         [bcs-valid [compile-set   tracewrap `thread:iter-reg  exp]]]
+[defunk compile-set_args            [tracewrap exp]         [bcs-valid [compile-set   tracewrap `thread:args-reg  exp]]]
+[defunk compile-set_env             [tracewrap exp]         [bcs-valid [compile-set   tracewrap `thread:env-reg   exp]]]
+
+[defunk compile-swap                [tracewrap reg0 reg1]   [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:swap    reg0 reg1] nil]]]]
+[defunk compile-swap_value_and_iter [tracewrap]             [bcs-valid [compile-swap  tracewrap `thread:value-reg `thread:iter-reg]]]
+[defunk compile-swap_value_and_args [tracewrap]             [bcs-valid [compile-swap  tracewrap `thread:value-reg `thread:args-reg]]]
+
+[defunk compile-push                [tracewrap reg]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:push    reg  nil]  nil]]]]
+[defunk compile-push_value          [tracewrap]             [bcs-valid [compile-push  tracewrap `thread:value-reg]]]
+[defunk compile-push_iter           [tracewrap]             [bcs-valid [compile-push  tracewrap `thread:iter-reg]]]
+[defunk compile-push_args           [tracewrap]             [bcs-valid [compile-push  tracewrap `thread:args-reg]]]
+[defunk compile-push_env            [tracewrap]             [bcs-valid [compile-push  tracewrap `thread:env-reg]]]
+[defunk compile-push_return         [tracewrap]             [bcs-valid [compile-push  tracewrap `thread:return-reg]]]
+
+[defunk compile-pop                 [tracewrap reg]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:pop     reg  nil]  nil]]]]
+[defunk compile-pop_value           [tracewrap]             [bcs-valid [compile-pop   tracewrap `thread:value-reg]]]
+[defunk compile-pop_iter            [tracewrap]             [bcs-valid [compile-pop   tracewrap `thread:iter-reg]]]
+[defunk compile-pop_args            [tracewrap]             [bcs-valid [compile-pop   tracewrap `thread:args-reg]]]
+[defunk compile-pop_env             [tracewrap]             [bcs-valid [compile-pop   tracewrap `thread:env-reg]]]
+[defunk compile-pop_return          [tracewrap]             [bcs-valid [compile-pop   tracewrap `thread:return-reg]]]
+
+[defunk compile-copy                [tracewrap reg0 reg1]   [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:copy reg0 reg1] nil]]]]
+[defunk compile-copy_value_to_args  [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:value-reg `thread:args-reg]]]
+[defunk compile-copy_value_to_iter  [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:value-reg `thread:iter-reg]]]
+[defunk compile-copy_iter_to_value  [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:iter-reg  `thread:value-reg]]]
+[defunk compile-copy_iter_to_args   [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:iter-reg  `thread:args-reg]]]
+[defunk compile-copy_args_to_value  [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:args-reg  `thread:value-reg]]]
+[defunk compile-copy_args_to_iter   [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:args-reg  `thread:iter-reg]]]
+[defunk compile-copy_pc_to_return   [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:program-counter-reg `thread:return-reg]]]
+[defunk compile-copy_return_to_pc   [tracewrap]             [bcs-valid [compile-copy  tracewrap `thread:return-reg `thread:program-counter-reg]]]
+[defunk compile-return              [tracewrap]             [bcs-valid [compile-copy_return_to_pc tracewrap]]]
+
+[defunk compile-lookup_var          [tracewrap exp]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:lookup-var exp nil] nil]]]]
+[defunk compile-lookup_funkvar      [tracewrap exp]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:lookup-funkvar exp nil] nil]]]]
+[defunk compile-define_funkvar      [tracewrap var]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:define-funkvar var nil] nil]]]]
+[defunk compile-define_var          [tracewrap var]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:define-var var nil] nil]]]]
+[defunk compile-set_funkvar         [tracewrap var]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:set-funkvar var nil] nil]]]]
+[defunk compile-set_var             [tracewrap var]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:set-var var nil] nil]]]]
+[defunk compile-globalize_funkvar   [tracewrap var]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:globalize-funkvar var nil] nil]]]]
+[defunk compile-globalize_var       [tracewrap var]         [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:globalize-var var nil] nil]]]]
+[defunk compile-jump                [tracewrap new_pc]      [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:jump new_pc nil] nil]]]]
+[defunk compile-else_jump           [tracewrap new_pc]      [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:else-jump new_pc nil] nil]]]]
+[defunk compile-nop                 [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:nop nil nil] nil]]]]
+[defunk compile-debug               [tracewrap value]       [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:debug value nil] nil]]]]
+[defunk compile-trace               [tracewrap value]       [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:trace value nil] nil]]]]
+[defunk compile-compile             [tracewrap tw_compiled] [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:compile tw_compiled nil] nil]]]]
+[defunk compile-yield               [tracewrap]             [bcs-valid [tracewrap-bcs tracewrap [cons [bytecode `bytecode:yield nil nil] nil]]]]
+
+[defunk compile-symbol [tracewrap exp] [bcs-valid [compile-lookup_var tracewrap exp]]]
+
+
+[defunk exp-is_compile_special_symbol [exp]
+  [or [eq exp `quote]
+      [eq exp `backquote-list]
+      [eq exp `backquote-list_append]
+      [eq exp `if]
+      [eq exp `apply]
+      [eq exp `funkvar]
+      [eq exp `define-funk]
+      [eq exp `define]
+      [eq exp `setfunk]
+      [eq exp `set]
+      [eq exp `globalize]
+      [eq exp `globalize-funk]
+      [eq exp `yield]]]
+
+[defunk compile-eval_args [tracewrap args]
+  [if [null args]
+      [bcs-valid [compile-set_args tracewrap nil]]
+    [let [[exp_bcs [compile-cons tracewrap]]]
+      [let [[full_bcs exp_bcs]
+	    [iter     exp_bcs]]
+	[= iter [list-set_cdr iter [compile-copy_iter_to_args tracewrap]]]
+	
+	[while args
+	  [= iter [list-set_cdr iter [compile-push_iter tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-push_args tracewrap]]]
+	  
+	  [= iter [list-set_cdr iter [compile-exp       tracewrap [car args]]]]
+	  
+	  [= iter [list-set_cdr iter [compile-pop_iter  tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-pop_args  tracewrap]]]
+	  [= iter [list-set_cdr iter [compile-set_car   tracewrap]]]
+	  
+	  [= args [cdr args]]
+	  [if args
+	      [prog [= iter [list-set_cdr iter [compile-copy_iter_to_value  tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-cons                tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-swap_value_and_iter tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-set_cdr             tracewrap]]]
+		    [= iter [list-set_cdr iter [compile-swap_value_and_iter tracewrap]]]
+		    ]]]
+	[bcs-valid full_bcs]]]]]
+
+[defunk compile-funkvar_call [tracewrap exps]
+  [let [[funkvar [car exps]]]
+    [let [[funkvar_value [lookup-funkvar funkvar `undefined-funkvar]]]
+      [if [metrocfunk? funkvar_value]
+	  [bcs-valid [compile-exp tracewrap [apply funkvar_value [cdr exps]]]]
+	[let [[full_bcs [compile-eval_args tracewrap [cdr exps]]]]
+	  [let [[iter full_bcs]]
+	    [= iter [list-set_cdr iter [compile-lookup_funkvar    tracewrap funkvar]]]
+	    [= iter [list-set_cdr iter [compile-copy_pc_to_return tracewrap]]]
+	    [= iter [list-set_cdr iter [compile-funk_bytecode     tracewrap]]]
+	    [bcs-valid full_bcs]]]]]]]
+
+[defunk compile-cons_exp [tracewrap exp]
+  [let [[car [car exp]]]
+    [let [[funkvar_binding_value [lookup-funkvar car `undefined-funkvar]]]
+      [cond [[metro? funkvar_binding_value]      [bcs-valid [compile-exp                tracewrap [funk-apply funkvar_binding_value [cdr exp]]]]]
+	    [[exp-is_compile_special_symbol car] [bcs-valid [compile-special_symbol_exp tracewrap exp]]]
+	    [[symbol? car]                       [bcs-valid [compile-funkvar_call       tracewrap exp]]]
+	    [t                                   [error `compile-time [list 'tried to compile:' exp 'don\'t know how to compile type.']]]]]]]
+
+[defunk compile-funk [tracewrap funk]
+  [if [null funk]
+      [error `compile-time '\nf2__compile__funk error: funk is nil.']
+    [let [[funk_bcs [compile-set_value tracewrap funk]]]
+      [let [[body_bytecodes [funk-body_bytecodes funk]]]
+	[if [not `body_bytecodes]
+	    [bcs-valid body_bytecodes]
+	  [prog 'save return and environment registers'
+		[let [[full_bcs [compile-push_return tracewrap]]]
+		  [let [[iter full_bcs]]
+		    [= iter [list-set_cdr iter [compile-push_env tracewrap]]]
+		    
+		    'define args in funk environment'
+		    [= iter [list-set_cdr iter [compile-copy_args_to_iter tracewrap]]]
+		    [let [[var_iter [funk-args funk]]]
+		      [while var_iter
+			
+			[let [[var [car var_iter]]
+			      [cdr [cdr var_iter]]]
+			  [if [eq var `:rest]
+			      [prog [= iter [list-set_cdr iter [compile-copy_iter_to_value tracewrap]]]
+				    [= iter [list-set_cdr iter [compile-define_var tracewrap [car cdr]]]]
+				    [= var_iter nil]]
+			    [prog [= iter [list-set_cdr iter [compile-copy_iter_to_value tracewrap]]]
+				  [= iter [list-set_cdr iter [compile-else_jump tracewrap wrong_argument_number-bcs]]]
+				  
+				  [= iter [list-set_cdr iter [compile-car tracewrap]]]
+				  [= iter [list-set_cdr iter [compile-define_var tracewrap var]]]
+				  
+				  [if cdr
+				      [prog [= iter [list-set_cdr iter [compile-cdr tracewrap]]]
+					    [= iter [list-set_cdr iter [compile-copy_value_to_iter tracewrap]]]
+					    ]]
+				  
+				  [= var_iter cdr]]]]]
+		      
+		      'execute funk body'
+		      [let [[body_bcs [compile-rawcode tracewrap [funk-body funk]]]]
+			[if [exception? body_bcs]
+			    [bcs-valid body_bcs]
+			  [prog [= iter [list-set_cdr iter body_bcs]]
+				
+				'restore return and environment registers'
+				[= iter [list-set_cdr iter [compile-pop_env           tracewrap]]]
+				[= iter [list-set_cdr iter [compile-pop_env           tracewrap]]] 'this is pushed in f2_bytecodes.c'
+				[= iter [list-set_cdr iter [compile-pop_return        tracewrap]]]
+				[= iter [list-set_cdr iter [compile-copy_return_to_pc tracewrap]]]
+				
+				[funk-set_body_bytecodes funk full_bcs]
+				[bcs-valid funk_bcs]
+				]]]]]]]]]]]]
+
+
+[defunk compile-exp [tracewrap exp]
+  [cond [[null       exp] [compile-set_value tracewrap nil]]
+	[[integer?   exp] [compile-set_value tracewrap exp]]
+	[[pointer?   exp] [compile-set_value tracewrap exp]]
+	[[string?    exp] [compile-set_value tracewrap exp]]
+	[[symbol?    exp] [compile-symbol    tracewrap exp]]
+	[[cons?      exp] [compile-cons_exp  tracewrap exp]]
+	[[array?     exp] [compile-set_value tracewrap exp]]
+	[[cfunk?     exp] [compile-set_value tracewrap exp]]
+	[[funk?      exp] [compile-funk      tracewrap exp]]
+	[[metro?     exp] [compile-metro     tracewrap exp]]
+	[[exception? exp] [compile-set_value tracewrap exp]]
+	[[bytecode?  exp] [compile-set_value tracewrap exp]]
+	[[thread?    exp] [compile-set_value tracewrap exp]]
+	[t                [error nil 'unrecognized type in compile.']]]]
+
+[defunk compile-rawcode [tracewrap exps]
+  [if [null exps]
+      nil
+    [let [[full_bcs  [compile-exp tracewrap [car exps]]]
+	  [exps_iter [cdr exps]]]
+      [let [[bcs_iter full_bcs]]
+	[while exps_iter
+	  [= bcs_iter  [list-set_cdr bcs_iter [compile-exp tracewrap [car exps_iter]]]]
+	  [= exps_iter [cdr exps_iter]]]
+	full_bcs]]]]
+
+`[let [[a [thread-set_program_counter [this-thread] [compile-exp nil `[funk [x] [print x]]]]
+	  ]]
+   [apply a [list 'this is a test']]
+   ]
+
+

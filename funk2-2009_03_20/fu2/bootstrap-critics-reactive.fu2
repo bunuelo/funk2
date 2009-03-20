@@ -1,0 +1,89 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk critic-reactive-integer_type_bug [thread bug]
+  [ansi-stream-reset stdout]
+  [format stdout
+	  '\n\n'
+	  [append `[A bug has occured that could not be automatically debugged by any of the reflective bug-handling critics.  
+		      We have paused the thread that has produced this bug, so that it may be debugged and continue executing under the control of reflective critics.
+		      This bug type does not have any reflective critics assigned to it.
+		      The best that we can do at this point is to give you an English description of the bug and a new Read-Eval-Print-Loop:]
+		   [bug-english_sentence_list bug]]
+	  '\n\n']
+  [globalize last-error-thread thread]
+  `bug_not_handled]
+
+[defunk critic-reactive-unknown_bug [thread]
+  [ansi-stream-foreground stdout 10]
+  [format stdout
+	  '\n' 
+	  '\n' 'Reactive Critic Fired: We have paused a buggy thread and are now running in a new thread, handling an unhandled bug type.'
+	  '\n']
+  [thread-print_backtrace thread]
+  [let [[value       [thread-value thread]]
+	[bug_handled nil]]
+    [format stdout '\n' '  bug: ' value]
+    [if [bug? value]
+	[let* [[bug  value]
+	       [type [bug-type bug]]]
+	  [if [eq `bug_handled [cond [[integer? type] [critic-reactive-integer_type_bug thread bug]]
+				     [t               `bug_not_handled]]]
+	      [= bug_handled t]]]
+      [prog [ansi-stream-foreground stdout]
+	    [format stdout
+		    '\n' 'This should be a bug.  Instead we got: ' value
+		    '\n']]]
+    [if bug_handled
+	[prog [ansi-stream-foreground stdout 10]
+	      [format stdout
+		      '\n' 
+		      '\n' 'Bug reported as handled.  Exiting reactive critic thread.'
+		      '\n']
+	      [ansi-stream-reset stdout]]
+      [prog [ansi-stream-foreground stdout 10]
+	    [format stdout
+		    '\n' 
+		    '\n' 'Enabling reactive critics for this new thread now.'
+		    '\n']
+	    [thread-enable_reactive_critics [this-thread]]
+	    [format stdout
+		    '\n' 
+		    '\n' 'Beginning new user debug repl now.'
+		    '\n']
+	    [ansi-stream-reset stdout]
+	    [repl]]]]]
+
+[defunk critic-reactive-primitive_response [thread]
+  [critic-reactive-unknown_bug thread]]
+
+[globalize thread:-environment_critics- [list &critic-reactive-unknown_bug]]
+
+[defmetro criticize [var code :rest body]
+  `[prog [define thread:-environment_critics- [list [funk [,var]
+							  ,code]]]
+	 @body]]
+
+[defunk thread-enable_reactive_critics [this]
+  [thread-critics-set this &critic-reactive-primitive_response]]
+
+[boot-add_user_command `[thread-enable_reactive_critics [this-thread]]]
+

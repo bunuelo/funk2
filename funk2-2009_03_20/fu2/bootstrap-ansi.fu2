@@ -1,0 +1,64 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[globalize-funk ansi-stream-begin_command                          &primfunk:ansi__stream__begin_command]
+[globalize-funk ansi-stream-print_code                             &primfunk:ansi__stream__print_code]
+[globalize-funk ansi-stream-reset                                  &primfunk:ansi__stream__reset]
+[globalize-funk ansi-stream-bold                                   &primfunk:ansi__stream__bold]
+[globalize-funk ansi-stream-half_bright                            &primfunk:ansi__stream__half_bright]
+[globalize-funk ansi-stream-underscore                             &primfunk:ansi__stream__underscore]
+[globalize-funk ansi-stream-blink                                  &primfunk:ansi__stream__blink]
+[globalize-funk ansi-stream-reverse_video                          &primfunk:ansi__stream__reverse_video]
+[globalize-funk ansi-stream-normal_intensity                       &primfunk:ansi__stream__normal_intensity]
+[globalize-funk ansi-stream-underline_off                          &primfunk:ansi__stream__underline_off]
+[globalize-funk ansi-stream-blink_off                              &primfunk:ansi__stream__blink_off]
+[globalize-funk ansi-stream-reverse_video_off                      &primfunk:ansi__stream__reverse_video_off]
+[globalize-funk ansi-stream-black_foreground                       &primfunk:ansi__stream__black_foreground]
+[globalize-funk ansi-stream-red_foreground                         &primfunk:ansi__stream__red_foreground]
+[globalize-funk ansi-stream-green_foreground                       &primfunk:ansi__stream__green_foreground]
+[globalize-funk ansi-stream-brown_foreground                       &primfunk:ansi__stream__brown_foreground]
+[globalize-funk ansi-stream-blue_foreground                        &primfunk:ansi__stream__blue_foreground]
+[globalize-funk ansi-stream-magenta_foreground                     &primfunk:ansi__stream__magenta_foreground]
+[globalize-funk ansi-stream-cyan_foreground                        &primfunk:ansi__stream__cyan_foreground]
+[globalize-funk ansi-stream-white_foreground                       &primfunk:ansi__stream__white_foreground]
+[globalize-funk ansi-stream-underscore_with_default_foreground     &primfunk:ansi__stream__underscore_with_default_foreground]
+[globalize-funk ansi-stream-underscore_off_with_default_foreground &primfunk:ansi__stream__underscore_off_with_default_foreground]
+[globalize-funk ansi-stream-black_background                       &primfunk:ansi__stream__black_background]
+[globalize-funk ansi-stream-red_background                         &primfunk:ansi__stream__red_background]
+[globalize-funk ansi-stream-green_background                       &primfunk:ansi__stream__green_background]
+[globalize-funk ansi-stream-brown_background                       &primfunk:ansi__stream__brown_background]
+[globalize-funk ansi-stream-blue_background                        &primfunk:ansi__stream__blue_background]
+[globalize-funk ansi-stream-magenta_background                     &primfunk:ansi__stream__magenta_background]
+[globalize-funk ansi-stream-cyan_background                        &primfunk:ansi__stream__cyan_background]
+[globalize-funk ansi-stream-white_background                       &primfunk:ansi__stream__white_background]
+[globalize-funk ansi-stream-default_background                     &primfunk:ansi__stream__default_background]
+[globalize-funk ansi-stream-clear_screen                           &primfunk:ansi__stream__clear_screen]
+[globalize-funk ansi-stream-clear_keyboard_leds                    &primfunk:ansi__stream__clear_keyboard_leds]
+[globalize-funk ansi-stream-set_scroll_lock_led                    &primfunk:ansi__stream__set_scroll_lock_led]
+[globalize-funk ansi-stream-set_num_lock_led                       &primfunk:ansi__stream__set_num_lock_led]
+[globalize-funk ansi-stream-set_caps_lock_led                      &primfunk:ansi__stream__set_caps_lock_led]
+[globalize-funk ansi-stream-move_cursor                            &primfunk:ansi__stream__move_cursor]
+[globalize-funk ansi-stream-beep                                   &primfunk:ansi__stream__beep]
+[globalize-funk ansi-stream-foreground                             &primfunk:ansi__stream__foreground]
+[globalize-funk ansi-stream-background                             &primfunk:ansi__stream__background]
+[globalize-funk ansi-stream-rectangle                              &primfunk:ansi__stream__rectangle]
+[globalize-funk ansi-stream-bordered_rectangle                     &primfunk:ansi__stream__bordered_rectangle]
+

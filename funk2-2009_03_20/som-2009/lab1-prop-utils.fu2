@@ -1,0 +1,34 @@
+'Lab 1'
+
+[defunk lab1_agent_type-test [agent_type_name]
+  [let [[blocks_world [blocks_world-create [blocks_world_physics-new [list [blocks_world_object-new_table   `the-table         0  0 50  2 `white]
+									   [blocks_world_object-new_gripper `the-gripper      21 23  3  3 `magenta]
+									   [blocks_world_object-new_block   `the-blue-block   10  2  5  5 `blue]
+									   [blocks_world_object-new_block   `the-green-block  20  5  5  5 `green]
+									   [blocks_world_object-new_block   `the-red-block    30  2 10  5 `red]
+									   [blocks_world_object-new_block   `the-yellow-block 30 10  5  5 `yellow]]]]]]
+    [let [[agent [blocks_world_agent-new agent_type_name blocks_world]]]
+      [blocks_world-agent-set blocks_world agent]
+      [blocks_world-repl      blocks_world]
+      blocks_world]]]
+
+[defunk   learning_agent_plan?                           [exp]                                                                  [and exp [array? exp] [> [length exp] 1] [eq [array-elt exp 0] `learning_agent_plan]]]
+[defunk   learning_agent_plan-new                        [plan negative_prepost_pairs positive_prepost_pairs conjunctive_rule]  [array `learning_agent_plan plan negative_prepost_pairs positive_prepost_pairs conjunctive_rule]]
+[defmetro learning_agent_plan-plan                       [this]                                                                `[array-elt     ,this 1]]
+[defmetro learning_agent_plan-negative_prepost_pairs     [this]                                                                `[array-elt     ,this 2]]
+[defmetro learning_agent_plan-negative_prepost_pairs-set [this value]                                                          `[array-elt-set ,this 2 ,value]]
+[defmetro learning_agent_plan-positive_prepost_pairs     [this]                                                                `[array-elt     ,this 3]]
+[defmetro learning_agent_plan-positive_prepost_pairs-set [this value]                                                          `[array-elt-set ,this 3 ,value]]
+[defmetro learning_agent_plan-conjunctive_rule           [this]                                                                `[array-elt     ,this 4]]
+[defmetro learning_agent_plan-conjunctive_rule-set       [this value]                                                          `[array-elt-set ,this 4 ,value]]
+
+[defunk learning_agent_plan-brief [this]
+  [list `:plan           [learning_agent_plan-plan                   this]
+	  `:negative_pairs [learning_agent_plan-negative_prepost_pairs this]
+	    `:positive_pairs [learning_agent_plan-positive_prepost_pairs this]]]
+
+[defunk learning_agent_plan-create [plan] [learning_agent_plan-new plan nil nil nil]]
+
+[defunk learning_agent-sense [blocks_world]
+  [blocks_world-generate_perceptions blocks_world]]
+

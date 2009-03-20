@@ -44,9 +44,9 @@ f2ptr f2__text_buffer_characterp(f2ptr this, f2ptr cause) {return f2bool__new(ra
 
 // text_buffer primobject definition
 
-defprimobject__static_slot(text_buffer__width,  0);
-defprimobject__static_slot(text_buffer__height, 1);
-defprimobject__static_slot(text_buffer__buffer, 2);
+defprimobject__static_slot(text_buffer__width,      0);
+defprimobject__static_slot(text_buffer__height,     1);
+defprimobject__static_slot(text_buffer__characters, 2);
 
 f2ptr __text_buffer__symbol = -1;
 

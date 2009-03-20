@@ -50,12 +50,12 @@ defprimobject__static_slot(text_buffer__buffer, 2);
 
 f2ptr __text_buffer__symbol = -1;
 
-f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr buffer) {
+f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters) {
   if (__text_buffer__symbol == -1) {__text_buffer__symbol = f2symbol__new(cause, strlen("text_buffer"), (u8*)"text_buffer");}
   f2ptr this = f2__primobject__new(cause, __text_buffer__symbol, 5, nil);
-  f2text_buffer__width__set( this, cause, width);
-  f2text_buffer__height__set(this, cause, height);
-  f2text_buffer__buffer__set(this, cause, buffer);
+  f2text_buffer__width__set(     this, cause, width);
+  f2text_buffer__height__set(    this, cause, height);
+  f2text_buffer__characters__set(this, cause, characters);
   return this;
 }
 

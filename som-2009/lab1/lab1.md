@@ -188,7 +188,7 @@ In this section of the lab, we are going to learn the \textsc{If-Do} rules of a 
 
 If we limit ourselves to the task of learning a rule to classify "relevant" versus "not relevant" preconditions for an action to take place, then we do not really need a description of the rule's antecedent.  In fact, we could throw away the representation and focus only on the data's behavior, by learning a *discriminative classifier*.  Instead, we will learn the full function, not just the description, so that we can reason about this knowledge later.
 
-We are not learning a rule to select the best action from a set of actions, we are learning a rule for *each* action that determines whether or not it is relevant.  This is a problem of **concept learning**, \marginpar[right]{This lab is interdisciplinary and sometimes non-linear.  You can skip to section X to learn more about concept learning.} learning a binary valued function from examples of *input* and *output* pairs.  Later in section \ref{sec:conceptlearning} lab, you will learn more details about concept learning. 
+We are not learning a rule to select the best action from a set of actions, we are learning a rule for *each* action that determines whether or not it is relevant.  This is a problem of **concept learning**, \marginpar[right]{This lab is interdisciplinary and sometimes non-linear.  You can skip to section \ref{sec:conceptlearning} to learn more about concept learning.} learning a binary valued function from examples of *input* and *output* pairs.  Later in section \ref{sec:conceptlearning} lab, you will learn more details about concept learning. 
 
 
 \questionset{1}
@@ -324,9 +324,9 @@ The size of the set of possible world states `S` is based on `P` and `C`:
 
 A predicate's *terms* can either be functors or variables.  **Functor symbols**, `F` = \{$f_i/\alpha_i,...,f_n/\alpha_n\}$, do not define relations as predicates do, instead they are functions that map constants to constants. **Constant symbols**, the set of which is denoted `C`, are the common case of functors with 0 arity, and these denote *objects* or *items* in the domain of interest. For example, in our blocks world we have `C` = \{\textsf{red-block}, \textsf{blue-block}, \textsf{yellow-block}, \textsf{green-block}, \textsf{gripper}, \textsf{table}\}. A functor $f$ with arity $k$ is a mapping from \texttt{C}$^{k}$ to \texttt{C}. For example, \prop{mother}{dustin} maps to the constant symbol \textsf{sharon}. We can get rid of most functors `f`/$\alpha$ by converting them into a relation `r`/$\alpha+1$, for example \pred{motherOf}{dustin}{sharon}.  An exception is functors that are defined recursively:  for example, with the constant \textsf{0} and the successor functor `succ/1`, we can define all of the natural numbers: \textsf{0}, \prop{succ}{0}, \prop{succ(succ}{0}\texttt{)}...  
 
-Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
+Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A predicate with no variables is called a *ground atom*.
 
-Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own category using combinations of properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
+Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own ad-hoc categories by combining properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
 
 \begin{equation}
 \forall \textsf{X}\ \prop{block}{X}\ \land \pred{on}{X}{gripper} \rightarrow \prop{inGripper}{X} \\
@@ -362,7 +362,7 @@ Using the notation of FOL, write down the a) **antecedents** (preconditions) and
 
    - Membership function that maps to *true* or *false*.
    - Cognitive representation that divides the world into *things in the concept* versus *things outside the concept*.
-   - Intentional definition of a set, \eg \{\textsf{x} : \prop{blue}{x} $\land$ \pred{has}{x}{feathers}\}.
+   - Intensional definition of a set, \eg \{\textsf{x} : \prop{blue}{x} $\land$ \pred{has}{x}{feathers}\}.
 
 However the term has a shared history in psychology as well as AI.  This section will cover human concept learning. 
  

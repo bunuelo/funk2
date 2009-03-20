@@ -45,7 +45,6 @@ f2ptr f2text_buffer__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file
 boolean_t raw__text_bufferp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_buffer(this, cause));}
 f2ptr f2__text_bufferp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_bufferp(this, cause));}
 
-
 // **
 
 void f2__primobject__text_buffer__reinitialize_globalvars() {
@@ -61,7 +60,7 @@ void f2__primobject__text_buffer__initialize() {
   
   environment__add_var_value(cause, global_environment(), __text_buffer__symbol, nil);
   
-  f2__primcfunk__init(file_text_buffer__new);
+  //f2__primcfunk__init(file_text_buffer__new);
   
   resume_gc();
   try_gc();

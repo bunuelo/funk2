@@ -54,6 +54,7 @@ void f2__initialize() {
   pause_gc(); f2__primobject_object_type__initialize();      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject_circular_buffer__initialize();  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject__stream__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject__text_buffer__initialize();     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primcfunks__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primfunks__memory__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__reader__initialize();                      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");

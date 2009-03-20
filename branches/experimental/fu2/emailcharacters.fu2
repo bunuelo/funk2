@@ -1,0 +1,131 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk   eqhash-new           [pow2_size]       [array `eqhash pow2_size [array-new pow2_size]]]
+[defmetro eqhash-pow2_size     [this]           `[array-elt ,this 1]]
+[defmetro eqhash-bin_array     [this]           `[array-elt ,this 2]]
+[defunk   eqhash-put           [this key value]  [let [[bin_array [eqhash-bin_array this]]
+						       [index     [>> [* 65521 [pointer key]] [eqhash-pow2_size this]]]]
+						   [array-elt-set bin_array index [cons [cons key value] [array-elt bin-array index]]]]]
+'[defunk   eqhash-get           [this key]        ['
+
+[defunk   context-new        [characters emails]  [array `context characters emails]]
+[defunk   context?           [exp]                [and [array? exp] [eq `context [array-elt exp 0]]]]
+[defmetro context-characters [this]              `[array-elt ,this 1]]
+[defmetro context-emails     [this]              `[array-elt ,this 2]]
+
+[defunk   email?      [exp]   [and [cons? exp] [eq `email [car exp]]]]
+[defmetro email-slots [this] `[cdr ,this]]
+
+[defunk email-read [exp context]
+  [mapc [funk [exp]
+	      [cond [[from?     exp] [prog [format stdout '\nfrom']
+					   [from-read exp context]]]
+		    [[to?       exp] [prog [format stdout '\nto']
+					   [to-read exp context]]]
+		    [[cc?       exp] [prog [format stdout '\ncc']
+					   [cc-read exp context]]]
+		    [[subject?  exp] [format stdout '\nsubject']]
+		    [[body?     exp] [prog [format stdout '\nbody']
+					   [body-read exp context]]]
+		    [[date?     exp] [format stdout '\ndate']]
+		    [[reply-to? exp] [format stdout '\nreply-to']]
+		    [t               [format stdout '\nerror! unrecognized email subobject type  ' [car exp]]
+				     [error `email-read 'unrecognized type']]]]
+	[email-slots exp]]]
+
+[defunk define?   [exp] [and [cons? exp] [eq `define   [car exp]]]]
+[defunk date?     [exp] [and [cons? exp] [eq `date     [car exp]]]]
+
+[defunk   from?      [exp]   [and [cons? exp] [eq `from [car exp]]]]
+[defmetro from-slots [this] `[cdr ,this]]
+
+[defunk from-read [exp context]
+  [mapc [funk [exp]
+	      [cond [[string? exp] [format stdout '\nfrom-string']]
+		    [t             [format stdout '\nerror! unrecognized from subobject type  ' [car exp]]
+				   [error `from-read 'unrecognized type']]]]
+	[from-slots exp]]]
+
+[defunk   to?      [exp]   [and [cons? exp] [eq `to [car exp]]]]
+[defmetro to-slots [this] `[cdr ,this]]
+
+[defunk to-read [exp context]
+  [mapc [funk [exp]
+	      [cond [[string? exp] [format stdout '\nto-string']]
+		    [t             [format stdout '\nerror! unrecognized from subobject type  ' [car exp]]
+				   [error `from-read 'unrecognized type']]]]
+	[to-slots exp]]]
+
+[defunk   cc?      [exp]   [and [cons? exp] [eq `cc [car exp]]]]
+[defmetro cc-slots [this] `[cdr ,this]]
+
+[defunk cc-read [exp context]
+  [mapc [funk [exp]
+	      [cond [[string? exp] [format stdout '\ncc-string']]
+		    [t             [format stdout '\nerror! unrecognized from subobject type  ' [car exp]]
+				   [error `from-read 'unrecognized type']]]]
+	[cc-slots exp]]]
+
+[defunk reply-to? [exp] [and [cons? exp] [eq `reply-to [car exp]]]]
+[defunk subject?  [exp] [and [cons? exp] [eq `subject  [car exp]]]]
+
+[defunk greeting?   [exp] [and [cons? exp] [eq `greeting   [car exp]]]]
+[defunk signature?  [exp] [and [cons? exp] [eq `signature  [car exp]]]]
+[defunk postscript? [exp] [and [cons? exp] [eq `postscript [car exp]]]]
+
+[defunk   body?      [exp]   [and [cons? exp] [eq `body     [car exp]]]]
+[defmetro body-slots [this] `[cdr ,this]]
+
+[defunk body-read [exp context]
+  [mapc [funk [exp]
+	      [cond [[quoted?     exp] [format stdout '\nquoted']]
+		    [[greeting?   exp] [format stdout '\ngreeting']]
+		    [[signature?  exp] [format stdout '\nsignature']]
+		    [[postscript? exp] [format stdout '\npostscript']]
+		    [[symbol?     exp] [format stdout '\nsymbol']]
+		    [[string?     exp] [format stdout '\nstring: ' exp]]
+		    [t                 [format stdout '\nerror! unrecognized body subobject type  ' [car exp]]
+				       [error `body-read 'unrecognized type']]]]
+	[body-slots exp]]]
+
+[defunk quoted?   [exp] [and [cons? exp] [eq `quoted   [car exp]]]]
+[defunk imagined? [exp] [and [cons? exp] [eq `imagined [car exp]]]]
+
+[defunk   history?      [exp]   [and [cons? exp] [eq `history  [car exp]]]]
+[defmetro history-slots [this] `[cdr ,this]]
+
+[defunk history-read [exp context]
+  [mapc [funk [exp]
+	      [cond [[email?    exp] [prog [format stdout '\nemail']
+					   [email-read exp context]]]
+		    [[define?   exp] [format stdout '\ndefine']]
+		    [t               [format stdout '\nerror! unrecognized history subobject type!  ' [car exp]]
+				     [error `email-parse 'unrecognized type']]]]
+	[history-slots exp]]]
+
+[defunk history-read_in_new_context [exp]
+  [let [[context [context-new nil nil]]]
+    [history-read exp context]
+    context]]
+
+
+

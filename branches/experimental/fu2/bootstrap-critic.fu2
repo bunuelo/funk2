@@ -1,0 +1,124 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[print 'beginning bootstrap-critic.fu2']
+
+[globalize *active_critics_type_hash* nil]
+
+[defmetro critics-deactivate_all [] `[= *active_critics_type_hash* [hashtable-new 5]]]
+
+[critics-deactivate_all]
+
+
+[defunk   pattern-new           [variable_form]  [array `pattern variable_form]]
+[defmetro pattern-variable_form [this]          `[array-elt ,this 1]]
+
+[globalize *pattern_match_hashbits* 4]
+
+[defunk variable_form-fill_assignment_hashtable [variable_form form partial_assignment_hashtable]
+  [if [null variable_form]
+      [if [null form]
+	  nil
+	`long_form]
+    [if [null form]
+	`short_form
+      [if [or [not [cons? variable_form]] [not [cons? form]]]
+	  [if [eq variable_form form]
+	      nil
+	    `[mismatch ,variable_form ,form]]
+	[let [[variable_exp [car variable_form]]
+	      [form_exp     [car form]]]
+	  [if [and [cons? variable_exp] [eq [car variable_exp] `?]]
+	      [let [[variable_name [cadr variable_exp]]]
+		[hashtable-add_keyvalue_pair partial_assignment_hashtable variable_name [cons form_exp [hashtable-lookup_value partial_assignment_hashtable variable_name]]]
+		[variable_form-fill_assignment_hashtable [cdr variable_form] [cdr form] partial_assignment_hashtable]]
+	    [if [not [eq variable_exp form_exp]]
+		`[mismatch ,variable_exp ,form_exp]
+	      [variable_form-fill_assignment_hashtable [cdr variable_form] [cdr form] partial_assignment_hashtable]]]]]]]]
+
+[defunk variable_form-variables [this]
+  [let [[variables nil]]
+    [define-funk helper [funk [variable_form]
+			      [if [null variable_form]
+				  nil
+				[if [cons? variable_form]
+				    [if [eq [car variable_form] `?]
+					[push [cadr variable_form] variables]
+				      [prog [helper [car variable_form]]
+					    [helper [cdr variable_form]]]]
+				  nil]]]]
+    [helper this]
+    variables]]
+
+[defunk pattern-assignment_hashtable [this form]
+  [let [[variable_form [pattern-variable_form this]]]
+    [let [[assignment_hashtable [hashtable-new *pattern_match_hashbits*]]]
+      [let [[failure [variable_form-fill_assignment_hashtable variable_form form assignment_hashtable]]]
+	[if failure
+	    [prog `[format stdout 'critic note: ' `[failure ,failure] '\n']
+		  nil]
+	  assignment_hashtable]]]]]
+
+[defunk pattern-variables [this]
+  [variable_form-variables [pattern-variable_form this]]]
+
+[defunk pattern-test []
+  [let [[pattern [pattern-new `[all [? x] are [? y]]]]]
+    [pattern-assignment_hashtable pattern `[all foxes are canines]]]]
+
+[defunk   pattern_critic-new      [pattern reaction]  [array `pattern_critic pattern reaction]]
+[defmetro pattern_critic-pattern  [this]             `[array-elt ,this 1]]
+[defmetro pattern_critic-reaction [this]             `[array-elt ,this 2]]
+
+[defunk pattern_critic_reaction-compile [pattern reaction_body]
+  [let [[match_response [eval `[funk ,[reverse [pattern-variables pattern]] @reaction_body]]]]
+    [eval `[funk [stimulation_form]
+		 [let [[assignment_hashtable [pattern-assignment_hashtable ,pattern stimulation_form]]]
+		   [if assignment_hashtable
+		       [let [[assignment_values_list [hashtable-values assignment_hashtable]]]
+			 [apply ,match_response [mapcar [funk [assignment_values]
+							      [if [!= [length assignment_values] 1]
+								  [error `critic_fire `multiple_assignments_to_one_variable]]
+							      [car assignment_values]]
+							assignment_values_list]]]
+		     nil]]]]]]
+
+
+
+[defmetro critical [:rest body]
+  `[prog @body]]
+
+[defmetro critic [variable_form :rest reaction_body]
+  `[let [[pattern [pattern-new [quote ,variable_form]]]]
+     [let [[this [pattern_critic-new pattern [pattern_critic_reaction-compile pattern [quote [[critical @reaction_body]]]]]]]
+       this]]]
+
+[defmetro defcritic [type variable_form :rest reaction_body]
+  [format stdout '\n' `[defcritic ,type ,variable_form]]
+  `[hashtable-add_keyvalue_pair *active_critics_type_hash* [quote ,type] [cons [pattern_critic-reaction [critic ,variable_form @reaction_body]]
+									       [hashtable-lookup_value *active_critics_type_hash* [quote ,type]]]]]
+
+[defmetro apply-critics [type form]
+  `[let [[form ,form]]
+     [parc [funk [critic_reaction]
+		 [apply critic_reaction [cons form nil]]]
+	   [hashtable-lookup_value *active_critics_type_hash* [quote ,type]]]]]
+

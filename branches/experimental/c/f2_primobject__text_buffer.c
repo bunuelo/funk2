@@ -155,7 +155,7 @@ f2ptr f2text_cursor__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr foreground_color, 
 }
 
 boolean_t raw__text_cursorp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_cursor(this, cause));}
-f2ptr f2__text_cursorp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_cursorp(this, cause));}
+f2ptr      f2__text_cursorp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_cursorp(this, cause));}
 
 
 // text_window primobject definition
@@ -176,6 +176,30 @@ f2ptr f2text_window__new(f2ptr cause, f2ptr double_buffer, f2ptr cursor) {
 boolean_t raw__text_windowp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_window(this, cause));}
 f2ptr f2__text_windowp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_windowp(this, cause));}
 
+f2ptr raw__text_window__create(f2ptr cause, s64 width, s64 height) {
+  if (width < 0 || height < 0) {
+    return f2larva__new(cause, 58);
+  }
+  f2ptr double_buffer = raw__array__new(cause, 2);
+  f2ptr front_buffer = raw__text_buffer__create(cause, width, height);
+  f2ptr back_buffer  = raw__text_buffer__create(cause, width, height);
+  raw__array__elt__set(cause, double_buffer, 0, front_buffer);
+  raw__array__elt__set(cause, double_buffer, 1, back_buffer);
+  f2ptr cursor = f2text_cursor__new(cause, f2integer__new(cause, 0), f2integer__new(cause, 0), nil, nil);
+  f2ptr text_window = f2text_window__new(cause, double_buffer, cursor);
+  return text_window;
+}
+
+f2ptr f2__text_window__create(f2ptr cause, f2ptr width, f2ptr height) {
+  if ((! raw__integerp(width, cause)) ||
+      (! raw__integerp(height, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  s64 raw_width  = f2integer__i(width,  cause);
+  s64 raw_height = f2integer__i(height, cause);
+  return raw__text_window__create(cause, raw_width, raw_height);
+}
+def_pcfunk2(text_window__create, width, height, return f2__text_window__create(this_cause, width, height));
 
 // **
 
@@ -199,6 +223,7 @@ void f2__primobject__text_buffer__initialize() {
   environment__add_var_value(cause, global_environment(), __text_window__symbol,           nil);
   
   f2__primcfunk__init__2(text_buffer__create, width, height);
+  f2__primcfunk__init__2(text_window__create, width, height);
   
   resume_gc();
   try_gc();

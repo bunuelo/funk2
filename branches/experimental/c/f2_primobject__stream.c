@@ -245,7 +245,7 @@ def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_char
 
 f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
   if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
-  return f2stream__new(cause, __text_window_stream__symbol, nil, nil, text_window);
+  return f2stream__new(cause, __text_window_stream__symbol, nil, nil, text_window, nil);
 }
 def_pcfunk1(text_window_stream__new, text_window, return f2__text_window_stream__new(this_cause, text_window));
 

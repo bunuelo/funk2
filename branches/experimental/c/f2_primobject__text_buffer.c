@@ -23,7 +23,7 @@
 
 // text_buffer_character primobject definition
 
-defprimobject__static_slot(text_buffer_character__character,  0);
+defprimobject__static_slot(text_buffer_character__character,        0);
 defprimobject__static_slot(text_buffer_character__foreground_color, 1);
 defprimobject__static_slot(text_buffer_character__background_color, 2);
 
@@ -87,6 +87,52 @@ f2ptr f2__text_buffer__create(f2ptr cause, f2ptr width, f2ptr height) {
   return raw__text_buffer__create(cause, raw_width, raw_height);
 }
 def_pcfunk2(text_buffer__create, width, height, return f2__text_buffer__create(this_cause, width, height));
+
+f2ptr raw__text_buffer__character(f2ptr cause, f2ptr this, s64 x, s64 y) {
+  if (! raw__text_bufferp(this cause)) {
+    return f2larva__new(cause, 1);
+  }
+  if (x < 0 || y < 0) {
+    return f2larva__new(cause, 57);
+  }
+  f2ptr   width  = f2text_buffer__width(this, cause);
+  s64 raw_width  = f2integer__i(width, cause);
+  f2ptr   height = f2text_buffer__height(this, cause);
+  s64 raw_height = f2integer__i(height, cause);
+  if (x >= width || y >= height) {
+    return f2larva__new(cause, 57);
+  }
+  f2ptr characters = f2text_buffer__characters(this, cause);
+  return raw__array__elt(cause, characters, y * raw_width + x);
+}
+
+f2ptr raw__text_buffer__character__set(f2ptr cause, f2ptr this, s64 x, s64 y, f2ptr text_char) {
+  if ((! raw__text_bufferp(this, cause)) ||
+      (! raw__text_buffer_characterp(text_char, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  if (x < 0 || y < 0) {
+    return f2larva__new(cause, 57);
+  }
+  f2ptr   width  = f2text_buffer__width(this, cause);
+  s64 raw_width  = f2integer__i(width, cause);
+  f2ptr   height = f2text_buffer__height(this, cause);
+  s64 raw_height = f2integer__i(height, cause);
+  if (x >= width || y >= height) {
+    return f2larva__new(cause, 57);
+  }
+  f2ptr characters = f2text_buffer__characters(this, cause);
+  return raw__array__elt__set(cause, characters, y * raw_width + x, text_char);
+}
+
+f2ptr raw__text_buffer__draw_character(f2ptr cause, f2ptr this, s64 x, s64 y, f2ptr character, f2ptr foreground_color, f2ptr background_color) {
+  if ((! raw__text_bufferp(this, cause)) ||
+      (! raw__charp(character, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr text_char = f2text_buffer_character__new(cause, character, foreground_color, background_color);
+  return raw__text_buffer__character__set(cause, this, x, y, text_char);
+}
 
 // **
 

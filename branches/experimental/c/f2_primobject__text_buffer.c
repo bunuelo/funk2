@@ -281,7 +281,7 @@ void f2__primobject__text_buffer__initialize() {
   
   f2__primcfunk__init__2(text_buffer__create, width, height);
   f2__primcfunk__init__2(text_window__create, width, height);
-  f2__primcfunk__init__7(text_window__render, screen_x0, screen_y0, x0, y0, x1, y1);
+  f2__primcfunk__init__7(text_window__render, this, screen_x0, screen_y0, x0, y0, x1, y1);
   
   resume_gc();
   try_gc();

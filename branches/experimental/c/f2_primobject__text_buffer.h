@@ -85,6 +85,36 @@ defprimobject__static_slot__prototype(text_buffer__characters);
 boolean_t raw__text_bufferp(f2ptr this, f2ptr cause);
 f2ptr      f2__text_bufferp(f2ptr this, f2ptr cause);
 
+// text_window
+
+extern f2ptr __text_window__symbol;
+f2ptr f2text_window__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters);
+#define      f2primobject__is__text_window(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_window__symbol)
+
+defprimobject__static_slot__prototype(text_window__width);
+#define      f2text_window__width(                   this, cause)        primobject__static_slot__accessor(         this, text_window__width, cause)
+#define      f2text_window__width__set(              this, cause, value) primobject__static_slot__set(              this, text_window__width, cause, value)
+#define      f2text_window__width__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_window__width, cause)
+#define      f2text_window__width__trace(            this, cause)        primobject__static_slot__trace(            this, text_window__width, cause)
+#define      f2text_window__width__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_window__width, cause)
+
+defprimobject__static_slot__prototype(text_window__height);
+#define      f2text_window__height(                   this, cause)        primobject__static_slot__accessor(         this, text_window__height, cause)
+#define      f2text_window__height__set(              this, cause, value) primobject__static_slot__set(              this, text_window__height, cause, value)
+#define      f2text_window__height__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_window__height, cause)
+#define      f2text_window__height__trace(            this, cause)        primobject__static_slot__trace(            this, text_window__height, cause)
+#define      f2text_window__height__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_window__height, cause)
+
+defprimobject__static_slot__prototype(text_window__characters);
+#define      f2text_window__characters(                   this, cause)        primobject__static_slot__accessor(         this, text_window__characters, cause)
+#define      f2text_window__characters__set(              this, cause, value) primobject__static_slot__set(              this, text_window__characters, cause, value)
+#define      f2text_window__characters__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_window__characters, cause)
+#define      f2text_window__characters__trace(            this, cause)        primobject__static_slot__trace(            this, text_window__characters, cause)
+#define      f2text_window__characters__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_window__characters, cause)
+
+boolean_t raw__text_windowp(f2ptr this, f2ptr cause);
+f2ptr      f2__text_windowp(f2ptr this, f2ptr cause);
+
 // **
 
 // **

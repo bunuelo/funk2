@@ -134,6 +134,28 @@ f2ptr raw__text_buffer__draw_character(f2ptr cause, f2ptr this, s64 x, s64 y, f2
   return raw__text_buffer__character__set(cause, this, x, y, text_char);
 }
 
+
+// text_window primobject definition
+
+defprimobject__static_slot(text_window__width,      0);
+defprimobject__static_slot(text_window__height,     1);
+defprimobject__static_slot(text_window__characters, 2);
+
+f2ptr __text_window__symbol = -1;
+
+f2ptr f2text_window__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters) {
+  if (__text_window__symbol == -1) {__text_window__symbol = f2symbol__new(cause, strlen("text_window"), (u8*)"text_window");}
+  f2ptr this = f2__primobject__new(cause, __text_window__symbol, 5, nil);
+  f2text_window__width__set(     this, cause, width);
+  f2text_window__height__set(    this, cause, height);
+  f2text_window__characters__set(this, cause, characters);
+  return this;
+}
+
+boolean_t raw__text_windowp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_window(this, cause));}
+f2ptr f2__text_windowp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_windowp(this, cause));}
+
+
 // **
 
 void f2__primobject__text_buffer__reinitialize_globalvars() {
@@ -141,6 +163,7 @@ void f2__primobject__text_buffer__reinitialize_globalvars() {
   
   __text_buffer_character__symbol = f2symbol__new(cause, strlen("text_buffer_character"), (u8*)"text_buffer_character");
   __text_buffer__symbol           = f2symbol__new(cause, strlen("text_buffer"),           (u8*)"text_buffer");
+  __text_window__symbol           = f2symbol__new(cause, strlen("text_window"),           (u8*)"text_window");
 }
 
 void f2__primobject__text_buffer__initialize() {
@@ -150,6 +173,7 @@ void f2__primobject__text_buffer__initialize() {
   
   environment__add_var_value(cause, global_environment(), __text_buffer_character__symbol, nil);
   environment__add_var_value(cause, global_environment(), __text_buffer__symbol,           nil);
+  environment__add_var_value(cause, global_environment(), __text_window__symbol,           nil);
   
   f2__primcfunk__init__2(text_buffer__create, width, height);
   

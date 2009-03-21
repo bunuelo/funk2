@@ -29,9 +29,10 @@ defprimobject__static_slot(stream__file_descriptor, 2);
 defprimobject__static_slot(stream__string,          3);
 defprimobject__static_slot(stream__index,           4);
 
-f2ptr __stream__symbol        = -1;
-f2ptr __file_stream__symbol   = -1;
-f2ptr __string_stream__symbol = -1;
+f2ptr __stream__symbol             = -1;
+f2ptr __file_stream__symbol        = -1;
+f2ptr __string_stream__symbol      = -1;
+f2ptr __text_window_stream__symbol = -1;
 
 f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_descriptor, f2ptr string, f2ptr index) {
   if (__stream__symbol == -1) {__stream__symbol = f2symbol__new(cause, strlen("stream"), (u8*)"stream");}
@@ -242,14 +243,32 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_character(this_cause, stream));
 
+f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
+  if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
+  return f2stream__new(cause, __text_window_stream__symbol, nil, nil, text_window);
+}
+def_pcfunk1(text_window_stream__new, text_window, return f2__text_window_stream__new(this_cause, text_window));
+
+boolean_t raw__text_window_streamp(f2ptr this, f2ptr cause) {
+  if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
+  return (raw__streamp(this, cause) && f2__symbol__eq(cause, f2stream__type(this, cause), __text_window_stream__symbol));
+}
+f2ptr f2__text_window_streamp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_window_streamp(this, cause));}
+
+f2ptr f2__text_window_stream(f2ptr cause, f2ptr text_window) {
+  return f2__text_window_stream__new(cause, text_window);
+}
+def_pcfunk1(text_window_stream, text_window, return f2__text_window_stream(this_cause, text_window));
+
 // **
 
 void f2__primobject__stream__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  __stream__symbol        = f2symbol__new(cause, strlen("stream"),        (u8*)"stream");
-  __file_stream__symbol   = f2symbol__new(cause, strlen("file_stream"),   (u8*)"file_stream");
-  __string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");
+  __stream__symbol             = f2symbol__new(cause, strlen("stream"),             (u8*)"stream");
+  __file_stream__symbol        = f2symbol__new(cause, strlen("file_stream"),        (u8*)"file_stream");
+  __string_stream__symbol      = f2symbol__new(cause, strlen("string_stream"),      (u8*)"string_stream");
+  __text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");
 }
 
 void f2__primobject__stream__initialize() {
@@ -257,9 +276,10 @@ void f2__primobject__stream__initialize() {
   f2__primobject__stream__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  environment__add_var_value(cause, global_environment(), __stream__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __file_stream__symbol,   nil);
-  environment__add_var_value(cause, global_environment(), __string_stream__symbol, nil);
+  environment__add_var_value(cause, global_environment(), __stream__symbol,             nil);
+  environment__add_var_value(cause, global_environment(), __file_stream__symbol,        nil);
+  environment__add_var_value(cause, global_environment(), __string_stream__symbol,      nil);
+  environment__add_var_value(cause, global_environment(), __text_window_stream__symbol, nil);
   
   f2__primcfunk__init(file_stream__new);
   f2__primcfunk__init(string_stream__new);
@@ -272,6 +292,8 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init(stream__nonblocking__set);
   f2__primcfunk__init(stream__ungetc);
   f2__primcfunk__init(stream__try_read_character);
+  f2__primcfunk__init(text_window_stream__new);
+  f2__primcfunk__init(text_window_stream);
   
   resume_gc();
   try_gc();

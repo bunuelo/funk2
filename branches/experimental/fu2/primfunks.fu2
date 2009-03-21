@@ -364,4 +364,6 @@
 [globalize-funk stream-ungetc                               &primfunk:stream__ungetc]
 [globalize-funk stream-nonblocking__set                     &primfunk:stream__nonblocking__set]
 [globalize-funk stream-try_read_character                   &primfunk:stream__try_read_character]
+[globalize-funk text_window_stream-new                      &primfunk:text_window_stream__new]
+[globalize-funk text_window_stream                          &primfunk:text_window_stream]
 

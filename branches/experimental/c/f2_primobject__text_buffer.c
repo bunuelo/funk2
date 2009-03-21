@@ -256,7 +256,7 @@ f2ptr f2__text_window__render(f2ptr cause, f2ptr this, f2ptr screen_x0, f2ptr sc
   s64 raw_y1 = f2integer__i(y1, cause);
   return raw__text_window__render(cause, this, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
 }
-def_pcfunk7(text_window__render, this, screen_x0, screen_y0, x0, y0, x1, y1, return f2__text_window__render(this_cause, screen_x0, screen_y0, x0, y0, x1, y1));
+def_pcfunk7(text_window__render, this, screen_x0, screen_y0, x0, y0, x1, y1, return f2__text_window__render(this_cause, this, screen_x0, screen_y0, x0, y0, x1, y1));
 
 // **
 

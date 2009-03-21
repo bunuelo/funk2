@@ -227,7 +227,9 @@ f2ptr raw__text_window__render(f2ptr cause, f2ptr this, s64 screen_x0, s64 scree
   if (screen_x0 < 0 || screen_y0 < 0 || screen_x1 < 0 || screen_y1 < 0) {
     return f2larva__new(cause, 5);
   }
-  if (screen_x0 >= raw_width || screen_y0 >= raw_height || screen_x1 >= raw_width || screen_y1 >= raw_height) {
+  s64 screen_width  = raw__termios__width();
+  s64 screen_height = raw__termios__height();
+  if (screen_x0 >= screen_width || screen_y0 >= screen_height || screen_x1 >= screen_width || screen_y1 >= screen_height) {
     return f2larva__new(cause, 6);
   }
   s64 ix, iy;

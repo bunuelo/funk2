@@ -239,6 +239,25 @@ f2ptr raw__text_window__render(f2ptr cause, f2ptr this, s64 screen_x0, s64 scree
   return nil;
 }
 
+f2ptr f2__text_window__render(f2ptr cause, f2ptr this, f2ptr screen_x0, f2ptr screen_y0, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1) {
+  if ((! raw__integerp(screen_x0, cause)) ||
+      (! raw__integerp(screen_y0, cause)) ||
+      (! raw__integerp(x0, cause)) ||
+      (! raw__integerp(y0, cause)) ||
+      (! raw__integerp(x1, cause)) ||
+      (! raw__integerp(y1, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  s64 raw_screen_x0 = f2integer__i(screen_x0, cause);
+  s64 raw_screen_y0 = f2integer__i(screen_x0, cause);
+  s64 raw_x0 = f2integer__i(x0, cause);
+  s64 raw_y0 = f2integer__i(y0, cause);
+  s64 raw_x1 = f2integer__i(x1, cause);
+  s64 raw_y1 = f2integer__i(y1, cause);
+  return raw__text_window__render(cause, this, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
+}
+def_pcfunk7(text_window__render, this, screen_x0, screen_y0, x0, y0, x1, y1, return f2__text_window__render(this_cause, screen_x0, screen_y0, x0, y0, x1, y1));
+
 // **
 
 void f2__primobject__text_buffer__reinitialize_globalvars() {
@@ -262,6 +281,7 @@ void f2__primobject__text_buffer__initialize() {
   
   f2__primcfunk__init__2(text_buffer__create, width, height);
   f2__primcfunk__init__2(text_window__create, width, height);
+  f2__primcfunk__init__7(text_window__render, screen_x0, screen_y0, x0, y0, x1, y1);
   
   resume_gc();
   try_gc();

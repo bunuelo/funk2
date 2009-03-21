@@ -260,7 +260,7 @@ f2ptr f2__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, f2p
   s64 raw_y0 = f2integer__i(y0, cause);
   s64 raw_x1 = f2integer__i(x1, cause);
   s64 raw_y1 = f2integer__i(y1, cause);
-  return raw__text_window__render(cause, this, stream, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
+  return raw__text_window__stream__render(cause, this, stream, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
 }
 def_pcfunk8(text_window__stream__render, this, stream, screen_x0, screen_y0, x0, y0, x1, y1, return f2__text_window__stream__render(this_cause, this, stream, screen_x0, screen_y0, x0, y0, x1, y1));
 

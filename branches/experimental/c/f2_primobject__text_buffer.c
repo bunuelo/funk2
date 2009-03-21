@@ -137,18 +137,16 @@ f2ptr raw__text_buffer__draw_character(f2ptr cause, f2ptr this, s64 x, s64 y, f2
 
 // text_window primobject definition
 
-defprimobject__static_slot(text_window__width,      0);
-defprimobject__static_slot(text_window__height,     1);
-defprimobject__static_slot(text_window__characters, 2);
+defprimobject__static_slot(text_window__double_buffer, 0);
+defprimobject__static_slot(text_window__cursor,        1);
 
 f2ptr __text_window__symbol = -1;
 
-f2ptr f2text_window__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters) {
+f2ptr f2text_window__new(f2ptr cause, f2ptr double_buffer, f2ptr cursor) {
   if (__text_window__symbol == -1) {__text_window__symbol = f2symbol__new(cause, strlen("text_window"), (u8*)"text_window");}
   f2ptr this = f2__primobject__new(cause, __text_window__symbol, 5, nil);
-  f2text_window__width__set(     this, cause, width);
-  f2text_window__height__set(    this, cause, height);
-  f2text_window__characters__set(this, cause, characters);
+  f2text_window__double_buffer__set(this, cause, double_buffer);
+  f2text_window__cursor__set(       this, cause, cursor);
   return this;
 }
 

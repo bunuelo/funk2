@@ -201,7 +201,7 @@ f2ptr f2__text_window__create(f2ptr cause, f2ptr width, f2ptr height) {
 }
 def_pcfunk2(text_window__create, width, height, return f2__text_window__create(this_cause, width, height));
 
-f2ptr raw__text_window__render(f2ptr cause, f2ptr this, s64 screen_x0, s64 screen_y0, s64 x0, s64 y0, s64 x1, s64 y1) {
+f2ptr raw__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, s64 screen_x0, s64 screen_y0, s64 x0, s64 y0, s64 x1, s64 y1) {
   if (! raw__text_windowp(this, cause)) {
     return f2larva__new(cause, 1);
   }
@@ -232,16 +232,22 @@ f2ptr raw__text_window__render(f2ptr cause, f2ptr this, s64 screen_x0, s64 scree
   if (screen_x0 >= screen_width || screen_y0 >= screen_height || screen_x1 >= screen_width || screen_y1 >= screen_height) {
     return f2larva__new(cause, 6);
   }
+  f2ptr double_buffer = f2text_window__double_buffer(this, cause);
+  f2ptr front_buffer  = raw__array__elt(cause, double_buffer, 0);
   s64 ix, iy;
   for (iy = y0; iy <= y1; iy ++) {
+    raw__ansi__stream__move_cursor(cause, stream, screen_x0, screen_y0 + (iy - y0));
     for (ix = x0; ix <= x1; ix ++) {
-      // yay!
+      f2ptr text_char = raw__text_buffer__character(cause, front_buffer, ix, iy);
+      f2ptr character = f2text_buffer_character__character(text_char, cause);
+      char ch = f2char__ch(character, cause);
+      raw__stream__writef(cause, stream, "%c", ch);
     }
   }
   return nil;
 }
 
-f2ptr f2__text_window__render(f2ptr cause, f2ptr this, f2ptr screen_x0, f2ptr screen_y0, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1) {
+f2ptr f2__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, f2ptr screen_x0, f2ptr screen_y0, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1) {
   if ((! raw__integerp(screen_x0, cause)) ||
       (! raw__integerp(screen_y0, cause)) ||
       (! raw__integerp(x0, cause)) ||
@@ -256,7 +262,7 @@ f2ptr f2__text_window__render(f2ptr cause, f2ptr this, f2ptr screen_x0, f2ptr sc
   s64 raw_y0 = f2integer__i(y0, cause);
   s64 raw_x1 = f2integer__i(x1, cause);
   s64 raw_y1 = f2integer__i(y1, cause);
-  return raw__text_window__render(cause, this, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
+  return raw__text_window__render(cause, this, stream, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
 }
 def_pcfunk7(text_window__render, this, screen_x0, screen_y0, x0, y0, x1, y1, return f2__text_window__render(this_cause, this, screen_x0, screen_y0, x0, y0, x1, y1));
 

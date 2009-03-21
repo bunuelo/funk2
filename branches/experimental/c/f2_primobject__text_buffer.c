@@ -118,7 +118,7 @@ f2ptr raw__text_buffer__character__set(f2ptr cause, f2ptr this, s64 x, s64 y, f2
   s64 raw_width  = f2integer__i(width, cause);
   f2ptr   height = f2text_buffer__height(this, cause);
   s64 raw_height = f2integer__i(height, cause);
-  if (x >= width || y >= height) {
+  if (x >= raw_width || y >= raw_height) {
     return f2larva__new(cause, 57);
   }
   f2ptr characters = f2text_buffer__characters(this, cause);

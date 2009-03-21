@@ -89,7 +89,7 @@ f2ptr f2__text_buffer__create(f2ptr cause, f2ptr width, f2ptr height) {
 def_pcfunk2(text_buffer__create, width, height, return f2__text_buffer__create(this_cause, width, height));
 
 f2ptr raw__text_buffer__character(f2ptr cause, f2ptr this, s64 x, s64 y) {
-  if (! raw__text_bufferp(this cause)) {
+  if (! raw__text_bufferp(this, cause)) {
     return f2larva__new(cause, 1);
   }
   if (x < 0 || y < 0) {

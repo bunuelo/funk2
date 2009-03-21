@@ -88,29 +88,36 @@ f2ptr      f2__text_bufferp(f2ptr this, f2ptr cause);
 // text_cursor
 
 extern f2ptr __text_cursor__symbol;
-f2ptr f2text_cursor__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters);
+f2ptr f2text_cursor__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr foreground_color, f2ptr background_color);
 #define      f2primobject__is__text_cursor(this, cause) raw__eq(cause, f2primobject__type(this, cause), __text_cursor__symbol)
 
-defprimobject__static_slot__prototype(text_cursor__width);
-#define      f2text_cursor__width(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__width, cause)
-#define      f2text_cursor__width__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__width, cause, value)
-#define      f2text_cursor__width__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__width, cause)
-#define      f2text_cursor__width__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__width, cause)
-#define      f2text_cursor__width__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__width, cause)
+defprimobject__static_slot__prototype(text_cursor__x);
+#define      f2text_cursor__x(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__x, cause)
+#define      f2text_cursor__x__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__x, cause, value)
+#define      f2text_cursor__x__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__x, cause)
+#define      f2text_cursor__x__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__x, cause)
+#define      f2text_cursor__x__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__x, cause)
 
-defprimobject__static_slot__prototype(text_cursor__height);
-#define      f2text_cursor__height(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__height, cause)
-#define      f2text_cursor__height__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__height, cause, value)
-#define      f2text_cursor__height__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__height, cause)
-#define      f2text_cursor__height__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__height, cause)
-#define      f2text_cursor__height__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__height, cause)
+defprimobject__static_slot__prototype(text_cursor__y);
+#define      f2text_cursor__y(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__y, cause)
+#define      f2text_cursor__y__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__y, cause, value)
+#define      f2text_cursor__y__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__y, cause)
+#define      f2text_cursor__y__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__y, cause)
+#define      f2text_cursor__y__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__y, cause)
 
-defprimobject__static_slot__prototype(text_cursor__characters);
-#define      f2text_cursor__characters(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__characters, cause)
-#define      f2text_cursor__characters__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__characters, cause, value)
-#define      f2text_cursor__characters__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__characters, cause)
-#define      f2text_cursor__characters__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__characters, cause)
-#define      f2text_cursor__characters__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__characters, cause)
+defprimobject__static_slot__prototype(text_cursor__foreground_color);
+#define      f2text_cursor__foreground_color(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__foreground_color, cause)
+#define      f2text_cursor__foreground_color__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__foreground_color, cause, value)
+#define      f2text_cursor__foreground_color__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__foreground_color, cause)
+#define      f2text_cursor__foreground_color__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__foreground_color, cause)
+#define      f2text_cursor__foreground_color__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__foreground_color, cause)
+
+defprimobject__static_slot__prototype(text_cursor__background_color);
+#define      f2text_cursor__background_color(                   this, cause)        primobject__static_slot__accessor(         this, text_cursor__background_color, cause)
+#define      f2text_cursor__background_color__set(              this, cause, value) primobject__static_slot__set(              this, text_cursor__background_color, cause, value)
+#define      f2text_cursor__background_color__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, text_cursor__background_color, cause)
+#define      f2text_cursor__background_color__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__background_color, cause)
+#define      f2text_cursor__background_color__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__background_color, cause)
 
 boolean_t raw__text_cursorp(f2ptr this, f2ptr cause);
 f2ptr      f2__text_cursorp(f2ptr this, f2ptr cause);

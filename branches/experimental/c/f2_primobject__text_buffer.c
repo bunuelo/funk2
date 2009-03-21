@@ -232,8 +232,6 @@ f2ptr raw__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, s6
   if (screen_x0 >= screen_width || screen_y0 >= screen_height || screen_x1 >= screen_width || screen_y1 >= screen_height) {
     return f2larva__new(cause, 6);
   }
-  f2ptr double_buffer = f2text_window__double_buffer(this, cause);
-  f2ptr front_buffer  = raw__array__elt(cause, double_buffer, 0);
   s64 ix, iy;
   for (iy = y0; iy <= y1; iy ++) {
     raw__ansi__stream__move_cursor(cause, stream, screen_x0, screen_y0 + (iy - y0));

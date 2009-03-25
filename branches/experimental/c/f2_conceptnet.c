@@ -64,7 +64,7 @@ f2ptr raw__conceptnet__load_r3_format(f2ptr cause, u8* filename) {
     return nil;
   }
   f2ptr relations = nil;
-  f2ptr conceptnet = f2conceptnet__new(cause, relations);
+  f2ptr conceptnet = f2conceptnet_graph__new(cause, relations);
   
   close(fd);
   return conceptnet;

@@ -30,15 +30,20 @@ void assert_failed(f2ptr thread, char* filename, int line_num, char* str) {
 ptr malloc_executable(size_t required_bytes) {
   size_t page_size   = getpagesize();
   size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
-#ifdef OSX104
-  void* p = mmap(0,    alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_ANON,                   -1, 0);
-#else
-  void* p = mmap(NULL, alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,  0, 0);
-#endif
-  if (p == MAP_FAILED) {
-    perror("malloc_executable() mmap");
-    error(nil, "malloc_executable mmap failed.");
+  void* p = malloc(alloc_bytes);
+  if (! p) {
+    perror("malloc_executable() malloc");
+    error(nil, "malloc_executable malloc failed.");
   }
+  //#ifdef OSX104
+  //  void* p = mmap(0,    alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_ANON,                   -1, 0);
+  //#else
+  //  void* p = mmap(NULL, alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,  0, 0);
+  //#endif
+  //if (p == MAP_FAILED) {
+  //  perror("malloc_executable() mmap");
+  //  error(nil, "malloc_executable mmap failed.");
+  //}
   return to_ptr(p);
 }
 
@@ -1469,6 +1474,7 @@ void f2__primobject_object__reinitialize_globalvars();           // defined in f
 void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
 void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f2_primobject__circular_buffer.c
 void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
+void f2__primobject__text_buffer__reinitialize_globalvars();     // defined in f2_primobject__text_buffer.c
 void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
 void f2__reader__reinitialize_globalvars();                      // defined in f2_reader.c
 void f2__compile__reinitialize_globalvars();                     // defined in f2_compile.c
@@ -1489,6 +1495,7 @@ void f2__blocks_world__reinitialize_globalvars();                // defined in f
 void f2__primobject__dynamic_library__reinitialize_globalvars(); // defined in f2_primobject__dynamic_library.c
 void f2__dlfcn__reinitialize_globalvars();                       // defined in f2_dlfcn.c
 void f2__gmodule__reinitialize_globalvars();                     // defined in f2_gmodule.c
+void f2__conceptnet__reinitialize_globalvars();                  // defined in f2_conceptnet.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -1582,6 +1589,7 @@ void rebuild_memory_info_from_image() {
     f2__primobject_object_type__reinitialize_globalvars();
     f2__primobject_circular_buffer__reinitialize_globalvars();
     f2__primobject__stream__reinitialize_globalvars();
+    f2__primobject__text_buffer__reinitialize_globalvars();
     f2__globalenv__reinitialize_globalvars();
     f2__primcfunks__reinitialize_globalvars();
     f2__reader__reinitialize_globalvars();
@@ -1605,6 +1613,7 @@ void rebuild_memory_info_from_image() {
     f2__blocks_world__reinitialize_globalvars();
     f2__dlfcn__reinitialize_globalvars();
     f2__gmodule__reinitialize_globalvars();
+    f2__conceptnet__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

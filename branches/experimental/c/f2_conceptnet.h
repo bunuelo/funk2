@@ -55,6 +55,23 @@ boolean_t raw__conceptnet_relationp(f2ptr this, f2ptr cause);
 f2ptr      f2__conceptnet_relationp(f2ptr this, f2ptr cause);
 
 
+// conceptnet_graph
+
+extern f2ptr __conceptnet_graph__symbol;
+f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations);
+#define      f2primobject__is__conceptnet_graph(this, cause) raw__eq(cause, f2primobject__type(this, cause), __conceptnet_graph__symbol)
+
+defprimobject__static_slot__protorelations(conceptnet_graph__relations);
+#define      f2conceptnet_graph__relations(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_graph__relations, cause)
+#define      f2conceptnet_graph__relations__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_graph__relations, cause, value)
+#define      f2conceptnet_graph__relations__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_graph__relations, cause)
+#define      f2conceptnet_graph__relations__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_graph__relations, cause)
+#define      f2conceptnet_graph__relations__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_graph__relations, cause)
+
+boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause);
+f2ptr      f2__conceptnet_graphp(f2ptr this, f2ptr cause);
+
+
 
 // **
 

@@ -239,7 +239,7 @@ f2ptr f2__conceptnet_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr 
     return f2larva__new(cause, 1);
   }
   f2ptr concept_relations_hash = f2__hashtable__new(cause, 20);
-  f2ptr relation_iter = f2conceptnew_graph__relations(this, cause);
+  f2ptr relation_iter = f2conceptnet_graph__relations(this, cause);
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
     f2ptr right_concept  = f2conceptnet_relation__right_concept(relation, cause);

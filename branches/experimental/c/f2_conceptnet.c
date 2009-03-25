@@ -177,7 +177,7 @@ f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int f
   return conceptnet_relation;
 }
 
-f2ptr raw__conceptnet__load_r3_format(f2ptr cause, u8* filename) {
+f2ptr raw__conceptnet_graph__load_r3_format(f2ptr cause, u8* filename) {
   int fd = open((char*)filename, O_RDONLY);
   if (fd == -1) {
     return nil;
@@ -218,6 +218,40 @@ f2ptr f2__conceptnet__load_r3_format(f2ptr cause, f2ptr filename) {
 
 def_pcfunk1(conceptnet__load_r3_format, filename, return f2__conceptnet__load_r3_format(this_cause, filename));
 
+f2ptr f2__conceptnet_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr this) {
+  if (! raw__conceptnet_graphp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr concept_relations_hash = f2__hashtable__new(cause, 20);
+  f2ptr relation_iter = f2conceptnew_graph__relations(this, cause);
+  while (relation_iter) {
+    f2ptr relation       = f2cons__car(relation_iter, cause);
+    f2ptr left_concept   = f2conceptnet_relation__left_concept(relation, cause);
+    f2ptr old_hash_value = f2hashtable__lookup_value(concept_relations_hash, cause, left_concept);
+    f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
+    f2__hashtable__add_keyvalue_pair(cause, concept_relations_hash, left_concept, new_hash_value);
+  }
+  return concept_relations_hash;
+}
+def_pcfunk1(conceptnet_graph__new_left_concept_relations_hash, this, return f2__conceptnet_graph__new_left_concept_relations_hash(this_cause, this));
+
+f2ptr f2__conceptnet_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr this) {
+  if (! raw__conceptnet_graphp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr concept_relations_hash = f2__hashtable__new(cause, 20);
+  f2ptr relation_iter = f2conceptnew_graph__relations(this, cause);
+  while (relation_iter) {
+    f2ptr relation       = f2cons__car(relation_iter, cause);
+    f2ptr right_concept  = f2conceptnet_relation__right_concept(relation, cause);
+    f2ptr old_hash_value = f2hashtable__lookup_value(concept_relations_hash, cause, right_concept);
+    f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
+    f2__hashtable__add_keyvalue_pair(cause, concept_relations_hash, right_concept, new_hash_value);
+  }
+  return concept_relations_hash;
+}
+def_pcfunk1(conceptnet_graph__new_right_concept_relations_hash, this, return f2__conceptnet_graph__new_right_concept_relations_hash(this_cause, this));
+
 // **
 
 void f2__conceptnet__reinitialize_globalvars() {
@@ -236,6 +270,8 @@ void f2__conceptnet__initialize() {
   environment__add_var_value(cause, global_environment(), __conceptnet_graph__symbol, nil);
   
   f2__primcfunk__init__1(conceptnet__load_r3_format, filename);
+  f2__primcfunk__init__1(conceptnet_graph__new_left_concept_relations_hash, this);
+  f2__primcfunk__init__1(conceptnet_graph__new_right_concept_relations_hash, this);
   
   resume_gc();
   try_gc();

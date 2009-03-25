@@ -56,6 +56,10 @@ f2ptr      f2__conceptnet_relationp(f2ptr this, f2ptr cause);
 
 
 
+// **
+
+void f2__primobject__conceptnet__reinitialize_globalvars();
+void f2__primobject__conceptnet__initialize();
 
 #endif // F2__CONCEPTNET__H
 

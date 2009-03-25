@@ -42,3 +42,22 @@ boolean_t raw__conceptnet_relationp(f2ptr this, f2ptr cause) {return (raw__array
 f2ptr f2__conceptnet_relationp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_relationp(this, cause));}
 
 
+// **
+
+void f2__primobject__conceptnet__reinitialize_globalvars() {
+  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
+  
+  __conceptnet_relation__symbol = f2symbol__new(cause, strlen("conceptnet_relation"), (u8*)"conceptnet_relation");
+}
+
+void f2__primobject__conceptnet__initialize() {
+  pause_gc();
+  f2__primobject__conceptnet__reinitialize_globalvars();
+  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
+  
+  environment__add_var_value(cause, global_environment(), __conceptnet_relation__symbol, nil);
+  
+  resume_gc();
+  try_gc();
+}
+

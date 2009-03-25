@@ -72,7 +72,7 @@ f2ptr f2__conceptnet__load_r3_format(f2ptr cause, f2ptr filename) {
     return f2larva__new(cause, 1);
   }
   s64   filename_length = f2string__length(filename, cause);
-  char* filename_str = alloca(filename_length + 1);
+  u8* filename_str = (u8*)alloca(filename_length + 1);
   f2string__str_copy(filename, cause, filename_str);
   filename_str[filename_length] = 0;
   return raw__conceptnet__load_r3_format(cause, filename_str);

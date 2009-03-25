@@ -19,18 +19,32 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk conceptnet-load_r3_format &primfunk:conceptnet__load_r3_format]
+[globalize-funk conceptnet_graph-load_r3_format                   &primfunk:conceptnet_graph__load_r3_format]
+[globalize-funk conceptnet_graph-new_left_concept_relations_hash  &primfunk:conceptnet_graph__new_left_concept_relations_hash]
+[globalize-funk conceptnet_graph-new_right_concept_relations_hash &primfunk:conceptnet_graph__new_right_concept_relations_hash]
 
-[globalize conceptnet nil]
+[globalize conceptnet                              nil]
+[globalize conceptnet-left_concept_relations_hash  nil]
+[globalize conceptnet-right_concept_relations_hash nil]
+
+[defunk conceptnet-load [filename]
+  [= conceptnet [conceptnet-load_r3_format 'data/conceptnet3/conceptnet_en_20080605.n3']]
+  [if conceptnet
+      [prog [= conceptnet-left_concept_relations_hash [conceptnet_graph-new_left_concept_relations_hash conceptnet]]
+	    [= conceptnet-left_concept_relations_hash [conceptnet_graph-new_left_concept_relations_hash conceptnet]]
+	    `success]
+    `failure]]
 
 [defunk conceptnet-init []
-  [if [null conceptnet]
-      [= conceptnet [conceptnet-load_r3_format 'data/conceptnet3/conceptnet_en_20080605.n3']]]
-  `success]
+  [conceptnet-load 'data/conceptnet3/conceptnet_en_20080605.n3']]
 
 [defunk conceptnet-test []
-  [if [null conceptnet]
-      [= conceptnet [conceptnet-load_r3_format 'data/conceptnet3/conceptnet_test.n3']]]
-  `test_success]
+  [conceptnet-load 'data/conceptnet3/conceptnet_test.n3']]
+
+[defunk conceptnet-lookup_left_concept [concept]
+  [hashtable-lookup_value conceptnet-left_concept_relations_hash concept]]
+
+[defunk conceptnet-lookup_right_concept [concept]
+  [hashtable-lookup_value conceptnet-right_concept_relations_hash concept]]
 
 

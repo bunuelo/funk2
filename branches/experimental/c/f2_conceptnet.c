@@ -215,8 +215,7 @@ f2ptr f2__conceptnet__load_r3_format(f2ptr cause, f2ptr filename) {
   filename_str[filename_length] = 0;
   return raw__conceptnet__load_r3_format(cause, filename_str);
 }
-
-def_pcfunk1(conceptnet__load_r3_format, filename, return f2__conceptnet__load_r3_format(this_cause, filename));
+def_pcfunk1(conceptnet_graph__load_r3_format, filename, return f2__conceptnet_graph__load_r3_format(this_cause, filename));
 
 f2ptr f2__conceptnet_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr this) {
   if (! raw__conceptnet_graphp(this, cause)) {
@@ -269,8 +268,8 @@ void f2__conceptnet__initialize() {
   environment__add_var_value(cause, global_environment(), __conceptnet_relation__symbol, nil);
   environment__add_var_value(cause, global_environment(), __conceptnet_graph__symbol, nil);
   
-  f2__primcfunk__init__1(conceptnet__load_r3_format, filename);
-  f2__primcfunk__init__1(conceptnet_graph__new_left_concept_relations_hash, this);
+  f2__primcfunk__init__1(conceptnet_graph__load_r3_format,                   filename);
+  f2__primcfunk__init__1(conceptnet_graph__new_left_concept_relations_hash,  this);
   f2__primcfunk__init__1(conceptnet_graph__new_right_concept_relations_hash, this);
   
   resume_gc();

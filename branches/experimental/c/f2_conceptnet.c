@@ -58,8 +58,8 @@ f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations) {
 boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_graph(this, cause));}
 f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_graphp(this, cause));}
 
-f2ptr raw__conceptnet__load_r3_format(f2ptr cause, char* filename) {
-  int fd = open(filename, O_RDONLY);
+f2ptr raw__conceptnet__load_r3_format(f2ptr cause, u8* filename) {
+  int fd = open((char*)filename, O_RDONLY);
   if (fd == -1) {
     return nil;
   }

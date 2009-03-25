@@ -58,27 +58,87 @@ f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations) {
 boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_graph(this, cause));}
 f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_graphp(this, cause));}
 
+//<http://conceptnet.media.mit.edu/assertion/1112793> conceptnet:LeftConcept <http://conceptnet.media.mit.edu/concept/1003777>;
+// conceptnet:RelationType <http://conceptnet.media.mit.edu/reltype/IsA>;
+// conceptnet:RightConcept <http://conceptnet.media.mit.edu/concept/1003230>;
+// conceptnet:LeftText "Hockey";
+// conceptnet:RightText "a sport";
+// conceptnet:FrameId <http://conceptnet.media.mit.edu/frame/1385>;
+// conceptnet:Language <http://conceptnet.media.mit.edu/language/en>;
+// conceptnet:Creator <http://conceptnet.media.mit.edu/user/8362>;
+// conceptnet:Score 66; conceptnet:Sentence "Hockey is a sport played in an arena".
+
+#define max_concept_line_len 4096
+
 f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int fd) {
+  s64 line_len = 0;
+  {
+    boolean_t done = boolean__false;
+    s64 index = 0;
+    u8  read_buffer[max_concept_line_len];
+    do {
+      char ch;
+      size_t read_num = read(fd, &ch, 1);
+      if (read_num != 1 || ch == '\r' || ch == '\n') {
+	done = boolean__true;
+      } else {
+	if (index < max_concept_line_len) {
+	  read_buffer[index] = ch;
+	}
+	index ++;
+      }
+    } while (! done);
+    if (index == 0) {
+      return nil;
+    }
+    if (index >= max_concept_line_len) {
+      return nil;
+    }
+    read_buffer[index] = 0;
+    line_len = index;
+  }
+  if (line_len == 0) {
+    return nil;
+  }
+  
   f2ptr type          = nil;
   f2ptr left_concept  = nil;
   f2ptr right_concept = nil;
-  boolean_t done = boolean__false;
-  u64 index = 0;
-  u8  read_buffer[4096];
-  do {
-    char ch;
-    size_t read_num = read(fd, &ch, 1);
-    if (read_num != 1 || ch == '\r' || ch == '\n') {
-      done = boolean__true;
-    } else {
-      read_buffer[index] = ch;
-      index ++;
+  
+  {
+    boolean_t done = boolean__false;
+    int       semicolon_count = 0;
+    s64 index = 0;
+    while (! done) {
+      if (read_buffer[index] == ';') {
+	semicolon_count ++;
+	if (semicolon_count == 2) {
+	  boolean_t fine_type_done == boolean__false;
+	  s64 find_type_index = index;
+	  while (! find_type_done) {
+	    if (read_buffer[find_type_index] == '/') {
+	      s64 type_start_index = find_type_index + 1;
+	      s64 type_end_index   = index - 1;
+	      s64 type_len = type_end_index - type_start_index;
+	      type = f2symbol__new(cause, type_len, read_buffer + type_start_index);
+	      find_type_done = boolean__true;
+	    } else if (find_type_index == 0) {
+	      return nil;
+	    } else {
+	      find_type_index --;
+	    }
+	  }
+	}
+
+
+      }
+      
+      if (index >= line_len) {
+	done = boolean__true;
+      }
     }
-  } while (! done);
-  if (index == 0) {
-    return nil;
   }
-  read_buffer[index] = 0;
+  
   f2ptr conceptnet_relation = f2conceptnet_relation__new(cause, type, left_concept, right_concept);
   return conceptnet_relation;
 }

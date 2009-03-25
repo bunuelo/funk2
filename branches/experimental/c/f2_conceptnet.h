@@ -24,6 +24,37 @@
 
 #include "f2_primobjects.h"
 
+// conceptnet_relation
+
+extern f2ptr __conceptnet_relation__symbol;
+f2ptr f2conceptnet_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept);
+#define      f2primobject__is__conceptnet_relation(this, cause) raw__eq(cause, f2primobject__type(this, cause), __conceptnet_relation__symbol)
+
+defprimobject__static_slot__prototype(conceptnet_relation__type);
+#define      f2conceptnet_relation__type(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_relation__type, cause)
+#define      f2conceptnet_relation__type__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_relation__type, cause, value)
+#define      f2conceptnet_relation__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_relation__type, cause)
+#define      f2conceptnet_relation__type__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_relation__type, cause)
+#define      f2conceptnet_relation__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_relation__type, cause)
+
+defprimobject__static_slot__prototype(conceptnet_relation__left_concept);
+#define      f2conceptnet_relation__left_concept(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_relation__left_concept, cause)
+#define      f2conceptnet_relation__left_concept__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_relation__left_concept, cause, value)
+#define      f2conceptnet_relation__left_concept__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_relation__left_concept, cause)
+#define      f2conceptnet_relation__left_concept__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_relation__left_concept, cause)
+#define      f2conceptnet_relation__left_concept__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_relation__left_concept, cause)
+
+defprimobject__static_slot__prototype(conceptnet_relation__right_concept);
+#define      f2conceptnet_relation__right_concept(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_relation__right_concept, cause)
+#define      f2conceptnet_relation__right_concept__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_relation__right_concept, cause, value)
+#define      f2conceptnet_relation__right_concept__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_relation__right_concept, cause)
+#define      f2conceptnet_relation__right_concept__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_relation__right_concept, cause)
+#define      f2conceptnet_relation__right_concept__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_relation__right_concept, cause)
+
+boolean_t raw__conceptnet_relationp(f2ptr this, f2ptr cause);
+f2ptr      f2__conceptnet_relationp(f2ptr this, f2ptr cause);
+
+
 
 
 #endif // F2__CONCEPTNET__H

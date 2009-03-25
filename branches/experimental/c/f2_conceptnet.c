@@ -21,3 +21,24 @@
 
 #include "funk2.h"
 
+// conceptnet_relation primobject definition
+
+defprimobject__static_slot(conceptnet_relation__type,        0);
+defprimobject__static_slot(conceptnet_relation__left_concept, 1);
+defprimobject__static_slot(conceptnet_relation__right_concept, 2);
+
+f2ptr __conceptnet_relation__symbol = -1;
+
+f2ptr f2conceptnet_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept) {
+  if (__conceptnet_relation__symbol == -1) {__conceptnet_relation__symbol = f2symbol__new(cause, strlen("conceptnet_relation"), (u8*)"conceptnet_relation");}
+  f2ptr this = f2__primobject__new(cause, __conceptnet_relation__symbol, 5, nil);
+  f2conceptnet_relation__type__set( this, cause, type);
+  f2conceptnet_relation__left_concept__set(this, cause, left_concept);
+  f2conceptnet_relation__right_concept__set(this, cause, right_concept);
+  return this;
+}
+
+boolean_t raw__conceptnet_relationp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_relation(this, cause));}
+f2ptr f2__conceptnet_relationp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_relationp(this, cause));}
+
+

@@ -58,14 +58,55 @@ f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations) {
 boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_graph(this, cause));}
 f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_graphp(this, cause));}
 
+f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int fd) {
+  f2ptr type          = nil;
+  f2ptr left_concept  = nil;
+  f2ptr right_concept = nil;
+  boolean_t done = boolean__false;
+  u64 index = 0;
+  u8  read_buffer[4096];
+  do {
+    char ch;
+    size_t read_num = read(fd, &ch, 1);
+    if (read_num != 1 || ch == '\r' || ch == '\n') {
+      done == boolean__true;
+    } else {
+      read_buffer[index] = ch;
+      index ++;
+    }
+  } while (! done);
+  if (index == 0) {
+    return nil;
+  }
+  read_buffer[index] = 0;
+  f2ptr conceptnet_relation = f2conceptnet_relation__new(cause, type, left_concept, right_concept);
+  return conceptnet_relation;
+}
+
 f2ptr raw__conceptnet__load_r3_format(f2ptr cause, u8* filename) {
   int fd = open((char*)filename, O_RDONLY);
   if (fd == -1) {
     return nil;
   }
-  f2ptr relations = nil;
+  boolean_t done = boolean__false;
+  f2ptr relations     = nil;
+  f2ptr relation_iter = nil;
+  do {
+    f2ptr relation = raw__conceptnet_relation__new_read_from_file_descriptor(cause, fd);
+    if (! relation) {
+      done = boolean__true;
+    } else {
+      f2ptr new_cons = f2cons__new(cause, relation, nil);
+      if (! relation_iter) {
+	relation_iter = new_cons;
+	relations     = relation_iter;
+      } else {
+	f2cons__cdr__set(relation_iter, cause, new_cons);
+	relation_iter = new_cons;
+      }
+    }
+  } while (! done);
   f2ptr conceptnet = f2conceptnet_graph__new(cause, relations);
-  
   close(fd);
   return conceptnet;
 }

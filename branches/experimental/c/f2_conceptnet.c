@@ -205,7 +205,7 @@ f2ptr raw__conceptnet_graph__load_r3_format(f2ptr cause, u8* filename) {
   return conceptnet;
 }
 
-f2ptr f2__conceptnet__load_r3_format(f2ptr cause, f2ptr filename) {
+f2ptr f2__conceptnet_graph__load_r3_format(f2ptr cause, f2ptr filename) {
   if (! raw__stringp(filename, cause)) {
     return f2larva__new(cause, 1);
   }
@@ -213,7 +213,7 @@ f2ptr f2__conceptnet__load_r3_format(f2ptr cause, f2ptr filename) {
   u8* filename_str = (u8*)alloca(filename_length + 1);
   f2string__str_copy(filename, cause, filename_str);
   filename_str[filename_length] = 0;
-  return raw__conceptnet__load_r3_format(cause, filename_str);
+  return raw__conceptnet_graph__load_r3_format(cause, filename_str);
 }
 def_pcfunk1(conceptnet_graph__load_r3_format, filename, return f2__conceptnet_graph__load_r3_format(this_cause, filename));
 

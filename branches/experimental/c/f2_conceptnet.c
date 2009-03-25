@@ -58,8 +58,27 @@ f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations) {
 boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_graph(this, cause));}
 f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_graphp(this, cause));}
 
+f2ptr raw__conceptnet__load_r3_format(f2ptr cause, char* filename) {
+  int fd = open(filename, O_RDONLY);
+  if (fd == -1) {
+    return nil;
+  }
+  
+  close(fd);
+}
 
+f2ptr f2__conceptnet__load_r3_format(f2ptr cause, f2ptr filename) {
+  if (! raw__stringp(filename, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  s64   filename_length = f2string__length(filename, cause);
+  char* filename_str = alloca(filename_length + 1);
+  f2string__str_copy(filename, cause, filename_str);
+  filename_str[filename_length] = 0;
+  return raw__conceptnet__load_r3_format(cause, filename_str);
+}
 
+def_pcfunk1(conceptnet__load_r3_format, filename, return f2__conceptnet__load_r3_format(this_cause, filename));
 
 // **
 
@@ -77,6 +96,8 @@ void f2__conceptnet__initialize() {
   
   environment__add_var_value(cause, global_environment(), __conceptnet_relation__symbol, nil);
   environment__add_var_value(cause, global_environment(), __conceptnet_graph__symbol, nil);
+  
+  f2__primcfunk__init__1(conceptnet__load_r3_format, filename);
   
   resume_gc();
   try_gc();

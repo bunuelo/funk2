@@ -128,6 +128,38 @@ f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int f
 	      find_type_index --;
 	    }
 	  }
+	} else if (semicolon_count == 4) {
+	  boolean_t find_left_done = boolean__false;
+	  s64 find_left_index = index - 2;
+	  while (! find_left_done) {
+	    if (read_buffer[find_left_index] == '\"') {
+	      s64 left_start_index = find_left_index + 1;
+	      s64 left_end_index   = index - 1;
+	      s64 left_len = left_end_index - left_start_index;
+	      left_concept = f2symbol__new(cause, left_len, read_buffer + left_start_index);
+	      find_left_done = boolean__true;
+	    } else if (find_left_index == 0) {
+	      return nil;
+	    } else {
+	      find_left_index --;
+	    }
+	  }
+	} else if (semicolon_count == 5) {
+	  boolean_t find_right_done = boolean__false;
+	  s64 find_right_index = index - 2;
+	  while (! find_right_done) {
+	    if (read_buffer[find_right_index] == '\"') {
+	      s64 right_start_index = find_right_index + 1;
+	      s64 right_end_index   = index - 1;
+	      s64 right_len = right_end_index - right_start_index;
+	      right_concept = f2symbol__new(cause, right_len, read_buffer + right_start_index);
+	      find_right_done = boolean__true;
+	    } else if (find_right_index == 0) {
+	      return nil;
+	    } else {
+	      find_right_index --;
+	    }
+	  }
 	}
       }
       

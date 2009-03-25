@@ -129,12 +129,12 @@ f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int f
 	    }
 	  }
 	}
-
-
       }
       
       if (index >= line_len) {
 	done = boolean__true;
+      } else {
+	index ++;
       }
     }
   }

@@ -70,6 +70,8 @@ f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__co
 
 #define max_concept_line_len 4096
 
+// this is a quick hack to load the conceptnet r3 file format into conceptnet1 format triples: [relation-type left-concept right-concept]
+
 f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int fd) {
   s64 line_len = 0;
   u8  read_buffer[max_concept_line_len];

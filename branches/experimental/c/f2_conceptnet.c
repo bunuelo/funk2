@@ -72,10 +72,10 @@ f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__co
 
 f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int fd) {
   s64 line_len = 0;
+  u8  read_buffer[max_concept_line_len];
   {
     boolean_t done = boolean__false;
     s64 index = 0;
-    u8  read_buffer[max_concept_line_len];
     do {
       char ch;
       size_t read_num = read(fd, &ch, 1);

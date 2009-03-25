@@ -28,7 +28,7 @@
 [globalize conceptnet-right_concept_relations_hash nil]
 
 [defunk conceptnet-load [filename]
-  [= conceptnet [conceptnet_graph-load_r3_format 'data/conceptnet3/conceptnet_en_20080605.n3']]
+  [= conceptnet [conceptnet_graph-load_r3_format filename]]
   [if conceptnet
       [prog [= conceptnet-left_concept_relations_hash  [conceptnet_graph-new_left_concept_relations_hash  conceptnet]]
 	    [= conceptnet-right_concept_relations_hash [conceptnet_graph-new_right_concept_relations_hash conceptnet]]

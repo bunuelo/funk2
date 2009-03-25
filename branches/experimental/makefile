@@ -82,6 +82,7 @@ funk2_server_objs = \
   c/f2_primobject__object_type.o \
   c/f2_primobject__circular_buffer.o \
   c/f2_primobject__stream.o \
+  c/f2_primobject__text_buffer.o \
   c/f2_print.o \
   c/f2_primfunks.o \
   c/f2_primfunks__errno.o \
@@ -103,7 +104,6 @@ funk2_server_objs = \
   c/f2_status.o \
   c/f2_swapmemory.o \
   c/f2_termios.o \
-  c/f2_text_buffer.o \
   c/f2_thought_process.o \
   c/f2_thread.o \
   c/f2_time.o \
@@ -144,6 +144,7 @@ funk2_headers = \
   c/f2_primobject__object_type.h \
   c/f2_primobject__circular_buffer.h \
   c/f2_primobject__stream.h \
+  c/f2_primobject__text_buffer.h \
   c/f2_print.h \
   c/f2_primfunks.h \
   c/f2_primfunks__errno.h \
@@ -163,7 +164,6 @@ funk2_headers = \
   c/f2_status.h \
   c/f2_swapmemory.h \
   c/f2_termios.h \
-  c/f2_text_buffer.h \
   c/f2_thought_process.h \
   c/f2_thread.h \
   c/f2_time.h \

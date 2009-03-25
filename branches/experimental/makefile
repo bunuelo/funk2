@@ -103,6 +103,7 @@ funk2_server_objs = \
   c/f2_status.o \
   c/f2_swapmemory.o \
   c/f2_termios.o \
+  c/f2_text_buffer.o \
   c/f2_thought_process.o \
   c/f2_thread.o \
   c/f2_time.o \
@@ -162,6 +163,7 @@ funk2_headers = \
   c/f2_status.h \
   c/f2_swapmemory.h \
   c/f2_termios.h \
+  c/f2_text_buffer.h \
   c/f2_thought_process.h \
   c/f2_thread.h \
   c/f2_time.h \

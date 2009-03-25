@@ -69,7 +69,7 @@ f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int f
     char ch;
     size_t read_num = read(fd, &ch, 1);
     if (read_num != 1 || ch == '\r' || ch == '\n') {
-      done == boolean__true;
+      done = boolean__true;
     } else {
       read_buffer[index] = ch;
       index ++;

@@ -58,13 +58,20 @@ boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
   return 1;
 }
 
+f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
+  f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
+  f2ptr this = f2hashtable__new(cause, f2integer__new(cause, bin_num_power), bin_array);
+  resume_gc();
+  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
+  return this;
+}
+
 f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
   if(! raw__integerp(bin_num_power, cause)) {
     return f2larva__new(cause, 1);
   }
   pause_gc();
-  f2ptr bin_array = raw__array__new(cause, 1ll << f2integer__i(bin_num_power, cause));
-  f2ptr this = f2hashtable__new(cause, bin_num_power, bin_array);
+  f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
   resume_gc();
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;

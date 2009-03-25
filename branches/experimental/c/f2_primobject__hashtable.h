@@ -44,6 +44,7 @@ defprimobject__static_slot__prototype(hashtable__bin_array);
 #define f2hashtable__bin_array__trace(     this, cause)        primobject__static_slot__trace(     this, hashtable__bin_array, cause)
 #define f2hashtable__bin_array__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, hashtable__bin_array, cause)
 
+f2ptr raw__hashtable__new                (f2ptr cause, s64 bin_num_power);
 f2ptr f2__hashtable__new                 (f2ptr cause, f2ptr bin_num_power);
 f2ptr f2__hashtablep                     (f2ptr this, f2ptr cause);
 f2ptr f2__hashtable__add_keyvalue_pair   (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);

@@ -56,6 +56,7 @@ funk2_server_objs = \
   c/f2_command_line.o \
   c/f2_compile.o \
   c/f2_compile_x86.o \
+  c/f2_conceptnet.o \
   c/f2_critic.o \
   c/f2_dlfcn.o \
   c/f2_event_router.o \
@@ -115,6 +116,7 @@ funk2_headers = \
   c/f2_bytecodes.h \
   c/f2_compile.h \
   c/f2_compile_x86.h \
+  c/f2_conceptnet.h \
   c/f2_critic.h \
   c/f2_dlfcn.h \
   c/f2_event_router.h \

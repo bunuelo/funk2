@@ -113,7 +113,7 @@ f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int f
       if (read_buffer[index] == ';') {
 	semicolon_count ++;
 	if (semicolon_count == 2) {
-	  boolean_t find_type_done == boolean__false;
+	  boolean_t find_type_done = boolean__false;
 	  s64 find_type_index = index;
 	  while (! find_type_done) {
 	    if (read_buffer[find_type_index] == '/') {

@@ -28,4 +28,9 @@
       [= conceptnet [conceptnet-load_r3_format 'data/conceptnet3/conceptnet_en_20080605.n3']]]
   `success]
 
+[defunk conceptnet-test []
+  [if [null conceptnet]
+      [= conceptnet [conceptnet-load_r3_format 'data/conceptnet3/conceptnet_test.n3']]]
+  `test_success]
+
 

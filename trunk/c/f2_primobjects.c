@@ -572,22 +572,6 @@ f2ptr f2bug__new(f2ptr cause, f2ptr type) {
 }
 
 
-// action
-
-defprimobject__static_slot(action__funk,        0);
-defprimobject__static_slot(action__transframes, 1);
-
-f2ptr __action__symbol = -1;
-
-f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr transframes) {
-  release__assert(__action__symbol != -1, nil, "f2action__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __action__symbol, 1, nil);
-  f2action__funk__set(       this, cause, funk);
-  f2action__transframes__set(this, cause, transframes);
-  return this;
-}
-
-
 // size_2d
 
 defprimobject__static_slot(size_2d__x, 0);

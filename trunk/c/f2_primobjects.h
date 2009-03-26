@@ -891,26 +891,6 @@ defprimobject__static_slot__prototype(bug__type);
 #define f2bug__type__trace(     this, cause)        primobject__static_slot__trace(     this, bug__type, cause)
 #define f2bug__type__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, bug__type, cause)
 
-// action
-
-extern f2ptr __action__symbol;
-extern f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr transframes);
-#define f2primobject__is_action(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __action__symbol)
-
-defprimobject__static_slot__prototype(action__funk);
-#define f2action__funk(            this, cause)        primobject__static_slot__accessor(  this, action__funk, cause)
-#define f2action__funk__set(       this, cause, value) primobject__static_slot__set(       this, action__funk, cause, value)
-#define f2action__funk__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, action__funk, cause)
-#define f2action__funk__trace(     this, cause)        primobject__static_slot__trace(     this, action__funk, cause)
-#define f2action__funk__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, action__funk, cause)
-
-defprimobject__static_slot__prototype(action__transframes);
-#define f2action__transframes(            this, cause)        primobject__static_slot__accessor(  this, action__transframes, cause)
-#define f2action__transframes__set(       this, cause, value) primobject__static_slot__set(       this, action__transframes, cause, value)
-#define f2action__transframes__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, action__transframes, cause)
-#define f2action__transframes__trace(     this, cause)        primobject__static_slot__trace(     this, action__transframes, cause)
-#define f2action__transframes__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, action__transframes, cause)
-
 
 // size_2d
 

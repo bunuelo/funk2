@@ -49,6 +49,7 @@ void f2__initialize() {
   // **********************************************************************************************************************************************************************************
   
   pause_gc(); f2__primobjects__initialize();                 resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject__action__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject_tensor__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject_object__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject_object_type__initialize();      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");

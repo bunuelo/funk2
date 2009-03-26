@@ -1,7 +1,5 @@
 'set operations'
 
-[globalize-funk size &length]
-
 [defunk member? [x list]
   [if [null list]
       nil

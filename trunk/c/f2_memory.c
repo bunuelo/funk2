@@ -1469,6 +1469,7 @@ void f2__funk2_node__reinitialize_globalvars();                  // defined in f
 void f2__globalenv__reinitialize_globalvars();                   // defined in f2_globalenv.c
 void f2__peer_command_server__reinitialize_globalvars();         // defined in f2_peer_command_server.c
 void f2__primobjects__reinitialize_globalvars();                 // defined in f2_primobjects.c
+void f2__primobject__action__reinitialize_globalvars();          // defined in f2_primobject__action.c
 void f2__primobject_tensor__reinitialize_globalvars();           // defined in f2_primobject__tensor.c
 void f2__primobject_object__reinitialize_globalvars();           // defined in f2_primobject__object.c
 void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
@@ -1584,6 +1585,7 @@ void rebuild_memory_info_from_image() {
     f2__primobject_hashtable__reinitialize_globalvars();
     f2__primobject_frame__reinitialize_globalvars();
     f2__primobject_environment__reinitialize_globalvars();
+    f2__primobject__action__reinitialize_globalvars();
     f2__primobject_tensor__reinitialize_globalvars();
     f2__primobject_object__reinitialize_globalvars();
     f2__primobject_object_type__reinitialize_globalvars();

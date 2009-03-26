@@ -521,8 +521,9 @@ f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_
   return this;
 }
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
-  f2ptr subscribers_mutex = f2mutex__new(cause);
+f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+  f2ptr subscribers_mutex    = f2mutex__new(cause);
+  f2ptr current_events_mutex = f2mutex__new(cause);
   return f2cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 }
 

@@ -53,6 +53,7 @@ void f2__initialize() {
   pause_gc(); f2__primobject_object__initialize();           resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject_object_type__initialize();      resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject_circular_buffer__initialize();  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  pause_gc(); f2__primobject__semantic_graph__initialize();  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject__stream__initialize();          resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primobject__text_buffer__initialize();     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__primcfunks__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
@@ -82,7 +83,6 @@ void f2__initialize() {
   pause_gc(); f2__primobject__dynamic_library__initialize(); resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__dlfcn__initialize();                       resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   pause_gc(); f2__gmodule__initialize();                     resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
-  pause_gc(); f2__conceptnet__initialize();                  resume_gc(); try_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

@@ -70,6 +70,7 @@ funk2_server_objs = \
   c/f2_packet.o \
   c/f2_peer_command_server.o \
   c/f2_primobjects.o \
+  c/f2_primobject__action.o \
   c/f2_primobject__boolean.o \
   c/f2_primobject__char_pointer.o \
   c/f2_primobject__dynamic_library.o \
@@ -132,6 +133,7 @@ funk2_headers = \
   c/f2_object.h \
   c/f2_packet.h \
   c/f2_primobjects.h \
+  c/f2_primobject__action.h \
   c/f2_primobject__boolean.h \
   c/f2_primobject__char_pointer.h \
   c/f2_primobject__dynamic_library.h \

@@ -1859,6 +1859,92 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
+u64 raw__hash_value(f2ptr cause, f2ptr exp) {
+  if (! exp) {
+    return 0;
+  }
+  ptype_t ptype = f2ptype__raw(exp, cause);
+  switch(ptype) {
+  case ptype_integer:
+    return f2integer__i(exp, cause);
+  case ptype_double:
+    union {
+      double d;
+      u64    i;
+    } u;
+    u.i = 0;
+    u.d = f2double__d(exp, cause);
+    return u.i;
+  case ptype_float:
+    union {
+      float f;
+      u64   i;
+    } u;
+    u.i = 0;
+    u.f = f2float__f(exp, cause);
+    return u.i;
+  case ptype_pointer:
+    union {
+      ptr p;
+      u64 i;
+    } u;
+    u.i = 0;
+    u.p = f2float__f(exp, cause);
+    return u.i;
+  case ptype_gfunkptr:
+    union {
+      f2ptr g;
+      u64   i;
+    } u;
+    u.i = 0;
+    u.g = f2gfunkptr__gfunkptr(exp, cause);
+    return u.i;
+  case ptype_mutex:
+    return (u64)exp;
+  case ptype_char:
+    union {
+      char ch;
+      u64  i;
+    } u;
+    u.i  = 0;
+    u.ch = f2char__ch(exp, cause);
+    return u.i;
+  case ptype_string:
+    return f2string__hash_value(exp, cause);
+  case ptype_symbol:
+    return f2symbol__hash_value(exp, cause);
+  case ptype_chunk:
+    return f2chunk__hash_value(exp, cause);
+  case ptype_simple_array:
+    u64 hash_value = 1;
+    s64 length = f2simple_array__length(exp, cause);
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      f2ptr subexp = f2simple_array__elt(exp, index, cause);
+      hash_value *= raw__hash_value(cause, subexp);
+    }
+    return hash_value;
+  case ptype_traced_array:
+    u64 hash_value = 1;
+    s64 length = f2traced_array__length(exp, cause);
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      f2ptr subexp = f2traced_array__elt(exp, index, cause);
+      hash_value *= raw__hash_value(cause, subexp);
+    }
+    return hash_value;
+  case ptype_larva:
+    return f2larva__type(exp, cause);
+  default:
+    return 0;
+  }
+}
+
+f2ptr f2__hash_value(f2ptr cause, f2ptr exp) {
+  return f2integer__new(cause, raw__hash_value(cause, exp));
+}
+def_pcfunk1(hash_value, exp, return f2__hash_value(this_cause, exp));
+
 f2ptr f2__funktionalp(f2ptr cause, f2ptr thread, f2ptr exp) {
   boolean_t exp__is_funktional = boolean__true;
   raw__compile(cause, thread, exp, boolean__false, boolean__false, NULL, &exp__is_funktional, nil, NULL);
@@ -2266,6 +2352,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(prev__set);
   
   f2__funktional_primcfunk__init__1(colonize, exp);
+  f2__funktional_primcfunk__init__1(hash_value, exp);
   f2__funktional_primcfunk__init__1(funktionalp, exp);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);

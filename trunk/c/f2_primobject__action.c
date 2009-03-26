@@ -104,11 +104,11 @@ f2ptr f2__action__end(f2ptr cause, f2ptr this) {
 	  f2cause__current_events__set(cause, cause, f2cons__cdr(current_events_iter, cause));
 	}
 	f2action_event__end_time__set(action_event, cause, microseconds_since_1970);
+	break;
       }
       current_events_prev = current_events_iter;
       current_events_iter = f2cons__cdr(current_events_iter, cause);
     }
-    f2cause__current_events__set(cause, cause, f2cons__new(cause, action_event, f2cause__current_events(this, cause)));
     f2mutex__unlock(current_events_mutex, cause);
   }
   return nil;

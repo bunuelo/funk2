@@ -1588,6 +1588,7 @@ void rebuild_memory_info_from_image() {
     f2__primobject_object__reinitialize_globalvars();
     f2__primobject_object_type__reinitialize_globalvars();
     f2__primobject_circular_buffer__reinitialize_globalvars();
+    f2__primobject__semantic_graph__reinitialize_globalvars();
     f2__primobject__stream__reinitialize_globalvars();
     f2__primobject__text_buffer__reinitialize_globalvars();
     f2__globalenv__reinitialize_globalvars();
@@ -1613,7 +1614,6 @@ void rebuild_memory_info_from_image() {
     f2__blocks_world__reinitialize_globalvars();
     f2__dlfcn__reinitialize_globalvars();
     f2__gmodule__reinitialize_globalvars();
-    f2__conceptnet__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

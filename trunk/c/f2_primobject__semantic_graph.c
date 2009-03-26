@@ -21,42 +21,42 @@
 
 #include "funk2.h"
 
-// conceptnet_relation primobject definition
+// semantic_relation primobject definition
 
-defprimobject__static_slot(conceptnet_relation__type,          0);
-defprimobject__static_slot(conceptnet_relation__left_concept,  1);
-defprimobject__static_slot(conceptnet_relation__right_concept, 2);
+defprimobject__static_slot(semantic_relation__type,          0);
+defprimobject__static_slot(semantic_relation__left_concept,  1);
+defprimobject__static_slot(semantic_relation__right_concept, 2);
 
-f2ptr __conceptnet_relation__symbol = -1;
+f2ptr __semantic_relation__symbol = -1;
 
-f2ptr f2conceptnet_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept) {
-  if (__conceptnet_relation__symbol == -1) {__conceptnet_relation__symbol = f2symbol__new(cause, strlen("conceptnet_relation"), (u8*)"conceptnet_relation");}
-  f2ptr this = f2__primobject__new(cause, __conceptnet_relation__symbol, 3, nil);
-  f2conceptnet_relation__type__set(         this, cause, type);
-  f2conceptnet_relation__left_concept__set( this, cause, left_concept);
-  f2conceptnet_relation__right_concept__set(this, cause, right_concept);
+f2ptr f2semantic_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept) {
+  if (__semantic_relation__symbol == -1) {__semantic_relation__symbol = f2symbol__new(cause, strlen("semantic_relation"), (u8*)"semantic_relation");}
+  f2ptr this = f2__primobject__new(cause, __semantic_relation__symbol, 3, nil);
+  f2semantic_relation__type__set(         this, cause, type);
+  f2semantic_relation__left_concept__set( this, cause, left_concept);
+  f2semantic_relation__right_concept__set(this, cause, right_concept);
   return this;
 }
 
-boolean_t raw__conceptnet_relationp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_relation(this, cause));}
-f2ptr f2__conceptnet_relationp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_relationp(this, cause));}
+boolean_t raw__semantic_relationp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__semantic_relation(this, cause));}
+f2ptr f2__semantic_relationp(f2ptr this, f2ptr cause) {return f2bool__new(raw__semantic_relationp(this, cause));}
 
 
-// conceptnet_graph primobject definition
+// semantic_graph primobject definition
 
-defprimobject__static_slot(conceptnet_graph__relations, 0);
+defprimobject__static_slot(semantic_graph__relations, 0);
 
-f2ptr __conceptnet_graph__symbol = -1;
+f2ptr __semantic_graph__symbol = -1;
 
-f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations) {
-  if (__conceptnet_graph__symbol == -1) {__conceptnet_graph__symbol = f2symbol__new(cause, strlen("conceptnet_graph"), (u8*)"conceptnet_graph");}
-  f2ptr this = f2__primobject__new(cause, __conceptnet_graph__symbol, 1, nil);
-  f2conceptnet_graph__relations__set( this, cause, relations);
+f2ptr f2semantic_graph__new(f2ptr cause, f2ptr relations) {
+  if (__semantic_graph__symbol == -1) {__semantic_graph__symbol = f2symbol__new(cause, strlen("semantic_graph"), (u8*)"semantic_graph");}
+  f2ptr this = f2__primobject__new(cause, __semantic_graph__symbol, 1, nil);
+  f2semantic_graph__relations__set( this, cause, relations);
   return this;
 }
 
-boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__conceptnet_graph(this, cause));}
-f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__conceptnet_graphp(this, cause));}
+boolean_t raw__semantic_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__semantic_graph(this, cause));}
+f2ptr f2__semantic_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__semantic_graphp(this, cause));}
 
 //<http://conceptnet.media.mit.edu/assertion/1112793> conceptnet:LeftConcept <http://conceptnet.media.mit.edu/concept/1003777>;
 // conceptnet:RelationType <http://conceptnet.media.mit.edu/reltype/IsA>;
@@ -72,7 +72,7 @@ f2ptr f2__conceptnet_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__co
 
 // this is a quick hack to load the conceptnet r3 file format into conceptnet1 format triples: [relation-type left-concept right-concept]
 
-f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int fd) {
+f2ptr raw__semantic_relation__new_read_from_file_descriptor(f2ptr cause, int fd) {
   s64 line_len = 0;
   u8  read_buffer[max_concept_line_len];
   {
@@ -173,11 +173,11 @@ f2ptr raw__conceptnet_relation__new_read_from_file_descriptor(f2ptr cause, int f
     }
   }
   
-  f2ptr conceptnet_relation = f2conceptnet_relation__new(cause, type, left_concept, right_concept);
-  return conceptnet_relation;
+  f2ptr semantic_relation = f2semantic_relation__new(cause, type, left_concept, right_concept);
+  return semantic_relation;
 }
 
-f2ptr raw__conceptnet_graph__load_r3_format(f2ptr cause, u8* filename) {
+f2ptr raw__semantic_graph__load_r3_format(f2ptr cause, u8* filename) {
   int fd = open((char*)filename, O_RDONLY);
   if (fd == -1) {
     return nil;
@@ -186,7 +186,7 @@ f2ptr raw__conceptnet_graph__load_r3_format(f2ptr cause, u8* filename) {
   f2ptr relations     = nil;
   f2ptr relation_iter = nil;
   do {
-    f2ptr relation = raw__conceptnet_relation__new_read_from_file_descriptor(cause, fd);
+    f2ptr relation = raw__semantic_relation__new_read_from_file_descriptor(cause, fd);
     if (! relation) {
       done = boolean__true;
     } else {
@@ -200,12 +200,12 @@ f2ptr raw__conceptnet_graph__load_r3_format(f2ptr cause, u8* filename) {
       }
     }
   } while (! done);
-  f2ptr conceptnet = f2conceptnet_graph__new(cause, relations);
+  f2ptr conceptnet = f2semantic_graph__new(cause, relations);
   close(fd);
   return conceptnet;
 }
 
-f2ptr f2__conceptnet_graph__load_r3_format(f2ptr cause, f2ptr filename) {
+f2ptr f2__semantic_graph__load_r3_format(f2ptr cause, f2ptr filename) {
   if (! raw__stringp(filename, cause)) {
     return f2larva__new(cause, 1);
   }
@@ -213,19 +213,19 @@ f2ptr f2__conceptnet_graph__load_r3_format(f2ptr cause, f2ptr filename) {
   u8* filename_str = (u8*)alloca(filename_length + 1);
   f2string__str_copy(filename, cause, filename_str);
   filename_str[filename_length] = 0;
-  return raw__conceptnet_graph__load_r3_format(cause, filename_str);
+  return raw__semantic_graph__load_r3_format(cause, filename_str);
 }
-def_pcfunk1(conceptnet_graph__load_r3_format, filename, return f2__conceptnet_graph__load_r3_format(this_cause, filename));
+def_pcfunk1(semantic_graph__load_r3_format, filename, return f2__semantic_graph__load_r3_format(this_cause, filename));
 
-f2ptr f2__conceptnet_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr this) {
-  if (! raw__conceptnet_graphp(this, cause)) {
+f2ptr f2__semantic_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_graphp(this, cause)) {
     return f2larva__new(cause, 1);
   }
   f2ptr concept_relations_hash = raw__hashtable__new(cause, 20);
-  f2ptr relation_iter = f2conceptnet_graph__relations(this, cause);
+  f2ptr relation_iter = f2semantic_graph__relations(this, cause);
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
-    f2ptr left_concept   = f2conceptnet_relation__left_concept(relation, cause);
+    f2ptr left_concept   = f2semantic_relation__left_concept(relation, cause);
     f2ptr old_hash_value = f2__hashtable__lookup_value(concept_relations_hash, cause, left_concept);
     f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
     f2__hashtable__add_keyvalue_pair(cause, concept_relations_hash, left_concept, new_hash_value);
@@ -233,17 +233,17 @@ f2ptr f2__conceptnet_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr t
   }
   return concept_relations_hash;
 }
-def_pcfunk1(conceptnet_graph__new_left_concept_relations_hash, this, return f2__conceptnet_graph__new_left_concept_relations_hash(this_cause, this));
+def_pcfunk1(semantic_graph__new_left_concept_relations_hash, this, return f2__semantic_graph__new_left_concept_relations_hash(this_cause, this));
 
-f2ptr f2__conceptnet_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr this) {
-  if (! raw__conceptnet_graphp(this, cause)) {
+f2ptr f2__semantic_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_graphp(this, cause)) {
     return f2larva__new(cause, 1);
   }
   f2ptr concept_relations_hash = raw__hashtable__new(cause, 20);
-  f2ptr relation_iter = f2conceptnet_graph__relations(this, cause);
+  f2ptr relation_iter = f2semantic_graph__relations(this, cause);
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
-    f2ptr right_concept  = f2conceptnet_relation__right_concept(relation, cause);
+    f2ptr right_concept  = f2semantic_relation__right_concept(relation, cause);
     f2ptr old_hash_value = f2__hashtable__lookup_value(concept_relations_hash, cause, right_concept);
     f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
     f2__hashtable__add_keyvalue_pair(cause, concept_relations_hash, right_concept, new_hash_value);
@@ -251,28 +251,28 @@ f2ptr f2__conceptnet_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr 
   }
   return concept_relations_hash;
 }
-def_pcfunk1(conceptnet_graph__new_right_concept_relations_hash, this, return f2__conceptnet_graph__new_right_concept_relations_hash(this_cause, this));
+def_pcfunk1(semantic_graph__new_right_concept_relations_hash, this, return f2__semantic_graph__new_right_concept_relations_hash(this_cause, this));
 
 // **
 
-void f2__conceptnet__reinitialize_globalvars() {
+void f2__primobject__semantic_graph__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  __conceptnet_relation__symbol = f2symbol__new(cause, strlen("conceptnet_relation"), (u8*)"conceptnet_relation");
-  __conceptnet_graph__symbol    = f2symbol__new(cause, strlen("conceptnet_graph"),    (u8*)"conceptnet_graph");
+  __semantic_relation__symbol = f2symbol__new(cause, strlen("semantic_relation"), (u8*)"semantic_relation");
+  __semantic_graph__symbol    = f2symbol__new(cause, strlen("semantic_graph"),    (u8*)"semantic_graph");
 }
 
-void f2__conceptnet__initialize() {
+void f2__primobject__semantic_graph__initialize() {
   pause_gc();
-  f2__conceptnet__reinitialize_globalvars();
+  f2__primobject__semantic_graph__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  environment__add_var_value(cause, global_environment(), __conceptnet_relation__symbol, nil);
-  environment__add_var_value(cause, global_environment(), __conceptnet_graph__symbol, nil);
+  environment__add_var_value(cause, global_environment(), __semantic_relation__symbol, nil);
+  environment__add_var_value(cause, global_environment(), __semantic_graph__symbol, nil);
   
-  f2__primcfunk__init__1(conceptnet_graph__load_r3_format,                   filename);
-  f2__primcfunk__init__1(conceptnet_graph__new_left_concept_relations_hash,  this);
-  f2__primcfunk__init__1(conceptnet_graph__new_right_concept_relations_hash, this);
+  f2__primcfunk__init__1(semantic_graph__load_conceptnet_r3_format,        filename);
+  f2__primcfunk__init__1(semantic_graph__new_left_concept_relations_hash,  this);
+  f2__primcfunk__init__1(semantic_graph__new_right_concept_relations_hash, this);
   
   resume_gc();
   try_gc();

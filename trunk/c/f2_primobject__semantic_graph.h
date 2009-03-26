@@ -19,64 +19,64 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__CONCEPTNET__H
-#define F2__CONCEPTNET__H
+#ifndef F2__PRIMOBJECT__SEMANTIC_GRAPH__H
+#define F2__PRIMOBJECT__SEMANTIC_GRAPH__H
 
 #include "f2_primobjects.h"
 
-// conceptnet_relation
+// semantic_relation
 
-extern f2ptr __conceptnet_relation__symbol;
-f2ptr f2conceptnet_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept);
-#define      f2primobject__is__conceptnet_relation(this, cause) raw__eq(cause, f2primobject__type(this, cause), __conceptnet_relation__symbol)
+extern f2ptr __semantic_relation__symbol;
+f2ptr f2semantic_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2ptr right_concept);
+#define      f2primobject__is__semantic_relation(this, cause) raw__eq(cause, f2primobject__type(this, cause), __semantic_relation__symbol)
 
-defprimobject__static_slot__prototype(conceptnet_relation__type);
-#define      f2conceptnet_relation__type(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_relation__type, cause)
-#define      f2conceptnet_relation__type__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_relation__type, cause, value)
-#define      f2conceptnet_relation__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_relation__type, cause)
-#define      f2conceptnet_relation__type__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_relation__type, cause)
-#define      f2conceptnet_relation__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_relation__type, cause)
+defprimobject__static_slot__prototype(semantic_relation__type);
+#define      f2semantic_relation__type(                   this, cause)        primobject__static_slot__accessor(         this, semantic_relation__type, cause)
+#define      f2semantic_relation__type__set(              this, cause, value) primobject__static_slot__set(              this, semantic_relation__type, cause, value)
+#define      f2semantic_relation__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, semantic_relation__type, cause)
+#define      f2semantic_relation__type__trace(            this, cause)        primobject__static_slot__trace(            this, semantic_relation__type, cause)
+#define      f2semantic_relation__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, semantic_relation__type, cause)
 
-defprimobject__static_slot__prototype(conceptnet_relation__left_concept);
-#define      f2conceptnet_relation__left_concept(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_relation__left_concept, cause)
-#define      f2conceptnet_relation__left_concept__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_relation__left_concept, cause, value)
-#define      f2conceptnet_relation__left_concept__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_relation__left_concept, cause)
-#define      f2conceptnet_relation__left_concept__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_relation__left_concept, cause)
-#define      f2conceptnet_relation__left_concept__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_relation__left_concept, cause)
+defprimobject__static_slot__prototype(semantic_relation__left_concept);
+#define      f2semantic_relation__left_concept(                   this, cause)        primobject__static_slot__accessor(         this, semantic_relation__left_concept, cause)
+#define      f2semantic_relation__left_concept__set(              this, cause, value) primobject__static_slot__set(              this, semantic_relation__left_concept, cause, value)
+#define      f2semantic_relation__left_concept__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, semantic_relation__left_concept, cause)
+#define      f2semantic_relation__left_concept__trace(            this, cause)        primobject__static_slot__trace(            this, semantic_relation__left_concept, cause)
+#define      f2semantic_relation__left_concept__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, semantic_relation__left_concept, cause)
 
-defprimobject__static_slot__prototype(conceptnet_relation__right_concept);
-#define      f2conceptnet_relation__right_concept(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_relation__right_concept, cause)
-#define      f2conceptnet_relation__right_concept__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_relation__right_concept, cause, value)
-#define      f2conceptnet_relation__right_concept__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_relation__right_concept, cause)
-#define      f2conceptnet_relation__right_concept__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_relation__right_concept, cause)
-#define      f2conceptnet_relation__right_concept__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_relation__right_concept, cause)
+defprimobject__static_slot__prototype(semantic_relation__right_concept);
+#define      f2semantic_relation__right_concept(                   this, cause)        primobject__static_slot__accessor(         this, semantic_relation__right_concept, cause)
+#define      f2semantic_relation__right_concept__set(              this, cause, value) primobject__static_slot__set(              this, semantic_relation__right_concept, cause, value)
+#define      f2semantic_relation__right_concept__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, semantic_relation__right_concept, cause)
+#define      f2semantic_relation__right_concept__trace(            this, cause)        primobject__static_slot__trace(            this, semantic_relation__right_concept, cause)
+#define      f2semantic_relation__right_concept__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, semantic_relation__right_concept, cause)
 
-boolean_t raw__conceptnet_relationp(f2ptr this, f2ptr cause);
-f2ptr      f2__conceptnet_relationp(f2ptr this, f2ptr cause);
+boolean_t raw__semantic_relationp(f2ptr this, f2ptr cause);
+f2ptr      f2__semantic_relationp(f2ptr this, f2ptr cause);
 
 
-// conceptnet_graph
+// semantic_graph
 
-extern f2ptr __conceptnet_graph__symbol;
-f2ptr f2conceptnet_graph__new(f2ptr cause, f2ptr relations);
-#define      f2primobject__is__conceptnet_graph(this, cause) raw__eq(cause, f2primobject__type(this, cause), __conceptnet_graph__symbol)
+extern f2ptr __semantic_graph__symbol;
+f2ptr f2semantic_graph__new(f2ptr cause, f2ptr relations);
+#define      f2primobject__is__semantic_graph(this, cause) raw__eq(cause, f2primobject__type(this, cause), __semantic_graph__symbol)
 
-defprimobject__static_slot__prototype(conceptnet_graph__relations);
-#define      f2conceptnet_graph__relations(                   this, cause)        primobject__static_slot__accessor(         this, conceptnet_graph__relations, cause)
-#define      f2conceptnet_graph__relations__set(              this, cause, value) primobject__static_slot__set(              this, conceptnet_graph__relations, cause, value)
-#define      f2conceptnet_graph__relations__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, conceptnet_graph__relations, cause)
-#define      f2conceptnet_graph__relations__trace(            this, cause)        primobject__static_slot__trace(            this, conceptnet_graph__relations, cause)
-#define      f2conceptnet_graph__relations__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, conceptnet_graph__relations, cause)
+defprimobject__static_slot__prototype(semantic_graph__relations);
+#define      f2semantic_graph__relations(                   this, cause)        primobject__static_slot__accessor(         this, semantic_graph__relations, cause)
+#define      f2semantic_graph__relations__set(              this, cause, value) primobject__static_slot__set(              this, semantic_graph__relations, cause, value)
+#define      f2semantic_graph__relations__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, semantic_graph__relations, cause)
+#define      f2semantic_graph__relations__trace(            this, cause)        primobject__static_slot__trace(            this, semantic_graph__relations, cause)
+#define      f2semantic_graph__relations__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, semantic_graph__relations, cause)
 
-boolean_t raw__conceptnet_graphp(f2ptr this, f2ptr cause);
-f2ptr      f2__conceptnet_graphp(f2ptr this, f2ptr cause);
+boolean_t raw__semantic_graphp(f2ptr this, f2ptr cause);
+f2ptr      f2__semantic_graphp(f2ptr this, f2ptr cause);
 
 
 
 // **
 
-void f2__conceptnet__reinitialize_globalvars();
-void f2__conceptnet__initialize();
+void f2__primobject__semantic_graph__reinitialize_globalvars();
+void f2__primobject__semantic_graph__initialize();
 
-#endif // F2__CONCEPTNET__H
+#endif // F2__PRIMOBJECT__SEMANTIC_GRAPH__H
 

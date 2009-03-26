@@ -1473,6 +1473,7 @@ void f2__primobject_tensor__reinitialize_globalvars();           // defined in f
 void f2__primobject_object__reinitialize_globalvars();           // defined in f2_primobject__object.c
 void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
 void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f2_primobject__circular_buffer.c
+void f2__primobject__semantic_graph__reinitialize_globalvars();  // defined in f2_primobject__semantic_graph.c
 void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
 void f2__primobject__text_buffer__reinitialize_globalvars();     // defined in f2_primobject__text_buffer.c
 void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
@@ -1495,7 +1496,6 @@ void f2__blocks_world__reinitialize_globalvars();                // defined in f
 void f2__primobject__dynamic_library__reinitialize_globalvars(); // defined in f2_primobject__dynamic_library.c
 void f2__dlfcn__reinitialize_globalvars();                       // defined in f2_dlfcn.c
 void f2__gmodule__reinitialize_globalvars();                     // defined in f2_gmodule.c
-void f2__conceptnet__reinitialize_globalvars();                  // defined in f2_conceptnet.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}

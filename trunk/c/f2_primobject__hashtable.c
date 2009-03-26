@@ -86,7 +86,7 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
-  u64   key__hash_value    = f2symbol__hash_value(key, cause);
+  u64   key__hash_value    = raw__hash_value(cause, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -120,7 +120,7 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
-  u64   key__hash_value    = f2symbol__hash_value(key, cause);
+  u64   key__hash_value    = raw__hash_value(cause, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;

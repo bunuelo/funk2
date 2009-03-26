@@ -27,6 +27,9 @@
 [defunk global_actions-lookup [name]
   [hashtable-lookup_value global_actions name]]
 
+[defmetro action [name]
+  `[global_actions-lookup [quote ,name]]]
+
 [defmetro defaction [name args :rest body]
   `[let [[this-action-funk [funk ,args @body]]]
      [let [[this-action [action-new this-action-funk]]]

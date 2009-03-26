@@ -42,6 +42,11 @@ boolean_t raw__actionp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause
 f2ptr f2__actionp(f2ptr this, f2ptr cause) {return f2bool__new(raw__actionp(this, cause));}
 
 
+f2ptr f2__action__new(f2ptr cause, f2ptr funk) {
+  return f2action__new(cause, funk, nil, nil);
+}
+def_pcfunk1(action__new, funk, return f2__action__new(this_cause, funk));
+
 // **
 
 void f2__primobject__action__reinitialize_globalvars() {
@@ -56,6 +61,8 @@ void f2__primobject__action__initialize() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   environment__add_var_value(cause, global_environment(), __action__symbol, nil);
+  
+  f2__primcfunk__init__1(action__new, funk);
   
   resume_gc();
   try_gc();

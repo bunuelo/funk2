@@ -74,7 +74,7 @@ f2ptr f2__action__begin(f2ptr cause, f2ptr this) {
     if (! raw__causep(cause, cause)) {
       return f2larva__new(cause, 1);
     }
-    f2ptr action_event = f2action_event__new(cause, this, microseconds_since_1970, nil);
+    f2ptr action_event         = f2action_event__new(cause, this, microseconds_since_1970, nil);
     f2ptr current_events_mutex = f2cause__current_events_mutex(this, cause);
     f2mutex__lock(current_events_mutex, cause);
     f2cause__current_events__set(this, cause, f2cons__new(cause, action_event, f2cause__current_events(this, cause)));

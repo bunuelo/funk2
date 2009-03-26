@@ -21,15 +21,16 @@
 
 [globalize global_actions [hashtable-new 12]]
 
-[defunk global_action-add [name action]
+[defunk global_actions-add [name action]
   [hashtable-add_keyvalue_pair global_actions name action]]
 
-[defunk global_action-lookup [name]
+[defunk global_actions-lookup [name]
   [hashtable-lookup_value global_actions name]]
 
 [defmetro defaction [name args :rest body]
   `[let [[this-action-funk [funk ,args @body]]]
      [let [[this-action [action-new this-action-funk]]]
+       [global_actions-add [quote ,name] this-action]
        [defunk ,name ,args
 	 [action-begin          this-action]
 	 [let [[result [funkall this-action-funk @args]]]

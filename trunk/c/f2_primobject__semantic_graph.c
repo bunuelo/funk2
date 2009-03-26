@@ -177,7 +177,7 @@ f2ptr raw__semantic_relation__new_read_from_file_descriptor(f2ptr cause, int fd)
   return semantic_relation;
 }
 
-f2ptr raw__semantic_graph__load_r3_format(f2ptr cause, u8* filename) {
+f2ptr raw__semantic_graph__load_conceptnet_r3_format(f2ptr cause, u8* filename) {
   int fd = open((char*)filename, O_RDONLY);
   if (fd == -1) {
     return nil;
@@ -205,7 +205,7 @@ f2ptr raw__semantic_graph__load_r3_format(f2ptr cause, u8* filename) {
   return conceptnet;
 }
 
-f2ptr f2__semantic_graph__load_r3_format(f2ptr cause, f2ptr filename) {
+f2ptr f2__semantic_graph__load_conceptnet_r3_format(f2ptr cause, f2ptr filename) {
   if (! raw__stringp(filename, cause)) {
     return f2larva__new(cause, 1);
   }
@@ -213,9 +213,9 @@ f2ptr f2__semantic_graph__load_r3_format(f2ptr cause, f2ptr filename) {
   u8* filename_str = (u8*)alloca(filename_length + 1);
   f2string__str_copy(filename, cause, filename_str);
   filename_str[filename_length] = 0;
-  return raw__semantic_graph__load_r3_format(cause, filename_str);
+  return raw__semantic_graph__load_conceptnet_r3_format(cause, filename_str);
 }
-def_pcfunk1(semantic_graph__load_r3_format, filename, return f2__semantic_graph__load_r3_format(this_cause, filename));
+def_pcfunk1(semantic_graph__load_conceptnet_r3_format, filename, return f2__semantic_graph__load_conceptnet_r3_format(this_cause, filename));
 
 f2ptr f2__semantic_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr this) {
   if (! raw__semantic_graphp(this, cause)) {

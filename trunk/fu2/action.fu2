@@ -23,8 +23,9 @@
   `[let [[this-action-funk [funk ,args @body]]]
      [let [[this-action [action-new this-action-funk]]]
        [defunk ,name ,args
-	 [action-begin this-action]
-	 [funkall      this-action-funk @args]
-	 [action-end   this-action]]
+	 [action-begin          this-action]
+	 [let [[result [funkall this-action-funk @args]]]
+	   [action-end          this-action]
+	   result]]
        nil]]]
 

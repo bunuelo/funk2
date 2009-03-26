@@ -79,9 +79,9 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
 
 f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  if(! raw__symbolp(key, cause)) {
-    return f2larva__new(cause, 1);
-  }
+  //if(! raw__symbolp(key, cause)) {
+  //  return f2larva__new(cause, 1);
+  //}
   pause_gc();
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -95,7 +95,7 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
   while(keyvalue_pair_iter) {
     f2ptr iter__keyvalue_pair = f2cons__car(keyvalue_pair_iter,  cause);
     f2ptr keyvalue_pair__key  = f2cons__car(iter__keyvalue_pair, cause);
-    if (f2__symbol__eq(cause, key, keyvalue_pair__key)) {
+    if (raw__equals(cause, key, keyvalue_pair__key)) {
       keyvalue_pair = iter__keyvalue_pair;
       break;
     }
@@ -113,9 +113,9 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
 
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  if(! raw__symbolp(key, cause)) {
-    return f2larva__new(cause, 1);
-  }
+  //if(! raw__symbolp(key, cause)) {
+  //  return f2larva__new(cause, 1);
+  //}
   pause_gc();
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -128,7 +128,7 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   while(keyvalue_pair_iter) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-    if (f2__symbol__eq(cause, key, keyvalue_pair__key)) {
+    if (raw__equals(cause, key, keyvalue_pair__key)) {
       resume_gc(); return keyvalue_pair;
     }
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);

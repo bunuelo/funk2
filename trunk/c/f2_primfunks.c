@@ -298,7 +298,7 @@ f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
 }
 def_pcfunk2(string__elt, x, y, return f2__string__elt(this_cause, x, y));
 
-f2ptr f2__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
+boolean_t raw__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
   u64 x_len = f2string__length(x, cause);
   u64 y_len = f2string__length(y, cause);
   if (x_len != y_len) {
@@ -308,7 +308,11 @@ f2ptr f2__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
   char* y_str = alloca(x_len);
   f2string__str_copy(x, cause, (u8*)x_str);
   f2string__str_copy(y, cause, (u8*)y_str);
-  return f2bool__new(memcmp(x_str, y_str, x_len) == 0);
+  return (memcmp(x_str, y_str, x_len) == 0);
+}
+
+f2ptr f2__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
+  return f2bool__new(raw__string__eq(cause, x, y));
 }
 def_pcfunk2(string__equals, x, y, return f2__string__eq(this_cause, x, y));
 
@@ -1891,7 +1895,7 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
       u64 i;
     } u;
     u.i = 0;
-    u.p = f2float__f(exp, cause);
+    u.p = f2pointer__p(exp, cause);
     return u.i;
   }
   case ptype_gfunkptr: {
@@ -1951,6 +1955,80 @@ f2ptr f2__hash_value(f2ptr cause, f2ptr exp) {
   return f2integer__new(cause, raw__hash_value(cause, exp));
 }
 def_pcfunk1(hash_value, exp, return f2__hash_value(this_cause, exp));
+
+boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
+  if (raw__hash_value(cause, x) != raw__hash_value(cause, y)) {
+    return boolean__false;
+  }
+  ptype_t x_ptype = f2ptype__raw(x, cause);
+  ptype_t y_ptype = f2ptype__raw(y, cause);
+  if (x_ptype != y_ptype) {
+    return boolean__false;
+  }
+  switch(x_ptype) {
+  case ptype_integer:
+    return f2integer__i(x, cause) == f2integer__i(y, cause);
+  case ptype_double:
+    return f2double__d(x, cause) == f2double__d(y, cause);
+  case ptype_float:
+    return f2float__f(x, cause) == f2float__f(y, cause);
+  case ptype_pointer:
+    return f2pointer__p(x, cause) == f2pointer__p(y, cause);
+  case ptype_gfunkptr:
+    return f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause);
+  case ptype_mutex:
+    return x == y;
+  case ptype_char:
+    return f2char__ch(x, cause) == f2char__ch(y, cause);
+  case ptype_string:
+    return raw__string__eq(cause, x, y);
+  case ptype_symbol:
+    return raw__symbol__eq(cause, x, y);
+  case ptype_chunk:
+    return x == y;
+  case ptype_simple_array: {
+    s64 x_length = f2simple_array__length(x, cause);
+    s64 y_length = f2simple_array__length(y, cause);
+    if (x_length != y_length) {
+      return boolean__false;
+    }
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      f2ptr x_subexp = f2simple_array__elt(x, index, cause);
+      f2ptr y_subexp = f2simple_array__elt(y, index, cause);
+      if (! raw__equals(cause, x_subexp, y_subexp)) {
+	return boolean__false;
+      }
+    }
+    return boolean__true;
+  }
+  case ptype_traced_array: {
+    s64 x_length = f2traced_array__length(x, cause);
+    s64 y_length = f2traced_array__length(y, cause);
+    if (x_length != y_length) {
+      return boolean__false;
+    }
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      f2ptr x_subexp = f2traced_array__elt(x, index, cause);
+      f2ptr y_subexp = f2traced_array__elt(y, index, cause);
+      if (! raw__equals(cause, x_subexp, y_subexp)) {
+	return boolean__false;
+      }
+    }
+    return boolean__true;
+  }
+  case ptype_larva:
+    return f2larva__type(x, cause) == f2larva__type(y, cause);
+  default:
+    return x == y;
+  }
+}
+
+f2ptr f2__equals(f2ptr cause, f2ptr x, f2ptr y) {
+  return f2bool__new(raw__equals(cause, x, y));
+}
+def_pcfunk2(equals, x, y, return f2__equals(this_cause, x, y));
 
 f2ptr f2__funktionalp(f2ptr cause, f2ptr thread, f2ptr exp) {
   boolean_t exp__is_funktional = boolean__true;
@@ -2360,6 +2438,7 @@ void f2__primcfunks__initialize() {
   
   f2__funktional_primcfunk__init__1(colonize, exp);
   f2__funktional_primcfunk__init__1(hash_value, exp);
+  f2__funktional_primcfunk__init__2(equals, x, y);
   f2__funktional_primcfunk__init__1(funktionalp, exp);
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);

@@ -27,7 +27,7 @@
 // action
 
 extern f2ptr __action__symbol;
-f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr success_events, f2ptr failure_events);
+f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr success_events_mutex, f2ptr success_events, f2ptr failure_events_mutex, f2ptr failure_events);
 #define      f2primobject__is__action(this, cause) raw__eq(cause, f2primobject__type(this, cause), __action__symbol)
 
 defprimobject__static_slot__prototype(action__funk);
@@ -37,12 +37,26 @@ defprimobject__static_slot__prototype(action__funk);
 #define      f2action__funk__trace(            this, cause)        primobject__static_slot__trace(            this, action__funk, cause)
 #define      f2action__funk__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, action__funk, cause)
 
+defprimobject__static_slot__prototype(action__success_events_mutex);
+#define      f2action__success_events_mutex(                   this, cause)        primobject__static_slot__accessor(         this, action__success_events_mutex, cause)
+#define      f2action__success_events_mutex__set(              this, cause, value) primobject__static_slot__set(              this, action__success_events_mutex, cause, value)
+#define      f2action__success_events_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, action__success_events_mutex, cause)
+#define      f2action__success_events_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, action__success_events_mutex, cause)
+#define      f2action__success_events_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, action__success_events_mutex, cause)
+
 defprimobject__static_slot__prototype(action__success_events);
 #define      f2action__success_events(                   this, cause)        primobject__static_slot__accessor(         this, action__success_events, cause)
 #define      f2action__success_events__set(              this, cause, value) primobject__static_slot__set(              this, action__success_events, cause, value)
 #define      f2action__success_events__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, action__success_events, cause)
 #define      f2action__success_events__trace(            this, cause)        primobject__static_slot__trace(            this, action__success_events, cause)
 #define      f2action__success_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, action__success_events, cause)
+
+defprimobject__static_slot__prototype(action__failure_events_mutex);
+#define      f2action__failure_events_mutex(                   this, cause)        primobject__static_slot__accessor(         this, action__failure_events_mutex, cause)
+#define      f2action__failure_events_mutex__set(              this, cause, value) primobject__static_slot__set(              this, action__failure_events_mutex, cause, value)
+#define      f2action__failure_events_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, action__failure_events_mutex, cause)
+#define      f2action__failure_events_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, action__failure_events_mutex, cause)
+#define      f2action__failure_events_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, action__failure_events_mutex, cause)
 
 defprimobject__static_slot__prototype(action__failure_events);
 #define      f2action__failure_events(                   this, cause)        primobject__static_slot__accessor(         this, action__failure_events, cause)

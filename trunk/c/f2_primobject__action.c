@@ -23,18 +23,22 @@
 
 // action primobject definition
 
-defprimobject__static_slot(action__funk,           0);
-defprimobject__static_slot(action__success_events, 1);
-defprimobject__static_slot(action__failure_events, 2);
+defprimobject__static_slot(action__funk,                 0);
+defprimobject__static_slot(action__success_events_mutex, 1);
+defprimobject__static_slot(action__success_events,       2);
+defprimobject__static_slot(action__failure_events_mutex, 3);
+defprimobject__static_slot(action__failure_events,       4);
 
 f2ptr __action__symbol = -1;
 
-f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr success_events, f2ptr failure_events) {
+f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr success_events_mutex, f2ptr success_events, f2ptr failure_events_mutex, f2ptr failure_events) {
   if (__action__symbol == -1) {__action__symbol = f2symbol__new(cause, strlen("action"), (u8*)"action");}
-  f2ptr this = f2__primobject__new(cause, __action__symbol, 3, nil);
+  f2ptr this = f2__primobject__new(cause, __action__symbol, 5, nil);
   f2action__funk__set(         this, cause, funk);
-  f2action__success_events__set(this, cause, success_events);
-  f2action__failure_events__set(this, cause, failure_events);
+  f2action__success_events_mutex__set(this, cause, success_events_mutex);
+  f2action__success_events__set(      this, cause, success_events);
+  f2action__failure_events_mutex__set(this, cause, failure_events_mutex);
+  f2action__failure_events__set(      this, cause, failure_events);
   return this;
 }
 
@@ -43,7 +47,9 @@ f2ptr f2__actionp(f2ptr this, f2ptr cause) {return f2bool__new(raw__actionp(this
 
 
 f2ptr f2__action__new(f2ptr cause, f2ptr funk) {
-  return f2action__new(cause, funk, nil, nil);
+  f2ptr success_events_mutex = f2mutex__new(cause);
+  f2ptr failure_events_mutex = f2mutex__new(cause);
+  return f2action__new(cause, funk, success_events_mutex, nil, failure_events_mutex, nil);
 }
 def_pcfunk1(action__new, funk, return f2__action__new(this_cause, funk));
 
@@ -90,26 +96,36 @@ f2ptr f2__action__end(f2ptr cause, f2ptr this) {
     if (! raw__causep(cause, cause)) {
       return f2larva__new(cause, 1);
     }
-    f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
-    f2mutex__lock(current_events_mutex, cause);
-    f2ptr current_events_prev = nil;
-    f2ptr current_events_iter = f2cause__current_events(cause, cause);
-    while (current_events_iter) {
-      f2ptr action_event = f2cons__car(current_events_iter, cause);
-      f2ptr action       = f2action_event__action(action_event, cause);
-      if (action == this) {
-	if (current_events_prev) {
-	  f2cons__cdr__set(current_events_prev, cause, f2cons__cdr(current_events_iter, cause));
-	} else {
-	  f2cause__current_events__set(cause, cause, f2cons__cdr(current_events_iter, cause));
+    f2ptr finished_action_event = nil;
+    {
+      f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
+      f2mutex__lock(current_events_mutex, cause);
+      f2ptr current_events_prev = nil;
+      f2ptr current_events_iter = f2cause__current_events(cause, cause);
+      while (current_events_iter) {
+	f2ptr action_event = f2cons__car(current_events_iter, cause);
+	f2ptr action       = f2action_event__action(action_event, cause);
+	if (action == this) {
+	  if (current_events_prev) {
+	    f2cons__cdr__set(current_events_prev, cause, f2cons__cdr(current_events_iter, cause));
+	  } else {
+	    f2cause__current_events__set(cause, cause, f2cons__cdr(current_events_iter, cause));
+	  }
+	  f2action_event__end_time__set(action_event, cause, microseconds_since_1970);
+	  finished_action_event = action_event;
+	  break;
 	}
-	f2action_event__end_time__set(action_event, cause, microseconds_since_1970);
-	break;
+	current_events_prev = current_events_iter;
+	current_events_iter = f2cons__cdr(current_events_iter, cause);
       }
-      current_events_prev = current_events_iter;
-      current_events_iter = f2cons__cdr(current_events_iter, cause);
+      f2mutex__unlock(current_events_mutex, cause);
     }
-    f2mutex__unlock(current_events_mutex, cause);
+    {
+      f2ptr success_events_mutex = f2action__success_events_mutex(this, cause);
+      f2mutex__lock(success_events_mutex, cause);
+      f2action__success_events__set(this, cause, f2cons__new(cause, finished_action_event, f2action__success_events(this, cause)));
+      f2mutex__unlock(success_events_mutex, cause);
+    }
   }
   return nil;
 }

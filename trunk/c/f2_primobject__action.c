@@ -75,9 +75,9 @@ f2ptr f2__action__begin(f2ptr cause, f2ptr this) {
       return f2larva__new(cause, 1);
     }
     f2ptr action_event         = f2action_event__new(cause, this, microseconds_since_1970, nil);
-    f2ptr current_events_mutex = f2cause__current_events_mutex(this, cause);
+    f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
     f2mutex__lock(current_events_mutex, cause);
-    f2cause__current_events__set(this, cause, f2cons__new(cause, action_event, f2cause__current_events(this, cause)));
+    f2cause__current_events__set(cause, cause, f2cons__new(cause, action_event, f2cause__current_events(cause, cause)));
     f2mutex__unlock(current_events_mutex, cause);
   }
   return nil;
@@ -90,10 +90,10 @@ f2ptr f2__action__end(f2ptr cause, f2ptr this) {
     if (! raw__causep(cause, cause)) {
       return f2larva__new(cause, 1);
     }
-    f2ptr current_events_mutex = f2cause__current_events_mutex(this, cause);
+    f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
     f2mutex__lock(current_events_mutex, cause);
     f2ptr current_events_prev = nil;
-    f2ptr current_events_iter = f2cause__current_events(this, cause);
+    f2ptr current_events_iter = f2cause__current_events(cause, cause);
     while (current_events_iter) {
       f2ptr action_event = f2cons__car(current_events_iter, cause);
       f2ptr action       = f2action_event__action(action_event, cause);

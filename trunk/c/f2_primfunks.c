@@ -467,9 +467,21 @@ f2ptr f2__array__length(f2ptr cause, f2ptr x) {
 def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
 
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_arrayp(this, cause)) {return f2simple_array__elt(this, index, cause);}
-  else if (raw__traced_arrayp(this, cause)) {return f2traced_array__elt(this, index, cause);}
-  else {return f2larva__new(cause, 1);}
+  if (raw__simple_arrayp(this, cause)) {
+    u64 length = f2simple_array__length(this, cause);
+    if (index >= length) {
+      return f2larva__new(cause, 2);
+    }
+    return f2simple_array__elt(this, index, cause);
+  } else if (raw__traced_arrayp(this, cause)) {
+    u64 length = f2traced_array__length(this, cause);
+    if (index >= length) {
+      return f2larva__new(cause, 2);
+    }
+    return f2traced_array__elt(this, index, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
 }
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
   if (!raw__integerp(index, cause)) {return f2larva__new(cause, 1);}

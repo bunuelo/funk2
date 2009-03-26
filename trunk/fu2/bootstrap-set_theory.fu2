@@ -1,18 +1,13 @@
 'set operations'
-[globalize f nil]
 
 [globalize-funk size &length]
 
-[defunk equal? [x y]
-  [or [eq x y]
-      [and [cons? x] [cons? y] [equal? [car x] [car y]] [equal? [cdr x] [cdr y]]]]]
-
 [defunk member? [x list]
-	[if [null list] f
-			[or [equal? [car list] x]   
-					[member? x [cdr list]]
-			]]]
-
+  [if [null list]
+      nil
+    [or [equals [car list] x]
+	[member? x [cdr list]]
+	]]]
 
 [defunk remove-duplicates [x]
   [if [null x]

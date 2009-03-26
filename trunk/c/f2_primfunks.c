@@ -1919,7 +1919,7 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
   case ptype_symbol:
     return f2symbol__hash_value(exp, cause);
   case ptype_chunk:
-    return f2chunk__hash_value(exp, cause);
+    return (u64)exp;
   case ptype_simple_array: {
     u64 hash_value = 1;
     s64 length = f2simple_array__length(exp, cause);

@@ -96,7 +96,7 @@ f2ptr f2__action__end(f2ptr cause, f2ptr this) {
     f2ptr current_events_iter = f2cause__current_events(this, cause);
     while (current_events_iter) {
       f2ptr action_event = f2cons__car(current_events_iter, cause);
-      f2ptr action = f2action_event__action(current_event, cause);
+      f2ptr action       = f2action_event__action(action_event, cause);
       if (action == this) {
 	if (current_events_prev) {
 	  f2cons__cdr__set(current_events_prev, cause, f2cons__cdr(current_events_iter, cause));

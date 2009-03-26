@@ -23,9 +23,9 @@
 
 #include "funk2.h"
 
-//#ifdef DEBUG
+#ifdef DEBUG
 #  define F2__PTYPE__TYPE_CHECK
-//#endif
+#endif
 
 pthread_mutex_t __global_ptype_incr_mutex[memory_pool_num];
 

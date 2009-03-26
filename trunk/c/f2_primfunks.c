@@ -1924,22 +1924,13 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     return f2symbol__hash_value(exp, cause);
   case ptype_chunk:
     return (u64)exp;
-  case ptype_simple_array: {
-    u64 hash_value = 1;
-    s64 length = f2simple_array__length(exp, cause);
-    s64 index;
-    for (index = 0; index < length; index ++) {
-      f2ptr subexp = f2simple_array__elt(exp, index, cause);
-      hash_value *= raw__hash_value(cause, subexp);
-    }
-    return hash_value;
-  }
+  case ptype_simple_array:
   case ptype_traced_array: {
     u64 hash_value = 1;
-    s64 length = f2traced_array__length(exp, cause);
+    s64 length = raw__array__length(cause, exp);
     s64 index;
     for (index = 0; index < length; index ++) {
-      f2ptr subexp = f2traced_array__elt(exp, index, cause);
+      f2ptr subexp = raw__array__elt(cause, exp, index);
       hash_value *= raw__hash_value(cause, subexp);
     }
     return hash_value;
@@ -1986,32 +1977,17 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return raw__symbol__eq(cause, x, y);
   case ptype_chunk:
     return x == y;
-  case ptype_simple_array: {
-    s64 x_length = f2simple_array__length(x, cause);
-    s64 y_length = f2simple_array__length(y, cause);
-    if (x_length != y_length) {
-      return boolean__false;
-    }
-    s64 index;
-    for (index = 0; index < x_length; index ++) {
-      f2ptr x_subexp = f2simple_array__elt(x, index, cause);
-      f2ptr y_subexp = f2simple_array__elt(y, index, cause);
-      if (! raw__equals(cause, x_subexp, y_subexp)) {
-	return boolean__false;
-      }
-    }
-    return boolean__true;
-  }
+  case ptype_simple_array:
   case ptype_traced_array: {
-    s64 x_length = f2traced_array__length(x, cause);
-    s64 y_length = f2traced_array__length(y, cause);
+    s64 x_length = raw__array__length(cause, x);
+    s64 y_length = raw__array__length(cause, y);
     if (x_length != y_length) {
       return boolean__false;
     }
     s64 index;
     for (index = 0; index < x_length; index ++) {
-      f2ptr x_subexp = f2traced_array__elt(x, index, cause);
-      f2ptr y_subexp = f2traced_array__elt(y, index, cause);
+      f2ptr x_subexp = raw__array__elt(cause, x, index);
+      f2ptr y_subexp = raw__array__elt(cause, y, index);
       if (! raw__equals(cause, x_subexp, y_subexp)) {
 	return boolean__false;
       }

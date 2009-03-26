@@ -803,8 +803,8 @@ defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
 // cause
 
 f2ptr __cause__symbol;
-f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr bmemory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last);
-f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last);
+f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr bmemory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
+f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
 
 #define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
 
@@ -844,7 +844,7 @@ defprimobject__static_slot__prototype(cause__imagination_stack);
 #define f2cause__imagination_stack__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__imagination_stack, cause)
 
 defprimobject__static_slot__prototype(cause__event_buffer_first);
-#define f2cause__event_buffer_first(                   this, cause)        primobject__static_slot__accessor(         this, cause__event_buffer_first, cause)
+%#define f2cause__event_buffer_first(                   this, cause)        primobject__static_slot__accessor(         this, cause__event_buffer_first, cause)
 #define f2cause__event_buffer_first__set(              this, cause, value) primobject__static_slot__set(              this, cause__event_buffer_first, cause, value)
 #define f2cause__event_buffer_first__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__event_buffer_first, cause)
 #define f2cause__event_buffer_first__trace(            this, cause)        primobject__static_slot__trace(            this, cause__event_buffer_first, cause)
@@ -856,6 +856,20 @@ defprimobject__static_slot__prototype(cause__event_buffer_last);
 #define f2cause__event_buffer_last__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__event_buffer_last, cause)
 #define f2cause__event_buffer_last__trace(            this, cause)        primobject__static_slot__trace(            this, cause__event_buffer_last, cause)
 #define f2cause__event_buffer_last__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__event_buffer_last, cause)
+
+defprimobject__static_slot__prototype(cause__current_events_mutex);
+#define f2cause__current_events_mutex(                   this, cause)        primobject__static_slot__accessor(         this, cause__current_events_mutex, cause)
+#define f2cause__current_events_mutex__set(              this, cause, value) primobject__static_slot__set(              this, cause__current_events_mutex, cause, value)
+#define f2cause__current_events_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__current_events_mutex, cause)
+#define f2cause__current_events_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events_mutex, cause)
+#define f2cause__current_events_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events_mutex, cause)
+
+defprimobject__static_slot__prototype(cause__current_events);
+#define f2cause__current_events(                   this, cause)        primobject__static_slot__accessor(         this, cause__current_events, cause)
+#define f2cause__current_events__set(              this, cause, value) primobject__static_slot__set(              this, cause__current_events, cause, value)
+#define f2cause__current_events__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__current_events, cause)
+#define f2cause__current_events__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events, cause)
+#define f2cause__current_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events, cause)
 
 
 f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);

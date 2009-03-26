@@ -870,6 +870,7 @@ f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x);
 // primobject hashtable
 
 u64 raw__hash_value(f2ptr cause, f2ptr exp);
+boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 
 // primobject thought_process
 

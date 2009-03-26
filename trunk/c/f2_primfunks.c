@@ -2430,7 +2430,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(thread__subversion_cause);
   
   f2__funktional_primcfunk__init(first);
-  f2__funktional_primcfunk__init(first__set);
+  f2__funktional_pirmcfunk__init(first__set);
   f2__funktional_primcfunk__init(next);
   f2__funktional_primcfunk__init(next__set);
   f2__funktional_primcfunk__init(prev);

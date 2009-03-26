@@ -1781,7 +1781,7 @@ f2ptr f2__thread__subversion_cause(f2ptr cause, f2ptr thread, f2ptr name) {
     subscribers           = f2cause__subscribers(cause, cause);
     old_imagination_stack = f2cause__imagination_stack(cause, cause);
   }
-  f2ptr new_cause = f2__cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers, f2cons__new(cause, name, old_imagination_stack), nil, nil, f2mutex__new(cause), nil);
+  f2ptr new_cause = f2__cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers, f2cons__new(cause, name, old_imagination_stack), nil, nil, nil);
   f2thread__cause_reg__set(thread, cause, new_cause);
   return new_cause;
 }

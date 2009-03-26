@@ -1867,7 +1867,7 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
   switch(ptype) {
   case ptype_integer:
     return f2integer__i(exp, cause);
-  case ptype_double:
+  case ptype_double: {
     union {
       double d;
       u64    i;
@@ -1875,7 +1875,8 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     u.i = 0;
     u.d = f2double__d(exp, cause);
     return u.i;
-  case ptype_float:
+  }
+  case ptype_float: {
     union {
       float f;
       u64   i;
@@ -1883,7 +1884,8 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     u.i = 0;
     u.f = f2float__f(exp, cause);
     return u.i;
-  case ptype_pointer:
+  }
+  case ptype_pointer: {
     union {
       ptr p;
       u64 i;
@@ -1891,7 +1893,8 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     u.i = 0;
     u.p = f2float__f(exp, cause);
     return u.i;
-  case ptype_gfunkptr:
+  }
+  case ptype_gfunkptr: {
     union {
       f2ptr g;
       u64   i;
@@ -1899,9 +1902,10 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     u.i = 0;
     u.g = f2gfunkptr__gfunkptr(exp, cause);
     return u.i;
+  }
   case ptype_mutex:
     return (u64)exp;
-  case ptype_char:
+  case ptype_char: {
     union {
       char ch;
       u64  i;
@@ -1909,13 +1913,14 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     u.i  = 0;
     u.ch = f2char__ch(exp, cause);
     return u.i;
+  }
   case ptype_string:
     return f2string__hash_value(exp, cause);
   case ptype_symbol:
     return f2symbol__hash_value(exp, cause);
   case ptype_chunk:
     return f2chunk__hash_value(exp, cause);
-  case ptype_simple_array:
+  case ptype_simple_array: {
     u64 hash_value = 1;
     s64 length = f2simple_array__length(exp, cause);
     s64 index;
@@ -1924,7 +1929,8 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
       hash_value *= raw__hash_value(cause, subexp);
     }
     return hash_value;
-  case ptype_traced_array:
+  }
+  case ptype_traced_array: {
     u64 hash_value = 1;
     s64 length = f2traced_array__length(exp, cause);
     s64 index;
@@ -1933,6 +1939,7 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
       hash_value *= raw__hash_value(cause, subexp);
     }
     return hash_value;
+  }
   case ptype_larva:
     return f2larva__type(exp, cause);
   default:

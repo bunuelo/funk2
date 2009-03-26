@@ -1993,7 +1993,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
       return boolean__false;
     }
     s64 index;
-    for (index = 0; index < length; index ++) {
+    for (index = 0; index < x_length; index ++) {
       f2ptr x_subexp = f2simple_array__elt(x, index, cause);
       f2ptr y_subexp = f2simple_array__elt(y, index, cause);
       if (! raw__equals(cause, x_subexp, y_subexp)) {
@@ -2009,7 +2009,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
       return boolean__false;
     }
     s64 index;
-    for (index = 0; index < length; index ++) {
+    for (index = 0; index < x_length; index ++) {
       f2ptr x_subexp = f2traced_array__elt(x, index, cause);
       f2ptr y_subexp = f2traced_array__elt(y, index, cause);
       if (! raw__equals(cause, x_subexp, y_subexp)) {

@@ -1948,6 +1948,12 @@ f2ptr f2__hash_value(f2ptr cause, f2ptr exp) {
 def_pcfunk1(hash_value, exp, return f2__hash_value(this_cause, exp));
 
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
+  if (x == y) {
+    return boolean__true;
+  }
+  if ((! x) || (! y)) {
+    return boolean__false;
+  }
   if (raw__hash_value(cause, x) != raw__hash_value(cause, y)) {
     return boolean__false;
   }

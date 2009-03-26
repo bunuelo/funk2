@@ -19,5 +19,8 @@
  rights to redistribute these changes.
 '
 
-[globalize action-new &primfunk:action__new]
+[globalize action-new      &primfunk:action__new]
+[globalize action-begin    &primfunk:action__begin]
+[globalize action-end      &primfunk:action__end]
+
 

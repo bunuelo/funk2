@@ -19,20 +19,13 @@
  rights to redistribute these changes.
 '
 
-[defunk action-new [funk transframes]
-  [let [[this [array-new 3]]]
-    [array-elt-set this 0 `action]
-    [array-elt-set this 1 funk]
-    [array-elt-set this 2 transframes]
-    this]]
-
-[defunk   action?            [exp]   [and [array? exp] [== [array-length exp] 2] [eq [array-elt exp 0] `action]]]
-[defmetro action-funk        [this] `[array-elt ,this 1]]
-[defmetro action-transframes [this] `[array-elt ,this 2]]
-
-[defmetro action [args :rest body]
-  `[action-new [funk ,args @body] nil]]
-
 [defmetro defaction [name args :rest body]
-  `[globalize-funk ,name [action ,args @body]]]
+  `[let [[this-action-funk [funk ,args
+				  @body]]]
+     [let [[this-action [action-new this-action-funk]]]
+       [defunk ,name ,args
+	 [action-begin this-action]
+	 [funkall      this-action-funk @body]
+	 [action-end   this-action]]
+       nil]]]
 

@@ -47,6 +47,16 @@ f2ptr f2__action__new(f2ptr cause, f2ptr funk) {
 }
 def_pcfunk1(action__new, funk, return f2__action__new(this_cause, funk));
 
+f2ptr f2__action__begin(f2ptr cause, f2ptr this) {
+  return nil;
+}
+def_pcfunk1(action__begin, this, return f2__action__begin(this_cause, this));
+
+f2ptr f2__action__end(f2ptr cause, f2ptr this) {
+  return nil;
+}
+def_pcfunk1(action__end, this, return f2__action__end(this_cause, this));
+
 // **
 
 void f2__primobject__action__reinitialize_globalvars() {
@@ -63,6 +73,8 @@ void f2__primobject__action__initialize() {
   environment__add_var_value(cause, global_environment(), __action__symbol, nil);
   
   f2__primcfunk__init__1(action__new, funk);
+  f2__primcfunk__init__1(action__begin, this);
+  f2__primcfunk__init__1(action__end, this);
   
   resume_gc();
   try_gc();

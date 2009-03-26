@@ -41,3 +41,7 @@
 	   result]]
        nil]]]
 
+[defunk action-brief [this]
+  [let [[funkable [action-funk this]]]
+    `[action ,[funkable-name funkable] ,[funkable-args funkable]]]]
+

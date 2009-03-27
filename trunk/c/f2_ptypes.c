@@ -1439,6 +1439,7 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
 }
 
 f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
+  boolean_t tracing_on = raw__cause__is_traced(cause, cause);
   u64 data_byte_num = (sizeof(dptr_t) * length);
   f2ptr traced_array_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
@@ -1451,7 +1452,7 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
     f2ptr*  f2ptr_iter = f2ptr_ptr;
     dptr_t* dptr_iter  = traced_array_block->dptr_data;
     for (i = length; i > 0; i --) {
-      dptr__init((dptr_t*)dptr_iter, *f2ptr_iter, dptr__default__tracing_on, nil, nil);
+      dptr__init((dptr_t*)dptr_iter, *f2ptr_iter, tracing_on, nil, nil);
       f2ptr_iter ++;
       dptr_iter  ++;
     }
@@ -1459,12 +1460,12 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
     int i;
     dptr_t* dptr_iter  = traced_array_block->dptr_data;
     for (i = length; i > 0; i --) {
-      dptr__init((dptr_t*)dptr_iter, nil, dptr__default__tracing_on, nil, nil);
+      dptr__init((dptr_t*)dptr_iter, nil, tracing_on, nil, nil);
       dptr_iter  ++;
     }
   }
   memblock__set_render_position_relative_to(traced_array_f2ptr, cause);
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, traced_array_f2ptr);}
+  if (tracing_on) {ptype_trace_create(pool_index, cause, traced_array_f2ptr);}
   return traced_array_f2ptr;
 }
 

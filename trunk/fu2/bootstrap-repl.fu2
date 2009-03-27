@@ -442,14 +442,6 @@
 
 [defunk print-html [exp] [format-html stdout '\n'] [fwrite_html stdout exp]]
 
-[defmetro time [:rest codes]
-  'This doesn\'t really work because macros are not fully expanded at compile-time.'
-  `[let [[start-time [system-time]]]
-     [let [[time-result [prog @codes]]]
-       [let [[end-time [system-time]]]
-	 [format stdout 'time: '] [format stdout [system-time-subtract end-time start-time]] [format stdout '\n']]
-       time-result]]]
-
 [defmetro while [cond :rest body]
   `[prog [define-funk while-loop
 	   [funk-unlabeled while []

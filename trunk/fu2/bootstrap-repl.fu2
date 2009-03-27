@@ -367,7 +367,7 @@
   [print `[elt-1d-seq-set ,seq ,index ,value]]
   [cond [[null seq]                   [error `run-time `list-index-too-big]]
 	[[integer-equal_sign index 0] [car-set seq value]]
-	[t                            [elt-1d-seq-set [cdr seq] [- index 1] value]]]]
+	[t                            [elt-1d-seq-set [cdr seq] [integer-subtract index 1] value]]]]
 
 [defunk elt-1d-set [collection index value]
   [cond [[cons?  collection] [elt-1d-seq-set collection index value]]

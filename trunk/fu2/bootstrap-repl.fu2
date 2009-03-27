@@ -364,7 +364,6 @@
       [funkall &elt [elt-1d collection [car indices]] rest_indices]]]]
 
 [defunk elt-1d-seq-set [seq index value]
-  [print `[elt-1d-seq-set ,seq ,index ,value]]
   [cond [[null seq]                   [error `run-time `list-index-too-big]]
 	[[integer-equal_sign index 0] [car-set seq value]]
 	[t                            [elt-1d-seq-set [cdr seq] [integer-subtract index 1] value]]]]

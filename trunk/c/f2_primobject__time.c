@@ -40,15 +40,15 @@ f2ptr f2__timep(f2ptr this, f2ptr cause) {return f2bool__new(raw__timep(this, ca
 
 // **
 
-void f2__primobject__semantic_graph__reinitialize_globalvars() {
+void f2__primobject__time__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   __time__symbol = f2symbol__new(cause, strlen("time"), (u8*)"time");
 }
 
-void f2__primobject__semantic_graph__initialize() {
+void f2__primobject__time__initialize() {
   pause_gc();
-  f2__primobject__semantic_graph__reinitialize_globalvars();
+  f2__primobject__time__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   environment__add_var_value(cause, global_environment(), __time__symbol, nil);

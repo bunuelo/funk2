@@ -204,6 +204,14 @@
 [defmetro unsafe:action-failure_events        [x]   `[unsafe:primobject-slot     ,x 5]]
 [defmetro unsafe:action-failure_events-set    [x y] `[unsafe:primobject-slot-set ,x 5 ,y]]
    
+[defunk   action_event?                      [x]    [and [primobject? x] [eq [unsafe:primobject-type x] `action_event]]]
+[defmetro unsafe:action_event-action         [x]   `[unsafe:primobject-slot     ,x 1]]
+[defmetro unsafe:action_event-action-set     [x y] `[unsafe:primobject-slot-set ,x 1 ,y]]
+[defmetro unsafe:action_event-begin_time     [x]   `[unsafe:primobject-slot     ,x 2]]
+[defmetro unsafe:action_event-begin_time-set [x y] `[unsafe:primobject-slot-set ,x 2 ,y]]
+[defmetro unsafe:action_event-end_time       [x]   `[unsafe:primobject-slot     ,x 3]]
+[defmetro unsafe:action_event-end_time-set   [x y] `[unsafe:primobject-slot-set ,x 3 ,y]]
+
 [defunk   time?                                   [x]    [and [primobject? x] [eq [unsafe:primobject-type x] `time]]]
 [defmetro unsafe:time-microseconds_since_1970     [x]   `[unsafe:primobject-slot     ,x 1]]
 [defmetro unsafe:time-microseconds_since_1970-set [x y] `[unsafe:primobject-slot-set ,x 1 ,y]]
@@ -467,8 +475,15 @@
 [defunk safe:action-failure_events     [x]   [if [action? x] [unsafe:action-failure_events     x]   [error `run-time `[safe:action-failure_events     type-check-failure]]]]
 [defunk safe:action-failure_events-set [x y] [if [action? x] [unsafe:action-failure_events-set x y] [error `run-time `[safe:action-failure_events-set type-check-failure]]]]
 
-[defunk safe:time-microseconds_since_1970     [x]   [if [action? x] [unsafe:time-microseconds_since_1970     x]   [error `run-time `[safe:time-microseconds_since_1970     type-check-failure]]]]
-[defunk safe:time-microseconds_since_1970-set [x y] [if [action? x] [unsafe:time-microseconds_since_1970-set x y] [error `run-time `[safe:time-microseconds_since_1970-set type-check-failure]]]]
+[defunk safe:action_event-action               [x]   [if [action_event? x] [unsafe:action_event-action         x]   [error `run-time `[safe:action_event-action         type-check-failure]]]]
+[defunk safe:action_event-action-set           [x y] [if [action_event? x] [unsafe:action_event-action-set     x y] [error `run-time `[safe:action_event-action-set     type-check-failure]]]]
+[defunk safe:action_event-begin_time           [x]   [if [action_event? x] [unsafe:action_event-begin_time     x]   [error `run-time `[safe:action_event-begin_time     type-check-failure]]]]
+[defunk safe:action_event-begin_time-set       [x y] [if [action_event? x] [unsafe:action_event-begin_time-set x y] [error `run-time `[safe:action_event-begin_time-set type-check-failure]]]]
+[defunk safe:action_event-end_time             [x]   [if [action_event? x] [unsafe:action_event-end_time       x]   [error `run-time `[safe:action_event-end_time       type-check-failure]]]]
+[defunk safe:action_event-end_time-set         [x y] [if [action_event? x] [unsafe:action_event-end_time-set   x y] [error `run-time `[safe:action_event-end_time-set   type-check-failure]]]]
+
+[defunk safe:time-microseconds_since_1970     [x]   [if [time? x] [unsafe:time-microseconds_since_1970     x]   [error `run-time `[safe:time-microseconds_since_1970     type-check-failure]]]]
+[defunk safe:time-microseconds_since_1970-set [x y] [if [time? x] [unsafe:time-microseconds_since_1970-set x y] [error `run-time `[safe:time-microseconds_since_1970-set type-check-failure]]]]
 
 
 [defunk safe:bug-type     [x]   [if [bug? x] [unsafe:bug-type     x]   [error `run-time `[safe:bug-type     type-check-failure]]]]
@@ -727,6 +742,13 @@
 [defmetro action-success_events-set [x y] `[,[if *compile-type-checking* `safe:action-success_events-set `unsafe:action-success_events-set] ,x ,y]]
 [defmetro action-failure_events     [x]   `[,[if *compile-type-checking* `safe:action-failure_events     `unsafe:action-failure_events]     ,x]]
 [defmetro action-failure_events-set [x y] `[,[if *compile-type-checking* `safe:action-failure_events-set `unsafe:action-failure_events-set] ,x ,y]]
+
+[defmetro action_event-action         [x]   `[,[if *compile-type-checking* `safe:action_event-action         `unsafe:action_event-action]         ,x]]
+[defmetro action_event-action-set     [x y] `[,[if *compile-type-checking* `safe:action_event-action-set     `unsafe:action_event-action-set]     ,x ,y]]
+[defmetro action_event-begin_time     [x]   `[,[if *compile-type-checking* `safe:action_event-begin_time     `unsafe:action_event-begin_time]     ,x]]
+[defmetro action_event-begin_time-set [x y] `[,[if *compile-type-checking* `safe:action_event-begin_time-set `unsafe:action_event-begin_time-set] ,x ,y]]
+[defmetro action_event-end_time       [x]   `[,[if *compile-type-checking* `safe:action_event-end_time       `unsafe:action_event-end_time]       ,x]]
+[defmetro action_event-end_time-set   [x y] `[,[if *compile-type-checking* `safe:action_event-end_time-set   `unsafe:action_event-end_time-set]   ,x ,y]]
 
 [defmetro time-microseconds_since_1970     [x]   `[,[if *compile-type-checking* `safe:time-microseconds_since_1970     `unsafe:time-microseconds_since_1970]     ,x]]
 [defmetro time-microseconds_since_1970-set [x y] `[,[if *compile-type-checking* `safe:time-microseconds_since_1970-set `unsafe:time-microseconds_since_1970-set] ,x ,y]]

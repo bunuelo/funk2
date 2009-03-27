@@ -202,6 +202,10 @@
 [defmetro unsafe:action-failure_events        [x]   `[unsafe:primobject-slot     ,x 3]]
 [defmetro unsafe:action-failure_events-set    [x y] `[unsafe:primobject-slot-set ,x 3 ,y]]
    
+[defunk   time?                                   [x]    [and [primobject? x] [eq [unsafe:primobject-type x] `time]]]
+[defmetro unsafe:time-microseconds_since_1970     [x]   `[unsafe:primobject-slot     ,x 1]]
+[defmetro unsafe:time-microseconds_since_1970-set [x y] `[unsafe:primobject-slot-set ,x 1 ,y]]
+   
 
 [defmetro transframe                            [symbol_old_news] `[array `primobject `transframe nil ,symbol_old_news]]
 [defunk   transframe?                           [x]                [and [primobject? x] [eq [unsafe:primobject-type x] `transframe]]]
@@ -460,6 +464,10 @@
 [defunk safe:action-success_events-set [x y] [if [action? x] [unsafe:action-success_events-set x y] [error `run-time `[safe:action-success_events-set type-check-failure]]]]
 [defunk safe:action-failure_events     [x]   [if [action? x] [unsafe:action-failure_events     x]   [error `run-time `[safe:action-failure_events     type-check-failure]]]]
 [defunk safe:action-failure_events-set [x y] [if [action? x] [unsafe:action-failure_events-set x y] [error `run-time `[safe:action-failure_events-set type-check-failure]]]]
+
+[defunk safe:time-microseconds_since_1970     [x]   [if [action? x] [unsafe:time-microseconds_since_1970     x]   [error `run-time `[safe:time-microseconds_since_1970     type-check-failure]]]]
+[defunk safe:time-microseconds_since_1970-set [x y] [if [action? x] [unsafe:time-microseconds_since_1970-set x y] [error `run-time `[safe:time-microseconds_since_1970-set type-check-failure]]]]
+
 
 [defunk safe:bug-type     [x]   [if [bug? x] [unsafe:bug-type     x]   [error `run-time `[safe:bug-type     type-check-failure]]]]
 [defunk safe:bug-type-set [x y] [if [bug? x] [unsafe:bug-type-set x y] [error `run-time `[safe:bug-type-set type-check-failure]]]]

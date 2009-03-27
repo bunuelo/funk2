@@ -23,10 +23,7 @@
   [ansi-stream-reset stdout]
   [format stdout
 	  '\n\n'
-	  [append `[A bug has occured that could not be automatically debugged by any of the reflective bug-handling critics.  
-		      We have paused the thread that has produced this bug, so that it may be debugged and continue executing under the control of reflective critics.
-		      This bug type does not have any reflective critics assigned to it.
-		      The best that we can do at this point is to give you an English description of the bug and a new Read-Eval-Print-Loop:]
+	  [append `[A bug has occured.]
 		   [bug-english_sentence_list bug]]
 	  '\n\n']
   [globalize last-error-thread thread]

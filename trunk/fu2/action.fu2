@@ -43,9 +43,9 @@
 
 [defunk action-brief [this]
   [let [[funkable [action-funk this]]]
-    `[action ,[funkable-name funkable] ,[funkable-args funkable]]]]
+    `[action ,[brief [funkable-name funkable]] ,[brief [funkable-args funkable]]]]]
 
 [defunk action_event-brief [this]
-  `[action_event :begin_time ,[action_event-begin_time this] :end_time ,[action_event-end_time this]]]
+  `[action_event :begin_time ,[brief [action_event-begin_time this]] :end_time ,[brief [action_event-end_time this]]]]
 
 

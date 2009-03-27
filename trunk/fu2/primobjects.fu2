@@ -454,6 +454,13 @@
 [defunk safe:transframe-symbol_old_news     [x]   [if [transframe? x] [unsafe:transframe-symbol_old_news     x]   [error `run-time `[safe:transframe-symbol_old_news     type-check-failure]]]]
 [defunk safe:transframe-symbol_old_news-set [x y] [if [transframe? x] [unsafe:transframe-symbol_old_news-set x y] [error `run-time `[safe:transframe-symbol_old_news-set type-check-failure]]]]
 
+[defunk safe:action-funk               [x]   [if [action? x] [unsafe:action-funk               x]   [error `run-time `[safe:action-funk               type-check-failure]]]]
+[defunk safe:action-funk-set           [x y] [if [action? x] [unsafe:action-funk-set           x y] [error `run-time `[safe:action-funk-set           type-check-failure]]]]
+[defunk safe:action-success_events     [x]   [if [action? x] [unsafe:action-success_events     x]   [error `run-time `[safe:action-success_events     type-check-failure]]]]
+[defunk safe:action-success_events-set [x y] [if [action? x] [unsafe:action-success_events-set x y] [error `run-time `[safe:action-success_events-set type-check-failure]]]]
+[defunk safe:action-failure_events     [x]   [if [action? x] [unsafe:action-failure_events     x]   [error `run-time `[safe:action-failure_events     type-check-failure]]]]
+[defunk safe:action-failure_events-set [x y] [if [action? x] [unsafe:action-failure_events-set x y] [error `run-time `[safe:action-failure_events-set type-check-failure]]]]
+
 [defunk safe:bug-type     [x]   [if [bug? x] [unsafe:bug-type     x]   [error `run-time `[safe:bug-type     type-check-failure]]]]
 [defunk safe:bug-type-set [x y] [if [bug? x] [unsafe:bug-type-set x y] [error `run-time `[safe:bug-type-set type-check-failure]]]]
 
@@ -703,6 +710,13 @@
 
 [defmetro transframe-symbol_old_news     [x]   `[,[if *compile-type-checking* `safe:transframe-symbol_old_news     `unsafe:transframe-symbol_old_news]     ,x]]
 [defmetro transframe-symbol_old_news-set [x y] `[,[if *compile-type-checking* `safe:transframe-symbol_old_news-set `unsafe:transframe-symbol_old_news-set] ,x ,y]]
+
+[defmetro action-funk               [x]   `[,[if *compile-type-checking* `safe:action-funk               `unsafe:action-funk]                ,x]]
+[defmetro action-funk-set           [x y] `[,[if *compile-type-checking* `safe:action-funk-set           `unsafe:action-funk-set]            ,x ,y]]
+[defmetro action-success_events     [x]   `[,[if *compile-type-checking* `safe:action-success_events     `unsafe:action-success_failure]     ,x]]
+[defmetro action-success_events-set [x y] `[,[if *compile-type-checking* `safe:action-success_events-set `unsafe:action-success_failure-set] ,x ,y]]
+[defmetro action-failure_events     [x]   `[,[if *compile-type-checking* `safe:action-failure_events     `unsafe:action-failure_failure]     ,x]]
+[defmetro action-failure_events-set [x y] `[,[if *compile-type-checking* `safe:action-failure_events-set `unsafe:action-failure_failure-set] ,x ,y]]
 
 [defmetro bug-type     [x]   `[,[if *compile-type-checking* `safe:bug-type     `unsafe:bug-type]     ,x]]
 [defmetro bug-type-set [x y] `[,[if *compile-type-checking* `safe:bug-type-set `unsafe:bug-type-set] ,x ,y]]

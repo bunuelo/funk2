@@ -21,9 +21,9 @@
 
 'This file contains functions defined in f2_trace.c, and exported as primfunks from primfunks.c'
 
-[globalize-funk unsafe:trace-remember-microseconds_since_1970     &primfunk:trace__remember__microseconds_since_1970]
-[globalize-funk unsafe:array-elt-remember-microseconds_since_1970 &primfunk:array__elt__remember__microseconds_since_1970]
-[globalize-funk unsafe:exp-remember-microseconds_since_1970       &primfunk:exp__remember__microseconds_since_1970]
-[globalize-funk unsafe:exp-remember-trans-microseconds_since_1970 &primfunk:exp__remember__trans__microseconds_since_1970]
-[globalize-funk unsafe:array-tracing_on-set                       &primfunk:array__tracing_on__set]
+[globalize-funk trace-remember-microseconds_since_1970     &primfunk:trace__remember__microseconds_since_1970]
+[globalize-funk array-elt-remember-microseconds_since_1970 &primfunk:array__elt__remember__microseconds_since_1970]
+[globalize-funk exp-remember-microseconds_since_1970       &primfunk:exp__remember__microseconds_since_1970]
+[globalize-funk exp-remember-trans-microseconds_since_1970 &primfunk:exp__remember__trans__microseconds_since_1970]
+[globalize-funk array-tracing_on-set                       &primfunk:array__tracing_on__set]
 

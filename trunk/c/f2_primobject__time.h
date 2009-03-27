@@ -40,6 +40,7 @@ defprimobject__static_slot__prototype(time__microseconds_since_1970);
 boolean_t raw__timep(f2ptr this, f2ptr cause);
 f2ptr      f2__timep(f2ptr this, f2ptr cause);
 
+f2ptr f2__time(f2ptr cause); // returns current time
 
 // **
 

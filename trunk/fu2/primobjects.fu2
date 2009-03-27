@@ -726,6 +726,10 @@
 [defmetro action-failure_events     [x]   `[,[if *compile-type-checking* `safe:action-failure_events     `unsafe:action-failure_failure]     ,x]]
 [defmetro action-failure_events-set [x y] `[,[if *compile-type-checking* `safe:action-failure_events-set `unsafe:action-failure_failure-set] ,x ,y]]
 
+[defmetro time-microseconds_since_1970     [x]   `[,[if *compile-type-checking* `safe:time-microseconds_since_1970     `unsafe:time-microseconds_since_1970]     ,x]]
+[defmetro time-microseconds_since_1970-set [x y] `[,[if *compile-type-checking* `safe:time-microseconds_since_1970-set `unsafe:time-microseconds_since_1970-set] ,x ,y]]
+
+
 [defmetro bug-type     [x]   `[,[if *compile-type-checking* `safe:bug-type     `unsafe:bug-type]     ,x]]
 [defmetro bug-type-set [x y] `[,[if *compile-type-checking* `safe:bug-type-set `unsafe:bug-type-set] ,x ,y]]
 

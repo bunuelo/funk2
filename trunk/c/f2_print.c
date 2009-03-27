@@ -984,6 +984,11 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("end_time",    15, cause, stream, f2action_event__end_time(exp, cause), f2action_event__end_time__tracing_on(exp, cause), f2action_event__end_time__trace(exp, cause), f2action_event__end_time__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html); width += subexp_size[0]; height += subexp_size[1];}
+	  } else if (f2primobject__is__time(exp, cause)) {
+	    int subexp_size[2];
+	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+	    {f2__write_pretty__slot_key_and_value("microseconds_since_1970",    15, cause, stream, f2time__microseconds_since_1970(exp, cause), f2time__microseconds_since_1970__tracing_on(exp, cause), f2time__microseconds_since_1970__trace(exp, cause), f2time__microseconds_since_1970__imagination_frame(exp, cause),
+						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html); width += subexp_size[0]; height += subexp_size[1];}
 	  } else {
 	    array_is_not_known_primobject = 1; // we print unknown primobjects in the same format of basic arrays
 	  }

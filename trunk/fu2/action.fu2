@@ -45,3 +45,6 @@
   [let [[funkable [action-funk this]]]
     `[action ,[funkable-name funkable] ,[funkable-args funkable]]]]
 
+[defunk action_event-brief [this]
+  this]
+

@@ -19,13 +19,12 @@
  rights to redistribute these changes.
 '
 
-[defunk remember [exp date]
-  [let [[microseconds_since_1970 [date-to_microseconds_since_1970 date]]]
-    [exp-remember-microseconds_since_1970 exp microseconds_since_1970]]]
+[defunk remember [exp time]
+  [exp-remember-microseconds_since_1970 exp [time-microseconds_since_1970 time]]]
 
-[defunk remember-trans [exp initial_date final_date]
-  [let [[initial_microseconds [date-to_microseconds_since_1970 initial_date]]
-	[final_microseconds   [date-to_microseconds_since_1970 final_date]]]
+[defunk remember-trans [exp initial_time final_time]
+  [let [[initial_microseconds [time-microseconds_since_1970 initial_time]]
+	[final_microseconds   [time-microseconds_since_1970 final_time]]]
     [exp-remember-trans-microseconds_since_1970 exp initial_microseconds final_microseconds]]]
 
 [defunk tracing_on-set [exp value]

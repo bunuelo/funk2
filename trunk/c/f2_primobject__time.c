@@ -30,7 +30,7 @@ f2ptr __time__symbol = -1;
 f2ptr f2time__new(f2ptr cause, f2ptr microseconds_since_1970) {
   if (__time__symbol == -1) {__time__symbol = f2symbol__new(cause, strlen("time"), (u8*)"time");}
   f2ptr this = f2__primobject__new(cause, __time__symbol, 1, nil);
-  f2time__microseconds_since_1970__set( this, cause, microseconds_since_1970);
+  f2time__microseconds_since_1970__set(this, cause, microseconds_since_1970);
   return this;
 }
 

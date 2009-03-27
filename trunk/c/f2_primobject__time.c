@@ -37,6 +37,11 @@ f2ptr f2time__new(f2ptr cause, f2ptr microseconds_since_1970) {
 boolean_t raw__timep(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__time(this, cause));}
 f2ptr f2__timep(f2ptr this, f2ptr cause) {return f2bool__new(raw__timep(this, cause));}
 
+// returns a new time object that represents the time of the call.
+f2ptr f2__time(f2ptr cause) {
+  return f2time__new(cause, f2__system_microseconds_since_1970(cause));
+}
+def_pcfunk0(time, return f2__time(this_cause));
 
 // **
 
@@ -52,6 +57,8 @@ void f2__primobject__time__initialize() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   environment__add_var_value(cause, global_environment(), __time__symbol, nil);
+  
+  f2__primcfunk__init__0(time);
   
   resume_gc();
   try_gc();

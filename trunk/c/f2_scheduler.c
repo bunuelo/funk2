@@ -234,7 +234,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     if(need_to_launch_larva_handling_critic_thread) {
       f2ptr critics = f2thread__critics(thread, cause);
       if (critics) {
-	f2__thread_serial(cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
+	f2__thread_serial(f2thread__cause_reg(thread, cause), thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
       } else {
 	status("larva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
 	f2ptr larva = f2thread__value(thread, cause);

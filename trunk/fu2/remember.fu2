@@ -19,6 +19,9 @@
  rights to redistribute these changes.
 '
 
+[defunk memory_tracing [value]
+  [cause-memory_tracing_on-set [this-cause] value]]
+
 [defunk remember [exp time]
   [exp-remember-microseconds_since_1970 exp [time-microseconds_since_1970 time]]]
 

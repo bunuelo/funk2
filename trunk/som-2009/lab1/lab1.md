@@ -166,7 +166,7 @@ Experiment with blocks world.  Find a command that fails to perform your action,
 
 ## Reactive Agents
 
-A **reactive agent** observes the world but only needs to represent the world's state enough to determine which action it should do next. \marginpar[right]{See \href{http://web.media.mit.edu/~minsky/eb5.html}{\S5.1 and \S5.2} of \emph{The Emotion Machine} for an explanation of `instinctive' versus `learned' reactive agents.}  The most basic type of reaction is *instinctive*, an inborn rule that tells the agent how to act in a situation.  You can think if *act* generally, not just limited to external observable behaviors, but also including cognitive changes--turn on a planner, increase adrenaline production, etc.  
+A **reactive agent** observes the world but only needs to represent the world's state enough to determine which action it should do next. \marginpar[right]{See \href{http://web.media.mit.edu/~minsky/eb5.html}{\S5.1 and \S5.2} of \emph{The Emotion Machine} for an explanation of `instinctive' versus `learned' reactive agents.}  The most basic type of reaction is *instinctive*, an inborn rule that tells the agent how to act in a situation.  You can think of *act* generally, not just limited to external observable behaviors, but also including cognitive changes--turn on a planner, increase adrenaline production, etc.  
 
 These rules can be represented in terms of \textsc{If-Do} control rules.  When the antecedent (the expression contained after the \textsc{If}) matches its precepts, then a specific action is performed.  In order to solve more difficult problems, we need our agent to be able to predict its environment. It must still detect action preconditions and select actions but now *also* predict the outcomes of these actions using \textsc{If-Do-Then} rules. 
 
@@ -326,7 +326,7 @@ A predicate's *terms* can either be functors or variables.  **Functor symbols**,
 
 Variables, usually denoted with capital letters, specify an undefined constant that can be queried: \pred{on}{blue-block}{X}, and an inference engine should return false or one or more substitutions like \textsf{X}/\textsf{table}.  A term with no variables is called a *ground atom*.
 
-Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own category using combinations of properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule to only applies to blocks.} of a set:
+Terms can be joined together using the same Boolean connectives that are used in propositional logic, but in addition, FOL provides the ability to quantify variables.  These two operators, called the **existential quantifiers**, are $\forall$ "for all" and $\exists$ "there exists". With these, we can write formulas that make claims about *some* members or *all* members\footnote{Or we can define our own category using combinations of properties of variables, as we do by enforcing the \texttt{block/1} property in Equation 2, so the rule only applies to blocks.} of a set:
 
 \begin{equation}
 \forall \textsf{X}\ \prop{block}{X}\ \land \pred{on}{X}{gripper} \rightarrow \prop{inGripper}{X} \\
@@ -386,7 +386,7 @@ Do Bruner's results generalize to all concepts?  This work is criticized for ass
 
 ## Inheritance and the Representation-Inference Trade-Off
 
-In the late 1960s, Ross Quillian developed a taxonomic semantic network, a hierarchical model of human memory.  His computer program would efficiently organize knowledge using the idea of *inheritance*: properties can be stored at one location -- their most general categories, and then 'inherited' to their more specific category members by an inference process when needed.  For example, the property \prop{canFly}{.} would only be located at \textsf{birds}, and then be *deduced* to the members of the category when needed:  Does a robin fly?  \prop{canFly}{bird} $\land$ \pred{isA}{robin}{bird} $\rightarrow$ \prop{canFly}{robin}. 
+In the late 1960s, Ross Quillian developed a taxonomic semantic network, a hierarchical model of human memory.  His computer program efficiently organized knowledge using the idea of *inheritance*: properties can be stored at one location -- their most general categories, and then are 'inherited' to their more specific category members by an inference process when needed.  For example, the property \prop{canFly}{.} would only be located at \textsf{birds}, and then be *deduced* to the members of the category when needed:  Does a robin fly?  \prop{canFly}{bird} $\land$ \pred{isA}{robin}{bird} $\rightarrow$ \prop{canFly}{robin}. 
 
 Qulllian's taxonomic model of semantic memory explained many experimental findings.  For example, people take longer to answer questions like "Does a robin have a spine?" than they do with questions that rely on local features like "Does a robin fly?".   In addition, people were faster at accessing words when they had been primed with a semantically similar word.
 

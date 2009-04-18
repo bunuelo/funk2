@@ -547,19 +547,21 @@ void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
 
 // transframe
 
-defprimobject__static_slot(transframe__symbol_old_news, 0);
+defprimobject__static_slot(transframe__microseconds_since_1970, 0);
+defprimobject__static_slot(transframe__symbol_old_news,         1);
 
 f2ptr __transframe__symbol = -1;
 
-f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr symbol_old_news, int trace_depth) {
+f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news, int trace_depth) {
   release__assert(__transframe__symbol != -1, nil, "f2transframe__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new__trace_depth(cause, __transframe__symbol, 1, nil, trace_depth);
-  f2transframe__symbol_old_news__set__trace_depth( this, cause, symbol_old_news, trace_depth);
+  f2transframe__microseconds_since_1970__set__trace_depth(this, cause, microseconds_since_1970, trace_depth);
+  f2transframe__symbol_old_news__set__trace_depth(        this, cause, symbol_old_news,         trace_depth);
   return this;
 }
 
-f2ptr f2transframe__new(f2ptr cause, f2ptr symbol_old_news) {
-  return f2transframe__new__trace_depth(cause, symbol_old_news, 1);
+f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news) {
+  return f2transframe__new__trace_depth(cause, microseconds_since_1970, symbol_old_news, 1);
 }
 
 

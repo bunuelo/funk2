@@ -879,18 +879,27 @@ void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 // transframe
 
 extern f2ptr __transframe__symbol;
-extern f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr symbol_old_news, int trace_depth);
-extern f2ptr f2transframe__new(f2ptr cause, f2ptr symbol_old_news);
+f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news, int trace_depth);
+f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news);
 #define f2primobject__is_transframe(this, cause) raw__eq(cause, f2primobject__type(this, cause), __transframe__symbol)
+
+defprimobject__static_slot__prototype(transframe__microseconds_since_1970);
+#define f2transframe__microseconds_since_1970(                   this, cause)                     primobject__static_slot__accessor(         this, transframe__microseconds_since_1970, cause)
+#define f2transframe__microseconds_since_1970__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, transframe__microseconds_since_1970, cause, value, trace_depth)
+#define f2transframe__microseconds_since_1970__set(              this, cause, value)              primobject__static_slot__set(              this, transframe__microseconds_since_1970, cause, value)
+#define f2transframe__microseconds_since_1970__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, transframe__microseconds_since_1970, cause)
+#define f2transframe__microseconds_since_1970__trace(            this, cause)                     primobject__static_slot__trace(            this, transframe__microseconds_since_1970, cause)
+#define f2transframe__microseconds_since_1970__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__microseconds_since_1970, cause)
 
 // symbol_old_news is a list of 3-element arrays, e.g. [(symbol-1 old-1 new-1) (symbol-2 old-2 new-2) . . .]
 defprimobject__static_slot__prototype(transframe__symbol_old_news);
-#define f2transframe__symbol_old_news(                  this, cause)                     primobject__static_slot__accessor(        this, transframe__symbol_old_news, cause)
-#define f2transframe__symbol_old_news__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, transframe__symbol_old_news, cause, value, trace_depth)
-#define f2transframe__symbol_old_news__set(             this, cause, value)              primobject__static_slot__set(             this, transframe__symbol_old_news, cause, value)
-#define f2transframe__symbol_old_news__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, transframe__symbol_old_news, cause)
-#define f2transframe__symbol_old_news__trace(           this, cause)                     primobject__static_slot__trace(           this, transframe__symbol_old_news, cause)
-#define f2transframe__symbol_old_news__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, transframe__symbol_old_news, cause)
+#define f2transframe__symbol_old_news(                   this, cause)                     primobject__static_slot__accessor(         this, transframe__symbol_old_news, cause)
+#define f2transframe__symbol_old_news__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, transframe__symbol_old_news, cause, value, trace_depth)
+#define f2transframe__symbol_old_news__set(              this, cause, value)              primobject__static_slot__set(              this, transframe__symbol_old_news, cause, value)
+#define f2transframe__symbol_old_news__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, transframe__symbol_old_news, cause)
+#define f2transframe__symbol_old_news__trace(            this, cause)                     primobject__static_slot__trace(            this, transframe__symbol_old_news, cause)
+#define f2transframe__symbol_old_news__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__symbol_old_news, cause)
+
 
 // bug
 
@@ -899,11 +908,11 @@ extern f2ptr f2bug__new(f2ptr cause, f2ptr type);
 #define f2primobject__is_bug(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bug__symbol)
 
 defprimobject__static_slot__prototype(bug__type);
-#define f2bug__type(            this, cause)        primobject__static_slot__accessor(  this, bug__type, cause)
-#define f2bug__type__set(       this, cause, value) primobject__static_slot__set(       this, bug__type, cause, value)
-#define f2bug__type__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, bug__type, cause)
-#define f2bug__type__trace(     this, cause)        primobject__static_slot__trace(     this, bug__type, cause)
-#define f2bug__type__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, bug__type, cause)
+#define f2bug__type(                   this, cause)        primobject__static_slot__accessor(         this, bug__type, cause)
+#define f2bug__type__set(              this, cause, value) primobject__static_slot__set(              this, bug__type, cause, value)
+#define f2bug__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bug__type, cause)
+#define f2bug__type__trace(            this, cause)        primobject__static_slot__trace(            this, bug__type, cause)
+#define f2bug__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bug__type, cause)
 
 
 // size_2d

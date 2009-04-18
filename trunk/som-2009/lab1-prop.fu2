@@ -8,6 +8,8 @@
 [defunk propositional_agent-sense [blocks_world]
   [blocks_world-generate_perceptions blocks_world]]
 
+[propositional_agent-plan [quote [[on a b] [on b d]]]
+
 [defunk propositional_agent-plan [perceptions]
   [if [member? [quote [on the-yellow-block the-red-block]] perceptions]
       [quote [prog [move-to the-yellow-block]

@@ -119,7 +119,7 @@ f2ptr raw__exp__remember__microseconds_since_1970(f2ptr cause, f2ptr exp, u64 mi
     int this__length = f2traced_array__length(exp, cause);
     int i;
     f2ptr new_array = raw__array__new(cause, this__length);
-    for (i = this__length - 1; i != 0; i --) {
+    for (i = 0; i < this__length; i --) {
       raw__array__elt__set(cause, new_array, i, raw__array__elt__remember__microseconds_since_1970(cause, exp, i, microseconds_since_1970));
     }
     return new_array;

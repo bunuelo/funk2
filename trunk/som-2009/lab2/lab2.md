@@ -26,11 +26,11 @@ resolve one of these goal conflicts.
 
  **example)** You want to study for a test, and you are tired.  Conjure a memory of failing the test to elicit a Fearful state or Imagine a competition between another colleague to obtain Anger, thereby releasing adrenaline to suppress Sleep.
 
- **a)** You are on a diet, and want to eat Double Fudge ice cream.
+ **a)** You are on a diet, and want to eat double fudge ice cream.
 
  **b)** You want a good grade, and you are bored in class.
 
- **c)** You want to yell at a police officer, and not be arrested.
+ **c)** You want to yell at a police officer and not be arrested.
 
 
 # Unpacking Selves #
@@ -78,23 +78,17 @@ People communicate efficiently by assuming shared context and background world k
   - **Hair:** Facial hair? Underarm hair? No, hair on their heads!  
   - **Long:** How long is long? Longer than what? Presumably, the hair on the heads of adult male humans. 
 
-One problem with this sentence is that it is *under-speciﬁed*; the sentence assumes 
-a shared-context to parse its intended meaning. If we fully expanded the context, we would have something like "adult female humans have longer hair on their heads than adult male humans in America on planet Earth in the later 20th century." 
+One problem with this sentence is that it is *under-specified*; the sentence assumes 
+a shared-context to parse its intended meaning. If we fully expanded the context, we would have something like *adult female humans have longer hair on their heads than adult male humans in America on planet Earth in the later 20th century.* 
 
 \question Pick five assertions from the first 500 entires in OMCS and expand the context in a similar way as the above example.    \url{http://web.media.mit.edu/~dustin/6.868/omcs-h500.txt}.
 
 
-
 # Model-6 critic-selectors
 
-On pg. 229-230, Minsky lists examples of critics and selectors for
-the top 4 layers (deliberative, reflective, self-reflective, and
-self-conscious).  For example, in the deliberative layer, "An
-action did not achieve the expected effect" is a critic, while
-"Find a better way to predict" is a selector that this critic
-activates.
+On pg. 229-230, Minsky lists examples of critics and selectors for the top 4 layers (deliberative, reflective, self-reflective, and self-conscious).  For example, in the deliberative layer, "An action did not achieve the expected effect" is a critic, while "Find a better way to predict" is a selector that this critic activates.
 
-\question For each of these four layers, list two additional critic-selector pairs.
+\question For each of these four layers, come up with two additional critic-selector pairs.
 
 
 

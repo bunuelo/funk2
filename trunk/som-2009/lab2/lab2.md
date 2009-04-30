@@ -74,7 +74,7 @@ which would make the assertion false.
 
 People communicate efficiently by assuming shared context and background world knowledge to compress the verbal messages we impart. Take for example the commonsense assertion: “females have long hair.” A lot of details are left implicit: 
 
-  - **Females:** What kind of females? Zebras, ducks and boats? No, human females.  Babies? No, adult human females. At MIT? In Soviet Russia? 
+  - **Females:** What kind of females? Zebras, ducks and boats? No, human females.  Babies? No, adult human females. At MIT? In the US Army? 
   - **Hair:** Facial hair? Underarm hair? No, hair on their heads!  
   - **Long:** How long is long? Longer than what? Presumably, the hair on the heads of adult male humans. 
 

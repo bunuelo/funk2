@@ -163,7 +163,7 @@ f2ptr raw__exp__remember__trans__microseconds_since_1970(f2ptr cause, f2ptr exp,
 	symbol_old_news = f2cons__new(cause, symbol_old_new, symbol_old_news);
       }
     }
-    return f2transframe__new(cause, symbol_old_news);
+    return f2transframe__new(cause, f2integer__new(cause, initial_microseconds), symbol_old_news);
   } break;
   }
   error(nil, "raw__exp__remember__microseconds_since_1970 error: shouldn't get here.");

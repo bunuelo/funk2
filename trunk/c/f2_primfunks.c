@@ -1589,27 +1589,6 @@ def_pcfunk0(repl, return f2integer__new(this_cause, f2__repl(this_cause, simple_
 def_pcfunk2(tensor__new_from_array_of_integer_dimensions, dimensions, fill_element, return f2__tensor__new_from_array_of_integer_dimensions(this_cause, dimensions, fill_element));
 def_pcfunk2(tensor__elt_from_array_of_integer_indices,    this, indices,            return f2tensor__elt_from_array_of_integer_indices(this, indices, this_cause));
 
-// f2_trace.c funktions
-
-def_pcfunk3(trace__remember__microseconds_since_1970, this, microseconds_since_1970, remember_value__place,
-	    f2ptr remember_value;
-	    f2ptr trace_iter = raw__trace__remember__microseconds_since_1970( this_cause, this, f2integer__i(microseconds_since_1970, this_cause), &remember_value);
-	    f2place__thing__set(remember_value__place, this_cause, remember_value);
-	    return trace_iter);
-
-def_pcfunk3(array__elt__remember__microseconds_since_1970, this, index, microseconds_since_1970,
-	    return raw__array__elt__remember__microseconds_since_1970( this_cause, this, f2integer__i(index, this_cause), f2integer__i(microseconds_since_1970, this_cause)));
-
-def_pcfunk2(exp__remember__microseconds_since_1970, exp, microseconds_since_1970,
-	    return raw__exp__remember__microseconds_since_1970( this_cause, exp, f2integer__i(microseconds_since_1970, this_cause)));
-
-def_pcfunk3(exp__remember__trans__microseconds_since_1970, exp, initial_microseconds, final_microseconds,
-	    return raw__exp__remember__trans__microseconds_since_1970( this_cause, exp, f2integer__i(initial_microseconds, this_cause), f2integer__i(final_microseconds, this_cause)));
-
-def_pcfunk2(array__tracing_on__set, this, tracing_on,
-	    raw__array__tracing_on__set(this_cause, this, tracing_on != nil);
-	    return nil);
-
 def_pcfunk0(system__peer_command_server__port_num,
 	    return f2integer__new(this_cause, __funk2.command_line.peer_command_server__port_num));
 
@@ -2401,13 +2380,6 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init(tensor__new_from_array_of_integer_dimensions);
   f2__primcfunk__init(tensor__elt_from_array_of_integer_indices);
-  
-  // f2_trace.c funktions
-  f2__primcfunk__init(trace__remember__microseconds_since_1970);
-  f2__primcfunk__init(array__elt__remember__microseconds_since_1970);
-  f2__primcfunk__init(exp__remember__microseconds_since_1970);
-  f2__primcfunk__init(exp__remember__trans__microseconds_since_1970);
-  f2__primcfunk__init(array__tracing_on__set);
   
   f2__primcfunk__init(funk2_node_handler__know_of_node);
   f2__primcfunk__init__4(send_request_register_peer, computer_id, node_id, ip_addr, port_num);

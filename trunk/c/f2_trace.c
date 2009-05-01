@@ -30,6 +30,8 @@ void raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on) 
   }
 }
 
+f2ptr __do_not_remember__symbol;
+
 // beginning of fast initialization
 
 void f2__trace__reinitialize_globalvars() {

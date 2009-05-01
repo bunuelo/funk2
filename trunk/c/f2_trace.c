@@ -30,7 +30,7 @@ void raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on) 
   }
 }
 
-f2ptr __do_not_remember__symbol;
+f2ptr __do_not_remember__symbol = -1;
 
 // beginning of fast initialization
 

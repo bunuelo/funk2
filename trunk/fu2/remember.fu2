@@ -22,34 +22,3 @@
 [defunk memory_tracing [value]
   [cause-memory_tracing_on-set [this-cause] value]]
 
-[defunk remember [exp time]
-  [exp-remember-microseconds_since_1970 exp [time-microseconds_since_1970 time]]]
-
-[defunk remember-trans [exp initial_time final_time]
-  [let [[initial_microseconds [time-microseconds_since_1970 initial_time]]
-	[final_microseconds   [time-microseconds_since_1970 final_time]]]
-    [exp-remember-trans-microseconds_since_1970 exp initial_microseconds final_microseconds]]]
-
-[defunk tracing_on-set [exp value]
-  [cond [[null   exp] []]
-	[[array? exp] [array-tracing_on-set exp value]]
-	[t            []]]]
-
-`[
-
-[let [[a [array 1 2 3 4]]]
-  [tracing_on-set a t]
-  [let [[d0 [system_date]]]
-    [array-elt-set a 2 10]
-    [let [[d1 [system_date]]]
-      [array-elt-set a 2 20]
-      [let [[d2 [system_date]]]
-	[list [remember-trans a d0 d1]
-	      [remember-trans a d1 d2]
-	      [remember-trans a d2 d0]
-	      [remember-trans a d2 d1]
-	      [remember-trans a d1 d0]
-	      ]]]]]
-
-]
-

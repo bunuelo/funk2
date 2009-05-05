@@ -768,7 +768,7 @@ f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr 
 				   nil);
   
   f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
-  f2thread__funk(new_thread, cause, cfunkable, args);
+  f2thread__funk(new_thread, cause, execution_cause, cfunkable, args);
   
   f2__global_scheduler__add_thread_parallel(cause, new_thread);
   resume_gc();
@@ -798,7 +798,7 @@ f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread,
 				   nil);
   
   f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
-  f2thread__funk(new_thread, cause, cfunkable, args);
+  f2thread__funk(new_thread, cause, execution_cause, cfunkable, args);
   
   f2__global_scheduler__add_thread_serial(cause, new_thread);
   resume_gc();
@@ -1750,16 +1750,6 @@ f2ptr f2__subscribe(f2ptr cause, f2ptr thread, f2ptr event_types, f2ptr funkable
   return nil;
 }
 def_pcfunk2(subscribe, event_type, funkable, return f2__subscribe(this_cause, simple_thread, event_type, funkable));
-
-f2ptr f2__thread__new_with_imaginary_cause(f2ptr cause, f2ptr imagination_name, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_cause = f2__cause__new_imaginary(cause, imagination_name);
-  
-  return new_thread;
-}
-def_pcfunk2(thread, funk, args, return f2__thread(this_cause, simple_thread, simple_env, funk, args));
-
-}
-def_pcfunk2(thread__subversion_cause, thread, name, return f2__thread__subversion_cause(this_cause, thread, name));
 
 f2ptr f2__first(f2ptr cause, f2ptr exp) {
   if (raw__consp(exp, cause)) {

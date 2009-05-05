@@ -536,13 +536,13 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
     bytecode_tracing_on = f2cause__bytecode_tracing_on(cause, cause);
     memory_tracing_on   = f2cause__memory_tracing_on(cause, cause);
     subscribers         = f2cause__subscribers(cause, cause);
-    imagination_stack   = f2cause__imagination_name(cause, cause);
+    imagination_stack   = f2cause__imagination_stack(cause, cause);
   }
   return f2__cause__new(cause,
 			bytecode_tracing_on,
 			memory_tracing_on,
 			subscribers,
-			imagination_name,
+			imagination_stack,
 			nil,  // event_buffer_first
 			nil,  // event_buffer_last
 			nil); // current_events

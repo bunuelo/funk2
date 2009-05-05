@@ -550,7 +550,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
 
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause);
-  f2cause__imagination_stack__set(cause, new_cause, f2cons__new(imagination_name, f2cause__imagination_stack(cause, new_cause)));
+  f2cause__imagination_stack__set(cause, new_cause, f2cons__new(cause, imagination_name, f2cause__imagination_stack(cause, new_cause)));
   return new_cause;
 }
 

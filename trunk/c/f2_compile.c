@@ -921,7 +921,7 @@ f2ptr raw__apply_metro(f2ptr simple_cause, f2ptr thread, f2ptr metro, f2ptr args
 #endif // DEBUG_COMPILE
   
   //printf ("\nThread 0x%X creating child compile thread.", (uint)thread); fflush(stdout);
-  f2ptr new_thread = f2__thread_serial(cause, thread, f2thread__env(thread, cause), metro, args);
+  f2ptr new_thread = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), metro, args);
   
   //f2thread__keep_undead__set(new_thread, cause, __true__symbol);
   //printf ("\nCompile thread created: 0x%X", (uint)new_thread); fflush(stdout);
@@ -951,7 +951,7 @@ f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr thread, f2ptr funk, f2ptr args) 
 #endif // DEBUG_COMPILE
   
   //printf ("\nThread 0x%X creating child compile thread.", (uint)thread); fflush(stdout);
-  f2ptr new_thread = f2__thread_serial(cause, thread, f2thread__env(thread, cause), funk, args);
+  f2ptr new_thread = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), funk, args);
   
   //f2thread__keep_undead__set(new_thread, cause, __true__symbol);
   //printf ("\nCompile thread created: 0x%X", (uint)new_thread); fflush(stdout);

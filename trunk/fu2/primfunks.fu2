@@ -323,7 +323,7 @@
 [globalize-funk event_subscriber                            &primfunk:event_subscriber]
 [globalize-funk subscribe                                   &primfunk:subscribe]
 
-[globalize-funk thread-subversion_cause                     &primfunk:thread__subversion_cause]
+`[globalize-funk thread-subversion_cause                     &primfunk:thread__subversion_cause]
 
 [globalize-funk first                                       &primfunk:first]
 [globalize-funk first-set                                   &primfunk:first__set]

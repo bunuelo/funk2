@@ -812,7 +812,7 @@ f2ptr f2__thread__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_thre
   resume_gc();
   return new_thread;
 }
-def_pcfunk2(thread__imagine, imagination_name, funk, args, return f2__thread(this_cause, imagination_name, simple_thread, simple_env, funk, args));
+def_pcfunk3(thread__imagine, imagination_name, funk, args, return f2__thread(this_cause, imagination_name, simple_thread, simple_env, funk, args));
 
 // sequence (array, list, doublelist, etc.)
 

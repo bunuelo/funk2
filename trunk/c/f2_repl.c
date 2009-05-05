@@ -25,7 +25,7 @@ int f2__repl(f2ptr cause, f2ptr thread) {
   printf("\nfunk2 warning: garbage collection is disabled in this repl.");
   f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil);
   f2ptr repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
-  f2ptr repl_thread   = f2__thread_serial(cause, thread, f2thread__env(thread, cause), repl_funk, nil);
+  f2ptr repl_thread   = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), repl_funk, nil);
   while (1) {
 
     printf ("\nF-In-> "); fflush(stdout);
@@ -42,7 +42,7 @@ int f2__repl(f2ptr cause, f2ptr thread) {
 	f2thread__value__set(thread, cause, repl_funk_bcs);
       } else {
 	f2thread__program_counter__set(repl_thread, cause, nil);
-	f2thread__force_funk(repl_thread, cause, repl_funk, nil);
+	f2thread__force_funk(repl_thread, cause, cause, repl_funk, nil);
       }
       
       resume_gc();

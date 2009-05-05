@@ -43,7 +43,7 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
   
   f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil);
   f2ptr load_funk_bcs = f2__compile__funk(cause, thread, load_funk);
-  f2ptr load_thread   = f2__thread_serial(cause, thread, f2thread__env(thread, cause), load_funk, nil);
+  f2ptr load_thread   = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), load_funk, nil);
   f2ptr read_exp      = nil;
   
   while (read_exp != __end_of_file_exception) {
@@ -65,7 +65,7 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 	  f2thread__value__set(thread, cause, load_funk_bcs);
 	} else {
 	  f2thread__program_counter__set(load_thread, cause, nil);
-	  f2thread__force_funk(load_thread, cause, load_funk, nil);
+	  f2thread__force_funk(load_thread, cause, cause, load_funk, nil);
 	}
 	
 	resume_gc();

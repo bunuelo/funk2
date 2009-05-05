@@ -805,6 +805,15 @@ f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread,
   return new_thread;
 }
 
+f2ptr f2__thread__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  pause_gc();
+  f2ptr imaginary_cause = f2__cause__new_imaginary(cause, imagination_name);
+  f2ptr new_thread = f2__thread(cause, imaginary_cause, parent_thread, parent_env, cfunkable, args);
+  resume_gc();
+  return new_thread;
+}
+def_pcfunk2(thread__imagine, imagination_name, funk, args, return f2__thread(this_cause, imagination_name, simple_thread, simple_env, funk, args));
+
 // sequence (array, list, doublelist, etc.)
 
 u64 raw__length(f2ptr cause, f2ptr seq) {
@@ -2171,6 +2180,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(make_funk);
   f2__primcfunk__init(make_metro);
   f2__primcfunk__init(thread);
+  f2__primcfunk__init(thread__imagine);
   
   f2__primcfunk__init__1(           length,                     seq);
   f2__funktional_primcfunk__init__2(integer__greater_than,      x, y);
@@ -2377,8 +2387,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(publish_event);
   f2__primcfunk__init(event_subscriber);
   f2__primcfunk__init(subscribe);
-  
-  //f2__primcfunk__init(thread__subversion_cause);
   
   f2__funktional_primcfunk__init(first);
   f2__funktional_primcfunk__init(first__set);

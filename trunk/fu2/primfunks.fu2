@@ -119,6 +119,7 @@
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]
 [globalize-funk thread                                      &primfunk:thread]
+[globalize-funk thread-imagine                              &primfunk:thread__imagine]
 
 [globalize-funk length                                      &primfunk:length]
 [globalize-funk unsafe:integer-greater_than                 &primfunk:integer__greater_than]

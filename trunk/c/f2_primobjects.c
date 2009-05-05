@@ -527,6 +527,33 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracin
   return f2cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 }
 
+f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
+  f2ptr bytecode_tracing_on = nil;
+  f2ptr memory_tracing_on   = nil;
+  f2ptr subscribers         = nil;
+  f2ptr imagination_stack   = nil;
+  if (cause) {
+    bytecode_tracing_on = f2cause__bytecode_tracing_on(cause, cause);
+    memory_tracing_on   = f2cause__memory_tracing_on(cause, cause);
+    subscribers         = f2cause__subscribers(cause, cause);
+    imagination_stack   = f2cause__imagination_name(cause, cause);
+  }
+  return f2__cause__new(cause,
+			bytecode_tracing_on,
+			memory_tracing_on,
+			subscribers,
+			imagination_name,
+			nil,  // event_buffer_first
+			nil,  // event_buffer_last
+			nil); // current_events
+}
+
+f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
+  f2ptr new_cause = f2__cause__new_with_inherited_properties(cause);
+  f2cause__imagination_stack__set(cause, new_cause, f2cons__new(imagination_name, f2cause__imagination_stack(cause, new_cause)));
+  return new_cause;
+}
+
 f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
   if (this && (! raw__causep(this, cause))) {
     return f2larva__new(cause, 1);

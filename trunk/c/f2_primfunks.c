@@ -682,7 +682,7 @@ def_pcfunk2(hashtable__lookup_value,         this, key,        return f2__hashta
 
 // primobject thread
 
-void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
+void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   f2ptr env;
   if      (raw__funkp(cfunkable, cause))       {env = f2funk__env(cfunkable, cause);}
@@ -691,6 +691,7 @@ void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args
   else if (raw__metrocfunkp(cfunkable, cause)) {env = f2thread__env(thread, cause);}
   else                                         {error(nil, "f2thread__force_funk error: cfunkable must be funk or metro.");}
   
+  f2thread__cause_reg__set(thread, cause, execution_cause);
   f2thread__env__set(thread, cause, env);
   f2thread__args__set(thread, cause, args);
   f2thread__value__set(thread, cause, cfunkable);
@@ -721,9 +722,10 @@ void debug__f2thread__funk__unfunkable_error() {
   status("debug__f2thread__funk__unfunkable_error here.");
 }
 
-void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
+void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   
+  f2thread__cause_reg__set(      thread, cause, execution_cause);
   f2thread__args__set(           thread, cause, args);
   f2thread__value__set(          thread, cause, cfunkable);
   f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause));
@@ -744,7 +746,7 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   resume_gc();
 }
 
-f2ptr f2__thread(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   f2ptr new_thread = f2thread__new(cause,
 				   nil,
@@ -756,7 +758,7 @@ f2ptr f2__thread(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunk
 				   nil,
 				   nil,
 				   nil,
-				   cause,
+				   execution_cause,
 				   __funk2.globalenv.true__symbol,
 				   nil,
 				   parent_thread,
@@ -772,9 +774,9 @@ f2ptr f2__thread(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunk
   resume_gc();
   return new_thread;
 }
-def_pcfunk2(thread, funk, args, return f2__thread(this_cause, simple_thread, simple_env, funk, args));
+def_pcfunk2(thread, funk, args, return f2__thread(this_cause, this_cause, simple_thread, simple_env, funk, args));
 
-f2ptr f2__thread_serial(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   f2ptr new_thread = f2thread__new(cause,
 				   nil,
@@ -786,7 +788,7 @@ f2ptr f2__thread_serial(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2pt
 				   nil,
 				   nil,
 				   nil,
-				   cause,
+				   execution_cause,
 				   __funk2.globalenv.true__symbol,
 				   nil,
 				   parent_thread,
@@ -1749,20 +1751,13 @@ f2ptr f2__subscribe(f2ptr cause, f2ptr thread, f2ptr event_types, f2ptr funkable
 }
 def_pcfunk2(subscribe, event_type, funkable, return f2__subscribe(this_cause, simple_thread, event_type, funkable));
 
-f2ptr f2__thread__subversion_cause(f2ptr cause, f2ptr thread, f2ptr name) {
-  f2ptr bytecode_tracing_on   = nil;
-  f2ptr memory_tracing_on     = nil;
-  f2ptr subscribers           = nil;
-  f2ptr old_imagination_stack = nil;
-  if (cause) {
-    bytecode_tracing_on   = f2cause__bytecode_tracing_on(cause, cause);
-    memory_tracing_on     = f2cause__memory_tracing_on(cause, cause);
-    subscribers           = f2cause__subscribers(cause, cause);
-    old_imagination_stack = f2cause__imagination_stack(cause, cause);
-  }
-  f2ptr new_cause = f2__cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers, f2cons__new(cause, name, old_imagination_stack), nil, nil, nil);
-  f2thread__cause_reg__set(thread, cause, new_cause);
-  return new_cause;
+f2ptr f2__thread__new_with_imaginary_cause(f2ptr cause, f2ptr imagination_name, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  f2ptr new_cause = f2__cause__new_imaginary(cause, imagination_name);
+  
+  return new_thread;
+}
+def_pcfunk2(thread, funk, args, return f2__thread(this_cause, simple_thread, simple_env, funk, args));
+
 }
 def_pcfunk2(thread__subversion_cause, thread, name, return f2__thread__subversion_cause(this_cause, thread, name));
 

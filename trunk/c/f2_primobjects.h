@@ -805,6 +805,8 @@ defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
 f2ptr __cause__symbol;
 f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr bmemory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
 f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
+f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
+f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
 
 #define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
 

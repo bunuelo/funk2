@@ -878,10 +878,10 @@ boolean_t raw__thought_processp(f2ptr x, f2ptr cause);
 
 // primobject thread
 
-void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args);
-void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args);
-f2ptr f2__thread(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
-f2ptr f2__thread_serial(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
+void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args);
+void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args);
+f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
+f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 
 // sequence (array, list, doublelist, etc.)
 

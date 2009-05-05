@@ -181,6 +181,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // start a thread executing the user read-eval-print loop
       f2__thread(cause,
+		 cause,
 		 nil,
 		 global_environment(),
 		 load_funk,
@@ -198,6 +199,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // start a thread executing the user read-eval-print loop
       f2__thread(cause,
+		 cause,
 		 nil,
 		 global_environment(),
 		 repl_funk,
@@ -207,6 +209,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   } else {
     // start a thread executing the boot function
     f2__thread(cause,
+	       cause,
 	       nil,
 	       global_environment(),
 	       boot_funk,

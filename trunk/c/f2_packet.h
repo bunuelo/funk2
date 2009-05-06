@@ -379,7 +379,7 @@ void send_packet__respond__system__environment(funk2_node_t* funk2_node, f2ptr t
 void recv_packet__respond__system__environment(funk2_node_t* funk2_node, pcs_respond__system__environment_t* packet);
 
 f2ptr funk2_node__system__environment(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
-f2ptr funk2__system__environment(f2ptr cause, node_id_t node_id);
+f2ptr f2system__environment(f2ptr cause, node_id_t node_id);
 
 
 //  funk2_packet_type__pcs_request__f2ptype__raw                                 = 0x06, //ptype_t          (f2ptr cause, f2ptr this);

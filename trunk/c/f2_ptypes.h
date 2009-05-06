@@ -64,7 +64,7 @@ boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this);
 
 // this.system
 
-f2ptr pfunk2__system__environment(f2ptr cause);
+f2ptr f2system__environment(f2ptr cause);
 
 // memblock
 

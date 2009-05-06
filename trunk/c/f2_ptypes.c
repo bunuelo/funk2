@@ -1537,7 +1537,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
   int length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
     ptype_access_num__decr(pool_index);
-    return pfunk2__f2larva__new__trace_depth(cause, larva_type__array_index_out_of_bounds, trace_depth - 1);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2traced_array__elt error: index out of range.");
   }
   f2ptr return_value = nil;

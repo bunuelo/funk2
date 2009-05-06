@@ -4278,7 +4278,7 @@ f2ptr funk2_node__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2p
 f2ptr f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, u64 trace_depth) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
-    return pfunk2__f2traced_array__elt(this, index, cause, trace_depth);
+    return pfunk2__f2traced_array__elt__trace_depth(this, index, cause, trace_depth);
   } else {
     f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);

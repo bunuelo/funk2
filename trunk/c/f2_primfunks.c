@@ -431,10 +431,19 @@ def_pcfunk2(traced_array__elt__imagination_frame, x, y, return f2__traced_array_
 f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__imagination_frame__set(x, f2integer__i(y, cause), cause, z); return nil;}
 def_pcfunk3(traced_array__elt__imagination_frame__set, x, y, z, return f2__traced_array__elt__imagination_frame__set(this_cause, x, y, z));
 
+// cause
+
+bool raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
+  if (! this) {
+    return nil;
+  }
+  return (f2cause__allocate_traced_arrays(this, cause) != nil);
+}
+
 // array interface
 
 f2ptr raw__array__new(f2ptr cause, u64 length) {
-  if (f2cause__allocate_traced_arrays(cause, cause)) {
+  if (raw__cause__allocate_traced_arrays(cause, cause)) {
     return f2traced_array__new(cause, length, to_ptr(NULL));
   } else {
     return f2simple_array__new(cause, length, to_ptr(NULL));
@@ -442,7 +451,7 @@ f2ptr raw__array__new(f2ptr cause, u64 length) {
 }
 
 f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init) {
-  if (f2cause__allocate_traced_arrays(cause, cause)) {
+  if (raw__cause__allocate_traced_arrays(cause, cause)) {
     return f2traced_array__new_copy(cause, length, init);
   } else {
     return f2simple_array__new_copy(cause, length, init);

@@ -439,6 +439,7 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
   }
   if (! raw__causep(this, cause)) {
     status("error: cause is not a cause");
+    return boolean__false;
   }
   return (f2cause__allocate_traced_arrays(this, cause) != nil);
 }

@@ -530,7 +530,7 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_t
 }
 
 f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
-  return f2__cause__new(cause, nil, nil, nil, nil, nil, nil, nil, nil);
+  return f2__cause__new(cause, __funk2.true__symbol, nil, nil, nil, nil, nil, nil, nil);
 }
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {

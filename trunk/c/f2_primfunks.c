@@ -435,7 +435,7 @@ def_pcfunk3(traced_array__elt__imagination_frame__set, x, y, z, return f2__trace
 
 bool raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
   if (! this) {
-    return nil;
+    return (cause__allocate_traced_arrays__default_value != nil);
   }
   return (f2cause__allocate_traced_arrays(this, cause) != nil);
 }

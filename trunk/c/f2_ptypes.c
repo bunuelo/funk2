@@ -23,9 +23,9 @@
 
 #include "funk2.h"
 
-//#ifdef DEBUG
+#ifdef DEBUG
 #  define F2__PTYPE__TYPE_CHECK
-//#endif
+#endif
 
 pthread_mutex_t __global_ptype_incr_mutex[memory_pool_num];
 
@@ -75,6 +75,7 @@ void ptype_access__lockout_access(int pool_index, int max_access) {
   ptype_incr_mutex__lock(pool_index);
   // these types of polling loops should be replaced by a pthread_cond!
   while (__global_ptype_access_num[pool_index] > max_access) {
+    f2__sleep(1);
     sched_yield();
   }
 }

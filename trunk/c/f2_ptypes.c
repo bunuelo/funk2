@@ -1555,7 +1555,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
   } else {
     // this is an imaginary cause, so we need to retrieve the correct imaginary value, or the default (non-imaginary or "real") value is returned.
     f2ptr the_real_cause_for_really_thinking_imaginarily = nil;
-    f2ptr imagination_name_stack  = f2cause__imagination_stack__trace_depth(cause, the_real_cause_for_really_thinking_imaginarily, trace_depth - 1);
+    f2ptr imagination_name_stack  = f2cause__imagination_stack(cause, the_real_cause_for_really_thinking_imaginarily);
     f2ptr imagination_frame       = __pure__f2traced_array__elt__imagination_frame(this, index);
     f2ptr real_value              = __pure__f2traced_array__elt(this, index);
     return_value = f2__imagination_frame__get_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, imagination_name_stack, real_value, trace_depth - 1);

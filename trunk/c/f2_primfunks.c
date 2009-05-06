@@ -502,6 +502,15 @@ f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
 }
 def_pcfunk2(array__elt, x, y, return f2__array__elt(this_cause, x, y));
 
+f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth) {
+  if      (raw__simple_arrayp(this, cause)) {f2simple_array__elt(             this, index, cause             ); return nil;}
+  else if (raw__traced_arrayp(this, cause)) {f2traced_array__elt__trace_depth(this, index, cause, trace_depth); return nil;}
+  else {
+    error(nil, "raw__array__elt__trace_depth: should be a type of array.");
+    return nil;
+  }
+}
+
 f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
   if      (raw__simple_arrayp(this, cause)) {f2simple_array__elt__set(this, index, cause, value); return nil;}
   else if (raw__traced_arrayp(this, cause)) {f2traced_array__elt__set(this, index, cause, value); return nil;}

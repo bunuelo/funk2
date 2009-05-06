@@ -494,51 +494,60 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr thread, f2pt
 
 // cause
 
-defprimobject__static_slot(cause__bytecode_tracing_on,  0);
-defprimobject__static_slot(cause__memory_tracing_on,    1);
-defprimobject__static_slot(cause__subscribers_mutex,    2);
-defprimobject__static_slot(cause__subscribers,          3);
-defprimobject__static_slot(cause__imagination_stack,    4);
-defprimobject__static_slot(cause__event_buffer_first,   5);
-defprimobject__static_slot(cause__event_buffer_last,    6);
-defprimobject__static_slot(cause__current_events_mutex, 7);
-defprimobject__static_slot(cause__current_events,       8);
+defprimobject__static_slot(cause__allocate_traced_arrays, 0);
+defprimobject__static_slot(cause__bytecode_tracing_on,    1);
+defprimobject__static_slot(cause__memory_tracing_on,      2);
+defprimobject__static_slot(cause__subscribers_mutex,      3);
+defprimobject__static_slot(cause__subscribers,            4);
+defprimobject__static_slot(cause__imagination_stack,      5);
+defprimobject__static_slot(cause__event_buffer_first,     6);
+defprimobject__static_slot(cause__event_buffer_last,      7);
+defprimobject__static_slot(cause__current_events_mutex,   8);
+defprimobject__static_slot(cause__current_events,         9);
 
 f2ptr __cause__symbol = -1;
 
-f2ptr f2cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
+f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
   release__assert(__cause__symbol != -1, nil, "f2cause__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __cause__symbol, 9, nil);
-  f2cause__bytecode_tracing_on__set( this, cause, bytecode_tracing_on);
-  f2cause__memory_tracing_on__set(   this, cause, memory_tracing_on);
-  f2cause__subscribers_mutex__set(   this, cause, subscribers_mutex);
-  f2cause__subscribers__set(         this, cause, subscribers);
-  f2cause__imagination_stack__set(   this, cause, imagination_stack);
-  f2cause__event_buffer_first__set(  this, cause, event_buffer_first);
-  f2cause__event_buffer_last__set(   this, cause, event_buffer_last);
-  f2cause__current_events_mutex__set(this, cause, current_events_mutex);
-  f2cause__current_events__set(      this, cause, current_events);
+  f2ptr this = f2__primobject__new(cause, __cause__symbol, 10, nil);
+  f2cause__allocate_traced_arrays__set(this, cause, allocate_traced_arrays);
+  f2cause__bytecode_tracing_on__set(   this, cause, bytecode_tracing_on);
+  f2cause__memory_tracing_on__set(     this, cause, memory_tracing_on);
+  f2cause__subscribers_mutex__set(     this, cause, subscribers_mutex);
+  f2cause__subscribers__set(           this, cause, subscribers);
+  f2cause__imagination_stack__set(     this, cause, imagination_stack);
+  f2cause__event_buffer_first__set(    this, cause, event_buffer_first);
+  f2cause__event_buffer_last__set(     this, cause, event_buffer_last);
+  f2cause__current_events_mutex__set(  this, cause, current_events_mutex);
+  f2cause__current_events__set(        this, cause, current_events);
   return this;
 }
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
-  return f2cause__new(cause, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+  return f2cause__new(cause, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+}
+
+f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
+  return f2__cause__new(cause, nil, nil, nil, nil, nil, nil, nil);
 }
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
-  f2ptr bytecode_tracing_on = nil;
-  f2ptr memory_tracing_on   = nil;
-  f2ptr subscribers         = nil;
-  f2ptr imagination_stack   = nil;
+  f2ptr allocate_traced_arrays = nil;
+  f2ptr bytecode_tracing_on    = nil;
+  f2ptr memory_tracing_on      = nil;
+  f2ptr subscribers            = nil;
+  f2ptr imagination_stack      = nil;
   if (cause) {
-    bytecode_tracing_on = f2cause__bytecode_tracing_on(cause, cause);
-    memory_tracing_on   = f2cause__memory_tracing_on(cause, cause);
-    subscribers         = f2cause__subscribers(cause, cause);
-    imagination_stack   = f2cause__imagination_stack(cause, cause);
+    allocate_traced_arrays = f2cause__allocate_traced_arrays(cause, cause);
+    bytecode_tracing_on    = f2cause__bytecode_tracing_on(cause, cause);
+    memory_tracing_on      = f2cause__memory_tracing_on(cause, cause);
+    subscribers            = f2cause__subscribers(cause, cause);
+    imagination_stack      = f2cause__imagination_stack(cause, cause);
   }
   return f2__cause__new(cause,
+			allocate_traced_arrays,
 			bytecode_tracing_on,
 			memory_tracing_on,
 			subscribers,

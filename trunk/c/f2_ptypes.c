@@ -176,25 +176,29 @@ void ptype_trace_write(int pool_index, f2ptr cause, f2ptr location, f2ptr value)
   //pool__resume_gc(pool_index);
 }
 
-boolean_t raw__cause__is_traced(f2ptr cause, f2ptr this) {
+boolean_t raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, int trace_depth) {
   if (! this) {
     return nil;
   }
 #ifdef F2__PTYPE__TYPE_CHECK
-  if(! raw__causep(this, cause)) {
+  if(! raw__causep__trace_depth(this, cause, trace_depth)) {
     status("raw__cause__is_traced !raw__causep(this, cause)");
     f2__print(nil, this); fflush(stdout);
     error(nil, "raw__cause__is_traced !raw__causep(this, cause)");
   }
 #endif
-  return f2cause__memory_tracing_on(this, cause);
+  return f2cause__memory_tracing_on__trace_depth(this, cause, trace_depth);
+}
+
+boolean_t raw__cause__is_traced(f2ptr cause, f2ptr this) {
+  return raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, 1);
 }
 
 void debug__cause__is_imaginary() {
   printf("\ndebug__cause__is_imaginary here.");
 }
 
-boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
+boolean_t raw__cause__is_imaginary__trace_depth(f2ptr cause, f2ptr this, int trace_depth) {
   if (! this) {
     return nil;
   }
@@ -210,6 +214,10 @@ boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
     debug__cause__is_imaginary();
   }
   return return_value;
+}
+
+boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
+  return raw__cause__is_imaginary__trace_depth(cause, this, 1);
 }
 
 void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
@@ -1541,7 +1549,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
     //error(nil, "f2traced_array__elt error: index out of range.");
   }
   f2ptr return_value = nil;
-  if (! raw__cause__is_imaginary(cause, cause)) {
+  if (! raw__cause__is_imaginary__trace_depth(cause, cause, trace_depth - 1)) {
     return_value = __pure__f2traced_array__elt(this, index);
   } else {
     // this is an imaginary cause, so we need to retrieve the correct imaginary value, or the default (non-imaginary or "real") value is returned.
@@ -1578,7 +1586,7 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2traced_array__elt__set__trace_depth error: index out of range.");
   }
-  if (! raw__cause__is_imaginary(cause, cause)) {
+  if (! raw__cause__is_imaginary__trace_depth(cause, cause, trace_depth - 1)) {
     f2ptr old_elt    = __pure__f2traced_array__elt(this, index);
     f2ptr prev_elts  = __pure__f2traced_array__elt__trace(this, index);
     int   tracing_on = __pure__f2traced_array__elt__tracing_on(this, index);

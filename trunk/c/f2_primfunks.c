@@ -837,7 +837,7 @@ f2ptr f2__thread__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_thre
 def_pcfunk3(thread__imagine, imagination_name, funk, args, return f2__thread__imagine(this_cause, imagination_name, simple_thread, simple_env, funk, args));
 
 f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
-  f2ptr i_cause = f2__cause__new_imaginary(cause, imagination_name);
+  //f2ptr i_cause = f2__cause__new_imaginary(cause, imagination_name);
   
   return nil;
 }

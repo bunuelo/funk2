@@ -603,7 +603,7 @@ f2ptr funk2_node__system__environment(funk2_node_t* funk2_node, f2ptr this_threa
   return environment;
 }
 
-f2ptr f2system__environment(f2ptr cause, node_id_t node_id) {
+f2ptr system__environment(f2ptr cause, node_id_t node_id) {
   computer_id_t computer_id = funk2_node_handler__lookup_computer_id_from_node_id(&(__funk2.node_handler), node_id);
   if (computer_id == ((computer_id_t)-1)) {
     printf ("couldn't find node_id");

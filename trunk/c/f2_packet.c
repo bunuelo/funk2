@@ -396,6 +396,8 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2traced_array__immutable__set:              recv_packet__respond__f2traced_array__immutable__set(funk2_node, (pcs_respond__f2traced_array__immutable__set_t*)packet);                           break;
   case funk2_packet_type__pcs_request__f2traced_array__length:                      recv_packet__request__f2traced_array__length(funk2_node, (pcs_request__f2traced_array__length_t*)packet);                                           break;
   case funk2_packet_type__pcs_respond__f2traced_array__length:                      recv_packet__respond__f2traced_array__length(funk2_node, (pcs_respond__f2traced_array__length_t*)packet);                                           break;
+  case funk2_packet_type__pcs_request__f2traced_array__elt__trace_depth:            recv_packet__request__f2traced_array__elt__trace_depth(funk2_node, (pcs_request__f2traced_array__elt__trace_depth_t*)packet);                       break;
+  case funk2_packet_type__pcs_respond__f2traced_array__elt__trace_depth:            recv_packet__respond__f2traced_array__elt__trace_depth(funk2_node, (pcs_respond__f2traced_array__elt__trace_depth_t*)packet);                       break;
   case funk2_packet_type__pcs_request__f2traced_array__elt:                         recv_packet__request__f2traced_array__elt(funk2_node, (pcs_request__f2traced_array__elt_t*)packet);                                                 break;
   case funk2_packet_type__pcs_respond__f2traced_array__elt:                         recv_packet__respond__f2traced_array__elt(funk2_node, (pcs_respond__f2traced_array__elt_t*)packet);                                                 break;
   case funk2_packet_type__pcs_request__f2traced_array__elt__set__trace_depth:       recv_packet__request__f2traced_array__elt__set__trace_depth(funk2_node, (pcs_request__f2traced_array__elt__set__trace_depth_t*)packet);             break;
@@ -4216,6 +4218,71 @@ u64 f2traced_array__length(f2ptr this, f2ptr cause) {
     f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__length(funk2_node, thread, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 trace_depth) {
+  packet_status("send_packet__request__f2traced_array__elt__trace_depth: executing.");
+  pcs_request__f2traced_array__elt__trace_depth_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2traced_array__elt__trace_depth;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.this                                      = this;
+  packet.payload.index                                     = index;
+  packet.payload.trace_depth                               = trace_depth;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__trace_depth_t* packet) {
+  packet_status("recv_packet__request__f2traced_array__elt__trace_depth: executing.");
+  f2ptr cause       = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr thread      = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  f2ptr this        = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
+  f2ptr elt = pfunk2__f2traced_array__elt__trace_depth(this, packet->payload.index, cause, packet->payload.trace_depth);
+  send_packet__respond__f2traced_array__elt__trace_depth(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause, elt);
+}
+
+void send_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr elt) {
+  packet_status("send_packet__respond__f2traced_array__elt__trace_depth: executing.");
+  pcs_respond__f2traced_array__elt__trace_depth_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2traced_array__elt__trace_depth;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.elt                                       = elt;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__trace_depth_t* packet) {
+  packet_status("recv_packet__respond__f2traced_array__elt__trace_depth: executing.");
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 trace_depth) {
+  send_packet__request__f2traced_array__elt__trace_depth(funk2_node, this_thread, cause, this, index, trace_depth);
+  pcs_respond__f2traced_array__elt__trace_depth_t* packet = (pcs_respond__f2traced_array__elt__trace_depth_t*)funk2_node_handler__wait_for_new_thread_packet(&(__funk2.node_handler), this_thread);
+  packet_status("funk2_node__f2traced_array__elt__trace_depth: packet->payload.elt = " f2ptr__fstr, packet->payload.elt);
+  f2ptr elt = rf2_to_lf2(packet->payload.elt);
+  packet_status("funk2_node__f2traced_array__elt__trace_depth: rf2_to_lf2(packet->payload.elt) = " f2ptr__fstr, elt);
+  f2__free(to_ptr(packet));
+  return elt;
+}
+
+f2ptr f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, u64 trace_depth) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2traced_array__elt(this, index, cause, trace_depth);
+  } else {
+    f2ptr         thread     = f2__scheduler__pthread_current_thread(this_pthread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2traced_array__elt__trace_depth(funk2_node, thread, cause, this, index, trace_depth);
   }
 }
 

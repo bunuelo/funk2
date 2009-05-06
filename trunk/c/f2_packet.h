@@ -165,6 +165,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2traced_array__immutable__set             ,
   funk2_packet_type__pcs_request__f2traced_array__length                     , //u64              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2traced_array__length                     ,
+  funk2_packet_type__pcs_request__f2traced_array__elt__trace_depth           , //f2ptr            (f2ptr cause, f2ptr this, u64 index, int trace_depth);
+  funk2_packet_type__pcs_respond__f2traced_array__elt__trace_depth           ,
   funk2_packet_type__pcs_request__f2traced_array__elt                        , //f2ptr            (f2ptr cause, f2ptr this, u64 index);
   funk2_packet_type__pcs_respond__f2traced_array__elt                        ,
   funk2_packet_type__pcs_request__f2traced_array__elt__set__trace_depth      , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);
@@ -2737,7 +2739,7 @@ struct pcs_packet_payload_respond__f2traced_array__length_s {
 typedef struct pcs_packet_payload_respond__f2traced_array__length_s pcs_packet_payload_respond__f2traced_array__length_t;
 
 struct pcs_respond__f2traced_array__length_s {
-  funk2_packet_header_t                         header;
+  funk2_packet_header_t                                header;
   pcs_packet_payload_respond__f2traced_array__length_t payload;
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__length_s pcs_respond__f2traced_array__length_t;
@@ -2749,6 +2751,52 @@ void recv_packet__respond__f2traced_array__length(funk2_node_t* funk2_node, pcs_
 
 u64 funk2_node__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
 u64 f2traced_array__length(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__elt__trace_depth           , //f2ptr            (f2ptr cause, f2ptr this, u64 index, int trace_depth);
+
+// request f2traced_array__elt__trace_depth
+
+struct pcs_packet_payload_request__f2traced_array__elt__trace_depth_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+  u64                                                trace_depth;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__elt__trace_depth_s pcs_packet_payload_request__f2traced_array__elt__trace_depth_t;
+
+struct pcs_request__f2traced_array__elt__trace_depth_s {
+  funk2_packet_header_t                                          header;
+  pcs_packet_payload_request__f2traced_array__elt__trace_depth_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__elt__trace_depth_s pcs_request__f2traced_array__elt__trace_depth_t;
+
+
+//  funk2_packet_type__pcs_respond__f2traced_array__elt__trace_depth           ,
+
+// respond f2traced_array__elt__trace_depth
+
+struct pcs_packet_payload_respond__f2traced_array__elt__trace_depth_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              elt;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__elt__trace_depth_s pcs_packet_payload_respond__f2traced_array__elt__trace_depth_t;
+
+struct pcs_respond__f2traced_array__elt__trace_depth_s {
+  funk2_packet_header_t                                          header;
+  pcs_packet_payload_respond__f2traced_array__elt__trace_depth_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__elt__trace_depth_s pcs_respond__f2traced_array__elt__trace_depth_t;
+
+void send_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 trace_depth);
+void recv_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__trace_depth_t* packet);
+void send_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr elt);
+void recv_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__trace_depth_t* packet);
+
+f2ptr funk2_node__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 trace_depth);
+f2ptr f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, u64 trace_depth);
+
+
 
 
 //  funk2_packet_type__pcs_request__f2traced_array__elt                               = 0x3B, //f2ptr            (f2ptr this, u64 index, f2ptr cause);

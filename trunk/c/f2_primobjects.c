@@ -140,48 +140,64 @@ void raw__imagination_link__add_new_imagination_slot__trace_depth(f2ptr cause, f
   f2imagination_link__imagination_frame__set__trace_depth(this, cause, new_imagination_frame, trace_depth - 1);
 }
 
-f2ptr f2__imagination_frame__get_slot(f2ptr cause, f2ptr this, f2ptr name) {
+f2ptr f2__imagination_frame__get_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, int trace_depth) {
   f2ptr slot_iter = this;
   while (slot_iter) {
-    f2ptr slot_name = f2imagination_link__name(slot_iter, cause);
+    f2ptr slot_name = f2imagination_link__name__trace_depth(slot_iter, cause, trace_depth);
     if (raw__symbol__eq(cause, name, slot_name)) {
       return slot_iter;
     }
-    slot_iter = f2imagination_link__next(slot_iter, cause);
+    slot_iter = f2imagination_link__next__trace_depth(slot_iter, cause, trace_depth);
   }
   return nil;
 }
 
-f2ptr f2__imagination_link__get_slot(f2ptr cause, f2ptr this, f2ptr name) {
-  f2ptr imagination_frame = f2imagination_link__imagination_frame(this, cause);
-  return f2__imagination_frame__get_slot(cause, imagination_frame, name);
+f2ptr f2__imagination_frame__get_slot(f2ptr cause, f2ptr this, f2ptr name) {
+  return f2__imagination_frame__get_slot(cause, this, name, 1);
 }
 
-f2ptr f2__imagination_link__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value) {
+f2ptr f2__imagination_link__get_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, int trace_depth) {
+  f2ptr imagination_frame = f2imagination_link__imagination_frame__trace_depth(this, cause, trace_depth);
+  return f2__imagination_frame__get_slot__trace_depth(cause, imagination_frame, name, trace_depth);
+}
+
+f2ptr f2__imagination_link__get_slot(f2ptr cause, f2ptr this, f2ptr name) {
+  return f2__imagination_link__get_slot__trace_depth(cause, this, name, 1);
+}
+
+f2ptr f2__imagination_link__get_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value, u64 trace_depth) {
   f2ptr imagination_link_iter = this;
   f2ptr name_iter             = name_stack;
   while (name_iter) {
-    f2ptr name = f2cons__car(name_iter, cause);
-    f2ptr slot = f2__imagination_link__get_slot(cause, imagination_link_iter, name);
+    f2ptr name = f2cons__car__trace_depth(name_iter, cause, trace_depth);
+    f2ptr slot = f2__imagination_link__get_slot__trace_depth(cause, imagination_link_iter, name, trace_depth);
     if (! slot) {
       return doesnt_exist_value;
     }
     imagination_link_iter = slot;
     name_iter = f2cons__cdr(name_iter, cause);
   }
-  return f2imagination_link__value(imagination_link_iter, cause);
+  return f2imagination_link__value__trace_depth(imagination_link_iter, cause, trace_depth);
 }
 
-f2ptr f2__imagination_frame__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value) {
+f2ptr f2__imagination_link__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value) {
+  return f2__imagination_link__get_value_from_name_stack(cause, this, name_stack, doesnt_exist_value, 1);
+}
+
+f2ptr f2__imagination_frame__get_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value, int trace_depth) {
   if (name_stack) {
     f2ptr name = f2cons__car(name_stack, cause);
-    f2ptr slot = f2__imagination_frame__get_slot(cause, this, name);
+    f2ptr slot = f2__imagination_frame__get_slot__trace_depth(cause, this, name, trace_depth);
     if (! slot) {
       return doesnt_exist_value;
     }
-    return f2__imagination_link__get_value_from_name_stack(cause, slot, f2cons__cdr(name_stack, cause), doesnt_exist_value);
+    return f2__imagination_link__get_value_from_name_stack__trace_depth(cause, slot, f2cons__cdr(name_stack, cause), doesnt_exist_value, trace_depth);
   }
   return doesnt_exist_value;
+}
+
+f2ptr f2__imagination_frame__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value) {
+  return f2__imagination_frame__get_value_from_name_stack__trace_depth(cause, this, name_stack, doesnt_exist_value, 1);
 }
 
 void f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr value, int trace_depth) {

@@ -221,19 +221,24 @@ defprimobject__static_slot__prototype(imagination_link__trace);
 #define f2imagination_link__trace__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, imagination_link__trace, cause)
 
 defprimobject__static_slot__prototype(imagination_link__imagination_frame);
-#define f2imagination_link__imagination_frame(                  this, cause)                     primobject__static_slot__accessor(        this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, imagination_link__imagination_frame, cause, value, trace_depth)
-#define f2imagination_link__imagination_frame__set(             this, cause, value)              primobject__static_slot__set(             this, imagination_link__imagination_frame, cause, value)
-#define f2imagination_link__imagination_frame__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__trace(           this, cause)                     primobject__static_slot__trace(           this, imagination_link__imagination_frame, cause)
+#define f2imagination_link__imagination_frame__trace_depth(     this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__imagination_frame, cause, trace_depth)
+#define f2imagination_link__imagination_frame(                  this, cause)                     primobject__static_slot__accessor(             this, imagination_link__imagination_frame, cause)
+#define f2imagination_link__imagination_frame__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__imagination_frame, cause, value, trace_depth)
+#define f2imagination_link__imagination_frame__set(             this, cause, value)              primobject__static_slot__set(                  this, imagination_link__imagination_frame, cause, value)
+#define f2imagination_link__imagination_frame__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__imagination_frame, cause)
+#define f2imagination_link__imagination_frame__trace(           this, cause)                     primobject__static_slot__trace(                this, imagination_link__imagination_frame, cause)
 #define f2imagination_link__imagination_frame__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, imagination_link__imagination_frame, cause)
 
 f2ptr raw__imagination_frame__lookup_imagination_link__trace_depth(f2ptr cause, f2ptr this, f2ptr real_value, f2ptr imagination_name_stack, int trace_depth);
 f2ptr raw__imagination_frame__new_with_added_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth);
 void  raw__imagination_link__add_new_imagination_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth);
+f2ptr  f2__imagination_frame__get_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, int trace_depth);
 f2ptr  f2__imagination_frame__get_slot(f2ptr cause, f2ptr this, f2ptr name);
+f2ptr  f2__imagination_link__get_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, int trace_depth);
 f2ptr  f2__imagination_link__get_slot(f2ptr cause, f2ptr this, f2ptr name);
+f2ptr  f2__imagination_link__get_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value, u64 trace_depth);
 f2ptr  f2__imagination_link__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value);
+f2ptr  f2__imagination_frame__get_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value, int trace_depth);
 f2ptr  f2__imagination_frame__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value);
 void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr value, int trace_depth);
 

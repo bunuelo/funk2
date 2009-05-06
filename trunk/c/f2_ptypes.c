@@ -209,7 +209,8 @@ boolean_t raw__cause__is_imaginary__trace_depth(f2ptr cause, f2ptr this, int tra
     error(nil, "raw__cause__is_imaginary !raw__causep(this, cause)");
   }
 #endif
-  boolean_t return_value = (f2cause__imagination_stack(this, cause) != nil);
+  f2ptr the_cause_for_checking_whether_imaginary_or_not = nil; // cause (results in infinite loop)
+  boolean_t return_value = (f2cause__imagination_stack(this, the_cause_for_checking_whether_imaginary_or_not) != nil);
   if (return_value) {
     debug__cause__is_imaginary();
   }

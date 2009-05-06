@@ -806,6 +806,7 @@ boolean_t  raw__arrayp(f2ptr x, f2ptr cause);
 f2ptr f2__arrayp(f2ptr cause, f2ptr x);
 u64   raw__array__length(f2ptr cause, f2ptr x);
 f2ptr f2__array__length(f2ptr cause, f2ptr x);
+f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth);
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index);
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index);
 f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value);

@@ -109,7 +109,7 @@ f2ptr initial_cause() {
 
 // this.system
 
-f2ptr funk2__f2system__environment(f2ptr cause) {
+f2ptr pfunk2__f2system__environment(f2ptr cause) {
   return __funk2.memory.global_environment_f2ptr;
 }
 

@@ -668,7 +668,7 @@ ptype_t funk2_node__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return raw;
 }
 
-ptype_t funk2__f2ptype__raw(f2ptr this, f2ptr cause) {
+ptype_t f2ptype__raw(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2ptype__raw(this, cause);
@@ -729,7 +729,7 @@ f2ptr funk2_node__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return ptype__cause;
 }
 
-f2ptr funk2__f2ptype__cause(f2ptr this, f2ptr cause) {
+f2ptr f2ptype__cause(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2ptype__cause(this, cause);
@@ -788,7 +788,7 @@ void funk2_node__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_thread
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {
+void f2ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2ptype__cause__set(this, cause, value);
@@ -848,7 +848,7 @@ f2ptr funk2_node__f2integer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return new;
 }
 
-f2ptr funk2__f2integer__new(f2ptr cause, u64 i) {
+f2ptr f2integer__new(f2ptr cause, u64 i) {
   return pfunk2__f2integer__new(cause, i);
 }
 
@@ -902,7 +902,7 @@ s64 funk2_node__f2integer__i(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr 
   return i;
 }
 
-s64 funk2__f2integer__i(f2ptr this, f2ptr cause) {
+s64 f2integer__i(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2integer__i(this, cause);
@@ -962,7 +962,7 @@ f2ptr funk2_node__f2double__new(funk2_node_t* funk2_node, f2ptr this_thread, f2p
   return new;
 }
 
-f2ptr funk2__f2double__new(f2ptr cause, double d) {
+f2ptr f2double__new(f2ptr cause, double d) {
   return pfunk2__f2double__new(cause, d);
 }
 
@@ -1016,7 +1016,7 @@ double funk2_node__f2double__d(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
   return d;
 }
 
-double funk2__f2double__d(f2ptr cause, f2ptr this) {
+double f2double__d(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2double__d(this, cause);
@@ -1076,7 +1076,7 @@ f2ptr funk2_node__f2float__new(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
   return new;
 }
 
-f2ptr funk2__f2float__new(f2ptr cause, float f) {
+f2ptr f2float__new(f2ptr cause, float f) {
   return pfunk2__f2float__new(cause, f);
 }
 
@@ -1130,7 +1130,7 @@ float funk2_node__f2float__f(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr 
   return f;
 }
 
-float funk2__f2float__f(f2ptr cause, f2ptr this) {
+float f2float__f(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2float__f(this, cause);
@@ -1190,7 +1190,7 @@ f2ptr funk2_node__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return new;
 }
 
-f2ptr funk2__f2pointer__new(f2ptr cause, ptr p) {
+f2ptr f2pointer__new(f2ptr cause, ptr p) {
   return pfunk2__f2pointer__new(cause, p);
 }
 
@@ -1244,7 +1244,7 @@ ptr funk2_node__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr 
   return p;
 }
 
-ptr funk2__f2pointer__p(f2ptr this, f2ptr cause) {
+ptr f2pointer__p(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2pointer__p(this, cause);
@@ -1307,7 +1307,7 @@ f2ptr funk2_node__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_thread, f
   return new;
 }
 
-f2ptr funk2__f2gfunkptr__new(f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address) {
+f2ptr f2gfunkptr__new(f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address) {
   return pfunk2__f2gfunkptr__new(cause, computer_id, pool_index, pool_address);
 }
 
@@ -1361,7 +1361,7 @@ f2ptr funk2_node__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr thi
   return new_from_f2ptr;
 }
 
-f2ptr funk2__f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p) {
+f2ptr f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p) {
   return pfunk2__f2gfunkptr__new_from_f2ptr(cause, f2p);
 }
 
@@ -1415,7 +1415,7 @@ f2ptr funk2_node__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_thre
   return gfunkptr;
 }
 
-f2ptr funk2__f2gfunkptr__gfunkptr(f2ptr cause, f2ptr this) {
+f2ptr f2gfunkptr__gfunkptr(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__gfunkptr(this, cause);
@@ -1476,7 +1476,7 @@ computer_id_t funk2_node__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2pt
   return computer_id;
 }
 
-computer_id_t funk2__f2gfunkptr__computer_id(f2ptr cause, f2ptr this) {
+computer_id_t f2gfunkptr__computer_id(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__computer_id(this, cause);
@@ -1537,7 +1537,7 @@ pool_index_t funk2_node__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr 
   return pool_index;
 }
 
-pool_index_t funk2__f2gfunkptr__pool_index(f2ptr cause, f2ptr this) {
+pool_index_t f2gfunkptr__pool_index(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__pool_index(this, cause);
@@ -1598,7 +1598,7 @@ pool_address_t funk2_node__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2
   return pool_address;
 }
 
-pool_address_t funk2__f2gfunkptr__pool_address(f2ptr cause, f2ptr this) {
+pool_address_t f2gfunkptr__pool_address(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__pool_address(this, cause);
@@ -1657,7 +1657,7 @@ f2ptr funk2_node__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
   return new;
 }
 
-f2ptr funk2__f2mutex__new(f2ptr cause) {
+f2ptr f2mutex__new(f2ptr cause) {
   return pfunk2__f2mutex__new(cause);
 }
 
@@ -1708,7 +1708,7 @@ void funk2_node__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2mutex__lock(f2ptr this, f2ptr cause) {
+void f2mutex__lock(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2mutex__lock(this, cause);
@@ -1766,7 +1766,7 @@ void funk2_node__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_thread, f2
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
+void f2mutex__unlock(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2mutex__unlock(this, cause);
@@ -1827,7 +1827,7 @@ int funk2_node__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return trylock;
 }
 
-int funk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
+int f2mutex__trylock(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2mutex__trylock(this, cause);
@@ -1887,7 +1887,7 @@ f2ptr funk2_node__f2char__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr
   return new;
 }
 
-f2ptr funk2__f2char__new(f2ptr cause, u64 ch) {
+f2ptr f2char__new(f2ptr cause, u64 ch) {
   return pfunk2__f2char__new(cause, ch);
 }
 
@@ -1941,7 +1941,7 @@ u64 funk2_node__f2char__ch(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr ca
   return ch;
 }
 
-u64 funk2__f2char__ch(f2ptr this, f2ptr cause) {
+u64 f2char__ch(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2char__ch(this, cause);
@@ -2002,7 +2002,7 @@ f2ptr funk2_node__f2string__new(funk2_node_t* funk2_node, f2ptr this_thread, f2p
   return new;
 }
 
-f2ptr funk2__f2string__new(f2ptr cause, u64 length, u8* init) {
+f2ptr f2string__new(f2ptr cause, u64 length, u8* init) {
   return pfunk2__f2string__new(cause, length, init);
 }
 
@@ -2056,7 +2056,7 @@ u64 funk2_node__f2string__length(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return length;
 }
 
-u64 funk2__f2string__length(f2ptr this, f2ptr cause) {
+u64 f2string__length(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2string__length(this, cause);
@@ -2118,7 +2118,7 @@ u8 funk2_node__f2string__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr 
   return elt;
 }
 
-u8 funk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
+u8 f2string__elt(f2ptr this, int index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2string__elt(this, index, cause);
@@ -2181,7 +2181,7 @@ void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_thread,
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
+void f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2string__str_copy(this, cause, str);
@@ -2242,7 +2242,7 @@ int funk2_node__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_thread
   return hash_value;
 }
 
-int funk2__f2string__hash_value(f2ptr cause, f2ptr this) {
+int f2string__hash_value(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2string__hash_value(this, cause);
@@ -2303,7 +2303,7 @@ f2ptr funk2_node__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_thread, f2p
   return new;
 }
 
-f2ptr funk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
+f2ptr f2symbol__new(f2ptr cause, u64 length, u8* init) {
   return pfunk2__f2symbol__new(cause, length, init);
 }
 
@@ -2357,7 +2357,7 @@ u64 funk2_node__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_thread, f2
   return length;
 }
 
-u64 funk2__f2symbol__length(f2ptr this, f2ptr cause) {
+u64 f2symbol__length(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2symbol__length(this, cause);
@@ -2418,7 +2418,7 @@ u64 funk2_node__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_thread
   return hash_value;
 }
 
-u64 funk2__f2symbol__hash_value(f2ptr this, f2ptr cause) {
+u64 f2symbol__hash_value(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2symbol__hash_value(this, cause);
@@ -2480,7 +2480,7 @@ u8 funk2_node__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr 
   return elt;
 }
 
-u8 funk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
+u8 f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2symbol__elt(this, index, cause);
@@ -2545,7 +2545,7 @@ void funk2_node__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_thread,
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
+void f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2symbol__str_copy(this, cause, str);
@@ -2606,7 +2606,7 @@ f2ptr funk2_node__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
   return new;
 }
 
-f2ptr funk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes) {
+f2ptr f2chunk__new(f2ptr cause, u64 length, byte* bytes) {
   return pfunk2__f2chunk__new(cause, length, bytes);
 }
 
@@ -2660,7 +2660,7 @@ f2ptr funk2_node__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_thread,
   return new_copy;
 }
 
-f2ptr funk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk) {
+f2ptr f2chunk__new_copy(f2ptr cause, f2ptr init_chunk) {
   return pfunk2__f2chunk__new_copy(cause, init_chunk);
 }
 
@@ -2714,7 +2714,7 @@ u64 funk2_node__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_thread, f2p
   return length;
 }
 
-u64 funk2__f2chunk__length(f2ptr cause, f2ptr this) {
+u64 f2chunk__length(f2ptr cause, f2ptr this) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__length(this, cause);
@@ -2776,7 +2776,7 @@ u8 funk2_node__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_thread, f
   return elt;
 }
 
-u8 funk2__f2chunk__bit8__elt(f2ptr cause, f2ptr this, u64 index) {
+u8 f2chunk__bit8__elt(f2ptr cause, f2ptr this, u64 index) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit8__elt(this, index, cause);
@@ -2836,7 +2836,7 @@ void funk2_node__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_th
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2chunk__bit8__elt__set(f2ptr cause, f2ptr this, u64 index, u8 value) {
+void f2chunk__bit8__elt__set(f2ptr cause, f2ptr this, u64 index, u8 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2chunk__bit8__elt__set(this, index, cause, value);
@@ -2898,7 +2898,7 @@ u16 funk2_node__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_thread,
   return elt;
 }
 
-u16 funk2__f2chunk__bit16__elt(f2ptr cause, f2ptr this, u64 index) {
+u16 f2chunk__bit16__elt(f2ptr cause, f2ptr this, u64 index) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit16__elt(this, index, cause);
@@ -2958,7 +2958,7 @@ void funk2_node__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_t
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2chunk__bit16__elt__set(f2ptr cause, f2ptr this, u64 index, u16 value) {
+void f2chunk__bit16__elt__set(f2ptr cause, f2ptr this, u64 index, u16 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit16__elt__set(this, index, cause, value);
@@ -3020,7 +3020,7 @@ u32 funk2_node__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_thread,
   return elt;
 }
 
-u32 funk2__f2chunk__bit32__elt(f2ptr cause, f2ptr this, u64 index) {
+u32 f2chunk__bit32__elt(f2ptr cause, f2ptr this, u64 index) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit32__elt(this, index, cause);
@@ -3080,7 +3080,7 @@ void funk2_node__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_t
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2chunk__bit32__elt__set(f2ptr cause, f2ptr this, u64 index, u32 value) {
+void f2chunk__bit32__elt__set(f2ptr cause, f2ptr this, u64 index, u32 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit32__elt__set(this, index, cause, value);
@@ -3142,7 +3142,7 @@ u64 funk2_node__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_thread,
   return elt;
 }
 
-u64 funk2__f2chunk__bit64__elt(f2ptr cause, f2ptr this, u64 index) {
+u64 f2chunk__bit64__elt(f2ptr cause, f2ptr this, u64 index) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit64__elt(this, index, cause);
@@ -3202,7 +3202,7 @@ void funk2_node__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_t
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2chunk__bit64__elt__set(f2ptr cause, f2ptr this, u64 index, u64 value) {
+void f2chunk__bit64__elt__set(f2ptr cause, f2ptr this, u64 index, u64 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit64__elt__set(this, index, cause, value);
@@ -3269,7 +3269,7 @@ f2ptr funk2_node__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_threa
   return cfunk_jump_return;
 }
 
-f2ptr funk2__f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args) {
+f2ptr f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__cfunk_jump(this, cause, thread, env, args);
@@ -3332,7 +3332,7 @@ int funk2_node__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_thre
   return bytecode_jump_return;
 }
 
-int funk2__f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr user_thread) {
+int f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr user_thread) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bytecode_jump(this, cause, user_thread);
@@ -3397,7 +3397,7 @@ f2ptr funk2_node__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_thread, f2p
   return send_return;
 }
 
-f2ptr funk2__f2chunk__send(f2ptr cause, f2ptr this, int start, int length, int fd, int flags) {
+f2ptr f2chunk__send(f2ptr cause, f2ptr this, int start, int length, int fd, int flags) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__send(this, cause, start, length, fd, flags);
@@ -3462,7 +3462,7 @@ f2ptr funk2_node__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_thread, f2p
   return recv_return;
 }
 
-f2ptr funk2__f2chunk__recv(f2ptr cause, f2ptr this, int start, int length, int fd, int flags) {
+f2ptr f2chunk__recv(f2ptr cause, f2ptr this, int start, int length, int fd, int flags) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__recv(this, cause, start, length, fd, flags);
@@ -3537,7 +3537,7 @@ f2ptr funk2_node__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_threa
   return new;
 }
 
-f2ptr funk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_array) {
+f2ptr f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_array) {
   return pfunk2__f2simple_array__new(cause, length, f2ptr_array);
 }
 
@@ -3592,7 +3592,7 @@ f2ptr funk2_node__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_
   return new_copy;
 }
 
-f2ptr funk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
+f2ptr f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
   return pfunk2__f2simple_array__new_copy(cause, length, init_array);
 }
 
@@ -3648,7 +3648,7 @@ f2ptr funk2_node__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this
   return immutable;
 }
 
-f2ptr funk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
+f2ptr f2simple_array__immutable(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2simple_array__immutable(this, cause);
@@ -3709,7 +3709,7 @@ void funk2_node__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr 
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+void f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2simple_array__immutable__set(this, cause, value);
@@ -3770,7 +3770,7 @@ u64 funk2_node__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_thre
   return length;
 }
 
-u64 funk2__f2simple_array__length(f2ptr this, f2ptr cause) {
+u64 f2simple_array__length(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2simple_array__length(this, cause);
@@ -3834,7 +3834,7 @@ f2ptr funk2_node__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_threa
   return elt;
 }
 
-f2ptr funk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
+f2ptr f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2simple_array__elt(this, index, cause);
@@ -3896,7 +3896,7 @@ void funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_t
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2simple_array__elt__set(this, index, cause, value);
@@ -3975,7 +3975,7 @@ f2ptr funk2_node__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_threa
   return new;
 }
 
-f2ptr funk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_array) {
+f2ptr f2traced_array__new(f2ptr cause, u64 length, ptr dptr_array) {
   return pfunk2__f2traced_array__new(cause, length, dptr_array);
 }
 
@@ -4030,7 +4030,7 @@ f2ptr funk2_node__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_
   return new_copy;
 }
 
-f2ptr funk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
+f2ptr f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
   return pfunk2__f2traced_array__new_copy(cause, length, init_array);
 }
 
@@ -4086,7 +4086,7 @@ f2ptr funk2_node__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this
   return immutable;
 }
 
-f2ptr funk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
+f2ptr f2traced_array__immutable(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2traced_array__immutable(this, cause);
@@ -4147,7 +4147,7 @@ void funk2_node__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr 
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+void f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2traced_array__immutable__set(this, cause, value);
@@ -4208,7 +4208,7 @@ u64 funk2_node__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_thre
   return length;
 }
 
-u64 funk2__f2traced_array__length(f2ptr this, f2ptr cause) {
+u64 f2traced_array__length(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2traced_array__length(this, cause);
@@ -4272,7 +4272,7 @@ f2ptr funk2_node__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_threa
   return elt;
 }
 
-f2ptr funk2__f2traced_array__elt(f2ptr this, u64 index, f2ptr cause) {
+f2ptr f2traced_array__elt(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt(this, index, cause);
@@ -4334,7 +4334,7 @@ void funk2_node__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node,
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f2ptr value, int trace_depth) {
+void f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f2ptr value, int trace_depth) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__set__trace_depth(this, index, cause, value, trace_depth);
@@ -4396,7 +4396,7 @@ void funk2_node__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_t
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+void f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__set(this, index, cause, value);
@@ -4458,7 +4458,7 @@ f2ptr funk2_node__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2pt
   return tracing_on;
 }
 
-f2ptr funk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause) {
+f2ptr f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__tracing_on(this, index, cause);
@@ -4519,7 +4519,7 @@ void funk2_node__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, 
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+void f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__tracing_on__set(this, index, cause, value);
@@ -4581,7 +4581,7 @@ f2ptr funk2_node__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr thi
   return trace;
 }
 
-f2ptr funk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
+f2ptr f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__trace(this, index, cause);
@@ -4642,7 +4642,7 @@ void funk2_node__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+void f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__trace__set(this, index, cause, value);
@@ -4704,7 +4704,7 @@ f2ptr funk2_node__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_nod
   return imagination_frame;
 }
 
-f2ptr funk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause) {
+f2ptr f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__imagination_frame(this, index, cause);
@@ -4765,7 +4765,7 @@ void funk2_node__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2
   f2__free(to_ptr(packet));
 }
 
-void funk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+void f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__imagination_frame__set(this, index, cause, value);
@@ -4825,7 +4825,7 @@ f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
   return new;
 }
 
-f2ptr funk2__f2larva__new(f2ptr cause, u32 type) {
+f2ptr f2larva__new(f2ptr cause, u32 type) {
   return pfunk2__f2larva__new(cause, type);
 }
 
@@ -4879,7 +4879,7 @@ u32 funk2_node__f2larva__type(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr
   return type;
 }
 
-u32 funk2__f2larva__type(f2ptr this, f2ptr cause) {
+u32 f2larva__type(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2larva__type(this, cause);

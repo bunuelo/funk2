@@ -181,7 +181,7 @@ f2ptr f2__imagination_link__get_value_from_name_stack__trace_depth(f2ptr cause, 
 }
 
 f2ptr f2__imagination_link__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value) {
-  return f2__imagination_link__get_value_from_name_stack(cause, this, name_stack, doesnt_exist_value, 1);
+  return f2__imagination_link__get_value_from_name_stack__trace_depth(cause, this, name_stack, doesnt_exist_value, 1);
 }
 
 f2ptr f2__imagination_frame__get_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value, int trace_depth) {

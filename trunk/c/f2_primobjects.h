@@ -110,20 +110,22 @@ extern f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr);
 #define f2primobject__is_cons(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cons__symbol)
 
 defprimobject__static_slot__prototype(cons__car);
-#define f2cons__car(                   this, cause)                     primobject__static_slot__accessor(         this, cons__car, cause)
-#define f2cons__car__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, cons__car, cause, value, trace_depth)
-#define f2cons__car__set(              this, cause, value)              primobject__static_slot__set(              this, cons__car, cause, value)
-#define f2cons__car__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, cons__car, cause)
-#define f2cons__car__trace(            this, cause)                     primobject__static_slot__trace(            this, cons__car, cause)
-#define f2cons__car__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, cons__car, cause)
+#define f2cons__car__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__car, cause, trace_depth)
+#define f2cons__car(                   this, cause)                     primobject__static_slot__accessor(             this, cons__car, cause)
+#define f2cons__car__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, cons__car, cause, value, trace_depth)
+#define f2cons__car__set(              this, cause, value)              primobject__static_slot__set(                  this, cons__car, cause, value)
+#define f2cons__car__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, cons__car, cause)
+#define f2cons__car__trace(            this, cause)                     primobject__static_slot__trace(                this, cons__car, cause)
+#define f2cons__car__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, cons__car, cause)
 
 defprimobject__static_slot__prototype(cons__cdr);
-#define f2cons__cdr(                   this, cause)                     primobject__static_slot__accessor(         this, cons__cdr, cause)
-#define f2cons__cdr__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, cons__cdr, cause, value, trace_depth)
-#define f2cons__cdr__set(              this, cause, value)              primobject__static_slot__set(              this, cons__cdr, cause, value)
-#define f2cons__cdr__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, cons__cdr, cause)
-#define f2cons__cdr__trace(            this, cause)                     primobject__static_slot__trace(            this, cons__cdr, cause)
-#define f2cons__cdr__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, cons__cdr, cause)
+#define f2cons__cdr__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__cdr, cause, trace_depth)
+#define f2cons__cdr(                   this, cause)                     primobject__static_slot__accessor(             this, cons__cdr, cause)
+#define f2cons__cdr__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, cons__cdr, cause, value, trace_depth)
+#define f2cons__cdr__set(              this, cause, value)              primobject__static_slot__set(                  this, cons__cdr, cause, value)
+#define f2cons__cdr__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, cons__cdr, cause)
+#define f2cons__cdr__trace(            this, cause)                     primobject__static_slot__trace(                this, cons__cdr, cause)
+#define f2cons__cdr__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, cons__cdr, cause)
 
 
 // deprecated cons macros

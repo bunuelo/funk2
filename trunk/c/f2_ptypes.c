@@ -191,7 +191,7 @@ boolean_t raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, int trace_
 }
 
 boolean_t raw__cause__is_traced(f2ptr cause, f2ptr this) {
-  return raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, 1);
+  return raw__cause__is_traced__trace_depth(cause, this, 1);
 }
 
 void debug__cause__is_imaginary() {

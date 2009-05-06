@@ -195,7 +195,7 @@ boolean_t raw__cause__is_traced(f2ptr cause, f2ptr this) {
 }
 
 void debug__cause__is_imaginary() {
-  printf("\ndebug__cause__is_imaginary here.");
+  //printf("\ndebug__cause__is_imaginary here.");
 }
 
 boolean_t raw__cause__is_imaginary__trace_depth(f2ptr cause, f2ptr this, int trace_depth) {

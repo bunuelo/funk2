@@ -153,7 +153,7 @@ f2ptr f2__imagination_frame__get_slot__trace_depth(f2ptr cause, f2ptr this, f2pt
 }
 
 f2ptr f2__imagination_frame__get_slot(f2ptr cause, f2ptr this, f2ptr name) {
-  return f2__imagination_frame__get_slot(cause, this, name, 1);
+  return f2__imagination_frame__get_slot__trace_depth(cause, this, name, 1);
 }
 
 f2ptr f2__imagination_link__get_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, int trace_depth) {

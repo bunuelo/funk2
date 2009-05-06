@@ -1615,23 +1615,24 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
   } else {
     // cause has imaginary effects
     // we first find imagination_link with the correct name if it exists or we allocate a new imagination_link with the cause's imagination's name.
-    f2ptr imagination_name_stack  = f2cause__imagination_stack(cause, cause);
+    f2ptr the_real_cause_for_really_thinking_imaginarily = nil;
+    f2ptr imagination_name_stack  = f2cause__imagination_stack(cause, the_real_cause_for_really_thinking_imaginarily);
     f2ptr imagination_frame       = __pure__f2traced_array__elt__imagination_frame(this, index);
     f2ptr real_value              = __pure__f2traced_array__elt(this, index);
-    f2ptr name = f2cons__car(imagination_name_stack, cause);
-    f2ptr next = f2cons__cdr(imagination_name_stack, cause);
-    f2ptr slot = f2__imagination_frame__get_slot(cause, imagination_frame, name);
+    f2ptr name = f2cons__car(imagination_name_stack, the_real_cause_for_really_thinking_imaginarily);
+    f2ptr next = f2cons__cdr(imagination_name_stack, the_real_cause_for_really_thinking_imaginarily);
+    f2ptr slot = f2__imagination_frame__get_slot(the_real_cause_for_really_thinking_imaginarily, imagination_frame, name);
     if (! slot) {
-      imagination_frame = raw__imagination_frame__new_with_added_slot__trace_depth(cause, imagination_frame, name, next ? real_value : value, trace_depth - 1);
+      imagination_frame = raw__imagination_frame__new_with_added_slot__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, name, next ? real_value : value, trace_depth - 1);
       __pure__f2traced_array__elt__imagination_frame__set(this, index, imagination_frame);
       if (next) {
-	slot = f2__imagination_frame__get_slot(cause, imagination_frame, name);
+	slot = f2__imagination_frame__get_slot(the_real_cause_for_really_thinking_imaginarily, imagination_frame, name);
 	release__assert(slot != nil, cause, "pfunk2__f2traced_array__elt__set__trace_depth error 1: !(slot != nil)");
       }
     }
     if (next) {
       release__assert(slot != nil, cause, "pfunk2__f2traced_array__elt__set__trace_depth error 2: !(slot != nil)");
-      f2__imagination_link__set_value_from_name_stack__trace_depth(cause, slot, next, value, trace_depth - 1);
+      f2__imagination_link__set_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, slot, next, value, trace_depth - 1);
     }
   }
   ptype_access_num__decr(pool_index);

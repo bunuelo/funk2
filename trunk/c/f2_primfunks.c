@@ -839,9 +839,12 @@ def_pcfunk3(thread__imagine, imagination_name, funk, args, return f2__thread__im
 f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
   f2ptr i_cause = f2__cause__new_imaginary(cause, imagination_name);
   f2ptr test_array = raw__array__new(i_cause, 10);
-  raw__array__elt__set(i_cause, test_array, 0, f2integer__new(cause, 1));
+  raw__array__elt__set(cause,   test_array, 0, f2integer__new(cause, 0));
+  raw__array__elt__set(i_cause, test_array, 1, f2integer__new(cause, 1));
+  f2__print(cause,   cause);
   f2__print(cause,   test_array);
   f2__print(cause,   raw__array__elt(cause,   test_array, 0));
+  f2__print(cause,   i_cause);
   f2__print(i_cause, test_array);
   f2__print(cause,   raw__array__elt(i_cause, test_array, 0));
   return test_array;

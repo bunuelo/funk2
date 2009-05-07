@@ -841,7 +841,9 @@ f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
   f2ptr test_array = raw__array__new(i_cause, 10);
   raw__array__elt__set(i_cause, test_array, 0, f2integer__new(cause, 1));
   f2__print(cause,   test_array);
+  f2__print(cause,   raw__array__elt(cause,   test_array, 0));
   f2__print(i_cause, test_array);
+  f2__print(cause,   raw__array__elt(i_cause, test_array, 0));
   return test_array;
 }
 def_pcfunk1(test_imagine, imagination_name, return f2__test_imagine(this_cause, imagination_name));

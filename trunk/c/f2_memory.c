@@ -162,6 +162,9 @@ void memorypool__init(memorypool_t* pool) {
     char* swap_directory = (__funk2.command_line.swap_directory != NULL) ? __funk2.command_line.swap_directory : "/tmp/";
     f2swapmemory__init_and_alloc(&(pool->swap_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY, swap_directory);
   }
+#elif defined(DYNAMIC_MEMORY)
+  pool->total_global_memory = sizeof(memblock_t) + F2__INITIAL_MEMORY;
+  f2dynamicmemory__init_and_alloc(&(pool->dynamic_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY);
 #elif defined(STATIC_MEMORY)
   pool->total_global_memory = STATIC_MEMORY__BYTE_NUM;
   pool->static_memory = global_static_memory();
@@ -187,6 +190,8 @@ void pool__destroy(int pool_index) {
   
 #if defined(SWAP_MEMORY)
   f2swapmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].swap_memory));
+#elif defined(DYNAMIC_MEMORY)
+  f2dynamicmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].dynamic_memory));
 #elif defined(STATIC_MEMORY)
 #endif
 }
@@ -338,6 +343,12 @@ void memory_test__swap_memory(int pool_index) {
 #endif // SWAP_MEMORY
 }
 
+void memory_test__dynamic_memory(int pool_index) {
+#ifdef DYNAMIC_MEMORY
+  release__assert(__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test: (__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory) failed.");
+#endif // DYNAMIC_MEMORY
+}
+
 void memory_test__byte_num_zero(int pool_index) {
   memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
   memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
@@ -397,6 +408,7 @@ void memory_test(int pool_index) {
 				 printf("\n__funk2.memory.pool[%d].total_global_memory              = %d", pool_index, (int)__funk2.memory.pool[pool_index].total_global_memory);
 				 fflush(stdout));
   memory_test__swap_memory(pool_index);
+  memory_test__dynamic_memory(pool_index);
   memory_test__byte_num_zero(pool_index);
   memory_test__all_known_types(pool_index);
   {
@@ -409,7 +421,7 @@ void memory_test(int pool_index) {
   //printf("...done testing memory in pool[%d].", pool_index); fflush(stdout);
 }
 
-#if defined(SWAP_MEMORY) // can't resize static memory configurations at all.
+#if defined(DYNAMIC_MEMORY) // can't resize static memory configurations at all.
 
 void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
   if(((u64)byte_num) > ((u64)f2ptr__pool_address__max_value)) {
@@ -424,22 +436,22 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
   if (byte_num == __funk2.memory.pool[pool_index].total_global_memory) {return;}
   //ptype_access__lockout_access(1);
   f2size_t         old_total_global_memory      = __funk2.memory.pool[pool_index].total_global_memory;
-  f2swapmemory_t old_swap_memory; memcpy(&old_swap_memory, &(__funk2.memory.pool[pool_index].swap_memory), sizeof(f2swapmemory_t));
+  f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
   //__funk2.memory.pool[pool_index].global_memory_block_data = f2__new_alloc(__funk2.memory.pool[pool_index].global_memory_block_data, old_total_global_memory, byte_num);
-  f2swapmemory__realloc(&(__funk2.memory.pool[pool_index].swap_memory), &old_swap_memory, byte_num);
-  __funk2.memory.pool[pool_index].global_f2ptr_offset = __funk2.memory.pool[pool_index].swap_memory.ptr - 1;
+  f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, byte_num);
+  __funk2.memory.pool[pool_index].global_f2ptr_offset = __funk2.memory.pool[pool_index].dynamic_memory.ptr - 1;
   __funk2.memory.pool[pool_index].total_global_memory = byte_num;
-  if (__funk2.memory.pool[pool_index].swap_memory.ptr != old_swap_memory.ptr) {
+  if (__funk2.memory.pool[pool_index].dynamic_memory.ptr != old_dynamic_memory.ptr) {
     // need to fix pointers (globals, memblock__next(block))
-    s64 byte_diff = (s64)(__funk2.memory.pool[pool_index].swap_memory.ptr - old_swap_memory.ptr);
+    s64 byte_diff = (s64)(__funk2.memory.pool[pool_index].dynamic_memory.ptr - old_dynamic_memory.ptr);
     if (__funk2.memory.pool[pool_index].used_memory_tree.head)  {__funk2.memory.pool[pool_index].used_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].used_memory_tree.head) + byte_diff);}
     if (__funk2.memory.pool[pool_index].free_memory_tree.head)  {__funk2.memory.pool[pool_index].free_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].free_memory_tree.head) + byte_diff);}
-    if (__funk2.memory.global_environment_ptr >= old_swap_memory.ptr &&
-	__funk2.memory.global_environment_ptr <  old_swap_memory.ptr + old_total_global_memory) {
+    if (__funk2.memory.global_environment_ptr >= old_dynamic_memory.ptr &&
+	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
-    memblock_t* iter = from_ptr(__funk2.memory.pool[pool_index].swap_memory.ptr);
-    memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].swap_memory.ptr)) + old_total_global_memory);
+    memblock_t* iter = from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr);
+    memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr)) + old_total_global_memory);
     memblock_t* last = NULL;
     while(iter < end_of_blocks) {
       if (iter->rbt_node.parent) {iter->rbt_node.parent = (rbt_node_t*)(((u8*)(iter->rbt_node.parent) + byte_diff));}
@@ -469,7 +481,7 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
     }
   } else {
     if (byte_num > old_total_global_memory) {
-      memblock_t* block = (memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].swap_memory.ptr)) + old_total_global_memory);
+      memblock_t* block = (memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr)) + old_total_global_memory);
       memblock__byte_num(block) = (byte_num - old_total_global_memory);
       block->used     = 0;
       block->gc_touch = 0;
@@ -483,7 +495,7 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
   //ptype_access__unlockout_access();
   debug_memory_test(pool_index, 1);
 }
-#endif // SWAP_MEMORY
+#endif // DYNAMIC_MEMORY
 
 void clear_all_gc_touch_flags(int pool_index) {
   debug_memory_test(pool_index, 3);
@@ -1027,12 +1039,12 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
   status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num));
   //#endif // DEBUG_MEMORY
-#ifdef SWAP_MEMORY
+#ifdef DYNAMIC_MEMORY
   pool__change_total_memory_available(pool_index, __funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num);
   block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
-#endif // SWAP_MEMORY
+#endif // DYNAMIC_MEMORY
   if (block) {return block;}  
-  // shouldn't get here if we have SWAP_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
+  // shouldn't get here if we have DYNAMIC_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
   printf("\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
   error(nil, "find_free_memory_for_new_memblock error: shouldn't get here.\n");
   return to_ptr(NULL);
@@ -1686,11 +1698,11 @@ int raw__memory_image__load(char* filename) {
 	safe_fread(&size_i, sizeof(f2size_t), 1, fptr);
 	__funk2.memory.pool[pool_index].next_unique_block_id = size_i;
 	
-#ifdef SWAP_MEMORY
-	f2swapmemory_t old_swap_memory; memcpy(&old_swap_memory, &(__funk2.memory.pool[pool_index].swap_memory), sizeof(f2swapmemory_t));
-	f2swapmemory__realloc(&(__funk2.memory.pool[pool_index].swap_memory), &old_swap_memory, __funk2.memory.pool[pool_index].total_global_memory);
+#ifdef DYNAMIC_MEMORY
+	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
+	f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, __funk2.memory.pool[pool_index].total_global_memory);
 	safe_fread(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
-#endif // SWAP_MEMORY
+#endif // DYNAMIC_MEMORY
 
 #ifdef STATIC_MEMORY
 	safe_fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);

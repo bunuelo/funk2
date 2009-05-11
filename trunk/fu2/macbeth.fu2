@@ -2829,7 +2829,7 @@
       [while iter
 	[let [[subexp [car iter]]]
 	  [cast_exp-read subexp]]
-	[set iter [cdr iter]]]]]]
+	[= iter [cdr iter]]]]]]
 
 [defunk act-read [this]
   [format stdout '\nact-read not yet implemented.']
@@ -2862,5 +2862,5 @@
       [while iter
 	[let [[subexp [car iter]]]
 	  [play_exp-read subexp]]
-	[set iter [cdr iter]]]]]]
+	[= iter [cdr iter]]]]]]
 

@@ -104,7 +104,7 @@ funk2_server_objs = \
   c/f2_socket_client.o \
   c/f2_socket_server.o \
   c/f2_status.o \
-  c/f2_dynamicmemory.o \
+  c/f2_dynamic_memory.o \
   c/f2_termios.o \
   c/f2_thought_process.o \
   c/f2_thread.o \
@@ -166,7 +166,7 @@ funk2_headers = \
   c/f2_signal.h \
   c/f2_socket.h \
   c/f2_status.h \
-  c/f2_dynamicmemory.h \
+  c/f2_dynamic_memory.h \
   c/f2_termios.h \
   c/f2_thought_process.h \
   c/f2_thread.h \

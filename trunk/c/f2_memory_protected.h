@@ -30,7 +30,7 @@
 #  include "f2_staticmemory.h"
 #endif // F2__ARCH_SENSOR_NODE
 
-#include "f2_swapmemory.h"
+//#include "f2_swapmemory.h"
 #include "f2_dynamic_memory.h"
 #include <pthread.h>
 
@@ -71,7 +71,7 @@ typedef struct memorypool_s {
 #elif defined(SWAP_MEMORY)
   f2swapmemory_t    swap_memory;
 #elif defined(DYNAMIC_MEMORY)
-  f2dynamicmemory_t    dynamic_memory;
+  f2dynamicmemory_t dynamic_memory;
 #endif 
   rbt_tree_t        used_memory_tree;
   rbt_tree_t        free_memory_tree; // free memory does grow on trees!

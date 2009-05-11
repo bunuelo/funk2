@@ -83,7 +83,7 @@ typedef struct memorypool_s {
 #if defined(SWAP_MEMORY)
 #  define memorypool__memory__ptr(this) ((this)->swap_memory.ptr)
 #elif defined(DYNAMIC_MEMORY)
-#  define memorypool__memory__ptr(this) ((this)->dynamic_memory->ptr)
+#  define memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
 #elif defined(STATIC_MEMORY)
 #  define memorypool__memory__ptr(this) ((this)->static_memory->ptr)
 #else

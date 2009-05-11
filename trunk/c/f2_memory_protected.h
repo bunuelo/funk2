@@ -67,7 +67,7 @@ typedef struct memorypool_s {
   f2size_t          total_free_memory;
 #if defined(STATIC_MEMORY)
   f2staticmemory_t* static_memory;
-#if defined(DYNAMIC_MEMORY)
+#elif defined(DYNAMIC_MEMORY)
   f2dynamicmemory_t dynamic_memory;
 #endif 
   rbt_tree_t        used_memory_tree;

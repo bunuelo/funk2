@@ -2816,9 +2816,10 @@
   [format stdout '\ncast_exp-read here.']
   [if [not [cast_exp? this]]
       [error `run-time `reading-cast_exp]
-    [let [[command [car this]]]
-      [cond [[eq command `character] [character-read this]]
-	    ]]]]
+    [cond [[string? this] nil]
+	  [[cons?   this] [let [[command [car this]]]
+			    [cond [[eq command `character] [character-read this]]
+				  ]]]]]]
 
 [defunk cast? [exp] [and exp [cons? exp] [eq [car exp] `cast]]]
 [defunk cast-read [this]

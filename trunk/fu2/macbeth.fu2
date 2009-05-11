@@ -1577,7 +1577,7 @@
 				      [say macbeth ['Come, we\'ll to sleep. My strange and self-abuse  '
 						    'Is the initiate fear that wants hard use.'
 						    'We are yet but young in deed.']]
-				      [exit-all]]]
+				      [exit_all]]]
 		       [scene [number 5]
 			      [setting 'A heath. Thunder.']
 			      [script [enter hecate]
@@ -1622,7 +1622,7 @@
 						   'Sits in a foggy cloud and stays for me.']]
 				      [exit hecate]
 				      [say first_witch ['Come, let\'s make haste; she\'ll soon be back again.']]
-				      [exit-all]]]
+				      [exit_all]]]
 		       [scene [number 6]
 			      [setting 'Forres. The palace.']
 			      [script [enter lennox first_lord]

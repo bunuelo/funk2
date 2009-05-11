@@ -1149,7 +1149,7 @@
 						    'The sweeter welcome, we will keep ourself'
 						    'Till supper time alone. While then, God be with you!']]
 				      'Exeunt all but Macbeth and an Attendant.'
-				      [exit_all_but macbeth macbeth-attendant]
+				      [exit_all_except macbeth macbeth-attendant]
 				      [say macbeth ['Sirrah, a word with you. Attend those men'
 						    'Our pleasure?']]
 				      [say macbeth-attendant ['They are, my lord, without the palace gate.']]

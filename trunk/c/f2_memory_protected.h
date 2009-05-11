@@ -30,7 +30,6 @@
 #  include "f2_staticmemory.h"
 #endif // F2__ARCH_SENSOR_NODE
 
-//#include "f2_swapmemory.h"
 #include "f2_dynamic_memory.h"
 #include <pthread.h>
 
@@ -68,9 +67,7 @@ typedef struct memorypool_s {
   f2size_t          total_free_memory;
 #if defined(STATIC_MEMORY)
   f2staticmemory_t* static_memory;
-#elif defined(SWAP_MEMORY)
-  f2swapmemory_t    swap_memory;
-#elif defined(DYNAMIC_MEMORY)
+#if defined(DYNAMIC_MEMORY)
   f2dynamicmemory_t dynamic_memory;
 #endif 
   rbt_tree_t        used_memory_tree;
@@ -80,14 +77,12 @@ typedef struct memorypool_s {
   uint              next_unique_block_id;
 } memorypool_t;
 
-#if defined(SWAP_MEMORY)
-#  define memorypool__memory__ptr(this) ((this)->swap_memory.ptr)
-#elif defined(DYNAMIC_MEMORY)
+#if defined(DYNAMIC_MEMORY)
 #  define memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
 #elif defined(STATIC_MEMORY)
 #  define memorypool__memory__ptr(this) ((this)->static_memory->ptr)
 #else
-#  error SWAP_MEMORY or DYNAMIC_MEMORY or STATIC_MEMORY must be defined.
+#  error DYNAMIC_MEMORY or STATIC_MEMORY must be defined.
 #endif
 
 #include "f2_ptypes_memory.h"

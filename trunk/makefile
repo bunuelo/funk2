@@ -275,11 +275,6 @@ clean-o:
 	echo "Removing:"; ls c/*.o; echo ""
 	rm -f c/*.o
 
-clean-swp:
-	echo "Removing:"; ls f2swp/*.f2swp; echo ""
-	rm -f /tmp/*.f2swp
-	rm -f f2swp/*.f2swp
-
 clean-trace:
 	eccho "Removing:"; ls funk2_trace.log; echo ""
 	rm -f funk2_trace.log
@@ -290,12 +285,11 @@ clean-install:
 	rm -f $(install__bootstrap__img)
 
 
-clean6:        clean-config
-clean5: clean6 clean--bootstrap-repl.img
-clean4: clean5 clean-img
-clean3: clean4 clean-o
-clean2: clean3 clean-trace
-clean1: clean2 clean-swp
+clean5:        clean-config
+clean4: clean5 clean--bootstrap-repl.img
+clean3: clean4 clean-img
+clean2: clean3 clean-o
+clean1: clean2 clean-trace
 clean0: clean1 clean-install
 
 install-silent: $(compile__funk2)

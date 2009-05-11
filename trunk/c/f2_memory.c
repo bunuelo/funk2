@@ -156,13 +156,7 @@ void memorypool__init(memorypool_t* pool) {
   pool->should_run_gc                        = 0;
   pool->total_allocated_memory_since_last_gc = 0;
   pool->next_unique_block_id                 = 0;
-#if defined(SWAP_MEMORY)
-  pool->total_global_memory = sizeof(memblock_t) + F2__INITIAL_MEMORY;
-  {
-    char* swap_directory = (__funk2.command_line.swap_directory != NULL) ? __funk2.command_line.swap_directory : "/tmp/";
-    f2swapmemory__init_and_alloc(&(pool->swap_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY, swap_directory);
-  }
-#elif defined(DYNAMIC_MEMORY)
+#if defined(DYNAMIC_MEMORY)
   pool->total_global_memory = sizeof(memblock_t) + F2__INITIAL_MEMORY;
   f2dynamicmemory__init_and_alloc(&(pool->dynamic_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY);
 #elif defined(STATIC_MEMORY)
@@ -188,9 +182,7 @@ void pool__destroy(int pool_index) {
   ptype_access__lockout_access(pool_index, 0);
   memory_mutex__lock(pool_index);
   
-#if defined(SWAP_MEMORY)
-  f2swapmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].swap_memory));
-#elif defined(DYNAMIC_MEMORY)
+#if defined(DYNAMIC_MEMORY)
   f2dynamicmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].dynamic_memory));
 #elif defined(STATIC_MEMORY)
 #endif
@@ -337,12 +329,6 @@ f2size_t total_free_memory(int pool_index) {
   return free_memory_count;
 }
 
-void memory_test__swap_memory(int pool_index) {
-#ifdef SWAP_MEMORY
-  release__assert(__funk2.memory.pool[pool_index].swap_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test: (__funk2.memory.pool[pool_index].swap_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory) failed.");
-#endif // SWAP_MEMORY
-}
-
 void memory_test__dynamic_memory(int pool_index) {
 #ifdef DYNAMIC_MEMORY
   release__assert(__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test: (__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory) failed.");
@@ -407,7 +393,6 @@ void memory_test(int pool_index) {
 				 printf("\ntotal_used_memory(%d) + total_free_memory() = %d", pool_index, (int)free_memory_num + used_memory_num);
 				 printf("\n__funk2.memory.pool[%d].total_global_memory              = %d", pool_index, (int)__funk2.memory.pool[pool_index].total_global_memory);
 				 fflush(stdout));
-  memory_test__swap_memory(pool_index);
   memory_test__dynamic_memory(pool_index);
   memory_test__byte_num_zero(pool_index);
   memory_test__all_known_types(pool_index);
@@ -1522,21 +1507,6 @@ f2ptr ptr_to_f2ptr__slow(ptr p) {
   }
   error(nil, "ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
-
-/*
-void gfunkptr__init_from_ptr__slow(ptr p, gfunkptr_t* dest) {
-  if (p == NULL) {gfunkptr__init(dest, 0, 0, 0);}
-  int i;
-  for (i = 0; i < memory_pool_num; i ++) {
-    if ((u8*)p >= (u8*)__funk2.memory.pool[i].swap_memory.ptr &&
-	(u8*)p <  (u8*)__funk2.memory.pool[i].swap_memory.ptr + __funk2.memory.pool[i].total_global_memory) {
-      gfunkptr__init(dest, 0, i, ((u8*)p) - ((u8*)__funk2.memory.pool[i].global_f2ptr_offset));
-      return;
-    }
-  }
-  error(nil, "gfunkptr__init_from_ptr__slow error: p is not in any local memory pool.");
-}
-*/
 
 // precondition: each and every memory pool's global_memory_mutex is locked!
 void rebuild_memory_info_from_image() {

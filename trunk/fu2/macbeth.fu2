@@ -2846,6 +2846,7 @@
   [if [not [play_exp? this]]
       [error `run-time `reading-play_exp]
     [let [[command [car this]]]
+      [format stdout '\nplay_exp-read command=' command]
       [cond [[eq command `date]   nil]
 	    [[eq command `title]  nil]
 	    [[eq command `author] nil]

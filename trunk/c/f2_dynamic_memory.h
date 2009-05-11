@@ -32,7 +32,7 @@ typedef struct f2dynamicmemory_s {
 
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num);
 void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this);
-void f2dynamicmemory__realloc(f2dynamicmemory_t* new_swapmemory, f2swapmemory_t* old_swapmemory, f2size_t byte_num);
+void f2dynamicmemory__realloc(f2dynamicmemory_t* new_swapmemory, f2dynamicmemory_t* old_swapmemory, f2size_t byte_num);
 
 #endif // F2__DYNAMIC_MEMORY__H
 

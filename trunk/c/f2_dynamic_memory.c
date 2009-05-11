@@ -36,7 +36,7 @@ void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
   this->ptr      = NULL;
 }
 
-void f2dynamicmemory__realloc(f2dynamicmemory_t* new_swapmemory, f2swapmemory_t* old_swapmemory, f2size_t byte_num) {
+void f2dynamicmemory__realloc(f2dynamicmemory_t* new_swapmemory, f2dynamicmemory_t* old_swapmemory, f2size_t byte_num) {
   this->ptr = realloc(this->ptr, byte_num);
   if (this->ptr == NULL) {
     perror("realloc");

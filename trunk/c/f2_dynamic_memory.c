@@ -24,7 +24,7 @@
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
   this->byte_num = byte_num;
   this->ptr      = to_ptr(malloc(byte_num));
-  if (this->ptr == NULL) {
+  if (from_ptr(this->ptr) == NULL) {
     perror("malloc");
     exit(-1);
   }
@@ -37,7 +37,7 @@ void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
 }
 
 void f2dynamicmemory__realloc(f2dynamicmemory_t* new_swapmemory, f2dynamicmemory_t* old_swapmemory, f2size_t byte_num) {
-  this->ptr = realloc(from_ptr(this->ptr), byte_num);
+  this->ptr = to_ptr(realloc(from_ptr(this->ptr), byte_num));
   if (from_ptr(this->ptr) == NULL) {
     perror("realloc");
     exit(-1);

@@ -2833,6 +2833,16 @@
 	[= iter [cdr iter]]]]]]
 
 
+[defunk enter? [exp] [and exp [cons? exp] [eq [car exp] `enter]]]
+[defunk enter-read [this]
+  [if [not [enter? this]]
+      [error `run-time `reading-enter]
+    [let [[iter [cdr this]]]
+      [while iter
+	[let [[who [car iter]]]
+	  [format stdout '\nenter who=' who]]
+	[= iter [cdr iter]]]]]]
+
 [defunk script_exp?     [exp] [and exp [or [string? exp]
 					   [and [cons? exp] [let [[command [car exp]]]
 							      [or [eq command `enter]
@@ -2847,7 +2857,7 @@
       [error `run-time `reading-script_exp]
     [cond [[string? this] nil]
 	  [[cons?   this] [let [[command [car this]]]
-			    [cond [[eq command `enter]           nil]
+			    [cond [[eq command `enter]           [enter-read this]]
 				  [[eq command `exit]            nil]
 				  [[eq command `exit_all]        nil]
 				  [[eq command `exit_all_except] nil]

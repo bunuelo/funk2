@@ -49,7 +49,7 @@
   [load 'fu2/ioctl.fu2']]
 [if load-utilities [load-utilities]]
 
-[globalize load-basic-ai t]
+[globalize load-basic-ai nil]
 [defunk load-basic-ai []
   `[load 'fu2/link-grammar-wrapper.fu2']
    [load 'fu2/conceptnet.fu2']

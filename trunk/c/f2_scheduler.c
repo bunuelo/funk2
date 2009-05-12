@@ -289,6 +289,7 @@ void f2__scheduler__yield(f2ptr cause) {
     //printf("\nscheduler__yield: processor %d (%d) sleeping (thread_num: %d)", this_pthread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
     //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
     sched_yield();
+    f2__sleep(1);
     pool__try_gc(this_pthread__pool_index());
   }
 }

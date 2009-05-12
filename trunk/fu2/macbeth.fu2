@@ -2831,7 +2831,9 @@
 
 [defunk context-lookup_character [this name]
   [let [[characters [context-characters this]]]
+    [format stdout '\ncontext-lookup_character name=' name '\n']
     [let [[character [frame-lookup_var_value characters name nil]]]
+      [format stdout '\ncharacter=' character '\n']
       [if [null character]
 	  [prog [format stdout '\ncharacter ' name ' not defined!\n\n']
 		[error `run-time `[character-not-defined ,name]]]

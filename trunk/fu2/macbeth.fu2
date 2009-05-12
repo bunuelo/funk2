@@ -2833,7 +2833,7 @@
   [let [[characters [context-characters this]]]
     [let [[character [frame-lookup_var_value characters name nil]]]
       [if [null character]
-	  [prog [format stdout '\ncharacter ' name ' not defined!']
+	  [prog [format stdout '\ncharacter ' name ' not defined!\n\n']
 		[error `run-time `[character-not-defined ,name]]]
 	character]]]]
 

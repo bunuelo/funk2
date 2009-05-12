@@ -2849,10 +2849,6 @@
   [let [[character [context-lookup_character this name]]]
     [character-in_scene-set character value]]]
 
-[defunk context-lookup_character [this name]
-  [let [[characters [context-characters this]]]
-    [frame-lookup_var_value characters name nil]]]
-
 
 
 

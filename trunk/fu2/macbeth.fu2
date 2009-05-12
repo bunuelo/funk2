@@ -2831,7 +2831,7 @@
 
 [defunk context-lookup_character [this name]
   [let [[characters [context-characters this]]]
-    [let [[character [frame-lookup_var_value characters name]]]
+    [let [[character [frame-lookup_var_value characters name nil]]]
       [if [null character]
 	  [error `run-time `[character-not-defined ,name]]
 	character]]]]
@@ -2846,7 +2846,7 @@
 
 [defunk context-lookup_character [this name]
   [let [[characters [context-characters this]]]
-    [frame-lookup_var_value characters name]]]
+    [frame-lookup_var_value characters name nil]]]
 
 
 

@@ -2914,7 +2914,7 @@
 	[= iter [cdr iter]]]]]]
 
 [defunk context-characters-exit_all [this]
-  
+  [format stdout '\ncontext-characters-exit_all not yet implemented.']
   ]
 
 [defunk exit_all? [exp] [and exp [cons? exp] [eq [car exp] `exit_all]]]

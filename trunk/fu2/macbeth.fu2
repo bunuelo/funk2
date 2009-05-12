@@ -2990,7 +2990,8 @@
       [while iter
 	[let [[subexp [car iter]]]
 	  [scene_exp-read_in_context subexp context]]
-	[= iter [cdr iter]]]]]]
+	[= iter [cdr iter]]]
+      [context-characters-exit_all context]]]]
 
 [defunk act_exp?     [exp] [and exp [cons? exp] [let [[command [car exp]]]
 						  [or [eq command `number]

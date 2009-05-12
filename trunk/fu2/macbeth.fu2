@@ -49,6 +49,7 @@
 			[character first_lord           'A lord']
 			[character second_lord          'A lord']
 			[character soldiers             'Soldiers.']
+			[character thanes               'Thanes.']
 			[character malcolm-army         'Malcolm\'s army.']
 			'Lords, Gentlemen, Officers, Soldiers, Murtherers, Attendants, and Messengers']
 		  [act [number 1]

@@ -273,6 +273,8 @@ void* processor__start_routine(void *ptr) {
     f2ptr did_something = nil;
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);
+      f2__sleep(1);
+      sched_yield();
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_pthread__pool_index()); fflush(stdout);
     //printf("\nprocessor__start_routine: processor %d (%d) sleeping (thread_num: %d)", this_pthread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);

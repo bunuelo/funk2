@@ -2919,7 +2919,7 @@
 
 [defunk context-characters-exit_all [this]
   [let [[character_names [context-character_names this]]]
-    [format stdout '\ncontext-characters-exit_all character_names=' character_names]
+    [format stdout '\ncontext-characters-exit_all here.']
     [let [[iter character_names]]
       [while iter
 	[let [[name [car iter]]]

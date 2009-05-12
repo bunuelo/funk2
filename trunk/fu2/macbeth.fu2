@@ -2830,18 +2830,14 @@
     [frame-add_var_value characters name [character-new name description]]]]
 
 [defunk context-lookup_character [this name]
-  [format stdout '\ncontext-lookup_character here.\n']
   [let [[characters [context-characters this]]]
-    [format stdout '\ncontext-lookup_character name=' name '\n']
     [let [[character [frame-lookup_var_value characters name nil]]]
-      [format stdout '\ncharacter=' character '\n']
       [if [null character]
 	  [prog [format stdout '\ncharacter ' name ' not defined!\n\n']
 		[error `run-time `[character-not-defined ,name]]]
 	character]]]]
 
 [defunk context-character-in_scene [this name]
-  [format stdout '\ncontext-character-in_scene here.\n']
   [let [[character [context-lookup_character this name]]]
     [character-in_scene character]]]
 
@@ -2854,7 +2850,6 @@
 
 [defunk character? [exp] [and exp [cons? exp] [eq [car exp] `character]]]
 [defunk character-read_in_context [this context]
-  [format stdout '\ncharacter-read_in_context here.']
   [if [not [character? this]]
       [error `run-time `reading-character]
     [let [[name        [second this]]
@@ -2866,7 +2861,6 @@
 							[or [eq command `character]
 							    ]]]]]]
 [defunk cast_exp-read_in_context [this context]
-  [format stdout '\ncast_exp-read_in_context here.']
   [if [not [cast_exp? this]]
       [error `run-time `reading-cast_exp]
     [cond [[string? this] nil]
@@ -2876,7 +2870,6 @@
 
 [defunk cast? [exp] [and exp [cons? exp] [eq [car exp] `cast]]]
 [defunk cast-read_in_context [this context]
-  [format stdout '\ncast-read_in_context here.']
   [if [not [cast? this]]
       [error `run-time `reading-cast]
     [let [[iter [cdr this]]]
@@ -2899,9 +2892,7 @@
     [let [[iter [cdr this]]]
       [while iter
 	[let [[who [car iter]]]
-	  [format stdout '\nenter who=' who]
-	  [context-character-enter context who]
-	  ]
+	  [context-character-enter context who]]
 	[= iter [cdr iter]]]]]]
 
 [defunk script_exp?     [exp] [and exp [or [string? exp]

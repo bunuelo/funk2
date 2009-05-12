@@ -1740,7 +1740,7 @@
 						   'Like elves and fairies in a ring,'
 						   'Enchanting all that you put in.']]
 				      'Music and a song, "Black spirits."'
-				      [exit hecate]
+				      'Hecate retires.'
 				      [say second_witch ['By the pricking of my thumbs,'
 							 'Something wicked this way comes.'
 							 'Open, locks,'

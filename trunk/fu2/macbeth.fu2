@@ -2830,6 +2830,7 @@
     [frame-add_var_value characters name [character-new name description]]]]
 
 [defunk context-lookup_character [this name]
+  [format stdout '\ncontext-lookup_character here.\n']
   [let [[characters [context-characters this]]]
     [format stdout '\ncontext-lookup_character name=' name '\n']
     [let [[character [frame-lookup_var_value characters name nil]]]
@@ -2840,6 +2841,7 @@
 	character]]]]
 
 [defunk context-character-in_scene [this name]
+  [format stdout '\ncontext-character-in_scene here.\n']
   [let [[character [context-lookup_character this name]]]
     [character-in_scene character]]]
 
@@ -2888,6 +2890,7 @@
 	[= iter [cdr iter]]]]]]
 
 [defunk context-character-enter [this name]
+  [format stdout '\ncontext-character-enter here.']
   [let [[in_scene [context-character-in_scene this name]]]
     [if in_scene
 	[error `run-time `character-already-in_scene]

@@ -1390,7 +1390,7 @@
 				      [exit_all]]]
 		       [scene [number 4]
 			      [setting 'A Hall in the palace. A banquet prepared.']
-			      [script [enter macbeth lady_macbeth ross lennox lords macbeth-attendant]
+			      [script [enter macbeth lady_macbeth ross lennox first_lord second_lord macbeth-attendant]
 				      
 				      [say macbeth ['You know your own degrees; sit down. At first'
 						    'And last the hearty welcome.']]

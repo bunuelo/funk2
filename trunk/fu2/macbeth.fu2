@@ -2831,7 +2831,10 @@
 
 [defunk context-lookup_character [this name]
   [let [[characters [context-characters this]]]
-    [frame-lookup_var_value characters name]]]
+    [let [[character [frame-lookup_var_value characters name]]]
+      [if [null character]
+	  [error `run-time `[character-not-defined ,name]]
+	character]]]]
 
 [defunk context-character-in_scene [this name]
   [let [[character [context-lookup_character this name]]]

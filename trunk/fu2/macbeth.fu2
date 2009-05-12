@@ -5,6 +5,7 @@
 		  [title 'THE TRAGEDY OF MACBETH']
 		  [author 'William Shakespeare']
 		  [cast [character duncan              'King of Scotland']
+			[character duncan-attendants   'Duncan\'s attendants.'
 			[character macbeth             'Thane of Glamis and Cawdor, a general in the King\'s army']
 			[character lady_macbeth        'his wife']
 			[character macduff             'Thane of Fife, a nobleman of Scotland']
@@ -331,7 +332,7 @@
 		       [scene [number 4]
 			      [setting 'Forres. The palace.']
 			      [script 'Flourish.'
-				      [enter duncan malcolm donalbain lennox attendants]
+				      [enter duncan malcolm donalbain lennox duncan-attendants]
 				      
 				      [say duncan ['Is execution done on Cawdor? Are not'
 						   'Those in commission yet return\'d?']]
@@ -2921,7 +2922,8 @@
     [let [[iter character_names]]
       [while iter
 	[let [[name [car iter]]]
-	  [context-character-exit this name]]
+	  [if [context-character-in_scene this name]
+	      [context-character-exit this name]]]
 	[= iter [cdr iter]]]]]]
 
 [defunk exit_all? [exp] [and exp [cons? exp] [eq [car exp] `exit_all]]]

@@ -1910,7 +1910,7 @@
 				      [exit_all]]]
 		       [scene [number 2]
 			      [setting 'Fife. Macduff\'s castle.']
-			      [script [enter lady_macduff son ross]
+			      [script [enter lady_macduff macduff-son ross]
 				      
 				      [say lady_macduff ['What had he done, to make him fly the land?']]
 				      [say ross ['You must have patience, madam.']]

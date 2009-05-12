@@ -8,7 +8,6 @@
 			[character duncan-attendants    'Duncan\'s attendants.']
 			[character macbeth              'Thane of Glamis and Cawdor, a general in the King\'s army']
 			[character macbeth-servant      'Macbeth\'s servant.']
-			[character macbeth-attendant    'Macbeth\'s attendant.']
 			[character lady_macbeth         'his wife']
 			[character lady_macbeth-servant 'Lady Macbeth\'s servant.']
 			[character macduff              'Thane of Fife, a nobleman of Scotland']
@@ -1118,7 +1117,7 @@
 						   'And set me up in hope? But hush, no more.']]
 				      
 				      'Sennet sounds.'
-				      [enter macbeth lady_macbeth lennox ross macbeth-attendant]
+				      [enter macbeth lady_macbeth lennox ross macbeth-servant]
 				      'Enter Macbeth as King, Lady Macbeth as Queen, Lennox, Ross, Lords, Ladies, and Attendants.'
 				      [say macbeth ['Here\'s our chief guest.']]
 				      [say lady_macbeth ['If he had been forgotten,'
@@ -1159,12 +1158,12 @@
 						    'The sweeter welcome, we will keep ourself'
 						    'Till supper time alone. While then, God be with you!']]
 				      'Exeunt all but Macbeth and an Attendant.'
-				      [exit_all_except macbeth macbeth-attendant]
+				      [exit_all_except macbeth macbeth-servant]
 				      [say macbeth ['Sirrah, a word with you. Attend those men'
 						    'Our pleasure?']]
-				      [say macbeth-attendant ['They are, my lord, without the palace gate.']]
+				      [say macbeth-servant ['They are, my lord, without the palace gate.']]
 				      [say macbeth ['Bring them before us.']]
-				      [exit macbeth-attendant]
+				      [exit macbeth-servant]
 				      [say macbeth ['To be thus is nothing,'
 						    'But to be safely thus. Our fears in Banquo.'
 						    'Stick deep, and in his royalty of nature'
@@ -1191,10 +1190,10 @@
 						    'Rather than so, come, Fate, into the list,'
 						    'And champion me to the utterance! Who\'s there?']]
 				      
-				      [enter macbeth-attendant first_murtherer second_murtherer]
+				      [enter macbeth-servant first_murtherer second_murtherer]
 				      
 				      [say macbeth ['Now go to the door, and stay there till we call.']]
-				      [exit macbeth-attendant]
+				      [exit macbeth-servant]
 				      [say macbeth ['Was it not yesterday we spoke together?']]
 				      [say first_murtherer ['It was, so please your Highness.']]
 				      [say macbeth ['Well then, now'
@@ -1394,7 +1393,7 @@
 				      [exit_all]]]
 		       [scene [number 4]
 			      [setting 'A Hall in the palace. A banquet prepared.']
-			      [script [enter macbeth lady_macbeth ross lennox first_lord second_lord macbeth-attendant]
+			      [script [enter macbeth lady_macbeth ross lennox first_lord second_lord macbeth-servant]
 				      
 				      [say macbeth ['You know your own degrees; sit down. At first'
 						    'And last the hearty welcome.']]
@@ -2440,7 +2439,7 @@
 				      [exit_all]]]
 		       [scene [number 3]
 			      [setting 'Dunsinane. A room in the castle.']
-			      [script [enter macbeth scottish_doctor macbeth-attendant]
+			      [script [enter macbeth scottish_doctor macbeth-servant]
 				      
 				      [say macbeth ['Bring me no more reports; let them fly all!'
 						    'Till Birnam Wood remove to Dunsinane'
@@ -2453,20 +2452,20 @@
 						    'The mind I sway by and the heart I bear'
 						    'Shall never sag with doubt nor shake with fear.']]
 				      
-				      [enter servant]
+				      [enter macbeth-servant]
 				      
 				      [say macbeth ['The devil damn thee black, thou cream-faced loon!'
 						    'Where got\'st thou that goose look?']]
-				      [say servant ['There is ten thousand-']]
+				      [say macbeth-servant ['There is ten thousand-']]
 				      [say macbeth ['Geese, villain?']]
-				      [say servant ['Soldiers, sir.']]
+				      [say macbeth-servant ['Soldiers, sir.']]
 				      [say macbeth ['Go prick thy face and over-red thy fear',
 						    'Thou lily-liver\'d boy. What soldiers, patch?'
 						    'Death of thy soul! Those linen cheeks of thine'
 						    'Are counselors to fear. What soldiers, whey-face?']]
-				      [say servant ['The English force, so please you.']]
+				      [say macbeth-servant ['The English force, so please you.']]
 				      [say macbeth ['Take thy face hence.']]
-				      [exit servant]
+				      [exit macbeth-servant]
 				      [say macbeth ['Seyton-I am sick at heart,'
 						    'When I behold- Seyton, I say!- This push'
 						    'Will cheer me ever or disseat me now.'

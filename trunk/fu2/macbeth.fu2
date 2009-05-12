@@ -96,7 +96,7 @@
 						     'But the Norweyan lord, surveying vantage,'
 						     'With furbish\'d arms and new supplies of men,'
 						     'Began a fresh assault.']]
-				      [say duncan ['Dismay\'d not this  '
+				      [say duncan ['Dismay\'d not this'
 						   'Our captains, Macbeth and Banquo.?']]
 				      [say sergeant ['Yes,'
 						     'As sparrows eagles, or the hare the lion.'
@@ -2799,6 +2799,37 @@
 				      'Flourish.'
 				      [exit_all]]]]]]
 
+[defunk context-new []
+  [let [[this [frame-new]]]
+    [frame-add_var_value this `characters           [frame-new]]
+    [frame-add_var_value this `current_act_number   nil]
+    [frame-add_var_value this `current_scene_number nil]
+    [frame-add_var_value this `characters_present   nil]
+    this]]
+[defmetro context-characters               [this]       `[frame-lookup_var_value ,this `characters]]
+[defmetro context-characters-set           [this value] `[frame-var_value-set    ,this `characters ,value]]
+[defmetro context-current_act_number       [this]       `[frame-lookup_var_value ,this `current_act_number]]
+[defmetro context-current_act_number-set   [this value] `[frame-var_value-set    ,this `current_act_number ,value]]
+[defmetro context-current_scene_number     [this]       `[frame-lookup_var_value ,this `current_scene_number]]
+[defmetro context-current_scene_number-set [this value] `[frame-var_value-set    ,this `current_scene_number ,value]]
+[defmetro context-characters_present       [this]       `[frame-lookup_var_value ,this `characters_present]]
+[defmetro context-characters_present-set   [this value] `[frame-var_value-set    ,this `characters_present ,value]]
+
+[defunk character-new [name description]
+  [format stdout '\ncharacter-new: name=' name ' description=' description]]]]
+  [let [[this [frame-new]]]
+    [frame-add_var_value this `name        name]
+    [frame-add_var_value this `description description]
+    this]]
+
+[defunk context-define_character [this name description]
+  [let [[characters [context-characters this]]]
+    [frame-add_var_value characters name [character-new name description]]]]
+
+[defunk context-lookup_character [this name]
+  [let [[characters [context-characters this]]]
+    [frame-lookup_var_value characters name]]]
+
 [defunk character? [exp] [and exp [cons? exp] [eq [car exp] `character]]]
 [defunk character-read_in_context [this context]
   [format stdout '\ncharacter-read_in_context here.']
@@ -2806,7 +2837,7 @@
       [error `run-time `reading-character]
     [let [[name        [second this]]
 	  [description [third this]]]
-      [format stdout '\ncharacter: name=' name ' description=' description]]]]
+      [context-define_character context name description]]]]
 
 [defunk cast_exp?     [exp] [and exp [or [string? exp]
 					 [and [cons? exp] [let [[command [car exp]]]
@@ -2952,8 +2983,7 @@
 	  [play_exp-read_in_context subexp context]]
 	[= iter [cdr iter]]]]]]
 
-[defunk context-new []
-  [frame-new]]
+
 
 [defunk play-read [this]
   [play-read_in_context this [context-new]]]

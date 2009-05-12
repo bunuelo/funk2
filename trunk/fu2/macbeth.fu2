@@ -48,6 +48,7 @@
 			[character messenger            'A messenger']
 			[character first_lord           'A lord']
 			[character second_lord          'A lord']
+			[character soldiers             'Soldiers.']
 			'Lords, Gentlemen, Officers, Soldiers, Murtherers, Attendants, and Messengers']
 		  [act [number 1]
 		       [setting 'Scotland and England']

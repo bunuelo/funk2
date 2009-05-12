@@ -47,14 +47,14 @@ def_pcfunk0(object_type__new, return object_type__new(this_cause));
 
 // this lookup fails if binding is not strictly in local frame of object
 f2ptr object_type__lookup_local_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  return frame__lookup_type_var_assignment_cons(cause, f2object_type__frame(this, cause), type, var);
+  return frame__lookup_type_var_assignment_cons(cause, f2object_type__frame(this, cause), type, var, __type_variable_not_defined__symbol);
 }
 
 // this lookup first attempts to find a local binding, but also checks all inherited type frames for type bindings.
 f2ptr object_type__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   pause_gc();
   f2ptr assignment_cons = object_type__lookup_local_type_var_assignment_cons(cause, this, type, var);
-  if (! raw__type_variable_not_defined__exceptionp(assignment_cons, cause)) {
+  if (assignment_cons != __type_variable_not_defined__symbol) {
     resume_gc(); return assignment_cons;
   }
   // cycle through type bindings here if there is no local binding.

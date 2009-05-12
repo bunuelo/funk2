@@ -2816,7 +2816,7 @@
 [defmetro context-characters_present-set   [this value] `[frame-var_value-set    ,this `characters_present ,value]]
 
 [defunk character-new [name description]
-  [format stdout '\ncharacter-new: name=' name ' description=' description]]]]
+  [format stdout '\ncharacter-new: name=' name ' description=' description]
   [let [[this [frame-new]]]
     [frame-add_var_value this `name        name]
     [frame-add_var_value this `description description]

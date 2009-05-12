@@ -28,10 +28,10 @@
 
 // variable_not_defined__exception
 
-extern f2ptr    __type_variable_not_defined__symbol;
+//extern f2ptr    __type_variable_not_defined__symbol;
 
-f2ptr    f2type_variable_not_defined__exception__new(f2ptr cause, f2ptr variable);
-boolean_t  raw__type_variable_not_defined__exceptionp    (f2ptr exp, f2ptr cause);
+//f2ptr    f2type_variable_not_defined__exception__new(f2ptr cause, f2ptr variable);
+//boolean_t  raw__type_variable_not_defined__exceptionp    (f2ptr exp, f2ptr cause);
 
 // default variable types
 
@@ -60,15 +60,15 @@ void  frame__add_var_value                  (f2ptr cause, f2ptr this, f2ptr var,
 void  frame__add_funkvar_value              (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
 f2ptr frame__new_empty                      (f2ptr cause);
 f2ptr frame__new_empty_globalsize           (f2ptr cause);
-f2ptr frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr frame__lookup_type_var_value          (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);              // *
-f2ptr frame__type_var_value__set            (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value); // *
-f2ptr frame__lookup_var_assignment_cons     (f2ptr cause, f2ptr this, f2ptr var);
-f2ptr frame__lookup_var_value               (f2ptr cause, f2ptr this, f2ptr var);                          // *
-f2ptr frame__var_value__set                 (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);             // *
-f2ptr frame__lookup_funkvar_assignment_cons (f2ptr cause, f2ptr this, f2ptr var);
-f2ptr frame__lookup_funkvar_value           (f2ptr cause, f2ptr this, f2ptr funkvar);                      // *
-f2ptr frame__funkvar_value__set             (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value);         // *
+f2ptr frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
+f2ptr frame__lookup_type_var_value          (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);              // *
+f2ptr frame__type_var_value__set            (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value); // *
+f2ptr frame__lookup_var_assignment_cons     (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
+f2ptr frame__lookup_var_value               (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);                          // *
+f2ptr frame__var_value__set                 (f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value);             // *
+f2ptr frame__lookup_funkvar_assignment_cons (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
+f2ptr frame__lookup_funkvar_value           (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr not_defined_value);                      // *
+f2ptr frame__funkvar_value__set             (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value, f2ptr not_defined_value);         // *
 
 void f2__primobject_frame__reinitialize_globalvar__symbols();
 void f2__primobject_frame__reinitialize_globalvar__exceptions();

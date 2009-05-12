@@ -5,7 +5,7 @@
 		  [title 'THE TRAGEDY OF MACBETH']
 		  [author 'William Shakespeare']
 		  [cast [character duncan              'King of Scotland']
-			[character duncan-attendants   'Duncan\'s attendants.'
+			[character duncan-attendants   'Duncan\'s attendants.']
 			[character macbeth             'Thane of Glamis and Cawdor, a general in the King\'s army']
 			[character lady_macbeth        'his wife']
 			[character macduff             'Thane of Fife, a nobleman of Scotland']

@@ -144,12 +144,12 @@ f2ptr frame__new_empty_globalsize(f2ptr cause) {
 }
 
 f2ptr frame__create_var_list(f2ptr cause, f2ptr this) {
-  return hashtable__create_key_list(cause, frame__var_hashtable(cause, this));
+  return f2__hashtable__create_key_list(cause, frame__var_hashtable(cause, this));
 }
 def_pcfunk1(frame__create_var_list, this, return frame__create_var_list(this_cause, this));
 
 f2ptr frame__create_funkvar_list(f2ptr cause, f2ptr this) {
-  return hashtable__create_key_list(cause, frame__funkvar_hashtable(cause, this));
+  return f2__hashtable__create_key_list(cause, frame__funkvar_hashtable(cause, this));
 }
 def_pcfunk1(frame__create_funkvar_list, this, return frame__create_var_list(this_cause, this));
 

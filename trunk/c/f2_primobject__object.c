@@ -62,7 +62,7 @@ f2ptr object__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr typ
   while (type_iter) {
     f2ptr parent_type = f2cons__car(type_iter, cause);
     assignment_cons = object_type__lookup_type_var_assignment_cons(cause, parent_type, type, var);
-    if (! raw__type_variable_not_defined__exceptionp(assignment_cons, cause)) {
+    if (assignment_cons != __type_variable_not_defined__symbol) {
       resume_gc(); return assignment_cons;
     }
     type_iter = f2cons__cdr(type_iter, cause);

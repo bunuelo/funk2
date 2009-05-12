@@ -178,8 +178,6 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__lookup_funkvar_value);
   f2__primcfunk__init(frame__funkvar_value__set);
   
-  //__type_variable_not_defined__symbol = f2symbol__new(initial_cause(), strlen("primobject:frame-type_variable_not_defined"), (u8*)"primobject:frame-type_variable_not_defined");
-  
   __frame__variable_type__symbol      = f2symbol__new(initial_cause(), strlen("variable"),      (u8*)"variable");
   __frame__funk_variable_type__symbol = f2symbol__new(initial_cause(), strlen("funk_variable"), (u8*)"funk_variable");
   

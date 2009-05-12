@@ -21,6 +21,8 @@
 
 #include "funk2.h"
 
+f2ptr __type_variable_not_defined__symbol;
+
 f2ptr __current_environment__symbol;
 
 // environment primobject
@@ -51,8 +53,8 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   f2ptr env = this;
   f2ptr value;
   while (env) {
-    value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var);
-    if (! raw__type_variable_not_defined__exceptionp(value, cause)) {
+    value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __type_variable_not_defined__symbol);
+    if (value != __type_variable_not_defined__symbol) {
       resume_gc(); return value;
     }
     env = f2environment__parent_env(env, cause);
@@ -69,8 +71,8 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   f2ptr env = this;
   f2ptr value;
   while (env) {
-    value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var);
-    if (! raw__type_variable_not_defined__exceptionp(value, cause)) {
+    value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __type_variable_not_defined__symbol);
+    if (value != __type_variable_not_defined__symbol) {
       resume_gc(); return value;
     }
     env = f2environment__parent_env(env, cause);
@@ -103,8 +105,8 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   f2ptr env = this;
   f2ptr result;
   while (env) {
-    result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value);
-    if (! raw__type_variable_not_defined__exceptionp(result, cause)) {
+    result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __type_variable_not_defined__symbol);
+    if (result != __type_variable_not_defined__symbol) {
       resume_gc(); return result;
     }
     env = f2environment__parent_env(env, cause);
@@ -167,6 +169,8 @@ void print_environment_backtrace(f2ptr env) {
 void f2__primobject_environment__reinitialize_globalvar__symbols() {
   f2ptr cause = initial_cause(); //f2_primobject_environment_c__cause__new(initial_cause(), nil, nil);
   
+  __type_variable_not_defined__symbol = f2symbol__new(initial_cause(), strlen("primobject:environment-type_variable_not_defined"), (u8*)"primobject:environment-type_variable_not_defined");
+  
   __environment__symbol         = f2symbol__new(cause, strlen("environment"), (u8*)"environment");                                                                           
   __current_environment__symbol = f2symbol__new(cause, strlen("primobject:-current_environment-"), (u8*)"primobject:-current_environment-");                                                                     
 }
@@ -188,6 +192,8 @@ void f2__primobject_environment__initialize() {
   global_environment__set(f2environment__new(cause, frame__new_empty_globalsize(cause),
 					     nil,
 					     f2symbol__new(cause, strlen("env:global_environment"), (u8*)"env:global_environment")));
+  
+  environment__add_var_value(cause, global_environment(), __type_variable_not_defined__symbol,         nil);
   
   environment__add_var_value(cause, global_environment(), __environment__symbol,         nil);
   environment__add_var_value(cause, global_environment(), __current_environment__symbol, nil);

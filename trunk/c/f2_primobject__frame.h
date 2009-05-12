@@ -26,13 +26,6 @@
 #include "f2_primobject__hashtable.h"
 #include "f2_primobject__environment.h"
 
-// variable_not_defined__exception
-
-//extern f2ptr    __type_variable_not_defined__symbol;
-
-//f2ptr    f2type_variable_not_defined__exception__new(f2ptr cause, f2ptr variable);
-//boolean_t  raw__type_variable_not_defined__exceptionp    (f2ptr exp, f2ptr cause);
-
 // default variable types
 
 extern f2ptr __frame__variable_type__symbol;

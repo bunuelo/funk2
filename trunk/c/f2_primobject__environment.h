@@ -30,6 +30,8 @@
 #include "f2_primobject__hashtable.h"
 #include "f2_primobject__frame.h"
 
+extern f2ptr __type_variable_not_defined__symbol;
+
 extern f2ptr __environment__symbol;
 extern f2ptr __current_environment__symbol;
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc);

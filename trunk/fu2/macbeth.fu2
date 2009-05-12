@@ -13,6 +13,7 @@
 			[character lady_macbeth-servant 'Lady Macbeth\'s servant.']
 			[character macduff              'Thane of Fife, a nobleman of Scotland']
 			[character lady_macduff         'his wife']
+			[character macduff-son          'Macduff\'s son.']
 			[character malcolm              'elder son of Duncan']
 			[character donalbain            'younger son of Duncan']
 			[character banquo               'Thane of Lochaber, a general in the King\'s army']
@@ -1947,36 +1948,36 @@
 				      [exit ross]
 				      [say lady_macduff ['Sirrah, your father\'s dead.'
 							 'And what will you do now? How will you live?']]
-				      [say son ['As birds do, Mother.']]
+				      [say macduff-son ['As birds do, Mother.']]
 				      [say lady_macduff ['What, with worms and flies?  ']]
-				      [say son ['With what I get, I mean; and so do they.']]
+				      [say macduff-son ['With what I get, I mean; and so do they.']]
 				      [say lady_macduff ['Poor bird! Thou\'ldst never fear the net nor lime,'
 							 'The pitfall nor the gin.']]
-				      [say son ['Why should I, Mother? Poor birds they are not set for.'
-						'My father is not dead, for all your saying.']]
+				      [say macduff-son ['Why should I, Mother? Poor birds they are not set for.'
+							'My father is not dead, for all your saying.']]
 				      [say lady_macduff ['Yes, he is dead. How wilt thou do for father?']]
-				      [say son ['Nay, how will you do for a husband?']]
+				      [say macduff-son ['Nay, how will you do for a husband?']]
 				      [say lady_macduff ['Why, I can buy me twenty at any market.']]
-				      [say son ['Then you\'ll buy \'em to sell again.']]
+				      [say macduff-son ['Then you\'ll buy \'em to sell again.']]
 				      [say lady_macduff ['Thou speak\'st with all thy wit, and yet, i\' faith,'
 							 'With wit enough for thee.']]
-				      [say son ['Was my father a traitor, Mother?']]
+				      [say macduff-son ['Was my father a traitor, Mother?']]
 				      [say lady_macduff ['Ay, that he was.']]
-				      [say son ['What is a traitor?']]
+				      [say macduff-son ['What is a traitor?']]
 				      [say lady_macduff ['Why one that swears and lies.']]
-				      [say son ['And be all traitors that do so?']]
+				      [say macduff-son ['And be all traitors that do so?']]
 				      [say lady_macduff ['Everyone that does so is a traitor and must be'
 							 'hanged.']]
-				      [say son ['And must they all be hanged that swear and lie?']]
+				      [say macduff-son ['And must they all be hanged that swear and lie?']]
 				      [say lady_macduff ['Everyone.  ']]
-				      [say son ['Who must hang them?']]
+				      [say macduff-son ['Who must hang them?']]
 				      [say lady_macduff ['Why, the honest men.']]
-				      [say son ['Then the liars and swearers are fools, for there are liars and'
-						'swearers enow to beat the honest men and hang up them.']]
+				      [say macduff-son ['Then the liars and swearers are fools, for there are liars and'
+							'swearers enow to beat the honest men and hang up them.']]
 				      [say lady_macduff ['Now, God help thee, poor monkey! But how wilt thou do'
 							 'for a father?']]
-				      [say son ['If he were dead, you\'ld weep for him; if you would not, it'
-						'were a good sign that I should quickly have a new father.']]
+				      [say macduff-son ['If he were dead, you\'ld weep for him; if you would not, it'
+							'were a good sign that I should quickly have a new father.']]
 				      [say lady_macduff ['Poor prattler, how thou talk\'st!']]
 				      
 				      [enter messenger]
@@ -2005,15 +2006,15 @@
 				      [say lady_macduff ['I hope, in no place so unsanctified'
 							 'Where such as thou mayst find him.']]
 				      [say first_murtherer ['He\'s a traitor.']]
-				      [say son ['Thou liest, thou shag-ear\'d villain!']]
+				      [say macduff-son ['Thou liest, thou shag-ear\'d villain!']]
 				      [say first_murtherer ['What, you egg!']]
 				      'Stabs him.'
 				      [say first_murtherer ['Young fry of treachery!']]
-				      [say son ['He has kill\'d me, Mother.'
-						'Run away, I pray you!']]
+				      [say macduff-son ['He has kill\'d me, Mother.'
+							'Run away, I pray you!']]
 				      
 				      'Dies.'
-				      [exit son]
+				      [exit macduff-son]
 				      
 				      [say lady_macduff ['[crying] Murther!']]
 				      [exit lady_macduff]

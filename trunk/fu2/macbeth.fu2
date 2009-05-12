@@ -2883,7 +2883,7 @@
   [format stdout '\ncontext-character-enter name=' name]
   [let [[in_scene [context-character-in_scene this name]]]
     [if in_scene
-	[error `run-time `character-already-in_scene]
+	[error `run-time `character-already_in_scene]
       [context-character-in_scene-set this name `t]]]]
 
 [defunk enter? [exp] [and exp [cons? exp] [eq [car exp] `enter]]]
@@ -2894,6 +2894,23 @@
       [while iter
 	[let [[who [car iter]]]
 	  [context-character-enter context who]]
+	[= iter [cdr iter]]]]]]
+
+[defunk context-character-exit [this name]
+  [format stdout '\ncontext-character-exit name=' name]
+  [let [[in_scene [context-character-in_scene this name]]]
+    [if [not in_scene]
+	[error `run-time `character-not_in_scene]
+      [context-character-in_scene-set this name nil]]]]
+
+[defunk exit? [exp] [and exp [cons? exp] [eq [car exp] `exit]]]
+[defunk exit-read_in_context [this context]
+  [if [not [exit? this]]
+      [error `run-time `reading-exit]
+    [let [[iter [cdr this]]]
+      [while iter
+	[let [[who [car iter]]]
+	  [context-character-exit context who]]
 	[= iter [cdr iter]]]]]]
 
 [defunk script_exp?     [exp] [and exp [or [string? exp]
@@ -2911,7 +2928,7 @@
     [cond [[string? this] nil]
 	  [[cons?   this] [let [[command [car this]]]
 			    [cond [[eq command `enter]           [enter-read_in_context this context]]
-				  [[eq command `exit]            nil]
+				  [[eq command `exit]            [exit-read_in_context  this context]]
 				  [[eq command `exit_all]        nil]
 				  [[eq command `exit_all_except] nil]
 				  [[eq command `say]             nil]

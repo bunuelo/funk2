@@ -80,7 +80,7 @@ void object__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, 
 f2ptr object__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   pause_gc();
   f2ptr assignment_cons = object__lookup_type_var_assignment_cons(cause, this, type, var);
-  if (! raw__type_variable_not_defined__exceptionp(assignment_cons, cause)) {
+  if (assignment_cons != __type_variable_not_defined__symbol) {
     f2ptr value = f2cons__cdr(assignment_cons, cause);
     resume_gc(); return value;
   }
@@ -91,7 +91,7 @@ f2ptr object__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
 f2ptr object__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   pause_gc();
   f2ptr assignment_cons = object__lookup_local_type_var_assignment_cons(cause, this, type, var);
-  if (! raw__type_variable_not_defined__exceptionp(assignment_cons, cause)) {
+  if (assignment_cons != __type_variable_not_defined__symbol) {
     f2cons__cdr__set(assignment_cons, cause, value);
     // success
     resume_gc(); return nil;

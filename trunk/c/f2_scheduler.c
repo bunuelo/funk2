@@ -169,7 +169,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      exit_reason__found_larva
 	    } exit_reason = exit_reason__none;
 	    
-	    int i = 200;
+	    int i = 1000;
 	    while (! exit_reason) {
 	      if(i == 0) {
 		exit_reason = exit_reason__too_many_loops;

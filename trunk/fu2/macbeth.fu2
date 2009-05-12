@@ -2804,7 +2804,6 @@
     [frame-add_var_value this `characters           [frame-new]]
     [frame-add_var_value this `current_act_number   nil]
     [frame-add_var_value this `current_scene_number nil]
-    [frame-add_var_value this `characters_present   nil]
     this]]
 [defmetro context-characters               [this]       `[frame-lookup_var_value ,this `characters]]
 [defmetro context-characters-set           [this value] `[frame-var_value-set    ,this `characters ,value]]
@@ -2812,15 +2811,19 @@
 [defmetro context-current_act_number-set   [this value] `[frame-var_value-set    ,this `current_act_number ,value]]
 [defmetro context-current_scene_number     [this]       `[frame-lookup_var_value ,this `current_scene_number]]
 [defmetro context-current_scene_number-set [this value] `[frame-var_value-set    ,this `current_scene_number ,value]]
-[defmetro context-characters_present       [this]       `[frame-lookup_var_value ,this `characters_present]]
-[defmetro context-characters_present-set   [this value] `[frame-var_value-set    ,this `characters_present ,value]]
 
 [defunk character-new [name description]
   [format stdout '\ncharacter-new: name=' name ' description=' description]
   [let [[this [frame-new]]]
     [frame-add_var_value this `name        name]
     [frame-add_var_value this `description description]
+    [frame-add_var_value this `in_scene    nil]
     this]]
+[defmetro character-name         [this]       `[frame-lookup_var_value ,this `name]]
+[defmetro character-description  [this]       `[frame-lookup_var_value ,this `description]]
+[defmetro character-in_scene     [this]       `[frame-lookup_var_value ,this `in_scene]]
+[defmetro character-in_scene-set [this value] `[frame-var_value-set    ,this `in_scene ,value]]
+
 
 [defunk context-define_character [this name description]
   [let [[characters [context-characters this]]]
@@ -2829,6 +2832,21 @@
 [defunk context-lookup_character [this name]
   [let [[characters [context-characters this]]]
     [frame-lookup_var_value characters name]]]
+
+[defunk context-character-in_scene [this name]
+  [let [[character [context-lookup_character this name]]]
+    [character-in_scene character]]]
+
+[defunk context-character-in_scene-set [this name value]
+  [let [[character [context-lookup_character this name]]]
+    [character-in_scene-set character value]]]
+
+[defunk context-lookup_character [this name]
+  [let [[characters [context-characters this]]]
+    [frame-lookup_var_value characters name]]]
+
+
+
 
 [defunk character? [exp] [and exp [cons? exp] [eq [car exp] `character]]]
 [defunk character-read_in_context [this context]
@@ -2863,6 +2881,11 @@
 	  [cast_exp-read_in_context subexp context]]
 	[= iter [cdr iter]]]]]]
 
+[defunk context-character-enter [this name]
+  [let [[in_scene [context-character-in_scene this name]]]
+    [if in_scene
+	[error `run-time `character-already-in_scene]
+      [context-character-in_scene-set this name `t]]]]
 
 [defunk enter? [exp] [and exp [cons? exp] [eq [car exp] `enter]]]
 [defunk enter-read_in_context [this context]
@@ -2871,7 +2894,9 @@
     [let [[iter [cdr this]]]
       [while iter
 	[let [[who [car iter]]]
-	  [format stdout '\nenter who=' who]]
+	  [format stdout '\nenter who=' who]
+	  [context-character-enter context who]
+	  ]
 	[= iter [cdr iter]]]]]]
 
 [defunk script_exp?     [exp] [and exp [or [string? exp]

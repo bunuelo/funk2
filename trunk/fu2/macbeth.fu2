@@ -24,7 +24,7 @@
 			[character angus                'nobleman of Scotland']
 			[character caithness            'nobleman of Scotland']
 			[character siward               'Earl of Northumberland, general of the English forces']
-			[character young_siward         'His son']
+			[character siward_son           'His son']
 			[character seyton               'Attendant to Macbeth']
 			[character hecate               'Queen of the Witches']
 			[character first_witch          'One of three witches']

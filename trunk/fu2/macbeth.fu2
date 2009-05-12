@@ -2181,16 +2181,16 @@
 				      [say macduff ['Such welcome and unwelcome things at once'
 					     '\'Tis hard to reconcile.']]
 				      
-				      [enter doctor]
+				      [enter english_doctor]
 				      
 				      [say malcolm ['Well, more anon. Comes the King forth, I prey you?']]
-				      [say doctor ['Ay, sir, there are a crew of wretched souls'
-						   'That stay his cure. Their malady convinces'
-						   'The great assay of art, but at his touch,'
-						   'Such sanctity hath heaven given his hand,'
-						   'They presently amend.']]
+				      [say english_doctor ['Ay, sir, there are a crew of wretched souls'
+							    'That stay his cure. Their malady convinces'
+							    'The great assay of art, but at his touch,'
+							    'Such sanctity hath heaven given his hand,'
+							    'They presently amend.']]
 				      [say malcolm ['I thank you, Doctor.']]
-				      [exit doctor]
+				      [exit english_doctor]
 				      [say macduff ['What\'s the disease he means?']]
 				      [say malcolm ['\'Tis call\'d the evil:'
 						    'A most miraculous work in this good King,'
@@ -2315,22 +2315,22 @@
 		  [act [number 5]
 		       [scene [number 1]
 			      [setting 'Dunsinane. Anteroom in the castle.']
-			      [script [enter doctor gentlewoman]
+			      [script [enter scottish_doctor gentlewoman]
 				      'Enter a doctor of physic.'
 				      
-				      [say doctor ['I have two nights watched with you, but can perceive no'
-						   'truth in your report. When was it she last walked?']]
+				      [say scottish_doctor ['I have two nights watched with you, but can perceive no'
+							    'truth in your report. When was it she last walked?']]
 				      [say gentlewoman ['Since his Majesty went into the field, have seen her'
 							'rise from her bed, throw her nightgown upon her, unlock her'
 							'closet, take forth paper, fold it, write upon\'t, read it,'
 							'afterwards seal it, and again return to bed; yet all this while'
 							'in a most fast sleep.']]
-				      [say doctor ['A great perturbation in nature, to receive at once the'
-						   'benefit of sleep and do the effects of watching! In this slumbery'
-						   'agitation, besides her walking and other actual performances,'
-						   'what, at any time, have you heard her say?']]
+				      [say scottish_doctor ['A great perturbation in nature, to receive at once the'
+							    'benefit of sleep and do the effects of watching! In this slumbery'
+							    'agitation, besides her walking and other actual performances,'
+							    'what, at any time, have you heard her say?']]
 				      [say gentlewoman ['That, sir, which I will not report after her.']]
-				      [say doctor ['You may to me, and \'tis most meet you should.']]
+				      [say scottish_doctor ['You may to me, and \'tis most meet you should.']]
 				      [say gentlewoman ['Neither to you nor anyone, having no witness to'
 							'confirm my speech.']]
 				      
@@ -2339,59 +2339,59 @@
 				      
 				      [say gentlewoman ['Lo you, here she comes! This is her very guise, and, upon my'
 							'life, fast asleep. Observe her; stand close.']]
-				      [say doctor ['How came she by that light?']]
+				      [say scottish_doctor ['How came she by that light?']]
 				      [say gentlewoman ['Why, it stood by her. She has light by her'
 							'continually; \'tis her command.']]
-				      [say doctor ['You see, her eyes are open.']]
+				      [say scottish_doctor ['You see, her eyes are open.']]
 				      [say gentlewoman ['Ay, but their sense is shut.']]
-				      [say doctor ['What is it she does now? Look how she rubs her hands.']]
+				      [say scottish_doctor ['What is it she does now? Look how she rubs her hands.']]
 				      [say gentlewoman ['It is an accustomed action with her, to seem thus'
 							'washing her hands. I have known her continue in this a quarter of'
 							'an hour.']]
 				      [say lady_macbeth ['Yet here\'s a spot.']]
-				      [say doctor ['Hark, she speaks! I will set down what comes from her, to'
-						   'satisfy my remembrance the more strongly.']]
+				      [say scottish_doctor ['Hark, she speaks! I will set down what comes from her, to'
+							    'satisfy my remembrance the more strongly.']]
 				      [say lady_macbeth ['Out, damned spot! Out, I say! One- two -why then \'tis'
 							 'time to do\'t. Hell is murky. Fie, my lord, fie! A soldier, and'
 							 'afeard? What need we fear who knows it, when none can call our'
 							 'power to account? Yet who would have thought the old man to have'
 							 'had so much blood in him?']]
-				      [say doctor ['Do you mark that?']]
+				      [say scottish_doctor ['Do you mark that?']]
 				      [say lady_macbeth ['The Thane of Fife had a wife; where is she now? What,'
 							 'will these hands neer be clean? No more o\' that, my lord, no more'
 							 'o\' that. You mar all with this starting.']]
-				      [say doctor ['Go to, go to; you have known what you should not.']]
+				      [say scottish_doctor ['Go to, go to; you have known what you should not.']]
 				      [say gentlewoman ['She has spoke what she should not, I am sure of that.'
 							'Heaven knows what she has known.']]
 				      [say lady_macbeth ['Here\'s the smell of the blood still. All the perfumes'
 							 'of Arabia will not sweeten this little hand. Oh, oh, oh!']]
-				      [say doctor ['What a sigh is there! The heart is sorely charged.']]
+				      [say scottish_doctor ['What a sigh is there! The heart is sorely charged.']]
 				      [say gentlewoman ['I would not have such a heart in my bosom for the'
 							'dignity of the whole body.']]
-				      [say doctor ['Well, well, well-']]
+				      [say scottish_doctor ['Well, well, well-']]
 				      [say gentlewoman ['Pray God it be, sir.']]
-				      [say doctor ['This disease is beyond my practice. Yet I have known those'
-						   'which have walked in their sleep who have died holily in their'
-						   'beds.']]
+				      [say scottish_doctor ['This disease is beyond my practice. Yet I have known those'
+							    'which have walked in their sleep who have died holily in their'
+							    'beds.']]
 				      [say lady_macbeth ['Wash your hands, put on your nightgown, look not so'
 							 'pale. I tell you yet again, Banquo\'s buried; he cannot come out'
 							 'on\'s grave.']]
-				      [say doctor ['Even so?']]
+				      [say scottish_doctor ['Even so?']]
 				      [say lady_macbeth ['To bed, to bed; there\'s knocking at the gate. Come,'
 							 'come, come, come, give me your hand.What\'s done cannot be undone.'
 							 'To bed, to bed, to bed.']]
 				      [exit lady_macbeth]
-				      [say doctor ['Will she go now to bed?']]
+				      [say scottish_doctor ['Will she go now to bed?']]
 				      [say gentlewoman ['Directly.']]
-				      [say doctor ['Foul whisperings are abroad. Unnatural deeds'
-						   'Do breed unnatural troubles; infected minds'
-						   'To their deaf pillows will discharge their secrets.'
-						   'More needs she the divine than the physician.'
-						   'God, God, forgive us all! Look after her;'
-						   'Remove from her the means of all annoyance,'
-						   'And still keep eyes upon her. So good night.'
-						   'My mind she has mated and amazed my sight.'
-						   'I think, but dare not speak.']]
+				      [say scottish_doctor ['Foul whisperings are abroad. Unnatural deeds'
+							    'Do breed unnatural troubles; infected minds'
+							    'To their deaf pillows will discharge their secrets.'
+							    'More needs she the divine than the physician.'
+							    'God, God, forgive us all! Look after her;'
+							    'Remove from her the means of all annoyance,'
+							    'And still keep eyes upon her. So good night.'
+							    'My mind she has mated and amazed my sight.'
+							    'I think, but dare not speak.']]
 				      [say gentlewoman ['Good night, good doctor.']]
 				      [exit_all]]]
 		       [scene [number 2]
@@ -2439,7 +2439,7 @@
 				      [exit_all]]]
 		       [scene [number 3]
 			      [setting 'Dunsinane. A room in the castle.']
-			      [script [enter macbeth doctor macbeth-attendant]
+			      [script [enter macbeth scottish_doctor macbeth-attendant]
 				      
 				      [say macbeth ['Bring me no more reports; let them fly all!'
 						    'Till Birnam Wood remove to Dunsinane'
@@ -2490,9 +2490,9 @@
 						    'Send out more horses, skirr the country round,'
 						    'Hang those that talk of fear. Give me mine armor.'
 						    'How does your patient, doctor?']]
-				      [say doctor ['Not so sick, my lord,'
-						   'As she is troubled with thick-coming fancies,'
-						   'That keep her from her rest.']]
+				      [say scottish_doctor ['Not so sick, my lord,'
+							    'As she is troubled with thick-coming fancies,'
+							    'That keep her from her rest.']]
 				      [say macbeth ['Cure her of that.'
 						    'Canst thou not minister to a mind diseased,'
 						    'Pluck from the memory a rooted sorrow,'
@@ -2500,8 +2500,8 @@
 						    'And with some sweet oblivious antidote'
 						    'Cleanse the stuff\'d bosom of that perilous stuff  '
 						    'Which weighs upon the heart?']]
-				      [say doctor ['Therein the patient'
-						   'Must minister to himself.']]
+				      [say scottish_doctor ['Therein the patient'
+							    'Must minister to himself.']]
 				      [say macbeth ['Throw physic to the dogs, I\'ll none of it.'
 						    'Come, put mine armor on; give me my staff.'
 						    'Seyton, send out. Doctor, the Thanes fly from me.'
@@ -2512,13 +2512,13 @@
 						    'That should applaud again. Pull\'t off, I say.'
 						    'What rhubarb, cyme, or what purgative drug'
 						    'Would scour these English hence? Hearst thou of them?']]
-				      [say doctor ['Ay, my good lord, your royal preparation'
-						   'Makes us hear something.']]
+				      [say scottish_doctor ['Ay, my good lord, your royal preparation'
+							    'Makes us hear something.']]
 				      [say macbeth ['Bring it after me.'
 						    'I will not be afraid of death and bane'
 						    'Till Birnam Forest come to Dunsinane.']]
-				      [say doctor ['[Aside.] Were I from Dunsinane away and clear,'
-						   'Profit again should hardly draw me here.']]
+				      [say scottish_doctor ['[Aside.] Were I from Dunsinane away and clear,'
+							    'Profit again should hardly draw me here.']]
 				      [exit_all]]]
 		       [scene [number 4]
 			      [setting 'Country near Birnam Wood. Drum and colors.']

@@ -148,7 +148,27 @@ f2ptr f2__hashtable__lookup_value(f2ptr this, f2ptr cause, f2ptr key) {
 }
 
 
-
+f2ptr f2__hashtable__create_key_list(f2ptr cause, f2ptr this) {
+  f2ptr sequence = nil;
+  f2ptr bin_array = f2hashtable__bin_array(this, cause);
+  u64   bin_array__length = raw__array__length(cause, bin_array);
+  u64 index;
+  for (index = 0; index < bin_array__length; index ++) {
+    
+    f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
+    while(keyvalue_pair_iter) {
+      f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
+      f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
+      
+      sequence = f2cons__new(cause, keyvalue_pair__key, sequence);
+      
+      keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+    }
+    
+  }
+  
+  return sequence;
+}
 
 // end of object
 

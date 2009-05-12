@@ -2913,6 +2913,16 @@
 	  [context-character-exit context who]]
 	[= iter [cdr iter]]]]]]
 
+[defunk context-characters-exit_all [this]
+  
+  ]
+
+[defunk exit_all? [exp] [and exp [cons? exp] [eq [car exp] `exit_all]]]
+[defunk exit_all-read_in_context [this context]
+  [if [not [exit_all? this]]
+      [error `run-time `reading-exit_all]
+    [context-characters-exit_all context]]]
+
 [defunk script_exp?     [exp] [and exp [or [string? exp]
 					   [and [cons? exp] [let [[command [car exp]]]
 							      [or [eq command `enter]
@@ -2927,9 +2937,9 @@
       [error `run-time `reading-script_exp]
     [cond [[string? this] nil]
 	  [[cons?   this] [let [[command [car this]]]
-			    [cond [[eq command `enter]           [enter-read_in_context this context]]
-				  [[eq command `exit]            [exit-read_in_context  this context]]
-				  [[eq command `exit_all]        nil]
+			    [cond [[eq command `enter]           [enter-read_in_context    this context]]
+				  [[eq command `exit]            [exit-read_in_context     this context]]
+				  [[eq command `exit_all]        [exit_all-read_in_context this context]]
 				  [[eq command `exit_all_except] nil]
 				  [[eq command `say]             nil]
 				  ]]]]]]

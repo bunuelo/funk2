@@ -1186,7 +1186,7 @@
 						    'Rather than so, come, Fate, into the list,'
 						    'And champion me to the utterance! Who\'s there?']]
 				      
-				      [enter attendant first_murtherer second_murtherer]
+				      [enter macbeth-attendant first_murtherer second_murtherer]
 				      
 				      [say macbeth ['Now go to the door, and stay there till we call.']]
 				      [exit macbeth-attendant]
@@ -1389,7 +1389,7 @@
 				      [exit_all]]]
 		       [scene [number 4]
 			      [setting 'A Hall in the palace. A banquet prepared.']
-			      [script [enter macbeth lady_macbeth ross lennox lords attendants]
+			      [script [enter macbeth lady_macbeth ross lennox lords macbeth-attendant]
 				      
 				      [say macbeth ['You know your own degrees; sit down. At first'
 						    'And last the hearty welcome.']]
@@ -2435,7 +2435,7 @@
 				      [exit_all]]]
 		       [scene [number 3]
 			      [setting 'Dunsinane. A room in the castle.']
-			      [script [enter macbeth doctor attendants]
+			      [script [enter macbeth doctor macbeth-attendant]
 				      
 				      [say macbeth ['Bring me no more reports; let them fly all!'
 						    'Till Birnam Wood remove to Dunsinane'

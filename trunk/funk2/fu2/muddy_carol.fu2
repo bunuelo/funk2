@@ -12,15 +12,17 @@
   [format stdout '\ndefobject symbol=' symbol ' english=' english]
   `[prog [globalize ,symbol [frame-new]]
 	 [frame-push ,symbol `symbol [quote ,symbol]]
-	 [frame-push ,symbol `english english]]]
+	 [frame-push ,symbol `english ,english]]]
 
 [defmetro defrelation [symbol obj1 type obj2]
   [format stdout '\ndefrelation symbol=' symbol ' obj1=' obj1 ' type=' type ' obj2=' obj2]
-  `[prog [globalize ,symbol [frame-new]]
-	 [frame-push ,symbol `type [quote ,type]]
-	 [frame-push ,symbol `obj1 obj1]
-	 [frame-push ,symbol `obj2 obj2]
-	 [frame-push ,obj1 [quote ,type] obj2]]]
+  `[let [[obj1 ,obj1]
+	 [obj2 ,obj2]]
+     [globalize ,symbol [frame-new]]
+     [frame-push ,symbol `type [quote ,type]]
+     [frame-push ,symbol `obj1 obj1]
+     [frame-push ,symbol `obj2 obj2]
+     [frame-push obj1 [quote ,type] obj2]]]
 
 
 

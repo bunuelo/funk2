@@ -8,12 +8,16 @@
 [defunk frame-get [this var]
   [frame-lookup_var_value this var nil]]
 
-[globalize carol      [frame-new]]
+[defmetro defobject [symbol]
+  `[prog [globalize ,symbol [frame-new]]
+	 [frame-push ,symbol `symbol [quote ,symbol]]]]
 
-[globalize my-clothes [frame-new]]
+[defobject carol]
+
+[defobject my-clothes]
 [frame-push carol `my-clothes my-clothes]
 
-[globalize clean [frame-new]]
+[defobject clean]
 [frame-push my-clothes `attain-property clean]
 
 

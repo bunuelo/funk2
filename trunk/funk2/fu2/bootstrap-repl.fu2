@@ -752,7 +752,6 @@
 		[[action?              exp]  [action-brief exp]]
 		[[action_event?        exp]  [action_event-brief exp]]
 		[[time?                exp]  [time-brief exp]]
-		[[learning_agent_plan? exp]  [learning_agent_plan-brief exp]]
 		[t                          `<>]]]]
 
 [defunk funkable? [exp]

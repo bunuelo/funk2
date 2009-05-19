@@ -14,7 +14,7 @@
 	 [frame-push ,symbol `symbol [quote ,symbol]]
 	 [frame-push ,symbol `english ,english]]]
 
-[defmetro defrelation [symbol obj1 type obj2]
+[defmetro defrelation [symbol obj1 type obj2 english]
   [format stdout '\ndefrelation symbol=' symbol ' obj1=' obj1 ' type=' type ' obj2=' obj2]
   `[let [[obj1 ,obj1]
 	 [obj2 ,obj2]]
@@ -22,18 +22,19 @@
      [frame-push ,symbol `type [quote ,type]]
      [frame-push ,symbol `obj1 obj1]
      [frame-push ,symbol `obj2 obj2]
+     [frame-push ,symbol `english ,english]
      [frame-push obj1 [quote ,type] obj2]]]
 
 
 
 [defobject carol 'Carol']
 
-[defobject my_clothes 'my-clothes']
+[defobject my_clothes 'my clothes']
 [frame-push carol `my_clothes my_clothes]
 
 [defobject clean 'clean']
 
-[defrelation my_clothes-become-clean my_clothes become clean]
+[defrelation my_clothes-become-clean my_clothes become clean 'my clothes become clean']
 
 
 

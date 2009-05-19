@@ -1,0 +1,20 @@
+
+[defunk frame-add [this var value]
+  [frame-add_var_value this var value]]
+
+[defunk frame-push [this var value]
+  [frame-add_var_value this var [cons value [frame-lookup_var_value this var nil]]]]
+
+[defunk frame-get [this var]
+  [frame-lookup_var_value this var nil]]
+
+[globalize carol      [frame-new]]
+
+[globalize my-clothes [frame-new]]
+[frame-push carol `my-clothes my-clothes]
+
+[globalize clean [frame-new]]
+[frame-push my-clothes `attain-property clean]
+
+
+

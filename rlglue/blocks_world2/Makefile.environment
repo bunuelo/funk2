@@ -1,0 +1,21 @@
+LDFLAGS := $(EXTRA_LDFLAGS) -lrlutils -lrlenvironment -lrlgluenetdev
+CFLAGS := $(EXTRA_CFLAGS) -Wall -pedantic
+
+all: BlocksWorld
+
+BlocksWorld: blocks_world_standalone.o 
+	$(CC) blocks_world_standalone.o $(LDFLAGS) -o BlocksWorld      
+
+blocks_world_standalone.o: blocks_world_standalone.c
+	$(CC)  $(CFLAGS) -c blocks_world_standalone.c -o blocks_world_standalone.o 
+
+clean:
+	rm -rf BlocksWorld BlocksWorld.exe *.o
+
+
+
+
+
+
+
+

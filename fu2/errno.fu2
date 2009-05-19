@@ -1,0 +1,105 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk errno:errno-to_string [errno]
+  [cond [[= errno errno:errno-e2big]           'Argument list too long.']
+	[[= errno errno:errno-eacces]          'Permission denied.']
+	[[= errno errno:errno-eaddrinuse]      'Address in use.']
+	[[= errno errno:errno-eaddrnotavail]   'Address not available.']
+	[[= errno errno:errno-eafnosupport]    'Address family not supported.']
+	[[= errno errno:errno-eagain]          'Resource unavailable, try again (may be the same value as [EWOULDBLOCK]).']
+	[[= errno errno:errno-ealready]        'Connection already in progress.']
+	[[= errno errno:errno-ebadf]           'Bad file descriptor.']
+	[[= errno errno:errno-ebadmsg]         'Bad message.']
+	[[= errno errno:errno-ebusy]           'Device or resource busy.']
+	[[= errno errno:errno-ecanceled]       'Operation canceled.']
+	[[= errno errno:errno-echild]          'No child processes.']
+	[[= errno errno:errno-econnaborted]    'Connection aborted.']
+	[[= errno errno:errno-econnrefused]    'Connection refused.']
+	[[= errno errno:errno-econnreset]      'Connection reset.']
+	[[= errno errno:errno-edeadlk]         'Resource deadlock would occur.']
+	[[= errno errno:errno-edestaddrreq]    'Destination address required.']
+	[[= errno errno:errno-edom]            'Mathematics argument out of domain of function.']
+	[[= errno errno:errno-edquot]          'Reserved.']
+	[[= errno errno:errno-eexist]          'File exists.']
+	[[= errno errno:errno-efault]          'Bad address.']
+	[[= errno errno:errno-efbig]           'File too large.']
+	[[= errno errno:errno-ehostunreach]    'Host is unreachable.']
+	[[= errno errno:errno-eidrm]           'Identifier removed.']
+	[[= errno errno:errno-eilseq]          'Illegal byte sequence.']
+	[[= errno errno:errno-einprogress]     'Operation in progress.']
+	[[= errno errno:errno-eintr]           'Interrupted function.']
+	[[= errno errno:errno-einval]          'Invalid argument.']
+	[[= errno errno:errno-eio]             'I/O error.']
+	[[= errno errno:errno-eisconn]         'Socket is connected.']
+	[[= errno errno:errno-eisdir]          'Is a directory.']
+	[[= errno errno:errno-eloop]           'Too many levels of symbolic links.']
+	[[= errno errno:errno-emfile]          'Too many open files.']
+	[[= errno errno:errno-emlink]          'Too many links.']
+	[[= errno errno:errno-emsgsize]        'Message too large.']
+	[[= errno errno:errno-emultihop]       'Reserved.']
+	[[= errno errno:errno-enametoolong]    'Filename too long.']
+	[[= errno errno:errno-enetdown]        'Network is down.']
+	[[= errno errno:errno-enetreset]       'Connection aborted by network.']
+	[[= errno errno:errno-enetunreach]     'Network unreachable.']
+	[[= errno errno:errno-enfile]          'Too many files open in system.']
+	[[= errno errno:errno-enobufs]         'No buffer space available.']
+	[[= errno errno:errno-enodata]         'No message is available on the STREAM head read queue.']
+	[[= errno errno:errno-enodev]          'No such device.']
+	[[= errno errno:errno-enoent]          'No such file or directory.']
+	[[= errno errno:errno-enoexec]         'Executable file format error.']
+	[[= errno errno:errno-enolock]         'No locks available.']
+	[[= errno errno:errno-enolink]         'Reserved.']
+	[[= errno errno:errno-enomem]          'Not enough space.']
+	[[= errno errno:errno-enomsg]          'No message of the desired type.']
+	[[= errno errno:errno-enoprotoopt]     'Protocol not available.']
+	[[= errno errno:errno-enospc]          'No space left on device.']
+	[[= errno errno:errno-enosr]           'No STREAM resources.']
+	[[= errno errno:errno-enostr]          'Not a STREAM.']
+	[[= errno errno:errno-enosys]          'Function not supported.']
+	[[= errno errno:errno-enotconn]        'The socket is not connected.']
+	[[= errno errno:errno-enotdir]         'Not a directory.']
+	[[= errno errno:errno-enotempty]       'Directory not empty.']
+	[[= errno errno:errno-enotsock]        'Not a socket.']
+	[[= errno errno:errno-enotsup]         'Not supported.']
+	[[= errno errno:errno-enotty]          'Inappropriate I/O control operation.']
+	[[= errno errno:errno-enxio]           'No such device or address.']
+	[[= errno errno:errno-eopnotsupp]      'Operation not supported on socket.']
+	[[= errno errno:errno-eoverflow]       'Value too large to be stored in data type.']
+	[[= errno errno:errno-eperm]           'Operation not permitted.']
+	[[= errno errno:errno-epipe]           'Broken pipe.']
+	[[= errno errno:errno-eproto]          'Protocol error.']
+	[[= errno errno:errno-eprotonosupport] 'Protocol not supported.']
+	[[= errno errno:errno-eprototype]      'Protocol wrong type for socket.']
+	[[= errno errno:errno-erange]          'Result too large.']
+	[[= errno errno:errno-erofs]           'Read-only file system.']
+	[[= errno errno:errno-espipe]          'Invalid seek.']
+	[[= errno errno:errno-esrch]           'No such process.']
+	[[= errno errno:errno-estale]          'Reserved.']
+	[[= errno errno:errno-etime]           'Stream ioctl() timeout.']
+	[[= errno errno:errno-etimeout]        'Connection timed out.']
+	[[= errno errno:errno-etxtbsy]         'Text file busy.']
+	[[= errno errno:errno-ewouldblock]     'Operation would block (may be the same value as [EAGAIN]).']
+	[[= errno errno:errno-exdev]           'Cross-device link.']
+	[t                                     '<unknown errno>']]]
+
+[defunk errno:errno-string [] [errno:errno-to_string [errno:errno]]]
+

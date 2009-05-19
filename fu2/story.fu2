@@ -1,0 +1,252 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[load 'fu2/actor.fu2']
+
+'Barbara recommendations:'
+'  lehnert 1991 (no google hits for lehnert)'
+'  schenk conceptual primitives (no google hits)'
+
+[defunk fat-list-contains_type [seq type]
+  [if [act is-type [car seq]]
+      t
+    [fat-list-contains_type [cdr seq] type]]]
+
+'amb expressions are statements of values that could be chosen arbitrarily.  they are different representations for equivalent meaning.  these are the foundations for later abstractions of these ideas that will be schemas over ambs, or panalogies.'
+[defunk fat-amb [:rest values]
+  [actor [type      []     `amb]
+	 [is-type   [type] [or [eq type `amb] [fat-list-contains_type values type]]]
+	 [values    []     values]]]
+
+[defunk fat-utterance []
+  [actor [type    []     `utterance]
+	 [is-type [type] [eq type `utterance]]]]
+
+[defunk fat-string [string]
+  [actor [type    []     `string]
+	 [is-type [type] [eq type `string]]
+	 [string  []     string]]]
+
+[defunk fat-word []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `word]
+		       [is-type [type] [or [eq type `word] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-story [title sequence]
+  [let [[parents nil]]
+    [let [[this [actor [type     []     `story]
+		       [is-type  [type] [or [eq type `story] [fat-list-contains_type parents type]]]
+		       [title    []     title]
+		       [sequence []     sequence]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-tense []
+  [actor [type    []     `tense]
+	 [is-type [type] [eq type `tense]]]]
+
+[defunk fat-compound_tense [tense child]
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `compound_tense]
+		       [is-type [type] [or [eq type `compound_tense] [fat-list-contains_type parents type]]]
+		       [tense   []     tense]
+		       [child   []     child]]]]
+      [= parents [list [fat-tense]]]
+      this]]]
+
+[defunk fat-verb []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `verb]
+		       [is-type [type] [or [eq type `verb] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-conj_verb [verb tense]
+  [let [[parents nil[]]]
+    [let [[this [actor [type      []     `conj_verb]
+		       [is-type   [type] [or [eq type `conj_verb] [fat-list-contains_type parents type]]]
+		       [verb      []     verb]
+		       [tense     []     tense]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-qualifier []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `qualifier]
+		       [is-type [type] [or [eq type `qualifier] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-noun []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `noun]
+		       [is-type [type] [or [eq type `noun] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-plural [noun]
+  [actor [type    []     `plural]
+	 [is-type [type] [eq type `plural]]
+	 [noun    []     noun]]]
+
+[defunk fat-actor []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `actor]
+		       [is-type [type] [or [eq type `actor] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-adj []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `adj]
+		       [is-type [type] [or [eq type `adj] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-gerund [verb]
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `gerund]
+		       [is-type [type] [or [eq type `gerund] [fat-list-contains_type parents type]]]
+		       [verb    []     verb]]]]
+      [= parents [list [fat-noun_phrase nil nil this nil]]]
+      this]]]
+
+[defunk fat-pronoun []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `pronoun]
+		       [is-type [type] [or [eq type `pronoun] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-noun_phrase nil nil nil nil]]]
+      this]]]
+
+'prolocutive is a specific type of pronoun that refers to actors.'
+[defunk fat-proactor []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `proactor]
+		       [is-type [type] [or [eq type `proactor] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-pronoun]]]
+      this]]]
+
+[defunk fat-prolocutive []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `prolocutive]
+		       [is-type [type] [or [eq type `prolocutive] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-pronoun]]]
+      this]]]
+
+[defunk fat-prep []
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `prep]
+		       [is-type [type] [or [eq type `prep] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-question_word []
+  [let [[parents nil]]
+    [let [[this [actor [type [] `question_word]
+		       [is-type [type] [or [eq type `question_word] [fat-list-contains_type parents type]]]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-noun_phrase [qualifier adjs noun prep_phrase]
+  [let [[parents nil]]
+    [let [[this [actor [type        []     `noun_phrase]
+		       [is-type     [type] [or [eq type `noun_phrase] [fat-list-contains_type parents type]]]
+		       [qualifier   []     qualifier]
+		       [adjs        []     adjs]
+		       [noun        []     noun]
+		       [prep_phrase []     prep_phrase]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-prep_phrase [prep noun_phrase]
+  [let [[parents nil]]
+    [let [[this [actor [type        []     `prep_phrase]
+		       [is-type     [type] [eq type `prep_phrase]]
+		       [prep        []     prep]
+		       [noun_phrase []     noun_phrase]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-adj-possessive [actor]
+  [let [[parents nil]]
+    [let [[this [actor [type    []     `adj-possessive]
+		       [is-type [type] [or [eq type `adj-possessive] [fat-list-contains_type parents type]]]
+		       [actor   []     actor]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-negation [expression]
+  [actor [type       []     `negation]
+	 [is-type    [type] [or [eq type `negation]
+				[act is-type expression type]]]
+	 [expression []     expression]]]
+
+[defunk fat-sentence [subject-np verb direct_object-np prep_phrases]
+  [let [[parents nil]]
+    [let [[this [actor [type             []     `sentence]
+		       [is-type          [type] [or [eq type `sentence] [fat-list-contains_type parents type]]]
+		       [subject-np       []     subject-np]
+		       [conj_verb        []     conj_verb]
+		       [direct_object-np []     direct_object-np]
+		       [prep_phrases     []     prep_phrases]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-sentence_sequence [:rest sentences]
+  [let [[parents nil]]
+    [let [[this [actor [type      []     `sentence_sequence]
+		       [is-type   [type] [or [eq type `sentence_sequence] [fat-list-contains_type parents type]]]
+		       [sentences []     sentences]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-question [expression]
+  [actor [type       []     `question]
+	 [is-type    [type] [or [eq type `question]
+				[act is-type expression type]]]
+	 [expression []     expression]]]
+
+[defunk fat-addressive [actor expression]
+  [actor [type [] `addressive]
+	 [is-type    [type] [or [eq type `addressive]
+				[act is-type expression type]]]
+	 [actor      []     actor]
+	 [expression []     expression]]]
+
+[defunk fat-exclamation [expression]
+  [let [[parents nil]]
+    [let [[this [actor [type       []     `exclamation]
+		       [is-type    [type] [or [eq type `exclamation] [fat-list-contains_type parents type]]]
+		       [expression []     expression]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[defunk fat-quote [expression]
+  [let [[parents nil]]
+    [let [[this [actor [type       []     `quote]
+		       [is-type    [type] [or [eq type `quote] [fat-list-contains_type parents type]]]
+		       [expression []     expression]]]]
+      [= parents [list [fat-utterance]]]
+      this]]]
+
+[print 'done evaluating story.fu2']

@@ -8,17 +8,26 @@
 [defunk frame-get [this var]
   [frame-lookup_var_value this var nil]]
 
-[defmetro defobject [symbol]
+[defmetro defobject [symbol english]
   `[prog [globalize ,symbol [frame-new]]
-	 [frame-push ,symbol `symbol [quote ,symbol]]]]
+	 [frame-push ,symbol `symbol [quote ,symbol]]
+	 [frame-push ,symbol `english english]]]
 
-[defobject carol]
+[defmetro defrelation [symbol type obj1 obj2]
+  `[prog [globalize ,symbol [frame-new]]
+	 [frame-push ,symbol `type [quote ,type]]
+	 [frame-push ,symbol `obj1 obj1]
+	 [frame-push ,symbol `obj2 obj2]
+	 [frame-push ,obj1 [quote ,type] obj2]]]
 
-[defobject my-clothes]
-[frame-push carol `my-clothes my-clothes]
+[defobject carol 'Carol']
 
-[defobject clean]
-[frame-push my-clothes `attain-property clean]
+[defobject my_clothes 'my-clothes']
+[frame-push carol `my_clothes my_clothes]
+
+[defobject clean 'clean']
+
+[defrelation my_clothes-become-clean my_clothes become clean]
 
 
 

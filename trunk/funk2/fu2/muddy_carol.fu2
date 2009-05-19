@@ -9,6 +9,7 @@
   [frame-lookup_var_value this var nil]]
 
 [defmetro defobject [symbol english]
+  [format stdout '\ndefobject symbol=' symbol ' english=' english]
   `[prog [globalize ,symbol [frame-new]]
 	 [frame-push ,symbol `symbol [quote ,symbol]]
 	 [frame-push ,symbol `english english]]]

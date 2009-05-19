@@ -15,6 +15,7 @@
 	 [frame-push ,symbol `english english]]]
 
 [defmetro defrelation [symbol obj1 type obj2]
+  [format stdout '\ndefrelation symbol=' symbol ' obj1=' obj1 ' type=' type ' obj2=' obj2]
   `[prog [globalize ,symbol [frame-new]]
 	 [frame-push ,symbol `type [quote ,type]]
 	 [frame-push ,symbol `obj1 obj1]

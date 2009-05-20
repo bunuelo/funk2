@@ -108,22 +108,22 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   case ptype_integer: {
     u8 temp_str[1024];
     snprintf((char*)temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
-    return f2string__new(cause, strlen(temp_str), temp_str);
+    return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   case ptype_double: {
     u8 temp_str[1024];
     snprintf((char*)temp_str, 1024, double__fstr, f2double__d(exp, cause));
-    return f2string__new(cause, strlen(temp_str), temp_str);
+    return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   case ptype_float: {
     u8 temp_str[1024];
     snprintf((char*)temp_str, 1024, float__fstr, f2float__f(exp, cause));
-    return f2string__new(cause, strlen(temp_str), temp_str);
+    return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   case ptype_pointer: {
     u8 temp_str[1024];
     snprintf((char*)temp_str, 1024, pointer__fstr, f2pointer__p(exp, cause));
-    return f2string__new(cause, strlen(temp_str), temp_str);
+    return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   case ptype_gfunkptr:
     return f2string__new(cause, strlen("<gfunkptr>"), (u8*)"<gfunkptr>");
@@ -137,7 +137,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     } else {
       snprintf((char*)temp_str, 1024, "%c%c%X", __escape_char, __escape_hex_char_char, (uint)ch_value);
     }
-    return f2string__new(cause, strlen(temp_str), temp_str);
+    return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   case ptype_string: {
     u64 exp__length = f2string__length(exp, cause);
@@ -200,7 +200,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u8 temp_str[1024];
     u32 larva_type = f2larva__type(exp, cause);
     snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, __escape_char, __escape_larva_char, larva_type);
-    return f2string__new(cause, strlen(temp_str), temp_str);
+    return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   }
 }

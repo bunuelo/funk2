@@ -27,14 +27,15 @@
 
 
 
-[defobject carol 'Carol']
+[globalize carol [frame-new]]
 
 [defobject my_clothes 'my clothes']
 [frame-push carol `my_clothes my_clothes]
 
 [defobject clean 'clean']
+[frame-push carol `clean clean]
 
 [defrelation my_clothes-become-clean my_clothes become clean 'my clothes become clean']
-
+[frame-push carol `my_clothes-become-clean my_clothes-become-clean]
 
 

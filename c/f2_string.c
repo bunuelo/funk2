@@ -99,30 +99,30 @@ def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__string
 
 f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   if (! exp) {
-    return f2string__new(cause, strlen("[]"), "[]");
+    return f2string__new(cause, strlen("[]"), (u8*)"[]");
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
   case ptype_free_memory:     return f2larva__new(cause, 1);
   case ptype_newly_allocated: return f2larva__new(cause, 1);
   case ptype_integer: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
+    u8 temp_str[1024];
+    snprintf((char*)temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
     return f2string__new(cause, strlen(temp_str), temp_str);
   } break;
   case ptype_double: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, double__fstr, f2double__d(exp, cause));
+    u8 temp_str[1024];
+    snprintf((char*)temp_str, 1024, double__fstr, f2double__d(exp, cause));
     return f2string__new(cause, strlen(temp_str), temp_str);
   } break;
   case ptype_float: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, float__fstr, f2float__f(exp, cause));
+    u8 temp_str[1024];
+    snprintf((char*)temp_str, 1024, float__fstr, f2float__f(exp, cause));
     return f2string__new(cause, strlen(temp_str), temp_str);
   } break;
   case ptype_pointer: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, pointer__fstr, f2pointer__p(exp, cause));
+    u8 temp_str[1024];
+    snprintf((char*)temp_str, 1024, pointer__fstr, f2pointer__p(exp, cause));
     return f2string__new(cause, strlen(temp_str), temp_str);
   } break;
   case ptype_gfunkptr:
@@ -130,12 +130,12 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   case ptype_mutex:
     return f2string__new(cause, strlen("[mutex]"), (u8*)"[mutex]");
   case ptype_char: {
-    char temp_str[1024];
+    u8 temp_str[1024];
     u8 ch_value = f2char__ch(exp, cause);
     if (ch_value >= 28) {
-      snprintf(temp_str, 1024, "%c%c%c", __escape_char, __escape_char_char, ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%c", __escape_char, __escape_char_char, ch_value);
     } else {
-      snprintf(temp_str, 1024, "%c%c%X", __escape_char, __escape_hex_char_char, (uint)ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%X", __escape_char, __escape_hex_char_char, (uint)ch_value);
     }
     return f2string__new(cause, strlen(temp_str), temp_str);
   } break;
@@ -197,9 +197,9 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   case ptype_traced_array:
     return f2string__new(cause, strlen("<traced_array>"), (u8*)"<traced_array>");
   case ptype_larva: {
-    char temp_str[1024];
+    u8 temp_str[1024];
     u32 larva_type = f2larva__type(exp, cause);
-    snprintf(temp_str, 1024, "%c%c" u32__fstr, __escape_char, __escape_larva_char, larva_type);
+    snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, __escape_char, __escape_larva_char, larva_type);
     return f2string__new(cause, strlen(temp_str), temp_str);
   } break;
   }

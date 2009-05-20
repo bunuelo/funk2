@@ -53,7 +53,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
 def_pcfunk1(stringlist__concat, this, return f2__stringlist__new_string_from_concatenation(this_cause, this));
 
 f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
-  if (! raw__stringp(cause, intersperse_string)) {
+  if (! raw__stringp(intersperse_string, cause)) {
     return f2larva__new(cause, 1);
   }
   u64 intersperse_string__length = f2string__length(intersperse_string, cause);

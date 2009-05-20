@@ -258,6 +258,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
     return f2larva__new(cause, 90);
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
+  lseek(fd, 0, SEEK_SET);
   u8* file__str = (u8*)malloc(file__length);
   u64 read_length = read(fd, file__str, file__length);
   if (read_length != file__length) {

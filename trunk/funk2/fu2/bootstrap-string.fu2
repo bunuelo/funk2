@@ -20,8 +20,11 @@
 '
 
 [defunk string-concat [:rest seq]
-  [funkall &stringlist-concat seq]]
+  [stringlist-concat seq]]
 
 [defunk string-intersperse [intersperse_string :rest seq]
-  [funkall &stringlist-intersperse seq intersperse_string]]
+  [stringlist-intersperse seq intersperse_string]]
+
+[defunk string-prog [:rest seq]
+  [stringlist-intersperse seq '\n']]
 

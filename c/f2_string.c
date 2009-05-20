@@ -207,6 +207,17 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
 
+f2ptr f2__string__to_symbol(f2ptr cause, f2ptr this) {
+  if (! raw__stringp(this, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 this__length = f2string__length(this, cause);
+  u8* temp_str = alloca(this__length);
+  f2string__str_copy(this, cause, temp_str);
+  f2ptr new_symbol = f2symbol__new(cause, this__length, temp_str);
+  return new_symbol;
+}
+def_pcfunk1(string__to_symbol, this, return f2__string__to_symbol(this_cause, this));
 
 void f2__string__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
@@ -221,6 +232,7 @@ void f2__string__initialize() {
   f2__primcfunk__init(stringlist__concat);
   f2__primcfunk__init(stringlist__intersperse);
   f2__primcfunk__init(exp__to_string);
+  f2__primcfunk__init(string__to_symbol);
   
   resume_gc();
   try_gc();

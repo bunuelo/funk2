@@ -1156,7 +1156,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 }
 
 f2ptr f2__fwrite_html(f2ptr cause, f2ptr stream, f2ptr exp) {
-  int recursion_depth = 7;
+  int recursion_depth = default_print_recursion_depth;
   int screen_width    = raw__termios__width() * 3 / 4; // we shouldn't need this 3/4 factor, butwe print too wide above...
   return f2__write_pretty(cause, stream, exp, recursion_depth, 0, screen_width, NULL, 1, NULL, 0, 1, 1);
 }
@@ -1180,13 +1180,13 @@ f2ptr f2__print_depth(f2ptr cause, f2ptr exp, int recursion_depth) {
 }
 
 
-f2ptr f2__fwrite(f2ptr cause, f2ptr stream, f2ptr exp) {return f2__fwrite_depth(    cause, stream, exp, 8);}
-f2ptr f2__write(f2ptr cause, f2ptr exp)                {return f2__write_depth(     cause,       exp, 8); fflush(stdout);}
-f2ptr f2__exp__print(f2ptr cause, f2ptr exp)           {return f2__exp__print_depth(cause,       exp, 8);}
-f2ptr f2__print(f2ptr cause, f2ptr exp)                {return f2__print_depth(     cause,       exp, 8);}
+f2ptr f2__fwrite(f2ptr cause, f2ptr stream, f2ptr exp) {return f2__fwrite_depth(    cause, stream, exp, default_print_recursion_depth);}
+f2ptr f2__write(f2ptr cause, f2ptr exp)                {return f2__write_depth(     cause,         exp, default_print_recursion_depth); fflush(stdout);}
+f2ptr f2__exp__print(f2ptr cause, f2ptr exp)           {return f2__exp__print_depth(cause,         exp, default_print_recursion_depth);}
+f2ptr f2__print(f2ptr cause, f2ptr exp)                {return f2__print_depth(     cause,         exp, default_print_recursion_depth);}
 
 f2ptr f2__fprint_prompt_debug(f2ptr cause, f2ptr stream, char* prompt, f2ptr exp) {
-  int recursion_depth = 10;
+  int recursion_depth = default_print_recursion_depth;
   int screen_width = raw__termios__width() * 3 / 4; // we shouldn't need this 3/4 factor, but we print too wide above...
   int prompt_width = strlen(prompt);
   if (stream) {
@@ -1199,7 +1199,7 @@ f2ptr f2__fprint_prompt_debug(f2ptr cause, f2ptr stream, char* prompt, f2ptr exp
 }
 
 f2ptr f2__fprint_prompt(f2ptr cause, f2ptr stream, char* prompt, f2ptr exp) {
-  int recursion_depth = 10;
+  int recursion_depth = default_print_recursion_depth;
   int screen_width = raw__termios__width() * 3 / 4; // we shouldn't need this 3/4 factor, butwe print too wide above...
   int prompt_width = strlen(prompt);
   if (stream) {

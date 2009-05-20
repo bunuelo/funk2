@@ -21,4 +21,5 @@
 
 [globalize-funk stringlist-concat      &primfunk:stringlist__concat]
 [globalize-funk stringlist-intersperse &primfunk:stringlist__intersperse]
+[globalize-funk exp-to_string          &primfunk:exp__to_string]
 

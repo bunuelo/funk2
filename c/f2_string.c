@@ -52,6 +52,51 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stringlist__concat, this, return f2__stringlist__new_string_from_concatenation(this_cause, this));
 
+f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
+  if (! raw__stringp(cause, intersperse_string)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 intersperse_string__length = f2string__length(intersperse_string, cause);
+  u8* intersperse_string__str    = malloc(intersperse_string__length + 1);
+  f2string__str_copy(intersperse_string, cause, intersperse_string__str);
+  u64 total_length = 0;
+  {
+    f2ptr iter = this;
+    while (iter) {
+      if (! raw__consp(iter, cause)) {return f2larva__new(cause, 1);}
+      f2ptr str = f2cons__car(iter, cause);
+      if (! raw__stringp(str, cause)) {return f2larva__new(cause, 1);}
+      u64 str_length = f2string__length(str, cause);
+      total_length += str_length;
+      iter = f2cons__cdr(iter, cause);
+      if (iter) {
+	total_length += intersperse_string__length;
+      }
+    }
+  }
+  u8* temp_str = (u8*)malloc(total_length + 1);
+  u64 index = 0;
+  {
+    f2ptr iter = this;
+    while (iter) {
+      f2ptr str = f2cons__car(iter, cause);
+      u64 str_length = f2string__length(str, cause);
+      f2string__str_copy(str, cause, temp_str + index);
+      index += str_length;
+      iter = f2cons__cdr(iter, cause);
+      if (iter) {
+	memcpy(temp_str + index, intersperse_string__str, intersperse_string__length);
+	index += intersperse_string__length;
+      }
+    }
+  }
+  f2ptr new_string = f2string__new(cause, total_length, temp_str);
+  free(temp_str);
+  free(intersperse_string__str);
+  return new_string;
+}
+def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__new_string_from_intersperse(this_cause, this, intersperse_string));
+
 
 void f2__string__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
@@ -64,6 +109,7 @@ void f2__string__initialize() {
   f2__primobject_frame__reinitialize_globalvars();
   
   f2__primcfunk__init(stringlist__concat);
+  f2__primcfunk__init(stringlist__intersperse);
   
   resume_gc();
   try_gc();

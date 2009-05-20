@@ -19,5 +19,6 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk stringlist-concat &primfunk:stringlist__concat]
+[globalize-funk stringlist-concat      &primfunk:stringlist__concat]
+[globalize-funk stringlist-intersperse &primfunk:stringlist__intersperse]
 

@@ -262,7 +262,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   u8* file__str = (u8*)malloc(file__length);
   u64 read_length = read(fd, file__str, file__length);
   if (read_length != file__length) {
-    printf("read_length=" u64__fstr ", file__length=" u64__fstr, read_length, file__length);
+    printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
     free(file__str);
     return f2larva__new(cause, 91);
   }

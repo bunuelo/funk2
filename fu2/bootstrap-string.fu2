@@ -20,5 +20,5 @@
 '
 
 [defunk string-concat [:rest seq]
-  [apply &stringlist-concat seq]]
+  [funkall &stringlist-concat seq]]
 

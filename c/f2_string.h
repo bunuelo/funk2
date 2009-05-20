@@ -22,7 +22,12 @@
 #ifndef F2__STRING__H
 #define F2__STRING__H
 
+#include "f2_primfunks.h"
 
+f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this);
+
+void f2__string__reinitialize_globalvars();
+void f2__string__initialize();
 
 #endif // F2__STRING__H
 

@@ -131,6 +131,7 @@
 #include "f2_socket_client.h"
 #include "f2_socket_server.h"
 #include "f2_status.h"
+#include "f2_string.h"
 #include "f2_termios.h"
 #include "f2_thought_process.h"
 #include "f2_thread.h"

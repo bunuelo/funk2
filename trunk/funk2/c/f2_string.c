@@ -203,6 +203,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   }
+  return f2larva__new(cause, 1);
 }
 def_pcfunk1(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
 

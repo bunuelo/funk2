@@ -229,8 +229,9 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
     return f2larva__new(cause, 1);
   }
   u64 filename__length = f2string__length(filename, cause);
-  u8* filename__str = alloca(filename__length);
+  u8* filename__str = alloca(filename__length + 1);
   f2string__str_copy(filename, cause, filename__str);
+  filename__str[filename__length] = 0;
   int fd = open(filename__str, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
     return f2larva__new(cause, 89);
@@ -249,8 +250,9 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
     return f2larva__new(cause, 1);
   }
   u64 filename__length = f2string__length(filename, cause);
-  u8* filename__str = alloca(filename__length);
+  u8* filename__str = alloca(filename__length + 1);
   f2string__str_copy(filename, cause, filename__str);
+  filename__str[filename__length] = 0;
   int fd = open(filename__str, O_RDONLY);
   if (fd == -1) {
     return f2larva__new(cause, 90);

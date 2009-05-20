@@ -32,7 +32,7 @@
   [string-to_symbol [exp-to_string exp]]]
 
 [defunk string-read [this]
-  [read [string_stream-new this 0]]]
+  [read [string_stream-new [string-concat this ' '] 0]]]
 
 [defunk string_parse-test [exp]
   [if [not [equals exp [string-read [exp-to_string exp]]]]

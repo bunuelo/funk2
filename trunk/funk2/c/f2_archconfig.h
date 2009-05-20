@@ -121,6 +121,7 @@ typedef u64 f2size_t;
 
 #define double__fstr "%f"
 #define float__fstr  "%f"
+#define pointer__fstr "#x" X64__fstr
 
 // function mappings
 #define f2__mmap  mmap

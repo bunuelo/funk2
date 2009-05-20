@@ -204,7 +204,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   } break;
   }
 }
-def_pcfunk2(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
+def_pcfunk1(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
 
 
 void f2__string__reinitialize_globalvars() {

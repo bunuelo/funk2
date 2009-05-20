@@ -1495,6 +1495,7 @@ void f2__blocks_world__reinitialize_globalvars();                // defined in f
 void f2__primobject__dynamic_library__reinitialize_globalvars(); // defined in f2_primobject__dynamic_library.c
 void f2__dlfcn__reinitialize_globalvars();                       // defined in f2_dlfcn.c
 void f2__gmodule__reinitialize_globalvars();                     // defined in f2_gmodule.c
+void f2__string__reinitialize_globalvars();                      // defined in f2_string.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -1600,6 +1601,7 @@ void rebuild_memory_info_from_image() {
     f2__blocks_world__reinitialize_globalvars();
     f2__dlfcn__reinitialize_globalvars();
     f2__gmodule__reinitialize_globalvars();
+    f2__string__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

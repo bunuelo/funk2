@@ -223,6 +223,52 @@ f2ptr f2__string__to_symbol(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(string__to_symbol, this, return f2__string__to_symbol(this_cause, this));
 
+f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
+  if ((! raw__stringp(this,     cause)) ||
+      (! raw__stringp(filename, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 filename__length = f2string__length(filename, cause);
+  u8* filename__str = alloca(filename__length);
+  f2string__str_copy(filename, cause, filename__str);
+  int fd = open(filename__str, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+  if (fd == -1) {
+    return f2larva__new(cause, 89);
+  }
+  u64 this__length = f2string__length(this, cause);
+  u8* this__str = alloca(this__length);
+  f2string__str_copy(this, cause, this__str);
+  write(fd, this__str, this__length);
+  close(fd);
+  return nil;
+}
+def_pcfunk2(string__save, this, filename, return f2__string__save(this_cause, this, filename));
+
+f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
+  if (! raw__stringp(filename, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 filename__length = f2string__length(filename, cause);
+  u8* filename__str = alloca(filename__length);
+  f2string__str_copy(filename, cause, filename__str);
+  int fd = open(filename__str, O_RDONLY);
+  if (fd == -1) {
+    return f2larva__new(cause, 90);
+  }
+  u64 file__length = lseek(fd, 0, SEEK_END);
+  u8* file__str = (u8*)malloc(file__length);
+  u64 read_length = read(fd, file__str, file__length);
+  if (read_length != file__length) {
+    free(file__str);
+    return f2larva__new(cause, 91);
+  }
+  f2ptr new_string = f2string__new(cause, file__length, file__str);
+  free(file__str);
+  close(fd);
+  return new_string;
+}
+def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename));
+
 void f2__string__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
 }
@@ -237,6 +283,8 @@ void f2__string__initialize() {
   f2__primcfunk__init(stringlist__intersperse);
   f2__primcfunk__init(exp__to_string);
   f2__primcfunk__init(string__to_symbol);
+  f2__primcfunk__init(string__save);
+  f2__primcfunk__init(string__load);
   
   resume_gc();
   try_gc();

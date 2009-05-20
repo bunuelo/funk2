@@ -23,5 +23,7 @@
 [globalize-funk stringlist-intersperse &primfunk:stringlist__intersperse]
 [globalize-funk exp-to_string          &primfunk:exp__to_string]
 [globalize-funk string-to_symbol       &primfunk:string__to_symbol]
+[globalize-funk string-save            &primfunk:string__save]
+[globalize-funk string-load            &primfunk:string__load]
 
 

@@ -146,6 +146,8 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u8* temp_str     = alloca(exp__length * 2);
     u64 index;
     u64 new_index = 0;
+    temp_str[new_index] = __string_quote_char;
+    new_index ++;
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];
       if (ch == __string_quote_char) {
@@ -155,13 +157,15 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
       temp_str[new_index] = ch;
       new_index ++;
     }
+    temp_str[new_index] = __string_quote_char;
+    new_index ++;
     return f2string__new(cause, new_index, temp_str);
   } break;
   case ptype_symbol: {
     boolean_t all_cool = boolean__true;
-    u64 exp__length = f2string__length(exp, cause);
+    u64 exp__length = f2symbol__length(exp, cause);
     u8* temp_old_str = alloca(exp__length);
-    f2string__str_copy(exp, cause, temp_old_str);
+    f2symbol__str_copy(exp, cause, temp_old_str);
     u64 index;
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];

@@ -169,7 +169,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u64 index;
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];
-      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char) {
+      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char || ch == __symbol_quote_char || ch == __string_quote_char) {
 	all_cool = boolean__false;
       }
     }

@@ -346,7 +346,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	boolean_t all_cool = 1;
 	for (i = 0; i < length; i ++) {
 	  ch = temp_str_buf[i];
-	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char) {
+	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char || ch == __symbol_quote_char || ch == __string_quote_char) {
 	    all_cool = 0;
 	  }
 	}

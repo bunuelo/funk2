@@ -34,7 +34,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
       iter = f2cons__cdr(iter, cause);
     }
   }
-  char* temp_str = (char*)malloc(total_length + 1);
+  u8* temp_str = (u8*)malloc(total_length + 1);
   u64 index = 0;
   {
     f2ptr iter = this;

@@ -35,7 +35,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
     }
   }
   char* temp_str = (char*)malloc(total_length + 1);
-  u6 index = 0;
+  u64 index = 0;
   {
     f2ptr iter = this;
     while (iter) {

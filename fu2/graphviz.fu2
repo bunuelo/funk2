@@ -64,7 +64,7 @@
 [defmetro reactive_relation-object_one [this]                           `[elt  ,this 2]]
 [defmetro reactive_relation-object_two [this]                           `[elt  ,this 3]]
 
-[defune exp-to_symbol_string [exp]
+[defunk exp-to_symbol_string [exp]
   [string-replace_all
    [string-replace_all
     [format nil exp]

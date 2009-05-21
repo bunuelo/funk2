@@ -42,6 +42,16 @@
   [if [not [equals exp [stringlist-intersperse [string-split this token] token]]]
       [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
 
+[defunk stringlist-append [this]
+  [string-intersperse this '']]
+
+[defunk string-format [exps]
+  [stringlist-append [mapcar [funk [exp]
+				   [if [string? exp]
+				       exp
+				     [exp-to_string exp]]]
+			     exps]]]
+
 [defunk string-test []
   [string_parse-test []]
   [string_parse-test 1]

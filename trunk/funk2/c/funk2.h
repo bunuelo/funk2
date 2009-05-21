@@ -158,6 +158,7 @@ typedef struct funk2_s {
   funk2_locale_t                     locale;
   funk2_event_router_t               event_router;
   funk2_primobject_circular_buffer_t primobject__circular_buffer;
+  funk2_child_process_handler_t      child_process_handler;
 } funk2_t;
 
 boolean_t funk2__handle_clients(funk2_t* this);

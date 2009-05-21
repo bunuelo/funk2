@@ -21,5 +21,49 @@
 
 #include "funk2.h"
 
+void funk2_child_process_handler__init(funk2_child_process_handler_t* this) {
+  this->child_process_list = NULL;
+}
+
+void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
+  funk2_child_process_list_t iter = this->child_process_list;
+  while (iter) {
+    funk2_child_process_list_t next = iter->next;
+    funk2_child_process_t* child_process = &(iter->child_process);
+    funk2_child_process__destroy(child_process);
+    free(iter);
+    iter = next;
+  }
+}
+
+void funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
+  funk2_child_process_list_t* child_process_node = (funk2_child_process_list_t*)malloc(sizeof(funk2_child_process_list_t));
+  child_process__init(&(child_process_node->child_process), argv, envp);
+  child_process_node->next = this->child_process_list;
+  this->child_process_list = child_process_node;
+}
+
+void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this) {
+  funk2_child_process_list_t* iter;
+  funk2_child_process_list_t* prev = NULL;
+  funk2_child_process_list_t* next;
+  while (iter) {
+    next = iter->next;
+    funk2_child_process_t* child_process = &(this->child_process);
+    funk2_child_process__handle(child_process);
+    if (funk2_child_process__is_completed(child_process)) {
+      if (prev) {
+	prev->next = iter->next;
+      } else {
+	this->child_process_list = iter->next;
+      }
+      free(iter);
+    } else {
+      prev = iter;
+    }
+    iter = next;
+  }
+}
+
 
 

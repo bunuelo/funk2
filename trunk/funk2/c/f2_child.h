@@ -24,16 +24,29 @@
 
 #include "f2_primfunks.h"
 
-typedef struct child_process_s {
+typedef struct funk2_child_process_s {
   char**    argv;
   char**    envp;
   pid_t     pid;
   boolean_t exited;
   boolean_t killed;
   boolean_t stopped;  
-} child_process_t;
+} funk2_child_process_t;
 
-child_process_t* child_process__new(char** argv, char** envp);
+typedef struct funk2_child_process_list_s {
+  funk2_child_process_t              child_process;
+  struct funk2_child_process_list_s* next;
+} funk2_child_process_list_t;
+
+typedef enum funk2_child_process_init_e {
+  funk2_child_process_init__success,
+  funk2_child_process_init__fork_failed
+} funk2_child_process_init_t;
+
+void      funk2_child_process__init(        funk2_child_process_t* this, char** argv, char** envp);
+void      funk2_child_process__destroy(     funk2_child_process_t* this);
+boolean_t funk2_child_process__is_completed(funk2_child_process_t* this);
+void      funk2_child_process__handle(      funk2_child_process_t* this);
 
 #endif // F2__CHILD__H
 

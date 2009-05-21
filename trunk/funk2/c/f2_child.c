@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-void child_process__init(child_process_t* this, char** argv, char** envp, pid_t pid) {
+funk2_child_process_init_t funk2_child_process__init(funk2_child_process_t* this, char** argv, char** envp) {
   char** new_argv;
   {
     int index;
@@ -50,17 +50,13 @@ void child_process__init(child_process_t* this, char** argv, char** envp, pid_t 
   }
   this->argv    = new_argv;
   this->envp    = new_envp;
-  this->pid     = pid;
   this->exited  = boolean__false;
   this->killed  = boolean__false;
   this->stopped = boolean__false;
-}
-
-child_process_t* child_process__new(char** argv, char** envp) {
-  pid_t child_pid = fork();
-  if (child_pid == -1) {
+  this->pid     = fork(); // FORK PROCESS HERE!!!
+  if (this->pid == -1) {
     printf("\nfork() error.\n"); fflush(stdout);
-    return NULL;
+    return funk2_child_process_init__fork_failed;
   }
   if (child_pid == 0) {
     if (execve(argv[0], argv, envp) == -1) {
@@ -71,9 +67,43 @@ child_process_t* child_process__new(char** argv, char** envp) {
     printf("\nchild failed to execve (2)"); fflush(stdout);
     exit(-1);
   }
-  child_process_t* child_process = (child_process_t*)malloc(sizeof(child_process_t));
-  child_process__init(child_process, argv, envp, child_pid);
-  return child_process;
+  return funk2_child_process_init__success;
+}
+
+void funk2_child_process__destroy(funk2_child_process_t* this) {
+  if (! funk2_child_process__is_completed(this)) {
+    int result = kill(this->pid, SIGKILL);
+    if (result == -1) {
+      printf("\nerror killing child.  pid=%d\n", this->pid);
+    }
+  }
+}
+
+boolean_t funk2_child_process__is_completed(funk2_child_process_t* this) {
+  return (this->exited || this->killed);
+}
+
+void funk2_child_process__handle(funk2_child_process_t* this) {
+  int pid_status;
+  if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
+    printf("\nchild_process__handle(): waitpid error.\n");
+    return;
+  }
+  if (pid_status != 0) {
+    if (WIFEXITED(pid_status)) {
+      printf("\nchild_process__handle(): child process exited, pid=%d.\n", this->pid);
+      this->exited = boolean__true;
+    } else if (WIFSIGNALED(pid_status)) {
+      printf("\nchild_process__handle(): child process killed, pid=%d.\n", this->pid);
+      this->killed = boolean__true;
+    } else if (WIFSTOPPED(pid_status)) {
+      printf("child_process__handle(): child process stopped, pid=%d.\n", this->pid);
+      this->stopped = boolean__true;
+    } else if (WIFCONTINUED(pid_status)) {
+      printf("child_process__handle(): child process continuing, pid=%d.\n", this->pid);
+      this->stopped = boolean__false;
+    }
+  }
 }
 
 

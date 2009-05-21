@@ -25,8 +25,11 @@
 [defunk string-intersperse [intersperse_string :rest seq]
   [stringlist-intersperse seq intersperse_string]]
 
-[defunk string-prog [:rest seq]
+[defunk stringlist-prog [seq]
   [stringlist-intersperse seq '\n']]
+
+[defunk string-prog [:rest seq]
+  [stringlist-prog seq]]
 
 [defunk exp-to_symbol [exp]
   [string-to_symbol [exp-to_string exp]]]

@@ -43,7 +43,7 @@
       [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
 
 [defunk stringlist-append [this]
-  [string-intersperse this '']]
+  [stringlist-intersperse this '']]
 
 [defunk string-format [:rest exps]
   [stringlist-append [mapcar [funk [exp]

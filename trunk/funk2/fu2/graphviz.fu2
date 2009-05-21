@@ -100,7 +100,7 @@
 							     [object_one [reactive_relation-object_one reactive_relation]]
 							     [object_two [reactive_relation-object_two reactive_relation]]]
 							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_one]        ' [label = "'                      object_one '\\n(reactive)"];']]]]
-							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_two]        ' [label = \"~A\\n(reactive)\"];'  object_two]]]]
+							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_two]        ' [label = \\"~A\\n(reactive)\\"];'  object_two]]]]
 							 [= code_seq [append code_seq [list [format nil [reactive_relation-to_symbol_string reactive_relation] ' [shape=box,style=filled,label="' relation   '",height=.1,width=.1];']]]]
 							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_one] ' -> ' [reactive_relation-to_symbol_string reactive_relation] ' -> ' [reactive_object-to_symbol_string object_two] ';']]]]
 							 

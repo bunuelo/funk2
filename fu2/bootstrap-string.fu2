@@ -45,7 +45,7 @@
 [defunk stringlist-append [this]
   [string-intersperse this '']]
 
-[defunk string-format [exps]
+[defunk string-format [:rest exps]
   [stringlist-append [mapcar [funk [exp]
 				   [if [string? exp]
 				       exp

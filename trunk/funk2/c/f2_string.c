@@ -297,7 +297,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   while(index <= sup_index) {
     if (index == sup_index || memcmp(this__str + index, token__str, token__length) == 0) {
       u64 substr__length = index - last_match_index;
-      f2ptr new_substr = f2string__new(cause, substr__length, this__str + index);
+      f2ptr new_substr = f2string__new(cause, substr__length, this__str + last_match_index);
       f2ptr new_cons = f2cons__new(cause, new_substr, nil);
       if (iter == nil) {
 	new_seq = new_cons;

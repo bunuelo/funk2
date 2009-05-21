@@ -58,7 +58,7 @@ funk2_child_process_init_t funk2_child_process__init(funk2_child_process_t* this
     printf("\nfork() error.\n"); fflush(stdout);
     return funk2_child_process_init__fork_failed;
   }
-  if (child_pid == 0) {
+  if (this->pid == 0) {
     if (execve(argv[0], argv, envp) == -1) {
       printf("\nchild failed to execve (1)"); fflush(stdout);
       perror("child failed to execve");

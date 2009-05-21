@@ -54,7 +54,7 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
   funk2_child_process_list_t* next;
   while (iter) {
     next = iter->next;
-    funk2_child_process_t* child_process = &(this->child_process);
+    funk2_child_process_t* child_process = &(iter->child_process);
     funk2_child_process__handle(child_process);
     if (funk2_child_process__is_completed(child_process)) {
       if (prev) {

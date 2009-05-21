@@ -80,7 +80,7 @@
 	  '_'
 	  [reactive_object-to_symbol_string [reactive_relation-relation   this]]
 	  '_'
-	  [reactive_object-to_symbol_string (reactive_relation-object_two this]]]]
+	  [reactive_object-to_symbol_string [reactive_relation-object_two this]]]]
 
 
 

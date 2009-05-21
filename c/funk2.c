@@ -128,6 +128,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   int event_buffer__byte_num = 32768;
   funk2_event_router__init(&(this->event_router), event_buffer__byte_num);
   
+  funk2_child_process_handler__init(&(this->child_process_handler));
+  
   f2ptr cause = initial_cause();
   
   char* install__bootstrap_img__filename      = F2__INSTALL__BOOTSTRAP_IMG__FILENAME;
@@ -255,14 +257,16 @@ void funk2__destroy(funk2_t* this) {
   funk2_command_line__destroy(&(this->command_line));
   funk2_node_handler__destroy(&(this->node_handler));
   funk2_peer_command_server__destroy(&(this->peer_command_server));
+  funk2_child_process_handler__destroy(&(this->child_process_handler));
   
   pthread_mutex_destroy(&(this->event_id_mutex));
 }
 
-boolean_t funk2__handle_clients(funk2_t* this) {
+boolean_t funk2__handle(funk2_t* this) {
   funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
   funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
   funk2_node_handler__handle_nodes(&(this->node_handler));
+  funk2_child_process_handler__handle(&(this->child_process_handler));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
@@ -274,7 +278,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   funk2__init(this, argc, argv);
   
   while (1) {
-    boolean_t did_something = funk2__handle_clients(this);
+    boolean_t did_something = funk2__handle(this);
     if (! did_something) {
       f2__sleep(1000000);
     }

@@ -26,10 +26,10 @@ void funk2_child_process_handler__init(funk2_child_process_handler_t* this) {
 }
 
 void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
-  funk2_child_process_list_t iter = this->child_process_list;
+  funk2_child_process_list_t* iter = this->child_process_list;
   while (iter) {
-    funk2_child_process_list_t next = iter->next;
-    funk2_child_process_t* child_process = &(iter->child_process);
+    funk2_child_process_list_t* next          = iter->next;
+    funk2_child_process_t*      child_process = &(iter->child_process);
     funk2_child_process__destroy(child_process);
     free(iter);
     iter = next;

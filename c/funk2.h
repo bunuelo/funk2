@@ -163,7 +163,7 @@ typedef struct funk2_s {
   funk2_child_process_handler_t      child_process_handler;
 } funk2_t;
 
-boolean_t funk2__handle_clients(funk2_t* this);
+boolean_t funk2__handle(funk2_t* this);
 
 extern funk2_t __funk2;
 

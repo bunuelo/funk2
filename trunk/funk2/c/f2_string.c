@@ -306,6 +306,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       }
       iter = new_cons;
       index += token__length;
+      last_match_index = index;
     } else {
       index ++;
     }

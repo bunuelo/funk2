@@ -29,10 +29,10 @@ typedef struct funk2_child_process_handler_s {
   funk2_child_process_list_t* child_process_list;
 } funk2_child_process_handler_t;
 
-void funk2_child_process_handler__init(funk2_child_process_handler_t* this);
-void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this);
-void funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp);
-void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this);
+void                       funk2_child_process_handler__init(funk2_child_process_handler_t* this);
+void                       funk2_child_process_handler__destroy(funk2_child_process_handler_t* this);
+funk2_child_process_init_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp);
+void                       funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this);
 
 #endif // F2__CHILD_HANDLER__H
 

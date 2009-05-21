@@ -36,11 +36,16 @@ void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
   }
 }
 
-void funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
+funk2_child_process_init_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
   funk2_child_process_list_t* child_process_node = (funk2_child_process_list_t*)malloc(sizeof(funk2_child_process_list_t));
-  child_process__init(&(child_process_node->child_process), argv, envp);
+  funk2_child_process_init_t result = child_process__init(&(child_process_node->child_process), argv, envp);
+  if (result != funk2_child_process_init__success) {
+    free(child_process_node);
+    return result;
+  }
   child_process_node->next = this->child_process_list;
   this->child_process_list = child_process_node;
+  return funk2_child_process_init__success;
 }
 
 void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this) {

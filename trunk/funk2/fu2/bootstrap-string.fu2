@@ -38,12 +38,18 @@
   [if [not [equals exp [string-read [exp-to_string exp]]]]
       [error `compile-time `[string_parse-test ,exp]]]]
 
+[defunk string-split_intersperse_test [this token]
+  [if [not [equals exp [stringlist-intersperse [string-split this token] token]]]
+      [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
+
 [defunk string-test []
   [string_parse-test []]
   [string_parse-test 1]
   [string_parse-test 12345]
   [string_parse-test #x1234]
   [string_parse-test 'string']
-  [string_parse-test `symbol]]
+  [string_parse-test `symbol]
+  [string-split_intersperse_test 'this is a test' 's']
+  ]
 
 

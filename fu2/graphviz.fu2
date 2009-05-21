@@ -52,11 +52,11 @@
 [defunk phdproposal_root_dir []
   [format nil neurominde_svn-directory 'home/neptune/Desktop/papers/phdproposal/']]
 
-[globalize phdproposal-reactive_color        '"#000000"']
-[globalize phdproposal-deliberative_color    '"#0000CC"']
-[globalize phdproposal-reflective_color      '"#008800"']
-[globalize phdproposal-self_reflective_color '"#CC0000"']
-[globalize phdproposal-self_conscious_color  '"#CC00CC"']
+[globalize phdproposal-reactive_color        '#000000']
+[globalize phdproposal-deliberative_color    '#0000CC']
+[globalize phdproposal-reflective_color      '#008800']
+[globalize phdproposal-self_reflective_color '#CC0000']
+[globalize phdproposal-self_conscious_color  '#CC00CC']
 
 [defunk   reactive_relation?           [exp]                             [and exp [cons? exp] [eq [car exp] `reactive_relation]]]
 [defunk   reactive_relation-new        [relation object_one object_two]  [list `reactive_relation relation object_one object_two]]

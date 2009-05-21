@@ -24,7 +24,16 @@
 
 #include "f2_primfunks.h"
 
+typedef struct child_process_s {
+  char**    argv;
+  char**    envp;
+  pid_t     pid;
+  boolean_t exited;
+  boolean_t killed;
+  boolean_t stopped;  
+} child_process_t;
 
+child_process_t* child_process__new(char** argv, char** envp);
 
 #endif // F2__CHILD__H
 

@@ -49,7 +49,7 @@ funk2_child_process_init_t funk2_child_process_handler__add_new_child_process(fu
 }
 
 void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this) {
-  funk2_child_process_list_t* iter;
+  funk2_child_process_list_t* iter = this->child_process_list;
   funk2_child_process_list_t* prev = NULL;
   funk2_child_process_list_t* next;
   while (iter) {

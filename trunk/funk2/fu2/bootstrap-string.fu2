@@ -37,14 +37,6 @@
 [defunk string-read [this]
   [read [string_stream-new [string-concat this ' '] 0]]]
 
-[defunk string_parse-test [exp]
-  [if [not [equals exp [string-read [exp-to_string exp]]]]
-      [error `compile-time `[string_parse-test ,exp]]]]
-
-[defunk string-split_intersperse_test [this token]
-  [if [not [equals exp [stringlist-intersperse [string-split this token] token]]]
-      [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
-
 [defunk stringlist-append [this]
   [stringlist-intersperse this '']]
 
@@ -54,6 +46,19 @@
 				       exp
 				     [exp-to_string exp]]]
 			     exps]]]
+
+[defunk string-replace_all [this token replacement]
+  [stringlist-intersperse [string-split this token] replacement]]
+
+'tests'
+
+[defunk string_parse-test [exp]
+  [if [not [equals exp [string-read [exp-to_string exp]]]]
+      [error `compile-time `[string_parse-test ,exp]]]]
+
+[defunk string-split_intersperse_test [this token]
+  [if [not [equals exp [stringlist-intersperse [string-split this token] token]]]
+      [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
 
 [defunk string-test []
   [string_parse-test []]

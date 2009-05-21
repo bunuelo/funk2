@@ -43,10 +43,10 @@ typedef enum funk2_child_process_init_e {
   funk2_child_process_init__fork_failed
 } funk2_child_process_init_t;
 
-void      funk2_child_process__init(        funk2_child_process_t* this, char** argv, char** envp);
-void      funk2_child_process__destroy(     funk2_child_process_t* this);
-boolean_t funk2_child_process__is_completed(funk2_child_process_t* this);
-void      funk2_child_process__handle(      funk2_child_process_t* this);
+funk2_child_process_init_t funk2_child_process__init(        funk2_child_process_t* this, char** argv, char** envp);
+void                       funk2_child_process__destroy(     funk2_child_process_t* this);
+boolean_t                  funk2_child_process__is_completed(funk2_child_process_t* this);
+void                       funk2_child_process__handle(      funk2_child_process_t* this);
 
 #endif // F2__CHILD__H
 

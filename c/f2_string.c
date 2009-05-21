@@ -293,7 +293,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   f2ptr iter    = nil;
   u64 last_match_index = 0;
   u64 index            = 0;
-  u64 sup_index        = this__length - token__length;
+  u64 sup_index        = this__length - token__length + 1;
   while(index <= sup_index) {
     if (index == sup_index || memcmp(this__str + index, token__str, token__length) == 0) {
       u64 substr__length = index - last_match_index;

@@ -91,17 +91,17 @@
     [let [[reactive_relations [list rr-dirty_clothes
 				    rr-clean_clothes]]]
       [graphviz_digraph 'G'
-			[format nil '  node [fillcolor = white, color = "' phdproposal-reactive_color '", style = filled];']
-			[format nil '  edge [color = "' phdproposal-reactive_color '"];']
+			[format nil 'node [fillcolor = white, color = "' phdproposal-reactive_color '", style = filled];']
+			[format nil 'edge [color = "' phdproposal-reactive_color '"];']
 			
 			[stringlist-prog [let [[code_seq nil]]
 					   [mapc [funk [reactive_relation]
 						       [let [[relation   [reactive_relation-relation   reactive_relation]]
 							     [object_one [reactive_relation-object_one reactive_relation]]
 							     [object_two [reactive_relation-object_two reactive_relation]]]
-							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_one]        ' [label = "'                      object_one '\\n(reactive)"];']]]]
-							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_two]        ' [label = \\"~A\\n(reactive)\\"];'  object_two]]]]
-							 [= code_seq [append code_seq [list [format nil [reactive_relation-to_symbol_string reactive_relation] ' [shape=box,style=filled,label="' relation   '",height=.1,width=.1];']]]]
+							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_one]        ' [label = "'                       object_one '\\n(reactive)"];']]]]
+							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_two]        ' [label = \\"~A\\n(reactive)\\"];' object_two]]]]
+							 [= code_seq [append code_seq [list [format nil [reactive_relation-to_symbol_string reactive_relation] ' [shape=box,style=filled,label="'  relation   '",height=.1,width=.1];']]]]
 							 [= code_seq [append code_seq [list [format nil [reactive_object-to_symbol_string   object_one] ' -> ' [reactive_relation-to_symbol_string reactive_relation] ' -> ' [reactive_object-to_symbol_string object_two] ';']]]]
 							 
 							 ]]

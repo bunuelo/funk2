@@ -76,6 +76,8 @@
 #include "f2_buffered_file.h"
 #include "f2_buffered_socket.h"
 #include "f2_bytecodes.h"
+#include "f2_child.h"
+#include "f2_child_handler.h"
 #include "f2_circular_buffer.h"
 #include "f2_command_line.h"
 #include "f2_compile.h"

@@ -52,6 +52,7 @@ funk2_server_objs = \
   c/f2_buffered_file.o \
   c/f2_buffered_socket.o \
   c/f2_bytecodes.o \
+  c/f2_child.o \
   c/f2_child_handler.o \
   c/f2_circular_buffer.o \
   c/f2_command_line.o \
@@ -119,6 +120,7 @@ funk2_headers = \
   c/f2_buffered_file.h \
   c/f2_buffered_socket.h \
   c/f2_bytecodes.h \
+  c/f2_child.h \
   c/f2_child_handler.h \
   c/f2_compile.h \
   c/f2_compile_x86.h \

@@ -19,12 +19,12 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__CHILD_HANDLER__H
-#define F2__CHILD_HANDLER__H
+#ifndef F2__CHILD__H
+#define F2__CHILD__H
 
 #include "f2_primfunks.h"
-#include "f2_child.h"
 
 
-#endif // F2__CHILD_HANDLER__H
+
+#endif // F2__CHILD__H
 

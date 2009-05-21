@@ -273,6 +273,47 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
 }
 def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename));
 
+f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
+  if ((! raw__stringp(this,  cause)) ||
+      (! raw__stringp(token, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 token__length = f2string__length(this, cause);
+  if (token__length == 0) {
+    return f2larva__new(cause, 93);
+  }
+  u8* token__str    = (u8*)malloc(token__length);
+  f2string__str_copy(token, cause, token__str);
+  
+  u64 this__length = f2string__length(this, cause);
+  u8* this__str = (u8*)malloc(this__length);
+  f2string__str_copy(this, cause, this__str);
+  
+  f2ptr new_seq = nil;
+  f2ptr iter    = nil;
+  u64 last_match_index = 0;
+  u64 index            = 0;
+  u64 sup_index        = this__length - token__length;
+  while(index <= sup_index) {
+    if (index == sup_index || memcmp(this__str + index, token__str, token__length) == 0) {
+      u64 substr__length = index - last_match_index;
+      f2ptr new_substr = f2string__new(cause, this__str + index, substr__length);
+      f2ptr new_cons = f2cons__new(cause, new_substr, nil);
+      if (iter == nil) {
+	new_seq = new_cons;
+      } else {
+	f2cons__cdr__set(iter, cause, new_cons);
+      }
+      iter = new_cons;
+      index += token__length;
+    } else {
+      index ++;
+    }
+  }
+  return new_seq;
+}
+def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));
+
 void f2__string__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
 }
@@ -289,6 +330,7 @@ void f2__string__initialize() {
   f2__primcfunk__init(string__to_symbol);
   f2__primcfunk__init(string__save);
   f2__primcfunk__init(string__load);
+  f2__primcfunk__init(string__split);
   
   resume_gc();
   try_gc();

@@ -150,7 +150,7 @@ computer_id_t funk2_node__remote_computer_id_to_local_computer_id(funk2_node_t* 
   send_packet__request__remote_computer_id_to_node_id(this, remote_computer_id);
   while (local_computer_id == f2ptr__computer_id__max_value) {
     local_computer_id = this->remote_computer_id_to_local_computer_id[remote_computer_id];
-    funk2__handle_clients(&__funk2);
+    funk2__handle(&__funk2);
   }
   //printf("\n          : local_computer_id=%d (fetched from peer command server)", local_computer_id);
   return local_computer_id;

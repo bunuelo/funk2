@@ -278,7 +278,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       (! raw__stringp(token, cause))) {
     return f2larva__new(cause, 1);
   }
-  u64 token__length = f2string__length(this, cause);
+  u64 token__length = f2string__length(token, cause);
   if (token__length == 0) {
     return f2larva__new(cause, 93);
   }

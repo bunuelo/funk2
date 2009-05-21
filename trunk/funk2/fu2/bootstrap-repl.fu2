@@ -434,7 +434,9 @@
     [apply &append sets]]]
 
 [defunk format [stream :rest exps]
-  [mapc [funk [exp] [exp-format stream exp]] exps]]
+  [if [null stream]
+      [apply &string-format exps]
+    [mapc [funk [exp] [exp-format stream exp]] exps]]]
 
 [defunk format-html [stream :rest exps]
   [mapc [funk [exp] [exp-format-html stream exp]] exps]]

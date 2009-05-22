@@ -31,6 +31,7 @@ typedef struct funk2_child_process_s {
   boolean_t exited;
   boolean_t killed;
   boolean_t stopped;  
+  boolean_t no_longer_exists;
 } funk2_child_process_t;
 
 typedef struct funk2_child_process_list_s {

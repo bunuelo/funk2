@@ -89,7 +89,7 @@ void funk2_child_process__destroy(funk2_child_process_t* this) {
 }
 
 boolean_t funk2_child_process__is_completed(funk2_child_process_t* this) {
-  return (this->exited || this->killed);
+  return (this->exited || this->killed || this->no_longer_exists);
 }
 
 void funk2_child_process__handle(funk2_child_process_t* this) {
@@ -98,7 +98,7 @@ void funk2_child_process__handle(funk2_child_process_t* this) {
     if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
       if (errno == ECHILD) {
 	printf("\nchild_process__handle(): child process no longer exists, pid=%d.\n", this->pid);
-	this->exited = boolean__true;
+	this->no_longer_exists = boolean__true;
       } else {
 	char msg[1024];
 	snprintf(msg, 1024, "\nchild_process__handle(): waitpid error, pid=%d.\n", this->pid);

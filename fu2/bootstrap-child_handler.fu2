@@ -22,4 +22,10 @@
 [defunk exec [command :rest args]
   [child_handler-add_new_child_process [cons command args] nil]]
 
+[defunk system [command :rest args]
+  [let [[pid [apply &exec [cons command args]]]]
+    [while [child_handler-process_exists pid]
+      [yield]]]]
 
+
+    

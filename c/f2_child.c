@@ -71,7 +71,9 @@ funk2_child_process_init_t funk2_child_process__init(funk2_child_process_t* this
 }
 
 void funk2_child_process__destroy(funk2_child_process_t* this) {
+  printf("\ndestroying child.  pid=%d\n", this->pid);
   if (! funk2_child_process__is_completed(this)) {
+    printf("\nkilling child.  pid=%d\n", this->pid);
     int result = kill(this->pid, SIGKILL);
     if (result == -1) {
       printf("\nerror killing child.  pid=%d\n", this->pid);

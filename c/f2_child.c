@@ -87,9 +87,13 @@ void funk2_child_process__handle(funk2_child_process_t* this) {
   if (! this->exited) {
     int pid_status;
     if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
-      char msg[1024];
-      snprintf(msg, 1024, "\nchild_process__handle(): waitpid error, pid=%d.\n", this->pid);
-      perror(msg);
+      if (errno == ECHILD) {
+	this->exited = boolean__true;
+      } else {
+	char msg[1024];
+	snprintf(msg, 1024, "\nchild_process__handle(): waitpid error, pid=%d.\n", this->pid);
+	perror(msg);
+      }
       return;
     }
     if (pid_status != 0) {

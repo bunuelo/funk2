@@ -152,7 +152,6 @@ f2ptr f2__child_handler__process_exists(f2ptr cause, f2ptr pid) {
 def_pcfunk1(child_handler__process_exists, pid, return f2__child_handler__process_exists(this_cause, pid));
 
 f2ptr f2__environ(f2ptr cause) {
-  f2ptr prev    = nil;
   f2ptr new_seq = nil;
   f2ptr iter    = nil;
   int index;

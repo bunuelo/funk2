@@ -157,7 +157,7 @@ f2ptr f2__environ(f2ptr cause) {
   int index;
   for (index = 0; environ[index] != NULL; index ++) {
     u64 str_len = strlen(environ[index]);
-    f2ptr new_string = f2string__new(cause, str_len, environ[index]);
+    f2ptr new_string = f2string__new(cause, str_len, (u8*)environ[index]);
     f2ptr new_cons = f2cons__new(cause, new_string, nil);
     if (iter) {
       f2cons__cdr__set(iter, cause, new_cons);

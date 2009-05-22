@@ -239,9 +239,13 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   u64 this__length = f2string__length(this, cause);
   u8* this__str = alloca(this__length);
   f2string__str_copy(this, cause, this__str);
-  write(fd, this__str, this__length);
+  u64 write_bytes = write(fd, this__str, this__length);
+  f2ptr result = nil;
+  if (write_bytes != this__length) {
+    result = f2larva__new(cause, 89);
+  }
   close(fd);
-  return nil;
+  return result;
 }
 def_pcfunk2(string__save, this, filename, return f2__string__save(this_cause, this, filename));
 

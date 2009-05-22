@@ -86,7 +86,7 @@ boolean_t funk2_child_process__is_completed(funk2_child_process_t* this) {
 void funk2_child_process__handle(funk2_child_process_t* this) {
   int pid_status;
   if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
-    printf("\nchild_process__handle(): waitpid error.\n");
+    perror("\nchild_process__handle(): waitpid error, pid=%d.\n", this->pid);
     return;
   }
   if (pid_status != 0) {

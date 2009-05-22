@@ -22,6 +22,8 @@
 #ifndef F2__PROCESSOR_MUTEX__H
 #define F2__PROCESSOR_MUTEX__H
 
+#include <pthread.h>
+
 typedef struct funk2_processor_mutex_s {
   char            lock_source_file[1024];
   int             lock_line_num;

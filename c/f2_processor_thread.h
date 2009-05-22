@@ -22,6 +22,8 @@
 #ifndef F2__PROCESSOR_THREAD__H
 #define F2__PROCESSOR_THREAD__H
 
+#include <pthread.h>
+
 typedef void (*funk2_processor_thread_function_pointer_t)(void*);
 
 typedef struct funk2_processor_thread_s {

@@ -130,7 +130,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_event_router__init(&(this->event_router), event_buffer__byte_num);
   
   funk2_child_process_handler__init(&(this->child_process_handler));
-  funk2_process_thread_handler__init(&(this->process_thread_handler));
+  funk2_processor_thread_handler__init(&(this->processor_thread_handler));
   
   f2ptr cause = initial_cause();
   
@@ -260,7 +260,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_node_handler__destroy(&(this->node_handler));
   funk2_peer_command_server__destroy(&(this->peer_command_server));
   funk2_child_process_handler__destroy(&(this->child_process_handler));
-  funk2_process_thread_handler__destroy(&(this->process_thread_handler));
+  funk2_processor_thread_handler__destroy(&(this->processor_thread_handler));
   
   pthread_mutex_destroy(&(this->event_id_mutex));
 }

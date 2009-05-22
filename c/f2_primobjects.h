@@ -670,7 +670,7 @@ defprimobject__static_slot__prototype(thread__last_executed_time);
 // processor
 
 extern f2ptr __processor__symbol;
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr pthread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc);
+f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc);
 
 #define f2primobject__is_processor(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __processor__symbol)
 
@@ -681,12 +681,12 @@ defprimobject__static_slot__prototype(processor__scheduler);
 #define f2processor__scheduler__trace(          this, cause)        primobject__static_slot__trace(     this, processor__scheduler, cause)
 #define f2processor__scheduler__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, processor__scheduler, cause)
 
-defprimobject__static_slot__prototype(processor__pthread);
-#define f2processor__pthread(                   this, cause)        primobject__static_slot__accessor(  this, processor__pthread, cause)
-#define f2processor__pthread__set(              this, cause, value) primobject__static_slot__set(       this, processor__pthread, cause, value)
-#define f2processor__pthread__tracing_on(       this, cause)        primobject__static_slot__tracing_on(this, processor__pthread, cause)
-#define f2processor__pthread__trace(            this, cause)        primobject__static_slot__trace(     this, processor__pthread, cause)
-#define f2processor__pthread__imagination_frame(            this, cause)        primobject__static_slot__imagination_frame(     this, processor__pthread, cause)
+defprimobject__static_slot__prototype(processor__processor_thread);
+#define f2processor__processor_thread(                   this, cause)        primobject__static_slot__accessor(         this, processor__processor_thread, cause)
+#define f2processor__processor_thread__set(              this, cause, value) primobject__static_slot__set(              this, processor__processor_thread, cause, value)
+#define f2processor__processor_thread__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__processor_thread, cause)
+#define f2processor__processor_thread__trace(            this, cause)        primobject__static_slot__trace(            this, processor__processor_thread, cause)
+#define f2processor__processor_thread__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__processor_thread, cause)
 
 defprimobject__static_slot__prototype(processor__active_threads_mutex);
 #define f2processor__active_threads_mutex(            this, cause)        primobject__static_slot__accessor(  this, processor__active_threads_mutex, cause)

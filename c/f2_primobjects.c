@@ -439,7 +439,7 @@ f2ptr f2thread__new(f2ptr cause,
 // processor
 
 defprimobject__static_slot(processor__scheduler,              0);
-defprimobject__static_slot(processor__pthread,                1);
+defprimobject__static_slot(processor__processor_thread,       1);
 defprimobject__static_slot(processor__active_threads_mutex,   2);
 defprimobject__static_slot(processor__active_threads,         3);
 defprimobject__static_slot(processor__sleeping_threads_mutex, 4);
@@ -449,11 +449,11 @@ defprimobject__static_slot(processor__desc,                   7);
 
 f2ptr __processor__symbol = -1;
 
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr pthread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc) {
+f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc) {
   release__assert(__processor__symbol != -1, nil, "f2processor__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __processor__symbol, 8, nil);
   f2processor__scheduler__set(             this, cause, scheduler);
-  f2processor__pthread__set(               this, cause, pthread);
+  f2processor__processor_thread__set(      this, cause, processor_thread);
   f2processor__active_threads_mutex__set(  this, cause, active_threads_mutex);
   f2processor__active_threads__set(        this, cause, active_threads);
   f2processor__sleeping_threads_mutex__set(this, cause, sleeping_threads_mutex);

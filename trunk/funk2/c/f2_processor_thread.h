@@ -28,6 +28,7 @@ typedef void (*funk2_processor_thread_function_pointer_t)(void*);
 
 typedef struct funk2_processor_thread_s {
   funk2_processor_thread_function_pointer_t start_function;
+  void*                                     args;
   pthread_t                                 pthread;
 } funk2_processor_thread_t;
 

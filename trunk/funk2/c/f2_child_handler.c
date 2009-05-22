@@ -78,5 +78,27 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
   pthread_mutex_unlock(&(this->access_mutex));
 }
 
+f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr envp) {
+  return nil;
+}
+def_pcfunk2(child_handler__add_new_child_process, argv, envp, return f2__child_handler__add_new_child_process(this_cause, argv, envp));
+
+// **
+
+void f2__child_handler__reinitialize_globalvars() {
+  //f2ptr cause = initial_cause(); //f2_child_handler_c__cause__new(initial_cause(), nil, global_environment());
+}
+
+void f2__child_handler__initialize() {
+  //f2ptr cause = initial_cause(); //f2_child_handler_c__cause__new(initial_cause(), nil, global_environment());
+  pause_gc();
+  
+  f2__child_handler__reinitialize_globalvars();
+  
+  f2__primcfunk__init(child_handler__add_new_child_process);
+  
+  resume_gc();
+  try_gc();
+}
 
 

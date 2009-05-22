@@ -279,13 +279,16 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
     return f2larva__new(cause, 1);
   }
   u64 token__length = f2string__length(token, cause);
+  u64 this__length  = f2string__length(this,  cause);
   if (token__length == 0) {
     return f2larva__new(cause, 93);
+  }
+  if (token__length > this__length) {
+    return f2larva__new(cause, 94);
   }
   u8* token__str    = (u8*)malloc(token__length);
   f2string__str_copy(token, cause, token__str);
   
-  u64 this__length = f2string__length(this, cause);
   u8* this__str = (u8*)malloc(this__length);
   f2string__str_copy(this, cause, this__str);
   

@@ -33,6 +33,7 @@
 [load 'fu2/bootstrap-critics-reactive.fu2']
 [load 'fu2/bootstrap-action.fu2']
 [load 'fu2/bootstrap-string.fu2']
+[load 'fu2/bootstrap-child_process.fu2']
 `[load 'fu2/bootstrap-dlfcn.fu2']
 `[load 'fu2/bootstrap-gmodule.fu2']
 `[load 'fu2/bootstrap-alien.fu2']

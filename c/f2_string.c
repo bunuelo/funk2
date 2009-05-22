@@ -323,7 +323,7 @@ void f2__string__initialize() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
   pause_gc();
   
-  f2__primobject_frame__reinitialize_globalvars();
+  f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init(stringlist__concat);
   f2__primcfunk__init(stringlist__intersperse);

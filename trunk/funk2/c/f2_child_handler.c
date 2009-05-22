@@ -151,6 +151,26 @@ f2ptr f2__child_handler__process_exists(f2ptr cause, f2ptr pid) {
 }
 def_pcfunk1(child_handler__process_exists, pid, return f2__child_handler__process_exists(this_cause, pid));
 
+f2ptr f2__environ(f2ptr cause) {
+  f2ptr prev    = nil;
+  f2ptr new_seq = nil;
+  f2ptr iter    = nil;
+  int index;
+  for (index = 0; environ[index] != NULL; index ++) {
+    u64 str_len = strlen(environ[index]);
+    f2ptr new_string = f2string__new(cause, str_len, environ[index]);
+    f2ptr new_cons = f2cons__new(cause, new_string, nil);
+    if (iter) {
+      f2cons__cdr__set(iter, cause, new_cons);
+    } else {
+      new_seq = iter;
+    }
+    iter = new_cons;
+  }
+  return new_seq;
+}
+def_pcfunk0(environ, return f2__environ(this_cause));
+
 // **
 
 void f2__child_handler__reinitialize_globalvars() {
@@ -165,6 +185,7 @@ void f2__child_handler__initialize() {
   
   f2__primcfunk__init(child_handler__add_new_child_process);
   f2__primcfunk__init(child_handler__process_exists);
+  f2__primcfunk__init(environ);
   
   resume_gc();
   try_gc();

@@ -96,7 +96,7 @@ f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr en
       }
       u64 elt__length = f2string__length(elt, cause);
       raw_argv[index] = (char*)alloca(elt__length + 1);
-      f2string__str_copy(elt, cause, raw_argv[index]);
+      f2string__str_copy(elt, cause, (u8*)raw_argv[index]);
       raw_argv[index][elt__length] = 0;
     }
     raw_argv[index] = NULL;
@@ -113,12 +113,12 @@ f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr en
       }
       u64 elt__length = f2string__length(elt, cause);
       raw_envp[index] = (char*)alloca(elt__length + 1);
-      f2string__str_copy(elt, cause, raw_envp[index]);
+      f2string__str_copy(elt, cause, (u8*)raw_envp[index]);
       raw_envp[index][elt__length] = 0;
     }
     raw_envp[index] = NULL;
   }
-  pid_t pid = funk2_child_process_handler__add_new_child_process(&(__funk2.child_handler), raw_argv, raw_envp);
+  pid_t pid = funk2_child_process_handler__add_new_child_process(&(__funk2.child_process_handler), raw_argv, raw_envp);
   f2ptr result = nil;
   if (pid != 0) {
     result = f2integer__new(cause, pid);

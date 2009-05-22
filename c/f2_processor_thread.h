@@ -36,7 +36,7 @@ typedef struct funk2_processor_thread_list_s {
   struct funk2_processor_thread_list_s* next;
 } funk2_processor_thread_list_t;
 
-void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function);
+void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args);
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this);
 
 

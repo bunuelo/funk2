@@ -84,26 +84,28 @@ boolean_t funk2_child_process__is_completed(funk2_child_process_t* this) {
 }
 
 void funk2_child_process__handle(funk2_child_process_t* this) {
-  int pid_status;
-  if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
-    char msg[1024];
-    snprintf(msg, 1024, "\nchild_process__handle(): waitpid error, pid=%d.\n", this->pid);
-    perror(msg);
-    return;
-  }
-  if (pid_status != 0) {
-    if (WIFEXITED(pid_status)) {
-      printf("\nchild_process__handle(): child process exited, pid=%d.\n", this->pid);
-      this->exited = boolean__true;
-    } else if (WIFSIGNALED(pid_status)) {
-      printf("\nchild_process__handle(): child process killed, pid=%d.\n", this->pid);
-      this->killed = boolean__true;
-    } else if (WIFSTOPPED(pid_status)) {
-      printf("child_process__handle(): child process stopped, pid=%d.\n", this->pid);
-      this->stopped = boolean__true;
-    } else if (WIFCONTINUED(pid_status)) {
-      printf("child_process__handle(): child process continuing, pid=%d.\n", this->pid);
-      this->stopped = boolean__false;
+  if (! this->exited) {
+    int pid_status;
+    if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
+      char msg[1024];
+      snprintf(msg, 1024, "\nchild_process__handle(): waitpid error, pid=%d.\n", this->pid);
+      perror(msg);
+      return;
+    }
+    if (pid_status != 0) {
+      if (WIFEXITED(pid_status)) {
+	printf("\nchild_process__handle(): child process exited, pid=%d.\n", this->pid);
+	this->exited = boolean__true;
+      } else if (WIFSIGNALED(pid_status)) {
+	printf("\nchild_process__handle(): child process killed, pid=%d.\n", this->pid);
+	this->killed = boolean__true;
+      } else if (WIFSTOPPED(pid_status)) {
+	printf("child_process__handle(): child process stopped, pid=%d.\n", this->pid);
+	this->stopped = boolean__true;
+      } else if (WIFCONTINUED(pid_status)) {
+	printf("child_process__handle(): child process continuing, pid=%d.\n", this->pid);
+	this->stopped = boolean__false;
+      }
     }
   }
 }

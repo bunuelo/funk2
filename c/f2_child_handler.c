@@ -65,9 +65,9 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
     funk2_child_process__handle(child_process);
     if (funk2_child_process__is_completed(child_process)) {
       if (prev) {
-	prev->next = iter->next;
+	prev->next = next;
       } else {
-	this->child_process_list = iter->next;
+	this->child_process_list = next;
       }
       free(iter);
     } else {

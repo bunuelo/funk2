@@ -48,12 +48,13 @@ funk2_child_process_init_t funk2_child_process__init(funk2_child_process_t* this
     }
     new_envp[index] = NULL;
   }
-  this->argv    = new_argv;
-  this->envp    = new_envp;
-  this->exited  = boolean__false;
-  this->killed  = boolean__false;
-  this->stopped = boolean__false;
-  this->pid     = fork(); // FORK PROCESS HERE!!!
+  this->argv             = new_argv;
+  this->envp             = new_envp;
+  this->exited           = boolean__false;
+  this->killed           = boolean__false;
+  this->stopped          = boolean__false;
+  this->no_longer_exists = boolean__false;
+  this->pid              = fork(); // FORK PROCESS HERE!!!
   if (this->pid == -1) {
     printf("\nfork() error.\n"); fflush(stdout);
     return funk2_child_process_init__fork_failed;

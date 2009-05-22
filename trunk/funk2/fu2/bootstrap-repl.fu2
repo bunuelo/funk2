@@ -60,7 +60,7 @@
 [primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
 [primfunk:load 'fu2/primfunks-string.fu2']
-[primfunk:load 'fu2/primfunks-child_process.fu2']
+[primfunk:load 'fu2/primfunks-child_handler.fu2']
 
 [globalize stdin-stream  [file_stream-new 0]]
 [globalize stdout-stream [file_stream-new 1]]

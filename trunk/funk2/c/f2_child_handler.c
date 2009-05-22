@@ -39,19 +39,19 @@ void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
   }
 }
 
-funk2_child_process_init_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
+pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
   pthread_mutex_lock(&(this->access_mutex));
   funk2_child_process_list_t* child_process_node = (funk2_child_process_list_t*)malloc(sizeof(funk2_child_process_list_t));
   funk2_child_process_init_t  result             = funk2_child_process__init(&(child_process_node->child_process), argv, envp);
   if (result != funk2_child_process_init__success) {
     free(child_process_node);
     pthread_mutex_unlock(&(this->access_mutex));
-    return result;
+    return 0;
   }
   child_process_node->next = this->child_process_list;
   this->child_process_list = child_process_node;
   pthread_mutex_unlock(&(this->access_mutex));
-  return funk2_child_process_init__success;
+  return child_process_node->child_process.pid;
 }
 
 void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this) {
@@ -78,8 +78,52 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
   pthread_mutex_unlock(&(this->access_mutex));
 }
 
+
+
 f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr envp) {
-  return nil;
+  u64 argv__length = raw__length(cause, argv);
+  u64 envp__length = raw__length(cause, envp);
+  
+  char** raw_argv;
+  {
+    raw_argv = (char**)alloca(sizeof(char*) * (argv__length + 1));
+    u64 index;
+    for (index = 0; index < argv__length; index ++) {
+      f2ptr elt = raw__elt(cause, argv, index);
+      if (! raw__stringp(elt, cause)) {
+	printf("\nchild_handler-add_new_child_process error: argv must contain only strings.\n");
+	return f2larva__new(cause, 1);
+      }
+      u64 elt__length = f2string__length(elt, cause);
+      raw_argv[index] = (char*)alloca(elt__length + 1);
+      f2string__str_copy(elt, cause, raw_argv[index]);
+      raw_argv[index][elt__length] = 0;
+    }
+    raw_argv[index] = NULL;
+  }
+  char** raw_envp;
+  {
+    raw_envp = (char**)alloca(sizeof(char*) * (envp__length + 1));
+    u64 index;
+    for (index = 0; index < envp__length; index ++) {
+      f2ptr elt = raw__elt(cause, envp, index);
+      if (! raw__stringp(elt, cause)) {
+	printf("\nchild_handler-add_new_child_process error: envp must contain only strings.\n");
+	return f2larva__new(cause, 1);
+      }
+      u64 elt__length = f2string__length(elt, cause);
+      raw_envp[index] = (char*)alloca(elt__length + 1);
+      f2string__str_copy(elt, cause, raw_envp[index]);
+      raw_envp[index][elt__length] = 0;
+    }
+    raw_envp[index] = NULL;
+  }
+  pid_t pid = funk2_child_process_handler__add_new_child_process(&(__funk2.child_handler), raw_argv, raw_envp);
+  f2ptr result = nil;
+  if (pid != 0) {
+    result = f2integer__new(cause, pid);
+  }
+  return result;
 }
 def_pcfunk2(child_handler__add_new_child_process, argv, envp, return f2__child_handler__add_new_child_process(this_cause, argv, envp));
 

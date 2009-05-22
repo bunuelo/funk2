@@ -931,18 +931,12 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
 }
 def_pcfunk1(length, seq, return f2__length(this_cause, seq));
 
-f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
+f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
   if (! this) {
     printf ("\nseq_elt error: this argument is nil (must be cons, array, or chunk)."); fflush(stdout);
     return f2larva__new(cause, 1);
     //return f2__argument_type_check_failure__exception__new(cause, this);
   }
-  if ((! index) || (! raw__integerp(index, cause))) {
-    printf ("\nseq_elt error: index argument must be integer."); fflush(stdout);
-    return f2larva__new(cause, 1);
-    //return f2__argument_type_check_failure__exception__new(cause, index);
-  }
-  int raw_index = f2integer__i(index, cause);
   if (raw_index < 0) {
     printf("\nseq_elt error: index less than zero."); fflush(stdout);
     return f2larva__new(cause, 1);
@@ -952,7 +946,7 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__consp(this, cause)) {
-      int count = f2integer__i(index, cause);
+      int count = raw_index;
       f2ptr iter = this;
       while(count > 0) {
 	count --;
@@ -985,6 +979,20 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
     //return f2__argument_type_check_failure__exception__new(cause, this); // should return exception (once exceptions are defined)
     break;
   }
+}
+
+f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  if ((! index) || (! raw__integerp(index, cause))) {
+    printf ("\nf2__elt error: index argument must be integer."); fflush(stdout);
+    return f2larva__new(cause, 1);
+  }
+  int raw_index = f2integer__i(index, cause);
+  return raw__elt(cause, this, raw_index);
+}
+
+// deprecated and should be removed
+f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
+  return f2__elt(cause, this, index);
 }
 
 // primobject cfunk

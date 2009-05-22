@@ -886,6 +886,10 @@ f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread,
 
 // sequence (array, list, doublelist, etc.)
 
+f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index);
+f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index);
+
+// deprecated (use raw__elt or f2__elt instead)
 f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);
 
 // primobject cfunk

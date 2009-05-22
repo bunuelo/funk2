@@ -21,4 +21,6 @@
 
 [globalize-funk child_handler-add_new_child_process &primfunk:child_handler__add_new_child_process]
 [globalize-funk child_handler-process_exists        &primfunk:child_handler__process_exists]
+[globalize-funk environ                             &primfunk:environ]
+
 

@@ -57,6 +57,7 @@ funk2_child_process_init_t funk2_child_process__init(funk2_child_process_t* this
   this->pid              = fork(); // FORK PROCESS HERE!!!
   if (this->pid == -1) {
     printf("\nfork() error.\n"); fflush(stdout);
+    perror("fork");
     return funk2_child_process_init__fork_failed;
   }
   if (this->pid == 0) {

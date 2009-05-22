@@ -162,7 +162,7 @@ f2ptr f2__environ(f2ptr cause) {
     if (iter) {
       f2cons__cdr__set(iter, cause, new_cons);
     } else {
-      new_seq = iter;
+      new_seq = new_cons;
     }
     iter = new_cons;
   }

@@ -24,7 +24,7 @@
 
 #include <pthread.h>
 
-typedef void (*funk2_processor_thread_function_pointer_t)(void*);
+typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
 
 typedef struct funk2_processor_thread_s {
   funk2_processor_thread_function_pointer_t start_function;

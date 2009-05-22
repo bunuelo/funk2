@@ -77,6 +77,15 @@ void funk2_child_process__destroy(funk2_child_process_t* this) {
       printf("\nerror killing child.  pid=%d\n", this->pid);
     }
   }
+  int index;
+  for (index = 0; this->argv[index] != NULL; index ++) {
+    free(this->argv[index]);
+  }
+  free(this->argv);
+  for (index = 0; this->envp[index] != NULL; index ++) {
+    free(this->envp[index]);
+  }
+  free(this->envp);
 }
 
 boolean_t funk2_child_process__is_completed(funk2_child_process_t* this) {
@@ -88,6 +97,7 @@ void funk2_child_process__handle(funk2_child_process_t* this) {
     int pid_status;
     if (waitpid(this->pid, &pid_status, WNOHANG | WUNTRACED | WCONTINUED) == -1) {
       if (errno == ECHILD) {
+	printf("\nchild_process__handle(): child process no longer exists, pid=%d.\n", this->pid);
 	this->exited = boolean__true;
       } else {
 	char msg[1024];

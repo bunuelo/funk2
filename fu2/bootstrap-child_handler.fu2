@@ -19,3 +19,7 @@
  rights to redistribute these changes.
 '
 
+[defunk exec [command :rest args]
+  [child_handler-add_new_child_process [cons command args] nil]]
+
+

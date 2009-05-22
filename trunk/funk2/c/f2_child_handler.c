@@ -78,7 +78,20 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
   pthread_mutex_unlock(&(this->access_mutex));
 }
 
-
+boolean_t funk2_child_process_handler__process_exists(funk2_child_process_handler_t* this, pid_t pid) {
+  pthread_mutex_lock(&(this->access_mutex));
+  funk2_child_process_list_t* iter = this->child_process_list;
+  while (iter) {
+    funk2_child_process_t* child_process = &(iter->child_process);
+    if (child_process->pid == pid) {
+      pthread_mutex_unlock(&(this->access_mutex));
+      return boolean__true;
+    }
+    iter = iter->next;
+  }
+  pthread_mutex_unlock(&(this->access_mutex));
+  return boolean__false;
+}
 
 f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr envp) {
   u64 argv__length = raw__length(cause, argv);
@@ -127,6 +140,16 @@ f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr en
 }
 def_pcfunk2(child_handler__add_new_child_process, argv, envp, return f2__child_handler__add_new_child_process(this_cause, argv, envp));
 
+f2ptr f2__child_handler__process_exists(f2ptr cause, f2ptr pid) {
+  if (! raw__integerp(pid, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  pid_t raw_pid = f2integer__i(pid, cause);
+  boolean_t process_exists = funk2_child_process_handler__process_exists(&(__funk2.child_process_handler), raw_pid);
+  return f2bool__new(process_exists);
+}
+def_pcfunk1(child_handler__process_exists, pid, return f2__child_handler__process_exists(this_cause, pid));
+
 // **
 
 void f2__child_handler__reinitialize_globalvars() {
@@ -140,6 +163,7 @@ void f2__child_handler__initialize() {
   f2__child_handler__reinitialize_globalvars();
   
   f2__primcfunk__init(child_handler__add_new_child_process);
+  f2__primcfunk__init(child_handler__process_exists);
   
   resume_gc();
   try_gc();

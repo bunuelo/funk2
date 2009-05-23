@@ -321,7 +321,7 @@ void f2__print_threads_stacks() {
 }
 
 void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) {
-  funk2_processor_thread_t* new_processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__spinnerd.processor_thread_handler), processor__start_routine, (void*)(long)processor_index);
+  funk2_processor_thread_t* new_processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), processor__start_routine, (void*)(long)processor_index);
   //pthread_t raw_pthread;
   //if(pthread_create(&raw_pthread, NULL, (pthread_start_routine)processor__start_routine, (void*)(long)processor_index)) {
   //  error(nil, "couldn't create processor pthread.");

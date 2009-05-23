@@ -19,21 +19,16 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__LOAD__H
+#define F2__LOAD__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_reader.h"
+#include "f2_compile.h"
+#include "f2_thread.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+extern f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename);
+extern def_pcfunk__prototype__declare(pcfunk__load);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+extern void f2__load__initialize();
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-
+#endif // F2__LOAD__H

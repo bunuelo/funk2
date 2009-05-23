@@ -19,21 +19,20 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__PRIMCFUNKS__LOCALE__H
+#define F2__PRIMCFUNKS__LOCALE__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+typedef struct funk2_locale_s {
+  pthread_mutex_t interface_mutex;
+} funk2_locale_t;
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+void funk2_locale__init(funk2_locale_t* this);
+void funk2_locale__destroy(funk2_locale_t* this);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+// **
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
+void f2__primfunks__locale__reinitialize_globalvars();
+void f2__primfunks__locale__initialize();
+void f2__primfunks__locale__destroy();
 
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-
+#endif // F2__PRIMCFUNKS__LOCALE__H

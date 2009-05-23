@@ -19,21 +19,18 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__STATICMEMORY__H
+#define F2__STATICMEMORY__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_memory.h"
+#include "f2_archconfig.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+typedef struct f2staticmemory_s {
+  u8 ptr[STATIC_MEMORY__BYTE_NUM];
+} f2staticmemory_t;
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+void f2staticmemory__initialize(f2staticmemory_t* this);
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
+f2staticmemory_t* global_static_memory();
 
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-
+#endif // F2__SWAPMEMORY__H

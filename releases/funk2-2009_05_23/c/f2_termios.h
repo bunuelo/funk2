@@ -19,21 +19,16 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__TERMIOS__H
+#define F2__TERMIOS__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+int raw__termios__height();
+int raw__termios__width();
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+// **
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+void f2__termios__reinitialize_globalvars();
+void f2__termios__initialize();
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+#endif // F2__TERMIOS__H
 

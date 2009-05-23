@@ -19,21 +19,23 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__STATUS__H
+#define F2__STATUS__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+typedef struct funk2_status_s {
+  pthread_mutex_t trace_mutex;
+} funk2_status_t;
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+void funk2_status(char* filename, int line_num, char* msg, ...);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+#define status(msg, rest...) funk2_status(__FILE__, __LINE__, msg, ## rest)
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
+ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...);
+ssize_t writef(int fd, char* msg, ...);
 
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
+void f2__status__reinitialize_globalvars();
+void f2__status__initialize();
+void f2__status__destroy();
 
+#endif // F2__STATUS__H
 

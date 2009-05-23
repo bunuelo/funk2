@@ -19,21 +19,21 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__HTML__H
+#define F2__HTML__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_ansi.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+void html__stream__protected_string(f2ptr cause, f2ptr stream, char* str);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+void html__stream__font(f2ptr cause, f2ptr stream, char* face, char* size, char* color);
+void html__stream__end_font(f2ptr cause, f2ptr stream);
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
+void html__stream__font_face( f2ptr cause, f2ptr stream, char* face);
+void html__stream__font_size( f2ptr cause, f2ptr stream, char* size);
+void html__stream__font_color(f2ptr cause, f2ptr stream, char* color);
 
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
+void html__stream__ansi_foreground(f2ptr cause, f2ptr stream, ansi_color_t color);
 
+#endif // F2__HTML__H
 

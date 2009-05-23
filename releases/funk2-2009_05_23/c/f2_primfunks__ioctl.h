@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2009 Bo Morgan.
+// Copyright (c) 2007-2008 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -19,21 +19,19 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__PRIMFUNKS__IOCTL__H
+#define F2__PRIMFUNKS__IOCTL__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+//#define __USE_GNU
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+#include "f2_primfunks.h"
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+f2ptr f2__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place);
+f2ptr f2__ioctl__siocinq(f2ptr cause);
+f2ptr f2__ioctl__siocoutq(f2ptr cause);
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
+void f2__primfunks__ioctl__reinitialize_globalvars();
+void f2__primfunks__ioctl__initialize();
 
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+#endif // F2__PRIMFUNKS__FCNTL__H
 

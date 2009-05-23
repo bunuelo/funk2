@@ -21,19 +21,17 @@
 
 #include "funk2.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+void f2__sleep(int microseconds) {
+  usleep(microseconds);
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
+u64 raw__system_microseconds_since_1970() {
+  struct timeval tv;
+  if(gettimeofday(&tv, NULL)) {printf("\nsystem_microseconds_since_1970 error: returning nil."); return 0;}
+  return ((((u64)tv.tv_sec) * 1000000) + ((u64)tv.tv_usec));
 }
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
+f2ptr f2__system_microseconds_since_1970(f2ptr cause) {
+  return f2integer__new(cause, raw__system_microseconds_since_1970());
 }
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
 

@@ -1,0 +1,845 @@
+[globalize -funk2-bootstrap-copyright- ' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+']
+
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '
+
+  /----------------------------------------\\
+  |                                        |
+  | ']
+[primfunk:ansi__stream__foreground stdout 9]
+[primfunk:exp__format stdout 'funk2 img']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '/']
+[primfunk:ansi__stream__foreground stdout 9]
+[primfunk:exp__format stdout 'bootstrap']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '.']
+[primfunk:ansi__stream__foreground stdout 9]
+[primfunk:exp__format stdout 'img compiling now']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout '.']
+[primfunk:ansi__stream__foreground stdout 15]
+[primfunk:exp__format stdout ' |
+  |                                        |
+  \\----------------------------------------/
+
+']
+[primfunk:ansi__stream__reset stdout]
+
+[primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
+
+[primfunk:load 'fu2/primfunks.fu2']
+[primfunk:load 'fu2/primfunks-memory.fu2']
+[primfunk:load 'fu2/primfunks-socket.fu2']
+[primfunk:load 'fu2/primfunks-errno.fu2']
+[primfunk:load 'fu2/primfunks-fcntl.fu2']
+[primfunk:load 'fu2/primfunks-ioctl.fu2']
+[primfunk:load 'fu2/primfunks-trace.fu2']
+[primfunk:load 'fu2/primfunks-serialize.fu2']
+[primfunk:load 'fu2/primfunks-locale.fu2']
+[primfunk:load 'fu2/primfunks-text_buffer.fu2']
+[primfunk:load 'fu2/primfunks-time.fu2']
+[primfunk:load 'fu2/primfunks-frame.fu2']
+[primfunk:load 'fu2/primfunks-string.fu2']
+[primfunk:load 'fu2/primfunks-child_handler.fu2']
+
+[globalize stdin-stream  [file_stream-new 0]]
+[globalize stdout-stream [file_stream-new 1]]
+[globalize stderr-stream [file_stream-new 2]]
+
+[define -current_env_name- `global-environment]
+
+[globalize-funk funk-unlabeled [make-metro `funk-unlabeled `[name args :rest body]
+					   `[[define demetroed    [exps-demetropolize_full body]]
+					     [define compiled_funk [make-funk name args
+									      demetroed
+									      body
+									      nil
+									      nil]]
+					     [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+					     [define is_funktional [primfunk:array__elt compiled_funk 10]]
+					     `[make-funk [quote ,name] [quote ,args]
+							  [quote ,demetroed]
+							  [quote ,body]
+							  [quote ,compiled_bcs]
+							  ,is_funktional]]
+					    nil
+					    nil
+					    nil]]
+
+[globalize-funk metro [make-metro `metro `[name args :rest body]
+				  `[[define demetroed    [exps-demetropolize_full body]]
+				    [define compiled_funk [make-funk name args
+								     demetroed
+								     body
+								     nil
+								     nil]]
+				    [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+				    [define is_funktional [primfunk:array__elt compiled_funk 10]]
+				    `[make-metro [quote ,name] [quote ,args]
+						 [quote ,demetroed]
+						 [quote ,body]
+						 [quote ,compiled_bcs]
+						 ,is_funktional]]
+				   nil
+				   nil
+				   nil]]
+
+[globalize-funk defmetro
+		[metro `defmetro [name args :rest body]
+		       [exp-format stdout '\n'] [exp-format stdout `[defmetro ,name ,args]]
+		       `[globalize-funk ,name [metro ,name ,args
+						      @body]]]]
+
+[defmetro prog [:rest body]
+  `[funk-apply [funk-unlabeled prog []
+			       @body] []]]
+
+[defmetro apply [proc args]
+  [define debug-apply nil]
+  [if debug-apply
+      `[let [[proc ,proc]
+	     [args [list @args]]]
+	 [if proc
+	     [funk-apply proc args]
+	   [error `run-time 'apply error: proc is nil.']]]
+    `[funk-apply ,proc ,args]]]
+
+[defmetro funk [args :rest body]
+  `[funk-unlabeled funk ,args
+		   @body]]
+
+`[exp-format stdout '\ndefining defunk\n']
+
+[defmetro defunk [name args :rest body]
+  [exp-format stdout '\n'] [exp-format stdout `[defunk ,name ,args]]
+  `[globalize-funk ,name
+		    [funk-unlabeled ,name ,args
+				     @body]]]
+
+`[exp-format stdout '\ndone defining defunk\n']
+`[exp-format stdout '\ndefining eval\n']
+
+
+
+[defunk eval [exp]
+  [funk-apply [make-funk `eval []
+			 [cons exp nil]
+			 [cons exp nil]
+			 nil
+			 nil]
+	      nil]]
+
+`[exp-format stdout '\ndone defining eval\n']
+`[exp-format stdout '\ndefining or\n']
+
+[defmetro or [:rest conds]
+  [if [null conds]
+      nil
+    `[if ,[first conds]
+	 `t
+       ,[funk-apply &or [next conds]]]]]
+
+`[exp-format stdout '\ndone defining or\n']
+
+[defmetro and [:rest conds]
+  [if [null conds]
+      ``t
+    `[if [null ,[first conds]]
+	 nil
+       ,[funk-apply &and [next conds]]]]]
+
+[defunk error [type value]
+  [larva 63]]
+
+'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
+
+[primfunk:load 'fu2/primobjects.fu2']
+
+'primitive accessors and mututators completely defined at this point.'
+
+[defmetro chunk-write_8bit  [x y z] `[chunk-write_8bit_integer  ,x ,y [coerce-to-int ,z]]]
+[defmetro chunk-write_16bit [x y z] `[chunk-write_16bit_integer ,x ,y [coerce-to-int ,z]]]
+[defmetro chunk-write_32bit [x y z] `[chunk-write_32bit_integer ,x ,y [coerce-to-int ,z]]]
+
+[defmetro car     [x]   `[first     ,x]]
+[defmetro car-set [x y] `[first-set ,x ,y]]
+[defmetro cdr     [x]   `[next      ,x]]
+[defmetro cdr-set [x y] `[next-set  ,x ,y]]
+[defmetro cir     [x]   `[prev      ,x]]
+[defmetro cir-set [x y] `[prev-set  ,x ,y]]
+
+[defunk list [:rest seq]
+  [if [null seq]
+      nil
+    [cons [car seq]
+	  [apply &list
+		 [cdr seq]]]]]
+
+[defmetro label [name args :rest body]
+  `[define-funk ,name
+     [funk-unlabeled label ,args
+		     @body]]]
+
+`[defmetro mapc [proc seq]
+   `[rawcode [bytecode push   iter     nil  nil]
+	     [bytecode push   args     nil  nil]
+	     
+	     [bytecode lookup variable proc nil]
+	     [bytecode copy   value    args nil]
+	     [bytecode lookup variable seq  nil]
+	     [bytecode copy   value    iter nil]
+	     
+	     [bytecode pop    args     nil  nil]
+	     [bytecode pop    iter     nil  nil]
+	     ]]
+
+[defunk mapc [proc seq]
+  [if [null seq]
+      nil
+    [prog [apply proc [cons [car seq] nil]]
+	  [mapc  proc [cdr seq]]]]]
+
+[defunk parseq [proc seq]
+  [if [null seq]
+      nil
+    [cons [thread proc [cons [car seq] nil]]
+	  [parseq proc [cdr seq]]]]]
+
+[defunk mapcar [proc seq]
+  [if [null seq]
+      nil
+    [prog [define result [apply proc [cons [car seq] nil]]]
+	  [define cons_result [cons result nil]]
+	  [define iter   cons_result]
+	  [mapc [funk [elt]
+		      [define new_cons [cons [apply proc [cons elt nil]] nil]]
+		      [cdr-set iter new_cons]
+		      [mutate iter [cdr iter]]]
+		[cdr seq]]
+	  cons_result]]]
+
+[defunk filter [cond_proc seq]
+  [if [null seq]
+      nil
+    [prog [define exp    [car seq]]
+	  [define result [apply cond_proc [cons exp nil]]]
+	  [if result
+	      [cons result [filter cond_proc [cdr seq]]]
+	    [filter cond_proc [cdr seq]]]]]]
+
+[defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
+[wrong_argument_number_error-set [funk-body_bytecodes &wrong_argument_number_error]]
+
+[defmetro cadr [seq]
+  `[car [cdr ,seq]]]
+
+[defmetro caddr [seq]
+  `[car [cdr [cdr ,seq]]]]
+
+[defmetro cadddr [seq]
+  `[car [cdr [cdr [cdr ,seq]]]]]
+
+[defmetro cddr [seq]
+  `[cdr [cdr ,seq]]]
+
+`[defunk first [seq]
+   [car seq]]
+
+[defunk second [seq]
+  [car [cdr seq]]]
+
+[defunk third [seq]
+  [car [cdr [cdr seq]]]]
+
+[defunk fourth [seq]
+  [car [cdr [cdr [cdr seq]]]]]
+
+[defmetro let [varpairs :rest body]
+  [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
+  `[apply [funk-unlabeled let ,let-vars
+			  @body]
+	  [list @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
+
+[defmetro parlet [varpairs :rest body]
+  `[let ,[mapcar [funk [varpair]
+		       [let [[var       [first varpair]]
+			     [value_exp [second varpair]]]
+			 `[,var [thread [funk [] ,value_exp] []]]]]
+		 varpairs]
+     [define-funk parlet-wait-loop
+       [funk []
+	     [if [and @[mapcar [funk [varpair]
+				     [let [[var [first varpair]]]
+				       `[thread-complete? ,var]]]
+			       varpairs]]
+		 []
+	       [prog [yield]
+		     [parlet-wait-loop]]]]]
+     [parlet-wait-loop]
+     [let ,[mapcar [funk [varpair]
+			 [let [[var       [first varpair]]
+			       [value_exp [second varpair]]]
+			   `[,var [thread-value ,var]]]]
+		   varpairs]
+       @body]]]
+
+[defunk join [:rest threads]
+  [define-funk threads-wait-loop
+    [funk []
+	  [define-funk threads-scan-loop
+	    [funk [thread_iter]
+		  [if [null thread_iter]
+		      t
+		    [let [[thread [car thread_iter]]]
+		      [if [null [thread-complete? thread]]
+			  nil
+			[threads-scan-loop [cdr thread_iter]]]]]]]
+	  [if [threads-scan-loop threads]
+	      nil
+	    [prog [yield]
+		  [threads-wait-loop]]]]]
+  [threads-wait-loop]]
+
+[defmetro parog [:rest codes]
+  'run commands in parallel'
+  `[let [[parog-threads [list @[mapcar [funk [code]
+					     `[thread [funk [] ,code] []]]
+				       codes]]]]
+     [apply &join parog-threads]]]
+
+[defunk parc [proc seq]
+  'run mapc commands in parallel'
+  [let [[parc-threads [mapcar [funk [exp]
+				    [thread proc [cons exp nil]]]
+			      seq]]]
+    [apply &join parc-threads]]]
+
+[defunk parcar [proc seq]
+  'run mapcar commands in parallel'
+  [let [[parcar-threads [mapcar [funk [exp]
+				      [thread proc [cons exp nil]]]
+				seq]]]
+    [apply &join parcar-threads]
+    [mapcar [funk [x] [thread-value x]] parcar-threads]]]
+
+[defmetro cond [:rest clauses]
+  [if [null clauses]
+      nil
+    [let [[clause [car clauses]]]
+      `[if ,[car clause]
+	   [prog @[cdr clause]]
+	 ,[apply &cond [cdr clauses]]]]]]
+
+[defunk elt-1d-seq [seq index]
+  [cond [[null seq]                   [error `run-time `list-index-too-big]]
+	[[integer-equal_sign index 0] [car seq]]
+	[t                            [elt-1d-seq [cdr seq] [integer-subtract index 1]]]]]
+
+[defunk elt-1d [collection index]
+  [cond [[cons?  collection] [elt-1d-seq collection index]]
+	[[array? collection] [array-elt  collection index]]
+	[t                   [error `run-time `unknown-collection-type]]]]
+
+[defunk elt [collection :rest indices]
+  [let [[rest_indices [cdr indices]]]
+    [if [null rest_indices]
+	[elt-1d collection [car indices]]
+      [funkall &elt [elt-1d collection [car indices]] rest_indices]]]]
+
+[defunk elt-1d-seq-set [seq index value]
+  [cond [[null seq]                   [error `run-time `list-index-too-big]]
+	[[integer-equal_sign index 0] [car-set seq value]]
+	[t                            [elt-1d-seq-set [cdr seq] [integer-subtract index 1] value]]]]
+
+[defunk elt-1d-set [collection index value]
+  [cond [[cons?  collection] [elt-1d-seq-set collection index value]]
+	[[array? collection] [array-elt-set  collection index value]]
+	[t                   [error `run-time `unknown-collection-type]]]]
+
+[defunk elt-set [collection indices value]
+  [if [cons? indices]
+      [if [null [cdr indices]]
+	  [elt-1d-set collection [car indices] value]
+	[elt-set [elt collection [car indices]] [cdr indices] value]]
+    [elt-1d-set collection indices value]]]
+
+[defmetro dotimes [var-max_index :rest body]
+  [let [[var       [car  var-max_index]]
+	[max_index [cadr var-max_index]]]
+    `[let [[,var      0]
+	   [max_index ,max_index]]
+       [define-funk dotimes-loop
+	 [funk []
+	       [prog @body]
+	       [mutate ,var [integer-add ,var 1]]
+	       [if [integer-less_than ,var max_index]
+		   [dotimes-loop]]]]
+       [if [integer-less_than ,var max_index]
+	   [dotimes-loop]]]]]
+
+[defunk range [min max]
+  [if [integer-less_than min max]
+      [cons min [range [integer-add min 1] max]]]]
+
+[defmetro partimes [var-max_index :rest body]
+  [let [[var       [car  var-max_index]]
+	[max_index [cadr var-max_index]]]
+    `[let [[partimes-proc [funk [,var] @body]]
+	   [max_index ,max_index]]
+       [let [[partimes-seq [range 0 max_index]]]
+	 [apply &join [parseq partimes-proc partimes-seq]]]]]]
+
+[defunk list-set_cdr [seq value]
+  [if [null seq] [error `run-time `[[funk list-set_cdr] [desc [null seq]] [funk-args ,seq ,value]]]]
+  [let [[cdr_seq [cdr seq]]]
+    [if cdr_seq
+	[list-set_cdr cdr_seq value]
+      [prog [cdr-set seq value]
+	    seq]]]]
+
+[defunk list-copy [seq]
+  [mapcar &identity seq]]
+
+[defunk append [first_seq :rest rest_seqs]
+  [if [null first_seq]
+      [apply &append rest_seqs]
+    [let [[first_seq_copy [list-copy first_seq]]]
+      [if [null rest_seqs]
+	  first_seq_copy
+	[prog [list-set_cdr first_seq_copy [apply &append rest_seqs]]
+	      first_seq_copy]]]]]
+
+[defunk merge [:rest sets]
+  [if [null sets]
+      nil
+    [apply &append sets]]]
+
+[defunk format [stream :rest exps]
+  [if [null stream]
+      [apply &string-format exps]
+    [mapc [funk [exp] [exp-format stream exp]] exps]]]
+
+[defunk format-html [stream :rest exps]
+  [mapc [funk [exp] [exp-format-html stream exp]] exps]]
+
+[defunk fwrite_html [stream :rest exps]
+  [mapc [funk [exp] [exp-fwrite_html stream exp]] exps]]
+
+[defunk print-html [exp] [format-html stdout '\n'] [fwrite_html stdout exp]]
+
+[defmetro while [cond :rest body]
+  `[prog [define-funk while-loop
+	   [funk-unlabeled while []
+			   [if ,cond
+			       [prog [prog @body]
+				     [while-loop]]]]]
+	 [while-loop]]]
+
+[defmetro funkall [funk :rest args]
+  `[apply ,funk [list @args]]]
+
+[defunk find [exp seq key test]
+  [if [null seq]
+      nil
+    [let [[car [car seq]]]
+      [let [[car-key [funkall key car]]]
+	[if [funkall test exp car-key]
+	    car
+	  [find exp [cdr seq] key test]]]]]]
+
+[defunk thread-find_last_trace_env [thread]
+  [find `trace_env [thread-trace thread] [funk [x] [car x]] &eq]]
+
+[defunk array-new [:rest lengths]
+  [if [null lengths]
+      []
+    [let [[cdr    [cdr lengths]]
+	  [length [car lengths]]]
+      [let [[a    [array-new_1d length]]]
+	[if cdr [dotimes [i length] [array-elt-set a i [apply &array-new cdr]]]]
+	a]]]]
+
+[defunk hashtable-new [bin_num_power] [hashtable bin_num_power [array-new [integer-bitshift_left 1 bin_num_power]]]]
+
+`[defmetro put [value place]
+  [let [[dplace [demetropolize_full place]]]
+    [cond [[symbol? dplace] `[mutate ,dplace ,value]]
+	  [[cons?   dplace] [let [[car [car dplace]]]
+			      [cond [[eq car   `safe:cons-car]                     `[safe:cons-car-set               ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:cons-car]                   `[unsafe:cons-car-set               ,[cadr dplace] ,value]]
+				    [[eq car   `safe:cons-cdr]                     `[safe:cons-cdr-set               ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:cons-cdr]                   `[unsafe:cons-cdr-set               ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:cfunk-args]                   `[safe:cfunk-args-set             ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:cfunk-args]                 `[unsafe:cfunk-args-set             ,[cadr dplace] ,value]]
+				    [[eq car   `safe:cfunk-cfunkptr]               `[safe:cfunk-cfunkptr-set         ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:cfunk-cfunkptr]             `[unsafe:cfunk-cfunkptr-set         ,[cadr dplace] ,value]]
+				    [[eq car   `safe:cfunk-env]                    `[safe:cfunk-env-set              ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:cfunk-env]                  `[unsafe:cfunk-env-set              ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:metrocfunk-args]              `[safe:metrocfunk-args-set        ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metrocfunk-args]            `[unsafe:metrocfunk-args-set        ,[cadr dplace] ,value]]
+				    [[eq car   `safe:metrocfunk-cfunkptr]          `[safe:metrocfunk-cfunkptr-set    ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metrocfunk-cfunkptr]        `[unsafe:metrocfunk-cfunkptr-set    ,[cadr dplace] ,value]]
+				    [[eq car   `safe:metrocfunk-env]               `[safe:metrocfunk-env-set         ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metrocfunk-env]             `[unsafe:metrocfunk-env-set         ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:funk-body_bytecodes]          `[safe:funk-body_bytecodes-set    ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:funk-body_bytecodes]        `[unsafe:funk-body_bytecodes-set    ,[cadr dplace] ,value]]
+				    [[eq car   `safe:funk-args]                    `[safe:funk-args-set              ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:funk-args]                  `[unsafe:funk-args-set              ,[cadr dplace] ,value]]
+				    [[eq car   `safe:funk-body]                    `[safe:funk-body-set              ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:funk-body]                  `[unsafe:funk-body-set              ,[cadr dplace] ,value]]
+				    [[eq car   `safe:funk-env]                     `[safe:funk-env-set               ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:funk-env]                   `[unsafe:funk-env-set               ,[cadr dplace] ,value]]
+				    [[eq car   `safe:funk-machine_code]            `[safe:funk-machine_code-set      ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:funk-machine_code]          `[unsafe:funk-machine_code-set      ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:metro-body_bytecodes]         `[safe:metro-body_bytecodes-set   ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metro-body_bytecodes]       `[unsafe:metro-body_bytecodes-set   ,[cadr dplace] ,value]]
+				    [[eq car   `safe:metro-args]                   `[safe:metro-args-set             ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metro-args]                 `[unsafe:metro-args-set             ,[cadr dplace] ,value]]
+				    [[eq car   `safe:metro-body]                   `[safe:metro-body-set             ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metro-body]                 `[unsafe:metro-body-set             ,[cadr dplace] ,value]]
+				    [[eq car   `safe:metro-env]                    `[safe:metro-env-set              ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metro-env]                  `[unsafe:metro-env-set              ,[cadr dplace] ,value]]
+				    [[eq car   `safe:metro-machine_code]           `[safe:metro-machine_code-set     ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:metro-machine_code]         `[unsafe:metro-machine_code-set     ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:exception-tag]                `[safe:exception-tag-set          ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:exception-tag]              `[unsafe:exception-tag-set          ,[cadr dplace] ,value]]
+				    [[eq car   `safe:exception-value]              `[safe:exception-value-set        ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:exception-value]            `[unsafe:exception-value-set        ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:bytecode-command]             `[safe:bytecode-command-set       ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:bytecode-command]           `[unsafe:bytecode-command-set       ,[cadr dplace] ,value]]
+				    [[eq car   `safe:bytecode-arg0]                `[safe:bytecode-arg0-set          ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:bytecode-arg0]              `[unsafe:bytecode-arg0-set          ,[cadr dplace] ,value]]
+				    [[eq car   `safe:bytecode-arg1]                `[safe:bytecode-arg1-set          ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:bytecode-arg1]              `[unsafe:bytecode-arg1-set          ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:thread-program_counter]       `[safe:thread-program_counter-set ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-program_counter]     `[unsafe:thread-program_counter-set ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-stack]                 `[safe:thread-stack-set           ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-stack]               `[unsafe:thread-stack-set           ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-iter]                  `[safe:thread-iter-set            ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-iter]                `[unsafe:thread-iter-set            ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-env]                   `[safe:thread-env-set             ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-env]                 `[unsafe:thread-env-set             ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-args]                  `[safe:thread-args-set            ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-args]                `[unsafe:thread-args-set            ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-return]                `[safe:thread-return-set          ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-return]              `[unsafe:thread-return-set          ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-value]                 `[safe:thread-value-set           ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-value]               `[unsafe:thread-value-set           ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-trace]                 `[safe:thread-trace-set           ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-trace]               `[unsafe:thread-trace-set           ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-critics]               `[safe:thread-critics-set         ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-critics]             `[unsafe:thread-critics-set         ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-context]               `[safe:thread-context-set         ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-context]             `[unsafe:thread-context-set         ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-keep_undead]           `[safe:thread-keep_undead-set     ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-keep_undead]         `[unsafe:thread-keep_undead-set     ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-parent_thread]         `[safe:thread-parent_thread-set   ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-parent_thread]       `[unsafe:thread-parent_thread-set   ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-parent_env]            `[safe:thread-parent_env-set      ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-parent_env]          `[unsafe:thread-parent_env-set      ,[cadr dplace] ,value]]
+				    [[eq car   `safe:thread-execute_mutex]         `[safe:thread-execute_mutex-set   ,[cadr dplace] ,value]]
+				    [[eq car `unsafe:thread-execute_mutex]       `[unsafe:thread-execute_mutex-set   ,[cadr dplace] ,value]]
+				    
+				    [[eq car   `safe:array-elt]                    `[safe:array-elt-set              ,[cadr dplace] ,[caddr dplace] ,value]]
+				    [[eq car `unsafe:array-elt]                  `[unsafe:array-elt-set              ,[cadr dplace] ,[caddr dplace] ,value]]
+				    
+				    [[eq car              `elt]                               `[elt-set              ,[cadr dplace] ,[caddr dplace] ,value]]
+				    
+				    [t [error `compile-time 'unrecognized accessor to convert to mutator']]]]]
+	  [t [error `compile-time 'unrecognized type of demetropolized place.']]]]]
+
+`[defmetro push [element place]
+  `[let [[element_value ,element]]
+     [put [cons element_value ,place] ,place]]]
+
+[defunk type [exp]
+  [if [null exp]
+      `nil
+    [let [[ptype_raw [ptype-raw exp]]]
+      [cond [[integer-equal_sign ptype_raw 0]  `free_memory]
+	    [[integer-equal_sign ptype_raw 1]  `newly_allocated]
+	    [[integer-equal_sign ptype_raw 2]  `integer]
+	    [[integer-equal_sign ptype_raw 3]  `double]
+	    [[integer-equal_sign ptype_raw 4]  `float]
+	    [[integer-equal_sign ptype_raw 5]  `pointer]
+	    [[integer-equal_sign ptype_raw 6]  `char]
+	    [[integer-equal_sign ptype_raw 7]  `string]
+	    [[integer-equal_sign ptype_raw 8]  `symbol]
+	    [[integer-equal_sign ptype_raw 9]  `cons]
+	    [[integer-equal_sign ptype_raw 10] `array]
+	    [[integer-equal_sign ptype_raw 11] `chunk]
+	    [[integer-equal_sign ptype_raw 12] `cfunk]
+	    [[integer-equal_sign ptype_raw 13] `ptype_metrocfunk]
+	    [[integer-equal_sign ptype_raw 14] `ptype_funk]
+	    [[integer-equal_sign ptype_raw 15] `ptype_metro]
+	    [[integer-equal_sign ptype_raw 16] `ptype_exception]
+	    [[integer-equal_sign ptype_raw 17] `ptype_bytecode]
+	    [[integer-equal_sign ptype_raw 18] `ptype_thread]
+	    [t                                 [error `unknown-type exp]]]]]]
+
+'coerce: attempts to detect and optimize for quoted type conversions at compile-time.'
+[defmetro coerce [exp type]
+  [if [and [cons? type]
+	   [eq [car type] `quote]
+	   [cons? [cdr type]]
+	   [symbol? [cadr type]]]
+      [let [[quoted_type [cadr type]]]
+	[cond [[eq quoted_type `integer] `[let [[exp ,exp]]
+					    [cond [[integer? exp]                    exp]
+						  [[double?  exp] [double-to_integer exp]]
+						  [[float?   exp] [float-to_integer  exp]]
+						  [t [error `cannot-coerce-type-to-integer [type exp]]]]]]
+	      [[eq quoted_type `double]  `[let [[exp ,exp]]
+					    [cond [[integer? exp] [integer-to_double exp]]
+						  [[double?  exp]                    exp]
+						  [[float?   exp] [float-to_double   exp]]
+						  [t [error `cannot-coerce-type-to-integer [type exp]]]]]]
+	      [[eq quoted_type `float]   `[let [[exp ,exp]]
+					    [cond [[integer? exp] [integer-to_float  exp]]
+						  [[double?  exp] [double-to_float   exp]]
+						  [[float?   exp]                    exp]
+						  [t [error `cannot-coerce-type-to-integer [type exp]]]]]]
+	      [t                         [error `cannot-coerce-to-type type]]]]
+    `[let [[exp  ,exp]
+	   [type ,type]]
+       [cond [[eq type `integer] [cond [[integer? exp]                    exp]
+				       [[double?  exp] [double-to_integer exp]]
+				       [[float?   exp] [float-to_integer  exp]]
+				       [t [error `cannot-coerce-type-to-integer [type exp]]]]]
+	     [[eq type `double]  [cond [[integer? exp] [integer-to_double exp]]
+				       [[double?  exp]                    exp]
+				       [[float?   exp] [float-to_double   exp]]
+				       [t [error `cannot-coerce-type-to-integer [type exp]]]]]
+	     [[eq type `float]   [cond [[integer? exp] [integer-to_float  exp]]
+				       [[double?  exp] [double-to_float   exp]]
+				       [[float?   exp]                    exp]
+				       [t [error `cannot-coerce-type-to-integer [type exp]]]]]
+	     [t                  [error `cannot-coerce-to-type type]]]]]]
+
+[defmetro with-critic [critic :rest body]
+  `[let [[this-thread [this-thread]]]
+     [let [[old-critics [thread-critics this-thread]]]
+       [thread-critics-set this-thread [cons ,critic [thread-critics this-thread]]]
+       @body]
+     [thread-critics-set this-thread old-critics]]]
+
+[defunk critic_funk-backtrace [thread]
+  [format stdout '\nCritical Exception Handling']
+  [mapc [funk [x] [if [cons? x] [let [[car [car x]]]
+				  [if [eq car `trace_env]
+				      [format stdout '\ntrace_env: ' [cadr x]]]]]]
+	[thread-trace thread]]]
+
+[defmetro with-backtrace [:rest body]
+  `[with-critic &critic_funk-backtrace
+		@body]]
+
+[defunk print [x]
+  [format stdout '\n']
+  [exp-print x]]
+
+[defunk demetropolize [x]
+  [let [[demetro_pair [demetropolize_once x]]]
+    [let [[did_something [car demetro_pair]]
+	  [retval        [cdr demetro_pair]]]
+      [if did_something
+	  [demetropolize retval]
+	retval]]]]
+
+[defunk demetropolize1 [x]
+  [cdr [demetropolize_once x]]]
+
+[defmetro mutexprog [mutex :rest body]
+  `[let [[mutexprog-mutex ,mutex]]
+     [mutex-lock   mutexprog-mutex]
+     [prog @body]
+     [mutex-unlock mutexprog-mutex]]]
+
+[defmetro defmutexfunk [mutex name args :rest body]
+  `[defunk ,name ,args [mutexprog ,mutex @body]]]
+
+[defmetro defunks-mutex [mutex :rest funkdefs] 
+  `[let [[defunks_mutex-mutex ,mutex]]
+     @[mapcar [funk [funkdef]
+		    `[defmutexfunk defunks_mutex-mutex @funkdef]]]]]
+
+[defmetro rest [exp]
+  `[cdr ,exp]]
+
+[defunk remove [element sequence]
+  [let [[new_sequence [cons nil nil]]]
+    [let [[new_sequence_iter new_sequence]]
+      [mapc [funk [sequence_element]
+		  [if [not [eq element sequence_element]]
+		      [let [[new_cons [cons sequence_element nil]]]
+			[cons-cdr-set new_sequence_iter new_cons]
+			[mutate new_sequence_iter new_cons]]]]
+	    sequence]
+      [cdr new_sequence]]]]
+
+[defmetro let* [var_value_pairs :rest body]
+  [if [null var_value_pairs]
+      `[prog @body]
+    [let [[var_value_pair [car var_value_pairs]]]
+      [let [[var   [first  var_value_pair]]
+	    [value [second var_value_pair]]]
+	`[let [[,var ,value]]
+	   [let* ,[cdr var_value_pairs]
+	     @body]]]]]]
+
+[defunk list? [exp]
+  [if [null exp]
+      t
+    [if [cons? exp]
+	[list? [cdr exp]]
+      nil]]]
+
+[defmetro bytecode_trace [exp]
+  `[let [[this-cause [this-cause]]]
+     [cause-bytecode_tracing_on-set this-cause t]
+     ,exp
+     [cause-bytecode_tracing_on-set this-cause nil]
+     [let [[event_buffer_first [cause-event_buffer_first this-cause]]]
+       [cause-event_buffer_first-set this-cause nil]
+       [cause-event_buffer_last-set  this-cause nil]
+       event_buffer_first]]]
+
+[defunk maparray [map_proc exp]
+  [let [[length [length exp]]]
+    [let [[new_array [array-new length]]]
+      [dotimes [i length]
+	[array-elt-set new_array i [funkall map_proc [cons [array-elt exp i] nil]]]]
+      new_array]]]
+
+[defunk brief [exp]
+  [if exp [cond [[integer?             exp]  exp]
+		[[symbol?              exp]  exp]
+		[[string?              exp]  exp]
+		[[double?              exp]  exp]
+		[[float?               exp]  exp]
+		[[pointer?             exp]  exp]
+		[[funk?                exp] `[funk       ,[funk-name exp]       ,[funk-args exp]]]
+		[[metro?               exp] `[metro      ,[metro-name exp]      ,[metro-args exp]]]
+		[[cfunk?               exp] `[cfunk      ,[cfunk-name exp]      ,[cfunk-args exp]]]
+		[[metrocfunk?          exp] `[metrocfunk ,[metrocfunk-name exp] ,[metrocfunk-args exp]]]
+		[[cons?                exp]  [mapcar [funk [arg]
+							   [brief arg]]
+						     exp]]
+		[[environment?         exp] `environment]
+		[[action?              exp]  [action-brief exp]]
+		[[action_event?        exp]  [action_event-brief exp]]
+		[[time?                exp]  [time-brief exp]]
+		[t                          `<>]]]]
+
+[defunk funkable? [exp]
+  [or [cfunk?      exp]
+      [metrocfunk? exp]
+      [funk?       exp]
+      [metro?      exp]]]
+
+[defunk funkable-name [exp]
+  [cond [[funk?       exp] [funk-name       exp]]
+	[[metro?      exp] [metro-name      exp]]
+	[[cfunk?      exp] [cfunk-name      exp]]
+	[[metrocfunk? exp] [metrocfunk-name exp]]
+	[t                 [error `run-time 'funkable-name exp is not funkable']]]]
+
+[defunk funkable-args [exp]
+  [cond [[funk?       exp] [funk-args       exp]]
+	[[metro?      exp] [metro-args      exp]]
+	[[cfunk?      exp] [cfunk-args      exp]]
+	[[metrocfunk? exp] [metrocfunk-args exp]]
+	[t                 [error `run-time 'funkable-name exp is not funkable']]]]
+
+[defunk bytecode_trace-brief [this]
+  [filter [funk [bytecode_event]
+		[let [[result [let [[command [bytecode-command [bytecode_event-bytecode bytecode_event]]]]
+				[cond [[eq command `funk]      [let [[context [bytecode_event-context bytecode_event]]]
+								 [let [[value [elt context 0]]
+								       [args  [elt context 1]]]
+								   `[funk-event      :name ,[funkable-name value] @[apply [funk [:rest seq]
+																[if [null seq]
+																    nil
+																  [apply &append seq]]]
+															  [let [[arg_value_iter args]]
+															    [mapcar [funk [arg]
+																	  [if [cons? arg_value_iter]
+																	      [let [[arg_value [car arg_value_iter]]]
+																		[mutate arg_value_iter [cdr arg_value_iter]]
+																		[list [colonize arg] [brief arg_value]]]
+																	    [list [colonize arg] `?]]]
+																    [funkable-args value]]]]]]]]
+				      [[eq command `jump-funk] [let [[context [bytecode_event-context bytecode_event]]]
+								 [let [[value [elt context 0]]
+								       [args  [elt context 1]]]
+								   `[jump-funk-event :name ,[funkable-name value] @[apply [funk [:rest seq]
+																[if [null seq]
+																    nil
+																  [apply &append seq]]]
+															  [let [[arg_value_iter args]]
+															    [mapcar [funk [arg]
+																	  [let [[arg_value [car arg_value_iter]]]
+																	    [mutate arg_value_iter [cdr arg_value_iter]]
+																	    [list [colonize arg] [brief arg_value]]]]
+																    [funkable-args value]]]]]]]]
+				      [t                       nil]]]]]
+		  [if result [print result]]
+		  result]]
+	  this]]
+
+[defunk memblock-set_init_render_xyz   [x y z]        [if [and [float? x] [float? y] [float? z]] [unsafe:memblock-set_init_render_xyz x y z] [error `type-error [list `memblock-set_init_render_xyz x y z]]]]
+[defunk memblock-set_init_render_on    [render_on]    [if [integer? render_on] [unsafe:memblock-set_init_render_on render_on] [error `type-error [list `memblock-set_init_render_on render_on]]]]
+[defunk memblock-set_init_render_noise [render_noise] [if [float? render_noise] [unsafe:memblock-set_init_render_noise render_noise] [error `type-error [list `memblock-set_init_render_noise render_noise]]]]
+
+`[defmetro set [var value] `[mutate ,var ,value]]
+[defmetro = [var value] `[mutate ,var ,value]]
+
+'redefining error in a better way.'
+`[defunk error [type value]
+   [let [[except [exception `error [cons type [cons value nil]]]]]
+     [print `[error ,except]]
+     `[print `[this-thread: ,[this-thread]]]
+      except]]
+
+[primfunk:load 'fu2/bootstrap-reader.fu2']
+[primfunk:load 'fu2/repl.fu2']
+
+[format stdout '\n'
+	'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'
+	'funk2: saving half-baked memory_image to img/bootstrap-repl.img.']
+
+[primfunk:memory_image__save 'img/bootstrap-repl.img']
+
+[format stdout '\n'
+	'funk2: done saving half-baked memory_image.' '\n'
+	'\n']
+
+[quit]
+

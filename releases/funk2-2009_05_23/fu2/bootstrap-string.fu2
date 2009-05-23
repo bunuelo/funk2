@@ -1,0 +1,73 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk string-concat [:rest seq]
+  [stringlist-concat seq]]
+
+[defunk string-intersperse [intersperse_string :rest seq]
+  [stringlist-intersperse seq intersperse_string]]
+
+[defunk stringlist-prog [seq]
+  [stringlist-intersperse seq '\n']]
+
+[defunk string-prog [:rest seq]
+  [stringlist-prog seq]]
+
+[defunk exp-to_symbol [exp]
+  [string-to_symbol [exp-to_string exp]]]
+
+[defunk string-read [this]
+  [read [string_stream-new [string-concat this ' '] 0]]]
+
+[defunk stringlist-append [this]
+  [stringlist-intersperse this '']]
+
+[defunk string-format [:rest exps]
+  [stringlist-append [mapcar [funk [exp]
+				   [if [string? exp]
+				       exp
+				     [exp-to_string exp]]]
+			     exps]]]
+
+[defunk string-replace_all [this token replacement]
+  [stringlist-intersperse [string-split this token] replacement]]
+
+'tests'
+
+[defunk string_parse-test [exp]
+  [if [not [equals exp [string-read [exp-to_string exp]]]]
+      [error `compile-time `[string_parse-test ,exp]]]]
+
+[defunk string-split_intersperse_test [this token]
+  [if [not [equals exp [stringlist-intersperse [string-split this token] token]]]
+      [error `compile-time `[string-split_intersperse_test ,this ,token]]]]
+
+[defunk string-test []
+  [string_parse-test []]
+  [string_parse-test 1]
+  [string_parse-test 12345]
+  [string_parse-test #x1234]
+  [string_parse-test 'string']
+  [string_parse-test `symbol]
+  [string-split_intersperse_test 'this is a test' 's']
+  ]
+
+

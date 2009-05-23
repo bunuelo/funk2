@@ -19,21 +19,16 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#include "f2_staticmemory.h"
+#include <string.h>
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+f2staticmemory_t __global_static_memory;
+
+void f2staticmemory__initialize(f2staticmemory_t* this) {
+  memset(this->ptr, 0x00, STATIC_MEMORY__BYTE_NUM);
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
+f2staticmemory_t* global_static_memory() {
+  return &(__global_static_memory);
 }
-
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
 

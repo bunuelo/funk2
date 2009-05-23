@@ -21,19 +21,28 @@
 
 #include "funk2.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
+  this->byte_num = byte_num;
+  this->ptr      = to_ptr(malloc(byte_num));
+  if (from_ptr(this->ptr) == NULL) {
+    perror("malloc");
+    exit(-1);
+  }
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
+void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
+  free(from_ptr(this->ptr));
+  this->byte_num = 0;
+  this->ptr      = to_ptr(NULL);
 }
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
+void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t byte_num) {
+  new_memory->ptr = to_ptr(realloc(from_ptr(old_memory->ptr), byte_num));
+  if (from_ptr(new_memory->ptr) == NULL) {
+    perror("realloc");
+    exit(-1);
+  }
+  new_memory->byte_num = byte_num;
 }
 
 

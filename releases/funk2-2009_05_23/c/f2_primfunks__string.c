@@ -21,19 +21,3 @@
 
 #include "funk2.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-

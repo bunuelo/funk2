@@ -19,21 +19,26 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__CHILD_HANDLER__H
+#define F2__CHILD_HANDLER__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_primfunks.h"
+#include "f2_child.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+typedef struct funk2_child_process_handler_s {
+  pthread_mutex_t             access_mutex;
+  funk2_child_process_list_t* child_process_list;
+} funk2_child_process_handler_t;
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+void  funk2_child_process_handler__init(funk2_child_process_handler_t* this);
+void  funk2_child_process_handler__destroy(funk2_child_process_handler_t* this);
+pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp);
+void  funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this);
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
+// **
 
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
+void f2__child_handler__reinitialize_globalvars();
+void f2__child_handler__initialize();
 
+#endif // F2__CHILD_HANDLER__H
 

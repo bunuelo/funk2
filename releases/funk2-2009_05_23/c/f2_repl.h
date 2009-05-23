@@ -19,21 +19,20 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__REPL__H
+#define F2__REPL__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_primobject__environment.h"
+#include "f2_print.h"
+#include "f2_ptypes.h"
+#include "f2_primfunks.h"
+#include "f2_reader.h"
+#include "f2_compile.h"
+#include "f2_thread.h"
+#include "f2_bytecodes.h"
+#include "f2_signal.h"
+#include "f2_scheduler.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+int f2__repl(f2ptr cause, f2ptr thread);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-
+#endif //F2__REPL__H

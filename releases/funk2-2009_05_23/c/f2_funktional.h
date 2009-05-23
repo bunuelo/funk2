@@ -19,21 +19,15 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__FUNKTIONAL__H
+#define F2__FUNKTIONAL__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_primfunks.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this);
+f2ptr      f2__exp__is_immutable(f2ptr cause, f2ptr this);
+boolean_t raw__funkable__is_funktional(f2ptr cause, f2ptr this);
+f2ptr      f2__funkable__is_funktional(f2ptr cause, f2ptr this);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+#endif // F2__FUNKTIONAL__H
 

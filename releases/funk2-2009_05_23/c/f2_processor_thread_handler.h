@@ -19,21 +19,20 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__PROCESSOR_THREAD_HANDLER__H
+#define F2__PROCESSOR_THREAD_HANDLER__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+typedef struct funk2_processor_thread_handler_s {
+  pthread_mutex_t                access_mutex;
+  u64                            processor_thread_next_index;
+  funk2_processor_thread_list_t* processor_thread_list;
+} funk2_processor_thread_handler_t;
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+void                      funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this);
+void                      funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this);
+funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+u64 this_processor_thread__pool_index();
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+#endif // F2__PROCESSOR_THREAD_HANDLER__H
 

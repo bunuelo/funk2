@@ -19,21 +19,20 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__DLFCN__H
+#define F2__DLFCN__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+boolean_t raw__dlfcn__supported();
+ptr       raw__dlfcn__dlopen(u8* filename, int flag);
+u8*       raw__dlfcn__dlerror();
+ptr       raw__dlfcn__dlsym(ptr handle, u8* symbol);
+int       raw__dlfcn__dlclose(ptr handle);
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+// **
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+void f2__dlfcn__reinitialize_globalvars();
+void f2__dlfcn__initialize();
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
+#endif // F2__DLFCN__H
 
 

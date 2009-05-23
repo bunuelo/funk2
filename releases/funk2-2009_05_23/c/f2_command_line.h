@@ -19,21 +19,28 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__COMMAND_LINE__H
+#define F2__COMMAND_LINE__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+typedef struct funk2_command_line_s {
+  int    argc;
+  char** argv;
+  char*  load_source_filename;
+  char*  user_command;
+  int    peer_command_server__port_num;
+  char*  swap_directory;
+} funk2_command_line_t;
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+void f2__print_usage();
+boolean_t string__parse_integer(char* this, int* return_value);
+boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, int* port_num);
+boolean_t string__filename_exists(char* this);
+void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv);
+void funk2_command_line__destroy(funk2_command_line_t* this);
+void string__print_quote_protected(char* this);
+void funk2_command_line__print(funk2_command_line_t* this);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+#endif // F2__COMMAND_LINE__H
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
 
 

@@ -21,19 +21,18 @@
 
 #include "funk2.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+// char_pointer primobject definition
+
+defprimobject__static_slot(char_pointer__pointer_value, 0);
+
+f2ptr __char_pointer__symbol = -1;
+
+f2ptr f2char_pointer__new(f2ptr cause, f2ptr pointer_value) {
+  release__assert(__char_pointer__symbol != -1, nil, "f2char_pointer__new error: used before initialized.");
+  f2ptr this = f2__primobject__new(cause, __char_pointer__symbol, 1, nil);
+  f2char_pointer__pointer_value__set(this, cause, pointer_value);
+  return this;
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+f2ptr f2__char_pointerp(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__arrayp(this, cause) && raw__array__length(cause, this) == 2 && f2primobject__is_char_pointer(this, cause));}
 

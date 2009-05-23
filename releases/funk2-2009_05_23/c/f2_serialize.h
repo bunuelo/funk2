@@ -19,21 +19,19 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__SERIALIZE__H
+#define F2__SERIALIZE__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_primobjects.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+void    raw__serialize_ptype_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int* new_index, ptype_t ptype);
+ptype_t raw__deserialize_ptype_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int* new_index);
+void    raw__serialize_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int *new_index, f2ptr exp);
+f2ptr   f2__serialize(f2ptr cause, f2ptr exp);
+f2ptr   raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int* new_index);
+f2ptr   f2__deserialize(f2ptr cause, f2ptr chunk, f2ptr index, f2ptr new_index_place);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+void f2__serialize__reinitialize_globalvars();
+void f2__serialize__initialize();
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-
+#endif // F2__SERIALIZE__H

@@ -19,21 +19,22 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#include "f2_f2ptr.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+void f2ptr__init(f2ptr_t* this, ip_addr_t ip_addr, pool_index_t pool_index, pool_offset_t pool_offset) {
+  this->ip_addr     = ip_addr;
+  this->pool_index  = pool_index;
+  this->pool_offset = pool_offset;
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
+f2ptr_t* f2ptr__new(ip_addr_t ip_addr, pool_index_t pool_index, pool_offset_t pool_offset) {
+  f2ptr_t* this = (f2ptr_t*)f2__malloc(sizeof(f2ptr_t));
+  f2ptr__init(this, ip_addr, pool_index, pool_offset);
+  return this;
 }
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
+void f2ptr__delete(f2ptr_t* this) {
+  f2__free(this);
 }
 
 

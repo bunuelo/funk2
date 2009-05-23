@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2009 Bo Morgan.
+// Copyright (c) 2007-2008 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -21,19 +21,18 @@
 
 #include "funk2.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+// boolean primobject definition
+
+defprimobject__static_slot(boolean__integer_value, 0);
+
+f2ptr __boolean__symbol = -1;
+
+f2ptr f2boolean__new(f2ptr cause, f2ptr integer_value) {
+  release__assert(__boolean__symbol != -1, nil, "f2boolean__new error: used before initialized.");
+  f2ptr this = f2__primobject__new(cause, __boolean__symbol, 1, nil);
+  f2boolean__integer_value__set(this, cause, integer_value);
+  return this;
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+f2ptr f2__booleanp(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__arrayp(this, cause) && raw__array__length(cause, this) == 2 && f2primobject__is_boolean(this, cause));}
 

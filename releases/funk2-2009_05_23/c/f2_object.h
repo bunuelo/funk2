@@ -19,21 +19,18 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__OBJECT__H
+#define F2__OBJECT__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_primfunks.h"
+#include "f2_ptypes.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+typedef struct funk2_object_types_s {
+  funk2_ptype_object_types_t ptype;
+} funk2_object_types_t;
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+f2ptr f2__object__slot_accessor(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__object__slot_mutator(f2ptr cause, f2ptr this, f2ptr slot);
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+#endif // F2__OBJECT__H
 

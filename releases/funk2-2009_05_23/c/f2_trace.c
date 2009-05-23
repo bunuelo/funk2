@@ -21,19 +21,30 @@
 
 #include "funk2.h"
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
+void raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on) {
+  int this__length = raw__array__length(cause, this);
+  int i;
+  for (i = this__length - 1; i != 0; i --) {
+    raw__array__elt__tracing_on__set(cause, this, i, f2bool__new(tracing_on));
+    raw__array__elt__set(cause, this, i, raw__array__elt(cause, this, i));
+  }
 }
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
+f2ptr __do_not_remember__symbol = -1;
+
+// beginning of fast initialization
+
+void f2__trace__reinitialize_globalvars() {
+  {char *str = "do_not_remember"; __do_not_remember__symbol = f2symbol__new(initial_cause(), strlen(str), (u8*)str);}
 }
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
+void f2__trace__initialize() {
+  pause_gc();
+  f2__trace__reinitialize_globalvars();
+  
+  environment__add_var_value(initial_cause(), global_environment(), __do_not_remember__symbol, nil);
+  
+  resume_gc();
+  try_gc();
 }
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
 

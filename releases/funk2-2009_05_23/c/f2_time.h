@@ -19,21 +19,17 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__TIME__H
+#define F2__TIME__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_global.h"
+#include "f2_memory.h"
+#include "f2_ptypes.h"
+#include "f2_primfunks.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
+void  f2__sleep(int microseconds);
+u64   raw__system_microseconds_since_1970();
+f2ptr f2__system_microseconds_since_1970(f2ptr cause);
 
 
+#endif // F2__TIME__H

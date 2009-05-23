@@ -19,21 +19,12 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__CRITIC__H
+#define F2__CRITIC__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_trace.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+//f2ptr f2__primobject_argument_type_check_failure__critic(f2ptr cause, f2ptr expected_type, f2ptr argument_value, f2ptr argument_dptr_array, f2ptr argument_dptr_index);
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
-
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
+#endif // F2__CRITIC__H
 

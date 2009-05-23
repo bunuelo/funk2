@@ -19,21 +19,25 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__COMPILE_X86__H
+#define F2__COMPILE_X86__H
 
-void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
-}
+#include "f2_bytecodes.h"
+#include "f2_compile.h"
+#include "f2_ptypes.h"
 
-void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
-}
+typedef enum x86_reg_e {
+  x86_reg__eax,
+  x86_reg__ecx,
+  x86_reg__edx,
+  x86_reg__ebx,
+  x86_reg__esp,
+  x86_reg__ebp,
+  x86_reg__esi,
+  x86_reg__edi
+} x86_reg_t;
 
-void funk2_processor_mutex__lock(funk2_processor_mutex_t* this) {
-}
+f2ptr f2chunk__new_compiled_from_funk(f2ptr cause, f2ptr funk);
+f2ptr f2chunk__new_compiled_from_metro(f2ptr cause, f2ptr metro);
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this) {
-}
-
-void funk2_processor_mutex__unlock(funk2_processor_mutex_t* this) {
-}
-
-
+#endif // F2__COMPILE_X86__H

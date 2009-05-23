@@ -1,0 +1,75 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+
+'Bo,'
+'Isn\'t this a variation on the Freud bakery shop joke?'
+'keep laughing'
+'Thinking ahead:'
+
+
+
+`[joke-sequence	[new-actor      officer]
+		[new-actor      driver]
+		[enter-scene    officer]
+		[enter-scene    driver]
+		[says           nil     nil     'A police officer pulls a guy over for speeding.']
+		[asks           officer driver  'May I see your driver\'s license?']
+		[says           driver  officer 'I don\'t have one.  I had it suspended when I got my 5th DUI.']
+		[knows          officer         'driver has broken law: driving without license']
+		[knows          officer         'driver has history of breaking laws: suspended license']
+		[says           officer driver  'May I see the owner\'s card for this vehicle?']
+		[says           driver  officer 'It\'s not my car. I stole it.']
+		[knows          officer         'driver has broken law: stole car']
+		[says           officer driver  'The car is stolen?']
+		[says           driver  officer 'That\'s right. But come to think of it, I think I saw the owner\'s card in the glove box when I was putting my gun in there.']
+		[knows          officer         'driver has broken law: concealed gun.']
+		[says           officer driver  'There\'s a gun in the glove box?']
+		[says           driver  officer 'Yes sir. That\'s where I put it after I shot and killed the woman who owns this car and stuffed her in the trunk.']
+		[knows          officer         'driver has broken law: murder.']
+		[knows          officer         'driver has broken many laws']
+		[possible-irony                 'driver seems to be working against his own implied goal of not getting arrested.']
+		[says           officer driver  'There\'s a BODY in the TRUNK?!?!?']
+		[says           driver  officer 'Yes, sir.']
+		[says           nil     nil     'Hearing this the officer immediately called his captain. The car was quickly surrounded by police, and the captain approached the driver to handle the situation:']
+		[new-actor      captain         'superior of officer']
+		[calls-for-help officer captain 'help.']
+		[tells          officer captain 'all knowledge of driver']
+		[enter-scene    captain]
+		[says           captain driver  'Sir, can I see your license?']
+		[says           driver  captain 'Sure, Here it is.']
+		[says           nil     nil     'It was valid.']
+		[says           captain driver  'Who\'s car is this?']
+		[says           driver  captain 'It\'s mine officer, here\'s the owner\' card.']
+		[says           nil     nil     'The driver owned the car.']
+		[says           captain driver  'Could you slowly open your glove box so I can see if there\'s a gun in it?']
+		[says           driver  captain 'Yes, sir, but there\'s no gun in it.']
+		[says           nil     nil     'Sure enough, there was nothing in the glove box.']
+		[says           captain driver  'Would you mind opening the trunk? I was told you said there\'s a body in it.']
+		[says           driver  captain 'No problem.']
+		[says           nil     nil     'Trunk is opened; no body.']
+		[says           captain driver  'I don\'t understand it. The officer who stopped you said you told him you didn\'t have a license, stole the car, had a gun in the glove box, and that there was a dead body in the trunk.']
+		[says           driver  captain 'Yeah, I\'ll bet the lying b*****d told you I was speeding too.']
+		]
+
+
+
+

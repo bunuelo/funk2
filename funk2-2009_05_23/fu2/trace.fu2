@@ -1,0 +1,49 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+'This file contains functions defined in f2_trace.c, and exported as primfunks from primfunks.c'
+
+[defunk safe:trace-remember-microseconds_since_1970 [this microseconds_since_1970 value_place]
+  [if [not [and [doublelink? this] [integer? microseconds_since_1970] [place? value_place]]] [error `argument-type `safe:trace-remember-microseconds_since_1970]
+    [unsafe:trace-remember-microseconds_since_1970 this microseconds_since_1970 value_place]]]
+
+[defunk safe:array-elt-remember-microseconds_since_1970 [this index microseconds_since_1970]
+  [if [not [and [array? this] [integer? index] [integer? microseconds_since_1970]]] [error `argument-type `safe:array-elt-remember-microseconds_since_1970]
+    [unsafe:array-elt-remember-microseconds_since_1970 this index microseconds_since_1970]]]
+
+[defunk safe:exp-remember-microseconds_since_1970 [exp microseconds_since_1970]
+  [if [not [integer? microseconds_since_1970]] [error `argument-type `safe:exp-remember-microseconds_since_1970]
+    [unsafe:exp-remember-microseconds_since_1970 exp microseconds_since_1970]]]
+
+[defunk safe:exp-remember-trans-microseconds_since_1970 [exp initial_microseconds final_microseconds]
+  [if [not [and [integer? initial_microseconds] [integer? final_microseconds]]] [error `argument-type `safe:exp-remember-trans-microseconds_since_1970]
+    [unsafe:exp-remember-trans-microseconds_since_1970 exp initial_microseconds final_microseconds]]]
+
+[defunk safe:array-tracing_on-set [this value]
+  [if [not [array? this]] [error `argument-type `safe:array-tracing_on-set]
+    [unsafe:array-tracing_on-set this value]]]
+
+[globalize-funk trace-remember-microseconds_since_1970     &safe:trace-remember-microseconds_since_1970]
+[globalize-funk array-elt-remember-microseconds_since_1970 &safe:array-elt-remember-microseconds_since_1970]
+[globalize-funk exp-remember-microseconds_since_1970       &safe:exp-remember-microseconds_since_1970]
+[globalize-funk exp-remember-trans-microseconds_since_1970 &safe:exp-remember-trans-microseconds_since_1970]
+[globalize-funk array-tracing_on-set                       &safe:array-tracing_on-set]
+

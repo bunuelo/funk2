@@ -43,7 +43,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   pthread_t tid = pthread_self();
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
-    if (iter->pthread = tid) {
+    if (iter->processor_thread.pthread = tid) {
       return &(iter->processor_thread);
     }
     iter = iter->next;

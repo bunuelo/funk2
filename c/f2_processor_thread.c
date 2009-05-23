@@ -21,7 +21,8 @@
 
 #include "funk2.h"
 
-void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
+void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args) {
+  this->index          = index;
   this->start_function = start_function;
   this->args           = args;
   int result = pthread_create(&(this->pthread), NULL, this->start_function, args);

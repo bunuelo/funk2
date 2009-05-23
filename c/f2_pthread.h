@@ -26,8 +26,8 @@
 #include "f2_memory.h"
 #include <pthread.h>
 
-extern void pthread_list__reset();
-extern int  this_pthread__pool_index();
-extern void pthread_list__destroy_all_others();
+//extern void pthread_list__reset();
+//extern int  this_pthread__pool_index();
+//extern void pthread_list__destroy_all_others();
 
 #endif // F2__PTHREAD__H

@@ -97,7 +97,6 @@ funk2_server_objs = \
   c/f2_processor_mutex.o \
   c/f2_processor_thread.o \
   c/f2_processor_thread_handler.o \
-  c/f2_pthread.o \
   c/f2_ptypes.o \
   c/f2_reader.o \
   c/f2_redblacktree.o \
@@ -167,7 +166,6 @@ funk2_headers = \
   c/f2_processor_mutex.h \
   c/f2_processor_thread.h \
   c/f2_processor_thread_handler.h \
-  c/f2_pthread.h \
   c/f2_ptypes.h \
   c/f2_reader.h \
   c/f2_redblacktree.h \

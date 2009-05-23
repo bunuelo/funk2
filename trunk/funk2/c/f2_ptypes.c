@@ -315,7 +315,7 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
 }
 
 f2ptr pfunk2__f2double__new(f2ptr cause, double d) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2double__new(pool_index, cause, d);
   ptype_access_num__decr(pool_index);
@@ -364,7 +364,7 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
 }
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2float__new(pool_index, cause, f);
   ptype_access_num__decr(pool_index);
@@ -413,7 +413,7 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
 }
 
 f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2pointer__new(pool_index, cause, p);
   ptype_access_num__decr(pool_index);
@@ -462,7 +462,7 @@ f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_compute
 }
 
 f2ptr pfunk2__f2gfunkptr__new(f2ptr cause, computer_id_t gf2_computer_id, pool_index_t gf2_pool_index, pool_address_t gf2_pool_address) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2gfunkptr__new(pool_index, cause, gf2_computer_id, gf2_pool_index, gf2_pool_address);
   ptype_access_num__decr(pool_index);
@@ -470,7 +470,7 @@ f2ptr pfunk2__f2gfunkptr__new(f2ptr cause, computer_id_t gf2_computer_id, pool_i
 }
 
 f2ptr pfunk2__f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2gfunkptr__new(pool_index, cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));
   ptype_access_num__decr(pool_index);
@@ -582,7 +582,7 @@ pthread_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2mutex__new(f2ptr cause) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2mutex__new(pool_index, cause);
   ptype_access_num__decr(pool_index);
@@ -663,7 +663,7 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
 }
 
 f2ptr pfunk2__f2char__new(f2ptr cause, u64 ch) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2char__new(pool_index, cause, ch);
   ptype_access_num__decr(pool_index);
@@ -715,7 +715,7 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
 }
 
 f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, u8* init) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2string__new(pool_index, cause, length, init);
   ptype_access_num__decr(pool_index);
@@ -904,7 +904,7 @@ void gc_touch_all_symbols() {
 }
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2symbol__new(pool_index, cause, length, init);
   ptype_access_num__decr(pool_index);
@@ -1037,7 +1037,7 @@ u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2chunk__new(pool_index, cause, length, bytes);
   ptype_access_num__decr(pool_index);
@@ -1045,7 +1045,7 @@ f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes) {
 }
 
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2chunk__new_copy(pool_index, cause, init_chunk);
   ptype_access_num__decr(pool_index);
@@ -1311,7 +1311,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
 }
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr this = __pure__f2simple_array__new(pool_index, cause, length, f2ptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
@@ -1480,7 +1480,7 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
 }
 
 f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr this = __pure__f2traced_array__new(pool_index, cause, length, dptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
@@ -1489,7 +1489,7 @@ f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
 }
 
 f2ptr pfunk2__f2traced_array__new_from_f2ptrs(f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
-  int pool_index = this_pthread__pool_index(); ptype_access_num__incr(pool_index);
+  int pool_index = this_processor_thread__pool_index(); ptype_access_num__incr(pool_index);
   f2ptr this = __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, length, f2ptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
   ptype_access_num__decr(pool_index);
@@ -1810,7 +1810,7 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
 }
 
 f2ptr pfunk2__f2larva__new(f2ptr cause, u32 type) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2larva__new(pool_index, cause, type);
   ptype_access_num__decr(pool_index);

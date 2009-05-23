@@ -127,7 +127,6 @@
 #include "f2_processor_mutex.h"
 #include "f2_processor_thread.h"
 #include "f2_processor_thread_handler.h"
-#include "f2_pthread.h"
 #include "f2_reader.h"
 #include "f2_redblacktree.h"
 #include "f2_repl.h"

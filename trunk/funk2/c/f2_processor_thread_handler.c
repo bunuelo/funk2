@@ -51,12 +51,12 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   return NULL;
 }
 
-int this_processor_thread__pool_index() {
+u64 this_processor_thread__pool_index() {
   funk2_processor_thread_t* this_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
   if (this_processor_thread == NULL) {
     return 0;
   }
-  printf("\npool_index=%d\n", this_processor_thread->index); fflush(stdout);
+  printf("\npool_index=" u64__fstr "\n", this_processor_thread->index); fflush(stdout);
   return this_processor_thread->index;
 }
 

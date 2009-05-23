@@ -56,7 +56,7 @@ u64 this_processor_thread__pool_index() {
   if (this_processor_thread == NULL) {
     return 0;
   }
-  printf("\npool_index=" u64__fstr "\n", this_processor_thread->index); fflush(stdout);
+  //printf("\npool_index=" u64__fstr "\n", this_processor_thread->index); fflush(stdout);
   return this_processor_thread->index;
 }
 

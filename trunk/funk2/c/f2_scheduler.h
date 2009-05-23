@@ -31,7 +31,7 @@ typedef struct funk2_operating_system_s {
   pthread_mutex_t scheduler__execute_mutex;
   f2ptr           scheduler;
   f2ptr           scheduler__symbol;
-  f2ptr           pthread__current_thread[memory_pool_num];
+  f2ptr           processor_thread__current_thread[memory_pool_num];
 } funk2_operating_system_t;
 
 //extern f2ptr f2scheduler__new(f2ptr context, f2ptr processors, f2ptr threads, f2ptr thread_num);
@@ -55,17 +55,9 @@ f2ptr f2__global_scheduler__thread_num__set(f2ptr cause, f2ptr value);
 void  f2__global_scheduler__add_thread_serial(f2ptr cause, f2ptr thread);
 void  f2__global_scheduler__add_thread_parallel(f2ptr cause, f2ptr thread);
 
-f2ptr f2__scheduler__pthread_current_thread(int pool_index);
+f2ptr f2__scheduler__processor_thread_current_thread(int pool_index);
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
-
-//extern f2ptr f2processor__new(f2ptr context, f2ptr scheduler, f2ptr pthread, f2ptr desc);
-//extern f2ptr f2processor__scheduler(f2ptr this);
-//extern f2ptr f2processor__scheduler__set(f2ptr this, f2ptr value);
-//extern f2ptr f2processor__pthread(f2ptr this);
-//extern f2ptr f2processor__pthread__set(f2ptr this, f2ptr value);
-//extern f2ptr f2processor__desc(f2ptr this);
-//extern f2ptr f2processor__desc__set(f2ptr this, f2ptr value);
 
 f2ptr f2__add_thread(f2ptr cause, f2ptr this, f2ptr thread);
 
@@ -77,7 +69,7 @@ void f2__scheduler__complete_thread(f2ptr cause, f2ptr thread);
 
 void f2__print_threads_stacks();
 
-void f2__scheduler__exec_with_main_pthread(f2ptr cause);
+//void f2__scheduler__exec_with_main_processor_thread(f2ptr cause);
 
 void f2__scheduler__start_processors();
 void f2__scheduler__stop_processors();

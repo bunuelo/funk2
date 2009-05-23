@@ -286,7 +286,7 @@ clean-o:
 	rm -f c/*.o
 
 clean-trace:
-	eccho "Removing:"; ls funk2_trace.log; echo ""
+	echo "Removing:"; ls funk2_trace.log; echo ""
 	rm -f funk2_trace.log
 
 clean-install:

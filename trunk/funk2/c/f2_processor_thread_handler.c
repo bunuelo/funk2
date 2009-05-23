@@ -52,7 +52,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
 }
 
 int this_processor_thread__pool_index() {
-  funk2_processor_thread_t* this_processor_thread = funk2_processor_thread_handler__myself(&(__spinnerd.processor_thread_handler));
+  funk2_processor_thread_t* this_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
   if (this_processor_thread == NULL) {
     return 0;
   }

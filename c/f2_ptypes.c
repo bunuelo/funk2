@@ -267,7 +267,7 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
 }
 
 f2ptr pfunk2__f2integer__new(f2ptr cause, s64 i) {
-  int pool_index = this_pthread__pool_index();
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2integer__new(pool_index, cause, i);
   ptype_access_num__decr(pool_index);

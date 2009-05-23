@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
-  this->processor_thread_next_index = 1;
+  this->processor_thread_next_index = 0;
   this->processor_thread_list       = NULL;
 }
 

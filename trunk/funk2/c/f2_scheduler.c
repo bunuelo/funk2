@@ -24,7 +24,7 @@
 void funk2_operating_system__init(funk2_operating_system_t* this) {
   int i;
   for (i = 0; i < memory_pool_num; i++) {
-    this->pthread__current_thread[i] = nil;
+    this->processor_thread__current_thread[i] = nil;
   }
 }
 
@@ -32,20 +32,18 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
 }
 
 
-typedef void* (*pthread_start_routine)(void*);
-
 f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
-  return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_pthread__pool_index());
+  return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
 }
 
 void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
   f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads       = f2processor__active_threads(this, cause);
-  pool__pause_gc(this_pthread__pool_index());
+  pool__pause_gc(this_processor_thread__pool_index());
   f2ptr new_cons             = f2cons__new(cause, thread, active_threads);
   f2processor__active_threads__set(this, cause, new_cons);
-  pool__resume_gc(this_pthread__pool_index());
+  pool__resume_gc(this_processor_thread__pool_index());
   f2mutex__unlock(active_threads_mutex, cause);
 }
 
@@ -122,16 +120,16 @@ void f2__global_scheduler__execute_mutex__unlock(f2ptr cause) {
   pthread_mutex_unlock(&(__funk2.operating_system.scheduler__execute_mutex));
 }
 
-f2ptr f2__scheduler__pthread_current_thread(int pool_index) {
-  f2ptr thread = __funk2.operating_system.pthread__current_thread[pool_index];
+f2ptr f2__scheduler__processor_thread_current_thread(int pool_index) {
+  f2ptr thread = __funk2.operating_system.processor_thread__current_thread[pool_index];
   if (! thread) {
-    error(nil, "f2__scheduler__pthread_current_thread: thread=nil");
+    error(nil, "f2__scheduler__processor_thread_current_thread: thread=nil");
   }
   return thread;
 }
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
-  pool__pause_gc(this_pthread__pool_index());
+  pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something    = nil;
   {
     f2__global_scheduler__execute_mutex__lock(cause);
@@ -149,9 +147,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     if (f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) { // successful lock
       if (! f2thread__paused(thread, cause)) {
 	int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	release__assert(pool_index == this_pthread__pool_index(), thread, "f2processor__execute_next_bytecodes: pool_index != this_pthread__pool_index().");
-	f2ptr popped_thread = __funk2.operating_system.pthread__current_thread[pool_index];
-	__funk2.operating_system.pthread__current_thread[pool_index] = thread;
+	release__assert(pool_index == this_processor_thread__pool_index(), thread, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	f2ptr popped_thread = __funk2.operating_system.processor_thread__current_thread[pool_index];
+	__funk2.operating_system.processor_thread__current_thread[pool_index] = thread;
 	//printf("\n  got thread lock.");
 	if (raw__larvap(f2thread__value(thread, cause), cause)) {
 	  //printf("\nthread paused due to larva in value register.");
@@ -224,7 +222,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    prev_thread_iter__already_set = 1;
 	  }
 	}
-	__funk2.operating_system.pthread__current_thread[pool_index] = popped_thread;
+	__funk2.operating_system.processor_thread__current_thread[pool_index] = popped_thread;
       }
       f2mutex__unlock(f2thread__execute_mutex(thread, cause), cause);
     } else {
@@ -254,11 +252,11 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     
     thread_iter = next_thread_iter;
   }
-  pool__resume_gc(this_pthread__pool_index());
-  pool__try_gc(this_pthread__pool_index());
+  pool__resume_gc(this_processor_thread__pool_index());
+  pool__try_gc(this_processor_thread__pool_index());
   
   //if (did_something) {
-  //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) thread_num = %d", this_pthread__pool_index(), processor, thread_num);
+  //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) thread_num = %d", this_processor_thread__pool_index(), processor, thread_num);
   //}
   return did_something;
 }
@@ -267,7 +265,7 @@ void* processor__start_routine(void *ptr) {
   f2ptr cause     = nil;
   f2ptr processor = f2__global_scheduler__this_processor(cause);
 #ifdef DEBUG_SCHEDULER
-  printf("\nstarting processor %d (%d)", this_pthread__pool_index(), processor); fflush(stdout);
+  printf("\nstarting processor %d (%d)", this_processor_thread__pool_index(), processor); fflush(stdout);
 #endif // DEBUG_SCHEDULER
   while(1) {
     f2ptr did_something = nil;
@@ -276,8 +274,8 @@ void* processor__start_routine(void *ptr) {
       f2__sleep(1);
       sched_yield();
     } while (did_something);
-    //printf("\nprocessor %d sleeping", this_pthread__pool_index()); fflush(stdout);
-    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (thread_num: %d)", this_pthread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
+    //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
+    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (thread_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
     f2__sleep(100000);
     sched_yield();
   }
@@ -288,11 +286,11 @@ void f2__scheduler__yield(f2ptr cause) {
   f2ptr processor = f2__global_scheduler__this_processor(cause);
   if(! f2processor__execute_next_bytecodes(processor, cause)) {
     //f2ptr processor = f2__global_scheduler__this_processor();
-    //printf("\nscheduler__yield: processor %d (%d) sleeping (thread_num: %d)", this_pthread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
+    //printf("\nscheduler__yield: processor %d (%d) sleeping (thread_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
     //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
     sched_yield();
     f2__sleep(1);
-    pool__try_gc(this_pthread__pool_index());
+    pool__try_gc(this_processor_thread__pool_index());
   }
 }
 
@@ -322,32 +320,31 @@ void f2__print_threads_stacks() {
   //}
 }
 
-void f2processor__start_new_pthread(f2ptr cause, long processor_index) {
-  pthread_t raw_pthread;
-  if(pthread_create(&raw_pthread, NULL, (pthread_start_routine)processor__start_routine, (void*)(long)processor_index)) {
-    error(nil, "couldn't create processor pthread.");
-  }
-  f2ptr pthread   = f2pointer__new(cause, to_ptr(raw_pthread));
+void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) {
+  funk2_processor_thread_t* new_processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__spinnerd.processor_thread_handler), processor__start_routine, (void*)(long)processor_index);
+  //pthread_t raw_pthread;
+  //if(pthread_create(&raw_pthread, NULL, (pthread_start_routine)processor__start_routine, (void*)(long)processor_index)) {
+  //  error(nil, "couldn't create processor pthread.");
+  //}
+  f2ptr processsor_thread = f2pointer__new(cause, to_ptr(new_processor_thread));
   f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_index);
-  f2processor__pthread__set(processor, cause, pthread);
+  f2processor__processor_thread__set(processor, cause, processor_thread);
 }
 
-void f2__scheduler__exec_with_main_pthread(f2ptr cause) {
-  processor__start_routine((void*)(long)this_pthread__pool_index());
-}
+//void f2__scheduler__exec_with_main_pthread(f2ptr cause) {
+//  processor__start_routine((void*)(long)this_pthread__pool_index());
+//}
 
 void f2__scheduler__start_processors() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   int i;
   for (i = 0; i < scheduler_processor_num; i ++) {
-    f2processor__start_new_pthread(cause, i);
+    f2processor__start_new_processor_thread(cause, i);
   }
 }
 
 void f2__scheduler__stop_processors() {
-  status("f2__scheduler__stop_processors note: doing nothing (pthread_cancel locks up on Athena, should have soft lock?).");
-  //f2__global_scheduler__execute_mutex__unlock(cause);
-  //pthread_list__destroy_all_others();  
+  status("f2__scheduler__stop_processors note: doing nothing.");
 }
 
 void f2__scheduler__reinitialize_globalvars() {

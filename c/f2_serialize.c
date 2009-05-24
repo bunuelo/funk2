@@ -81,7 +81,7 @@ void raw__serialize_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int *new
       u8 temp_buffer[40];
       memset(temp_buffer, 0, 40);
       funk2_processor_mutex_t* mutex = ptype_mutex__m(exp, cause);
-      memcpy(temp_buffer, mutex, sizeof(funk2_processsor_mutex_t));
+      memcpy(temp_buffer, mutex, sizeof(funk2_processor_mutex_t));
       u64 i;
       for (i = 0; i < 40; i++) {
       	if (chunk) {f2chunk__bit8__elt__set(chunk, index, cause, temp_buffer[i]);} index ++;

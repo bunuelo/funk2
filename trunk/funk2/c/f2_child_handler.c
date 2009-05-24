@@ -90,7 +90,7 @@ boolean_t funk2_child_process_handler__process_exists(funk2_child_process_handle
     }
     iter = iter->next;
   }
-  funk2_processor__unlock(&(this->access_mutex));
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__false;
 }
 

@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 void funk2_child_process_handler__init(funk2_child_process_handler_t* this) {
-  funk2_processor_mutex_init(&(this->access_mutex));
+  funk2_processor_mutex__init(&(this->access_mutex));
   this->child_process_list = NULL;
 }
 

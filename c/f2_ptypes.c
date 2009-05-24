@@ -566,7 +566,7 @@ f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
   debug__assert(mutex_block, nil, "block is nil.");
   mutex_block->ptype.ptype = ptype_mutex;
   mutex_block->ptype.cause = cause;
-  funk2_processor_mutex__init(mutex_block->m, NULL);
+  funk2_processor_mutex__init(mutex_block->m);
   memblock__set_render_position_relative_to(mutex_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, mutex_f2ptr);}
   return mutex_f2ptr;
@@ -821,7 +821,7 @@ boolean_t     __symbol_hash__initialized = 0;
 symbol_hash_t __symbol_hash;
 
 void symbol_hash__initialize() {
-  funk2_processor_mutex__init(&symbol_hash_mutex, NULL);
+  funk2_processor_mutex__init(&symbol_hash_mutex);
   __symbol_hash.array               = (symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
   bzero(__symbol_hash.array, sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
   __symbol_hash.total_symbol_num    = 0;

@@ -32,7 +32,7 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
   pthread_mutex_destroy(&(this->pthread_mutex));
 }
 
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, char* lock_source_file, int lock_line_num) {
+funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
   if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
     this->is_locked        = boolean__true;
     this->lock_source_file = lock_source_file;
@@ -42,7 +42,7 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
   return funk2_processor_mutex_trylock_result__failure;
 }
 
-void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, char* lock_source_file, int lock_line_num) {
+void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
   while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
     sched_yield();
     //f2__sleep(1);

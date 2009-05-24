@@ -240,10 +240,10 @@ void f2__destroy() {
   f2__peer_command_server__destroy();
   status("funk2: destroying funk2 node handler.");
   f2__funk2_node__destroy();
-  status("funk2: destroying status.");
-  f2__status__destroy();
   status("funk2: destroying primfunks-locale.");
   f2__primfunks__locale__destroy();
+  status("funk2: destroying status.");
+  f2__status__destroy();
 }
 
 void funk2__destroy(funk2_t* this) {

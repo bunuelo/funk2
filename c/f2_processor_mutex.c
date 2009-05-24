@@ -35,8 +35,8 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
   if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
     this->is_locked        = boolean__true;
-    this->lock_source_file = lock_source_file;
-    this->lock_line_num    = lock_line_num;
+    this->lock_source_file = (char*)lock_source_file;
+    this->lock_line_num    = (int)lock_line_num;
     return funk2_processor_mutex_trylock_result__success;
   }
   return funk2_processor_mutex_trylock_result__failure;

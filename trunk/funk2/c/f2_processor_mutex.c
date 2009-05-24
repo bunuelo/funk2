@@ -49,7 +49,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 }
 
-void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, char* unlock_source_file, int unlock_line_num) {
+void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {
   this->is_locked = boolean__false;
   pthread_mutex_unlock(&(this->pthread_mutex));
 }

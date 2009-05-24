@@ -26,6 +26,7 @@
 
 #include "f2_thread.h"
 #include "f2_time.h"
+#include "f2_processor_mutex.h"
 
 typedef struct funk2_operating_system_s {
   funk2_processor_mutex_t scheduler__execute_mutex;

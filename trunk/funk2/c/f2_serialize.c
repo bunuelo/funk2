@@ -80,8 +80,8 @@ void raw__serialize_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int *new
       printf("\nserialize mutex"); fflush(stdout);
       u8 temp_buffer[40];
       memset(temp_buffer, 0, 40);
-      pthread_mutex_t* mutex = ptype_mutex__m(exp, cause);
-      memcpy(temp_buffer, mutex, sizeof(pthread_mutex_t));
+      funk2_processor_mutex_t* mutex = ptype_mutex__m(exp, cause);
+      memcpy(temp_buffer, mutex, sizeof(funk2_processsor_mutex_t));
       u64 i;
       for (i = 0; i < 40; i++) {
       	if (chunk) {f2chunk__bit8__elt__set(chunk, index, cause, temp_buffer[i]);} index ++;
@@ -200,8 +200,8 @@ f2ptr raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int
       temp_buffer[i] = f2chunk__bit8__elt(chunk, index, cause); index ++;
     }
     exp = f2mutex__new(cause);
-    pthread_mutex_t* mutex = ptype_mutex__m(exp, cause);
-    memcpy(mutex, temp_buffer, sizeof(pthread_mutex_t));
+    funk2_processor_mutex_t* mutex = ptype_mutex__m(exp, cause);
+    memcpy(mutex, temp_buffer, sizeof(funk2_processor_mutex_t));
   } break;
   case ptype_char: {
     u8 ch = (u8)f2chunk__bit8__elt(chunk, index, cause); index ++;

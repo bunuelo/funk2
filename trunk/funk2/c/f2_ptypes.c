@@ -27,7 +27,7 @@
 #  define F2__PTYPE__TYPE_CHECK
 #endif
 
-pthread_mutex_t __global_ptype_incr_mutex[memory_pool_num];
+funk2_processor_mutex_t __global_ptype_incr_mutex[memory_pool_num];
 
 void print_mutex_error(int retval) {
   switch (retval) {
@@ -40,13 +40,13 @@ void print_mutex_error(int retval) {
 
 void ptype_incr_mutex__lock(int pool_index)    {
 #ifdef F2__PTHREAD
-  assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); pthread_mutex_lock(&__global_ptype_incr_mutex[pool_index]);/*while(pthread_mutex_trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
+  assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); funk2_processor_mutex__lock(&__global_ptype_incr_mutex[pool_index]);/*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
 #endif // F2__PTHREAD
 }
 
 void ptype_incr_mutex__unlock(int pool_index)  {
 #ifdef F2__PTHREAD
-  assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); int retval = pthread_mutex_unlock(&__global_ptype_incr_mutex[pool_index]); if (retval) {print_mutex_error(retval);}
+  assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); int retval = funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]); if (retval) {print_mutex_error(retval);}
 #endif // F2__PTHREAD
 }
 
@@ -566,16 +566,16 @@ f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
   debug__assert(mutex_block, nil, "block is nil.");
   mutex_block->ptype.ptype = ptype_mutex;
   mutex_block->ptype.cause = cause;
-  pthread_mutex_init(mutex_block->m, NULL);
+  funk2_processor_mutex__init(mutex_block->m, NULL);
   memblock__set_render_position_relative_to(mutex_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, mutex_f2ptr);}
   return mutex_f2ptr;
 }
 
-pthread_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause) {
+funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
   ptype_access_num__incr(pool_index);
-  pthread_mutex_t* m = __pure__f2mutex__m(this);
+  funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
   __pure__memblock__render_read_activated__set(this, 1);
   ptype_access_num__decr(pool_index);
   return m;
@@ -599,7 +599,7 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
   do {
     int pool_index = __f2ptr__pool_index(this);
     ptype_access_num__incr(pool_index);
-    lock_failed = pthread_mutex_trylock(ptype_mutex__m(this, cause));
+    lock_failed = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
     ptype_access_num__decr(pool_index);
   } while (lock_failed);
 }
@@ -612,7 +612,7 @@ void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  pthread_mutex_unlock(ptype_mutex__m(this, cause));
+  funk2_processor_mutex__unlock(ptype_mutex__m(this, cause));
   ptype_access_num__decr(pool_index);
 }
 
@@ -624,7 +624,7 @@ int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  int return_value = pthread_mutex_trylock(ptype_mutex__m(this, cause));
+  int return_value = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
   ptype_access_num__decr(pool_index);
   return return_value;
 }
@@ -804,7 +804,7 @@ f2ptr f2__string__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 // symbol
 
-pthread_mutex_t symbol_hash_mutex = PTHREAD_MUTEX_INITIALIZER;
+funk2_processor_mutex_t symbol_hash_mutex; // must initialize
 
 typedef struct symbol_hash_node_s {
   f2ptr                      symbol;
@@ -821,6 +821,7 @@ boolean_t     __symbol_hash__initialized = 0;
 symbol_hash_t __symbol_hash;
 
 void symbol_hash__initialize() {
+  funk2_processor_mutex__init(&symbol_hash_mutex, NULL);
   __symbol_hash.array               = (symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
   bzero(__symbol_hash.array, sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
   __symbol_hash.total_symbol_num    = 0;
@@ -850,7 +851,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   if (length == 0) {
     return nil;
   }
-  pthread_mutex_lock(&symbol_hash_mutex);
+  funk2_processor_mutex__lock(&symbol_hash_mutex);
   if (! __symbol_hash__initialized) {symbol_hash__initialize();}
   ptype_symbol_block_t* symbol_block = NULL;
   
@@ -864,7 +865,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
       printf("\nfound unused symbol."); fflush(stdout);
     }
     if (symbol_block->length == length && (! memcmp(symbol_block->str, str, length))) {
-      pthread_mutex_unlock(&symbol_hash_mutex);
+      funk2_processor_mutex__unlock(&symbol_hash_mutex);
       return node->symbol;
     }
     node = node->next;
@@ -885,7 +886,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   // and add new symbol to hash table
   symbol_hash__add_symbol(symbol_f2ptr);
   
-  pthread_mutex_unlock(&symbol_hash_mutex);
+  funk2_processor_mutex__unlock(&symbol_hash_mutex);
   memblock__set_render_position_relative_to(symbol_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, symbol_f2ptr);}
   return symbol_f2ptr;
@@ -1977,7 +1978,7 @@ void f2__ptypes__initialize__object_slots() {
 void f2__ptypes__initialize() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    pthread_mutex_init(&__global_ptype_incr_mutex[pool_index], NULL);
+    funk2_processor_mutex__init(&__global_ptype_incr_mutex[pool_index]);
     __global_ptype_access_num[pool_index] = 0;
   }
 }

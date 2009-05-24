@@ -149,7 +149,7 @@ void f2__destroy();
 typedef struct funk2_s {
   node_id_t                          node_id;
   event_id_t                         event_id;
-  pthread_mutex_t                    event_id_mutex;
+  funk2_processor_mutex_t            event_id_mutex;
   funk2_command_line_t               command_line;
   funk2_memory_t                     memory;
   funk2_globalenv_t                  globalenv;

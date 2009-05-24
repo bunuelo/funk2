@@ -22,25 +22,25 @@
 #include "funk2.h"
 
 void funk2_locale__init(funk2_locale_t* this) {
-  pthread_mutex_init(&(this->interface_mutex), NULL);
+  funk2_processor_mutex__init(&(this->interface_mutex));
 }
 
 void funk2_locale__destroy(funk2_locale_t* this) {
-  pthread_mutex_destroy(&(this->interface_mutex));
+  funk2_processor_mutex__destroy(&(this->interface_mutex));
 }
 
 
 // char *setlocale(int category, const char *locale);
 
 f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
-  pthread_mutex_lock(&(__funk2.locale.interface_mutex));
+  funk2_processor_mutex__lock(&(__funk2.locale.interface_mutex));
   char* old_locale_str = setlocale(f2integer__i(category, cause), locale_str);
   if (old_locale_str == NULL) {
-    pthread_mutex_unlock(&(__funk2.locale.interface_mutex));
+    funk2_processor_mutex__unlock(&(__funk2.locale.interface_mutex));
     return nil;
   }
   f2ptr retval = f2string__new(cause, strlen(old_locale_str), (u8*)old_locale_str);
-  pthread_mutex_unlock(&(__funk2.locale.interface_mutex));
+  funk2_processor_mutex__unlock(&(__funk2.locale.interface_mutex));
   return retval;
 }
 

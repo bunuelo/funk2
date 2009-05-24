@@ -22,13 +22,13 @@
 #include "funk2.h"
 
 void funk2_child_process_handler__init(funk2_child_process_handler_t* this) {
-  pthread_mutex_init(&(this->access_mutex), NULL);
+  funk2_processor_mutex_init(&(this->access_mutex));
   this->child_process_list = NULL;
 }
 
 void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
-  pthread_mutex_lock(&(this->access_mutex));
-  pthread_mutex_destroy(&(this->access_mutex));
+  funk2_processor_mutex__lock(&(this->access_mutex));
+  funk2_processor_mutex__destroy(&(this->access_mutex));
   funk2_child_process_list_t* iter = this->child_process_list;
   while (iter) {
     funk2_child_process_list_t* next          = iter->next;
@@ -40,22 +40,22 @@ void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
 }
 
 pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
-  pthread_mutex_lock(&(this->access_mutex));
+  funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_child_process_list_t* child_process_node = (funk2_child_process_list_t*)malloc(sizeof(funk2_child_process_list_t));
   funk2_child_process_init_t  result             = funk2_child_process__init(&(child_process_node->child_process), argv, envp);
   if (result != funk2_child_process_init__success) {
     free(child_process_node);
-    pthread_mutex_unlock(&(this->access_mutex));
+    funk2_processor_mutex__unlock(&(this->access_mutex));
     return 0;
   }
   child_process_node->next = this->child_process_list;
   this->child_process_list = child_process_node;
-  pthread_mutex_unlock(&(this->access_mutex));
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return child_process_node->child_process.pid;
 }
 
 void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this) {
-  pthread_mutex_lock(&(this->access_mutex));
+  funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_child_process_list_t* iter = this->child_process_list;
   funk2_child_process_list_t* prev = NULL;
   funk2_child_process_list_t* next;
@@ -76,21 +76,21 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
     }
     iter = next;
   }
-  pthread_mutex_unlock(&(this->access_mutex));
+  funk2_processor_mutex__unlock(&(this->access_mutex));
 }
 
 boolean_t funk2_child_process_handler__process_exists(funk2_child_process_handler_t* this, pid_t pid) {
-  pthread_mutex_lock(&(this->access_mutex));
+  funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_child_process_list_t* iter = this->child_process_list;
   while (iter) {
     funk2_child_process_t* child_process = &(iter->child_process);
     if (child_process->pid == pid) {
-      pthread_mutex_unlock(&(this->access_mutex));
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return boolean__true;
     }
     iter = iter->next;
   }
-  pthread_mutex_unlock(&(this->access_mutex));
+  funk2_processor__unlock(&(this->access_mutex));
   return boolean__false;
 }
 

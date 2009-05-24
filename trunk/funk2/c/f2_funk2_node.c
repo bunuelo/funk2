@@ -112,7 +112,7 @@ void funk2_node__init(funk2_node_t* this, node_id_t node_id, computer_id_t compu
   client_id__copy(&(this->socket_client.client_id), client_id);
   char hostname[128];
   sprintf(hostname, "%d.%d.%d.%d", client_id->ip_addr[0], client_id->ip_addr[1], client_id->ip_addr[2], client_id->ip_addr[3]);
-  pthread_mutex_init(&(this->socket_client_mutex), NULL);
+  funk2_processor_mutex__init(&(this->socket_client_mutex));
   socket_client__init(&(this->socket_client), "", hostname, client_id->port_num, send_buffer_byte_num, recv_buffer_byte_num);
   this->node_id                                     = node_id;
   this->computer_id                                 = computer_id;
@@ -130,7 +130,7 @@ void funk2_node__init(funk2_node_t* this, node_id_t node_id, computer_id_t compu
 
 void funk2_node__destroy(funk2_node_t* this) {
   socket_client__destroy(&(this->socket_client));
-  pthread_mutex_destroy(&(this->socket_client_mutex));
+  funk2_processor_mutex__destroy(&(this->socket_client_mutex));
 }
 
 // this can only be called from socket_rpc_layer
@@ -169,7 +169,7 @@ f2ptr funk2_node__remote_f2ptr_to_local_f2ptr(funk2_node_t* this, f2ptr remote_f
 }
 
 void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_handler) {
-  pthread_mutex_lock(&(this->socket_client_mutex));
+  funk2_processor_mutex__lock(&(this->socket_client_mutex));
   //printf("\nfunk2_node__handle_node note: handling funk2 node (node_id=" node_id__fstr ") %d.%d.%d.%d:%d.",
   //	 this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
   if (this->socket_client.socket.disconnected) {
@@ -189,20 +189,20 @@ void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_hand
 	}
       }
     }
-    pthread_mutex_unlock(&(this->socket_client_mutex));
+    funk2_processor_mutex__unlock(&(this->socket_client_mutex));
   } else {
     buffered_socket__error_type_t result = buffered_socket__flush(&(this->socket_client.socket));
     if (result != buffered_socket__error_type__success) {
       status("funk2_node__handle_node error: failed to flush funk2 node socket (node_id=" node_id__fstr ") %d.%d.%d.%d:%d.",
 	     this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
-      pthread_mutex_unlock(&(this->socket_client_mutex));
+      funk2_processor_mutex__unlock(&(this->socket_client_mutex));
     } else {
       funk2_packet_t* packet = funk2_packet__recv_new_valid_from_buffered_socket(&(this->socket_client.socket));
       if (packet) {
-	pthread_mutex_unlock(&(this->socket_client_mutex));
+	funk2_processor_mutex__unlock(&(this->socket_client_mutex));
 	funk2_packet__receive(this, (pcs_action_packet_t*)packet);
       } else {
-	pthread_mutex_unlock(&(this->socket_client_mutex));
+	funk2_processor_mutex__unlock(&(this->socket_client_mutex));
       }
       if (! (this->sent_register_request)) {
 	u8 ip_addr[4] = {0, 0, 0, 0};
@@ -219,36 +219,36 @@ void funk2_node__set_computer_id_mapping(funk2_node_t* this, computer_id_t local
 }
 
 void funk2_node__send_packet(f2ptr cause, funk2_node_t* this, funk2_packet_t* packet) {
-  pthread_mutex_lock(&(this->socket_client_mutex));
+  funk2_processor_mutex__lock(&(this->socket_client_mutex));
   this->last_sent_packet__stream_iter ++;
   packet->header.stream_iter = this->last_sent_packet__stream_iter;
   u64 packet__size = funk2_packet__sizeof(packet);
   memcpy(&(this->last_sent_packet), packet, packet__size);
   this->last_sent_packet__is_valid = boolean__true;
   funk2_packet__send_to_socket(cause, packet, &(this->socket_client.socket));
-  pthread_mutex_unlock(&(this->socket_client_mutex));
+  funk2_processor_mutex__unlock(&(this->socket_client_mutex));
 }
 
 void socket_rpc_layer__funk2_node__send_packet(funk2_node_t* this, funk2_packet_t* packet) {
-  pthread_mutex_lock(&(this->socket_client_mutex));
+  funk2_processor_mutex__lock(&(this->socket_client_mutex));
   this->last_sent_packet__stream_iter ++;
   packet->header.stream_iter = this->last_sent_packet__stream_iter;
   u64 packet__size = funk2_packet__sizeof(packet);
   memcpy(&(this->last_sent_packet), packet, packet__size);
   this->last_sent_packet__is_valid = boolean__true;
   socket_rpc_layer__funk2_packet__send_to_socket(packet, &(this->socket_client.socket));
-  pthread_mutex_unlock(&(this->socket_client_mutex));
+  funk2_processor_mutex__unlock(&(this->socket_client_mutex));
 }
 
 void funk2_node_handler__init(funk2_node_handler_t* this, u32 new_node__send_buffer_byte_num, u32 new_node__recv_buffer_byte_num) {
-  pthread_mutex_init(&(this->next_computer_id_mutex), NULL);
+  funk2_processor_mutex__init(&(this->next_computer_id_mutex), NULL);
   this->next_computer_id               = 0;
   this->node_list                      = NULL;
   this->new_node__send_buffer_byte_num = new_node__send_buffer_byte_num;
   this->new_node__recv_buffer_byte_num = new_node__recv_buffer_byte_num;
-  pthread_mutex_init(&(this->remote_thread_hash_mutex), NULL);
+  funk2_processor_mutex__init(&(this->remote_thread_hash_mutex), NULL);
   thread_hash__init(&(this->remote_thread_hash));
-  pthread_mutex_init(&(this->local_thread_hash_mutex), NULL);
+  funk2_processor_mutex__init(&(this->local_thread_hash_mutex), NULL);
   thread_hash__init(&(this->local_thread_hash));
   int i;
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {
@@ -265,21 +265,21 @@ void funk2_node_handler__destroy(funk2_node_handler_t* this) {
     free(iter);
     iter = next;
   }
-  pthread_mutex_destroy(&(this->remote_thread_hash_mutex));
+  funk2_processor_mutex__destroy(&(this->remote_thread_hash_mutex));
   thread_hash__destroy(&(this->remote_thread_hash));
-  pthread_mutex_destroy(&(this->local_thread_hash_mutex));
+  funk2_processor_mutex__destroy(&(this->local_thread_hash_mutex));
   thread_hash__destroy(&(this->local_thread_hash));
-  pthread_mutex_destroy(&(this->next_computer_id_mutex));
+  funk2_processor_mutex__destroy(&(this->next_computer_id_mutex));
 }
 
 computer_id_t funk2_node_handler__add_node(funk2_node_handler_t* this, node_id_t node_id, client_id_t* client_id) {
   //printf("\nfunk2_node_handler__add_node note: added funk2 node (node_id=" node_id__fstr ") %d.%d.%d.%d:%d", node_id, client_id->ip_addr[0], client_id->ip_addr[1], client_id->ip_addr[2], client_id->ip_addr[3], client_id->port_num);
   computer_id_t computer_id;
   {
-    pthread_mutex_lock(&(this->next_computer_id_mutex));
+    funk2_processor_mutex__lock(&(this->next_computer_id_mutex));
     computer_id = this->next_computer_id;
     this->next_computer_id ++;
-    pthread_mutex_unlock(&(this->next_computer_id_mutex));
+    funk2_processor_mutex__unlock(&(this->next_computer_id_mutex));
   }
   funk2_node_list_t* new_node_list = (funk2_node_list_t*)malloc(sizeof(funk2_node_list_t));
   funk2_node__init(&(new_node_list->node), node_id, computer_id, client_id, this->new_node__send_buffer_byte_num, this->new_node__recv_buffer_byte_num);
@@ -353,30 +353,30 @@ void funk2_node_handler__add_local_thread_funk2_packet(funk2_node_handler_t* thi
 }
 
 funk2_node_t* funk2_node_handler__lookup_remote_thread_funk2_node(funk2_node_handler_t* this, f2ptr thread) {
-  pthread_mutex_lock(&(this->remote_thread_hash_mutex));
+  funk2_processor_mutex__lock(&(this->remote_thread_hash_mutex));
   funk2_node_t* funk2_node = thread_hash__lookup_funk2_node(&(this->remote_thread_hash), thread);
-  pthread_mutex_unlock(&(this->remote_thread_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->remote_thread_hash_mutex));
   return funk2_node;
 }
 
 funk2_node_t* funk2_node_handler__pop_remote_thread_funk2_node(funk2_node_handler_t* this, f2ptr thread) {
-  pthread_mutex_lock(&(this->remote_thread_hash_mutex));
+  funk2_processor_mutex__lock(&(this->remote_thread_hash_mutex));
   funk2_node_t* funk2_node = thread_hash__pop_funk2_node(&(this->remote_thread_hash), thread);
-  pthread_mutex_unlock(&(this->remote_thread_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->remote_thread_hash_mutex));
   return funk2_node;
 }
 
 funk2_packet_t* funk2_node_handler__lookup_local_thread_funk2_packet(funk2_node_handler_t* this, f2ptr thread) {
-  pthread_mutex_lock(&(this->local_thread_hash_mutex));
+  funk2_processor_mutex__lock(&(this->local_thread_hash_mutex));
   funk2_packet_t* funk2_packet = thread_hash__lookup_funk2_packet(&(this->local_thread_hash), thread);
-  pthread_mutex_unlock(&(this->local_thread_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->local_thread_hash_mutex));
   return funk2_packet;
 }
 
 funk2_packet_t* funk2_node_handler__pop_local_thread_funk2_packet(funk2_node_handler_t* this, f2ptr thread) {
-  pthread_mutex_lock(&(this->local_thread_hash_mutex));
+  funk2_processor_mutex__lock(&(this->local_thread_hash_mutex));
   funk2_packet_t* funk2_packet = thread_hash__pop_funk2_packet(&(this->local_thread_hash), thread);
-  pthread_mutex_unlock(&(this->local_thread_hash_mutex));
+  funk2_processor_mutex__unlock(&(this->local_thread_hash_mutex));
   return funk2_packet;
 }
 

@@ -51,22 +51,22 @@ typedef struct thread_hash_s {
 #define max_funk2_packet_size 32768
 
 struct funk2_node_s {
-  node_id_t        node_id;
-  computer_id_t    computer_id;
-  pthread_mutex_t  socket_client_mutex;
-  socket_client_t  socket_client;
-  boolean_t             sent_register_request;
-  u64              last_try_reconnect__microseconds_since_1970;
-  computer_id_t    remote_computer_id_to_local_computer_id[f2ptr__computer_id__max_value + 1];
-  computer_id_t    local_computer_id_to_remote_computer_id[f2ptr__computer_id__max_value + 1];
-  stream_iter_t    last_recv_packet__stream_iter;
-  stream_iter_t    last_sent_packet__stream_iter;
-  boolean_t             last_sent_packet__is_valid;
+  node_id_t               node_id;
+  computer_id_t           computer_id;
+  funk2_processor_mutex_t socket_client_mutex;
+  socket_client_t         socket_client;
+  boolean_t               sent_register_request;
+  u64                     last_try_reconnect__microseconds_since_1970;
+  computer_id_t           remote_computer_id_to_local_computer_id[f2ptr__computer_id__max_value + 1];
+  computer_id_t           local_computer_id_to_remote_computer_id[f2ptr__computer_id__max_value + 1];
+  stream_iter_t           last_recv_packet__stream_iter;
+  stream_iter_t           last_sent_packet__stream_iter;
+  boolean_t               last_sent_packet__is_valid;
   union {
-    funk2_packet_t last_sent_packet;
-    u8             last_sent_packet_bytes[max_funk2_packet_size];
+    funk2_packet_t        last_sent_packet;
+    u8                    last_sent_packet_bytes[max_funk2_packet_size];
   };
-  event_id_t       last_known_event;
+  event_id_t              last_known_event;
 };
 
 typedef struct funk2_node_list_s {
@@ -75,16 +75,16 @@ typedef struct funk2_node_list_s {
 } funk2_node_list_t;
 
 typedef struct funk2_node_handler_s {
-  pthread_mutex_t    next_computer_id_mutex;
-  computer_id_t      next_computer_id;
-  funk2_node_list_t* node_list;
-  thread_hash_t      remote_thread_hash;
-  pthread_mutex_t    remote_thread_hash_mutex;
-  thread_hash_t      local_thread_hash;
-  pthread_mutex_t    local_thread_hash_mutex;
-  funk2_node_t*      funk2_node_by_computer_id_array[f2ptr__computer_id__max_value + 1];
-  u32                new_node__send_buffer_byte_num;
-  u32                new_node__recv_buffer_byte_num;
+  funk2_processor_mutex_t next_computer_id_mutex;
+  computer_id_t           next_computer_id;
+  funk2_node_list_t*      node_list;
+  thread_hash_t           remote_thread_hash;
+  funk2_processor_mutex_t remote_thread_hash_mutex;
+  thread_hash_t           local_thread_hash;
+  funk2_processor_mutex_t local_thread_hash_mutex;
+  funk2_node_t*           funk2_node_by_computer_id_array[f2ptr__computer_id__max_value + 1];
+  u32                     new_node__send_buffer_byte_num;
+  u32                     new_node__recv_buffer_byte_num;
 } funk2_node_handler_t;
 
 void            thread_hash__init(thread_hash_t* this);

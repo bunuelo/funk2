@@ -113,11 +113,11 @@ void f2__global_scheduler__add_thread_parallel(f2ptr cause, f2ptr thread) {
 }
 
 void f2__global_scheduler__execute_mutex__lock(f2ptr cause) {
-  pthread_mutex_lock(&(__funk2.operating_system.scheduler__execute_mutex));
+  funk2_processor_mutex__lock(&(__funk2.operating_system.scheduler__execute_mutex));
 }
 
 void f2__global_scheduler__execute_mutex__unlock(f2ptr cause) {
-  pthread_mutex_unlock(&(__funk2.operating_system.scheduler__execute_mutex));
+  funk2_processor_mutex__unlock(&(__funk2.operating_system.scheduler__execute_mutex));
 }
 
 f2ptr f2__scheduler__processor_thread_current_thread(int pool_index) {
@@ -355,7 +355,7 @@ void f2__scheduler__reinitialize_globalvars() {
 }
 
 void f2__scheduler__initialize() {
-  pthread_mutex_init(&(__funk2.operating_system.scheduler__execute_mutex), NULL);
+  funk2_processor_mutex__init(&(__funk2.operating_system.scheduler__execute_mutex));
   f2__global_scheduler__execute_mutex__lock(initial_cause());
   
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());

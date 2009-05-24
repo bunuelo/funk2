@@ -96,7 +96,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   this->node_id  = raw__system_microseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
-  pthread_mutex_init(&(this->event_id_mutex), NULL);
+  funk2_processor_mutex__init(&(this->event_id_mutex));
   
   status("booting up funk2 p2p node (node_id=#x" X64__fstr ")", this->node_id);
   
@@ -262,7 +262,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_child_process_handler__destroy(&(this->child_process_handler));
   funk2_processor_thread_handler__destroy(&(this->processor_thread_handler));
   
-  pthread_mutex_destroy(&(this->event_id_mutex));
+  funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

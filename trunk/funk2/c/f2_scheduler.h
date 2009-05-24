@@ -28,10 +28,10 @@
 #include "f2_time.h"
 
 typedef struct funk2_operating_system_s {
-  pthread_mutex_t scheduler__execute_mutex;
-  f2ptr           scheduler;
-  f2ptr           scheduler__symbol;
-  f2ptr           processor_thread__current_thread[memory_pool_num];
+  funk2_processor_mutex_t scheduler__execute_mutex;
+  f2ptr                   scheduler;
+  f2ptr                   scheduler__symbol;
+  f2ptr                   processor_thread__current_thread[memory_pool_num];
 } funk2_operating_system_t;
 
 //extern f2ptr f2scheduler__new(f2ptr context, f2ptr processors, f2ptr threads, f2ptr thread_num);

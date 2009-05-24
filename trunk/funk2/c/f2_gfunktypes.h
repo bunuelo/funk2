@@ -50,11 +50,11 @@ ptr  gf2__pointer__p(gfunkptr_t* this);
 
 // mutex
 
-void             gf2__mutex__new(gfunkptr_t* result, gfunkptr_t* cause);
-pthread_mutex_t* gf2__mutex__m(gfunkptr_t* this);
-void             gf2__mutex__lock(gfunkptr_t* this);
-void             gf2__mutex__unlock(gfunkptr_t* this);
-int              gf2__mutex__trylock(gfunkptr_t* this);
+void                     gf2__mutex__new(gfunkptr_t* result, gfunkptr_t* cause);
+funk2_processor_mutex_t* gf2__mutex__m(gfunkptr_t* this);
+void                     gf2__mutex__lock(gfunkptr_t* this);
+void                     gf2__mutex__unlock(gfunkptr_t* this);
+int                      gf2__mutex__trylock(gfunkptr_t* this);
 
 // character
 

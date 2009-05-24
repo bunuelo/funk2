@@ -60,21 +60,21 @@ typedef struct memblock_s memblock_t;
 //#define memblock__next__set(this, value) (((this)->rbt_node.right) = (rbt_node_t*)(value))
 
 typedef struct memorypool_s {
-  pthread_mutex_t   global_memory_allocate_mutex;
-  uint              disable_gc; // incremented/decremented by pause_gc/resume_gc
-  u8                should_run_gc; // if disabled when needed more memory (and allocated more) then True
-  f2size_t          total_global_memory;
-  f2size_t          total_free_memory;
+  funk2_processor_mutex_t global_memory_allocate_mutex;
+  uint                    disable_gc; // incremented/decremented by pause_gc/resume_gc
+  u8                      should_run_gc; // if disabled when needed more memory (and allocated more) then True
+  f2size_t                total_global_memory;
+  f2size_t                total_free_memory;
 #if defined(STATIC_MEMORY)
-  f2staticmemory_t* static_memory;
+  f2staticmemory_t*       static_memory;
 #elif defined(DYNAMIC_MEMORY)
-  f2dynamicmemory_t dynamic_memory;
+  f2dynamicmemory_t       dynamic_memory;
 #endif 
-  rbt_tree_t        used_memory_tree;
-  rbt_tree_t        free_memory_tree; // free memory does grow on trees!
-  ptr               global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
-  f2size_t          total_allocated_memory_since_last_gc;
-  uint              next_unique_block_id;
+  rbt_tree_t              used_memory_tree;
+  rbt_tree_t              free_memory_tree; // free memory does grow on trees!
+  ptr                     global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
+  f2size_t                total_allocated_memory_since_last_gc;
+  uint                    next_unique_block_id;
 } memorypool_t;
 
 #if defined(DYNAMIC_MEMORY)

@@ -840,12 +840,7 @@ u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int genera
 }
 
 void memory_mutex__lock(int pool_index) {
-  int result = funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
-  switch(result) {
-  case 0: break;
-  case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
-  case EDEADLK: error(nil, "the mutex is already locked by the calling thread (\"error checking\" mutexes only)."); break;
-  }
+  funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
 }
 int  memory_mutex__try_lock(int pool_index) {
   int result = funk2_processor_mutex__trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
@@ -857,13 +852,7 @@ int  memory_mutex__try_lock(int pool_index) {
   return result;
 }
 void memory_mutex__unlock(int pool_index) {
-  int result = funk2_processor_mutex__unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
-  switch(result) {
-  case 0: break;
-  case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
-  case EPERM: error(nil, "the calling thread does not own the mutex (\"error checking\" mutexes only)."); break;
-  }
-  if(result) {error(nil, "error unlocking mutex.");}
+  funk2_processor_mutex__unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
 }
 
 void pool__touch_all_referenced_from_generation(int pool_index, int touch_generation_num) {

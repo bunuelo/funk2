@@ -1124,7 +1124,6 @@ void raw__exit(int value) {
   print_gc_stats();
 #endif // DEBUG
   f2__destroy();
-  status("funk2 exit: exiting.");
   exit(value);
 }
 f2ptr f2__quit(f2ptr cause, f2ptr value) {

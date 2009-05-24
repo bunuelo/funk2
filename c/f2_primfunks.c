@@ -1727,10 +1727,10 @@ def_pcfunk1(larva, type, return f2__larva(this_cause, type));
 // events
 
 f2ptr f2__publish_event(f2ptr cause, f2ptr type, f2ptr data) {
-  pthread_mutex_lock(&(__funk2.event_id_mutex));
+  funk2_processor_mutex__lock(&(__funk2.event_id_mutex));
   event_id_t event_id = __funk2.event_id;
   __funk2.event_id ++;
-  pthread_mutex_unlock(&(__funk2.event_id_mutex));
+  funk2_processor_mutex__unlock(&(__funk2.event_id_mutex));
   circular_buffer__write_result_t result = funk2_event_router__know_of_event(&(__funk2.event_router), cause, __funk2.node_id, event_id, type, data);
   if (result != circular_buffer__write_result__success) {
     return f2larva__new(cause, 13);

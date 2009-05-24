@@ -25,6 +25,7 @@
 #include <pthread.h>
 
 typedef struct funk2_processor_mutex_s {
+  boolean_t       is_locked;
   char            lock_source_file[1024];
   int             lock_line_num;
   pthread_mutex_t pthread_mutex;
@@ -37,9 +38,13 @@ typedef enum funk2_processor_mutex_trylock_result_e {
 
 void                                   funk2_processor_mutex__init(funk2_processor_mutex_t* this);
 void                                   funk2_processor_mutex__destroy(funk2_processor_mutex_t* this);
-void                                   funk2_processor_mutex__lock(funk2_processor_mutex_t* this);
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__trylock(funk2_processor_mutex_t* this);
-void                                   funk2_processor_mutex__unlock(funk2_processor_mutex_t* this);
+funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, char* lock_source_file, int lock_line_num);
+void                                   funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, char* lock_source_file, int lock_line_num);
+void                                   funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, char* unlock_source_file, int unlock_line_num);
+
+#define funk2_processor_mutex__trylock(this) funk2_processor_mutex__raw_trylock(this, __FILE__, __LINE__)
+#define funk2_processor_mutex__lock(   this) funk2_processor_mutex__raw_lock(   this, __FILE__, __LINE__)
+#define funk2_processor_mutex__unlock( this) funk2_processor_mutex__raw_unlock( this, __FILE__, __LINE__)
 
 #endif // F2__PROCESSOR_MUTEX__H
 

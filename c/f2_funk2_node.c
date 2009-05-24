@@ -241,14 +241,14 @@ void socket_rpc_layer__funk2_node__send_packet(funk2_node_t* this, funk2_packet_
 }
 
 void funk2_node_handler__init(funk2_node_handler_t* this, u32 new_node__send_buffer_byte_num, u32 new_node__recv_buffer_byte_num) {
-  funk2_processor_mutex__init(&(this->next_computer_id_mutex), NULL);
+  funk2_processor_mutex__init(&(this->next_computer_id_mutex));
   this->next_computer_id               = 0;
   this->node_list                      = NULL;
   this->new_node__send_buffer_byte_num = new_node__send_buffer_byte_num;
   this->new_node__recv_buffer_byte_num = new_node__recv_buffer_byte_num;
-  funk2_processor_mutex__init(&(this->remote_thread_hash_mutex), NULL);
+  funk2_processor_mutex__init(&(this->remote_thread_hash_mutex));
   thread_hash__init(&(this->remote_thread_hash));
-  funk2_processor_mutex__init(&(this->local_thread_hash_mutex), NULL);
+  funk2_processor_mutex__init(&(this->local_thread_hash_mutex));
   thread_hash__init(&(this->local_thread_hash));
   int i;
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {

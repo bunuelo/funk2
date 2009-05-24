@@ -135,13 +135,13 @@ ptype_gfunkptr_block_t* ptype_gfunkptr_block__new(int pool_index, f2ptr cause, c
 // mutex
 
 struct ptype_mutex_block_s {
-  ptype_block_t   ptype;
-  pthread_mutex_t m[1];
+  ptype_block_t           ptype;
+  funk2_processor_mutex_t m[1];
 } __attribute__((__packed__));
 typedef struct ptype_mutex_block_s ptype_mutex_block_t;
 
-ptype_mutex_block_t* ptype_mutex_block__new(int pool_index, f2ptr cause);
-pthread_mutex_t*     ptype_mutex__m(f2ptr this, f2ptr cause);
+ptype_mutex_block_t*     ptype_mutex_block__new(int pool_index, f2ptr cause);
+funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause);
 
 #define __pure__f2mutex__new(pool_index, cause) ptype_mutex__new(pool_index, cause)
 #define __pure__f2mutex__m(this)    (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)

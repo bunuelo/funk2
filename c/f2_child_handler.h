@@ -26,7 +26,7 @@
 #include "f2_child.h"
 
 typedef struct funk2_child_process_handler_s {
-  pthread_mutex_t             access_mutex;
+  funk2_processor_mutex_t     access_mutex;
   funk2_child_process_list_t* child_process_list;
 } funk2_child_process_handler_t;
 

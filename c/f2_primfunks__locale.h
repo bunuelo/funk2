@@ -23,7 +23,7 @@
 #define F2__PRIMCFUNKS__LOCALE__H
 
 typedef struct funk2_locale_s {
-  pthread_mutex_t interface_mutex;
+  funk2_processor_mutex_t interface_mutex;
 } funk2_locale_t;
 
 void funk2_locale__init(funk2_locale_t* this);

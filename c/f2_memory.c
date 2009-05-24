@@ -151,7 +151,7 @@ void memblock__init(memblock_t* block, f2size_t byte_num, int used, int gc_touch
 }
 
 void memorypool__init(memorypool_t* pool) {
-  pthread_mutex_init(&(pool->global_memory_allocate_mutex), NULL);
+  funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex), NULL);
   pool->disable_gc                           = 0;
   pool->should_run_gc                        = 0;
   pool->total_allocated_memory_since_last_gc = 0;
@@ -840,7 +840,7 @@ u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int genera
 }
 
 void memory_mutex__lock(int pool_index) {
-  int result = pthread_mutex_lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
+  int result = funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
   switch(result) {
   case 0: break;
   case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
@@ -848,7 +848,7 @@ void memory_mutex__lock(int pool_index) {
   }
 }
 int  memory_mutex__try_lock(int pool_index) {
-  int result = pthread_mutex_trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
+  int result = funk2_processor_mutex__trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
   switch(result) {
   case 0: break;
   case EBUSY: break;
@@ -857,7 +857,7 @@ int  memory_mutex__try_lock(int pool_index) {
   return result;
 }
 void memory_mutex__unlock(int pool_index) {
-  int result = pthread_mutex_unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
+  int result = funk2_processor_mutex__unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
   switch(result) {
   case 0: break;
   case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
@@ -1073,7 +1073,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   //block->unique_id   = __funk2.memory.pool[pool_index].next_unique_block_id; __funk2.memory.pool[pool_index].next_unique_block_id ++;
   //block->read_count  = 0;
   //block->write_count = 0;
-  //pthread_mutex_init(&(block->mutex), NULL);
+  //funk2_processor_mutex__init(&(block->mutex), NULL);
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
 #ifdef DEBUG_MEMORY

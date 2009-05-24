@@ -29,6 +29,8 @@ void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
 }
 
 void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
+  this->lock_source_file = "destroyed";
+  this->lock_line_num    = 0;
   pthread_mutex_destroy(&(this->pthread_mutex));
 }
 

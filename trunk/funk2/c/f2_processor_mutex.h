@@ -25,9 +25,9 @@
 #include <pthread.h>
 
 typedef struct funk2_processor_mutex_s {
-  boolean_t       is_locked;
-  const char*     lock_source_file;
-  const int       lock_line_num;
+  boolean_t is_locked;
+  char*     lock_source_file;
+  int       lock_line_num;
   pthread_mutex_t pthread_mutex;
 } funk2_processor_mutex_t;
 

@@ -151,7 +151,7 @@ void memblock__init(memblock_t* block, f2size_t byte_num, int used, int gc_touch
 }
 
 void memorypool__init(memorypool_t* pool) {
-  funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex), NULL);
+  funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex));
   pool->disable_gc                           = 0;
   pool->should_run_gc                        = 0;
   pool->total_allocated_memory_since_last_gc = 0;
@@ -1073,7 +1073,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   //block->unique_id   = __funk2.memory.pool[pool_index].next_unique_block_id; __funk2.memory.pool[pool_index].next_unique_block_id ++;
   //block->read_count  = 0;
   //block->write_count = 0;
-  //funk2_processor_mutex__init(&(block->mutex), NULL);
+  //funk2_processor_mutex__init(&(block->mutex));
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
 #ifdef DEBUG_MEMORY

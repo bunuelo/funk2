@@ -34,7 +34,6 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
 
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, char* lock_source_file, int lock_line_num) {
   if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
-    pthread_mutex_lock(&(this->pthread_mutex));
     this->is_locked = boolean__true;
     strncpy(this->lock_source_file, lock_source_file, 1024);
     this->lock_line_num = lock_line_num;

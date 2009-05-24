@@ -44,7 +44,7 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
 }
 
 void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, char* lock_source_file, int lock_line_num) {
-  while (funk2_processor_mutex__trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+  while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
     sched_yield();
     f2__sleep(1);
   }

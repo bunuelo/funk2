@@ -23,6 +23,7 @@
 #define F2__SERIALIZE__H
 
 #include "f2_primobjects.h"
+#include "f2_processor_mutex.h"
 
 void    raw__serialize_ptype_to_chunk_index(f2ptr cause, f2ptr chunk, int index, int* new_index, ptype_t ptype);
 ptype_t raw__deserialize_ptype_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int* new_index);

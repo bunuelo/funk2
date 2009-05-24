@@ -37,7 +37,7 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
     this->is_locked        = boolean__true;
     this->lock_source_file = (char*)lock_source_file;
     this->lock_line_num    = (int)lock_line_num;
-    this->pthread          = pthread_self();
+    this->lock_tid         = pthread_self();
     return funk2_processor_mutex_trylock_result__success;
   }
   return funk2_processor_mutex_trylock_result__failure;

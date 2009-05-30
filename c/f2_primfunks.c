@@ -1295,7 +1295,7 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr dem
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
   return funk;
 }
-def_pcfunk6(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, return f2__make_funk(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional));
+def_pcfunk7(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_funk(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
 f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
   //f2__print_prompt("make-metro args: ", args);
@@ -1313,7 +1313,7 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr de
   
   return metro;
 }
-def_pcfunk6(make_metro, name, args, demetropolized_body, body, bytecodes, is_funktional, return f2__make_metro(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional));
+def_pcfunk7(make_metro, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_metro(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
 f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args) {
   release__assert(raw__cfunkp(cfunk, cause),        nil, "cfunk failed type assertion.");

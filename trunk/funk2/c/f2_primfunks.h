@@ -945,7 +945,7 @@ f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode);
 f2ptr f2__fclose(f2ptr cause, f2ptr fptr);
 f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr exp, f2ptr protect_environment);
 f2ptr f2__identity(f2ptr cause, f2ptr exp);
-f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional,g f2ptr documentation);
+f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation);
 f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentationg);
 f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args);
 f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr thread, f2ptr args);

@@ -86,6 +86,7 @@
 							  nil]]
 					    nil
 					    nil
+					    nil
 					    nil]]
 
 [globalize-funk metro [make-metro `metro `[name args :rest body]
@@ -104,6 +105,7 @@
 						 [quote ,compiled_bcs]
 						 ,is_funktional
 						 nil]]
+				   nil
 				   nil
 				   nil
 				   nil]]

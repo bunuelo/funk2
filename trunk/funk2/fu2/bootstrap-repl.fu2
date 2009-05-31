@@ -74,6 +74,7 @@
 									      demetroed
 									      body
 									      nil
+									      nil
 									      nil]]
 					     [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
 					     [define is_funktional [primfunk:array__elt compiled_funk 10]]
@@ -81,7 +82,8 @@
 							  [quote ,demetroed]
 							  [quote ,body]
 							  [quote ,compiled_bcs]
-							  ,is_funktional]]
+							  ,is_funktional
+							  nil]]
 					    nil
 					    nil
 					    nil]]
@@ -92,6 +94,7 @@
 								     demetroed
 								     body
 								     nil
+								     nil
 								     nil]]
 				    [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
 				    [define is_funktional [primfunk:array__elt compiled_funk 10]]
@@ -99,7 +102,8 @@
 						 [quote ,demetroed]
 						 [quote ,body]
 						 [quote ,compiled_bcs]
-						 ,is_funktional]]
+						 ,is_funktional
+						 nil]]
 				   nil
 				   nil
 				   nil]]
@@ -145,6 +149,7 @@
   [funk-apply [make-funk `eval []
 			 [cons exp nil]
 			 [cons exp nil]
+			 nil
 			 nil
 			 nil]
 	      nil]]

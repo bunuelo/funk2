@@ -1,0 +1,39 @@
+This package was debianized by Bo Morgan <bo@mit.edu> on
+Sun, 31 May 2009 18:58:42 -0400.
+
+It was downloaded from <http://neuromin.de/>
+
+Upstream Author(s):
+
+    Bo Morgan <bo@mit.edu>
+
+Copyright:
+
+    <Copyright (C) 2007-2009 Bo Morgan>
+
+License:
+
+    MIT License
+
+The Debian packaging is copyright 2009, Bo Morgan <bo@mit.edu> and
+is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
+
+
+Copyright (c) 2007-2009 Bo Morgan.
+All rights reserved.
+
+Author: Bo Morgan
+
+Permission to use, copy, modify and distribute this software and its
+documentation is hereby granted, provided that both the copyright
+notice and this permission notice appear in all copies of the
+software, derivative works or modified versions, and any portions
+thereof, and that both notices appear in supporting documentation.
+
+BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+
+Bo Morgan requests users of this software to return to bo@mit.edu any
+improvements or extensions that they make and grant Bo Morgan the
+rights to redistribute these changes.

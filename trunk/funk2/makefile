@@ -19,12 +19,15 @@
 # rights to redistribute these changes.
 # 
 
+debian_install_root_dir = $(DESTDIR)/
+
 current_dir                  = $(shell pwd | sed -e 's=^/tmp_mnt/=/=')
 
 source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
 source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
+source__icons__dir           = $(source__funk2__dir)icons/
 
 compile__funk2__dir           = $(source__funk2__dir)
 compile__bin__dir             = $(compile__funk2__dir)bin/
@@ -33,16 +36,17 @@ compile__funk2                = $(compile__bin__dir)funk2
 compile__bootstrap__img       = $(compile__img__dir)bootstrap.img
 compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
 
-install__funk2__dir          = /usr/local/funk2/
+install__funk2__dir          = $(debian_install_root_dir)usr/funk2/
 install__img__dir            = $(install__funk2__dir)img/
 install__bin__dir            = $(install__funk2__dir)bin/
 install__include__dir        = $(install__funk2__dir)include/
 install__funk2               = $(install__bin__dir)funk2
 install__bootstrap__img      = $(install__img__dir)bootstrap.img
-install__system_bin__dir     = /usr/local/bin/
-install__system_include__dir = /usr/local/include/funk2/
+install__system_bin__dir     = $(debian_install_root_dir)usr/bin/
+install__system_include__dir = $(debian_install_root_dir)usr/include/funk2/
 install__funk2__system_link  = $(install__system_bin__dir)funk2
 install__rlglue_dir          = $(current_dir)/extern
+install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/
 
 default: $(compile__funk2) $(compile__bootstrap__img)
 
@@ -273,6 +277,11 @@ clean-config:
 	rm -f config.mak
 	echo "" > config.mak
 
+clean-binary:
+	echo "Removing: $(compile__funk2) and bin/configurator"
+	rm -f $(compile__funk2)
+	rm -f bin/configurator
+
 clean--bootstrap-repl.img:
 	echo "Removing:"; ls $(compile__bootstrap__repl__img); echo ""
 	rm -f $(compile__bootstrap__repl__img)
@@ -295,7 +304,8 @@ clean-install:
 	rm -f $(install__bootstrap__img)
 
 
-clean5:        clean-config
+clean6:        clean-config
+clean5: clean6 clean-binary
 clean4: clean5 clean--bootstrap-repl.img
 clean3: clean4 clean-img
 clean2: clean3 clean-o
@@ -312,21 +322,13 @@ install-silent: $(compile__funk2)
 	echo "  install__system_bin__dir     = $(install__system_bin__dir)"
 	echo "  install__system_include__dir = $(install__system_include__dir)"
 	echo ""
-	mkdir -p $(install__funk2__dir)
-	mkdir -p $(install__img__dir)
-	mkdir -p $(install__bin__dir)
-	mkdir -p $(install__include__dir)
-	mkdir -p $(install__system_bin__dir)
-	mkdir -p $(install__system_include__dir)
-	cp -f  $(compile__funk2) $(install__funk2)
-	chmod a+rx $(install__funk2)
+	install -d $(install__funk2__dir) $(install__img__dir) $(install__bin__dir) $(install__include__dir) $(install__system_bin__dir) $(install__system_include__dir) $(install__icons__dir)
+	install -m755 $(compile__funk2) $(install__funk2)
 	ln -fs $(install__funk2) $(install__funk2__system_link)
-	chmod a+rx $(install__funk2__system_link)
-	cp -f $(compile__bootstrap__img) $(install__bootstrap__img)
-	chmod a+r $(install__bootstrap__img)
-	cp -f c/*.h $(install__include__dir)
-	chmod a+r $(install__include__dir)*.h
+	install -m755 $(compile__bootstrap__img) $(install__bootstrap__img)
+	install -m644 c/*.h $(install__include__dir)
 	ln -fs $(install__include__dir)*.h $(install__system_include__dir)
+	install -m644 $(source__icons__dir)* $(install__icons__dir)
 
 clean:     clean1
 uninstall: clean0

@@ -26,6 +26,7 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__jump_funk__symbol          = -1;
   this->bytecode__array__symbol              = -1;
   this->bytecode__cons__symbol               = -1;
+  this->bytecode__consp__symbol              = -1;
   this->bytecode__car__symbol                = -1;
   this->bytecode__cdr__symbol                = -1;
   this->bytecode__car__set__symbol           = -1;
@@ -301,6 +302,28 @@ int f2__thread__bytecode__cons(f2ptr thread, f2ptr bytecode) {
   f2ptr new_cons = f2cons__new(cause, nil, nil);
   if (! new_cons) {error(nil, "cons bytecode error: new cons is nil");}
   f2thread__iter__set(thread, cause, new_cons);
+  return 0;
+}
+
+
+// bytecode consp []
+
+void raw__thread__bytecode_trace__consp(f2ptr cause, f2ptr bytecode, f2ptr thread) {
+  bytecode_status("bytecode trace: [consp]");
+  f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, nil);
+  raw__cause__event_buffer__add(cause, bytecode_event);
+}
+
+int f2__thread__bytecode__consp(f2ptr thread, f2ptr bytecode) {
+  f2ptr cause = f2thread__cause_reg(thread, nil);
+  if (f2__cause__bytecode_tracing_on(cause, cause)) {
+    raw__thread__bytecode_trace__consp(cause, bytecode, thread);
+  }
+  
+  f2__thread__increment_pc(thread, cause);
+  
+  f2ptr result = f2bool__new(raw__consp(f2thread__value(thread, cause)));
+  f2thread__value__set(thread, cause, result);
   return 0;
 }
 
@@ -2695,6 +2718,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__funk__symbol                = f2symbol__new(cause, strlen("funk"),               (u8*)"funk");
   __funk2.bytecode.bytecode__array__symbol               = f2symbol__new(cause, strlen("array"),              (u8*)"array");
   __funk2.bytecode.bytecode__cons__symbol                = f2symbol__new(cause, strlen("cons"),               (u8*)"cons");
+  __funk2.bytecode.bytecode__consp__symbol               = f2symbol__new(cause, strlen("consp"),              (u8*)"consp");
   __funk2.bytecode.bytecode__car__symbol                 = f2symbol__new(cause, strlen("car"),                (u8*)"car");
   __funk2.bytecode.bytecode__cdr__symbol                 = f2symbol__new(cause, strlen("cdr"),                (u8*)"cdr");
   __funk2.bytecode.bytecode__car__set__symbol            = f2symbol__new(cause, strlen("car-set"),            (u8*)"car-set");

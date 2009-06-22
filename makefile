@@ -249,7 +249,6 @@ $(compile__bootstrap__img): $(compile__bootstrap__repl__img) $(funk2_fu2s)
 #	echo "quit"                          >> compile_bootstrap_img.gdb
 #	gdb -x compile_bootstrap_img.gdb $(compile__funk2)
 	$(compile__funk2) $(source__bootstrap__fu2)
-	chmod a-x $(compile__bootstrap__img)
 
 # objdump/test.objdump is for reverse engineering a machine code compiler from c/test.c (it would be relatively easy to automate this; it would be nice to have our machine code compiler be machine independent)
 
@@ -318,7 +317,7 @@ install-silent: $(compile__funk2)
 	echo ""
 	install -d $(install__funk2__dir) $(install__img__dir) $(install__bin__dir) $(install__include__dir) $(install__system_bin__dir) $(install__system_include__dir) $(install__icons__dir)
 	install -m755 $(compile__funk2) $(install__funk2)
-	install -m755 $(compile__bootstrap__img) $(install__bootstrap__img)
+	install -m644 $(compile__bootstrap__img) $(install__bootstrap__img)
 	install -m644 c/*.h $(install__include__dir)
 	install -m644 $(source__icons__dir)* $(install__icons__dir)
 

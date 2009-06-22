@@ -1,3 +1,5 @@
 funk2 (2.06.2009.06.22-1) unstable; urgency=low
 
- -- Bo Morgan <bo@mit.edu>
+  * Initial release (Closes: #0004)  <nnnn is the bug number of your ITP>
+
+ -- Bo Morgan <bo@mit.edu>  Mon, 22 Jun 2009 18:58:42 -0400

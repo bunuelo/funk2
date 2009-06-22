@@ -23,6 +23,7 @@
 
 void funk2_processor_mutex__error() {
   printf("\nfunk2_processor_mutex__error here.\n");
+  exit(-1);
 }
 
 void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {

@@ -45,7 +45,7 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
 
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
   if (! this->is_initialized) {
-    printf("\nfunk2_processor_mutex__destroy error: attempted to destroy uninitialized mutex.\n"); fflush(stdout);
+    printf("\nfunk2_processor_mutex__raw_trylock error: attempted to destroy uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
   if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
@@ -60,7 +60,7 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
 
 void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
   if (! this->is_initialized) {
-    printf("\nfunk2_processor_mutex__destroy error: attempted to destroy uninitialized mutex.\n"); fflush(stdout);
+    printf("\nfunk2_processor_mutex__raw_lock error: attempted to destroy uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
   while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
@@ -71,7 +71,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {
   if (! this->is_initialized) {
-    printf("\nfunk2_processor_mutex__destroy error: attempted to destroy uninitialized mutex.\n"); fflush(stdout);
+    printf("\nfunk2_processor_mutex__raw_unlock error: attempted to destroy uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
   this->is_locked = boolean__false;

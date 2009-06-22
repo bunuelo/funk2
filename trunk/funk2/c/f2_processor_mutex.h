@@ -24,12 +24,16 @@
 
 #include <pthread.h>
 
+#define F2__PROCESSOR_MUTEX__DEBUG
+
 typedef struct funk2_processor_mutex_s {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
   boolean_t       is_initialized;
   boolean_t       is_locked;
   char*           lock_source_file;
   int             lock_line_num;
   pthread_t       lock_tid;
+#endif
   pthread_mutex_t pthread_mutex;
 } funk2_processor_mutex_t;
 

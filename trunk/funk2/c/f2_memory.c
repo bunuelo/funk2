@@ -1403,17 +1403,17 @@ f2ptr global_environment() {
   return retval;
 }
 
-void safe_fwrite(void* ptr, size_t object_size, size_t object_num, FILE* fptr) {
-  int result = fwrite(ptr, object_size, object_num, fptr);
-  if (result != object_num) {
-    error(nil, "safe_fwrite error.");
+void safe_write(int fd, void* ptr, size_t object_size) {
+  size_t result = write(fd, ptr, object_size);
+  if (result != object_size) {
+    error(nil, "safe_write error.");
   }
 }
 
-void safe_fread(void* ptr, size_t object_size, size_t object_num, FILE* fptr) {
-  int result = fread(ptr, object_size, object_num, fptr);
-  if (result != object_num) {
-    error(nil, "safe_fread error.");
+void safe_read(int fd, void* ptr, size_t object_size) {
+  size_t result = read(fd, ptr, object_size, object_num);
+  if (result != object_size) {
+    error(nil, "safe_read error.");
   }
 }
 
@@ -1426,23 +1426,23 @@ int raw__memory_image__save(char* filename) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__lock(pool_index);
   }
-  FILE* fptr = fopen(filename, "w");
-  if (!fptr) {
+  int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+  if (fd == -1) {
     printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
     return -1;
   }
   f2ptr    f2_i;
   f2size_t size_i;
   int      i;
-  i = 0xfaded;             safe_fwrite(&i, sizeof(int), 1, fptr);
-  i = F2__COMPILE_TIME_ID; safe_fwrite(&i, sizeof(int), 1, fptr);
+  i = 0xfaded;             safe_write(fd, &i, sizeof(int));
+  i = F2__COMPILE_TIME_ID; safe_write(fd, &i, sizeof(int));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    size_i = __funk2.memory.pool[pool_index].total_global_memory;      safe_fwrite(&size_i, sizeof(f2size_t), 1, fptr);
-    size_i = __funk2.memory.pool[pool_index].next_unique_block_id;     safe_fwrite(&size_i, sizeof(f2size_t), 1, fptr);
-    {size_t result = fwrite(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr); if (result != 1) {error(nil, "raw__memory_image__save fwrite error.");}}
+    size_i = __funk2.memory.pool[pool_index].total_global_memory;      safe_write(fd, &size_i, sizeof(f2size_t));
+    size_i = __funk2.memory.pool[pool_index].next_unique_block_id;     safe_write(fd, &size_i, sizeof(f2size_t));
+    safe_write(from_ptr(fd, memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
   }
-  f2_i = __funk2.memory.global_environment_f2ptr; safe_fwrite(&f2_i, sizeof(f2ptr), 1, fptr);
-  fclose(fptr);
+  f2_i = __funk2.memory.global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
+  close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__unlock(pool_index);
   }
@@ -1625,8 +1625,8 @@ int raw__memory_image__load(char* filename) {
   }
   
   
-  FILE* fptr = fopen(filename, "r");
-  if (! fptr) {
+  int fd = open(filename, O_RDONLY);
+  if (fd == -1) {
     //#ifdef DEBUG_MEMORY
     status("load_image_from_disk failure: could not open file \"%s\".", filename);
     //#endif // DEBUG_MEMORY
@@ -1636,7 +1636,7 @@ int raw__memory_image__load(char* filename) {
       int      i;
       f2ptr    f2_i;
       f2size_t size_i;
-      safe_fread(&i, sizeof(int), 1, fptr);
+      safe_read(fd, &i, sizeof(int));
       if (i != 0xfaded) {
 	//#ifdef DEBUG_MEMORY
 	status("load_image_from_disk failure: file is not a funk memory image.");
@@ -1645,7 +1645,7 @@ int raw__memory_image__load(char* filename) {
 	break;
       }
       
-      safe_fread(&i, sizeof(int), 1, fptr);
+      safe_read(fd, &i, sizeof(int));
       if (i != F2__COMPILE_TIME_ID) {
 	//#ifdef DEBUG_MEMORY
 	status("load_image_from_disk failure: file is saved from a different version of funk2.");
@@ -1655,25 +1655,25 @@ int raw__memory_image__load(char* filename) {
       }
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	safe_fread(&size_i, sizeof(f2size_t), 1, fptr);
+	safe_read(fd, &size_i, sizeof(f2size_t));
 	__funk2.memory.pool[pool_index].total_global_memory = size_i;
 	
-	safe_fread(&size_i, sizeof(f2size_t), 1, fptr);
+	safe_read(fd, &size_i, sizeof(f2size_t));
 	__funk2.memory.pool[pool_index].next_unique_block_id = size_i;
 	
 #ifdef DYNAMIC_MEMORY
 	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
 	f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, __funk2.memory.pool[pool_index].total_global_memory);
-	safe_fread(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
+	safe_read(fd, from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
 #endif // DYNAMIC_MEMORY
 
 #ifdef STATIC_MEMORY
-	safe_fread(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory, 1, fptr);
+	safe_read(fd, memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory);
 #endif // STATIC_MEMORY
 	
       }
       
-      safe_fread(&f2_i, sizeof(f2ptr), 1, fptr);
+      safe_read(fd, &f2_i, sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
       
       //#ifdef DEBUG_MEMORY
@@ -1695,7 +1695,7 @@ int raw__memory_image__load(char* filename) {
       //#endif // DEBUG_MEMORY
       break;
     }
-    fclose(fptr);      
+    close(fd);      
   }
   
   f2__global_scheduler__execute_mutex__unlock(initial_cause());

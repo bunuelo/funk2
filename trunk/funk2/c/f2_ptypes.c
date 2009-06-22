@@ -1976,6 +1976,7 @@ void f2__ptypes__initialize__object_slots() {
 // initialize ptypes
 
 void f2__ptypes__initialize() {
+  symbol_hash__initialize();
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_processor_mutex__init(&__global_ptype_incr_mutex[pool_index]);

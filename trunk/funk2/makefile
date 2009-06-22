@@ -21,7 +21,7 @@
 
 debian_install_root_dir = $(DESTDIR)/
 
-current_dir                  = $(shell pwd | sed -e 's=^/tmp_mnt/=/=')
+current_dir                  = $(shell pwd | sed -e 's=^/tmp_mnt/=/=')/
 
 source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
@@ -36,17 +36,15 @@ compile__funk2                = $(compile__bin__dir)funk2
 compile__bootstrap__img       = $(compile__img__dir)bootstrap.img
 compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
 
-install__funk2__dir          = $(debian_install_root_dir)usr/funk2/
-install__img__dir            = $(install__funk2__dir)img/
-install__bin__dir            = $(install__funk2__dir)bin/
-install__include__dir        = $(install__funk2__dir)include/
+install__system_bin__dir     = $(debian_install_root_dir)usr/bin/
+install__bin__dir            = $(debian_install_root_dir)usr/bin/
+install__include__dir        = $(debian_install_root_dir)usr/include/funk2/
+install__system_include__dir = $(debian_install_root_dir)usr/include/funk2/
+install__img__dir            = $(debian_install_root_dir)usr/share/funk2/img/
+install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/icons/
 install__funk2               = $(install__bin__dir)funk2
 install__bootstrap__img      = $(install__img__dir)bootstrap.img
-install__system_bin__dir     = $(debian_install_root_dir)usr/bin/
-install__system_include__dir = $(debian_install_root_dir)usr/include/funk2/
-install__funk2__system_link  = $(install__system_bin__dir)funk2
-install__rlglue_dir          = $(current_dir)/extern
-install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/
+install__rlglue_dir          = $(current_dir)extern
 
 default: $(compile__funk2) $(compile__bootstrap__img)
 
@@ -300,7 +298,6 @@ clean-trace:
 
 clean-install:
 	rm -f $(install__funk2)
-	rm -f $(install__funk2__system_link)
 	rm -f $(install__bootstrap__img)
 
 
@@ -324,7 +321,6 @@ install-silent: $(compile__funk2)
 	echo ""
 	install -d $(install__funk2__dir) $(install__img__dir) $(install__bin__dir) $(install__include__dir) $(install__system_bin__dir) $(install__system_include__dir) $(install__icons__dir)
 	install -m755 $(compile__funk2) $(install__funk2)
-	cp -af $(install__funk2) $(install__funk2__system_link)
 	install -m755 $(compile__bootstrap__img) $(install__bootstrap__img)
 	install -m644 c/*.h $(install__include__dir)
 	cp -af $(install__include__dir)*.h $(install__system_include__dir)

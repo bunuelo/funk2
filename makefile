@@ -16,6 +16,11 @@ export:
 tar.gz: export
 	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar
 
+changelog:
+	echo "funk2 (2.06.2009.06.22-1) unstable; urgency=low" >  trunk/funk2/debian/changelog
+	echo ""                                                >> trunk/funk2/debian/changelog
+	echo " -- Bo Morgan <bo@mit.edu>"                      >> trunk/funk2/debian/changelog
+
 deb: export
 	cd $(export_dir); dpkg-buildpackage -rfakeroot
 	mkdir -p releases/$(package_rootname)/

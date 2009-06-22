@@ -3,7 +3,8 @@ version = $(shell cat trunk/funk2/version)
 version_tag = $(version).$(date_tag)
 package_rootname = funk2-$(version_tag)
 tmp_dir = /tmp/funk2-deb/
-export_dir = $(tmp_dir)$(package_rootname)/
+deb_create_dir = $(tmp_dir)deb_create_dir/
+export_dir = $(deb_create_dir)$(package_rootname)/
 
 clean-export:
 	rm -Rf $(export_dir)
@@ -17,7 +18,11 @@ tar.gz: export
 
 deb: export
 	cd $(export_dir); dpkg-buildpackage -rfakeroot
-
+	mkdir -p releases/$(package_rootname)/
+	cp $(deb_create_dir)/*.deb releases/$(package_rootname)/
+	cp $(deb_create_dir)/*.dsc releases/$(package_rootname)/
+	cp $(deb_create_dir)/*.changes releases/$(package_rootname)/
+	cp $(deb_create_dir)/*.tar.gz releases/$(package_rootname)/
 
 clean: clean-export
 

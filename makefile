@@ -24,6 +24,7 @@ changelog:
 	echo "  * Initial release (Closes: #0004)  <nnnn is the bug number of your ITP>" >> trunk/funk2/debian/changelog
 	echo ""                                                                          >> trunk/funk2/debian/changelog
 	echo " -- Bo Morgan <bo@mit.edu>  $(date)"                                       >> trunk/funk2/debian/changelog
+	echo ""                                                                          >> trunk/funk2/debian/changelog
 
 deb: changelog export
 	cd $(export_dir); dpkg-buildpackage -rfakeroot

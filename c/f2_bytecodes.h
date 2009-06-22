@@ -32,6 +32,7 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__jump_funk__symbol;
   f2ptr bytecode__array__symbol;
   f2ptr bytecode__cons__symbol;
+  f2ptr bytecode__consp__symbol;
   f2ptr bytecode__car__symbol;
   f2ptr bytecode__cdr__symbol;
   f2ptr bytecode__car__set__symbol;
@@ -109,6 +110,7 @@ int                    f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2
 int                    f2__thread__bytecode__jump_funk(                       f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__array(                           f2ptr thread, f2ptr bytecode, f2ptr length);
 int                    f2__thread__bytecode__cons(                            f2ptr thread, f2ptr bytecode);
+int                    f2__thread__bytecode__consp(                           f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__car(                             f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__cdr(                             f2ptr thread, f2ptr bytecode);
 int                    f2__thread__bytecode__car__set(                        f2ptr thread, f2ptr bytecode);

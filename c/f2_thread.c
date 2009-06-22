@@ -43,6 +43,7 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   else if (command == __funk2.bytecode.bytecode__reg_array__elt__symbol)      {f2__thread__bytecode__reg_array__elt(     thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__reg_array__elt__set__symbol) {f2__thread__bytecode__reg_array__elt__set(thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__cons__symbol)                {f2__thread__bytecode__cons(               thread, bytecode);}
+  else if (command == __funk2.bytecode.bytecode__consp__symbol)               {f2__thread__bytecode__consp(              thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__car__set__symbol)            {f2__thread__bytecode__car__set(           thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__funk__symbol)                {f2__thread__bytecode__funk(               thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)           {f2__thread__bytecode__jump_funk(          thread, bytecode);}

@@ -41,9 +41,10 @@ install__bin__dir            = $(debian_install_root_dir)usr/bin/
 install__include__dir        = $(debian_install_root_dir)usr/include/funk2/
 install__img__dir            = $(debian_install_root_dir)usr/share/funk2/img/
 install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/icons/
+install__man__dir            = $(debian_install_root_dir)usr/share/man/man1/
 install__funk2               = $(install__bin__dir)funk2
 install__bootstrap__img      = $(install__img__dir)bootstrap.img
-install__rlglue_dir          = $(current_dir)extern
+install__rlglue__dir         = $(current_dir)extern
 
 default: $(compile__funk2) $(compile__bootstrap__img)
 
@@ -320,6 +321,8 @@ install-silent: $(compile__funk2)
 	install -m644 $(compile__bootstrap__img) $(install__bootstrap__img)
 	install -m644 c/*.h $(install__include__dir)
 	install -m644 $(source__icons__dir)* $(install__icons__dir)
+	gzip -c debian/funk2.1 > debian/funk2.1.gz
+	install -m644 debian/funk2.1.gz $(install__man__dir)
 
 clean:     clean1
 uninstall: clean0
@@ -344,7 +347,7 @@ readline:
 
 # RL-Glue Libraries  http://glue.rl-community.org
 rlglue:
-	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue_dir); make; make install
-#	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue_dir) --with-rl-glue=$(install__rlglue_dir); make; make install
+	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue__dir); make; make install
+#	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue__dir) --with-rl-glue=$(install__rlglue__dir); make; make install
 
 

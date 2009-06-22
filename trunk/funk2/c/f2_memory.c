@@ -1411,7 +1411,7 @@ void safe_write(int fd, void* ptr, size_t object_size) {
 }
 
 void safe_read(int fd, void* ptr, size_t object_size) {
-  size_t result = read(fd, ptr, object_size, object_num);
+  size_t result = read(fd, ptr, object_size);
   if (result != object_size) {
     error(nil, "safe_read error.");
   }

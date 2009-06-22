@@ -1439,7 +1439,7 @@ int raw__memory_image__save(char* filename) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     size_i = __funk2.memory.pool[pool_index].total_global_memory;      safe_write(fd, &size_i, sizeof(f2size_t));
     size_i = __funk2.memory.pool[pool_index].next_unique_block_id;     safe_write(fd, &size_i, sizeof(f2size_t));
-    safe_write(from_ptr(fd, memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
+    safe_write(fd, from_ptr(fd, memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
   }
   f2_i = __funk2.memory.global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
   close(fd);

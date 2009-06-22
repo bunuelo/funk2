@@ -10,7 +10,7 @@ clean-export:
 	rm -Rf $(export_dir)
 
 export:
-	mkdir -p $(tmp_dir)
+	mkdir -p $(export_dir)
 	svn export trunk/funk2 $(export_dir)
 
 tar.gz: export

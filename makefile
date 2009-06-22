@@ -23,6 +23,7 @@ changelog:
 	echo ""                                               >> trunk/funk2/debian/changelog
 	echo "  * Initial release (Closes: #0004)"            >> trunk/funk2/debian/changelog
 	echo ""                                               >> trunk/funk2/debian/changelog
+	echo ""                                               >> trunk/funk2/debian/changelog
 	echo " -- Bo Morgan <bo@mit.edu>  $(date) "           >> trunk/funk2/debian/changelog
 	echo ""                                               >> trunk/funk2/debian/changelog
 

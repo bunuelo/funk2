@@ -1,4 +1,4 @@
-date = $(shell date)
+date = $(shell date -R)
 date_tag = $(shell date +%Y.%m.%d)
 version = $(shell cat trunk/funk2/version)
 version_tag = $(version).$(date_tag)
@@ -24,7 +24,7 @@ changelog:
 	echo "  * Initial release (Closes: #0004)"            >> trunk/funk2/debian/changelog
 	echo ""                                               >> trunk/funk2/debian/changelog
 	echo ""                                               >> trunk/funk2/debian/changelog
-	echo " -- Bo Morgan <bo@mit.edu>  $(date) "           >> trunk/funk2/debian/changelog
+	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> trunk/funk2/debian/changelog
 	echo ""                                               >> trunk/funk2/debian/changelog
 
 deb: changelog export

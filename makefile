@@ -249,6 +249,7 @@ $(compile__bootstrap__img): $(compile__bootstrap__repl__img) $(funk2_fu2s)
 #	echo "quit"                          >> compile_bootstrap_img.gdb
 #	gdb -x compile_bootstrap_img.gdb $(compile__funk2)
 	$(compile__funk2) $(source__bootstrap__fu2)
+	chmod a-x $(compile__bootstrap__img)
 
 # objdump/test.objdump is for reverse engineering a machine code compiler from c/test.c (it would be relatively easy to automate this; it would be nice to have our machine code compiler be machine independent)
 

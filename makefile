@@ -1,6 +1,7 @@
 date_tag = $(shell date +%Y.%m.%d)
 version = $(shell cat trunk/funk2/version)
-version_tag = $(version).$(date_tag)
+upstream_version = 1
+version_tag = $(version).$(date_tag)-$(upstream_version)
 package_rootname = funk2-$(version_tag)
 tmp_dir = /tmp/funk2-deb/
 export_dir = $(tmp_dir)$(package_rootname)/

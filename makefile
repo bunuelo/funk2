@@ -34,7 +34,7 @@ deb: changelog export
 	cp $(deb_create_dir)/*.dsc releases/$(package_rootname)/
 	cp $(deb_create_dir)/*.changes releases/$(package_rootname)/
 	cp $(deb_create_dir)/*.tar.gz releases/$(package_rootname)/
-
+	lintian $(deb_create_dir)/*.deb
 
 clean-deb:
 	rm -Rf $(deb_create_dir)

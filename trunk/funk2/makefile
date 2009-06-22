@@ -39,7 +39,6 @@ compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
 install__system_bin__dir     = $(debian_install_root_dir)usr/bin/
 install__bin__dir            = $(debian_install_root_dir)usr/bin/
 install__include__dir        = $(debian_install_root_dir)usr/include/funk2/
-install__system_include__dir = $(debian_install_root_dir)usr/include/funk2/
 install__img__dir            = $(debian_install_root_dir)usr/share/funk2/img/
 install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/icons/
 install__funk2               = $(install__bin__dir)funk2
@@ -313,17 +312,13 @@ install-silent: $(compile__funk2)
 	echo ""
 	echo "make: performing system-wide installation of funk2"
 	echo ""
-	echo "  install__funk2__dir          = $(install__funk2__dir)"
-	echo "  install__bin__dir            = $(install__bin__dir)"
-	echo "  install__include__dir        = $(install__include__dir)"
-	echo "  install__system_bin__dir     = $(install__system_bin__dir)"
-	echo "  install__system_include__dir = $(install__system_include__dir)"
+	echo "  install__bin__dir     = $(install__bin__dir)"
+	echo "  install__include__dir = $(install__include__dir)"
 	echo ""
 	install -d $(install__funk2__dir) $(install__img__dir) $(install__bin__dir) $(install__include__dir) $(install__system_bin__dir) $(install__system_include__dir) $(install__icons__dir)
 	install -m755 $(compile__funk2) $(install__funk2)
 	install -m755 $(compile__bootstrap__img) $(install__bootstrap__img)
 	install -m644 c/*.h $(install__include__dir)
-	cp -af $(install__include__dir)*.h $(install__system_include__dir)
 	install -m644 $(source__icons__dir)* $(install__icons__dir)
 
 clean:     clean1

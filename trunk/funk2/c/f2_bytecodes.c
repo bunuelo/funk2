@@ -322,7 +322,7 @@ int f2__thread__bytecode__consp(f2ptr thread, f2ptr bytecode) {
   
   f2__thread__increment_pc(thread, cause);
   
-  f2ptr result = f2bool__new(raw__consp(f2thread__value(thread, cause)));
+  f2ptr result = f2bool__new(raw__consp(f2thread__value(thread, cause), cause));
   f2thread__value__set(thread, cause, result);
   return 0;
 }

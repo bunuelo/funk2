@@ -1,3 +1,4 @@
+date = $(shell date)
 date_tag = $(shell date +%Y.%m.%d)
 version = $(shell cat trunk/funk2/version)
 version_tag = $(version).$(date_tag)
@@ -18,11 +19,11 @@ tar.gz: export
 	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar
 
 changelog:
-	echo "funk2 ("$(version_tag)") unstable; urgency=low"                            >  trunk/funk2/debian/changelog
+	echo "funk2 ($(version_tag))   unstable; urgency=low"                            >  trunk/funk2/debian/changelog
 	echo ""                                                                          >> trunk/funk2/debian/changelog
 	echo "  * Initial release (Closes: #0004)  <nnnn is the bug number of your ITP>" >> trunk/funk2/debian/changelog
 	echo ""                                                                          >> trunk/funk2/debian/changelog
-	echo " -- Bo Morgan <bo@mit.edu>"                                                >> trunk/funk2/debian/changelog
+	echo " -- Bo Morgan <bo@mit.edu>  $(date)"                                       >> trunk/funk2/debian/changelog
 
 deb: changelog export
 	cd $(export_dir); dpkg-buildpackage -rfakeroot

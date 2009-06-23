@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH FUNK2 1 "May 31, 2009"
+.TH FUNK2 1 "Jun 23, 2009"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -19,21 +19,19 @@
 funk2 \- reflective programming language
 .SH SYNOPSIS
 .B funk2
-.RI [ options ] " files" ...
+.RI funk2 [-x <command>] [-p <portnum>] [--swap-directory <swap-directory>] [<source.fu2>]
 .br
-.B bar
-.RI [ options ] " files" ...
 .SH DESCRIPTION
 This manual page documents briefly the
 .B funk2
 command.
 .PP
 .\" TeX users may be more comfortable with the \fB<whatever>\fP and
-.\" \fI<whatever>\fP escape sequences to invode bold face and italics,
+.\" \fI<whatever>\fP escape sequences to invoke bold face and italics,
 .\" respectively.
 \fBfunk2\fP is a reflective programming language for the simulation and correlation of complex artificial intelligence theories of mind to behavioral psychology data and neuroscience data.
 .SH OPTIONS
-These programs follow the usual GNU command line syntax, with long
+This program follows the usual GNU command line syntax, with long
 options starting with two dashes (`-').
 A summary of options is included below.
 For a complete description, see the Info files.
@@ -43,15 +41,25 @@ Show summary of options.
 .TP
 .B \-v, \-\-version
 Show version of program.
-.SH SEE ALSO
-.BR bar (1),
-.BR baz (1).
+.TP
+.B <source.fu2>
+A user supplied filename of file from which to read and execute source code after booting and before exiting.
+.TP
+.B \-x <command>  [:default [repl]]
+A user supplied command to execute after booting and before exiting.
+.TP
+.B \-p <portnum>  [:default 22222 :try anything from 22222 to 23221]
+The localhost peer-command-server port number.  Each copy of funk2 sharing a network interface must be able to allocate a unique peer-command-server port number.
+.TP
+.B \--swap-directory <swap-directory>  [:default ./f2swp/ :try /tmp/]
+local filesystem directory for storing swap files which should have an absolute minimum of 2 gigabytes of free space.
+.\" .SH SEE ALSO
+.\" .BR bar (1),
+.\" .BR baz (1).
 .br
-The programs are documented fully by
-.IR "The Rise and Fall of a Fooish Bar" ,
-available via the Info system.
+This programs is explained more fully by
+.IR "http://neuromin.de/rct/funk2.html".
 .SH AUTHOR
-funk2 was written by <upstream author>.
+funk2 was written by Bo Morgan.
 .PP
-This manual page was written by Bo Morgan <bo@mit.edu>,
-for the Debian project (and may be used by others).
+This manual page was written by Bo Morgan <bo@mit.edu>, for the Debian project (and may be used by others).

@@ -28,7 +28,7 @@ changelog:
 	echo ""                                               >> trunk/funk2/debian/changelog
 
 deb: changelog export
-	cd $(export_dir); dpkg-buildpackage -rfakeroot -us -uc
+	unset POSIXLY_CORRECT; cd $(export_dir); dpkg-buildpackage -rfakeroot -us -uc
 	mkdir -p releases/$(package_rootname)/
 	cp $(deb_create_dir)/*.deb releases/$(package_rootname)/
 	cp $(deb_create_dir)/*.dsc releases/$(package_rootname)/

@@ -316,7 +316,7 @@ install-silent: $(compile__funk2)
 	echo "  install__bin__dir     = $(install__bin__dir)"
 	echo "  install__include__dir = $(install__include__dir)"
 	echo ""
-	install -d $(install__funk2__dir) $(install__img__dir) $(install__bin__dir) $(install__include__dir) $(install__system_bin__dir) $(install__system_include__dir) $(install__icons__dir)
+	install -d $(install__funk2__dir) $(install__img__dir) $(install__bin__dir) $(install__include__dir) $(install__system_bin__dir) $(install__system_include__dir) $(install__icons__dir) $(install__man__dir)
 	install -m755 $(compile__funk2) $(install__funk2)
 	install -m644 $(compile__bootstrap__img) $(install__bootstrap__img)
 	install -m644 c/*.h $(install__include__dir)

@@ -1,0 +1,29 @@
+Format: 1.8
+Date: Mon, 22 Jun 2009 20:31:35 -0400
+Source: funk2
+Binary: funk2
+Architecture: source i386
+Version: 2.06.2009.06.22
+Distribution: unstable
+Urgency: low
+Maintainer: Bo Morgan <bo@mit.edu>
+Changed-By: Bo Morgan <bo@mit.edu>
+Description: 
+ funk2      - reflective programming language
+Closes: 0004
+Changes: 
+ funk2 (2.06.2009.06.22)   unstable; urgency=low
+ .
+   * Initial release (Closes: #0004)
+Checksums-Sha1: 
+ e662972b5e70f6207420442edc386c417df20f33 513 funk2_2.06.2009.06.22.dsc
+ 981a18e4d5ac3f0e298b28e52c92549e98a67e12 558060 funk2_2.06.2009.06.22.tar.gz
+ eccb4b72acbeee2efb7e62468f56895353fbd361 40092822 funk2_2.06.2009.06.22_i386.deb
+Checksums-Sha256: 
+ 1b9b8273f428ff5616ae22ba006b2a5385ce30676b0a2cf449323870178200f0 513 funk2_2.06.2009.06.22.dsc
+ 84d7ac06fe52db5567d9aab97cdc06e7fd69b73b300d73aacacb79ef2990229e 558060 funk2_2.06.2009.06.22.tar.gz
+ 69e0a1c84a21795b25a36e8b993e4db16bc4febf3fa00ba95e14c58751cfbc8a 40092822 funk2_2.06.2009.06.22_i386.deb
+Files: 
+ 4f10f12a7bcdeccf6ca8ce09c2540b92 513 science optional funk2_2.06.2009.06.22.dsc
+ 35e12f7103a9ce3c7375e1fe0e712eba 558060 science optional funk2_2.06.2009.06.22.tar.gz
+ e5a0e17a1ac7d4799e813a77f347e1b8 40092822 science optional funk2_2.06.2009.06.22_i386.deb

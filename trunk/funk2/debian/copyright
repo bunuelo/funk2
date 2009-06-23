@@ -10,8 +10,9 @@ License:
 
     MIT License
 
-The Debian packaging is copyright 2009, Bo Morgan <bo@mit.edu> and
-is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
+The Debian packaging is copyright 2009, Bo Morgan <bo@mit.edu> and is
+licensed under the MIT License, see
+`http://www.opensource.org/licenses/mit-license.php'.
 
 
 Copyright (c) 2007-2009 Bo Morgan.

@@ -1,9 +1,10 @@
+pwd = $(shell pwd)/
 date = $(shell date -R)
 date_tag = $(shell date +%Y.%m.%d)
 version = $(shell cat trunk/funk2/version)
 version_tag = $(version).$(date_tag)
 package_rootname = funk2-$(version_tag)
-tmp_dir = /tmp/
+tmp_dir = $(pwd)tmp/
 funk2_tmp_dir = $(tmp_dir)funk2-deb/
 deb_create_dir = $(funk2_tmp_dir)deb_create_dir/
 export_dir = $(deb_create_dir)$(package_rootname)/

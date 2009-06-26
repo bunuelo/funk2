@@ -41,13 +41,13 @@ clean:
 	# Add here commands to clean up after the build process.
 	$(MAKE) clean
 
-	#debhelper 7 needed for: dh_clean 
+	dh_clean 
 
 install: build
 	dh_testdir
 	dh_testroot
-	#debhelper 7 needed for: dh_prep  
-	#debhelper 7 needed for: dh_installdirs
+	dh_prep  
+	dh_installdirs
 
 	# Add here commands to install the package into debian/funk2.
 	$(MAKE) DESTDIR=$(CURDIR)/debian/funk2 install

@@ -70,10 +70,6 @@ typedef enum ptype_e {
 #include "f2_time.h"
 //#include "f2_gfunkptr.h"
 
-#define memory_mutex__lock(pool_index)     funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
-#define memory_mutex__try_lock(pool_index) funk2_processor_mutex__trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
-#define memory_mutex__unlock(pool_index)   funk2_processor_mutex__unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
-
 ptr  f2__malloc(f2size_t byte_num);
 void f2__free(ptr this);
 ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);

@@ -27,6 +27,8 @@ f2ptr f2__apropos(f2ptr cause, f2ptr this) {
 def_pcfunk1(apropos, this, return f2__apropos(this_cause, this));
 
 
+// **
+
 void f2__apropos__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_apropos_c__cause__new(initial_cause(), nil, global_environment());
 }

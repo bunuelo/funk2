@@ -23,6 +23,10 @@
 #define F2__APROPOS__H
 
 
+// **
+
+void f2__apropos__reinitialize_globalvars();
+void f2__apropos__initialize();
 
 #endif // F2__APROPOS__H
 

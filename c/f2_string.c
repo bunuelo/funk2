@@ -342,7 +342,7 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   u8* this__str = (u8*)malloc(this__length);
   f2string__str_copy(this, cause, this__str);
   
-  u64 sup_index = this__length - token__length + 1;
+  u64 sup_index = this__length - substring__length + 1;
   for (index = 0; index <= sup_index; index ++) {
     if (memcmp(this__str + index, substring__str, substring__length) == 0) {
       return boolean__true;

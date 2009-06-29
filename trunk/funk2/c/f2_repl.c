@@ -40,13 +40,14 @@ int f2__repl(f2ptr cause, f2ptr thread) {
       repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
       if(raw__larvap(repl_funk_bcs, cause)) {
 	f2thread__value__set(thread, cause, repl_funk_bcs);
+	resume_gc();
+	try_gc();
       } else {
 	f2thread__program_counter__set(repl_thread, cause, nil);
+	resume_gc();
+	try_gc();
 	f2thread__force_funk(repl_thread, cause, cause, repl_funk, nil);
       }
-      
-      resume_gc();
-      try_gc();
       
       f2__scheduler__complete_thread(cause, repl_thread);
       

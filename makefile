@@ -50,6 +50,7 @@ default: $(compile__funk2) $(compile__bootstrap__img)
 
 funk2_server_objs = \
   c/f2_ansi.o \
+  c/f2_apropos.o \
   c/f2_blocks_world.o \
   c/f2_buffered_file.o \
   c/f2_buffered_socket.o \
@@ -120,6 +121,7 @@ funk2_server_objs = \
   c/funk2.o
 funk2_headers = \
   c/f2_ansi.h \
+  c/f2_apropos.h \
   c/f2_blocks_world.h \
   c/f2_buffered_file.h \
   c/f2_buffered_socket.h \

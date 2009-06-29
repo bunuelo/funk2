@@ -1411,8 +1411,8 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t prot
   }
   __compile__recursion_count ++;
 #endif // DEBUG_COMPILE
-  pause_gc();
   f2ptr result_bcs = nil;
+  pause_gc();
   if      (!exp)                        {result_bcs = f2__compile__value__set(cause, nil);}
   else if (raw__integerp(exp, cause))   {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__pointerp(exp, cause))   {result_bcs = f2__compile__value__set(cause, exp);}

@@ -74,6 +74,7 @@
 #include <unistd.h>
 
 #include "f2_ansi.h"
+#include "f2_apropos.h"
 #include "f2_blocks_world.h"
 #include "f2_buffered_file.h"
 #include "f2_buffered_socket.h"

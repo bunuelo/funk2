@@ -322,6 +322,41 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
 }
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));
 
+boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
+  if ((! raw__stringp(this,      cause)) ||
+      (! raw__stringp(substring, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  
+  u64 substring__length = f2string__length(substring, cause);
+  u64 this__length      = f2string__length(this,      cause);
+  if (substring__length == 0) {
+    return f2larva__new(cause, 97);
+  }
+  if (substring__length > this__length) {
+    return f2larva__new(cause, 98);
+  }
+  u8* substring__str = (u8*)malloc(substring__length);
+  f2string__str_copy(substring, cause, substring__str);
+  
+  u8* this__str = (u8*)malloc(this__length);
+  f2string__str_copy(this, cause, this__str);
+  
+  u64 sup_index = this__length - token__length + 1;
+  for (index = 0; index <= sup_index; index ++) {
+    if (memcmp(this__str + index, substring__str, substring__length) == 0) {
+      return boolean__true;
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
+  return f2bool__new(raw__string__contains(cause, this, substring));
+}
+def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_cause, this, substring));
+
+
 void f2__string__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
 }
@@ -339,6 +374,7 @@ void f2__string__initialize() {
   f2__primcfunk__init(string__save);
   f2__primcfunk__init(string__load);
   f2__primcfunk__init(string__split);
+  f2__primcfunk__init(string__contains);
   
   resume_gc();
   try_gc();

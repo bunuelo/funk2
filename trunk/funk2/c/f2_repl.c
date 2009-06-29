@@ -41,11 +41,9 @@ int f2__repl(f2ptr cause, f2ptr thread) {
       if(raw__larvap(repl_funk_bcs, cause)) {
 	f2thread__value__set(thread, cause, repl_funk_bcs);
 	resume_gc();
-	try_gc();
       } else {
 	f2thread__program_counter__set(repl_thread, cause, nil);
 	resume_gc();
-	try_gc();
 	f2thread__force_funk(repl_thread, cause, cause, repl_funk, nil);
       }
       
@@ -56,7 +54,6 @@ int f2__repl(f2ptr cause, f2ptr thread) {
       printf ("\nF-Out> "); f2__write(cause, eval_exp); fflush(stdout);
       //printf("\nrepl_thread stack size = %d", raw__length(f2thread__stack(repl_thread))); fflush(stdout);
       resume_gc();
-      try_gc();
       
       //printf("\nglobal_environment.frame   : %d", f2environment__frame(global_environment())); fflush(stdout);
       //printf("\nglobal_scheduler.processors: %d", f2scheduler__processors(__global__scheduler)); fflush(stdout);

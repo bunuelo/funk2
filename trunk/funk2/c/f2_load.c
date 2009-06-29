@@ -68,8 +68,8 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 	} else {
 	  f2thread__program_counter__set(load_thread, cause, nil);
 	  resume_gc();
-	  try_gc();
 	  f2thread__force_funk(load_thread, cause, cause, load_funk, nil);
+	  try_gc();
 	}
 	
 	

@@ -21,10 +21,62 @@
 
 #include "funk2.h"
 
-f2ptr f2__apropos(f2ptr cause, f2ptr this) {
-  return nil;
+f2ptr f2__exp__documentation(f2ptr cause, f2ptr exp) {
+  if (raw__cfunkp(exp, cause)) {
+    return f2cfunk__documentation(exp, cause);
+  } else if (raw__metrocfunkp(exp, cause)) {
+    return f2metrocfunk__documentation(exp, cause);
+  } else if (raw__funkp(exp, cause)) {
+    return f2funk__documentation(exp, cause);
+  } else if (raw__metrop(exp, cause)) {
+    return f2metro__documentation(exp, cause);
+  } else {
+    return nil;
+  }
 }
-def_pcfunk1(apropos, this, return f2__apropos(this_cause, this));
+
+f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
+  if (! raw__stringp(find_string, cause)) {
+    return f2larva__new(cause, 1);
+  }
+  
+  f2ptr frame             = f2environment__frame(this, cause);
+  f2ptr funkvar_hashtable = frame__funkvar_hashtable(frame, cause);
+  f2ptr bin_array         = f2hashtable__bin_array(funkvar_hashtable, cause);
+  s64   length            = raw__array__length(cause, bin_array);
+  
+  f2ptr match_seq = nil;
+  
+  s64 index;
+  for (index = 0; index < length; index ++) {
+    f2ptr bin  = raw__array__elt(cause, bin_array, index);
+    
+    f2ptr iter = bin;
+    while (iter) {
+      f2ptr keyvalue_pair = f2cons__car(iter, cause);
+      
+      f2ptr key           = f2cons__car(keyvalue_pair, cause);
+      f2ptr value         = f2cons__cdr(keyvalue_pair, cause);
+      f2ptr documentation = f2__exp__documentation(cause, value);
+      if (raw__stringp(documentation, cause)) {
+	if (raw__string__contains(cause, documentation, find_string)) {
+	  match_pair = f2list2__new(cause, key, documentation);
+	  match_seq = f2cons__new(cause, match_pair, match_seq);
+	}
+      }
+      
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return match_seq;
+}
+
+f2ptr f2__apropos(f2ptr cause, f2ptr find_string) {
+  f2ptr global_environment = __funk2.memory.global_environment_f2ptr;
+  return f2__environment__apropos(cause, global_environment, find_string);
+}
+def_pcfunk1(apropos, find_string, return f2__apropos(this_cause, find_string));
+
 
 
 // **

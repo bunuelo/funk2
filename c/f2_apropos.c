@@ -60,8 +60,8 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       f2ptr documentation = f2__exp__documentation(cause, value);
       if (raw__stringp(documentation, cause)) {
 	if (raw__string__contains(cause, documentation, find_string)) {
-	  match_pair = f2list2__new(cause, key, documentation);
-	  match_seq = f2cons__new(cause, match_pair, match_seq);
+	  f2ptr match_pair = f2list2__new(cause, key, documentation);
+	  match_seq        = f2cons__new(cause, match_pair, match_seq);
 	}
       }
       

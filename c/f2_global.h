@@ -96,8 +96,8 @@ typedef                         u64 pool_address_t;
 
 
 //#define scheduler_processor_num 1
-#if (processor_num_power == 0)
-#  define ideal_scheduler_processor_num (2)
+#if (processor_num_power <= 2)
+#  define ideal_scheduler_processor_num (4)
 #else
 #  define ideal_scheduler_processor_num (1<<(processor_num_power))
 #endif

@@ -63,13 +63,15 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 					  thread, load_funk);
 	if(raw__exceptionp(load_funk_bcs, cause)) {
 	  f2thread__value__set(thread, cause, load_funk_bcs);
+	  resume_gc();
+	  try_gc();
 	} else {
 	  f2thread__program_counter__set(load_thread, cause, nil);
+	  resume_gc();
+	  try_gc();
 	  f2thread__force_funk(load_thread, cause, cause, load_funk, nil);
 	}
 	
-	resume_gc();
-	try_gc();
 	
 	f2__scheduler__complete_thread(cause, load_thread);
 	
@@ -79,13 +81,16 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 	if (raw__exceptionp(eval_exp, cause)) {
 	  printf("\nload eval exception: "); f2__write(cause, eval_exp); fflush(stdout);
 	  f2__stream__close(cause, stream);
+	  resume_gc();
+	  try_gc();
 	  return f2integer__new(f2thread__cause_reg(load_thread, cause), 1);
+	} else {
+	  resume_gc();
+	  try_gc();
 	}
 #ifdef DEBUG_LOAD
 	printf ("\nLoad-F-Out> "); f2__write(cause, eval_exp); fflush(stdout);
 #endif
-	resume_gc();
-	try_gc();
       }
     }
   }  

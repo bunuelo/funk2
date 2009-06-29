@@ -1486,6 +1486,7 @@ void f2__dlfcn__reinitialize_globalvars();                       // defined in f
 void f2__gmodule__reinitialize_globalvars();                     // defined in f2_gmodule.c
 void f2__string__reinitialize_globalvars();                      // defined in f2_string.c
 void f2__child_handler__reinitialize_globalvars();               // defined in f2_child_handler.c
+void f2__apropos__reinitialize_globalvars();                     // defined in f2_apropos.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -1593,6 +1594,7 @@ void rebuild_memory_info_from_image() {
     f2__gmodule__reinitialize_globalvars();
     f2__string__reinitialize_globalvars();
     f2__child_handler__reinitialize_globalvars();
+    f2__apropos__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

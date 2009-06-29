@@ -19,11 +19,9 @@
  rights to redistribute these changes.
 '
 
-`[load 'fu2/bootstrap-primobject_type.fu2']
 [load 'fu2/bootstrap-thread.fu2']
 [load 'fu2/bootstrap-bugs.fu2']
 [load 'fu2/bootstrap-boot.fu2']
-`[load 'fu2/bootstrap-graph.fu2']
 [load 'fu2/bootstrap-math.fu2']
 [load 'fu2/bootstrap-set_theory.fu2']
 [load 'fu2/bootstrap-ansi.fu2']
@@ -34,14 +32,19 @@
 [load 'fu2/bootstrap-action.fu2']
 [load 'fu2/bootstrap-string.fu2']
 [load 'fu2/bootstrap-child_handler.fu2']
+[load 'fu2/bootstrap-apropos.fu2']
+
+[load 'fu2/action.fu2']
+[load 'fu2/remember.fu2']
+[load 'fu2/time.fu2']
+
+`[load 'fu2/bootstrap-primobject_type.fu2']
+`[load 'fu2/bootstrap-graph.fu2']
 `[load 'fu2/bootstrap-dlfcn.fu2']
 `[load 'fu2/bootstrap-gmodule.fu2']
 `[load 'fu2/bootstrap-alien.fu2']
 `[load 'fu2/bootstrap-dynamic_library.fu2']
 
-[load 'fu2/action.fu2']
-[load 'fu2/remember.fu2']
-[load 'fu2/time.fu2']
 
 [globalize load-utilities nil]
 [defunk load-utilities []

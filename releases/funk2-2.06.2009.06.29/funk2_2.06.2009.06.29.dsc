@@ -1,3 +1,6 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
 Format: 1.0
 Source: funk2
 Binary: funk2
@@ -13,3 +16,11 @@ Checksums-Sha256:
  d1af23d77380f3f9554dccc2c7ead5a623e2aee9030585cc7c9dbdd4f428cc04 558163 funk2_2.06.2009.06.29.tar.gz
 Files: 
  778df363ff9c9c59c221a388bb915b94 558163 funk2_2.06.2009.06.29.tar.gz
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFKSSOgTl4SjsKMJkQRAllYAJ0ZmGe3kmRKLOQ7p8QFae2sLZq1TQCfbF26
+VwPx3+9Xi4ZbJlekfZMMqHE=
+=ZPtz
+-----END PGP SIGNATURE-----

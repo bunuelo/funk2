@@ -70,42 +70,46 @@ typedef enum ptype_e {
 #include "f2_time.h"
 //#include "f2_gfunkptr.h"
 
-extern ptr  f2__malloc(f2size_t byte_num);
-extern void f2__free(ptr this);
-extern ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
+#define memory_mutex__lock(pool_index)     funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
+#define memory_mutex__try_lock(pool_index) funk2_processor_mutex__trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
+#define memory_mutex__unlock(pool_index)   funk2_processor_mutex__unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
 
-extern void assert_failed(f2ptr thread, char* filename, int line_num, char* str);
+ptr  f2__malloc(f2size_t byte_num);
+void f2__free(ptr this);
+ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
 
-extern void memblock__set_init_render_xyz(float x, float y, float z);
-extern void memblock__set_init_render_on(u8 render_on);
-extern void memblock__set_init_render_noise(float render_noise);
+void assert_failed(f2ptr thread, char* filename, int line_num, char* str);
+
+void memblock__set_init_render_xyz(float x, float y, float z);
+void memblock__set_init_render_on(u8 render_on);
+void memblock__set_init_render_noise(float render_noise);
 
 extern float memblock__render_noise;
 
-extern void exp__gc_touch_all_referenced(ptr start_block_ptr);
+void exp__gc_touch_all_referenced(ptr start_block_ptr);
 
-extern void      pool__pause_gc(int pool_index);
-extern int       pool__try_pause_gc(int pool_index);
-extern void      pool__resume_gc(int pool_index);
-extern boolean_t pool__try_gc(int pool_index);
-extern boolean_t pool__should_run_gc(int pool_index);
+void      pool__pause_gc(int pool_index);
+int       pool__try_pause_gc(int pool_index);
+void      pool__resume_gc(int pool_index);
+boolean_t pool__try_gc(int pool_index);
+boolean_t pool__should_run_gc(int pool_index);
 
-extern void      pause_gc();
-extern int       try_pause_gc();
-extern void      resume_gc();
-extern boolean_t try_gc();
-extern boolean_t should_run_gc();
-extern int       gc__is_disabled();
+void      pause_gc();
+int       try_pause_gc();
+void      resume_gc();
+boolean_t try_gc();
+boolean_t should_run_gc();
+int       gc__is_disabled();
 
 void  global_environment__set(f2ptr global_environment);
 f2ptr global_environment();
 
-extern void print_gc_stats();
+void print_gc_stats();
 
-extern int raw__memory_image__save(char* filename);
-extern int raw__memory_image__load(char* filename);
+int raw__memory_image__save(char* filename);
+int raw__memory_image__load(char* filename);
 
-extern void f2__memory__initialize();
-extern void f2__memory__destroy();
+void f2__memory__initialize();
+void f2__memory__destroy();
 
 #endif // F2__MEMORY__H

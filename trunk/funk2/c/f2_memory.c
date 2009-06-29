@@ -839,22 +839,6 @@ u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int genera
   return did_something;
 }
 
-void memory_mutex__lock(int pool_index) {
-  funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
-}
-int  memory_mutex__try_lock(int pool_index) {
-  int result = funk2_processor_mutex__trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
-  switch(result) {
-  case 0: break;
-  case EBUSY: break;
-  case EINVAL: error(nil, "the mutex has not been properly initialized."); break;
-  }
-  return result;
-}
-void memory_mutex__unlock(int pool_index) {
-  funk2_processor_mutex__unlock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex);
-}
-
 void pool__touch_all_referenced_from_generation(int pool_index, int touch_generation_num) {
   memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
   memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);

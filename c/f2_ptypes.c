@@ -181,7 +181,7 @@ boolean_t raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, int trace_
     return nil;
   }
 #ifdef F2__PTYPE__TYPE_CHECK
-  if(! raw__causep__trace_depth(this, cause, trace_depth)) {
+  if(! raw__causep(this, cause)) {
     status("raw__cause__is_traced !raw__causep(this, cause)");
     f2__print(nil, this); fflush(stdout);
     error(nil, "raw__cause__is_traced !raw__causep(this, cause)");

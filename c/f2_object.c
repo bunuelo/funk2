@@ -67,6 +67,7 @@ f2ptr f2__object__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   }
   return f2larva__new(cause, 1);
 }
+def_pcfunk2(object__slot_funk, this, slot, return f2__object__slot_funk(this_cause, this, slot));
 
 
 // **

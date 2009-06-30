@@ -41,7 +41,9 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__primobjectp(this, cause)) {
-      //return f2__primobject__slot_funk(cause, this, slot);
+      f2ptr primobject_type_name = f2primobject__type(this, cause);
+      f2ptr primobject_type      = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+      return f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     } else {
       if (ptype == ptype_simple_array) {
 	return f2__simple_array__slot__get_funk(cause, this, slot);
@@ -77,7 +79,9 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__primobjectp(this, cause)) {
-      //return f2__primobject__slot_funk(cause, this, slot);
+      f2ptr primobject_type_name = f2primobject__type(this, cause);
+      f2ptr primobject_type      = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+      return f2__primobject_type__lookup_slot_set_funk(cause, primobject_type, slot);
     } else {
       if (ptype == ptype_simple_array) {
 	return f2__simple_array__slot__set_funk(cause, this, slot);
@@ -113,7 +117,9 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__primobjectp(this, cause)) {
-      //return f2__primobject__slot_funk(cause, this, slot);
+      f2ptr primobject_type_name = f2primobject__type(this, cause);
+      f2ptr primobject_type      = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+      return f2__primobject_type__lookup_slot_execute_funk(cause, primobject_type, slot);
     } else {
       if (ptype == ptype_simple_array) {
 	return f2__simple_array__slot__execute_funk(cause, this, slot);

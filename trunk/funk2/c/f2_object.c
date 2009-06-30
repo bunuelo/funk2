@@ -68,3 +68,22 @@ f2ptr f2__object__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   return f2larva__new(cause, 1);
 }
 
+
+// **
+
+void f2__object__reinitialize_globalvars() {
+  //f2ptr cause = initial_cause(); //f2_object_c__cause__new(initial_cause(), nil, global_environment());
+}
+
+void f2__object__initialize() {
+  //f2ptr cause = initial_cause(); //f2_object_c__cause__new(initial_cause(), nil, global_environment());
+  pause_gc();
+  
+  f2__string__reinitialize_globalvars();
+  
+  f2__primcfunk__init__2(object__slot_funk, this, slot, "returns the slot funktion for the object, i.e. an accessor (e.g. value), a mutator (e.g. value-set), or an otherwise more general executor (e.g. print-value).");
+  
+  resume_gc();
+  try_gc();
+}
+

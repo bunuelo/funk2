@@ -29,8 +29,10 @@ typedef struct funk2_object_types_s {
   funk2_ptype_object_types_t ptype;
 } funk2_object_types_t;
 
-f2ptr f2__object__slot_accessor(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__object__slot_mutator(f2ptr cause, f2ptr this, f2ptr slot);
+// **
+
+void f2__object__reinitialize_globalvars();
+void f2__object__initialize();
 
 #endif // F2__OBJECT__H
 

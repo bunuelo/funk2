@@ -62,7 +62,11 @@
    ]
 [if load-basic-ai [load-basic-ai]]
 
+[format stdout '\nsaving img/bootstrap.img.']
+
 [memory_image-save 'img/bootstrap.img']
+
+[format stdout '\ndone.\n']
 
 [quit]
 

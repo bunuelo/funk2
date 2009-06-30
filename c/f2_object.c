@@ -21,53 +21,114 @@
 
 #include "funk2.h"
 
-f2ptr f2__object__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   ptype_t ptype = f2ptype__raw(this, cause);
   switch (ptype) {
   case ptype_free_memory:
   case ptype_newly_allocated:
     error(nil, "shouldn't ever see this object ptype.");
     return nil;
-  case ptype_integer:
-    return f2__integer__slot_funk(cause, this, slot);
-  case ptype_double:
-    return f2__double__slot_funk(cause, this, slot);
-  case ptype_float:
-    return f2__float__slot_funk(cause, this, slot);
-  case ptype_pointer:
-    return f2__pointer__slot_funk(cause, this, slot);
-  case ptype_gfunkptr:
-    return f2__gfunkptr__slot_funk(cause, this, slot);
-  case ptype_mutex:
-    return f2__mutex__slot_funk(cause, this, slot);
-  case ptype_char:
-    return f2__char__slot_funk(cause, this, slot);
-  case ptype_string:
-    return f2__string__slot_funk(cause, this, slot);
-  case ptype_symbol:
-    return f2__symbol__slot_funk(cause, this, slot);
-  case ptype_chunk:
-    return f2__chunk__slot_funk(cause, this, slot);
+  case ptype_integer:  return f2__integer__slot__get_funk(cause, this, slot);
+  case ptype_double:   return f2__double__slot__get_funk(cause, this, slot);
+  case ptype_float:    return f2__float__slot__get_funk(cause, this, slot);
+  case ptype_pointer:  return f2__pointer__slot__get_funk(cause, this, slot);
+  case ptype_gfunkptr: return f2__gfunkptr__slot__get_funk(cause, this, slot);
+  case ptype_mutex:    return f2__mutex__slot__get_funk(cause, this, slot);
+  case ptype_char:     return f2__char__slot__get_funk(cause, this, slot);
+  case ptype_string:   return f2__string__slot__get_funk(cause, this, slot);
+  case ptype_symbol:   return f2__symbol__slot__get_funk(cause, this, slot);
+  case ptype_chunk:    return f2__chunk__slot__get_funk(cause, this, slot);
   case ptype_simple_array:
   case ptype_traced_array:
-    if (! raw__primobjectp(this, cause)) {
+    if (raw__primobjectp(this, cause)) {
+      //return f2__primobject__slot_funk(cause, this, slot);
+    } else {
       if (ptype == ptype_simple_array) {
-	return f2__simple_array__slot_funk(cause, this, slot);
+	return f2__simple_array__slot__get_funk(cause, this, slot);
       } else if (ptype == ptype_traced_array) {
-	return f2__traced_array__slot_funk(cause, this, slot);
+	return f2__traced_array__slot__get_funk(cause, this, slot);
       }
       return f2larva__new(cause, 1);
-    } else {
-      //return f2__primobject__slot_funk(cause, this, slot);
     }
-    printf("\nf2__object__slot_mutator error: unknown primobject type.");
-    return f2larva__new(cause, 1);
   case ptype_larva:
-    return f2__larva__slot_funk(cause, this, slot);
+    return f2__larva__slot__get_funk(cause, this, slot);
   }
   return f2larva__new(cause, 1);
 }
-def_pcfunk2(object__slot_funk, this, slot, return f2__object__slot_funk(this_cause, this, slot));
+def_pcfunk2(object__slot__get_funk, this, slot, return f2__object__slot__get_funk(this_cause, this, slot));
+
+f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  ptype_t ptype = f2ptype__raw(this, cause);
+  switch (ptype) {
+  case ptype_free_memory:
+  case ptype_newly_allocated:
+    error(nil, "shouldn't ever see this object ptype.");
+    return nil;
+  case ptype_integer:  return f2__integer__slot__set_funk(cause, this, slot);
+  case ptype_double:   return f2__double__slot__set_funk(cause, this, slot);
+  case ptype_float:    return f2__float__slot__set_funk(cause, this, slot);
+  case ptype_pointer:  return f2__pointer__slot__set_funk(cause, this, slot);
+  case ptype_gfunkptr: return f2__gfunkptr__slot__set_funk(cause, this, slot);
+  case ptype_mutex:    return f2__mutex__slot__set_funk(cause, this, slot);
+  case ptype_char:     return f2__char__slot__set_funk(cause, this, slot);
+  case ptype_string:   return f2__string__slot__set_funk(cause, this, slot);
+  case ptype_symbol:   return f2__symbol__slot__set_funk(cause, this, slot);
+  case ptype_chunk:    return f2__chunk__slot__set_funk(cause, this, slot);
+  case ptype_simple_array:
+  case ptype_traced_array:
+    if (raw__primobjectp(this, cause)) {
+      //return f2__primobject__slot_funk(cause, this, slot);
+    } else {
+      if (ptype == ptype_simple_array) {
+	return f2__simple_array__slot__set_funk(cause, this, slot);
+      } else if (ptype == ptype_traced_array) {
+	return f2__traced_array__slot__set_funk(cause, this, slot);
+      }
+      return f2larva__new(cause, 1);
+    }
+  case ptype_larva:
+    return f2__larva__slot__set_funk(cause, this, slot);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(object__slot__set_funk, this, slot, return f2__object__slot__set_funk(this_cause, this, slot));
+
+f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  ptype_t ptype = f2ptype__raw(this, cause);
+  switch (ptype) {
+  case ptype_free_memory:
+  case ptype_newly_allocated:
+    error(nil, "shouldn't ever see this object ptype.");
+    return nil;
+  case ptype_integer:  return f2__integer__slot__execute_funk(cause, this, slot);
+  case ptype_double:   return f2__double__slot__execute_funk(cause, this, slot);
+  case ptype_float:    return f2__float__slot__execute_funk(cause, this, slot);
+  case ptype_pointer:  return f2__pointer__slot__execute_funk(cause, this, slot);
+  case ptype_gfunkptr: return f2__gfunkptr__slot__execute_funk(cause, this, slot);
+  case ptype_mutex:    return f2__mutex__slot__execute_funk(cause, this, slot);
+  case ptype_char:     return f2__char__slot__execute_funk(cause, this, slot);
+  case ptype_string:   return f2__string__slot__execute_funk(cause, this, slot);
+  case ptype_symbol:   return f2__symbol__slot__execute_funk(cause, this, slot);
+  case ptype_chunk:    return f2__chunk__slot__execute_funk(cause, this, slot);
+  case ptype_simple_array:
+  case ptype_traced_array:
+    if (raw__primobjectp(this, cause)) {
+      //return f2__primobject__slot_funk(cause, this, slot);
+    } else {
+      if (ptype == ptype_simple_array) {
+	return f2__simple_array__slot__execute_funk(cause, this, slot);
+      } else if (ptype == ptype_traced_array) {
+	return f2__traced_array__slot__execute_funk(cause, this, slot);
+      }
+      return f2larva__new(cause, 1);
+    }
+  case ptype_larva:
+    return f2__larva__slot__execute_funk(cause, this, slot);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(object__slot__execute_funk, this, slot, return f2__object__slot__execute_funk(this_cause, this, slot));
+
 
 
 // **
@@ -82,7 +143,9 @@ void f2__object__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__2(object__slot_funk, this, slot, "returns the slot funktion for the object, i.e. an accessor (e.g. value), a mutator (e.g. value-set), or an otherwise more general executor (e.g. print-value).");
+  f2__primcfunk__init__2(object__slot__get_funk,     this, slot, "returns the slot get funk for the object, i.e. an accessor (e.g. value).");
+  f2__primcfunk__init__2(object__slot__set_funk,     this, slot, "returns the slot set funk for the object, i.e. a mutator (e.g. value-set).");
+  f2__primcfunk__init__2(object__slot__execute_funk, this, slot, "returns the slot execute funk for the object, i.e. a general executor (e.g. print-value).");
   
   resume_gc();
   try_gc();

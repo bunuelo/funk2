@@ -291,11 +291,20 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
 def_pcfunk1(integer__new__slot_funk, this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
 def_pcfunk1(integer__i__slot_funk,   this, return this);
 
-f2ptr f2__integer__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__integer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_integer.i__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__integer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__integer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_integer.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_integer.i__funk;
   }
   return nil;
 }
@@ -339,11 +348,20 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
 def_pcfunk1(double__new__slot_funk, this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 def_pcfunk1(double__d__slot_funk,   this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 
-f2ptr f2__double__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__double__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_double.d__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_double.d__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__double__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_double.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_double.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_double.d__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_double.d__funk;
   }
   return nil;
 }
@@ -388,11 +406,20 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
 def_pcfunk1(float__new__slot_funk, this, return f2float__new(this_cause, f2float__f(this_cause, this)));
 def_pcfunk1(float__f__slot_funk,   this, return this);
 
-f2ptr f2__float__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__float__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_float.f__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_float.f__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__float__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__float__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_float.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_float.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_float.f__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_float.f__funk;
   }
   return nil;
 }
@@ -437,11 +464,20 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
 def_pcfunk1(pointer__new__slot_funk, this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
 def_pcfunk1(pointer__p__slot_funk,   this, return this);
 
-f2ptr f2__pointer__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__pointer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__pointer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__pointer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_pointer.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk;
   }
   return nil;
 }
@@ -540,12 +576,8 @@ def_pcfunk1(gfunkptr__computer_id__slot_funk, this, return f2integer__new(this_c
 def_pcfunk1(gfunkptr__pool_index__slot_funk, this, return f2integer__new(this_cause, f2gfunkptr__pool_index(this, this_cause)));
 def_pcfunk1(gfunkptr__pool_address__slot_funk, this, return f2integer__new(this_cause, f2gfunkptr__pool_address(this, this_cause)));
 
-f2ptr f2__gfunkptr__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__symbol)) {
+f2ptr f2__gfunkptr__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk;
@@ -553,6 +585,19 @@ f2ptr f2__gfunkptr__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
     return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__gfunkptr__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__gfunkptr__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk;
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk;
   }
   return nil;
 }
@@ -634,7 +679,15 @@ def_pcfunk1(mutex__lock__slot_funk, this, f2mutex__lock(this, this_cause); retur
 def_pcfunk1(mutex__unlock__slot_funk, this, f2mutex__unlock(this, this_cause); return nil);
 def_pcfunk1(mutex__trylock__slot_funk, this, return f2bool__new(f2mutex__trylock(this, this_cause) == 0));
 
-f2ptr f2__mutex__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__mutex__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__mutex__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__mutex__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_mutex.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_mutex.lock__symbol)) {
@@ -687,11 +740,20 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
 def_pcfunk1(char__new__slot_funk, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
 def_pcfunk1(char__ch__slot_funk, this, return this);
 
-f2ptr f2__char__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__char__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_char.ch__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__char__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__char__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_char.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_char.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_char.ch__funk;
   }
   return nil;
 }
@@ -788,15 +850,24 @@ def_pcfunk1(string__length__slot_funk, this, return f2integer__new(this_cause, f
 def_pcfunk2(string__elt__slot_funk, this, index, return f2char__new(this_cause, f2string__elt(this, this_cause, f2integer__i(index, this_cause))));
 def_pcfunk1(string__hash_value__slot_funk, this, return f2integer__new(this_cause, f2string__hash_value(this, this_cause)));
 
-f2ptr f2__string__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.new__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_string.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.length__symbol)) {
+f2ptr f2__string__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.length__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_string.length__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_string.elt__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.hash_value__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_string.hash_value__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__string__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__string__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.new__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_string.new__funk;
   }
   return nil;
 }
@@ -976,15 +1047,24 @@ def_pcfunk1(symbol__length__slot_funk, this, return f2integer__new(this_cause, f
 def_pcfunk2(symbol__elt__slot_funk, this, index, return f2char__new(this_cause, f2symbol__elt(this, this_cause, f2integer__i(index, this_cause))));
 def_pcfunk1(symbol__hash_value__slot_funk, this, return f2integer__new(this_cause, f2symbol__hash_value(this, this_cause)));
 
-f2ptr f2__symbol__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.new__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.length__symbol)) {
+f2ptr f2__symbol__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.length__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__symbol__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__symbol__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.new__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk;
   }
   return nil;
 }
@@ -1245,27 +1325,37 @@ def_pcfunk3(chunk__bit64__elt__set__slot_funk, this, index, value, f2chunk__bit6
 def_pcfunk4(chunk__cfunk_jump__slot_funk, this, thread, env, args, return f2chunk__cfunk_jump(this, this_cause, thread, env, args));
 def_pcfunk2(chunk__bytecode_jump__slot_funk, this, thread, return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, thread)));
 
-f2ptr f2__chunk__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.new__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol)) {
+f2ptr f2__chunk__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__chunk__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk;
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk;
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__chunk__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.new__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__symbol)) {
@@ -1409,15 +1499,25 @@ def_pcfunk1(simple_array__length__slot_funk, this, return f2integer__new(this_ca
 def_pcfunk2(simple_array__elt__slot_funk, this, index, return f2simple_array__elt(this, f2integer__i(index, this_cause), this_cause));
 def_pcfunk3(simple_array__elt__set__slot_funk, this, index, value, f2simple_array__elt__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
 
-f2ptr f2__simple_array__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.new__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.length__symbol)) {
+f2ptr f2__simple_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.length__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol)) {
+  }
+  return nil;
+}
+
+f2ptr f2__simple_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__simple_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.new__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk;
   }
   return nil;
 }
@@ -1770,27 +1870,37 @@ def_pcfunk3(traced_array__elt__trace__set__slot_funk, this, index, value, f2trac
 def_pcfunk2(traced_array__elt__imagination_frame__slot_funk, this, index, return f2traced_array__elt__imagination_frame(this, f2integer__i(index, this_cause), this_cause));
 def_pcfunk3(traced_array__elt__imagination_frame__set__slot_funk, this, index, value, f2traced_array__elt__imagination_frame__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
 
-f2ptr f2__traced_array__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.new__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol)) {
+f2ptr f2__traced_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__traced_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk;
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__funk;
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__funk;
   } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__traced_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.new__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk;
   }
   return nil;
 }
@@ -1835,11 +1945,20 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
 def_pcfunk1(larva__new__slot_funk, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
 def_pcfunk1(larva__type__slot_funk, this, return f2integer__new(this_cause, f2larva__type(this, this_cause)));
 
-f2ptr f2__larva__slot_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+f2ptr f2__larva__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_larva.type__symbol)) {
+    return __funk2.globalenv.object_type.ptype.ptype_larva.type__funk;
+  }
+  return nil;
+}
+
+f2ptr f2__larva__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
+  return nil;
+}
+
+f2ptr f2__larva__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_larva.new__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_larva.new__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_larva.type__symbol)) {
-    return __funk2.globalenv.object_type.ptype.ptype_larva.type__funk;
   }
   return nil;
 }

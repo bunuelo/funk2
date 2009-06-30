@@ -307,20 +307,20 @@ void f2__socket__initialize() {
   
   f2__socket__reinitialize_globalvars();
   
-  f2__primcfunk__init(f2__inaddr_any);
+  f2__primcfunk__init(f2__inaddr_any, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__socket);
-  f2__primcfunk__init(f2__accept);
-  f2__primcfunk__init(f2__connect);
-  f2__primcfunk__init(f2__bind);
-  f2__primcfunk__init(f2__getsockname);
-  f2__primcfunk__init(f2__listen);
+  f2__primcfunk__init(f2__socket, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__accept, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__connect, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__bind, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__getsockname, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__listen, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__socket__pf_unix);
-  f2__primcfunk__init(f2__socket__pf_local);
-  f2__primcfunk__init(f2__socket__pf_inet);
-  f2__primcfunk__init(f2__socket__pf_inet6);
-  f2__primcfunk__init(f2__socket__pf_ipx);
+  f2__primcfunk__init(f2__socket__pf_unix, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_local, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_inet, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_inet6, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_ipx, "(as defined in socket.h)");
 /*
   f2__primcfunk__init(f2__socket__pf_netlink);
   f2__primcfunk__init(f2__socket__pf_x25);
@@ -329,37 +329,37 @@ void f2__socket__initialize() {
   f2__primcfunk__init(f2__socket__pf_packet);
   f2__primcfunk__init(f2__socket__sock_packet);
 */
-  f2__primcfunk__init(f2__socket__pf_appletalk);
-  f2__primcfunk__init(f2__socket__sock_dgram);
-  f2__primcfunk__init(f2__socket__sock_seqpacket);
-  f2__primcfunk__init(f2__socket__sock_raw);
-  f2__primcfunk__init(f2__socket__sock_rdm);
-  f2__primcfunk__init(f2__socket__sock_stream);
+  f2__primcfunk__init(f2__socket__pf_appletalk, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__sock_dgram, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__sock_seqpacket, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__sock_raw, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__sock_rdm, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__sock_stream, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__gethostbyname);
+  f2__primcfunk__init(f2__gethostbyname, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__h_errno);
+  f2__primcfunk__init(f2__h_errno, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__h_errno__host_not_found);
-  f2__primcfunk__init(f2__h_errno__no_address);
-  f2__primcfunk__init(f2__h_errno__no_recovery);
-  f2__primcfunk__init(f2__h_errno__try_again);
+  f2__primcfunk__init(f2__h_errno__host_not_found, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__h_errno__no_address, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__h_errno__no_recovery, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__h_errno__try_again, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__hostent__h_name);
-  f2__primcfunk__init(f2__hostent__h_aliases);
-  f2__primcfunk__init(f2__hostent__h_addrtype);
-  f2__primcfunk__init(f2__hostent__h_length);
-  f2__primcfunk__init(f2__hostent__h_addr_list);
+  f2__primcfunk__init(f2__hostent__h_name, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__hostent__h_aliases, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__hostent__h_addrtype, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__hostent__h_length, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__hostent__h_addr_list, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__sockaddr_in__sin_family);
-  f2__primcfunk__init(f2__sockaddr_in__sin_port);
-  f2__primcfunk__init(f2__sockaddr_in__sin_addr);
+  f2__primcfunk__init(f2__sockaddr_in__sin_family, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__sockaddr_in__sin_port, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__sockaddr_in__sin_addr, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__chunk__send);
-  f2__primcfunk__init(f2__send);
+  f2__primcfunk__init(f2__chunk__send, "send a chunk of data (as defined in socket.h)");
+  f2__primcfunk__init(f2__send, "(as defined in socket.h)");
   
-  f2__primcfunk__init(f2__chunk__recv);
-  f2__primcfunk__init(f2__recv);
+  f2__primcfunk__init(f2__chunk__recv, "recv a chunk of data (as defined in socket.h)");
+  f2__primcfunk__init(f2__recv, "(as defined in socket.h)");
   
   resume_gc();
 }

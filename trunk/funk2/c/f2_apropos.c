@@ -76,8 +76,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
 }
 
 f2ptr f2__apropos(f2ptr cause, f2ptr find_string) {
-  f2ptr global_environment = global_environment();
-  return f2__environment__apropos(cause, global_environment, find_string);
+  return f2__environment__apropos(cause, global_environment(), find_string);
 }
 def_pcfunk1(apropos, find_string, return f2__apropos(this_cause, find_string));
 

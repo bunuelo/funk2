@@ -40,7 +40,6 @@ f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t
 
 
 
-
 void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   
   {char* type_name = "place";            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),            f2place__primobject_type__new(cause));}

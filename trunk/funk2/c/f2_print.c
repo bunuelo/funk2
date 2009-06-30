@@ -1138,7 +1138,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		}
 	      }
 	    }
-	    f2__write_pretty(cause, stream, elt, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html); width += subexp_size[0]; height += subexp_size[1];
+	    f2__write_pretty(cause, stream, elt, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    write_elt_with_space = 1;
 	  }
 	  f2__write__ansi_color(cause, stream, print__ansi__array__foreground, use_ansi_colors, use_html);

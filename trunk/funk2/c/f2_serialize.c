@@ -275,8 +275,8 @@ void f2__serialize__initialize() {
   
   f2__serialize__reinitialize_globalvars();
   
-  f2__primcfunk__init(f2__serialize);
-  f2__primcfunk__init(f2__deserialize);
+  f2__primcfunk__init(f2__serialize, "");
+  f2__primcfunk__init(f2__deserialize, "");
   
   resume_gc();
   try_gc();

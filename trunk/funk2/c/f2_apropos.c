@@ -45,7 +45,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
   f2ptr bin_array         = f2hashtable__bin_array(funkvar_hashtable, cause);
   s64   length            = raw__array__length(cause, bin_array);
   
-  f2ptr match_seq = nil;
+  f2ptr match_frame = f2frame__new_empty(cause);
   
   s64 index;
   for (index = 0; index < length; index ++) {
@@ -75,13 +75,12 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       }
       
       if (matches) {
-	f2ptr match_pair = f2list2__new(cause, key, documentation);
-	match_seq        = f2cons__new(cause, match_pair, match_seq);
+	f2__frame__add_funkvar_value(cause, match_frame, key, value);
       }
       iter = f2cons__cdr(iter, cause);
     }
   }
-  return match_seq;
+  return match_frame;
 }
 
 f2ptr f2__apropos(f2ptr cause, f2ptr find_string) {

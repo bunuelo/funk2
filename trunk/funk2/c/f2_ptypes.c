@@ -1341,13 +1341,13 @@ f2ptr f2__chunk__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 }
 
 f2ptr f2__chunk__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__symbol)) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk;
   }
   return nil;
@@ -1509,7 +1509,7 @@ f2ptr f2__simple_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 }
 
 f2ptr f2__simple_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol)) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk;
   }
   return nil;
@@ -1886,13 +1886,13 @@ f2ptr f2__traced_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 }
 
 f2ptr f2__traced_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol)) {
+  if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__funk;
-  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__symbol)) {
     return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__funk;
   }
   return nil;

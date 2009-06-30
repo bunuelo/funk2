@@ -89,7 +89,8 @@ extern f2ptr   f2primobject__new(             f2ptr cause, f2ptr type, f2ptr sta
 // place
 
 extern f2ptr __place__symbol;
-extern f2ptr f2place__new(f2ptr cause, f2ptr thing);
+f2ptr f2place__new(f2ptr cause, f2ptr thing);
+f2ptr f2place__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_place(this, cause)      raw__eq(cause, f2primobject__type(this, cause), __place__symbol)
 
@@ -104,8 +105,9 @@ defprimobject__static_slot__prototype(place__thing);
 // cons
 
 extern f2ptr __cons__symbol;
-extern f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth);
-extern f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr);
+f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth);
+f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr);
+f2ptr f2cons__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_cons(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cons__symbol)
 
@@ -155,8 +157,9 @@ defprimobject__static_slot__prototype(cons__cdr);
 // doublelink
 
 extern f2ptr __doublelink__symbol;
-extern f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value, int trace_depth);
-extern f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
+f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value, int trace_depth);
+f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
+f2ptr f2doublelink__primobject_type__new(f2ptr cause);
 #define f2primobject__is_doublelink(this, cause) raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol)
 
 defprimobject__static_slot__prototype(doublelink__prev);
@@ -189,6 +192,7 @@ defprimobject__static_slot__prototype(doublelink__value);
 extern f2ptr __imagination_link__symbol;
 f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame, int trace_depth);
 f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame);
+f2ptr f2imagination_link__primobject_type__new(f2ptr cause);
 #define f2primobject__is_imagination_link(this, cause) raw__eq(cause, f2primobject__type(this, cause), __imagination_link__symbol)
 
 defprimobject__static_slot__prototype(imagination_link__next);
@@ -253,6 +257,7 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 
 extern f2ptr __cfunk__symbol;
 f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
+f2ptr f2cfunk__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_cfunk(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cfunk__symbol)
 
@@ -303,6 +308,7 @@ defprimobject__static_slot__prototype(cfunk__documentation);
 
 extern f2ptr __metrocfunk__symbol;
 f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
+f2ptr f2metrocfunk__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_metrocfunk(       this, cause)        raw__eq(cause, f2primobject__type(this, cause), __metrocfunk__symbol)
 
@@ -353,6 +359,7 @@ defprimobject__static_slot__prototype(metrocfunk__documentation);
 
 extern f2ptr __funk__symbol;
 f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation);
+f2ptr f2funk__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_funk(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __funk__symbol)
 
@@ -424,6 +431,7 @@ defprimobject__static_slot__prototype(funk__documentation);
 
 extern f2ptr __metro__symbol;
 f2ptr f2metro__new(f2ptr context, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation);
+f2ptr f2metro__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_metro(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __metro__symbol)
 
@@ -494,7 +502,8 @@ defprimobject__static_slot__prototype(metro__documentation);
 // exception
 
 extern f2ptr __exception__symbol;
-extern f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value);
+f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value);
+f2ptr f2exception__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_exception(    this, cause)        raw__eq(cause, f2primobject__type(this, cause), __exception__symbol)
 
@@ -516,6 +525,7 @@ defprimobject__static_slot__prototype(exception__value);
 
 extern f2ptr __bytecode__symbol;
 f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2);
+f2ptr f2bytecode__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_bytecode(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode__symbol)
 
@@ -569,6 +579,7 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr execute_mutex,
 		    f2ptr paused,
 		    f2ptr last_executed_time);
+f2ptr f2thread__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_thread(                 this, cause)        raw__eq(cause, f2primobject__type(this, cause), __thread__symbol)
 
@@ -699,6 +710,7 @@ defprimobject__static_slot__prototype(thread__last_executed_time);
 
 extern f2ptr __processor__symbol;
 f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc);
+f2ptr f2processor__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_processor(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __processor__symbol)
 
@@ -763,6 +775,7 @@ defprimobject__static_slot__prototype(processor__desc);
 
 extern f2ptr __scheduler__symbol;
 f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer);
+f2ptr f2scheduler__primobject_type__new(f2ptr cause);
 #define f2primobject__is_scheduler(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __scheduler__symbol)
 
 defprimobject__static_slot__prototype(scheduler__processors);
@@ -803,8 +816,9 @@ defprimobject__static_slot__prototype(scheduler__event_buffer);
 
 // event_subscriber
 
-f2ptr __event_subscriber__symbol;
+extern f2ptr __event_subscriber__symbol;
 f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_type, f2ptr thread, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex);
+f2ptr f2event_subscriber__primobject_type__new(f2ptr cause);
 #define f2primobject__is__event_subscriber(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __event_subscriber__symbol)
 
 defprimobject__static_slot__prototype(event_subscriber__event_types);
@@ -851,6 +865,7 @@ defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
 f2ptr __cause__symbol;
 f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr bmemory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
+f2ptr f2cause__primobject_type__new(f2ptr cause);
 f2ptr f2__cause__new_with_default_properties(f2ptr cause);
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
@@ -939,6 +954,7 @@ void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 extern f2ptr __transframe__symbol;
 f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news, int trace_depth);
 f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news);
+f2ptr f2transframe__primobject_type__new(f2ptr cause);
 #define f2primobject__is_transframe(this, cause) raw__eq(cause, f2primobject__type(this, cause), __transframe__symbol)
 
 defprimobject__static_slot__prototype(transframe__microseconds_since_1970);
@@ -963,6 +979,7 @@ defprimobject__static_slot__prototype(transframe__symbol_old_news);
 
 extern f2ptr __bug__symbol;
 extern f2ptr f2bug__new(f2ptr cause, f2ptr type);
+f2ptr f2bug__primobject_type__new(f2ptr cause);
 #define f2primobject__is_bug(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bug__symbol)
 
 defprimobject__static_slot__prototype(bug__type);
@@ -977,6 +994,7 @@ defprimobject__static_slot__prototype(bug__type);
 
 extern f2ptr __size_2d__symbol;
 extern f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2size_2d__primobject_type__new(f2ptr cause);
 #define f2primobject__is__size_2d(this, cause)        raw__eq(cause, f2primobject__type(this, cause), __size_2d__symbol)
 
 defprimobject__static_slot__prototype(size_2d__x);
@@ -999,6 +1017,7 @@ defprimobject__static_slot__prototype(size_2d__y);
 extern f2ptr __event__symbol;
 f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data, int trace_depth);
 f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data);
+f2ptr f2event__primobject_type__new(f2ptr cause);
 #define f2primobject__is__event(this, cause) raw__eq(cause, f2primobject__type(this, cause), __event__symbol)
 
 defprimobject__static_slot__prototype(event__node_id);
@@ -1039,6 +1058,7 @@ defprimobject__static_slot__prototype(event__data);
 extern f2ptr __bytecode_event__symbol;
 f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr context, int trace_depth);
 f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context);
+f2ptr f2bytecode_event__primobject_type__new(f2ptr cause);
 #define f2primobject__is__bytecode_event(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode_event__symbol)
 
 defprimobject__static_slot__prototype(bytecode_event__bytecode);
@@ -1056,6 +1076,9 @@ defprimobject__static_slot__prototype(bytecode_event__context);
 #define f2bytecode_event__context__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, bytecode_event__context, cause)
 #define f2bytecode_event__context__trace(            this, cause)                     primobject__static_slot__trace(            this, bytecode_event__context, cause)
 #define f2bytecode_event__context__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, bytecode_event__context, cause)
+
+
+
 
 
 // end of objects

@@ -902,36 +902,6 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 
 boolean_t raw__larvap(f2ptr x, f2ptr cause);
 
-// place
-
-boolean_t raw__placep(f2ptr x, f2ptr cause);
-f2ptr f2__place(f2ptr cause, f2ptr x);
-f2ptr f2__placep(f2ptr cause, f2ptr x);
-f2ptr f2__place__thing(f2ptr cause, f2ptr x);
-f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y);
-
-// cons
-
-boolean_t raw__consp(f2ptr x, f2ptr cause);
-f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__consp(f2ptr cause, f2ptr x);
-f2ptr f2__cons__car(f2ptr cause, f2ptr x);
-f2ptr f2__cons__car__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__cons__cdr(f2ptr cause, f2ptr x);
-f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
-
-// doublelink
-
-boolean_t raw__doublelinkp(f2ptr x, f2ptr cause);
-f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__doublelinkp(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__prev__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__doublelink__next(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__doublelink__value(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y);
-
 // chunk
 
 f2ptr f2__chunk(f2ptr cause, f2ptr length);
@@ -964,36 +934,6 @@ f2ptr f2__elt(f2ptr cause, f2ptr this, f2ptr index);
 
 // deprecated (use raw__elt or f2__elt instead)
 f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);
-
-// primobject cfunk
-
-boolean_t raw__cfunkp(f2ptr x, f2ptr cause);
-
-// primobject funk
-
-boolean_t raw__funkp(f2ptr x, f2ptr cause);
-
-// primobject metro
-
-boolean_t raw__metrop(f2ptr x, f2ptr cause);
-
-// primobject metrocfunk
-
-boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause);
-
-// primobject bytecode
-
-boolean_t raw__bytecodep(f2ptr x, f2ptr cause);
-
-// primobject cause
-
-boolean_t raw__causep(f2ptr x, f2ptr cause);
-
-// primobject thread
-
-boolean_t raw__threadp(f2ptr x, f2ptr cause);
-
-// primobject exception
 
 
 // interface funkable (includes types: funk, metro, cfunk, metrocfunk)

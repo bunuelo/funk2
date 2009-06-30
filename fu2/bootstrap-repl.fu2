@@ -753,6 +753,7 @@
 		[[double?              exp]  exp]
 		[[float?               exp]  exp]
 		[[pointer?             exp]  exp]
+		[[frame?               exp]  exp]
 		[[funk?                exp] `[funk       ,[funk-name exp]       ,[funk-args exp]]]
 		[[metro?               exp] `[metro      ,[metro-name exp]      ,[metro-args exp]]]
 		[[cfunk?               exp] `[cfunk      ,[cfunk-name exp]      ,[cfunk-args exp]]]

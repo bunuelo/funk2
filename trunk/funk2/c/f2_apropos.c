@@ -67,9 +67,10 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       }
       resume_gc();
       if (! matches) {
-	if (raw__stringp(documentation, cause) &&
-	    raw__string__contains(cause, documentation, find_string)) {
-	  matches = boolean__true;
+	if (raw__stringp(documentation, cause)) {
+	  if (f2__string__contains(cause, documentation, find_string) != nil) {
+	    matches = boolean__true;
+	  }
 	}
       }
       

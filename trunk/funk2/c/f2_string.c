@@ -322,7 +322,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
 }
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));
 
-boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
+f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   if ((! raw__stringp(this,      cause)) ||
       (! raw__stringp(substring, cause))) {
     return f2larva__new(cause, 1);
@@ -331,10 +331,10 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   u64 substring__length = f2string__length(substring, cause);
   u64 this__length      = f2string__length(this,      cause);
   if (substring__length == 0) {
-    return f2larva__new(cause, 97);
+    return f2bool__new(boolean__true);
   }
   if (substring__length > this__length) {
-    return f2larva__new(cause, 98);
+    return f2bool__new(boolean__false);
   }
   u8* substring__str = (u8*)malloc(substring__length);
   f2string__str_copy(substring, cause, substring__str);
@@ -346,14 +346,10 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   u64 sup_index = this__length - substring__length + 1;
   for (index = 0; index <= sup_index; index ++) {
     if (memcmp(this__str + index, substring__str, substring__length) == 0) {
-      return boolean__true;
+      return f2bool__new(boolean__true);
     }
   }
-  return boolean__false;
-}
-
-f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
-  return f2bool__new(raw__string__contains(cause, this, substring));
+  return f2bool__new(boolean__false);
 }
 def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_cause, this, substring));
 

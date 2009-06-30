@@ -281,19 +281,19 @@ void f2__primobject__stream__initialize() {
   environment__add_var_value(cause, global_environment(), __string_stream__symbol,      nil);
   environment__add_var_value(cause, global_environment(), __text_window_stream__symbol, nil);
   
-  f2__primcfunk__init(file_stream__new);
-  f2__primcfunk__init(string_stream__new);
-  f2__primcfunk__init(string_stream);
-  f2__primcfunk__init(stream__new_open_file);
-  f2__primcfunk__init(stream__close);
-  f2__primcfunk__init(stream__file_mode__rdonly);
-  f2__primcfunk__init(stream__file_mode__creat);
-  f2__primcfunk__init(stream__file_mode__rdwr);
-  f2__primcfunk__init(stream__nonblocking__set);
-  f2__primcfunk__init(stream__ungetc);
-  f2__primcfunk__init(stream__try_read_character);
-  f2__primcfunk__init(text_window_stream__new);
-  f2__primcfunk__init(text_window_stream);
+  f2__primcfunk__init(file_stream__new, "");
+  f2__primcfunk__init(string_stream__new, "");
+  f2__primcfunk__init(string_stream, "");
+  f2__primcfunk__init(stream__new_open_file, "");
+  f2__primcfunk__init(stream__close, "");
+  f2__primcfunk__init(stream__file_mode__rdonly, "");
+  f2__primcfunk__init(stream__file_mode__creat, "");
+  f2__primcfunk__init(stream__file_mode__rdwr, "");
+  f2__primcfunk__init(stream__nonblocking__set, "");
+  f2__primcfunk__init(stream__ungetc, "");
+  f2__primcfunk__init(stream__try_read_character, "");
+  f2__primcfunk__init(text_window_stream__new, "");
+  f2__primcfunk__init(text_window_stream, "");
   
   resume_gc();
   try_gc();

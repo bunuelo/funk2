@@ -377,15 +377,15 @@ void f2__thought_process__initialize() {
   //f2__primcfunk__init(thought_process__execute_funk);
   //f2__primcfunk__init(thought_process__execute_funk__put);
   
-  f2__primcfunk__init(thought_process__read_funk);
-  f2__primcfunk__init(thought_process__read_funk__put);
-  f2__primcfunk__init(thought_process__write_funk);
-  f2__primcfunk__init(thought_process__write_funk__put);
-  f2__primcfunk__init(thought_process__execute_funk);
-  f2__primcfunk__init(thought_process__execute_funk__put);
-  f2__primcfunk__init(abstract);
-  f2__primcfunk__init(realize);
-  f2__primcfunk__init(thought_process);
+  f2__primcfunk__init(thought_process__read_funk, "");
+  f2__primcfunk__init(thought_process__read_funk__put, "");
+  f2__primcfunk__init(thought_process__write_funk, "");
+  f2__primcfunk__init(thought_process__write_funk__put, "");
+  f2__primcfunk__init(thought_process__execute_funk, "");
+  f2__primcfunk__init(thought_process__execute_funk__put, "");
+  f2__primcfunk__init(abstract, "");
+  f2__primcfunk__init(realize, "");
+  f2__primcfunk__init(thought_process, "");
   
   resume_gc();
   try_gc();

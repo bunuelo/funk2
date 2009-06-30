@@ -22,19 +22,24 @@
 #include "funk2.h"
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this) {
-  this->type_hash = raw__hashtable__new(cause, 5);
+  this->type_hash = nil;
 }
 
 void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this) {
 }
 
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
+  if (this->type_hash == nil) {this->type_hash = raw__hashtable__new(cause, 5);}
   hashtable__add_keyvalue_pair(cause, this->type_hash, type_name, type);
 }
 
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
+  if (this->type_hash == nil) {this->type_hash = raw__hashtable__new(cause, 5);}
   return f2__hashtable__lookup_value(this->type_hash, cause, type_name);
 }
+
+
+
 
 void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   

@@ -165,6 +165,7 @@ typedef struct funk2_s {
   funk2_primobject_circular_buffer_t primobject__circular_buffer;
   funk2_child_process_handler_t      child_process_handler;
   funk2_processor_thread_handler_t   processor_thread_handler;
+  funk2_primobject_type_handler_t    primobject_type_handler;
 } funk2_t;
 
 boolean_t funk2__handle(funk2_t* this);

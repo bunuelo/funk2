@@ -134,6 +134,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_child_process_handler__init(&(this->child_process_handler));
   funk2_processor_thread_handler__init(&(this->processor_thread_handler));
   
+  funk2_primobject_type_handler__init(&(this->primobject_type_handler));
+  
   f2ptr cause = initial_cause();
   
   char* install__bootstrap_img__filename      = F2__INSTALL__BOOTSTRAP_IMG__FILENAME;
@@ -141,6 +143,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   char* compile__bootstrap_repl_img__filename = F2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME;
   char* other__bootstrap_img__filename        = "/mit/6.868/funk2/img/bootstrap.img";
   
+
   f2__initialize();
   
   // try to load the default system-wide bootstrap image
@@ -252,6 +255,7 @@ void funk2__destroy(funk2_t* this) {
   print_bytecode_stats(stdout);
   print_gc_stats();
   
+  funk2_primobject_type_handler__destroy(&(this->primobject_type_handler));
   funk2_event_router__destroy(&(this->event_router));
   funk2_locale__destroy(&(this->locale));
   funk2_operating_system__destroy(&(this->operating_system));

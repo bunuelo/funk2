@@ -28,4 +28,77 @@ void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this) 
 void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this) {
 }
 
+void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
+  if (this->type_hash == nil) {
+    printf("\nfunk2_primobject_type_handler__add_type error: type_hash not initialized yet.\n"); fflush(stdout);
+    error(nil, "funk2_primobject_type_handler__add_type error: type_hash not initialized yet.");
+  }
+  
+}
+
+void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
+  if (this->type_hash == nil) {
+    this->type_hash = raw__hashtable__new(cause, 5);
+  }
+  
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("place"),            "place"),            f2place__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cons"),             "cons"),             f2cons__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("doublelink"),       "doublelink"),       f2doublelink__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("imagination_link"), "imagination_link"), f2imagination_link__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cfunk"),            "cfunk"),            f2cfunk__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("metrocfunk"),       "metrocfunk"),       f2metrocfunk__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("funk"),             "funk"),             f2funk__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("metro"),            "metro"),            f2metro__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("exception"),        "exception"),        f2exception__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bytecode"),         "bytecode"),         f2bytecode__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("thread"),           "thread"),           f2thread__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("processor"),        "processor"),        f2processor__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("scheduler"),        "scheduler"),        f2scheduler__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("event"),            "event"),            f2event_subscriber__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cause"),            "cause"),            f2cause__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("transframe"),       "transframe"),       f2transframe__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bug"),              "bug"),              f2bug__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("size_2d"),          "size_2d"),          f2size_2d__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("event"),            "event"),            f2event__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bytecode_event"),   "bytecode_event"),   f2bytecode_event__primobject_type__new(cause));
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

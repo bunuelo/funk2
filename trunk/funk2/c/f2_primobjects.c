@@ -61,6 +61,9 @@ f2ptr f2place__new(f2ptr cause, f2ptr p) {
   return this;
 }
 
+f2ptr f2place__primobject_type__new(f2ptr cause) {
+  return nil;
+}
 
 // cons
 
@@ -79,6 +82,10 @@ f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_dept
 
 f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
   return f2cons__new__trace_depth(cause, car, cdr, 1);
+}
+
+f2ptr f2cons__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 
@@ -103,6 +110,11 @@ f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
   return f2doublelink__new__trace_depth(cause, prev, next, value, 1);
 }
 
+f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
+
 // imagination_link
 
 defprimobject__static_slot(imagination_link__next,              0);
@@ -123,6 +135,11 @@ f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, 
   f2imagination_link__imagination_frame__set__trace_depth(this, cause, imagination_frame, trace_depth);
   return this;
 }
+
+f2ptr f2imagination_link__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {
   return f2imagination_link__new__trace_depth(cause, next, name, value, trace, imagination_frame, 1);
@@ -244,6 +261,11 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr en
   return this;
 }
 
+f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
+
 // metrocfunk
 
 defprimobject__static_slot(metrocfunk__name,          0);
@@ -268,6 +290,10 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2p
   f2metrocfunk__documentation__set(this, cause, documentation);
   /*resume_gc();*/
   return this;
+}
+
+f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 
@@ -302,6 +328,10 @@ f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2p
   return this;
 }
 
+f2ptr f2funk__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 // metro
 
@@ -334,6 +364,10 @@ f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2
   return this;
 }
 
+f2ptr f2metro__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 // exception
 
@@ -350,6 +384,10 @@ f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
   f2exception__value__set(this, cause, value);
   /*resume_gc();*/
   return this;
+}
+
+f2ptr f2exception__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 
@@ -372,6 +410,10 @@ f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr 
   f2bytecode__arg2__set(   this, cause, arg2);
   /*resume_gc();*/
   return this;
+}
+
+f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 
@@ -439,6 +481,10 @@ f2ptr f2thread__new(f2ptr cause,
   return this;
 }
 
+f2ptr f2thread__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 //int f2thread__is_complete(f2ptr this) {
 //  return __pure__f2thread__is_complete(this);
 //}
@@ -471,6 +517,10 @@ f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2p
   return this;
 }
 
+f2ptr f2processor__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 // scheduler
 
@@ -493,6 +543,10 @@ f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mu
   return this;
 }
 
+f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 // event_subscriber
 
@@ -513,6 +567,10 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr thread, f2pt
   f2event_subscriber__event_buffer__set(      this, cause, event_buffer);
   f2event_subscriber__event_buffer_mutex__set(this, cause, event_buffer_mutex);
   return this;
+}
+
+f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 
@@ -546,6 +604,11 @@ f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tra
   f2cause__current_events__set(        this, cause, current_events);
   return this;
 }
+
+f2ptr f2cause__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
   f2ptr subscribers_mutex    = f2mutex__new(cause);
@@ -626,6 +689,10 @@ f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970,
   return this;
 }
 
+f2ptr f2transframe__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news) {
   return f2transframe__new__trace_depth(cause, microseconds_since_1970, symbol_old_news, 1);
 }
@@ -644,6 +711,10 @@ f2ptr f2bug__new(f2ptr cause, f2ptr type) {
   return this;
 }
 
+f2ptr f2bug__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 
 // size_2d
 
@@ -658,6 +729,10 @@ f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {
   f2size_2d__x__set(this, cause, x);
   f2size_2d__y__set(this, cause, y);
   return this;
+}
+
+f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 
@@ -680,6 +755,10 @@ f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2pt
   return this;
 }
 
+f2ptr f2event__primobject_type__new(f2ptr cause) {
+  return nil;
+}
+
 f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {
   return f2event__new__trace_depth(cause, node_id, event_id, type, data, 1);
 }
@@ -698,6 +777,10 @@ f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr cont
   f2bytecode_event__bytecode__set__trace_depth(this, cause, bytecode, trace_depth);
   f2bytecode_event__context__set__trace_depth( this, cause, context,  trace_depth);
   return this;
+}
+
+f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
+  return nil;
 }
 
 f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {

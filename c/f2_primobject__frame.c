@@ -176,15 +176,15 @@ void f2__primobject_frame__initialize() {
   
   f2__primobject_frame__reinitialize_globalvar__symbols();
   
-  f2__primcfunk__init(frame__new);
-  f2__primcfunk__init(frame__add_var_value);
-  f2__primcfunk__init(frame__lookup_var_value);
-  f2__primcfunk__init(frame__var_value__set);
-  f2__primcfunk__init(frame__add_funkvar_value);
-  f2__primcfunk__init(frame__lookup_funkvar_value);
-  f2__primcfunk__init(frame__funkvar_value__set);
-  f2__primcfunk__init(frame__create_var_list);
-  f2__primcfunk__init(frame__create_funkvar_list);
+  f2__primcfunk__init(frame__new, "");
+  f2__primcfunk__init(frame__add_var_value, "");
+  f2__primcfunk__init(frame__lookup_var_value, "");
+  f2__primcfunk__init(frame__var_value__set, "");
+  f2__primcfunk__init(frame__add_funkvar_value, "");
+  f2__primcfunk__init(frame__lookup_funkvar_value, "");
+  f2__primcfunk__init(frame__funkvar_value__set, "");
+  f2__primcfunk__init(frame__create_var_list, "");
+  f2__primcfunk__init(frame__create_funkvar_list, "");
   
   __frame__variable_type__symbol      = f2symbol__new(initial_cause(), strlen("variable"),      (u8*)"variable");
   __frame__funk_variable_type__symbol = f2symbol__new(initial_cause(), strlen("funk_variable"), (u8*)"funk_variable");

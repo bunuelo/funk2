@@ -555,7 +555,7 @@
 //#define f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, cfunk_args_code, doc_string) \//
 //  f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, cfunk_args_code, nil, doc_string)
 
-#define f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional, documentation, doc_string) \
+#define f2__primcfunk__init__with_c_cfunk_var__0_arg(name, c_cfunk_var, is_funktional, doc_string) \
   f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, is_funktional, nil, doc_string)
 
 #define f2__primcfunk__init__with_c_cfunk_var__0_arg_and_rest(name, and_rest, c_cfunk_var, is_funktional, doc_string) \

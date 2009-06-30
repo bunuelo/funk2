@@ -88,44 +88,44 @@ void f2__primfunks__fcntl__initialize() {
   
   f2__primfunks__fcntl__reinitialize_globalvars();
   
-  f2__primcfunk__init(f2__fcntl);
-  f2__primcfunk__init(f2__fcntl__getfd);
-  f2__primcfunk__init(f2__fcntl__setfd);
-  f2__primcfunk__init(f2__fcntl__getfl);
-  f2__primcfunk__init(f2__fcntl__setfl);
-  f2__primcfunk__init(f2__fcntl__f_dupfd);
-  f2__primcfunk__init(f2__fcntl__f_getfd);
-  f2__primcfunk__init(f2__fcntl__f_setfd);
-  f2__primcfunk__init(f2__fcntl__f_getfl);
-  f2__primcfunk__init(f2__fcntl__f_setfl);
-  f2__primcfunk__init(f2__fcntl__f_getown);
-  f2__primcfunk__init(f2__fcntl__f_setown);
-  f2__primcfunk__init(f2__fcntl__f_getlk);
-  f2__primcfunk__init(f2__fcntl__f_setlk);
-  f2__primcfunk__init(f2__fcntl__f_setlkw);
+  f2__primcfunk__init(f2__fcntl, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__getfd, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__setfd, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__getfl, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__setfl, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_dupfd, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_getfd, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_setfd, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_getfl, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_setfl, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_getown, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_setown, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_getlk, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_setlk, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__f_setlkw, "(as defined in fcntl.h)");
   
-  f2__primcfunk__init(f2__fcntl__o_append);
-  f2__primcfunk__init(f2__fcntl__o_async);
-  f2__primcfunk__init(f2__fcntl__o_creat);
+  f2__primcfunk__init(f2__fcntl__o_append, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_async, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_creat, "(as defined in fcntl.h)");
 
 #ifdef __APPLE__
 
 #else
-  f2__primcfunk__init(f2__fcntl__o_direct);	
-  f2__primcfunk__init(f2__fcntl__o_largefile);
-  f2__primcfunk__init(f2__fcntl__o_noatime);
+  f2__primcfunk__init(f2__fcntl__o_direct, "(as defined in fcntl.h)");	
+  f2__primcfunk__init(f2__fcntl__o_largefile, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_noatime, "(as defined in fcntl.h)");
 #endif
 
-  f2__primcfunk__init(f2__fcntl__o_directory);
-  f2__primcfunk__init(f2__fcntl__o_excl);
-  f2__primcfunk__init(f2__fcntl__o_noctty);
-  f2__primcfunk__init(f2__fcntl__o_nofollow);
-  f2__primcfunk__init(f2__fcntl__o_nonblock);
-  f2__primcfunk__init(f2__fcntl__o_sync);
-  f2__primcfunk__init(f2__fcntl__o_trunc);
-  f2__primcfunk__init(f2__fcntl__o_rdonly);
-  f2__primcfunk__init(f2__fcntl__o_wronly);
-  f2__primcfunk__init(f2__fcntl__o_rdwr);
+  f2__primcfunk__init(f2__fcntl__o_directory, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_excl, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_noctty, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_nofollow, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_nonblock, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_sync, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_trunc, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_rdonly, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_wronly, "(as defined in fcntl.h)");
+  f2__primcfunk__init(f2__fcntl__o_rdwr, "(as defined in fcntl.h)");
   
   resume_gc();
 }

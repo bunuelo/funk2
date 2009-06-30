@@ -61,6 +61,20 @@ f2ptr f2place__new(f2ptr cause, f2ptr p) {
   return this;
 }
 
+boolean_t raw__placep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_place(x, cause));}
+
+f2ptr f2__place(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}
+def_pcfunk1(place, x, return f2__place(this_cause, x));
+
+f2ptr f2__placep(f2ptr cause, f2ptr x) {return f2bool__new(raw__placep(x, cause));}
+def_pcfunk1(placep, x, return f2__placep(this_cause, x));
+
+f2ptr f2__place__thing(f2ptr cause, f2ptr x) {return f2place__thing(x, cause);}
+def_pcfunk1(place__thing, x, return f2__place__thing(this_cause, x));
+
+f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y) {f2place__thing__set(x, cause, y); return nil;}
+def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x, y));
+
 f2ptr f2place__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "thing"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
@@ -85,6 +99,26 @@ f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_dept
 f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
   return f2cons__new__trace_depth(cause, car, cdr, 1);
 }
+
+boolean_t raw__consp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cons(x, cause));}
+
+f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
+def_pcfunk2(cons, x, y, return f2__cons(this_cause, x, y));
+
+f2ptr f2__consp(f2ptr cause, f2ptr x) {return f2bool__new(raw__consp(x, cause));}
+def_pcfunk1(consp, x, return f2__consp(this_cause, x));
+
+f2ptr f2__cons__car(f2ptr cause, f2ptr x) {return f2cons__car(x, cause);}
+def_pcfunk1(cons__car, x, return f2__cons__car(this_cause, x));
+
+f2ptr f2__cons__car__set(f2ptr cause, f2ptr x, f2ptr y) {f2cons__car__set(x, cause, y); return nil;}
+def_pcfunk2(cons__car__set, x, y, return f2__cons__car__set(this_cause, x, y));
+
+f2ptr f2__cons__cdr(f2ptr cause, f2ptr x) {return f2cons__cdr(x, cause);}
+def_pcfunk1(cons__cdr, x, return f2__cons__cdr(this_cause, x));
+
+f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y) {f2cons__cdr__set(x, cause, y); return nil;}
+def_pcfunk2(cons__cdr__set, x, y, return f2__cons__cdr__set(this_cause, x, y));
 
 f2ptr f2cons__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
@@ -114,6 +148,32 @@ f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr 
 f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
   return f2doublelink__new__trace_depth(cause, prev, next, value, 1);
 }
+
+boolean_t raw__doublelinkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
+
+f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
+def_pcfunk3(doublelink, x, y, z, return f2__doublelink(this_cause, x, y, z));
+
+f2ptr f2__doublelinkp(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublelinkp(x, cause));}
+def_pcfunk1(doublelinkp, x, return f2__doublelinkp(this_cause, x));
+
+f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x) {return f2doublelink__prev(x, cause);}
+def_pcfunk1(doublelink__prev, x, return f2__doublelink__prev(this_cause, x));
+
+f2ptr f2__doublelink__prev__set(f2ptr cause, f2ptr x, f2ptr y) {f2doublelink__prev__set(x, cause, y); return nil;}
+def_pcfunk2(doublelink__prev__set, x, y, return f2__doublelink__prev__set(this_cause, x, y));
+
+f2ptr f2__doublelink__next(f2ptr cause, f2ptr x) {return f2doublelink__next(x, cause);}
+def_pcfunk1(doublelink__next, x, return f2__doublelink__next(this_cause, x));
+
+f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y) {f2doublelink__next__set(x, cause, y); return nil;}
+def_pcfunk2(doublelink__next__set, x, y, return f2__doublelink__next__set(this_cause, x, y));
+
+f2ptr f2__doublelink__value(f2ptr cause, f2ptr x) {return f2doublelink__value(x, cause);}
+def_pcfunk1(doublelink__value, x, return f2__doublelink__value(this_cause, x));
+
+f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y) {f2doublelink__value__set(x, cause, y); return nil;}
+def_pcfunk2(doublelink__value__set, x, y, return f2__doublelink__value__set(this_cause, x, y));
 
 f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
@@ -276,6 +336,8 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr en
   return this;
 }
 
+boolean_t raw__cfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cfunk(x, cause));}
+
 f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
@@ -313,6 +375,8 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2p
   /*resume_gc();*/
   return this;
 }
+
+boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metrocfunk(x, cause));}
 
 f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
@@ -356,6 +420,8 @@ f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2p
   /*resume_gc();*/
   return this;
 }
+
+boolean_t raw__funkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_funk(x, cause));}
 
 f2ptr f2funk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
@@ -403,6 +469,8 @@ f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2
   return this;
 }
 
+boolean_t raw__metrop(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metro(x, cause));}
+
 f2ptr f2metro__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "name";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
@@ -435,6 +503,11 @@ f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
   return this;
 }
 
+boolean_t raw__exceptionp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_exception(x, cause));}
+
+f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
+def_pcfunk2(exception, tag, value, return f2__exception(this_cause, tag, value));
+
 f2ptr f2exception__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "tag";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
@@ -463,6 +536,8 @@ f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr 
   /*resume_gc();*/
   return this;
 }
+
+boolean_t raw__bytecodep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_bytecode(x, cause));}
 
 f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
@@ -700,6 +775,8 @@ f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tra
   f2cause__current_events__set(        this, cause, current_events);
   return this;
 }
+
+boolean_t raw__causep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cause(x, cause));}
 
 f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
@@ -965,6 +1042,33 @@ void f2__primobjects__initialize() {
   environment__add_var_value(cause, global_environment(), __size_2d__symbol,          nil);
   environment__add_var_value(cause, global_environment(), __event__symbol,            nil);
   environment__add_var_value(cause, global_environment(), __bytecode_event__symbol,   nil);
+  
+  // place
+  
+  f2__primcfunk__init(place, "");
+  f2__funktional_primcfunk__init(placep, "");
+  f2__primcfunk__init(place__thing, "");
+  f2__primcfunk__init(place__thing__set, "");
+  
+  // cons
+  
+  f2__funktional_primcfunk__init(consp, "");
+  f2__primcfunk__init(cons, "");
+  f2__primcfunk__init(cons__car, "");
+  f2__primcfunk__init(cons__car__set, "");
+  f2__primcfunk__init(cons__cdr, "");
+  f2__primcfunk__init(cons__cdr__set, "");
+  
+  // doublelink
+  
+  f2__primcfunk__init(doublelink, "");
+  f2__funktional_primcfunk__init(doublelinkp, "");
+  f2__primcfunk__init(doublelink__prev, "");
+  f2__primcfunk__init(doublelink__prev__set, "");
+  f2__primcfunk__init(doublelink__next, "");
+  f2__primcfunk__init(doublelink__next__set, "");
+  f2__primcfunk__init(doublelink__value, "");
+  f2__primcfunk__init(doublelink__value__set, "");
   
   resume_gc();
   try_gc();

@@ -603,72 +603,6 @@ def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__
 
 boolean_t raw__larvap(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
 
-// place
-
-boolean_t raw__placep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_place(x, cause));}
-
-f2ptr f2__place(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}
-def_pcfunk1(place, x, return f2__place(this_cause, x));
-
-f2ptr f2__placep(f2ptr cause, f2ptr x) {return f2bool__new(raw__placep(x, cause));}
-def_pcfunk1(placep, x, return f2__placep(this_cause, x));
-
-f2ptr f2__place__thing(f2ptr cause, f2ptr x) {return f2place__thing(x, cause);}
-def_pcfunk1(place__thing, x, return f2__place__thing(this_cause, x));
-
-f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y) {f2place__thing__set(x, cause, y); return nil;}
-def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x, y));
-
-// cons
-
-boolean_t raw__consp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cons(x, cause));}
-
-f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
-def_pcfunk2(cons, x, y, return f2__cons(this_cause, x, y));
-
-f2ptr f2__consp(f2ptr cause, f2ptr x) {return f2bool__new(raw__consp(x, cause));}
-def_pcfunk1(consp, x, return f2__consp(this_cause, x));
-
-f2ptr f2__cons__car(f2ptr cause, f2ptr x) {return f2cons__car(x, cause);}
-def_pcfunk1(cons__car, x, return f2__cons__car(this_cause, x));
-
-f2ptr f2__cons__car__set(f2ptr cause, f2ptr x, f2ptr y) {f2cons__car__set(x, cause, y); return nil;}
-def_pcfunk2(cons__car__set, x, y, return f2__cons__car__set(this_cause, x, y));
-
-f2ptr f2__cons__cdr(f2ptr cause, f2ptr x) {return f2cons__cdr(x, cause);}
-def_pcfunk1(cons__cdr, x, return f2__cons__cdr(this_cause, x));
-
-f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y) {f2cons__cdr__set(x, cause, y); return nil;}
-def_pcfunk2(cons__cdr__set, x, y, return f2__cons__cdr__set(this_cause, x, y));
-
-// doublelink
-
-boolean_t raw__doublelinkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
-
-f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
-def_pcfunk3(doublelink, x, y, z, return f2__doublelink(this_cause, x, y, z));
-
-f2ptr f2__doublelinkp(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublelinkp(x, cause));}
-def_pcfunk1(doublelinkp, x, return f2__doublelinkp(this_cause, x));
-
-f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x) {return f2doublelink__prev(x, cause);}
-def_pcfunk1(doublelink__prev, x, return f2__doublelink__prev(this_cause, x));
-
-f2ptr f2__doublelink__prev__set(f2ptr cause, f2ptr x, f2ptr y) {f2doublelink__prev__set(x, cause, y); return nil;}
-def_pcfunk2(doublelink__prev__set, x, y, return f2__doublelink__prev__set(this_cause, x, y));
-
-f2ptr f2__doublelink__next(f2ptr cause, f2ptr x) {return f2doublelink__next(x, cause);}
-def_pcfunk1(doublelink__next, x, return f2__doublelink__next(this_cause, x));
-
-f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y) {f2doublelink__next__set(x, cause, y); return nil;}
-def_pcfunk2(doublelink__next__set, x, y, return f2__doublelink__next__set(this_cause, x, y));
-
-f2ptr f2__doublelink__value(f2ptr cause, f2ptr x) {return f2doublelink__value(x, cause);}
-def_pcfunk1(doublelink__value, x, return f2__doublelink__value(this_cause, x));
-
-f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y) {f2doublelink__value__set(x, cause, y); return nil;}
-def_pcfunk2(doublelink__value__set, x, y, return f2__doublelink__value__set(this_cause, x, y));
-
 // chunk
 
 f2ptr f2__chunk(f2ptr cause, f2ptr length) {
@@ -995,32 +929,6 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
   return f2__elt(cause, this, index);
 }
 
-// primobject cfunk
-
-boolean_t raw__cfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cfunk(x, cause));}
-
-// primobject funk
-
-boolean_t raw__funkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_funk(x, cause));}
-
-// primobject metro
-
-boolean_t raw__metrop(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metro(x, cause));}
-
-// primobject metrocfunk
-
-boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_metrocfunk(x, cause));}
-
-// primobject bytecode
-
-boolean_t raw__bytecodep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_bytecode(x, cause));}
-
-// primobject cause
-
-boolean_t raw__causep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cause(x, cause));}
-
-// primobject hashtable
-
 // primobject thought_process
 
 boolean_t raw__thought_processp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thought_process(x, cause));}
@@ -1028,13 +936,6 @@ boolean_t raw__thought_processp(f2ptr x, f2ptr cause) {return (raw__primobjectp(
 // primobject thread
 
 boolean_t raw__threadp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thread(x, cause));}
-
-// primobject exception
-
-boolean_t raw__exceptionp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_exception(x, cause));}
-
-f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
-def_pcfunk2(exception, tag, value, return f2__exception(this_cause, tag, value));
 
 // primobject circular_buffer
 
@@ -2184,33 +2085,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
   f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
   f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
-  
-  // place
-  
-  f2__primcfunk__init(place, "");
-  f2__funktional_primcfunk__init(placep, "");
-  f2__primcfunk__init(place__thing, "");
-  f2__primcfunk__init(place__thing__set, "");
-  
-  // cons
-  
-  f2__funktional_primcfunk__init(consp, "");
-  f2__primcfunk__init(cons, "");
-  f2__primcfunk__init(cons__car, "");
-  f2__primcfunk__init(cons__car__set, "");
-  f2__primcfunk__init(cons__cdr, "");
-  f2__primcfunk__init(cons__cdr__set, "");
-  
-  // doublelink
-  
-  f2__primcfunk__init(doublelink, "");
-  f2__funktional_primcfunk__init(doublelinkp, "");
-  f2__primcfunk__init(doublelink__prev, "");
-  f2__primcfunk__init(doublelink__prev__set, "");
-  f2__primcfunk__init(doublelink__next, "");
-  f2__primcfunk__init(doublelink__next__set, "");
-  f2__primcfunk__init(doublelink__value, "");
-  f2__primcfunk__init(doublelink__value__set, "");
   
   // circular_buffer
   

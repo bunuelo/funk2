@@ -2112,7 +2112,7 @@ void f2__primcfunks__initialize() {
   // mutex
   
   f2__funktional_primcfunk__init__1(mutexp,         exp, "");
-  f2__primcfunk__init__0(           mutex);
+  f2__primcfunk__init__0(           mutex, "");
   f2__primcfunk__init__1(           mutex__lock,    this, "");
   f2__primcfunk__init__1(           mutex__unlock,  this, "");
   f2__primcfunk__init__1(           mutex__trylock, this, "");

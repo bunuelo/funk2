@@ -62,7 +62,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       
       pause_gc();
       f2ptr key_string = f2__exp__to_new_string(cause, key);
-      if (raw__string__contains(cause, key_string, find_string)) {
+      if (f2__string__contains(cause, key_string, find_string) != nil) {
 	matches = boolean__true;
       }
       resume_gc();

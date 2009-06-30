@@ -195,19 +195,57 @@ typedef enum larva_type_e {
 f2ptr pfunk2__f2larva__new(f2ptr cause, u32 type);
 u32   pfunk2__f2larva__type(f2ptr this, f2ptr cause);
 
-f2ptr f2__integer__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__double__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__float__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__pointer__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__gfunkptr__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__mutex__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__char__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__string__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__symbol__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__chunk__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__simple_array__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__traced_array__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__larva__slot_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__integer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__integer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__integer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__double__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__double__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__float__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__float__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__float__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__pointer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__pointer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__pointer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__gfunkptr__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__gfunkptr__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__gfunkptr__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__mutex__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__mutex__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__mutex__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__char__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__char__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__char__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__string__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__string__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__string__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__symbol__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__symbol__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__symbol__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__chunk__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__chunk__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__chunk__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__simple_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__simple_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__simple_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__traced_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__traced_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__traced_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
+f2ptr f2__larva__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__larva__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__larva__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
 
 // **
 

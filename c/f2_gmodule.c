@@ -214,14 +214,14 @@ void f2__gmodule__initialize() {
   f2__gmodule__reinitialize_globalvars();
   //f2ptr cause = initial_cause(); //f2_gmodule_c__cause__new(initial_cause(), nil, nil);
   
-  f2__funktional_primcfunk__init__0(gmodule__supported);
-  f2__primcfunk__init__2(           gmodule__build_path, directory, module_name);
-  f2__primcfunk__init__2(           gmodule__open, filename, flags);
-  f2__primcfunk__init__2(           gmodule__symbol, module, symbol_name);
-  f2__primcfunk__init__1(           gmodule__name, module);
-  f2__primcfunk__init__1(           gmodule__make_resident, module);
-  f2__primcfunk__init__1(           gmodule__close, module);
-  f2__primcfunk__init__0(           gmodule__error);
+  f2__funktional_primcfunk__init__0(gmodule__supported, "");
+  f2__primcfunk__init__2(           gmodule__build_path, directory, module_name, "");
+  f2__primcfunk__init__2(           gmodule__open, filename, flags, "");
+  f2__primcfunk__init__2(           gmodule__symbol, module, symbol_name, "");
+  f2__primcfunk__init__1(           gmodule__name, module, "");
+  f2__primcfunk__init__1(           gmodule__make_resident, module, "");
+  f2__primcfunk__init__1(           gmodule__close, module, "");
+  f2__primcfunk__init__0(           gmodule__error, "");
   
   resume_gc();
   try_gc();

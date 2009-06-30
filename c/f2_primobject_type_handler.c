@@ -41,26 +41,26 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
     this->type_hash = raw__hashtable__new(cause, 5);
   }
   
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("place"),            "place"),            f2place__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cons"),             "cons"),             f2cons__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("doublelink"),       "doublelink"),       f2doublelink__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("imagination_link"), "imagination_link"), f2imagination_link__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cfunk"),            "cfunk"),            f2cfunk__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("metrocfunk"),       "metrocfunk"),       f2metrocfunk__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("funk"),             "funk"),             f2funk__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("metro"),            "metro"),            f2metro__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("exception"),        "exception"),        f2exception__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bytecode"),         "bytecode"),         f2bytecode__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("thread"),           "thread"),           f2thread__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("processor"),        "processor"),        f2processor__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("scheduler"),        "scheduler"),        f2scheduler__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("event"),            "event"),            f2event_subscriber__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cause"),            "cause"),            f2cause__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("transframe"),       "transframe"),       f2transframe__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bug"),              "bug"),              f2bug__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("size_2d"),          "size_2d"),          f2size_2d__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("event"),            "event"),            f2event__primobject_type__new(cause));
-  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bytecode_event"),   "bytecode_event"),   f2bytecode_event__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("place"),            (u8*)"place"),            f2place__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cons"),             (u8*)"cons"),             f2cons__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("doublelink"),       (u8*)"doublelink"),       f2doublelink__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("imagination_link"), (u8*)"imagination_link"), f2imagination_link__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cfunk"),            (u8*)"cfunk"),            f2cfunk__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("metrocfunk"),       (u8*)"metrocfunk"),       f2metrocfunk__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("funk"),             (u8*)"funk"),             f2funk__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("metro"),            (u8*)"metro"),            f2metro__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("exception"),        (u8*)"exception"),        f2exception__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bytecode"),         (u8*)"bytecode"),         f2bytecode__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("thread"),           (u8*)"thread"),           f2thread__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("processor"),        (u8*)"processor"),        f2processor__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("scheduler"),        (u8*)"scheduler"),        f2scheduler__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("event"),            (u8*)"event"),            f2event_subscriber__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("cause"),            (u8*)"cause"),            f2cause__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("transframe"),       (u8*)"transframe"),       f2transframe__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bug"),              (u8*)"bug"),              f2bug__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("size_2d"),          (u8*)"size_2d"),          f2size_2d__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("event"),            (u8*)"event"),            f2event__primobject_type__new(cause));
+  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen("bytecode_event"),   (u8*)"bytecode_event"),   f2bytecode_event__primobject_type__new(cause));
   
 }
 

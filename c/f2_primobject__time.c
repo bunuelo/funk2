@@ -58,7 +58,7 @@ void f2__primobject__time__initialize() {
   
   environment__add_var_value(cause, global_environment(), __time__symbol, nil);
   
-  f2__primcfunk__init__0(time);
+  f2__primcfunk__init__0(time, "");
   
   resume_gc();
   try_gc();

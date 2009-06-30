@@ -364,14 +364,14 @@ void f2__string__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init(stringlist__concat);
-  f2__primcfunk__init(stringlist__intersperse);
-  f2__primcfunk__init(exp__to_string);
-  f2__primcfunk__init(string__to_symbol);
-  f2__primcfunk__init(string__save);
-  f2__primcfunk__init(string__load);
-  f2__primcfunk__init(string__split);
-  f2__primcfunk__init(string__contains);
+  f2__primcfunk__init(stringlist__concat, "concatenate a list of strings together into a new resultant string.");
+  f2__primcfunk__init(stringlist__intersperse, "concatenate a list of strings together into a new resultant string with a extra token string placed between each of the strings.");
+  f2__primcfunk__init(exp__to_string, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
+  f2__primcfunk__init(string__to_symbol, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
+  f2__primcfunk__init(string__save, "save a string to a filename");
+  f2__primcfunk__init(string__load, "load a string from a filename");
+  f2__primcfunk__init(string__split, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse.");
+  f2__primcfunk__init(string__contains, "returns true when the string contains the specified substring.");
   
   resume_gc();
   try_gc();

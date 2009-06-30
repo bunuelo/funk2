@@ -270,9 +270,9 @@ void f2__primobject__semantic_graph__initialize() {
   environment__add_var_value(cause, global_environment(), __semantic_relation__symbol, nil);
   environment__add_var_value(cause, global_environment(), __semantic_graph__symbol, nil);
   
-  f2__primcfunk__init__1(semantic_graph__load_conceptnet_r3_format,        filename);
-  f2__primcfunk__init__1(semantic_graph__new_left_concept_relations_hash,  this);
-  f2__primcfunk__init__1(semantic_graph__new_right_concept_relations_hash, this);
+  f2__primcfunk__init__1(semantic_graph__load_conceptnet_r3_format,        filename, "");
+  f2__primcfunk__init__1(semantic_graph__new_left_concept_relations_hash,  this, "");
+  f2__primcfunk__init__1(semantic_graph__new_right_concept_relations_hash, this, "");
   
   resume_gc();
   try_gc();

@@ -30,7 +30,7 @@ void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* thi
 
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
   if (this->type_hash == nil) {this->type_hash = raw__hashtable__new(cause, 5);}
-  hashtable__add_keyvalue_pair(cause, this->type_hash, type_name, type);
+  f2__hashtable__add_keyvalue_pair(cause, this->type_hash, type_name, type);
 }
 
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {

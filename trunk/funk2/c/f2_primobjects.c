@@ -62,8 +62,8 @@ f2ptr f2place__new(f2ptr cause, f2ptr p) {
 }
 
 f2ptr f2place__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "thing"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "thing"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -87,11 +87,11 @@ f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
 }
 
 f2ptr f2cons__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "car";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "car-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cdr";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cdr-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "car";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "car-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cdr";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cdr-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -118,13 +118,13 @@ f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
 }
 
 f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "prev";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "prev-set";  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "next";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "next-set";  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "prev";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "prev-set";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "next";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "next-set";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -151,17 +151,17 @@ f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, 
 }
 
 f2ptr f2imagination_link__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "next";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "next-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "name";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "name-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value-set";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "trace";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "trace-set";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "imagination_frame";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "imagination_frame-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "next";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "next-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "name";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "name-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value-set";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "trace";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "trace-set";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "imagination_frame";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "imagination_frame-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -287,19 +287,19 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr en
 }
 
 f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "name";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "name-set";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args-set";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cfunkptr";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cfunkptr-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env";               frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env-set";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "name-set";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args-set";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cfunkptr";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cfunkptr-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env-set";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -331,19 +331,19 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2p
 }
 
 f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "name";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "name-set";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args-set";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cfunkptr";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cfunkptr-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env";               frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env-set";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "name-set";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args-set";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cfunkptr";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cfunkptr-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env-set";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -380,25 +380,25 @@ f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2p
 }
 
 f2ptr f2funk__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "name";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "name-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body_bytecodes";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body_bytecodes-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "demetropolized_body";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "demetropolized_body-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env";                     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env-set";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "machine_code";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "machine_code-set";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "name";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "name-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body_bytecodes";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body_bytecodes-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "demetropolized_body";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "demetropolized_body-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env-set";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "machine_code";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "machine_code-set";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -435,25 +435,25 @@ f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2
 }
 
 f2ptr f2metro__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "name";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "name-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body_bytecodes";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body_bytecodes-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "demetropolized_body";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "demetropolized_body-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "body-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env";                     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env-set";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "machine_code";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "machine_code-set";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_funktional-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "documentation-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "name";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "name-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body_bytecodes";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body_bytecodes-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "demetropolized_body";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "demetropolized_body-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "body-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env-set";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "machine_code";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "machine_code-set";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_funktional-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "documentation-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -476,11 +476,11 @@ f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
 }
 
 f2ptr f2exception__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "tag";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "tag-set";   frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "tag";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "tag-set";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -507,15 +507,15 @@ f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr 
 }
 
 f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "command";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "command-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "arg0";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "arg0-set";    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "arg1";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "arg1-set";    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "arg2";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "arg2-set";    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "command";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "command-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "arg0";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "arg0-set";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "arg1";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "arg1-set";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "arg2";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "arg2-set";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -585,41 +585,41 @@ f2ptr f2thread__new(f2ptr cause,
 }
 
 f2ptr f2thread__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "program_counter";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "program_counter-set";    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "stack";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "stack-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "iter";                   frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "iter-set";               frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env";                    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "env-set";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args";                   frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "args-set";               frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "return";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "return-set";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "value-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "trace";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "trace-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "critics";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "critics-set";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cause_reg";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "cause_reg-set";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "keep_undead";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "keep_undead-set";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_zombie";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "is_zombie-set";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "parent_thread";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "parent_thread-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "parent_env";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "parent_env-set";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "execute_mutex";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "execute_mutex-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "paused";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "paused-set";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "last_executed_time";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "last_executed_time-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "program_counter";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "program_counter-set";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "stack";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "stack-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "iter";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "iter-set";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "env-set";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "args-set";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "return";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "return-set";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "value-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "trace";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "trace-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "critics";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "critics-set";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cause_reg";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "cause_reg-set";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "keep_undead";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "keep_undead-set";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_zombie";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "is_zombie-set";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "parent_thread";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "parent_thread-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "parent_env";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "parent_env-set";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "execute_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "execute_mutex-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "paused";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "paused-set";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "last_executed_time";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "last_executed_time-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -656,23 +656,23 @@ f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2p
 }
 
 f2ptr f2processor__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "scheduler";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "scheduler-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "processor_thread";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "processor_thread-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "active_threads_mutex";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "active_threads_mutex-set";   frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "active_threads";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "active_threads-set";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "sleeping_threads_mutex";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "sleeping_threads_mutex-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "sleeping_threads";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "sleeping_threads-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "pool_index";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "pool_index-set";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "desc";                       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "desc-set";                   frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "scheduler";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "scheduler-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "processor_thread";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "processor_thread-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "active_threads_mutex";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "active_threads_mutex-set";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "active_threads";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "active_threads-set";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "sleeping_threads_mutex";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "sleeping_threads_mutex-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "sleeping_threads";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "sleeping_threads-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "pool_index";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "pool_index-set";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "desc";                       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "desc-set";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -699,17 +699,17 @@ f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mu
 }
 
 f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "processors";                  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "processors-set";              frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_subscribers_mutex";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_subscribers_mutex-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_subscribers";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_subscribers-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_mutex";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_mutex-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer-set";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "processors";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "processors-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_subscribers_mutex";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_subscribers_mutex-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_subscribers";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_subscribers-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_mutex-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer-set";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -736,17 +736,17 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr thread, f2pt
 }
 
 f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "event_types";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_types-set";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "thread";                 frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "thread-set";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "funkable";               frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "funkable-set";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer";           frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer-set";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_mutex";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_mutex-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "event_types";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_types-set";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "thread";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "thread-set";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "funkable";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "funkable-set";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer-set";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_mutex";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_mutex-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -783,27 +783,27 @@ f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tra
 }
 
 f2ptr f2cause__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "allocate_traced_arrays";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "allocate_traced_arrays-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "bytecode_tracing_on";        frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "bytecode_tracing_on-set";    frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "memory_tracing_on";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "memory_tracing_on-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "subscribers_mutex";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "subscribers_mutex-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "subscribers";                frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "subscribers-set";            frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "imagination_stack";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "imagination_stack-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_first";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_first-set";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_last";          frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_buffer_last-set";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "current_events_mutex";       frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "current_events_mutex-set";   frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "current_events";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "current_events-set";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "allocate_traced_arrays";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "allocate_traced_arrays-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "bytecode_tracing_on";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "bytecode_tracing_on-set";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "memory_tracing_on";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "memory_tracing_on-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "subscribers_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "subscribers_mutex-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "subscribers";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "subscribers-set";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "imagination_stack";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "imagination_stack-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_first";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_first-set";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_last";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_buffer_last-set";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "current_events_mutex";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "current_events_mutex-set";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "current_events";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "current_events-set";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -888,11 +888,11 @@ f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970,
 }
 
 f2ptr f2transframe__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "microseconds_since_1970";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "microseconds_since_1970-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "symbol_old_news";             frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "symbol_old_news-set";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "microseconds_since_1970";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "microseconds_since_1970-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "symbol_old_news";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "symbol_old_news-set";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -915,9 +915,9 @@ f2ptr f2bug__new(f2ptr cause, f2ptr type) {
 }
 
 f2ptr f2bug__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "type";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "type-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "type-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -938,11 +938,11 @@ f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {
 }
 
 f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "x";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "x-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "y";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "y-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "x";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "x-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "y";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "y-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -967,15 +967,15 @@ f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2pt
 }
 
 f2ptr f2event__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "node_id";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "node_id-set";  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_id";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "event_id-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "type";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "type-set";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "data";         frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "data-set";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "node_id";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "node_id-set";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_id";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "event_id-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "type";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "type-set";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "data";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "data-set";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 
@@ -1000,11 +1000,11 @@ f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr cont
 }
 
 f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
-  {char* slot_name = "bytecode";     frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "bytecode-set"; frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "context";      frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
-  {char* slot_name = "context-set";  frame__add_funkvar_value(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil);}
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "bytecode";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "bytecode-set"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "context";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "context-set";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
 

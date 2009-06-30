@@ -21,20 +21,38 @@
 
 #include "funk2.h"
 
-f2ptr f2__primobject_type_handler__new(f2ptr cause) {
-  return nil;
+f2ptr f2__primobject_type__new(f2ptr cause) {
+  return frame__new_empty(cause);
 }
 
-f2ptr f2__primobject_type_handler__add_slot(f2ptr cause, f2ptr name, f2ptr get_funk, f2ptr set_funk, f2ptr execute_funk) {
-  return nil;
+void f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr get_funk, f2ptr set_funk, f2ptr execute_funk) {
+  frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"),     "get_funk"),     name, get_funk);
+  frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"),     "set_funk"),     name, set_funk);
+  frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), "execute_funk"), name, execute_funk);
 }
 
-f2ptr f2__primobject_type_handler__lookup_slot_get_funk(f2ptr cause, f2ptr name) {
-  return nil;
+f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr name) {
+  f2ptr result = frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"), "get_funk"), name, nil);
+  if (! result) {
+    return f2larva__new(cause, 3);
+  }
+  return result;
 }
 
-f2ptr f2__primobject_type_handler__lookup_slot_set_funk(f2ptr cause, f2ptr name) {
-  return nil;
+f2ptr f2__primobject_type__lookup_slot_set_funk(f2ptr cause, f2ptr this, f2ptr name) {
+  f2ptr result = frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"), "set_funk"), name, nil);
+  if (! result) {
+    return f2larva__new(cause, 3);
+  }
+  return result;
+}
+
+f2ptr f2__primobject_type__lookup_slot_execute_funk(f2ptr cause, f2ptr this, f2ptr name) {
+  f2ptr result = frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), "execute_funk"), name, nil);
+  if (! result) {
+    return f2larva__new(cause, 3);
+  }
+  return result;
 }
 
 

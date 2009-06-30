@@ -49,10 +49,10 @@ void f2__primfunks__ioctl__initialize() {
   
   f2__primfunks__ioctl__reinitialize_globalvars();
   
-  f2__primcfunk__init(f2__ioctl__int);
+  f2__primcfunk__init(f2__ioctl__int, "(as defined in ioctl.h)");
   
-  f2__primcfunk__init(f2__ioctl__siocinq);
-  f2__primcfunk__init(f2__ioctl__siocoutq);
+  f2__primcfunk__init(f2__ioctl__siocinq, "(as defined in ioctl.h)");
+  f2__primcfunk__init(f2__ioctl__siocoutq, "(as defined in ioctl.h)");
   
   resume_gc();
 }

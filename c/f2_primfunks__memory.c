@@ -107,26 +107,26 @@ def_pcfunk1(f2__memory_image__load, filename, return f2integer__new(this_cause, 
 
 void f2__primfunks__memory__initialize() {
   pause_gc();
-  f2__primcfunk__init(f2__malloc);
-  f2__primcfunk__init(f2__free);
-  f2__primcfunk__init(f2__new_alloc);
-  f2__primcfunk__init(assert_failed);
-  f2__primcfunk__init(exp__gc_touch_all_referenced);
-  f2__primcfunk__init(pool__pause_gc);
-  f2__primcfunk__init(pool__resume_gc);
-  f2__primcfunk__init(pool__try_gc);
-  f2__primcfunk__init(pool__should_run_gc);
-  f2__primcfunk__init(pause_gc);
-  f2__primcfunk__init(resume_gc);
-  f2__primcfunk__init(try_gc);
-  f2__primcfunk__init(should_run_gc);
-  f2__primcfunk__init(gc__is_disabled);
-  f2__primcfunk__init(global_environment__set);
-  f2__primcfunk__init(global_environment);
-  f2__primcfunk__init(print_gc_stats);
-  f2__primcfunk__init(f2__memory__initialize);
-  f2__primcfunk__init(f2__memory_image__save);
-  f2__primcfunk__init(f2__memory_image__load);
+  f2__primcfunk__init(f2__malloc, "(as defined in stdlib.h)");
+  f2__primcfunk__init(f2__free, "(as defined in stdlib.h)");
+  f2__primcfunk__init(f2__new_alloc, "");
+  f2__primcfunk__init(assert_failed, "");
+  f2__primcfunk__init(exp__gc_touch_all_referenced, "");
+  f2__primcfunk__init(pool__pause_gc, "");
+  f2__primcfunk__init(pool__resume_gc, "");
+  f2__primcfunk__init(pool__try_gc, "");
+  f2__primcfunk__init(pool__should_run_gc, "");
+  f2__primcfunk__init(pause_gc, "");
+  f2__primcfunk__init(resume_gc, "");
+  f2__primcfunk__init(try_gc, "");
+  f2__primcfunk__init(should_run_gc, "");
+  f2__primcfunk__init(gc__is_disabled, "");
+  f2__primcfunk__init(global_environment__set, "");
+  f2__primcfunk__init(global_environment, "");
+  f2__primcfunk__init(print_gc_stats, "");
+  f2__primcfunk__init(f2__memory__initialize, "");
+  f2__primcfunk__init(f2__memory_image__save, "saves an image to disk of the entire currently executing funk2 memory image.");
+  f2__primcfunk__init(f2__memory_image__load, "loads an image from disk of the entire funk2 memory image (replacing the current image).");
   resume_gc();
 }
 

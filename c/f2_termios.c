@@ -107,12 +107,12 @@ void f2__termios__initialize() {
   
   f2__termios__reinitialize_globalvars();
   
-  f2__primcfunk__init(termios__width);
-  f2__primcfunk__init(termios__height);
-  f2__primcfunk__init(termios__noecho);
-  f2__primcfunk__init(termios__echo);
-  f2__primcfunk__init(termios__nocanon);
-  f2__primcfunk__init(termios__canon);
+  f2__primcfunk__init(termios__width, "returns the current width of the terminal. (as defined in termios.h)");
+  f2__primcfunk__init(termios__height, "returns the current height of the terminal.  (as defined in termios.h)");
+  f2__primcfunk__init(termios__noecho, "(as defined in termios.h)");
+  f2__primcfunk__init(termios__echo, "(as defined in termios.h)");
+  f2__primcfunk__init(termios__nocanon, "(as defined in termios.h)");
+  f2__primcfunk__init(termios__canon, "(as defined in termios.h)");
   
   resume_gc();
   try_gc();

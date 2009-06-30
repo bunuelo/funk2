@@ -264,25 +264,25 @@ defprimobject__static_slot__prototype(cfunk__name);
 #define f2cfunk__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__name, cause)
 
 defprimobject__static_slot__prototype(cfunk__args);
-#define f2cfunk__args(                this, cause)        primobject__static_slot__accessor(  this, cfunk__args, cause)
-#define f2cfunk__args__set(           this, cause, value) primobject__static_slot__set(       this, cfunk__args, cause, value)
-#define f2cfunk__args__tracing_on(    this, cause)        primobject__static_slot__tracing_on(this, cfunk__args, cause)
-#define f2cfunk__args__trace(         this, cause)        primobject__static_slot__trace(     this, cfunk__args, cause)
-#define f2cfunk__args__imagination_frame(         this, cause)        primobject__static_slot__imagination_frame(     this, cfunk__args, cause)
+#define f2cfunk__args(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__args, cause)
+#define f2cfunk__args__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__args, cause, value)
+#define f2cfunk__args__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__args, cause)
+#define f2cfunk__args__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__args, cause)
+#define f2cfunk__args__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__args, cause)
 
 defprimobject__static_slot__prototype(cfunk__cfunkptr);
-#define f2cfunk__cfunkptr(            this, cause)        primobject__static_slot__accessor(  this, cfunk__cfunkptr, cause)
-#define f2cfunk__cfunkptr__set(       this, cause, value) primobject__static_slot__set(       this, cfunk__cfunkptr, cause, value)
-#define f2cfunk__cfunkptr__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, cfunk__cfunkptr, cause)
-#define f2cfunk__cfunkptr__trace(     this, cause)        primobject__static_slot__trace(     this, cfunk__cfunkptr, cause)
-#define f2cfunk__cfunkptr__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, cfunk__cfunkptr, cause)
+#define f2cfunk__cfunkptr(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__cfunkptr, cause)
+#define f2cfunk__cfunkptr__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__cfunkptr, cause, value)
+#define f2cfunk__cfunkptr__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__cfunkptr, cause)
+#define f2cfunk__cfunkptr__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__cfunkptr, cause)
+#define f2cfunk__cfunkptr__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__cfunkptr, cause)
 
 defprimobject__static_slot__prototype(cfunk__env);
-#define f2cfunk__env(                 this, cause)        primobject__static_slot__accessor(  this, cfunk__env, cause)
-#define f2cfunk__env__set(            this, cause, value) primobject__static_slot__set(       this, cfunk__env, cause, value)
-#define f2cfunk__env__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, cfunk__env, cause)
-#define f2cfunk__env__trace(          this, cause)        primobject__static_slot__trace(     this, cfunk__env, cause)
-#define f2cfunk__env__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, cfunk__env, cause)
+#define f2cfunk__env(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__env, cause)
+#define f2cfunk__env__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__env, cause, value)
+#define f2cfunk__env__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__env, cause)
+#define f2cfunk__env__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__env, cause)
+#define f2cfunk__env__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__env, cause)
 
 defprimobject__static_slot__prototype(cfunk__is_funktional);
 #define f2cfunk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__is_funktional, cause)

@@ -338,9 +338,9 @@ void f2__primobject__text_buffer__initialize() {
   environment__add_var_value(cause, global_environment(), __text_cursor__symbol,           nil);
   environment__add_var_value(cause, global_environment(), __text_window__symbol,           nil);
   
-  f2__primcfunk__init__2(text_buffer__create, width, height);
-  f2__primcfunk__init__2(text_window__create, width, height);
-  f2__primcfunk__init__8(text_window__stream__render, this, stream, screen_x0, screen_y0, x0, y0, x1, y1);
+  f2__primcfunk__init__2(text_buffer__create, width, height, "");
+  f2__primcfunk__init__2(text_window__create, width, height, "");
+  f2__primcfunk__init__8(text_window__stream__render, this, stream, screen_x0, screen_y0, x0, y0, x1, y1, "");
   
   resume_gc();
   try_gc();

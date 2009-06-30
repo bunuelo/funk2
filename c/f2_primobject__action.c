@@ -149,9 +149,9 @@ void f2__primobject__action__initialize() {
   environment__add_var_value(cause, global_environment(), __action__symbol,       nil);
   environment__add_var_value(cause, global_environment(), __action_event__symbol, nil);
   
-  f2__primcfunk__init__1(action__new,   funk);
-  f2__primcfunk__init__1(action__begin, this);
-  f2__primcfunk__init__1(action__end,   this);
+  f2__primcfunk__init__1(action__new,   funk, "");
+  f2__primcfunk__init__1(action__begin, this, "");
+  f2__primcfunk__init__1(action__end,   this, "");
   
   resume_gc();
   try_gc();

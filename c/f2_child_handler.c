@@ -182,9 +182,9 @@ void f2__child_handler__initialize() {
   
   f2__child_handler__reinitialize_globalvars();
   
-  f2__primcfunk__init(child_handler__add_new_child_process);
-  f2__primcfunk__init(child_handler__process_exists);
-  f2__primcfunk__init(environ);
+  f2__primcfunk__init(child_handler__add_new_child_process, "");
+  f2__primcfunk__init(child_handler__process_exists, "");
+  f2__primcfunk__init(environ, "");
   
   resume_gc();
   try_gc();

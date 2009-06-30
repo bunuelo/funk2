@@ -686,44 +686,44 @@ void f2__blocks_world__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.block__symbol,   nil);
   environment__add_var_value(cause, global_environment(), __funk2.globalenv.blocks_world.gripper__symbol, nil);
   
-  f2__primcfunk__init(blocks_world__lower_left__x);
-  f2__primcfunk__init(blocks_world__lower_left__y);
+  f2__primcfunk__init(blocks_world__lower_left__x, "");
+  f2__primcfunk__init(blocks_world__lower_left__y, "");
   
-  f2__primcfunk__init(blocks_world_rectangle__new);
-  f2__primcfunk__init(blocks_world_rectanglep);
-  f2__primcfunk__init(blocks_world_rectangle__x0);
-  f2__primcfunk__init(blocks_world_rectangle__y0);
-  f2__primcfunk__init(blocks_world_rectangle__x1);
-  f2__primcfunk__init(blocks_world_rectangle__y1);
-  f2__primcfunk__init(blocks_world_rectangle__new_copy);
-  f2__primcfunk__init(blocks_world_rectangle__create);
-  f2__primcfunk__init(blocks_world_rectangle__render);
-  f2__primcfunk__init(blocks_world_rectangle__clear_line_above);
-  f2__primcfunk__init(blocks_world_rectangle__translate);
-  f2__primcfunk__init(blocks_world_rectangle__new_translate);
-  f2__primcfunk__init(blocks_world_rectangle__overlaps);
+  f2__primcfunk__init(blocks_world_rectangle__new, "");
+  f2__primcfunk__init(blocks_world_rectanglep, "");
+  f2__primcfunk__init(blocks_world_rectangle__x0, "");
+  f2__primcfunk__init(blocks_world_rectangle__y0, "");
+  f2__primcfunk__init(blocks_world_rectangle__x1, "");
+  f2__primcfunk__init(blocks_world_rectangle__y1, "");
+  f2__primcfunk__init(blocks_world_rectangle__new_copy, "");
+  f2__primcfunk__init(blocks_world_rectangle__create, "");
+  f2__primcfunk__init(blocks_world_rectangle__render, "");
+  f2__primcfunk__init(blocks_world_rectangle__clear_line_above, "");
+  f2__primcfunk__init(blocks_world_rectangle__translate, "");
+  f2__primcfunk__init(blocks_world_rectangle__new_translate, "");
+  f2__primcfunk__init(blocks_world_rectangle__overlaps, "");
   
-  f2__primcfunk__init(blocks_world_color__new);
-  f2__primcfunk__init(blocks_world_colorp);
-  f2__primcfunk__init(blocks_world_color__name);
-  f2__primcfunk__init(blocks_world_color__render);
+  f2__primcfunk__init(blocks_world_color__new, "");
+  f2__primcfunk__init(blocks_world_colorp, "");
+  f2__primcfunk__init(blocks_world_color__name, "");
+  f2__primcfunk__init(blocks_world_color__render, "");
   
-  f2__primcfunk__init(blocks_world_object__new);
-  f2__primcfunk__init(blocks_world_objectp);
-  f2__primcfunk__init(blocks_world_object__name);
-  f2__primcfunk__init(blocks_world_object__type);
-  f2__primcfunk__init(blocks_world_object__rectangle);
-  f2__primcfunk__init(blocks_world_object__color);
-  f2__primcfunk__init(blocks_world_object__ignore_gravity);
-  f2__primcfunk__init(blocks_world_object__ignore_gravity__set);
-  f2__primcfunk__init(blocks_world_object__holding_object);
-  f2__primcfunk__init(blocks_world_object__holding_object__set);
-  f2__primcfunk__init(blocks_world_object__render);
-  f2__primcfunk__init(blocks_world_object__translate_overlaps_objects);
+  f2__primcfunk__init(blocks_world_object__new, "");
+  f2__primcfunk__init(blocks_world_objectp, "");
+  f2__primcfunk__init(blocks_world_object__name, "");
+  f2__primcfunk__init(blocks_world_object__type, "");
+  f2__primcfunk__init(blocks_world_object__rectangle, "");
+  f2__primcfunk__init(blocks_world_object__color, "");
+  f2__primcfunk__init(blocks_world_object__ignore_gravity, "");
+  f2__primcfunk__init(blocks_world_object__ignore_gravity__set, "");
+  f2__primcfunk__init(blocks_world_object__holding_object, "");
+  f2__primcfunk__init(blocks_world_object__holding_object__set, "");
+  f2__primcfunk__init(blocks_world_object__render, "");
+  f2__primcfunk__init(blocks_world_object__translate_overlaps_objects, "");
   
-  f2__primcfunk__init(blocks_world_physics__new);
-  f2__primcfunk__init(blocks_world_physicsp);
-  f2__primcfunk__init(blocks_world_physics__objects);
+  f2__primcfunk__init(blocks_world_physics__new, "");
+  f2__primcfunk__init(blocks_world_physicsp, "");
+  f2__primcfunk__init(blocks_world_physics__objects, "");
   
   resume_gc();
   try_gc();

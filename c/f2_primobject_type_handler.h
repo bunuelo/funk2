@@ -28,5 +28,6 @@ typedef struct funk2_primobject_type_handler_s {
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);
 void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this);
+void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
 
 #endif // F2__PRIMOBJECT_TYPE_HANDLER__H

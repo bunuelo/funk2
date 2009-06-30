@@ -32,27 +32,15 @@ void f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr ge
 }
 
 f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr name) {
-  f2ptr result = frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"), name, nil);
-  if (! result) {
-    return f2larva__new(cause, 3);
-  }
-  return result;
+  return frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"), name, nil);
 }
 
 f2ptr f2__primobject_type__lookup_slot_set_funk(f2ptr cause, f2ptr this, f2ptr name) {
-  f2ptr result = frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"), (u8*)"set_funk"), name, nil);
-  if (! result) {
-    return f2larva__new(cause, 3);
-  }
-  return result;
+  return frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"), (u8*)"set_funk"), name, nil);
 }
 
 f2ptr f2__primobject_type__lookup_slot_execute_funk(f2ptr cause, f2ptr this, f2ptr name) {
-  f2ptr result = frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), name, nil);
-  if (! result) {
-    return f2larva__new(cause, 3);
-  }
-  return result;
+  return frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), name, nil);
 }
 
 

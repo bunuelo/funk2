@@ -45,6 +45,10 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
   f2ptr bin_array         = f2hashtable__bin_array(funkvar_hashtable, cause);
   s64   length            = raw__array__length(cause, bin_array);
   
+  printf("\nenvironment__apropos here.");
+  printf("\nlength=" s64__fstr, length);
+  printf("\n");
+  
   f2ptr match_seq = nil;
   
   s64 index;
@@ -57,13 +61,13 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       
       f2ptr key           = f2cons__car(keyvalue_pair, cause);
       f2ptr value         = f2cons__cdr(keyvalue_pair, cause);
-      f2ptr documentation = f2__exp__documentation(cause, value);
-      if (raw__stringp(documentation, cause)) {
-	if (raw__string__contains(cause, documentation, find_string)) {
-	  f2ptr match_pair = f2list2__new(cause, key, documentation);
-	  match_seq        = f2cons__new(cause, match_pair, match_seq);
-	}
-      }
+      //f2ptr documentation = f2__exp__documentation(cause, value);
+      //if (raw__stringp(documentation, cause)) {
+      //	if (raw__string__contains(cause, documentation, find_string)) {
+      //	  f2ptr match_pair = f2list2__new(cause, key, documentation);
+      //	  match_seq        = f2cons__new(cause, match_pair, match_seq);
+      //	}
+      //}
       
       iter = f2cons__cdr(iter, cause);
     }

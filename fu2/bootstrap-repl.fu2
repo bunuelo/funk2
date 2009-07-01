@@ -66,9 +66,9 @@
 [primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-trace.fu2']
 
-[globalize stdin-stream  [file_stream-new 0]]
-[globalize stdout-stream [file_stream-new 1]]
-[globalize stderr-stream [file_stream-new 2]]
+[globalize stdin-stream  [primfunk:file_stream__new 0]]
+[globalize stdout-stream [primfunk:file_stream__new 1]]
+[globalize stderr-stream [primfunk:file_stream__new 2]]
 
 [define -current_env_name- `global-environment]
 

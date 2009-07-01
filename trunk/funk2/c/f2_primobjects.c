@@ -1454,6 +1454,9 @@ f2ptr f2bug__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}
+def_pcfunk1(bug__new, type, return f2__bug__new(this_cause, type));
+
 f2ptr f2__bug__type(f2ptr cause, f2ptr this) {return f2bug__type(this, cause);}
 def_pcfunk1(bug__type, x, return f2__bug__type(this_cause, x));
 
@@ -1482,6 +1485,9 @@ f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
   {char* slot_name = "y";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
+
+f2ptr f2__size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {return f2size_2d__new(cause, x, y);}
+def_pcfunk2(size_2d__new, x, y, return f2__size_2d__new(this_cause, x, y));
 
 f2ptr f2__size_2d__x(f2ptr cause, f2ptr this) {return f2size_2d__x(this, cause);}
 def_pcfunk1(size_2d__x, x, return f2__size_2d__x(this_cause, x));
@@ -1515,6 +1521,10 @@ f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2pt
   return this;
 }
 
+f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {
+  return f2event__new__trace_depth(cause, node_id, event_id, type, data, 1);
+}
+
 f2ptr f2event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "node_id";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
@@ -1523,6 +1533,9 @@ f2ptr f2event__primobject_type__new(f2ptr cause) {
   {char* slot_name = "data";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
+
+f2ptr f2__event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {return f2event__new(cause, node_id, event_id, type, data);}
+def_pcfunk4(event__new, node_id, event_id, type, data, return f2__event__new(this_cause, node_id, event_id, type, data));
 
 f2ptr f2__event__node_id(f2ptr cause, f2ptr this) {return f2event__node_id(this, cause);}
 def_pcfunk1(event__node_id, x, return f2__event__node_id(this_cause, x));
@@ -1549,10 +1562,6 @@ f2ptr f2__event__data__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event
 def_pcfunk2(event__data__set, x, y, return f2__event__data__set(this_cause, x, y));
 
 
-
-f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {
-  return f2event__new__trace_depth(cause, node_id, event_id, type, data, 1);
-}
 
 
 // bytecode_event

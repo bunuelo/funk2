@@ -38,10 +38,23 @@ f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t
   return f2__hashtable__lookup_value(this->type_hash, cause, type_name);
 }
 
-
+void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
+  {char* type_name = "integer";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2integer__primobject_type__new(cause));}
+  {char* type_name = "double";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2double__primobject_type__new(cause));}
+  {char* type_name = "float";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2float__primobject_type__new(cause));}
+  {char* type_name = "pointer";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2pointer__primobject_type__new(cause));}
+  {char* type_name = "gfunkptr";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2gfunkptr__primobject_type__new(cause));}
+  {char* type_name = "mutex";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2mutex__primobject_type__new(cause));}
+  {char* type_name = "char";         funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2char__primobject_type__new(cause));}
+  {char* type_name = "string";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2string__primobject_type__new(cause));}
+  {char* type_name = "symbol";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2symbol__primobject_type__new(cause));}
+  {char* type_name = "chunk";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2chunk__primobject_type__new(cause));}
+  {char* type_name = "simple_array"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2simple_array__primobject_type__new(cause));}
+  {char* type_name = "traced_array"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2traced_array__primobject_type__new(cause));}
+  {char* type_name = "larva";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2larva__primobject_type__new(cause));}
+}
 
 void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
-  
   {char* type_name = "place";            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),            f2place__primobject_type__new(cause));}
   {char* type_name = "cons";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2cons__primobject_type__new(cause));}
   {char* type_name = "doublelink";       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),       f2doublelink__primobject_type__new(cause));}
@@ -62,7 +75,6 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "size_2d";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2size_2d__primobject_type__new(cause));}
   {char* type_name = "event";            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),            f2event__primobject_type__new(cause));}
   {char* type_name = "bytecode_event";   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),   f2bytecode_event__primobject_type__new(cause));}
-  
 }
 
 

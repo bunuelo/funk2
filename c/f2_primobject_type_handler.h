@@ -23,7 +23,8 @@
 #define F2__PRIMOBJECT_TYPE_HANDLER__H
 
 typedef struct funk2_primobject_type_handler_s {
-  f2ptr type_hash;
+  funk2_processor_mutex_t type_hash_mutex;
+  f2ptr                   type_hash;
 } funk2_primobject_type_handler_t;
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);

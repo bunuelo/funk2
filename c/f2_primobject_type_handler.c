@@ -22,21 +22,43 @@
 #include "funk2.h"
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this) {
+  funk2_processor_mutex__init(&(this->type_hash_mutex));
   this->type_hash = nil;
 }
 
 void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this) {
+  funk2_processor_mutex__destroy(&(this->type_hash_mutex));
+}
+
+void funk2_primobject_type_handler__reset_type_hash(f2ptr cause) {
+  funk2_processor_mutex__lock(&(this->type_hash_mutex));
+  f2ptr new_type_hash = raw__hashtable__new(cause, 5);
+  this->type_hash = new_type_hash;
+  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("primobject_type_handler-type_hash"), (u8*)"primobject_type_handler-type_hash"), new_type_hash);
+  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
-  if (this->type_hash == nil) {this->type_hash = raw__hashtable__new(cause, 5);}
+  funk2_processor_mutex__lock(&(this->type_hash_mutex));
+  if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(cause);}
   f2__hashtable__add_keyvalue_pair(cause, this->type_hash, type_name, type);
+  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 
+f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {return funk2_primobject_type_handler__add_type(&(__funk2.funk2_primobject_type_handler), cause, type_name, type);}
+def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name, type));
+
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
-  if (this->type_hash == nil) {this->type_hash = raw__hashtable__new(cause, 5);}
-  return f2__hashtable__lookup_value(this->type_hash, cause, type_name);
+  funk2_processor_mutex__lock(&(this->type_hash_mutex));
+  if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(cause);}
+  f2ptr result = f2__hashtable__lookup_value(this->type_hash, cause, type_name);
+  funk2_processor_mutex__unlock(&(this->type_hash_mutex));
+  return result;
 }
+
+f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {return funk2_primobject_type_handler__lookup_type(&(__funk2.funk2_primobject_type_handler), cause, type_name);}
+def_pcfunk1(lookup_type, type_name, return f2__lookup_type(this_cause, type_name));
+
 
 void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "integer";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2integer__primobject_type__new(cause));}
@@ -77,41 +99,22 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "bytecode_event";   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),   f2bytecode_event__primobject_type__new(cause));}
 }
 
+// **
 
+void f2__primobject_type_handler__reinitialize_globalvars() {
+  //f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void f2__primobject_type_handler__initialize() {
+  //f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
+  pause_gc();
+  
+  f2__primobject_type_handler__reinitialize_globalvars();
+  
+  f2__primcfunk__init__2(add_type, type_name, type, "adds the symbolic type_name associated with type to the primobject_type_handler.");
+  f2__primcfunk__init__1(lookup_type, type_name, "returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
+  
+  resume_gc();
+  try_gc();
+}
 

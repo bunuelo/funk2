@@ -287,8 +287,14 @@
 	      [cons result [filter cond_proc [cdr seq]]]
 	    [filter cond_proc [cdr seq]]]]]]
 
+[defunk object-get [slot_name this]
+  [apply [object-slot-get_funk this slot_name] nil]]
+
+[defunk object-set [slot_name this value]
+  [apply [object-slot-get_funk this slot_name] [cons value nil]]]
+
 [defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
-[wrong_argument_number_error-set [funk-body_bytecodes &wrong_argument_number_error]]
+[wrong_argument_number_error-set [object-get `body_bytecodes &wrong_argument_number_error]]
 
 [defmetro cadr [seq]
   `[car [cdr ,seq]]]

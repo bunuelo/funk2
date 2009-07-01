@@ -76,25 +76,38 @@ ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
 
+
 // integer
 
 f2ptr pfunk2__f2integer__new(f2ptr cause, s64 i);
 s64   pfunk2__f2integer__i(f2ptr this, f2ptr cause);
+
+f2ptr f2integer__primobject_type__new(f2ptr cause);
+
 
 // double
 
 f2ptr  pfunk2__f2double__new(f2ptr cause, double d);
 double pfunk2__f2double__d(f2ptr this, f2ptr cause);
 
+f2ptr f2double__primobject_type__new(f2ptr cause);
+
+
 // float
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f);
 float pfunk2__f2float__f(f2ptr this, f2ptr cause);
 
+f2ptr f2float__primobject_type__new(f2ptr cause);
+
+
 // pointer
 
 f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p);
 ptr   pfunk2__f2pointer__p(f2ptr this, f2ptr cause);
+
+f2ptr f2pointer__primobject_type__new(f2ptr cause);
+
 
 // gfunkptr
 
@@ -105,6 +118,9 @@ computer_id_t  pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause);
 pool_index_t   pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause);
 pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause);
 
+f2ptr f2gfunkptr__primobject_type__new(f2ptr cause);
+
+
 // mutex
 
 f2ptr            pfunk2__f2mutex__new(f2ptr cause);
@@ -112,10 +128,16 @@ void             pfunk2__f2mutex__lock(f2ptr this, f2ptr cause);
 void             pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause);
 int              pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause);
 
+f2ptr f2mutex__primobject_type__new(f2ptr cause);
+
+
 // char
 
 f2ptr pfunk2__f2char__new(f2ptr cause, u64 ch);
 u64   pfunk2__f2char__ch(f2ptr this, f2ptr cause);
+
+f2ptr f2char__primobject_type__new(f2ptr cause);
+
 
 // string
 
@@ -124,6 +146,9 @@ u64   pfunk2__f2string__length(f2ptr this, f2ptr cause);
 u8    pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause);
 void  pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str);
 int   pfunk2__f2string__hash_value(f2ptr this, f2ptr cause);
+
+f2ptr f2string__primobject_type__new(f2ptr cause);
+
 
 // symbol
 
@@ -135,6 +160,9 @@ u64   pfunk2__f2symbol__length(f2ptr this, f2ptr cause);
 u8    pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause);
 u64   pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause);
 void  pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str);
+
+f2ptr f2symbol__primobject_type__new(f2ptr cause);
+
 
 // chunk
 
@@ -155,6 +183,9 @@ int   pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread);
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags);
 f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int flags);
 
+f2ptr f2chunk__primobject_type__new(f2ptr cause);
+
+
 // simple_array
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr);
@@ -164,6 +195,9 @@ void  pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
 u64   pfunk2__f2simple_array__length(f2ptr this, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+
+f2ptr f2simple_array__primobject_type__new(f2ptr cause);
+
 
 // traced_array
 
@@ -185,6 +219,9 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
 f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
+f2ptr f2traced_array__primobject_type__new(f2ptr cause);
+
+
 // larva
 
 typedef enum larva_type_e {
@@ -194,6 +231,10 @@ typedef enum larva_type_e {
 
 f2ptr pfunk2__f2larva__new(f2ptr cause, u32 type);
 u32   pfunk2__f2larva__type(f2ptr this, f2ptr cause);
+
+f2ptr f2larva__primobject_type__new(f2ptr cause);
+
+// get, set, and execute slot funk accessors
 
 f2ptr f2__integer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr f2__integer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
@@ -246,6 +287,7 @@ f2ptr f2__traced_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr f2__larva__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr f2__larva__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
 f2ptr f2__larva__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+
 
 // **
 

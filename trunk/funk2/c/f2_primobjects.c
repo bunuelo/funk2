@@ -227,13 +227,13 @@ def_pcfunk1(imagination_link__name, x, return f2__imagination_link__name(this_ca
 f2ptr f2__imagination_link__name__set(f2ptr cause, f2ptr this, f2ptr value) {return f2imagination_link__name__set(this, cause, value);}
 def_pcfunk2(imagination_link__name__set, x, y, return f2__imagination_link__name__set(this_cause, x, y));
 
-f2ptr f2__imagination_link__value(f2ptr cause, f2ptr this) {return f2imagination_value__name(this, cause);}
+f2ptr f2__imagination_link__value(f2ptr cause, f2ptr this) {return f2imagination_link__value(this, cause);}
 def_pcfunk1(imagination_link__value, x, return f2__imagination_link__value(this_cause, x));
 
 f2ptr f2__imagination_link__value__set(f2ptr cause, f2ptr this, f2ptr value) {return f2imagination_link__value__set(this, cause, value);}
 def_pcfunk2(imagination_link__value__set, x, y, return f2__imagination_link__value__set(this_cause, x, y));
 
-f2ptr f2__imagination_link__imagination_frame(f2ptr cause, f2ptr this) {return f2imagination_value__imagination_frame(this, cause);}
+f2ptr f2__imagination_link__imagination_frame(f2ptr cause, f2ptr this) {return f2imagination_link__imagination_frame(this, cause);}
 def_pcfunk1(imagination_link__imagination_frame, x, return f2__imagination_link__imagination_frame(this_cause, x));
 
 f2ptr f2__imagination_link__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr value) {return f2imagination_link__imagination_frame__set(this, cause, value);}

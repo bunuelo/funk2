@@ -783,6 +783,9 @@ f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {return f2bytecode__new(cause, command, arg0, arg1, arg2);}
+def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(this_cause, command, arg0, arg1, arg2));
+
 f2ptr f2__bytecode__command(f2ptr cause, f2ptr this) {return f2bytecode__command(this, cause);}
 def_pcfunk1(bytecode__command, x, return f2__bytecode__command(this_cause, x));
 

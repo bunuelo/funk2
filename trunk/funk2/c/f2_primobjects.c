@@ -1641,7 +1641,7 @@ void f2__primobjects__initialize() {
   // cons
   
   f2__funktional_primcfunk__init(consp, "");
-  f2__primcfunk__init(cons, "");
+  //f2__primcfunk__init(cons, "");
   //f2__primcfunk__init(cons__car, "");
   //f2__primcfunk__init(cons__car__set, "");
   //f2__primcfunk__init(cons__cdr, "");

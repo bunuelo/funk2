@@ -1649,7 +1649,7 @@ void f2__primobjects__initialize() {
   
   // doublelink
   
-  f2__primcfunk__init(doublelink, "");
+  //f2__primcfunk__init(doublelink, "");
   f2__funktional_primcfunk__init(doublelinkp, "");
   //f2__primcfunk__init(doublelink__prev, "");
   //f2__primcfunk__init(doublelink__prev__set, "");

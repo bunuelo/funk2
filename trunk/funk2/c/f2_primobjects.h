@@ -1430,8 +1430,8 @@ typedef struct funk2_object_type__thread__slot_s {
 } funk2_object_type__thread__slot_t;
 
 typedef struct funk2_object_type__processor__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
+  //f2ptr new__symbol;
+  //f2ptr new__funk;
   f2ptr scheduler__symbol;
   f2ptr scheduler__funk;
   f2ptr scheduler__set__symbol;

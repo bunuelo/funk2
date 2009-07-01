@@ -83,14 +83,16 @@
 [globalize-funk unsafe:place-thing-set                      &primfunk:place__thing__set]
 
 [globalize-funk cons?                                       &primfunk:consp]
-[globalize-funk cons                                        &primfunk:cons]
+[globalize-funk cons-new                                    &primfunk:cons__new]
+[globalize-funk cons                                        &primfunk:cons__new]
 [globalize-funk unsafe:cons-car                             &primfunk:cons__car]
 [globalize-funk unsafe:cons-car-set                         &primfunk:cons__car__set]
 [globalize-funk unsafe:cons-cdr                             &primfunk:cons__cdr]
 [globalize-funk unsafe:cons-cdr-set                         &primfunk:cons__cdr__set]
 
 [globalize-funk doublelink?                                 &primfunk:doublelinkp]
-[globalize-funk doublelink                                  &primfunk:doublelink]
+[globalize-funk doublelink-new                              &primfunk:doublelink__new]
+[globalize-funk doublelink                                  &primfunk:doublelink__new]
 [globalize-funk unsafe:doublelink-prev                      &primfunk:doublelink__prev]
 [globalize-funk unsafe:doublelink-prev-set                  &primfunk:doublelink__prev__set]
 [globalize-funk unsafe:doublelink-next                      &primfunk:doublelink__next]

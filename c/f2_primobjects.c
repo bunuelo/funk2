@@ -102,8 +102,8 @@ f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
 
 boolean_t raw__consp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_cons(x, cause));}
 
-f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
-def_pcfunk2(cons, x, y, return f2__cons(this_cause, x, y));
+f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
+def_pcfunk2(cons__new, x, y, return f2__cons__new(this_cause, x, y));
 
 f2ptr f2__consp(f2ptr cause, f2ptr x) {return f2bool__new(raw__consp(x, cause));}
 def_pcfunk1(consp, x, return f2__consp(this_cause, x));
@@ -151,8 +151,8 @@ f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
 
 boolean_t raw__doublelinkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
 
-f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
-def_pcfunk3(doublelink, x, y, z, return f2__doublelink(this_cause, x, y, z));
+f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
+def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));
 
 f2ptr f2__doublelinkp(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublelinkp(x, cause));}
 def_pcfunk1(doublelinkp, x, return f2__doublelinkp(this_cause, x));
@@ -215,6 +215,13 @@ f2ptr f2imagination_link__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {
+  return f2imagination_link__new__trace_depth(cause, next, name, value, trace, imagination_frame, 1);
+}
+
+f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}
+def_pcfunk5(imagination_link__new, next, name, value, trace, imagination_frame, return f2__imagination_link__next(this_cause, next, name, value, trace, imagination_frame));
+
 f2ptr f2__imagination_link__next(f2ptr cause, f2ptr this) {return f2imagination_link__next(this, cause);}
 def_pcfunk1(imagination_link__next, x, return f2__imagination_link__next(this_cause, x));
 
@@ -239,10 +246,6 @@ def_pcfunk1(imagination_link__imagination_frame, x, return f2__imagination_link_
 f2ptr f2__imagination_link__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr value) {return f2imagination_link__imagination_frame__set(this, cause, value);}
 def_pcfunk2(imagination_link__imagination_frame__set, x, y, return f2__imagination_link__imagination_frame__set(this_cause, x, y));
 
-
-f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {
-  return f2imagination_link__new__trace_depth(cause, next, name, value, trace, imagination_frame, 1);
-}
 
 f2ptr raw__imagination_frame__new_with_added_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth) {
   f2ptr trace             = nil;
@@ -373,6 +376,9 @@ f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
+def_pcfunk6(cfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__cfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
+
 f2ptr f2__cfunk__name(f2ptr cause, f2ptr this) {return f2cfunk__name(this, cause);}
 def_pcfunk1(cfunk__name, x, return f2__cfunk__name(this_cause, x));
 
@@ -448,6 +454,9 @@ f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
   {char* slot_name = "documentation";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
+
+f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2metrocfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation));
+def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
 
 f2ptr f2__metrocfunk__name(f2ptr cause, f2ptr this) {return f2metrocfunk__name(this, cause);}
 def_pcfunk1(metrocfunk__name, x, return f2__metrocfunk__name(this_cause, x));

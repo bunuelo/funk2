@@ -220,7 +220,7 @@ f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, 
 }
 
 f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}
-def_pcfunk5(imagination_link__new, next, name, value, trace, imagination_frame, return f2__imagination_link__next(this_cause, next, name, value, trace, imagination_frame));
+def_pcfunk5(imagination_link__new, next, name, value, trace, imagination_frame, return f2__imagination_link__new(this_cause, next, name, value, trace, imagination_frame));
 
 f2ptr f2__imagination_link__next(f2ptr cause, f2ptr this) {return f2imagination_link__next(this, cause);}
 def_pcfunk1(imagination_link__next, x, return f2__imagination_link__next(this_cause, x));

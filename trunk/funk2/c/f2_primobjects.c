@@ -75,9 +75,17 @@ def_pcfunk1(place__thing, x, return f2__place__thing(this_cause, x));
 f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y) {f2place__thing__set(x, cause, y); return nil;}
 def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x, y));
 
+//  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_place.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+//  {f2__primcfunk__init__with_c_cfunk_var__1_arg(place__new, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk = cfunk;}
+//  {char* symbol_str = "thing"; __funk2.globalenv.object_type.primobject.primobject_type_place.thing__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+//  {f2__primcfunk__init__with_c_cfunk_var__1_arg(place__thing, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_place.thing__funk = cfunk;}
+//  {char* symbol_str = "thing-set"; __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+//  {f2__primcfunk__init__with_c_cfunk_var__2_arg(place__thing__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk = cfunk;}
+
 f2ptr f2place__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "thing"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk);}
+  {char* slot_name = "thing"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_place.thing__funk, __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk, nil);}
   return this;
 }
 
@@ -122,8 +130,9 @@ def_pcfunk2(cons__cdr__set, x, y, return f2__cons__cdr__set(this_cause, x, y));
 
 f2ptr f2cons__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "car";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "cdr";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cons.new__funk);}
+  {char* slot_name = "car"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.car__funk, __funk2.globalenv.object_type.primobject.primobject_type_cons.car__set__funk, nil);}
+  {char* slot_name = "cdr"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.cdr__funk, __funk2.globalenv.object_type.primobject.primobject_type_cons.cdr__set__funk, nil);}
   return this;
 }
 
@@ -177,9 +186,10 @@ def_pcfunk2(doublelink__value__set, x, y, return f2__doublelink__value__set(this
 
 f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "prev";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "next";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "value";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_doublelink.new__funk);}
+  {char* slot_name = "prev";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.prev__funk,  __funk2.globalenv.object_type.primobject.primobject_type_doublelink.prev__set__funk, nil);}
+  {char* slot_name = "next";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.next__funk,  __funk2.globalenv.object_type.primobject.primobject_type_doublelink.next__set__funk, nil);}
+  {char* slot_name = "value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.value__funk, __funk2.globalenv.object_type.primobject.primobject_type_doublelink.value__set__funk, nil);}
   return this;
 }
 
@@ -207,11 +217,17 @@ f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, 
 
 f2ptr f2imagination_link__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "next";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "name";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "value";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "trace";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "imagination_frame";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.new__funk);}
+  {char* slot_name = "next";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__funk,              __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__set__funk, nil);}
+  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.name__funk,              __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.name__set__funk, nil);}
+  {char* slot_name = "value";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.value__funk,             __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.value__set__funk, nil);}
+  {char* slot_name = "trace";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.trace__funk,             __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.trace__set__funk, nil);}
+  {char* slot_name = "imagination_frame"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.imagination_frame__funk, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.imagination_frame__set__funk, nil);}
   return this;
 }
 
@@ -373,12 +389,19 @@ boolean_t raw__cfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) 
 
 f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "args";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "cfunkptr";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "env";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "is_funktional";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "documentation";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cfunk.new__funk);}
+  {char* slot_name = "name";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.name__funk,          __funk2.globalenv.object_type.primobject.primobject_type_cfunk.name__set__funk, nil);}
+  {char* slot_name = "args";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.args__funk,          __funk2.globalenv.object_type.primobject.primobject_type_cfunk.args__set__funk, nil);}
+  {char* slot_name = "cfunkptr";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.cfunkptr__funk,      __funk2.globalenv.object_type.primobject.primobject_type_cfunk.cfunkptr__set__funk, nil);}
+  {char* slot_name = "env";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.env__funk,           __funk2.globalenv.object_type.primobject.primobject_type_cfunk.env__set__funk, nil);}
+  {char* slot_name = "is_funktional"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.is_funktional__funk, __funk2.globalenv.object_type.primobject.primobject_type_cfunk.is_funktional__set__funk, nil);}
+  {char* slot_name = "documentation"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.documentation__funk, __funk2.globalenv.object_type.primobject.primobject_type_cfunk.documentation__set__funk, nil);}
   return this;
 }
 
@@ -452,12 +475,19 @@ boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, ca
 
 f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "args";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "cfunkptr";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "env";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "is_funktional";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "documentation";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.new__funk);}
+  {char* slot_name = "name";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__funk,          __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__set__funk, nil);}
+  {char* slot_name = "args";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__funk,          __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__set__funk, nil);}
+  {char* slot_name = "cfunkptr";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__funk,      __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__set__funk, nil);}
+  {char* slot_name = "env";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__funk,           __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__set__funk, nil);}
+  {char* slot_name = "is_funktional"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__funk, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__set__funk, nil);}
+  {char* slot_name = "documentation"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__funk, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__set__funk, nil);}
   return this;
 }
 
@@ -536,15 +566,25 @@ boolean_t raw__funkp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) &
 
 f2ptr f2funk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "name";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "body_bytecodes";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "args";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "demetropolized_body";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "body";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "env";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "machine_code";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "is_funktional";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "documentation";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_funk.new__funk);}
+  {char* slot_name = "name";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.name__funk,                __funk2.globalenv.object_type.primobject.primobject_type_funk.name__set__funk, nil);}
+  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.body_bytecodes__funk,      __funk2.globalenv.object_type.primobject.primobject_type_funk.body_bytecodes__set__funk, nil);}
+  {char* slot_name = "args";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.args__funk,                __funk2.globalenv.object_type.primobject.primobject_type_funk.args__set__funk, nil);}
+  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.demetropolized_body__funk, __funk2.globalenv.object_type.primobject.primobject_type_funk.demetropolized_body__set__funk, nil);}
+  {char* slot_name = "body";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.body__funk,                __funk2.globalenv.object_type.primobject.primobject_type_funk.body__set__funk, nil);}
+  {char* slot_name = "env";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.env__funk,                 __funk2.globalenv.object_type.primobject.primobject_type_funk.env__set__funk, nil);}
+  {char* slot_name = "machine_code";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.machine_code__funk,        __funk2.globalenv.object_type.primobject.primobject_type_funk.machine_code__set__funk, nil);}
+  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.is_funktional__funk,       __funk2.globalenv.object_type.primobject.primobject_type_funk.is_funktional__set__funk, nil);}
+  {char* slot_name = "documentation";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_funk.documentation__funk,       __funk2.globalenv.object_type.primobject.primobject_type_funk.documentation__set__funk, nil);}
   return this;
 }
 
@@ -639,15 +679,25 @@ boolean_t raw__metrop(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) 
 
 f2ptr f2metro__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "name";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "body_bytecodes";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "args";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "demetropolized_body";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "body";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "env";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "machine_code";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "is_funktional";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "documentation";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.new__funk);}
+  {char* slot_name = "name";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk, nil);}
+  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk, nil);}
+  {char* slot_name = "args";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__funk, nil);}
+  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__funk, nil);}
+  {char* slot_name = "body";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.body__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__funk, nil);}
+  {char* slot_name = "env";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.env__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__funk, nil);}
+  {char* slot_name = "machine_code";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__funk, nil);}
+  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__funk, nil);}
+  {char* slot_name = "documentation";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									  __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__funk, nil);}
   return this;
 }
 
@@ -730,8 +780,9 @@ def_pcfunk2(exception, tag, value, return f2__exception(this_cause, tag, value))
 
 f2ptr f2exception__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "tag";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "value";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_exception.new__funk);}
+  {char* slot_name = "tag";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__funk, __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__set__funk, nil);}
+  {char* slot_name = "value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.value__funk, __funk2.globalenv.object_type.primobject.primobject_type_exception.value__set__funk, nil);}
   return this;
 }
 
@@ -776,10 +827,11 @@ boolean_t raw__bytecodep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, caus
 
 f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "command";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "arg0";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "arg1";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "arg2";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__funk);}
+  {char* slot_name = "command"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__set__funk, nil);}
+  {char* slot_name = "arg0";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__set__funk, nil);}
+  {char* slot_name = "arg1";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__set__funk, nil);}
+  {char* slot_name = "arg2";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__set__funk, nil);}
   return this;
 }
 
@@ -877,23 +929,41 @@ f2ptr f2thread__new(f2ptr cause,
 
 f2ptr f2thread__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "program_counter";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "stack";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "iter";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "env";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "args";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "return";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "value";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "trace";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "critics";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "cause_reg";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "keep_undead";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "is_zombie";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "parent_thread";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "parent_env";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "execute_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "paused";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "last_executed_time";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_thread.new__funk);}
+  {char* slot_name = "program_counter";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter__set__funk, nil);}
+  {char* slot_name = "stack";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.stack__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.stack__set__funk, nil);}
+  {char* slot_name = "iter";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.iter__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.iter__set__funk, nil);}
+  {char* slot_name = "env";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.env__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.env__set__funk, nil);}
+  {char* slot_name = "args";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.args__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.args__set__funk, nil);}
+  {char* slot_name = "return";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.return__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.return__set__funk, nil);}
+  {char* slot_name = "value";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.value__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.value__set__funk, nil);}
+  {char* slot_name = "trace";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.trace__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.trace__set__funk, nil);}
+  {char* slot_name = "critics";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__set__funk, nil);}
+  {char* slot_name = "cause_reg";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.cause_reg__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.cause_reg__set__funk, nil);}
+  {char* slot_name = "keep_undead";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.keep_undead__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.keep_undead__set__funk, nil);}
+  {char* slot_name = "is_zombie";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.is_zombie__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.is_zombie__set__funk, nil);}
+  {char* slot_name = "parent_thread";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.parent_thread__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.parent_thread__set__funk, nil);}
+  {char* slot_name = "parent_env";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.parent_env__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.parent_env__set__funk, nil);}
+  {char* slot_name = "execute_mutex";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.execute_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.execute_mutex__set__funk, nil);}
+  {char* slot_name = "paused";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.paused__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.paused__set__funk, nil);}
+  {char* slot_name = "last_executed_time"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__set__funk, nil);}
   return this;
 }
 
@@ -1031,14 +1101,23 @@ f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2p
 
 f2ptr f2processor__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "scheduler";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "processor_thread";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "active_threads_mutex";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "active_threads";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "sleeping_threads_mutex";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "sleeping_threads";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "pool_index";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "desc";                       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk);}
+  {char* slot_name = "scheduler";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__set__funk, nil);}
+  {char* slot_name = "processor_thread";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__set__funk, nil);}
+  {char* slot_name = "active_threads_mutex";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_mutex__set__funk, nil);}
+  {char* slot_name = "active_threads";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__set__funk, nil);}
+  {char* slot_name = "sleeping_threads_mutex"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__set__funk, nil);}
+  {char* slot_name = "sleeping_threads";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads__set__funk, nil);}
+  {char* slot_name = "pool_index";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.pool_index__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.pool_index__set__funk, nil);}
+  {char* slot_name = "desc";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.desc__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.desc_funk__set__funk, nil);}
   return this;
 }
 
@@ -1115,11 +1194,17 @@ f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mu
 
 f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "processors";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_subscribers_mutex";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_subscribers";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_buffer_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_buffer";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.new__funk);}
+  {char* slot_name = "processors";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__funk, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__set__funk, nil);}
+  {char* slot_name = "event_subscribers_mutex"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers_mutex__set__funk, nil);}
+  {char* slot_name = "event_subscribers";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers__funk, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers__set__funk, nil);}
+  {char* slot_name = "event_buffer_mutex";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer_mutex__set__funk, nil);}
+  {char* slot_name = "event_buffer";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer__funk, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer__set__funk, nil);}
   return this;
 }
 
@@ -1180,11 +1265,17 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr thread, f2pt
 
 f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "event_types";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "thread";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "funkable";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_buffer";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_buffer_mutex";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__funk);}
+  {char* slot_name = "event_types";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__set__funk, nil);}
+  {char* slot_name = "thread";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.thread__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.thread__set__funk, nil);}
+  {char* slot_name = "funkable";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__set__funk, nil);}
+  {char* slot_name = "event_buffer";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__set__funk, nil);}
+  {char* slot_name = "event_buffer_mutex"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__set__funk, nil);}
   return this;
 }
 
@@ -1257,16 +1348,27 @@ boolean_t raw__causep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) 
 
 f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "allocate_traced_arrays";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "bytecode_tracing_on";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "memory_tracing_on";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "subscribers_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "subscribers";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "imagination_stack";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_buffer_first";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_buffer_last";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "current_events_mutex";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "current_events";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
+  {char* slot_name = "allocate_traced_arrays"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__set__funk, nil);}
+  {char* slot_name = "bytecode_tracing_on";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.bytecode_tracing_on__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.bytecode_tracing_on__set__funk, nil);}
+  {char* slot_name = "memory_tracing_on";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.memory_tracing_on__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.memory_tracing_on__set__funk, nil);}
+  {char* slot_name = "subscribers_mutex";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.subscribers_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.subscribers_mutex__set__funk, nil);}
+  {char* slot_name = "subscribers";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.subscribers__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.subscribers__set__funk, nil);}
+  {char* slot_name = "imagination_stack";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.imagination_stack__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.imagination_stack__set__funk, nil);}
+  {char* slot_name = "event_buffer_first";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.event_buffer_first__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.event_buffer_first__set__funk, nil);}
+  {char* slot_name = "event_buffer_last";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.event_buffer_last__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.event_buffer_last__set__funk, nil);}
+  {char* slot_name = "current_events_mutex";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.current_events_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.current_events_mutex__set__funk, nil);}
+  {char* slot_name = "current_events";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.current_events__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.current_events__set__funk, nil);}
   return this;
 }
 
@@ -1343,7 +1445,7 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_t
 }
 
 f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
-  return f2__cause__new(cause, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
+  return f2__cause__new(cause, cause__allocate_traced_arrays__default_value, __funk2.globalenv.object_type.primobject.primobject_type_.__funk, __funk2.globalenv.object_type.primobject.primobject_type_.__set__funk, nil, __funk2.globalenv.object_type.primobject.primobject_type_.__funk, __funk2.globalenv.object_type.primobject.primobject_type_.__set__funk, nil, nil);
 }
 
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {
@@ -1410,8 +1512,11 @@ f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970,
 
 f2ptr f2transframe__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "microseconds_since_1970";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "symbol_old_news";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk);}
+  {char* slot_name = "microseconds_since_1970"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__set__funk, nil);}
+  {char* slot_name = "symbol_old_news";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__set__funk, nil);}
   return this;
 }
 
@@ -1450,7 +1555,8 @@ f2ptr f2bug__new(f2ptr cause, f2ptr type) {
 
 f2ptr f2bug__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bug.new__funk);}
+  {char* slot_name = "type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk, __funk2.globalenv.object_type.primobject.primobject_type_bug.type__set__funk, nil);}
   return this;
 }
 
@@ -1481,8 +1587,9 @@ f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {
 
 f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "x";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "y";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__funk);}
+  {char* slot_name = "x";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__funk, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__set__funk, nil);}
+  {char* slot_name = "y";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__funk, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__set__funk, nil);}
   return this;
 }
 
@@ -1527,10 +1634,11 @@ f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr
 
 f2ptr f2event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "node_id";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "event_id";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "type";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "data";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event.new__funk);}
+  {char* slot_name = "node_id";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__funk, __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__set__funk, nil);}
+  {char* slot_name = "event_id"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.event_id__funk, __funk2.globalenv.object_type.primobject.primobject_type_event.event_id__set__funk, nil);}
+  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.type__funk, __funk2.globalenv.object_type.primobject.primobject_type_event.type__set__funk, nil);}
+  {char* slot_name = "data";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.data__funk, __funk2.globalenv.object_type.primobject.primobject_type_event.data__set__funk, nil);}
   return this;
 }
 
@@ -1585,8 +1693,11 @@ f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
 
 f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "bytecode";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
-  {char* slot_name = "context";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
+  {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__funk);}
+  {char* slot_name = "bytecode"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+							       __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__set__funk, nil);}
+  {char* slot_name = "context";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+							       __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__set__funk, nil);}
   return this;
 }
 
@@ -1946,38 +2057,38 @@ void f2__primobjects__initialize() {
   
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thread.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var(thread__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.new__funk = cfunk;}
-  {char* symbol_str = "program_counter"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__program_counter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__funk = cfunk;}
-  {char* symbol_str = "program_counter-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__program_counter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__set__funk = cfunk;}
-  {char* symbol_str = "stack"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__stack, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__funk = cfunk;}
-  {char* symbol_str = "stack-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__stack__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__set__funk = cfunk;}
-  {char* symbol_str = "iter"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__iter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__funk = cfunk;}
-  {char* symbol_str = "iter-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__iter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__set__funk = cfunk;}
-  {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__env, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__funk = cfunk;}
-  {char* symbol_str = "env-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__env__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__set__funk = cfunk;}
-  {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__funk = cfunk;}
-  {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__args__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__set__funk = cfunk;}
-  {char* symbol_str = "return"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__return, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__funk = cfunk;}
-  {char* symbol_str = "return-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__return__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__set__funk = cfunk;}
-  {char* symbol_str = "value"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__funk = cfunk;}
-  {char* symbol_str = "value-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__value__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__set__funk = cfunk;}
-  {char* symbol_str = "trace"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__trace, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__funk = cfunk;}
-  {char* symbol_str = "trace-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__trace__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__set__funk = cfunk;}
+  {char* symbol_str = "program_counter"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__program_counter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter__funk = cfunk;}
+  {char* symbol_str = "program_counter-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__program_counter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter__set__funk = cfunk;}
+  {char* symbol_str = "stack"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__stack, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.stack__funk = cfunk;}
+  {char* symbol_str = "stack-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__stack__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.stack__set__funk = cfunk;}
+  {char* symbol_str = "iter"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__iter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.iter__funk = cfunk;}
+  {char* symbol_str = "iter-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__iter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.iter__set__funk = cfunk;}
+  {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__env, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.env__funk = cfunk;}
+  {char* symbol_str = "env-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__env__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.env__set__funk = cfunk;}
+  {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.args__funk = cfunk;}
+  {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__args__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.args__set__funk = cfunk;}
+  {char* symbol_str = "return"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__return, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.return__funk = cfunk;}
+  {char* symbol_str = "return-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__return__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.return__set__funk = cfunk;}
+  {char* symbol_str = "value"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.value__funk = cfunk;}
+  {char* symbol_str = "value-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__value__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.value__set__funk = cfunk;}
+  {char* symbol_str = "trace"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__trace, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.trace__funk = cfunk;}
+  {char* symbol_str = "trace-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__trace__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.trace__set__funk = cfunk;}
   {char* symbol_str = "critics"; __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__critics, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__funk = cfunk;}
   {char* symbol_str = "critics-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

@@ -26,9 +26,9 @@ f2ptr f2__primobject_type__new(f2ptr cause) {
 }
 
 void f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr get_funk, f2ptr set_funk, f2ptr execute_funk) {
-  frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"),     (u8*)"get_funk"),     name, get_funk);
-  frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"),     (u8*)"set_funk"),     name, set_funk);
-  frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), name, execute_funk);
+  if (get_funk)     {frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"),     (u8*)"get_funk"),     name, get_funk);}
+  if (set_funk)     {frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"),     (u8*)"set_funk"),     name, set_funk);}
+  if (execute_funk) {frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), name, execute_funk);}
 }
 
 f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr name) {

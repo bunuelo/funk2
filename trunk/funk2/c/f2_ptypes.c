@@ -2085,8 +2085,13 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 void f2__ptypes__initialize__object_slots() {
   f2ptr cause = initial_cause();
   
-  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.new__funk = cfunk;}
+  {
+    char* str = "new"; f2ptr new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); 
+    __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol = new_symbol;
+    __funk2.globalenv.object_type.ptype.ptype_integer.new__funk   = cfunk;
+    environment__add_var_value(cause, global_environment(), __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol, cfunk);
+  }
   {char* str = "i"; __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__i__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.i__funk = cfunk;}
   

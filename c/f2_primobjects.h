@@ -1357,8 +1357,8 @@ typedef struct funk2_object_type__bytecode__slot_s {
 } funk2_object_type__bytecode__slot_t;
 
 typedef struct funk2_object_type__thread__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
+  //f2ptr new__symbol;
+  //f2ptr new__funk;
   f2ptr program_counter_reg__symbol;
   f2ptr program_counter_reg__funk;
   f2ptr program_counter_reg__set__symbol;

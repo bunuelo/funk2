@@ -1241,8 +1241,8 @@ typedef struct funk2_object_type__metrocfunk__slot_s {
 } funk2_object_type__metrocfunk__slot_t;
 
 typedef struct funk2_object_type__funk__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
+  //f2ptr new__symbol;
+  //f2ptr new__funk;
   f2ptr name__symbol;
   f2ptr name__funk;
   f2ptr name__set__symbol;
@@ -1282,8 +1282,8 @@ typedef struct funk2_object_type__funk__slot_s {
 } funk2_object_type__funk__slot_t;
 
 typedef struct funk2_object_type__metro__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
+  //f2ptr new__symbol;
+  //f2ptr new__funk;
   f2ptr name__symbol;
   f2ptr name__funk;
   f2ptr name__set__symbol;

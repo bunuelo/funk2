@@ -184,7 +184,7 @@
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 
-[primfunk:load 'fu2/primobjects.fu2']
+`[primfunk:load 'fu2/primobjects.fu2']
 
 'primitive accessors and mututators completely defined at this point.'
 

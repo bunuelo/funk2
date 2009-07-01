@@ -1249,7 +1249,12 @@ def_pcfunk1(cause__allocate_traced_arrays, x, return f2__cause__allocate_traced_
 f2ptr f2__cause__allocate_traced_arrays__set(f2ptr cause, f2ptr this, f2ptr value) {return f2cause__allocate_traced_arrays__set(this, cause, value);}
 def_pcfunk2(cause__allocate_traced_arrays__set, x, y, return f2__cause__allocate_traced_arrays__set(this_cause, x, y));
 
-f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {return f2cause__bytecode_tracing_on(this, cause);}
+f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
+  if (this && (! raw__causep(this, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  return (this ? f2cause__bytecode_tracing_on(this, cause) : nil);
+}
 def_pcfunk1(cause__bytecode_tracing_on, x, return f2__cause__bytecode_tracing_on(this_cause, x));
 
 f2ptr f2__cause__bytecode_tracing_on__set(f2ptr cause, f2ptr this, f2ptr value) {return f2cause__bytecode_tracing_on__set(this, cause, value);}
@@ -1348,13 +1353,6 @@ f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause);
   f2cause__imagination_stack__set(new_cause, cause, f2cons__new(cause, imagination_name, f2cause__imagination_stack(cause, new_cause)));
   return new_cause;
-}
-
-f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
-  if (this && (! raw__causep(this, cause))) {
-    return f2larva__new(cause, 1);
-  }
-  return (this ? f2cause__bytecode_tracing_on(this, cause) : nil);
 }
 
 void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {

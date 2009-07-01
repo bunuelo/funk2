@@ -235,6 +235,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2ptr thread_cause = f2thread__cause_reg(thread, cause);
 	f2__thread_serial(thread_cause, thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
       } else {
+	f2__print(cause, thread);
 	printf("\nlarva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
 	f2ptr larva = f2thread__value(thread, cause);
 	if (! raw__larvap(larva, cause)) {

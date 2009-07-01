@@ -72,6 +72,8 @@
 
 [define -current_env_name- `global-environment]
 
+[primfunk:exp__format stdout '\ndebug 1\n']
+
 [globalize-funk funk-unlabeled [make-metro `funk-unlabeled `[name args :rest body]
 					   `[[define demetroed    [exps-demetropolize_full body]]
 					     [define compiled_funk [make-funk name args
@@ -93,6 +95,8 @@
 					    nil
 					    nil]]
 
+[primfunk:exp__format stdout '\ndebug 2\n']
+
 [globalize-funk metro [make-metro `metro `[name args :rest body]
 				  `[[define demetroed    [exps-demetropolize_full body]]
 				    [define compiled_funk [make-funk name args
@@ -113,6 +117,8 @@
 				   nil
 				   nil
 				   nil]]
+
+[primfunk:exp__format stdout '\ndebug 3\n']
 
 [globalize-funk defmetro
 		[metro `defmetro [name args :rest body]
@@ -150,6 +156,7 @@
 `[exp-format stdout '\ndefining eval\n']
 
 
+[primfunk:exp__format stdout '\ndebug 4\n']
 
 [defunk eval [exp]
   [funk-apply [make-funk `eval []
@@ -198,6 +205,8 @@
 [defmetro cdr-set [x y] `[next-set  ,x ,y]]
 [defmetro cir     [x]   `[prev      ,x]]
 [defmetro cir-set [x y] `[prev-set  ,x ,y]]
+
+[primfunk:exp__format stdout '\ndebug 5\n']
 
 [defunk list [:rest seq]
   [if [null seq]

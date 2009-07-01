@@ -1188,6 +1188,9 @@ f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr thread, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex) {return f2event_subscriber__new(cause, event_types, thread, funkable, event_buffer, event_buffer_mutex);}
+def_pcfunk5(event_subscriber__new, event_types, thread, funkable, event_buffer, event_buffer_mutex, return f2__event_subscriber__new(this_cause, event_types, thread, funkable, event_buffer, event_buffer_mutex));
+
 f2ptr f2__event_subscriber__event_types(f2ptr cause, f2ptr this) {return f2event_subscriber__event_types(this, cause);}
 def_pcfunk1(event_subscriber__event_types, x, return f2__event_subscriber__event_types(this_cause, x));
 

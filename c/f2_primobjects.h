@@ -1116,6 +1116,19 @@ defprimobject__static_slot__prototype(bytecode_event__context);
 #define f2bytecode_event__context__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, bytecode_event__context, cause)
 
 
+
+
+
+// end of objects
+
+extern void f2__primobjects__reinitialize_globalvars();
+extern void f2__primobjects__initialize();
+
+#endif // F2__PRIMOBJECTS__H
+
+#ifndef F2__PRIMOBJECT__GLOBALENV_STRUCTS
+#define F2__PRIMOBJECT__GLOBALENV_STRUCTS
+
 // primobject global slot definitions
 
 typedef struct funk2_object_type__place__slot_s {
@@ -1655,12 +1668,5 @@ typedef struct funk2_primobject_object_types_s {
   funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
 } funk2_primobject_object_types_t;
 
-
-
-// end of objects
-
-extern void f2__primobjects__reinitialize_globalvars();
-extern void f2__primobjects__initialize();
-
-#endif // F2__PRIMOBJECTS__H
+#endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS
 

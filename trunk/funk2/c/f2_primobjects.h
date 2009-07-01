@@ -1494,10 +1494,10 @@ typedef struct funk2_object_type__scheduler__slot_s {
 typedef struct funk2_object_type__event_subscriber__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
-  f2ptr event_type__symbol;
-  f2ptr event_type__funk;
-  f2ptr event_type__set__symbol;
-  f2ptr event_type__set__funk;
+  f2ptr event_types__symbol;
+  f2ptr event_types__funk;
+  f2ptr event_types__set__symbol;
+  f2ptr event_types__set__funk;
   f2ptr thread__symbol;
   f2ptr thread__funk;
   f2ptr thread__set__symbol;

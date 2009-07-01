@@ -1123,6 +1123,9 @@ f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer) {return f2scheduler__new(cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);}
+def_pcfunk5(scheduler__new, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, return f2__scheduler__new(this_cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer));
+
 f2ptr f2__scheduler__processors(f2ptr cause, f2ptr this) {return f2scheduler__processors(this, cause);}
 def_pcfunk1(scheduler__processors, x, return f2__scheduler__processors(this_cause, x));
 
@@ -1995,9 +1998,9 @@ void f2__primobjects__initialize() {
   
   // processor
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_processor.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__8_arg(processor__new, scheduler, processor_thread, active_threads_mutex, active_threads, sleeping_threads_mutex, sleeping_threads, pool_index, desc,
-						cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk = cfunk;}
+  //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_processor.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  //{f2__primcfunk__init__with_c_cfunk_var__8_arg(processor__new, scheduler, processor_thread, active_threads_mutex, active_threads, sleeping_threads_mutex, sleeping_threads, pool_index, desc,
+  //                                              cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk = cfunk;}
   {char* symbol_str = "scheduler"; __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__scheduler, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__funk = cfunk;}
   {char* symbol_str = "scheduler-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

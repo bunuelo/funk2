@@ -1579,12 +1579,19 @@ f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr cont
   return this;
 }
 
+f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
+  return f2bytecode_event__new__trace_depth(cause, bytecode, context, 1);
+}
+
 f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "bytecode";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   {char* slot_name = "context";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, nil);}
   return this;
 }
+
+f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
+def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
 
 f2ptr f2__bytecode_event__bytecode(f2ptr cause, f2ptr this) {return f2bytecode_event__bytecode(this, cause);}
 def_pcfunk1(bytecode_event__bytecode, x, return f2__bytecode_event__bytecode(this_cause, x));
@@ -1600,9 +1607,6 @@ def_pcfunk2(bytecode_event__context__set, x, y, return f2__bytecode_event__conte
 
 
 
-f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
-  return f2bytecode_event__new__trace_depth(cause, bytecode, context, 1);
-}
 
 
 // **

@@ -257,12 +257,16 @@ void f2__ptypes__initialize();
 #ifndef F2__PTYPES__OBJECT_TYPES
 #define F2__PTYPES__OBJECT_TYPES
 
+// integer
+
 typedef struct funk2_object_type__integer__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr i__symbol;
   f2ptr i__funk;
 } funk2_object_type__integer__slot_t;
+
+// double
 
 typedef struct funk2_object_type__double__slot_s {
   f2ptr new__symbol;
@@ -271,6 +275,8 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr d__funk;
 } funk2_object_type__double__slot_t;
 
+// float
+
 typedef struct funk2_object_type__float__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
@@ -278,12 +284,16 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr f__funk;
 } funk2_object_type__float__slot_t;
 
+// pointer
+
 typedef struct funk2_object_type__pointer__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr p__symbol;
   f2ptr p__funk;
 } funk2_object_type__pointer__slot_t;
+
+// gfunkptr
 
 typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr new__symbol;
@@ -300,6 +310,8 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr pool_address__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
+// mutex
+
 typedef struct funk2_object_type__mutex__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
@@ -311,12 +323,16 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr trylock__funk;
 } funk2_object_type__mutex__slot_t;
 
+// char
+
 typedef struct funk2_object_type__char__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr ch__symbol;
   f2ptr ch__funk;
 } funk2_object_type__char__slot_t;
+
+// string
 
 typedef struct funk2_object_type__string__slot_s {
   f2ptr new__symbol;
@@ -329,6 +345,8 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr hash_value__funk;
 } funk2_object_type__string__slot_t;
 
+// symbol
+
 typedef struct funk2_object_type__symbol__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
@@ -339,6 +357,8 @@ typedef struct funk2_object_type__symbol__slot_s {
   f2ptr hash_value__symbol;
   f2ptr hash_value__funk;
 } funk2_object_type__symbol__slot_t;
+
+// chunk
 
 typedef struct funk2_object_type__chunk__slot_s {
   f2ptr new__symbol;
@@ -369,6 +389,8 @@ typedef struct funk2_object_type__chunk__slot_s {
   f2ptr bytecode_jump__funk;
 } funk2_object_type__chunk__slot_t;
 
+// simple_array
+
 typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
@@ -381,6 +403,8 @@ typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr elt__set__symbol;
   f2ptr elt__set__funk;
 } funk2_object_type__simple_array__slot_t;
+
+// traced_array
 
 typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr new__symbol;
@@ -405,12 +429,16 @@ typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr elt__imagination_frame__set__funk;
 } funk2_object_type__traced_array__slot_t;
 
+// larva
+
 typedef struct funk2_object_type__larva__slot_s {
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr type__symbol;
   f2ptr type__funk;
 } funk2_object_type__larva__slot_t;
+
+
 
 typedef struct funk2_ptype_object_types_s {
   funk2_object_type__integer__slot_t      ptype_integer;

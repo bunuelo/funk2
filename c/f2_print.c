@@ -928,9 +928,14 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 			      int   key__length   = f2symbol__length(keyvalue_pair__key, cause);
 			      char* framekey__str = (char*)alloca(type_key__length + 1 + key__length + 1);
 			      f2symbol__str_copy(type_keyvalue_pair__key, cause, (u8*)framekey__str);
-			      framekey__str[type_key__length] = ' ';
-			      f2symbol__str_copy(keyvalue_pair__key,      cause, (u8*)framekey__str + type_key__length + 1);
-			      framekey__str[type_key__length + 1 + key__length] = 0;
+			      {
+				int i;
+				for (i = type_key__length; i <= max_type_name_length; i ++) {
+				  framekey__str[i] = ' ';
+				}
+			      }
+			      f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str + max_type_name_length + 1);
+			      framekey__str[max_type_name_length + 1 + key__length] = 0;
 			      int subexp_size[2];
 			      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 			      f2ptr slot_value             = f2cons__cdr(keyvalue_pair, cause);

@@ -24,6 +24,7 @@
 
 #include "f2_primfunks.h"
 #include "f2_ptypes.h"
+#include "f2_primobjects.h"
 
 typedef struct funk2_object_types_s {
   funk2_ptype_object_types_t      ptype;

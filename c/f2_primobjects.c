@@ -1924,37 +1924,37 @@ void f2__primobjects__initialize() {
   
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thread.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var(thread__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.new__funk = cfunk;}
-  {char* symbol_str = "program_counter_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "program_counter"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__program_counter_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__funk = cfunk;}
-  {char* symbol_str = "program_counter_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "program_counter-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__program_counter_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.program_counter_reg__set__funk = cfunk;}
-  {char* symbol_str = "stack_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "stack"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__stack_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__funk = cfunk;}
-  {char* symbol_str = "stack_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "stack-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__stack_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.stack_reg__set__funk = cfunk;}
-  {char* symbol_str = "iter_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "iter"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__iter_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__funk = cfunk;}
-  {char* symbol_str = "iter_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "iter-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__iter_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.iter_reg__set__funk = cfunk;}
-  {char* symbol_str = "env_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__env_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__funk = cfunk;}
-  {char* symbol_str = "env_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "env-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__env_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.env_reg__set__funk = cfunk;}
-  {char* symbol_str = "args_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__args_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__funk = cfunk;}
-  {char* symbol_str = "args_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__args_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.args_reg__set__funk = cfunk;}
-  {char* symbol_str = "return_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "return"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__return_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__funk = cfunk;}
-  {char* symbol_str = "return_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "return-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__return_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.return_reg__set__funk = cfunk;}
-  {char* symbol_str = "value_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "value"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__value_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__funk = cfunk;}
-  {char* symbol_str = "value_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "value-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__value_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.value_reg__set__funk = cfunk;}
-  {char* symbol_str = "trace_reg"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "trace"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__trace_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__funk = cfunk;}
-  {char* symbol_str = "trace_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "trace-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__trace_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.trace_reg__set__funk = cfunk;}
   {char* symbol_str = "critics"; __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__critics, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.critics__funk = cfunk;}

@@ -19,3 +19,25 @@
  rights to redistribute these changes.
 '
 
+`[placep
+  place
+  place__thing
+  place__thing__set
+  
+  consp
+  cons
+  cons__car
+  cons__car__set
+  cons__cdr
+  cons__cdr__set
+  
+  doublelinkp
+  doublelink
+  doublelink__prev
+  doublelink__prev__set
+  doublelink__next
+  doublelink__next__set
+  doublelink__value
+  doublelink__value__set]
+
+

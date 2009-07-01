@@ -26,7 +26,8 @@
 #include "f2_ptypes.h"
 
 typedef struct funk2_object_types_s {
-  funk2_ptype_object_types_t ptype;
+  funk2_ptype_object_types_t      ptype;
+  funk2_primobject_object_types_t primobject;
 } funk2_object_types_t;
 
 // **

@@ -1419,6 +1419,9 @@ f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol
   return f2transframe__new__trace_depth(cause, microseconds_since_1970, symbol_old_news, 1);
 }
 
+f2ptr f2__transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, microseconds_since_1970, symbol_old_news);}
+def_pcfunk2(transframe__new, microseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, microseconds_since_1970, symbol_old_news));
+
 f2ptr f2__transframe__microseconds_since_1970(f2ptr cause, f2ptr this) {return f2transframe__microseconds_since_1970(this, cause);}
 def_pcfunk1(transframe__microseconds_since_1970, x, return f2__transframe__microseconds_since_1970(this_cause, x));
 

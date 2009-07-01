@@ -1627,8 +1627,6 @@ void f2__primobjects__initialize() {
   f2__primcfunk__init(place, "");
   f2__funktional_primcfunk__init(placep, "");
   
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(place__thing, this, 0, ""); __funk2.globalenv.object_type.ptype.ptype_larva.new__funk = cfunk;}
-  
   //f2__primcfunk__init(place__thing, "");
   //f2__primcfunk__init(place__thing__set, "");
   

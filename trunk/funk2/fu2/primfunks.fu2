@@ -77,7 +77,8 @@
 [globalize-funk unsafe:chunk-new_compiled_from_funk         &primfunk:chunk__new_compiled_from_funk]
 
 [globalize-funk place?                                      &primfunk:placep]
-[globalize-funk place                                       &primfunk:place]
+[globalize-funk place-new                                   &primfunk:place__new]
+[globalize-funk place                                       &primfunk:place__new]
 [globalize-funk unsafe:place-thing                          &primfunk:place__thing]
 [globalize-funk unsafe:place-thing-set                      &primfunk:place__thing__set]
 

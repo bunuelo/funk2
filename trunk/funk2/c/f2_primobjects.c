@@ -63,8 +63,8 @@ f2ptr f2place__new(f2ptr cause, f2ptr p) {
 
 boolean_t raw__placep(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_place(x, cause));}
 
-f2ptr f2__place(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}
-def_pcfunk1(place, x, return f2__place(this_cause, x));
+f2ptr f2__place__new(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}
+def_pcfunk1(place__new, x, return f2__place__new(this_cause, x));
 
 f2ptr f2__placep(f2ptr cause, f2ptr x) {return f2bool__new(raw__placep(x, cause));}
 def_pcfunk1(placep, x, return f2__placep(this_cause, x));
@@ -1623,8 +1623,7 @@ void f2__primobjects__initialize() {
   
   // place
   
-
-  f2__primcfunk__init(place, "");
+  
   f2__funktional_primcfunk__init(placep, "");
   
   //f2__primcfunk__init(place__thing, "");

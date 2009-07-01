@@ -39,8 +39,8 @@ void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handle
 }
 
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
-  funk2_processor_mutex__lock(&(this->type_hash_mutex));
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
+  funk2_processor_mutex__lock(&(this->type_hash_mutex));
   f2__hashtable__add_keyvalue_pair(cause, this->type_hash, type_name, type);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
@@ -49,8 +49,8 @@ f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {funk2_primobject_t
 def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name, type));
 
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
-  funk2_processor_mutex__lock(&(this->type_hash_mutex));
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
+  funk2_processor_mutex__lock(&(this->type_hash_mutex));
   f2ptr result = f2__hashtable__lookup_value(this->type_hash, cause, type_name);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
   return result;

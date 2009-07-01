@@ -735,6 +735,9 @@ f2ptr f2exception__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__exception__new(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
+def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, tag, value));
+
 f2ptr f2__exception__tag(f2ptr cause, f2ptr this) {return f2exception__tag(this, cause);}
 def_pcfunk1(exception__tag, x, return f2__exception__tag(this_cause, x));
 

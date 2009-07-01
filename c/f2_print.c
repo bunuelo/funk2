@@ -865,7 +865,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		    }
 		    
 		    {
-		      f2ptr typevar_hashtable                    = f2cons__cdr(keyvalue_pair, cause);
+		      f2ptr typevar_hashtable                    = f2cons__cdr(type_keyvalue_pair, cause);
 		      f2ptr typevar_hashtable__bin_array         = f2hashtable__bin_array(typevar_hashtable, cause);
 		      int   typevar_hashtable__bin_array__length = raw__array__length(cause, typevar_hashtable__bin_array);
 		      
@@ -912,7 +912,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		    }
 		    
 		    {
-		      f2ptr typevar_hashtable                    = f2cons__cdr(keyvalue_pair, cause);
+		      f2ptr typevar_hashtable                    = f2cons__cdr(type_keyvalue_pair, cause);
 		      f2ptr typevar_hashtable__bin_array         = f2hashtable__bin_array(typevar_hashtable, cause);
 		      int   typevar_hashtable__bin_array__length = raw__array__length(cause, typevar_hashtable__bin_array);
 		      

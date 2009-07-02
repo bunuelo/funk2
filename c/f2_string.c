@@ -26,7 +26,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__consp(iter, cause)) {return f2larva__new(cause, 1);}
+      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1);}
       f2ptr str = f2cons__car(iter, cause);
       if (! raw__stringp(str, cause)) {return f2larva__new(cause, 1);}
       u64 str_length = f2string__length(str, cause);
@@ -63,7 +63,7 @@ f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__consp(iter, cause)) {return f2larva__new(cause, 1);}
+      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1);}
       f2ptr str = f2cons__car(iter, cause);
       if (! raw__stringp(str, cause)) {return f2larva__new(cause, 1);}
       u64 str_length = f2string__length(str, cause);

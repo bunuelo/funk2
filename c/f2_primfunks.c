@@ -288,23 +288,6 @@ def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_
 //  return retval;
 //}
 
-boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__symbolp(this, cause)) || (! raw__symbolp(that, cause))) {return boolean__false;}
-  u64 this__length = f2symbol__length(this, cause);
-  u64 that__length = f2symbol__length(that, cause);
-  if (this__length != that__length) {
-    return boolean__false;
-  }
-  char* this__str = (char*)alloca(this__length + 1);
-  char* that__str = (char*)alloca(that__length + 1);
-  f2symbol__str_copy(this, cause, (u8*)this__str);
-  f2symbol__str_copy(that, cause, (u8*)that__str);
-  if (memcmp(this__str, that__str, this__length) != 0) {
-    return boolean__false;
-  }
-  return boolean__true;
-}
-
 // simple_array
 
 //boolean_t raw__simple_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}

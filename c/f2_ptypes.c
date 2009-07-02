@@ -1208,6 +1208,22 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   f2string__str_copy(str, this_cause, str__bytes);
   return f2symbol__new(this_cause, str__length, str__bytes);
 }
+boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__symbol__is_type(cause, this)) || (! raw__symbol__is_type(cause, that))) {return boolean__false;}
+  u64 this__length = f2symbol__length(this, cause);
+  u64 that__length = f2symbol__length(that, cause);
+  if (this__length != that__length) {
+    return boolean__false;
+  }
+  char* this__str = (char*)alloca(this__length + 1);
+  char* that__str = (char*)alloca(that__length + 1);
+  f2symbol__str_copy(this, cause, (u8*)this__str);
+  f2symbol__str_copy(that, cause, (u8*)that__str);
+  if (memcmp(this__str, that__str, this__length) != 0) {
+    return boolean__false;
+  }
+  return boolean__true;
+}
 f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__symbol__eq(cause, x, y));}
 
 def_pcfunk1(symbol__is_type, x, return f2__symbol__is_type(this_cause, x));

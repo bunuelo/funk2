@@ -185,6 +185,7 @@ f2ptr f2__symbol__length(f2ptr cause, f2ptr x);
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__symbol__hash_value(f2ptr cause, f2ptr x);
 f2ptr f2__symbol__new(f2ptr cause, f2ptr str);
+boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 
 // chunk

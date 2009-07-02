@@ -1,17 +1,17 @@
 'set operations'
 
-[defunk member? [x list]
+[defunk is_member [x list]
   [if [null list]
       nil
     [or [equals [car list] x]
-	[member? x [cdr list]]
+	[is_member x [cdr list]]
 	]]]
 
 [defunk remove-duplicates [x]
   [if [null x]
       nil
     [let [[car_x [car x]]]
-      [if [member? car_x [cdr x]]
+      [if [is_member car_x [cdr x]]
           [remove-duplicates [cdr x]]
         [cons car_x [remove-duplicates [cdr x]]]]]]]
 
@@ -24,7 +24,7 @@
   [if [null a]
       b
     [let [[car_a [car a]]]
-      [if [member? car_a b]
+      [if [is_member car_a b]
           [union [cdr a] b]
         [cons car_a [union [cdr a] b]]]]]]
 
@@ -32,7 +32,7 @@
   [if [or [null a] [null b]] 
       nil
     [let [[car_a [car a]]]
-      [if [member? car_a b]
+      [if [is_member car_a b]
         [cons car_a [intersect [cdr a] b]]
         [intersect [cdr a] b]]]]]
 
@@ -41,7 +41,7 @@
   [if [or [null a] [null b]]
       nil
     [let [[car_a [car a]]]
-      [if [member? car_a b]
+      [if [is_member car_a b]
           [difference [cdr a] b]
         [cons car_a [difference [cdr a] b]]]]]]
 
@@ -52,13 +52,13 @@
 
 
 'tree functions'
-[defunk branch? [x] [cons? x]]
-[defunk leaf? [x] [not [branch? x]]]
+[defunk is_branch [x] [is-type `cons x]]
+[defunk is_leaf [x] [not [is_branch x]]]
 
 
 [defunk maptree [proc tree]
   [if [null tree] nil
-      [if [branch? tree]
+      [if [is_branch tree]
           [mapc [funk [x]
                   [maptree proc x]]
                 tree]
@@ -66,7 +66,7 @@
 
 [defunk mapcartree [proc tree]
   [if [null tree] nil
-    [if [branch? tree]
+    [if [is_branch tree]
         [mapcar [funk [x]
                   [mapcartree proc x]]
                 tree]

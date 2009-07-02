@@ -20,12 +20,12 @@
 '
 
 [defunk bug-symbolic_type [this]
-  [if [not [bug? this]]
+  [if [not [is-type `bug this]]
       `not-bug
     [let [[type [bug-type this]]]
-      [let [[symbolic_type [if [symbol? type]
+      [let [[symbolic_type [if [is-type `symbol type]
 			       type
-			     [if [integer? type]
+			     [if [is-type `integer type]
 				 [cond [[eq type 1]  `function_argument_does_not_have_correct_type-bug_type]
 				       [[eq type 18]    `tried_to_funk_object_that_is_not_funkable-bug_type]
 				       [[eq type 23]     `failed_to_lookup_variable_in_environment-bug_type]

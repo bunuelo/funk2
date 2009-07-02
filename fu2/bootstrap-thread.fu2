@@ -32,13 +32,13 @@
 [defmetro thread_stack-args_reg   [this] `[car      [cdr [cdr [cdr ,this]]]]]
 
 [defunk thread_stack-is_complete [this]
-  [if [cons? this]
+  [if [is-type `cons this]
       [let [[cdr1 [cdr this]]]
-	[if [cons? cdr1]
+	[if [is-type `cons cdr1]
 	    [let [[cdr2 [cdr cdr1]]]
-	      [if [cons? cdr2]
+	      [if [is-type `cons cdr2]
 		  [let [[cdr3 [cdr cdr2]]]
-		    [if [cons? cdr3]
+		    [if [is-type `cons cdr3]
 			t]]]]]]]]
 
 [defunk thread_stack-get_rest [this]
@@ -46,71 +46,9 @@
     [if [thread_stack-is_complete rest]
 	rest]]]
 
-`[this does not work yet...  the stack is not as simple as it seems...]
-`[defunk thread-stream_backtrace [this stream]
-  [let [[stack [thread-stack this]]]
-    [let [[stack_iter stack]]
-      [while stack_iter
-	[let [[env_reg    [thread_stack-env_reg    stack_iter]]
-	      [return_reg [thread_stack-return_reg stack_iter]]
-	      [value_reg  [thread_stack-value_reg  stack_iter]]
-	      [args_reg   [thread_stack-args_reg   stack_iter]]]
-	  [ansi-stream-foreground stream 9] [format stream '\n' 'Thread Funktion Call Stack'
-						    '\n'
-						    '\n' '  :env    ' [brief env_reg]]
-	  [ansi-stream-foreground stream 9] [format stream '\n' '  :return ' [brief return_reg]]
-	  [ansi-stream-foreground stream 9] [format stream '\n' '  :value  ' [brief value_reg]]
-	  [ansi-stream-foreground stream 9] [format stream '\n' '  :args   ' [brief args_reg]]
-	  [format stream '\n']
-	  ]
-	[= stack_iter [thread_stack-get_rest stack_iter]]]]]]
-
-[defunk thread-stream_backtrace [this stream]
-  [let [[stack [thread-stack this]]]
-    [let [[stack_iter stack]]
-      [while stack_iter
-	[let [[stack_exp [car stack_iter]]]
-	  [if [funkable? stack_exp]
-	      [let [[funkable stack_exp]]
-		[let [[name [funkable-name funkable]]
-		      [args [funkable-args funkable]]]
-		  [if [not [cons? stack_iter]]
-		      [format stream '\nerror: stack_iter is not cons.']
-		    [prog [= stack_iter [cdr stack_iter]]
-			  [if [not [eq name `prog]]
-			      [let [[arg_iter   [if [cons? args]
-						    args
-						  [prog [format stream '\nerror: args is not cons.']
-							nil]]]
-				    [arg_values [if [cons? stack_iter]
-						    [car stack_iter]
-						  `missing-argument-value]]]
-				[format stream '\n' '  '
-					`[funk ,name @[apply [funk [:rest exps]
-								   [if [null exps]
-								       nil
-								     [apply &append exps]]]
-							     [mapcar [funk [arg_value]
-									   [let [[arg [if [cons? arg_iter]
-											  [car arg_iter]
-											[prog [format stream '\nerror: arg_iter is not cons.']
-											      `missing-argument]]]]
-									     [let [[arg_value_pair [list [if [symbol? arg]
-													     [colonize arg]
-													   [prog [format stream '\nerror: arg is not symbol.']
-														 `unknown-argument-name]]
-													 [brief arg_value]]]]
-									       [if [cons? arg_iter]
-										   [= arg_iter [cdr arg_iter]]
-										 [prog [format stream '\nerror: arg_iter is not cons.']
-										       [= arg_iter nil]]]
-									       arg_value_pair]]]
-								     [if [cons? arg_values]
-									 arg_values
-								       [prog [format stream '\nerror: arg_values is not cons.']
-									     nil]]]]]]]]]]]]]
-	  [= stack_iter [cdr stack_iter]]]]]]]
-
 [defunk thread-print_backtrace [this]
-  [thread-stream_backtrace this stdout]]
+  [format stdout '\nthread-print_backtrace not implemented yet.']
+  nil]
+
+
 

@@ -41,7 +41,7 @@
 `[does nothing for now]
 
 [defunk abstract [exp]
-  [brief exp]]
+  exp]
 
 [defunk repl-io [input-stream output-stream html tutorial]
   [define-funk afwrite-maybe_html      [if html &afwrite_html &afwrite]]

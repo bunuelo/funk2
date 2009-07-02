@@ -20,24 +20,24 @@
 '
 
 [defunk > [x y]
-  [if [and [integer? x] [integer? y]] [integer-greater_than x y]
-    [if [and [pointer? x] [pointer? y]] [pointer-greater_than x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-greater_than x y]
+    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-greater_than x y]
       [error `runtime-error `type-check-failure]]]]
 
 [defunk < [x y]
-  [if [and [integer? x] [integer? y]] [integer-less_than x y]
-    [if [and [pointer? x] [pointer? y]] [pointer-less_than x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-less_than x y]
+    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-less_than x y]
       [error `runtime-error `type-check-failure]]]]
 
 
 'addition'
 
 [defunk binary-add [x y]
-  [if [and [integer? x] [integer? y]] [integer-add x y]
-    [if [and [pointer? x] [integer? y]] [pointer-add_integer x y]
-      [if [and [double? x] [double? y]] [double-add_double x y]
-	[if [and [double? x] [integer? y]] [double-add_integer x y]
-	  [if [and [integer? x] [double? y]] [integer-add_double x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-add x y]
+    [if [and [is-type `pointer x] [is-type `integer y]] [pointer-add_integer x y]
+      [if [and [is-type `double x] [is-type `double y]] [double-add_double x y]
+	[if [and [is-type `double x] [is-type `integer y]] [double-add_integer x y]
+	  [if [and [is-type `integer x] [is-type `double y]] [integer-add_double x y]
 	    [error `runtime-error `type-check-failure]]]]]]]
 
 [defmetro + [x :rest rest]
@@ -49,11 +49,11 @@
 'subtraction'
 
 [defunk binary-subtract [x y]
-  [if [and [integer? x] [integer? y]] [integer-subtract x y]
-    [if [and [pointer? x] [pointer? y]] [pointer-subtract x y]
-      [if [and [double? x] [double? y]] [double-subtract_double x y]
-	[if [and [double? x] [integer? y]] [double-subtract_integer x y]
-	  [if [and [integer? x] [double? y]] [integer-subtract_double x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-subtract x y]
+    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-subtract x y]
+      [if [and [is-type `double x] [is-type `double y]] [double-subtract_double x y]
+	[if [and [is-type `double x] [is-type `integer y]] [double-subtract_integer x y]
+	  [if [and [is-type `integer x] [is-type `double y]] [integer-subtract_double x y]
 	    [error `runtime-error `type-check-failure]]]]]]]
 
 [defunk negative [x]
@@ -68,10 +68,10 @@
 'multiplication'
 
 [defunk binary-multiply [x y]
-  [if [and [integer? x] [integer? y]] [integer-multiply x y]
-    [if [and [integer? x] [double? y]] [unsafe:double-multiply_by_integer y x]
-      [if [and [double? x] [double? y]] [unsafe:double-multiply_by_double x y]
-	[if [and [double? x] [integer? y]] [unsafe:double-multiply_by_integer x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-multiply x y]
+    [if [and [is-type `integer x] [is-type `double y]] [unsafe:double-multiply_by_integer y x]
+      [if [and [is-type `double x] [is-type `double y]] [unsafe:double-multiply_by_double x y]
+	[if [and [is-type `double x] [is-type `integer y]] [unsafe:double-multiply_by_integer x y]
 	  [error `runtime-error `type-check-failure]]]]]]
 
 [defmetro * [x :rest rest]
@@ -83,10 +83,10 @@
 'division'
 
 [defunk binary-divide [x y]
-  [if [and [integer? x] [integer? y]] [integer-divide_by_integer x y]
-    [if [and [integer? x] [double? y]] [integer-divide_by_double x y]
-      [if [and [double? x] [double? y]] [double-divide_by_double x y]
-	[if [and [double? x] [integer? y]] [double-divide_by_integer x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-divide_by_integer x y]
+    [if [and [is-type `integer x] [is-type `double y]] [integer-divide_by_double x y]
+      [if [and [is-type `double x] [is-type `double y]] [double-divide_by_double x y]
+	[if [and [is-type `double x] [is-type `integer y]] [double-divide_by_integer x y]
 	  [error `runtime-error `type-check-failure]]]]]]
 
 [defunk inverse [x]
@@ -99,41 +99,41 @@
 
 
 [defunk == [x y]
-  [if [and [integer? x] [integer? y]] [integer-equal_sign x y]
-    [if [and [pointer? x] [pointer? y]] [pointer-equal_sign x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-equal_sign x y]
+    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-equal_sign x y]
       [error `runtime-error `type-check-failure]]]]
 
 [defunk != [x y]
-  [if [and [integer? x] [integer? y]] [integer-not_equal_sign x y]
-    [if [and [pointer? x] [pointer? y]] [pointer-not_equal_sign x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-not_equal_sign x y]
+    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-not_equal_sign x y]
       [error `runtime-error `type-check-failure]]]]
 
 'bitshift-left'
 
 [defunk << [x y]
-  [if [and [integer? x] [integer? y]] [integer-bitshift_left x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-bitshift_left x y]
     [error `runtime-error `type-check-failure]]]
 
 'bitshift-right'
 
 [defunk >> [x y]
-  [if [and [integer? x] [integer? y]] [integer-bitshift_right x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-bitshift_right x y]
     [error `runtime-error `type-check-failure]]]
 
 [defunk bit_and [x y]
-  [if [and [integer? x] [integer? y]] [integer-bit_and x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-bit_and x y]
     [error `runtime-error `type-check-failure]]]
 
 [defunk bit_or [x y]
-  [if [and [integer? x] [integer? y]] [integer-bit_or x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-bit_or x y]
     [error `runtime-error `type-check-failure]]]
 
 [defunk bit_xor [x y]
-  [if [and [integer? x] [integer? y]] [integer-bit_xor x y]
+  [if [and [is-type `integer x] [is-type `integer y]] [integer-bit_xor x y]
     [error `runtime-error `type-check-failure]]]
 
 [defunk bit_not [x]
-  [if [integer? x] [integer-bit_not x]
+  [if [is-type `integer x] [integer-bit_not x]
     [error `runtime-error `type-check-failure]]]
 
 

@@ -20,14 +20,14 @@
 '
 
 [defunk slotdef-name [exp]
-  [cond [[symbol? exp] exp]
-	[[cons?   exp] [first exp]]
-	[t             [error `compile-time `[slotdef-name ,exp]]]]]
+  [cond [[is-type `symbol exp] exp]
+	[[is-type `cons   exp] [first exp]]
+	[t                     [error `compile-time `[slotdef-name ,exp]]]]]
 
 [defunk slotdef-default_exp [exp]
-  [cond [[symbol? exp] nil]
-	[[cons?   exp] [second exp]]
-	[t             [error `compile-time `[slotdef-default_exp ,exp]]]]]
+  [cond [[is-type `symbol exp] nil]
+	[[is-type `cons   exp] [second exp]]
+	[t                     [error `compile-time `[slotdef-default_exp ,exp]]]]]
 
 [globalize -primobject_type-name-hash- [hashtable-new 10]]
 

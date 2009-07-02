@@ -58,8 +58,6 @@ f2ptr f2__tensor__new_from_array_of_integer_dimensions(f2ptr cause, f2ptr dimens
   return this;
 }
 
-f2ptr f2__tensorp(f2ptr this, f2ptr cause) {return f2bool__new(raw__arrayp(this, cause) && f2primobject__is_tensor(this, cause));}
-
 f2ptr f2tensor__elt_from_array_of_integer_indices(f2ptr this, f2ptr indices, f2ptr cause) {
   f2ptr dimensions         = f2tensor__dimensions(this, cause);
   int   dimensions__length = raw__array__length(cause, dimensions);

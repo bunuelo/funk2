@@ -27,6 +27,8 @@
 // tensor
 
 extern f2ptr __tensor__symbol;
+boolean_t raw__tensor__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__tensor__is_type(f2ptr cause, f2ptr this);
 f2ptr f2tensor__new(f2ptr cause, f2ptr dimensions, f2ptr data);
 #define f2primobject__is_tensor(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __tensor__symbol)
 
@@ -45,7 +47,6 @@ defprimobject__static_slot__prototype(tensor__data);
 #define f2tensor__data__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, tensor__data, cause)
 
 f2ptr f2__tensor__new_from_array_of_integer_dimensions(f2ptr cause, f2ptr dimensions, f2ptr fill_element);
-f2ptr f2__tensorp(f2ptr this, f2ptr cause);
 f2ptr f2tensor__elt_from_array_of_integer_indices(f2ptr this, f2ptr indices, f2ptr cause);
 
 void f2__primobject_tensor__reinitialize_globalvars();

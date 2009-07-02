@@ -33,9 +33,7 @@ defprimobject__static_slot(environment__desc,       2);
 
 f2ptr __environment__symbol;
 
-#ifdef DEBUG
 f2ptr __environment__last_23_larva_symbol = nil;
-#endif // DEBUG
 
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc) {
   pause_gc();
@@ -66,9 +64,7 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   }
   //printf ("\nvariable not defined: "); f2__write(nil, var); fflush(stdout);
   //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
-#ifdef DEBUG
   __environment__last_23_larva_symbol = var;
-#endif // DEBUG
   f2ptr rv = f2larva__new(cause, 23);
   resume_gc(); return rv;
 }
@@ -87,9 +83,7 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   }
   //printf ("\nvariable not defined: "); f2__write(nil, var); fflush(stdout);
   //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
-#ifdef DEBUG
   __environment__last_23_larva_symbol = var;
-#endif // DEBUG
   f2ptr rv = f2larva__new(cause, 23);
   resume_gc(); return rv;
 }
@@ -124,9 +118,7 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   }
   printf ("\nset-var not defined: "); f2__write(nil, var); fflush(stdout);
   //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
-#ifdef DEBUG
   __environment__last_23_larva_symbol = var;
-#endif // DEBUG
   f2ptr rv = f2larva__new(cause, 23);
   resume_gc(); return rv;
 }

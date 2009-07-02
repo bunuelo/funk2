@@ -70,7 +70,7 @@
 	 @body]]
 
 [defunk thread-enable_reactive_critics [this]
-  [thread-critics-set this &critic-reactive-primitive_response]]
+  [object-set `critics this &critic-reactive-primitive_response]]
 
 [boot-add_user_command `[thread-enable_reactive_critics [this-thread]]]
 

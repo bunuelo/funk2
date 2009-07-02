@@ -36,8 +36,8 @@ f2ptr f2__object_type__new(f2ptr cause, f2ptr types, f2ptr frame) {
   return this;
 }
 
-boolean_t raw__object_typep(f2ptr this, f2ptr cause) {return raw__arrayp(this, cause) && f2primobject__is_object_type(this, cause);}
-f2ptr f2__object_typep(f2ptr this, f2ptr cause) {return f2bool__new(raw__object_typep(this, cause));}
+boolean_t raw__object_type__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_object_type(this, cause);}
+f2ptr f2__object_type__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__object_type__is_type(cause, this));}
 
 f2ptr object_type__new(f2ptr cause) {
   return f2__object_type__new(cause, nil, frame__new_empty(cause));

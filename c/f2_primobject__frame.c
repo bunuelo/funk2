@@ -54,6 +54,7 @@ f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
   f2ptr result = f2frame__new__raw(cause, type_hashtable);
   pause_gc();
   resume_gc();
+  resume_gc();
   return result;
 }
 

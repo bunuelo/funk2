@@ -67,7 +67,7 @@ f2ptr f2place__new(f2ptr cause, f2ptr p) {
 
 boolean_t raw__place__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_place(x, cause));
 }
@@ -116,7 +116,7 @@ f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
 
 boolean_t raw__cons__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_cons(x, cause));
 }
@@ -174,7 +174,7 @@ f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
 
 boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_doublelink(x, cause));
 }
@@ -255,7 +255,7 @@ f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, 
 
 boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_imagination_link(x, cause));
 }
@@ -432,7 +432,7 @@ f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__cfunk__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_cfunk(x, cause));
 }
@@ -525,7 +525,7 @@ f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__metrocfunk__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_metrocfunk(x, cause));
 }
@@ -629,7 +629,7 @@ f2ptr f2funk__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__funk__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_funk(x, cause));
 }
@@ -748,7 +748,7 @@ f2ptr f2metro__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__metro__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_metro(x, cause));
 }
@@ -837,7 +837,7 @@ f2ptr f2exception__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__exception__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_exception(x, cause));
 }
@@ -894,7 +894,7 @@ f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__bytecode__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_bytecode(x, cause));
 }
@@ -1035,7 +1035,7 @@ f2ptr f2thread__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__thread__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_thread(x, cause));
 }
@@ -1198,7 +1198,7 @@ f2ptr f2processor__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__processor__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_processor(x, cause));
 }
@@ -1294,7 +1294,7 @@ f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__scheduler__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_scheduler(x, cause));
 }
@@ -1374,7 +1374,7 @@ f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is__event_subscriber(x, cause));
 }
@@ -1633,7 +1633,7 @@ f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol
 
 boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_transframe(x, cause));
 }
@@ -1678,7 +1678,7 @@ f2ptr f2bug__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__bug__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_bug(x, cause));
 }
@@ -1720,7 +1720,7 @@ f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is__size_2d(x, cause));
 }
@@ -1778,7 +1778,7 @@ f2ptr f2event__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__event__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is__event(x, cause));
 }
@@ -1846,7 +1846,7 @@ f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
 
 boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is__bytecode_event(x, cause));
 }

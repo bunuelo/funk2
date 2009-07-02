@@ -80,7 +80,7 @@ def_pcfunk1(determine_real_thought_process_types, exp, return f2__determine_real
 
 f2ptr f2thought_process__new_from_exp(f2ptr cause, f2ptr exp, f2ptr bin_num_power) {
   release__assert(__funk2.thought_process.real_value_slot__symbol != -1, nil, "f2thought_process__new_from_exp error: used before thought process initialized.");
-  release__assert(raw__integerp(bin_num_power, cause),              nil, "f2thought_process__new_from_exp error: bin_num_power should be integer.");
+  release__assert(raw__integer__is_type(cause, bin_num_power),              nil, "f2thought_process__new_from_exp error: bin_num_power should be integer.");
   f2ptr read_write_execute_slot_hash = f2__hashtable__new(cause, bin_num_power);
   f2ptr read_funk                    = nil;
   f2ptr write_funk                   = nil;

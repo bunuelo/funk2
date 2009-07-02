@@ -29,9 +29,9 @@ f2ptr __thread__return_reg__symbol;
 f2ptr __thread__value_reg__symbol;
 
 void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
-  debug__assert(raw__threadp(thread, nil), nil, "thread type assertion failed.");
-  debug__assert(raw__bytecodep(bytecode, nil), nil, "bytecode type assertion failed.");
-  debug__assert((! cause) || raw__causep(cause, nil), nil, "thread type assertion failed.");
+  debug__assert(raw__thread__is_type(nil, thread), nil, "thread type assertion failed.");
+  debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
+  debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "thread type assertion failed.");
   //f2ptr cause = f2thread__execute_bytecode__cause__new(f2thread__cause_reg(thread), thread, f2thread__env(thread), bytecode);
   //f2thread__cause_reg__set(thread, cause, cause);
   f2ptr command = f2bytecode__command(bytecode, cause);
@@ -91,14 +91,14 @@ void f2__print_environment_stack(f2ptr cause, f2ptr thread, f2ptr env) {
 f2ptr __thread__environment_critics__symbol = -1;
 
 boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
-  debug__assert(raw__threadp(thread, nil), nil, "thread type assertion failed.");
-  debug__assert((! cause) || raw__causep(cause, nil), nil, "thread type assertion failed.");
+  debug__assert(raw__thread__is_type(nil, thread), nil, "thread type assertion failed.");
+  debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "thread type assertion failed.");
   
   f2ptr pc_reg = f2thread__program_counter(thread, cause);
   release__assert(pc_reg != nil, nil, "(pc_reg != nil) assertion failure.");
   
   f2ptr bytecode = f2cons__car(pc_reg, cause);
-  debug__assert(raw__bytecodep(bytecode, cause), thread, "f2__thread__execute_next_bytecode error: assertion failed (raw__bytecodep(bytecode)).");
+  debug__assert(raw__bytecode__is_type(cause, bytecode), thread, "f2__thread__execute_next_bytecode error: assertion failed (raw__bytecode__is_type(bytecode)).");
   
   boolean_t bytecode_is_yield = 0;
   if (f2bytecode__command(bytecode, cause) == __funk2.bytecode.bytecode__yield__symbol) {

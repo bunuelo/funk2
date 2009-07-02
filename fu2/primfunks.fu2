@@ -34,33 +34,33 @@
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
-[globalize-funk integer?                                    &primfunk:integerp]
+[globalize-funk integer?                                    &primfunk:integer__is_type]
 
-[globalize-funk double?                                     &primfunk:doublep]
+[globalize-funk double?                                     &primfunk:double__is_type]
 
-[globalize-funk float?                                      &primfunk:floatp]
+[globalize-funk float?                                      &primfunk:float__is_type]
 
-[globalize-funk pointer?                                    &primfunk:pointerp]
+[globalize-funk pointer?                                    &primfunk:pointer__is_type]
 
-[globalize-funk mutex?                                      &primfunk:mutexp]
+[globalize-funk mutex?                                      &primfunk:mutex__is_type]
 [globalize-funk mutex                                       &primfunk:mutex]
 [globalize-funk unsafe:mutex-lock                           &primfunk:mutex__lock]
 [globalize-funk unsafe:mutex-unlock                         &primfunk:mutex__unlock]
 [globalize-funk unsafe:mutex-trylock                        &primfunk:mutex__trylock]
 
-[globalize-funk string?                                     &primfunk:stringp]
+[globalize-funk string?                                     &primfunk:string__is_type]
 [globalize-funk unsafe:string-length                        &primfunk:string__length]
 [globalize-funk unsafe:string-elt                           &primfunk:string__elt]
 [globalize-funk unsafe:string-equals                        &primfunk:string__equals]
 [globalize-funk unsafe:string-to_new_raw_c_string           &primfunk:string__new_raw_c_string]
 [globalize-funk unsafe:string-new_from_raw_c_string         &primfunk:string__new_from_raw_c_string]
 
-[globalize-funk symbol?                                     &primfunk:symbolp]
+[globalize-funk symbol?                                     &primfunk:symbol__is_type]
 [globalize-funk unsafe:symbol-length                        &primfunk:symbol__length]
 [globalize-funk unsafe:symbol-elt                           &primfunk:symbol__elt]
 [globalize-funk unsafe:symbol-equals                        &primfunk:symbol__eq]
 
-[globalize-funk chunk?                                      &primfunk:chunkp]
+[globalize-funk chunk?                                      &primfunk:chunk__is_type]
 [globalize-funk chunk                                       &primfunk:chunk]
 [globalize-funk unsafe:chunk-length                         &primfunk:chunk__length]
 `[globalize-funk unsafe:chunk-bytes                          &primfunk:chunk__bytes]
@@ -76,13 +76,13 @@
 [globalize-funk unsafe:chunk-read_bit32_signed              &primfunk:chunk__read_bit32_signed]
 [globalize-funk unsafe:chunk-new_compiled_from_funk         &primfunk:chunk__new_compiled_from_funk]
 
-[globalize-funk place?                                      &primfunk:placep]
+[globalize-funk place?                                      &primfunk:place__is_type]
 [globalize-funk place-new                                   &primfunk:place__new]
 [globalize-funk place                                       &primfunk:place__new]
 [globalize-funk unsafe:place-thing                          &primfunk:place__thing]
 [globalize-funk unsafe:place-thing-set                      &primfunk:place__thing__set]
 
-[globalize-funk cons?                                       &primfunk:consp]
+[globalize-funk cons?                                       &primfunk:cons__is_type]
 [globalize-funk cons-new                                    &primfunk:cons__new]
 [globalize-funk cons                                        &primfunk:cons__new]
 [globalize-funk unsafe:cons-car                             &primfunk:cons__car]
@@ -90,7 +90,7 @@
 [globalize-funk unsafe:cons-cdr                             &primfunk:cons__cdr]
 [globalize-funk unsafe:cons-cdr-set                         &primfunk:cons__cdr__set]
 
-[globalize-funk doublelink?                                 &primfunk:doublelinkp]
+[globalize-funk doublelink?                                 &primfunk:doublelink__is_type]
 [globalize-funk doublelink-new                              &primfunk:doublelink__new]
 [globalize-funk doublelink                                  &primfunk:doublelink__new]
 [globalize-funk unsafe:doublelink-prev                      &primfunk:doublelink__prev]
@@ -100,7 +100,7 @@
 [globalize-funk unsafe:doublelink-value                     &primfunk:doublelink__value]
 [globalize-funk unsafe:doublelink-value-set                 &primfunk:doublelink__value__set]
 
-[globalize-funk array?                                      &primfunk:arrayp]
+[globalize-funk array?                                      &primfunk:array__is_type]
 [globalize-funk array-new_1d                                &primfunk:array__new_1d]
 [globalize-funk array                                       &primfunk:array]
 [globalize-funk unsafe:array-length                         &primfunk:array__length]
@@ -114,7 +114,7 @@
 [globalize-funk unsafe:array-elt-imagination_frame          &primfunk:array__elt__imagination_frame]
 [globalize-funk unsafe:array-elt-imagination_frame-set      &primfunk:array__elt__imagination_frame__set]
 
-[globalize-funk circular_buffer?                            &primfunk:circular_bufferp]
+[globalize-funk circular_buffer?                            &primfunk:circular_buffer__is_type]
 [globalize-funk circular_buffer                             &primfunk:circular_buffer]
 [globalize-funk unsafe:circular_buffer-add                  &primfunk:circular_buffer__add]
 [globalize-funk unsafe:circular_buffer-remove               &primfunk:circular_buffer__remove]

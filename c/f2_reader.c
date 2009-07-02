@@ -215,7 +215,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       exp = raw__read(cause, stream);
       if (exp == __end_parens_exception) {resume_gc(); return seq;} // successfully read end of list
       if (exp == __end_of_file_exception) {resume_gc(); return __unmatched_begin_paren_exception;}
-      if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;} // other exceptions should be propagated
+      if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;} // other exceptions should be propagated
       new_cons = f2cons__new(cause, exp, nil);
       if (seq) {
 	f2cons__cdr__set(iter, cause, new_cons);
@@ -236,7 +236,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     while (1) {
       exp = raw__read(cause, stream);
       if (exp == __doublelink_end_parens_exception) {resume_gc(); return seq;} // successfully read end of doublelink list
-      if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;} // other exceptions should be propagated
+      if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;} // other exceptions should be propagated
       new_doublelink = f2doublelink__new(cause, iter, nil, exp);
       if (seq) {
 	f2doublelink__next__set(iter, cause, new_doublelink);
@@ -251,21 +251,21 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   // read quoted expression
   if (raw__eq(cause, first_char, __char__quote)) {
     f2ptr exp = raw__read(cause, stream);
-    if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+    if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
     resume_gc(); return f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, exp, nil));
   }
   // read backquoted expression
   if (raw__eq(cause, first_char, __char__backquote)) {
     f2ptr exp = raw__read(cause, stream);
-    if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+    if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
     if (raw__cons__is_type(cause, exp) && (contains_comma(cause, exp) || contains_cdr_comma(cause, exp))) {
       if (contains_cdr_comma_at_this_level(cause, exp)) {
 	exp = comma_filter_backquoted_exp(cause, exp);
-	if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+	if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
 	resume_gc(); return f2cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, exp);
       } else {
 	exp = comma_filter_backquoted_exp(cause, exp);
-	if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+	if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
 	resume_gc(); return f2cons__new(cause, __funk2.globalenv.backquote__list__symbol, exp);
       }
     }
@@ -274,19 +274,19 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   // read comma expression (hopefully within backquote)
   if (raw__eq(cause, first_char, __char__comma)) {
     f2ptr exp = raw__read(cause, stream);
-    if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+    if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
     resume_gc(); return f2cons__new(cause, __funk2.globalenv.comma__symbol, f2cons__new(cause, exp, nil));
   }
   // read comma expression (hopefully within backquote)
   if (raw__eq(cause, first_char, __char__cdr_comma)) {
     f2ptr exp = raw__read(cause, stream);
-    if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+    if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
     resume_gc(); return f2cons__new(cause, __funk2.globalenv.cdr_comma__symbol, f2cons__new(cause, exp, nil));
   }
   // read funktion name
   if (raw__eq(cause, first_char, __char__funktion)) {
     f2ptr exp = raw__read(cause, stream);
-    if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
+    if (raw__exception__is_type(cause, exp)) {resume_gc(); return exp;}
     resume_gc(); return f2cons__new(cause, __funk2.globalenv.funkvar__symbol, f2cons__new(cause, exp, nil));
   }
   if (raw__eq(cause, first_char, __char__escape)) {
@@ -415,7 +415,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     } else if (raw__eq(cause, read_ch, __char__escape_gfunkptr)) {
       // read gfunkptr of form #g(ip_addr pool_index pool_address)
       f2ptr gfunkptr_read_array = raw__read(cause, stream);
-      if ((! raw__arrayp(gfunkptr_read_array, cause)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {resume_gc(); return __gfunkptr_read__exception;}
+      if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {resume_gc(); return __gfunkptr_read__exception;}
       f2ptr computer_id__integer  = raw__array__elt(cause, gfunkptr_read_array, 0);
       f2ptr pool_index__integer   = raw__array__elt(cause, gfunkptr_read_array, 1);
       f2ptr pool_address__integer = raw__array__elt(cause, gfunkptr_read_array, 2);
@@ -440,7 +440,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       subexp = raw__read(cause, stream);
       if (subexp == __array_end_parens_exception) {break;}
-      if (raw__exceptionp(subexp, cause)) {resume_gc(); return subexp;}
+      if (raw__exception__is_type(cause, subexp)) {resume_gc(); return subexp;}
       buf[i] = subexp;
       i ++;
       if (i >= buf_size) {

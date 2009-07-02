@@ -236,8 +236,8 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr thread, f2ptr funk) {
     status("f2__compile__funk error: funk is nil.");
     return f2larva__new(cause, 129);
   }
-  if (!raw__funkp(funk, cause)) {
-    status("f2__compile__funk error: !raw__funkp(funk): funk variable value is not of type funk.");
+  if (!raw__funk__is_type(cause, funk)) {
+    status("f2__compile__funk error: !raw__funk__is_type(funk): funk variable value is not of type funk.");
     return f2larva__new(cause, 130);
   }
   
@@ -846,7 +846,7 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr exps, 
     return bcs_valid(exp_bcs);
   } else {
     if ((! (raw__cfunk__is_type(cause, funkvar_value) ||
-	    raw__funkp(funkvar_value, cause))) ||
+	    raw__funk__is_type(cause, funkvar_value))) ||
 	(! raw__funkable__is_funktional(cause, funkvar_value))) {
       if (is_funktional) {
 	*is_funktional = boolean__false;

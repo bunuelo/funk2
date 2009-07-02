@@ -142,7 +142,7 @@ f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr en
 def_pcfunk2(child_handler__add_new_child_process, argv, envp, return f2__child_handler__add_new_child_process(this_cause, argv, envp));
 
 f2ptr f2__child_handler__process_exists(f2ptr cause, f2ptr pid) {
-  if (! raw__integerp(pid, cause)) {
+  if (! raw__integer__is_type(cause, pid)) {
     return f2larva__new(cause, 1);
   }
   pid_t raw_pid = f2integer__i(pid, cause);

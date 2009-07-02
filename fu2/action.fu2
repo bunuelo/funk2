@@ -19,7 +19,7 @@
  rights to redistribute these changes.
 '
 
-[globalize global_actions [new `hashtable 12]]
+[globalize global_actions [object-new `hashtable 12]]
 
 [defunk global_actions-add [name action]
   [hashtable-add_keyvalue_pair global_actions name action]]

@@ -28,7 +28,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
     while (iter) {
       if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1);}
       f2ptr str = f2cons__car(iter, cause);
-      if (! raw__stringp(str, cause)) {return f2larva__new(cause, 1);}
+      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1);}
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);
@@ -53,7 +53,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
 def_pcfunk1(stringlist__concat, this, return f2__stringlist__new_string_from_concatenation(this_cause, this));
 
 f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
-  if (! raw__stringp(intersperse_string, cause)) {
+  if (! raw__string__is_type(cause, intersperse_string)) {
     return f2larva__new(cause, 1);
   }
   u64 intersperse_string__length = f2string__length(intersperse_string, cause);
@@ -65,7 +65,7 @@ f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr
     while (iter) {
       if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1);}
       f2ptr str = f2cons__car(iter, cause);
-      if (! raw__stringp(str, cause)) {return f2larva__new(cause, 1);}
+      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1);}
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);
@@ -212,7 +212,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
 def_pcfunk1(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
 
 f2ptr f2__string__to_symbol(f2ptr cause, f2ptr this) {
-  if (! raw__stringp(this, cause)) {
+  if (! raw__string__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   u64 this__length = f2string__length(this, cause);
@@ -224,8 +224,8 @@ f2ptr f2__string__to_symbol(f2ptr cause, f2ptr this) {
 def_pcfunk1(string__to_symbol, this, return f2__string__to_symbol(this_cause, this));
 
 f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
-  if ((! raw__stringp(this,     cause)) ||
-      (! raw__stringp(filename, cause))) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, filename))) {
     return f2larva__new(cause, 1);
   }
   u64 filename__length = f2string__length(filename, cause);
@@ -250,7 +250,7 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
 def_pcfunk2(string__save, this, filename, return f2__string__save(this_cause, this, filename));
 
 f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
-  if (! raw__stringp(filename, cause)) {
+  if (! raw__string__is_type(cause, filename)) {
     return f2larva__new(cause, 1);
   }
   u64 filename__length = f2string__length(filename, cause);
@@ -278,8 +278,8 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
 def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename));
 
 f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
-  if ((! raw__stringp(this,  cause)) ||
-      (! raw__stringp(token, cause))) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, token))) {
     return f2larva__new(cause, 1);
   }
   u64 token__length = f2string__length(token, cause);
@@ -323,8 +323,8 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));
 
 f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
-  if ((! raw__stringp(this,      cause)) ||
-      (! raw__stringp(substring, cause))) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, substring))) {
     return f2larva__new(cause, 1);
   }
   

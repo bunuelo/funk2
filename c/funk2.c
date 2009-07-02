@@ -205,7 +205,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // try to find a nice user-friendly repl
       f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
-      if (raw__funkable__is_type(cause, repl_funk)) {
+      if (! raw__funkable__is_type(cause, repl_funk)) {
 	// if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
 	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:repl"), (u8*)"primfunk:repl"));
       }

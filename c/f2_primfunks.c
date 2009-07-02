@@ -227,9 +227,6 @@ def_pcfunk2(pointer__subtract, x, y, return f2__pointer__subtract(this_cause, x,
 f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x) {f2ptr f2p = (f2ptr)((unsigned long)f2pointer__p(x, cause)); return f2gfunkptr__new(cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));}
 def_pcfunk1(gfunkptr__new_from_pointer, x, return f2__gfunkptr__new_from_pointer(this_cause, x));
 
-f2ptr f2__gfunkptrp(f2ptr cause, f2ptr x) {return f2bool__new(raw__gfunkptrp(x, cause));}
-def_pcfunk1(gfunkptrp, x, return f2__gfunkptrp(this_cause, x));
-
 // mutex
 
 // char

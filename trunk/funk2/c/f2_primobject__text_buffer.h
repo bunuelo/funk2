@@ -147,7 +147,6 @@ defprimobject__static_slot__prototype(text_window__cursor);
 boolean_t raw__text_window__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__text_window__is_type(f2ptr cause, f2ptr this);
 
-// **
 
 // **
 

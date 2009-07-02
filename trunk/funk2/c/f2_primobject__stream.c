@@ -166,8 +166,8 @@ f2ptr f2__stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
 def_pcfunk2(stream__nonblocking__set, this, value, return f2__stream__nonblocking__set(this_cause, this, value));
 
 f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
-  if (! raw__streamp(this, cause)) {error(nil, "raw__stream__ungetc error: this must be stream."); return f2larva__new(cause, 1);}
-  if (! raw__charp(character, cause)) {error(nil, "raw__stream__ungetc error: character must be char."); return f2larva__new(cause, 1);}
+  if (! raw__stream__is_type(cause, this)) {error(nil, "raw__stream__ungetc error: this must be stream."); return f2larva__new(cause, 1);}
+  if (! raw__char__is_type(cause, character)) {error(nil, "raw__stream__ungetc error: character must be char."); return f2larva__new(cause, 1);}
   f2ptr ungetc_stack = f2stream__ungetc_stack(this, cause);
   f2ptr new_cons = f2cons__new(cause, character, ungetc_stack);
   f2stream__ungetc_stack__set(this, cause, new_cons);
@@ -224,7 +224,7 @@ f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) 
 }
 
 f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
-  if (! raw__streamp(this, cause)) {
+  if (! raw__stream__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   f2ptr ungetc_stack    = f2stream__ungetc_stack(this, cause);
@@ -249,11 +249,11 @@ f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
 }
 def_pcfunk1(text_window_stream__new, text_window, return f2__text_window_stream__new(this_cause, text_window));
 
-boolean_t raw__text_window_streamp(f2ptr this, f2ptr cause) {
+boolean_t raw__text_window_stream__is_type(f2ptr cause, f2ptr this) {
   if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
-  return (raw__streamp(this, cause) && f2__symbol__eq(cause, f2stream__type(this, cause), __text_window_stream__symbol));
+  return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__type(this, cause), __text_window_stream__symbol));
 }
-f2ptr f2__text_window_streamp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_window_streamp(this, cause));}
+f2ptr f2__text_window_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__text_window_stream__is_type(cause, this));}
 
 f2ptr f2__text_window_stream(f2ptr cause, f2ptr text_window) {
   return f2__text_window_stream__new(cause, text_window);

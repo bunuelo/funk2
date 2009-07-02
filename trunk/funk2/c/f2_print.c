@@ -427,7 +427,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
       case ptype_traced_array:
 	f2__write__ansi_color(cause, stream, print__ansi__array__foreground, use_ansi_colors, use_html);
 	int array_is_not_known_primobject = 0; // assume for the time being that we know this is a primobject (we correct this assumption after primobject recognition conditionals)
-	if (! raw__primobjectp(exp, cause)) {
+	if (! raw__primobject__is_type(cause, exp)) {
 	  array_is_not_known_primobject = 1; // array is not even primobject!
 	} else {
 	  if (show_slot_causes ||
@@ -491,7 +491,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		    f2__write__ansi_color(cause, stream, print__ansi__array__foreground, use_ansi_colors, use_html);
 		    if (stream) {raw__stream__writef(cause, stream, "%c", __right_paren_char);} width ++;
 		    iter = nil;
-		  } else if (! raw__consp(cdr, cause)) {
+		  } else if (! raw__cons__is_type(cause, cdr)) {
 		    f2__write__ansi_color(cause, stream, print__ansi__array__foreground, use_ansi_colors, use_html);
 		    if (stream) {raw__stream__writef(cause, stream, " .");} width += 2;
 		    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
@@ -862,7 +862,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		while(type_keyvalue_pair_iter) {
 		  f2ptr type_keyvalue_pair      = f2cons__car(type_keyvalue_pair_iter, cause);
 		  f2ptr type_keyvalue_pair__key = f2cons__car(type_keyvalue_pair, cause);
-		  if (f2__symbolp(cause, type_keyvalue_pair__key)) {
+		  if (f2__symbol__is_type(cause, type_keyvalue_pair__key)) {
 		    int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
 		    if (type_key__length > max_type_name_length) {
 		      max_type_name_length = type_key__length;
@@ -881,7 +881,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 			  while(keyvalue_pair_iter) {
 			    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
 			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-			    if (f2__symbolp(cause, keyvalue_pair__key)) {
+			    if (f2__symbol__is_type(cause, keyvalue_pair__key)) {
 			      int key__length = f2symbol__length(keyvalue_pair__key, cause);
 			      if (key__length > max_slot_name_length) {
 				max_slot_name_length = key__length;
@@ -909,7 +909,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		while(type_keyvalue_pair_iter) {
 		  f2ptr type_keyvalue_pair      = f2cons__car(type_keyvalue_pair_iter, cause);
 		  f2ptr type_keyvalue_pair__key = f2cons__car(type_keyvalue_pair, cause);
-		  if (f2__symbolp(cause, type_keyvalue_pair__key)) {
+		  if (f2__symbol__is_type(cause, type_keyvalue_pair__key)) {
 		    int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
 		    if (type_key__length > max_type_name_length) {
 		      max_type_name_length = type_key__length;
@@ -928,7 +928,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 			  while(keyvalue_pair_iter) {
 			    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
 			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair,      cause);
-			    if (f2__symbolp(cause, keyvalue_pair__key)) {
+			    if (f2__symbol__is_type(cause, keyvalue_pair__key)) {
 			      int   key__length   = f2symbol__length(keyvalue_pair__key, cause);
 			      char* framekey__str = (char*)alloca(type_key__length + 1 + key__length + 1);
 			      f2symbol__str_copy(type_keyvalue_pair__key, cause, (u8*)framekey__str);
@@ -1201,7 +1201,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  if (fptr) {fputc(__array_right_paren_char, raw_fptr);} width ++;
 	  */
 	}
-	if (raw__primobjectp(exp, cause)) {
+	if (raw__primobject__is_type(cause, exp)) {
 	  if (show_slot_causes ||
 	      ((! f2primobject__is_cons(exp, cause)) &&
 	       (! f2primobject__is_doublelink(exp, cause)))) {

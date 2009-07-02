@@ -70,8 +70,8 @@ f2ptr f2action_event__new(f2ptr cause, f2ptr action, f2ptr begin_time, f2ptr end
   return this;
 }
 
-boolean_t raw__action_eventp(f2ptr this, f2ptr cause) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__action_event(this, cause));}
-f2ptr f2__action_eventp(f2ptr this, f2ptr cause) {return f2bool__new(raw__action_eventp(this, cause));}
+boolean_t raw__action_event__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__action_event(this, cause));}
+f2ptr f2__action_event__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__action_event__is_type(cause, this));}
 
 
 f2ptr f2__action__begin(f2ptr cause, f2ptr this) {

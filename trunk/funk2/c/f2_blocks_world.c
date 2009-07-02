@@ -542,10 +542,10 @@ f2ptr f2__blocks_world_object__render(f2ptr cause, f2ptr this) {
   }
   f2ptr rectangle = f2blocks_world_object__rectangle(this, cause);
   f2ptr color     = f2blocks_world_object__color(this, cause);
-  if (raw__larvap(f2__blocks_world_color__render(cause, color), cause)) {
+  if (raw__larva__is_type(cause, f2__blocks_world_color__render(cause, color))) {
     return f2larva__new(cause, 2);
   }
-  if (raw__larvap(raw__blocks_world_rectangle__render(cause, rectangle, render_char), cause)) {
+  if (raw__larva__is_type(cause, raw__blocks_world_rectangle__render(cause, rectangle, render_char))) {
     return f2larva__new(cause, 2);
   }
   raw__ansi__stream__foreground(cause, __funk2.globalenv.stdout_stream, 7);
@@ -587,7 +587,7 @@ f2ptr raw__blocks_world_object__translate_overlaps_objects(f2ptr cause, f2ptr th
     }
     f2ptr object_rectangle = f2blocks_world_object__rectangle(object, cause);
     f2ptr overlaps_result = f2__blocks_world_rectangle__overlaps(cause, translate_rectangle, object_rectangle);
-    if (raw__larvap(overlaps_result, cause)) {
+    if (raw__larva__is_type(cause, overlaps_result)) {
       return overlaps_result; // propogate error larva
     }
     if (overlaps_result) {

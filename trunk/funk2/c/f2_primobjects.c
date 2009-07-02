@@ -163,7 +163,7 @@ f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
 
 boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
 f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublelink__is_type(cause, x));}
-def_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x));
+sdef_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x));
 
 f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
 def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));
@@ -194,9 +194,6 @@ f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
   {char* slot_name = "value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.value__funk, __funk2.globalenv.object_type.primobject.primobject_type_doublelink.value__set__funk, nil);}
   return this;
 }
-
-// deprecated
-boolean_t raw__doublelinkp(f2ptr x, f2ptr cause) {return raw__doublelink__is_type(cause, x);}
 
 
 // imagination_link
@@ -240,8 +237,8 @@ f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, 
   return f2imagination_link__new__trace_depth(cause, next, name, value, trace, imagination_frame, 1);
 }
 
-boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_doublelink(x, cause));}
-f2ptr f2__imagination_link__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__imagination_link__is_type(cause, this));}
+boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__imagination_link__is_type(f2ptr cause, f2ptr this);
 def_pcfunk1(imagination_link__is_type, x, return f2__imagination_link__is_type(this_cause, x));
 
 f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}
@@ -455,9 +452,6 @@ def_pcfunk1(cfunk__documentation, x, return f2__cfunk__documentation(this_cause,
 f2ptr f2__cfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {return f2cfunk__documentation__set(this, cause, value);}
 def_pcfunk2(cfunk__documentation__set, x, y, return f2__cfunk__documentation__set(this_cause, x, y));
 
-// deprecated
-boolean_t raw__cfunkp(f2ptr x, f2ptr cause) {return raw__cfunk__is_type(cause, x);}
-
 
 // metrocfunk
 
@@ -545,9 +539,6 @@ def_pcfunk1(metrocfunk__documentation, x, return f2__metrocfunk__documentation(t
 
 f2ptr f2__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {return f2metrocfunk__documentation__set(this, cause, value);}
 def_pcfunk2(metrocfunk__documentation__set, x, y, return f2__metrocfunk__documentation__set(this_cause, x, y));
-
-// deprecated
-boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause) {return raw__metrocfunk__is_type(cause, x);}
 
 
 // funk
@@ -663,10 +654,6 @@ def_pcfunk1(funk__documentation, x, return f2__funk__documentation(this_cause, x
 f2ptr f2__funk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__documentation__set(this, cause, value);}
 def_pcfunk2(funk__documentation__set, x, y, return f2__funk__documentation__set(this_cause, x, y));
 
-// deprecated
-boolean_t raw__funkp(f2ptr x, f2ptr cause) {return raw__funk__is_type(cause, x);}
-
-
 
 // metro
 
@@ -781,9 +768,6 @@ def_pcfunk1(metro__documentation, x, return f2__metro__documentation(this_cause,
 f2ptr f2__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {return f2metro__documentation__set(this, cause, value);}
 def_pcfunk2(metro__documentation__set, x, y, return f2__metro__documentation__set(this_cause, x, y));
 
-// deprecated
-boolean_t raw__metrop(f2ptr x, f2ptr cause) {return raw__metro__is_type(cause, x);}
-
 
 // exception
 
@@ -829,11 +813,6 @@ def_pcfunk1(exception__value, x, return f2__exception__value(this_cause, x));
 f2ptr f2__exception__value__set(f2ptr cause, f2ptr this, f2ptr value) {return f2exception__value__set(this, cause, value);}
 def_pcfunk2(exception__value__set, x, y, return f2__exception__value__set(this_cause, x, y));
 
-// deprecated
-boolean_t raw__exceptionp(f2ptr x, f2ptr cause) {return raw__exception__is_type(cause, x);}
-
-//f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
-//def_pcfunk2(exception, tag, value, return f2__exception(this_cause, tag, value));
 
 
 // bytecode
@@ -898,8 +877,6 @@ def_pcfunk1(bytecode__arg2, x, return f2__bytecode__arg2(this_cause, x));
 f2ptr f2__bytecode__arg2__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode__arg2__set(this, cause, value);}
 def_pcfunk2(bytecode__arg2__set, x, y, return f2__bytecode__arg2__set(this_cause, x, y));
 
-// deprecated
-boolean_t raw__bytecodep(f2ptr x, f2ptr cause) {return raw__bytecode__is_type(cause, x);}
 
 // thread
 
@@ -1550,9 +1527,6 @@ void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
   }
   f2cause__event_buffer_last__set(cause, cause, new_event_buffer_node);
 }
-
-// deprecated
-boolean_t raw__causep(f2ptr x, f2ptr cause) {return raw__cause__is_type(cause, x);}
 
 
 // transframe

@@ -319,6 +319,7 @@ f2ptr f2__integer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2integer__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_integer.new__funk);}
   {char* slot_name = "i"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.i__funk, nil, nil);}
   return this;
@@ -393,6 +394,7 @@ f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2double__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_double.new__funk);}
   {char* slot_name = "d"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_double.d__funk, nil, nil);}
   return this;
@@ -471,6 +473,7 @@ f2ptr f2__float__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2float__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_float.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_float.new__funk);}
   {char* slot_name = "f"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_float.f__funk, nil, nil);}
   return this;
@@ -549,6 +552,7 @@ f2ptr f2__pointer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2pointer__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_pointer.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk);}
   {char* slot_name = "p"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk, nil, nil);}
   return this;
@@ -689,6 +693,7 @@ f2ptr f2__gfunkptr__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk);}
   {char* slot_name = "new_from_f2ptr"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk);}
   {char* slot_name = "gfunkptr"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk, nil, nil);}
@@ -820,6 +825,7 @@ f2ptr f2__mutex__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2mutex__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk);}
   {char* slot_name = "lock"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk);}
   {char* slot_name = "trylock"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__funk);}
@@ -900,6 +906,7 @@ f2ptr f2__char__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2char__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_char.new__funk);}
   {char* slot_name = "ch"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_char.ch__funk, nil, nil);}
   return this;
@@ -1051,6 +1058,7 @@ f2ptr f2__string__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2string__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_string.new__funk);}
   {char* slot_name = "length"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_string.length__funk, nil, nil);}
   {char* slot_name = "elt"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_string.elt__funk, nil, nil);}
@@ -1293,6 +1301,7 @@ f2ptr f2__symbol__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2symbol__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_symbol.is_type__funk);}
   {char* slot_name = "new";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk);}
   {char* slot_name = "length";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk, nil, nil);}
   {char* slot_name = "elt";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk, nil, nil);}
@@ -1613,6 +1622,7 @@ f2ptr f2__chunk__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2chunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk);}
   {char* slot_name = "new_copy"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_chunk.new_copy__funk);}
   {char* slot_name = "length"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk, nil, nil);}
@@ -1798,6 +1808,7 @@ f2ptr f2__simple_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) 
 
 f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk);}
   {char* slot_name = "new_copy"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_simple_array.new_copy__funk);}
   {char* slot_name = "length"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk, nil, nil);}
@@ -2219,6 +2230,7 @@ f2ptr f2__traced_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) 
 
 f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk);}
   {char* slot_name = "length"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk, nil, nil);}
   {char* slot_name = "elt"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk, nil);}
@@ -2297,6 +2309,7 @@ f2ptr f2__larva__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2larva__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_larva.is_type__funk);}
   {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_larva.new__funk);}
   {char* slot_name = "type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_larva.type__funk, nil, nil);}
   return this;

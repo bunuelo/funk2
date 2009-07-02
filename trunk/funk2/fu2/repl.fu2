@@ -23,27 +23,19 @@
 [defmetro object-fwrite_html [this stream] `[object-execute ,this `fwrite_html .stream]]
 
 [defunk afwrite [exp stream]
-  [if [abstract_object? exp]
-      [object-fwrite exp stream]
-    [fwrite stream exp]]]
+  [fwrite stream exp]]
 
 [defunk afwrite_html [exp stream]
-  [if [abstract_object? exp]
-      [object-fwrite_html exp stream]
-    [fwrite_html stream exp]]]
+  [fwrite_html stream exp]]
 
 [defunk aformat [stream :rest args]
   [mapc [funk [arg]
-	      [if [abstract_object? arg]
-		  [object-format arg stream]
-		[format stream arg]]]
+	      [format stream arg]]
 	args]]
 
 [defunk aformat_html [stream :rest args]
   [mapc [funk [arg]
-	      [if [abstract_object? arg]
-		  [object-format_html arg stream]
-		[format-html stream arg]]]
+	      [format-html stream arg]]
 	args]]
 
 `[does nothing for now]
@@ -58,7 +50,7 @@
   [define-funk print-maybe_html        [funk [exp]        [stream-print-maybe_html stdout exp]]]
   [if output-stream [aformat-maybe_html output-stream '\nin--> ']]
   [let [[read-exp [read input-stream]]]
-    [if [exception? read-exp]
+    [if [is-type `exception read-exp]
 	[let [[tag [exception-tag read-exp]]]
 	  [cond [[eq tag `reader:end_of_file-exception] [prog [if output-stream [afwrite-maybe_html 'repl-io: got end_of_file exception.' output-stream]]
 							      t]]
@@ -67,7 +59,7 @@
       [let [[read-exp-abstract [abstract read-exp]]]
 	[if tutorial [if output-stream [prog [aformat-maybe_html output-stream '\nread> '] [afwrite-maybe_html read-exp-abstract output-stream]]]]
 	[let [[eval-exp [eval read-exp]]]
-	  [if [exception? eval-exp]
+	  [if [is-type `exception eval-exp]
 	      [let [[tag [exception-tag eval-exp]]]
 		[cond [[eq tag `reader:end_of_file-exception] [prog [if output-stream [afwrite-maybe_html 'repl-io: got end_of_file exception.' output-stream]]
 								    t]]
@@ -79,7 +71,7 @@
 
 [defunk repl []
   [let [[result [repl-io stdin stdout nil nil]]]
-    [if [exception? result]
+    [if [is-type `exception result]
 	[prog [format stdout
 		      '\nerror repl: unexpected exception ' result '\n'
 		      '\n            restarting repl.\n']
@@ -87,7 +79,7 @@
 
 [defunk repl-html []
   [let [[result [repl-io stdin stdout t t]]]
-    [if [exception? result]
+    [if [is-type `exception result]
 	[prog [format-html stdout
 			   '\nerror repl: unexpected exception ' result '\n'
 			   '\n            restarting repl.\n']

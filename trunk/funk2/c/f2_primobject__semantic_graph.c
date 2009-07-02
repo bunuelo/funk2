@@ -206,7 +206,7 @@ f2ptr raw__semantic_graph__load_conceptnet_r3_format(f2ptr cause, u8* filename) 
 }
 
 f2ptr f2__semantic_graph__load_conceptnet_r3_format(f2ptr cause, f2ptr filename) {
-  if (! raw__stringp(filename, cause)) {
+  if (! raw__string__is_type(cause, filename)) {
     return f2larva__new(cause, 1);
   }
   s64   filename_length = f2string__length(filename, cause);

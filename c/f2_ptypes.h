@@ -179,8 +179,13 @@ void  pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str);
 
 f2ptr f2symbol__primobject_type__new(f2ptr cause);
 
-boolean_t raw__symbol__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__symbol__is_type(f2ptr cause, f2ptr exp);
+boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__symbol__length(f2ptr cause, f2ptr x);
+f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__symbol__hash_value(f2ptr cause, f2ptr x);
+f2ptr f2__symbol__new(f2ptr cause, f2ptr str);
+f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 
 // chunk
 

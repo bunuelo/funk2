@@ -42,7 +42,7 @@ f2ptr f2action__new(f2ptr cause, f2ptr funk, f2ptr success_events_mutex, f2ptr s
   return this;
 }
 
-boolean_t raw__actionp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__action(this, cause));}
+boolean_t raw__actionp(f2ptr this, f2ptr cause) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__action(this, cause));}
 f2ptr f2__actionp(f2ptr this, f2ptr cause) {return f2bool__new(raw__actionp(this, cause));}
 
 
@@ -70,7 +70,7 @@ f2ptr f2action_event__new(f2ptr cause, f2ptr action, f2ptr begin_time, f2ptr end
   return this;
 }
 
-boolean_t raw__action_eventp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__action_event(this, cause));}
+boolean_t raw__action_eventp(f2ptr this, f2ptr cause) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__action_event(this, cause));}
 f2ptr f2__action_eventp(f2ptr this, f2ptr cause) {return f2bool__new(raw__action_eventp(this, cause));}
 
 

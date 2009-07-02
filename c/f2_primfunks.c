@@ -1917,7 +1917,7 @@ void f2__primcfunks__initialize() {
   
   // circular_buffer
   
-  f2__funktional_primcfunk__init(circular_buffer__is_type, "");
+  //f2__funktional_primcfunk__init(circular_buffer__is_type, "");
   f2__primcfunk__init(circular_buffer, "");
   f2__primcfunk__init(circular_buffer__add, "");
   f2__primcfunk__init(circular_buffer__remove, "");
@@ -2146,7 +2146,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(colonize, exp, "");
   f2__funktional_primcfunk__init__1(hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
-  f2__funktional_primcfunk__init__1(funktionalp, exp, "");
+  //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
   
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);

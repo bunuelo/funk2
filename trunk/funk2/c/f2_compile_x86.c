@@ -1046,7 +1046,7 @@ void f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(f2ptr this, uint index, 
 
 
 void f2__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint* next_index, f2ptr bytecode) {
-  debug__assert(raw__bytecodep(bytecode, cause), nil, "f2__chunk__compile_x86__bytecode error: bytecode type assertion failed.");
+  debug__assert(raw__bytecode__is_type(cause, bytecode), nil, "f2__chunk__compile_x86__bytecode error: bytecode type assertion failed.");
   f2ptr command = f2bytecode__command(bytecode, cause);
   if      (command == __funk2.bytecode.bytecode__push__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__push(cause, f2bytecode__arg0(bytecode, cause)));}
   else if (command == __funk2.bytecode.bytecode__pop__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__pop( cause, f2bytecode__arg0(bytecode, cause)));}

@@ -1291,7 +1291,7 @@ int f2__thread__bytecode__pop__env_reg(f2ptr thread, f2ptr bytecode) {
   
   f2__thread__stack__pop_env(thread, cause);
   release__assert(f2thread__env(thread, cause), thread, "env popped to nil.");
-  release__assert(raw__environmentp(f2thread__env(thread, cause), cause), thread, "assertion failed: popped to non-environment");
+  release__assert(raw__environment__is_type(cause, f2thread__env(thread, cause)), thread, "assertion failed: popped to non-environment");
   //f2__print(nil, f2thread__env(thread));
   //fflush(stdout);
   return 0;
@@ -2338,7 +2338,7 @@ int f2__thread__bytecode__newenv(f2ptr thread, f2ptr bytecode) {
 					parent_env,
 					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
   release__assert(new_env, thread, "new_env is nil");
-  release__assert(raw__environmentp(new_env, cause), thread, "new_env is not environment");
+  release__assert(raw__environment__is_type(cause, new_env), thread, "new_env is not environment");
   f2thread__env__set(thread, cause, new_env);
   return 0;
 }

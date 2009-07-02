@@ -172,7 +172,7 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
     //trace2(bytecode__jump_funk, funktion, f2thread__args(thread));
     f2thread__env__set(thread, cause, f2funk__env(funktion, cause));
     f2ptr body_bcs           = f2funk__body_bytecodes(funktion, cause);
-    if (raw__larvap(body_bcs, cause)) {
+    if (raw__larva__is_type(cause, body_bcs)) {
       f2thread__value__set(thread, cause, body_bcs);
       return 1;
     }
@@ -194,7 +194,7 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
     //trace2(bytecode__jump_funk, funktion, f2thread__args(thread));
     f2thread__env__set(thread, cause, f2metro__env(funktion, cause));
     f2ptr body_bcs           = f2metro__body_bytecodes(funktion, cause);
-    if (raw__larvap(body_bcs, cause)) {
+    if (raw__larva__is_type(cause, body_bcs)) {
       f2thread__value__set(thread, cause, body_bcs);
       return 1;
     }
@@ -2366,7 +2366,7 @@ int f2__thread__bytecode__machine_code(f2ptr thread, f2ptr bytecode, f2ptr chunk
 
 void raw__thread__bytecode_helper__reg_array__elt(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr reg_value) {
   f2ptr elt       = nil;
-  if (! raw__arrayp(reg_value, cause)) {
+  if (! raw__array__is_type(cause, reg_value)) {
     elt = f2larva__new(cause, 1);
   } else {
     u64 length = f2__array__length(cause, reg_value);
@@ -2539,7 +2539,7 @@ int f2__thread__bytecode__reg_array__elt(f2ptr thread, f2ptr bytecode, f2ptr reg
 
 void raw__thread__bytecode_helper__reg_array__elt__set(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr reg_value) {
   f2ptr elt = nil;
-  if (! raw__arrayp(reg_value, cause)) {
+  if (! raw__array__is_type(cause, reg_value)) {
     elt = f2larva__new(cause, 1);
   } else {
     u64 length = f2__array__length(cause, reg_value);

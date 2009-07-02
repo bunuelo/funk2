@@ -288,10 +288,10 @@
 	    [filter cond_proc [cdr seq]]]]]]
 
 [defunk object-get [slot_name this]
-  [apply [object-slot-get_funk this slot_name] nil]]
+  [apply [object-slot-get_funk this slot_name] [cons this nil]]]
 
 [defunk object-set [slot_name this value]
-  [apply [object-slot-get_funk this slot_name] [cons value nil]]]
+  [apply [object-slot-get_funk this slot_name] [cons this [cons value nil]]]]
 
 [defunk object-execute [slot_name this :rest args]
   [apply [object-slot-get_funk this slot_name] args]]

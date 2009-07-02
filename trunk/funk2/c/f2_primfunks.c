@@ -52,9 +52,9 @@ def_pcfunk0(system__node_id, return f2__system__node_id(this_cause));
 
 f2ptr f2__system__environment(f2ptr cause, f2ptr node_id) {
   node_id_t raw_node_id;
-  if (raw__pointerp(node_id, cause)) {
+  if (raw__pointer__is_type(cause, node_id)) {
     raw_node_id = f2pointer__p(node_id, cause);
-  } else if (raw__integerp(node_id, cause)) {
+  } else if (raw__integer__is_type(cause, node_id)) {
     raw_node_id = f2integer__i(node_id, cause);
   } else {
     printf("\nsystem-environment error: node_id must be integer or pointer.");
@@ -265,7 +265,7 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
 def_pcfunk1(string__new_raw_c_string, x, return f2__string__new_raw_c_string(this_cause, x));
 
 f2ptr f2__string__new_from_raw_c_string(f2ptr cause, f2ptr x) {
-  if (!raw__pointerp(x, cause)) {return f2larva__new(cause, 1);}
+  if (!raw__pointer__is_type(cause, x)) {return f2larva__new(cause, 1);}
   char* str = (char*)from_ptr(f2pointer__p(x, cause));
   return f2string__new(cause, strlen(str), (u8*)str);
 }
@@ -808,7 +808,7 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
 
 //def_pcfunk1(circular_bufferp,        x,    return f2__circular_bufferp(x, this_cause));
 f2ptr f2__circular_buffer(f2ptr cause, f2ptr length) {
-  if (! raw__integerp(length, cause)) {return f2larva__new(cause, 1);}
+  if (! raw__integer__is_type(cause, length)) {return f2larva__new(cause, 1);}
   return raw__circular_buffer__new_empty(cause, f2integer__i(length, cause));
 }
 def_pcfunk1(circular_buffer,         x,    return f2__circular_buffer(this_cause, x));

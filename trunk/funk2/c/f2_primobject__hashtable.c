@@ -62,7 +62,7 @@ f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
 }
 
 f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
-  if(! raw__integerp(bin_num_power, cause)) {
+  if(! raw__integer__is_type(cause, bin_num_power)) {
     return f2larva__new(cause, 1);
   }
   pause_gc();

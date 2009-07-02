@@ -21,8 +21,6 @@
 
 #include "funk2.h"
 
-// tensor primobject definition
-
 defprimobject__static_slot(object__types, 0);
 defprimobject__static_slot(object__frame, 1);
 
@@ -36,8 +34,8 @@ f2ptr f2__object__new(f2ptr cause, f2ptr types, f2ptr frame) {
   return this;
 }
 
-boolean_t raw__objectp(f2ptr this, f2ptr cause) {return raw__arrayp(this, cause) && f2primobject__is_object(this, cause);}
-f2ptr f2__objectp(f2ptr this, f2ptr cause) {return f2bool__new(raw__objectp(this, cause));}
+boolean_t raw__object__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_object(this, cause);}
+f2ptr f2__object__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__object__is_type(cause, this));}
 
 f2ptr object__new(f2ptr cause) {
   return f2__object__new(cause, nil, frame__new_empty(cause));

@@ -35,9 +35,7 @@ extern f2ptr __type_variable_not_defined__symbol;
 extern f2ptr __environment__symbol;
 extern f2ptr __current_environment__symbol;
 
-#ifdef DEBUG
 extern f2ptr __environment__last_23_larva_symbol;
-#endif // DEBUG
 
 boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__environment__is_type(f2ptr cause, f2ptr this);

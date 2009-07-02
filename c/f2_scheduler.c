@@ -245,10 +245,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  printf("\n  larva type=" u64__fstr, raw_type); fflush(stdout);
 	  if (raw_type == 23) {
 	    printf("\n  larva is symbol-undefined type"); fflush(stdout);
-#ifdef DEBUG
 	    printf(", and last symbol was: "); fflush(stdout);
 	    f2__print(nil, __environment__last_23_larva_symbol); fflush(stdout);
-#endif // DEBUG
 	  }
 	}
       }

@@ -27,6 +27,8 @@
 // hashtable
 
 extern f2ptr __hashtable__symbol;
+boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this);
 f2ptr f2hashtable__new(f2ptr cause, f2ptr bin_num_power, f2ptr bin_array);
 #define f2primobject__is_hashtable(this, cause)                    raw__eq(cause, f2primobject__type(this, cause), __hashtable__symbol)
 
@@ -46,7 +48,6 @@ defprimobject__static_slot__prototype(hashtable__bin_array);
 
 f2ptr raw__hashtable__new                (f2ptr cause, s64 bin_num_power);
 f2ptr f2__hashtable__new                 (f2ptr cause, f2ptr bin_num_power);
-f2ptr f2__hashtablep                     (f2ptr this, f2ptr cause);
 f2ptr f2__hashtable__add_keyvalue_pair   (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
 f2ptr f2__hashtable__lookup_value        (f2ptr this, f2ptr cause, f2ptr key);

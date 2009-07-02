@@ -1329,7 +1329,7 @@ f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_event_subscriber(x, cause));}
+boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is__event_subscriber(x, cause));}
 f2ptr f2__event_subscriber__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__event_subscriber__is_type(cause, x));}
 def_pcfunk1(event_subscriber__is_type, x, return f2__event_subscriber__is_type(this_cause, x));
 

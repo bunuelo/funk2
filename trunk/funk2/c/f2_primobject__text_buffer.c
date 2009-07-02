@@ -59,8 +59,8 @@ f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr character
   return this;
 }
 
-boolean_t raw__text_bufferp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_buffer(this, cause));}
-f2ptr f2__text_bufferp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_bufferp(this, cause));}
+boolean_t raw__text_buffer__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_buffer(this, cause));}
+f2ptr f2__text_buffer__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__text_buffer__is_type(cause, this));}
 
 f2ptr raw__text_buffer__create(f2ptr cause, s64 width, s64 height) {
   if (width <= 0 || height <= 0) {
@@ -174,8 +174,8 @@ f2ptr f2text_cursor__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr foreground_color, 
   return this;
 }
 
-boolean_t raw__text_cursorp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_cursor(this, cause));}
-f2ptr      f2__text_cursorp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_cursorp(this, cause));}
+boolean_t raw__text_cursor__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_cursor(this, cause));}
+f2ptr      f2__text_cursor__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__text_cursor__is_type(cause, this));}
 
 
 // text_window primobject definition
@@ -193,8 +193,8 @@ f2ptr f2text_window__new(f2ptr cause, f2ptr double_buffer, f2ptr cursor) {
   return this;
 }
 
-boolean_t raw__text_windowp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_window(this, cause));}
-f2ptr f2__text_windowp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_windowp(this, cause));}
+boolean_t raw__text_window__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_window(this, cause));}
+f2ptr f2__text_window__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__text_window__is_type(cause, this));}
 
 f2ptr raw__text_window__create(f2ptr cause, s64 width, s64 height) {
   if (width < 0 || height < 0) {

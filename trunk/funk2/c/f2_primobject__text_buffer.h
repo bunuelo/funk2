@@ -82,8 +82,9 @@ defprimobject__static_slot__prototype(text_buffer__characters);
 #define      f2text_buffer__characters__trace(            this, cause)        primobject__static_slot__trace(            this, text_buffer__characters, cause)
 #define      f2text_buffer__characters__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_buffer__characters, cause)
 
-boolean_t raw__text_bufferp(f2ptr this, f2ptr cause);
-f2ptr      f2__text_bufferp(f2ptr this, f2ptr cause);
+boolean_t raw__text_buffer__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__text_buffer__is_type(f2ptr cause, f2ptr this);
+
 
 // text_cursor
 
@@ -119,8 +120,9 @@ defprimobject__static_slot__prototype(text_cursor__background_color);
 #define      f2text_cursor__background_color__trace(            this, cause)        primobject__static_slot__trace(            this, text_cursor__background_color, cause)
 #define      f2text_cursor__background_color__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_cursor__background_color, cause)
 
-boolean_t raw__text_cursorp(f2ptr this, f2ptr cause);
-f2ptr      f2__text_cursorp(f2ptr this, f2ptr cause);
+boolean_t raw__text_cursor__is_type(f2ptr cause, f2ptr this);
+f2ptr      f2__text_cursor__is_type(f2ptr cause, f2ptr this);
+
 
 // text_window
 
@@ -142,8 +144,8 @@ defprimobject__static_slot__prototype(text_window__cursor);
 #define      f2text_window__cursor__trace(            this, cause)        primobject__static_slot__trace(            this, text_window__cursor, cause)
 #define      f2text_window__cursor__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_window__cursor, cause)
 
-boolean_t raw__text_windowp(f2ptr this, f2ptr cause);
-f2ptr      f2__text_windowp(f2ptr this, f2ptr cause);
+boolean_t raw__text_window__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__text_window__is_type(f2ptr cause, f2ptr this);
 
 // **
 

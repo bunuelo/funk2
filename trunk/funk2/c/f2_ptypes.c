@@ -319,9 +319,6 @@ f2ptr f2integer__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__integerp(f2ptr x, f2ptr cause) {return raw__integer__is_type(cause, x);}
-//f2ptr f2__integerp(f2ptr cause, f2ptr x) {return f2bool__new(raw__integerp(x, cause));}
 
 
 // double
@@ -964,8 +961,8 @@ f2ptr f2__string__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__string_
 f2ptr f2__string__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2string__length(x, cause));}
 
 f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  if ((! raw__stringp(this, cause)) ||
-      (! raw__integerp(index, cause))) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, index))) {
     return f2larva__new(cause, 1);
   }
   u64 raw_index = f2integer__i(index, cause);
@@ -1021,10 +1018,6 @@ f2ptr f2string__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__stringp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_string);}
-//f2ptr f2__stringp(f2ptr cause, f2ptr x) {return f2bool__new(raw__stringp(x, cause));}
-//def_pcfunk1(stringp, x, return f2__stringp(this_cause, x));
 
 
 // symbol

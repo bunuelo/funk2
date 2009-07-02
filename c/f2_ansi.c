@@ -33,7 +33,7 @@ void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code) {
 }
 
 f2ptr f2__ansi__stream__print_code(f2ptr cause, f2ptr stream, f2ptr code) {
-  if (! raw__integerp(code, cause)) {
+  if (! raw__integer__is_type(cause, code)) {
     return f2larva__new(cause, 1);
   }
   int raw_code = f2integer__i(code, cause);
@@ -262,7 +262,7 @@ void raw__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, int x, int y) {
 }
 
 f2ptr f2__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, f2ptr x, f2ptr y) {
-  if ((! raw__integerp(x, cause)) || (! raw__integerp(y, cause))) {
+  if ((! raw__integer__is_type(cause, x)) || (! raw__integer__is_type(cause, y))) {
     return f2larva__new(cause, 1);
   }
   int raw_x = f2integer__i(x, cause);
@@ -302,7 +302,7 @@ f2ptr raw__ansi__stream__foreground(f2ptr cause, f2ptr stream, ansi_color_t colo
 }
 
 f2ptr f2__ansi__stream__foreground(f2ptr cause, f2ptr stream, f2ptr color) {
-  if (! raw__integerp(color, cause)) {
+  if (! raw__integer__is_type(cause, color)) {
     return f2larva__new(cause, 1);
   }
   ansi_color_t raw_color = (ansi_color_t)f2integer__i(color, cause);
@@ -333,7 +333,7 @@ f2ptr raw__ansi__stream__background(f2ptr cause, f2ptr stream, ansi_color_t colo
 }
 
 f2ptr f2__ansi__stream__background(f2ptr cause, f2ptr stream, f2ptr color) {
-  if (! raw__integerp(color, cause)) {
+  if (! raw__integer__is_type(cause, color)) {
     return f2larva__new(cause, 1);
   }
   ansi_color_t raw_color = (ansi_color_t)f2integer__i(color, cause);
@@ -355,10 +355,10 @@ void raw__ansi__stream__rectangle(f2ptr cause, f2ptr stream, s64 x0, s64 y0, s64
 }
 
 f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1, f2ptr ch) {
-  if ((! raw__integerp(x0, cause)) ||
-      (! raw__integerp(x1, cause)) ||
-      (! raw__integerp(y0, cause)) ||
-      (! raw__integerp(y1, cause)) ||
+  if ((! raw__integer__is_type(cause, x0)) ||
+      (! raw__integer__is_type(cause, x1)) ||
+      (! raw__integer__is_type(cause, y0)) ||
+      (! raw__integer__is_type(cause, y1)) ||
       (! raw__charp(ch, cause))) {
     return f2larva__new(cause, 1);
   }
@@ -393,10 +393,10 @@ void raw__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, int x0, in
 }
 
 f2ptr f2__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1, f2ptr background_char) {
-  if ((! raw__integerp(x0, cause)) ||
-      (! raw__integerp(y0, cause)) ||
-      (! raw__integerp(x1, cause)) ||
-      (! raw__integerp(y1, cause)) ||
+  if ((! raw__integer__is_type(cause, x0)) ||
+      (! raw__integer__is_type(cause, y0)) ||
+      (! raw__integer__is_type(cause, x1)) ||
+      (! raw__integer__is_type(cause, y1)) ||
       (! raw__charp(background_char, cause))) {
     return f2larva__new(cause, 1);
   }

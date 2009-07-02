@@ -44,7 +44,7 @@
 `[globalize-funk pointer?                                    &primfunk:pointer__is_type]
 
 `[globalize-funk mutex?                                      &primfunk:mutex__is_type]
-[globalize-funk mutex                                       &primfunk:mutex]
+`[globalize-funk mutex                                       &primfunk:mutex]
 [globalize-funk unsafe:mutex-lock                           &primfunk:mutex__lock]
 [globalize-funk unsafe:mutex-unlock                         &primfunk:mutex__unlock]
 [globalize-funk unsafe:mutex-trylock                        &primfunk:mutex__trylock]

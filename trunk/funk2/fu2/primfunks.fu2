@@ -352,7 +352,7 @@
 [globalize-funk colonize                                    &primfunk:colonize]
 [globalize-funk hash_value                                  &primfunk:hash_value]
 [globalize-funk equals                                      &primfunk:equals]
-[globalize-funk funktional?                                 &primfunk:funktionalp]
+`[globalize-funk funktional?                                 &primfunk:funktionalp]
 
 [primfunk:exp__format stdout '\ndebug 0.1.7.3\n']
 'end of f2_primfunks.c'

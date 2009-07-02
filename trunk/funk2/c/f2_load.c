@@ -32,7 +32,7 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
 }
 
 f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
-  if (!raw__stringp(filename, cause)) {printf("\nload error: filename must be a string."); return nil;}
+  if (!raw__string__is_type(cause, filename)) {printf("\nload error: filename must be a string."); return nil;}
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {f2__print(cause, filename); printf("\nload error: couldn't open file for reading."); return nil;}
 #ifdef DEBUG_LOAD

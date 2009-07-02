@@ -800,8 +800,6 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
 
 // primobject thought_process
 
-boolean_t raw__thought_process__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_thought_process(x, cause));}
-
 // primobject thread
 
 //boolean_t raw__threadp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thread(x, cause));}

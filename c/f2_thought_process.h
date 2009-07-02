@@ -54,8 +54,11 @@ typedef struct funk2_thought_process_s {
 
 // thought_process
 
+boolean_t raw__thought_process__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__thought_process__is_type(f2ptr cause, f2ptr x);
 f2ptr f2thought_process__new__trace_depth(f2ptr cause, f2ptr read_write_execute_slot_hash, int trace_depth);
 f2ptr f2thought_process__new(f2ptr cause, f2ptr read_write_execute_slot_hash);
+
 
 #define f2primobject__is_thought_process(this, cause) (f2primobject__type(this, cause) == __funk2.thought_process.thought_process__symbol)
 

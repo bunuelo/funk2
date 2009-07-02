@@ -86,7 +86,7 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
 
 f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr result = environment__lookup_type_var_value(cause, this, type, var);
-  if (raw__larvap(result, cause)) {
+  if (raw__larva__is_type(cause, result)) {
     error(nil, "environment__safe_lookup_type_var_value failed to lookup variable.");
   }
   return result;

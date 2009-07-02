@@ -128,13 +128,14 @@ f2ptr frame__new_empty(f2ptr cause) {
   f2ptr this = f2frame__new(cause,
 			    f2__hashtable__new(cause, f2integer__new(cause, 5)),
 			    f2__hashtable__new(cause, f2integer__new(cause, 5)));
-  resume_gc();
   return this;
 }
 
 def_pcfunk0(frame__new, return frame__new_empty(this_cause));
 
 f2ptr frame__new_empty_globalsize(f2ptr cause) {
+  pause_gc();
+  resume_gc();
   pause_gc();
   f2ptr this = f2frame__new(cause,
 			    f2__hashtable__new(cause, f2integer__new(cause, 24)),

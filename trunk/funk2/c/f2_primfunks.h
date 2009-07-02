@@ -869,8 +869,8 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
 boolean_t  raw__cause_is_traced(f2ptr cause);
 f2ptr raw__array__new(f2ptr cause, u64 length);
 f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init);
-boolean_t raw__array__is_type(f2ptr cause, f2ptr x) {return (raw__simple_array__is_type(cause, x) || raw__traced_array__is_type(cause, x));}
-f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__is_type(cause, x));}
+boolean_t raw__array__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__array__is_type(f2ptr cause, f2ptr x);
 u64   raw__array__length(f2ptr cause, f2ptr x);
 f2ptr f2__array__length(f2ptr cause, f2ptr x);
 f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth);

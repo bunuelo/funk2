@@ -1228,7 +1228,7 @@ def_pcfunk1(symbol__is_type, x, return f2__symbol__is_type(this_cause, x));
 def_pcfunk1(symbol__new, str, return f2__symbol__new(this_cause, str));
 def_pcfunk1(symbol__length, this, return f2__symbol__length(this_cause, this));
 def_pcfunk2(symbol__elt, this, index, return f2__symbol__elt(this_cause, this, index));
-def_pcfunk1(symbol__hash_value, this, return f2__symbol__hash_value(this_cause, x));
+def_pcfunk1(symbol__hash_value, this, return f2__symbol__hash_value(this_cause, this));
 def_pcfunk2(symbol__eq, x, y, return f2__symbol__eq(this_cause, x, y));
 
 f2ptr f2__symbol__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {

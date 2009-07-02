@@ -186,7 +186,7 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
   } else if (raw__cfunkp(funktion, cause)) {
     f2ptr args = f2thread__args(thread, cause);
     //trace2(bytecode__jump_funk, funktion, args);
-    release__assert(!args || raw__consp(args, cause), thread, "args failed args type assertion.");
+    release__assert(!args || raw__cons__is_type(cause, args), thread, "args failed args type assertion.");
     f2ptr value = f2__cfunk__apply(cause, funktion, thread, args);
     f2thread__value__set(thread, cause, value);
     return 1;
@@ -322,7 +322,7 @@ int f2__thread__bytecode__consp(f2ptr thread, f2ptr bytecode) {
   
   f2__thread__increment_pc(thread, cause);
   
-  f2ptr result = f2bool__new(raw__consp(f2thread__value(thread, cause), cause));
+  f2ptr result = f2bool__new(raw__cons__is_type(cause, f2thread__value(thread, cause)));
   f2thread__value__set(thread, cause, result);
   return 0;
 }

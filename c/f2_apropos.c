@@ -36,7 +36,7 @@ f2ptr f2__exp__documentation(f2ptr cause, f2ptr exp) {
 }
 
 f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
-  if (! raw__stringp(find_string, cause)) {
+  if (! raw__string__is_type(cause, find_string)) {
     return f2larva__new(cause, 1);
   }
   
@@ -67,7 +67,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       }
       resume_gc();
       if (! matches) {
-	if (raw__stringp(documentation, cause)) {
+	if (raw__string__is_type(cause, documentation)) {
 	  if (f2__string__contains(cause, documentation, find_string) != nil) {
 	    matches = boolean__true;
 	  }

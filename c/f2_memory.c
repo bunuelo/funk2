@@ -1136,9 +1136,11 @@ void debug__end_pause_gc(int pool_index) {
 
 void pool__pause_gc (int pool_index) {
   memory_mutex__lock(pool_index);
-  //if (! __funk2.memory.pool[pool_index].disable_gc) {
-  //  debug__begin_pause_gc(pool_index);
-  //}
+#ifdef DEBUG
+  if (! __funk2.memory.pool[pool_index].disable_gc) {
+    debug__begin_pause_gc(pool_index);
+  }
+#endif // DEBUG
   __funk2.memory.pool[pool_index].disable_gc ++;
   memory_mutex__unlock(pool_index);
 }
@@ -1146,9 +1148,11 @@ void pool__pause_gc (int pool_index) {
 int pool__try_pause_gc (int pool_index) {
   int lock_failed = memory_mutex__try_lock(pool_index);
   if (lock_failed == 0) {
-    //if (! __funk2.memory.pool[pool_index].disable_gc) {
-    //  debug__begin_pause_gc(pool_index);
-    //}
+#ifdef DEBUG
+    if (! __funk2.memory.pool[pool_index].disable_gc) {
+      debug__begin_pause_gc(pool_index);
+    }
+#endif // DEBUG
     __funk2.memory.pool[pool_index].disable_gc ++;
     memory_mutex__unlock(pool_index);
   }
@@ -1183,9 +1187,11 @@ int try_pause_gc() {
 void pool__resume_gc (int pool_index) {
   memory_mutex__lock(pool_index);
   __funk2.memory.pool[pool_index].disable_gc --;
-  //if (! __funk2.memory.pool[pool_index].disable_gc) {
-  //debug__end_pause_gc(pool_index);
-  //}
+#ifdef DEBUG
+  if (! __funk2.memory.pool[pool_index].disable_gc) {
+    debug__end_pause_gc(pool_index);
+  }
+#endif // DEBUG
   release__assert(__funk2.memory.pool[pool_index].disable_gc >= 0, nil, "__funk2.memory.pool[].disable_gc < 0.");
   memory_mutex__unlock(pool_index);
 }

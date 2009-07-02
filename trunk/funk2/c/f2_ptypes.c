@@ -962,7 +962,6 @@ boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(
 f2ptr f2__string__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__string__is_type(cause, x));}
 
 f2ptr f2__string__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2string__length(x, cause));}
-def_pcfunk1(string__length, x, return f2__string__length(this_cause, x));
 
 f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
   if ((! raw__stringp(this, cause)) ||

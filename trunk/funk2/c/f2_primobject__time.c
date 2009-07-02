@@ -34,8 +34,8 @@ f2ptr f2time__new(f2ptr cause, f2ptr microseconds_since_1970) {
   return this;
 }
 
-boolean_t raw__timep(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__time(this, cause));}
-f2ptr f2__timep(f2ptr this, f2ptr cause) {return f2bool__new(raw__timep(this, cause));}
+boolean_t raw__time__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__time(this, cause));}
+f2ptr f2__time__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__time__is_type(cause, this));}
 
 // returns a new time object that represents the time of the call.
 f2ptr f2__time(f2ptr cause) {

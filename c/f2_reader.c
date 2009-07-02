@@ -115,7 +115,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
 }
 
 boolean_t contains_comma(f2ptr cause, f2ptr exp) {
-  if (raw__consp(exp, cause)) {
+  if (raw__cons__is_type(cause, exp)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr cdr = f2cons__cdr(exp, cause);
     if (car == __funk2.globalenv.comma__symbol || cdr == __funk2.globalenv.comma__symbol) {
@@ -127,7 +127,7 @@ boolean_t contains_comma(f2ptr cause, f2ptr exp) {
 }
 
 boolean_t contains_cdr_comma(f2ptr cause, f2ptr exp) {
-  if (raw__consp(exp, cause)) {
+  if (raw__cons__is_type(cause, exp)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr cdr = f2cons__cdr(exp, cause);
     if (car == __funk2.globalenv.cdr_comma__symbol || cdr == __funk2.globalenv.cdr_comma__symbol) {
@@ -139,10 +139,10 @@ boolean_t contains_cdr_comma(f2ptr cause, f2ptr exp) {
 }
 
 boolean_t contains_cdr_comma_at_this_level(f2ptr cause, f2ptr exp) {
-  if (raw__consp(exp, cause)) {
+  if (raw__cons__is_type(cause, exp)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr cdr = f2cons__cdr(exp, cause);
-    if (raw__consp(car, cause) && f2cons__car(car, cause) == __funk2.globalenv.cdr_comma__symbol) {
+    if (raw__cons__is_type(cause, car) && f2cons__car(car, cause) == __funk2.globalenv.cdr_comma__symbol) {
       return 1;
     }
     return contains_cdr_comma_at_this_level(cause, cdr);
@@ -151,10 +151,10 @@ boolean_t contains_cdr_comma_at_this_level(f2ptr cause, f2ptr exp) {
 }
 
 f2ptr comma_filter_backquoted_exp(f2ptr cause, f2ptr exp) {
-  if (raw__consp(exp, cause)) {
+  if (raw__cons__is_type(cause, exp)) {
     f2ptr car = f2cons__car(exp, cause);
     f2ptr car_car;
-    if(raw__consp(car, cause) && ((car_car = f2cons__car(car, cause)) == __funk2.globalenv.comma__symbol || car_car == __funk2.globalenv.cdr_comma__symbol)) {
+    if(raw__cons__is_type(cause, car) && ((car_car = f2cons__car(car, cause)) == __funk2.globalenv.comma__symbol || car_car == __funk2.globalenv.cdr_comma__symbol)) {
       f2cons__car__set(exp, cause, f2cons__car(f2cons__cdr(f2cons__car(exp, cause), cause), cause));
     } else if (! (contains_comma(cause, car) || contains_cdr_comma(cause, car))) {
       f2cons__car__set(exp, cause, f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, car, nil)));
@@ -258,7 +258,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, first_char, __char__backquote)) {
     f2ptr exp = raw__read(cause, stream);
     if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}
-    if (raw__consp(exp, cause) && (contains_comma(cause, exp) || contains_cdr_comma(cause, exp))) {
+    if (raw__cons__is_type(cause, exp) && (contains_comma(cause, exp) || contains_cdr_comma(cause, exp))) {
       if (contains_cdr_comma_at_this_level(cause, exp)) {
 	exp = comma_filter_backquoted_exp(cause, exp);
 	if (raw__exceptionp(exp, cause)) {resume_gc(); return exp;}

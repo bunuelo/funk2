@@ -97,7 +97,7 @@ def_pcfunk1(blocks_world_rectangle__y1, this, return f2__blocks_world_rectangle_
 
 
 boolean_t raw__blocks_world_rectanglep(f2ptr this, f2ptr cause) {
-  return (raw__primobjectp(this, cause) && f2primobject__is__blocks_world_rectangle(this, cause));
+  return (raw__primobject__is_type(cause, this) && f2primobject__is__blocks_world_rectangle(this, cause));
 }
 
 f2ptr f2__blocks_world_rectanglep(f2ptr this, f2ptr cause) {

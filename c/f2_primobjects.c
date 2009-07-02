@@ -163,7 +163,7 @@ f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {
 
 boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_doublelink(x, cause));}
 f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublelink__is_type(cause, x));}
-sdef_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x));
+def_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x));
 
 f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
 def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));

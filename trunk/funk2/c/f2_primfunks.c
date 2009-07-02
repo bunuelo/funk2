@@ -822,7 +822,7 @@ def_pcfunk1(write, x, return f2__write(this_cause, x));
 def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, fptr, x));
 
 f2ptr f2__format(f2ptr cause, f2ptr stream, f2ptr exp) {
-  if (! raw__streamp(stream, cause)) {
+  if (! raw__stream__is_type(cause, stream)) {
     printf("\nraw__format error: stream must be stream.");
     f2__print(cause, stream);
     return f2larva__new(cause, 1);
@@ -1058,7 +1058,7 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr dem
   //f2__print_prompt("  tracewrap   : ", tracewrap);
   f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional, documentation);
   f2ptr result = f2__compile__funk(cause, thread, funk);
-  if (raw__larvap(result, cause)) {
+  if (raw__larva__is_type(cause, result)) {
     return result;
   }
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
@@ -1073,7 +1073,7 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr de
   //f2__print_prompt("  tracewrap    : ", tracewrap);
   f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional, documentation);
   f2ptr result = f2__compile__metro(cause, thread, metro);
-  if (raw__larvap(result, cause)) {
+  if (raw__larva__is_type(cause, result)) {
     return result;
   }
   

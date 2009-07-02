@@ -45,7 +45,7 @@ f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_desc
   return this;
 }
 
-boolean_t raw__stream__is_type(f2ptr cause, f2ptr this) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__stream(this, cause));}
+boolean_t raw__stream__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__stream(this, cause));}
 f2ptr f2__stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__stream__is_type(cause, this));}
 
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {

@@ -61,7 +61,7 @@ f2ptr f2place__new(f2ptr cause, f2ptr p) {
   return this;
 }
 
-boolean_t raw__place__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_place(x, cause));}
+boolean_t raw__place__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_place(x, cause));}
 
 
 f2ptr f2__place__new(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}

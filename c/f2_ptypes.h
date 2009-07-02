@@ -218,8 +218,12 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 
 f2ptr f2simple_array__primobject_type__new(f2ptr cause);
 
-boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr exp);
+boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__simple_array__new(f2ptr cause, f2ptr length);
+f2ptr f2__simple_array__length(f2ptr cause, f2ptr x);
+f2ptr f2__simple_array__elt(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 
 // traced_array
 

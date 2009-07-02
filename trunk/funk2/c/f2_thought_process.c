@@ -38,6 +38,9 @@ f2ptr f2thought_process__new(f2ptr cause, f2ptr read_write_execute_slot_hash) {
   return f2thought_process__new__trace_depth(cause, read_write_execute_slot_hash, 1);
 }
 
+boolean_t raw__thought_process__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_thought_process(x, cause));}
+f2ptr f2__thought_process__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__thought_process__is_type(cause, x));}
+
 f2ptr f2thought_process__read_parent_types(f2ptr cause, f2ptr this) {
   f2ptr read_write_execute_slot_hash = f2thought_process__read_write_execute_slot_hash(this, cause);
   f2ptr read_write_execute           = f2__hashtable__lookup_value(read_write_execute_slot_hash, cause, f2symbol__new(cause, strlen("parent_types"), (u8*)"parent_types"));

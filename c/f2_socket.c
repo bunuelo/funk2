@@ -104,7 +104,7 @@ f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
   f2ptr rv = f2integer__new(cause, accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len));
   // there is a bug here in getting the correct client address from accept.
   if (addr_array) {
-    if (raw__arrayp(addr_array, cause)) {
+    if (raw__array__is_type(cause, addr_array)) {
       int array_len = raw__array__length(cause, addr_array);
       int i;
       for (i = 0; i < addr_len && i < array_len; i ++) {

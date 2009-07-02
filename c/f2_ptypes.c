@@ -979,10 +979,10 @@ f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {
     return f2larva__new(cause, 1);
   }
-  int str__length = f2string__length(str, this_cause);
+  int str__length = f2string__length(str, cause);
   u8* str__bytes = (u8*)alloca(str__length);
-  f2string__str_copy(str, this_cause, str__bytes);
-  return f2string__new(this_cause, str__length, str__bytes);
+  f2string__str_copy(str, cause, str__bytes);
+  return f2string__new(cause, str__length, str__bytes);
 }
 
 def_pcfunk2(string__elt, x, y, return f2__string__elt(this_cause, x, y));

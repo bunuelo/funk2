@@ -661,7 +661,7 @@ u64 raw__length(f2ptr cause, f2ptr seq) {
   switch (f2ptype__raw(seq, cause)) {
   case ptype_simple_array:
   case ptype_traced_array:
-    if (raw__consp(seq, cause)) {
+    if (raw__cons__is_type(cause, seq)) {
       u64 count = 0;
       f2ptr iter = seq;
       while(iter) {
@@ -748,7 +748,7 @@ f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
   switch (f2ptype__raw(this, cause)) {
   case ptype_simple_array:
   case ptype_traced_array:
-    if (raw__consp(this, cause)) {
+    if (raw__cons__is_type(cause, this)) {
       int count = raw_index;
       f2ptr iter = this;
       while(count > 0) {
@@ -877,7 +877,7 @@ f2ptr f2__list(f2ptr cause, f2ptr seq) {
   while(iter) {
     release__assert(raw__cons__is_type(cause, iter), nil, "args cons type check failure in list.");
     new_cons = f2cons__new(cause, f2cons__car(iter, cause), nil);
-    release__assert(raw__consp(new_cons, cause), nil, "new cons type check failure in list.");
+    release__assert(raw__cons__is_type(cause, new_cons), nil, "new cons type check failure in list.");
     f2cons__cdr__set(new_iter, cause, new_cons);
     iter     = f2cons__cdr(iter, cause);
     new_iter = new_cons;

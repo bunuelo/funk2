@@ -1858,14 +1858,14 @@ void f2__primobjects__initialize() {
   // place
   
   
-  f2__funktional_primcfunk__init(placep, "");
+  //f2__funktional_primcfunk__init(placep, "");
   
   //f2__primcfunk__init(place__thing, "");
   //f2__primcfunk__init(place__thing__set, "");
   
   // cons
   
-  f2__funktional_primcfunk__init(consp, "");
+  //f2__funktional_primcfunk__init(consp, "");
   //f2__primcfunk__init(cons, "");
   //f2__primcfunk__init(cons__car, "");
   //f2__primcfunk__init(cons__car__set, "");
@@ -1875,7 +1875,7 @@ void f2__primobjects__initialize() {
   // doublelink
   
   //f2__primcfunk__init(doublelink, "");
-  f2__funktional_primcfunk__init(doublelinkp, "");
+  //f2__funktional_primcfunk__init(doublelinkp, "");
   //f2__primcfunk__init(doublelink__prev, "");
   //f2__primcfunk__init(doublelink__prev__set, "");
   //f2__primcfunk__init(doublelink__next, "");

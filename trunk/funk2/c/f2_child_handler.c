@@ -104,7 +104,7 @@ f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr en
     u64 index;
     for (index = 0; index < argv__length; index ++) {
       f2ptr elt = raw__elt(cause, argv, index);
-      if (! raw__stringp(elt, cause)) {
+      if (! raw__string__is_type(cause, elt)) {
 	printf("\nchild_handler-add_new_child_process error: argv must contain only strings.\n");
 	return f2larva__new(cause, 1);
       }
@@ -121,7 +121,7 @@ f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr en
     u64 index;
     for (index = 0; index < envp__length; index ++) {
       f2ptr elt = raw__elt(cause, envp, index);
-      if (! raw__stringp(elt, cause)) {
+      if (! raw__string__is_type(cause, elt)) {
 	printf("\nchild_handler-add_new_child_process error: envp must contain only strings.\n");
 	return f2larva__new(cause, 1);
       }

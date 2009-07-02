@@ -359,7 +359,7 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
       (! raw__integer__is_type(cause, x1)) ||
       (! raw__integer__is_type(cause, y0)) ||
       (! raw__integer__is_type(cause, y1)) ||
-      (! raw__charp(ch, cause))) {
+      (! raw__char__is_type(cause, ch))) {
     return f2larva__new(cause, 1);
   }
   s64 raw_x0 = f2integer__i(x0, cause);
@@ -397,7 +397,7 @@ f2ptr f2__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, f2ptr x0, 
       (! raw__integer__is_type(cause, y0)) ||
       (! raw__integer__is_type(cause, x1)) ||
       (! raw__integer__is_type(cause, y1)) ||
-      (! raw__charp(background_char, cause))) {
+      (! raw__char__is_type(cause, background_char))) {
     return f2larva__new(cause, 1);
   }
   s64 raw_x0              = f2integer__i(x0, cause);

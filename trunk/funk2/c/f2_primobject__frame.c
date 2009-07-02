@@ -40,20 +40,10 @@ f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
 }
 
 f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
-  resume_gc();
-  pause_gc();
   f2ptr type_hashtable = f2__hashtable__new(cause, f2integer__new(cause, 3));
-  resume_gc();
-  pause_gc();
   f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __frame__variable_type__symbol,      var_hashtable);
-  resume_gc();
-  pause_gc();
   f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __frame__funk_variable_type__symbol, funkvar_hashtable);
-  resume_gc();
-  pause_gc();
   f2ptr result = f2frame__new__raw(cause, type_hashtable);
-  resume_gc();
-  pause_gc();
   return result;
 }
 
@@ -145,8 +135,6 @@ f2ptr frame__new_empty(f2ptr cause) {
 def_pcfunk0(frame__new, return frame__new_empty(this_cause));
 
 f2ptr frame__new_empty_globalsize(f2ptr cause) {
-  pause_gc();
-  resume_gc();
   pause_gc();
   f2ptr this = f2frame__new(cause,
 			    f2__hashtable__new(cause, f2integer__new(cause, 24)),

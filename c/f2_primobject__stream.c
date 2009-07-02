@@ -100,7 +100,7 @@ f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
 def_pcfunk2(stream__new_open_file, filename, mode, return f2__stream__new_open_file(this_cause, filename, mode));
 
 f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
-  if ((! raw__file_streamp(this, cause))) {
+  if ((! raw__file_stream__is_type(cause, this))) {
     return f2larva__new(cause, 1);
   }
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
@@ -116,9 +116,9 @@ f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
-  if (raw__file_streamp(this, cause)) {
+  if (raw__file_stream__is_type(cause, this)) {
     return f2__file_stream__close(cause, this);
-  } else if (raw__string_streamp(this, cause)) {
+  } else if (raw__string_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   return f2larva__new(cause, 1);
@@ -151,14 +151,14 @@ int raw__file_stream__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value)
 }
 
 f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__file_streamp(this, cause)) {
+  if (! raw__file_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   return raw__file_stream__nonblocking__set(cause, this, (value != nil));
 }
 
 f2ptr f2__stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (raw__file_streamp(this, cause)) {
+  if (raw__file_stream__is_type(cause, this)) {
     return f2__file_stream__nonblocking__set(cause, this, value);
   }
   return f2larva__new(cause, 1);
@@ -181,7 +181,7 @@ void raw__stream__ungetc(f2ptr cause, f2ptr this, char ch) {
 }
 
 f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
-  if (! raw__file_streamp(this, cause)) {
+  if (! raw__file_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
@@ -207,7 +207,7 @@ f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
-  if (! raw__string_streamp(this, cause)) {
+  if (! raw__string_stream__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   f2ptr string = f2stream__string(this, cause);
@@ -233,9 +233,9 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
     f2stream__ungetc_stack__set(this, cause, f2cons__cdr(ungetc_stack, cause));
     return character;
   }
-  if (raw__file_streamp(this, cause)) {
+  if (raw__file_stream__is_type(cause, this)) {
     return f2__file_stream__try_ungetcless_read_character(cause, this);
-  } else if (raw__string_streamp(this, cause)) {
+  } else if (raw__string_stream__is_type(cause, this)) {
     return f2__string_stream__try_ungetcless_read_character(cause, this);
   } else {
     return nil;

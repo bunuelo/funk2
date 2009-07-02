@@ -28,8 +28,8 @@
 // char_pointer
 
 extern f2ptr __char_pointer__symbol;
-boolean_t raw__char_pointer__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) == 2 && f2primobject__is_char_pointer(this, cause));}
-f2ptr f2__char_pointer__is_type(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__char_pointer__is_type(cause, this));}
+boolean_t raw__char_pointer__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__char_pointer__is_type(f2ptr cause, f2ptr this);
 f2ptr f2char_pointer__new(f2ptr cause, f2ptr pointer_value);
 #define      f2primobject__is_char_pointer(this, cause)             raw__eq(cause, f2primobject__type(this, cause), __char_pointer__symbol)
 

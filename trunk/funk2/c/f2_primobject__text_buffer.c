@@ -222,7 +222,7 @@ f2ptr f2__text_window__create(f2ptr cause, f2ptr width, f2ptr height) {
 def_pcfunk2(text_window__create, width, height, return f2__text_window__create(this_cause, width, height));
 
 f2ptr raw__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, s64 screen_x0, s64 screen_y0, s64 x0, s64 y0, s64 x1, s64 y1) {
-  if ((! raw__text_windowp(this, cause)) ||
+  if ((! raw__text_window__is_type(cause, this)) ||
       (! raw__streamp(stream, cause))) {
     return f2larva__new(cause, 1);
   }

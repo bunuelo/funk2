@@ -307,7 +307,7 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
   if (! this) {
     return (cause__allocate_traced_arrays__default_value != nil);
   }
-  if (! raw__causep(this, cause)) {
+  if (! raw__cause__is_type(cause, this)) {
     status("error: cause is not a cause");
     return boolean__false;
   }
@@ -507,10 +507,10 @@ def_pcfunk2(hashtable__lookup_value,         this, key,        return f2__hashta
 void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   f2ptr env;
-  if      (raw__funkp(cfunkable, cause))       {env = f2funk__env(cfunkable, cause);}
-  else if (raw__metrop(cfunkable, cause))      {env = f2metro__env(cfunkable, cause);}
-  else if (raw__cfunkp(cfunkable, cause))      {env = f2thread__env(thread, cause);}
-  else if (raw__metrocfunkp(cfunkable, cause)) {env = f2thread__env(thread, cause);}
+  if      (raw__funk__is_type(cause, cfunkable))       {env = f2funk__env(cfunkable, cause);}
+  else if (raw__metro__is_type(cause, cfunkable))      {env = f2metro__env(cfunkable, cause);}
+  else if (raw__cfunk__is_type(cause, cfunkable))      {env = f2thread__env(thread, cause);}
+  else if (raw__metrocfunk__is_type(cause, cfunkable)) {env = f2thread__env(thread, cause);}
   else                                         {error(nil, "f2thread__force_funk error: cfunkable must be funk or metro.");}
   
   f2thread__cause_reg__set(thread, cause, execution_cause);

@@ -559,7 +559,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		  f2__write__ansi_color(cause, stream, print__ansi__array__foreground, use_ansi_colors, use_html);
 		  if (stream) {raw__stream__writef(cause, stream, "%c", __doublelink_right_paren_char);} width ++;
 		  iter = nil;
-		} else if (! raw__doublelinkp(next, cause)) {
+		} else if (! raw__doublelink__is_type(cause, next)) {
 		  f2__write__ansi_color(cause, stream, print__ansi__array__foreground, use_ansi_colors, use_html);
 		  if (stream) {raw__stream__writef(cause, stream, " .");} width += 2;
 		  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}

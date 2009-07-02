@@ -45,8 +45,8 @@ u8* raw__gmodule__build_path(u8* directory, u8* module_name) {
 }
 
 f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
-  if ((! raw__stringp(directory, cause)) ||
-      (! raw__stringp(module_name, cause))) {
+  if ((! raw__string__is_type(cause, directory)) ||
+      (! raw__string__is_type(cause, module_name))) {
     return f2larva__new(cause, 1);
   }
   int directory__length = f2string__length(directory, cause);
@@ -77,8 +77,8 @@ ptr raw__gmodule__open(u8* filename, u64 flags) {
 }
 
 f2ptr f2__gmodule__open(f2ptr cause, f2ptr filename, f2ptr flags) {
-  if ((! raw__stringp(filename, cause)) ||
-      (! raw__integerp(flags, cause))) {
+  if ((! raw__string__is_type(cause, filename)) ||
+      (! raw__integer__is_type(cause, flags))) {
     return f2larva__new(cause, 1);
   }
   int filename__length = f2string__length(filename, cause);
@@ -108,8 +108,8 @@ ptr raw__gmodule__symbol(ptr module, u8* symbol_name) {
 }
 
 f2ptr f2__gmodule__symbol(f2ptr cause, f2ptr module, f2ptr symbol_name) {
-  if ((! raw__pointerp(module, cause)) ||
-      (! raw__stringp(symbol_name, cause))) {
+  if ((! raw__pointer__is_type(cause, module)) ||
+      (! raw__string__is_type(cause, symbol_name))) {
     return f2larva__new(cause, 1);
   }
   ptr raw_module = f2pointer__p(module, cause);
@@ -135,7 +135,7 @@ u8* raw__gmodule__name(ptr module) {
 }
 
 f2ptr f2__gmodule__name(f2ptr cause, f2ptr module) {
-  if (! raw__pointerp(module, cause)) {
+  if (! raw__pointer__is_type(cause, module)) {
     return f2larva__new(cause, 1);
   }
   ptr raw_module = f2pointer__p(module, cause);
@@ -156,7 +156,7 @@ void raw__gmodule__make_resident(ptr module) {
 }
 
 f2ptr f2__gmodule__make_resident(f2ptr cause, f2ptr module) {
-  if (! raw__pointerp(module, cause)) {
+  if (! raw__pointer__is_type(cause, module)) {
     return f2larva__new(cause, 1);
   }
   ptr raw_module = f2pointer__p(module, cause);
@@ -175,7 +175,7 @@ boolean_t raw__gmodule__close(ptr module) {
 }
 
 f2ptr f2__gmodule__close(f2ptr cause, f2ptr module) {
-  if (! raw__pointerp(module, cause)) {
+  if (! raw__pointer__is_type(cause, module)) {
     return f2larva__new(cause, 1);
   }
   ptr raw_module = f2pointer__p(module, cause);

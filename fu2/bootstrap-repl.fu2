@@ -296,8 +296,8 @@
 [defunk object-execute [slot_name this :rest args]
   [apply [object-slot-get_funk this slot_name] args]]
 
-[defunk car [x] [object-get `car x]]
-[defunk cdr [x] [object-get `cdr x]]
+[defmetro car [x] `[object-get `car ,x]]
+[defmetro cdr [x] `[object-get `cdr ,x]]
 
 [defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
 [wrong_argument_number_error-set [object-get `body_bytecodes &wrong_argument_number_error]]

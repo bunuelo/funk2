@@ -42,11 +42,11 @@ boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__i
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
 
 boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
-  if (! raw__hashtablep(this, cause)) {return 0;}
+  if (! raw__hashtable__is_type(cause, this)) {return 0;}
   f2ptr bin_num_power = f2hashtable__bin_num_power(this, cause);
   f2ptr bin_array     = f2hashtable__bin_array(this, cause);
-  if (! raw__integerp(bin_num_power, cause)) {return 0;}
-  if (! raw__arrayp(bin_array, cause))       {return 0;}
+  if (! raw__integer__is_type(cause, bin_num_power)) {return 0;}
+  if (! raw__array__is_type(cause, bin_array))       {return 0;}
   s64 bin_num_power__i = f2integer__i(bin_num_power, cause);
   s64 length           = raw__array__length(cause, bin_array);
   if (! (length == (1ll << bin_num_power__i))) {return 0;}

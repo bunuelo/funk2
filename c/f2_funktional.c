@@ -71,7 +71,7 @@ boolean_t raw__funkable__is_funktional(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__funkable__is_funktional(f2ptr cause, f2ptr this) {
-  if (! raw__funkablep(this, cause)) {
+  if (! raw__funkable__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   return f2bool__new(raw__funkable__is_funktional(cause, this));

@@ -288,7 +288,12 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
   return i;
 }
 
-boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_integer);}
+boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_integer);
+}
 f2ptr f2__integer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__integer__is_type(cause, x));}
 def_pcfunk1(integer__is_type,        x,    return f2__integer__is_type(this_cause, x));
 def_pcfunk1(integer__new, this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
@@ -357,7 +362,12 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
   return d;
 }
 
-boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_double);}
+boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_double);
+}
 f2ptr f2__double__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__double__is_type(cause, x));}
 def_pcfunk1(double__is_type,        x,    return f2__double__is_type(this_cause, x));
 def_pcfunk1(double__new, this, return f2double__new(this_cause, f2double__d(this, this_cause)));
@@ -430,7 +440,12 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
   return f;
 }
 
-boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_float);}
+boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_float);
+}
 f2ptr f2__float__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__float__is_type(cause, x));}
 def_pcfunk1(float__is_type,        x,    return f2__float__is_type(this_cause, x));
 def_pcfunk1(float__new, this, return f2float__new(this_cause, f2float__f(this_cause, this)));
@@ -503,7 +518,12 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
   return p;
 }
 
-boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_pointer);}
+boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_pointer);
+}
 f2ptr f2__pointer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointer__is_type(cause, x));}
 def_pcfunk1(pointer__is_type,        x,    return f2__pointer__is_type(this_cause, x));
 def_pcfunk1(pointer__new, this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
@@ -626,7 +646,12 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
   return rv;
 }
 
-boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);}
+boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);
+}
 f2ptr f2__gfunkptr__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__gfunkptr__is_type(cause, x));}
 def_pcfunk1(gfunkptr__is_type, x, return f2__gfunkptr__is_type(this_cause, x));
 def_pcfunk3(gfunkptr__new, computer_id, pool_index, pool_address, return f2gfunkptr__new(this_cause, f2integer__i(computer_id, this_cause), f2integer__i(pool_index, this_cause), f2integer__i(pool_address, this_cause)));
@@ -750,7 +775,12 @@ int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
   return return_value;
 }
 
-boolean_t raw__mutex__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
+boolean_t raw__mutex__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_mutex);
+}
 f2ptr f2__mutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutex__is_type(cause, x));}
 def_pcfunk1(mutex__is_type, x, return f2__mutex__is_type(this_cause, x));
 
@@ -839,7 +869,12 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   return ch;
 }
 
-boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_char);}
+boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_char);
+}
 f2ptr f2__char__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__char__is_type(cause, x));}
 def_pcfunk1(char__is_type, x, return f2__char__is_type(this_cause, x));
 def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
@@ -955,7 +990,12 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
   return retval;
 }
 
-boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_string);}
+boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_string);
+}
 f2ptr f2__string__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__string__is_type(cause, x));}
 
 f2ptr f2__string__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2string__length(x, cause));}
@@ -1185,7 +1225,12 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   ptype_access_num__decr(pool_index);
 }
 
-boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_symbol);}
+boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_symbol);
+}
 f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbol__is_type(cause, x));}
 f2ptr f2__symbol__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__length(x, cause));}
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
@@ -1504,7 +1549,12 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
   return rv;
 }
 
-boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_chunk);}
+boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_chunk);
+}
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__is_type(cause, x));}
 f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
 
@@ -1705,7 +1755,12 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   return nil;
 }
 
-boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}
+boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_simple_array);
+}
 f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_array__is_type(cause, x));}
 f2ptr f2__simple_array__new(f2ptr cause, f2ptr length) {return f2simple_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));}
 f2ptr f2__simple_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2simple_array__length(x, cause));}
@@ -2087,7 +2142,12 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
   return nil;
 }
 
-boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
+boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_traced_array);
+}
 f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_array__is_type(cause, x));}
 f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {return f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));}
 f2ptr f2__traced_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2traced_array__length(x, cause));}
@@ -2206,7 +2266,12 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
   return type;
 }
 
-boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
+boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_larva);
+}
 f2ptr f2__larva__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__larva__is_type(cause, x));}
 def_pcfunk1(larva__is_type, x, return f2__larva__is_type(this_cause, x));
 def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));

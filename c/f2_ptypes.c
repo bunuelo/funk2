@@ -288,8 +288,11 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
   return i;
 }
 
-def_pcfunk1(integer__new__slot_funk, this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
-def_pcfunk1(integer__i__slot_funk,   this, return this);
+boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_integer);}
+f2ptr f2__integer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__integer__is_type(cause, x));}
+def_pcfunk1(integer__is_type,        x,    return f2__integer__is_type(this_cause, x));
+def_pcfunk1(integer__new, this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
+def_pcfunk1(integer__i,   this, return this);
 
 f2ptr f2__integer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
@@ -315,6 +318,10 @@ f2ptr f2integer__primobject_type__new(f2ptr cause) {
   {char* slot_name = "i"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.i__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//boolean_t raw__integerp(f2ptr x, f2ptr cause) {return raw__integer__is_type(cause, x);}
+//f2ptr f2__integerp(f2ptr cause, f2ptr x) {return f2bool__new(raw__integerp(x, cause));}
 
 
 // double
@@ -353,8 +360,11 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
   return d;
 }
 
-def_pcfunk1(double__new__slot_funk, this, return f2double__new(this_cause, f2double__d(this, this_cause)));
-def_pcfunk1(double__d__slot_funk,   this, return f2double__new(this_cause, f2double__d(this, this_cause)));
+boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_double);}
+f2ptr f2__double__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__double__is_type(cause, x));}
+def_pcfunk1(double__is_type,        x,    return f2__double__is_type(this_cause, x));
+def_pcfunk1(double__new, this, return f2double__new(this_cause, f2double__d(this, this_cause)));
+def_pcfunk1(double__d,   this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 
 f2ptr f2__double__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_double.d__symbol)) {
@@ -380,6 +390,11 @@ f2ptr f2double__primobject_type__new(f2ptr cause) {
   {char* slot_name = "d"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_double.d__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//boolean_t raw__doublep(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_double);}
+//f2ptr f2__doublep(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublep(x, cause));}
+//def_pcfunk1(doublep, x, return f2__doublep(this_cause, x));
 
 
 // float
@@ -418,8 +433,11 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
   return f;
 }
 
-def_pcfunk1(float__new__slot_funk, this, return f2float__new(this_cause, f2float__f(this_cause, this)));
-def_pcfunk1(float__f__slot_funk,   this, return this);
+boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_float);}
+f2ptr f2__float__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__float__is_type(cause, x));}
+def_pcfunk1(float__is_type,        x,    return f2__float__is_type(this_cause, x));
+def_pcfunk1(float__new, this, return f2float__new(this_cause, f2float__f(this_cause, this)));
+def_pcfunk1(float__f,   this, return this);
 
 f2ptr f2__float__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_float.f__symbol)) {
@@ -445,6 +463,11 @@ f2ptr f2float__primobject_type__new(f2ptr cause) {
   {char* slot_name = "f"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_float.f__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//boolean_t raw__floatp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_float);}
+//f2ptr f2__floatp(f2ptr cause, f2ptr x) {return f2bool__new(raw__floatp(x, cause));}
+//def_pcfunk1(floatp, x, return f2__floatp(this_cause, x));
 
 
 // pointer
@@ -483,8 +506,11 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
   return p;
 }
 
-def_pcfunk1(pointer__new__slot_funk, this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
-def_pcfunk1(pointer__p__slot_funk,   this, return this);
+boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_pointer);}
+f2ptr f2__pointer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointer__is_type(cause, x));}
+def_pcfunk1(pointer__is_type,        x,    return f2__pointer__is_type(this_cause, x));
+def_pcfunk1(pointer__new, this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
+def_pcfunk1(pointer__p,   this, return this);
 
 f2ptr f2__pointer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol)) {
@@ -510,6 +536,11 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause) {
   {char* slot_name = "p"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//boolean_t raw__pointerp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_pointer);}
+//f2ptr f2__pointerp(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointerp(x, cause));}
+//def_pcfunk1(pointerp, x, return f2__pointerp(this_cause, x));
 
 
 // gfunkptr
@@ -598,12 +629,15 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
   return rv;
 }
 
-def_pcfunk3(gfunkptr__new__slot_funk, computer_id, pool_index, pool_address, return f2gfunkptr__new(this_cause, f2integer__i(computer_id, this_cause), f2integer__i(pool_index, this_cause), f2integer__i(pool_address, this_cause)));
-def_pcfunk1(gfunkptr__new_from_f2ptr__slot_funk, f2p, return f2gfunkptr__new_from_f2ptr(this_cause, f2p));
-def_pcfunk1(gfunkptr__gfunkptr__slot_funk, this, return f2gfunkptr__gfunkptr(this, this_cause));
-def_pcfunk1(gfunkptr__computer_id__slot_funk, this, return f2integer__new(this_cause, f2gfunkptr__computer_id(this, this_cause)));
-def_pcfunk1(gfunkptr__pool_index__slot_funk, this, return f2integer__new(this_cause, f2gfunkptr__pool_index(this, this_cause)));
-def_pcfunk1(gfunkptr__pool_address__slot_funk, this, return f2integer__new(this_cause, f2gfunkptr__pool_address(this, this_cause)));
+boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);}
+f2ptr f2__gfunkptr__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__gfunkptr__is_type(cause, x));}
+def_pcfunk1(gfunkptr__is_type, x, return f2__gfunkptr__is_type(this_cause, x));
+def_pcfunk3(gfunkptr__new, computer_id, pool_index, pool_address, return f2gfunkptr__new(this_cause, f2integer__i(computer_id, this_cause), f2integer__i(pool_index, this_cause), f2integer__i(pool_address, this_cause)));
+def_pcfunk1(gfunkptr__new_from_f2ptr, f2p, return f2gfunkptr__new_from_f2ptr(this_cause, f2p));
+def_pcfunk1(gfunkptr__gfunkptr, this, return f2gfunkptr__gfunkptr(this, this_cause));
+def_pcfunk1(gfunkptr__computer_id, this, return f2integer__new(this_cause, f2gfunkptr__computer_id(this, this_cause)));
+def_pcfunk1(gfunkptr__pool_index, this, return f2integer__new(this_cause, f2gfunkptr__pool_index(this, this_cause)));
+def_pcfunk1(gfunkptr__pool_address, this, return f2integer__new(this_cause, f2gfunkptr__pool_address(this, this_cause)));
 
 f2ptr f2__gfunkptr__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__symbol)) {
@@ -641,6 +675,11 @@ f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
   {char* slot_name = "pool_address"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//boolean_t raw__gfunkptrp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);}
+//f2ptr f2__gfunkptr(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2gfunkptr__new(cause, f2integer__i(x, cause), f2integer__i(y, cause), f2integer__i(z, cause));}
+//def_pcfunk3(gfunkptr, x, y, z, return f2__gfunkptr(this_cause, x, y, z));
 
 
 // mutex
@@ -714,10 +753,22 @@ int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
   return return_value;
 }
 
-def_pcfunk0(mutex__new__slot_funk, return f2mutex__new(this_cause));
-def_pcfunk1(mutex__lock__slot_funk, this, f2mutex__lock(this, this_cause); return nil);
-def_pcfunk1(mutex__unlock__slot_funk, this, f2mutex__unlock(this, this_cause); return nil);
-def_pcfunk1(mutex__trylock__slot_funk, this, return f2bool__new(f2mutex__trylock(this, this_cause) == 0));
+boolean_t raw__mutex__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
+f2ptr f2__mutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutex__is_type(cause, x));}
+def_pcfunk1(mutex__is_type, x, return f2__mutex__is_type(this_cause, x));
+
+f2ptr f2__mutex__new(f2ptr cause) {return f2mutex__new(cause);}
+def_pcfunk0(mutex__new, return f2__mutex__new(this_cause));
+
+f2ptr f2__mutex__lock(f2ptr cause, f2ptr x) {f2mutex__lock(x, cause); return nil;}
+def_pcfunk1(mutex__lock, this, return f2__mutex__lock(this_cause, this));
+
+f2ptr f2__mutex__unlock(f2ptr cause, f2ptr x) {f2mutex__unlock(x, cause); return nil;}
+def_pcfunk1(mutex__unlock, this, return f2__mutex__unlock(this_cause, this));
+
+f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__trylock(x, cause));}
+def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
+
 
 f2ptr f2__mutex__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   return nil;
@@ -748,6 +799,11 @@ f2ptr f2mutex__primobject_type__new(f2ptr cause) {
   {char* slot_name = "unlock"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__funk);}
   return this;
 }
+
+// deprecated
+boolean_t raw__mutexp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
+f2ptr f2__mutexp(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutexp(x, cause));}
+//def_pcfunk1(mutexp, x, return f2__mutexp(this_cause, x));
 
 
 // char
@@ -786,8 +842,11 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   return ch;
 }
 
-def_pcfunk1(char__new__slot_funk, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
-def_pcfunk1(char__ch__slot_funk, this, return this);
+boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_char);}
+f2ptr f2__char__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__char__is_type(cause, x));}
+def_pcfunk1(char__is_type, x, return f2__char__is_type(this_cause, x));
+def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
+def_pcfunk1(char__ch, this, return this);
 
 f2ptr f2__char__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol)) {
@@ -814,6 +873,8 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+// deprecated
+//boolean_t raw__charp(f2ptr x, f2ptr cause) {return raw__char__is_type(cause, x);}
 
 // string
 
@@ -897,14 +958,39 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
   return retval;
 }
 
-def_pcfunk1(string__new__slot_funk, str,
-	    int str__length = f2string__length(str, this_cause);
-	    u8* str__bytes = (u8*)alloca(str__length);
-	    f2string__str_copy(str, this_cause, str__bytes);
-	    return f2string__new(this_cause, str__length, str__bytes));
-def_pcfunk1(string__length__slot_funk, this, return f2integer__new(this_cause, f2string__length(this, this_cause)));
-def_pcfunk2(string__elt__slot_funk, this, index, return f2char__new(this_cause, f2string__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk1(string__hash_value__slot_funk, this, return f2integer__new(this_cause, f2string__hash_value(this, this_cause)));
+boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_string);}
+f2ptr f2__string__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__string__is_type(cause, x));}
+
+f2ptr f2__string__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2string__length(x, cause));}
+def_pcfunk1(string__length, x, return f2__string__length(this_cause, x));
+
+f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  if ((! raw__stringp(this, cause)) ||
+      (! raw__integerp(index, cause))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 raw_index = f2integer__i(index, cause);
+  return f2char__new(cause, f2string__elt(this, raw_index, cause));
+}
+
+f2ptr f2__string__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, f2string__hash_value(this, cause));}
+
+f2ptr f2__string__new(f2ptr cause, f2ptr str) {
+  if (! raw__string__is_type(cause, str)) {
+    return f2larva__new(cause, 1);
+  }
+  int str__length = f2string__length(str, this_cause);
+  u8* str__bytes = (u8*)alloca(str__length);
+  f2string__str_copy(str, this_cause, str__bytes);
+  return f2string__new(this_cause, str__length, str__bytes);
+}
+
+def_pcfunk2(string__elt, x, y, return f2__string__elt(this_cause, x, y));
+def_pcfunk1(string__is_type, x, return f2__string__is_type(this_cause, x));
+def_pcfunk1(string__new, str, return f2__string__new(this_cause, str));
+def_pcfunk1(string__length, this, return f2__string__length(this_cause, this));
+def_pcfunk2(string__elt, this, index, return f2__string__elt(this_cause, index));
+def_pcfunk1(string__hash_value, this, return f2__string__hash_value(this_cause, this));
 
 f2ptr f2__string__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_string.length__symbol)) {
@@ -936,6 +1022,11 @@ f2ptr f2string__primobject_type__new(f2ptr cause) {
   {char* slot_name = "hash_value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_string.hash_value__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//boolean_t raw__stringp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_string);}
+//f2ptr f2__stringp(f2ptr cause, f2ptr x) {return f2bool__new(raw__stringp(x, cause));}
+//def_pcfunk1(stringp, x, return f2__stringp(this_cause, x));
 
 
 // symbol
@@ -1103,14 +1194,28 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   ptype_access_num__decr(pool_index);
 }
 
-def_pcfunk1(symbol__new__slot_funk, str,
-	    int str__length = f2string__length(str, this_cause);
-	    u8* str__bytes = (u8*)alloca(str__length);
-	    f2string__str_copy(str, this_cause, str__bytes);
-	    return f2symbol__new(this_cause, str__length, str__bytes));
-def_pcfunk1(symbol__length__slot_funk, this, return f2integer__new(this_cause, f2symbol__length(this, this_cause)));
-def_pcfunk2(symbol__elt__slot_funk, this, index, return f2char__new(this_cause, f2symbol__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk1(symbol__hash_value__slot_funk, this, return f2integer__new(this_cause, f2symbol__hash_value(this, this_cause)));
+boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_symbol);}
+f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbol__is_type(cause, x));}
+
+f2ptr f2__symbol__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__length(x, cause));}
+f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
+f2ptr f2__symbol__hash_value(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__hash_value(x, cause));}
+
+f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
+  if (! raw__string__is_type(cause, str)) {
+    return f2larva__new(cause, 1);
+  }
+  int str__length = f2string__length(str, this_cause);
+  u8* str__bytes = (u8*)alloca(str__length);
+  f2string__str_copy(str, this_cause, str__bytes);
+  return f2symbol__new(this_cause, str__length, str__bytes);
+}
+
+def_pcfunk1(symbol__is_type, x, return f2__symbol__is_type(this_cause, x));
+def_pcfunk1(symbol__new, str, return f2__symbol__new(this_cause, str));
+def_pcfunk1(symbol__length, this, return f2__symbol__length(this_cause, this));
+def_pcfunk2(symbol__elt, this, index, return f2__symbol__elt(this_cause, this, index));
+def_pcfunk1(symbol__hash_value, this, return f2__symbol__hash_value(this_cause, x));
 
 f2ptr f2__symbol__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.length__symbol)) {
@@ -1142,6 +1247,11 @@ f2ptr f2symbol__primobject_type__new(f2ptr cause) {
   {char* slot_name = "hash_value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk, nil, nil);}
   return this;
 }
+
+// deprecated
+//f2ptr f2__symbolp(f2ptr cause, f2ptr x) {return f2__symbol__is_type(cause, x);}
+//def_pcfunk1(symbolp, x, return f2__symbolp(this_cause, x));
+
 
 
 // chunk
@@ -1386,18 +1496,23 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
   return rv;
 }
 
-def_pcfunk1(chunk__new__slot_funk, length, return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL));
-def_pcfunk1(chunk__length__slot_funk, this, return f2integer__new(this_cause, f2chunk__length(this, this_cause)));
-def_pcfunk2(chunk__bit8__elt__slot_funk, this, index, return f2pointer__new(this_cause, f2chunk__bit8__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk3(chunk__bit8__elt__set__slot_funk, this, index, value, f2chunk__bit8__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
-def_pcfunk2(chunk__bit16__elt__slot_funk, this, index, return f2pointer__new(this_cause, f2chunk__bit16__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk3(chunk__bit16__elt__set__slot_funk, this, index, value, f2chunk__bit16__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
-def_pcfunk2(chunk__bit32__elt__slot_funk, this, index, return f2pointer__new(this_cause, f2chunk__bit32__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk3(chunk__bit32__elt__set__slot_funk, this, index, value, f2chunk__bit32__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
-def_pcfunk2(chunk__bit64__elt__slot_funk, this, index, return f2pointer__new(this_cause, f2chunk__bit64__elt(this, this_cause, f2integer__i(index, this_cause))));
-def_pcfunk3(chunk__bit64__elt__set__slot_funk, this, index, value, f2chunk__bit64__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
-def_pcfunk4(chunk__cfunk_jump__slot_funk, this, thread, env, args, return f2chunk__cfunk_jump(this, this_cause, thread, env, args));
-def_pcfunk2(chunk__bytecode_jump__slot_funk, this, thread, return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, thread)));
+boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_chunk);}
+f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__is_type(cause, x));}
+f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
+
+def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
+def_pcfunk1(chunk__new, length, return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL));
+def_pcfunk1(chunk__length, x, return f2__chunk__length(this_cause, x));
+def_pcfunk2(chunk__bit8__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit8__elt(this, this_cause, f2integer__i(index, this_cause))));
+def_pcfunk3(chunk__bit8__elt__set, this, index, value, f2chunk__bit8__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
+def_pcfunk2(chunk__bit16__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit16__elt(this, this_cause, f2integer__i(index, this_cause))));
+def_pcfunk3(chunk__bit16__elt__set, this, index, value, f2chunk__bit16__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
+def_pcfunk2(chunk__bit32__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit32__elt(this, this_cause, f2integer__i(index, this_cause))));
+def_pcfunk3(chunk__bit32__elt__set, this, index, value, f2chunk__bit32__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
+def_pcfunk2(chunk__bit64__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit64__elt(this, this_cause, f2integer__i(index, this_cause))));
+def_pcfunk3(chunk__bit64__elt__set, this, index, value, f2chunk__bit64__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
+def_pcfunk4(chunk__cfunk_jump, this, thread, env, args, return f2chunk__cfunk_jump(this, this_cause, thread, env, args));
+def_pcfunk2(chunk__bytecode_jump, this, thread, return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, thread)));
 
 f2ptr f2__chunk__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol)) {
@@ -1582,10 +1697,18 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   return nil;
 }
 
-def_pcfunk1(simple_array__new__slot_funk, length, return f2simple_array__new(this_cause, f2integer__i(length, this_cause), to_ptr(NULL)));
-def_pcfunk1(simple_array__length__slot_funk, this, return f2integer__new(this_cause, f2simple_array__length(this, this_cause)));
-def_pcfunk2(simple_array__elt__slot_funk, this, index, return f2simple_array__elt(this, f2integer__i(index, this_cause), this_cause));
-def_pcfunk3(simple_array__elt__set__slot_funk, this, index, value, f2simple_array__elt__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
+boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}
+f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_array__is_type(cause, x));}
+f2ptr f2__simple_array__new(f2ptr cause, f2ptr length) {return f2simple_array__new(this_cause, f2integer__i(length, this_cause), to_ptr(NULL));}
+f2ptr f2__simple_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2simple_array__length(x, cause));}
+f2ptr f2__simple_array__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2simple_array__elt(x, f2integer__i(y, cause), cause);}
+f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2simple_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
+
+def_pcfunk1(simple_array__is_type, x, return f2__simple_array__is_type(this_cause, x));
+def_pcfunk1(simple_array__new, length, return f2__simple_array__new(this_cause, length));
+def_pcfunk1(simple_array__length, x, return f2__simple_array__length(this_cause, x));
+def_pcfunk2(simple_array__elt, x, y, return f2__simple_array__elt(this_cause, x, y));
+def_pcfunk3(simple_array__elt__set, x, y, z, return f2__simple_array__elt__set(this_cause, x, y, z));
 
 f2ptr f2__simple_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_simple_array.length__symbol)) {
@@ -1956,16 +2079,40 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
   return nil;
 }
 
-def_pcfunk1(traced_array__new__slot_funk, length, return f2traced_array__new(this_cause, f2integer__i(length, this_cause), to_ptr(NULL)));
-def_pcfunk1(traced_array__length__slot_funk, this, return f2integer__new(this_cause, f2traced_array__length(this, this_cause)));
-def_pcfunk2(traced_array__elt__slot_funk, this, index, return f2traced_array__elt(this, f2integer__i(index, this_cause), this_cause));
-def_pcfunk3(traced_array__elt__set__slot_funk, this, index, value, f2traced_array__elt__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
-def_pcfunk2(traced_array__elt__tracing_on__slot_funk, this, index, return f2traced_array__elt__tracing_on(this, f2integer__i(index, this_cause), this_cause));
-def_pcfunk3(traced_array__elt__tracing_on__set__slot_funk, this, index, value, f2traced_array__elt__tracing_on__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
-def_pcfunk2(traced_array__elt__trace__slot_funk, this, index, return f2traced_array__elt__trace(this, f2integer__i(index, this_cause), this_cause));
-def_pcfunk3(traced_array__elt__trace__set__slot_funk, this, index, value, f2traced_array__elt__trace__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
-def_pcfunk2(traced_array__elt__imagination_frame__slot_funk, this, index, return f2traced_array__elt__imagination_frame(this, f2integer__i(index, this_cause), this_cause));
-def_pcfunk3(traced_array__elt__imagination_frame__set__slot_funk, this, index, value, f2traced_array__elt__imagination_frame__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
+boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
+f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_array__is_type(cause, x));}
+f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {return f2traced_array__new(this_cause, f2integer__i(length, this_cause), to_ptr(NULL));}
+f2ptr f2__traced_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2traced_array__length(x, cause));}
+f2ptr f2__traced_array__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt(x, f2integer__i(y, cause), cause);}
+f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
+f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__tracing_on(x, f2integer__i(y, cause), cause);}
+f2ptr f2__traced_array__elt__tracing_on__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__tracing_on__set(x, f2integer__i(y, cause), cause, z); return nil;}
+f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__trace(x, f2integer__i(y, cause), cause);}
+f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__trace__set(x, f2integer__i(y, cause), cause, z); return nil;}
+f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__imagination_frame(x, f2integer__i(y, cause), cause);}
+f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__imagination_frame__set(x, f2integer__i(y, cause), cause, z); return nil;}
+
+def_pcfunk1(traced_array__is_type, x, return f2__traced_array__is_type(this_cause, x));
+def_pcfunk1(traced_array__new, length, return f2__traced_array__new(this_cause, length));
+def_pcfunk1(traced_array__length, x, return f2__traced_array__length(this_cause, x));
+def_pcfunk2(traced_array__elt, x, y, return f2__traced_array__elt(this_cause, x, y));
+def_pcfunk3(traced_array__elt__set, x, y, z, return f2__traced_array__elt__set(this_cause, x, y, z));
+def_pcfunk2(traced_array__elt__tracing_on, x, y, return f2__traced_array__elt__tracing_on(this_cause, x, y));
+def_pcfunk3(traced_array__elt__tracing_on__set, x, y, z, return f2__traced_array__elt__tracing_on__set(this_cause, x, y, z));
+def_pcfunk2(traced_array__elt__trace, x, y, return f2__traced_array__elt__trace(this_cause, x, y));
+def_pcfunk3(traced_array__elt__trace__set, x, y, z, return f2__traced_array__elt__trace__set(this_cause, x, y, z));
+def_pcfunk2(traced_array__elt__imagination_frame, x, y, return f2__traced_array__elt__imagination_frame(this_cause, x, y));
+def_pcfunk3(traced_array__elt__imagination_frame__set, x, y, z, return f2__traced_array__elt__imagination_frame__set(this_cause, x, y, z));
+
+//def_pcfunk1(traced_array__length, this, return f2integer__new(this_cause, f2traced_array__length(this, this_cause)));
+//def_pcfunk2(traced_array__elt, this, index, return f2traced_array__elt(this, f2integer__i(index, this_cause), this_cause));
+//def_pcfunk3(traced_array__elt__set, this, index, value, f2traced_array__elt__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
+//def_pcfunk2(traced_array__elt__tracing_on, this, index, return f2traced_array__elt__tracing_on(this, f2integer__i(index, this_cause), this_cause));
+//def_pcfunk3(traced_array__elt__tracing_on__set, this, index, value, f2traced_array__elt__tracing_on__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
+//def_pcfunk2(traced_array__elt__trace, this, index, return f2traced_array__elt__trace(this, f2integer__i(index, this_cause), this_cause));
+//def_pcfunk3(traced_array__elt__trace__set, this, index, value, f2traced_array__elt__trace__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
+//def_pcfunk2(traced_array__elt__imagination_frame, this, index, return f2traced_array__elt__imagination_frame(this, f2integer__i(index, this_cause), this_cause));
+//def_pcfunk3(traced_array__elt__imagination_frame__set, this, index, value, f2traced_array__elt__imagination_frame__set(this, f2integer__i(index, this_cause), this_cause, value); return nil);
 
 f2ptr f2__traced_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol)) {
@@ -2051,8 +2198,11 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
   return type;
 }
 
-def_pcfunk1(larva__new__slot_funk, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
-def_pcfunk1(larva__type__slot_funk, this, return f2integer__new(this_cause, f2larva__type(this, this_cause)));
+boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
+f2ptr f2__larva__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__larva__is_type(cause, x));}
+def_pcfunk1(larva__is_type, x, return f2__larva__is_type(this_cause, x));
+def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
+def_pcfunk1(larva__type, this, return f2integer__new(this_cause, f2larva__type(this, this_cause)));
 
 f2ptr f2__larva__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_larva.type__symbol)) {
@@ -2085,133 +2235,154 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 void f2__ptypes__initialize__object_slots() {
   f2ptr cause = initial_cause();
   
-  {
-    char* str = "new"; f2ptr new_symbol = f2symbol__new(cause, strlen(str), (u8*)str);
-    f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); 
-    __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol = new_symbol;
-    __funk2.globalenv.object_type.ptype.ptype_integer.new__funk   = cfunk;
-    environment__add_var_value(cause, global_environment(), __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol, cfunk);
-  }
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_integer.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk = cfunk;}
+  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.new__funk = cfunk;}
   {char* str = "i"; __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__i__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.i__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__i, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.i__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_double.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_double.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.new__funk = cfunk;}
   {char* str = "d"; __funk2.globalenv.object_type.ptype.ptype_double.d__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__d__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.d__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__d, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.d__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_float.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_float.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.new__funk = cfunk;}
   {char* str = "f"; __funk2.globalenv.object_type.ptype.ptype_float.f__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__f__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.f__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__f, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.f__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_pointer.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_pointer.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk = cfunk;}
   {char* str = "p"; __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new__funk = cfunk;}
   {char* str = "new_from_f2ptr"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__new_from_f2ptr__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__new_from_f2ptr, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.new_from_f2ptr__funk = cfunk;}
   {char* str = "gfunkptr"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__gfunkptr__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__gfunkptr, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__funk = cfunk;}
   {char* str = "computer_id"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__computer_id__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__computer_id, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk = cfunk;}
   {char* str = "pool_index"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__pool_index__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__pool_index, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_mutex.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk = cfunk;}
   {char* str = "lock"; __funk2.globalenv.object_type.ptype.ptype_mutex.lock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__lock__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__lock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk = cfunk;}
   {char* str = "unlock"; __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__unlock__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__unlock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__funk = cfunk;}
   {char* str = "trylock"; __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__trylock__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__trylock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_char.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_char.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.new__funk = cfunk;}
   {char* str = "ch"; __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__ch__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.ch__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__ch, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.ch__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_string.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_string.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.new__funk = cfunk;}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_string.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__length__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.length__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.length__funk = cfunk;}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_string.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__elt__slot_funk, this, index, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__elt, this, index, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.elt__funk = cfunk;}
   {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_string.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__hash_value__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.hash_value__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.hash_value__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_symbol.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_symbol.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk = cfunk;}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_symbol.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__length__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk = cfunk;}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_symbol.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(symbol__elt__slot_funk, this, index, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(symbol__elt, this, index, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk = cfunk;}
   {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__hash_value__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_chunk.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = cfunk;}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__length__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk = cfunk;}
   {char* str = "bit8-elt"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit8__elt__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit8__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk = cfunk;}
   {char* str = "bit8-elt-set"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit8__elt__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit8__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk = cfunk;}
   {char* str = "bit16-elt"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit16__elt__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit16__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__funk = cfunk;}
   {char* str = "bit16-elt-set"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit16__elt__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit16__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk = cfunk;}
   {char* str = "bit32-elt"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit32__elt__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit32__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__funk = cfunk;}
   {char* str = "bit32-elt-set"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit32__elt__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit32__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk = cfunk;}
   {char* str = "bit64-elt"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit64__elt__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit64__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__funk = cfunk;}
   {char* str = "bit64-elt-set"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit64__elt__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(chunk__bit64__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk = cfunk;}
   {char* str = "cfunk_jump"; __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__4_arg(chunk__cfunk_jump__slot_funk, this, thread, env, args, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(chunk__cfunk_jump, this, thread, env, args, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk = cfunk;}
   {char* str = "bytecode_jump"; __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bytecode_jump__slot_funk, this, thread, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bytecode_jump, this, thread, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_simple_array.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk = cfunk;}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_simple_array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__length__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk = cfunk;}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__elt__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk = cfunk;}
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(simple_array__elt__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(simple_array__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_traced_array.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk = cfunk;}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__length__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk = cfunk;}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk = cfunk;}
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk = cfunk;}
   {char* str = "elt-tracing_on"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__tracing_on__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__tracing_on, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__funk = cfunk;}
   {char* str = "elt-tracing_on-set"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__tracing_on__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__tracing_on__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__funk = cfunk;}
   {char* str = "elt-trace"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__trace__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__trace, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__funk = cfunk;}
   {char* str = "elt-trace-set"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__trace__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__trace__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__funk = cfunk;}
   {char* str = "elt-imagination_frame"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__imagination_frame__slot_funk, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt__imagination_frame, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__funk = cfunk;}
   {char* str = "elt-imagination_frame-set"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__imagination_frame__set__slot_funk, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(traced_array__elt__imagination_frame__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__funk = cfunk;}
   
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_larva.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_larva.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__new__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.new__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.new__funk = cfunk;}
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_larva.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__type__slot_funk, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.type__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.type__funk = cfunk;}
   
 }
 

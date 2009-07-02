@@ -55,7 +55,7 @@ f2ptr f2semantic_graph__new(f2ptr cause, f2ptr relations) {
   return this;
 }
 
-boolean_t raw__semantic_graphp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__semantic_graph(this, cause));}
+boolean_t raw__semantic_graphp(f2ptr this, f2ptr cause) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__semantic_graph(this, cause));}
 f2ptr f2__semantic_graphp(f2ptr this, f2ptr cause) {return f2bool__new(raw__semantic_graphp(this, cause));}
 
 //<http://conceptnet.media.mit.edu/assertion/1112793> conceptnet:LeftConcept <http://conceptnet.media.mit.edu/concept/1003777>;

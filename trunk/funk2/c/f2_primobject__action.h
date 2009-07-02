@@ -65,8 +65,9 @@ defprimobject__static_slot__prototype(action__failure_events);
 #define      f2action__failure_events__trace(            this, cause)        primobject__static_slot__trace(            this, action__failure_events, cause)
 #define      f2action__failure_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, action__failure_events, cause)
 
-boolean_t raw__actionp(f2ptr this, f2ptr cause);
-f2ptr      f2__actionp(f2ptr this, f2ptr cause);
+boolean_t raw__action__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__action__is_type(f2ptr cause, f2ptr this);
+
 
 
 // action_event
@@ -96,8 +97,8 @@ defprimobject__static_slot__prototype(action_event__end_time);
 #define      f2action_event__end_time__trace(            this, cause)        primobject__static_slot__trace(            this, action_event__end_time, cause)
 #define      f2action_event__end_time__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, action_event__end_time, cause)
 
-boolean_t raw__action_eventp(f2ptr this, f2ptr cause);
-f2ptr      f2__action_eventp(f2ptr this, f2ptr cause);
+boolean_t raw__action_event__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__action_event__is_type(f2ptr cause, f2ptr this);
 
 
 

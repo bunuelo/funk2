@@ -168,7 +168,7 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
   f2ptr funktion = f2thread__value(thread, cause);
   //assert(funktion != nil, thread, "f2__thread__bytecode__funk assertion failed: funktion is null.");
   
-  if (raw__funkp(funktion, cause)) {
+  if (raw__funk__is_type(cause, funktion)) {
     //trace2(bytecode__jump_funk, funktion, f2thread__args(thread));
     f2thread__env__set(thread, cause, f2funk__env(funktion, cause));
     f2ptr body_bcs           = f2funk__body_bytecodes(funktion, cause);
@@ -183,14 +183,14 @@ int f2__thread__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr thread, f2
     } else {
       return 1;
     }
-  } else if (raw__cfunkp(funktion, cause)) {
+  } else if (raw__cfunk__is_type(cause, funktion)) {
     f2ptr args = f2thread__args(thread, cause);
     //trace2(bytecode__jump_funk, funktion, args);
     release__assert(!args || raw__cons__is_type(cause, args), thread, "args failed args type assertion.");
     f2ptr value = f2__cfunk__apply(cause, funktion, thread, args);
     f2thread__value__set(thread, cause, value);
     return 1;
-  } else if (raw__metrop(funktion, cause)) {
+  } else if (raw__metro__is_type(cause, funktion)) {
     //trace2(bytecode__jump_funk, funktion, f2thread__args(thread));
     f2thread__env__set(thread, cause, f2metro__env(funktion, cause));
     f2ptr body_bcs           = f2metro__body_bytecodes(funktion, cause);

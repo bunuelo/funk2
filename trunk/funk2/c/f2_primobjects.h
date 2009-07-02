@@ -73,7 +73,7 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #define primobject__static_slot__trace(                         this, name, cause)                     array_slot__trace(                         this, name, cause)
 #define primobject__static_slot__imagination_frame(             this, name, cause)                     array_slot__imagination_frame(             this, name, cause)
 
-#define raw__primobjectp(exp, cause) (raw__arrayp(exp, cause) && (raw__array__length(cause, exp) > defarray_slot__index_var(primobject__primobject_label)) && (raw__eq(cause, f2primobject__primobject_label(exp, cause), __primobject__symbol)))
+#define raw__primobject__is_type(cause, exp) (raw__array__is_type(cause, exp) && (raw__array__length(cause, exp) > defarray_slot__index_var(primobject__primobject_label)) && (raw__eq(cause, f2primobject__primobject_label(exp, cause), __primobject__symbol)))
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"

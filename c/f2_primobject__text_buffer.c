@@ -78,8 +78,8 @@ f2ptr raw__text_buffer__create(f2ptr cause, s64 width, s64 height) {
 }
 
 f2ptr f2__text_buffer__create(f2ptr cause, f2ptr width, f2ptr height) {
-  if ((! raw__integerp(width, cause)) || 
-      (! raw__integerp(height, cause))) {
+  if ((! raw__integer__is_type(cause, width)) || 
+      (! raw__integer__is_type(cause, height))) {
     return f2larva__new(cause, 1);
   }
   s64 raw_width  = f2integer__i(width,  cause);
@@ -211,8 +211,8 @@ f2ptr raw__text_window__create(f2ptr cause, s64 width, s64 height) {
 }
 
 f2ptr f2__text_window__create(f2ptr cause, f2ptr width, f2ptr height) {
-  if ((! raw__integerp(width, cause)) ||
-      (! raw__integerp(height, cause))) {
+  if ((! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height))) {
     return f2larva__new(cause, 1);
   }
   s64 raw_width  = f2integer__i(width,  cause);
@@ -267,12 +267,12 @@ f2ptr raw__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, s6
 }
 
 f2ptr f2__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, f2ptr screen_x0, f2ptr screen_y0, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1) {
-  if ((! raw__integerp(screen_x0, cause)) ||
-      (! raw__integerp(screen_y0, cause)) ||
-      (! raw__integerp(x0, cause)) ||
-      (! raw__integerp(y0, cause)) ||
-      (! raw__integerp(x1, cause)) ||
-      (! raw__integerp(y1, cause))) {
+  if ((! raw__integer__is_type(cause, screen_x0)) ||
+      (! raw__integer__is_type(cause, screen_y0)) ||
+      (! raw__integer__is_type(cause, x0)) ||
+      (! raw__integer__is_type(cause, y0)) ||
+      (! raw__integer__is_type(cause, x1)) ||
+      (! raw__integer__is_type(cause, y1))) {
     return f2larva__new(cause, 1);
   }
   s64 raw_screen_x0 = f2integer__i(screen_x0, cause);

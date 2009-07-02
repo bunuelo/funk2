@@ -54,10 +54,11 @@ boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
+  pause_gc();
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
   f2ptr this = f2hashtable__new(cause, f2integer__new(cause, bin_num_power), bin_array);
   resume_gc();
-  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
+  debug__assert(raw__hashtable__valid(cause, this), nil, "raw__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }
 

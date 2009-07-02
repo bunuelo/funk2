@@ -55,16 +55,16 @@ f2ptr f2__exp__is_immutable(f2ptr cause, f2ptr this) {
 
 
 boolean_t raw__funkable__is_funktional(f2ptr cause, f2ptr this) {
-  if (raw__cfunkp(this, cause)) {
+  if (raw__cfunk__is_type(cause, this)) {
     return (f2cfunk__is_funktional(this, cause) != nil);
   }
-  if (raw__metrocfunkp(this, cause)) {
+  if (raw__metrocfunk__is_type(cause, this)) {
     return (f2metrocfunk__is_funktional(this, cause) != nil);
   }
-  if (raw__funkp(this, cause)) {
+  if (raw__funk__is_type(cause, this)) {
     return (f2funk__is_funktional(this, cause) != nil);
   }
-  if (raw__metrop(this, cause)) {
+  if (raw__metro__is_type(cause, this)) {
     return (f2metro__is_funktional(this, cause) != nil);
   }
   error(nil, "raw__funkable__is_funktional (this is not funkable)");

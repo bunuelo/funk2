@@ -314,8 +314,8 @@
 [defmetro cddr [seq]
   `[cdr [cdr ,seq]]]
 
-`[defunk first [seq]
-   [car seq]]
+[defunk first [seq]
+  [car seq]]
 
 [defunk second [seq]
   [car [cdr seq]]]

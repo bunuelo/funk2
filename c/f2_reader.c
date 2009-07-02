@@ -301,7 +301,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-	if (! raw__charp(read_ch, cause)) {
+	if (! raw__char__is_type(cause, read_ch)) {
 	  resume_gc(); return f2larva__new(cause, 19);
 	}
 	char ch = f2char__ch(read_ch, cause);
@@ -342,7 +342,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-	if (! raw__charp(read_ch, cause)) {
+	if (! raw__char__is_type(cause, read_ch)) {
 	  resume_gc(); return f2larva__new(cause, 19);
 	}
 	char ch = f2char__ch(read_ch, cause);
@@ -383,7 +383,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-	if (! raw__charp(read_ch, cause)) {
+	if (! raw__char__is_type(cause, read_ch)) {
 	  resume_gc(); return f2larva__new(cause, 19);
 	}
 	char ch = f2char__ch(stream, cause);
@@ -419,9 +419,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr computer_id__integer  = raw__array__elt(cause, gfunkptr_read_array, 0);
       f2ptr pool_index__integer   = raw__array__elt(cause, gfunkptr_read_array, 1);
       f2ptr pool_address__integer = raw__array__elt(cause, gfunkptr_read_array, 2);
-      if ((! raw__integerp(computer_id__integer, cause)) ||
-	  (! raw__integerp(pool_index__integer, cause)) ||
-	  (! raw__integerp(pool_address__integer, cause))) {
+      if ((! raw__integer__is_type(cause, computer_id__integer)) ||
+	  (! raw__integer__is_type(cause, pool_index__integer)) ||
+	  (! raw__integer__is_type(cause, pool_address__integer))) {
 	resume_gc(); return __gfunkptr_read__exception;
       }
       computer_id_t  computer_id  = f2integer__i(computer_id__integer, cause);
@@ -466,7 +466,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
       if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-      if (! raw__charp(read_ch, cause)) {
+      if (! raw__char__is_type(cause, read_ch)) {
 	resume_gc(); return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
@@ -474,7 +474,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == __escape_char_char) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-	if (! raw__charp(read_ch, cause)) {
+	if (! raw__char__is_type(cause, read_ch)) {
 	  resume_gc(); return f2larva__new(cause, 19);
 	}
 	ch = f2char__ch(read_ch, cause);
@@ -505,7 +505,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
       if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-      if (! raw__charp(read_ch, cause)) {
+      if (! raw__char__is_type(cause, read_ch)) {
 	resume_gc(); return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
@@ -514,7 +514,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-	if (! raw__charp(read_ch, cause)) {
+	if (! raw__char__is_type(cause, read_ch)) {
 	  resume_gc(); return f2larva__new(cause, 19);
 	}
 	ch = f2char__ch(read_ch, cause);
@@ -541,7 +541,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
       if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-      if (! raw__charp(read_ch, cause)) {
+      if (! raw__char__is_type(cause, read_ch)) {
 	resume_gc(); return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
@@ -556,7 +556,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {resume_gc(); return nil;}
 	if (f2__eq(cause, read_ch, __eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); resume_gc(); return __end_of_file_exception;}
-	if (! raw__charp(read_ch, cause)) {
+	if (! raw__char__is_type(cause, read_ch)) {
 	  resume_gc(); return f2larva__new(cause, 19);
 	}
 	ch = f2char__ch(read_ch, cause);

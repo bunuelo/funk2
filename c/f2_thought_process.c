@@ -49,7 +49,7 @@ f2ptr f2thought_process__read_parent_types(f2ptr cause, f2ptr this) {
 
 f2ptr f2__determine_real_thought_process_types(f2ptr cause, f2ptr exp) {
   if (exp) {
-    if (raw__primobjectp(exp, cause)) {
+    if (raw__primobject__is_type(cause, exp)) {
       return f2cons__new(cause, f2primobject__type(exp, cause), nil);
     }
     ptype_t ptype = f2ptype__raw(exp, cause);
@@ -88,7 +88,7 @@ f2ptr f2thought_process__new_from_exp(f2ptr cause, f2ptr exp, f2ptr bin_num_powe
 }
 
 f2ptr f2__thought_process__real_value(f2ptr cause, f2ptr this) {
-  release__assert(raw__thought_processp(this, cause), cause, "f2thought_process__real_value assertion failed: this must be an thought_process.");
+  release__assert(raw__thought_process__is_type(cause, this), cause, "f2thought_process__real_value assertion failed: this must be an thought_process.");
   f2ptr read_write_execute_slot_hash = f2thought_process__read_write_execute_slot_hash(this, cause);
   return f2__hashtable__lookup_value(read_write_execute_slot_hash, cause, __funk2.thought_process.real_value_slot__symbol);
 }
@@ -96,9 +96,9 @@ f2ptr f2__thought_process__real_value(f2ptr cause, f2ptr this) {
 // thought_process-read_write_execute
 
 f2ptr f2__thought_process__read_write_execute__lookup(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (! raw__thought_processp(this, cause)) {return f2larva__new(cause, larva_type__invalid_type);}
+  if (! raw__thought_process__is_type(cause, this)) {return f2larva__new(cause, larva_type__invalid_type);}
   f2ptr this__read_write_execute = nil;
-  if (raw__thought_processp(this, cause)) {
+  if (raw__thought_process__is_type(cause, this)) {
     f2ptr thought_process__read_write_execute_hash = f2thought_process__read_write_execute_slot_hash(this, cause);
     this__read_write_execute = f2__hashtable__lookup_value(thought_process__read_write_execute_hash, cause, slot);
   } else {
@@ -108,7 +108,7 @@ f2ptr f2__thought_process__read_write_execute__lookup(f2ptr cause, f2ptr this, f
       f2ptr parent_type = f2cons__car(parent_type_iter, cause);
       f2ptr thought_process__read_write_execute_slot_hash = f2thought_process__read_write_execute_slot_hash(cause, parent_type);
       this__read_write_execute = f2__hashtable__lookup_value(thought_process__read_write_execute_slot_hash, cause, slot);
-      if (! raw__exceptionp(this__read_write_execute, cause)) {
+      if (! raw__exception__is_type(cause, this__read_write_execute)) {
 	parent_type_iter = nil;
       } else {
 	parent_type_iter = f2cons__cdr(parent_type_iter, cause);
@@ -210,7 +210,7 @@ f2ptr f2__abstract(f2ptr cause, f2ptr exp) {
 def_pcfunk1(abstract, x, return f2__abstract(this_cause, x));
 
 f2ptr f2__realize(f2ptr cause, f2ptr exp) {
-  if (raw__thought_processp(exp, cause)) {
+  if (raw__thought_process__is_type(cause, exp)) {
     return f2__thought_process__real_value(cause, exp);
   }
   return exp;

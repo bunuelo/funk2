@@ -68,7 +68,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
 
 ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
   va_list args;
-  if (! raw__streamp(stream, cause)) {error(nil, "stream_writef error: stream is not stream.");}
+  if (! raw__stream__is_type(cause, stream)) {error(nil, "stream_writef error: stream is not stream.");}
   f2ptr file_descriptor = f2stream__file_descriptor(stream, cause);
   int fd = f2integer__i(file_descriptor, cause);
   int msg_len = strlen(msg);

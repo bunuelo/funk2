@@ -38,15 +38,12 @@
 
 [primfunk:exp__format stdout '\ndebug 0.1.2\n']
 
-[globalize-funk integer?                                    &primfunk:integer__is_type]
+`[globalize-funk integer?                                    &primfunk:integer__is_type]
+`[globalize-funk double?                                     &primfunk:double__is_type]
+`[globalize-funk float?                                      &primfunk:float__is_type]
+`[globalize-funk pointer?                                    &primfunk:pointer__is_type]
 
-[globalize-funk double?                                     &primfunk:double__is_type]
-
-[globalize-funk float?                                      &primfunk:float__is_type]
-
-[globalize-funk pointer?                                    &primfunk:pointer__is_type]
-
-[globalize-funk mutex?                                      &primfunk:mutex__is_type]
+`[globalize-funk mutex?                                      &primfunk:mutex__is_type]
 [globalize-funk mutex                                       &primfunk:mutex]
 [globalize-funk unsafe:mutex-lock                           &primfunk:mutex__lock]
 [globalize-funk unsafe:mutex-unlock                         &primfunk:mutex__unlock]

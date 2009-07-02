@@ -28,5 +28,10 @@ f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr n
 f2ptr f2__primobject_type__lookup_slot_set_funk(f2ptr cause, f2ptr this, f2ptr name);
 f2ptr f2__primobject_type__lookup_slot_execute_funk(f2ptr cause, f2ptr this, f2ptr name);
 
+// **
+
+void f2__primobject_type__reinitialize_globalvars();
+void f2__primobject_type__initialize();
+
 #endif // F2__PRIMOBJECT_TYPE__H
 

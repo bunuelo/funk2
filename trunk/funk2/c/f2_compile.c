@@ -287,7 +287,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr thread, f2ptr funk) {
   boolean_t popped_env_and_return     = boolean__false;
   boolean_t optimize_unused_beginning = boolean__true;
   f2ptr body_bcs = f2__compile__rawcode(cause, thread, f2funk__demetropolized_body(funk, cause), boolean__false, boolean__true, &popped_env_and_return, &funk__is_funktional, local_variables, &funk__is_locally_funktional, optimize_unused_beginning);
-  if (raw__larvap(body_bcs, cause)) {
+  if (raw__larva__is_type(cause, body_bcs)) {
     return body_bcs;
   }
   if (body_bcs && (! raw__cons__is_type(cause, body_bcs))) {return body_bcs;}
@@ -478,7 +478,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean
     f2ptr exp = f2cons__car(exps, cause);
     next      = f2cons__cdr(exps, cause);
     full_bcs = raw__compile(cause, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional, local_variables, is_locally_funktional);
-    if (raw__larvap(full_bcs, cause)) {
+    if (raw__larva__is_type(cause, full_bcs)) {
       return full_bcs;
     }
     if (! exp__is_funktional) {
@@ -516,7 +516,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean
       f2ptr exp = f2cons__car(exps, cause);
       next      = f2cons__cdr(exps, cause);
       exp_bcs = raw__compile(cause, thread, exp, protect_subexp_environment, optimize_subexp_tail_recursion, popped_env_and_return, &exp__is_funktional, local_variables, is_locally_funktional);
-      if (raw__larvap(exp_bcs, cause)) {
+      if (raw__larva__is_type(cause, exp_bcs)) {
 	return exp_bcs;
       }
       if (! exp__is_funktional) {
@@ -556,14 +556,14 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean_
   if (false_exps && (! raw__cons__is_type(cause, false_exps))) {return false_exps;}
   
   f2ptr cond_bcs   = raw__compile(cause, thread, cond_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
-  if (raw__larvap(cond_bcs, cause)) {
+  if (raw__larva__is_type(cause, cond_bcs)) {
     return cond_bcs;
   }
   if (cond_bcs && (! raw__cons__is_type(cause, cond_bcs))) {return cond_bcs;}
   
   boolean_t true__popped_env_and_return = boolean__false;
   f2ptr true_bcs   = raw__compile(cause, thread, true_exp, protect_environment, optimize_tail_recursion, &true__popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
-  if (raw__larvap(true_bcs, cause)) {
+  if (raw__larva__is_type(cause, true_bcs)) {
     return true_bcs;
   }
   if (true_bcs && (! raw__cons__is_type(cause, true_bcs))) {return true_bcs;}
@@ -636,7 +636,7 @@ f2ptr f2__compile__eval_args(f2ptr simple_cause, f2ptr thread, f2ptr args, boole
     exp_bcs     = f2__compile__push_args(arg_cause);                            iter = f2__list_cdr__set(arg_cause, iter, exp_bcs);
     
     exp_bcs     = raw__compile(arg_cause, thread, current_arg, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
-    if (raw__larvap(exp_bcs, cause)) {
+    if (raw__larva__is_type(cause, exp_bcs)) {
       return exp_bcs;
     }
     if (exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {return exp_bcs;}
@@ -666,7 +666,7 @@ f2ptr   f2__compile__define_funk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs          = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
+  if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
@@ -685,7 +685,7 @@ f2ptr   f2__compile__define_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs      = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
+  if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
@@ -704,7 +704,7 @@ f2ptr f2__compile__mutate_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
+  if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
@@ -723,7 +723,7 @@ f2ptr f2__compile__mutatefunk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) 
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs       = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
+  if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
@@ -742,7 +742,7 @@ f2ptr f2__compile__globalize_var_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
+  if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
@@ -761,7 +761,7 @@ f2ptr f2__compile__globalize_funkvar_exp(f2ptr simple_cause, f2ptr thread, f2ptr
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
   exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs       = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(value_bcs, cause)) {
+  if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
@@ -781,7 +781,7 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boole
   exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
   
   f2ptr full_bcs = raw__compile(cause, thread, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(full_bcs, cause)) {
+  if (raw__larva__is_type(cause, full_bcs)) {
     return full_bcs;
   }
   if (full_bcs && (! raw__cons__is_type(cause, full_bcs))) {
@@ -791,7 +791,7 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps, boole
   
   iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause));
   f2ptr exp_bcs  = raw__compile(cause, thread, args_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
-  if (raw__larvap(exp_bcs, cause)) {
+  if (raw__larva__is_type(cause, exp_bcs)) {
     return exp_bcs;
   }
   if (exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {
@@ -840,7 +840,7 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr exps, 
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), funkvar);
   if (raw__metrocfunkp(funkvar_value, cause)) {
     f2ptr exp_bcs = raw__compile(cause, thread, f2__metrocfunk__apply(cause, funkvar_value, thread, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
-    if (raw__larvap(exp_bcs, cause)) {
+    if (raw__larva__is_type(cause, exp_bcs)) {
       return exp_bcs;
     }
     return bcs_valid(exp_bcs);
@@ -980,7 +980,7 @@ f2ptr f2__compile__backquote_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
     exp_bcs     = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
     exp_bcs     = raw__compile(cause, thread, f2cons__car(args, cause), boolean__true, boolean__false, NULL, NULL, nil, NULL);
-    if (raw__larvap(exp_bcs, cause)) {
+    if (raw__larva__is_type(cause, exp_bcs)) {
       return exp_bcs;
     }
     if(exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {return exp_bcs;}
@@ -1017,7 +1017,7 @@ f2ptr f2__compile__backquote_append_exp(f2ptr simple_cause, f2ptr thread, f2ptr 
     exp_bcs     = f2__compile__push_args(cause);                            iter = f2__list_cdr__set(cause, iter, exp_bcs);
     
     exp_bcs     = raw__compile(cause, thread, f2cons__car(args, cause), boolean__true, boolean__false, NULL, NULL, nil, NULL);
-    if (raw__larvap(exp_bcs, cause)) {
+    if (raw__larva__is_type(cause, exp_bcs)) {
       return exp_bcs;
     }
     if(exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {return exp_bcs;}
@@ -1433,7 +1433,7 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t prot
     status("unrecognized type in compile.");
     return f2larva__new(cause, 128);
   }
-  if (! raw__larvap(result_bcs, cause)) {
+  if (! raw__larva__is_type(cause, result_bcs)) {
     result_bcs = bcs_valid(result_bcs);
   }
   resume_gc();

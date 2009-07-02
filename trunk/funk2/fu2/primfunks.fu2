@@ -88,7 +88,7 @@
 
 `[globalize-funk cons?                                       &primfunk:cons__is_type]
 `[globalize-funk cons-new                                    &primfunk:cons__new]
-`[globalize-funk cons                                        &primfunk:cons__new]
+[globalize-funk cons                                        &primfunk:cons__new]
 `[globalize-funk unsafe:cons-car                             &primfunk:cons__car]
 `[globalize-funk unsafe:cons-car-set                         &primfunk:cons__car__set]
 `[globalize-funk unsafe:cons-cdr                             &primfunk:cons__cdr]

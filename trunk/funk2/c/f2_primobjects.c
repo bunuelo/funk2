@@ -1661,7 +1661,7 @@ f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_size_2d(x, cause));}
+boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is__size_2d(x, cause));}
 f2ptr f2__size_2d__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__size_2d__is_type(cause, x));}
 def_pcfunk1(size_2d__is_type, x, return f2__size_2d__is_type(this_cause, x));
 
@@ -1714,7 +1714,7 @@ f2ptr f2event__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-boolean_t raw__event__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_event(x, cause));}
+boolean_t raw__event__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is__event(x, cause));}
 f2ptr f2__event__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__event__is_type(cause, x));}
 def_pcfunk1(event__is_type, x, return f2__event__is_type(this_cause, x));
 

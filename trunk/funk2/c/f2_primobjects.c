@@ -1412,7 +1412,7 @@ f2ptr f2__cause__allocate_traced_arrays__set(f2ptr cause, f2ptr this, f2ptr valu
 def_pcfunk2(cause__allocate_traced_arrays__set, x, y, return f2__cause__allocate_traced_arrays__set(this_cause, x, y));
 
 f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
-  if (this && (! raw__causep(this, cause))) {
+  if (this && (! raw__cause__is_type(cause, this))) {
     return f2larva__new(cause, 1);
   }
   return (this ? f2cause__bytecode_tracing_on(this, cause) : nil);

@@ -168,6 +168,7 @@ f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
 #define f2list__elt_4__set(this, cause, value) f2cons__car__set(f2cons__cdr(f2cons__cdr(f2cons__cdr(f2cons__cdr(this, cause), cause), cause), cause), cause, cause, value)
 
 
+
 // doublelink
 
 extern f2ptr __doublelink__symbol;
@@ -202,15 +203,14 @@ defprimobject__static_slot__prototype(doublelink__value);
 #define f2doublelink__value__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__value, cause)
 #define f2doublelink__value__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__value, cause)
 
-boolean_t raw__doublelinkp(f2ptr x, f2ptr cause);
 f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__doublelinkp(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__prev__set(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__doublelink__next(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__doublelink__value(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y);
+
 
 
 // imagination_link
@@ -281,6 +281,8 @@ f2ptr  f2__imagination_frame__get_value_from_name_stack__trace_depth(f2ptr cause
 f2ptr  f2__imagination_frame__get_value_from_name_stack(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr doesnt_exist_value);
 void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause, f2ptr this, f2ptr name_stack, f2ptr value, int trace_depth);
 
+
+
 // cfunk
 
 extern f2ptr __cfunk__symbol;
@@ -333,7 +335,6 @@ defprimobject__static_slot__prototype(cfunk__documentation);
 #define f2cfunk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__documentation, cause)
 #define f2cfunk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__documentation, cause)
 
-boolean_t raw__cfunkp(f2ptr x, f2ptr cause);
 
 
 // metrocfunk
@@ -388,7 +389,6 @@ defprimobject__static_slot__prototype(metrocfunk__documentation);
 #define f2metrocfunk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, metrocfunk__documentation, cause)
 #define f2metrocfunk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metrocfunk__documentation, cause)
 
-boolean_t raw__metrocfunkp(f2ptr x, f2ptr cause);
 
 
 // funk
@@ -464,7 +464,6 @@ defprimobject__static_slot__prototype(funk__documentation);
 #define f2funk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, funk__documentation, cause)
 #define f2funk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, funk__documentation, cause)
 
-boolean_t raw__funkp(f2ptr x, f2ptr cause);
 
 
 // metro
@@ -540,7 +539,6 @@ defprimobject__static_slot__prototype(metro__documentation);
 #define f2metro__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, metro__documentation, cause)
 #define f2metro__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metro__documentation, cause)
 
-boolean_t raw__metrop(f2ptr x, f2ptr cause);
 
 
 // exception
@@ -566,6 +564,8 @@ defprimobject__static_slot__prototype(exception__value);
 #define f2exception__value__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, exception__value, cause)
 #define f2exception__value__trace(     this, cause)        primobject__static_slot__trace(     this, exception__value, cause)
 #define f2exception__value__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, exception__value, cause)
+
+
 
 // bytecode
 
@@ -605,7 +605,6 @@ defprimobject__static_slot__prototype(bytecode__arg2);
 #define f2bytecode__arg2__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg2, cause)
 #define f2bytecode__arg2__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg2, cause)
 
-boolean_t raw__bytecodep(f2ptr x, f2ptr cause);
 
 
 // thread
@@ -758,7 +757,6 @@ defprimobject__static_slot__prototype(thread__last_executed_time);
 #define f2thread__is_complete(this, cause)          __pure__f2thread__is_complete(this, cause)
 //extern int f2thread__is_complete(f2ptr this);
 
-boolean_t raw__threadp(f2ptr x, f2ptr cause);
 
 
 // processor
@@ -1007,8 +1005,6 @@ defprimobject__static_slot__prototype(cause__current_events);
 #define f2cause__current_events__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events, cause)
 #define f2cause__current_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events, cause)
 
-boolean_t raw__causep(f2ptr x, f2ptr cause);
-
 f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
 void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 
@@ -1041,6 +1037,7 @@ defprimobject__static_slot__prototype(transframe__symbol_old_news);
 #define f2transframe__symbol_old_news__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__symbol_old_news, cause)
 
 
+
 // bug
 
 extern f2ptr __bug__symbol;
@@ -1056,6 +1053,7 @@ defprimobject__static_slot__prototype(bug__type);
 #define f2bug__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bug__type, cause)
 #define f2bug__type__trace(            this, cause)        primobject__static_slot__trace(            this, bug__type, cause)
 #define f2bug__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bug__type, cause)
+
 
 
 // size_2d
@@ -1080,6 +1078,7 @@ defprimobject__static_slot__prototype(size_2d__y);
 #define f2size_2d__y__tracing_on( this, cause)        primobject__static_slot__tracing_on(this, size_2d__y, cause)
 #define f2size_2d__y__trace(      this, cause)        primobject__static_slot__trace(     this, size_2d__y, cause)
 #define f2size_2d__y__imagination_frame(      this, cause)        primobject__static_slot__imagination_frame(     this, size_2d__y, cause)
+
 
 
 // event
@@ -1123,6 +1122,7 @@ defprimobject__static_slot__prototype(event__data);
 #define f2event__data__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, event__data, cause)
 #define f2event__data__trace(           this, cause)                     primobject__static_slot__trace(           this, event__data, cause)
 #define f2event__data__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, event__data, cause)
+
 
 
 // bytecode_event

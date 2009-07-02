@@ -126,7 +126,7 @@ f2ptr f2__expression_not_funkable__exception__new(f2ptr cause, f2ptr funktion) {
 
 void unrecognized_bytecode_register__error(f2ptr thread, f2ptr cause, char* bytecode_name, f2ptr reg) {
   char reg_str[1024];
-  if(raw__symbolp(reg, cause)) {
+  if(raw__symbol__is_type(cause, reg)) {
     f2symbol__str_copy(reg, cause, (u8*)reg_str);
     reg_str[f2symbol__length(reg, cause)] = (u8)0;
   } else {

@@ -270,6 +270,12 @@
 	      [cons result [filter cond_proc [cdr seq]]]
 	    [filter cond_proc [cdr seq]]]]]]
 
+[defunk object-new [type_name :rest args]
+  [apply [primobject_type-lookup_slot_execute_funk [lookup_type type_name] `new] args]]
+
+[defmetro new [type_name :rest args]
+  `[object-new ,type_name @args]]
+
 [defunk object-get [slot_name this]
   [apply [object-slot-get_funk this slot_name] [cons this nil]]]
 

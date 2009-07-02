@@ -77,7 +77,7 @@ f2ptr f2__action_event__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw
 f2ptr f2__action__begin(f2ptr cause, f2ptr this) {
   if (cause) {
     f2ptr time = f2__time(cause);
-    if (! raw__causep(cause, cause)) {
+    if (! raw__cause__is_type(cause, cause)) {
       return f2larva__new(cause, 1);
     }
     f2ptr action_event         = f2action_event__new(cause, this, time, nil);
@@ -93,7 +93,7 @@ def_pcfunk1(action__begin, this, return f2__action__begin(this_cause, this));
 f2ptr f2__action__end(f2ptr cause, f2ptr this) {
   if (cause) {
     f2ptr time = f2__time(cause);
-    if (! raw__causep(cause, cause)) {
+    if (! raw__cause__is_type(cause, cause)) {
       return f2larva__new(cause, 1);
     }
     f2ptr finished_action_event = nil;

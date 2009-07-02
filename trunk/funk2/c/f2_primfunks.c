@@ -337,13 +337,13 @@ f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__i
 def_pcfunk1(array__is_type, x, return f2__array__is_type(this_cause, x));
 
 u64 raw__array__length(f2ptr cause, f2ptr x) {
-  if      (raw__simple_array__is_type(cause, x)) {return f2simple_array__length(cause, x);}
-  else if (raw__traced_array__is_type(cause, x)) {return f2traced_array__length(cause, x);}
+  if      (raw__simple_array__is_type(cause, x)) {return f2simple_array__length(x, cause);}
+  else if (raw__traced_array__is_type(cause, x)) {return f2traced_array__length(x, cause);}
   else {error(nil, "raw__array__length: invalid type"); return 0;}
 }
 f2ptr f2__array__length(f2ptr cause, f2ptr x) {
-  if      (raw__simple_array__is_type(cause, x)) {return f2__simple_array__length(x, cause);}
-  else if (raw__traced_array__is_type(cause, x)) {return f2__traced_array__length(x, cause);}
+  if      (raw__simple_array__is_type(cause, x)) {return f2__simple_array__length(cause, x);}
+  else if (raw__traced_array__is_type(cause, x)) {return f2__traced_array__length(cause, x);}
   else {return f2larva__new(cause, 1);}
 }
 def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));

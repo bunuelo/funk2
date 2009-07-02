@@ -151,7 +151,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2ptr popped_thread = __funk2.operating_system.processor_thread__current_thread[pool_index];
 	__funk2.operating_system.processor_thread__current_thread[pool_index] = thread;
 	//printf("\n  got thread lock.");
-	if (raw__larvap(f2thread__value(thread, cause), cause)) {
+	if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
 	  //printf("\nthread paused due to larva in value register.");
 	} else {
 	  if ((! f2thread__is_complete(thread, cause))) {
@@ -175,7 +175,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      } else if (f2__thread__execute_next_bytecode(cause, thread)) {
 		exit_reason = exit_reason__reached_yield;
 		break;
-	      } else if (raw__larvap(f2thread__value(thread, cause), cause)) {
+	      } else if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
 		f2ptr larva = f2thread__value(thread, cause);
 		f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
 		f2ptr critics = f2thread__critics(thread, cause);
@@ -238,7 +238,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2__print(cause, thread);
 	printf("\nlarva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
 	f2ptr larva = f2thread__value(thread, cause);
-	if (! raw__larvap(larva, cause)) {
+	if (! raw__larva__is_type(cause, larva)) {
 	  printf("\n  larva is not a larva."); fflush(stdout);
 	} else {
 	  u64 raw_type = f2larva__type(larva, cause);

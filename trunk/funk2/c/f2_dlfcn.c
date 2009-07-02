@@ -43,8 +43,8 @@ ptr raw__dlfcn__dlopen(u8* filename, int flag) {
 }
 
 f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
-  if ((! raw__stringp(filename, cause)) ||
-      (! raw__integerp(flag, cause))) {
+  if ((! raw__string__is_type(cause, filename)) ||
+      (! raw__integer__is_type(cause, flag))) {
     return f2larva__new(cause, 1);
   }
   int filename__length = f2string__length(filename, cause);
@@ -82,8 +82,8 @@ ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 }
 
 f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
-  if ((! raw__pointerp(handle, cause)) ||
-      (! raw__stringp(symbol, cause))) {
+  if ((! raw__pointer__is_type(cause, handle)) ||
+      (! raw__string__is_type(cause, symbol))) {
     return f2larva__new(cause, 1);
   }
   ptr raw_handle = f2pointer__p(handle, cause);
@@ -108,7 +108,7 @@ int raw__dlfcn__dlclose(ptr handle) {
 }
 
 f2ptr f2__dlfcn__dlclose(f2ptr cause, f2ptr handle) {
-  if (! raw__pointerp(handle, cause)) {
+  if (! raw__pointer__is_type(cause, handle)) {
     return f2larva__new(cause, 1);
   }
   ptr raw_handle = f2pointer__p(handle, cause);

@@ -290,7 +290,7 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
 
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_integer);
 }
@@ -364,7 +364,7 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_double);
 }
@@ -442,7 +442,7 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
 
 boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_float);
 }
@@ -520,7 +520,7 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
 
 boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_pointer);
 }
@@ -648,7 +648,7 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
 
 boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_gfunkptr);
 }
@@ -777,7 +777,7 @@ int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
 
 boolean_t raw__mutex__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_mutex);
 }
@@ -871,7 +871,7 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
 
 boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_char);
 }
@@ -992,7 +992,7 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
 
 boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_string);
 }
@@ -1227,7 +1227,7 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_symbol);
 }
@@ -1551,7 +1551,7 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if ((!cause) || (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_chunk);
 }
@@ -1757,7 +1757,7 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 
 boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_simple_array);
 }
@@ -2144,7 +2144,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
 
 boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_traced_array);
 }
@@ -2268,7 +2268,7 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
 
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_larva);
 }

@@ -838,14 +838,14 @@ f2ptr   f2__compile__funkvar_call(f2ptr simple_cause, f2ptr thread, f2ptr exps, 
   
   f2ptr funkvar = f2cons__car(exps, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), funkvar);
-  if (raw__metrocfunkp(funkvar_value, cause)) {
+  if (raw__metrocfunk__is_type(cause, funkvar_value)) {
     f2ptr exp_bcs = raw__compile(cause, thread, f2__metrocfunk__apply(cause, funkvar_value, thread, f2cons__cdr(exps, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
     if (raw__larva__is_type(cause, exp_bcs)) {
       return exp_bcs;
     }
     return bcs_valid(exp_bcs);
   } else {
-    if ((! (raw__cfunkp(funkvar_value, cause) ||
+    if ((! (raw__cfunk__is_type(cause, funkvar_value) ||
 	    raw__funkp(funkvar_value, cause))) ||
 	(! raw__funkable__is_funktional(cause, funkvar_value))) {
       if (is_funktional) {
@@ -1132,7 +1132,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean
   
   f2ptr car = f2cons__car(exp, cause);
   f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), car);
-  if (raw__metrop(funkvar_value, cause))         {return raw__compile(cause, thread, raw__apply_metro(cause, thread, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);}
+  if (raw__metro__is_type(cause, funkvar_value))         {return raw__compile(cause, thread, raw__apply_metro(cause, thread, funkvar_value, f2cons__cdr(exp, cause)), boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);}
   if (f2__is_compile_special_symbol(cause, car)) {return bcs_valid(f2__compile__special_symbol_exp(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__is_type(cause, car))          {return bcs_valid(f2__compile__funkvar_call(cause, thread, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   status("tried to compile: "); f2__write(cause, exp); fflush(stdout);
@@ -1339,7 +1339,7 @@ f2ptr   f2__demetropolize_once(f2ptr simple_cause, f2ptr thread, f2ptr env, f2pt
     {
       f2ptr car = f2cons__car(exp, cause);
       f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), car);
-      if      (raw__metrop(funkvar_value, cause))         {values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, raw__apply_metro(simple_cause, thread, funkvar_value, f2cons__cdr(exp, cause)));}
+      if      (raw__metro__is_type(cause, funkvar_value)) {values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, raw__apply_metro(simple_cause, thread, funkvar_value, f2cons__cdr(exp, cause)));}
       else if (f2__is_compile_special_symbol(cause, car)) {values = f2__demetropolize__special_symbol_exp(simple_cause, thread, env, exp);}
       else if (raw__symbol__is_type(cause, car))          {values = f2__demetropolize__funkvar_call(simple_cause, thread, env, exp);}
       else                                                {values = f2cons__new(simple_cause, nil, exp);}
@@ -1367,7 +1367,7 @@ f2ptr   f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr thread, f2
     {
       f2ptr car = f2cons__car(exp, cause);
       f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2thread__env(thread, cause), car);
-      if      (raw__metrop(funkvar_value, cause))         {values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, raw__apply_metro(simple_cause, thread, funkvar_value, f2cons__cdr(exp, cause)));}
+      if      (raw__metro__is_type(cause, funkvar_value)) {values = f2cons__new(simple_cause, __funk2.globalenv.true__symbol, raw__apply_metro(simple_cause, thread, funkvar_value, f2cons__cdr(exp, cause)));}
       else if (f2__is_compile_special_symbol(cause, car)) {values = f2__demetropolize__special_symbol_exp(simple_cause, thread, env, exp);}
       else if (raw__symbol__is_type(cause, car))          {values = f2__demetropolize__funkvar_call(simple_cause, thread, env, exp);}
       else                                                {values = f2cons__new(simple_cause, nil, exp);}

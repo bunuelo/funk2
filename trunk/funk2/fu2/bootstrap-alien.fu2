@@ -19,18 +19,18 @@
  rights to redistribute these changes.
 '
 
-[defunk argtype? [exp] [or [eq exp `integer]
-			   [eq exp `float]
-			   [eq exp `double]
-			   [eq exp `pointer]
-			   [eq exp `char*]]]
+[defunk is_argtype [exp] [or [eq exp `integer]
+			     [eq exp `float]
+			     [eq exp `double]
+			     [eq exp `pointer]
+			     [eq exp `char*]]]
 
-[defunk type-is-primitive_argtype? [argtype exp]
-  [cond [[eq argtype `integer] [integer? exp]]
-	[[eq argtype `pointer] [pointer? exp]]
-	[[eq argtype `float]   [float?   exp]]
-	[[eq argtype `double]  [double?  exp]]
-	[t                     [error `argtype-unknown `type-is-primitive_argtype?]]]]
+[defunk type-is-primitive_argtype [argtype exp]
+  [cond [[eq argtype `integer] [is-type `integer exp]]
+	[[eq argtype `pointer] [is-type `pointer exp]]
+	[[eq argtype `float]   [is-type `float   exp]]
+	[[eq argtype `double]  [is-type `double  exp]]
+	[t                     [error `argtype-unknown `type-is-primitive_argtype]]]]
 
 [defunk argtype-to_primitive_argtype [argtype]
   [cond [[eq argtype `integer] `integer]
@@ -352,10 +352,10 @@
 	[t [error `too-many-args-for-primitive-cfunk [list return_type argtypes]]]]]
 
 [defunk raw_c_funk [return_type cfunk_ptr argtypes]
-  [if [not [pointer? cfunk_ptr]] [error `wrong-type 'cfunk_ptr should be pointer']]
-  [mapc [funk [argtype] [if [not [argtype? argtype]] [error `wrong-type 'argtype should be either integer, float, double, or pointer.']]]
+  [if [not [is-type `pointer cfunk_ptr]] [error `wrong-type 'cfunk_ptr should be pointer']]
+  [mapc [funk [argtype] [if [not [is_argtype argtype]] [error `wrong-type 'argtype should be either integer, float, double, or pointer.']]]
 	argtypes]
-  [if [not [or [null return_type] [argtype? return_type]]] [error `wrong-type 'return_type must be either nil or a valid argtype.']]
+  [if [not [or [null return_type] [is_argtype return_type]]] [error `wrong-type 'return_type must be either nil or a valid argtype.']]
   [let [[this               [array-new 5]]
 	[primitive_argtypes [mapcar [funk [x] [argtype-to_primitive_argtype x]] argtypes]]]
     [put return_type                                               [elt this 0]]
@@ -374,7 +374,7 @@
   [let [[argtype_iter [raw_c_funk-primitive_argtypes raw_c_funk]]]
     [mapc [funk [arg]
 		[let [[argtype [car argtype_iter]]]
-		  [if [not [type-is-primitive_argtype? argtype arg]] [error `wrong-type [list 'arg must be of type' argtype]]]
+		  [if [not [type-is-primitive_argtype argtype arg]] [error `wrong-type [list 'arg must be of type' argtype]]]
 		  [= argtype_iter [cdr argtype_iter]]]]
 	  args]
     [if argtype_iter [error `wrong-argument-number 'too few arguments passed']]
@@ -385,12 +385,12 @@
 
 [defunk gmodule-lookup_symbol-safe [gmodule symbol_name]
   [let [[cfunk_ptr [gmodule-symbol gmodule symbol_name]]]
-    [if [or [null cfunk_ptr] [exception? cfunk_ptr]]
+    [if [or [null cfunk_ptr] [is-type `exception cfunk_ptr]]
 	[error `could-not-lookup-symbol [list symbol_name cfunk_ptr]]
       cfunk_ptr]]]
 
 [defmetro defunk-alien [gmodule_name local_name return_type extern_symbol argpairs]
-  [let [[types [mapcar [funk [argpair] [if [not [cons? argpair]] [error `defunk-alien-argpair-type 'must of form: [type name]']] [car  argpair]] argpairs]]
+  [let [[types [mapcar [funk [argpair] [if [not [is-type `cons argpair]] [error `defunk-alien-argpair-type 'must of form: [type name]']] [car  argpair]] argpairs]]
 	[args  [mapcar [funk [argpair]                                                                                           [cadr argpair]] argpairs]]]
     `[let [[raw_c_funk nil]]
        [defunk ,local_name ,args

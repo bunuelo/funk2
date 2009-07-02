@@ -42,7 +42,7 @@
 
 [defunk string-format [:rest exps]
   [stringlist-append [mapcar [funk [exp]
-				   [if [string? exp]
+				   [if [is-type `string exp]
 				       exp
 				     [exp-to_string exp]]]
 			     exps]]]

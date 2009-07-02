@@ -25,7 +25,7 @@
 [globalize-funk blocks_world-lower_left-y                      &primfunk:blocks_world__lower_left__y]
 
 [globalize-funk blocks_world_rectangle-new                     &primfunk:blocks_world_rectangle__new]
-[globalize-funk blocks_world_rectangle?                        &primfunk:blocks_world_rectanglep]
+[globalize-funk blocks_world_rectangle-is_type                 &primfunk:blocks_world_rectangle__is_type]
 [globalize-funk blocks_world_rectangle-x0                      &primfunk:blocks_world_rectangle__x0]
 [globalize-funk blocks_world_rectangle-y0                      &primfunk:blocks_world_rectangle__y0]
 [globalize-funk blocks_world_rectangle-x1                      &primfunk:blocks_world_rectangle__x1]
@@ -39,12 +39,12 @@
 [globalize-funk blocks_world_rectangle-overlaps                &primfunk:blocks_world_rectangle__overlaps]
 
 [globalize-funk blocks_world_color-new                         &primfunk:blocks_world_color__new]
-[globalize-funk blocks_world_color?                            &primfunk:blocks_world_colorp]
+[globalize-funk blocks_world_color-is_type                     &primfunk:blocks_world_color__is_type]
 [globalize-funk blocks_world_color-name                        &primfunk:blocks_world_color__name]
 [globalize-funk blocks_world_color-render                      &primfunk:blocks_world_color__render]
 
 [globalize-funk blocks_world_object-new                        &primfunk:blocks_world_object__new]
-[globalize-funk blocks_world_object?                           &primfunk:blocks_world_objectp]
+[globalize-funk blocks_world_object-is_type                    &primfunk:blocks_world_object__is_type]
 [globalize-funk blocks_world_object-name                       &primfunk:blocks_world_object__name]
 [globalize-funk blocks_world_object-type                       &primfunk:blocks_world_object__type]
 [globalize-funk blocks_world_object-rectangle                  &primfunk:blocks_world_object__rectangle]
@@ -58,6 +58,6 @@
 [globalize-funk blocks_world_object-translate_overlaps_objects &primfunk:blocks_world_object__translate_overlaps_objects]
 
 [globalize-funk blocks_world_physics-new                       &primfunk:blocks_world_physics__new]
-[globalize-funk blocks_world_physics?                          &primfunk:blocks_world_physicsp]
+[globalize-funk blocks_world_physics-is_type                   &primfunk:blocks_world_physics__is_type]
 [globalize-funk blocks_world_physics-objects                   &primfunk:blocks_world_physics__objects]
 

@@ -290,7 +290,7 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
 
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_integer);
 }
@@ -364,7 +364,7 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PTYPE__TYPE_CHECK
-  if (! raw__cause__is_type(nil, cause)) {error(nil "cause is not cause.");}
+  if (! raw__cause__is_type(nil, cause)) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_double);
 }

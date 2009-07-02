@@ -37,8 +37,8 @@ defprimobject__static_slot__prototype(time__microseconds_since_1970);
 #define      f2time__microseconds_since_1970__trace(            this, cause)        primobject__static_slot__trace(            this, time__microseconds_since_1970, cause)
 #define      f2time__microseconds_since_1970__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, time__microseconds_since_1970, cause)
 
-boolean_t raw__timep(f2ptr this, f2ptr cause);
-f2ptr      f2__timep(f2ptr this, f2ptr cause);
+boolean_t raw__time__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__time__is_type(f2ptr cause, f2ptr this);
 
 f2ptr f2__time(f2ptr cause); // returns current time
 

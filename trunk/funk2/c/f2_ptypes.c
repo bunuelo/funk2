@@ -987,7 +987,7 @@ f2ptr f2__string__new(f2ptr cause, f2ptr str) {
 def_pcfunk1(string__is_type, x, return f2__string__is_type(this_cause, x));
 def_pcfunk1(string__new, str, return f2__string__new(this_cause, str));
 def_pcfunk1(string__length, this, return f2__string__length(this_cause, this));
-def_pcfunk2(string__elt, this, index, return f2__string__elt(this_cause, index));
+def_pcfunk2(string__elt, this, index, return f2__string__elt(this_cause, this, index));
 def_pcfunk1(string__hash_value, this, return f2__string__hash_value(this_cause, this));
 
 f2ptr f2__string__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {

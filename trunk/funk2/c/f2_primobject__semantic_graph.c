@@ -38,8 +38,8 @@ f2ptr f2semantic_relation__new(f2ptr cause, f2ptr type, f2ptr left_concept, f2pt
   return this;
 }
 
-boolean_t raw__semantic_relationp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__semantic_relation(this, cause));}
-f2ptr f2__semantic_relationp(f2ptr this, f2ptr cause) {return f2bool__new(raw__semantic_relationp(this, cause));}
+boolean_t raw__semantic_relation__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__semantic_relation(this, cause));}
+f2ptr f2__semantic_relation__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__semantic_relation__is_type(cause, this));}
 
 
 // semantic_graph primobject definition

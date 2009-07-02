@@ -1777,7 +1777,7 @@ f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is_bytecode_event(x, cause));}
+boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x) {return (raw__primobjectp(x, cause) && f2primobject__is__bytecode_event(x, cause));}
 f2ptr f2__bytecode_event__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bytecode_event__is_type(cause, x));}
 def_pcfunk1(bytecode_event__is_type, x, return f2__bytecode_event__is_type(this_cause, x));
 

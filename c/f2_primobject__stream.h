@@ -27,6 +27,8 @@
 // stream
 
 extern f2ptr __stream__symbol;
+boolean_t raw__stream__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_descriptor, f2ptr string, f2ptr index);
 #define      f2primobject__is__stream(this, cause) raw__eq(cause, f2primobject__type(this, cause), __stream__symbol)
 
@@ -65,14 +67,11 @@ defprimobject__static_slot__prototype(stream__index);
 #define      f2stream__index__trace(            this, cause)        primobject__static_slot__trace(            this, stream__index, cause)
 #define      f2stream__index__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__index, cause)
 
-boolean_t raw__streamp(f2ptr this, f2ptr cause);
-f2ptr      f2__streamp(f2ptr this, f2ptr cause);
+boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);
 
-boolean_t raw__file_streamp(f2ptr this, f2ptr cause);
-f2ptr      f2__file_streamp(f2ptr this, f2ptr cause);
-
-boolean_t raw__string_streamp(f2ptr this, f2ptr cause);
-f2ptr      f2__string_streamp(f2ptr this, f2ptr cause);
+boolean_t raw__string_stream__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__string_stream__is_type(f2ptr cause, f2ptr this);
 
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode);
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode);

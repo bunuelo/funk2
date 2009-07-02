@@ -34,5 +34,6 @@ f2ptr f2char_pointer__new(f2ptr cause, f2ptr pointer_value) {
   return this;
 }
 
-f2ptr f2__char_pointerp(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__arrayp(this, cause) && raw__array__length(cause, this) == 2 && f2primobject__is_char_pointer(this, cause));}
+boolean_t raw__char_pointer__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) == 2 && f2primobject__is_char_pointer(this, cause));}
+f2ptr f2__char_pointer__is_type(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__char_pointer__is_type(cause, this));}
 

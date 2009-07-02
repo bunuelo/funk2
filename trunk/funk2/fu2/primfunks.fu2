@@ -331,13 +331,16 @@
 [globalize-funk funk2_node_handler-know_of_node             &primfunk:funk2_node_handler__know_of_node]
 [globalize-funk send_request_register_peer                  &primfunk:send_request_register_peer]
 
-[globalize-funk larva                                       &primfunk:larva]
+[primfunk:exp__format stdout '\ndebug 0.1.7.1\n']
+`[globalize-funk larva                                       &primfunk:larva]
 
 [globalize-funk publish_event                               &primfunk:publish_event]
 [globalize-funk event_subscriber                            &primfunk:event_subscriber]
 [globalize-funk subscribe                                   &primfunk:subscribe]
 
 `[globalize-funk thread-subversion_cause                     &primfunk:thread__subversion_cause]
+
+[primfunk:exp__format stdout '\ndebug 0.1.7.2\n']
 
 [globalize-funk first                                       &primfunk:first]
 [globalize-funk first-set                                   &primfunk:first__set]
@@ -351,6 +354,7 @@
 [globalize-funk equals                                      &primfunk:equals]
 [globalize-funk funktional?                                 &primfunk:funktionalp]
 
+[primfunk:exp__format stdout '\ndebug 0.1.7.3\n']
 'end of f2_primfunks.c'
 
 

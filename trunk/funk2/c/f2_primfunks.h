@@ -863,12 +863,6 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
 
 // symbol
 
-boolean_t  raw__symbolp(f2ptr x, f2ptr cause);
-f2ptr f2__symbolp(f2ptr cause, f2ptr x);
-f2ptr f2__symbol__length(f2ptr cause, f2ptr x);
-f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
-boolean_t  raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 
 // array
 

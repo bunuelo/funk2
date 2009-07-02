@@ -296,6 +296,7 @@
 [defunk object-execute [slot_name this :rest args]
   [apply [object-slot-get_funk this slot_name] args]]
 
+[globalize-funk cons &primfunk:cons__new]
 [defmetro car [x] `[object-get `car ,x]]
 [defmetro cdr [x] `[object-get `cdr ,x]]
 

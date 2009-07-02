@@ -305,9 +305,6 @@ boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return boolean__true;
 }
 
-f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__symbol__eq(cause, x, y));}
-def_pcfunk2(symbol__eq, x, y, return f2__symbol__eq(this_cause, x, y));
-
 // simple_array
 
 //boolean_t raw__simple_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}

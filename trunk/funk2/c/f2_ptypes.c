@@ -1196,11 +1196,9 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_symbol);}
 f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbol__is_type(cause, x));}
-
 f2ptr f2__symbol__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__length(x, cause));}
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
 f2ptr f2__symbol__hash_value(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__hash_value(x, cause));}
-
 f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {
     return f2larva__new(cause, 1);
@@ -1210,12 +1208,14 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   f2string__str_copy(str, this_cause, str__bytes);
   return f2symbol__new(this_cause, str__length, str__bytes);
 }
+f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__symbol__eq(cause, x, y));}
 
 def_pcfunk1(symbol__is_type, x, return f2__symbol__is_type(this_cause, x));
 def_pcfunk1(symbol__new, str, return f2__symbol__new(this_cause, str));
 def_pcfunk1(symbol__length, this, return f2__symbol__length(this_cause, this));
 def_pcfunk2(symbol__elt, this, index, return f2__symbol__elt(this_cause, this, index));
 def_pcfunk1(symbol__hash_value, this, return f2__symbol__hash_value(this_cause, x));
+def_pcfunk2(symbol__eq, x, y, return f2__symbol__eq(this_cause, x, y));
 
 f2ptr f2__symbol__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_symbol.length__symbol)) {
@@ -1241,10 +1241,11 @@ f2ptr f2__symbol__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2symbol__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk);}
-  {char* slot_name = "length"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk, nil, nil);}
-  {char* slot_name = "elt"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk, nil, nil);}
+  {char* slot_name = "new";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk);}
+  {char* slot_name = "length";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk, nil, nil);}
+  {char* slot_name = "elt";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk, nil, nil);}
   {char* slot_name = "hash_value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk, nil, nil);}
+  //{char* slot_name = "==";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk, nil, nil);}
   return this;
 }
 

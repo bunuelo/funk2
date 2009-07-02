@@ -300,6 +300,9 @@
 [defmetro car [x] `[object-get `car ,x]]
 [defmetro cdr [x] `[object-get `cdr ,x]]
 
+[defunk is-type [type_name exp]
+  [apply [object-slot-execute_funk this `is_type] [cons exp nil]]]
+
 [defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
 [wrong_argument_number_error-set [object-get `body_bytecodes &wrong_argument_number_error]]
 

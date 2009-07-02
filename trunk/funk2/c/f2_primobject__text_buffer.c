@@ -127,7 +127,7 @@ f2ptr raw__text_buffer__character__set(f2ptr cause, f2ptr this, s64 x, s64 y, f2
 
 f2ptr raw__text_buffer__draw_character(f2ptr cause, f2ptr this, s64 x, s64 y, f2ptr character, f2ptr foreground_color, f2ptr background_color) {
   if ((! raw__text_buffer__is_type(cause, this)) ||
-      (! raw__charp(character, cause))) {
+      (! raw__char__is_type(cause, character))) {
     return f2larva__new(cause, 1);
   }
   f2ptr text_char = f2text_buffer_character__new(cause, character, foreground_color, background_color);

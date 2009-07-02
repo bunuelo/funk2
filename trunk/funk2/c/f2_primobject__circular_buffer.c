@@ -37,13 +37,8 @@ f2ptr f2circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_arra
   return this;
 }
 
-boolean_t raw__circular_bufferp(f2ptr this, f2ptr cause) {
-  return raw__arrayp(this, cause) && f2primobject__is_circular_buffer(this, cause);
-}
-
-f2ptr f2__circular_bufferp(f2ptr this, f2ptr cause) {
-  return f2bool__new(raw__circular_bufferp(this, cause));
-}
+boolean_t raw__circular_buffer__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_circular_buffer(this, cause);}
+f2ptr f2__circular_buffer__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__circular_buffer__is_type(cause, this));}
 
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length) {
   return f2circular_buffer__new(cause, f2integer__new(cause, 0), f2integer__new(cause, 0), raw__array__new(cause, length));

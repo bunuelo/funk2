@@ -32,6 +32,8 @@ typedef struct funk2_primobject_circular_buffer_s {
   f2ptr full__symbol;
 } funk2_primobject_circular_buffer_t;
 
+boolean_t raw__circular_buffer__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__circular_buffer__is_type(f2ptr cause, f2ptr this);
 f2ptr f2circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_array);
 #define f2primobject__is_circular_buffer(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__circular_buffer.symbol)
 
@@ -58,7 +60,6 @@ defprimobject__static_slot__prototype(circular_buffer__bin_array);
 
 f2ptr f2__circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_array);
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
-f2ptr f2__circular_bufferp(f2ptr this, f2ptr cause);
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr f2__circular_buffer__remove(f2ptr cause, f2ptr this);
 boolean_t  raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);

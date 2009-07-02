@@ -31,14 +31,14 @@ int f2__repl(f2ptr cause, f2ptr thread) {
     printf ("\nF-In-> "); fflush(stdout);
     f2ptr read_exp = raw__read(cause, __funk2.globalenv.stdin_stream);
     
-		if (raw__exceptionp(read_exp, cause)) {
+    if (raw__exception__is_type(cause, read_exp)) {
       printf("\nrepl exception: "); f2__write(thread, read_exp); fflush(stdout);
     } else {
       pause_gc();
       
       repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
       repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
-      if(raw__larvap(repl_funk_bcs, cause)) {
+      if(raw__larva__is_type(cause, repl_funk_bcs)) {
 	f2thread__value__set(thread, cause, repl_funk_bcs);
 	resume_gc();
       } else {

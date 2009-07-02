@@ -578,7 +578,7 @@ f2ptr raw__blocks_world_object__translate_overlaps_objects(f2ptr cause, f2ptr th
   
   f2ptr object_iter = objects;
   while (object_iter) {
-    if (! raw__consp(object_iter, cause)) {
+    if (! raw__cons__is_type(cause, object_iter)) {
       return f2larva__new(cause, 1);
     }
     f2ptr object = f2cons__car(object_iter, cause);

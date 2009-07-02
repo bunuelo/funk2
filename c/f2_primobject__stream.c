@@ -86,8 +86,8 @@ f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
 }
 
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
-  if ((! raw__stringp(filename, cause)) || 
-      (! raw__integerp(mode, cause))) {
+  if ((! raw__string__is_type(cause, filename)) || 
+      (! raw__integer__is_type(cause, mode))) {
     return f2larva__new(cause, 1);
   }
   u64   filename__length = f2string__length(filename, cause);
@@ -104,7 +104,7 @@ f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1);
   }
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  if (! raw__integerp(file_descriptor, cause)) {
+  if (! raw__integer__is_type(cause, file_descriptor)) {
     return f2larva__new(cause, 1);
   }
   int fd = f2integer__i(file_descriptor, cause);
@@ -185,7 +185,7 @@ f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1);
   }
   f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  if (! raw__integerp(file_descriptor, cause)) {return f2larva__new(cause, 17);}
+  if (! raw__integer__is_type(cause, file_descriptor)) {return f2larva__new(cause, 17);}
   u64 fd = f2integer__i(file_descriptor, cause);
   u8  data[2] = {0, 0};
   u32 bytes_read = 0;

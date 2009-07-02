@@ -181,11 +181,11 @@ boolean_t raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, int trace_
     return nil;
   }
 #ifdef F2__PTYPE__TYPE_CHECK
-  if(! raw__cause__is_type(cause, this)) {
-    status("raw__cause__is_traced !raw__cause__is_type(cause, this)");
-    f2__print(nil, this); fflush(stdout);
-    error(nil, "raw__cause__is_traced !raw__cause__is_type(cause, this)");
-  }
+  //if(! raw__cause__is_type(cause, this)) {
+  //  status("raw__cause__is_traced !raw__cause__is_type(cause, this)");
+  //  f2__print(nil, this); fflush(stdout);
+  //  error(nil, "raw__cause__is_traced !raw__cause__is_type(cause, this)");
+  //}
 #endif
   return f2cause__memory_tracing_on__trace_depth(this, cause, trace_depth);
 }
@@ -203,11 +203,11 @@ boolean_t raw__cause__is_imaginary__trace_depth(f2ptr cause, f2ptr this, int tra
     return nil;
   }
 #ifdef F2__PTYPE__TYPE_CHECK
-  if(! raw__cause__is_type(cause, this)) {
-    status("raw__cause__is_imaginary !raw__cause__is_type(cause, this)");
-    f2__print(nil, this); fflush(stdout);
-    error(nil, "raw__cause__is_imaginary !raw__cause__is_type(cause, this)");
-  }
+  //if(! raw__cause__is_type(cause, this)) {
+  //  status("raw__cause__is_imaginary !raw__cause__is_type(cause, this)");
+  //  f2__print(nil, this); fflush(stdout);
+  //  error(nil, "raw__cause__is_imaginary !raw__cause__is_type(cause, this)");
+  //}
 #endif
   f2ptr the_cause_for_checking_whether_imaginary_or_not = nil; // avoids infinitely considering whether or not we are imagining by returning the "real" value of our cause's imagination stack... (see South Park, ImaginationLand Episode for elaboration)
   boolean_t return_value = (f2cause__imagination_stack(this, the_cause_for_checking_whether_imaginary_or_not) != nil);

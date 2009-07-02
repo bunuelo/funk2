@@ -253,18 +253,18 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
 
 f2ptr f2traced_array__primobject_type__new(f2ptr cause);
 
-boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
-f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_array__is_type(cause, x));}
-f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {return f2traced_array__new(this_cause, f2integer__i(length, this_cause), to_ptr(NULL));}
-f2ptr f2__traced_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2traced_array__length(x, cause));}
-f2ptr f2__traced_array__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt(x, f2integer__i(y, cause), cause);}
-f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
-f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__tracing_on(x, f2integer__i(y, cause), cause);}
-f2ptr f2__traced_array__elt__tracing_on__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__tracing_on__set(x, f2integer__i(y, cause), cause, z); return nil;}
-f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__trace(x, f2integer__i(y, cause), cause);}
-f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__trace__set(x, f2integer__i(y, cause), cause, z); return nil;}
-f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__imagination_frame(x, f2integer__i(y, cause), cause);}
-f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__imagination_frame__set(x, f2integer__i(y, cause), cause, z); return nil;}
+boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__traced_array__new(f2ptr cause, f2ptr length);
+f2ptr f2__traced_array__length(f2ptr cause, f2ptr x);
+f2ptr f2__traced_array__elt(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__traced_array__elt__tracing_on__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 
 // larva
 

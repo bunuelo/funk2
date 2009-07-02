@@ -1186,7 +1186,7 @@ int try_pause_gc() {
 
 void pool__resume_gc (int pool_index) {
   memory_mutex__lock(pool_index);
-  release__assert(__funk2.memory.pool[pool_index].disable_gc > 0, nil, "__funk2.memory.pool[].disable_gc <= 0 before decrement... too many calls to resume_gc.");
+  release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
   __funk2.memory.pool[pool_index].disable_gc --;
 #ifdef DEBUG
   if (! __funk2.memory.pool[pool_index].disable_gc) {

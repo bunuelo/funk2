@@ -34,5 +34,6 @@ f2ptr f2boolean__new(f2ptr cause, f2ptr integer_value) {
   return this;
 }
 
-f2ptr f2__booleanp(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__arrayp(this, cause) && raw__array__length(cause, this) == 2 && f2primobject__is_boolean(this, cause));}
+boolean_t raw__boolean__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) == 2 && f2primobject__is_boolean(this, cause));}
+f2ptr f2__boolean__is_type(f2ptr cause, f2ptr this) {return f2boolean__new(cause, raw__boolean__is_type(cause, this));}
 

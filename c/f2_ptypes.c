@@ -984,7 +984,6 @@ f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   return f2string__new(cause, str__length, str__bytes);
 }
 
-def_pcfunk2(string__elt, x, y, return f2__string__elt(this_cause, x, y));
 def_pcfunk1(string__is_type, x, return f2__string__is_type(this_cause, x));
 def_pcfunk1(string__new, str, return f2__string__new(this_cause, str));
 def_pcfunk1(string__length, this, return f2__string__length(this_cause, this));

@@ -38,8 +38,8 @@ f2ptr f2text_buffer_character__new(f2ptr cause, f2ptr character, f2ptr foregroun
   return this;
 }
 
-boolean_t raw__text_buffer_characterp(f2ptr this, f2ptr cause) {return (raw__arrayp(this, cause) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_buffer_character(this, cause));}
-f2ptr f2__text_buffer_characterp(f2ptr this, f2ptr cause) {return f2bool__new(raw__text_buffer_characterp(this, cause));}
+boolean_t raw__text_buffer_character__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__text_buffer_character(this, cause));}
+f2ptr f2__text_buffer_character__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__text_buffer_character__is_type(cause, this));}
 
 
 // text_buffer primobject definition

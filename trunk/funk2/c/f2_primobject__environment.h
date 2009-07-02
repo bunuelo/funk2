@@ -34,6 +34,8 @@ extern f2ptr __type_variable_not_defined__symbol;
 
 extern f2ptr __environment__symbol;
 extern f2ptr __current_environment__symbol;
+boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc);
 #define f2primobject__is_environment(this, cause) raw__eq(cause, f2primobject__type(this, cause), __environment__symbol)
 
@@ -57,8 +59,6 @@ defprimobject__static_slot__prototype(environment__desc);
 #define f2environment__desc__tracing_on(      this, cause)        primobject__static_slot__tracing_on(this, environment__desc, cause)
 #define f2environment__desc__trace(           this, cause)        primobject__static_slot__trace(     this, environment__desc, cause)
 #define f2environment__desc__imagination_frame(           this, cause)        primobject__static_slot__imagination_frame(     this, environment__desc, cause)
-
-f2ptr raw__environmentp(f2ptr this, f2ptr cause);
 
 void  environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);

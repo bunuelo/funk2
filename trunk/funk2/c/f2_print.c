@@ -83,7 +83,7 @@ void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2]
 }
 
 void f2__fwrite__raw_string(f2ptr cause, f2ptr stream, f2ptr str, f2ptr use_html) {
-  if ((! str) || (! raw__stringp(str, cause))) {error(nil, "f2__write__raw_string error: str must be of type ptype_string.");}
+  if ((! str) || (! raw__string__is_type(cause, str))) {error(nil, "f2__write__raw_string error: str must be of type ptype_string.");}
   pause_gc();
   int length = f2string__length(str, cause);
   int i;

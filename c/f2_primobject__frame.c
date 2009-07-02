@@ -40,21 +40,20 @@ f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
 }
 
 f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
-  pause_gc();
   resume_gc();
+  pause_gc();
   f2ptr type_hashtable = f2__hashtable__new(cause, f2integer__new(cause, 3));
-  pause_gc();
   resume_gc();
+  pause_gc();
   f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __frame__variable_type__symbol,      var_hashtable);
-  pause_gc();
   resume_gc();
+  pause_gc();
   f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __frame__funk_variable_type__symbol, funkvar_hashtable);
-  pause_gc();
   resume_gc();
+  pause_gc();
   f2ptr result = f2frame__new__raw(cause, type_hashtable);
+  resume_gc();
   pause_gc();
-  resume_gc();
-  resume_gc();
   return result;
 }
 

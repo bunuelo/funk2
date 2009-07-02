@@ -869,8 +869,8 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
 boolean_t  raw__cause_is_traced(f2ptr cause);
 f2ptr raw__array__new(f2ptr cause, u64 length);
 f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init);
-boolean_t  raw__arrayp(f2ptr x, f2ptr cause);
-f2ptr f2__arrayp(f2ptr cause, f2ptr x);
+boolean_t raw__array__is_type(f2ptr cause, f2ptr x) {return (raw__simple_array__is_type(cause, x) || raw__traced_array__is_type(cause, x));}
+f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__is_type(cause, x));}
 u64   raw__array__length(f2ptr cause, f2ptr x);
 f2ptr f2__array__length(f2ptr cause, f2ptr x);
 f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth);
@@ -894,15 +894,8 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 
 // larva
 
-boolean_t raw__larvap(f2ptr x, f2ptr cause);
-
 // chunk
 
-f2ptr f2__chunk(f2ptr cause, f2ptr length);
-boolean_t raw__chunkp(f2ptr x, f2ptr cause);
-f2ptr f2__chunkp(f2ptr cause, f2ptr x);
-f2ptr f2__chunk__length(f2ptr cause, f2ptr x);
-f2ptr f2__chunk__bytes(f2ptr cause, f2ptr x);
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x);
 
 // primobject hashtable
@@ -912,7 +905,6 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 
 // primobject thought_process
 
-boolean_t raw__thought_processp(f2ptr x, f2ptr cause);
 
 // primobject thread
 
@@ -932,11 +924,9 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);
 
 // interface funkable (includes types: funk, metro, cfunk, metrocfunk)
 
-boolean_t raw__funkablep(f2ptr exp, f2ptr cause);
+boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp);
   
   
-boolean_t raw__exceptionp(f2ptr x, f2ptr cause);
-f2ptr f2__exception(f2ptr cause, f2ptr tag, f2ptr value);
 f2ptr f2__format(f2ptr cause, f2ptr fptr, f2ptr exp);
 f2ptr f2__format__html(f2ptr cause, f2ptr fptr, f2ptr exp);
 f2ptr f2__list(f2ptr cause, f2ptr seq);

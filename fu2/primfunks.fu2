@@ -19,8 +19,6 @@
  rights to redistribute these changes.
 '
 
-[primfunk:exp__format stdout '\ndebug 0.1.1\n']
-
 [globalize-funk system-node_id                              &primfunk:system__node_id]
 [globalize-funk system-environment                          &primfunk:system__environment]
 
@@ -33,94 +31,7 @@
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
-[primfunk:exp__format stdout '\ndebug 0.1.2\n']
-
-`[globalize-funk integer?                                    &primfunk:integer__is_type]
-`[globalize-funk double?                                     &primfunk:double__is_type]
-`[globalize-funk float?                                      &primfunk:float__is_type]
-`[globalize-funk pointer?                                    &primfunk:pointer__is_type]
-
-`[globalize-funk mutex?                                      &primfunk:mutex__is_type]
-`[globalize-funk mutex                                       &primfunk:mutex]
-`[globalize-funk unsafe:mutex-lock                           &primfunk:mutex__lock]
-`[globalize-funk unsafe:mutex-unlock                         &primfunk:mutex__unlock]
-`[globalize-funk unsafe:mutex-trylock                        &primfunk:mutex__trylock]
-
-[primfunk:exp__format stdout '\ndebug 0.1.3\n']
-
-`[globalize-funk string?                                     &primfunk:string__is_type]
-`[globalize-funk unsafe:string-length                        &primfunk:string__length]
-`[globalize-funk unsafe:string-elt                           &primfunk:string__elt]
-`[globalize-funk unsafe:string-equals                        &primfunk:string__equals]
-`[globalize-funk unsafe:string-to_new_raw_c_string           &primfunk:string__new_raw_c_string]
-`[globalize-funk unsafe:string-new_from_raw_c_string         &primfunk:string__new_from_raw_c_string]
-
-`[globalize-funk symbol?                                     &primfunk:symbol__is_type]
-`[globalize-funk unsafe:symbol-length                        &primfunk:symbol__length]
-`[globalize-funk unsafe:symbol-elt                           &primfunk:symbol__elt]
-`[globalize-funk unsafe:symbol-equals                        &primfunk:symbol__eq]
-
-`[globalize-funk chunk?                                      &primfunk:chunk__is_type]
-`[globalize-funk chunk                                       &primfunk:chunk]
-`[globalize-funk unsafe:chunk-length                         &primfunk:chunk__length]
-`[globalize-funk unsafe:chunk-copy                           &primfunk:chunk__copy]
-`[globalize-funk unsafe:chunk-read_bit8                      &primfunk:chunk__read_bit8]
-`[globalize-funk unsafe:chunk-write_bit8_integer             &primfunk:chunk__write_bit8_integer]
-`[globalize-funk unsafe:chunk-read_bit8_signed               &primfunk:chunk__read_bit8_signed]
-`[globalize-funk unsafe:chunk-read_bit16                     &primfunk:chunk__read_bit16]
-`[globalize-funk unsafe:chunk-write_bit16_integer            &primfunk:chunk__write_bit16_integer]
-`[globalize-funk unsafe:chunk-read_bit16_signed              &primfunk:chunk__read_bit16_signed]
-`[globalize-funk unsafe:chunk-read_bit32                     &primfunk:chunk__read_bit32]
-`[globalize-funk unsafe:chunk-write_bit32_integer            &primfunk:chunk__write_bit32_integer]
-`[globalize-funk unsafe:chunk-read_bit32_signed              &primfunk:chunk__read_bit32_signed]
-`[globalize-funk unsafe:chunk-new_compiled_from_funk         &primfunk:chunk__new_compiled_from_funk]
-
-[primfunk:exp__format stdout '\ndebug 0.1.4\n']
-
-`[globalize-funk place?                                      &primfunk:place__is_type]
-`[globalize-funk place-new                                   &primfunk:place__new]
-`[globalize-funk place                                       &primfunk:place__new]
-`[globalize-funk unsafe:place-thing                          &primfunk:place__thing]
-`[globalize-funk unsafe:place-thing-set                      &primfunk:place__thing__set]
-
-`[globalize-funk cons?                                       &primfunk:cons__is_type]
-`[globalize-funk cons-new                                    &primfunk:cons__new]
-`[globalize-funk cons                                        &primfunk:cons__new]
-`[globalize-funk unsafe:cons-car                             &primfunk:cons__car]
-`[globalize-funk unsafe:cons-car-set                         &primfunk:cons__car__set]
-`[globalize-funk unsafe:cons-cdr                             &primfunk:cons__cdr]
-`[globalize-funk unsafe:cons-cdr-set                         &primfunk:cons__cdr__set]
-
-`[globalize-funk doublelink?                                 &primfunk:doublelink__is_type]
-`[globalize-funk doublelink-new                              &primfunk:doublelink__new]
-`[globalize-funk doublelink                                  &primfunk:doublelink__new]
-`[globalize-funk unsafe:doublelink-prev                      &primfunk:doublelink__prev]
-`[globalize-funk unsafe:doublelink-prev-set                  &primfunk:doublelink__prev__set]
-`[globalize-funk unsafe:doublelink-next                      &primfunk:doublelink__next]
-`[globalize-funk unsafe:doublelink-next-set                  &primfunk:doublelink__next__set]
-`[globalize-funk unsafe:doublelink-value                     &primfunk:doublelink__value]
-`[globalize-funk unsafe:doublelink-value-set                 &primfunk:doublelink__value__set]
-
-`[globalize-funk array?                                      &primfunk:array__is_type]
-`[globalize-funk array-new_1d                                &primfunk:array__new_1d]
-`[globalize-funk array                                       &primfunk:array]
 [globalize-funk array-length                         &primfunk:array__length]
-`[globalize-funk unsafe:array-elt                            &primfunk:array__elt]
-`[globalize-funk unsafe:array-elt-set                        &primfunk:array__elt__set]
-
-`[globalize-funk unsafe:array-elt-tracing_on                 &primfunk:array__elt__tracing_on]
-`[globalize-funk unsafe:array-elt-tracing_on-set             &primfunk:array__elt__tracing_on__set]
-`[globalize-funk unsafe:array-elt-trace                      &primfunk:array__elt__trace]
-`[globalize-funk unsafe:array-elt-trace-set                  &primfunk:array__elt__trace__set]
-`[globalize-funk unsafe:array-elt-imagination_frame          &primfunk:array__elt__imagination_frame]
-`[globalize-funk unsafe:array-elt-imagination_frame-set      &primfunk:array__elt__imagination_frame__set]
-
-[primfunk:exp__format stdout '\ndebug 0.1.5\n']
-
-`[globalize-funk circular_buffer?                            &primfunk:circular_buffer__is_type]
-`[globalize-funk circular_buffer                             &primfunk:circular_buffer]
-`[globalize-funk unsafe:circular_buffer-add                  &primfunk:circular_buffer__add]
-`[globalize-funk unsafe:circular_buffer-remove               &primfunk:circular_buffer__remove]
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]
@@ -157,8 +68,6 @@
 [globalize-funk eq                                          &primfunk:eq]
 
 [globalize-funk quit                                        &primfunk:quit]
-
-[primfunk:exp__format stdout '\ndebug 0.1.6\n']
 
 [globalize-funk exp-print                                   &primfunk:exp__print]
 [globalize-funk write                                       &primfunk:write]
@@ -314,8 +223,6 @@
 [globalize-funk float-to_integer                            &primfunk:float__to_integer]
 [globalize-funk float-to_double                             &primfunk:float__to_double]
 
-[primfunk:exp__format stdout '\ndebug 0.1.7\n']
-
 [globalize-funk repl                                        &primfunk:repl]
 
 [globalize-funk hashtable-add_keyvalue_pair                 &primfunk:hashtable__add_keyvalue_pair]
@@ -328,7 +235,6 @@
 [globalize-funk funk2_node_handler-know_of_node             &primfunk:funk2_node_handler__know_of_node]
 [globalize-funk send_request_register_peer                  &primfunk:send_request_register_peer]
 
-[primfunk:exp__format stdout '\ndebug 0.1.7.1\n']
 `[globalize-funk larva                                       &primfunk:larva]
 
 [globalize-funk publish_event                               &primfunk:publish_event]
@@ -336,8 +242,6 @@
 [globalize-funk subscribe                                   &primfunk:subscribe]
 
 `[globalize-funk thread-subversion_cause                     &primfunk:thread__subversion_cause]
-
-[primfunk:exp__format stdout '\ndebug 0.1.7.2\n']
 
 [globalize-funk first                                       &primfunk:first]
 [globalize-funk first-set                                   &primfunk:first__set]
@@ -351,7 +255,6 @@
 [globalize-funk equals                                      &primfunk:equals]
 `[globalize-funk funktional?                                 &primfunk:funktionalp]
 
-[primfunk:exp__format stdout '\ndebug 0.1.7.3\n']
 'end of f2_primfunks.c'
 
 
@@ -366,8 +269,6 @@
 [globalize-funk funk2_node_handler-known_node_info          &primfunk:funk2_node_handler__known_node_info]
 
 'defined in f2_peer_command_server.c'
-
-[primfunk:exp__format stdout '\ndebug 0.1.8\n']
 
 [globalize-funk peer_command_server-active_client_info      &primfunk:peer_command_server__active_client_info]
 
@@ -386,4 +287,3 @@
 [globalize-funk text_window_stream-new                      &primfunk:text_window_stream__new]
 [globalize-funk text_window_stream                          &primfunk:text_window_stream]
 
-[primfunk:exp__format stdout '\ndebug 0.1.9\n']

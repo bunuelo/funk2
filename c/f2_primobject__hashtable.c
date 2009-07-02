@@ -38,13 +38,8 @@ f2ptr f2hashtable__new(f2ptr cause, f2ptr bin_num_power, f2ptr bin_array) {
 
 // hardcoded hashtable functions
 
-boolean_t raw__hashtablep(f2ptr this, f2ptr cause) {
-  return raw__arrayp(this, cause) && f2primobject__is_hashtable(this, cause);
-}
-
-f2ptr f2__hashtablep(f2ptr this, f2ptr cause) {
-  return f2bool__new(raw__hashtablep(this, cause));
-}
+boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_hashtable(this, cause);}
+f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
 
 boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
   if (! raw__hashtablep(this, cause)) {return 0;}

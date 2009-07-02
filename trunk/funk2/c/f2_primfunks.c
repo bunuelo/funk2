@@ -1866,7 +1866,6 @@ void f2__primcfunks__initialize() {
   
   // gfunkptr
   
-  f2__primcfunk__init__3(           gfunkptr,                   computer_id, pool_index, pool_address, "");
   f2__primcfunk__init__1(           gfunkptr__new_from_pointer, pointer, "");
   
   // mutex
@@ -1879,7 +1878,7 @@ void f2__primcfunks__initialize() {
   
   // symbol
   
-  f2__funktional_primcfunk__init__2(symbol__eq,     this, that, "");
+  //f2__funktional_primcfunk__init__2(symbol__eq,     this, that, "");
   
   // chunk
   

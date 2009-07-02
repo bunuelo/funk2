@@ -34,7 +34,7 @@
 [load 'fu2/bootstrap-child_handler.fu2']
 [load 'fu2/bootstrap-apropos.fu2']
 
-[load 'fu2/action.fu2']
+`[load 'fu2/action.fu2']
 [load 'fu2/remember.fu2']
 [load 'fu2/time.fu2']
 

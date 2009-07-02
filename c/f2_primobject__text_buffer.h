@@ -51,8 +51,8 @@ defprimobject__static_slot__prototype(text_buffer_character__background_color);
 #define      f2text_buffer_character__background_color__trace(            this, cause)        primobject__static_slot__trace(            this, text_buffer_character__background_color, cause)
 #define      f2text_buffer_character__background_color__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, text_buffer_character__background_color, cause)
 
-boolean_t raw__text_buffer_characterp(f2ptr this, f2ptr cause);
-f2ptr      f2__text_buffer_characterp(f2ptr this, f2ptr cause);
+boolean_t raw__text_buffer_character__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__text_buffer_character__is_type(f2ptr cause, f2ptr this);
 
 
 // text_buffer

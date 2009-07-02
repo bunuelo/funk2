@@ -1137,9 +1137,9 @@ void debug__end_pause_gc(int pool_index) {
 void pool__pause_gc (int pool_index) {
   memory_mutex__lock(pool_index);
 #ifdef DEBUG
-  if (! __funk2.memory.pool[pool_index].disable_gc) {
-    debug__begin_pause_gc(pool_index);
-  }
+  //if (! __funk2.memory.pool[pool_index].disable_gc) {
+  //  debug__begin_pause_gc(pool_index);
+  //}
 #endif // DEBUG
   __funk2.memory.pool[pool_index].disable_gc ++;
   memory_mutex__unlock(pool_index);
@@ -1149,9 +1149,9 @@ int pool__try_pause_gc (int pool_index) {
   int lock_failed = memory_mutex__try_lock(pool_index);
   if (lock_failed == 0) {
 #ifdef DEBUG
-    if (! __funk2.memory.pool[pool_index].disable_gc) {
-      debug__begin_pause_gc(pool_index);
-    }
+    //if (! __funk2.memory.pool[pool_index].disable_gc) {
+    //  debug__begin_pause_gc(pool_index);
+    //}
 #endif // DEBUG
     __funk2.memory.pool[pool_index].disable_gc ++;
     memory_mutex__unlock(pool_index);
@@ -1189,9 +1189,9 @@ void pool__resume_gc (int pool_index) {
   release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
   __funk2.memory.pool[pool_index].disable_gc --;
 #ifdef DEBUG
-  if (! __funk2.memory.pool[pool_index].disable_gc) {
-    debug__end_pause_gc(pool_index);
-  }
+  //if (! __funk2.memory.pool[pool_index].disable_gc) {
+  //  debug__end_pause_gc(pool_index);
+  //}
 #endif // DEBUG
   memory_mutex__unlock(pool_index);
 }

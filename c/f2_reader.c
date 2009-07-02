@@ -91,7 +91,7 @@ f2ptr __char__symbol_quote           = -1;
 //}
 
 f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
-  if (! raw__streamp(stream, cause)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
+  if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
   f2ptr read_ch = nil;
   while (read_ch == nil) {
     read_ch = f2__stream__try_read_character(cause, stream);
@@ -173,7 +173,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   
   // basic type checking for stream argument
   if (!stream) {printf("\nraw__read: stream is nil."); resume_gc(); return __invalid_argument_type_exception;}
-  if (! raw__streamp(stream, cause)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); resume_gc(); return __invalid_argument_type_exception;}
+  if (! raw__stream__is_type(cause, stream)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); resume_gc(); return __invalid_argument_type_exception;}
   f2ptr first_char;
 
   //char * line = readline (">>>");

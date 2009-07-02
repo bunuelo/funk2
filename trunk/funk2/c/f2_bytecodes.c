@@ -503,7 +503,7 @@ int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr bytecode,
   
   f2__thread__increment_pc(thread, cause);
   
-  if (raw__exceptionp(exp, cause)) {
+  if (raw__exception__is_type(cause, exp)) {
     f2thread__value__set(thread, cause, exp);
   } else {
     f2thread__program_counter__set(thread, cause, exp);
@@ -2152,7 +2152,7 @@ int f2__thread__bytecode__jump(f2ptr thread, f2ptr bytecode, f2ptr new_program_c
   
   f2__thread__increment_pc(thread, cause);
   
-  if (raw__exceptionp(new_program_counter, cause)) {
+  if (raw__exception__is_type(cause, new_program_counter)) {
     f2thread__value__set(thread, cause, new_program_counter);
   } else {
     f2thread__program_counter__set(thread, cause, new_program_counter);
@@ -2179,7 +2179,7 @@ int f2__thread__bytecode__else_jump(f2ptr thread, f2ptr bytecode, f2ptr new_prog
   f2__thread__increment_pc(thread, cause);
   
   if(! f2thread__value(thread, cause)) {
-    if (raw__exceptionp(new_program_counter, cause)) {
+    if (raw__exception__is_type(cause, new_program_counter)) {
       f2thread__value__set(thread, cause, new_program_counter);
     } else {
       f2thread__program_counter__set(thread, cause, new_program_counter);

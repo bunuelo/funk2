@@ -31,7 +31,7 @@
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
-[globalize-funk array-length                         &primfunk:array__length]
+[globalize-funk array-length                                &primfunk:array__length]
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]

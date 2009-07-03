@@ -245,6 +245,7 @@ $(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
 $(compile__bootstrap__repl__img): $(compile__funk2) $(funk2_fu2s)
+	mkdir -p img
 #	echo "break assert_failed"                 >  compile_bootstrap_repl_img.gdb
 #	echo "run $(source__bootstrap__repl__fu2)" >> compile_bootstrap_repl_img.gdb
 #	echo "quit"                                >> compile_bootstrap_repl_img.gdb
@@ -253,6 +254,7 @@ $(compile__bootstrap__repl__img): $(compile__funk2) $(funk2_fu2s)
 
 # bootstrap the funk2 processor from a basic repl-prompt.
 $(compile__bootstrap__img): $(compile__bootstrap__repl__img) $(funk2_fu2s)
+	mkdir -p img
 #	echo "break assert_failed"           >  compile_bootstrap_img.gdb
 #	echo "run $(source__bootstrap__fu2)" >> compile_bootstrap_img.gdb
 #	echo "quit"                          >> compile_bootstrap_img.gdb

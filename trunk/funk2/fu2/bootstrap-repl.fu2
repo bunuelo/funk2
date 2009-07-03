@@ -268,10 +268,10 @@
   [apply [object-slot-get_funk this slot_name] [cons this nil]]]
 
 [defunk object-set [slot_name this value]
-  [apply [object-slot-get_funk this slot_name] [cons this [cons value nil]]]]
+  [apply [object-slot-set_funk this slot_name] [cons this [cons value nil]]]]
 
 [defunk object-execute [slot_name this :rest args]
-  [apply [object-slot-get_funk this slot_name] args]]
+  [apply [object-slot-execute_funk this slot_name] args]]
 
 [globalize-funk cons &primfunk:cons__new]
 [defmetro car [x] `[object-get `car ,x]]

@@ -19,6 +19,8 @@
  rights to redistribute these changes.
 '
 
+[globalize-funk primobject_type-new                      &primfunk:primobject_type__new]
+[globalize-funk primobject_type-add_slot                 &primfunk:primobject_type__add_slot]
 [globalize-funk primobject_type-lookup_slot_get_funk     &primfunk:primobject_type__lookup_slot_get_funk]
 [globalize-funk primobject_type-lookup_slot_set_funk     &primfunk:primobject_type__lookup_slot_set_funk]
 [globalize-funk primobject_type-lookup_slot_execute_funk &primfunk:primobject_type__lookup_slot_execute_funk]

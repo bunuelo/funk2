@@ -1,0 +1,32 @@
+Format: 1.8
+Date: Sun, 31 May 2009 18:58:42 -0400
+Source: funk2
+Binary: funk2
+Architecture: source i386
+Version: 2.06.2009.05.31-1
+Distribution: unstable
+Urgency: low
+Maintainer: Bo Morgan <bo@mit.edu>
+Changed-By: Bo Morgan <bo@mit.edu>
+Description: 
+ funk2      - reflective programming language
+Closes: 0004
+Changes: 
+ funk2 (2.06.2009.05.31-1) unstable; urgency=low
+ .
+   * Initial release (Closes: #0004)  <nnnn is the bug number of your ITP>
+Checksums-Sha1: 
+ 8f47dcdf13cbefcb7ee2d72e8dc92d95a967f88e 783 funk2_2.06.2009.05.31-1.dsc
+ b8f06f329b6ce72b42b695ddc89401c5ceb23ce0 496281 funk2_2.06.2009.05.31.orig.tar.gz
+ 44b59f61b5d177e3305668fd46053c81552c3edc 9879 funk2_2.06.2009.05.31-1.diff.gz
+ af09fa196ac09697ffe59ccac2f427880a37c49d 40552832 funk2_2.06.2009.05.31-1_i386.deb
+Checksums-Sha256: 
+ 887fbdd9e7e63b1e514e155d6fadfd6c55279b047995e9532262d767a4d8aa91 783 funk2_2.06.2009.05.31-1.dsc
+ 6bfd6a51f25b551df7b8a4d1476156c2379b8c9b2687dd3f53be3d74556238a9 496281 funk2_2.06.2009.05.31.orig.tar.gz
+ b113794baa48edfad4f354c51692e80dfb7c36ef49d9cfa9f567160b4a8846c0 9879 funk2_2.06.2009.05.31-1.diff.gz
+ 79ed82439e07215098e0e17495d2db3cb7a9f670662a7a7455427551658150b3 40552832 funk2_2.06.2009.05.31-1_i386.deb
+Files: 
+ 980c630a020895c4ef596e35e4dade31 783 science optional funk2_2.06.2009.05.31-1.dsc
+ 392e58ce3ee872f76ac4011e107620ba 496281 science optional funk2_2.06.2009.05.31.orig.tar.gz
+ 8092eeafeea4a9a873139dce50697eb7 9879 science optional funk2_2.06.2009.05.31-1.diff.gz
+ 62449f6bfcce116ee74a045e689ed077 40552832 science optional funk2_2.06.2009.05.31-1_i386.deb

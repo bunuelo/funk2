@@ -1,0 +1,103 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[load 'fu2/bootstrap-thread.fu2']
+[load 'fu2/bootstrap-bugs.fu2']
+[load 'fu2/bootstrap-boot.fu2']
+[load 'fu2/bootstrap-math.fu2']
+[load 'fu2/bootstrap-set_theory.fu2']
+[load 'fu2/bootstrap-ansi.fu2']
+[load 'fu2/bootstrap-termios.fu2']
+[load 'fu2/bootstrap-blocks_world.fu2']
+[load 'fu2/bootstrap-semantic_graph.fu2']
+[load 'fu2/bootstrap-critics-reactive.fu2']
+[load 'fu2/bootstrap-action.fu2']
+[load 'fu2/bootstrap-string.fu2']
+[load 'fu2/bootstrap-child_handler.fu2']
+[load 'fu2/bootstrap-apropos.fu2']
+
+`[load 'fu2/action.fu2']
+[load 'fu2/remember.fu2']
+[load 'fu2/time.fu2']
+
+`[load 'fu2/bootstrap-primobject_type.fu2']
+`[load 'fu2/bootstrap-graph.fu2']
+`[load 'fu2/bootstrap-dlfcn.fu2']
+`[load 'fu2/bootstrap-gmodule.fu2']
+`[load 'fu2/bootstrap-alien.fu2']
+`[load 'fu2/bootstrap-dynamic_library.fu2']
+
+
+[globalize load-utilities nil]
+[defunk load-utilities []
+  [load 'fu2/errno.fu2']
+  [load 'fu2/socket.fu2']
+  [load 'fu2/fcntl.fu2']
+  [load 'fu2/ioctl.fu2']]
+[if load-utilities [load-utilities]]
+
+[globalize load-basic-ai nil]
+[defunk load-basic-ai []
+  `[load 'fu2/link-grammar-wrapper.fu2']
+   [load 'fu2/conceptnet.fu2']
+   [load 'som-2009/blocks_world.fu2']
+   ]
+[if load-basic-ai [load-basic-ai]]
+
+[format stdout '\nsaving img/bootstrap.img.']
+
+[memory_image-save 'img/bootstrap.img']
+
+[format stdout '\ndone.\n']
+
+[quit]
+
+
+
+`[prog
+  
+  `[parload 'fu2/miscfunks.fu2'
+	    'fu2/cause.fu2'
+	    ]
+   
+   `[seqload 'fu2/actor.fu2']
+    
+    'fu2/x86-compile.fu2'
+    
+  [parload 'fu2/socket-client.fu2'
+	   'fu2/socket-server.fu2']
+  
+  'fu2/opengl.fu2'
+  
+  [parload 'fu2/bootstrap-critic.fu2'
+	   'fu2/bootstrap-default_critics.fu2']
+  
+  'fu2/roboverse.fu2'
+  
+  `['fu2/brainviz.fu2']
+   
+   `[seqload 'fu2/neuralmom-demo.fu2']
+    
+    [seqload 'fu2/bootstrap-grid.fu2'
+	     'fu2/serialize.fu2']
+    
+    ]
+

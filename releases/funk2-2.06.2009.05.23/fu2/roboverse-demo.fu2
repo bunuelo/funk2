@@ -1,0 +1,164 @@
+' 
+ Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+
+`[load 'fu2/roboverse.fu2']
+
+[defunk roboframe? [exp] [and [array? exp] [eq [array-elt exp 0] `roboframe]]]
+[defunk roboframe [type :rest slotvalues]
+  [let [[slotvalue_iter  slotvalues]
+	[slotvalue_pairs nil]]
+    [while slotvalue_iter
+      [= slotvalue_pairs [cons [cons [car slotvalue_iter] [cadr slotvalue_iter]] slotvalue_pairs]]
+      [= slotvalue_iter [cddr slotvalue_iter]]]
+    [let [[this [array-new 3]]]
+      [put `roboframe      [array-elt this 0]]
+      [put type            [array-elt this 1]]
+      [put slotvalue_pairs [array-elt this 2]]
+      this]]]
+[defmetro roboframe-type                 [this] `[array-elt ,this 1]]
+[defmetro roboframe-slotvalue_pairs      [this] `[array-elt ,this 2]]
+[defmetro roboframe-slotvalue_pair-slot  [this] `[car ,this]]
+[defmetro roboframe-slotvalue_pair-value [this] `[cdr ,this]]
+
+[defunk roboframe-slot_value [this slot]
+  [let [[slotvalue_pair_iter [roboframe-slotvalue_pairs this]]
+	[return_value        nil]]
+    [while slotvalue_pair_iter
+      [if [eq slot [roboframe-slotvalue_pair-slot [car slotvalue_pair_iter]]]
+	  [prog [= return_value [roboframe-slotvalue_pair-value [car slotvalue_pair_iter]]]
+		[= slotvalue_pair_iter nil]]
+	[= slotvalue_pair_iter [cdr slotvalue_pair_iter]]]]
+    return_value]]
+
+[defmetro xy_position [x y] `[roboframe `location_frame-xy_position `:x ,x `:y ,y]]
+
+[defmetro is_visible_to [actor   object]   `[roboframe `sensor_frame-is_visible_to `:actor   [quote ,actor]   `:object   ,object]]
+[defmetro is_touching   [subject object]   `[roboframe `sensor_frame-is_touching   `:subject [quote ,subject] `:object   ,object]]
+[defmetro is_holding    [actor   object]   `[roboframe `sensor_frame-is_holding    `:actor   [quote ,actor]   `:object   ,object]]
+[defmetro at_location   [object  location] `[roboframe `sensor_frame-at_location   `:object  [quote ,object]  `:location ,location]]
+[defmetro has_speed     [object  speed]    `[roboframe `sensor_frame-has_speed     `:object  [quote ,object]  `:speed    ,speed]]
+[defmetro is_attached   [subject object]   `[roboframe `sensor_frame-is_attached   `:subject [quote ,subject] `:object   ,object]]
+
+[defmetro moves_to [actor target]        `[roboframe `behavior_frame-moves_to `:actor [quote ,actor] `:target    ,target]]
+[defmetro looks_at [actor target]        `[roboframe `behavior_frame-looks_at `:actor [quote ,actor] `:target    ,target]]
+[defmetro grasps   [actor object]        `[roboframe `behavior_frame-grasps   `:actor [quote ,actor] `:object    ,object]]
+[defmetro releases [actor object]        `[roboframe `behavior_frame-releases `:actor [quote ,actor] `:object    ,object]]
+[defmetro attaches [actor object target] `[roboframe `behavior_frame-attaches `:actor [quote ,actor] `:object    ,object    `:target ,target]]
+[defmetro says     [actor statement]     `[roboframe `behavior_frame-says     `:actor [quote ,actor] `:statement ,statement]]
+
+[defmetro desires  [actor frame] `[roboframe `actor_frame-desires  `:actor [quote ,actor] `:frame ,frame]]
+[defmetro observes [actor frame] `[roboframe `actor_frame-observes `:actor [quote ,actor] `:frame ,frame]]
+[defmetro does     [actor frame] `[roboframe `actor_frame-does     `:actor [quote ,actor] `:frame ,frame]]
+[defmetro believes [actor frame] `[roboframe `actor_frame-does     `:actor [quote ,actor] `:frame ,frame]]
+
+[defmetro sequential [:rest frames] `[roboframe `order_frame-sequential `:frames [list @frames]]]
+
+[defmetro narrative [name :rest frames] `[roboframe `narrative_frame `:name [quote ,name] `:frames [list @frames]]]
+
+[defunk robot-new [name id props narratives]
+  [let [[this [array-new 5]]]
+    [put `robot     [elt this 0]]
+    [put name       [elt this 1]]
+    [put id         [elt this 2]]
+    [put props      [elt this 3]]
+    [put narratives [elt this 4]]
+    this]]
+[defmetro robot-name       [this] `[elt ,this 1]]
+[defmetro robot-id         [this] `[elt ,this 2]]
+[defmetro robot-props      [this] `[elt ,this 3]]
+[defmetro robot-narratives [this] `[elt ,this 4]]
+
+[defmetro robot-reactive_layer [robot]
+  `[let [[robot ,robot]
+	 [x      -4]
+	 [y      -4]
+	 [z       0]]
+     [trace-off [while still_running
+		  [format stdout '\nrobot (' [robot-name robot] ') here.']
+		  [roboverse-robot-move_to [robot-id robot] [integer-to_double x] [integer-to_double y] [integer-to_double z]] 
+		  [= x [- x]]
+		  [= y [- y]]
+		  ]
+		[format stdout '\nexiting (' [robot-name robot] ') robot loop.']]]]
+
+[defmetro robot-reflective_layer [reactive_thread]
+  `[let [[reactive_thread ,reactive_thread]]
+     [trace-off [let [[last_seen_trace nil]]
+		  [while still_running
+		    [format stdout '\nreflective layer here.']
+		    [let [[current_trace [thread-trace reactive_thread]]]
+		      [if [not [eq current_trace last_seen_trace]]
+			  [prog [print '\nnew trace!']
+				[= last_seen_trace current_trace]]
+			[print '\nold trace...']]]]]]]]
+
+[format stdout
+	'\nIn EM-ONE, I have used the term "architecture" to refer to the /structure and arrangement of commonsense knowledge and processes./  '
+	'\nThere is an analogue in biology.  '
+	'\nEvery cell has an architecture that is at some level common across all cells and even to some extent across all living organisms.  '
+	'\nBut to make up a person, these cells need to be organized into larger groups forming the various organs and systems of the body, each which possesses its own special ways to arrange cells.  '
+	'\nThe brain in particular seems to be divided into hundreds of distinct centers.  ']
+
+[defunk demo-run []
+  [roboverse-init_library]
+  [roboverse-start 0 1]
+  [format stdout '\nsimulation started.']
+  [let [[green-robot `[robot-new 'green'
+				 [roboverse-lookup_robot [- [string-to_new_raw_c_string 'green'] #x0]]
+				 [list [desires green [moves_to green [xy_position -10 -10]]]
+				       ]
+				 [list [narrative green_moves_to_position
+						  [sequential [observes green [at_location green [xy_position 5 3]]]
+							      [desires  green [moves_to    green [xy_position 0 0]]]
+							      [does     green [moves_to    green [xy_position 0 0]]]
+							      [observes green [at_location green [xy_position 0 0]]]]]]
+				 ]]
+	[pink-robot  `[robot-new 'pink'
+				 [roboverse-lookup_robot [- [string-to_new_raw_c_string 'pink']  #x0]]
+				 []
+				 []]]]
+    `[format stdout '\ngreen_robot = ']
+    `[format stdout [robot-id green-robot]]
+    `[format stdout '\npink_robot  = ']
+    `[format stdout [robot-id pink-robot]]
+    [let [[still_running t]]
+      [let [[  green-reactive_layer-thread   `[thread [funk [robot]           [robot-reactive_layer   robot]]           [list green-robot]]]]
+	[let [[green-reflective_layer-thread `[thread [funk [reactive_thread] [robot-reflective_layer reactive_thread]] [list green-reactive_layer-thread]]]]
+	  [define-funk loop
+	    [funk []
+		  [let [[key [roboverse-simulation_window-check_keypress]]]
+		    [format stdout '\nkey: '] [format stdout key] 
+		    'Q - quit'
+		    [if [!= key 113]
+			[prog [format stdout ' looping...']
+			      [roboverse-simulation_thread-step_time [/ [integer-to_double 1] [integer-to_double 2]]]
+			      
+			      [loop]]]]]]
+	  [loop]
+	  [= still_running nil]]]]]
+  [roboverse-stop]
+  [print 'Demo done.']]
+
+
+		
+	  
+

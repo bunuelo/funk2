@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Mon, 29 Jun 2009 18:48:26 +0000
+Source: funk2
+Binary: funk2
+Architecture: source i386
+Version: 2.06.2009.06.29
+Distribution: unstable
+Urgency: low
+Maintainer: Bo Morgan <bo@mit.edu>
+Changed-By: Bo Morgan <bo@mit.edu>
+Description: 
+ funk2      - reflective programming language
+Closes: 0004
+Changes: 
+ funk2 (2.06.2009.06.29)   unstable; urgency=low
+ .
+   * Initial release (Closes: #0004)
+Checksums-Sha1: 
+ db22151be42a677f3b6fdba83080ec87e857412e 750 funk2_2.06.2009.06.29.dsc
+ f72c69e2ad4348cc95152dbf7cb94076cece7a0f 558163 funk2_2.06.2009.06.29.tar.gz
+ e7d98f064b41994fe8b07be68d42fe134c4af580 40128842 funk2_2.06.2009.06.29_i386.deb
+Checksums-Sha256: 
+ 036e881c9e7752977190b7a8ceca43c0837f961224bba48447ae266f25f24de2 750 funk2_2.06.2009.06.29.dsc
+ d1af23d77380f3f9554dccc2c7ead5a623e2aee9030585cc7c9dbdd4f428cc04 558163 funk2_2.06.2009.06.29.tar.gz
+ f8dd92abefe46eb978c748d646028edc7d24ff249dd059e1ae54667ef8517fa3 40128842 funk2_2.06.2009.06.29_i386.deb
+Files: 
+ 602047f7096a4246e60817e0039c6b6f 750 science optional funk2_2.06.2009.06.29.dsc
+ 778df363ff9c9c59c221a388bb915b94 558163 science optional funk2_2.06.2009.06.29.tar.gz
+ de34437c79da3e52aaa01f8987112813 40128842 science optional funk2_2.06.2009.06.29_i386.deb
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFKSSOoTl4SjsKMJkQRAi0pAJ4rDlqJ/E1V7jUPrZwp/WlnIDaUQwCg6UGR
+kmu7Imx6oZ7ToqDYKFg8TTg=
+=J4Da
+-----END PGP SIGNATURE-----

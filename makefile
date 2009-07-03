@@ -1,4 +1,3 @@
-<<<<<<< HEAD:makefile
 # 
 # Copyright (c) 2007-2009 Bo Morgan.
 # All rights reserved.
@@ -360,50 +359,3 @@ readline:
 rlglue:
 	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue__dir); make; make install
 #	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue__dir) --with-rl-glue=$(install__rlglue__dir); make; make install
-=======
-pwd = $(shell pwd)/
-date = $(shell date -R)
-date_tag = $(shell date +%Y.%m.%d)
-version = $(shell cat trunk/funk2/version)
-version_tag = $(version).$(date_tag)
-package_rootname = funk2-$(version_tag)
-tmp_dir = $(pwd)tmp/
-funk2_tmp_dir = $(tmp_dir)funk2-deb/
-deb_create_dir = $(funk2_tmp_dir)deb_create_dir/
-export_dir = $(deb_create_dir)$(package_rootname)/
-
-clean-export:
-	rm -Rf $(export_dir)
-
-export:
-	mkdir -p $(deb_create_dir)
-	svn export trunk/funk2 $(export_dir)
-
-tar.gz: export
-	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar
-
-changelog:
-	echo "funk2 ($(version_tag))   unstable; urgency=low" >  trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-	echo "  * Initial release (Closes: #0004)"            >> trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-
-deb: changelog export
-	unset POSIXLY_CORRECT; cd $(export_dir); dpkg-buildpackage -rfakeroot
-	mkdir -p releases/$(package_rootname)/
-	cp $(deb_create_dir)/*.deb releases/$(package_rootname)/
-	cp $(deb_create_dir)/*.dsc releases/$(package_rootname)/
-	cp $(deb_create_dir)/*.changes releases/$(package_rootname)/
-	cp $(deb_create_dir)/*.tar.gz releases/$(package_rootname)/
-	lintian $(deb_create_dir)/*.deb
-
-clean-deb:
-	rm -Rf $(deb_create_dir)
-
-clean: clean-export clean-deb
->>>>>>> d603735ee77ace7bbb49756f259ce5c211936d4e:makefile
-
-

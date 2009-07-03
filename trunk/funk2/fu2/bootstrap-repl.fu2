@@ -264,24 +264,24 @@
 [defmetro new [type_name :rest args]
   `[object-new ,type_name @args]]
 
-[defunk object-get [slot_name this]
+[defunk object-get [this slot_name]
   [apply [object-slot-get_funk this slot_name] [cons this nil]]]
 
-[defunk object-set [slot_name this value]
+[defunk object-set [this slot_name value]
   [apply [object-slot-set_funk this slot_name] [cons this [cons value nil]]]]
 
-[defunk object-execute [slot_name this :rest args]
+[defunk object-execute [this slot_name :rest args]
   [apply [object-slot-execute_funk this slot_name] args]]
 
 [globalize-funk cons &primfunk:cons__new]
-[defmetro car [x] `[object-get `car ,x]]
-[defmetro cdr [x] `[object-get `cdr ,x]]
+[defmetro car [x] `[object-get ,x `car]]
+[defmetro cdr [x] `[object-get ,x `cdr]]
 
 [defunk is-type [type_name exp]
   [apply [primobject_type-lookup_slot_execute_funk [lookup_type type_name] `is_type] [cons exp nil]]]
 
 [defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
-[wrong_argument_number_error-set [object-get `body_bytecodes &wrong_argument_number_error]]
+[wrong_argument_number_error-set [object-get &wrong_argument_number_error `body_bytecodes]]
 
 [defmetro cadr [seq]
   `[car [cdr ,seq]]]

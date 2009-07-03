@@ -195,6 +195,7 @@ include config.mak
 include makefile.cfg
 
 bin/configurator: c/configurator.c
+	mkdir -p bin
 	gcc $(cc_flags) c/configurator.c -o $@
 
 configure: bin/configurator

@@ -239,6 +239,7 @@ configure-append-defines:
 	echo ""
 
 $(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
+	mkdir -p bin
 	gcc $(cc_flags) $(type_bits_flags) $(funk2_objs) $(libs) $(dynamic_library_linker_flags) -o $@
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).

@@ -22,7 +22,7 @@
 [defunk bug-symbolic_type [this]
   [if [not [is-type `bug this]]
       `not-bug
-    [let [[type [bug-type this]]]
+    [let [[type [object-get this `type]]]
       [let [[symbolic_type [if [is-type `symbol type]
 			       type
 			     [if [is-type `integer type]

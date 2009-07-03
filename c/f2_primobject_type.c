@@ -29,7 +29,7 @@ void f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr ge
   if (set_funk)     {frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"),     (u8*)"set_funk"),     name, set_funk);}
   if (execute_funk) {frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), name, execute_funk);}
 }
-def_pcfunk5(primobject_type__add_slot, this, name, get_funk, set_funk, execute_funk, return f2__primobject_type__add_slot(this_cause, this, name, get_funk, set_funk, execute_funk));
+def_pcfunk5(primobject_type__add_slot, this, name, get_funk, set_funk, execute_funk, f2__primobject_type__add_slot(this_cause, this, name, get_funk, set_funk, execute_funk); return nil);
 
 f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr slot_name) {return frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"), slot_name, nil);}
 def_pcfunk2(primobject_type__lookup_slot_get_funk, this, slot_name, return f2__primobject_type__lookup_slot_get_funk(this_cause, this, slot_name));

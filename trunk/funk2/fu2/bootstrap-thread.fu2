@@ -47,7 +47,7 @@
 	rest]]]
 
 [defunk thread-print_backtrace [this]
-  [format stdout '\nthread-print_backtrace not implemented yet.']
+  `[format stdout '\nthread-print_backtrace not implemented yet.']
   nil]
 
 

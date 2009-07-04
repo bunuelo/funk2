@@ -30,7 +30,7 @@ changelog-write_new:
 	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
 
-deb: changelog-write_new export
+deb: export changelog-write_new
 	unset POSIXLY_CORRECT; cd $(export_dir); dpkg-buildpackage -rfakeroot
 	mkdir -p releases/$(package_rootname)/
 	cp $(deb_create_dir)/*.deb releases/$(package_rootname)/

@@ -167,8 +167,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      exit_reason__found_larva
 	    } exit_reason = exit_reason__none;
 	    
-	    f2thread__last_executed_time__set(thread, cause, f2integer__new(cause, raw__system_microseconds_since_1970()));
-	    
 	    int i = 1000;
 	    while (! exit_reason) {
 	      if(i == 0) {
@@ -196,35 +194,43 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      i --;
 	    }
 	    
+	    f2thread__last_executed_time__set(thread, cause, f2integer__new(cause, raw__system_microseconds_since_1970()));
+	    
 	    if(exit_reason == exit_reason__found_larva) {
 	      need_to_launch_larva_handling_critic_thread = 1;
 	    }
 	    
 	    //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
 	  } else {
-	    f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);
-	    //printf("\n  thread completed.");
-	    if (! f2thread__keep_undead(thread, cause)) {
-	      f2ptr last_executed_time = f2thread__last_executed_time(thread, cause);
-	      if (last_executed_time) {
-		u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
-		if (raw__system_microseconds_since_1970() - raw_last_executed_time > 10 * 1000000) {
-		  // Removing a thread is not thread-safe.  It breaks things, so it needs to be fixed.
-		  f2ptr processor__active_threads_mutex;
-		  int lock_failed;
-		  do {
-		    //f2__global_scheduler__execute_mutex__lock(cause);
-		    processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-		    lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
-		    //f2__global_scheduler__execute_mutex__unlock(cause);
-		  } while (lock_failed);
-		  if (prev_thread_iter) {
-		    f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
-		  } else {
-		    f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+	    if (! f2thread__is_zombie(thread, cause)) {
+	      f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);
+	    } else {
+	      //printf("\n  thread completed.");
+	      if (! f2thread__keep_undead(thread, cause)) {
+		f2ptr last_executed_time = f2thread__last_executed_time(thread, cause);
+		if (last_executed_time) {
+		  u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
+		  if (raw__system_microseconds_since_1970() - raw_last_executed_time > 1 * 1000000) {
+		    // bug: removing a thread here seems to drop needed threads sometimes.  (why?)
+		    f2ptr processor__active_threads_mutex;
+		    int lock_failed;
+		    do {
+		      //f2__global_scheduler__execute_mutex__lock(cause);
+		      processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
+		      lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+		      //f2__global_scheduler__execute_mutex__unlock(cause);
+		      if (lock_failed) {
+			f2__sleep(1);
+		      }
+		    } while (lock_failed);
+		    if (prev_thread_iter) {
+		      f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
+		    } else {
+		      f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+		    }
+		    f2mutex__unlock(processor__active_threads_mutex, cause);
+		    prev_thread_iter__already_set = 1;
 		  }
-		  f2mutex__unlock(processor__active_threads_mutex, cause);
-		  prev_thread_iter__already_set = 1;
 		}
 	      }
 	    }

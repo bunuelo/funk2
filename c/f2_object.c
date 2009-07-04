@@ -43,15 +43,16 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
     if (raw__primobject__is_type(cause, this)) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
-      f2ptr primobject_type = nil;
       if (primobject_type_name == __frame__symbol) {
-	primobject_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
-      } else {
-	primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	if (test_get_type) {
+	  primobject_type_name = test_get_type;
+	}
       }
-      printf("\nprimobject_type = "); fflush(stdout);
-      f2__print(cause, primobject_type); fflush(stdout);
-      printf("\n"); fflush(stdout);
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+      //printf("\nprimobject_type = "); fflush(stdout);
+      //f2__print(cause, primobject_type); fflush(stdout);
+      //printf("\n"); fflush(stdout);
       if (primobject_type == nil) {
 	printf("\nprimobject_type = nil\n"); fflush(stdout);
 	return nil;
@@ -94,12 +95,13 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_traced_array:
     if (raw__primobject__is_type(cause, this)) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
-      f2ptr primobject_type = nil;
       if (primobject_type_name == __frame__symbol) {
-	primobject_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
-      } else {
-	primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	if (test_get_type) {
+	  primobject_type_name = test_get_type;
+	}
       }
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
       if (primobject_type == nil) {
 	return nil;
       }
@@ -140,12 +142,13 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_traced_array:
     if (raw__primobject__is_type(cause, this)) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
-      f2ptr primobject_type = nil;
       if (primobject_type_name == __frame__symbol) {
-	primobject_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
-      } else {
-	primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
+	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	if (test_get_type) {
+	  primobject_type_name = test_get_type;
+	}
       }
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
       if (primobject_type == nil) {
 	return nil;
       }

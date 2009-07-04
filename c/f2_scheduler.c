@@ -207,6 +207,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    if (! f2thread__keep_undead(thread, cause)) {
 	      f2ptr last_executed_time = f2thread__last_executed_time(thread, cause);
 	      if (last_executed_time != nil) {
+		f2__print(cause, last_executed_time); fflush(stdout);
 		u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
 		if ((raw__system_microseconds_since_1970() - raw_last_executed_time) > 10 * 1000000) {
 		  

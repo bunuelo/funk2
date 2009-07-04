@@ -19,6 +19,7 @@
  rights to redistribute these changes.
 '
 
+[globalize-funk frame-is_type              &primfunk:frame__is_type]
 [globalize-funk frame-new                  &primfunk:frame__new]
 [globalize-funk frame-add_var_value        &primfunk:frame__add_var_value]
 [globalize-funk frame-lookup_var_value     &primfunk:frame__lookup_var_value]

@@ -47,6 +47,10 @@ f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
   return result;
 }
 
+boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}
+f2ptr f2__frame__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__frame__is_type(cause, x));}
+def_pcfunk1(frame__is_type, x, return f2__frame__is_type(this_cause, x));
+
 void  frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
   f2ptr type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
@@ -176,6 +180,7 @@ void f2__primobject_frame__initialize() {
   
   f2__primobject_frame__reinitialize_globalvar__symbols();
   
+  f2__primcfunk__init__1(frame__is_type, exp, "checks to see if object is a frame.  returns true is object is a frame and false otherwise.");
   f2__primcfunk__init(frame__new, "");
   f2__primcfunk__init(frame__add_var_value, "");
   f2__primcfunk__init(frame__lookup_var_value, "");

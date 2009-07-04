@@ -21,23 +21,29 @@
 
 [defmetro deftype [type_name :rest slotdefs]
   [let [[primobject_type [primobject_type-new]]]
-    [primobject_type-add_slot primobject_type `new nil nil [eval `[funk-unlabeled ,type_name []
-										   [let [[this [frame-new]]]
-										     [prog @[mapcar [funk [slotdef]
-													  [if [is-type `symbol slotdef]
-													      `[frame-add_var_value this [quote ,slotdef] nil]
-													    [error `type-creation-new `[,type_name ,slotdef]]]]
-												    slotdefs]]
-										     this]]]]
-    
-    
+    [primobject_type-add_slot primobject_type `new
+			      nil
+			      nil
+			      [eval `[funk-unlabeled new []
+						     [let [[this [frame-new]]]
+						       [prog @[mapcar [funk [slotdef]
+									    [if [is-type `symbol slotdef]
+										`[frame-add_var_value this [quote ,slotdef] nil]
+									      [error `type-creation-new `[,type_name ,slotdef]]]]
+								      slotdefs]]
+						       this]]]]
+    [primobject_type-add_slot primobject_type `is_type
+			      nil
+			      nil
+			      [eval `[funk-unlabeled is_type [exp]
+						     [and exp [frame-is_type exp] [eq [quote ,type_name] [frame-lookup_var_value exp `type]]]]]]
     [mapc [funk [slotdef]
 		[if [is-type `symbol slotdef]
 		    [primobject_type-add_slot primobject_type slotdef
-					      [eval `[funk [this]
-							   [frame-lookup_var_value this [quote ,slotdef]]]]
-					      [eval `[funk [this value]
-							   [frame-var_value-set this [quote ,slotdef] value]]]
+					      [eval `[funk-unlabeled ,slotdef [this]
+								      [frame-lookup_var_value this [quote ,slotdef]]]]
+					      [eval `[funk-unlabeled ,slotdef [this value]
+								      [frame-var_value-set this [quote ,slotdef] value]]]
 					      nil]
 		  [error [error `type-creation-slot `[,type_name ,slotdef]]]]]
 	  slotdefs]

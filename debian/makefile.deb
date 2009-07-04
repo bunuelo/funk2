@@ -15,7 +15,7 @@ clean-export:
 
 export:
 	mkdir -p $(deb_create_dir)
-	git clone .. $(export_dir)
+	git clone .. $(export_dir_name)
 
 tar.gz: export
 	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar

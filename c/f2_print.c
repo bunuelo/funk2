@@ -856,6 +856,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    f2ptr type_hashtable__bin_array         = f2hashtable__bin_array(type_hashtable, cause);
 	    int   type_hashtable__bin_array__length = raw__array__length(cause, type_hashtable__bin_array);
 	    
+	    boolean_t need_to_print_type_besides_basic_variable = boolean__false; // if this is false, we can omit printing "variable" before each frame variable key.
+	    
 	    {
 	      int type__bin_array__index;
 	      for (type__bin_array__index = 0; type__bin_array__index < type_hashtable__bin_array__length; type__bin_array__index ++) {
@@ -865,9 +867,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		  f2ptr type_keyvalue_pair__key = f2cons__car(type_keyvalue_pair, cause);
 		  if (raw__symbol__is_type(cause, type_keyvalue_pair__key)) {
 		    int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
-		    if (type_key__length > max_type_name_length) {
-		      max_type_name_length = type_key__length;
-		    }
 		    
 		    {
 		      f2ptr typevar_hashtable                    = f2cons__cdr(type_keyvalue_pair, cause);
@@ -883,6 +882,13 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 			    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
 			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
 			    if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
+			      if (keyvalue_pair__key != __frame__variable_type__symbol) {
+				need_to_print_type_besides_basic_variable = boolean__true;
+			      }
+			      // here, we only update max_type_name_length if this type_name actually has a key that we are going to print.
+			      if (type_key__length > max_type_name_length) {
+				max_type_name_length = type_key__length;
+			      }
 			      int key__length = f2symbol__length(keyvalue_pair__key, cause);
 			      if (key__length > max_slot_name_length) {
 				max_slot_name_length = key__length;
@@ -931,23 +937,34 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair,      cause);
 			    if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
 			      int   key__length   = f2symbol__length(keyvalue_pair__key, cause);
-			      char* framekey__str = (char*)alloca(type_key__length + 1 + key__length + 1);
-			      f2symbol__str_copy(type_keyvalue_pair__key, cause, (u8*)framekey__str);
-			      {
-				int i;
-				for (i = type_key__length; i <= max_type_name_length; i ++) {
-				  framekey__str[i] = ' ';
+			      char* framekey__str = NULL;
+			      int   framekey__length = 0;
+			      
+			      if (need_to_print_type_besides_basic_variable) {
+				framekey__str = (char*)alloca(type_key__length + 1 + key__length + 1);
+				f2symbol__str_copy(type_keyvalue_pair__key, cause, (u8*)framekey__str);
+				{
+				  int i;
+				  for (i = type_key__length; i <= max_type_name_length; i ++) {
+				    framekey__str[i] = ' ';
+				  }
 				}
+				f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str + max_type_name_length + 1);
+				framekey__str[max_type_name_length + 1 + key__length] = 0;
+				framekey__length = max_type_name_length + 1 + max_slot_name_length;
+			      } else {
+				framekey__str = (char*)alloca(key__length + 1);
+				f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str);
+				framekey__str[key__length] = 0;
+				framekey__length = max_slot_name_length;
 			      }
-			      f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str + max_type_name_length + 1);
-			      framekey__str[max_type_name_length + 1 + key__length] = 0;
 			      int subexp_size[2];
 			      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 			      f2ptr slot_value             = f2cons__cdr(keyvalue_pair, cause);
 			      f2ptr slot_value__tracing_on = f2cons__cdr__tracing_on(keyvalue_pair, cause);
 			      f2ptr slot_value__trace      = f2cons__cdr__trace(keyvalue_pair, cause);
 			      f2ptr slot_value__cause      = f2cons__cdr__imagination_frame(keyvalue_pair, cause);
-			      {f2__write_pretty__slot_key_and_value(framekey__str, max_type_name_length + 1 + max_slot_name_length, cause, stream, slot_value, slot_value__tracing_on, slot_value__trace, slot_value__cause,
+			      {f2__write_pretty__slot_key_and_value(framekey__str, framekey__length, cause, stream, slot_value, slot_value__tracing_on, slot_value__trace, slot_value__cause,
 								    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 			    }
 			    keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);

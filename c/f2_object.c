@@ -49,6 +49,9 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
       } else {
 	primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
       }
+      printf("\nprimobject_type = "); fflush(stdout);
+      f2__print(cause, primobject_type); fflush(stdout);
+      printf("\n"); fflush(stdout);
       if (primobject_type == nil) {
 	printf("\nprimobject_type = nil\n"); fflush(stdout);
 	return nil;

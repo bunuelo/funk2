@@ -26,11 +26,21 @@
 										     [prog @[mapcar [funk [slotdef]
 													  [if [is-type `symbol slotdef]
 													      `[frame-add_var_value this [quote ,slotdef] nil]
-													    [error `type-creation `[,type_name ,slotdef]]]]
+													    [error `type-creation-new `[,type_name ,slotdef]]]]
 												    slotdefs]]
 										     this]]]]
     
     
+    [mapc [funk [slotdef]
+		[if [is-type `symbol slotdef]
+		    [primobject_type-add_slot primobject_type slotdef
+					      [eval `[funk [this]
+							   [frame-lookup_var_value this [quote ,slotdef]]]]
+					      [eval `[funk [this value]
+							   [frame-var_value-set this [quote ,slotdef] value]]]
+					      nil]
+		  [error [error `type-creation-slot `[,type_name ,slotdef]]]]]
+	  slotdefs]
     [add_type type_name primobject_type]]
   nil]
 

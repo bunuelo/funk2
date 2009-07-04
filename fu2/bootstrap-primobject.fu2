@@ -19,7 +19,7 @@
  rights to redistribute these changes.
 '
 
-[defunk deftype [type_name :rest slotdefs]
+[defmetro deftype [type_name :rest slotdefs]
   [let [[primobject_type [primobject_type-new]]]
     [primobject_type-add_slot primobject_type `new nil nil [eval `[funk-unlabeled ,type_name []
 										   [let [[this [frame-new]]]

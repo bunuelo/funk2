@@ -261,9 +261,6 @@
 [defunk object-new [type_name :rest args]
   [apply [primobject_type-lookup_slot_execute_funk [lookup_type type_name] `new] args]]
 
-[defmetro new [type_name :rest args]
-  `[object-new ,type_name @args]]
-
 [defunk object-get [this slot_name]
   [apply [object-slot-get_funk this slot_name] [cons this nil]]]
 
@@ -272,6 +269,18 @@
 
 [defunk object-execute [this slot_name :rest args]
   [apply [object-slot-execute_funk this slot_name] args]]
+
+[defmetro new [type_name :rest args]
+  `[object-new [quote ,type_name] @args]]
+
+[defmetro get [exp slot_name]
+  `[object-get ,exp [quote ,slot_name]]]
+
+[defmetro set [exp slot_name value]
+  `[object-set ,exp [quote ,slot_name] ,value]]
+
+[defmetro execute [exp slot_name :rest args]
+  `[object-execute ,exp [quote ,slot_name] @args]]
 
 [globalize-funk cons &primfunk:cons__new]
 [defmetro car [x] `[object-get ,x `car]]

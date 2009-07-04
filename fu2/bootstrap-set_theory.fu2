@@ -18,7 +18,7 @@
 [defunk list-to-set [x] [remove-duplicates x]]
 
 `[defmetro set [:rest elts] `[remove-duplicates [list @elts]]]
-[defunk   set [:rest elts]  [remove-duplicates        elts]]
+[defunk   set-new [:rest elts]  [remove-duplicates        elts]]
 
 [defunk union [a b]
   [if [null a]

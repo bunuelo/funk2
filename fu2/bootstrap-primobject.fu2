@@ -20,6 +20,11 @@
 '
 
 [defmetro deftype [type_name :rest slotdefs]
+  [print `[deftype ,type_name ,[mapcar [funk [slotdef]
+					     [if [is-type `symbol slotdef]
+						 slotdef
+					       [error `type-creation-print `[,type_name ,slotdef]]]]
+				       slotdefs]]]
   [let [[primobject_type [primobject_type-new]]]
     [primobject_type-add_slot primobject_type `new
 			      nil
@@ -51,5 +56,15 @@
     [add_type type_name primobject_type]]
   nil]
 
+[defunk add_type_funk [type_name slot_name funk]
+  [primobject_type-add_slot [lookup_type type_name] slot_name nil nil funk]]
 
+[defmetro deftypefunk [type_name slot_name args :rest body]
+  [print `[deftypefunk ,type_name ,slot_name ,args]]
+  `[add_type_funk [quote ,type_name] [quote ,slot_name]
+		  [funk [this @args]
+			@body]]]
+
+[defmetro have [this slot_name :rest args]
+  `[execute ,this ,slot_name ,this @args]]
 

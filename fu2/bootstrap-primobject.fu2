@@ -34,9 +34,5 @@
     [add_type type_name primobject_type]]
   nil]
 
-[defunk object-new [type_name :rest slotinits]
-  
-  nil]
-
 
 

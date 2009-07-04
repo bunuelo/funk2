@@ -19,6 +19,7 @@
  rights to redistribute these changes.
 '
 
+[load 'fu2/bootstrap-primobject.fu2']
 [load 'fu2/bootstrap-thread.fu2']
 [load 'fu2/bootstrap-bugs.fu2']
 [load 'fu2/bootstrap-boot.fu2']

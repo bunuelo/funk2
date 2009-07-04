@@ -167,7 +167,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      exit_reason__found_larva
 	    } exit_reason = exit_reason__none;
 	    
-	    f2thread__last_executed_time__set(thread, cause, f2integer__i(cause, raw__system_microseconds_since_1970()));
+	    f2thread__last_executed_time__set(thread, cause, f2integer__new(cause, raw__system_microseconds_since_1970()));
 	    
 	    int i = 1000;
 	    while (! exit_reason) {

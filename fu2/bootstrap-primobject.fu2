@@ -19,7 +19,7 @@
  rights to redistribute these changes.
 '
 
-[defmetro deftype [type_name :rest slotdefs]
+[defmetro deftype [type_name slotdefs]
   [print `[deftype ,type_name ,[mapcar [funk [slotdef]
 					     [if [is-type `symbol slotdef]
 						 slotdef

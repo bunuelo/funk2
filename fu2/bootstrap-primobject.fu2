@@ -37,12 +37,12 @@
 			      nil
 			      nil
 			      [eval `[funk-unlabeled is_type [exp]
-						     [and exp [frame-is_type exp] [eq [quote ,type_name] [frame-lookup_var_value exp `type]]]]]]
+						     [and exp [frame-is_type exp] [eq [quote ,type_name] [frame-lookup_var_value exp `type nil]]]]]]
     [mapc [funk [slotdef]
 		[if [is-type `symbol slotdef]
 		    [primobject_type-add_slot primobject_type slotdef
 					      [eval `[funk-unlabeled ,slotdef [this]
-								      [frame-lookup_var_value this [quote ,slotdef]]]]
+								      [frame-lookup_var_value this [quote ,slotdef] nil]]]
 					      [eval `[funk-unlabeled ,slotdef [this value]
 								      [frame-var_value-set this [quote ,slotdef] value]]]
 					      nil]

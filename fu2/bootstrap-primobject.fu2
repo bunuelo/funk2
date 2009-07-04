@@ -26,6 +26,7 @@
 			      nil
 			      [eval `[funk-unlabeled new []
 						     [let [[this [frame-new]]]
+						       [frame-add_var_value this `type [quote ,type_name]]
 						       [prog @[mapcar [funk [slotdef]
 									    [if [is-type `symbol slotdef]
 										`[frame-add_var_value this [quote ,slotdef] nil]

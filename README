@@ -1,0 +1,47 @@
+funk2: causally reflective programming language
+
+  funk2 [-x <command>] [-p <portnum>] [--swap-directory <swap-directory>] [<source.fu2>]
+
+    <source.fu2>
+
+        A user supplied filename of file from which to read and execute source
+        code after booting and before exiting.
+
+    -x <command>  [:default [repl]]
+
+        A user supplied command to execute after booting and before exiting.
+
+    -p <portnum>  [:default 22222 :try anything from 22222 to 23221]
+
+        The localhost peer-command-server port number.  Each copy of funk2
+        sharing a network interface must be able to allocate a unique
+        peer-command-server port number.
+
+    --swap-directory <swap-directory>  [:default ./f2swp/ :try /tmp/]
+        
+        local filesystem directory for storing swap files which should have an
+        absolute minimum of 2 gigabytes of free space.
+
+
+TO INSTALL:
+
+  make clean
+  make configure
+  make
+  make install  (as root)
+
+
+Homepage:
+
+  http://neuromin.de/rct/funk2.html
+
+
+Git Access:
+
+  http://git.neuromin.de/
+
+
+Package Downloads:
+
+  http://funk2.neuromin.de/
+

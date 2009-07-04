@@ -7,7 +7,8 @@ package_rootname = funk2-$(version_tag)
 tmp_dir = $(pwd)tmp/
 funk2_tmp_dir = $(tmp_dir)funk2-deb/
 deb_create_dir = $(funk2_tmp_dir)deb_create_dir/
-export_dir = $(deb_create_dir)$(package_rootname)/
+export_dir_name = $(deb_create_dir)$(package_rootname)
+export_dir = $(export_dir_name)/
 
 clean-export:
 	rm -Rf $(export_dir)

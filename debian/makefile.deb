@@ -21,7 +21,7 @@ export:
 tar.gz: export
 	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar
 
-changelog:
+changelog-write_new:
 	echo "funk2 ($(version_tag))   unstable; urgency=low" >  $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
 	echo "  * Initial release (Closes: #0004)"            >> $(export_dir)debian/changelog
@@ -30,7 +30,7 @@ changelog:
 	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
 
-deb: changelog export
+deb: changelog-write_new export
 	unset POSIXLY_CORRECT; cd $(export_dir); dpkg-buildpackage -rfakeroot
 	mkdir -p releases/$(package_rootname)/
 	cp $(deb_create_dir)/*.deb releases/$(package_rootname)/

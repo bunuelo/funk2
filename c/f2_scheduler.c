@@ -167,7 +167,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      exit_reason__found_larva
 	    } exit_reason = exit_reason__none;
 	    
-	    f2thread__last_execute_time__set(thread, cause, f2integer__i(cause, raw__system_microseconds_since_1970()));
+	    f2thread__last_executed_time__set(thread, cause, f2integer__i(cause, raw__system_microseconds_since_1970()));
 	    
 	    int i = 1000;
 	    while (! exit_reason) {
@@ -205,10 +205,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);
 	    //printf("\n  thread completed.");
 	    if (! f2thread__keep_undead(thread, cause)) {
-	      f2ptr last_execute_time = f2thread__last_execute_time(thread, cause);
-	      if (last_execute_time != nil) {
-		u64 raw_last_execute_time = f2integer__i(last_execute_time, cause);
-		if ((raw__system_microseconds_since_1970() - raw_last_execute_time) > 10 * 1000000) {
+	      f2ptr last_executed_time = f2thread__last_executed_time(thread, cause);
+	      if (last_executed_time != nil) {
+		u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
+		if ((raw__system_microseconds_since_1970() - raw_last_executed_time) > 10 * 1000000) {
 		  
 		  // Removing a thread is not thread-safe.  It breaks things, so it needs to be fixed.
 		  f2ptr processor__active_threads_mutex;

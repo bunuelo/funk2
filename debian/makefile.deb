@@ -1,7 +1,7 @@
 pwd = $(shell pwd)/
 date = $(shell date -R)
 date_tag = $(shell date +%Y.%m.%d)
-version = $(shell cat trunk/funk2/version)
+version = $(shell cat ../version)
 version_tag = $(version).$(date_tag)
 package_rootname = funk2-$(version_tag)
 tmp_dir = $(pwd)tmp/
@@ -20,13 +20,13 @@ tar.gz: export
 	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar
 
 changelog:
-	echo "funk2 ($(version_tag))   unstable; urgency=low" >  trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-	echo "  * Initial release (Closes: #0004)"            >> trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
-	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> trunk/funk2/debian/changelog
-	echo ""                                               >> trunk/funk2/debian/changelog
+	echo "funk2 ($(version_tag))   unstable; urgency=low" >  $(export_dir)debian/changelog
+	echo ""                                               >> $(export_dir)debian/changelog
+	echo "  * Initial release (Closes: #0004)"            >> $(export_dir)debian/changelog
+	echo ""                                               >> $(export_dir)debian/changelog
+	echo ""                                               >> $(export_dir)debian/changelog
+	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> $(export_dir)debian/changelog
+	echo ""                                               >> $(export_dir)debian/changelog
 
 deb: changelog export
 	unset POSIXLY_CORRECT; cd $(export_dir); dpkg-buildpackage -rfakeroot

@@ -882,7 +882,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 			    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
 			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
 			    if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
-			      if (keyvalue_pair__key != __frame__variable_type__symbol) {
+			      if (type_keyvalue_pair__key != __frame__variable_type__symbol) {
 				need_to_print_type_besides_basic_variable = boolean__true;
 			      }
 			      // here, we only update max_type_name_length if this type_name actually has a key that we are going to print.

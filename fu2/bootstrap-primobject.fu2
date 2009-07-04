@@ -42,9 +42,9 @@
 		[if [is-type `symbol slotdef]
 		    [primobject_type-add_slot primobject_type slotdef
 					      [eval `[funk-unlabeled ,slotdef [this]
-								      [frame-lookup_var_value this [quote ,slotdef] `[get slot-does-not-exist ,,slotdef]]]]
+								      [frame-lookup_var_value this [quote ,slotdef] `get-slot-does-not-exist]]]
 					      [eval `[funk-unlabeled ,slotdef [this value]
-								      [frame-var_value-set this [quote ,slotdef] value `[set slot-does-not-exist ,,slotdef]]]]
+								      [frame-var_value-set this [quote ,slotdef] value `slot-does-not-exist]]]
 					      nil]
 		  [error [error `type-creation-slot `[,type_name ,slotdef]]]]]
 	  slotdefs]

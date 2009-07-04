@@ -1,0 +1,47 @@
+Source: funk2
+Section: science
+Priority: optional
+Maintainer: Bo Morgan <bo@mit.edu>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.0
+Homepage: http://neuromin.de/rct/funk2.html
+
+Package: funk2
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: reflective programming language
+ Funk2 is a novel programming language that introduced a programming
+ technology that we call Causal Reflective Programming. The language
+ is based on a peer-to-peer shared memory system, allowing individuals
+ access to large numbers of processors and memory. Funk2 uses a
+ virtual scheduler, processor, and thread model that is based on top
+ of the shared memory system, while taking advantage of the specific
+ number of processor cores on each machine. We use Posix Threads to
+ implement virtual processors. Funk2 includes very simple and abstract
+ data and syntax representation--inspired by lisp and scheme. Funk2
+ compiles to bytecodes that may be shared between architectures,
+ inspired by these similar concepts in Python and Java virtual
+ machines. What is novel to the Funk2 programming language is it's
+ unique ability to keep track of everything that it does, which uses a
+ lot of memory when used indiscreetly, but in general allows
+ reflective tracing for causal reasons why bugs occur, when they
+ inevitably do. Other reflective features of the language include an
+ event-based inter-process communication system that works across the
+ peer-to-peer network, inspired by the Erlang model. We see a language
+ like this as necessary for the social, iterative, cooperative design
+ environment for large distributed complex control systems. Our
+ applications are inspired by Marvin Minsky's, Emotion Machine layered
+ control algorithm for a Society of Mind.
+ .
+ How does it work?
+ .
+ Examples of the most basic computational features include: (1) memory
+ creation, (2) memory read, and (3) memory write. Tracing all causal
+ relationships between these basic features allows tracing the context
+ of all other programmer-defined semantic abstractions. All of these
+ computational features create an intricate trace network of
+ dependencies, automatically traceable and shared by many parallel
+ threads of execution. Funk2 allows causal tracing to occur modularly
+ to dynamically chosen parts of large commonsense-scale artificial
+ intelligence projects. The resulting causal dependency trace networks
+ can be processed by critical causal reflection threads.

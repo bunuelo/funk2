@@ -1,0 +1,138 @@
+' 
+ Copyright (c) 2007 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[memblock-set_init_render_xyz [integer-to_float 0] [integer-to_float 0] [integer-to_float 0]]
+
+[memblock-set_init_render_xyz [integer-to_float -1] [integer-to_float -1] [integer-to_float 0]]
+
+[load 'fu2/neuralmom-brain_area.fu2']
+
+[memblock-set_init_render_xyz [integer-to_float 0] [integer-to_float 1] [integer-to_float 0]]
+
+[load 'fu2/neuralmom-occipital_cortex.fu2']
+
+[define-brain_area parietal_cortex [spatial_object_recognition] [spatial_object_knowledge]
+  '3D spatial processing'
+  nil]
+
+'frontal central sulcus'
+
+[defunk spatial_object_recognition-to__spatial_object_knowledge [spatial_object_recognition]
+  spatial_object_recognition]
+
+[define-brain_area frontal_central_sulcus [motor_deliberation] [cortical_motor_control]
+  'primary motor control processing'
+  [= cortical_motor_control [motor_deeliberation-to__corical_motor_control motor_deliberation]]
+  nil]
+
+
+'parietal central sulcus'
+
+[defunk body_maps-to_somatorsensory_objects [temperative_body_map pressure_body_map stretch_body_map cell_daamage_body_map]
+  nil]
+
+[define-brain_area parietal_central_sulcus [temperature_body_map pressure_body_map stretch_body_map cell_damage_body_map ] [somatosensory_objects]
+  'primary somatosensory processing'
+  [= somatosensory_objects [body_maps-to_somatorsensory_objects temperative_body_map pressure_body_map stretch_body_map cell_daamage_body_map]]
+  nil]
+
+
+'prefrontal cortex'
+
+[defunk motor_planning-to_motor_deliberation [motor_planning]
+  motor_planning]
+
+`[define-brain_area prefrontal_cortex [motor_planning] [motor_deliberation]
+   'motor control buffer (imagination) processing'
+   [= motor_deliberation [motor_planning-to_motor_deliberation motor_planning]]
+   nil]
+
+
+'frontal cortex'
+
+[define-brain_area frontal_cortex [] [goal_lattice]
+  'dynamic global resource allocation, real-time global imaginative planning, deliberative daydreaming'
+  [let [[top_priority_goal [goal_lattice-top_priority_goal goal_lattice]]]
+    [format stdout '\nfrontal_cortex top priority goal: ' top_priority_goal]
+    nil]]
+
+
+'temporal lobes'
+
+[defunk audio_frequency_map-to_cortical_semantic_map [audio_frequency_map]
+  audio_frequency_map]
+
+[define-brain_area temporal_lobes [audio_frequency_map] [cortical_semantic_map]
+  'language processing, serialize/deserialize semantics to/from neocortex areas'
+  nil]
+
+
+'thalamus'
+
+[define-brain_area thalamus [cortical_semantic_map] [cortical_semantic_map]
+  'reactive panalogies between neocortical areas'
+  nil]
+
+
+'limbic system'
+
+`[define-brain_area limbic_system [goal_lattice cortical_semantic_map] [goal_lattice]
+   'goal lattice prioritizers'
+  nil]
+
+
+'amygdala'
+
+`[define-brain_area amygdala [] []
+   'global hardcoded resource allocation configuration processing'
+   nil]
+
+
+'hippocampus'
+
+`[define-brain_area hippocampus [cortical_traces] [cortical_knowledge]
+   'neocortical compiler, dependency tracing, credit assignment'
+   nil]
+
+
+'cerebellum'
+
+`[define-brain_area cerebellum [cortical_motor_control] []
+   'adaptive clocks, timing controllers, '
+   nil]
+
+
+'hind brain'
+
+[define-brain_area hind_brain [] []
+  'motor/sensory reaction supervisors'
+  nil]
+
+
+'spinal cord'
+
+[define-brain_area spinal_cord [] []
+  'motor/sensory reactions'
+  nil]
+
+
+
+ 

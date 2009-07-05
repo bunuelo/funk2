@@ -112,6 +112,7 @@ funk2_server_objs = \
   c/f2_socket.o \
   c/f2_socket_client.o \
   c/f2_socket_server.o \
+  c/f2_sort.o \
   c/f2_status.o \
   c/f2_string.o \
   c/f2_dynamic_memory.o \
@@ -182,6 +183,7 @@ funk2_headers = \
   c/f2_serialize.h \
   c/f2_signal.h \
   c/f2_socket.h \
+  c/f2_sort.h \
   c/f2_status.h \
   c/f2_string.h \
   c/f2_dynamic_memory.h \

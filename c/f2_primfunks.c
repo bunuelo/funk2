@@ -1975,7 +1975,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__0(this__env, "");
   f2__primcfunk__init__0(this__args, "");
   
-  f2__primcfunk__init(random, "");
+  f2__primcfunk__init__1(random, sup_integer, "generate a random integer between 0 and sup_integer - 1.");
   
   f2__primcfunk__init(system_microseconds_since_1970, "");
   

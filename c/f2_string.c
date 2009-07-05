@@ -355,11 +355,9 @@ def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_
 
 
 void f2__string__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
 }
 
 void f2__string__initialize() {
-  //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
   pause_gc();
   
   f2__string__reinitialize_globalvars();

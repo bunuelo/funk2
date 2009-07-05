@@ -48,10 +48,11 @@
 	      ]]
     ]]
 
-[defunk quicksort [a strict_comparison_funk]
-  [quicksort_array_helper a 0 [- [length a] 1] strict_comparison_funk]]
-[set &quicksort documentation 'sorts an array in place according to the user-provided strict comparison funkable (i.e. <, >, and not <= or >=)']
+[defunk quicksort_array [a strict_comparison_funk]
+  [quicksort_array_helper a 0 [- [length a] 1] strict_comparison_funk]
+  a]
+[set &quicksort_array documentation 'sorts an array in place according to the user-provided strict comparison funkable (i.e. <, >, and not <= or >=)']
 
-[globalize-funk sort &quicksort]
+[globalize-funk sort_array &quicksort_array]
 
 

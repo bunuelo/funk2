@@ -301,6 +301,29 @@ def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_
 //def_pcfunk1(traced_arrayp, x, return f2__traced_arrayp(this_cause, x));
 
 
+// cons
+
+f2ptr f2__cons__to_array(f2ptr cause, f2ptr this) {
+  u64 length = 0;
+  f2ptr iter = this;
+  while (iter) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return f2larva__new(cause, 1);
+    }
+    length ++;
+  }
+  f2ptr new_array = raw__array__new(cause, length);
+  f2ptr iter = this;
+  u64 index = 0;
+  while (iter) {
+    f2ptr car = f2cons__car(iter, cause);
+    raw__array__elt__set(cause, new_array, index, car);
+    index ++;
+  }
+  return new_array;
+}
+def_pcfunk1(cons__to_array, this, return f2__cons__to_array(this_cause, this));
+
 // cause
 
 boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
@@ -466,6 +489,20 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 }
 def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
 
+
+f2ptr f2__array__to_list(f2ptr cause, f2ptr this) {
+  if (! raw__array__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 length = raw__array__length(this);
+  f2ptr new_seq = nil;
+  s64 index;
+  for (index = length - 1; index >= 0; index --) {
+    new_seq = f2cons__new(cause, raw__array__elt(cause, this, index), new_seq);
+  }
+  return new_seq;
+}
+def_pcfunk1(array__to_list, this, return f2__array__to_list(this_cause, this));
 
 
 // larva
@@ -1909,6 +1946,11 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
   f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
   f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
+  f2__primcfunk__init__1(           array__to_list,                     this);
+  
+  // cons
+  
+  f2__primcfunk__init__1(cons__to_array, this, "converts a cons list to a new array.");
   
   // circular_buffer
   

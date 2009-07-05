@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2008 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [globalize-funk system-node_id                              &primfunk:system__node_id]
 [globalize-funk system-environment                          &primfunk:system__environment]
@@ -32,6 +30,10 @@
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
 [globalize-funk array-length                                &primfunk:array__length]
+[globalize-funk array-to_list                               &primfunk:array__to_list]
+
+[globalize-funk cons-to_array                               &primfunk:cons__to_array]
+
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]

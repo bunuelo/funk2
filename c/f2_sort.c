@@ -144,7 +144,7 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
   }
   return integer_array__quicksort(cause, array, 0, raw__array__length(cause, array) - 1);
 }
-def_pcfunk1(sort_integer_list, integers, return f2__integer_array__quicksort(this_cause, integers));
+def_pcfunk1(sort_integer_array, integers, return f2__integer_array__quicksort(this_cause, integers));
 
 // **
 
@@ -156,7 +156,7 @@ void f2__sort__initialize() {
   
   f2__sort__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(sort_integer_list, this, "sort a list of integers into a new list using the quicksort algorithm.");
+  f2__primcfunk__init__1(sort_integer_array, this, "sort an array of integers in place.");
   
   resume_gc();
   try_gc();

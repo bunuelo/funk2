@@ -121,14 +121,14 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
     quicksort_swap_f2ptr(cause, array, first_element, j);
     //quicksort(array, first_element, j-1);
     {
-      f2ptr result = quicksort(cause, array, first_element, j - 1);
+      f2ptr result = integer_array__quicksort(cause, array, first_element, j - 1);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
     //quicksort(array, j+1, last_element);
     {
-      f2ptr result = quicksort(cause, array, j + 1, last_element);
+      f2ptr result = integer_array__quicksort(cause, array, j + 1, last_element);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

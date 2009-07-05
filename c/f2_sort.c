@@ -68,9 +68,6 @@ void quicksort_swap_f2ptr(f2ptr cause, f2ptr array, int x_index, int y_index) {
 }
 
 boolean_t quicksort_integer_greater_than_raw_integer(f2ptr cause, f2ptr x, s64 raw_y) {
-  if (! raw__integer__is_type(cause, x)) {
-    return boolean__false;
-  }
   return f2integer__i(x, cause) > raw_y;
 }
 
@@ -82,9 +79,6 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
     k = ((first_element + last_element) / 2);
     quicksort_swap_f2ptr(cause,  array, first_element,        k );
     key = raw__array__elt(cause, array, first_element);
-    if (! raw__integer__is_type(cause, key)) {
-      return f2larva__new(cause, 1);
-    }
     raw_key = f2integer__i(key, cause);
     i = first_element + 1;
     j = last_element;
@@ -96,7 +90,7 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
       do {
 	keep_looping = boolean__false;
 	if (i <= last_element) {
-	  if (! quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, i), raw_key)) {
+	  if (f2integer__i(raw__array__elt(cause, array, i), cause) <= raw_key) {
 	    i ++;
 	    keep_looping = boolean__true;
 	  }
@@ -109,7 +103,7 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
       do {
 	keep_looping = boolean__false;
 	if (j >= first_element) {
-	  if (quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, j), raw_key)) {
+	  if (f2integer__i(raw__array__elt(cause, array, j), cause) > raw_key) {
 	    j --;
 	    keep_looping = boolean__true;
 	  }
@@ -141,6 +135,13 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
 
 
 f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
+  s64 array__length = raw__array__length(cause, array);
+  s64 i;
+  for (i = 0; i < array__length; i ++) {
+    if (! raw__integer__is_type(cause, raw__array__elt(cause, array, i))) {
+      return f2larva__new(cause, 1);
+    }
+  }
   return integer_array__quicksort(cause, array, 0, raw__array__length(cause, array) - 1);
 }
 def_pcfunk1(sort_integer_list, integers, return f2__integer_array__quicksort(this_cause, integers));

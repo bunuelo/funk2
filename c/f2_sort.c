@@ -136,7 +136,7 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
     //}
   }
   //}
-  return nil;
+  return array;
 }
 
 

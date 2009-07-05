@@ -17,5 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk sort_integer_list &primfunk:sort_integer_list]
+[globalize-funk sort_integer_array &primfunk:sort_integer_array]
 

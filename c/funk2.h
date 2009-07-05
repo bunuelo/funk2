@@ -139,6 +139,7 @@
 #include "f2_socket.h"
 #include "f2_socket_client.h"
 #include "f2_socket_server.h"
+#include "f2_sort.h"
 #include "f2_status.h"
 #include "f2_string.h"
 #include "f2_termios.h"

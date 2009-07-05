@@ -91,6 +91,7 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
     if (! raw__integer__is_type(cause, key)) {
       return f2larva__new(cause, 1);
     }
+    raw_key = f2integer__i(key, cause);
     //i = first_element + 1;
     i = first_element + 1;
     //j = last_element;

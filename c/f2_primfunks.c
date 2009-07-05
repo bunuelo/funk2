@@ -1950,7 +1950,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
   f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
   f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
-  f2__primcfunk__init__1(           array__to_list,                     this);
+  f2__primcfunk__init__1(           array__to_list,                     this, "converts an array to a new list.");
   
   // cons
   

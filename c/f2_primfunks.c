@@ -305,20 +305,24 @@ def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_
 
 f2ptr f2__cons__to_array(f2ptr cause, f2ptr this) {
   u64 length = 0;
-  f2ptr iter = this;
-  while (iter) {
-    if (! raw__cons__is_type(cause, iter)) {
-      return f2larva__new(cause, 1);
+  {
+    f2ptr iter = this;
+    while (iter) {
+      if (! raw__cons__is_type(cause, iter)) {
+	return f2larva__new(cause, 1);
+      }
+      length ++;
     }
-    length ++;
   }
   f2ptr new_array = raw__array__new(cause, length);
-  f2ptr iter = this;
-  u64 index = 0;
-  while (iter) {
-    f2ptr car = f2cons__car(iter, cause);
-    raw__array__elt__set(cause, new_array, index, car);
-    index ++;
+  {
+    f2ptr iter = this;
+    u64 index = 0;
+    while (iter) {
+      f2ptr car = f2cons__car(iter, cause);
+      raw__array__elt__set(cause, new_array, index, car);
+      index ++;
+    }
   }
   return new_array;
 }

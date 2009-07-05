@@ -74,71 +74,70 @@ boolean_t quicksort_integer_greater_than_raw_integer(f2ptr cause, f2ptr x, s64 r
   return f2integer__i(x, cause) > raw_y;
 }
 
-//void quicksort(             int*  array, int first_element, int last_element) {
 f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int last_element) {
-  //int key, i, j, k;
   f2ptr key;
   s64   raw_key;
   s64   i, j, k;
-  //if (first_element < last_element) {
   if (first_element < last_element) {
-    //k = ((first_element + last_element) / 2);
     k = ((first_element + last_element) / 2);
-    //quicksort_swap    (       &array[first_element], &array[k]);
     quicksort_swap_f2ptr(cause,  array, first_element,        k );
-    //key = array[first_element];
     key = raw__array__elt(cause, array, first_element);
     if (! raw__integer__is_type(cause, key)) {
       return f2larva__new(cause, 1);
     }
     raw_key = f2integer__i(key, cause);
-    //i = first_element + 1;
     i = first_element + 1;
-    //j = last_element;
     j = last_element;
-    //while (i <= j) {
     while (i <= j) {
-      //while ((i <= last_element) && (array[i] <= key)) {
-      while ((i <= last_element) && (! quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, i), raw_key))) {
-	//i ++;
-	i ++;
-	//}
-      }
-      //while ((j >= first_element) && (array[j] > key)) {
-      while ((j >= first_element) && quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, j), raw_key)) {
-	//j --;
-	j --;
-	//}
-      }
-      //if (i < j) {
-      if (i < j) {
-	//quicksort_swap(&array[i], &array[j]);
-	quicksort_swap_f2ptr(cause, array, i, j);
-	//}
-      }
+      //while ((i <= last_element) && (! quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, i), raw_key))) {
+      //  i ++;
       //}
+      boolean_t keep_looping;
+      do {
+	keep_looping = boolean__false;
+	if (i <= last_element) {
+	  if (! quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, i), raw_key)) {
+	    i ++;
+	    keep_looping = boolean__true;
+	  }
+	}
+      } while (keep_looping);
+      
+      //while ((j >= first_element) && quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, j), raw_key)) {
+      //  j --;
+      //}
+      do {
+	keep_looping = boolean__false;
+	if (j >= first_element) {
+	  if (quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, j), raw_key)) {
+	    j --;
+	    keep_looping = boolean__true;
+	  }
+	}
+      } while (keep_looping);
+      if (i < j) {
+	quicksort_swap_f2ptr(cause, array, i, j);
+      }
     }
-    //quicksort_swap(&array[first_element], &array[j]);
     quicksort_swap_f2ptr(cause, array, first_element, j);
-    //quicksort(array, first_element, j-1);
     {
       f2ptr result = integer_array__quicksort(cause, array, first_element, j - 1);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
-    //quicksort(array, j+1, last_element);
     {
       f2ptr result = integer_array__quicksort(cause, array, j + 1, last_element);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
-    //}
   }
-  //}
   return array;
 }
+
+
+
 
 
 f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {

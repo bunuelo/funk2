@@ -21,42 +21,129 @@
 
 #include "funk2.h"
 
-static int f2__sort_integer_list__compare(const void* elt_x_void, const void* elt_y_void) {
-  f2ptr elt_x = *((f2ptr*)elt_x_void);
-  f2ptr elt_y = *((f2ptr*)elt_y_void);
-  if (! raw__integer__is_type(cause, elt_x)) {
-    return -1;
-  }
-  if (! raw__integer__is_type(cause, elt_y)) {
-    return 1;
-  }
-  return f2integer__i(elt_x, cause) - f2integer__i(elt_y, cause);
+/*
+void quicksort_swap(int *x, int *y) {
+  int temp;
+  temp = *x;
+  *x = *y;
+  *y = temp;
 }
 
-f2ptr f2__sort_integer_list(f2ptr cause, f2ptr integers) {
-  size_t sort_array__length = (size_t)raw__length(integers);
-  f2ptr* sort_array         = malloc(sizeof(f2ptr));
-  {
-    size_t index = 0;
-    f2ptr iter = integers;
-    while (iter) {
-      f2ptr car = f2cons__car(iter, cause);
-      sort_array[index] = car;
-      index ++;
-      iter = f2cons__cdr(iter, cause);
+void quicksort(int* array, int first_element, int last_element_minus_one) {
+  int key, i, j, k;
+  if (first_element < last_element_minus_one) {
+    k = ((first_element + last_element_minus_one) / 2);
+    quicksort_swap(&array[first_element], &array[k]);
+    key = array[first_element];
+    i = first_element + 1;
+    j = last_element_minus_one;
+    while (i <= j) {
+      while ((i <= last_element_minus_one) && (array[i] <= key)) {
+	i ++;
+      }
+      while ((j >= first_element) && (array[j] > key)) {
+	j --;
+      }
+      if ( i < j) {
+	quicksort_swap(&array[i], &array[j]);
+      }
     }
+    quicksort_swap(&array[first_element], &array[j]);
+    quicksort(array, first_element, j-1);
+    quicksort(array, j+1, last_element_minus_one);
   }
-  qsort(sort_array, sort_array__length, sizeof(u64), &f2__sort_integer_list__compare);
-  f2ptr new_list = nil; 
-  {
-    u64 i;
-    for (i = sort_array__length - 1; i >=  0; i --) {
-      new_list = f2cons__new(cause, sort_array[i], new_list);
-    }
-  }
-  return new_list;
 }
-def_pcfunk1(sort_integer_list, integers, return f2__sort_integer_list(this_cause, integers));
+*/
+
+void quicksort_swap_f2ptr(f2ptr array, int x_index, int y_index) {
+  f2ptr x = raw__array__elt(cause, array, x_index);
+  f2ptr y = raw__array__elt(cause, array, y_index);
+  {
+    f2ptr temp = x;
+    x          = y;
+    y          = temp;
+  }
+  raw__array__elt__set(cause, array, x_index, x);
+  raw__array__elt__set(cause, array, y_index, y);
+}
+
+boolean_t quicksort_integer_greater_than_raw_integer(f2ptr cause, f2ptr x, s64 raw_y) {
+  if (! raw__integer__is_type(cause, x)) {
+    return boolean__false;
+  }
+  return f2integer__i(x, cause) > raw_y;
+}
+
+//void quicksort(             int*  array, int first_element, int last_element) {
+f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int last_element) {
+  //int key, i, j, k;
+  f2ptr key;
+  s64   raw_key;
+  s64   i, j, k;
+  //if (first_element < last_element) {
+  if (first_element < last_element) {
+    //k = ((first_element + last_element) / 2);
+    k = ((first_element + last_element) / 2);
+    //quicksort_swap    (       &array[first_element], &array[k]);
+    quicksort_swap_f2ptr(cause,  array, first_element,        k );
+    //key = array[first_element];
+    key = raw__array__elt(cause, array, first_element);
+    if (! raw__integer__is_type(cause, key)) {
+      return f2larva__new(cause, 1);
+    }
+    //i = first_element + 1;
+    i = first_element + 1;
+    //j = last_element;
+    j = last_element;
+    //while (i <= j) {
+    while (i <= j) {
+      //while ((i <= last_element) && (array[i] <= key)) {
+      while ((i <= last_element) && (! quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, i), raw_key))) {
+	//i ++;
+	i ++;
+	//}
+      }
+      //while ((j >= first_element) && (array[j] > key)) {
+      while ((j >= first_element) && quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, j), raw_key)) {
+	//j --;
+	j --;
+	//}
+      }
+      //if (i < j) {
+      if (i < j) {
+	//quicksort_swap(&array[i], &array[j]);
+	quicksort_swap_f2ptr(cause, array, i, j);
+	//}
+      }
+      //}
+    }
+    //quicksort_swap(&array[first_element], &array[j]);
+    quicksort_swap_f2ptr(cause, array, first_element, j);
+    //quicksort(array, first_element, j-1);
+    {
+      f2ptr result = quicksort(cause, array, first_element, j - 1);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    //quicksort(array, j+1, last_element);
+    {
+      f2ptr result = quicksort(cause, array, j + 1, last_element);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    //}
+  }
+  //}
+  return nil;
+}
+
+
+f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
+  return integer_array__quicksort(cause, array, 0, raw__array__length(cause, array) - 1);
+}
+def_pcfunk1(sort_integer_list, integers, return f2__integer_array__quicksort(this_cause, integers));
 
 // **
 

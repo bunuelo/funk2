@@ -1,0 +1,80 @@
+'Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[defunk quicksort_array_helper [a first_element last_element compare]
+  [format stdout '\ndebug 0']
+  [let [[key nil]
+	[i   nil]
+	[j   nil]
+	[k   nil]]
+    [format stdout '\ndebug 1']
+    [if [< first_element last_element]
+	[prog [format stdout '\ndebug 2']
+	      [= k [/ [+ first_element last_element] 2]]
+	      [format stdout '\ndebug 3']
+	      [let [[temp [get a elt first_element]]]
+		[format stdout '\ndebug 4']
+		[set           a elt k             [get a elt first_element]]
+		[format stdout '\ndebug 5']
+		[set           a elt first_element temp]]
+	      [format stdout '\ndebug 6']
+	      [= key [get a elt first_element]]
+	      [format stdout '\ndebug 7']
+	      [= i [+ first_element 1]]
+	      [format stdout '\ndebug 8']
+	      [= j last_element]
+	      [format stdout '\ndebug 9']
+	      [while [<= i j]
+	      [format stdout '\ndebug 10']
+		[while [and [<= i last_element] [not [funkall compare [get a elt i] key]]]
+		  [format stdout '\ndebug 11']
+		  [= i [+ i 1]]]
+		[format stdout '\ndebug 12']
+		[while [and [>= j first_element] [funkall compare [get a elt j] key]]
+		  [format stdout '\ndebug 13']
+		  [= j [- j 1]]]
+		[format stdout '\ndebug 14']
+		[if [< i j]
+		    [let [[temp [get a elt i]]]
+		      [format stdout '\ndebug 15']
+		      [set a elt i [get a elt j]]
+		      [format stdout '\ndebug 16']
+		      [set a elt j temp]]]]
+	      [format stdout '\ndebug 17']
+	      [let [[temp [get a elt first_element]]]
+		[format stdout '\ndebug 18']
+		[set a elt first_element [get a elt j]]
+		[format stdout '\ndebug 19']
+		[set a elt j             temp]]
+	      [format stdout '\ndebug 20']
+	      [quicksort_array_helper a first_element [- j 1] compare]
+	      [format stdout '\ndebug 21']
+	      [quicksort_array_helper a [+ j 1] last_element compare]
+	      [format stdout '\ndebug 22']
+	      ]]
+    ]]
+
+[defunk quicksort [a strict_comparison_funk]
+  [quicksort_array_helper a 0 [- [length a] 1] strict_comparison_funk]]
+[set &quicksort documentation 'sorts an array in place according to the user-provided strict comparison funkable (i.e. <, >, and not <= or >=)']
+
+[globalize-funk sort &quicksort]
+
+

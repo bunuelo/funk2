@@ -55,7 +55,7 @@ void quicksort(int* array, int first_element, int last_element_minus_one) {
 }
 */
 
-void quicksort_swap_f2ptr(f2ptr array, int x_index, int y_index) {
+void quicksort_swap_f2ptr(f2ptr cause, f2ptr array, int x_index, int y_index) {
   f2ptr x = raw__array__elt(cause, array, x_index);
   f2ptr y = raw__array__elt(cause, array, y_index);
   {

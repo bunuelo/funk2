@@ -498,7 +498,7 @@ f2ptr f2__array__to_list(f2ptr cause, f2ptr this) {
   if (! raw__array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  u64 length = raw__array__length(this);
+  u64 length = raw__array__length(cause, this);
   f2ptr new_seq = nil;
   s64 index;
   for (index = length - 1; index >= 0; index --) {

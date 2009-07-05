@@ -312,6 +312,7 @@ f2ptr f2__cons__to_array(f2ptr cause, f2ptr this) {
 	return f2larva__new(cause, 1);
       }
       length ++;
+      iter = f2cons__cdr(iter, cause);
     }
   }
   f2ptr new_array = raw__array__new(cause, length);
@@ -322,6 +323,7 @@ f2ptr f2__cons__to_array(f2ptr cause, f2ptr this) {
       f2ptr car = f2cons__car(iter, cause);
       raw__array__elt__set(cause, new_array, index, car);
       index ++;
+      iter = f2cons__cdr(iter, cause);
     }
   }
   return new_array;

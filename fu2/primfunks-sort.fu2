@@ -18,4 +18,5 @@
  rights to redistribute these changes.'
 
 [globalize-funk sort_integer_array &primfunk:sort_integer_array]
+[globalize-funk array-quicksort    &primfunk:array__quicksort]
 

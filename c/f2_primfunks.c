@@ -573,6 +573,14 @@ def_pcfunk2(hashtable__lookup_value,         this, key,        return f2__hashta
 
 // primobject thread
 
+f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args) {
+  f2ptr new_thread = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), funk, args);
+  f2__scheduler__complete_thread(cause, new_thread);
+  f2ptr value = f2thread__value(new_thread, cause);
+  f2thread__keep_undead__set(new_thread, cause, nil);
+  return value;
+}
+
 void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   f2ptr env;
@@ -627,8 +635,8 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfun
       f2thread__env__set(thread, cause, env);
     }
   } else {
-    status(  "[ERROR] f2thread__force_funk error: cfunkable must be funk or metro.");
-    printf("\n[ERROR] f2thread__force_funk error: cfunkable must be funk or metro.\n"); fflush(stdout);
+    status(  "[ERROR] f2thread__funk error: cfunkable must be funk or metro.");
+    printf("\n[ERROR] f2thread__funk error: cfunkable must be funk or metro.\n"); fflush(stdout);
     printf("\n[ERROR] cfunkable="); fflush(stdout); f2__print(cause, cfunkable); fflush(stdout); printf("\n"); fflush(stdout);
     f2thread__value__set(thread, cause, f2larva__new(cause, 24));
     debug__f2thread__funk__unfunkable_error();

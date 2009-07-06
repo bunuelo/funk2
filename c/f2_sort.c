@@ -83,9 +83,6 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
     i = first_element + 1;
     j = last_element;
     while (i <= j) {
-      //while ((i <= last_element) && (! quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, i), raw_key))) {
-      //  i ++;
-      //}
       boolean_t keep_looping;
       do {
 	keep_looping = boolean__false;
@@ -97,9 +94,6 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
 	}
       } while (keep_looping);
       
-      //while ((j >= first_element) && quicksort_integer_greater_than_raw_integer(cause, raw__array__elt(cause, array, j), raw_key)) {
-      //  j --;
-      //}
       do {
 	keep_looping = boolean__false;
 	if (j >= first_element) {
@@ -130,10 +124,6 @@ f2ptr integer_array__quicksort(f2ptr cause, f2ptr array, int first_element, int 
   return array;
 }
 
-
-
-
-
 f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
   s64 array__length = raw__array__length(cause, array);
   s64 i;
@@ -146,6 +136,70 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
 }
 def_pcfunk1(sort_integer_array, integers, return f2__integer_array__quicksort(this_cause, integers));
 
+f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
+  f2ptr key;
+  s64   raw_key;
+  s64   i, j, k;
+  if (first_element < last_element) {
+    k = ((first_element + last_element) / 2);
+    quicksort_swap_f2ptr(cause,  array, first_element,        k );
+    key = raw__array__elt(cause, array, first_element);
+    raw_key = f2integer__i(key, cause);
+    i = first_element + 1;
+    j = last_element;
+    while (i <= j) {
+      boolean_t keep_looping;
+      do {
+	keep_looping = boolean__false;
+	if (i <= last_element) {
+	  f2ptr comparison_result = f2__force_funk_apply(cause, thread, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, i), key));
+	  if (! comparison_result) {
+	    i ++;
+	    keep_looping = boolean__true;
+	  }
+	}
+      } while (keep_looping);
+      
+      do {
+	keep_looping = boolean__false;
+	if (j >= first_element) {
+	  f2ptr comparison_result = f2__force_funk_apply(cause, thread, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, j), key));
+	  if (comparison_result) {
+	    j --;
+	    keep_looping = boolean__true;
+	  }
+	}
+      } while (keep_looping);
+      if (i < j) {
+	quicksort_swap_f2ptr(cause, array, i, j);
+      }
+    }
+    quicksort_swap_f2ptr(cause, array, first_element, j);
+    {
+      f2ptr result = array__quicksort_helper(cause, thread, array, comparison_funk, first_element, j - 1);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    {
+      f2ptr result = array__quicksort_helper(cause, thread, array, comparison_funk, j + 1, last_element);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+  }
+  return array;
+}
+
+f2ptr f2__array__quicksort(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comparison_funk) {
+  return array__quicksort_helper(cause, thread, array, comparison_funk, 0, raw__length(cause, array) - 1);
+}
+def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, this_thread, array, comparison_funk));
+
+
+
+
+
 // **
 
 void f2__sort__reinitialize_globalvars() {
@@ -157,6 +211,7 @@ void f2__sort__initialize() {
   f2__sort__reinitialize_globalvars();
   
   f2__primcfunk__init__1(sort_integer_array, this, "sort an array of integers in place.");
+  f2__primcfunk__init__2(array__quicksort, array, comparison_funk, "sort an array of elements in place by user provided comparison_funk.");
   
   resume_gc();
   try_gc();

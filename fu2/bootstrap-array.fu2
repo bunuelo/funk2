@@ -17,6 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk simple_array to-list [] [array-to_list this]]
-[deftypefunk traced_array to-list [] [array-to_list this]]
+[deftypefunk simple_array to-list  [] [array-to_list this]]
+[deftypefunk simple_array to-array [] this]
+
+[deftypefunk traced_array to-list  [] [array-to_list this]]
+[deftypefunk traced_array to-array [] this]
+
+
+
 

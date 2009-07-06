@@ -18,4 +18,6 @@
  rights to redistribute these changes.'
 
 [deftypefunk cons to-array [] [cons-to_array this]]
+[deftypefunk cons to-list  [] this]
+
 

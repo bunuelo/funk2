@@ -33,7 +33,7 @@
 [globalize-funk array-as_list                               &primfunk:array__as_list]
 
 [globalize-funk cons-as_array                               &primfunk:cons__as_array]
-
+[globalize-funk list-first_n                                &primfunk:list__first_n]
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]

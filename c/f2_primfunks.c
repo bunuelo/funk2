@@ -330,6 +330,33 @@ f2ptr f2__cons__as_array(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(cons__as_array, this, return f2__cons__as_array(this_cause, this));
 
+f2ptr f2__list__first_n(f2ptr cause, f2ptr this, f2ptr n) {
+  if (! raw__integer__is_type(cause, n)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 raw_n = f2integer__i(n, cause);
+  s64 index = 0;
+  u64 length = f2__length(cause, this);
+  f2ptr new_seq  = nil;
+  f2ptr new_iter = nil;
+  f2ptr iter = this;
+  while (iter && index < raw_n) {
+    f2ptr car = f2cons__car(iter, cause);
+    f2ptr new_cons = f2cons__new(cause, car, nil);
+    if (! new_seq) {
+      new_seq = new_cons;
+    }
+    if (new_iter) {
+      f2cons__cdr__set(new_iter, cause, new_cons);
+    }
+    new_iter = new_cons;
+    index ++;
+    iter = f2cons__cdr(iter, cause);
+  }
+  return new_seq;
+}
+def_pcfunk2(list__first_n, this, n, return f2__list__first_n(cause, this, n));
+
 // cause
 
 boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
@@ -1957,6 +1984,7 @@ void f2__primcfunks__initialize() {
   // cons
   
   f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
+  f2__primcfunk__init__1(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
   
   // circular_buffer
   

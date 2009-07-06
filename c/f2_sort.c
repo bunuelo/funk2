@@ -194,7 +194,7 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comp
 f2ptr f2__array__quicksort(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comparison_funk) {
   return array__quicksort_helper(cause, thread, array, comparison_funk, 0, raw__length(cause, array) - 1);
 }
-def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, this_thread, array, comparison_funk));
+def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, simple_thread, array, comparison_funk));
 
 
 

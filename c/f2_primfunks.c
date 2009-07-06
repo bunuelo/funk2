@@ -303,7 +303,7 @@ def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_
 
 // cons
 
-f2ptr f2__cons__to_array(f2ptr cause, f2ptr this) {
+f2ptr f2__cons__as_array(f2ptr cause, f2ptr this) {
   u64 length = 0;
   {
     f2ptr iter = this;
@@ -328,7 +328,7 @@ f2ptr f2__cons__to_array(f2ptr cause, f2ptr this) {
   }
   return new_array;
 }
-def_pcfunk1(cons__to_array, this, return f2__cons__to_array(this_cause, this));
+def_pcfunk1(cons__as_array, this, return f2__cons__as_array(this_cause, this));
 
 // cause
 
@@ -496,7 +496,7 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
 
 
-f2ptr f2__array__to_list(f2ptr cause, f2ptr this) {
+f2ptr f2__array__as_list(f2ptr cause, f2ptr this) {
   if (! raw__array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -508,7 +508,7 @@ f2ptr f2__array__to_list(f2ptr cause, f2ptr this) {
   }
   return new_seq;
 }
-def_pcfunk1(array__to_list, this, return f2__array__to_list(this_cause, this));
+def_pcfunk1(array__as_list, this, return f2__array__as_list(this_cause, this));
 
 
 // larva
@@ -1952,11 +1952,11 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
   f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
   f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
-  f2__primcfunk__init__1(           array__to_list,                     this, "converts an array to a new list.");
+  f2__primcfunk__init__1(           array__as_list,                     this, "returns an array represented as a new list.");
   
   // cons
   
-  f2__primcfunk__init__1(cons__to_array, this, "converts a cons list to a new array.");
+  f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
   
   // circular_buffer
   

@@ -17,10 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk to-list  [x] [have x to-list]]
-[set &to-list documentation 'makes sure an object is a list by possibly performing an object type-specific conversion process.']
+[defunk as-list  [x] [have x as-list]]
+[set &as-list documentation 'makes sure an object is a list by possibly performing an object type-specific conversion process.']
 
-[defunk to-array [x] [have x to-array]]
-[set &to-array documentation 'makes sure an object is an array by possibly performing an object type-specific conversion process.']
+[defunk as-array [x] [have x as-array]]
+[set &as-array documentation 'makes sure an object is an array by possibly performing an object type-specific conversion process.']
 
 

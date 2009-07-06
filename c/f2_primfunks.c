@@ -574,7 +574,7 @@ def_pcfunk2(hashtable__lookup_value,         this, key,        return f2__hashta
 // primobject thread
 
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args) {
-  f2ptr new_thread = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), funk, args);
+  f2ptr new_thread = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), funkable, args);
   f2__scheduler__complete_thread(cause, new_thread);
   f2ptr value = f2thread__value(new_thread, cause);
   f2thread__keep_undead__set(new_thread, cause, nil);

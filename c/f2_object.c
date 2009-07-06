@@ -31,7 +31,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_integer: {
     f2ptr result = f2__integer__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -39,7 +39,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_double: {
     f2ptr result = f2__double__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -47,15 +47,15 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_float: {
     f2ptr result = f2__float__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
-    return result
+    return result;
   }
   case ptype_pointer: {
     f2ptr result = f2__pointer__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -63,7 +63,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_gfunkptr: {
     f2ptr result = f2__gfunkptr__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -71,7 +71,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_mutex: {
     f2ptr result = f2__mutex__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -79,7 +79,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_char: {
     f2ptr result = f2__char__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -87,7 +87,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_string: {
     f2ptr result = f2__string__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -95,7 +95,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_symbol:{
     f2ptr result = f2__symbol__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -103,7 +103,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_chunk: {
     f2ptr result = f2__chunk__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -133,14 +133,14 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
       if (ptype == ptype_simple_array) {
 	f2ptr result = f2__simple_array__slot__get_funk(cause, this, slot);
 	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array"));
+	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array"));
 	  result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
 	}
 	return result;
       } else if (ptype == ptype_traced_array) {
 	f2ptr result = f2__traced_array__slot__get_funk(cause, this, slot);
 	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
+	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
 	  result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
 	}
 	return result;
@@ -151,7 +151,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_larva: {
     f2ptr result = f2__larva__slot__get_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -171,7 +171,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_integer: {
     f2ptr result = f2__integer__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -179,7 +179,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_double: {
     f2ptr result = f2__double__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -187,7 +187,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_float: {
     f2ptr result = f2__float__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -195,7 +195,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_pointer: {
     f2ptr result = f2__pointer__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -203,7 +203,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_gfunkptr: {
     f2ptr result = f2__gfunkptr__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -211,7 +211,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_mutex: {
     f2ptr result = f2__mutex__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -219,7 +219,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_char: {
     f2ptr result = f2__char__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -227,7 +227,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_string: {
     f2ptr result = f2__string__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -235,7 +235,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_symbol: {
     f2ptr result = f2__symbol__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -243,7 +243,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_chunk: {
     f2ptr result = f2__chunk__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -267,14 +267,14 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
       if (ptype == ptype_simple_array) {
 	f2ptr result = f2__simple_array__slot__set_funk(cause, this, slot);
 	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array"));
+	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array"));
 	  result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
 	}
 	return result;
       } else if (ptype == ptype_traced_array) {
 	f2ptr result = f2__traced_array__slot__set_funk(cause, this, slot);
 	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
+	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
 	  result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
 	}
 	return result;
@@ -284,7 +284,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_larva: {
     f2ptr result = f2__larva__slot__set_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -304,7 +304,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_integer: {
     f2ptr result = f2__integer__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -312,7 +312,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_double: {
     f2ptr result = f2__double__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("double"), (u8*)"double"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -320,7 +320,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_float: {
     f2ptr result = f2__float__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("float"), (u8*)"float"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -328,7 +328,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_pointer: {
     f2ptr result = f2__pointer__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -336,7 +336,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_gfunkptr: {
     f2ptr result = f2__gfunkptr__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -344,7 +344,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_mutex: {
     f2ptr result = f2__mutex__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("mutex"), (u8*)"mutex"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -352,7 +352,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_char: {
     f2ptr result = f2__char__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("char"), (u8*)"char"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -360,7 +360,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_string: {
     f2ptr result = f2__string__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("string"), (u8*)"string"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -368,7 +368,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_symbol: {
     f2ptr result = f2__symbol__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("symbol"), (u8*)"symbol"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -376,7 +376,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_chunk: {
     f2ptr result = f2__chunk__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("chunk"), (u8*)"chunk"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;
@@ -400,14 +400,14 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
       if (ptype == ptype_simple_array) {
 	f2ptr result = f2__simple_array__slot__execute_funk(cause, this, slot);
 	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array"));
+	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array"));
 	  result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
 	}
 	return result;
       } else if (ptype == ptype_traced_array) {
 	f2ptr result = f2__traced_array__slot__execute_funk(cause, this, slot);
 	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
+	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array"));
 	  result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
 	}
 	return result;
@@ -417,7 +417,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   case ptype_larva: {
     f2ptr result = f2__larva__slot__execute_funk(cause, this, slot);
     if (! result) {
-      f2ptr primobject_type = funk2_primobject_type_hander__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, f2symbol__new(cause, strlen("larva"), (u8*)"larva"));
       result = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot);
     }
     return result;

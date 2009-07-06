@@ -336,7 +336,6 @@ f2ptr f2__list__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   }
   s64 raw_n = f2integer__i(n, cause);
   s64 index = 0;
-  u64 length = f2__length(cause, this);
   f2ptr new_seq  = nil;
   f2ptr new_iter = nil;
   f2ptr iter = this;
@@ -355,7 +354,7 @@ f2ptr f2__list__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   }
   return new_seq;
 }
-def_pcfunk2(list__first_n, this, n, return f2__list__first_n(cause, this, n));
+def_pcfunk2(list__first_n, this, n, return f2__list__first_n(this_cause, this, n));
 
 // cause
 
@@ -1984,7 +1983,7 @@ void f2__primcfunks__initialize() {
   // cons
   
   f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
-  f2__primcfunk__init__1(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
+  f2__primcfunk__init__2(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
   
   // circular_buffer
   

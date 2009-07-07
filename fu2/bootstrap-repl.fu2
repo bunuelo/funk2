@@ -122,6 +122,12 @@
 		       `[globalize-funk ,name [metro ,name ,args
 						      @body]]]]
 
+[globalize-funk defmetro-local
+		[metro `defmetro-local [name args :rest body]
+			[exp-format stdout '\n'] [exp-format stdout `[defmetro-local ,name ,args]]
+			`[define-funk ,name [metro ,name ,args
+						    @body]]]]
+
 [defmetro prog [:rest body]
   `[funk-apply [funk-unlabeled prog []
 			       @body] []]]
@@ -147,6 +153,12 @@
   `[globalize-funk ,name
 		    [funk-unlabeled ,name ,args
 				     @body]]]
+
+[defmetro defunk-local [name args :rest body]
+  [exp-format stdout '\n'] [exp-format stdout `[defunk-local ,name ,args]]
+  `[define-funk ,name
+     [funk-unlabeled ,name ,args
+		      @body]]]
 
 `[exp-format stdout '\ndone defining defunk\n']
 `[exp-format stdout '\ndefining eval\n']

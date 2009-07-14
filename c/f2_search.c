@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-f2ptr f2__search(f2ptr thread, f2ptr cause, f2ptr expand_funk, f2ptr beam_width, f2ptr heuristic_funk) {
+f2ptr f2__search(f2ptr thread, f2ptr cause, f2ptr start_states, f2ptr expand_funk, f2ptr beam_width, f2ptr heuristic_funk) {
   return nil;
 }
 

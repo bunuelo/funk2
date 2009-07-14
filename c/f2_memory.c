@@ -1481,6 +1481,7 @@ void f2__object__reinitialize_globalvars();                      // defined in f
 void f2__primobject_type_handler__reinitialize_globalvars();     // defined in f2_primobject_type_handler.c
 void f2__primobject_type__reinitialize_globalvars();             // defined in f2_primobject_type.c
 void f2__sort__reinitialize_globalvars();                        // defined in f2_sort.c
+void f2__search__reinitialize_globalvars();                      // defined in f2_search.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -1593,6 +1594,7 @@ void rebuild_memory_info_from_image() {
     f2__primobject_type_handler__reinitialize_globalvars();
     f2__primobject_type__reinitialize_globalvars();
     f2__sort__reinitialize_globalvars();
+    f2__search__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

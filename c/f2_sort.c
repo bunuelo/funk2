@@ -21,40 +21,6 @@
 
 #include "funk2.h"
 
-/*
-void quicksort_swap(int *x, int *y) {
-  int temp;
-  temp = *x;
-  *x = *y;
-  *y = temp;
-}
-
-void quicksort(int* array, int first_element, int last_element_minus_one) {
-  int key, i, j, k;
-  if (first_element < last_element_minus_one) {
-    k = ((first_element + last_element_minus_one) / 2);
-    quicksort_swap(&array[first_element], &array[k]);
-    key = array[first_element];
-    i = first_element + 1;
-    j = last_element_minus_one;
-    while (i <= j) {
-      while ((i <= last_element_minus_one) && (array[i] <= key)) {
-	i ++;
-      }
-      while ((j >= first_element) && (array[j] > key)) {
-	j --;
-      }
-      if ( i < j) {
-	quicksort_swap(&array[i], &array[j]);
-      }
-    }
-    quicksort_swap(&array[first_element], &array[j]);
-    quicksort(array, first_element, j-1);
-    quicksort(array, j+1, last_element_minus_one);
-  }
-}
-*/
-
 void quicksort_swap_f2ptr(f2ptr cause, f2ptr array, int x_index, int y_index) {
   f2ptr x = raw__array__elt(cause, array, x_index);
   f2ptr y = raw__array__elt(cause, array, y_index);

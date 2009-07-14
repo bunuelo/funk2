@@ -38,7 +38,7 @@ void f2__search__initialize() {
   
   f2__sort__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(search, start_states, expand_funk, beam_width, heuristic_funk, "A-star beam search.");
+  f2__primcfunk__init__4(search, start_states, expand_funk, beam_width, heuristic_funk, "A-star beam search.");
   
   resume_gc();
   try_gc();

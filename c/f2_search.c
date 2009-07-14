@@ -25,7 +25,7 @@ f2ptr f2__search(f2ptr thread, f2ptr cause, f2ptr expand_funk, f2ptr beam_width,
   return nil;
 }
 
-def_pcfunk1(search, start_states, expand_funk, beam_width, heuristic_funk, return f2__search(simple_thread, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
+def_pcfunk4(search, start_states, expand_funk, beam_width, heuristic_funk, return f2__search(simple_thread, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
 
 // **
 

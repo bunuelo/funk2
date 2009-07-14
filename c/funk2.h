@@ -134,6 +134,7 @@
 #include "f2_redblacktree.h"
 #include "f2_repl.h"
 #include "f2_scheduler.h"
+#include "f2_search.h"
 #include "f2_serialize.h"
 #include "f2_signal.h"
 #include "f2_socket.h"

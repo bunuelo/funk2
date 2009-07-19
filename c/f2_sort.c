@@ -165,7 +165,6 @@ def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksor
 
 
 
-
 // **
 
 void f2__sort__reinitialize_globalvars() {

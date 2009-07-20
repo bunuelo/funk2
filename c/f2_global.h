@@ -58,40 +58,31 @@ typedef unsigned char boolean_t;
 
 // Single user 32 bit mode is only used for very old computers or those with very little (less than 1 gigabyte of usable disk space for a demo of the language).
 #ifdef F2__SINGLE_USER_32BIT_VERSION
-typedef                         u32 f2ptr;
-#  define f2ptr__fstr           X32__fstr
-#  define f2ptr__bit_num         32
-
-typedef                          u8 computer_id_t;
-#  define computer_id__fstr      X8__fstr
-#  define computer_id__bit_num    1
-
-typedef                          u8 pool_index_t;
-#  define pool_index__fstr       X8__fstr
-#  define pool_index__bit_num     1
-
-typedef                         u32 pool_address_t;
-#  define pool_address__fstr    X32__fstr
-#  define pool_address__bit_num  30
-
+    typedef                      u32 f2ptr;
+#   define f2ptr__fstr           X32__fstr
+#   define f2ptr__bit_num         32
+    typedef                       u8 computer_id_t;
+#   define computer_id__fstr      X8__fstr
+#   define computer_id__bit_num    1
+    typedef                       u8 pool_index_t;
+#   define pool_index__fstr       X8__fstr
+#   define pool_index__bit_num     1
+    typedef                      u32 pool_address_t;
+#   define pool_address__fstr    X32__fstr
+#   define pool_address__bit_num  30
 #else
-
-typedef                         u64 f2ptr;
-#  define f2ptr__fstr           X64__fstr
-#  define f2ptr__bit_num         64
-
-typedef                         u32 computer_id_t;
-#  define computer_id__fstr     X32__fstr
-#  define computer_id__bit_num   17
-
-typedef                          u8 pool_index_t;
-#  define pool_index__fstr       X8__fstr
-#  define pool_index__bit_num     5
-
-typedef                         u64 pool_address_t;
-#  define pool_address__fstr    X64__fstr
-#  define pool_address__bit_num  42
-
+    typedef                      u64 f2ptr;
+#   define f2ptr__fstr           X64__fstr
+#   define f2ptr__bit_num         64
+    typedef                      u32 computer_id_t;
+#   define computer_id__fstr     X32__fstr
+#   define computer_id__bit_num   17
+    typedef                       u8 pool_index_t;
+#   define pool_index__fstr       X8__fstr
+#   define pool_index__bit_num     5
+    typedef                      u64 pool_address_t;
+#   define pool_address__fstr    X64__fstr
+#   define pool_address__bit_num  42
 #endif
 
 

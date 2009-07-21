@@ -1133,52 +1133,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  }
 	}
 	if (array_is_not_known_primobject) {
-	  /*
-	  int subexp_size[2];
-	  f2ptr cdr;
-	  f2ptr iter = exp;
-	  int write_car_with_space = 0;
-	  if (stream) {fputc(__left_paren_char, raw_fptr);} indent_space_num ++; available_width --;
-	  while (iter) {
-	    cdr = f2cons__cdr(iter, cause);
-	    f2ptr car = f2cons__car(iter, cause);
-	    if (write_car_with_space) {
-	      //int car__try_wide = try_wide;
-	      
-	      boolean_t subexp__wide_success[1] = {1};
-	      f2__write_pretty(cause, nil, car, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, subexp__wide_success, show_slot_causes, use_ansi_colors, use_html);
-	      
-	      if (width < available_width && subexp__wide_success[0]) {
-		f2__write__space(cause, fptr, use_html); width ++;
-	      } else {
-		f2__write__line_break(cause, fptr, use_html); width = 0; height ++;
-		int i;
-		for (i = 0; i < indent_space_num + width; i++) {
-		  f2__write__space(cause, fptr, use_html);
-		}
-	      }
-	      
-	      //if (car__try_wide) {f2__write__space(fptr, use_html); width ++;} else {f2__write__line_break(fptr, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(fptr, use_html);}}
-	    }
-	    f2__write_pretty(cause, fptr, car, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html); width += subexp_size[0]; height += subexp_size[1];
-	    write_car_with_space = 1;
-	    if (!cdr) {
-	      f2__write__ansi_color(cause, fptr, print__ansi__array__foreground, use_ansi_colors, use_html);
-	      if (fptr) {fputc(__right_paren_char, raw_fptr);} width ++;
-	      iter = nil;
-	    } else if (! raw__consp(cdr, cause)) {
-	      f2__write__ansi_color(cause, fptr, print__ansi__array__foreground, use_ansi_colors, use_html);
-	      if (fptr) {fputs(" .", raw_fptr);} width += 2;
-	      if (try_wide) {f2__write__space(cause, fptr, use_html); width ++;} else {f2__write__line_break(cause, fptr, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, fptr, use_html);}}
-	      f2__write_pretty(cause, fptr, cdr, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html); width += subexp_size[0]; height += subexp_size[1];
-	      f2__write__ansi_color(cause, fptr, print__ansi__array__foreground, use_ansi_colors, use_html);
-	      if (fptr) {fputc(__right_paren_char, raw_fptr);} width ++;
-	      iter = nil;
-	    } else {
-	      iter = cdr;
-	    }
-	  }
-	  */
 	  int subexp_size[2];
 	  int i;
 	  int write_elt_with_space = 0;
@@ -1210,35 +1164,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    f2__write__ansi_color(cause, stream, print__ansi__traced_array__foreground, use_ansi_colors, use_html);
 	  }
 	  if (stream) {raw__stream__writef(cause, stream, "%c", __array_right_paren_char);} width ++;
-	  /*
-	  int subexp_size[2];
-	  int i;
-	  int write_elt_with_space = 0;
-	  int length = raw__array__length(cause, exp);
-	  if (fptr) {fputc(__array_left_paren_char, raw_fptr);} indent_space_num ++; available_width --;
-	  for(i = 0; i < length; i ++) {
-	    f2ptr elt = raw__array__elt(cause, exp, i);
-	    int elt__try_wide = try_wide;
-	    
-	    //if(fptr) {
-	    //  int  test_size[2];
-	    //  boolean_t test__wide_success[1] = {1};
-	    //  f2__write_pretty(cause, nil, elt, recursion_depth, indent_space_num, available_width, test_size, 1, test__wide_success, show_slot_causes);
-	    //  if ((! test__wide_success[0]) ||
-	    //	  (test_size[0] > available_width)) {
-	    //	if (wide_success) {wide_success[0] = 0;}
-	    //	try_wide = 0;
-	    //  }
-	    //} else {
-	    ///}
-	    
-	    if (write_elt_with_space) {if (elt__try_wide) {f2__write__space(cause, fptr, use_html); width ++;} else {f2__write__line_break(cause, fptr, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, fptr, use_html);}}}
-	    f2__write_pretty(cause, fptr, elt, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html); width += subexp_size[0]; height += subexp_size[1];
-	    write_elt_with_space = 1;
-	  }
-	  f2__write__ansi_color(cause, fptr, print__ansi__array__foreground, use_ansi_colors, use_html);
-	  if (fptr) {fputc(__array_right_paren_char, raw_fptr);} width ++;
-	  */
 	}
 	if (raw__primobject__is_type(cause, exp)) {
 	  if (show_slot_causes ||

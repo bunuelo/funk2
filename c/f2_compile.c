@@ -503,7 +503,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr thread, f2ptr exps, boolean
   f2ptr iter     = full_bcs;
   while (exps) {
     if (!raw__cons__is_type(cause, exps)) {
-      return f2__argument_type_check_failure__exception__new(simple_cause, exps);
+      return f2__argument_type_check_failure__larva__new(simple_cause, exps);
       //error(nil, "f2__compile__rawcode error: exps is not of type cons.");
     }
     protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
@@ -663,8 +663,8 @@ f2ptr   f2__compile__define_funk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp
   release__assert(__f2__compile__define_funk_exp__symbol != -1, nil, "__f2__compile__define_funk_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__define_funk_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr funkvar   = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs          = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
@@ -682,8 +682,8 @@ f2ptr   f2__compile__define_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   release__assert(__f2__compile__define_exp__symbol != -1, nil, "__f2__compile__define_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__define_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr var       = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs      = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
@@ -701,8 +701,8 @@ f2ptr f2__compile__mutate_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) {
   release__assert(__f2__compile__mutate_exp__symbol != -1, nil, "__f2__compile__mutate_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__mutate_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr var       = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
@@ -720,8 +720,8 @@ f2ptr f2__compile__mutatefunk_exp(f2ptr simple_cause, f2ptr thread, f2ptr exps) 
   release__assert(__f2__compile__mutatefunk_exp__symbol != -1, nil, "__f2__compile__mutatefunk_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__mutatefunk_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr funkvar   = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs       = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
@@ -739,8 +739,8 @@ f2ptr f2__compile__globalize_var_exp(f2ptr simple_cause, f2ptr thread, f2ptr exp
   release__assert(__f2__compile__globalize_var_exp__symbol != -1, nil, "__f2__compile__globalize_var_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__globalize_var_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr var       = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr var       = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
@@ -758,8 +758,8 @@ f2ptr f2__compile__globalize_funkvar_exp(f2ptr simple_cause, f2ptr thread, f2ptr
   release__assert(__f2__compile__globalize_funkvar_exp__symbol != -1, nil, "__f2__compile__globalize_funkvar_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__globalize_funkvar_exp__symbol, exps);
   
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr funkvar   = f2cons__car(exps, cause);
-  exps = f2cons__cdr(exps, cause); if (! exps) {return __argument_number_check_failure__exception;} f2ptr value_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr funkvar   = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! exps) {return f2larva__new(cause, 33);} f2ptr value_exp = f2cons__car(exps, cause);
   f2ptr value_bcs       = raw__compile(cause, thread, value_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;

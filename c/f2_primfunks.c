@@ -375,9 +375,21 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
   return (f2cause__allocate_traced_arrays(this, cause) != nil);
 }
 
-f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr cause_frame = f2cause__frame(this, cause);
+  frame__add_type_var_value(cause, cause_frame type, var, value);
+  return nil;
 }
+
+f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  return f2__cause__define_type_var(cause, this, __frame__variable_type__symbol, var, value);
+}
+def_pcfunk3(cause__define, this, var, value, return f2__cause__define(this_cause, this, var, value));
+
+f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
+  return f2__cause__define_type_funkvar(cause, this, __frame__funk_variable_type__symbol, funkvar, value);
+}
+def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
 
 // time
 
@@ -1976,6 +1988,11 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
   f2__primcfunk__init__2(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
+  
+  // cause
+  
+  f2__primcfunk__init__3(cause__define,       this, var,     value, "defines a cause-specific variable value.");
+  f2__primcfunk__init__3(cause__define__funk, this, funkvar, value, "defines a cause-specific funktion variable value.");
   
   // time
   

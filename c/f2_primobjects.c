@@ -1626,7 +1626,21 @@ void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
 }
 
 f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr type) {
-  f2ptr value = frame__lookup_type_var_value(cause, this, type, var, f2symbol__new(cause, strlen("not-defined"), (u8*)"not-defined"));
+  f2ptr     cause_iter   = this;
+  f2ptr     value        = nil;
+  boolean_t keep_looping;
+  do {
+    keep_looping = boolean__false;
+    value = frame__lookup_type_var_value(cause, cause_iter, type, var, __type_variable_not_defined__symbol);
+    if (raw__symbol__eq(cause, value, __type_variable_not_defined__symbol)) {
+      cause_iter = f2__ptype__cause(cause, cause_iter);
+      if (cause_iter) {
+	keep_looping = boolean__true;
+      } else {
+	value = f2larva__new(cause, 23);
+      }
+    }
+  } while (keep_looping);
   return value;
 }
 

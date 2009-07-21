@@ -1626,8 +1626,8 @@ typedef struct funk2_object_type__event_subscriber__slot_s {
 typedef struct funk2_object_type__cause__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
   f2ptr allocate_traced_arrays__symbol;
   f2ptr allocate_traced_arrays__funk;
   f2ptr allocate_traced_arrays__set__symbol;

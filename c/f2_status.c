@@ -45,10 +45,10 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
     return;
   }
   u64 nanoseconds_since_1970     = raw__nanoseconds_since_1970();
-  u64 seconds_since_1970         = milliseconds_since_1970 / nanoseconds_per_second;
-  u64 minutes_since_1970         = seconds_since_1970      / 60;
-  u64 hours_since_1970           = minutes_since_1970      / 60;
-  u64 earth_rotations_since_1970 = hours_since_1970        / 24;
+  u64 seconds_since_1970         = nanoseconds_since_1970 / nanoseconds_per_second;
+  u64 minutes_since_1970         = seconds_since_1970     / 60;
+  u64 hours_since_1970           = minutes_since_1970     / 60;
+  u64 earth_rotations_since_1970 = hours_since_1970       / 24;
   u64 hours        = hours_since_1970        - (earth_rotations_since_1970 * 24);
   u64 minutes      = minutes_since_1970      - (hours_since_1970           * 60);
   u64 seconds      = seconds_since_1970      - (minutes_since_1970         * 60);

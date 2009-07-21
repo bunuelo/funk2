@@ -690,6 +690,6 @@ void f2__reader__initialize() {
   __char__string_quote           = f2char__new(cause, __string_quote_char);           {char* str = "char:string_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__string_quote);}
   __char__symbol_quote           = f2char__new(cause, __symbol_quote_char);           {char* str = "char:symbol_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__symbol_quote);}
   
-  f2__primcfunk__init__1(read, stream, "main funk2 reader funktion for reading from a straem (such as stdin).");
+  f2__primcfunk__init__1(read, stream, "main funk2 reader funktion for reading from a stream (such as stdin).");
 }
 

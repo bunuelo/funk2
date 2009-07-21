@@ -38,8 +38,8 @@ f2ptr f2__primobject__new__trace_depth(f2ptr cause, f2ptr type, int static_slot_
   release__assert(__primobject__symbol != -1, nil, "f2__primobject__new error: used before primobjects initialized.");
   f2ptr this = raw__array__new(cause, primobject__header_size + static_slot_num);
   f2primobject__primobject_label__set__trace_depth(this, cause, __primobject__symbol, trace_depth);
-  f2primobject__type__set__trace_depth(            this, cause, type, trace_depth);
-  f2primobject__dynamic_slots__set__trace_depth(   this, cause, dynamic_slots, trace_depth);
+  f2primobject__type__set__trace_depth(            this, cause, type,                 trace_depth);
+  f2primobject__dynamic_slots__set__trace_depth(   this, cause, dynamic_slots,        trace_depth);
   return this;
 }
 

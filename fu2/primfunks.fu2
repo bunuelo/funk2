@@ -23,7 +23,7 @@
 [globalize-funk pointer                                     &primfunk:pointer]
 [globalize-funk deref-pointer                               &primfunk:deref_pointer]
 
-`[globalize-funk memblock-creation_microseconds_since_1970   &primfunk:memblock__creation_microseconds_since_1970]
+`[globalize-funk memblock-creation_nanoseconds_since_1970   &primfunk:memblock__creation_nanoseconds_since_1970]
 
 [globalize-funk ptype-raw                                   &primfunk:ptype__raw]
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]

@@ -1698,6 +1698,10 @@ typedef struct funk2_object_type__cause__slot_s {
   f2ptr current_events__funk;
   f2ptr current_events__set__symbol;
   f2ptr current_events__set__funk;
+  f2ptr define__symbol;
+  f2ptr define__funk;
+  f2ptr define__funk__symbol;
+  f2ptr define__funk__funk;
 } funk2_object_type__cause__slot_t;
 
 // transframe

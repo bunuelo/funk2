@@ -1453,7 +1453,6 @@ void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f
 void f2__primobject__semantic_graph__reinitialize_globalvars();  // defined in f2_primobject__semantic_graph.c
 void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
 void f2__primobject__text_buffer__reinitialize_globalvars();     // defined in f2_primobject__text_buffer.c
-void f2__primobject__time__reinitialize_globalvars();            // defined in f2_primobject__time.c
 void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
 void f2__reader__reinitialize_globalvars();                      // defined in f2_reader.c
 void f2__compile__reinitialize_globalvars();                     // defined in f2_compile.c
@@ -1563,7 +1562,6 @@ void rebuild_memory_info_from_image() {
     f2__primobject__semantic_graph__reinitialize_globalvars();
     f2__primobject__stream__reinitialize_globalvars();
     f2__primobject__text_buffer__reinitialize_globalvars();
-    f2__primobject__time__reinitialize_globalvars();
     f2__globalenv__reinitialize_globalvars();
     f2__primcfunks__reinitialize_globalvars();
     f2__reader__reinitialize_globalvars();

@@ -2131,7 +2131,9 @@ int f2__thread__bytecode__globalize_type_var(f2ptr thread, f2ptr bytecode, f2ptr
   f2__thread__increment_pc(thread, cause);
   
   f2ptr value = f2thread__value(thread, cause);
-  f2thread__value__set(thread, cause, environment__define_type_var_value(cause, global_environment(), type, var, value));
+  if (! raw__larva__is_type(cause, value)) {
+    f2thread__value__set(thread, cause, environment__define_type_var_value(cause, global_environment(), type, var, value));
+  }
   return 0;
 }
 

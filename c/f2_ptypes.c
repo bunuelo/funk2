@@ -1996,7 +1996,7 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       f2traced_array__elt__set__trace_depth(symbol_old_new, 2, cause, value,   trace_depth - 1);
       f2traced_array__elt__set__trace_depth(symbol_old_new, 1, cause, old_elt, trace_depth - 1);
       f2ptr symbol_old_news = f2cons__new__trace_depth(cause, symbol_old_new, nil, trace_depth - 1);
-      new_tracing_transframe = f2transframe__new__trace_depth(cause, f2integer__new(cause, raw__system_nanoseconds_since_1970()), symbol_old_news, trace_depth - 1);
+      new_tracing_transframe = f2transframe__new__trace_depth(cause, f2integer__new(cause, raw__nanoseconds_since_1970()), symbol_old_news, trace_depth - 1);
       new_tracing_doublelink = f2doublelink__new__trace_depth(cause, prev_elts, nil, new_tracing_transframe, trace_depth - 1);
     }
     

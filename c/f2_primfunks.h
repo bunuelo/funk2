@@ -877,6 +877,10 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x);
 
+// time
+
+f2ptr f2__time(f2ptr cause);
+
 // primobject hashtable
 
 u64 raw__hash_value(f2ptr cause, f2ptr exp);

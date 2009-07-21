@@ -364,6 +364,14 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
   return (f2cause__allocate_traced_arrays(this, cause) != nil);
 }
 
+// time
+
+f2ptr f2__time(f2ptr cause) {
+  return f2time__new(cause, f2__system_microseconds_since_1970(cause));
+}
+def_pcfunk0(time, return f2__time(this_cause));
+
+
 // array interface
 
 f2ptr raw__array__new(f2ptr cause, u64 length) {
@@ -1954,6 +1962,10 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
   f2__primcfunk__init__2(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
+  
+  // time
+  
+  f2__primcfunk__init__0(time, "returns the current time.");
   
   // circular_buffer
   

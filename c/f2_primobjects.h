@@ -1063,7 +1063,7 @@ boolean_t raw__time__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__time__is_type(f2ptr cause, f2ptr x);
 f2ptr f2time__new(f2ptr cause, f2ptr type);
 f2ptr f2time__primobject_type__new(f2ptr cause);
-#define f2primobject__is_time(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __time__symbol)
+#define f2primobject__is__time(this, cause) raw__eq(cause, f2primobject__type(this, cause), __time__symbol)
 
 defprimobject__static_slot__prototype(time__microseconds_since_1970);
 #define f2time__microseconds_since_1970(                   this, cause)        primobject__static_slot__accessor(         this, time__microseconds_since_1970, cause)

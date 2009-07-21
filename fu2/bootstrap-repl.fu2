@@ -308,6 +308,9 @@
 [defunk wrong_argument_number_error [:rest args] [error `run-time `[wrong-argument-number ,[cons `<funkable> [mapcar &identity args]]]]]
 [wrong_argument_number_error-set [object-get &wrong_argument_number_error `body_bytecodes]]
 
+[defunk slots [exp]
+  [primobject_type-get_funk-slot_names [lookup_type [type exp]]]]
+
 [defmetro cadr [seq]
   `[car [cdr ,seq]]]
 

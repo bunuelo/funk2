@@ -76,6 +76,9 @@ def_pcfunk2(primobject_type__lookup_slot_execute_funk, this, slot_name, return f
 // list slot type
 
 f2ptr f2__primobject_type__get_funk__slot_names(f2ptr cause, f2ptr this) {
+  if (! this) {
+    return nil;
+  }
   if (! raw__frame__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -84,6 +87,9 @@ f2ptr f2__primobject_type__get_funk__slot_names(f2ptr cause, f2ptr this) {
 def_pcfunk1(primobject_type__get_funk__slot_names, this, return f2__primobject_type__get_funk__slot_names(this_cause, this));
 
 f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this) {
+  if (! this) {
+    return nil;
+  }
   if (! raw__frame__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -92,6 +98,9 @@ f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this) {
 def_pcfunk1(primobject_type__set_funk__slot_names, this, return f2__primobject_type__set_funk__slot_names(this_cause, this));
 
 f2ptr f2__primobject_type__execute_funk__slot_names(f2ptr cause, f2ptr this) {
+  if (! this) {
+    return nil;
+  }
   if (! raw__frame__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }

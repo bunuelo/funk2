@@ -1568,6 +1568,17 @@ f2ptr f2__cause__current_events__set(f2ptr cause, f2ptr this, f2ptr value) {retu
 def_pcfunk2(cause__current_events__set, x, y, return f2__cause__current_events__set(this_cause, x, y));
 
 
+f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
+  return f2__cause__define_type_var(cause, this, __frame__variable_type__symbol, var, value);
+}
+def_pcfunk3(cause__define, this, var, value, return f2__cause__define(this_cause, this, var, value));
+
+f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
+  return f2__cause__define_type_var(cause, this, __frame__funk_variable_type__symbol, funkvar, value);
+}
+def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
+
+
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
   f2ptr frame                = frame__new_empty(cause);
   f2ptr subscribers_mutex    = f2mutex__new(cause);

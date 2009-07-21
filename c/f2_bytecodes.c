@@ -2062,8 +2062,12 @@ int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr bytecode, f2ptr ty
   
   f2__thread__increment_pc(thread, cause);
   
-  f2ptr env   = f2thread__env(thread, cause);
-  f2thread__value__set(thread, cause, environment__lookup_type_var_value(cause, env, type, var));
+  f2ptr env = f2thread__env(thread, cause);
+  f2ptr thread_value = environment__lookup_type_var_value(cause, env, type, var);
+  if (raw__larva__is_type(cause, thread_value)) {
+    thread_value = f2__cause__lookup_type_var_value(cause, cause, type, var);
+  }
+  f2thread__value__set(thread, cause, thread_value);
   return 0;
 }
 

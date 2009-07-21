@@ -1565,7 +1565,8 @@ f2ptr f2__cause__current_events__set(f2ptr cause, f2ptr this, f2ptr value) {retu
 def_pcfunk2(cause__current_events__set, x, y, return f2__cause__current_events__set(this_cause, x, y));
 
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+  f2ptr frame                = frame__new_empty(cause);
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
   return f2cause__new(cause, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
@@ -1583,7 +1584,6 @@ f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {
 }
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
-  f2ptr frame                  = nil;
   f2ptr allocate_traced_arrays = nil;
   f2ptr bytecode_tracing_on    = nil;
   f2ptr memory_tracing_on      = nil;
@@ -1597,7 +1597,6 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
     imagination_stack      = f2cause__imagination_stack(cause, cause);
   }
   return f2__cause__new(cause,
-			frame,
 			allocate_traced_arrays,
 			bytecode_tracing_on,
 			memory_tracing_on,

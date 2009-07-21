@@ -375,6 +375,10 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
   return (f2cause__allocate_traced_arrays(this, cause) != nil);
 }
 
+f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr cause_frame = f2cause__frame(this, cause);
+}
+
 // time
 
 f2ptr f2__time(f2ptr cause) {

@@ -303,7 +303,7 @@ void rpc_socket_layer__send_packet__request__know_of_event(             funk2_no
 struct pcs_packet_payload_client_request_received_s {
   funk2_packet_payload_header_t payload_header;
   client_id_t                   client_id;
-  u64                           microseconds_since_1970;
+  u64                           nanoseconds_since_1970;
   funk2_packet_t                request;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_client_request_received_s pcs_packet_payload_client_request_received_t;

@@ -1014,18 +1014,18 @@ void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 extern f2ptr __transframe__symbol;
 boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__transframe__is_type(f2ptr cause, f2ptr x);
-f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news, int trace_depth);
-f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news);
+f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news, int trace_depth);
+f2ptr f2transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news);
 f2ptr f2transframe__primobject_type__new(f2ptr cause);
 #define f2primobject__is_transframe(this, cause) raw__eq(cause, f2primobject__type(this, cause), __transframe__symbol)
 
-defprimobject__static_slot__prototype(transframe__microseconds_since_1970);
-#define f2transframe__microseconds_since_1970(                   this, cause)                     primobject__static_slot__accessor(         this, transframe__microseconds_since_1970, cause)
-#define f2transframe__microseconds_since_1970__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, transframe__microseconds_since_1970, cause, value, trace_depth)
-#define f2transframe__microseconds_since_1970__set(              this, cause, value)              primobject__static_slot__set(              this, transframe__microseconds_since_1970, cause, value)
-#define f2transframe__microseconds_since_1970__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, transframe__microseconds_since_1970, cause)
-#define f2transframe__microseconds_since_1970__trace(            this, cause)                     primobject__static_slot__trace(            this, transframe__microseconds_since_1970, cause)
-#define f2transframe__microseconds_since_1970__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__microseconds_since_1970, cause)
+defprimobject__static_slot__prototype(transframe__nanoseconds_since_1970);
+#define f2transframe__nanoseconds_since_1970(                   this, cause)                     primobject__static_slot__accessor(         this, transframe__nanoseconds_since_1970, cause)
+#define f2transframe__nanoseconds_since_1970__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, transframe__nanoseconds_since_1970, cause, value, trace_depth)
+#define f2transframe__nanoseconds_since_1970__set(              this, cause, value)              primobject__static_slot__set(              this, transframe__nanoseconds_since_1970, cause, value)
+#define f2transframe__nanoseconds_since_1970__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, transframe__nanoseconds_since_1970, cause)
+#define f2transframe__nanoseconds_since_1970__trace(            this, cause)                     primobject__static_slot__trace(            this, transframe__nanoseconds_since_1970, cause)
+#define f2transframe__nanoseconds_since_1970__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__nanoseconds_since_1970, cause)
 
 // symbol_old_news is a list of 3-element arrays, e.g. [(symbol-1 old-1 new-1) (symbol-2 old-2 new-2) . . .]
 defprimobject__static_slot__prototype(transframe__symbol_old_news);
@@ -1065,12 +1065,12 @@ f2ptr f2time__new(f2ptr cause, f2ptr type);
 f2ptr f2time__primobject_type__new(f2ptr cause);
 #define f2primobject__is__time(this, cause) raw__eq(cause, f2primobject__type(this, cause), __time__symbol)
 
-defprimobject__static_slot__prototype(time__microseconds_since_1970);
-#define f2time__microseconds_since_1970(                   this, cause)        primobject__static_slot__accessor(         this, time__microseconds_since_1970, cause)
-#define f2time__microseconds_since_1970__set(              this, cause, value) primobject__static_slot__set(              this, time__microseconds_since_1970, cause, value)
-#define f2time__microseconds_since_1970__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, time__microseconds_since_1970, cause)
-#define f2time__microseconds_since_1970__trace(            this, cause)        primobject__static_slot__trace(            this, time__microseconds_since_1970, cause)
-#define f2time__microseconds_since_1970__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, time__microseconds_since_1970, cause)
+defprimobject__static_slot__prototype(time__nanoseconds_since_1970);
+#define f2time__nanoseconds_since_1970(                   this, cause)        primobject__static_slot__accessor(         this, time__nanoseconds_since_1970, cause)
+#define f2time__nanoseconds_since_1970__set(              this, cause, value) primobject__static_slot__set(              this, time__nanoseconds_since_1970, cause, value)
+#define f2time__nanoseconds_since_1970__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, time__nanoseconds_since_1970, cause)
+#define f2time__nanoseconds_since_1970__trace(            this, cause)        primobject__static_slot__trace(            this, time__nanoseconds_since_1970, cause)
+#define f2time__nanoseconds_since_1970__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, time__nanoseconds_since_1970, cause)
 
 
 
@@ -1695,10 +1695,10 @@ typedef struct funk2_object_type__transframe__slot_s {
   f2ptr is_type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
-  f2ptr microseconds_since_1970__symbol;
-  f2ptr microseconds_since_1970__funk;
-  f2ptr microseconds_since_1970__set__symbol;
-  f2ptr microseconds_since_1970__set__funk;
+  f2ptr nanoseconds_since_1970__symbol;
+  f2ptr nanoseconds_since_1970__funk;
+  f2ptr nanoseconds_since_1970__set__symbol;
+  f2ptr nanoseconds_since_1970__set__funk;
   f2ptr symbol_old_news__symbol;
   f2ptr symbol_old_news__funk;
   f2ptr symbol_old_news__set__symbol;
@@ -1725,10 +1725,10 @@ typedef struct funk2_object_type__time__slot_s {
   f2ptr is_type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
-  f2ptr microseconds_since_1970__symbol;
-  f2ptr microseconds_since_1970__funk;
-  f2ptr microseconds_since_1970__set__symbol;
-  f2ptr microseconds_since_1970__set__funk;
+  f2ptr nanoseconds_since_1970__symbol;
+  f2ptr nanoseconds_since_1970__funk;
+  f2ptr nanoseconds_since_1970__set__symbol;
+  f2ptr nanoseconds_since_1970__set__funk;
 } funk2_object_type__time__slot_t;
 
 // size_2d

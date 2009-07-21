@@ -31,9 +31,9 @@ void funk2_peer_command_server_client__init(funk2_peer_command_server_client_t* 
 }
 
 void funk2_peer_command_server_client__reset_status_counters(funk2_peer_command_server_client_t* this) {
-  this->last_received_packet_microseconds_since_1970                        = 0;
-  this->last_receive_system__node_id_request_status_microseconds_since_1970 = 0;
-  this->last_receive_unexpected_packet_type_status_microseconds_since_1970  = 0;
+  this->last_received_packet_nanoseconds_since_1970                        = 0;
+  this->last_receive_system__node_id_request_status_nanoseconds_since_1970 = 0;
+  this->last_receive_unexpected_packet_type_status_nanoseconds_since_1970  = 0;
   this->count_receive_system__node_id_request_status                        = 0;
   this->count_receive_unexpected_packet_type_status                         = 0;
 }
@@ -41,20 +41,20 @@ void funk2_peer_command_server_client__reset_status_counters(funk2_peer_command_
 void funk2_peer_command_server_client__destroy(funk2_peer_command_server_client_t* this) {
 }
 
-void pcs_client_request_received_packet__init(pcs_client_request_received_packet_t* this, client_id_t* client_id, u64 microseconds_since_1970, funk2_packet_t* request) {
+void pcs_client_request_received_packet__init(pcs_client_request_received_packet_t* this, client_id_t* client_id, u64 nanoseconds_since_1970, funk2_packet_t* request) {
   u32 request__byte_num = funk2_packet__sizeof(request);
   funk2_packet_header__init(&(this->header), sizeof(funk2_packet_payload_header_t) + sizeof(client_id_t) + sizeof(u64) + request__byte_num);
   this->payload.payload_header.type = funk2_packet_type__pcs_request__client_request_received;
   client_id__copy(&(this->payload.client_id), client_id);
-  this->payload.microseconds_since_1970 = microseconds_since_1970;
+  this->payload.nanoseconds_since_1970 = nanoseconds_since_1970;
   memcpy(&(this->payload.request), request, request__byte_num);
 }
 
-pcs_client_request_received_packet_t* pcs_client_request_received_packet__new(client_id_t* client_id, u64 microseconds_since_1970, funk2_packet_t* request) {
+pcs_client_request_received_packet_t* pcs_client_request_received_packet__new(client_id_t* client_id, u64 nanoseconds_since_1970, funk2_packet_t* request) {
   u32 request__byte_num = funk2_packet__sizeof(request);
   //status("pcs_client_request_received_packet__new: request__byte_num=%d", request__byte_num);
   pcs_client_request_received_packet_t* new_packet = (pcs_client_request_received_packet_t*)from_ptr(f2__malloc(sizeof(funk2_packet_header_t) + sizeof(funk2_packet_payload_header_t) + sizeof(client_id_t) + sizeof(u64) + request__byte_num));
-  pcs_client_request_received_packet__init(new_packet, client_id, microseconds_since_1970, request);
+  pcs_client_request_received_packet__init(new_packet, client_id, nanoseconds_since_1970, request);
   return new_packet;
 }
 
@@ -66,7 +66,7 @@ funk2_packet_t* funk2_peer_command_server_client__recv_new_valid_packet(funk2_pe
   funk2_packet_t*    recv_packet = funk2_packet__recv_new_valid_from_buffered_socket(socket);
   
   if (recv_packet) {
-    this->last_received_packet_microseconds_since_1970 = raw__system_microseconds_since_1970();
+    this->last_received_packet_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   }
   return recv_packet;
 }
@@ -75,14 +75,14 @@ void funk2_peer_command_server_client__recv_packet(funk2_peer_command_server_cli
   buffered_socket_t* socket      = &(this->socket_server_client->socket);
   funk2_packet_t*    recv_packet = funk2_packet__recv_new_valid_from_buffered_socket(socket);
   if (recv_packet) {
-    u64 microseconds_since_1970 = raw__system_microseconds_since_1970();
-    this->last_received_packet_microseconds_since_1970 = microseconds_since_1970;
-    funk2_peer_command_server_client__buffer_request_packet(this, microseconds_since_1970, recv_packet);
+    u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    this->last_received_packet_nanoseconds_since_1970 = nanoseconds_since_1970;
+    funk2_peer_command_server_client__buffer_request_packet(this, nanoseconds_since_1970, recv_packet);
     f2__free(to_ptr(recv_packet)); recv_packet = NULL;
   }
 }
 
-void funk2_peer_command_server_client__buffer_request_packet(funk2_peer_command_server_client_t* this, u64 microseconds_since_1970, funk2_packet_t* packet) {
+void funk2_peer_command_server_client__buffer_request_packet(funk2_peer_command_server_client_t* this, u64 nanoseconds_since_1970, funk2_packet_t* packet) {
   //funk2_packet_header_t* packet_header = (funk2_packet_header_t*)packet;
   //{
   //  int k;
@@ -95,10 +95,10 @@ void funk2_peer_command_server_client__buffer_request_packet(funk2_peer_command_
   //    }
   //  }
   //}
-  funk2_peer_command_server__buffer_client_request_packet(this->peer_command_server, &(this->socket_server_client->client_id), microseconds_since_1970, packet);
+  funk2_peer_command_server__buffer_client_request_packet(this->peer_command_server, &(this->socket_server_client->client_id), nanoseconds_since_1970, packet);
 }
 
-void funk2_peer_command_server_client__execute_request(funk2_peer_command_server_client_t* this, client_id_t* client_id, u64 microseconds_since_1970, funk2_packet_t* packet) {
+void funk2_peer_command_server_client__execute_request(funk2_peer_command_server_client_t* this, client_id_t* client_id, u64 nanoseconds_since_1970, funk2_packet_t* packet) {
   // warning client (this) might be NULL if not connected!
   funk2_packet_payload_header_t* payload_header          = &(packet->payload_header);
   //socket_server_client_t*           socket_server_client    = this ? this->socket_server_client : NULL;
@@ -352,8 +352,8 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
     funk2_packet_header_t* packet_header = &(packet->header);
     if (this) {
       this->count_receive_unexpected_packet_type_status ++;
-      if (microseconds_since_1970 - this->last_receive_unexpected_packet_type_status_microseconds_since_1970 > funk2_peer_command_server__summary_seconds * 1000000) {
-	this->last_receive_unexpected_packet_type_status_microseconds_since_1970 = microseconds_since_1970;
+      if (nanoseconds_since_1970 - this->last_receive_unexpected_packet_type_status_nanoseconds_since_1970 > funk2_peer_command_server__summary_seconds * nanoseconds_per_second) {
+	this->last_receive_unexpected_packet_type_status_nanoseconds_since_1970 = nanoseconds_since_1970;
 	status("%-45s  (" u32__fstr " per %u sec) funk2_peer_command_server_client__execute_request: got unexpected packet type %d (0x%X) (payload=%d).", client_id_str, this->count_receive_unexpected_packet_type_status, funk2_peer_command_server__summary_seconds, payload_header->type, payload_header->type, packet_header->payload_length);
 	this->count_receive_unexpected_packet_type_status = 0;
 	{
@@ -487,8 +487,8 @@ void funk2_peer_command_server__buffer_request_packet(funk2_peer_command_server_
   funk2_peer_command_server__command_input_buffer__write(this, postpacket_magic, 2);
 }
 
-void funk2_peer_command_server__buffer_client_request_packet(funk2_peer_command_server_t* this, client_id_t* client_id, u64 microseconds_since_1970, funk2_packet_t* request) {
-  pcs_client_request_received_packet_t* client_request_packet = pcs_client_request_received_packet__new(client_id, microseconds_since_1970, request);
+void funk2_peer_command_server__buffer_client_request_packet(funk2_peer_command_server_t* this, client_id_t* client_id, u64 nanoseconds_since_1970, funk2_packet_t* request) {
+  pcs_client_request_received_packet_t* client_request_packet = pcs_client_request_received_packet__new(client_id, nanoseconds_since_1970, request);
   funk2_peer_command_server__buffer_request_packet(this, (funk2_packet_t*)client_request_packet);
   f2__free(to_ptr(client_request_packet));
 }
@@ -513,10 +513,10 @@ funk2_peer_command_server_client_t* funk2_peer_command_server__get_client(funk2_
   return NULL;
 }
 
-void funk2_peer_command_server__execute_client_request(funk2_peer_command_server_t* this, client_id_t* client_id, u64 microseconds_since_1970, funk2_packet_t* request) {
+void funk2_peer_command_server__execute_client_request(funk2_peer_command_server_t* this, client_id_t* client_id, u64 nanoseconds_since_1970, funk2_packet_t* request) {
   funk2_peer_command_server_client_t* client = funk2_peer_command_server__get_client(this, client_id);
   // client requests have effects on the server state that can be remembered
-  funk2_peer_command_server_client__execute_request(client, client_id, microseconds_since_1970, request);
+  funk2_peer_command_server_client__execute_request(client, client_id, nanoseconds_since_1970, request);
 }
 
 void funk2_peer_command_server__execute_funk2_packet(funk2_peer_command_server_t* this, funk2_packet_t* packet) {
@@ -526,7 +526,7 @@ void funk2_peer_command_server__execute_funk2_packet(funk2_peer_command_server_t
     pcs_client_request_received_packet_t* client_request_received = (pcs_client_request_received_packet_t*)packet;
     client_id_t                           client_id;
     memcpy(&client_id, &(client_request_received->payload.client_id), sizeof(client_id_t));
-    funk2_peer_command_server__execute_client_request(this, &client_id, client_request_received->payload.microseconds_since_1970, &(client_request_received->payload.request));
+    funk2_peer_command_server__execute_client_request(this, &client_id, client_request_received->payload.nanoseconds_since_1970, &(client_request_received->payload.request));
   } break;
   default: {
     funk2_packet_header_t* packet_header = &(packet->header);

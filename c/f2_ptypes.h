@@ -68,7 +68,7 @@ f2ptr pfunk2__system__environment(f2ptr cause);
 
 // memblock
 
-u64 pfunk2__memblock__creation_microseconds_since_1970(f2ptr this, f2ptr cause);
+u64 pfunk2__memblock__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
 
 // ptype
 

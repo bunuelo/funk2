@@ -114,10 +114,10 @@ void funk2_node__init(funk2_node_t* this, node_id_t node_id, computer_id_t compu
   sprintf(hostname, "%d.%d.%d.%d", client_id->ip_addr[0], client_id->ip_addr[1], client_id->ip_addr[2], client_id->ip_addr[3]);
   funk2_processor_mutex__init(&(this->socket_client_mutex));
   socket_client__init(&(this->socket_client), "", hostname, client_id->port_num, send_buffer_byte_num, recv_buffer_byte_num);
-  this->node_id                                     = node_id;
-  this->computer_id                                 = computer_id;
-  this->sent_register_request                       = boolean__false;
-  this->last_try_reconnect__microseconds_since_1970 = 0;
+  this->node_id                                    = node_id;
+  this->computer_id                                = computer_id;
+  this->sent_register_request                      = boolean__false;
+  this->last_try_reconnect__nanoseconds_since_1970 = 0;
   int i;
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {
     this->remote_computer_id_to_local_computer_id[i] = f2ptr__computer_id__max_value;
@@ -173,9 +173,9 @@ void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_hand
   //printf("\nfunk2_node__handle_node note: handling funk2 node (node_id=" node_id__fstr ") %d.%d.%d.%d:%d.",
   //	 this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
   if (this->socket_client.socket.disconnected) {
-    u64 microseconds_since_1970 = raw__system_microseconds_since_1970();
-    if (microseconds_since_1970 - this->last_try_reconnect__microseconds_since_1970 > 10 * 1000000) {
-      this->last_try_reconnect__microseconds_since_1970 = microseconds_since_1970;
+    u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    if (nanoseconds_since_1970 - this->last_try_reconnect__nanoseconds_since_1970 > 10 * 1000000) {
+      this->last_try_reconnect__nanoseconds_since_1970 = nanoseconds_since_1970;
       socket_client_connect_result_t result = socket_client__try_reconnect(&(this->socket_client));
       if (result != socket_client_connect_result__success) {
 	status("funk2_node__handle_node error: failed to reconnect to funk2 node (node_id=" node_id__fstr ") %d.%d.%d.%d:%d.",

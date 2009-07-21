@@ -27,9 +27,11 @@
 #include "f2_ptypes.h"
 #include "f2_primfunks.h"
 
+#define nanoseconds_per_second ((s64)1000000000)
+
 void  f2__sleep(int microseconds);
-u64   raw__system_microseconds_since_1970();
-f2ptr f2__system_microseconds_since_1970(f2ptr cause);
+u64   raw__nanoseconds_since_1970();
+f2ptr f2__nanoseconds_since_1970(f2ptr cause);
 
 
 #endif // F2__TIME__H

@@ -99,7 +99,7 @@ void f2__initialize() {
 void funk2__init(funk2_t* this, int argc, char** argv) {
   f2__status__initialize();
   
-  this->node_id  = raw__system_microseconds_since_1970() * u64_large_prime;
+  this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_mutex));
   

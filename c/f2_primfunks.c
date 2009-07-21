@@ -367,10 +367,9 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
 // time
 
 f2ptr f2__time(f2ptr cause) {
-  return f2time__new(cause, f2__system_microseconds_since_1970(cause));
+  return f2time__new(cause, f2__nanoseconds_since_1970(cause));
 }
 def_pcfunk0(time, return f2__time(this_cause));
-
 
 // array interface
 
@@ -955,7 +954,7 @@ f2ptr f2__quit(f2ptr cause, f2ptr value) {
 }
 def_pcfunk0(quit, f2__quit(this_cause, nil); return nil);
 
-def_pcfunk0(system_microseconds_since_1970, return f2__system_microseconds_since_1970(this_cause));
+def_pcfunk0(nanoseconds_since_1970, return f2__nanoseconds_since_1970(this_cause));
 
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
   if (!this || !index || ! raw__integer__is_type(cause, index)) {
@@ -2034,7 +2033,7 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init__1(random, sup_integer, "generate a random integer between 0 and sup_integer - 1.");
   
-  f2__primcfunk__init(system_microseconds_since_1970, "");
+  f2__primcfunk__init(nanoseconds_since_1970, "");
   
   f2__funktional_primcfunk__init(identity, "");
   

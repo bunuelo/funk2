@@ -44,19 +44,17 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
     funk2_processor_mutex__unlock(&(__funk2.status.trace_mutex));
     return;
   }
-  u64 microseconds_since_1970    = raw__system_microseconds_since_1970();
-  u64 milliseconds_since_1970    = microseconds_since_1970 / 1000;
-  u64 seconds_since_1970         = milliseconds_since_1970 / 1000;
+  u64 nanoseconds_since_1970     = raw__nanoseconds_since_1970();
+  u64 seconds_since_1970         = milliseconds_since_1970 / nanoseconds_per_second;
   u64 minutes_since_1970         = seconds_since_1970      / 60;
   u64 hours_since_1970           = minutes_since_1970      / 60;
   u64 earth_rotations_since_1970 = hours_since_1970        / 24;
   u64 hours        = hours_since_1970        - (earth_rotations_since_1970 * 24);
   u64 minutes      = minutes_since_1970      - (hours_since_1970           * 60);
   u64 seconds      = seconds_since_1970      - (minutes_since_1970         * 60);
-  u64 milliseconds = milliseconds_since_1970 - (seconds_since_1970         * 1000);
-  u64 microseconds = microseconds_since_1970 - (milliseconds_since_1970    * 1000);
+  u64 nanoseconds  = nanoseconds_since_1970  - (seconds_since_1970         * nanoseconds_per_second);
   char temp_msg2[2048];
-  sprintf(temp_msg2, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d.%03d,%03d funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (int)milliseconds, (int)microseconds, temp_msg);
+  sprintf(temp_msg2, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d.%09ld funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (int)milliseconds, (int)nanoseconds, temp_msg);
   size_t size_to_write = strlen(temp_msg2) + 1;
   size_t size_written  = write(trace_fd, temp_msg2, size_to_write);
   if (size_written != size_to_write) {

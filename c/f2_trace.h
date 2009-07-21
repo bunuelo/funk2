@@ -57,10 +57,10 @@ f2ptr f2tracenode__find_next__primobject_of_type(f2ptr tracenode, f2ptr cause, f
 
 extern f2ptr __do_not_remember__symbol;
 
-f2ptr raw__trace__remember__microseconds_since_1970(f2ptr cause, f2ptr this, u64 microseconds_since_1970, f2ptr* remember_value);
-f2ptr raw__array__elt__remember__microseconds_since_1970(f2ptr cause, f2ptr this, uint index, u64 microseconds_since_1970);
-f2ptr raw__exp__remember__microseconds_since_1970(f2ptr cause, f2ptr exp, u64 microseconds_since_1970);
-f2ptr raw__exp__remember__trans__microseconds_since_1970(f2ptr cause, f2ptr exp, u64 initial_microseconds, u64 final_microseconds);
+f2ptr raw__trace__remember__nanoseconds_since_1970(f2ptr cause, f2ptr this, u64 nanoseconds_since_1970, f2ptr* remember_value);
+f2ptr raw__array__elt__remember__nanoseconds_since_1970(f2ptr cause, f2ptr this, uint index, u64 nanoseconds_since_1970);
+f2ptr raw__exp__remember__nanoseconds_since_1970(f2ptr cause, f2ptr exp, u64 nanoseconds_since_1970);
+f2ptr raw__exp__remember__trans__nanoseconds_since_1970(f2ptr cause, f2ptr exp, u64 initial_nanoseconds, u64 final_nanoseconds);
 void  raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on);
 
 

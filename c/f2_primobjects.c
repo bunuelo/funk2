@@ -1616,15 +1616,15 @@ void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
 
 // transframe
 
-defprimobject__static_slot(transframe__microseconds_since_1970, 0);
+defprimobject__static_slot(transframe__nanoseconds_since_1970, 0);
 defprimobject__static_slot(transframe__symbol_old_news,         1);
 
 f2ptr __transframe__symbol = -1;
 
-f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news, int trace_depth) {
+f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news, int trace_depth) {
   release__assert(__transframe__symbol != -1, nil, "f2transframe__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new__trace_depth(cause, __transframe__symbol, 2, nil, trace_depth);
-  f2transframe__microseconds_since_1970__set__trace_depth(this, cause, microseconds_since_1970, trace_depth);
+  f2transframe__nanoseconds_since_1970__set__trace_depth(this, cause, nanoseconds_since_1970, trace_depth);
   f2transframe__symbol_old_news__set__trace_depth(        this, cause, symbol_old_news,         trace_depth);
   return this;
 }
@@ -1633,15 +1633,15 @@ f2ptr f2transframe__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__funk);}
   {char* slot_name = "new";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk);}
-  {char* slot_name = "microseconds_since_1970"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__set__funk, nil);}
+  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__funk, nil);}
   {char* slot_name = "symbol_old_news";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__set__funk, nil);}
+									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__funk, nil);}
   return this;
 }
 
-f2ptr f2transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news) {
-  return f2transframe__new__trace_depth(cause, microseconds_since_1970, symbol_old_news, 1);
+f2ptr f2transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {
+  return f2transframe__new__trace_depth(cause, nanoseconds_since_1970, symbol_old_news, 1);
 }
 
 boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x) {
@@ -1653,14 +1653,14 @@ boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__transframe__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__transframe__is_type(cause, x));}
 def_pcfunk1(transframe__is_type, x, return f2__transframe__is_type(this_cause, x));
 
-f2ptr f2__transframe__new(f2ptr cause, f2ptr microseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, microseconds_since_1970, symbol_old_news);}
-def_pcfunk2(transframe__new, microseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, microseconds_since_1970, symbol_old_news));
+f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, nanoseconds_since_1970, symbol_old_news);}
+def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
 
-f2ptr f2__transframe__microseconds_since_1970(f2ptr cause, f2ptr this) {return f2transframe__microseconds_since_1970(this, cause);}
-def_pcfunk1(transframe__microseconds_since_1970, x, return f2__transframe__microseconds_since_1970(this_cause, x));
+f2ptr f2__transframe__nanoseconds_since_1970(f2ptr cause, f2ptr this) {return f2transframe__nanoseconds_since_1970(this, cause);}
+def_pcfunk1(transframe__nanoseconds_since_1970, x, return f2__transframe__nanoseconds_since_1970(this_cause, x));
 
-f2ptr f2__transframe__microseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2transframe__microseconds_since_1970__set(this, cause, value);}
-def_pcfunk2(transframe__microseconds_since_1970__set, x, y, return f2__transframe__microseconds_since_1970__set(this_cause, x, y));
+f2ptr f2__transframe__nanoseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2transframe__nanoseconds_since_1970__set(this, cause, value);}
+def_pcfunk2(transframe__nanoseconds_since_1970__set, x, y, return f2__transframe__nanoseconds_since_1970__set(this_cause, x, y));
 
 f2ptr f2__transframe__symbol_old_news(f2ptr cause, f2ptr this) {return f2transframe__symbol_old_news(this, cause);}
 def_pcfunk1(transframe__symbol_old_news, x, return f2__transframe__symbol_old_news(this_cause, x));
@@ -1711,14 +1711,14 @@ def_pcfunk2(bug__type__set, x, y, return f2__bug__type__set(this_cause, x, y));
 
 // time
 
-defprimobject__static_slot(time__microseconds_since_1970, 0);
+defprimobject__static_slot(time__nanoseconds_since_1970, 0);
 
 f2ptr __time__symbol = -1;
 
-f2ptr f2time__new(f2ptr cause, f2ptr microseconds_since_1970) {
+f2ptr f2time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {
   release__assert(__time__symbol != -1, nil, "f2time__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __time__symbol, 1, nil);
-  f2time__microseconds_since_1970__set(this, cause, microseconds_since_1970);
+  f2time__nanoseconds_since_1970__set(this, cause, nanoseconds_since_1970);
   return this;
 }
 
@@ -1726,7 +1726,7 @@ f2ptr f2time__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
-  {char* slot_name = "microseconds_since_1970";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__set__funk, nil);}
+  {char* slot_name = "nanoseconds_since_1970";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk, nil);}
   return this;
 }
 
@@ -1739,14 +1739,14 @@ boolean_t raw__time__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__time__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__time__is_type(cause, x));}
 def_pcfunk1(time__is_type, x, return f2__time__is_type(this_cause, x));
 
-f2ptr f2__time__new(f2ptr cause, f2ptr microseconds_since_1970) {return f2time__new(cause, microseconds_since_1970);}
-def_pcfunk1(time__new, microseconds_since_1970, return f2__time__new(this_cause, microseconds_since_1970));
+f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2time__new(cause, nanoseconds_since_1970);}
+def_pcfunk1(time__new, nanoseconds_since_1970, return f2__time__new(this_cause, nanoseconds_since_1970));
 
-f2ptr f2__time__microseconds_since_1970(f2ptr cause, f2ptr this) {return f2time__microseconds_since_1970(this, cause);}
-def_pcfunk1(time__microseconds_since_1970, x, return f2__time__microseconds_since_1970(this_cause, x));
+f2ptr f2__time__nanoseconds_since_1970(f2ptr cause, f2ptr this) {return f2time__nanoseconds_since_1970(this, cause);}
+def_pcfunk1(time__nanoseconds_since_1970, x, return f2__time__nanoseconds_since_1970(this_cause, x));
 
-f2ptr f2__time__microseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2time__microseconds_since_1970__set(this, cause, value);}
-def_pcfunk2(time__microseconds_since_1970__set, x, y, return f2__time__microseconds_since_1970__set(this_cause, x, y));
+f2ptr f2__time__nanoseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2time__nanoseconds_since_1970__set(this, cause, value);}
+def_pcfunk2(time__nanoseconds_since_1970__set, x, y, return f2__time__nanoseconds_since_1970__set(this_cause, x, y));
 
 
 // size_2d
@@ -2494,11 +2494,11 @@ void f2__primobjects__initialize() {
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(transframe__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__funk = cfunk;}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(transframe__new, microseconds_since_1970, symbol_old_news, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk = cfunk;}
-  {char* symbol_str = "microseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(transframe__microseconds_since_1970, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__funk = cfunk;}
-  {char* symbol_str = "microseconds_since_1970-set"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(transframe__microseconds_since_1970__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.microseconds_since_1970__set__funk = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(transframe__new, nanoseconds_since_1970, symbol_old_news, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk = cfunk;}
+  {char* symbol_str = "nanoseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(transframe__nanoseconds_since_1970, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__funk = cfunk;}
+  {char* symbol_str = "nanoseconds_since_1970-set"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(transframe__nanoseconds_since_1970__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__funk = cfunk;}
   {char* symbol_str = "symbol_old_news"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.symbol_old_news__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(transframe__symbol_old_news, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.symbol_old_news__funk = cfunk;}
   {char* symbol_str = "symbol_old_news-set"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.symbol_old_news__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2521,10 +2521,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk = cfunk;}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_time.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__new, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk = cfunk;}
-  {char* symbol_str = "microseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__microseconds_since_1970, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__funk = cfunk;}
-  {char* symbol_str = "microseconds_since_1970-set"; __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__microseconds_since_1970__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__set__funk = cfunk;}
+  {char* symbol_str = "nanoseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__nanoseconds_since_1970, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk = cfunk;}
+  {char* symbol_str = "nanoseconds_since_1970-set"; __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__nanoseconds_since_1970__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk = cfunk;}
   
   // size_2d
   

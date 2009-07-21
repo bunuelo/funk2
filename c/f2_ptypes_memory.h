@@ -36,7 +36,7 @@
 // memblock
 
 #ifdef MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-#  define __pure__memblock__creation_microseconds_since_1970(this) (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_microseconds_since_1970)
+#  define __pure__memblock__creation_nanoseconds_since_1970(this) (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_nanoseconds_since_1970)
 #endif // MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
 
 #ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA

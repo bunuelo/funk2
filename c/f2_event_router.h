@@ -25,7 +25,7 @@
 #include "f2_funk2_node.h"
 
 typedef struct funk2_event_router_s {
-  u64       last_checked_event_buffers__microseconds_since_1970;
+  u64       last_checked_event_buffers__nanoseconds_since_1970;
   boolean_t distributed_event_last_tick;
 } funk2_event_router_t;
 

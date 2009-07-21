@@ -56,7 +56,7 @@ struct funk2_node_s {
   funk2_processor_mutex_t socket_client_mutex;
   socket_client_t         socket_client;
   boolean_t               sent_register_request;
-  u64                     last_try_reconnect__microseconds_since_1970;
+  u64                     last_try_reconnect__nanoseconds_since_1970;
   computer_id_t           remote_computer_id_to_local_computer_id[f2ptr__computer_id__max_value + 1];
   computer_id_t           local_computer_id_to_remote_computer_id[f2ptr__computer_id__max_value + 1];
   stream_iter_t           last_recv_packet__stream_iter;

@@ -108,7 +108,7 @@ f2ptr frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
-    f2ptr retval = f2__hashtable__slot_names(cause, type__hashtable);
+    retval = f2__hashtable__slot_names(cause, type__hashtable);
   }
   resume_gc();
   return retval;

@@ -159,15 +159,15 @@ f2ptr frame__new_empty_globalsize(f2ptr cause) {
   return this;
 }
 
-f2ptr frame__create_var_list(f2ptr cause, f2ptr this) {
-  return f2__hashtable__create_key_list(cause, frame__var_hashtable(cause, this));
+f2ptr frame__var__slot_names(f2ptr cause, f2ptr this) {
+  return f2__hashtable__slot_names(cause, frame__var_hashtable(cause, this));
 }
-def_pcfunk1(frame__create_var_list, this, return frame__create_var_list(this_cause, this));
+def_pcfunk1(frame__var__slot_names, this, return frame__create_var_list(this_cause, this));
 
-f2ptr frame__create_funkvar_list(f2ptr cause, f2ptr this) {
-  return f2__hashtable__create_key_list(cause, frame__funkvar_hashtable(cause, this));
+f2ptr frame__funkvar__slot_names(f2ptr cause, f2ptr this) {
+  return f2__hashtable__slot_names(cause, frame__funkvar_hashtable(cause, this));
 }
-def_pcfunk1(frame__create_funkvar_list, this, return frame__create_var_list(this_cause, this));
+def_pcfunk1(frame__funkvar__slot_names, this, return frame__create_var_list(this_cause, this));
 
 void f2__primobject_frame__reinitialize_globalvar__symbols() {
   __frame__symbol = f2symbol__new(initial_cause(), strlen("frame"), (u8*)"frame");
@@ -200,8 +200,8 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__add_funkvar_value, "");
   f2__primcfunk__init(frame__lookup_funkvar_value, "");
   f2__primcfunk__init(frame__funkvar_value__set, "");
-  f2__primcfunk__init(frame__create_var_list, "");
-  f2__primcfunk__init(frame__create_funkvar_list, "");
+  f2__primcfunk__init(frame__var__slot_names, "");
+  f2__primcfunk__init(frame__funkvar__slot_names, "");
   
   __frame__variable_type__symbol      = f2symbol__new(initial_cause(), strlen("variable"),      (u8*)"variable");
   __frame__funk_variable_type__symbol = f2symbol__new(initial_cause(), strlen("funk_variable"), (u8*)"funk_variable");

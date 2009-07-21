@@ -1459,7 +1459,7 @@ f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tra
 f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk);}
-  //{char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
+  {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
   {char* slot_name = "allocate_traced_arrays"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__set__funk, nil);}
   {char* slot_name = "bytecode_tracing_on";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),

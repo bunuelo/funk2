@@ -21,13 +21,8 @@
 
 #include "funk2.h"
 
-f2ptr __argument_type_check_failure__exception__tag;
-f2ptr __argument_type_check_failure__exception;
-f2ptr __argument_number_check_failure__exception__tag;
-f2ptr __argument_number_check_failure__exception;
-
-f2ptr f2__argument_type_check_failure__exception__new(f2ptr cause, f2ptr value)                                      {return f2exception__new(cause, __argument_type_check_failure__exception__tag,   value);}
-f2ptr f2__argument_number_check_failure__exception__new(f2ptr cause, f2ptr funk_symbol, int min_arg_num, f2ptr args) {return f2exception__new(cause, __argument_number_check_failure__exception__tag, f2list3__new(cause, funk_symbol, f2integer__new(cause, min_arg_num), args));}
+f2ptr f2__argument_type_check_failure__larva__new(f2ptr cause, f2ptr value)                                      {return f2larva__new(cause, 1);}
+f2ptr f2__argument_number_check_failure__larva__new(f2ptr cause, f2ptr funk_symbol, int min_arg_num, f2ptr args) {return f2larva__new(cause, 33);}
 
 // nil
 
@@ -912,7 +907,7 @@ f2ptr f2__list(f2ptr cause, f2ptr seq) {
   if (! seq) {return nil;}
   if (! raw__cons__is_type(cause, seq)) {
     printf("\nlist error: sequence must be type cons."); fflush(stdout);
-    return f2__argument_type_check_failure__exception__new(cause, seq);
+    return f2__argument_type_check_failure__larva__new(cause, seq);
   }
   f2ptr new_cons = f2cons__new(cause, f2cons__car(seq, cause), nil);
   f2ptr new_seq  = new_cons;
@@ -1864,11 +1859,6 @@ def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_thre
 void f2__primcfunks__reinitialize_globalvars() {
   f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
-  __argument_type_check_failure__exception__tag   = f2symbol__new(cause, strlen("primcfunks:argument-type-check-failure"),   (u8*)"primcfunks:argument-type-check-failure");
-  __argument_number_check_failure__exception__tag = f2symbol__new(cause, strlen("primcfunks:argument-number-check-failure"), (u8*)"primcfunks:argument-number-check-failure");
-  
-  __argument_type_check_failure__exception   = f2exception__new(cause, __argument_type_check_failure__exception__tag,   nil);  
-  __argument_number_check_failure__exception = f2exception__new(cause, __argument_number_check_failure__exception__tag, nil);
 }
 
 void f2__primcfunks__initialize() {
@@ -2197,9 +2187,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
-  
-  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_type_check_failure-exception"),   (u8*)"argument_type_check_failure-exception"),   __argument_type_check_failure__exception);
-  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("argument_number_check_failure-exception"), (u8*)"argument_number_check_failure-exception"), __argument_number_check_failure__exception);
   
   resume_gc();
   try_gc();

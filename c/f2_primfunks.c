@@ -1857,14 +1857,14 @@ f2ptr f2__is_funktional(f2ptr cause, f2ptr thread, f2ptr exp) {
 def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_thread, exp));
 
 void f2__primcfunks__reinitialize_globalvars() {
-  f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
+  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
 }
 
 void f2__primcfunks__initialize() {
   pause_gc();
   
-  f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
+  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
   f2__primcfunks__reinitialize_globalvars();
   

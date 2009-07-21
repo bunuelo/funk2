@@ -81,7 +81,7 @@ f2ptr f2__primobject_type__get_funk__slot_names(f2ptr cause, f2ptr this) {
   }
   return frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"));
 }
-def_pcfunk1(primobject_type__get_funk__slot_names, this, return f2__primobject_type__get_funk__slot_names(this_cause, this, slot_name));
+def_pcfunk1(primobject_type__get_funk__slot_names, this, return f2__primobject_type__get_funk__slot_names(this_cause, this));
 
 f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this) {
   if (! raw__frame__is_type(cause, this)) {
@@ -89,7 +89,7 @@ f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this) {
   }
   return frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("set_funk"), (u8*)"set_funk"));
 }
-def_pcfunk1(primobject_type__set_funk__slot_names, this, return f2__primobject_type__set_funk__slot_names(this_cause, this, slot_name));
+def_pcfunk1(primobject_type__set_funk__slot_names, this, return f2__primobject_type__set_funk__slot_names(this_cause, this));
 
 f2ptr f2__primobject_type__execute_funk__slot_names(f2ptr cause, f2ptr this) {
   if (! raw__frame__is_type(cause, this)) {
@@ -97,7 +97,7 @@ f2ptr f2__primobject_type__execute_funk__slot_names(f2ptr cause, f2ptr this) {
   }
   return frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"));
 }
-def_pcfunk1(primobject_type__execute_funk__slot_names, this, return f2__primobject_type__execute_funk__slot_names(this_cause, this, slot_name));
+def_pcfunk1(primobject_type__execute_funk__slot_names, this, return f2__primobject_type__execute_funk__slot_names(this_cause, this));
 
 
 

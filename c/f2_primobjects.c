@@ -1574,7 +1574,7 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_t
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
-  return f2__cause__new(cause, nil, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
+  return f2__cause__new(cause, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
 }
 
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {

@@ -1631,8 +1631,11 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
   boolean_t keep_looping;
   do {
     keep_looping = boolean__false;
-    value = frame__lookup_type_var_value(cause, cause_iter, type, var, __type_variable_not_defined__symbol);
-    if (raw__symbol__eq(cause, value, __type_variable_not_defined__symbol)) {
+    f2ptr cause_frame = f2cause__frame(cause_iter, cause);
+    if (cause_frame) {
+      value = frame__lookup_type_var_value(cause, cause_frame, type, var, __type_variable_not_defined__symbol);
+    }
+    if ((! cause_frame) || raw__symbol__eq(cause, value, __type_variable_not_defined__symbol)) {
       cause_iter = f2__ptype__cause(cause, cause_iter);
       if (cause_iter) {
 	keep_looping = boolean__true;

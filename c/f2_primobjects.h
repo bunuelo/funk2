@@ -1012,9 +1012,9 @@ defprimobject__static_slot__prototype(cause__current_events);
 #define f2cause__current_events__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events, cause)
 #define f2cause__current_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events, cause)
 
-f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
+f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
 void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
-f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr type);
+f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 
 
 // transframe

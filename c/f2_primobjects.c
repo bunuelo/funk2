@@ -1625,7 +1625,7 @@ void raw__cause__event_buffer__add(f2ptr cause, f2ptr event) {
   f2cause__event_buffer_last__set(cause, cause, new_event_buffer_node);
 }
 
-f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr type) {
+f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr     cause_iter   = this;
   f2ptr     value        = nil;
   boolean_t keep_looping;

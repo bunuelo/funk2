@@ -377,7 +377,7 @@ boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
 
 f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr cause_frame = f2cause__frame(this, cause);
-  frame__add_type_var_value(cause, cause_frame type, var, value);
+  frame__add_type_var_value(cause, cause_frame, type, var, value);
   return nil;
 }
 

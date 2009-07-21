@@ -40,7 +40,6 @@
 [load 'fu2/bootstrap-sort.fu2']
 
 `[load 'fu2/action.fu2']
-[load 'fu2/remember.fu2']
 [load 'fu2/time.fu2']
 
 `[load 'fu2/bootstrap-primobject_type.fu2']

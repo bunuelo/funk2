@@ -92,7 +92,7 @@
 
 [globalize-funk random                                      &primfunk:random]
 
-[globalize-funk system_nanoseconds_since_1970               &primfunk:system_nanoseconds_since_1970]
+[globalize-funk nanoseconds_since_1970                      &primfunk:nanoseconds_since_1970]
 
 [globalize-funk identity                                    &primfunk:identity]
 

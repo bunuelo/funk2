@@ -123,54 +123,7 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   resume_gc(); return rv;
 }
 
-void print_environment_backtrace(f2ptr env) {
-  f2ptr cause    = nil;
-  f2ptr env_iter = env;
-  while (env_iter) {
-    printf("\nenv> desc: "); f2__write(cause, f2environment__desc(env_iter, cause));
-    /*
-      f2ptr frame = f2env__frame(env_iter);
-      f2ptr binding_iter;
-      printf("\n   > var bindings: ");
-      {
-      binding_iter = frame__var_bindings(frame);
-      while (binding_iter) {
-      f2ptr binding = raw__car(nil, binding_iter);
-      f2ptr value = binding__value(binding);
-      printf ("\n                 [");
-      f2__write(nil, binding__var(binding));
-      if (raw__consp(value)) {
-      printf(" <>");
-      } else {
-      printf(" ");
-      f2__write(nil, value);
-      }
-      printf ("]");
-      binding_iter = raw__cdr(nil, binding_iter);
-      }
-      }
-      printf("\n   > funkvar bindings: ");
-      {
-      binding_iter = frame__funkvar_bindings(frame);
-      while (binding_iter) {
-      f2ptr binding = raw__car(nil, binding_iter);
-      f2ptr value = binding__value(binding);
-      printf ("\n                 [");
-      f2__write(nil, binding__var(binding));
-      if (raw__consp(value)) {
-      printf(" <>");
-      } else {
-      printf(" ");
-      f2__write(nil, value);
-      }
-      printf ("]");
-      binding_iter = raw__cdr(nil, binding_iter);
-      }
-      }
-    */
-    env_iter = f2environment__parent_env(env_iter, cause);
-  }
-}
+
 
 void f2__primobject_environment__reinitialize_globalvar__symbols() {
   f2ptr cause = initial_cause(); //f2_primobject_environment_c__cause__new(initial_cause(), nil, nil);

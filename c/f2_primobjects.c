@@ -1427,22 +1427,24 @@ def_pcfunk2(event_subscriber__event_buffer_mutex__set, x, y, return f2__event_su
 
 // cause
 
-defprimobject__static_slot(cause__allocate_traced_arrays, 0);
-defprimobject__static_slot(cause__bytecode_tracing_on,    1);
-defprimobject__static_slot(cause__memory_tracing_on,      2);
-defprimobject__static_slot(cause__subscribers_mutex,      3);
-defprimobject__static_slot(cause__subscribers,            4);
-defprimobject__static_slot(cause__imagination_stack,      5);
-defprimobject__static_slot(cause__event_buffer_first,     6);
-defprimobject__static_slot(cause__event_buffer_last,      7);
-defprimobject__static_slot(cause__current_events_mutex,   8);
-defprimobject__static_slot(cause__current_events,         9);
+defprimobject__static_slot(cause__frame,                   0);
+defprimobject__static_slot(cause__allocate_traced_arrays,  1);
+defprimobject__static_slot(cause__bytecode_tracing_on,     2);
+defprimobject__static_slot(cause__memory_tracing_on,       3);
+defprimobject__static_slot(cause__subscribers_mutex,       4);
+defprimobject__static_slot(cause__subscribers,             5);
+defprimobject__static_slot(cause__imagination_stack,       6);
+defprimobject__static_slot(cause__event_buffer_first,      7);
+defprimobject__static_slot(cause__event_buffer_last,       8);
+defprimobject__static_slot(cause__current_events_mutex,    9);
+defprimobject__static_slot(cause__current_events,         10);
 
 f2ptr __cause__symbol = -1;
 
-f2ptr f2cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
+f2ptr f2cause__new(f2ptr cause, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
   release__assert(__cause__symbol != -1, nil, "f2cause__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __cause__symbol, 10, nil);
+  f2ptr this = f2__primobject__new(cause, __cause__symbol, 11, nil);
+  f2cause__frame__set(                 this, cause, frame);
   f2cause__allocate_traced_arrays__set(this, cause, allocate_traced_arrays);
   f2cause__bytecode_tracing_on__set(   this, cause, bytecode_tracing_on);
   f2cause__memory_tracing_on__set(     this, cause, memory_tracing_on);
@@ -1460,6 +1462,8 @@ f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk);}
   {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
+  {char* slot_name = "frame";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__set__funk, nil);}
   {char* slot_name = "allocate_traced_arrays"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__set__funk, nil);}
   {char* slot_name = "bytecode_tracing_on";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
@@ -1494,6 +1498,12 @@ def_pcfunk1(cause__allocate_traced_arrays, x, return f2__cause__allocate_traced_
 
 f2ptr f2__cause__allocate_traced_arrays__set(f2ptr cause, f2ptr this, f2ptr value) {return f2cause__allocate_traced_arrays__set(this, cause, value);}
 def_pcfunk2(cause__allocate_traced_arrays__set, x, y, return f2__cause__allocate_traced_arrays__set(this_cause, x, y));
+
+f2ptr f2__cause__frame(f2ptr cause, f2ptr this) {return f2cause__frame(this, cause);}
+def_pcfunk1(cause__frame, x, return f2__cause__frame(this_cause, x));
+
+f2ptr f2__cause__frame__set(f2ptr cause, f2ptr this, f2ptr value) {return f2cause__frame__set(this, cause, value);}
+def_pcfunk2(cause__frame__set, x, y, return f2__cause__frame__set(this_cause, x, y));
 
 f2ptr f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this) {
   if (this && (! raw__cause__is_type(cause, this))) {
@@ -1555,15 +1565,15 @@ f2ptr f2__cause__current_events__set(f2ptr cause, f2ptr this, f2ptr value) {retu
 def_pcfunk2(cause__current_events__set, x, y, return f2__cause__current_events__set(this_cause, x, y));
 
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+f2ptr f2__cause__new(f2ptr cause, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
-  return f2cause__new(cause, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+  return f2cause__new(cause, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
-  return f2__cause__new(cause, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
+  return f2__cause__new(cause, nil, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
 }
 
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {
@@ -1573,6 +1583,7 @@ f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {
 }
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
+  f2ptr frame                  = nil;
   f2ptr allocate_traced_arrays = nil;
   f2ptr bytecode_tracing_on    = nil;
   f2ptr memory_tracing_on      = nil;
@@ -1586,6 +1597,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause) {
     imagination_stack      = f2cause__imagination_stack(cause, cause);
   }
   return f2__cause__new(cause,
+			frame,
 			allocate_traced_arrays,
 			bytecode_tracing_on,
 			memory_tracing_on,
@@ -2448,6 +2460,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk = cfunk;}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_cause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var(cause__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk = cfunk;}
+  {char* symbol_str = "frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__funk = cfunk;}
+  {char* symbol_str = "frame-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__frame__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__set__funk = cfunk;}
   {char* symbol_str = "allocate_traced_arrays"; __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__allocate_traced_arrays, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__funk = cfunk;}
   {char* symbol_str = "allocate_traced_arrays-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause.allocate_traced_arrays__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

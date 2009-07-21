@@ -1571,7 +1571,7 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_t
   f2ptr current_events_mutex = f2mutex__new(cause);
   return f2cause__new(cause, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
   return f2__cause__new(cause, nil, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);

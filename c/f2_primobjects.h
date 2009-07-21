@@ -925,7 +925,7 @@ f2ptr __cause__symbol;
 boolean_t raw__cause__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__cause__is_type(f2ptr cause, f2ptr x);
 f2ptr f2cause__new(f2ptr cause, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
-f2ptr f2__cause__new(f2ptr cause, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
+f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
 f2ptr f2cause__primobject_type__new(f2ptr cause);
 f2ptr f2__cause__new_with_default_properties(f2ptr cause);
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);

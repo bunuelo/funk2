@@ -52,7 +52,7 @@ f2ptr f2__hashtable__add_keyvalue_pair   (f2ptr cause, f2ptr this, f2ptr key, f2
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
 f2ptr f2__hashtable__lookup_value        (f2ptr this, f2ptr cause, f2ptr key);
 
-f2ptr f2__hashtable__create_key_list(f2ptr cause, f2ptr this);
+f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
 
 void f2__primobject_hashtable__reinitialize_globalvars();
 void f2__primobject_hashtable__initialize();

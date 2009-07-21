@@ -102,6 +102,18 @@ f2ptr frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var,
   resume_gc(); return not_defined_value;
 }
 
+f2ptr frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
+  f2ptr retval = nil;
+  pause_gc();
+  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
+  if (type__keyvalue_pair) {
+    f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
+    f2ptr retval = f2__hashtable__slot_names(cause, type__hashtable);
+  }
+  resume_gc();
+  return retval;
+}
+
 f2ptr frame__var_hashtable(f2ptr cause, f2ptr this) {return f2__hashtable__lookup_value(f2frame__type_hashtable(this, cause), cause, __frame__variable_type__symbol);}
 
 void frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {frame__add_type_var_value(cause, this, __frame__variable_type__symbol, var, value);}

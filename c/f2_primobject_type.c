@@ -43,6 +43,8 @@ f2ptr f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr g
 }
 def_pcfunk5(primobject_type__add_slot, this, name, get_funk, set_funk, execute_funk, return f2__primobject_type__add_slot(this_cause, this, name, get_funk, set_funk, execute_funk));
 
+// lookup slot type
+
 f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr slot_name) {
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__symbol__is_type(cause, slot_name))) {
@@ -70,6 +72,35 @@ f2ptr f2__primobject_type__lookup_slot_execute_funk(f2ptr cause, f2ptr this, f2p
 }
 def_pcfunk2(primobject_type__lookup_slot_execute_funk, this, slot_name, return f2__primobject_type__lookup_slot_execute_funk(this_cause, this, slot_name));
 
+
+// list slot type
+
+f2ptr f2__primobject_type__get_funk__slot_names(f2ptr cause, f2ptr this) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"));
+}
+def_pcfunk1(primobject_type__get_funk__slot_names, this, return f2__primobject_type__get_funk__slot_names(this_cause, this, slot_name));
+
+f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("set_funk"), (u8*)"set_funk"));
+}
+def_pcfunk1(primobject_type__set_funk__slot_names, this, return f2__primobject_type__set_funk__slot_names(this_cause, this, slot_name));
+
+f2ptr f2__primobject_type__execute_funk__slot_names(f2ptr cause, f2ptr this) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"));
+}
+def_pcfunk1(primobject_type__execute_funk__slot_names, this, return f2__primobject_type__execute_funk__slot_names(this_cause, this, slot_name));
+
+
+
 void f2__primobject_type__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
 }
@@ -85,6 +116,9 @@ void f2__primobject_type__initialize() {
   f2__primcfunk__init__2(primobject_type__lookup_slot_get_funk, this, slot_name, "lookup a primobject_type slot get_funk");
   f2__primcfunk__init__2(primobject_type__lookup_slot_set_funk, this, slot_name, "lookup a primobject_type slot set_funk");
   f2__primcfunk__init__2(primobject_type__lookup_slot_execute_funk, this, slot_name, "lookup a primobject_type slot execute_funk");
+  f2__primcfunk__init__1(primobject_type__get_funk__slot_names, this, "get a list of get_funk slot names.");
+  f2__primcfunk__init__1(primobject_type__set_funk__slot_names, this, "get a list of set_funk slot names.");
+  f2__primcfunk__init__1(primobject_type__execute_funk__slot_names, this, "get a list of execute_funk slot names.");
   
   resume_gc();
   try_gc();

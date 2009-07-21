@@ -64,6 +64,7 @@ f2ptr frame__var_value__set                 (f2ptr cause, f2ptr this, f2ptr var,
 f2ptr frame__lookup_funkvar_assignment_cons (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
 f2ptr frame__lookup_funkvar_value           (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr not_defined_value);                      // *
 f2ptr frame__funkvar_value__set             (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value, f2ptr not_defined_value);         // *
+f2ptr frame__type_var__slot_names           (f2ptr cause, f2ptr this, f2ptr type);
 
 void f2__primobject_frame__reinitialize_globalvar__symbols();
 void f2__primobject_frame__reinitialize_globalvar__exceptions();

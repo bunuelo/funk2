@@ -1709,6 +1709,46 @@ f2ptr f2__bug__type__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bug__ty
 def_pcfunk2(bug__type__set, x, y, return f2__bug__type__set(this_cause, x, y));
 
 
+// time
+
+defprimobject__static_slot(time__microseconds_since_1970, 0);
+
+f2ptr __time__symbol = -1;
+
+f2ptr f2time__new(f2ptr cause, f2ptr microseconds_since_1970) {
+  release__assert(__time__symbol != -1, nil, "f2time__new error: used before primobjects initialized.");
+  f2ptr this = f2__primobject__new(cause, __time__symbol, 1, nil);
+  f2time__microseconds_since_1970__set(this, cause, microseconds_since_1970);
+  return this;
+}
+
+f2ptr f2time__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
+  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
+  {char* slot_name = "microseconds_since_1970";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__set__funk, nil);}
+  return this;
+}
+
+boolean_t raw__time__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PRIMOBJECT__TYPE_CHECK
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+#endif // F2__PRIMOBJECT__TYPE_CHECK
+  return (raw__primobject__is_type(cause, x) && f2primobject__is_time(x, cause));
+}
+f2ptr f2__time__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__time__is_type(cause, x));}
+def_pcfunk1(time__is_type, x, return f2__time__is_type(this_cause, x));
+
+f2ptr f2__time__new(f2ptr cause, f2ptr microseconds_since_1970) {return f2time__new(cause, microseconds_since_1970);}
+def_pcfunk1(time__new, microseconds_since_1970, return f2__time__new(this_cause, microseconds_since_1970));
+
+f2ptr f2__time__microseconds_since_1970(f2ptr cause, f2ptr this) {return f2time__microseconds_since_1970(this, cause);}
+def_pcfunk1(time__microseconds_since_1970, x, return f2__time__microseconds_since_1970(this_cause, x));
+
+f2ptr f2__time__microseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2time__microseconds_since_1970__set(this, cause, value);}
+def_pcfunk2(time__microseconds_since_1970__set, x, y, return f2__time__microseconds_since_1970__set(this_cause, x, y));
+
+
 // size_2d
 
 defprimobject__static_slot(size_2d__x, 0);
@@ -1912,6 +1952,7 @@ void f2__primobjects__reinitialize_globalvars() {
   __cause__symbol            = f2symbol__new(cause, strlen("cause"),            (u8*)"cause");
   __transframe__symbol       = f2symbol__new(cause, strlen("transframe"),       (u8*)"transframe");
   __bug__symbol              = f2symbol__new(cause, strlen("bug"),              (u8*)"bug");
+  __time__symbol             = f2symbol__new(cause, strlen("time"),             (u8*)"time");
   __size_2d__symbol          = f2symbol__new(cause, strlen("size_2d"),          (u8*)"size_2d");
   __event__symbol            = f2symbol__new(cause, strlen("event"),            (u8*)"event");
   __bytecode_event__symbol   = f2symbol__new(cause, strlen("bytecode_event"),   (u8*)"bytecode_event");
@@ -1940,6 +1981,7 @@ void f2__primobjects__initialize() {
   environment__add_var_value(cause, global_environment(), __cause__symbol,            nil);
   environment__add_var_value(cause, global_environment(), __transframe__symbol,       nil);
   environment__add_var_value(cause, global_environment(), __bug__symbol,              nil);
+  environment__add_var_value(cause, global_environment(), __time__symbol,             nil);
   environment__add_var_value(cause, global_environment(), __size_2d__symbol,          nil);
   environment__add_var_value(cause, global_environment(), __event__symbol,            nil);
   environment__add_var_value(cause, global_environment(), __bytecode_event__symbol,   nil);
@@ -2472,6 +2514,17 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(bug__type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk = cfunk;}
   {char* symbol_str = "type-set"; __funk2.globalenv.object_type.primobject.primobject_type_bug.type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bug__type__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bug.type__set__funk = cfunk;}
+  
+  // time
+  
+  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk = cfunk;}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_time.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__new, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk = cfunk;}
+  {char* symbol_str = "microseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__microseconds_since_1970, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__funk = cfunk;}
+  {char* symbol_str = "microseconds_since_1970-set"; __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__microseconds_since_1970__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.microseconds_since_1970__set__funk = cfunk;}
   
   // size_2d
   

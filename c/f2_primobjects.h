@@ -1056,6 +1056,24 @@ defprimobject__static_slot__prototype(bug__type);
 
 
 
+// time
+
+extern f2ptr __time__symbol;
+boolean_t raw__time__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__time__is_type(f2ptr cause, f2ptr x);
+f2ptr f2time__new(f2ptr cause, f2ptr type);
+f2ptr f2time__primobject_type__new(f2ptr cause);
+#define f2primobject__is_time(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __time__symbol)
+
+defprimobject__static_slot__prototype(time__microseconds_since_1970);
+#define f2time__microseconds_since_1970(                   this, cause)        primobject__static_slot__accessor(         this, time__microseconds_since_1970, cause)
+#define f2time__microseconds_since_1970__set(              this, cause, value) primobject__static_slot__set(              this, time__microseconds_since_1970, cause, value)
+#define f2time__microseconds_since_1970__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, time__microseconds_since_1970, cause)
+#define f2time__microseconds_since_1970__trace(            this, cause)        primobject__static_slot__trace(            this, time__microseconds_since_1970, cause)
+#define f2time__microseconds_since_1970__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, time__microseconds_since_1970, cause)
+
+
+
 // size_2d
 
 extern f2ptr __size_2d__symbol;
@@ -1700,6 +1718,19 @@ typedef struct funk2_object_type__bug__slot_s {
   f2ptr type__set__funk;
 } funk2_object_type__bug__slot_t;
 
+// time
+
+typedef struct funk2_object_type__time__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr microseconds_since_1970__symbol;
+  f2ptr microseconds_since_1970__funk;
+  f2ptr microseconds_since_1970__set__symbol;
+  f2ptr microseconds_since_1970__set__funk;
+} funk2_object_type__time__slot_t;
+
 // size_2d
 
 typedef struct funk2_object_type__size_2d__slot_s {
@@ -1779,6 +1810,7 @@ typedef struct funk2_primobject_object_types_s {
   funk2_object_type__cause__slot_t            primobject_type_cause;
   funk2_object_type__transframe__slot_t       primobject_type_transframe;
   funk2_object_type__bug__slot_t              primobject_type_bug;
+  funk2_object_type__time__slot_t             primobject_type_time;
   funk2_object_type__size_2d__slot_t          primobject_type_size_2d;
   funk2_object_type__event__slot_t            primobject_type_event;
   funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;

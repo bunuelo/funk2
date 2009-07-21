@@ -212,23 +212,25 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
 		  if (raw__system_microseconds_since_1970() - raw_last_executed_time > 1 * 1000000) {
 		    // bug: removing a thread here seems to drop needed threads sometimes.  (why?)
-		    f2ptr processor__active_threads_mutex;
-		    int lock_failed;
-		    do {
-		      //f2__global_scheduler__execute_mutex__lock(cause);
-		      processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-		      lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
-		      //f2__global_scheduler__execute_mutex__unlock(cause);
-		      if (lock_failed) {
-			f2__sleep(1);
+		    {
+		      f2ptr processor__active_threads_mutex;
+		      int lock_failed;
+		      do {
+			//f2__global_scheduler__execute_mutex__lock(cause);
+			processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
+			lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+			//f2__global_scheduler__execute_mutex__unlock(cause);
+			if (lock_failed) {
+			  f2__sleep(1);
+			}
+		      } while (lock_failed);
+		      if (prev_thread_iter) {
+			f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
+		      } else {
+			f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
 		      }
-		    } while (lock_failed);
-		    if (prev_thread_iter) {
-		      f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
-		    } else {
-		      f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+		      f2mutex__unlock(processor__active_threads_mutex, cause);
 		    }
-		    f2mutex__unlock(processor__active_threads_mutex, cause);
 		    prev_thread_iter__already_set = 1;
 		  }
 		}
@@ -249,7 +251,20 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2ptr thread_cause = f2thread__cause_reg(thread, cause);
 	printf("\nlarva found in thread and thread has a critic, so launching critic thread in serial."); fflush(stdout);
 	printf("\n  critic="); f2__print(cause, critics); fflush(stdout);
-	f2__thread_serial(thread_cause, thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
+	f2ptr new_thread = f2__thread__new_unscheduled(thread_cause, thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
+	{
+	  f2ptr processor__active_threads_mutex;
+	  int lock_failed;
+	  do {
+	    processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
+	    lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+	    if (lock_failed) {
+	      f2__sleep(1);
+	    }
+	  } while (lock_failed);
+	  f2processor__active_threads__set(processor, cause, f2cons__new(cause, new_thread, f2processor__active_threads(processor, cause)));
+	  f2mutex__unlock(processor__active_threads_mutex, cause);
+	}	
 	//printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
       } else {
 	f2__print(cause, thread);

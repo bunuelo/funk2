@@ -384,6 +384,9 @@
   [sleep_for_nanoseconds_without_yield nanoseconds]
   [yield]]
 
+[defunk sleep [seconds]
+  [sleep_for_nanoseconds [* seconds 1000000000]]]
+
 [defmetro parog [:rest codes]
   'run commands in parallel'
   `[let [[parog-threads [list @[mapcar [funk [code]

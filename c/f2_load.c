@@ -90,6 +90,9 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
       }
     }
   }  
+  
+  f2thread__keep_undead__set(load_thread, cause, nil);
+  
 #ifdef DEBUG_LOAD
   printf("\nload done."); fflush(stdout);
 #endif // DEBUG_LOAD

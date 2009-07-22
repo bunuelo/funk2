@@ -59,6 +59,7 @@ int f2__repl(f2ptr cause, f2ptr thread) {
       //printf("\nglobal_scheduler.processors: %d", f2scheduler__processors(__global__scheduler)); fflush(stdout);
     }
   }
+  f2thread__keep_undead__set(repl_thread, cause, nil);
   return 0;
 }
 

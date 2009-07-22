@@ -44,7 +44,7 @@ int f2__repl(f2ptr cause, f2ptr thread) {
       } else {
 	f2thread__program_counter__set(repl_thread, cause, nil);
 	resume_gc();
-	f2thread__force_funk(repl_thread, cause, cause, repl_funk, nil);
+	f2thread__force_funk(repl_thread, cause, repl_funk, nil);
       }
       
       f2__scheduler__complete_thread(cause, repl_thread);

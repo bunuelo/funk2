@@ -1159,8 +1159,8 @@ def_pcfunk1(thread__last_executed_time, x, return f2__thread__last_executed_time
 f2ptr f2__thread__last_executed_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2thread__last_executed_time__set(this, cause, value);}
 def_pcfunk2(thread__last_executed_time__set, x, y, return f2__thread__last_executed_time__set(this_cause, x, y));
 
-f2ptr f2__thread__sleep_until_time(f2ptr cause, f2ptr this) {return f2thread__sleep_until_time(this, cause);}
-def_pcfunk1(thread__sleep_until_time, x, return f2__thread__sleep_until_time(this_cause, x));
+f2ptr f2__thread__sleep_until_time__get(f2ptr cause, f2ptr this) {return f2thread__sleep_until_time__get(this, cause);}
+def_pcfunk1(thread__sleep_until_time__get, x, return f2__thread__sleep_until_time__get(this_cause, x));
 
 f2ptr f2__thread__sleep_until_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2thread__sleep_until_time__set(this, cause, value);}
 def_pcfunk2(thread__sleep_until_time__set, x, y, return f2__thread__sleep_until_time__set(this_cause, x, y));

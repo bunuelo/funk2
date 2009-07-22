@@ -388,6 +388,8 @@ f2ptr f2__time(f2ptr cause) {
 }
 def_pcfunk0(time, return f2__time(this_cause));
 
+// thread
+
 // array interface
 
 f2ptr raw__array__new(f2ptr cause, u64 length) {

@@ -380,6 +380,10 @@
 		  [threads-wait-loop]]]]]
   [threads-wait-loop]]
 
+[defunk sleep_for_nanoseconds [nanoseconds]
+  [sleep_for_nanoseconds_without_yield nanoseconds]
+  [yield]]
+
 [defmetro parog [:rest codes]
   'run commands in parallel'
   `[let [[parog-threads [list @[mapcar [funk [code]

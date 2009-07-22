@@ -36,7 +36,7 @@
 [globalize-funk list-first_n                                &primfunk:list__first_n]
 
 [globalize-funk time                                        &primfunk:time]
-[globalize-funk thread-sleep_for_nanoseconds_without_yield  &primfunk:thread__sleep_for_nanoseconds_without_yield]
+[globalize-funk sleep_for_nanoseconds_without_yield         &primfunk:sleep_for_nanoseconds_without_yield]
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]

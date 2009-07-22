@@ -949,6 +949,8 @@ f2ptr f2__cause__new_with_default_properties(f2ptr cause);
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
+f2ptr f2__cause__add_thread(f2ptr cause, f2ptr this, f2ptr thread);
+f2ptr f2__cause__remove_thread(f2ptr cause, f2ptr this, f2ptr thread);
 
 #define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
 

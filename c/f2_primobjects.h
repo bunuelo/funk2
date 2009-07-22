@@ -765,6 +765,8 @@ defprimobject__static_slot__prototype(thread__sleep_until_time);
 #define f2thread__is_complete(this, cause)          __pure__f2thread__is_complete(this, cause)
 //extern int f2thread__is_complete(f2ptr this);
 
+f2ptr f2__thread__sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
+f2ptr f2__thread__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds);
 
 
 // processor

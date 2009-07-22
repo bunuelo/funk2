@@ -942,7 +942,7 @@ defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
 f2ptr __cause__symbol;
 boolean_t raw__cause__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__cause__is_type(f2ptr cause, f2ptr x);
-f2ptr f2cause__new(f2ptr cause, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
+f2ptr f2cause__new(f2ptr cause, f2ptr threads, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
 f2ptr f2cause__primobject_type__new(f2ptr cause);
 f2ptr f2__cause__new_with_default_properties(f2ptr cause);
@@ -951,6 +951,13 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
 
 #define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
+
+defprimobject__static_slot__prototype(cause__threads);
+#define f2cause__threads(                   this, cause)        primobject__static_slot__accessor(         this, cause__threads, cause)
+#define f2cause__threads__set(              this, cause, value) primobject__static_slot__set(              this, cause__threads, cause, value)
+#define f2cause__threads__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__threads, cause)
+#define f2cause__threads__trace(            this, cause)        primobject__static_slot__trace(            this, cause__threads, cause)
+#define f2cause__threads__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__threads, cause)
 
 defprimobject__static_slot__prototype(cause__frame);
 #define f2cause__frame(                   this, cause)        primobject__static_slot__accessor(         this, cause__frame, cause)
@@ -1684,6 +1691,10 @@ typedef struct funk2_object_type__cause__slot_s {
   f2ptr is_type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr threads__symbol;
+  f2ptr threads__funk;
+  f2ptr threads__set__symbol;
+  f2ptr threads__set__funk;
   f2ptr frame__symbol;
   f2ptr frame__funk;
   f2ptr frame__set__symbol;

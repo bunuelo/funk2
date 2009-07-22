@@ -678,6 +678,7 @@ f2ptr f2__thread__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr pare
 				   parent_env,
 				   f2mutex__new(cause),
 				   nil,
+				   nil,
 				   nil);
   f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
   f2thread__funk(new_thread, cause, execution_cause, cfunkable, args);
@@ -1598,6 +1599,7 @@ f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f
 					   parent_thread,
 					   parent_env,
 					   f2mutex__new(cause),
+					   nil,
 					   nil,
 					   nil);
   f2ptr event_buffer       = raw__circular_buffer__new_empty(cause, 1024);

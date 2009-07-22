@@ -390,10 +390,10 @@ def_pcfunk0(time, return f2__time(this_cause));
 
 // thread
 
-f2ptr f2__sleep_for_nanoseconds(f2ptr thread, f2ptr cause, f2ptr nanoseconds) {
+f2ptr f2__sleep_for_nanoseconds_without_yield(f2ptr thread, f2ptr cause, f2ptr nanoseconds) {
   return f2__thread__sleep_for_nanoseconds(cause, thread, nanoseconds);
 }
-def_pcfunk1(sleep_for_nanoseconds, nanoseconds, return f2__sleep_for_nanoseconds(simple_thread, this_cause, nanoseconds));
+def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds, return f2__sleep_for_nanoseconds_without_yield(simple_thread, this_cause, nanoseconds));
 
 // array interface
 
@@ -1992,7 +1992,7 @@ void f2__primcfunks__initialize() {
   
   // thread
   
-  f2__primcfunk__init__1(sleep_for_nanoseconds, nanoseconds, "tells current executing thread to sleep for given number of nanoseconds.  [yield] should immediately follow.");
+  f2__primcfunk__init__1(sleep_for_nanoseconds_without_yield, nanoseconds, "tells current executing thread to sleep for given number of nanoseconds.  [yield] should immediately follow.");
   
   // time
   

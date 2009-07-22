@@ -66,7 +66,6 @@
 [primfunk:load 'fu2/primfunks-sort.fu2']
 [primfunk:load 'fu2/primfunks-string.fu2']
 [primfunk:load 'fu2/primfunks-text_buffer.fu2']
-[primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-trace.fu2']
 
 [globalize stdin-stream  [file_stream-new 0]]

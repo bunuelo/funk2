@@ -37,6 +37,7 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
 }
 
 void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  printf("\n[adding active thread to processor " s64__fstr "]", f2integer__i(f2processor__pool_index(this, cause), cause)); fflush(stdout);
   f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads       = f2processor__active_threads(this, cause);

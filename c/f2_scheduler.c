@@ -268,7 +268,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2ptr thread_cause = f2thread__cause_reg(thread, cause);
 	printf("\nlarva found in thread and thread has a critic, so launching critic thread in serial."); fflush(stdout);
 	printf("\n  critic="); f2__print(cause, critics); fflush(stdout);
-	f2ptr new_thread = f2__thread__new(thread_cause, thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
+	f2ptr new_thread = f2__thread__new(thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
 	{
 	  f2ptr processor__active_threads_mutex;
 	  int lock_failed;

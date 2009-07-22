@@ -37,6 +37,9 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
 }
 
 void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  if (cause) {
+    f2__cause__add_thread(cause, cause, thread);
+  }
   f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads       = f2processor__active_threads(this, cause);
@@ -48,6 +51,9 @@ void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
 }
 
 boolean_t f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  if (cause) {
+    f2__cause__remove_thread(cause, cause, thread);
+  }
   boolean_t found_and_removed_thread = boolean__false;
   f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);

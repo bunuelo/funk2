@@ -1677,6 +1677,40 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_t
 }
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
 
+f2ptr f2__cause__add_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  f2ptr threads_mutex = f2cause__threads_mutex(this, cause);
+  f2mutex__lock(threads_mutex, cause);
+  f2cause__threads__set(this, cause, f2cons__new(cause, thread, f2cause__threads(this, cause)));
+  f2mutex__unlock(threads_mutex, cause);
+  return nil;
+}
+
+f2ptr f2__cause__remove_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  f2ptr threads_mutex = f2cause__threads_mutex(this, cause);
+  f2mutex__lock(threads_mutex, cause);
+  f2ptr prev = nil;
+  f2ptr iter = f2cause__threads(this, cause);
+  while (iter) {
+    f2ptr next = f2cons__cdr(iter, cause);
+    f2ptr iter_thread = f2cons__car(iter, cause);
+    if (iter_thread == thread) {
+      if (prev) {
+	f2cons__cdr__set(prev, cause, next);
+      } else {
+	f2cause__threads__set(this, cause, next);
+      }
+      break;
+    }
+    prev = iter;
+    iter = next;
+  }
+  f2mutex__unlock(threads_mutex, cause);
+  if (! iter) {
+    printf("\nf2__cause__remove_thread warning: could not find thread to remove."); fflush(stdout);
+  }
+  return nil;
+}
+
 f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
   return f2__cause__new(cause, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
 }

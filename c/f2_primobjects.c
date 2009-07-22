@@ -1495,24 +1495,26 @@ def_pcfunk2(event_subscriber__event_buffer_mutex__set, x, y, return f2__event_su
 
 // cause
 
-defprimobject__static_slot(cause__threads,                 0);
-defprimobject__static_slot(cause__frame,                   1);
-defprimobject__static_slot(cause__allocate_traced_arrays,  2);
-defprimobject__static_slot(cause__bytecode_tracing_on,     3);
-defprimobject__static_slot(cause__memory_tracing_on,       4);
-defprimobject__static_slot(cause__subscribers_mutex,       5);
-defprimobject__static_slot(cause__subscribers,             6);
-defprimobject__static_slot(cause__imagination_stack,       7);
-defprimobject__static_slot(cause__event_buffer_first,      8);
-defprimobject__static_slot(cause__event_buffer_last,       9);
-defprimobject__static_slot(cause__current_events_mutex,   10);
-defprimobject__static_slot(cause__current_events,         11);
+defprimobject__static_slot(cause__threads_mutex,           0);
+defprimobject__static_slot(cause__threads,                 1);
+defprimobject__static_slot(cause__frame,                   2);
+defprimobject__static_slot(cause__allocate_traced_arrays,  3);
+defprimobject__static_slot(cause__bytecode_tracing_on,     4);
+defprimobject__static_slot(cause__memory_tracing_on,       5);
+defprimobject__static_slot(cause__subscribers_mutex,       6);
+defprimobject__static_slot(cause__subscribers,             7);
+defprimobject__static_slot(cause__imagination_stack,       8);
+defprimobject__static_slot(cause__event_buffer_first,      9);
+defprimobject__static_slot(cause__event_buffer_last,      10);
+defprimobject__static_slot(cause__current_events_mutex,   11);
+defprimobject__static_slot(cause__current_events,         12);
 
 f2ptr __cause__symbol = -1;
 
-f2ptr f2cause__new(f2ptr cause, f2ptr threads, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
+f2ptr f2cause__new(f2ptr cause, f2ptr threads_mutex, f2ptr threads, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
   release__assert(__cause__symbol != -1, nil, "f2cause__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __cause__symbol, 12, nil);
+  f2ptr this = f2__primobject__new(cause, __cause__symbol, 13, nil);
+  f2cause__threads_mutex__set(         this, cause, threads_mutex);
   f2cause__threads__set(               this, cause, threads);
   f2cause__frame__set(                 this, cause, frame);
   f2cause__allocate_traced_arrays__set(this, cause, allocate_traced_arrays);
@@ -1532,6 +1534,8 @@ f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk);}
   {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
+  {char* slot_name = "threads_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_cause.threads_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.threads_mutex__set__funk, nil);}
   {char* slot_name = "threads";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.threads__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.threads__set__funk, nil);}
   {char* slot_name = "frame";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
@@ -1567,6 +1571,12 @@ boolean_t raw__cause__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__cause__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cause__is_type(cause, x));}
 def_pcfunk1(cause__is_type, x, return f2__cause__is_type(this_cause, x));
+
+f2ptr f2__cause__threads_mutex(f2ptr cause, f2ptr this) {return f2cause__threads_mutex(this, cause);}
+def_pcfunk1(cause__threads_mutex, x, return f2__cause__threads_mutex(this_cause, x));
+
+f2ptr f2__cause__threads_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2cause__threads_mutex__set(this, cause, value);}
+def_pcfunk2(cause__threads_mutex__set, x, y, return f2__cause__threads_mutex__set(this_cause, x, y));
 
 f2ptr f2__cause__threads(f2ptr cause, f2ptr this) {return f2cause__threads(this, cause);}
 def_pcfunk1(cause__threads, x, return f2__cause__threads(this_cause, x));
@@ -2585,6 +2595,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk = cfunk;}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_cause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var(cause__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk = cfunk;}
+  {char* symbol_str = "threads_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_cause.threads_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__threads_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.threads_mutex__funk = cfunk;}
+  {char* symbol_str = "threads_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause.threads_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__threads_mutex__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.threads_mutex__set__funk = cfunk;}
   {char* symbol_str = "threads"; __funk2.globalenv.object_type.primobject.primobject_type_cause.threads__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__threads, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.threads__funk = cfunk;}
   {char* symbol_str = "threads-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause.threads__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

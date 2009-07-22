@@ -149,11 +149,14 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2ptr sleep_until_time = f2thread__sleep_until_time(thread, cause);
 	boolean_t thread_needs_sleep = boolean__false;
 	if (sleep_until_time) {
+	  printf("\nthread sleeping."); fflush(stdout);
 	  f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(sleep_until_time, cause);
 	  s64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
 	  if (raw__nanoseconds_since_1970() >= nanoseconds_since_1970__i) {
+	    printf("\nthread done sleeping."); fflush(stdout);
 	    f2thread__sleep_until_time__set(thread, cause, nil);
 	  } else {
+	    printf("\nthread needs more sleep."); fflush(stdout);
 	    thread_needs_sleep = boolean__true;
 	  }
 	}

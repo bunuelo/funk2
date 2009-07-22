@@ -83,7 +83,7 @@ u64 raw__processor__active_threads__length(f2ptr cause, f2ptr processor) {
 f2ptr f2__scheduler__processor_with_fewest_threads(f2ptr cause, f2ptr scheduler) {
   f2ptr processors = f2scheduler__processors(scheduler, cause);
   u64 processors__length = raw__array__length(cause, processors);
-  u64   min_length    = 0;
+  u64   min_length    = 0xffffffffffffffff;
   f2ptr min_processor = nil;
   u64 i;
   printf("\nprocessor thread list:"); fflush(stdout);
@@ -92,8 +92,8 @@ f2ptr f2__scheduler__processor_with_fewest_threads(f2ptr cause, f2ptr scheduler)
     f2ptr active_threads = f2processor__active_threads(processor, cause);
     u64 threads__length = raw__length(cause, active_threads);
     printf("\n  processor pool_index=" s64__fstr " active_thread_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), threads__length); fflush(stdout);
-    if (threads__length + 1 < min_length) {
-      min_length = threads__length + 1; // avoids -1 assignment for u64
+    if (threads__length < min_length) {
+      min_length = threads__length;
       min_processor = processor;
     }
   }

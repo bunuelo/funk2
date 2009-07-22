@@ -1564,6 +1564,7 @@ f2ptr f2__funkable__parent_env(f2ptr cause, f2ptr funkable) {
 }
 
 f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f2ptr funkable) {
+  /*
   f2ptr parent_env         = f2__funkable__parent_env(cause, funkable);
   f2ptr thread             = f2thread__new(cause,
 					   nil,
@@ -1588,6 +1589,8 @@ f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f
   f2ptr event_buffer_mutex = f2mutex__new(cause);
   f2ptr subscriber         = f2event_subscriber__new(cause, event_type, thread, funkable, event_buffer, event_buffer_mutex);
   return subscriber;
+  */
+  return nil;
 }
 def_pcfunk2(event_subscriber, event_type, funkable, return f2__event_subscriber(this_cause, simple_thread, event_type, funkable));
 

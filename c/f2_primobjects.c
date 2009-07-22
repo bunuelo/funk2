@@ -1074,6 +1074,9 @@ f2ptr f2__thread__new(f2ptr cause, f2ptr parent_thread, f2ptr parent_env, f2ptr 
   f2ptr new_thread = f2thread__new(cause, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_thread, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
   f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
   f2thread__funk(new_thread, cause, cfunkable, cfunkable_args);
+  
+  //f2cause__threads__set(cause, cause, f2cons__new(cause, new_thread, f2cause__threads(cause, cause)));
+  
   return new_thread;
 }
 

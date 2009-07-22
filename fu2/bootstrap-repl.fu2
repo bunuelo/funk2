@@ -385,7 +385,7 @@
   [yield]]
 
 [defunk sleep [seconds]
-  [sleep_for_nanoseconds [* seconds 1000000000]]]
+  [sleep_for_nanoseconds [binary_multiply seconds 1000000000]]]
 
 [defmetro parog [:rest codes]
   'run commands in parallel'

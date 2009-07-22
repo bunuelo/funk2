@@ -954,6 +954,7 @@ defprimobject__static_slot(thread__parent_env,         13);
 defprimobject__static_slot(thread__execute_mutex,      14);
 defprimobject__static_slot(thread__paused,             15);
 defprimobject__static_slot(thread__last_executed_time, 16);
+defprimobject__static_slot(thread__sleep_until_time,   17);
 
 f2ptr __thread__symbol = -1;
 
@@ -974,10 +975,11 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr parent_env,
 		    f2ptr execute_mutex,
 		    f2ptr paused,
-		    f2ptr last_executed_time) {
+		    f2ptr last_executed_time,
+		    f2ptr sleep_until_time) {
   /*pause_gc();*/
   release__assert(__thread__symbol != -1, nil, "f2thread__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __thread__symbol, 17, nil);
+  f2ptr this = f2__primobject__new(cause, __thread__symbol, 18, nil);
   f2thread__program_counter__set(   this, cause, program_counter);
   f2thread__stack__set(             this, cause, stack);
   f2thread__iter__set(              this, cause, iter);
@@ -995,6 +997,7 @@ f2ptr f2thread__new(f2ptr cause,
   f2thread__execute_mutex__set(     this, cause, execute_mutex);
   f2thread__paused__set(            this, cause, paused);
   f2thread__last_executed_time__set(this, cause, last_executed_time);
+  f2thread__sleep_until_time__set(  this, cause, sleep_until_time);
   /*resume_gc();*/
   return this;
 }
@@ -1037,6 +1040,8 @@ f2ptr f2thread__primobject_type__new(f2ptr cause) {
 									 __funk2.globalenv.object_type.primobject.primobject_type_thread.paused__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.paused__set__funk, nil);}
   {char* slot_name = "last_executed_time"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									 __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__set__funk, nil);}
+  {char* slot_name = "sleep_until_time";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__set__funk, nil);}
   return this;
 }
 
@@ -1150,6 +1155,12 @@ def_pcfunk1(thread__last_executed_time, x, return f2__thread__last_executed_time
 
 f2ptr f2__thread__last_executed_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2thread__last_executed_time__set(this, cause, value);}
 def_pcfunk2(thread__last_executed_time__set, x, y, return f2__thread__last_executed_time__set(this_cause, x, y));
+
+f2ptr f2__thread__sleep_until_time(f2ptr cause, f2ptr this) {return f2thread__sleep_until_time(this, cause);}
+def_pcfunk1(thread__sleep_until_time, x, return f2__thread__sleep_until_time(this_cause, x));
+
+f2ptr f2__thread__sleep_until_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2thread__sleep_until_time__set(this, cause, value);}
+def_pcfunk2(thread__sleep_until_time__set, x, y, return f2__thread__sleep_until_time__set(this_cause, x, y));
 
 
 
@@ -2393,6 +2404,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__last_executed_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__funk = cfunk;}
   {char* symbol_str = "last_executed_time-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__last_executed_time__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.last_executed_time__set__funk = cfunk;}
+  {char* symbol_str = "sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__funk = cfunk;}
+  {char* symbol_str = "sleep_until_time-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__sleep_until_time__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__set__funk = cfunk;}
   
   // processor
   

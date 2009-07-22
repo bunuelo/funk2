@@ -629,7 +629,8 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr parent_env,
 		    f2ptr execute_mutex,
 		    f2ptr paused,
-		    f2ptr last_executed_time);
+		    f2ptr last_executed_time,
+		    f2ptr sleep_until_time);
 f2ptr f2thread__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_thread(                 this, cause)        raw__eq(cause, f2primobject__type(this, cause), __thread__symbol)
@@ -752,6 +753,13 @@ defprimobject__static_slot__prototype(thread__last_executed_time);
 #define f2thread__last_executed_time__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, thread__last_executed_time, cause)
 #define f2thread__last_executed_time__trace(     this, cause)        primobject__static_slot__trace(     this, thread__last_executed_time, cause)
 #define f2thread__last_executed_time__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, thread__last_executed_time, cause)
+
+defprimobject__static_slot__prototype(thread__sleep_until_time);
+#define f2thread__sleep_until_time(            this, cause)        primobject__static_slot__accessor(  this, thread__sleep_until_time, cause)
+#define f2thread__sleep_until_time__set(       this, cause, value) primobject__static_slot__set(       this, thread__sleep_until_time, cause, value)
+#define f2thread__sleep_until_time__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, thread__sleep_until_time, cause)
+#define f2thread__sleep_until_time__trace(     this, cause)        primobject__static_slot__trace(     this, thread__sleep_until_time, cause)
+#define f2thread__sleep_until_time__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(this, thread__sleep_until_time, cause)
 
 #define __pure__f2thread__is_complete(this, cause)  (!f2thread__program_counter(this, cause))
 #define f2thread__is_complete(this, cause)          __pure__f2thread__is_complete(this, cause)
@@ -1546,6 +1554,10 @@ typedef struct funk2_object_type__thread__slot_s {
   f2ptr last_executed_time__funk;
   f2ptr last_executed_time__set__symbol;
   f2ptr last_executed_time__set__funk;
+  f2ptr sleep_until_time__symbol;
+  f2ptr sleep_until_time__funk;
+  f2ptr sleep_until_time__set__symbol;
+  f2ptr sleep_until_time__set__funk;
 } funk2_object_type__thread__slot_t;
 
 // processor

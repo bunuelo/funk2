@@ -151,7 +151,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	if (sleep_until_time) {
 	  f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(sleep_until_time, cause);
 	  s64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
-	  if (raw__nanoseconds_since_1970() >= nanoseconds_since__i) {
+	  if (raw__nanoseconds_since_1970() >= nanoseconds_since_1970__i) {
 	    f2thread__sleep_until_time__set(thread, cause, nil);
 	  } else {
 	    thread_needs_sleep = boolean__true;

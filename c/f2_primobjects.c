@@ -1181,7 +1181,7 @@ f2ptr f2__thread__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanosecon
     return f2larva__new(cause, 1);
   }
   s64 nanoseconds__i = f2integer__i(nanoseconds, cause);
-  return f2__thread__sleep_until_time(this, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds__i)));
+  return f2__thread__sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds__i)));
 }
 def_pcfunk2(thread__sleep_for_nanoseconds, this, nanoseconds, return f2__thread__sleep_for_nanoseconds(this_cause, this, nanoseconds));
 

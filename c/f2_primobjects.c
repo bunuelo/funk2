@@ -1509,7 +1509,7 @@ f2ptr __cause__symbol = -1;
 
 f2ptr f2cause__new(f2ptr cause, f2ptr threads, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
   release__assert(__cause__symbol != -1, nil, "f2cause__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __cause__symbol, 11, nil);
+  f2ptr this = f2__primobject__new(cause, __cause__symbol, 12, nil);
   f2cause__threads__set(               this, cause, threads);
   f2cause__frame__set(                 this, cause, frame);
   f2cause__allocate_traced_arrays__set(this, cause, allocate_traced_arrays);

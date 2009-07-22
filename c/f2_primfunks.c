@@ -607,7 +607,7 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args
   return value;
 }
 
-void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args) {
+void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   pause_gc();
   f2ptr env;
   if      (raw__funk__is_type(cause, cfunkable))       {env = f2funk__env(cfunkable, cause);}
@@ -616,7 +616,6 @@ void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2pt
   else if (raw__metrocfunk__is_type(cause, cfunkable)) {env = f2thread__env(thread, cause);}
   else                                         {error(nil, "f2thread__force_funk error: cfunkable must be funk or metro.");}
   
-  f2thread__cause_reg__set(thread, cause, execution_cause);
   f2thread__env__set(thread, cause, env);
   f2thread__args__set(thread, cause, args);
   f2thread__value__set(thread, cause, cfunkable);
@@ -647,8 +646,7 @@ void debug__f2thread__funk__unfunkable_error() {
   status("debug__f2thread__funk__unfunkable_error here.");
 }
 
-void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args) {
-  f2thread__cause_reg__set(      thread, cause, execution_cause);
+void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2thread__args__set(           thread, cause, args);
   f2thread__value__set(          thread, cause, cfunkable);
   f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause));

@@ -511,17 +511,8 @@ int f2__thread__bytecode__set__program_counter_reg(f2ptr thread, f2ptr bytecode,
   return 1;
 }
 
-void raw__thread__bytecode_trace__set__cause_reg(f2ptr cause, f2ptr bytecode, f2ptr thread, f2ptr exp) {
-  bytecode_status("bytecode trace: [set cause " f2ptr__fstr "]", exp);
-  f2ptr bytecode_event = f2bytecode_event__new(cause, bytecode, nil);
-  raw__cause__event_buffer__add(cause, bytecode_event);
-}
-
 int f2__thread__bytecode__set__iter_reg(f2ptr thread, f2ptr bytecode, f2ptr exp) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
-  if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__set__cause_reg(cause, bytecode, thread, exp);
-  }
   
   f2__thread__increment_pc(thread, cause);
   

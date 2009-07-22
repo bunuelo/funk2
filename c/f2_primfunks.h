@@ -896,8 +896,8 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 // primobject thread
 
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args);
-void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args);
-void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfunkable, f2ptr args);
+void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args);
+void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args);
 f2ptr f2__thread__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);

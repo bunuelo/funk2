@@ -66,5 +66,9 @@
 			@body]]]
 
 [defmetro have [this slot_name :rest args]
-  `[execute ,this ,slot_name ,this @args]]
+  [define execute_funk [object-slot-execute_funk this slot_name]]
+  [if [or [is-type `metro this]
+	  [is-type `metrocfunk this]]
+      [apply [object-slot-execute_funk this slot_name] args]
+    `[execute ,this ,slot_name ,this @args]]]
 

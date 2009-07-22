@@ -1170,7 +1170,6 @@ f2ptr f2__thread__sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   if (! raw__time__is_type(cause, until_time)) {
     return f2larva__new(cause, 1);
   }
-  printf("\nsleeping until time: "); f2__print(0, until_time);
   f2thread__sleep_until_time__set(this, cause, until_time);
   return nil;
 }

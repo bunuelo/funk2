@@ -1219,8 +1219,6 @@ def_pcfunk1(thread__larva_args, x, return f2__thread__larva_args(this_cause, x))
 f2ptr f2__thread__larva_args__set(f2ptr cause, f2ptr this, f2ptr value) {return f2thread__larva_args__set(this, cause, value);}
 def_pcfunk2(thread__larva_args__set, x, y, return f2__thread__larva_args__set(this_cause, x, y));
 
-
-
 // processor
 
 defprimobject__static_slot(processor__scheduler,              0);

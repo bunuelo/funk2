@@ -777,7 +777,6 @@ defprimobject__static_slot__prototype(thread__larva_args);
 f2ptr f2__thread__sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
 f2ptr f2__thread__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds);
 
-
 // processor
 
 extern f2ptr __processor__symbol;

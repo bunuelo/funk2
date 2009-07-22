@@ -1560,8 +1560,8 @@ typedef struct funk2_object_type__thread__slot_s {
   f2ptr sleep_until_time__set__funk;
   f2ptr sleep_until_time__symbol;
   f2ptr sleep_until_time__funk;
-  f2ptr sleep_for_nanoseconds__execute__symbol;
-  f2ptr sleep_for_nanoseconds__execute__funk;
+  f2ptr sleep_for_nanoseconds__symbol;
+  f2ptr sleep_for_nanoseconds__funk;
 } funk2_object_type__thread__slot_t;
 
 // processor

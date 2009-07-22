@@ -955,6 +955,7 @@ defprimobject__static_slot(thread__execute_mutex,      14);
 defprimobject__static_slot(thread__paused,             15);
 defprimobject__static_slot(thread__last_executed_time, 16);
 defprimobject__static_slot(thread__sleep_until_time,   17);
+defprimobject__static_slot(thread__larva_args,         18);
 
 f2ptr __thread__symbol = -1;
 
@@ -976,10 +977,11 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr execute_mutex,
 		    f2ptr paused,
 		    f2ptr last_executed_time,
-		    f2ptr sleep_until_time) {
+		    f2ptr sleep_until_time,
+		    f2ptr larva_args) {
   /*pause_gc();*/
   release__assert(__thread__symbol != -1, nil, "f2thread__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __thread__symbol, 18, nil);
+  f2ptr this = f2__primobject__new(cause, __thread__symbol, 19, nil);
   f2thread__program_counter__set(   this, cause, program_counter);
   f2thread__stack__set(             this, cause, stack);
   f2thread__iter__set(              this, cause, iter);
@@ -998,6 +1000,7 @@ f2ptr f2thread__new(f2ptr cause,
   f2thread__paused__set(            this, cause, paused);
   f2thread__last_executed_time__set(this, cause, last_executed_time);
   f2thread__sleep_until_time__set(  this, cause, sleep_until_time);
+  f2thread__larva_args__set(        this, cause, larva_args);
   /*resume_gc();*/
   return this;
 }
@@ -1045,6 +1048,8 @@ f2ptr f2thread__primobject_type__new(f2ptr cause) {
 									    __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__set__funk,
 									    __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__funk);}
   {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_for_nanoseconds__funk);}
+  {char* slot_name = "larva_args";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									    __funk2.globalenv.object_type.primobject.primobject_type_thread.larva_args__funk, __funk2.globalenv.object_type.primobject.primobject_type_thread.larva_args__set__funk, nil);}
   return this;
 }
 
@@ -1183,6 +1188,12 @@ f2ptr f2__thread__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanosecon
   return f2__thread__sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds__i)));
 }
 def_pcfunk2(thread__sleep_for_nanoseconds, this, nanoseconds, return f2__thread__sleep_for_nanoseconds(this_cause, this, nanoseconds));
+
+f2ptr f2__thread__larva_args(f2ptr cause, f2ptr this) {return f2thread__larva_args(this, cause);}
+def_pcfunk1(thread__larva_args, x, return f2__thread__larva_args(this_cause, x));
+
+f2ptr f2__thread__larva_args__set(f2ptr cause, f2ptr this, f2ptr value) {return f2thread__larva_args__set(this, cause, value);}
+def_pcfunk2(thread__larva_args__set, x, y, return f2__thread__larva_args__set(this_cause, x, y));
 
 
 
@@ -2433,6 +2444,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_until_time__funk = cfunk;}
   {char* symbol_str = "sleep_for_nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_for_nanoseconds__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__sleep_for_nanoseconds, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.sleep_for_nanoseconds__funk = cfunk;}
+  {char* symbol_str = "larva_args"; __funk2.globalenv.object_type.primobject.primobject_type_thread.larva_args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(thread__larva_args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.larva_args__funk = cfunk;}
+  {char* symbol_str = "larva_args-set"; __funk2.globalenv.object_type.primobject.primobject_type_thread.larva_args__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(thread__larva_args__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_thread.larva_args__set__funk = cfunk;}
   
   // processor
   

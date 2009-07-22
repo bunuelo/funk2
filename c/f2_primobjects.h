@@ -630,7 +630,8 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr execute_mutex,
 		    f2ptr paused,
 		    f2ptr last_executed_time,
-		    f2ptr sleep_until_time);
+		    f2ptr sleep_until_time,
+		    f2ptr larva_args);
 f2ptr f2thread__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_thread(                 this, cause)        raw__eq(cause, f2primobject__type(this, cause), __thread__symbol)
@@ -760,6 +761,13 @@ defprimobject__static_slot__prototype(thread__sleep_until_time);
 #define f2thread__sleep_until_time__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, thread__sleep_until_time, cause)
 #define f2thread__sleep_until_time__trace(     this, cause)        primobject__static_slot__trace(     this, thread__sleep_until_time, cause)
 #define f2thread__sleep_until_time__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(this, thread__sleep_until_time, cause)
+
+defprimobject__static_slot__prototype(thread__larva_args);
+#define f2thread__larva_args(            this, cause)        primobject__static_slot__accessor(  this, thread__larva_args, cause)
+#define f2thread__larva_args__set(       this, cause, value) primobject__static_slot__set(       this, thread__larva_args, cause, value)
+#define f2thread__larva_args__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, thread__larva_args, cause)
+#define f2thread__larva_args__trace(     this, cause)        primobject__static_slot__trace(     this, thread__larva_args, cause)
+#define f2thread__larva_args__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(this, thread__larva_args, cause)
 
 #define __pure__f2thread__is_complete(this, cause)  (!f2thread__program_counter(this, cause))
 #define f2thread__is_complete(this, cause)          __pure__f2thread__is_complete(this, cause)
@@ -1556,14 +1564,18 @@ typedef struct funk2_object_type__thread__slot_s {
   f2ptr last_executed_time__funk;
   f2ptr last_executed_time__set__symbol;
   f2ptr last_executed_time__set__funk;
-  f2ptr sleep_until_time__get__symbol;
+  f2ptr sleep_until_time__get__symbol; // get
   f2ptr sleep_until_time__get__funk;
-  f2ptr sleep_until_time__set__symbol;
+  f2ptr sleep_until_time__set__symbol; // set
   f2ptr sleep_until_time__set__funk;
-  f2ptr sleep_until_time__symbol;
+  f2ptr sleep_until_time__symbol;      // execute
   f2ptr sleep_until_time__funk;
-  f2ptr sleep_for_nanoseconds__symbol;
+  f2ptr sleep_for_nanoseconds__symbol; // execute
   f2ptr sleep_for_nanoseconds__funk;
+  f2ptr larva_args__symbol;            // get
+  f2ptr larva_args__funk;
+  f2ptr larva_args__set__symbol;       // set
+  f2ptr larva_args__set__funk;
 } funk2_object_type__thread__slot_t;
 
 // processor

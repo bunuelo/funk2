@@ -390,6 +390,11 @@ def_pcfunk0(time, return f2__time(this_cause));
 
 // thread
 
+f2ptr f2__sleep_for_nanoseconds(f2ptr thread, f2ptr cause, f2ptr nanoseconds) {
+  return f2__thread__sleep_for_nanoseconds(cause, thread, nanoseconds);
+}
+def_pcfunk1(sleep_for_nanoseconds, nanoseconds, return f2__sleep_for_nanoseconds(simple_thread, this_cause, nanoseconds));
+
 // array interface
 
 f2ptr raw__array__new(f2ptr cause, u64 length) {
@@ -1984,6 +1989,10 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__2(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
   
   // cause
+  
+  // thread
+  
+  f2__primcfunk__init__1(sleep_for_nanoseconds, nanoseconds, "tells current executing thread to sleep for given number of nanoseconds.  [yield] should immediately follow.");
   
   // time
   

@@ -667,40 +667,15 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr execution_cause, f2ptr cfun
   }
 }
 
-f2ptr f2__thread__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_thread = f2thread__new(cause,
-				   nil,
-				   nil,
-				   nil,
-				   parent_env,
-				   nil,
-				   nil,
-				   nil,
-				   nil,
-				   nil,
-				   execution_cause,
-				   __funk2.globalenv.true__symbol,
-				   nil,
-				   parent_thread,
-				   parent_env,
-				   f2mutex__new(cause),
-				   nil,
-				   nil,
-				   nil);
-  f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
-  f2thread__funk(new_thread, cause, execution_cause, cfunkable, args);
-  return new_thread;
-}
-
 f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_thread = f2__thread__new_unscheduled(cause, execution_cause, parent_thread, parent_env, cfunkable, args);
+  f2ptr new_thread = f2__thread__new(cause, execution_cause, parent_thread, parent_env, cfunkable, args);
   f2__global_scheduler__add_thread_parallel(cause, new_thread);
   return new_thread;
 }
 def_pcfunk2(thread, funk, args, return f2__thread(this_cause, this_cause, simple_thread, simple_env, funk, args));
 
 f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_thread = f2__thread__new_unscheduled(cause, execution_cause, parent_thread, parent_env, cfunkable, args);
+  f2ptr new_thread = f2__thread__new(cause, execution_cause, parent_thread, parent_env, cfunkable, args);
   f2__global_scheduler__add_thread_serial(cause, new_thread);
   return new_thread;
 }

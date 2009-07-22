@@ -633,6 +633,7 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr sleep_until_time,
 		    f2ptr larva_args);
 f2ptr f2thread__primobject_type__new(f2ptr cause);
+f2ptr f2__thread__new(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 
 #define f2primobject__is_thread(                 this, cause)        raw__eq(cause, f2primobject__type(this, cause), __thread__symbol)
 

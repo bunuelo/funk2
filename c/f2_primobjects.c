@@ -1053,6 +1053,30 @@ f2ptr f2thread__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+f2ptr f2__thread__new(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  f2ptr program_counter    = nil;
+  f2ptr stack              = nil;
+  f2ptr iter               = nil;
+  f2ptr env                = parent_env;
+  f2ptr args               = nil;
+  f2ptr return_reg         = nil;
+  f2ptr value              = nil;
+  f2ptr trace              = nil;
+  f2ptr critics            = nil;
+  f2ptr cause_reg          = execution_cause;
+  f2ptr keep_undead        = __funk2.globalenv.true__symbol;
+  f2ptr is_zombie          = nil;
+  f2ptr execute_mutex      = f2mutex__new(cause);
+  f2ptr paused             = nil;
+  f2ptr last_executed_time = nil;
+  f2ptr sleep_until_time   = nil;
+  f2ptr larva_args         = nil;
+  f2ptr new_thread = f2thread__new(cause, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_thread, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
+  f2thread__keep_undead__set(new_thread, cause, __funk2.globalenv.true__symbol);
+  f2thread__funk(new_thread, cause, execution_cause, cfunkable, args);
+  return new_thread;
+}
+
 boolean_t raw__thread__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}

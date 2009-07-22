@@ -1655,10 +1655,11 @@ def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define_
 
 
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+  f2ptr threads              = nil;
   f2ptr frame                = frame__new_empty(cause);
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
-  return f2cause__new(cause, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+  return f2cause__new(cause, threads, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 }
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
 

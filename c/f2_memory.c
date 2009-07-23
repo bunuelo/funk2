@@ -1312,9 +1312,9 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       sched_yield();
     }
     for (index = 0; index < memory_pool_num; index ++) {
-      status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
+      status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       garbage_collect(index, 0);
-      status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
+      status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
     }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
     memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();

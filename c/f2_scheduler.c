@@ -163,7 +163,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   f2ptr prev_thread_iter = nil;
   int thread_num         = 0;
   while (thread_iter) {
-    boolean_t remove_this_thread_from_active_threads = boolean__false;
     f2ptr next_thread_iter = f2cons__cdr(thread_iter, cause);
     thread_num ++;
     f2ptr thread = f2cons__car(thread_iter, cause);

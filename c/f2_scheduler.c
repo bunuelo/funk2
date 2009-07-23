@@ -196,6 +196,7 @@ void execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr thread) {
     i --;
   }
   //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
+  return exit_reason;
 }
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {

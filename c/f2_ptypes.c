@@ -41,7 +41,9 @@ void print_mutex_error(int retval) {
   }
 }
 
-void ptype_incr_mutex__lock(int pool_index)    {
+#define ptype_incr_mutex__lock(pool_index)
+
+void raw__ptype_incr_mutex__lock(int pool_index)    {
   if (__ptypes_please_wait_for_gc_to_take_place) {
     funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
     __ptypes_waiting_count ++;
@@ -58,7 +60,9 @@ void ptype_incr_mutex__lock(int pool_index)    {
   /*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
 }
 
-void ptype_incr_mutex__unlock(int pool_index)  {
+#define ptype_incr_mutex__unlock(pool_index)
+
+void raw__ptype_incr_mutex__unlock(int pool_index)  {
   debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
   funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]);
 }

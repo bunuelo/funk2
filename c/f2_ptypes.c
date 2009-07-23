@@ -740,6 +740,18 @@ f2ptr pfunk2__f2mutex__new(f2ptr cause) {
   return retval;
 }
 
+boolean_t pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause) {
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_mutex) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  ptype_access_num__incr(pool_index);
+  boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_mutex__m(this, cause));
+  ptype_access_num__decr(pool_index);
+  return is_locked;
+}
+
 void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
@@ -791,6 +803,9 @@ def_pcfunk1(mutex__is_type, x, return f2__mutex__is_type(this_cause, x));
 
 f2ptr f2__mutex__new(f2ptr cause) {return f2mutex__new(cause);}
 def_pcfunk0(mutex__new, return f2__mutex__new(this_cause));
+
+f2ptr f2__mutex__is_locked(f2ptr cause, f2ptr x) {f2mutex__is_locked(x, cause); return nil;}
+def_pcfunk1(mutex__is_locked, this, return f2__mutex__is_locked(this_cause, this));
 
 f2ptr f2__mutex__lock(f2ptr cause, f2ptr x) {f2mutex__lock(x, cause); return nil;}
 def_pcfunk1(mutex__lock, this, return f2__mutex__lock(this_cause, this));
@@ -2367,6 +2382,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__funk = cfunk;}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_mutex.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk = cfunk;}
+  {char* str = "is_locked"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_locked, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__funk = cfunk;}
   {char* str = "lock"; __funk2.globalenv.object_type.ptype.ptype_mutex.lock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__lock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk = cfunk;}
   {char* str = "unlock"; __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

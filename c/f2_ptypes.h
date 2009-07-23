@@ -134,6 +134,7 @@ f2ptr f2__gfunkptr__is_type(f2ptr cause, f2ptr exp);
 // mutex
 
 f2ptr            pfunk2__f2mutex__new(f2ptr cause);
+boolean_t        pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause);
 void             pfunk2__f2mutex__lock(f2ptr this, f2ptr cause);
 void             pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause);
 int              pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause);
@@ -419,6 +420,8 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr is_type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr is_locked__symbol;
+  f2ptr is_locked__funk;
   f2ptr lock__symbol;
   f2ptr lock__funk;
   f2ptr unlock__symbol;

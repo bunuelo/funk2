@@ -312,6 +312,8 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2gfunkptr__pool_address:                    recv_packet__respond__f2gfunkptr__pool_address(funk2_node, (pcs_respond__f2gfunkptr__pool_address_t*)packet);                                       break;
   case funk2_packet_type__pcs_request__f2mutex__new:                                recv_packet__request__f2mutex__new(funk2_node, (pcs_request__f2mutex__new_t*)packet);                                                               break;
   case funk2_packet_type__pcs_respond__f2mutex__new:                                recv_packet__respond__f2mutex__new(funk2_node, (pcs_respond__f2mutex__new_t*)packet);                                                               break;
+  case funk2_packet_type__pcs_request__f2mutex__is_locked:                          recv_packet__request__f2mutex__is_locked(funk2_node, (pcs_request__f2mutex__is_locked_t*)packet);                                                   break;
+  case funk2_packet_type__pcs_respond__f2mutex__is_locked:                          recv_packet__respond__f2mutex__is_locked(funk2_node, (pcs_respond__f2mutex__is_locked_t*)packet);                                                   break;
   case funk2_packet_type__pcs_request__f2mutex__lock:                               recv_packet__request__f2mutex__lock(funk2_node, (pcs_request__f2mutex__lock_t*)packet);                                                             break;
   case funk2_packet_type__pcs_respond__f2mutex__lock:                               recv_packet__respond__f2mutex__lock(funk2_node, (pcs_respond__f2mutex__lock_t*)packet);                                                             break;
   case funk2_packet_type__pcs_request__f2mutex__unlock:                             recv_packet__request__f2mutex__unlock(funk2_node, (pcs_request__f2mutex__unlock_t*)packet);                                                         break;
@@ -1661,6 +1663,67 @@ f2ptr funk2_node__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
 
 f2ptr f2mutex__new(f2ptr cause) {
   return pfunk2__f2mutex__new(cause);
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2mutex__is_locked: executing.");
+  pcs_request__f2mutex__is_locked_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2mutex__is_locked;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2mutex__is_locked_t* packet) {
+  packet_status("recv_packet__request__f2mutex__is_locked: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_thread_funk2_node(&(__funk2.node_handler), thread, funk2_node);
+  boolean_t is_locked = pfunk2__f2mutex__is_locked(this, cause);
+  send_packet__respond__f2mutex__is_locked(funk2_node_handler__lookup_thread_execution_node(&(__funk2.node_handler), thread), thread, cause, is_locked);
+}
+
+void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, boolean_t is_locked) {
+  packet_status("send_packet__respond__f2mutex__is_locked: executing.");
+  pcs_respond__f2mutex__is_locked_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2mutex__is_locked;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.thread              = this_thread;
+  packet.payload.is_locked                                   = is_locked;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2mutex__is_locked_t* packet) {
+  packet_status("recv_packet__respond__f2mutex__is_locked: executing.");
+  f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
+  funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
+}
+
+boolean_t funk2_node__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this) {
+  send_packet__request__f2mutex__is_locked(funk2_node, this_thread, cause, this);
+  pcs_respond__f2mutex__is_locked_t* packet = (pcs_respond__f2mutex__is_locked_t*)funk2_node_handler__wait_for_new_thread_packet(&(__funk2.node_handler), this_thread);
+  boolean_t is_locked = packet->payload.is_locked;
+  f2__free(to_ptr(packet));
+  return is_locked;
+}
+
+boolean_t f2mutex__is_locked(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2mutex__is_locked(this, cause);
+  } else {
+    f2ptr         thread     = f2__scheduler__processor_thread_current_thread(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2mutex__is_locked(funk2_node, thread, cause, this);
+  }
 }
 
 // ******************************************************

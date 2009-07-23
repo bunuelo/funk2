@@ -150,6 +150,8 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2gfunkptr__pool_address:
   case funk2_packet_type__pcs_request__f2mutex__new:
   case funk2_packet_type__pcs_respond__f2mutex__new:
+  case funk2_packet_type__pcs_request__f2mutex__is_locked:
+  case funk2_packet_type__pcs_respond__f2mutex__is_locked:
   case funk2_packet_type__pcs_request__f2mutex__lock:
   case funk2_packet_type__pcs_respond__f2mutex__lock:
   case funk2_packet_type__pcs_request__f2mutex__unlock:

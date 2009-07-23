@@ -1085,6 +1085,45 @@ f2ptr funk2_node__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_thread, f2pt
 f2ptr f2mutex__new(f2ptr cause);
 
 
+//  funk2_packet_type__pcs_request__f2mutex__is_locked                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+
+// request f2mutex__is_locked
+
+struct pcs_packet_payload_request__f2mutex__is_locked_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2mutex__is_locked_s pcs_packet_payload_request__f2mutex__is_locked_t;
+
+struct pcs_request__f2mutex__is_locked_s {
+  funk2_packet_header_t                            header;
+  pcs_packet_payload_request__f2mutex__is_locked_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2mutex__is_locked_s pcs_request__f2mutex__is_locked_t;
+
+// respond f2mutex__is_locked
+
+struct pcs_packet_payload_respond__f2mutex__is_locked_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  boolean_t                                          is_locked;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2mutex__is_locked_s pcs_packet_payload_respond__f2mutex__is_locked_t;
+
+struct pcs_respond__f2mutex__is_locked_s {
+  funk2_packet_header_t                            header;
+  pcs_packet_payload_respond__f2mutex__is_locked_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2mutex__is_locked_s pcs_respond__f2mutex__is_locked_t;
+
+void send_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void recv_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2mutex__is_locked_t* packet);
+void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, int is_locked);
+void recv_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2mutex__is_locked_t* packet);
+
+boolean_t funk2_node__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+boolean_t f2mutex__is_locked(f2ptr this, f2ptr cause);
+
+
 //  funk2_packet_type__pcs_request__f2mutex__lock                              = 0x18, //void             (f2ptr cause, f2ptr this);
 
 // request f2mutex__lock

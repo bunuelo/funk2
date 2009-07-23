@@ -1119,7 +1119,7 @@ typedef struct pcs_respond__f2mutex__is_locked_s pcs_respond__f2mutex__is_locked
 
 void send_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
 void recv_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2mutex__is_locked_t* packet);
-void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, int is_locked);
+void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, boolean_t is_locked);
 void recv_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2mutex__is_locked_t* packet);
 
 boolean_t funk2_node__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);

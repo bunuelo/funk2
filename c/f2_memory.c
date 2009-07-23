@@ -1294,6 +1294,23 @@ boolean_t try_gc() {
   return did_something;
 }
 
+void funk2_memory__handle(funk2_memory_t* memory) {
+  boolean_t should_collect_garbage = boolean__false;
+  for (index = 0; index < memory_pool_num; index ++) {
+    if (memory->pool[index].should_run_gc) {
+      should_collect_garbage = boolean__true;
+    }
+  }
+  if (should_collect_garbage) {
+    __ptypes_please_wait_for_gc_to_take_place = boolean__true;
+    while (__ptypes_waiting_count < memory_pool_num) {
+      sched_yield();
+    }
+    garbage_collect();
+    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+  }
+}
+
 /*
 // use this after pausing and resuming garbage collection
 boolean_t pool__try_gc(int pool_index) {

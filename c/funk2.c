@@ -282,6 +282,7 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
   funk2_node_handler__handle_nodes(&(this->node_handler));
   funk2_child_process_handler__handle_child_processes(&(this->child_process_handler));
+  funk2_memory__handle(&(this->memory));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)

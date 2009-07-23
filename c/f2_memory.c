@@ -965,6 +965,7 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
   for (index = 0; index < memory_pool_num; index ++) {
     disable_gc |= __funk2.memory.pool[index].disable_gc;
   }
+  /*
   if (! disable_gc) {
     for (index = 0; index < memory_pool_num; index ++) {
       if (index != pool_index) {
@@ -992,8 +993,9 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
       if (block) {return block;}
     }
   } else {
-    __funk2.memory.pool[pool_index].should_run_gc = 1;
-  }
+  */
+  __funk2.memory.pool[pool_index].should_run_gc = 1;
+  //}
   //#ifdef DEBUG_MEMORY
   status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num));
@@ -1220,7 +1222,7 @@ int gc__is_disabled() {
 //
 boolean_t pool__try_gc(int pool_index) {
   u8 result = 0;
-  
+  /*
   int disable_gc    = 0;
   int should_run_gc = 0;
   int index;
@@ -1241,7 +1243,7 @@ boolean_t pool__try_gc(int pool_index) {
     }
     debug_memory_test(pool_index, 3);
   }
-  
+  */
   return result;
 }
 

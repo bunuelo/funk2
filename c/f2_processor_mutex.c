@@ -51,6 +51,20 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
   pthread_mutex_destroy(&(this->pthread_mutex));
 }
 
+boolean_t funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
+  if (! this->is_initialized) {
+    printf("\nfunk2_processor_mutex__is_locked error: attempted to use uninitialized mutex.\n"); fflush(stdout);
+    funk2_processor_mutex__error();
+  }
+#endif
+  if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
+    pthread_mutex_unlock(&(this->pthread_mutex));
+    return boolean__false;
+  }
+  return boolean__true;
+}
+
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   if (! this->is_initialized) {

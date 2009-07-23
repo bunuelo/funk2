@@ -44,6 +44,7 @@ typedef enum funk2_processor_mutex_trylock_result_e {
 
 void                                   funk2_processor_mutex__init(funk2_processor_mutex_t* this);
 void                                   funk2_processor_mutex__destroy(funk2_processor_mutex_t* this);
+boolean_t                              funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this);
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num);

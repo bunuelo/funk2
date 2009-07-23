@@ -31,6 +31,20 @@ boolean_t               __ptypes_please_wait_for_gc_to_take_place = boolean__fal
 s64                     __ptypes_waiting_count                    = 0;
 funk2_processor_mutex_t __ptypes_waiting_count_mutex;
 
+void wait_politely() {
+  processor_mutex_lock(&__ptypes_waiting_count_mutex);
+  __ptypes_waiting_count ++;
+  processor_mutex_unlock(&__ptypes_waiting_count_mutex);
+  while (__ptypes_please_wait_for_gc_to_take_place) {
+    sched_yield();
+  }
+  processor_mutex_lock(&__ptypes_waiting_count_mutex);
+  __ptypes_waiting_count --;
+  processor_mutex_unlock(&__ptypes_waiting_count_mutex);
+}
+
+#define check_wait_politely() if (__ptypes_please_wait_for_gc_to_take_place) {wait_politely();}
+
 void print_mutex_error(int retval) {
   switch (retval) {
   case EINVAL: error(nil, "error unlocking ptype_mutex: mutex is not initialized.");              break;
@@ -167,18 +181,21 @@ void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
 // ptype
 
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   ptype_t retval = __pure__f2ptype__raw(this);
   return retval;
 }
 
 f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   f2ptr retval = __pure__f2ptype__cause(this);
   return retval;
 }
 
 f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   __pure__f2ptype__cause(this) = value;
   return nil;
@@ -200,12 +217,14 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
 }
 
 f2ptr pfunk2__f2integer__new(f2ptr cause, s64 i) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2integer__new(pool_index, cause, i);
   return retval;
 }
 
 s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_integer) {
@@ -218,6 +237,7 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -271,12 +291,14 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
 }
 
 f2ptr pfunk2__f2double__new(f2ptr cause, double d) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2double__new(pool_index, cause, d);
   return retval;
 }
 
 double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_double) {
@@ -289,6 +311,7 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -346,12 +369,14 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
 }
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2float__new(pool_index, cause, f);
   return retval;
 }
 
 float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_float) {
@@ -364,6 +389,7 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -421,12 +447,14 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
 }
 
 f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2pointer__new(pool_index, cause, p);
   return retval;
 }
 
 ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_pointer) {
@@ -439,6 +467,7 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -496,18 +525,21 @@ f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_compute
 }
 
 f2ptr pfunk2__f2gfunkptr__new(f2ptr cause, computer_id_t gf2_computer_id, pool_index_t gf2_pool_index, pool_address_t gf2_pool_address) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2gfunkptr__new(pool_index, cause, gf2_computer_id, gf2_pool_index, gf2_pool_address);
   return retval;
 }
 
 f2ptr pfunk2__f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2gfunkptr__new(pool_index, cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));
   return retval;
 }
 
 f2ptr pfunk2__f2gfunkptr__gfunkptr(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
@@ -520,6 +552,7 @@ f2ptr pfunk2__f2gfunkptr__gfunkptr(f2ptr this, f2ptr cause) {
 }
 
 computer_id_t pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
@@ -532,6 +565,7 @@ computer_id_t pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause) {
 }
 
 pool_index_t pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
@@ -544,6 +578,7 @@ pool_index_t pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause) {
 }
 
 pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
@@ -556,6 +591,7 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -628,20 +664,23 @@ f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
   return mutex_f2ptr;
 }
 
+f2ptr pfunk2__f2mutex__new(f2ptr cause) {
+  check_wait_politely();
+  int pool_index = this_processor_thread__pool_index();
+  f2ptr retval = __pure__f2mutex__new(pool_index, cause);
+  return retval;
+}
+
 funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
   __pure__memblock__render_read_activated__set(this, 1);
   return m;
 }
 
-f2ptr pfunk2__f2mutex__new(f2ptr cause) {
-  int pool_index = this_processor_thread__pool_index();
-  f2ptr retval = __pure__f2mutex__new(pool_index, cause);
-  return retval;
-}
-
 boolean_t pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
@@ -653,6 +692,7 @@ boolean_t pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause) {
 }
 
 void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
@@ -666,6 +706,7 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
 }
 
 void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
@@ -676,6 +717,7 @@ void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
 }
 
 int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
@@ -687,6 +729,7 @@ int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__mutex__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -763,12 +806,14 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
 }
 
 f2ptr pfunk2__f2char__new(f2ptr cause, u64 ch) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2char__new(pool_index, cause, ch);
   return retval;
 }
 
 u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_char) {
@@ -781,6 +826,7 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -838,12 +884,14 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
 }
 
 f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, u8* init) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2string__new(pool_index, cause, length, init);
   return retval;
 }
 
 u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
@@ -856,6 +904,7 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
 }
 
 u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
@@ -868,6 +917,7 @@ u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
 }
 
 void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
@@ -879,6 +929,7 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
 }
 
 int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
@@ -893,6 +944,7 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -1066,12 +1118,14 @@ void gc_touch_all_symbols() {
 }
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2symbol__new(pool_index, cause, length, init);
   return retval;
 }
 
 u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
@@ -1084,6 +1138,7 @@ u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
 }
 
 u64 pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
@@ -1096,6 +1151,7 @@ u64 pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause) {
 }
 
 u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
@@ -1108,6 +1164,7 @@ u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
 }
 
 void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
@@ -1119,6 +1176,7 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
 }
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -1235,6 +1293,7 @@ f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
 }
 
 u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1247,18 +1306,21 @@ u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2chunk__new(pool_index, cause, length, bytes);
   return retval;
 }
 
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2chunk__new_copy(pool_index, cause, init_chunk);
   return retval;
 }
 
 u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1271,6 +1333,7 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
 }
 
 u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1283,6 +1346,7 @@ u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
 }
 
 void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value)   {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1292,6 +1356,7 @@ void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 val
 }
 
 u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1304,6 +1369,7 @@ u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
 }
 
 void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1315,6 +1381,7 @@ void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 va
 }
 
 u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1327,6 +1394,7 @@ u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
 }
 
 void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1338,6 +1406,7 @@ void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 va
 }
 
 u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1350,6 +1419,7 @@ u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
 }
 
 void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1361,6 +1431,7 @@ void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 va
 }
 
 f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr env, f2ptr args) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this); 
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1374,6 +1445,7 @@ f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr e
 }
 
 int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this); 
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1388,6 +1460,7 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
 }
 
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this); 
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1400,6 +1473,7 @@ f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int 
 }
 
 f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this); 
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
@@ -1412,6 +1486,7 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 }
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if ((!cause) || (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -1526,6 +1601,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
 }
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2simple_array__new(pool_index, cause, length, f2ptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
@@ -1533,6 +1609,7 @@ f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr) {
 }
 
 f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(init_array) != ptype_simple_array) {
     ptype_error(cause, init_array, __funk2.globalenv.ptype_simple_array__symbol);
@@ -1542,17 +1619,20 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
 }
 
 u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   u8 retval = __pure__f2simple_array__immutable(this);
   return retval;
 }
 
 void pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   __pure__f2simple_array__immutable__set(this, value);
 }
 
 u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_simple_array) {
@@ -1565,6 +1645,7 @@ u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -1583,6 +1664,7 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+  check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
   
   //int pool_index = __f2ptr__pool_index(this);
@@ -1605,6 +1687,7 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 }
 
 boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -1714,6 +1797,7 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
 }
 
 f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2traced_array__new(pool_index, cause, length, dptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
@@ -1721,6 +1805,7 @@ f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
 }
 
 f2ptr pfunk2__f2traced_array__new_from_f2ptrs(f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, length, f2ptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
@@ -1737,17 +1822,20 @@ f2ptr pfunk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
 }
 
 u8 pfunk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   u8 retval = __pure__f2traced_array__immutable(this);
   return retval;
 }
 
 void pfunk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   __pure__f2traced_array__immutable__set(this, value);
 }
 
 u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1760,6 +1848,7 @@ u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, int trace_depth) {
+  check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2traced_array_elt failed debug assertion: cause is non-null and not a cause.");
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -1792,6 +1881,7 @@ f2ptr pfunk2__f2traced_array__elt(f2ptr this, u64 index, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f2ptr value, int trace_depth) {
+  check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2traced_array_elt failed debug assertion: cause is non-null and not a cause.");
   
   //int pool_index = __f2ptr__pool_index(this);
@@ -1865,6 +1955,7 @@ f2ptr pfunk2__f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 }
 
 f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1881,6 +1972,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause
 }
 
 f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1897,6 +1989,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
 }
 
 f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1913,6 +2006,7 @@ f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
 }
 
 f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1929,6 +2023,7 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
 }
 
 f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1945,6 +2040,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2pt
 }
 
 f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
@@ -1961,6 +2057,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
 }
 
 boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK
@@ -2064,12 +2161,14 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
 }
 
 f2ptr pfunk2__f2larva__new(f2ptr cause, u32 type) {
+  check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2larva__new(pool_index, cause, type);
   return retval;
 }
 
 u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
+  check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_larva) {
@@ -2082,6 +2181,7 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
 }
 
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {
+  check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PTYPE__TYPE_CHECK

@@ -248,28 +248,31 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  if (last_executed_time) {
 		    u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
 		    if (raw__nanoseconds_since_1970() - raw_last_executed_time > 1 * nanoseconds_per_second) {
-		      remove_this_thread_from_active_threads = boolean__true;
-		      //// bug: removing a thread here seems to drop needed threads sometimes.  (why?)
-		      //{
-		      //	f2ptr processor__active_threads_mutex;
-		      //	int lock_failed;
-		      //	do {
-		      //	  //f2__global_scheduler__execute_mutex__lock(cause);
-		      //	  processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-		      //	  lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
-		      //	  //f2__global_scheduler__execute_mutex__unlock(cause);
-		      //	  if (lock_failed) {
-		      //	    f2__sleep(1);
-		      //	  }
-		      //	} while (lock_failed);
-		      //	if (prev_thread_iter) {
-		      //	  f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
-		      //	} else {
-		      //	  f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
-		      //	}
-		      //	f2mutex__unlock(processor__active_threads_mutex, cause);
-		      //}
-		      //prev_thread_iter__already_set = 1;
+		      // anytime a thread is removed from processor active threads, it should be removed from it's cause so that it can be garbage collected.
+		      if (cause) {
+			f2__cause__remove_thread(cause, cause, thread);
+		      }
+		      // bug: removing a thread here seems to drop needed threads sometimes.  (why?)
+		      {
+		      	f2ptr processor__active_threads_mutex;
+		      	int lock_failed;
+		      	do {
+		      	  //f2__global_scheduler__execute_mutex__lock(cause);
+		      	  processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
+		      	  lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+		      	  //f2__global_scheduler__execute_mutex__unlock(cause);
+		      	  if (lock_failed) {
+		      	    f2__sleep(1);
+		      	  }
+		      	} while (lock_failed);
+		      	if (prev_thread_iter) {
+		      	  f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
+		      	} else {
+		      	  f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+		      	}
+		      	f2mutex__unlock(processor__active_threads_mutex, cause);
+		      }
+		      prev_thread_iter__already_set = 1;
 		    }
 		  }
 		}
@@ -321,14 +324,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    f2__print(nil, __environment__last_23_larva_symbol); fflush(stdout);
 	  }
 	}
-      }
-    }
-    
-    if (remove_this_thread_from_active_threads) {
-      if (! f2__processor__remove_active_thread__thread_unsafe(cause, processor, thread)) {
-	printf("scheduler error removing active thread: doesn't exist in active list.");
-      } else {
-	prev_thread_iter__already_set = 1;
       }
     }
     

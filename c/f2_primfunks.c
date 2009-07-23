@@ -668,6 +668,7 @@ void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
 f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_thread = f2__thread__new(cause, parent_thread, parent_env, cfunkable, args);
   f2__global_scheduler__add_thread_parallel(cause, new_thread);
+  f2thread__keep_undead__set(new_thread, cause, nil);
   return new_thread;
 }
 def_pcfunk2(thread, funk, args, return f2__thread(this_cause, this_cause, simple_thread, simple_env, funk, args));

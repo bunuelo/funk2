@@ -56,7 +56,7 @@ void print_bytecode_stats__cfunk(FILE* fptr);
 
 void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 
-void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode);
+boolean_t f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode);
 boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread);
 
 void f2__thread__initialize();

@@ -27,7 +27,6 @@
 #  define F2__PTYPE__TYPE_CHECK
 #endif
 
-funk2_processor_mutex_t __global_ptype_incr_mutex[memory_pool_num];
 boolean_t               __ptypes_please_wait_for_gc_to_take_place = boolean__false;
 s64                     __ptypes_waiting_count                    = 0;
 funk2_processor_mutex_t __ptypes_waiting_count_mutex;
@@ -43,84 +42,11 @@ void print_mutex_error(int retval) {
 
 #define ptype_incr_mutex__lock(pool_index)
 
-void raw__ptype_incr_mutex__lock(int pool_index)    {
-  if (__ptypes_please_wait_for_gc_to_take_place) {
-    funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
-    __ptypes_waiting_count ++;
-    funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
-    while (__ptypes_please_wait_for_gc_to_take_place) {
-      sched_yield();
-    }
-    funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
-    __ptypes_waiting_count --;
-    funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
-  }
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  funk2_processor_mutex__lock(&__global_ptype_incr_mutex[pool_index]);
-  /*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
-}
-
 #define ptype_incr_mutex__unlock(pool_index)
-
-void raw__ptype_incr_mutex__unlock(int pool_index)  {
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]);
-}
-
-int __global_ptype_access_num[memory_pool_num];
 
 #define ptype_access_num__incr(pool_index)
 
-void raw__ptype_access_num__incr(int pool_index) {
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  ptype_incr_mutex__lock(pool_index);
-  memory_mutex__lock(pool_index);
-  __global_ptype_access_num[pool_index] ++;
-  memory_mutex__unlock(pool_index);
-  ptype_incr_mutex__unlock(pool_index);
-}
-
 #define ptype_access_num__decr(pool_index)
-
-void raw__ptype_access_num__decr(int pool_index) {
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  memory_mutex__lock(pool_index);
-  debug__assert(__global_ptype_access_num[pool_index] > 0, nil, "access num is < 0.");
-  __global_ptype_access_num[pool_index] --;
-  memory_mutex__unlock(pool_index);
-}
-
-// these mutex polling loops are hacks that probably create a whole crapload of thread mutex collisions...
-void ptype_access__lockout_access(int pool_index, int max_access) {
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  ptype_incr_mutex__lock(pool_index);
-  // these types of polling loops should be replaced by a pthread_cond!
-  while (__global_ptype_access_num[pool_index] > max_access) {
-    f2__sleep(1);
-    sched_yield();
-  }
-}
-
-int  ptype_access__try_lockout_access(int pool_index, int max_access) {
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); 
-  ptype_incr_mutex__lock(pool_index);
-  int try_count = 1;
-  while (__global_ptype_access_num[pool_index] > max_access && try_count > 0) {
-    try_count --;
-    sched_yield();
-  }
-  if (try_count == 0) {
-    ptype_incr_mutex__unlock(pool_index);
-    return 1; // failure
-  } else {
-    return 0; // success
-  }
-}
-
-void ptype_access__unlockout_access(int pool_index) {
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  ptype_incr_mutex__unlock(pool_index);
-}
 
 // used by global initialization for creation (and other) causes
 

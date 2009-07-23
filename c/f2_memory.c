@@ -1307,7 +1307,9 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
     }
-    garbage_collect();
+    for (index = 0; index < memory_pool_num; index ++) {
+      garbage_collect(index);
+    }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
   }
 }

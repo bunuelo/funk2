@@ -2442,11 +2442,6 @@ void f2__ptypes__initialize__object_slots() {
 
 void f2__ptypes__initialize() {
   symbol_hash__initialize();
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_processor_mutex__init(&__global_ptype_incr_mutex[pool_index]);
-    __global_ptype_access_num[pool_index] = 0;
-  }
   funk2_processor_mutex__init(&(__ptypes_waiting_count_mutex));
 }
 

@@ -28,6 +28,7 @@
 #endif
 
 funk2_processor_mutex_t __global_ptype_incr_mutex[memory_pool_num];
+boolean_t               __ptypes_please_wait_for_gc_to_take_place = boolean__false;
 
 void print_mutex_error(int retval) {
   switch (retval) {
@@ -40,13 +41,13 @@ void print_mutex_error(int retval) {
 
 void ptype_incr_mutex__lock(int pool_index)    {
 #ifdef F2__PTHREAD
-  assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); funk2_processor_mutex__lock(&__global_ptype_incr_mutex[pool_index]);/*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
+  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); funk2_processor_mutex__lock(&__global_ptype_incr_mutex[pool_index]);/*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
 #endif // F2__PTHREAD
 }
 
 void ptype_incr_mutex__unlock(int pool_index)  {
 #ifdef F2__PTHREAD
-  assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); int retval = funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]); if (retval) {print_mutex_error(retval);}
+  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); int retval = funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]); if (retval) {print_mutex_error(retval);}
 #endif // F2__PTHREAD
 }
 

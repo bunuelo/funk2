@@ -191,5 +191,6 @@ typedef struct funk2_memory_s {
 
 void funk2_memory__init(funk2_memory_t* this);
 void funk2_memory__destroy(funk2_memory_t* this);
+void funk2_memory__handle(funk2_memory_t* memory);
 
 #endif // F2__MEMORY__PROTECTED__H

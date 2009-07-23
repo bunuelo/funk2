@@ -102,8 +102,6 @@ f2ptr global_environment();
 
 void print_gc_stats();
 
-void funk2_memory__handle(funk2_memory_t* memory);
-
 int raw__memory_image__save(char* filename);
 int raw__memory_image__load(char* filename);
 

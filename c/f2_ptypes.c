@@ -40,10 +40,6 @@ void print_mutex_error(int retval) {
   }
 }
 
-#define ptype_incr_mutex__lock(pool_index)
-
-#define ptype_incr_mutex__unlock(pool_index)
-
 #define ptype_access_num__incr(pool_index)
 
 #define ptype_access_num__decr(pool_index)

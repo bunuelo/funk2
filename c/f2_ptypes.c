@@ -60,8 +60,7 @@ void ptype_incr_mutex__lock(int pool_index)    {
 
 void ptype_incr_mutex__unlock(int pool_index)  {
   debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
-  int retval = funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]);
-  if (retval) {print_mutex_error(retval);}
+  funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]);
 }
 
 int __global_ptype_access_num[memory_pool_num];

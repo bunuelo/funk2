@@ -179,7 +179,7 @@ void memorypool__init(memorypool_t* pool) {
 }
 
 void pool__destroy(int pool_index) {
-  ptype_access__lockout_access(pool_index, 0);
+  //ptype_access__lockout_access(pool_index, 0);
   memory_mutex__lock(pool_index);
   
 #if defined(DYNAMIC_MEMORY)

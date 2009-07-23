@@ -211,24 +211,26 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  exit_reason = exit_reason__too_many_loops;
 		  break;
 		} else if (f2__thread__execute_next_bytecode(cause, thread)) {
-		  exit_reason = exit_reason__reached_yield;
-		  break;
-		} else if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
-		  f2ptr larva = f2thread__value(thread, cause);
-		  f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
-		  f2ptr critics = f2thread__critics(thread, cause);
-		  if (critics) {
-		    f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+		  if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
+		    f2ptr larva = f2thread__value(thread, cause);
+		    f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
+		    f2ptr critics = f2thread__critics(thread, cause);
+		    if (critics) {
+		      f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+		    } else {
+		      f2thread__program_counter__set(thread, cause, nil);
+		    }
+		    exit_reason = exit_reason__found_larva;
+		    //printf("larva found in thread value register."); fflush(stdout);
+		    break;
+		  } else if (f2thread__is_complete(thread, cause)) {
+		    exit_reason = exit_reason__is_complete;
+		    break;
 		  } else {
-		    f2thread__program_counter__set(thread, cause, nil);
+		    exit_reason = exit_reason__reached_yield;
+		    break;
 		  }
-		  exit_reason = exit_reason__found_larva;
-		  //printf("larva found in thread value register."); fflush(stdout);
-		  break;
-		} else if (f2thread__is_complete(thread, cause)) {
-		  exit_reason = exit_reason__is_complete;
-		  break;
-		} 
+		}
 		i --;
 	      }
 	      

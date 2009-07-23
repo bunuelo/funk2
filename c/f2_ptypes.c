@@ -32,15 +32,15 @@ s64                     __ptypes_waiting_count                    = 0;
 funk2_processor_mutex_t __ptypes_waiting_count_mutex;
 
 void wait_politely() {
-  processor_mutex__lock(&__ptypes_waiting_count_mutex);
+  funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
   __ptypes_waiting_count ++;
-  processor_mutex__unlock(&__ptypes_waiting_count_mutex);
+  funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
   while (__ptypes_please_wait_for_gc_to_take_place) {
     sched_yield();
   }
-  processor_mutex__lock(&__ptypes_waiting_count_mutex);
+  funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
   __ptypes_waiting_count --;
-  processor_mutex__unlock(&__ptypes_waiting_count_mutex);
+  funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
 }
 
 #define check_wait_politely() if (__ptypes_please_wait_for_gc_to_take_place) {wait_politely();}

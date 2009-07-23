@@ -102,9 +102,6 @@ boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
   debug__assert(raw__bytecode__is_type(cause, bytecode), thread, "f2__thread__execute_next_bytecode error: assertion failed (raw__bytecode__is_type(bytecode)).");
   
   boolean_t bytecode_is_yield = f2__thread__execute_bytecode(cause, thread, bytecode);
-  //if (bytecode_is_yield) {
-  //  f2thread__program_counter__set(thread, f2thread__cause_reg(thread, cause), f2cons__cdr(pc_reg, cause));
-  //}
   
   return bytecode_is_yield;
 }

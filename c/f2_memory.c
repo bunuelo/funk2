@@ -1302,7 +1302,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       should_collect_garbage = boolean__true;
     }
   }
-  if (should_collect_garbage) {
+  if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 1 * 1000000000) {
     __ptypes_please_wait_for_gc_to_take_place = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
@@ -1311,6 +1311,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       garbage_collect(index, 0);
     }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+    memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   }
 }
 

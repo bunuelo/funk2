@@ -1303,6 +1303,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     }
   }
   if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 1 * 1000000000) {
+    printf("\nfunk2_memory__handle collecting garbage.");
     __ptypes_please_wait_for_gc_to_take_place = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();

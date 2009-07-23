@@ -28,7 +28,7 @@ f2ptr __thread__args_reg__symbol;
 f2ptr __thread__return_reg__symbol;
 f2ptr __thread__value_reg__symbol;
 
-void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
+boolean_t f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   debug__assert(raw__thread__is_type(nil, thread), nil, "thread type assertion failed.");
   debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
   debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "thread type assertion failed.");
@@ -62,13 +62,14 @@ void f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   else if (command == __funk2.bytecode.bytecode__debug__symbol)               {f2__thread__bytecode__debug(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__trace__symbol)               {f2__thread__bytecode__trace(              thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__compile__symbol)             {f2__thread__bytecode__compile(            thread, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__yield__symbol)               {}
+  else if (command == __funk2.bytecode.bytecode__yield__symbol)               {return boolean__true;}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)              {f2__thread__bytecode__newenv(             thread, bytecode);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)        {f2__thread__bytecode__machine_code(       thread, bytecode, f2bytecode__arg0(bytecode, cause));}
   else {
     f2__print(cause, bytecode);
     f2thread__value__set(thread, cause, f2larva__new(cause, 21));
   }
+  return boolean__false;
 }
 
 void f2__print_environment_stack(f2ptr cause, f2ptr thread, f2ptr env) {
@@ -95,17 +96,15 @@ boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
   debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "thread type assertion failed.");
   
   f2ptr pc_reg = f2thread__program_counter(thread, cause);
-  release__assert(pc_reg != nil, nil, "(pc_reg != nil) assertion failure.");
+  debug__assert(pc_reg != nil, nil, "(pc_reg != nil) assertion failure.");
   
   f2ptr bytecode = f2cons__car(pc_reg, cause);
   debug__assert(raw__bytecode__is_type(cause, bytecode), thread, "f2__thread__execute_next_bytecode error: assertion failed (raw__bytecode__is_type(bytecode)).");
   
-  boolean_t bytecode_is_yield = 0;
-  if (f2bytecode__command(bytecode, cause) == __funk2.bytecode.bytecode__yield__symbol) {
-    bytecode_is_yield = 1;
+  boolean_t bytecode_is_yield = boolean__false;
+  if (f2__thread__execute_bytecode(cause, thread, bytecode)) {
+    bytecode_is_yield = boolean__true;
     f2thread__program_counter__set(thread, f2thread__cause_reg(thread, cause), f2cons__cdr(pc_reg, cause));
-  } else {
-    f2__thread__execute_bytecode(cause, thread, bytecode);
   }
   
   return bytecode_is_yield;

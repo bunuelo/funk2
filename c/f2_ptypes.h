@@ -47,6 +47,9 @@ typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
 
 extern u8 __ptype__str[][128];
 
+extern boolean_t __ptypes_please_wait_for_gc_to_take_place;
+extern s64       __ptypes_waiting_count;
+
 // control lockout access (for garbage_collect)
 
 void ptype_access__lockout_access(int pool_index, int max_access);

@@ -174,7 +174,7 @@ typedef enum scheduler_fast_loop_exit_reason_e {
   exit_reason__found_larva
 } scheduler_fast_loop_exit_reason_t;
 
-void execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr thread) {
+scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr thread) {
   scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
   
   int i = 1000;

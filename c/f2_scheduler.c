@@ -166,12 +166,12 @@ void execute_next_bytecodes__helper__found_larva_in_thread(f2ptr cause, f2ptr th
   }
 }
 
-enum scheduler_fast_loop_exit_reason_e {
-		exit_reason__none = 0,
-		exit_reason__is_complete,
-		exit_reason__too_many_loops,
-		exit_reason__reached_yield,
-		exit_reason__found_larva
+typedef enum scheduler_fast_loop_exit_reason_e {
+  exit_reason__none = 0,
+  exit_reason__is_complete,
+  exit_reason__too_many_loops,
+  exit_reason__reached_yield,
+  exit_reason__found_larva
 } scheduler_fast_loop_exit_reason_t;
 
 void execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr thread) {

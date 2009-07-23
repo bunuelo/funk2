@@ -40,10 +40,6 @@ void print_mutex_error(int retval) {
   }
 }
 
-#define ptype_access_num__incr(pool_index)
-
-#define ptype_access_num__decr(pool_index)
-
 // used by global initialization for creation (and other) causes
 
 f2ptr initial_cause() {
@@ -172,25 +168,19 @@ void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
 
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   ptype_t retval = __pure__f2ptype__raw(this);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2ptype__cause(this);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   __pure__f2ptype__cause(this) = value;
-  ptype_access_num__decr(pool_index);
   return nil;
 }
 
@@ -211,15 +201,12 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
 
 f2ptr pfunk2__f2integer__new(f2ptr cause, s64 i) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2integer__new(pool_index, cause, i);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_integer) {
     ptype_error(cause, this, __funk2.globalenv.ptype_integer__symbol);
@@ -227,7 +214,6 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   s64 i = __pure__f2integer__i(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return i;
 }
 
@@ -286,15 +272,12 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
 
 f2ptr pfunk2__f2double__new(f2ptr cause, double d) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2double__new(pool_index, cause, d);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_double) {
     ptype_error(cause, this, __funk2.globalenv.ptype_double__symbol);
@@ -302,7 +285,6 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   double d = __pure__f2double__d(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return d;
 }
 
@@ -365,15 +347,12 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2float__new(pool_index, cause, f);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_float) {
     ptype_error(cause, this, __funk2.globalenv.ptype_float__symbol);
@@ -381,7 +360,6 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   float f = __pure__f2float__f(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return f;
 }
 
@@ -444,15 +422,12 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
 
 f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2pointer__new(pool_index, cause, p);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_pointer) {
     ptype_error(cause, this, __funk2.globalenv.ptype_pointer__symbol);
@@ -460,7 +435,6 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   ptr p = __pure__f2pointer__p(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return p;
 }
 
@@ -523,23 +497,18 @@ f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_compute
 
 f2ptr pfunk2__f2gfunkptr__new(f2ptr cause, computer_id_t gf2_computer_id, pool_index_t gf2_pool_index, pool_address_t gf2_pool_address) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2gfunkptr__new(pool_index, cause, gf2_computer_id, gf2_pool_index, gf2_pool_address);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 f2ptr pfunk2__f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2gfunkptr__new(pool_index, cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 f2ptr pfunk2__f2gfunkptr__gfunkptr(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
     ptype_error(cause, this, __funk2.globalenv.ptype_gfunkptr__symbol);
@@ -547,13 +516,11 @@ f2ptr pfunk2__f2gfunkptr__gfunkptr(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr rv = __pure__f2gfunkptr__gfunkptr(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
 computer_id_t pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
     ptype_error(cause, this, __funk2.globalenv.ptype_gfunkptr__symbol);
@@ -561,13 +528,11 @@ computer_id_t pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   computer_id_t rv = __pure__f2gfunkptr__computer_id(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
 pool_index_t pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
     ptype_error(cause, this, __funk2.globalenv.ptype_gfunkptr__symbol);
@@ -575,13 +540,11 @@ pool_index_t pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   pool_index_t rv = __pure__f2gfunkptr__pool_index(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
 pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_gfunkptr) {
     ptype_error(cause, this, __funk2.globalenv.ptype_gfunkptr__symbol);
@@ -589,7 +552,6 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   pool_address_t rv = __pure__f2gfunkptr__pool_address(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
@@ -668,18 +630,14 @@ f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
 
 funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return m;
 }
 
 f2ptr pfunk2__f2mutex__new(f2ptr cause) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2mutex__new(pool_index, cause);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
@@ -690,9 +648,7 @@ boolean_t pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_mutex__m(this, cause));
-  ptype_access_num__decr(pool_index);
   return is_locked;
 }
 
@@ -705,34 +661,28 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
   int lock_failed;
   do {
     int pool_index = __f2ptr__pool_index(this);
-    ptype_access_num__incr(pool_index);
     lock_failed = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
-    ptype_access_num__decr(pool_index);
   } while (lock_failed);
 }
 
 void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_processor_mutex__unlock(ptype_mutex__m(this, cause));
-  ptype_access_num__decr(pool_index);
 }
 
 int pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_mutex) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
   int return_value = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
-  ptype_access_num__decr(pool_index);
   return return_value;
 }
 
@@ -814,15 +764,12 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
 
 f2ptr pfunk2__f2char__new(f2ptr cause, u64 ch) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2char__new(pool_index, cause, ch);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_char) {
     ptype_error(cause, this, __funk2.globalenv.ptype_char__symbol);
@@ -830,7 +777,6 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 ch = __pure__f2char__ch(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return ch;
 }
 
@@ -893,15 +839,12 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
 
 f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, u8* init) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2string__new(pool_index, cause, length, init);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
@@ -909,13 +852,11 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64  length = __pure__f2string__length(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return length;
 }
 
 u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
@@ -923,13 +864,11 @@ u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   s8 ch = __pure__f2string__str(this)[index];
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return ch;
 }
 
 void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
@@ -937,12 +876,10 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
 #endif // F2__PTYPE__TYPE_CHECK
   memcpy(str, __pure__f2string__str(this), __pure__f2string__length(this));
   __pure__memblock__render_write_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
 }
 
 int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
@@ -952,7 +889,6 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
   u8* str = __pure__f2string__str(this);
   int retval = (int)chararray__hash_value(len, str);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
@@ -1131,15 +1067,12 @@ void gc_touch_all_symbols() {
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2symbol__new(pool_index, cause, length, init);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
@@ -1147,13 +1080,11 @@ u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64  length     = __pure__f2symbol__length(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return length;
 }
 
 u64 pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
@@ -1161,13 +1092,11 @@ u64 pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64  hash_value = __pure__f2symbol__hash_value(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return hash_value;
 }
 
 u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
@@ -1175,13 +1104,11 @@ u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u8 ch = __pure__f2symbol__str(this)[index];
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return ch;
 }
 
 void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_symbol) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
@@ -1189,7 +1116,6 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
 #endif // F2__PTYPE__TYPE_CHECK
   memcpy(str, __pure__f2symbol__str(this), __pure__f2symbol__length(this));
   __pure__memblock__render_write_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
 }
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
@@ -1310,7 +1236,6 @@ f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
 
 u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1318,29 +1243,23 @@ u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u8* bytes = __pure__f2chunk__bytes(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return bytes;
 }
 
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2chunk__new(pool_index, cause, length, bytes);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2chunk__new_copy(pool_index, cause, init_chunk);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1348,13 +1267,11 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2chunk__length(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return length;
 }
 
 u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1362,24 +1279,20 @@ u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u8 retval = __pure__f2chunk__bit8__elt(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value)   {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
   __pure__f2chunk__bit8__elt__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
 }
 
 u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1387,13 +1300,11 @@ u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u16 retval = __pure__f2chunk__bit16__elt(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1401,12 +1312,10 @@ void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 va
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit16__elt__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
 }
 
 u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1414,13 +1323,11 @@ u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u32 retval = __pure__f2chunk__bit32__elt(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1428,12 +1335,10 @@ void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 va
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit32__elt__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
 }
 
 u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1441,13 +1346,11 @@ u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 retval = __pure__f2chunk__bit64__elt(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1455,12 +1358,10 @@ void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 va
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit64__elt__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
 }
 
 f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr env, f2ptr args) {
   int pool_index = __f2ptr__pool_index(this); 
-  ptype_access_num__incr(pool_index); /*memblock__lock(this);*/
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1468,14 +1369,12 @@ f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr e
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__memblock__render_read_activated__set(this, 1); 
   cfunkptr_t jump = (cfunkptr_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
-  /*memblock__unlock(this);*/ ptype_access_num__decr(pool_index);
   printf("\nchunk-cfunk_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   return jump(cause, thread, env, args);
 }
 
 int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
   int pool_index = __f2ptr__pool_index(this); 
-  ptype_access_num__incr(pool_index); /*memblock__lock(this);*/
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1483,7 +1382,6 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__memblock__render_read_activated__set(this, 1); 
   bytecode_jump_t jump = (bytecode_jump_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
-  /*memblock__unlock(this);*/ ptype_access_num__decr(pool_index);
   //printf("\nchunk-bytecode_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   f2ptr bytecode = nil;
   return jump(thread, bytecode);
@@ -1491,7 +1389,6 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
 
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {
   int pool_index = __f2ptr__pool_index(this); 
-  ptype_access_num__incr(pool_index); /*memblock__lock(this);*/
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1499,13 +1396,11 @@ f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int 
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__memblock__render_read_activated__set(this, 1);
   f2ptr rv = f2integer__new(cause, send(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
-  /*memblock__unlock(this);*/ ptype_access_num__decr(pool_index);
   return rv;
 }
 
 f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {
   int pool_index = __f2ptr__pool_index(this); 
-  ptype_access_num__incr(pool_index); /*memblock__lock(this);*/
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_chunk) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
@@ -1513,7 +1408,6 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__memblock__render_write_activated__set(this, 1); 
   f2ptr rv = f2integer__new(cause, recv(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
-  /*memblock__unlock(this);*/ ptype_access_num__decr(pool_index);
   return rv;
 }
 
@@ -1633,10 +1527,8 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr this = __pure__f2simple_array__new(pool_index, cause, length, f2ptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
-  ptype_access_num__decr(pool_index);
   return this;
 }
 
@@ -1651,22 +1543,17 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
 
 u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   u8 retval = __pure__f2simple_array__immutable(this);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 void pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   __pure__f2simple_array__immutable__set(this, value);
-  ptype_access_num__decr(pool_index);
 }
 
 u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_simple_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
@@ -1674,14 +1561,12 @@ u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2simple_array__length(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return length;
 }
 
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_simple_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
@@ -1689,13 +1574,11 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   int length = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2array__elt error: index out of range.");
   }
   f2ptr rv = __pure__f2simple_array__elt(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
@@ -1705,7 +1588,6 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   int pool_index = __f2ptr__pool_index(this);
   
   pool__pause_gc(pool_index);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_simple_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
@@ -1714,12 +1596,10 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   __pure__memblock__render_write_activated__set(this, 1);
   u64 length     = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
   }
   __pure__f2simple_array__elt__set(this, index, value);
-  ptype_access_num__decr(pool_index);
   pool__resume_gc(pool_index);
   return nil;
 }
@@ -1835,18 +1715,15 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
 
 f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr this = __pure__f2traced_array__new(pool_index, cause, length, dptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
-  ptype_access_num__decr(pool_index);
   return this;
 }
 
 f2ptr pfunk2__f2traced_array__new_from_f2ptrs(f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
-  int pool_index = this_processor_thread__pool_index(); ptype_access_num__incr(pool_index);
+  int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, length, f2ptr_ptr);
   //if (cause) {ptype_trace_create(pool_index, cause, this);}
-  ptype_access_num__decr(pool_index);
   return this;
 }
 
@@ -1861,22 +1738,17 @@ f2ptr pfunk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
 
 u8 pfunk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   u8 retval = __pure__f2traced_array__immutable(this);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 void pfunk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
   __pure__f2traced_array__immutable__set(this, value);
-  ptype_access_num__decr(pool_index);
 }
 
 u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -1884,14 +1756,12 @@ u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return length;
 }
 
 f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, int trace_depth) {
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2traced_array_elt failed debug assertion: cause is non-null and not a cause.");
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -1899,7 +1769,6 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
 #endif // F2__PTYPE__TYPE_CHECK
   int length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2traced_array__elt error: index out of range.");
   }
@@ -1915,7 +1784,6 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
     return_value = f2__imagination_frame__get_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, imagination_name_stack, real_value, trace_depth - 1);
   }
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return return_value;
 }
 
@@ -1929,7 +1797,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
   int pool_index = __f2ptr__pool_index(this);
   
   pool__pause_gc(pool_index);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -1938,7 +1805,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
   __pure__memblock__render_write_activated__set(this, 1);
   u64 length     = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2traced_array__elt__set__trace_depth error: index out of range.");
   }
@@ -1990,7 +1856,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       f2__imagination_link__set_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, slot, next, value, trace_depth - 1);
     }
   }
-  ptype_access_num__decr(pool_index);
   pool__resume_gc(pool_index);
   return nil;
 }
@@ -2001,7 +1866,6 @@ f2ptr pfunk2__f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 
 f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -2009,18 +1873,15 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   f2ptr rv = __pure__f2traced_array__elt__tracing_on(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
 f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -2028,18 +1889,15 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   __pure__f2traced_array__elt__tracing_on__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return nil;
 }
 
 f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -2047,18 +1905,15 @@ f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   f2ptr rv = __pure__f2traced_array__elt__trace(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
 f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -2066,18 +1921,15 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   __pure__f2traced_array__elt__trace__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return nil;
 }
 
 f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -2085,18 +1937,15 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2pt
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   f2ptr rv = __pure__f2traced_array__elt__imagination_frame(this, index);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return rv;
 }
 
 f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -2104,12 +1953,10 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    ptype_access_num__decr(pool_index);
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   __pure__f2traced_array__elt__imagination_frame__set(this, index, value);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return nil;
 }
 
@@ -2218,15 +2065,12 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
 
 f2ptr pfunk2__f2larva__new(f2ptr cause, u32 type) {
   int pool_index = this_processor_thread__pool_index();
-  ptype_access_num__incr(pool_index);
   f2ptr retval = __pure__f2larva__new(pool_index, cause, type);
-  ptype_access_num__decr(pool_index);
   return retval;
 }
 
 u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
   int pool_index = __f2ptr__pool_index(this);
-  ptype_access_num__incr(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_larva) {
     ptype_error(cause, this, __funk2.globalenv.ptype_larva__symbol);
@@ -2234,7 +2078,6 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u32 type = __pure__f2larva__type(this);
   __pure__memblock__render_read_activated__set(this, 1);
-  ptype_access_num__decr(pool_index);
   return type;
 }
 

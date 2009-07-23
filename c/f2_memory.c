@@ -1220,6 +1220,7 @@ int gc__is_disabled() {
 //
 boolean_t pool__try_gc(int pool_index) {
   u8 result = 0;
+  /*
   int disable_gc    = 0;
   int should_run_gc = 0;
   int index;
@@ -1240,6 +1241,7 @@ boolean_t pool__try_gc(int pool_index) {
     }
     debug_memory_test(pool_index, 3);
   }
+  */
   return result;
 }
 

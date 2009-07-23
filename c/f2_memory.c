@@ -917,6 +917,7 @@ u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
     }
     try_generation_num ++;
   }
+  int index;
   for (index = 0; index < memory_pool_num; index ++) {
     pool__increment_generation(index);
   }

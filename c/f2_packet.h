@@ -81,6 +81,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2gfunkptr__pool_address                   ,
   funk2_packet_type__pcs_request__f2mutex__new                               , //f2ptr            (f2ptr cause);
   funk2_packet_type__pcs_respond__f2mutex__new                               ,
+  funk2_packet_type__pcs_request__f2mutex__is_locked                         , //boolean_t        (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2mutex__is_locked                         ,
   funk2_packet_type__pcs_request__f2mutex__lock                              , //void             (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2mutex__lock                              ,
   funk2_packet_type__pcs_request__f2mutex__unlock                            , //void             (f2ptr cause, f2ptr this);

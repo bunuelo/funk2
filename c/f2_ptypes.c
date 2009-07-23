@@ -746,6 +746,7 @@ boolean_t pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_mutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
+  int pool_index = this_processor_thread__pool_index();
   ptype_access_num__incr(pool_index);
   boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_mutex__m(this, cause));
   ptype_access_num__decr(pool_index);

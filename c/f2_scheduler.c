@@ -247,7 +247,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		if (! f2thread__keep_undead(thread, cause)) {
 		  f2ptr last_executed_time = f2thread__last_executed_time(thread, cause);
 		  if (last_executed_time) {
-		    f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_execute_time, cause);
+		    f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
 		    u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
 		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 1 * nanoseconds_per_second) {
 		      // anytime a thread is removed from processor active threads, it should be removed from it's cause so that it can be garbage collected.

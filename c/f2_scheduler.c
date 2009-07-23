@@ -325,7 +325,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     }
     
     if (remove_this_thread_from_active_threads) {
-      if (! f2__processor__remove_active_thread__thread_unsafe(cause, processor, thread)) {
+      if (! f2__processor__remove_active_thread(cause, processor, thread)) {
 	printf("scheduler error removing active thread: doesn't exist in active list.");
       }
     }

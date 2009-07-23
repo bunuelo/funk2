@@ -65,7 +65,9 @@ void ptype_incr_mutex__unlock(int pool_index)  {
 
 int __global_ptype_access_num[memory_pool_num];
 
-void ptype_access_num__incr(int pool_index) {
+#define ptype_access_num__incr(pool_index)
+
+void raw__ptype_access_num__incr(int pool_index) {
   debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
   ptype_incr_mutex__lock(pool_index);
   memory_mutex__lock(pool_index);
@@ -74,7 +76,9 @@ void ptype_access_num__incr(int pool_index) {
   ptype_incr_mutex__unlock(pool_index);
 }
 
-void ptype_access_num__decr(int pool_index) {
+#define ptype_access_num__decr(pool_index)
+
+void raw__ptype_access_num__decr(int pool_index) {
   debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
   memory_mutex__lock(pool_index);
   debug__assert(__global_ptype_access_num[pool_index] > 0, nil, "access num is < 0.");

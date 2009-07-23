@@ -210,7 +210,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		if(i == 0) {
 		  exit_reason = exit_reason__too_many_loops;
 		  break;
-		} else if (f2__thread__execute_next_bytecode(cause, thread)) {
+		} else if (! f2__thread__execute_next_bytecode(cause, thread)) {
 		  if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
 		    f2ptr larva = f2thread__value(thread, cause);
 		    f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);

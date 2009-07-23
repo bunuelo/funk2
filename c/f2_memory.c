@@ -917,6 +917,9 @@ u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
     }
     try_generation_num ++;
   }
+  for (index = 0; index < memory_pool_num; index ++) {
+    pool__increment_generation(index);
+  }
   return did_something;
 }
 
@@ -969,9 +972,6 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
       }
     }
     int did_something = garbage_collect(pool_index, byte_num);
-    for (index = 0; index < memory_pool_num; index ++) {
-      pool__increment_generation(index);
-    }
     for (index = 0; index < memory_pool_num; index ++) {
       if (index != pool_index) {
 	memory_mutex__unlock(index);

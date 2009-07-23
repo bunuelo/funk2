@@ -29,6 +29,8 @@
 
 funk2_processor_mutex_t __global_ptype_incr_mutex[memory_pool_num];
 boolean_t               __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+s64                     __ptypes_waiting_count                    = 0;
+funk2_processor_mutex_t __ptypes_waiting_count_mutex;
 
 void print_mutex_error(int retval) {
   switch (retval) {
@@ -40,15 +42,26 @@ void print_mutex_error(int retval) {
 }
 
 void ptype_incr_mutex__lock(int pool_index)    {
-#ifdef F2__PTHREAD
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); funk2_processor_mutex__lock(&__global_ptype_incr_mutex[pool_index]);/*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
-#endif // F2__PTHREAD
+  if (__ptypes_please_wait_for_gc_to_take_place) {
+    funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
+    __ptypes_waiting_count ++;
+    funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
+    while (__ptypes_please_wait_for_gc_to_take_place) {
+      sched_yield();
+    }
+    funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
+    __ptypes_waiting_count --;
+    funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
+  }
+  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
+  funk2_processor_mutex__lock(&__global_ptype_incr_mutex[pool_index]);
+  /*while(funk2_processor_mutex__trylock(&__global_ptype_incr_mutex[pool_index])) {sched_yield();}*/
 }
 
 void ptype_incr_mutex__unlock(int pool_index)  {
-#ifdef F2__PTHREAD
-  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range."); int retval = funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]); if (retval) {print_mutex_error(retval);}
-#endif // F2__PTHREAD
+  debug__assert(pool_index >= 0 && pool_index < memory_pool_num, nil, "pool_index out of range.");
+  int retval = funk2_processor_mutex__unlock(&__global_ptype_incr_mutex[pool_index]);
+  if (retval) {print_mutex_error(retval);}
 }
 
 int __global_ptype_access_num[memory_pool_num];
@@ -2501,6 +2514,7 @@ void f2__ptypes__initialize() {
     funk2_processor_mutex__init(&__global_ptype_incr_mutex[pool_index]);
     __global_ptype_access_num[pool_index] = 0;
   }
+  funk2_processor_mutex__init(&(__ptypes_waiting_count_mutex));
 }
 
 

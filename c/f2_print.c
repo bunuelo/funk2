@@ -290,6 +290,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       case ptype_mutex: {
+	int subexp_size[2];
+	
 	f2__write__ansi_color(cause, stream, print__ansi__mutex__foreground, use_ansi_colors, use_html);
 	char temp_str[128];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);

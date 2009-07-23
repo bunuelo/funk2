@@ -752,9 +752,6 @@ int f2__thread__bytecode__pop__env_reg(f2ptr thread, f2ptr bytecode) {
 
 int f2__thread__bytecode__pop__value_reg(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
-  if (f2__cause__bytecode_tracing_on(cause, cause)) {
-    raw__thread__bytecode_trace__pop__value_reg(cause, bytecode, thread);
-  }
   
   f2__thread__increment_pc(thread, cause);
   

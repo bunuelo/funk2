@@ -248,8 +248,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    u64 raw_last_executed_time = f2integer__i(last_executed_time, cause);
 		    if (raw__nanoseconds_since_1970() - raw_last_executed_time > 1 * nanoseconds_per_second) {
 		      // anytime a thread is removed from processor active threads, it should be removed from it's cause so that it can be garbage collected.
-		      if (cause) {
-			f2__cause__remove_thread(cause, cause, thread);
+		      f2ptr thread_cause = f2thread__cause_reg(thread, cause);
+		      if (thread_cause) {
+			f2__cause__remove_thread(cause, thread_cause, thread);
 		      }
 		      // bug: removing a thread here seems to drop needed threads sometimes.  (why?)
 		      {

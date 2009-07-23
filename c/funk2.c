@@ -287,7 +287,7 @@ boolean_t funk2__handle(funk2_t* this) {
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
   f2__sleep(1);
-  return boolean__true;
+  return boolean__false;
 }
 
 int funk2__main(funk2_t* this, int argc, char** argv) {

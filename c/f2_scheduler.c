@@ -40,7 +40,7 @@ void f2__processor__add_active_thread__thread_unsafe(f2ptr cause, f2ptr this, f2
   if (cause) {
     f2__cause__add_thread(cause, cause, thread);
   }
-  f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
+  //f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   //f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads       = f2processor__active_threads(this, cause);
   pool__pause_gc(this_processor_thread__pool_index());
@@ -51,6 +51,7 @@ void f2__processor__add_active_thread__thread_unsafe(f2ptr cause, f2ptr this, f2
 }
 
 void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   f2__processor__add_active_thread__thread_unsafe(cause, this, thread);
   f2mutex__unlock(active_threads_mutex, cause);
@@ -61,7 +62,7 @@ boolean_t f2__processor__remove_active_thread__thread_unsafe(f2ptr cause, f2ptr 
     f2__cause__remove_thread(cause, cause, thread);
   }
   boolean_t found_and_removed_thread = boolean__false;
-  f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
+  //f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   //f2mutex__lock(active_threads_mutex, cause);
   f2ptr active_threads_iter = f2processor__active_threads(this, cause);
   f2ptr active_threads_prev = nil;
@@ -83,6 +84,7 @@ boolean_t f2__processor__remove_active_thread__thread_unsafe(f2ptr cause, f2ptr 
 }
 
 boolean_t f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
+  f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   f2mutex__lock(active_threads_mutex, cause);
   boolean_t result = f2__processor__remove_active_thread__thread_unsafe(cause, this, thread);
   f2mutex__unlock(active_threads_mutex, cause);

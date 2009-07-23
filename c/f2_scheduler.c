@@ -154,6 +154,50 @@ f2ptr f2__scheduler__processor_thread_current_thread(int pool_index) {
   return thread;
 }
 
+
+void execute_next_bytecodes__helper__found_larva_in_thread(f2ptr cause, f2ptr thread) {
+  f2ptr larva = f2thread__value(thread, cause);
+  f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
+  f2ptr critics = f2thread__critics(thread, cause);
+  if (critics) {
+    f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+  } else {
+    f2thread__program_counter__set(thread, cause, nil);
+  }
+}
+
+enum scheduler_fast_loop_exit_reason_e {
+		exit_reason__none = 0,
+		exit_reason__is_complete,
+		exit_reason__too_many_loops,
+		exit_reason__reached_yield,
+		exit_reason__found_larva
+} scheduler_fast_loop_exit_reason_t;
+
+void execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr thread) {
+  scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
+  
+  int i = 1000;
+  while (! exit_reason) {
+    if(i == 0) {
+      exit_reason = exit_reason__too_many_loops;
+      break;
+    } else if (f2__thread__execute_next_bytecode(cause, thread)) {
+      exit_reason = exit_reason__reached_yield;
+      break;
+    } else if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
+      execute_next_bytecodes__helper__found_larva_in_thread(cause, thread);
+      exit_reason = exit_reason__found_larva;
+      break;
+    } else if (f2thread__is_complete(thread, cause)) {
+      exit_reason = exit_reason__is_complete;
+      break;
+    } 
+    i --;
+  }
+  //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
+}
+
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something    = nil;
@@ -197,40 +241,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      
 	      did_something = __funk2.globalenv.true__symbol;
 	      
-	      enum exit_reason_e {
-		exit_reason__none = 0,
-		exit_reason__is_complete,
-		exit_reason__too_many_loops,
-		exit_reason__reached_yield,
-		exit_reason__found_larva
-	      } exit_reason = exit_reason__none;
-	      
-	      int i = 1000;
-	      while (! exit_reason) {
-		if(i == 0) {
-		  exit_reason = exit_reason__too_many_loops;
-		  break;
-		} else if (f2__thread__execute_next_bytecode(cause, thread)) {
-		  exit_reason = exit_reason__reached_yield;
-		  break;
-		} else if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
-		  f2ptr larva = f2thread__value(thread, cause);
-		  f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
-		  f2ptr critics = f2thread__critics(thread, cause);
-		  if (critics) {
-		    f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
-		  } else {
-		    f2thread__program_counter__set(thread, cause, nil);
-		  }
-		  exit_reason = exit_reason__found_larva;
-		  //printf("larva found in thread value register."); fflush(stdout);
-		  break;
-		} else if (f2thread__is_complete(thread, cause)) {
-		  exit_reason = exit_reason__is_complete;
-		  break;
-		} 
-		i --;
-	      }
+	      scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, thread);
 	      
 	      f2thread__last_executed_time__set(thread, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
 	      
@@ -238,7 +249,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		need_to_launch_larva_handling_critic_thread = 1;
 	      }
 	      
-	      //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
 	    } else {
 	      if (! f2thread__is_zombie(thread, cause)) {
 		f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);

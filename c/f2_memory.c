@@ -153,7 +153,8 @@ void memblock__init(memblock_t* block, f2size_t byte_num, int used, int gc_touch
 void memorypool__init(memorypool_t* pool) {
   funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex));
   pool->disable_gc                           = 0;
-  pool->should_run_gc                        = 0;
+  pool->should_run_gc                        = boolean__false;
+  pool->should_enlarge_memory_now            = boolean__false;
   pool->total_allocated_memory_since_last_gc = 0;
   pool->next_unique_block_id                 = 0;
 #if defined(DYNAMIC_MEMORY)
@@ -994,16 +995,21 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
     }
   } else {
   */
-  __funk2.memory.pool[pool_index].should_run_gc = 1;
+  __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
   //}
   //#ifdef DEBUG_MEMORY
   status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num));
   //#endif // DEBUG_MEMORY
-#ifdef DYNAMIC_MEMORY
-  pool__change_total_memory_available(pool_index, __funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num);
+  __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
+  __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__true;
+  wait_politely();
+  //while (__funk2.memory.pool[pool_index].should_enlarge_memory_now) {
+  //  sched_yield();
+  //}
+  // this is now done in the memory handling thread:
+  //pool__change_total_memory_available(pool_index, __funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num);
   block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
-#endif // DYNAMIC_MEMORY
   if (block) {return block;}  
   // shouldn't get here if we have DYNAMIC_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
   printf("\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
@@ -1042,7 +1048,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   __funk2.memory.pool[pool_index].total_free_memory                    -= memblock__byte_num(block);
   __funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc += memblock__byte_num(block);
   if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= __funk2.memory.pool[pool_index].total_free_memory) {
-    __funk2.memory.pool[pool_index].should_run_gc = 1;
+    __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
   }
   rbt_tree__insert(&(__funk2.memory.pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->used        = 1;
@@ -1298,14 +1304,28 @@ void funk2_memory__handle(funk2_memory_t* memory) {
   boolean_t should_collect_garbage = boolean__false;
   int index;
   for (index = 0; index < memory_pool_num; index ++) {
+    if (memory->pool[pool_index].should_enlarge_memory_now) {
+      should_enlarge_memory_now = boolean__true;
+    }
     if (memory->pool[index].should_run_gc) {
       should_collect_garbage = boolean__true;
     }
   }
-  if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 1 * 1000000000) {
-    for (index = 0; index < memory_pool_num; index ++) {
-      memory->pool[index].should_run_gc = 0;
+  if (should_enlarge_memory_now) {
+    __ptypes_please_wait_for_gc_to_take_place = boolean__true;
+    while (__ptypes_waiting_count < memory_pool_num) {
+      sched_yield();
     }
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (memory->pool[pool_index].should_enlarge_memory_now) {
+	pool__change_total_memory_available(index, memory->pool[pool_index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
+	memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
+	memory->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
+      }
+    }
+    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+  }
+  if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 1 * 1000000000) {
     //printf("\nfunk2_memory__handle beginning collecting garbage.");
     __ptypes_please_wait_for_gc_to_take_place = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
@@ -1314,6 +1334,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     for (index = 0; index < memory_pool_num; index ++) {
       status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       garbage_collect(index, 0);
+      memory->pool[index].should_run_gc = boolean__false;
       status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
     }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
@@ -1386,7 +1407,7 @@ boolean_t try_gc() {
 
 boolean_t pool__should_run_gc(int pool_index) {
   memory_mutex__lock(pool_index);
-  boolean_t should_gc = (__funk2.memory.pool[pool_index].should_run_gc != 0);
+  boolean_t should_gc = __funk2.memory.pool[pool_index].should_run_gc;
   memory_mutex__unlock(pool_index);
   return should_gc;
 }

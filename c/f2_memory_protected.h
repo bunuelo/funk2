@@ -62,7 +62,9 @@ typedef struct memblock_s memblock_t;
 typedef struct memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;
   uint                    disable_gc; // incremented/decremented by pause_gc/resume_gc
-  u8                      should_run_gc; // if disabled when needed more memory (and allocated more) then True
+  boolean_t               should_run_gc; // if disabled when needed more memory (and allocated more) then True
+  boolean_t               should_enlarge_memory_now;
+  f2size_t                should_enlarge_memory_now__need_at_least_byte_num;
   f2size_t                total_global_memory;
   f2size_t                total_free_memory;
 #if defined(STATIC_MEMORY)

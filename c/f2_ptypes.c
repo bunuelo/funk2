@@ -36,7 +36,7 @@ void wait_politely() {
   __ptypes_waiting_count ++;
   funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
   while (__ptypes_please_wait_for_gc_to_take_place) {
-    //f2__sleep(1);
+    f2__sleep(1);
     sched_yield();
   }
   funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);

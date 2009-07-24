@@ -149,6 +149,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 
   f2__initialize();
   
+  pause_gc();
+
   funk2_primobject_type_handler__add_builtin_ptype_primobjects(&(this->primobject_type_handler), cause);
   funk2_primobject_type_handler__add_builtin_primobjects(&(this->primobject_type_handler), cause);
   
@@ -240,6 +242,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
   f2__scheduler__start_processors();
   this->memory.bootstrapping_mode = boolean__false;
+
+  resume_gc();
 }
 
 void f2__destroy() {

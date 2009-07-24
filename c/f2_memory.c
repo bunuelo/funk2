@@ -1380,6 +1380,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       status ("");
       status ("**********************************");
       status ("**** DOING GARBAGE COLLECTION ****");
+      status ("**********************************");
       status ("");
       for (index = 0; index < memory_pool_num; index ++) {
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
@@ -1388,7 +1389,11 @@ void funk2_memory__handle(funk2_memory_t* memory) {
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       }
     } else {
-      status ("should do garbage collection, but gc is disabled.");
+      status ("");
+      status ("***********************************************************");
+      status ("**** should do garbage collection, but gc is disabled. ****");
+      status ("***********************************************************");
+      status ("");
     }
     memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;

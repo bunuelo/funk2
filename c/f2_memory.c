@@ -690,6 +690,7 @@ void gc_touch_circle_buffer__advance_end() {
     __gc_touch_circle_buffer.end = __gc_touch_circle_buffer.start + __gc_touch_circle_buffer.num;
     printf("\n  copying %d bytes ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start).", ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
     printf("\n  sizeof(memblock_t**) = %d bytes.", sizeof(memblock_t**));
+    printf("\n  old_num = %d", old_num);
     gc_touch_print_array("just before copy");
     memcpy(__gc_touch_circle_buffer.start + old_num, __gc_touch_circle_buffer.start, ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
     gc_touch_print_array("just after copy");

@@ -1225,14 +1225,14 @@ int pool__try_pause_gc (int pool_index) {
   return lock_failed;
 }
 
-void pause_gc() {
+void raw_pause_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     pool__pause_gc(pool_index);
   }
 }
 
-int try_pause_gc() {
+int raw_try_pause_gc() {
   int pool_index;
   int lock_failed = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -1262,7 +1262,7 @@ void pool__resume_gc (int pool_index) {
   memory_mutex__unlock(pool_index);
 }
 
-void resume_gc() {
+void raw_resume_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     pool__resume_gc(pool_index);

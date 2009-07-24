@@ -180,6 +180,11 @@ void memorypool__init(memorypool_t* pool) {
   rbt_tree__init(&(pool->free_memory_tree), NULL);
   rbt_tree__insert(&(pool->free_memory_tree), (rbt_node_t*)block);
   rbt_tree__init(&(pool->used_memory_tree), NULL);
+  
+  pool->single_bytecode_alloc_array__used_num = 0;
+  for (i = 0; i < funk2_memory__single_bytecode_alloc_count; i ++) {
+    pool->single_bytecode_alloc_array[i] = nil;
+  }
 }
 
 void pool__destroy(int pool_index) {
@@ -190,6 +195,24 @@ void pool__destroy(int pool_index) {
   f2dynamicmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].dynamic_memory));
 #elif defined(STATIC_MEMORY)
 #endif
+}
+
+void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) {
+  pool->single_bytecode_alloc_array[this->single_bytecode_alloc_array__used_num] = exp;
+  this->single_bytecode_alloc_array__used_num ++;
+  if (this->single_bytecode_alloc_array__used_num >= funk2_memory__single_bytecode_alloc_count) {
+    error(nil, "memorypool__add_single_bytecode_alloc_f2ptr overflow error.");
+  }
+}
+
+void memorypool__clear_single_bytecode_alloc_array(memorypool_t* this) {
+  this->single_bytecode_alloc_array__used_num = 0;
+}
+
+// memory handling thread should never call this function
+void funk2_memory__signal_between_bytecodes(funk2_memory_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  memorypool__clear_single_bytecode_alloc_array(&(this->pool[pool_index]));
 }
 
 boolean_t valid_memblock_ptr(ptr p) {
@@ -1123,6 +1146,7 @@ f2ptr pool__memblock_f2ptr__new(int pool_index, f2size_t byte_num) {
   while (1) {
     f2ptr memblock_f2ptr = pool__memblock_f2ptr__try_new(pool_index, byte_num);
     if (memblock_f2ptr) {
+      memorypool__add_single_bytecode_alloc_f2ptr(&(__funk2.memory.pool[pool_index]), memblock_f2ptr);
       return memblock_f2ptr;
     }
     sched_yield();

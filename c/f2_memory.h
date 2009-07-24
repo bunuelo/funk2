@@ -70,6 +70,8 @@ typedef enum ptype_e {
 #include "f2_time.h"
 //#include "f2_gfunkptr.h"
 
+void funk2_memory__signal_between_bytecodes(funk2_memory_t* this);
+
 ptr  f2__malloc(f2size_t byte_num);
 void f2__free(ptr this);
 ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);

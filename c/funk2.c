@@ -242,7 +242,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
   f2__scheduler__start_processors();
   this->memory.bootstrapping_mode = boolean__false;
-
+  
   resume_gc();
 }
 

@@ -237,11 +237,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   //raw__memory_server__start_new_server_thread(cause, &posix_thread, f2integer__new(cause, 2222));
   //resume_gc();
   
-  this->memory.bootstrapping_mode = boolean__false;
-  
   // start pthreads for each processor (starts user repl)
   f2__scheduler__start_processors();
   
+  this->memory.bootstrapping_mode = boolean__false;
 }
 
 void f2__destroy() {

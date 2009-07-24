@@ -1350,14 +1350,16 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
     }
-    for (index = 0; index < memory_pool_num; index ++) {
-      status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-      garbage_collect(index, 0);
-      memory->pool[index].should_run_gc = boolean__false;
-      status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+    if (! gc__is_disabled()) {
+      for (index = 0; index < memory_pool_num; index ++) {
+	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+	garbage_collect(index, 0);
+	memory->pool[index].should_run_gc = boolean__false;
+	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+      }
+      memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
-    memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     //printf("\nfunk2_memory__handle done collecting garbage.");
   }
 }

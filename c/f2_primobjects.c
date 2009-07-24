@@ -1717,7 +1717,7 @@ f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
 
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {
   f2ptr new_cause = f2__cause__new_with_default_properties(cause);
-  f2cause__memory_tracing_on__set(new_cause, cause, __funk2.globalenv.true__symbol);
+  //f2cause__memory_tracing_on__set(new_cause, cause, __funk2.globalenv.true__symbol);
   return new_cause;
 }
 

@@ -90,13 +90,13 @@ void      pool__resume_gc(int pool_index);
 boolean_t pool__try_gc(int pool_index);
 boolean_t pool__should_run_gc(int pool_index);
 
-#define pause_gc()
-#define try_pause_gc() 0
-#define resume_gc()
+#define pause_gc()     raw_pause_gc()
+#define try_pause_gc() raw_try_pause_gc()
+#define resume_gc()    raw_resume_gc()
 
-//void      pause_gc();
-//int       try_pause_gc();
-//void      resume_gc();
+void      raw_pause_gc();
+int       raw_try_pause_gc();
+void      raw_resume_gc();
 boolean_t try_gc();
 boolean_t should_run_gc();
 int       gc__is_disabled();

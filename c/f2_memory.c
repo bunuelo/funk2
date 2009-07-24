@@ -62,6 +62,8 @@ void funk2_memory__init(funk2_memory_t* this) {
   this->memblock__last_z       =  0.0;
   this->memblock__render_on    =  1;
   this->memblock__render_noise =  2.5;
+  
+  this->memory_handling_thread = pthread_self();
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {
@@ -1004,7 +1006,15 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
   __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
   __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__true;
   __ptypes_please_wait_for_gc_to_take_place                                         = boolean__true;
-  wait_politely();
+  if (pthread_self() == __funk2.memory.memory_handling_thread) {
+    funk2_memory_t* memory = (&__funk2.memory);
+    pool__change_total_memory_available(index, memory->pool[pool_index].total_global_memory + (memory->pool[pool_index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
+    __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
+    __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__false;
+    __ptypes_please_wait_for_gc_to_take_place                                         = boolean__false;
+  } else {
+    wait_politely();
+  }
   //while (__funk2.memory.pool[pool_index].should_enlarge_memory_now) {
   //  sched_yield();
   //}

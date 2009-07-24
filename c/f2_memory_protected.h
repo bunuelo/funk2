@@ -190,6 +190,7 @@ typedef struct funk2_memory_s {
   u8           memblock__render_on;
   float        memblock__render_noise;
   u64          last_garbage_collect_nanoseconds_since_1970;
+  pthread_t    memory_handling_thread;
 } funk2_memory_t;
 
 void funk2_memory__init(funk2_memory_t* this);

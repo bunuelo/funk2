@@ -1383,6 +1383,8 @@ void funk2_memory__handle(funk2_memory_t* memory) {
 	memory->pool[index].should_run_gc = boolean__false;
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       }
+    } else {
+      status ("should do garbage collection, but gc is disabled.");
     }
     memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;

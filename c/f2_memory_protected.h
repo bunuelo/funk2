@@ -198,8 +198,9 @@ typedef struct funk2_memory_s {
   boolean_t    bootstrapping_mode;
 } funk2_memory_t;
 
-void funk2_memory__init(funk2_memory_t* this);
-void funk2_memory__destroy(funk2_memory_t* this);
-void funk2_memory__handle(funk2_memory_t* memory);
+void funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
+void funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread
+void funk2_memory__signal_between_bytecodes(funk2_memory_t* this); // never called by memory management thread
+void funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
 
 #endif // F2__MEMORY__PROTECTED__H

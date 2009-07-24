@@ -634,7 +634,7 @@ typedef struct gc_touch_circle_buffer_s {
   memblock_t** end;
 } gc_touch_circle_buffer_t;
 
-boolean_t                     __gc_touch_circle_buffer__initialized = 0;
+boolean_t                __gc_touch_circle_buffer__initialized = 0;
 gc_touch_circle_buffer_t __gc_touch_circle_buffer;
 
 void gc_touch_circle_buffer__init() {
@@ -670,17 +670,17 @@ void gc_touch_circle_buffer__advance_end() {
     __circle_buf_end_index = __gc_touch_circle_buffer.start;
   }
   if (__circle_buf_end_index == __circle_buf_start_index) {
-    //gc_touch_print_array("buffer");
-    //printf("\nincreasing buffer."); fflush(stdout);
-    //printf("\n  start = %x.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
-    //printf("\n  end   = %x.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
-    //gc_touch_print_array("debug 0");
+    gc_touch_print_array("buffer");
+    printf("\nincreasing buffer."); fflush(stdout);
+    printf("\n  start = %x.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
+    printf("\n  end   = %x.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
+    gc_touch_print_array("debug 0");
     // increasing size by two makes a lot of these memory moves conveniently easy.
     int old_num = __gc_touch_circle_buffer.num;
     __gc_touch_circle_buffer.num = old_num << 1;
-    //printf("\n__gc_touch_circle_buffer.start = %x", (int)__gc_touch_circle_buffer.start);
+    printf("\n__gc_touch_circle_buffer.start = %x", (int)__gc_touch_circle_buffer.start);
     memblock_t** new_location = (memblock_t**)from_ptr(f2__new_alloc(to_ptr(__gc_touch_circle_buffer.start), sizeof(memblock_t*) * old_num, sizeof(memblock_t*) * __gc_touch_circle_buffer.num));
-    //printf("\nnew_location = %x", (int)new_location);
+    printf("\nnew_location = %x", (int)new_location);
     int location_diff = new_location - __gc_touch_circle_buffer.start;
     __gc_touch_circle_buffer.start = new_location;
     
@@ -688,16 +688,16 @@ void gc_touch_circle_buffer__advance_end() {
     __circle_buf_end_index   += location_diff;
     
     __gc_touch_circle_buffer.end = __gc_touch_circle_buffer.start + __gc_touch_circle_buffer.num;
-    //printf("\n  copying %d bytes ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start).", ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
-    //printf("\n  sizeof(memblock_t**) = %d bytes.", sizeof(memblock_t**));
-    //gc_touch_print_array("just before copy");
+    printf("\n  copying %d bytes ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start).", ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
+    printf("\n  sizeof(memblock_t**) = %d bytes.", sizeof(memblock_t**));
+    gc_touch_print_array("just before copy");
     memcpy(__gc_touch_circle_buffer.start + old_num, __gc_touch_circle_buffer.start, ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
-    //gc_touch_print_array("just after copy");
+    gc_touch_print_array("just after copy");
     __circle_buf_end_index += old_num;
-    //printf("\ncircle_buffer size increased to %d.", __gc_touch_circle_buffer.num); fflush(stdout);
-    //printf("\n  start = %x.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
-    //printf("\n  end   = %x.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
-    //gc_touch_print_array("after all");
+    printf("\ncircle_buffer size increased to %d.", __gc_touch_circle_buffer.num); fflush(stdout);
+    printf("\n  start = %x.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
+    printf("\n  end   = %x.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
+    gc_touch_print_array("after all");
   }
 }
 
@@ -922,7 +922,7 @@ u8 garbage_collect_generation(int generation_num) {
     pool__touch_all_referenced_from_generation(pool_index, generation_num);
   }
   gc_touch_all_symbols();
-  //gc_touch_all_single_bytecode_alloc_arrays();
+  gc_touch_all_single_bytecode_alloc_arrays();
   
   u8 did_something = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

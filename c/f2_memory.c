@@ -851,6 +851,7 @@ u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int genera
   while (iter) {
     next = rbt_node__next(iter);
     if (((memblock_t*)iter)->generation_num <= generation_num && (! ((memblock_t*)iter)->gc_touch)) {
+      status("freeing block!");
       // remove from used list
       rbt_tree__remove(&(__funk2.memory.pool[pool_index].used_memory_tree), iter);
       // set to free

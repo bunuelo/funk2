@@ -199,7 +199,7 @@ void pool__destroy(int pool_index) {
 }
 
 void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) {
-  pool->single_bytecode_alloc_array[this->single_bytecode_alloc_array__used_num] = exp;
+  this->single_bytecode_alloc_array[this->single_bytecode_alloc_array__used_num] = exp;
   this->single_bytecode_alloc_array__used_num ++;
   if (this->single_bytecode_alloc_array__used_num >= funk2_memory__single_bytecode_alloc_count) {
     error(nil, "memorypool__add_single_bytecode_alloc_f2ptr overflow error.");

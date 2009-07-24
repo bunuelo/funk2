@@ -936,7 +936,7 @@ u8 garbage_collect_generation(int generation_num) {
   return did_something;
 }
 
-//#define NO_GENERATIONAL_GARBAGE_COLLECTION
+#define NO_GENERATIONAL_GARBAGE_COLLECTION
 
 u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   //printf("\ngarbage_collect(%d, " f2size_t__fstr ") note: running.", pool_index, goal_free_block_byte_num); fflush(stdout);

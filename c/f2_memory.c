@@ -844,6 +844,7 @@ u8 pool__free_all_gc_untouched_blocks(int pool_index) {
 }
 
 u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int generation_num) {
+  status("freeing all untouched blocks for pool %d, generation %d.", pool_index, generation_num);
   debug_memory_test(pool_index, 1);
   u8 did_something = 0;
   rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
@@ -917,11 +918,11 @@ u8 garbage_collect_generation(int generation_num) {
   }
   
   // this is where we touch everything we want to keep!
-  //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-  //  pool__touch_all_referenced_from_generation(pool_index, generation_num);
-  //}
-  //gc_touch_all_symbols();
-  //gc_touch_all_single_bytecode_alloc_arrays();
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    pool__touch_all_referenced_from_generation(pool_index, generation_num);
+  }
+  gc_touch_all_symbols();
+  gc_touch_all_single_bytecode_alloc_arrays();
   
   u8 did_something = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

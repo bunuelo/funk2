@@ -1004,32 +1004,34 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
   status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num));
   //#endif // DEBUG_MEMORY
-  __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
-  __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__true;
-  __ptypes_please_wait_for_gc_to_take_place                                         = boolean__true;
-  if (pthread_self() == __funk2.memory.memory_handling_thread) {
-    funk2_memory_t* memory = (&__funk2.memory);
-    if (! memory->bootstrapping_mode) {
-      while (__ptypes_waiting_count < memory_pool_num) {
-	sched_yield();
+  do {
+    __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
+    __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__true;
+    __ptypes_please_wait_for_gc_to_take_place                                         = boolean__true;
+    if (pthread_self() == __funk2.memory.memory_handling_thread) {
+      funk2_memory_t* memory = (&__funk2.memory);
+      if (! memory->bootstrapping_mode) {
+	while (__ptypes_waiting_count < memory_pool_num) {
+	  sched_yield();
+	}
       }
+      pool__change_total_memory_available(pool_index, memory->pool[pool_index].total_global_memory + (memory->pool[pool_index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
+      __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
+      __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__false;
+      __ptypes_please_wait_for_gc_to_take_place                                         = boolean__false;
+    } else {
+      wait_politely();
     }
-    pool__change_total_memory_available(pool_index, memory->pool[pool_index].total_global_memory + (memory->pool[pool_index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
-    __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
-    __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__false;
-    __ptypes_please_wait_for_gc_to_take_place                                         = boolean__false;
-  } else {
-    wait_politely();
-  }
-  //while (__funk2.memory.pool[pool_index].should_enlarge_memory_now) {
-  //  sched_yield();
-  //}
-  // this is now done in the memory handling thread:
-  //pool__change_total_memory_available(pool_index, __funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num);
-  block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
-  if (block) {return block;}  
-  // shouldn't get here if we have DYNAMIC_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
-  printf("\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
+    //while (__funk2.memory.pool[pool_index].should_enlarge_memory_now) {
+    //  sched_yield();
+    //}
+    // this is now done in the memory handling thread:
+    //pool__change_total_memory_available(pool_index, __funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num);
+    block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
+    if (block) {return block;}  
+    // shouldn't get here if we have DYNAMIC_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
+    printf("\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
+  } while (1);
   error(nil, "find_free_memory_for_new_memblock error: shouldn't get here.\n");
   return to_ptr(NULL);
 }

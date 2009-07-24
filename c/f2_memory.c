@@ -951,9 +951,9 @@ u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   while (try_generation_num <= maximum_generation_num && (! did_something)) {
     status("garbage_collect try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
     memblock_t* max_size_block = (memblock_t*)rbt_tree__maximum(&(__funk2.memory.pool[pool_index].free_memory_tree));
-    if (max_size_block && memblock__byte_num(max_size_block) >= goal_free_block_byte_num) {
-      break;
-    }
+    //if (max_size_block && memblock__byte_num(max_size_block) >= goal_free_block_byte_num) {
+    //  break;
+    //}
     if (garbage_collect_generation(try_generation_num)) {
       did_something = 1;
     }

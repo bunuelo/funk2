@@ -1038,10 +1038,10 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
 
 // note that byte_num must be at least sizeof(u8) for ptype! because of type checking in garbage collection
 f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
-  int lock_failed = memory_mutex__try_lock(pool_index);
-  if (lock_failed) {
-    return nil;
-  }
+  //int lock_failed = memory_mutex__try_lock(pool_index);
+  //if (lock_failed) {
+  //  return nil;
+  //}
   //printf ("\nmemblock_new byte_num = %d", (int)byte_num); fflush(stdout);
   debug_memory_test(pool_index, 3);
   memblock_t* block = (memblock_t*)from_ptr(find_or_create_free_splittable_memblock_and_unfree(pool_index, byte_num));
@@ -1091,7 +1091,7 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   }
 #endif
   f2ptr block_f2ptr = ptr_to_f2ptr(pool_index, to_ptr(block)); // this should be the only use of ptr_to_f2ptr in the whole program...
-  memory_mutex__unlock(pool_index);
+  //memory_mutex__unlock(pool_index);
 #ifdef DEBUG_MEMORY
   {
     u64 check_computer_id  = __f2ptr__computer_id(block_f2ptr);

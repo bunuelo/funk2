@@ -672,15 +672,15 @@ void gc_touch_circle_buffer__advance_end() {
   if (__circle_buf_end_index == __circle_buf_start_index) {
     gc_touch_print_array("buffer");
     printf("\nincreasing buffer."); fflush(stdout);
-    printf("\n  start = %x.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
-    printf("\n  end   = %x.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
+    printf("\n  start = %lx.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
+    printf("\n  end   = %lx.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
     gc_touch_print_array("debug 0");
     // increasing size by two makes a lot of these memory moves conveniently easy.
     int old_num = __gc_touch_circle_buffer.num;
     __gc_touch_circle_buffer.num = old_num << 1;
     printf("\n__gc_touch_circle_buffer.start = %x", (int)__gc_touch_circle_buffer.start);
     memblock_t** new_location = (memblock_t**)from_ptr(f2__new_alloc(to_ptr(__gc_touch_circle_buffer.start), sizeof(memblock_t*) * old_num, sizeof(memblock_t*) * __gc_touch_circle_buffer.num));
-    printf("\nnew_location = %x", (int)new_location); fflush(stdout);
+    printf("\nnew_location = %lx", (int)new_location); fflush(stdout);
     int location_diff = new_location - __gc_touch_circle_buffer.start;
     __gc_touch_circle_buffer.start = new_location;
     
@@ -696,8 +696,8 @@ void gc_touch_circle_buffer__advance_end() {
     gc_touch_print_array("just after copy");
     __circle_buf_end_index += old_num;
     printf("\ncircle_buffer size increased to %d.", __gc_touch_circle_buffer.num); fflush(stdout);
-    printf("\n  start = %x.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
-    printf("\n  end   = %x.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
+    printf("\n  start = %lx.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
+    printf("\n  end   = %lx.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
     gc_touch_print_array("after all");
   }
 }

@@ -182,6 +182,7 @@ void memorypool__init(memorypool_t* pool) {
   rbt_tree__init(&(pool->used_memory_tree), NULL);
   
   pool->single_bytecode_alloc_array__used_num = 0;
+  u64 i;
   for (i = 0; i < funk2_memory__single_bytecode_alloc_count; i ++) {
     pool->single_bytecode_alloc_array[i] = nil;
   }

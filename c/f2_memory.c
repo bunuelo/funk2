@@ -1318,10 +1318,10 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       sched_yield();
     }
     for (index = 0; index < memory_pool_num; index ++) {
-      if (memory->pool[pool_index].should_enlarge_memory_now) {
-	pool__change_total_memory_available(index, memory->pool[pool_index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
-	memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
-	memory->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
+      if (memory->pool[index].should_enlarge_memory_now) {
+	pool__change_total_memory_available(index, memory->pool[index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
+	memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
+	memory->pool[index].should_enlarge_memory_now                         = boolean__false;
       }
     }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;

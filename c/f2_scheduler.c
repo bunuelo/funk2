@@ -388,7 +388,10 @@ void f2__scheduler__yield(f2ptr cause) {
     //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
     sched_yield();
     f2__sleep(1);
-    pool__try_gc(this_processor_thread__pool_index());
+    if (__ptypes_please_wait_for_gc_to_take_place && pthread_self() != __funk2.memory.memory_handling_thread) {
+      wait_politely();
+    }
+    //pool__try_gc(this_processor_thread__pool_index());
   }
 }
 

@@ -93,6 +93,9 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 #endif
   while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
     sched_yield();
+    if (__ptypes_please_wait_for_gc_to_take_place && pthread_self() != __funk2.memory.memory_handling_thread) {
+      wait_politely();
+    }
     //f2__sleep(1);
   }
 }

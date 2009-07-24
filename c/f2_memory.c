@@ -949,7 +949,7 @@ u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   int try_generation_num = 1;
 #endif
   status("garbage_collect try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
-  while (try_generation_num <= maximum_generation_num) {
+  while (try_generation_num <= maximum_generation_num && (! did_something)) {
     memblock_t* max_size_block = (memblock_t*)rbt_tree__maximum(&(__funk2.memory.pool[pool_index].free_memory_tree));
     if (max_size_block && memblock__byte_num(max_size_block) >= goal_free_block_byte_num) {
       break;
@@ -1398,7 +1398,12 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       status ("");
       for (index = 0; index < memory_pool_num; index ++) {
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	garbage_collect(index, 1024);
+	int did_something = garbage_collect(index, 1024);
+	if (did_something) {
+	  status ("garbage collection did something.");
+	} else {
+	  status ("garbage collection did nothing.");
+	}
 	memory->pool[index].should_run_gc = boolean__false;
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       }

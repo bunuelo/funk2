@@ -357,6 +357,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 }
 
 void* processor__start_routine(void *ptr) {
+  while (__funk2.memory.bootstrapping_mode) {
+    sched_yield();
+  }
   f2ptr cause     = nil;
   f2ptr processor = f2__global_scheduler__this_processor(cause);
 #ifdef DEBUG_SCHEDULER

@@ -896,7 +896,7 @@ void gc_touch_all_single_bytecode_alloc_arrays() {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     u64 i;
     for (i = 0; i < __funk2.memory.pool[pool_index].single_bytecode_alloc_array__used_num; i ++) {
-      f2__gc_touch_all_referenced(single_bytecode_alloc_array[i]);
+      f2__gc_touch_all_referenced(__funk2.memory.pool[pool_index].single_bytecode_alloc_array[i]);
     }
   }
 }

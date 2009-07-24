@@ -202,7 +202,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
 }
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
-  pool__pause_gc(this_processor_thread__pool_index());
+  //pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something    = nil;
   {
     f2__global_scheduler__execute_mutex__lock(cause);
@@ -349,8 +349,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     
     thread_iter = next_thread_iter;
   }
-  pool__resume_gc(this_processor_thread__pool_index());
-  pool__try_gc(this_processor_thread__pool_index());
+  //pool__resume_gc(this_processor_thread__pool_index());
+  //pool__try_gc(this_processor_thread__pool_index());
   
   //if (did_something) {
   //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) thread_num = %d", this_processor_thread__pool_index(), processor, thread_num);

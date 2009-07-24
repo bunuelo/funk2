@@ -1304,7 +1304,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
   boolean_t should_collect_garbage = boolean__false;
   int index;
   for (index = 0; index < memory_pool_num; index ++) {
-    if (memory->pool[pool_index].should_enlarge_memory_now) {
+    if (memory->pool[index].should_enlarge_memory_now) {
       should_enlarge_memory_now = boolean__true;
     }
     if (memory->pool[index].should_run_gc) {

@@ -680,7 +680,7 @@ void gc_touch_circle_buffer__advance_end() {
     __gc_touch_circle_buffer.num = old_num << 1;
     printf("\n__gc_touch_circle_buffer.start = %x", (int)__gc_touch_circle_buffer.start);
     memblock_t** new_location = (memblock_t**)from_ptr(f2__new_alloc(to_ptr(__gc_touch_circle_buffer.start), sizeof(memblock_t*) * old_num, sizeof(memblock_t*) * __gc_touch_circle_buffer.num));
-    printf("\nnew_location = %x", (int)new_location);
+    printf("\nnew_location = %x", (int)new_location); fflush(stdout);
     int location_diff = new_location - __gc_touch_circle_buffer.start;
     __gc_touch_circle_buffer.start = new_location;
     

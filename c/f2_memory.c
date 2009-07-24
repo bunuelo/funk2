@@ -1003,6 +1003,7 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
   //#endif // DEBUG_MEMORY
   __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
   __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__true;
+  __ptypes_please_wait_for_gc_to_take_place                                         = boolean__true;
   wait_politely();
   //while (__funk2.memory.pool[pool_index].should_enlarge_memory_now) {
   //  sched_yield();
@@ -1313,7 +1314,6 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     }
   }
   if (should_enlarge_memory_now) {
-    __ptypes_please_wait_for_gc_to_take_place = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
     }

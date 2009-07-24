@@ -191,6 +191,7 @@ typedef struct funk2_memory_s {
   float        memblock__render_noise;
   u64          last_garbage_collect_nanoseconds_since_1970;
   pthread_t    memory_handling_thread;
+  boolean_t    bootstrapping_mode;
 } funk2_memory_t;
 
 void funk2_memory__init(funk2_memory_t* this);

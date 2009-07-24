@@ -936,7 +936,7 @@ u8 garbage_collect_generation(int generation_num) {
   return did_something;
 }
 
-#define NO_GENERATIONAL_GARBAGE_COLLECTION
+//#define NO_GENERATIONAL_GARBAGE_COLLECTION
 
 u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   //printf("\ngarbage_collect(%d, " f2size_t__fstr ") note: running.", pool_index, goal_free_block_byte_num); fflush(stdout);
@@ -1395,7 +1395,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       status ("");
       for (index = 0; index < memory_pool_num; index ++) {
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	garbage_collect(index, 0);
+	garbage_collect(index, 1024);
 	memory->pool[index].should_run_gc = boolean__false;
 	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       }

@@ -151,7 +151,6 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
   integer_block->ptype.ptype = ptype_integer;
   integer_block->ptype.cause = cause;
   integer_block->i           = i;
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, integer_f2ptr);}
   return integer_f2ptr;
 }
 
@@ -223,7 +222,6 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
   double_block->ptype.ptype = ptype_double;
   double_block->ptype.cause = cause;
   double_block->d           = d;
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, double_f2ptr);}
   return double_f2ptr;
 }
 
@@ -299,7 +297,6 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
   float_block->ptype.ptype = ptype_float;
   float_block->ptype.cause = cause;
   float_block->f           = f;
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, float_f2ptr);}
   return float_f2ptr;
 }
 
@@ -375,7 +372,6 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
   pointer_block->ptype.ptype = ptype_pointer;
   pointer_block->ptype.cause = cause;
   pointer_block->p           = p;
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, pointer_f2ptr);}
   return pointer_f2ptr;
 }
 
@@ -451,7 +447,6 @@ f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_compute
   gfunkptr_block->ptype.ptype = ptype_gfunkptr;
   gfunkptr_block->ptype.cause = cause;
   gfunkptr_block->gfunkptr    = f2ptr__new(gf2_computer_id, gf2_pool_index, gf2_pool_address);
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, gfunkptr_f2ptr);}
   return gfunkptr_f2ptr;
 }
 
@@ -586,7 +581,6 @@ f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
   mutex_block->ptype.ptype = ptype_mutex;
   mutex_block->ptype.cause = cause;
   funk2_processor_mutex__init(mutex_block->m);
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, mutex_f2ptr);}
   return mutex_f2ptr;
 }
 
@@ -725,7 +719,6 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
   char_block->ptype.ptype = ptype_char;
   char_block->ptype.cause = cause;
   char_block->ch          = ch;
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, char_f2ptr);}
   return char_f2ptr;
 }
 
@@ -801,7 +794,6 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
   if (str) {memcpy(string_block->str, str, length);}
   else     {bzero(string_block->str, length);}
   string_block->str[length] = 0x00;
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, string_f2ptr);}
   return string_f2ptr;
 }
 
@@ -1018,7 +1010,6 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   symbol_hash__add_symbol(symbol_f2ptr);
   
   funk2_processor_mutex__unlock(&symbol_hash_mutex);
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, symbol_f2ptr);}
   return symbol_f2ptr;
 }
 
@@ -1184,7 +1175,6 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   chunk_block->length      = length;
   if (bytes) {memcpy(chunk_block->bytes, bytes, data_byte_num);}
   else       {bzero(chunk_block->bytes, data_byte_num);}
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, chunk_f2ptr);}
   return chunk_f2ptr;
 }
 
@@ -1198,7 +1188,6 @@ f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
   chunk_block->ptype.cause = cause;
   chunk_block->length      = init_chunk_block->length;
   memcpy(chunk_block->bytes, init_chunk_block->bytes, data_byte_num);
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, chunk_f2ptr);}
   return chunk_f2ptr;
 }
 
@@ -1491,7 +1480,6 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
       f2ptr_iter  ++;
     }
   }
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, simple_array_f2ptr);}
   return simple_array_f2ptr;
 }
 
@@ -1499,7 +1487,6 @@ f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr) {
   check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2simple_array__new(pool_index, cause, length, f2ptr_ptr);
-  //if (cause) {ptype_trace_create(pool_index, cause, this);}
   return this;
 }
 
@@ -1651,7 +1638,6 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
       dptr_iter  ++;
     }
   }
-  if (tracing_on) {ptype_trace_create(pool_index, cause, traced_array_f2ptr);}
   return traced_array_f2ptr;
 }
 
@@ -1681,7 +1667,6 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
       dptr_iter  ++;
     }
   }
-  if (tracing_on) {ptype_trace_create(pool_index, cause, traced_array_f2ptr);}
   return traced_array_f2ptr;
 }
 
@@ -1689,7 +1674,6 @@ f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
   check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2traced_array__new(pool_index, cause, length, dptr_ptr);
-  //if (cause) {ptype_trace_create(pool_index, cause, this);}
   return this;
 }
 
@@ -1697,7 +1681,6 @@ f2ptr pfunk2__f2traced_array__new_from_f2ptrs(f2ptr cause, u64 length, f2ptr* f2
   check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr this = __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, length, f2ptr_ptr);
-  //if (cause) {ptype_trace_create(pool_index, cause, this);}
   return this;
 }
 
@@ -2036,7 +2019,6 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
   larva_block->ptype.cause = cause;
   larva_block->type        = type;
   funk2_memblock__set_render_position_relative_to(larva_f2ptr, cause);
-  if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, larva_f2ptr);}
   return larva_f2ptr;
 }
 

@@ -69,67 +69,6 @@ f2ptr pfunk2__system__environment(f2ptr cause) {
 
 // memblock
 
-#ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
-void memblock__set_render_position_relative_to(f2ptr this, f2ptr relative) {
-  if (! relative) {return;}
-  memblock_t* this_memblock     = (memblock_t*)raw__f2ptr_to_ptr(this);
-  memblock_t* relative_memblock = (memblock_t*)raw__f2ptr_to_ptr(relative);
-
-  float dx = (memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
-  float dy = (memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
-  float dz = (memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
-  float memblock__last_x = relative_memblock->render_position[0] + dx;
-  float memblock__last_y = relative_memblock->render_position[1] + dy;
-  float memblock__last_z = relative_memblock->render_position[2] + dz;
-  if (memblock__last_x < -1.0) {memblock__last_x = -1.0;}
-  if (memblock__last_x >  1.0) {memblock__last_x =  1.0;}
-  if (memblock__last_y < -1.0) {memblock__last_y = -1.0;}
-  if (memblock__last_y >  1.0) {memblock__last_y =  1.0;}
-  if (memblock__last_z < -1.0) {memblock__last_z = -1.0;}
-  if (memblock__last_z >  1.0) {memblock__last_z =  1.0;}
-  this_memblock->render_position[0] = memblock__last_x;
-  this_memblock->render_position[1] = memblock__last_y;
-  this_memblock->render_position[2] = memblock__last_z;
-}
-#else
-#  define memblock__set_render_position_relative_to(this, relative)
-#endif // MEMORY_OPTION__MEMBLOCK__RENDER_DATA
-
-void ptype_trace_create(int pool_index, f2ptr cause, f2ptr this) {
-  //pool__pause_gc(pool_index);
-  
-  //f2ptr create_event = f2event__new__trace_depth(cause, __funk2.globalenv.create_event__symbol, this, 0);
-  //f2ptr cause__trace = f2cause__trace(cause, cause);
-  //f2ptr new_trace    = f2doublelink__new__trace_depth(nil, cause__trace, nil, create_event, 0);
-  //f2cause__trace__set__trace_depth(cause, nil, new_trace, 0);
-  
-  //pool__resume_gc(pool_index);
-}
-
-void ptype_trace_read(int pool_index, f2ptr cause, f2ptr location, f2ptr value) {
-  //pool__pause_gc(pool_index);
-  
-  //f2ptr location_value_pair = f2cons__new__trace_depth(cause, location, value, 0);
-  //f2ptr read_event          = f2event__new__trace_depth(cause, __funk2.globalenv.read_event__symbol, location_value_pair, 0);
-  //f2ptr cause__trace        = f2cause__trace(cause, cause);
-  //f2ptr new_trace           = f2doublelink__new__trace_depth(nil, cause__trace, nil, read_event, 0);
-  //f2cause__trace__set__trace_depth(cause, nil, new_trace, 0);
-  
-  //pool__resume_gc(pool_index);
-}
-
-void ptype_trace_write(int pool_index, f2ptr cause, f2ptr location, f2ptr value) {
-  //pool__pause_gc(pool_index);
-  
-  //f2ptr location_value_pair = f2cons__new__trace_depth(cause, location, value, 0);
-  //f2ptr write_event         = f2event__new__trace_depth(cause, __funk2.globalenv.write_event__symbol, location_value_pair, 0);
-  //f2ptr cause__trace        = f2cause__trace(cause, cause);
-  //f2ptr new_trace           = f2doublelink__new__trace_depth(nil, cause__trace, nil, write_event, 0);
-  //f2cause__trace__set__trace_depth(cause, nil, new_trace, 0);
-  
-  //pool__resume_gc(pool_index);
-}
-
 boolean_t raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, int trace_depth) {
   if (! this) {
     return nil;
@@ -1134,7 +1073,6 @@ u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64  length     = __pure__f2symbol__length(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return length;
 }
 
@@ -1147,7 +1085,6 @@ u64 pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64  hash_value = __pure__f2symbol__hash_value(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return hash_value;
 }
 
@@ -1160,7 +1097,6 @@ u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8 ch = __pure__f2symbol__str(this)[index];
-  __pure__memblock__render_read_activated__set(this, 1);
   return ch;
 }
 
@@ -1173,7 +1109,6 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   memcpy(str, __pure__f2symbol__str(this), __pure__f2symbol__length(this));
-  __pure__memblock__render_write_activated__set(this, 1);
 }
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
@@ -1264,7 +1199,7 @@ f2ptr f2symbol__primobject_type__new(f2ptr cause) {
 
 f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   u64 data_byte_num = (sizeof(u8) * length);
-  f2ptr chunk_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_chunk_block_t) + data_byte_num);
+  f2ptr chunk_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_chunk_block_t) + data_byte_num);
   ptype_chunk_block_t* chunk_block = (ptype_chunk_block_t*)from_ptr(raw__f2ptr_to_ptr(chunk_f2ptr));
   debug__assert(chunk_block, nil, "block is nil.");
   chunk_block->ptype.ptype = ptype_chunk;
@@ -1272,7 +1207,6 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   chunk_block->length      = length;
   if (bytes) {memcpy(chunk_block->bytes, bytes, data_byte_num);}
   else       {bzero(chunk_block->bytes, data_byte_num);}
-  memblock__set_render_position_relative_to(chunk_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, chunk_f2ptr);}
   return chunk_f2ptr;
 }
@@ -1280,15 +1214,13 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
 f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
   ptype_chunk_block_t* init_chunk_block = (ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(init_chunk)));
   u64 data_byte_num = (sizeof(u8) * init_chunk_block->length);
-  f2ptr chunk_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_chunk_block_t));
+  f2ptr chunk_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_chunk_block_t));
   ptype_chunk_block_t* chunk_block = (ptype_chunk_block_t*)from_ptr(raw__f2ptr_to_ptr(chunk_f2ptr));
   debug__assert(chunk_block, nil, "block is nil.");
   chunk_block->ptype.ptype = ptype_chunk;
   chunk_block->ptype.cause = cause;
   chunk_block->length      = init_chunk_block->length;
   memcpy(chunk_block->bytes, init_chunk_block->bytes, data_byte_num);
-  __pure__memblock__render_read_activated__set(init_chunk, 1);
-  memblock__set_render_position_relative_to(chunk_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, chunk_f2ptr);}
   return chunk_f2ptr;
 }
@@ -1302,7 +1234,6 @@ u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8* bytes = __pure__f2chunk__bytes(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return bytes;
 }
 
@@ -1329,7 +1260,6 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2chunk__length(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return length;
 }
 
@@ -1342,7 +1272,6 @@ u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8 retval = __pure__f2chunk__bit8__elt(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return retval;
 }
 
@@ -1353,7 +1282,6 @@ void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 val
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
   __pure__f2chunk__bit8__elt__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
 }
 
 u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -1365,7 +1293,6 @@ u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u16 retval = __pure__f2chunk__bit16__elt(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return retval;
 }
 
@@ -1378,7 +1305,6 @@ void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit16__elt__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
 }
 
 u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -1390,7 +1316,6 @@ u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u32 retval = __pure__f2chunk__bit32__elt(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return retval;
 }
 
@@ -1403,7 +1328,6 @@ void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit32__elt__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
 }
 
 u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -1415,7 +1339,6 @@ u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 retval = __pure__f2chunk__bit64__elt(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return retval;
 }
 
@@ -1428,7 +1351,6 @@ void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit64__elt__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
 }
 
 f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr env, f2ptr args) {
@@ -1439,7 +1361,6 @@ f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr e
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__memblock__render_read_activated__set(this, 1); 
   cfunkptr_t jump = (cfunkptr_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
   printf("\nchunk-cfunk_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   return jump(cause, thread, env, args);
@@ -1453,7 +1374,6 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__memblock__render_read_activated__set(this, 1); 
   bytecode_jump_t jump = (bytecode_jump_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
   //printf("\nchunk-bytecode_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   f2ptr bytecode = nil;
@@ -1468,7 +1388,6 @@ f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int 
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__memblock__render_read_activated__set(this, 1);
   f2ptr rv = f2integer__new(cause, send(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
   return rv;
 }
@@ -1481,7 +1400,6 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__memblock__render_write_activated__set(this, 1); 
   f2ptr rv = f2integer__new(cause, recv(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
   return rv;
 }
@@ -1579,10 +1497,10 @@ void dptr__init(dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr trace, f2ptr imag
 
 f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {
   u64 data_byte_num = (sizeof(f2ptr) * length);
-  f2ptr simple_array_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_simple_array_block_t) + data_byte_num);
+  f2ptr simple_array_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_simple_array_block_t) + data_byte_num);
   ptype_simple_array_block_t* simple_array_block = (ptype_simple_array_block_t*)from_ptr(raw__f2ptr_to_ptr(simple_array_f2ptr));
   debug__assert(simple_array_block, nil, "block is nil.");
-  //debug__assert(!cause || valid_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_memblock_ptr(cause) failed");
+  //debug__assert(!cause || valid_funk2_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_funk2_memblock_ptr(cause) failed");
   simple_array_block->ptype.ptype = ptype_simple_array;
   simple_array_block->ptype.cause = cause;
   simple_array_block->immutable   = 0;
@@ -1596,7 +1514,6 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
       f2ptr_iter  ++;
     }
   }
-  memblock__set_render_position_relative_to(simple_array_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, simple_array_f2ptr);}
   return simple_array_f2ptr;
 }
@@ -1641,7 +1558,6 @@ u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2simple_array__length(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return length;
 }
 
@@ -1660,7 +1576,6 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
     //error(nil, "f2array__elt error: index out of range.");
   }
   f2ptr rv = __pure__f2simple_array__elt(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -1676,7 +1591,6 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__memblock__render_write_activated__set(this, 1);
   u64 length     = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
@@ -1745,10 +1659,9 @@ f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
 f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_ptr) {
   boolean_t tracing_on = raw__cause__is_traced(cause, cause);
   u64 data_byte_num = (sizeof(dptr_t) * length);
-  f2ptr traced_array_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
+  f2ptr traced_array_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
-  //debug__assert(!cause || valid_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_memblock_ptr(cause) failed");
   traced_array_block->ptype.ptype = ptype_traced_array;
   traced_array_block->ptype.cause = cause;
   traced_array_block->length      = length;
@@ -1761,7 +1674,6 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
       dptr_iter  ++;
     }
   }
-  memblock__set_render_position_relative_to(traced_array_f2ptr, cause);
   if (tracing_on) {ptype_trace_create(pool_index, cause, traced_array_f2ptr);}
   return traced_array_f2ptr;
 }
@@ -1769,7 +1681,7 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
 f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
   boolean_t tracing_on = raw__cause__is_traced(cause, cause);
   u64 data_byte_num = (sizeof(dptr_t) * length);
-  f2ptr traced_array_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
+  f2ptr traced_array_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   traced_array_block->ptype.ptype = ptype_traced_array;
@@ -1792,7 +1704,6 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
       dptr_iter  ++;
     }
   }
-  memblock__set_render_position_relative_to(traced_array_f2ptr, cause);
   if (tracing_on) {ptype_trace_create(pool_index, cause, traced_array_f2ptr);}
   return traced_array_f2ptr;
 }
@@ -1844,7 +1755,6 @@ u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return length;
 }
 
@@ -1873,7 +1783,6 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
     f2ptr real_value              = __pure__f2traced_array__elt(this, index);
     return_value = f2__imagination_frame__get_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, imagination_name_stack, real_value, trace_depth - 1);
   }
-  __pure__memblock__render_read_activated__set(this, 1);
   return return_value;
 }
 
@@ -1893,7 +1802,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__memblock__render_write_activated__set(this, 1);
   u64 length     = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
@@ -1968,7 +1876,6 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   f2ptr rv = __pure__f2traced_array__elt__tracing_on(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -1985,7 +1892,6 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   __pure__f2traced_array__elt__tracing_on__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
   return nil;
 }
 
@@ -2002,7 +1908,6 @@ f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   f2ptr rv = __pure__f2traced_array__elt__trace(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -2019,7 +1924,6 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   __pure__f2traced_array__elt__trace__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
   return nil;
 }
 
@@ -2036,7 +1940,6 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2pt
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   f2ptr rv = __pure__f2traced_array__elt__imagination_frame(this, index);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -2053,7 +1956,6 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
   __pure__f2traced_array__elt__imagination_frame__set(this, index, value);
-  __pure__memblock__render_read_activated__set(this, 1);
   return nil;
 }
 
@@ -2150,13 +2052,13 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
 // larva
 
 f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
-  f2ptr larva_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_larva_block_t));
+  f2ptr larva_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_larva_block_t));
   ptype_larva_block_t* larva_block = (ptype_larva_block_t*)from_ptr(raw__f2ptr_to_ptr(larva_f2ptr));
   debug__assert(larva_block, nil, "block is nil.");
   larva_block->ptype.ptype = ptype_larva;
   larva_block->ptype.cause = cause;
   larva_block->type        = type;
-  memblock__set_render_position_relative_to(larva_f2ptr, cause);
+  funk2_memblock__set_render_position_relative_to(larva_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, larva_f2ptr);}
   return larva_f2ptr;
 }
@@ -2177,7 +2079,6 @@ u32 pfunk2__f2larva__type(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u32 type = __pure__f2larva__type(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return type;
 }
 

@@ -355,8 +355,8 @@ typedef struct funk2_gc_touch_circle_buffer_s {
   funk2_memblock_t** end;
 } funk2_gc_touch_circle_buffer_t;
 
-boolean_t                __funk2_gc_touch_circle_buffer__initialized = 0;
-gc_touch_circle_buffer_t __funk2_gc_touch_circle_buffer;
+boolean_t                      __funk2_gc_touch_circle_buffer__initialized = 0;
+funk2_gc_touch_circle_buffer_t __funk2_gc_touch_circle_buffer;
 
 void gc_touch_circle_buffer__init() {
   __funk2_gc_touch_circle_buffer__initialized = 1;

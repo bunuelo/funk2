@@ -2018,7 +2018,6 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
   larva_block->ptype.ptype = ptype_larva;
   larva_block->ptype.cause = cause;
   larva_block->type        = type;
-  funk2_memblock__set_render_position_relative_to(larva_f2ptr, cause);
   return larva_f2ptr;
 }
 

@@ -86,9 +86,9 @@ funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 
 boolean_t valid_funk2_memblock_ptr(ptr p);
 
-#define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&(this->global_memory_allocate_mutex))
-#define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&(this->global_memory_allocate_mutex))
-#define funk2_memorypool__memory_mutex__unlock(this)   funk2_processor_mutex__unlock(&(this->global_memory_allocate_mutex))
+#define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
+#define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&((this)->global_memory_allocate_mutex))
+#define funk2_memorypool__memory_mutex__unlock(this)   funk2_processor_mutex__unlock(&((this)->global_memory_allocate_mutex))
 
 #define f2ptr__computer_id__bit_num  computer_id__bit_num
 #define f2ptr__pool_index__bit_num   pool_index__bit_num

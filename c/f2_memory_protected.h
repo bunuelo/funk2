@@ -78,11 +78,11 @@ typedef struct funk2_memorypool_s {
 #include "f2_ptypes_memory.h"
 #include "f2_memory.h"
 
-f2ptr       pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
-f2ptr       pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num);
-f2ptr       funk2_memblock_f2ptr__new(f2size_t byte_num);
-memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num);
-memblock_t* funk2_memblock__new(f2size_t byte_num);
+f2ptr             pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
+f2ptr             pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num);
+f2ptr             funk2_memblock_f2ptr__new(f2size_t byte_num);
+funk2_memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num);
+funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 
 boolean_t valid_funk2_memblock_ptr(ptr p);
 

@@ -84,8 +84,6 @@ f2ptr             funk2_memblock_f2ptr__new(f2size_t byte_num);
 funk2_memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num);
 funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 
-boolean_t valid_funk2_memblock_ptr(ptr p);
-
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
 #define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&((this)->global_memory_allocate_mutex))
 #define funk2_memorypool__memory_mutex__unlock(this)   funk2_processor_mutex__unlock(&((this)->global_memory_allocate_mutex))
@@ -174,11 +172,12 @@ typedef struct funk2_memory_s {
   boolean_t          bootstrapping_mode;
 } funk2_memory_t;
 
-void funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
-void funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread
-void funk2_memory__signal_enter_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
-void funk2_memory__signal_exit_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
-void funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
-void funk2_memory__print_gc_stats(funk2_memory_t* this);
+void      funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
+void      funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread
+void      funk2_memory__signal_enter_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
+void      funk2_memory__signal_exit_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
+void      funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
+void      funk2_memory__print_gc_stats(funk2_memory_t* this);
+boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
 
 #endif // F2__MEMORY__PROTECTED__H

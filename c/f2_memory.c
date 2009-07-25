@@ -1224,6 +1224,8 @@ int raw__memory_image__save(char* filename) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__lock(pool_index);
   }
+  // handles any delayed garbage collections
+  funk2_memory__handle(&(__funk2.memory));
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
     printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);

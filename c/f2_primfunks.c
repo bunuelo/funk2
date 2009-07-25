@@ -69,24 +69,6 @@ def_pcfunk1(deref_pointer, x, return f2__deref_pointer(this_cause, x));
 
 // memblock
 
-f2ptr f2__memblock__set_init_render_xyz(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
-  memblock__set_init_render_xyz(f2float__f(x, cause), f2float__f(y, cause), f2float__f(z, cause));
-  return nil;
-}
-def_pcfunk3(memblock__set_init_render_xyz, x, y, z, return f2__memblock__set_init_render_xyz(this_cause, x, y, z));
-
-f2ptr f2__memblock__set_init_render_on(f2ptr cause, f2ptr render_on) {
-  memblock__set_init_render_on(f2integer__i(render_on, cause));
-  return nil;
-}
-def_pcfunk1(memblock__set_init_render_on, render_on, return f2__memblock__set_init_render_on(this_cause, render_on));
-
-f2ptr f2__memblock__set_init_render_noise(f2ptr cause, f2ptr render_noise) {
-  memblock__set_init_render_noise(f2float__f(render_noise, cause));
-  return nil;
-}
-def_pcfunk1(memblock__set_init_render_noise, render_noise, return f2__memblock__set_init_render_noise(this_cause, render_noise));
-
 // ptype
 
 f2ptr f2__ptype__raw(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2ptype__raw(x, cause));}
@@ -1887,12 +1869,6 @@ void f2__primcfunks__initialize() {
   
   f2__funktional_primcfunk__init__1(pointer, exp, "");
   f2__funktional_primcfunk__init__1(deref_pointer, pointer, "");
-  
-  // ptype
-  
-  f2__primcfunk__init__4(           memblock__set_init_render_xyz,              this, x, y, z, "");
-  f2__primcfunk__init__2(           memblock__set_init_render_on,               this, value, "");
-  f2__primcfunk__init__2(           memblock__set_init_render_noise,            this, value, "");
   
   // ptype
   

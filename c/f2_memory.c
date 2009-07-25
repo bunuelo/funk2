@@ -355,23 +355,23 @@ typedef struct funk2_gc_touch_circle_buffer_s {
   funk2_memblock_t** end;
 } funk2_gc_touch_circle_buffer_t;
 
-boolean_t                      __funk2_gc_touch_circle_buffer__initialized = 0;
-funk2_gc_touch_circle_buffer_t __funk2_gc_touch_circle_buffer;
+boolean_t                      __gc_touch_circle_buffer__initialized = 0;
+funk2_gc_touch_circle_buffer_t __gc_touch_circle_buffer;
 
 void gc_touch_circle_buffer__init() {
-  __funk2_gc_touch_circle_buffer__initialized = 1;
-  __funk2_gc_touch_circle_buffer.num   = FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE;
-  __funk2_gc_touch_circle_buffer.start = (funk2_memblock_t**)from_ptr(f2__malloc(FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
-  __funk2_gc_touch_circle_buffer.end   = __funk2_gc_touch_circle_buffer.start + FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE;  
+  __gc_touch_circle_buffer__initialized = 1;
+  __gc_touch_circle_buffer.num   = GC_TOUCH_CIRCLE_BUF_START_SIZE;
+  __gc_touch_circle_buffer.start = (funk2_memblock_t**)from_ptr(f2__malloc(GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
+  __gc_touch_circle_buffer.end   = __gc_touch_circle_buffer.start + GC_TOUCH_CIRCLE_BUF_START_SIZE;  
 }
 
 funk2_memblock_t** __circle_buf_start_index;
 funk2_memblock_t** __circle_buf_end_index;
 
 void gc_touch_print_array(char* message) {
-  ptr* iter = (ptr*)__funk2_gc_touch_circle_buffer.start;
+  ptr* iter = (ptr*)__gc_touch_circle_buffer.start;
   printf("\n%16s: {", message);
-  for(; iter < (ptr*)__funk2_gc_touch_circle_buffer.end; iter++) {
+  for(; iter < (ptr*)__gc_touch_circle_buffer.end; iter++) {
     if (iter == (ptr*)__circle_buf_start_index) {
       printf(" *S*");
     }

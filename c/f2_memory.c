@@ -59,12 +59,18 @@ ptr f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num) {
   return new_mem;
 }
 
+
+// funk2_memblock
+
 void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch) {
   funk2_memblock__byte_num(block) = byte_num;
   block->used                     = used;
   block->gc_touch                 = gc_touch;
   block->generation_num           = 0;
 }
+
+
+// funk2_memorypool
 
 void funk2_memorypool__init(funk2_memorypool_t* pool) {
   funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex));
@@ -126,18 +132,20 @@ void funk2_memorypool__signal_exit_bytecode(funk2_memorypool_t* this) {
   }
 }
 
-boolean_t valid_funk2_memblock_ptr(ptr p) {
+
+
+boolean_t funk2_memory__valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))))) + __funk2.memory.pool[pool_index].total_global_memory);
+    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))))) + (this->pool[pool_index].total_global_memory));
     int byte_num;
     while(iter < end_of_blocks) {
       if ((to_ptr(iter)) == p) {return 1;}
       byte_num = funk2_memblock__byte_num(iter);
       if (byte_num <= 0) {
 	char str[1024];
-	sprintf(str, "valid_funk2_memblock_ptr error: byte_num <= 0 (%d).", byte_num);
+	sprintf(str, "funk2_memory__valid_funk2_memblock_ptr error: byte_num <= 0 (%d).", byte_num);
 	error(nil, str);
       }
       iter = (funk2_memblock_t*)(((u8*)iter) + byte_num);
@@ -160,7 +168,7 @@ ptr debug__f2ptr_to_ptr(f2ptr f2p) {
   }
   ptr p = __f2ptr_to_ptr(f2p);
 #ifdef DEBUG_MEMORY_VALID_PTRS
-  if (p && (! valid_funk2_memblock_ptr(p))) {
+  if (p && (! funk2_memory__valid_funk2_memblock_ptr((&__funk2.memory), p))) {
     char str[1024];
     sprintf(str, "debug__f2ptr_to_ptr error: invalid memblock f2ptr (%d).", (int)f2p);
     error(nil, str);
@@ -182,7 +190,7 @@ ptr debug__used_f2ptr_to_ptr(f2ptr f2p) {
   }
   ptr p = __f2ptr_to_ptr(f2p);
 #ifdef DEBUG_MEMORY_VALID_PTRS
-  if (p && (! valid_funk2_memblock_ptr(p))) {
+  if (p && (! funk2_memory__valid_funk2_memblock_ptr((&__funk2.memory), p))) {
     char str[1024];
     sprintf(str, "debug__ptr_to_f2ptr error: invalid memblock f2ptr (%d).", (int)f2p);
     error(nil, str);
@@ -520,7 +528,7 @@ void gc_touch__advance_start_index() {
   }
 }
 
-#define gc_touch__f2ptr(block_f2ptr)       {if (block_f2ptr) {ptr block_ptr = __f2ptr_to_ptr(block_f2ptr); debug__assert(!block_ptr || valid_funk2_memblock_ptr(block_ptr), nil, "valid_funk2_memblock_ptr(block_ptr) failed"); __circle_buf_end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr); gc_touch_circle_buffer__advance_end();}}
+#define gc_touch__f2ptr(block_f2ptr)       {if (block_f2ptr) {ptr block_ptr = __f2ptr_to_ptr(block_f2ptr); debug__assert(!block_ptr || funk2_memory__valid_funk2_memblock_ptr(&(__funk2.memory), block_ptr), nil, "funk2_memory__valid_funk2_memblock_ptr(block_ptr) failed"); __circle_buf_end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr); gc_touch_circle_buffer__advance_end();}}
 
 void gc_touch__dptr(dptr_t* dptr) {
   gc_touch__f2ptr(dptr->p);
@@ -566,7 +574,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 		  "\n    sizeof(simple_array_block) = %lu"
 		  "\n    sizeof(array_block)        = %lu"
 		  "\n    sizeof(larva_block)        = %lu",
-		  (unsigned long)valid_funk2_memblock_ptr(to_ptr(block)),
+		  (unsigned long)funk2_memory__valid_funk2_memblock_ptr(&(__funk2.memory), to_ptr(block)),
 		  (unsigned long)funk2_memblock__byte_num((funk2_memblock_t*)block),
 		  (unsigned long)sizeof(ptype_integer_block_t),
 		  (unsigned long)sizeof(ptype_double_block_t),
@@ -615,7 +623,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 	{
 	  char str[1024];
 	  sprintf(str, "unknown type (%d) of block (valid=%d) in garbage collector.",
-		  (int)(block->ptype), (int)valid_funk2_memblock_ptr(to_ptr(block)));
+		  (int)(block->ptype), (int)funk2_memory__valid_funk2_memblock_ptr(&(__funk2.memory), to_ptr(block)));
 	  error(nil, str);
 	}
       }

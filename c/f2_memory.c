@@ -311,7 +311,7 @@ void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this,
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
 }
 
-u8 defragment_free_memory_blocks_in_place(int pool_index) {
+u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this) {
   funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
   status("defragmenting __funk2.memory.pool[%d]", pool_index);
   u8 did_something = 0;
@@ -716,7 +716,7 @@ ptr find_or_create_free_splittable_funk2_memblock_and_unfree(int pool_index, f2s
   if (block) {return block;}  
   // If we get here then we failed to allocate enough memory from pool.
   funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
-  if (defragment_free_memory_blocks_in_place(pool_index)) {
+  if (funk2_memorypool__defragment_free_memory_blocks_in_place(&(__funk2.memory.pool[pool_index]))) {
     block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
     if (block) {return block;}
   }

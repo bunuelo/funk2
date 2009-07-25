@@ -312,13 +312,13 @@ void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this,
 }
 
 u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this) {
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  status("defragmenting __funk2.memory.pool[%d]", pool_index);
+  funk2_memorypool__debug_memory_test(this, 1);
+  status("defragmenting funk2_memorypool");
   u8 did_something = 0;
-  funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
+  funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(this));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   funk2_memblock_t* segment_first_free_block = NULL;
-  rbt_tree__init(&(__funk2.memory.pool[pool_index].free_memory_tree), NULL);
+  rbt_tree__init(&(this->free_memory_tree), NULL);
   while(iter < end_of_blocks) {
     if (segment_first_free_block) {
       // we are currently in a segment of free blocks
@@ -327,9 +327,9 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	segment_first_free_block = NULL;
       } else {
 	// we should combine this free block with the others in this segment
-	rbt_tree__remove(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)segment_first_free_block);
+	rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
 	funk2_memblock__byte_num(segment_first_free_block) += funk2_memblock__byte_num(iter);
-	rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)segment_first_free_block);
+	rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
 	iter = segment_first_free_block;
 	// set did_something flag
 	did_something = 1;
@@ -337,15 +337,13 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
     } else {
       if (! iter->used) {
 	segment_first_free_block = iter;
-	funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), iter);
-	//funk2_memblock__next(iter) = __funk2.memory.pool[pool_index].free_memory_blocks;
-	//__funk2.memory.pool[pool_index].free_memory_blocks = iter;
+	funk2_memorypool__link_funk2_memblock_to_freelist(this, iter);
       }
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
   release__assert(iter == end_of_blocks, nil, "failed.");
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
+  funk2_memorypool__debug_memory_test(this, 1);
   return did_something;
 }
 

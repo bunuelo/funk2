@@ -761,9 +761,11 @@ void garbage_collect__touch_everything(int generation_num) {
 u8 garbage_collect_generation(int generation_num) {
   status("collecting garbage...");
   int pool_index;
+#ifdef DEBUG_MEMORY
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     debug_memory_test(pool_index, 1);
   }
+#endif
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     clear_all_gc_touch_flags_before_generation(pool_index, generation_num);
   }
@@ -779,9 +781,7 @@ u8 garbage_collect_generation(int generation_num) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     debug_memory_test(pool_index, 1);
   }
-  //#ifdef DEBUG_MEMORY
   status("...done collecting garbage."); fflush(stdout);
-  //#endif // DEBUG_MEMORY
   return did_something;
 }
 

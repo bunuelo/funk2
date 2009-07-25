@@ -33,7 +33,7 @@ typedef unsigned char boolean_t;
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)
 
-#define F2__INITIAL_MEMORY 1024
+#define F2__INITIAL_MEMORY (10 * 1024 * 1024ull)
 
 #ifdef F2__ASSERTIONS__DEBUG
 #  define debug__assert(cond, thread, desc)                            {if(! (cond)) {assert_failed(thread, __FILE__, __LINE__, desc);}}

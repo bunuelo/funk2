@@ -53,7 +53,7 @@ typedef struct memblock_s memblock_t;
 //#define memblock__next(this)             ((memblock_t*)((this)->rbt_node.right))
 //#define memblock__next__set(this, value) (((this)->rbt_node.right) = (rbt_node_t*)(value))
 
-typedef struct memorypool_s {
+typedef struct funk2_memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;
   uint                    disable_gc; // incremented/decremented by pause_gc/resume_gc
   boolean_t               should_run_gc; // if disabled when needed more memory (and allocated more) then True
@@ -75,12 +75,12 @@ typedef struct memorypool_s {
   u64                     protected_alloc_array__length;
   f2ptr*                  protected_alloc_array;
   u64                     protected_alloc_array__reentrance_count;
-} memorypool_t;
+} funk2_memorypool_t;
 
 #if defined(DYNAMIC_MEMORY)
-#  define memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
+#  define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
 #elif defined(STATIC_MEMORY)
-#  define memorypool__memory__ptr(this) ((this)->static_memory->ptr)
+#  define funk2_memorypool__memory__ptr(this) ((this)->static_memory->ptr)
 #else
 #  error DYNAMIC_MEMORY or STATIC_MEMORY must be defined.
 #endif
@@ -179,17 +179,17 @@ extern ptr   fast__f2ptr_to_ptr(f2ptr f2p);
 extern f2ptr fast__ptr_to_f2ptr(ptr   p);
 
 typedef struct funk2_memory_s {
-  memorypool_t pool[memory_pool_num];
-  ptr          global_environment_ptr;
-  f2ptr        global_environment_f2ptr;
-  float        memblock__last_x;
-  float        memblock__last_y;
-  float        memblock__last_z;
-  u8           memblock__render_on;
-  float        memblock__render_noise;
-  u64          last_garbage_collect_nanoseconds_since_1970;
-  pthread_t    memory_handling_thread;
-  boolean_t    bootstrapping_mode;
+  funk2_memorypool_t pool[memory_pool_num];
+  ptr                global_environment_ptr;
+  f2ptr              global_environment_f2ptr;
+  float              memblock__last_x;
+  float              memblock__last_y;
+  float              memblock__last_z;
+  u8                 memblock__render_on;
+  float              memblock__render_noise;
+  u64                last_garbage_collect_nanoseconds_since_1970;
+  pthread_t          memory_handling_thread;
+  boolean_t          bootstrapping_mode;
 } funk2_memory_t;
 
 void funk2_memory__init(funk2_memory_t* this); // only called by memory management thread

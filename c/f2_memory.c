@@ -1398,15 +1398,17 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       status ("**********************************");
       status ("");
       for (index = 0; index < memory_pool_num; index ++) {
-	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	int did_something = garbage_collect(index, 1024);
-	if (did_something) {
-	  status ("garbage collection did something.");
-	} else {
-	  status ("garbage collection did nothing.");
+	if (memory->pool[index].should_run_gc) {
+	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+	  int did_something = garbage_collect(index, 1024);
+	  if (did_something) {
+	    status ("garbage collection did something.");
+	  } else {
+	    status ("garbage collection did nothing.");
+	  }
+	  memory->pool[index].should_run_gc = boolean__false;
+	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
 	}
-	memory->pool[index].should_run_gc = boolean__false;
-	status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
       }
     } else {
       status ("");

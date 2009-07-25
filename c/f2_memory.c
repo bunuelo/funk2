@@ -35,15 +35,6 @@ ptr malloc_executable(size_t required_bytes) {
     perror("malloc_executable() malloc");
     error(nil, "malloc_executable malloc failed.");
   }
-  //#ifdef OSX104
-  //  void* p = mmap(0,    alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_ANON,                   -1, 0);
-  //#else
-  //  void* p = mmap(NULL, alloc_bytes, PROT_EXEC | PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,  0, 0);
-  //#endif
-  //if (p == MAP_FAILED) {
-  //  perror("malloc_executable() mmap");
-  //  error(nil, "malloc_executable mmap failed.");
-  //}
   return to_ptr(p);
 }
 
@@ -94,63 +85,11 @@ ptr f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num) {
   return new_mem;
 }
 
-/*
-memorypool_t __pool[memory_pool_num];
-
-memblock_t* __global_environment_ptr   = NULL;
-f2ptr       __global_environment_f2ptr = nil;
-
-// struct memorypool
-
-float memblock__last_x       =  0.0;
-float memblock__last_y       =  0.0;
-float memblock__last_z       =  0.0;
-u8    memblock__render_on    =  1;
-float memblock__render_noise =  2.5;
-*/
-
-
-void memblock__set_init_render_xyz(float x, float y, float z) {
-  __funk2.memory.memblock__last_x = x;
-  __funk2.memory.memblock__last_y = y;
-  __funk2.memory.memblock__last_z = z;
-}
-
-void memblock__set_init_render_on(u8 render_on) {
-  __funk2.memory.memblock__render_on = render_on;
-}
-
-void memblock__set_init_render_noise(float render_noise) {
-  __funk2.memory.memblock__render_noise = render_noise;
-}
-
 void memblock__init(memblock_t* block, f2size_t byte_num, int used, int gc_touch) {
   memblock__byte_num(block)               = byte_num;
   block->used                             = used;
   block->gc_touch                         = gc_touch;
   block->generation_num                   = 0;
-  
-#ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
-  float dx = (__funk2.memory.memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
-  float dy = (__funk2.memory.memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
-  float dz = (__funk2.memory.memblock__render_noise / 10000000.0) * (float)(rand() % 20001 - 10000);
-  __funk2.memory.memblock__last_x += dx;
-  __funk2.memory.memblock__last_y += dy;
-  __funk2.memory.memblock__last_z += dz;
-  if (__funk2.memory.memblock__last_x < -1.0) {__funk2.memory.memblock__last_x = -1.0;}
-  if (__funk2.memory.memblock__last_x >  1.0) {__funk2.memory.memblock__last_x =  1.0;}
-  if (__funk2.memory.memblock__last_y < -1.0) {__funk2.memory.memblock__last_y = -1.0;}
-  if (__funk2.memory.memblock__last_y >  1.0) {__funk2.memory.memblock__last_y =  1.0;}
-  if (__funk2.memory.memblock__last_z < -1.0) {__funk2.memory.memblock__last_z = -1.0;}
-  if (__funk2.memory.memblock__last_z >  1.0) {__funk2.memory.memblock__last_z =  1.0;}
-  block->render_position[0]               = __funk2.memory.memblock__last_x;
-  block->render_position[1]               = __funk2.memory.memblock__last_y;
-  block->render_position[2]               = __funk2.memory.memblock__last_z;
-  block->render_create_activated          = 1;
-  block->render_read_activated            = 0;
-  block->render_write_activated           = 0;
-  block->render_on                        = __funk2.memory.memblock__render_on;
-#endif // MEMORY_OPTION__MEMBLOCK__RENDER_DATA
 }
 
 void memorypool__init(memorypool_t* pool) {
@@ -160,20 +99,12 @@ void memorypool__init(memorypool_t* pool) {
   pool->should_enlarge_memory_now            = boolean__false;
   pool->total_allocated_memory_since_last_gc = 0;
   pool->next_unique_block_id                 = 0;
-#if defined(DYNAMIC_MEMORY)
   pool->total_global_memory = sizeof(memblock_t) + F2__INITIAL_MEMORY;
   f2dynamicmemory__init_and_alloc(&(pool->dynamic_memory), sizeof(memblock_t) + F2__INITIAL_MEMORY);
-#elif defined(STATIC_MEMORY)
-  pool->total_global_memory = STATIC_MEMORY__BYTE_NUM;
-  pool->static_memory = global_static_memory();
-  f2staticmemory__initialize(pool->static_memory);
-#endif
   
   pool->total_free_memory = pool->total_global_memory;
   
-  //pool->global_memory_block_data = f2__malloc(sizeof(memblock_t) + F2__INITIAL_MEMORY);
   pool->global_f2ptr_offset = to_ptr(memorypool__memory__ptr(pool) - 1);
-  //pool->global_f2ptr_offset = pool->global_memory_block_data - 1;
   memblock_t* block = (memblock_t*)from_ptr(memorypool__memory__ptr(pool));
   memblock__init(block, pool->total_global_memory, 0, 0);
   
@@ -192,13 +123,8 @@ void memorypool__init(memorypool_t* pool) {
 }
 
 void pool__destroy(int pool_index) {
-  //ptype_access__lockout_access(pool_index, 0);
   memory_mutex__lock(pool_index);
-  
-#if defined(DYNAMIC_MEMORY)
   f2dynamicmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].dynamic_memory));
-#elif defined(STATIC_MEMORY)
-#endif
 }
 
 void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) {
@@ -214,9 +140,6 @@ void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) 
 
 void memorypool__signal_enter_bytecode(memorypool_t* this) {
   this->single_bytecode_alloc_array__reentrance_count ++;
-  //if (this->single_bytecode_alloc_array__reentrance_count > 1) {
-  //  status("memorypool__signal_enter_bytecode: reentrance_count > 1, reentrance_count=%d", this->single_bytecode_alloc_array__reentrance_count);
-  //}
 }
 
 void memorypool__signal_exit_bytecode(memorypool_t* this) {
@@ -246,7 +169,6 @@ boolean_t valid_memblock_ptr(ptr p) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memblock_t* iter = (memblock_t*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
-    //memblock_t* iter = __funk2.memory.pool[pool_index].global_memory_block_data;
     memblock_t* end_of_blocks = (memblock_t*)(((u8*)(from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))))) + __funk2.memory.pool[pool_index].total_global_memory);
     int byte_num;
     while(iter < end_of_blocks) {
@@ -286,23 +208,6 @@ ptr debug__f2ptr_to_ptr(f2ptr f2p) {
   return p;
 }
 
-/*
-f2ptr debug__ptr_to_f2ptr(ptr p) {
-  f2ptr f2p = __ptr_to_f2ptr(p);
-  if (f2p < 0 || f2p >= __pool[0].total_global_memory) {
-    error(nil, "debug__ptr_to_f2ptr error: received invalid pointer.");
-  }
-#ifdef DEBUG_MEMORY_VALID_PTRS
-  if (p && (! valid_memblock_ptr(p))) {
-    char str[1024];
-    sprintf(str, "debug__ptr_to_f2ptr error: invalid memblock f2ptr (%d).", (int)f2p);
-    error(nil, str);
-  }
-#endif
-  return f2p;
-}
-*/
-
 ptr debug__used_f2ptr_to_ptr(f2ptr f2p) {
   computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
   pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
@@ -331,35 +236,10 @@ ptr debug__used_f2ptr_to_ptr(f2ptr f2p) {
   return p;
 }
 
-/*
-f2ptr debug__used_ptr_to_f2ptr(ptr p) {
-  f2ptr f2p = __ptr_to_f2ptr(p);
-  if (f2p < 0 || f2p >= __pool[0].total_global_memory) {
-    error(nil, "debug__used_ptr_to_f2ptr error: received invalid pointer.");
-  }
-#ifdef DEBUG_MEMORY_VALID_PTRS
-  if (p && (! valid_memblock_ptr(p))) {
-    char str[1024];
-    sprintf(str, "debug__ptr_to_f2ptr error: invalid memblock f2ptr (%d).", (int)f2p);
-    error(nil, str);
-  }
-#endif
-  if (p) {
-    memblock_t* block = (memblock_t*)p;
-    if(! block->used) {
-      error(nil, "debug__used_ptr_to_f2ptr error: referenced unused memory block.");
-    }
-  }
-  return f2p;
-}
-*/
-
-// for some reason a raw #define screws things up with GC enabled... (or at least used to...  8-D )
+// for some reason a raw #define screws things up with GC enabled... [or at least used to...  8-( ]
 ptr fast__f2ptr_to_ptr(f2ptr f2p) {
   return (__f2ptr_to_ptr(f2p));
 }
-
-//f2ptr fast__ptr_to_f2ptr(ptr   p)   {return __ptr_to_f2ptr(p);}
 
 f2size_t total_used_memory(int pool_index) {
   f2size_t used_memory_count = 0;
@@ -384,9 +264,7 @@ f2size_t total_free_memory(int pool_index) {
 }
 
 void memory_test__dynamic_memory(int pool_index) {
-#ifdef DYNAMIC_MEMORY
   release__assert(__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test: (__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory) failed.");
-#endif // DYNAMIC_MEMORY
 }
 
 void memory_test__byte_num_zero(int pool_index) {
@@ -457,10 +335,7 @@ void memory_test(int pool_index) {
       free_iter = rbt_node__next(free_iter);
     }
   }
-  //printf("...done testing memory in pool[%d].", pool_index); fflush(stdout);
 }
-
-#if defined(DYNAMIC_MEMORY) // can't resize static memory configurations at all.
 
 void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
   if(((u64)byte_num) > ((u64)f2ptr__pool_address__max_value)) {
@@ -468,15 +343,10 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
 	   ((u64)byte_num), ((u64)f2ptr__pool_address__max_value));
     error(nil, "pool__change_total_memory_available error: tried to allocate more memory than is able to be addressed (are you using a 32 bit version still?).");
   }
-  //#ifdef DEBUG_MEMORY
   status("pool__change_total_memory_available(%d, " f2size_t__fstr ")", pool_index, byte_num); fflush(stdout);
-  //#endif // DEBUG_MEMORY
-  //debug_memory_test(pool_index, 3);
   if (byte_num == __funk2.memory.pool[pool_index].total_global_memory) {return;}
-  //ptype_access__lockout_access(1);
   f2size_t         old_total_global_memory      = __funk2.memory.pool[pool_index].total_global_memory;
   f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
-  //__funk2.memory.pool[pool_index].global_memory_block_data = f2__new_alloc(__funk2.memory.pool[pool_index].global_memory_block_data, old_total_global_memory, byte_num);
   f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, byte_num);
   __funk2.memory.pool[pool_index].global_f2ptr_offset = __funk2.memory.pool[pool_index].dynamic_memory.ptr - 1;
   __funk2.memory.pool[pool_index].total_global_memory = byte_num;
@@ -504,18 +374,14 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
       memblock__byte_num(iter) = (byte_num - old_total_global_memory);
       iter->used     = 0;
       iter->gc_touch = 0;
-      //#ifdef DEBUG_MEMORY
       status("pool__change_total_memory_available: created new block with size memblock__byte_num(last) = " f2size_t__fstr, memblock__byte_num(iter));
-      //#endif // DEBUG_MEMORY
       rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)iter);
       release__assert(memblock__byte_num(iter) > 0, nil, "(memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
     } else {
       rbt_tree__remove(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)last);
       memblock__byte_num(last) += (byte_num - old_total_global_memory);
       rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)last);
-      //#ifdef DEBUG_MEMORY
       status("pool__change_total_memory_available: increased last block size to memblock__byte_num(last) = " f2size_t__fstr, memblock__byte_num(last));
-      //#endif // DEBUG_MEMORY
       release__assert(memblock__byte_num(last) > 0, nil, "(memblock__byte_num(last) >= 0) should be enough free space to reduce memory block.");
     }
   } else {
@@ -531,10 +397,8 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
     }
   }
   __funk2.memory.pool[pool_index].total_free_memory += (byte_num - old_total_global_memory);
-  //ptype_access__unlockout_access();
   debug_memory_test(pool_index, 1);
 }
-#endif // DYNAMIC_MEMORY
 
 void clear_all_gc_touch_flags(int pool_index) {
   debug_memory_test(pool_index, 3);
@@ -558,56 +422,13 @@ void clear_all_gc_touch_flags_before_generation(int pool_index, int generation_n
   debug_memory_test(pool_index, 3);
 }
 
-u8 defragment_free_memory_blocks_to_end(int pool_index) {
-  debug_memory_test(pool_index, 3);
-  u8 did_something = 0;
-  /*
-  memblock_t* iter = __funk2.memory.pool[0].global_memory_block_data;
-  memblock_t* end_of_blocks = (memblock_t*)(((u8*)__funk2.memory.pool[0].global_memory_block_data) + __funk2.memory.pool[0].total_global_memory);
-  memblock_t* next_used_dest = __funk2.memory.pool[0].global_memory_block_data;
-  memblock_t* next;
-  u32 byte_num;
-  u32 total_free_bytes = 0;
-  __funk2.memory.pool[0].used_memory_blocks = NULL;
-  while(iter < end_of_blocks) {
-    byte_num = iter->byte_num;
-    next = (memblock_t*)(((u8*)iter) + byte_num);
-    if (iter->used) {
-      if (iter != next_used_dest) {
-	// move used memory block to end of all other used memory blocks
-	memmove(next_used_dest, iter, byte_num);
-      }
-      // add to used memory blocks
-      next_used_dest->rbt_node.right = __funk2.memory.pool[0].used_memory_blocks;
-      __funk2.memory.pool[0].used_memory_blocks = next_used_dest;
-      // move to next place to put next used memory block (or final free memory block)
-      next_used_dest = (memblock_t*)(((u8*)next_used_dest) + byte_num);
-    } else {
-      total_free_bytes += byte_num;
-    }
-    iter = next;
-  }
-  assert(iter == end_of_blocks, nil, "failed.");
-  // now we just have the rest as free memory
-  next_used_dest->rbt_node.right     = NULL;
-  next_used_dest->byte_num = total_free_bytes;
-  next_used_dest->used     = 0;
-  next_used_dest->gc_touch = 0;
-  __funk2.memory.pool[0].free_memory_blocks = next_used_dest;
-  debug_memory_test(pool_index, 3);
-  */
-  return did_something;
-}
-
 void pool__link_memblock_to_freelist(int pool_index, memblock_t* block) {
   rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)block);
 }
 
 u8 defragment_free_memory_blocks_in_place(int pool_index) {
   debug_memory_test(pool_index, 1);
-  //#ifdef DEBUG_MEMORY
   status("defragmenting __funk2.memory.pool[%d]", pool_index);
-  //#endif // DEBUG_MEMORY
   u8 did_something = 0;
   memblock_t* iter = (memblock_t*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
   memblock_t* end_of_blocks = (memblock_t*)(((u8*)from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
@@ -739,7 +560,6 @@ void gc_touch__advance_start_index() {
 }
 
 #define gc_touch__f2ptr(block_f2ptr)       {if (block_f2ptr) {ptr block_ptr = __f2ptr_to_ptr(block_f2ptr); debug__assert(!block_ptr || valid_memblock_ptr(block_ptr), nil, "valid_memblock_ptr(block_ptr) failed"); __circle_buf_end_index[0] = (memblock_t*)from_ptr(block_ptr); gc_touch_circle_buffer__advance_end();}}
-//#define gc_touch__gfunkptr(block_gfunkptr) {f2ptr block_f2ptr = local_gfunkptr__to_f2ptr(block_gfunkptr); gc_touch__f2ptr(block_f2ptr);}
 
 void gc_touch__dptr(dptr_t* dptr) {
   gc_touch__f2ptr(dptr->p);
@@ -871,7 +691,7 @@ u8 pool__free_all_gc_untouched_blocks(int pool_index) {
 }
 
 u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int generation_num) {
-  //status("freeing all untouched blocks for pool %d, generation %d.", pool_index, generation_num);
+  status("freeing all untouched blocks for pool %d, generation %d.", pool_index, generation_num);
   debug_memory_test(pool_index, 1);
   u8 did_something = 0;
   rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
@@ -879,7 +699,6 @@ u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int genera
   while (iter) {
     next = rbt_node__next(iter);
     if (((memblock_t*)iter)->generation_num <= generation_num && (! ((memblock_t*)iter)->gc_touch)) {
-      //status("freeing block!");
       // remove from used list
       rbt_tree__remove(&(__funk2.memory.pool[pool_index].used_memory_tree), iter);
       // set to free
@@ -930,12 +749,17 @@ void gc_touch_all_single_bytecode_alloc_arrays() {
   }
 }
 
+void garbage_collect__touch_everything(int generation_num) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    pool__touch_all_referenced_from_generation(pool_index, generation_num);
+  }
+  gc_touch_all_symbols();
+  gc_touch_all_single_bytecode_alloc_arrays();
+}
+
 u8 garbage_collect_generation(int generation_num) {
-  // all pools must be locked
-  //error(nil, "DEBUGGING! garbage collection disabled for now.");
-  //#ifdef DEBUG_MEMORY
   status("collecting garbage...");
-  //#endif // DEBUG_MEMORY
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     debug_memory_test(pool_index, 1);
@@ -945,11 +769,7 @@ u8 garbage_collect_generation(int generation_num) {
   }
   
   // this is where we touch everything we want to keep!
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    pool__touch_all_referenced_from_generation(pool_index, generation_num);
-  }
-  gc_touch_all_symbols();
-  gc_touch_all_single_bytecode_alloc_arrays();
+  garbage_collect__touch_everything(generation_num);
   
   u8 did_something = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -965,19 +785,13 @@ u8 garbage_collect_generation(int generation_num) {
   return did_something;
 }
 
-//#define NO_GENERATIONAL_GARBAGE_COLLECTION
-
 u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   //printf("\ngarbage_collect(%d, " f2size_t__fstr ") note: running.", pool_index, goal_free_block_byte_num); fflush(stdout);
   u8  did_something      = 0;
-#ifdef NO_GENERATIONAL_GARBAGE_COLLECTION
-  int try_generation_num = maximum_generation_num;
-#else
   int try_generation_num = 1;
-#endif
   while (try_generation_num <= maximum_generation_num && (! did_something)) {
     status("garbage_collect try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
-    //memblock_t* max_size_block = (memblock_t*)rbt_tree__maximum(&(__funk2.memory.pool[pool_index].free_memory_tree));
+    memblock_t* max_size_block = (memblock_t*)rbt_tree__maximum(&(__funk2.memory.pool[pool_index].free_memory_tree));
     //if (max_size_block && memblock__byte_num(max_size_block) >= goal_free_block_byte_num) {
     //  break;
     //}
@@ -1001,22 +815,17 @@ memblock_t* find_splittable_free_block_and_unfree(int pool_index, f2size_t byte_
     rbt_tree__remove(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)max_size_block);
     max_size_block->used = 1;
   } else {
-    //#ifdef DEBUG_MEMORY
     if (!max_size_block) {
       status("there are no free memory blocks left.");
     } else {
       status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, memblock__byte_num(max_size_block));
     }
-    //#endif // DEBUG_MEMORY
     max_size_block = NULL; // largest free memory block is not large enough.  fail.
   }
   // debug_memory_test(pool_index, 3); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
   return max_size_block;
 }
 
-//
-// bug: pool__try_gc has thread lock conditions with find_or_create_free_splittable_memblock_and_unfree.
-//
 ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t byte_num) {
   ptr block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
   if (block) {return block;}  
@@ -1025,50 +834,14 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
     block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
     if (block) {return block;}
   }
-  //if (defragment_free_memory_blocks_to_end()) {
-  //  block = find_splittable_free_block_and_unfree(byte_num);
-  //  if (block) {return block;}
-  //}
   int disable_gc = 0;
   int index;
   for (index = 0; index < memory_pool_num; index ++) {
     disable_gc |= __funk2.memory.pool[index].disable_gc;
   }
-  /*
-  if (! disable_gc) {
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (index != pool_index) {
-	ptype_access__lockout_access(index, 0);
-	memory_mutex__lock(index);
-      }
-    }
-    int did_something = garbage_collect(pool_index, byte_num);
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (index != pool_index) {
-	memory_mutex__unlock(index);
-	ptype_access__unlockout_access(index);
-      }
-    }
-    if (did_something) {
-      block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
-      if (block) {return block;}
-    }
-    if (defragment_free_memory_blocks_in_place(pool_index)) {
-      block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
-      if (block) {return block;}
-    }
-    if (defragment_free_memory_blocks_to_end(pool_index)) {
-      block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
-      if (block) {return block;}
-    }
-  } else {
-  */
   __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
-  //}
-  //#ifdef DEBUG_MEMORY
   status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num));
-  //#endif // DEBUG_MEMORY
   do {
     __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
     __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__true;
@@ -1087,11 +860,6 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
     } else {
       wait_politely();
     }
-    //while (__funk2.memory.pool[pool_index].should_enlarge_memory_now) {
-    //  sched_yield();
-    //}
-    // this is now done in the memory handling thread:
-    //pool__change_total_memory_available(pool_index, __funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num);
     block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
     if (block) {return block;}  
     // might need to loop more than once if two requests for memory from memory handling process occur at the same time.
@@ -1104,11 +872,6 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
 
 // note that byte_num must be at least sizeof(u8) for ptype! because of type checking in garbage collection
 f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
-  //int lock_failed = memory_mutex__try_lock(pool_index);
-  //if (lock_failed) {
-  //  return nil;
-  //}
-  //printf ("\nmemblock_new byte_num = %d", (int)byte_num); fflush(stdout);
   debug_memory_test(pool_index, 3);
   memblock_t* block = (memblock_t*)from_ptr(find_or_create_free_splittable_memblock_and_unfree(pool_index, byte_num));
 #ifdef DEBUG_MEMORY
@@ -1124,9 +887,6 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     
     pool__link_memblock_to_freelist(pool_index, new_block);
     
-    //printf("\npool__memblock_f2ptr__try_new: __funk2.memory.pool[%d].total_free_memory = %d", pool_index, __funk2.memory.pool[pool_index].total_free_memory);
-    //__funk2.memory.pool[pool_index].total_free_memory += memblock__byte_num(new_block);
-    //printf("\npool__memblock_f2ptr__try_new: __funk2.memory.pool[%d].total_free_memory = %d", pool_index, __funk2.memory.pool[pool_index].total_free_memory);
     memblock__byte_num(block) = byte_num;
   }
   
@@ -1137,10 +897,6 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   }
   rbt_tree__insert(&(__funk2.memory.pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->used        = 1;
-  //block->unique_id   = __funk2.memory.pool[pool_index].next_unique_block_id; __funk2.memory.pool[pool_index].next_unique_block_id ++;
-  //block->read_count  = 0;
-  //block->write_count = 0;
-  //funk2_processor_mutex__init(&(block->mutex));
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   debug_memory_test(pool_index, 3);
 #ifdef DEBUG_MEMORY
@@ -1157,7 +913,6 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   }
 #endif
   f2ptr block_f2ptr = ptr_to_f2ptr(pool_index, to_ptr(block)); // this should be the only use of ptr_to_f2ptr in the whole program...
-  //memory_mutex__unlock(pool_index);
 #ifdef DEBUG_MEMORY
   {
     u64 check_computer_id  = __f2ptr__computer_id(block_f2ptr);
@@ -1180,7 +935,6 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     }
   }
 #endif
-  //gfunkptr__init_from_f2ptr(&(block->gfunkptr), block_f2ptr);
   return block_f2ptr;
 }
 
@@ -1201,9 +955,6 @@ f2ptr memblock_f2ptr__new(f2size_t byte_num) {
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       f2ptr memblock_f2ptr = pool__memblock_f2ptr__try_new(pool_index, byte_num);
       if (memblock_f2ptr) {
-	//if (pool_index != 0) {
-	//  printf("\nchunk from pool[%d]: 0x%lx, pool_index=0x%lx, pool_address=0x%lx", pool_index, (unsigned long)memblock_f2ptr, (unsigned long)__f2ptr__funk2.memory.pool_index(memblock_f2ptr), (unsigned long)__f2ptr__pool_address(memblock_f2ptr));
-	//}
 	return memblock_f2ptr;
       }
     }
@@ -1236,7 +987,7 @@ void pool__pause_gc (int pool_index) {
   //  debug__begin_pause_gc(pool_index);
   //}
 #endif // DEBUG
-  //__funk2.memory.pool[pool_index].disable_gc ++;
+  __funk2.memory.pool[pool_index].disable_gc ++;
   memory_mutex__unlock(pool_index);
 }
 
@@ -1248,7 +999,7 @@ int pool__try_pause_gc (int pool_index) {
     //  debug__begin_pause_gc(pool_index);
     //}
 #endif // DEBUG
-    //__funk2.memory.pool[pool_index].disable_gc ++;
+    __funk2.memory.pool[pool_index].disable_gc ++;
     memory_mutex__unlock(pool_index);
   }
   return lock_failed;
@@ -1282,7 +1033,7 @@ int raw_try_pause_gc() {
 void pool__resume_gc (int pool_index) {
   memory_mutex__lock(pool_index);
   release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
-  //__funk2.memory.pool[pool_index].disable_gc --;
+  __funk2.memory.pool[pool_index].disable_gc --;
 #ifdef DEBUG
   //if (! __funk2.memory.pool[pool_index].disable_gc) {
   //  debug__end_pause_gc(pool_index);
@@ -1339,44 +1090,6 @@ boolean_t pool__try_gc(int pool_index) {
   return result;
 }
 
-/*
-// use this after pausing and resuming garbage collection
-boolean_t pool__try_gc(int pool_index) {
-  u8 result = 0;
-  ptype_access__lockout_access(pool_index, 0);
-  memory_mutex__lock(pool_index);
-  int disable_gc    = 0;
-  int should_run_gc = 0;
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    disable_gc    |= __funk2.memory.pool[pool_index].disable_gc;
-    should_run_gc |= __funk2.memory.pool[pool_index].should_run_gc;
-  }
-  if ((! disable_gc) && should_run_gc) {
-    for (index = 0; index < memory_pool_num; index ++) {
-      __funk2.memory.pool[index].should_run_gc = 0;
-    }
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (index != pool_index) {
-	ptype_access__lockout_access(index, 0);
-	memory_mutex__lock(index);
-      }
-    }
-    result = garbage_collect(pool_index);
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (index != pool_index) {
-	memory_mutex__unlock(index);
-	ptype_access__unlockout_access(index);
-      }
-    }
-    debug_memory_test(pool_index, 3);
-  }
-  memory_mutex__unlock(pool_index);
-  ptype_access__unlockout_access(pool_index);
-  return result;
-}
-*/
-
 boolean_t try_gc() {
   boolean_t did_something = 0;
   int pool_index;
@@ -1412,7 +1125,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
   }
   if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
-    //printf("\nfunk2_memory__handle beginning collecting garbage.");
+    status("\nfunk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
     __ptypes_please_wait_for_gc_to_take_place = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
@@ -1445,71 +1158,8 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     }
     memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
-    //printf("\nfunk2_memory__handle done collecting garbage.");
   }
 }
-
-/*
-// use this after pausing and resuming garbage collection
-boolean_t pool__try_gc(int pool_index) {
-  u8 result = 0;
-  ptype_access__lockout_access(pool_index, 0);
-  memory_mutex__lock(pool_index);
-  int this_pool__disable_gc;
-  int this_pool__should_run_gc;
-  int exists_pool__disable_gc;
-  int index;
-  this_pool__disable_gc    = __funk2.memory.pool[pool_index].disable_gc;
-  this_pool__should_run_gc = __funk2.memory.pool[pool_index].should_run_gc;
-  //if (this_pool__should_run_gc && this_pool__disable_gc) {
-  //  printf("\ntrying and should but disabled."); fflush(stdout);
-  //}
-  if (this_pool__should_run_gc && (! this_pool__disable_gc)) {
-    do {
-      for (index = 0; index < memory_pool_num; index ++) {
-	if (index != pool_index) {
-	  ptype_access__lockout_access(index, 0);
-	  memory_mutex__lock(index);
-	}
-      }
-      exists_pool__disable_gc = 0;
-      for (index = 0; index < memory_pool_num; index ++) {
-	exists_pool__disable_gc |= __funk2.memory.pool[index].disable_gc;
-      }
-      if (! exists_pool__disable_gc) {
-	result = garbage_collect(pool_index);
-	for (index = 0; index < memory_pool_num; index ++) {
-	  __funk2.memory.pool[index].should_run_gc = 0;
-	}
-      }
-      for (index = 0; index < memory_pool_num; index ++) {
-	if (index != pool_index) {
-	  memory_mutex__unlock(index);
-	  ptype_access__unlockout_access(index);
-	}
-      }
-      //sched_yield();
-    } while (0); //exists_pool__disable_gc);
-    //for (index = 0; index < memory_pool_num; index ++) {
-    //  __funk2.memory.pool[index].should_run_gc = 0;
-    //}
-    debug_memory_test(pool_index, 3);
-  }
-  memory_mutex__unlock(pool_index);
-  ptype_access__unlockout_access(pool_index);
-  return result;
-}
-
-boolean_t try_gc() {
-  boolean_t did_something = 0;
-  //int pool_index;
-  //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-  //did_something |= pool__try_gc(pool_index);
-  //}
-  did_something = pool__try_gc(this_pthread__funk2.memory.pool_index());
-  return did_something;
-}
-*/
 
 boolean_t pool__should_run_gc(int pool_index) {
   memory_mutex__lock(pool_index);
@@ -1568,10 +1218,8 @@ void safe_read(int fd, void* ptr, size_t object_size) {
 }
 
 int raw__memory_image__save(char* filename) {
-  //#ifdef DEBUG_MEMORY
   status("saving memory image.");
   print_gc_stats();
-  //#endif // DEBUG_MEMORY
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__lock(pool_index);
@@ -1821,24 +1469,15 @@ int raw__memory_image__load(char* filename) {
 	safe_read(fd, &size_i, sizeof(f2size_t));
 	__funk2.memory.pool[pool_index].next_unique_block_id = size_i;
 	
-#ifdef DYNAMIC_MEMORY
 	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
 	f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, __funk2.memory.pool[pool_index].total_global_memory);
 	safe_read(fd, from_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
-#endif // DYNAMIC_MEMORY
-
-#ifdef STATIC_MEMORY
-	safe_read(fd, memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])), __funk2.memory.pool[pool_index].total_global_memory);
-#endif // STATIC_MEMORY
-	
       }
       
       safe_read(fd, &f2_i, sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
       
-      //#ifdef DEBUG_MEMORY
       status("done loading memory image."); fflush(stdout);
-      //#endif // DEBUG_MEMORY    
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	__funk2.memory.pool[pool_index].global_f2ptr_offset = to_ptr(memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) - 1;
@@ -1847,12 +1486,9 @@ int raw__memory_image__load(char* filename) {
       __funk2.memory.global_environment_f2ptr = global_environment_f2ptr;
       __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
       
-      // rebuild auxilary memory info from image
       rebuild_memory_info_from_image();
       
-      //#ifdef DEBUG_MEMORY
       status("loaded memory image successfully.");
-      //#endif // DEBUG_MEMORY
       break;
     }
     close(fd);      
@@ -1864,11 +1500,7 @@ int raw__memory_image__load(char* filename) {
     memory_mutex__unlock(pool_index);
   }
   
-  
-  //#ifdef DEBUG_MEMORY
   print_gc_stats();
-  //#endif // DEBUG_MEMORY  
-  
   return retval;
 }
 

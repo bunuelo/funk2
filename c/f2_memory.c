@@ -712,7 +712,7 @@ void gc_touch__advance_start_index() {
   }
 }
 
-#define gc_touch__f2ptr(block_f2ptr)       {ptr block_ptr = __f2ptr_to_ptr(block_f2ptr);                              debug__assert(!block_ptr || valid_memblock_ptr(block_ptr), nil, "valid_memblock_ptr(block_ptr) failed"); __circle_buf_end_index[0] = (memblock_t*)from_ptr(block_ptr); gc_touch_circle_buffer__advance_end();}
+#define gc_touch__f2ptr(block_f2ptr)       {if (block_f2ptr) {ptr block_ptr = __f2ptr_to_ptr(block_f2ptr); debug__assert(!block_ptr || valid_memblock_ptr(block_ptr), nil, "valid_memblock_ptr(block_ptr) failed"); __circle_buf_end_index[0] = (memblock_t*)from_ptr(block_ptr); gc_touch_circle_buffer__advance_end();}}
 //#define gc_touch__gfunkptr(block_gfunkptr) {f2ptr block_f2ptr = local_gfunkptr__to_f2ptr(block_gfunkptr); gc_touch__f2ptr(block_f2ptr);}
 
 void gc_touch__dptr(dptr_t* dptr) {

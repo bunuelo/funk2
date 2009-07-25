@@ -145,13 +145,12 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
 // integer
 
 f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
-  f2ptr integer_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_integer_block_t));
+  f2ptr integer_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_integer_block_t));
   ptype_integer_block_t* integer_block = (ptype_integer_block_t*)from_ptr(raw__f2ptr_to_ptr(integer_f2ptr));
   debug__assert(integer_block, nil, "block is nil.");
   integer_block->ptype.ptype = ptype_integer;
   integer_block->ptype.cause = cause;
   integer_block->i           = i;
-  memblock__set_render_position_relative_to(integer_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, integer_f2ptr);}
   return integer_f2ptr;
 }
@@ -172,7 +171,6 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   s64 i = __pure__f2integer__i(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return i;
 }
 
@@ -219,13 +217,12 @@ f2ptr f2integer__primobject_type__new(f2ptr cause) {
 // double
 
 f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
-  f2ptr double_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_double_block_t));
+  f2ptr double_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_double_block_t));
   ptype_double_block_t* double_block = (ptype_double_block_t*)from_ptr(raw__f2ptr_to_ptr(double_f2ptr));
   debug__assert(double_block, nil, "block is nil.");
   double_block->ptype.ptype = ptype_double;
   double_block->ptype.cause = cause;
   double_block->d           = d;
-  memblock__set_render_position_relative_to(double_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, double_f2ptr);}
   return double_f2ptr;
 }
@@ -246,7 +243,6 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   double d = __pure__f2double__d(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return d;
 }
 
@@ -297,13 +293,12 @@ f2ptr f2double__primobject_type__new(f2ptr cause) {
 // float
 
 f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
-  f2ptr float_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_float_block_t));
+  f2ptr float_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_float_block_t));
   ptype_float_block_t* float_block = (ptype_float_block_t*)from_ptr(raw__f2ptr_to_ptr(float_f2ptr));
   debug__assert(float_block, nil, "block is nil.");
   float_block->ptype.ptype = ptype_float;
   float_block->ptype.cause = cause;
   float_block->f           = f;
-  memblock__set_render_position_relative_to(float_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, float_f2ptr);}
   return float_f2ptr;
 }
@@ -324,7 +319,6 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   float f = __pure__f2float__f(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return f;
 }
 
@@ -375,13 +369,12 @@ f2ptr f2float__primobject_type__new(f2ptr cause) {
 // pointer
 
 f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
-  f2ptr pointer_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_pointer_block_t));
+  f2ptr pointer_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_pointer_block_t));
   ptype_pointer_block_t* pointer_block = (ptype_pointer_block_t*)from_ptr(raw__f2ptr_to_ptr(pointer_f2ptr));
   debug__assert(pointer_block, nil, "block is nil.");
   pointer_block->ptype.ptype = ptype_pointer;
   pointer_block->ptype.cause = cause;
   pointer_block->p           = p;
-  memblock__set_render_position_relative_to(pointer_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, pointer_f2ptr);}
   return pointer_f2ptr;
 }
@@ -402,7 +395,6 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   ptr p = __pure__f2pointer__p(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return p;
 }
 
@@ -453,13 +445,12 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause) {
 // gfunkptr
 
 f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_computer_id, pool_index_t gf2_pool_index, pool_address_t gf2_pool_address) {
-  f2ptr gfunkptr_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_gfunkptr_block_t));
+  f2ptr gfunkptr_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_gfunkptr_block_t));
   ptype_gfunkptr_block_t* gfunkptr_block = (ptype_gfunkptr_block_t*)from_ptr(raw__f2ptr_to_ptr(gfunkptr_f2ptr));
   debug__assert(gfunkptr_block, nil, "block is nil.");
   gfunkptr_block->ptype.ptype = ptype_gfunkptr;
   gfunkptr_block->ptype.cause = cause;
   gfunkptr_block->gfunkptr    = f2ptr__new(gf2_computer_id, gf2_pool_index, gf2_pool_address);
-  memblock__set_render_position_relative_to(gfunkptr_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, gfunkptr_f2ptr);}
   return gfunkptr_f2ptr;
 }
@@ -487,7 +478,6 @@ f2ptr pfunk2__f2gfunkptr__gfunkptr(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr rv = __pure__f2gfunkptr__gfunkptr(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -500,7 +490,6 @@ computer_id_t pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   computer_id_t rv = __pure__f2gfunkptr__computer_id(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -513,7 +502,6 @@ pool_index_t pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   pool_index_t rv = __pure__f2gfunkptr__pool_index(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -526,7 +514,6 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   pool_address_t rv = __pure__f2gfunkptr__pool_address(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return rv;
 }
 
@@ -593,13 +580,12 @@ f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
 // mutex
 
 f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
-  f2ptr mutex_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_mutex_block_t));
+  f2ptr mutex_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_mutex_block_t));
   ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)from_ptr(raw__f2ptr_to_ptr(mutex_f2ptr));
   debug__assert(mutex_block, nil, "block is nil.");
   mutex_block->ptype.ptype = ptype_mutex;
   mutex_block->ptype.cause = cause;
   funk2_processor_mutex__init(mutex_block->m);
-  memblock__set_render_position_relative_to(mutex_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, mutex_f2ptr);}
   return mutex_f2ptr;
 }
@@ -615,7 +601,6 @@ funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return m;
 }
 
@@ -734,13 +719,12 @@ f2ptr f2__mutexp(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutexp(x, cause)
 // char
 
 f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
-  f2ptr char_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_char_block_t));
+  f2ptr char_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_char_block_t));
   ptype_char_block_t* char_block = (ptype_char_block_t*)from_ptr(raw__f2ptr_to_ptr(char_f2ptr));
   debug__assert(char_block, nil, "block is nil.");
   char_block->ptype.ptype = ptype_char;
   char_block->ptype.cause = cause;
   char_block->ch          = ch;
-  memblock__set_render_position_relative_to(char_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, char_f2ptr);}
   return char_f2ptr;
 }
@@ -761,7 +745,6 @@ u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 ch = __pure__f2char__ch(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return ch;
 }
 
@@ -809,7 +792,7 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
 // string
 
 f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
-  f2ptr string_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_string_block_t) + length + 1);
+  f2ptr string_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_string_block_t) + length + 1);
   ptype_string_block_t* string_block = (ptype_string_block_t*)from_ptr(raw__f2ptr_to_ptr(string_f2ptr));
   debug__assert(string_block, nil, "block is nil.");
   string_block->ptype.ptype = ptype_string;
@@ -818,7 +801,6 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
   if (str) {memcpy(string_block->str, str, length);}
   else     {bzero(string_block->str, length);}
   string_block->str[length] = 0x00;
-  memblock__set_render_position_relative_to(string_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, string_f2ptr);}
   return string_f2ptr;
 }
@@ -839,7 +821,6 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64  length = __pure__f2string__length(this);
-  __pure__memblock__render_read_activated__set(this, 1);
   return length;
 }
 
@@ -852,7 +833,6 @@ u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   s8 ch = __pure__f2string__str(this)[index];
-  __pure__memblock__render_read_activated__set(this, 1);
   return ch;
 }
 
@@ -865,7 +845,6 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   memcpy(str, __pure__f2string__str(this), __pure__f2string__length(this));
-  __pure__memblock__render_write_activated__set(this, 1);
 }
 
 int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
@@ -879,7 +858,6 @@ int pfunk2__f2string__hash_value(f2ptr this, f2ptr cause) {
   u64 len = __pure__f2string__length(this);
   u8* str = __pure__f2string__str(this);
   int retval = (int)chararray__hash_value(len, str);
-  __pure__memblock__render_read_activated__set(this, 1);
   return retval;
 }
 
@@ -1025,7 +1003,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   }
   
   // otherwise, create a new symbol
-  f2ptr symbol_f2ptr = pool__memblock_f2ptr__new(pool_index, sizeof(ptype_symbol_block_t) + length + 1);
+  f2ptr symbol_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_symbol_block_t) + length + 1);
   symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
   debug__assert(symbol_block, nil, "block is nil.");
   symbol_block->ptype.ptype = ptype_symbol;
@@ -1040,7 +1018,6 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   symbol_hash__add_symbol(symbol_f2ptr);
   
   funk2_processor_mutex__unlock(&symbol_hash_mutex);
-  memblock__set_render_position_relative_to(symbol_f2ptr, cause);
   if (raw__cause__is_traced(cause, cause)) {ptype_trace_create(pool_index, cause, symbol_f2ptr);}
   return symbol_f2ptr;
 }

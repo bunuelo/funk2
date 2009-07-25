@@ -140,16 +140,14 @@ funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 
 #define ptr_to_f2ptr(pool_index, p) __ptr_to_f2ptr(pool_index, p)
 
-void memory_test();
-
 #ifdef DEBUG_MEMORY
 #  if (DEBUG_MEMORY > 0)
-#    define debug_memory_test(pool_index, level) {if (DEBUG_MEMORY >= level) {memory_test(pool_index);}}
+#    define funk2_memorypool__debug_memory_test(this, level) {if (DEBUG_MEMORY >= level) {funk2_memorypool__memory_test(this);}}
 #  else
-#    define debug_memory_test(pool_index, level)
+#    define funk2_memorypool__debug_memory_test(this, level)
 #  endif
 #else
-#  define debug_memory_test(pool_index, level)
+#  define funk2_memorypool__debug_memory_test(this, level)
 #endif
 
 u8 garbage_collect();

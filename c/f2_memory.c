@@ -208,7 +208,7 @@ void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) 
     u64 old_length = this->single_bytecode_alloc_array__length;
     this->single_bytecode_alloc_array__length <<= 1;
     status("memorypool__add_single_bytecode_alloc_f2ptr: doubling size of single_bytecode_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->single_bytecode_alloc_array__length);
-    this->single_bytecode_alloc_array = f2__new_alloc(this->single_bytecode_alloc_array, sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->single_bytecode_alloc_array__length);
+    this->single_bytecode_alloc_array = from_ptr(f2__new_alloc(to_ptr(this->single_bytecode_alloc_array), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->single_bytecode_alloc_array__length));
   }
 }
 

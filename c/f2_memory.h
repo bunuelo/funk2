@@ -98,8 +98,6 @@ int       gc__is_disabled();
 void  global_environment__set(f2ptr global_environment);
 f2ptr global_environment();
 
-void funk2_memory__print_gc_stats(funk2_memory_t* this);
-
 int raw__memory_image__save(char* filename);
 int raw__memory_image__load(char* filename);
 

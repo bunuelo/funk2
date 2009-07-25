@@ -179,5 +179,6 @@ void funk2_memory__destroy(funk2_memory_t* this); // only called by memory manag
 void funk2_memory__signal_enter_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
 void funk2_memory__signal_exit_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
 void funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
+void funk2_memory__print_gc_stats(funk2_memory_t* this);
 
 #endif // F2__MEMORY__PROTECTED__H

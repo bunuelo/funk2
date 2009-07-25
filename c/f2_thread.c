@@ -104,7 +104,7 @@ boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
     f2ptr bytecode = f2cons__car(pc_reg, cause);
     debug__assert(raw__bytecode__is_type(cause, bytecode), thread, "f2__thread__execute_next_bytecode error: assertion failed (raw__bytecode__is_type(bytecode)).");
     
-    boolean_t bytecode_is_yield = f2__thread__execute_bytecode(cause, thread, bytecode);
+    bytecode_is_yield = f2__thread__execute_bytecode(cause, thread, bytecode);
   }
   funk2_memory__signal_exit_bytecode(&(__funk2.memory));
   return bytecode_is_yield;

@@ -61,7 +61,7 @@ typedef struct memblock_s memblock_t;
 //#define memblock__next(this)             ((memblock_t*)((this)->rbt_node.right))
 //#define memblock__next__set(this, value) (((this)->rbt_node.right) = (rbt_node_t*)(value))
 
-#define funk2_memory__single_bytecode_alloc_count 10000000
+#define funk2_memory__single_bytecode_alloc_count 100000000
 
 typedef struct memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;

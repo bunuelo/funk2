@@ -186,9 +186,9 @@ ptr used_f2ptr_to_ptr__debug(f2ptr f2p) {
 }
 
 // for some reason a raw #define screws things up with GC enabled... [or at least used to...  8-( ]
-ptr fast__f2ptr_to_ptr(f2ptr f2p) {
-  return (__f2ptr_to_ptr(f2p));
-}
+//ptr fast__f2ptr_to_ptr(f2ptr f2p) {
+//  return (__f2ptr_to_ptr(f2p));
+//}
 
 f2size_t total_used_memory(int pool_index) {
   f2size_t used_memory_count = 0;

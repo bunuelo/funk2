@@ -122,10 +122,10 @@ funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 #define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_address(pool_index, p))))                                           : ((u64)0))
 
 #ifdef DEBUG_MEMORY_POINTERS
-#  define      f2ptr_to_ptr(f2p) debug__used_f2ptr_to_ptr(f2p)
-//#  define        ptr_to_f2ptr(p) debug__used_ptr_to_f2ptr(p)
-#  define raw__f2ptr_to_ptr(f2p) debug__f2ptr_to_ptr(f2p)
-//#  define   raw__ptr_to_f2ptr(p) debug__ptr_to_f2ptr(p)
+#  define      f2ptr_to_ptr(f2p) used_f2ptr_to_ptr__debug(f2p)
+//#  define        ptr_to_f2ptr(p) used_ptr_to_f2ptr__debug(p)
+#  define raw__f2ptr_to_ptr(f2p) f2ptr_to_ptr__debug(f2p)
+//#  define   raw__ptr_to_f2ptr(p) ptr_to_f2ptr__debug(p)
 #else
 //#  define      f2ptr_to_ptr(f2p) fast__f2ptr_to_ptr(f2p)
 //#  define        ptr_to_f2ptr(p) fast__ptr_to_f2ptr(p)
@@ -140,7 +140,7 @@ funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 
 #define ptr_to_f2ptr(pool_index, p) __ptr_to_f2ptr(pool_index, p)
 
-extern void memory_test();
+void memory_test();
 
 #ifdef DEBUG_MEMORY
 #  if (DEBUG_MEMORY > 0)
@@ -152,16 +152,18 @@ extern void memory_test();
 #  define debug_memory_test(pool_index, level)
 #endif
 
-extern u8 garbage_collect();
+u8 garbage_collect();
 
-extern ptr   debug__f2ptr_to_ptr(f2ptr f2p);
-extern f2ptr debug__ptr_to_f2ptr(ptr   p);
+ptr   f2ptr_to_ptr__debug(f2ptr f2p);
+f2ptr ptr_to_f2ptr__debug(ptr   p);
 
-extern ptr   debug__used_f2ptr_to_ptr(f2ptr f2p);
-extern f2ptr debug__used_ptr_to_f2ptr(ptr   p);
+ptr   used_f2ptr_to_ptr__debug(f2ptr f2p);
+f2ptr used_ptr_to_f2ptr__debug(ptr   p);
 
-extern ptr   fast__f2ptr_to_ptr(f2ptr f2p);
-extern f2ptr fast__ptr_to_f2ptr(ptr   p);
+ptr   fast__f2ptr_to_ptr(f2ptr f2p);
+//f2ptr fast__ptr_to_f2ptr(ptr   p);
+
+#define fast__f2ptr_to_ptr(f2p) __f2ptr_to_ptr(f2p)
 
 typedef struct funk2_memory_s {
   funk2_memorypool_t pool[memory_pool_num];

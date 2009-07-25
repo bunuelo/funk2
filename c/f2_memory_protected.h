@@ -22,7 +22,7 @@
 #ifndef F2__MEMORY__PROTECTED__H
 #define F2__MEMORY__PROTECTED__H
 
-#define DEBUG_MEMORY 1
+//#define DEBUG_MEMORY 1
 
 #include "f2_global.h"
 #include "f2_redblacktree.h"
@@ -61,7 +61,7 @@ typedef struct memblock_s memblock_t;
 //#define memblock__next(this)             ((memblock_t*)((this)->rbt_node.right))
 //#define memblock__next__set(this, value) (((this)->rbt_node.right) = (rbt_node_t*)(value))
 
-#define funk2_memory__single_bytecode_alloc_count 1000000
+#define funk2_memory__single_bytecode_alloc_count 10000000
 
 typedef struct memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;

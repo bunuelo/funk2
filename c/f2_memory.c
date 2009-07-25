@@ -888,9 +888,9 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
   
   __funk2.memory.pool[pool_index].total_free_memory                    -= memblock__byte_num(block);
   __funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc += memblock__byte_num(block);
-  if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= __funk2.memory.pool[pool_index].total_free_memory) {
-    __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
-  }
+  //if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= __funk2.memory.pool[pool_index].total_free_memory) {
+  //  __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
+  //}
   rbt_tree__insert(&(__funk2.memory.pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->used        = 1;
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;

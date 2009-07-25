@@ -347,7 +347,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   return did_something;
 }
 
-#define FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
+#define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
 
 typedef struct funk2_gc_touch_circle_buffer_s {
   int                num;

@@ -185,9 +185,9 @@ ptr used_f2ptr_to_ptr__debug(f2ptr f2p) {
   return p;
 }
 
-f2size_t total_used_memory(int pool_index) {
+f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
   f2size_t used_memory_count = 0;
-  rbt_node_t* node = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
+  rbt_node_t* node = rbt_tree__minimum(&(this->used_memory_tree));
   while(node) {
     used_memory_count += funk2_memblock__byte_num((funk2_memblock_t*)node);
     node = rbt_node__next(node);
@@ -196,9 +196,9 @@ f2size_t total_used_memory(int pool_index) {
   return used_memory_count;
 }
 
-f2size_t total_free_memory(int pool_index) {
+f2size_t funk2_memorypool__total_free_memory(funk2_memorypool_t* this) {
   f2size_t free_memory_count = 0;
-  rbt_node_t* node = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].free_memory_tree));
+  rbt_node_t* node = rbt_tree__minimum(&(this->free_memory_tree));
   while(node) {
     free_memory_count += funk2_memblock__byte_num((funk2_memblock_t*)node);
     node = rbt_node__next(node);
@@ -259,11 +259,11 @@ void memory_test__all_known_types(int pool_index) {
 void memory_test(int pool_index) {
   status("testing memory in pool[%d]...", pool_index);
   status("__funk2.memory.pool[%d].total_free_memory = " f2size_t__fstr, pool_index, __funk2.memory.pool[pool_index].total_free_memory); fflush(stdout);
-  status("total_free_memory(%d) = " f2size_t__fstr, pool_index, total_free_memory(pool_index)); fflush(stdout);
-  release__assert(total_free_memory(pool_index) == __funk2.memory.pool[pool_index].total_free_memory, nil, "memory_test (total_free_memory() == __funk2.memory.pool[].total_free_memory) failure.");
-  release__assert_and_on_failure((int)(total_used_memory(pool_index) + total_free_memory(pool_index)) == (int)__funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test (total_used_memory() + total_free_memory() != __funk2.memory.pool[].total_global_memory) failure.",
-				 int used_memory_num = total_used_memory(pool_index);
-				 int free_memory_num = total_free_memory(pool_index);
+  status("total_free_memory(%d) = " f2size_t__fstr, pool_index, funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index]))); fflush(stdout);
+  release__assert(funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index])) == __funk2.memory.pool[pool_index].total_free_memory, nil, "memory_test (total_free_memory() == __funk2.memory.pool[].total_free_memory) failure.");
+  release__assert_and_on_failure((int)(funk2_memorypool__total_used_memory(&(__funk2.memory.pool[pool_index])) + funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index]))) == (int)__funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test (total_used_memory() + total_free_memory() != __funk2.memory.pool[].total_global_memory) failure.",
+				 int used_memory_num = funk2_memorypool__total_used_memory(&(__funk2.memory.pool[pool_index]));
+				 int free_memory_num = funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index]));
 				 printf("\ntotal_used_memory(%d)                       = %d", pool_index, (int)used_memory_num);
 				 printf("\ntotal_free_memory(%d)                       = %d", pool_index, (int)free_memory_num);
 				 printf("\ntotal_used_memory(%d) + total_free_memory() = %d", pool_index, (int)free_memory_num + used_memory_num);
@@ -1436,8 +1436,8 @@ void funk2_memory__print_gc_stats(funk2_memory_t* this) {
   for(pool_index = 0; pool_index < memory_pool_num; pool_index++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
     status("pool[%d].total_global_memory  = " f2size_t__fstr, pool_index, this->pool[pool_index].total_global_memory);
-    status("pool[%d].total_free_memory()  = " f2size_t__fstr, pool_index, total_free_memory(pool_index));
-    status("pool[%d].total_used_memory()  = " f2size_t__fstr, pool_index, total_used_memory(pool_index));
+    status("pool[%d].total_free_memory()  = " f2size_t__fstr, pool_index, funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index])));
+    status("pool[%d].total_used_memory()  = " f2size_t__fstr, pool_index, funk2_memorypool__total_used_memory(&(__funk2.memory.pool[pool_index])));
     status("pool[%d].next_unique_block_id = %u", pool_index, this->pool[pool_index].next_unique_block_id);
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }

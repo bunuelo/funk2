@@ -829,17 +829,13 @@ memblock_t* find_splittable_free_block_and_unfree(int pool_index, f2size_t byte_
 ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t byte_num) {
   ptr block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
   if (block) {return block;}  
+  // If we get here then we failed to allocate enough memory from pool.
+  __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
   debug_memory_test(pool_index, 3);
   if (defragment_free_memory_blocks_in_place(pool_index)) {
     block = to_ptr(find_splittable_free_block_and_unfree(pool_index, byte_num));
     if (block) {return block;}
   }
-  int disable_gc = 0;
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    disable_gc |= __funk2.memory.pool[index].disable_gc;
-  }
-  __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
   status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(__funk2.memory.pool[pool_index].total_global_memory + (__funk2.memory.pool[pool_index].total_global_memory >> 3) + byte_num));
   do {

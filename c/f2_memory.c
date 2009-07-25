@@ -671,16 +671,16 @@ void gc_touch_circle_buffer__advance_end() {
   }
   if (__circle_buf_end_index == __circle_buf_start_index) {
     gc_touch_print_array("buffer");
-    printf("\nincreasing buffer."); fflush(stdout);
-    printf("\n  start = %lx.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
-    printf("\n  end   = %lx.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
+    //printf("\nincreasing buffer."); fflush(stdout);
+    //printf("\n  start = %lx.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
+    //printf("\n  end   = %lx.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
     gc_touch_print_array("debug 0");
     // increasing size by two makes a lot of these memory moves conveniently easy.
     int old_num = __gc_touch_circle_buffer.num;
     __gc_touch_circle_buffer.num = old_num << 1;
-    printf("\n__gc_touch_circle_buffer.start = %x", (int)__gc_touch_circle_buffer.start);
+    //printf("\n__gc_touch_circle_buffer.start = %x", (int)__gc_touch_circle_buffer.start);
     memblock_t** new_location = (memblock_t**)from_ptr(f2__new_alloc(to_ptr(__gc_touch_circle_buffer.start), sizeof(memblock_t*) * old_num, sizeof(memblock_t*) * __gc_touch_circle_buffer.num));
-    printf("\nnew_location = %lx", (int)new_location); fflush(stdout);
+    //printf("\nnew_location = %lx", (int)new_location); fflush(stdout);
     int location_diff = new_location - __gc_touch_circle_buffer.start;
     __gc_touch_circle_buffer.start = new_location;
     
@@ -688,16 +688,16 @@ void gc_touch_circle_buffer__advance_end() {
     __circle_buf_end_index   += location_diff;
     
     __gc_touch_circle_buffer.end = __gc_touch_circle_buffer.start + __gc_touch_circle_buffer.num;
-    printf("\n  copying %d bytes ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start).", ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
-    printf("\n  sizeof(memblock_t**) = %d bytes.", sizeof(memblock_t**));
-    printf("\n  old_num = %d", old_num);
+    //printf("\n  copying %d bytes ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start).", ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
+    //printf("\n  sizeof(memblock_t**) = %d bytes.", sizeof(memblock_t**));
+    //printf("\n  old_num = %d", old_num);
     gc_touch_print_array("just before copy");
     memcpy(__gc_touch_circle_buffer.start + old_num, __gc_touch_circle_buffer.start, ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
     gc_touch_print_array("just after copy");
     __circle_buf_end_index += old_num;
-    printf("\ncircle_buffer size increased to %d.", __gc_touch_circle_buffer.num); fflush(stdout);
-    printf("\n  start = %lx.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
-    printf("\n  end   = %lx.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
+    //printf("\ncircle_buffer size increased to %d.", __gc_touch_circle_buffer.num); fflush(stdout);
+    //printf("\n  start = %lx.", (int)(__circle_buf_start_index - __gc_touch_circle_buffer.start)); fflush(stdout);
+    //printf("\n  end   = %lx.", (int)(__circle_buf_end_index   - __gc_touch_circle_buffer.start)); fflush(stdout);
     gc_touch_print_array("after all");
   }
 }

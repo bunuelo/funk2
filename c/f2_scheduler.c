@@ -179,7 +179,6 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   
   int i = 1000;
   while (! exit_reason) {
-    funk2_memory__signal_between_bytecodes(&(__funk2.memory));
     if(i == 0) {
       exit_reason = exit_reason__too_many_loops;
       break;
@@ -196,7 +195,6 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     } 
     i --;
   }
-  funk2_memory__signal_between_bytecodes(&(__funk2.memory));
   //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
   return exit_reason;
 }

@@ -186,6 +186,7 @@ void memorypool__init(memorypool_t* pool) {
   for (i = 0; i < funk2_memory__single_bytecode_alloc_count; i ++) {
     pool->single_bytecode_alloc_array[i] = nil;
   }
+  pool->single_bytecode_alloc_array__reentrance_count = 0;
 }
 
 void pool__destroy(int pool_index) {
@@ -206,14 +207,31 @@ void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) 
   }
 }
 
-void memorypool__clear_single_bytecode_alloc_array(memorypool_t* this) {
-  this->single_bytecode_alloc_array__used_num = 0;
+void memorypool__signal_enter_bytecode(memorypool_t* this) {
+  this->single_bytecode_alloc_array__reentrance_count ++;
+}
+
+void memorypool__signal_exit_bytecode(memorypool_t* this) {
+  if (this->single_bytecode_alloc_array__reentrance_count == 0) {
+    error(nil, "memorypool__signal_exit_bytecode error: bytecode reentrance underflow.");
+  }
+  this->single_bytecode_alloc_array__reentrance_count --;
+  if (this->single_bytecode_alloc_array__reentrance_count == 0) {
+    // bytecode stack is done
+    this->single_bytecode_alloc_array__used_num = 0;
+  }
 }
 
 // memory handling thread should never call this function
-void funk2_memory__signal_between_bytecodes(funk2_memory_t* this) {
+void funk2_memory__signal_enter_bytecode(funk2_memory_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  memorypool__clear_single_bytecode_alloc_array(&(this->pool[pool_index]));
+  memorypool__signal_enter_bytecode(&(this->pool[pool_index]));
+}
+
+// memory handling thread should never call this function
+void funk2_memory__signal_exit_bytecode(funk2_memory_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  memorypool__signal_exit_bytecode(&(this->pool[pool_index]));
 }
 
 boolean_t valid_memblock_ptr(ptr p) {

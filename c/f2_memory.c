@@ -42,20 +42,6 @@ void free_executable(ptr p) {
   munmap(from_ptr(p), 1);
 }
 
-
-// funk2_memory
-
-void funk2_memory__init(funk2_memory_t* this) {
-  this->global_environment_ptr   = to_ptr(NULL);
-  this->global_environment_f2ptr = nil;
-  
-  this->memory_handling_thread = pthread_self();
-  this->bootstrapping_mode     = boolean__true;
-}
-
-void funk2_memory__destroy(funk2_memory_t* this) {
-}
-
 ptr f2__malloc(f2size_t byte_num) {
   ptr this = malloc_executable(byte_num);
   if (! this) {error(nil, "f2__malloc error: out of memory.");}
@@ -138,18 +124,6 @@ void funk2_memorypool__signal_exit_bytecode(funk2_memorypool_t* this) {
     // bytecode stack is done
     this->protected_alloc_array__used_num = 0;
   }
-}
-
-// memory handling thread should never call this function
-void funk2_memory__signal_enter_bytecode(funk2_memory_t* this) {
-  int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__signal_enter_bytecode(&(this->pool[pool_index]));
-}
-
-// memory handling thread should never call this function
-void funk2_memory__signal_exit_bytecode(funk2_memory_t* this) {
-  int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__signal_exit_bytecode(&(this->pool[pool_index]));
 }
 
 boolean_t valid_funk2_memblock_ptr(ptr p) {
@@ -969,18 +943,18 @@ void debug__end_pause_gc(int pool_index) {
 }
 
 void pool__pause_gc (int pool_index) {
-  memory_mutex__lock(pool_index);
+  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   funk2_memorypool__signal_enter_bytecode(&(__funk2.memory.pool[pool_index]));
   //__funk2.memory.pool[pool_index].disable_gc ++;
-  memory_mutex__unlock(pool_index);
+  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
 }
 
 int pool__try_pause_gc (int pool_index) {
-  int lock_failed = memory_mutex__try_lock(pool_index);
+  int lock_failed = funk2_memorypool__memory_mutex__try_lock(&(__funk2.memory.pool[pool_index]));
   if (lock_failed == 0) {
     funk2_memorypool__signal_enter_bytecode(&(__funk2.memory.pool[pool_index]));
     //__funk2.memory.pool[pool_index].disable_gc ++;
-    memory_mutex__unlock(pool_index);
+    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
   return lock_failed;
 }
@@ -1011,11 +985,11 @@ int raw_try_pause_gc() {
 }
 
 void pool__resume_gc (int pool_index) {
-  memory_mutex__lock(pool_index);
+  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
   funk2_memorypool__signal_exit_bytecode(&(__funk2.memory.pool[pool_index]));
   //__funk2.memory.pool[pool_index].disable_gc --;
-  memory_mutex__unlock(pool_index);
+  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
 }
 
 void raw_resume_gc() {
@@ -1053,72 +1027,10 @@ boolean_t try_gc() {
   return did_something;
 }
 
-void funk2_memory__handle(funk2_memory_t* memory) {
-  boolean_t should_collect_garbage    = boolean__false;
-  boolean_t should_enlarge_memory_now = boolean__false;
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    if (memory->pool[index].should_enlarge_memory_now) {
-      should_enlarge_memory_now = boolean__true;
-    }
-    if (memory->pool[index].should_run_gc) {
-      should_collect_garbage = boolean__true;
-    }
-  }
-  if (should_enlarge_memory_now) {
-    while (__ptypes_waiting_count < memory_pool_num) {
-      sched_yield();
-    }
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (memory->pool[index].should_enlarge_memory_now) {
-	pool__change_total_memory_available(index, memory->pool[index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
-	memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
-	memory->pool[index].should_enlarge_memory_now                         = boolean__false;
-      }
-    }
-    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
-  }
-  if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
-    status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
-    __ptypes_please_wait_for_gc_to_take_place = boolean__true;
-    while (__ptypes_waiting_count < memory_pool_num) {
-      sched_yield();
-    }
-    if (! gc__is_disabled()) {
-      status ("");
-      status ("**********************************");
-      status ("**** DOING GARBAGE COLLECTION ****");
-      status ("**********************************");
-      status ("");
-      for (index = 0; index < memory_pool_num; index ++) {
-	if (memory->pool[index].should_run_gc) {
-	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	  int did_something = garbage_collect(index, 0);
-	  if (did_something) {
-	    status ("garbage collection did something.");
-	  } else {
-	    status ("garbage collection did nothing.");
-	  }
-	  memory->pool[index].should_run_gc = boolean__false;
-	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	}
-      }
-    } else {
-      status ("");
-      status ("***********************************************************");
-      status ("**** should do garbage collection, but gc is disabled. ****");
-      status ("***********************************************************");
-      status ("");
-    }
-    memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
-  }
-}
-
 boolean_t pool__should_run_gc(int pool_index) {
-  memory_mutex__lock(pool_index);
+  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   boolean_t should_gc = __funk2.memory.pool[pool_index].should_run_gc;
-  memory_mutex__unlock(pool_index);
+  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   return should_gc;
 }
 
@@ -1135,12 +1047,12 @@ boolean_t should_run_gc() {
 void global_environment__set(f2ptr global_environment) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__lock(pool_index);
+    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   }
   __funk2.memory.global_environment_f2ptr = global_environment;
   __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__unlock(pool_index);
+    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
 }
 
@@ -1148,11 +1060,11 @@ f2ptr global_environment() {
   f2ptr retval;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__lock(pool_index);
+    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   }
   retval = __funk2.memory.global_environment_f2ptr;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__unlock(pool_index);
+    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
   return retval;
 }
@@ -1176,7 +1088,7 @@ int raw__memory_image__save(char* filename) {
   print_gc_stats();
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__lock(pool_index);
+    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   }
   // should collect garbage probably
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -1197,7 +1109,7 @@ int raw__memory_image__save(char* filename) {
   f2_i = __funk2.memory.global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
   close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__unlock(pool_index);
+    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
   return 0;
 }
@@ -1292,7 +1204,7 @@ void rebuild_memory_info_from_image() {
   
   // temporarily unlocks all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__unlock(pool_index);
+    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
   // temporary period of all memory mutexes locked
   {
@@ -1357,7 +1269,7 @@ void rebuild_memory_info_from_image() {
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__lock(pool_index);
+    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -1378,7 +1290,7 @@ int raw__memory_image__load(char* filename) {
   
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__lock(pool_index);
+    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   }
   
   
@@ -1440,26 +1352,118 @@ int raw__memory_image__load(char* filename) {
   f2__global_scheduler__execute_mutex__unlock(initial_cause());
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    memory_mutex__unlock(pool_index);
+    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
   
   print_gc_stats();
   return retval;
 }
 
-void print_gc_stats() {
-  int pool_index;
-  for(pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    memory_mutex__lock(pool_index);
-    status("__funk2.memory.pool[%d].total_global_memory  = " f2size_t__fstr, pool_index, __funk2.memory.pool[pool_index].total_global_memory);
-    status("__funk2.memory.pool[%d].total_free_memory()  = " f2size_t__fstr, pool_index, total_free_memory(pool_index));
-    status("__funk2.memory.pool[%d].total_used_memory()  = " f2size_t__fstr, pool_index, total_used_memory(pool_index));
-    status("__funk2.memory.pool[%d].next_unique_block_id = %u", pool_index, __funk2.memory.pool[pool_index].next_unique_block_id);
-    memory_mutex__unlock(pool_index);
+
+
+// funk2_memory
+
+void funk2_memory__init(funk2_memory_t* this) {
+  this->global_environment_ptr   = to_ptr(NULL);
+  this->global_environment_f2ptr = nil;
+  
+  this->memory_handling_thread = pthread_self();
+  this->bootstrapping_mode     = boolean__true;
+}
+
+void funk2_memory__destroy(funk2_memory_t* this) {
+}
+
+// memory handling thread should never call this function
+void funk2_memory__signal_enter_bytecode(funk2_memory_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_memorypool__signal_enter_bytecode(&(this->pool[pool_index]));
+}
+
+// memory handling thread should never call this function
+void funk2_memory__signal_exit_bytecode(funk2_memory_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_memorypool__signal_exit_bytecode(&(this->pool[pool_index]));
+}
+
+void funk2_memory__handle(funk2_memory_t* memory) {
+  boolean_t should_collect_garbage    = boolean__false;
+  boolean_t should_enlarge_memory_now = boolean__false;
+  int index;
+  for (index = 0; index < memory_pool_num; index ++) {
+    if (memory->pool[index].should_enlarge_memory_now) {
+      should_enlarge_memory_now = boolean__true;
+    }
+    if (memory->pool[index].should_run_gc) {
+      should_collect_garbage = boolean__true;
+    }
+  }
+  if (should_enlarge_memory_now) {
+    while (__ptypes_waiting_count < memory_pool_num) {
+      sched_yield();
+    }
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (memory->pool[index].should_enlarge_memory_now) {
+	pool__change_total_memory_available(index, memory->pool[index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
+	memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
+	memory->pool[index].should_enlarge_memory_now                         = boolean__false;
+      }
+    }
+    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+  }
+  if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
+    status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
+    __ptypes_please_wait_for_gc_to_take_place = boolean__true;
+    while (__ptypes_waiting_count < memory_pool_num) {
+      sched_yield();
+    }
+    if (! gc__is_disabled()) {
+      status ("");
+      status ("**********************************");
+      status ("**** DOING GARBAGE COLLECTION ****");
+      status ("**********************************");
+      status ("");
+      for (index = 0; index < memory_pool_num; index ++) {
+	if (memory->pool[index].should_run_gc) {
+	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+	  int did_something = garbage_collect(index, 0);
+	  if (did_something) {
+	    status ("garbage collection did something.");
+	  } else {
+	    status ("garbage collection did nothing.");
+	  }
+	  memory->pool[index].should_run_gc = boolean__false;
+	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+	}
+      }
+    } else {
+      status ("");
+      status ("***********************************************************");
+      status ("**** should do garbage collection, but gc is disabled. ****");
+      status ("***********************************************************");
+      status ("");
+    }
+    memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
   }
 }
 
-// END UNPROTECTED-USE MEMORY FUNCTIONS
+void funk2_memory__print_gc_stats(funk2_memory_t* this) {
+  int pool_index;
+  for(pool_index = 0; pool_index < memory_pool_num; pool_index++) {
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    status("pool[%d].total_global_memory  = " f2size_t__fstr, pool_index, this->pool[pool_index].total_global_memory);
+    status("pool[%d].total_free_memory()  = " f2size_t__fstr, pool_index, total_free_memory(pool_index));
+    status("pool[%d].total_used_memory()  = " f2size_t__fstr, pool_index, total_used_memory(pool_index));
+    status("pool[%d].next_unique_block_id = %u", pool_index, this->pool[pool_index].next_unique_block_id);
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+  }
+}
+
+
+
+
+// **
 
 void f2__memory__initialize() {
   int pool_index;

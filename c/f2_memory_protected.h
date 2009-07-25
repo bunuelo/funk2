@@ -22,7 +22,7 @@
 #ifndef F2__MEMORY__PROTECTED__H
 #define F2__MEMORY__PROTECTED__H
 
-//#define DEBUG_MEMORY 1
+#define DEBUG_MEMORY 2
 
 #include "f2_global.h"
 #include "f2_redblacktree.h"

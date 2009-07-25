@@ -845,7 +845,7 @@ u8 pool__free_all_gc_untouched_blocks(int pool_index) {
 }
 
 u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int generation_num) {
-  status("freeing all untouched blocks for pool %d, generation %d.", pool_index, generation_num);
+  //status("freeing all untouched blocks for pool %d, generation %d.", pool_index, generation_num);
   debug_memory_test(pool_index, 1);
   u8 did_something = 0;
   rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));

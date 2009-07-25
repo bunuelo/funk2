@@ -214,6 +214,9 @@ void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) 
 
 void memorypool__signal_enter_bytecode(memorypool_t* this) {
   this->single_bytecode_alloc_array__reentrance_count ++;
+  if (this->single_bytecode_alloc_array__reentrance_count > 1) {
+    status("memorypool__signal_enter_bytecode: reentrance_count > 1, reentrance_count=%d", this->single_bytecode_alloc_array__reentrance_count);
+  }
 }
 
 void memorypool__signal_exit_bytecode(memorypool_t* this) {

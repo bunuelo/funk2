@@ -1120,7 +1120,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       for (index = 0; index < memory_pool_num; index ++) {
 	if (memory->pool[index].should_run_gc) {
 	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	  int did_something = garbage_collect(index, 1024);
+	  int did_something = garbage_collect(index, 0);
 	  if (did_something) {
 	    status ("garbage collection did something.");
 	  } else {

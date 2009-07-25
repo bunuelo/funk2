@@ -109,12 +109,12 @@ f2ptr f2__scheduler__processor_with_fewest_threads(f2ptr cause, f2ptr scheduler)
   u64   min_length    = 0xffffffffffffffff;
   f2ptr min_processor = nil;
   u64 i;
-  printf("\nprocessor thread list:"); fflush(stdout);
+  status("processor thread list:");
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
     f2ptr active_threads = f2processor__active_threads(processor, cause);
     u64 threads__length = raw__length(cause, active_threads);
-    printf("\n  processor pool_index=" s64__fstr " active_thread_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), threads__length); fflush(stdout);
+    status("  processor pool_index=" s64__fstr " active_thread_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), threads__length);
     if (threads__length < min_length) {
       min_length = threads__length;
       min_processor = processor;
@@ -130,7 +130,7 @@ void f2__global_scheduler__add_thread_serial(f2ptr cause, f2ptr thread) {
 
 void f2__scheduler__add_thread_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr thread) {
   f2ptr processor = f2__scheduler__processor_with_fewest_threads(cause, this);
-  printf("\n[adding thread to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause)); fflush(stdout);
+  status("[adding thread to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
   f2__processor__add_active_thread(cause, processor, thread);
 }
 

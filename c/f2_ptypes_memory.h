@@ -35,28 +35,16 @@
 
 // memblock
 
-#ifdef MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-#  define __pure__memblock__creation_nanoseconds_since_1970(this) (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_nanoseconds_since_1970)
-#endif // MEMORY_OPTION__MEMBLOCK__MICROSECOND_TIMESTAMP
-
-#ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
-#  define __pure__memblock__render_read_activated(this)              (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->render_read_activated)
-#  define __pure__memblock__render_read_activated__set(this, value)  (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->render_read_activated = (value))
-#  define __pure__memblock__render_write_activated(this)             (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->render_write_activated)
-#  define __pure__memblock__render_write_activated__set(this, value) (((memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->render_write_activated = (value))
-#else
-#  define __pure__memblock__render_read_activated(this)              0
-#  define __pure__memblock__render_read_activated__set(this, value)
-#  define __pure__memblock__render_write_activated(this)             0
-#  define __pure__memblock__render_write_activated__set(this, value)
-#endif // MEMORY_OPTION__MEMBLOCK__RENDER_DATA
+#ifdef MEMORY_OPTION__FUNK2_MEMBLOCK__MICROSECOND_TIMESTAMP
+#  define __pure__funk2_memblock__creation_nanoseconds_since_1970(this) (((funk2_memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_nanoseconds_since_1970)
+#endif // MEMORY_OPTION__FUNK2_MEMBLOCK__MICROSECOND_TIMESTAMP
 
 // ptype
 
 struct ptype_block_s {
-  memblock_t block;
-  ptype_t    ptype;
-  f2ptr      cause;
+  funk2_memblock_t block;
+  ptype_t          ptype;
+  f2ptr            cause;
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;
 

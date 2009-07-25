@@ -156,59 +156,8 @@ f2size_t funk2_memorypool__total_free_memory(funk2_memorypool_t* this) {
 
 
 
-ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
-  computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
-  pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
-  pool_address_t pool_address = __f2ptr__pool_address(f2p);
-  debug__assert(computer_id == 0, nil, "computer_id != 0");
-  if (computer_id != 0 || pool_address < 0 || pool_address >= this->pool[pool_index].total_global_memory) {
-    printf("\ncomputer_id  = " computer_id__fstr,  computer_id);
-    printf("\npool_index   = " pool_index__fstr,   pool_index);
-    printf("\npool_address = " pool_address__fstr, pool_address);
-    fflush(stdout);
-    error(nil, "f2ptr_to_ptr__debug error: received invalid pointer.");
-  }
-  ptr p = __f2ptr_to_ptr(f2p);
-#ifdef DEBUG_MEMORY_VALID_PTRS
-  if (p && (! funk2_memory__is_valid_funk2_memblock_ptr(this, p))) {
-    char str[1024];
-    sprintf(str, "f2ptr_to_ptr__debug error: invalid memblock f2ptr (%d).", (int)f2p);
-    error(nil, str);
-  }
-#endif
-  return p;
-}
-
-ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
-  computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
-  pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
-  pool_address_t pool_address = __f2ptr__pool_address(f2p);
-  if (computer_id != 0 || pool_address < 0 || pool_address >= this->pool[pool_index].total_global_memory) {
-    printf("\ncomputer_id  = " computer_id__fstr,  computer_id);
-    printf("\npool_index   = " pool_index__fstr,   pool_index);
-    printf("\npool_address = " pool_address__fstr, pool_address);
-    fflush(stdout);
-    error(nil, "used_f2ptr_to_ptr__debug error: received invalid pointer.");
-  }
-  ptr p = __f2ptr_to_ptr(f2p);
-#ifdef DEBUG_MEMORY_VALID_PTRS
-  if (p && (! funk2_memory__is_valid_funk2_memblock_ptr(this, p))) {
-    char str[1024];
-    sprintf(str, "ptr_to_f2ptr__debug error: invalid memblock f2ptr (%d).", (int)f2p);
-    error(nil, str);
-  }
-#endif
-  if (p) {
-    funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
-    if(! block->used) {
-      error(nil, "used_f2ptr_to_ptr__debug error: referenced unused memory block.");
-    }
-  }
-  return p;
-}
-
-void memory_test__dynamic_memory(int pool_index) {
-  release__assert(__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory, nil, "memory_test: (__funk2.memory.pool[pool_index].dynamic_memory.byte_num == __funk2.memory.pool[pool_index].total_global_memory) failed.");
+void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this) {
+  release__assert(this->dynamic_memory.byte_num == this->total_global_memory, nil, "funk2_memorypool__memory_test__dynamic_memory: (this->dynamic_memory.byte_num == this->total_global_memory) failed.");
 }
 
 void memory_test__byte_num_zero(int pool_index) {
@@ -269,7 +218,7 @@ void memory_test(int pool_index) {
 				 printf("\ntotal_used_memory(%d) + total_free_memory() = %d", pool_index, (int)free_memory_num + used_memory_num);
 				 printf("\n__funk2.memory.pool[%d].total_global_memory              = %d", pool_index, (int)__funk2.memory.pool[pool_index].total_global_memory);
 				 fflush(stdout));
-  memory_test__dynamic_memory(pool_index);
+  funk2_memorypool__memory_test__dynamic_memory(&(__funk2.memory.pool[pool_index]));
   memory_test__byte_num_zero(pool_index);
   memory_test__all_known_types(pool_index);
   {
@@ -1461,6 +1410,57 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
     }
   }
   return boolean__false;
+}
+
+ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
+  computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
+  pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
+  pool_address_t pool_address = __f2ptr__pool_address(f2p);
+  debug__assert(computer_id == 0, nil, "computer_id != 0");
+  if (computer_id != 0 || pool_address < 0 || pool_address >= this->pool[pool_index].total_global_memory) {
+    printf("\ncomputer_id  = " computer_id__fstr,  computer_id);
+    printf("\npool_index   = " pool_index__fstr,   pool_index);
+    printf("\npool_address = " pool_address__fstr, pool_address);
+    fflush(stdout);
+    error(nil, "f2ptr_to_ptr__debug error: received invalid pointer.");
+  }
+  ptr p = __f2ptr_to_ptr(f2p);
+#ifdef DEBUG_MEMORY_VALID_PTRS
+  if (p && (! funk2_memory__is_valid_funk2_memblock_ptr(this, p))) {
+    char str[1024];
+    sprintf(str, "f2ptr_to_ptr__debug error: invalid memblock f2ptr (%d).", (int)f2p);
+    error(nil, str);
+  }
+#endif
+  return p;
+}
+
+ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
+  computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
+  pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
+  pool_address_t pool_address = __f2ptr__pool_address(f2p);
+  if (computer_id != 0 || pool_address < 0 || pool_address >= this->pool[pool_index].total_global_memory) {
+    printf("\ncomputer_id  = " computer_id__fstr,  computer_id);
+    printf("\npool_index   = " pool_index__fstr,   pool_index);
+    printf("\npool_address = " pool_address__fstr, pool_address);
+    fflush(stdout);
+    error(nil, "used_f2ptr_to_ptr__debug error: received invalid pointer.");
+  }
+  ptr p = __f2ptr_to_ptr(f2p);
+#ifdef DEBUG_MEMORY_VALID_PTRS
+  if (p && (! funk2_memory__is_valid_funk2_memblock_ptr(this, p))) {
+    char str[1024];
+    sprintf(str, "ptr_to_f2ptr__debug error: invalid memblock f2ptr (%d).", (int)f2p);
+    error(nil, str);
+  }
+#endif
+  if (p) {
+    funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
+    if(! block->used) {
+      error(nil, "used_f2ptr_to_ptr__debug error: referenced unused memory block.");
+    }
+  }
+  return p;
 }
 
 

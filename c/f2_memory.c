@@ -160,9 +160,9 @@ void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this) {
   release__assert(this->dynamic_memory.byte_num == this->total_global_memory, nil, "funk2_memorypool__memory_test__dynamic_memory: (this->dynamic_memory.byte_num == this->total_global_memory) failed.");
 }
 
-void memory_test__byte_num_zero(int pool_index) {
-  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
+void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this) {
+  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   while(iter < end_of_blocks) {
     release__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
@@ -219,7 +219,7 @@ void memory_test(int pool_index) {
 				 printf("\n__funk2.memory.pool[%d].total_global_memory              = %d", pool_index, (int)__funk2.memory.pool[pool_index].total_global_memory);
 				 fflush(stdout));
   funk2_memorypool__memory_test__dynamic_memory(&(__funk2.memory.pool[pool_index]));
-  memory_test__byte_num_zero(pool_index);
+  funk2_memorypool__memory_test__byte_num_zero(&(__funk2.memory.pool[pool_index]));
   memory_test__all_known_types(pool_index);
   {
     rbt_node_t* free_iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].free_memory_tree));

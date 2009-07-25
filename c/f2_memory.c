@@ -154,8 +154,6 @@ f2size_t funk2_memorypool__total_free_memory(funk2_memorypool_t* this) {
   return free_memory_count;
 }
 
-
-
 void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this) {
   release__assert(this->dynamic_memory.byte_num == this->total_global_memory, nil, "funk2_memorypool__memory_test__dynamic_memory: (this->dynamic_memory.byte_num == this->total_global_memory) failed.");
 }
@@ -234,30 +232,30 @@ void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
   }
 }
 
-void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
+void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num) {
   if(((u64)byte_num) > ((u64)f2ptr__pool_address__max_value)) {
-    status("pool__change_total_memory_available error: tried to allocate more memory than is able to be addressed ((u64)byte_num) > ((u64)f2ptr__pool_address__max_value), ((u64)" u64__fstr ") > ((u64)" u64__fstr ").",
+    status("funk2_memorypool__change_total_memory_available error: tried to allocate more memory than is able to be addressed ((u64)byte_num) > ((u64)f2ptr__pool_address__max_value), ((u64)" u64__fstr ") > ((u64)" u64__fstr ").",
 	   ((u64)byte_num), ((u64)f2ptr__pool_address__max_value));
-    error(nil, "pool__change_total_memory_available error: tried to allocate more memory than is able to be addressed (are you using a 32 bit version still?).");
+    error(nil, "funk2_memorypool__change_total_memory_available error: tried to allocate more memory than is able to be addressed (are you using a 32 bit version still?).");
   }
-  status("pool__change_total_memory_available(%d, " f2size_t__fstr ")", pool_index, byte_num); fflush(stdout);
-  if (byte_num == __funk2.memory.pool[pool_index].total_global_memory) {return;}
-  f2size_t         old_total_global_memory      = __funk2.memory.pool[pool_index].total_global_memory;
-  f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
-  f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, byte_num);
-  __funk2.memory.pool[pool_index].global_f2ptr_offset = __funk2.memory.pool[pool_index].dynamic_memory.ptr - 1;
-  __funk2.memory.pool[pool_index].total_global_memory = byte_num;
-  if (__funk2.memory.pool[pool_index].dynamic_memory.ptr != old_dynamic_memory.ptr) {
+  status("funk2_memorypool__change_total_memory_available(" f2size_t__fstr ")", byte_num); fflush(stdout);
+  if (byte_num == this->total_global_memory) {return;}
+  f2size_t         old_total_global_memory      = this->total_global_memory;
+  f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
+  f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, byte_num);
+  this->global_f2ptr_offset = this->dynamic_memory.ptr - 1;
+  this->total_global_memory = byte_num;
+  if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {
     // need to fix pointers (globals, funk2_memblock__next(block))
-    s64 byte_diff = (s64)(__funk2.memory.pool[pool_index].dynamic_memory.ptr - old_dynamic_memory.ptr);
-    if (__funk2.memory.pool[pool_index].used_memory_tree.head)  {__funk2.memory.pool[pool_index].used_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].used_memory_tree.head) + byte_diff);}
-    if (__funk2.memory.pool[pool_index].free_memory_tree.head)  {__funk2.memory.pool[pool_index].free_memory_tree.head = (rbt_node_t*)(((u8*)__funk2.memory.pool[pool_index].free_memory_tree.head) + byte_diff);}
+    s64 byte_diff = (s64)(this->dynamic_memory.ptr - old_dynamic_memory.ptr);
+    if (this->used_memory_tree.head)  {this->used_memory_tree.head = (rbt_node_t*)(((u8*)this->used_memory_tree.head) + byte_diff);}
+    if (this->free_memory_tree.head)  {this->free_memory_tree.head = (rbt_node_t*)(((u8*)this->free_memory_tree.head) + byte_diff);}
     if (__funk2.memory.global_environment_ptr >= old_dynamic_memory.ptr &&
 	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
-    funk2_memblock_t* iter = from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr);
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr)) + old_total_global_memory);
+    funk2_memblock_t* iter = from_ptr(this->dynamic_memory.ptr);
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
     funk2_memblock_t* last = NULL;
     while(iter < end_of_blocks) {
       if (iter->rbt_node.parent) {iter->rbt_node.parent = (rbt_node_t*)(((u8*)(iter->rbt_node.parent) + byte_diff));}
@@ -271,30 +269,30 @@ void pool__change_total_memory_available(int pool_index, f2size_t byte_num) {
       funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
       iter->used     = 0;
       iter->gc_touch = 0;
-      status("pool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
-      rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)iter);
+      status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
+      rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)iter);
       release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
     } else {
-      rbt_tree__remove(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)last);
+      rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)last);
       funk2_memblock__byte_num(last) += (byte_num - old_total_global_memory);
-      rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)last);
-      status("pool__change_total_memory_available: increased last block size to funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(last));
+      rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)last);
+      status("funk2_memorypool__change_total_memory_available: increased last block size to funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(last));
       release__assert(funk2_memblock__byte_num(last) > 0, nil, "(funk2_memblock__byte_num(last) >= 0) should be enough free space to reduce memory block.");
     }
   } else {
     if (byte_num > old_total_global_memory) {
-      funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr)) + old_total_global_memory);
+      funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
       funk2_memblock__byte_num(block) = (byte_num - old_total_global_memory);
       block->used     = 0;
       block->gc_touch = 0;
-      rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)block);
+      rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
       release__assert(funk2_memblock__byte_num(block) > 0, nil, "(funk2_memblock__byte_num(block) > 0) should be enough free space to reduce memory block.");
     } else {
-      release__assert(0, nil, "pool__change_total_memory_available error: not implemented yet.");
+      release__assert(0, nil, "funk2_memorypool__change_total_memory_available error: not implemented yet.");
     }
   }
-  __funk2.memory.pool[pool_index].total_free_memory += (byte_num - old_total_global_memory);
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
+  this->total_free_memory += (byte_num - old_total_global_memory);
+  funk2_memorypool__debug_memory_test(this, 1);
 }
 
 void clear_all_gc_touch_flags(int pool_index) {
@@ -746,7 +744,7 @@ ptr find_or_create_free_splittable_funk2_memblock_and_unfree(int pool_index, f2s
 	  sched_yield();
 	}
       }
-      pool__change_total_memory_available(pool_index, memory->pool[pool_index].total_global_memory + (memory->pool[pool_index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
+      funk2_memorypool__change_total_memory_available(&(memory->pool[pool_index]), memory->pool[pool_index].total_global_memory + (memory->pool[pool_index].total_global_memory >> 3) + memory->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
       __funk2.memory.pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
       __funk2.memory.pool[pool_index].should_enlarge_memory_now                         = boolean__false;
       __ptypes_please_wait_for_gc_to_take_place                                         = boolean__false;
@@ -1340,7 +1338,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
     }
     for (index = 0; index < memory_pool_num; index ++) {
       if (memory->pool[index].should_enlarge_memory_now) {
-	pool__change_total_memory_available(index, memory->pool[index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
+	funk2_memorypool__change_total_memory_available(&(memory->pool[index]), memory->pool[index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
 	memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
 	memory->pool[index].should_enlarge_memory_now                         = boolean__false;
       }

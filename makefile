@@ -97,7 +97,6 @@ funk2_server_objs = \
   c/f2_primfunks__fcntl.o \
   c/f2_primfunks__ioctl.o \
   c/f2_primfunks__locale.o \
-  c/f2_primfunks__memory.o \
   c/f2_processor_mutex.o \
   c/f2_processor_thread.o \
   c/f2_processor_thread_handler.o \
@@ -170,7 +169,6 @@ funk2_headers = \
   c/f2_primfunks__fcntl.h \
   c/f2_primfunks__ioctl.h \
   c/f2_primfunks__locale.h \
-  c/f2_primfunks__memory.h \
   c/f2_processor_mutex.h \
   c/f2_processor_thread.h \
   c/f2_processor_thread_handler.h \

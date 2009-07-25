@@ -105,7 +105,6 @@
 #include "f2_primfunks__fcntl.h"
 #include "f2_primfunks__ioctl.h"
 #include "f2_primfunks__locale.h"
-#include "f2_primfunks__memory.h"
 #include "f2_primfunks__string.h"
 #include "f2_primobject__action.h"
 #include "f2_primobject__boolean.h"

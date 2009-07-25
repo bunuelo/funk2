@@ -347,40 +347,31 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   return did_something;
 }
 
-void exp__gc_touch_all_referenced(ptr block_ptr);
+#define FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
 
-void f2__gc_touch_all_referenced(f2ptr exp) {
-  if(!exp) {return;}
-  ptype_block_t* exp_block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (exp_block->block.gc_touch) {return;}
-  exp__gc_touch_all_referenced(to_ptr(exp_block));
-}
-
-#define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
-
-typedef struct gc_touch_circle_buffer_s {
+typedef struct funk2_gc_touch_circle_buffer_s {
   int                num;
   funk2_memblock_t** start;
   funk2_memblock_t** end;
-} gc_touch_circle_buffer_t;
+} funk2_gc_touch_circle_buffer_t;
 
-boolean_t                __gc_touch_circle_buffer__initialized = 0;
-gc_touch_circle_buffer_t __gc_touch_circle_buffer;
+boolean_t                __funk2_gc_touch_circle_buffer__initialized = 0;
+gc_touch_circle_buffer_t __funk2_gc_touch_circle_buffer;
 
-void gc_touch_circle_buffer__init() {
-  __gc_touch_circle_buffer__initialized = 1;
-  __gc_touch_circle_buffer.num   = GC_TOUCH_CIRCLE_BUF_START_SIZE;
-  __gc_touch_circle_buffer.start = (funk2_memblock_t**)from_ptr(f2__malloc(GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
-  __gc_touch_circle_buffer.end   = __gc_touch_circle_buffer.start + GC_TOUCH_CIRCLE_BUF_START_SIZE;  
+void funk2_gc_touch_circle_buffer__init() {
+  __funk2_gc_touch_circle_buffer__initialized = 1;
+  __funk2_gc_touch_circle_buffer.num   = FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE;
+  __funk2_gc_touch_circle_buffer.start = (funk2_memblock_t**)from_ptr(f2__malloc(FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
+  __funk2_gc_touch_circle_buffer.end   = __funk2_gc_touch_circle_buffer.start + FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE;  
 }
 
 funk2_memblock_t** __circle_buf_start_index;
 funk2_memblock_t** __circle_buf_end_index;
 
 void gc_touch_print_array(char* message) {
-  ptr* iter = (ptr*)__gc_touch_circle_buffer.start;
+  ptr* iter = (ptr*)__funk2_gc_touch_circle_buffer.start;
   printf("\n%16s: {", message);
-  for(; iter < (ptr*)__gc_touch_circle_buffer.end; iter++) {
+  for(; iter < (ptr*)__funk2_gc_touch_circle_buffer.end; iter++) {
     if (iter == (ptr*)__circle_buf_start_index) {
       printf(" *S*");
     }
@@ -547,6 +538,13 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
   }
+}
+
+void f2__gc_touch_all_referenced(f2ptr exp) {
+  if(!exp) {return;}
+  ptype_block_t* exp_block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
+  if (exp_block->block.gc_touch) {return;}
+  exp__gc_touch_all_referenced(to_ptr(exp_block));
 }
 
 u8 pool__free_all_gc_untouched_blocks(int pool_index) {

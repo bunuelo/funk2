@@ -76,6 +76,7 @@ ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
 void assert_failed(f2ptr thread, char* filename, int line_num, char* str);
 
 void exp__gc_touch_all_referenced(ptr start_block_ptr);
+void f2__gc_touch_all_referenced(f2ptr exp);
 
 void      pool__pause_gc(int pool_index);
 int       pool__try_pause_gc(int pool_index);

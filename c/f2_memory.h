@@ -68,7 +68,6 @@ typedef enum ptype_e {
 } ptype_t;
 
 #include "f2_time.h"
-//#include "f2_gfunkptr.h"
 
 ptr  f2__malloc(f2size_t byte_num);
 void f2__free(ptr this);

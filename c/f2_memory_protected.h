@@ -122,9 +122,9 @@ funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 #define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_address(pool_index, p))))                                           : ((u64)0))
 
 #ifdef DEBUG_MEMORY_POINTERS
-#  define      f2ptr_to_ptr(f2p) used_f2ptr_to_ptr__debug(f2p)
+#  define      f2ptr_to_ptr(f2p) funk2_memory__used_f2ptr_to_ptr__debug(&(__funk2.memory), f2p)
 //#  define        ptr_to_f2ptr(p) used_ptr_to_f2ptr__debug(p)
-#  define raw__f2ptr_to_ptr(f2p) f2ptr_to_ptr__debug(f2p)
+#  define raw__f2ptr_to_ptr(f2p) funk2_memory__f2ptr_to_ptr__debug(&(__funk2.memory), f2p)
 //#  define   raw__ptr_to_f2ptr(p) ptr_to_f2ptr__debug(p)
 #else
 //#  define      f2ptr_to_ptr(f2p) fast__f2ptr_to_ptr(f2p)

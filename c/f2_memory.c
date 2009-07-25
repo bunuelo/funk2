@@ -868,6 +868,9 @@ ptr find_or_create_free_splittable_memblock_and_unfree(int pool_index, f2size_t 
 
 // note that byte_num must be at least sizeof(u8) for ptype! because of type checking in garbage collection
 f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
+  if ((! __funk2.memory.bootstrapping_mode) && pthread_self() == __funk2.memory.memory_handling_thread) {
+    status("warning: memory handling thread trying to allocate %d bytes from pool %d.", byte_num, pool_index);
+  }
   debug_memory_test(pool_index, 3);
   memblock_t* block = (memblock_t*)from_ptr(find_or_create_free_splittable_memblock_and_unfree(pool_index, byte_num));
 #ifdef DEBUG_MEMORY

@@ -1065,28 +1065,6 @@ int gc__is_disabled() {
 //
 boolean_t pool__try_gc(int pool_index) {
   u8 result = 0;
-  /*
-  int disable_gc    = 0;
-  int should_run_gc = 0;
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    disable_gc    |= __funk2.memory.pool[index].disable_gc;
-    should_run_gc |= __funk2.memory.pool[index].should_run_gc;
-  }
-  if ((! disable_gc) && should_run_gc) {
-    for (index = 0; index < memory_pool_num; index ++) {
-      ptype_access__lockout_access(index, 0);
-      memory_mutex__lock(index);
-      __funk2.memory.pool[index].should_run_gc = 0;
-    }
-    result = garbage_collect(pool_index, 0); // we should see how much was needed last time.
-    for (index = 0; index < memory_pool_num; index ++) {
-      memory_mutex__unlock(index);
-      ptype_access__unlockout_access(index);
-    }
-    debug_memory_test(pool_index, 3);
-  }
-  */
   return result;
 }
 
@@ -1224,8 +1202,7 @@ int raw__memory_image__save(char* filename) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     memory_mutex__lock(pool_index);
   }
-  // handles any delayed garbage collections
-  funk2_memory__handle(&(__funk2.memory));
+  // should collect garbage probably
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
     printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);

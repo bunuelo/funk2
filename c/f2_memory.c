@@ -170,9 +170,9 @@ void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this) {
   release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
 }
 
-void memory_test__all_known_types(int pool_index) {
-  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
+void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this) {
+  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used) {
       ptype_block_t* ptype_block = (ptype_block_t*)iter;
@@ -220,7 +220,7 @@ void memory_test(int pool_index) {
 				 fflush(stdout));
   funk2_memorypool__memory_test__dynamic_memory(&(__funk2.memory.pool[pool_index]));
   funk2_memorypool__memory_test__byte_num_zero(&(__funk2.memory.pool[pool_index]));
-  memory_test__all_known_types(pool_index);
+  funk2_memorypool__memory_test__all_known_types(&(__funk2.memory.pool[pool_index]));
   {
     rbt_node_t* free_iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].free_memory_tree));
     // this should lock up if there is a loop in free list.

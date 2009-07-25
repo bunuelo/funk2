@@ -196,7 +196,7 @@ void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this) {
       default:
 	{
 	  char str[1024];
-	  sprintf(str, "unknown type (%ld) of block (%ld) in debugging pool[%ld] memory test.", (long)(ptype_block->ptype), (long)ptype_block, (long)pool_index);
+	  sprintf(str, "unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->ptype), (long)ptype_block);
 	  release__assert(0, nil, str);
 	}
       }

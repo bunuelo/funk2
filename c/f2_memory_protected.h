@@ -160,8 +160,8 @@ f2ptr ptr_to_f2ptr__debug(ptr   p);
 ptr   used_f2ptr_to_ptr__debug(f2ptr f2p);
 f2ptr used_ptr_to_f2ptr__debug(ptr   p);
 
-ptr   fast__f2ptr_to_ptr(f2ptr f2p);
-//f2ptr fast__ptr_to_f2ptr(ptr   p);
+//ptr   fast__f2ptr_to_ptr(f2ptr f2p);
+f2ptr fast__ptr_to_f2ptr(ptr   p);
 
 #define fast__f2ptr_to_ptr(f2p) __f2ptr_to_ptr(f2p)
 

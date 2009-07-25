@@ -307,8 +307,8 @@ void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypo
   funk2_memorypool__debug_memory_test(this, 3);
 }
 
-void pool__link_funk2_memblock_to_freelist(int pool_index, funk2_memblock_t* block) {
-  rbt_tree__insert(&(__funk2.memory.pool[pool_index].free_memory_tree), (rbt_node_t*)block);
+void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block) {
+  rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
 }
 
 u8 defragment_free_memory_blocks_in_place(int pool_index) {
@@ -337,7 +337,7 @@ u8 defragment_free_memory_blocks_in_place(int pool_index) {
     } else {
       if (! iter->used) {
 	segment_first_free_block = iter;
-	pool__link_funk2_memblock_to_freelist(pool_index, iter);
+	funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), iter);
 	//funk2_memblock__next(iter) = __funk2.memory.pool[pool_index].free_memory_blocks;
 	//__funk2.memory.pool[pool_index].free_memory_blocks = iter;
       }
@@ -565,7 +565,7 @@ u8 pool__free_all_gc_untouched_blocks(int pool_index) {
       ((funk2_memblock_t*)iter)->used = 0;
       __funk2.memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
       // add to free list
-      pool__link_funk2_memblock_to_freelist(pool_index, (funk2_memblock_t*)iter);
+      funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), (funk2_memblock_t*)iter);
       // set did_something flag
       did_something = 1;
     }
@@ -590,7 +590,7 @@ u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int genera
       ((funk2_memblock_t*)iter)->used = 0;
       __funk2.memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
       // add to free list
-      pool__link_funk2_memblock_to_freelist(pool_index, (funk2_memblock_t*)iter);
+      funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), (funk2_memblock_t*)iter);
       // set did_something flag
       did_something = 1;
     }
@@ -769,7 +769,7 @@ f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
     funk2_memblock__init(new_block, new_block__byte_num, 0, 0);
     
-    pool__link_funk2_memblock_to_freelist(pool_index, new_block);
+    funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), new_block);
     
     funk2_memblock__byte_num(block) = byte_num;
   }
@@ -1117,7 +1117,7 @@ void rebuild_memory_info_from_image() {
 	if (iter->used) {
 	  rbt_tree__insert(&(__funk2.memory.pool[pool_index].used_memory_tree), (rbt_node_t*)iter);
 	} else {
-	  pool__link_funk2_memblock_to_freelist(pool_index, iter);
+	  funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), iter);
 	  __funk2.memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));

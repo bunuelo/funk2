@@ -295,26 +295,16 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   funk2_memorypool__debug_memory_test(this, 1);
 }
 
-void clear_all_gc_touch_flags(int pool_index) {
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
-  rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
-  while (iter) {
-    ((funk2_memblock_t*)iter)->gc_touch = 0;
-    iter = rbt_node__next(iter);
-  }
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
-}
-
-void clear_all_gc_touch_flags_before_generation(int pool_index, int generation_num) {
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
-  rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
+void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num) {
+  funk2_memorypool__debug_memory_test(this, 3);
+  rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
   while (iter) {
     if(((funk2_memblock_t*)iter)->generation_num < generation_num) {
       ((funk2_memblock_t*)iter)->gc_touch = 0;
     }
     iter = rbt_node__next(iter);
   }
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
+  funk2_memorypool__debug_memory_test(this, 3);
 }
 
 void pool__link_funk2_memblock_to_freelist(int pool_index, funk2_memblock_t* block) {
@@ -662,7 +652,7 @@ u8 garbage_collect_generation(int generation_num) {
   }
 #endif
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    clear_all_gc_touch_flags_before_generation(pool_index, generation_num);
+    funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(__funk2.memory.pool[pool_index]), generation_num);
   }
   
   // this is where we touch everything we want to keep!

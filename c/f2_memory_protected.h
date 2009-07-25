@@ -61,8 +61,6 @@ typedef struct memblock_s memblock_t;
 //#define memblock__next(this)             ((memblock_t*)((this)->rbt_node.right))
 //#define memblock__next__set(this, value) (((this)->rbt_node.right) = (rbt_node_t*)(value))
 
-#define funk2_memory__single_bytecode_alloc_count 1000000
-
 typedef struct memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;
   uint                    disable_gc; // incremented/decremented by pause_gc/resume_gc
@@ -82,7 +80,8 @@ typedef struct memorypool_s {
   f2size_t                total_allocated_memory_since_last_gc;
   uint                    next_unique_block_id;
   u64                     single_bytecode_alloc_array__used_num;
-  f2ptr                   single_bytecode_alloc_array[funk2_memory__single_bytecode_alloc_count];
+  u64                     single_bytecode_alloc_array__length;
+  f2ptr*                  single_bytecode_alloc_array;
   u64                     single_bytecode_alloc_array__reentrance_count;
 } memorypool_t;
 

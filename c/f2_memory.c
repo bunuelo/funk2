@@ -182,8 +182,10 @@ void memorypool__init(memorypool_t* pool) {
   rbt_tree__init(&(pool->used_memory_tree), NULL);
   
   pool->single_bytecode_alloc_array__used_num = 0;
+  pool->single_bytecode_alloc_array__length   = 1024;
   u64 i;
-  for (i = 0; i < funk2_memory__single_bytecode_alloc_count; i ++) {
+  pool->single_bytecode_alloc_array = (f2ptr*)f2__malloc(sizeof(f2ptr) * pool->single_bytecode_alloc_array__length);
+  for (i = 0; i < pool->single_bytecode_alloc_array__length; i ++) {
     pool->single_bytecode_alloc_array[i] = nil;
   }
   pool->single_bytecode_alloc_array__reentrance_count = 0;
@@ -202,8 +204,11 @@ void pool__destroy(int pool_index) {
 void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) {
   this->single_bytecode_alloc_array[this->single_bytecode_alloc_array__used_num] = exp;
   this->single_bytecode_alloc_array__used_num ++;
-  if (this->single_bytecode_alloc_array__used_num >= funk2_memory__single_bytecode_alloc_count) {
-    error(nil, "memorypool__add_single_bytecode_alloc_f2ptr overflow error.");
+  if (this->single_bytecode_alloc_array__used_num >= this->single_bytecode_alloc_array__length) {
+    u64 old_length = this->single_bytecode_alloc_array__length;
+    this->single_bytecode_alloc_array__length <<= 1;
+    status("memorypool__add_single_bytecode_alloc_f2ptr: doubling size of single_bytecode_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->single_bytecode_alloc_array__length);
+    this->single_bytecode_alloc_array = f2__new_alloc(this->single_bytecode_alloc_array, sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->single_bytecode_alloc_array__length);
   }
 }
 

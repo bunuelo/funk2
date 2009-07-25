@@ -358,7 +358,7 @@ typedef struct funk2_gc_touch_circle_buffer_s {
 boolean_t                __funk2_gc_touch_circle_buffer__initialized = 0;
 gc_touch_circle_buffer_t __funk2_gc_touch_circle_buffer;
 
-void funk2_gc_touch_circle_buffer__init() {
+void gc_touch_circle_buffer__init() {
   __funk2_gc_touch_circle_buffer__initialized = 1;
   __funk2_gc_touch_circle_buffer.num   = FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE;
   __funk2_gc_touch_circle_buffer.start = (funk2_memblock_t**)from_ptr(f2__malloc(FUNK2_GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));

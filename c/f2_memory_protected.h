@@ -203,7 +203,8 @@ typedef struct funk2_memory_s {
 
 void funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
 void funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread
-void funk2_memory__signal_between_bytecodes(funk2_memory_t* this); // never called by memory management thread
+void funk2_memory__signal_enter_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
+void funk2_memory__signal_exit_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
 void funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
 
 #endif // F2__MEMORY__PROTECTED__H

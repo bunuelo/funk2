@@ -50,21 +50,21 @@ u8 __ptype__str[][128] = {
 #endif // F2__PTYPE__C__COMPILING
 
 typedef enum ptype_e {
-  ptype_free_memory     =  0,
-  ptype_newly_allocated =  1,
-  ptype_integer         =  2,
-  ptype_double          =  3,
-  ptype_float           =  4,
-  ptype_pointer         =  5,
-  ptype_gfunkptr        =  6,
-  ptype_mutex           =  7,
-  ptype_char            =  8,
-  ptype_string          =  9,
-  ptype_symbol          = 10,
-  ptype_chunk           = 11,
-  ptype_simple_array    = 12,
-  ptype_traced_array    = 13,
-  ptype_larva           = 14,
+  ptype_free_memory     = 0x40 + 0x0,
+  ptype_newly_allocated = 0x40 + 0x1,
+  ptype_integer         = 0x40 + 0x2,
+  ptype_double          = 0x40 + 0x3,
+  ptype_float           = 0x40 + 0x4,
+  ptype_pointer         = 0x40 + 0x5,
+  ptype_gfunkptr        = 0x40 + 0x6,
+  ptype_mutex           = 0x40 + 0x7,
+  ptype_char            = 0x40 + 0x8,
+  ptype_string          = 0x40 + 0x9,
+  ptype_symbol          = 0x40 + 0xA,
+  ptype_chunk           = 0x40 + 0xB,
+  ptype_simple_array    = 0x40 + 0xC,
+  ptype_traced_array    = 0x40 + 0xD,
+  ptype_larva           = 0x40 + 0xE,
 } ptype_t;
 
 #include "f2_time.h"

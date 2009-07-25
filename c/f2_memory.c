@@ -1455,7 +1455,7 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
     funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))))) + (this->pool[pool_index].total_global_memory));
     int byte_num;
     while(iter < end_of_blocks) {
-      if ((to_ptr(iter)) == p) {return 1;}
+      if ((to_ptr(iter)) == p) {return boolean__true;}
       byte_num = funk2_memblock__byte_num(iter);
       if (byte_num <= 0) {
 	char str[1024];
@@ -1465,7 +1465,7 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
       iter = (funk2_memblock_t*)(((u8*)iter) + byte_num);
     }
   }
-  return 0;
+  return boolean__false;
 }
 
 

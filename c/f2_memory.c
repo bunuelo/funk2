@@ -931,6 +931,9 @@ f2ptr pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     }
   }
 #endif
+  if (block_f2ptr) {
+    memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[pool_index]), block_f2ptr);
+  }
   return block_f2ptr;
 }
 
@@ -938,7 +941,6 @@ f2ptr pool__memblock_f2ptr__new(int pool_index, f2size_t byte_num) {
   while (1) {
     f2ptr memblock_f2ptr = pool__memblock_f2ptr__try_new(pool_index, byte_num);
     if (memblock_f2ptr) {
-      memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[pool_index]), memblock_f2ptr);
       return memblock_f2ptr;
     }
     sched_yield();

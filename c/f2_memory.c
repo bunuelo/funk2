@@ -867,7 +867,7 @@ f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
       status("pool_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
       status("  pool_index = " pool_index__fstr, (pool_index_t)pool_index);
       status("  block_ptr  = " ptr__fstr,        (ptr)block_ptr);
-      print_gc_stats();
+      funk2_memory__print_gc_stats(&(__funk2.memory));
       error(nil, "pool_address is out of range.");
     }
   }
@@ -878,19 +878,19 @@ f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     u64 check_computer_id  = __f2ptr__computer_id(block_f2ptr);
     if (check_computer_id != 0) {
       status("[ERROR] computer_id must be zero for a local memory allocation.");
-      print_gc_stats();
+      funk2_memory__print_gc_stats(&(__funk2.memory));
       error(nil, "computer_id must be zero for a local memory allocation.");
     }
     u64 check_pool_index   = __f2ptr__pool_index(block_f2ptr);
     if (check_pool_index > f2ptr__pool_index__max_value) {
       status("[ERROR] pool_index is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_index, f2ptr__pool_index__max_value);
-      print_gc_stats();
+      funk2_memory__print_gc_stats(&(__funk2.memory));
       error(nil, "pool_index is out of range.");
     }
     u64 check_pool_address = __f2ptr__pool_address(block_f2ptr);
     if (check_pool_address > f2ptr__pool_address__max_value) {
       status("[ERROR] pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
-      print_gc_stats();
+      funk2_memory__print_gc_stats(&(__funk2.memory));
       error(nil, "pool_address is out of range.");
     }
   }
@@ -1085,7 +1085,7 @@ void safe_read(int fd, void* ptr, size_t object_size) {
 
 int raw__memory_image__save(char* filename) {
   status("saving memory image.");
-  print_gc_stats();
+  funk2_memory__print_gc_stats(&(__funk2.memory));
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
@@ -1355,7 +1355,7 @@ int raw__memory_image__load(char* filename) {
     funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
   }
   
-  print_gc_stats();
+  funk2_memory__print_gc_stats(&(__funk2.memory));
   return retval;
 }
 

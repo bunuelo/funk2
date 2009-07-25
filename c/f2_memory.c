@@ -112,14 +112,14 @@ void memorypool__init(memorypool_t* pool) {
   rbt_tree__insert(&(pool->free_memory_tree), (rbt_node_t*)block);
   rbt_tree__init(&(pool->used_memory_tree), NULL);
   
-  pool->single_bytecode_alloc_array__used_num = 0;
-  pool->single_bytecode_alloc_array__length   = 1024;
+  pool->protected_alloc_array__used_num = 0;
+  pool->protected_alloc_array__length   = 1024;
   u64 i;
-  pool->single_bytecode_alloc_array = (f2ptr*)f2__malloc(sizeof(f2ptr) * pool->single_bytecode_alloc_array__length);
-  for (i = 0; i < pool->single_bytecode_alloc_array__length; i ++) {
-    pool->single_bytecode_alloc_array[i] = nil;
+  pool->protected_alloc_array = (f2ptr*)f2__malloc(sizeof(f2ptr) * pool->protected_alloc_array__length);
+  for (i = 0; i < pool->protected_alloc_array__length; i ++) {
+    pool->protected_alloc_array[i] = nil;
   }
-  pool->single_bytecode_alloc_array__reentrance_count = 0;
+  pool->protected_alloc_array__reentrance_count = 0;
 }
 
 void pool__destroy(int pool_index) {
@@ -127,29 +127,29 @@ void pool__destroy(int pool_index) {
   f2dynamicmemory__destroy_and_free(&(__funk2.memory.pool[pool_index].dynamic_memory));
 }
 
-void memorypool__add_single_bytecode_alloc_f2ptr(memorypool_t* this, f2ptr exp) {
-  this->single_bytecode_alloc_array[this->single_bytecode_alloc_array__used_num] = exp;
-  this->single_bytecode_alloc_array__used_num ++;
-  if (this->single_bytecode_alloc_array__used_num >= this->single_bytecode_alloc_array__length) {
-    u64 old_length = this->single_bytecode_alloc_array__length;
-    this->single_bytecode_alloc_array__length <<= 1;
-    status("memorypool__add_single_bytecode_alloc_f2ptr: doubling size of single_bytecode_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->single_bytecode_alloc_array__length);
-    this->single_bytecode_alloc_array = from_ptr(f2__new_alloc(to_ptr(this->single_bytecode_alloc_array), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->single_bytecode_alloc_array__length));
+void memorypool__add_protected_alloc_f2ptr(memorypool_t* this, f2ptr exp) {
+  this->protected_alloc_array[this->protected_alloc_array__used_num] = exp;
+  this->protected_alloc_array__used_num ++;
+  if (this->protected_alloc_array__used_num >= this->protected_alloc_array__length) {
+    u64 old_length = this->protected_alloc_array__length;
+    this->protected_alloc_array__length <<= 1;
+    status("memorypool__add_protected_alloc_f2ptr: doubling size of protected_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->protected_alloc_array__length);
+    this->protected_alloc_array = from_ptr(f2__new_alloc(to_ptr(this->protected_alloc_array), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->protected_alloc_array__length));
   }
 }
 
 void memorypool__signal_enter_bytecode(memorypool_t* this) {
-  this->single_bytecode_alloc_array__reentrance_count ++;
+  this->protected_alloc_array__reentrance_count ++;
 }
 
 void memorypool__signal_exit_bytecode(memorypool_t* this) {
-  if (this->single_bytecode_alloc_array__reentrance_count == 0) {
+  if (this->protected_alloc_array__reentrance_count == 0) {
     error(nil, "memorypool__signal_exit_bytecode error: bytecode reentrance underflow.");
   }
-  this->single_bytecode_alloc_array__reentrance_count --;
-  if (this->single_bytecode_alloc_array__reentrance_count == 0) {
+  this->protected_alloc_array__reentrance_count --;
+  if (this->protected_alloc_array__reentrance_count == 0) {
     // bytecode stack is done
-    this->single_bytecode_alloc_array__used_num = 0;
+    this->protected_alloc_array__used_num = 0;
   }
 }
 
@@ -739,12 +739,12 @@ void pool__increment_generation(int pool_index) {
   }
 }
 
-void gc_touch_all_single_bytecode_alloc_arrays() {
+void gc_touch_all_protected_alloc_arrays() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     u64 i;
-    for (i = 0; i < __funk2.memory.pool[pool_index].single_bytecode_alloc_array__used_num; i ++) {
-      f2__gc_touch_all_referenced(__funk2.memory.pool[pool_index].single_bytecode_alloc_array[i]);
+    for (i = 0; i < __funk2.memory.pool[pool_index].protected_alloc_array__used_num; i ++) {
+      f2__gc_touch_all_referenced(__funk2.memory.pool[pool_index].protected_alloc_array[i]);
     }
   }
 }
@@ -755,7 +755,7 @@ void garbage_collect__touch_everything(int generation_num) {
     pool__touch_all_referenced_from_generation(pool_index, generation_num);
   }
   gc_touch_all_symbols();
-  gc_touch_all_single_bytecode_alloc_arrays();
+  gc_touch_all_protected_alloc_arrays();
 }
 
 u8 garbage_collect_generation(int generation_num) {
@@ -942,7 +942,7 @@ f2ptr pool__memblock_f2ptr__new(int pool_index, f2size_t byte_num) {
   while (1) {
     f2ptr memblock_f2ptr = pool__memblock_f2ptr__try_new(pool_index, byte_num);
     if (memblock_f2ptr) {
-      memorypool__add_single_bytecode_alloc_f2ptr(&(__funk2.memory.pool[pool_index]), memblock_f2ptr);
+      memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[pool_index]), memblock_f2ptr);
       return memblock_f2ptr;
     }
     sched_yield();

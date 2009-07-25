@@ -76,12 +76,6 @@ ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
 
 void assert_failed(f2ptr thread, char* filename, int line_num, char* str);
 
-void memblock__set_init_render_xyz(float x, float y, float z);
-void memblock__set_init_render_on(u8 render_on);
-void memblock__set_init_render_noise(float render_noise);
-
-extern float memblock__render_noise;
-
 void exp__gc_touch_all_referenced(ptr start_block_ptr);
 
 void      pool__pause_gc(int pool_index);

@@ -31,27 +31,17 @@
 
 #define maximum_generation_num 7
 
-struct memblock_s {
+struct funk2_memblock_s {
   rbt_node_t rbt_node;
   u8         used           : 1;
   u8         gc_touch       : 1;
   u8         generation_num : 3;
   u8         ptype          : ptype__min_bits;
-#ifdef MEMORY_OPTION__MEMBLOCK__RENDER_DATA
-  float      render_position[3];
-  u8         render_create_activated : 1;
-  u8         render_read_activated   : 1;
-  u8         render_write_activated  : 1;
-  u8         render_on               : 1;
-#endif // MEMORY_OPTION__MEMBLOCK__RENDER_DATA
   u8         raw_mem[0];
 } __attribute__((__packed__));
-typedef struct memblock_s memblock_t;
+typedef struct funk2_memblock_s funk2_memblock_t;
 
-#define memblock__byte_num(this)         ((this)->rbt_node.key)
-
-//#define memblock__next(this)             ((memblock_t*)((this)->rbt_node.right))
-//#define memblock__next__set(this, value) (((this)->rbt_node.right) = (rbt_node_t*)(value))
+#define funk2_memblock__byte_num(this)         ((this)->rbt_node.key)
 
 typedef struct funk2_memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;
@@ -88,16 +78,13 @@ typedef struct funk2_memorypool_s {
 #include "f2_ptypes_memory.h"
 #include "f2_memory.h"
 
-#define memblock__lock(this)                   {if(pthread_mutex_lock(&(((memblock_t*)f2ptr_to_ptr(this))->mutex)))   {error(nil, "memblock_lock failed.");}}
-#define memblock__unlock(this)                 {if(pthread_mutex_unlock(&(((memblock_t*)f2ptr_to_ptr(this))->mutex))) {error(nil, "memblock_unlock failed.");}}
+f2ptr       pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
+f2ptr       pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num);
+f2ptr       funk2_memblock_f2ptr__new(f2size_t byte_num);
+memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num);
+memblock_t* funk2_memblock__new(f2size_t byte_num);
 
-f2ptr       pool__memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
-f2ptr       pool__memblock_f2ptr__new(int pool_index, f2size_t byte_num);
-f2ptr       memblock_f2ptr__new(f2size_t byte_num);
-memblock_t* pool__memblock__new(int pool_index, f2size_t byte_num);
-memblock_t* memblock__new(f2size_t byte_num);
-
-boolean_t valid_memblock_ptr(ptr p);
+boolean_t valid_funk2_memblock_ptr(ptr p);
 
 #define memory_mutex__lock(pool_index)     funk2_processor_mutex__lock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
 #define memory_mutex__try_lock(pool_index) funk2_processor_mutex__trylock(&__funk2.memory.pool[pool_index].global_memory_allocate_mutex)
@@ -182,11 +169,6 @@ typedef struct funk2_memory_s {
   funk2_memorypool_t pool[memory_pool_num];
   ptr                global_environment_ptr;
   f2ptr              global_environment_f2ptr;
-  float              memblock__last_x;
-  float              memblock__last_y;
-  float              memblock__last_z;
-  u8                 memblock__render_on;
-  float              memblock__render_noise;
   u64                last_garbage_collect_nanoseconds_since_1970;
   pthread_t          memory_handling_thread;
   boolean_t          bootstrapping_mode;

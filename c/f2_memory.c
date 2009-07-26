@@ -425,7 +425,6 @@ void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buf
 void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr block_f2ptr) {
   if (block_f2ptr) {
     ptr block_ptr = __f2ptr_to_ptr(block_f2ptr);
-    //debug__assert(!block_ptr || funk2_memory__is_valid_funk2_memblock_ptr(&(__funk2.memory), block_ptr), nil, "funk2_memory__is_valid_funk2_memblock_ptr(block_ptr) failed");
     (this)->end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr);
     funk2_gc_touch_circle_buffer__advance_end(this);
   }
@@ -437,29 +436,25 @@ void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* th
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->trace);
 }
 
-void exp__gc_touch_all_referenced(ptr start_block_ptr) {
+void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr) {
   
   release__assert(start_block_ptr, nil, "exp__gc_touch_all_referenced assertion failed: got null value.");
   
   ptype_block_t* start_block = (ptype_block_t*)from_ptr(start_block_ptr);
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
-  }
-  __funk2.memory.gc_touch_circle_buffer.start_index    = __funk2.memory.gc_touch_circle_buffer.start;
-  __funk2.memory.gc_touch_circle_buffer.end_index      = __funk2.memory.gc_touch_circle_buffer.start_index + 1;
-  __funk2.memory.gc_touch_circle_buffer.start_index[0] = (funk2_memblock_t*)start_block;
+  this->start_index    = this->start;
+  this->end_index      = this->start_index + 1;
+  this->start_index[0] = (funk2_memblock_t*)start_block;
   ptype_block_t* block;
-  while (__funk2.memory.gc_touch_circle_buffer.end_index != __funk2.memory.gc_touch_circle_buffer.start_index) {
-    block = (ptype_block_t*)(__funk2.memory.gc_touch_circle_buffer.start_index[0]);
+  while (this->end_index != this->start_index) {
+    block = (ptype_block_t*)(this->start_index[0]);
     if (block && (! block->block.gc_touch)) {
-      funk2_gc_touch_circle_buffer__touch_f2ptr(&(__funk2.memory.gc_touch_circle_buffer), block->cause);
+      funk2_gc_touch_circle_buffer__touch_f2ptr(this, block->cause);
       switch(block->ptype) {
       case ptype_free_memory:
 	{
 	  char str[1024];
 	  sprintf(str,
-		  "\nblock (valid=%lu) of type free_memory (%lu bytes) in garbage collector."
+		  "\nblock of type free_memory (%lu bytes) in garbage collector."
 		  "\n  FYI:"
 		  "\n    sizeof(integer_block)      = %lu"
 		  "\n    sizeof(double_block)       = %lu"
@@ -474,7 +469,6 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 		  "\n    sizeof(simple_array_block) = %lu"
 		  "\n    sizeof(array_block)        = %lu"
 		  "\n    sizeof(larva_block)        = %lu",
-		  (unsigned long)funk2_memory__is_valid_funk2_memblock_ptr(&(__funk2.memory), to_ptr(block)),
 		  (unsigned long)funk2_memblock__byte_num((funk2_memblock_t*)block),
 		  (unsigned long)sizeof(ptype_integer_block_t),
 		  (unsigned long)sizeof(ptype_double_block_t),
@@ -506,7 +500,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 	int i;
 	f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
 	for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
-	  funk2_gc_touch_circle_buffer__touch_f2ptr(&(__funk2.memory.gc_touch_circle_buffer), *iter);
+	  funk2_gc_touch_circle_buffer__touch_f2ptr(this, *iter);
 	  iter ++;
 	}
       } break;
@@ -514,7 +508,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 	int i;
 	dptr_t* iter = (dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
 	for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
-	  funk2_gc_touch_circle_buffer__touch_dptr(&(__funk2.memory.gc_touch_circle_buffer), (dptr_t*)iter);
+	  funk2_gc_touch_circle_buffer__touch_dptr(this, (dptr_t*)iter);
 	  iter ++;
 	}
       } break;
@@ -522,16 +516,13 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
       default:
 	{
 	  char str[1024];
-	  sprintf(str, "unknown type (%d) of block (valid=%d) in garbage collector.",
-		  (int)(block->ptype), (int)funk2_memory__is_valid_funk2_memblock_ptr(&(__funk2.memory), to_ptr(block)));
+	  sprintf(str, "unknown type (%d) of block in garbage collector.",
+		  (int)(block->ptype), to_ptr(block)));
 	  error(nil, str);
 	}
       }
     }
-    funk2_gc_touch_circle_buffer__advance_start_index(&(__funk2.memory.gc_touch_circle_buffer));
-  }
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
+    funk2_gc_touch_circle_buffer__advance_start_index(this);
   }
 }
 
@@ -539,7 +530,7 @@ void f2__gc_touch_all_referenced(f2ptr exp) {
   if(!exp) {return;}
   ptype_block_t* exp_block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
   if (exp_block->block.gc_touch) {return;}
-  exp__gc_touch_all_referenced(to_ptr(exp_block));
+  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(__funk2.memory.gc_touch_circle_buffer), to_ptr(exp_block));
 }
 
 u8 pool__free_all_gc_untouched_blocks(int pool_index) {
@@ -596,7 +587,7 @@ void pool__touch_all_referenced_from_generation(int pool_index, int touch_genera
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used && iter->generation_num == touch_generation_num) {
-      exp__gc_touch_all_referenced(to_ptr(iter));
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(__funk2.memory.gc_touch_circle_buffer), to_ptr(iter));
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }

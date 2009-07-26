@@ -525,11 +525,11 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
   }
 }
 
-void f2__gc_touch_all_referenced(f2ptr exp) {
+void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp) {
   if(!exp) {return;}
   ptype_block_t* exp_block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
   if (exp_block->block.gc_touch) {return;}
-  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(__funk2.memory.gc_touch_circle_buffer), to_ptr(exp_block));
+  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(this, to_ptr(exp_block));
 }
 
 u8 pool__free_all_gc_untouched_blocks(int pool_index) {

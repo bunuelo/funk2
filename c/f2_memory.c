@@ -352,7 +352,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this) {
   this->num                    = GC_TOUCH_CIRCLE_BUF_START_SIZE;
   this->start                  = (funk2_memblock_t**)from_ptr(f2__malloc(GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
-  this->end                    = __gc_touch_circle_buffer.start + GC_TOUCH_CIRCLE_BUF_START_SIZE;  
+  this->end                    = this->start + GC_TOUCH_CIRCLE_BUF_START_SIZE;  
   this->circle_buf_start_index = NULL;
   this->circle_buf_end_index   = NULL;
 }

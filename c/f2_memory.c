@@ -573,9 +573,9 @@ void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* thi
   }
 }
 
-void pool__increment_generation(int pool_index) {
-  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
+void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
+  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used) {
       if (iter->generation_num < maximum_generation_num) {
@@ -649,7 +649,7 @@ u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   }
   int index;
   for (index = 0; index < memory_pool_num; index ++) {
-    pool__increment_generation(index);
+    funk2_memorypool__increment_generation(&(__funk2.memory.pool[index]));
   }
   return did_something;
 }

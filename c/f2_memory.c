@@ -528,7 +528,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 	}
       }
     }
-    gc_touch__advance_start_index();
+    funk2_gc_touch_circle_buffer__advance_start_index(&(__funk2.memory.gc_touch_circle_buffer));
   }
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);

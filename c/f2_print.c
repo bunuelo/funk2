@@ -200,6 +200,10 @@ void f2__write_pretty__slot_key_and_value(char* slot_name, int max_slot_name_len
   f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
 }
 
+void found_illegal_type() {
+  printf("found illegal type.");
+}
+
 f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode) {
   if (try_wide) {
     if(stream) {
@@ -1217,7 +1221,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	char temp_str[128];
 	f2__write__ansi_color(cause, stream, print__ansi__error__foreground, use_ansi_colors, use_html);
 	sprintf(temp_str, "<illegal-type-%d>", (int)ptype); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	error(nil, "found illegal type");
+	found_illegal_type(); // set breakpoint on this function to stop here.
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       }

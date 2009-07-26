@@ -517,7 +517,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
 	{
 	  char str[1024];
 	  sprintf(str, "unknown type (%d) of block in garbage collector.",
-		  (int)(block->ptype), to_ptr(block)));
+		  (int)(block->ptype), to_ptr(block));
 	  error(nil, str);
 	}
       }

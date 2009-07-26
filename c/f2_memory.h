@@ -273,6 +273,7 @@ void      funk2_memory__signal_exit_bytecode(funk2_memory_t* this); // memory ha
 void      funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
 void      funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
+u8        funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 
 
 #endif // F2__MEMORY__H

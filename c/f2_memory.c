@@ -558,12 +558,16 @@ u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypo
   return did_something;
 }
 
-void pool__touch_all_referenced_from_generation(int pool_index, int touch_generation_num) {
-  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
+void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num) {
+  if (pool_index < 0 || pool_index >= memory_pool_num) {
+    error(nil, "pool_index out of range.");
+  }
+  funk2_memorypool_t* pool          = &(this->pool[pool_index]);
+  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(pool)));
+  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used && iter->generation_num == touch_generation_num) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(__funk2.memory.gc_touch_circle_buffer), to_ptr(iter));
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(memory->gc_touch_circle_buffer), to_ptr(iter));
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
@@ -595,7 +599,7 @@ void gc_touch_all_protected_alloc_arrays() {
 void garbage_collect__touch_everything(int generation_num) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    pool__touch_all_referenced_from_generation(pool_index, generation_num);
+    funk2_memory__touch_all_referenced_from_pool_generation(&(__funk2.memory), pool_index, generation_num);
   }
   gc_touch_all_symbols();
   gc_touch_all_protected_alloc_arrays();

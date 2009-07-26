@@ -22,6 +22,9 @@
 #ifndef F2_MEMORY_TYPEDEF_STRUCTS
 #define F2_MEMORY_TYPEDEF_STRUCTS
 
+#define ptype__total_num 14
+#define ptype__min_bits   4
+
 typedef enum ptype_e {
   ptype_free_memory     = 0x40 + 0x0,
   ptype_newly_allocated = 0x40 + 0x1,
@@ -98,9 +101,6 @@ typedef struct funk2_memory_s {
 //#include "f2_time.h"
 
 #define nil ((f2ptr)0)
-
-#define ptype__total_num 14
-#define ptype__min_bits   4
 
 #ifdef F2__PTYPE__C__COMPILING
 u8 __ptype__str[][128] = {

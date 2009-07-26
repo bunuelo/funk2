@@ -567,7 +567,7 @@ void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* thi
   funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used && iter->generation_num == touch_generation_num) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(memory->gc_touch_circle_buffer), to_ptr(iter));
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), to_ptr(iter));
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }

@@ -538,28 +538,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
-  //printf("\ngarbage_collect(%d, " f2size_t__fstr ") note: running.", pool_index, goal_free_block_byte_num); fflush(stdout);
-  u8  did_something      = 0;
-  int try_generation_num = 1;
-  while (try_generation_num <= maximum_generation_num && (! did_something)) {
-    status("garbage_collect try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
-    //funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(__funk2.memory.pool[pool_index].free_memory_tree));
-    //if (max_size_block && funk2_memblock__byte_num(max_size_block) >= goal_free_block_byte_num) {
-    //  break;
-    //}
-    if (funk2_memory__garbage_collect_generation(&(__funk2.memory), try_generation_num)) {
-      did_something = 1;
-    }
-    try_generation_num ++;
-  }
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    funk2_memorypool__increment_generation(&(__funk2.memory.pool[index]));
-  }
-  return did_something;
-}
-
 // look for memory block that is not used and is big enough for us to split up
 funk2_memblock_t* find_splittable_free_block_and_unfree(int pool_index, f2size_t byte_num) {
   funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
@@ -1180,15 +1158,15 @@ void funk2_memory__signal_exit_bytecode(funk2_memory_t* this) {
   funk2_memorypool__signal_exit_bytecode(&(this->pool[pool_index]));
 }
 
-void funk2_memory__handle(funk2_memory_t* memory) {
+void funk2_memory__handle(funk2_memory_t* this) {
   boolean_t should_collect_garbage    = boolean__false;
   boolean_t should_enlarge_memory_now = boolean__false;
   int index;
   for (index = 0; index < memory_pool_num; index ++) {
-    if (memory->pool[index].should_enlarge_memory_now) {
+    if (this->pool[index].should_enlarge_memory_now) {
       should_enlarge_memory_now = boolean__true;
     }
-    if (memory->pool[index].should_run_gc) {
+    if (this->pool[index].should_run_gc) {
       should_collect_garbage = boolean__true;
     }
   }
@@ -1197,15 +1175,15 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       sched_yield();
     }
     for (index = 0; index < memory_pool_num; index ++) {
-      if (memory->pool[index].should_enlarge_memory_now) {
-	funk2_memorypool__change_total_memory_available(&(memory->pool[index]), memory->pool[index].total_global_memory + (memory->pool[index].total_global_memory >> 3) + memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
-	memory->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
-	memory->pool[index].should_enlarge_memory_now                         = boolean__false;
+      if (this->pool[index].should_enlarge_memory_now) {
+	funk2_memorypool__change_total_memory_available(&(this->pool[index]), this->pool[index].total_global_memory + (this->pool[index].total_global_memory >> 3) + this->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
+	this->pool[index].should_enlarge_memory_now__need_at_least_byte_num = 0;
+	this->pool[index].should_enlarge_memory_now                         = boolean__false;
       }
     }
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
   }
-  if (should_collect_garbage && (raw__nanoseconds_since_1970() - memory->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
+  if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
     status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
     __ptypes_please_wait_for_gc_to_take_place = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
@@ -1218,16 +1196,20 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       status ("**********************************");
       status ("");
       for (index = 0; index < memory_pool_num; index ++) {
-	if (memory->pool[index].should_run_gc) {
-	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
-	  int did_something = garbage_collect(index, 0);
-	  if (did_something) {
-	    status ("garbage collection did something.");
-	  } else {
-	    status ("garbage collection did nothing.");
-	  }
-	  memory->pool[index].should_run_gc = boolean__false;
-	  status ("memory->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(memory->pool[index].total_global_memory));
+	if (this->pool[index].should_run_gc) {
+	  status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+	}
+      }
+      boolean_t did_something = funk2_memory__garbage_collect_generations_until_did_something(this, 0);
+      if (did_something) {
+	status ("garbage collection did something.");
+      } else {
+	status ("garbage collection did nothing.");
+      }
+      for (index = 0; index < memory_pool_num; index ++) {
+	if (this->pool[index].should_run_gc) {
+	  this->pool[index].should_run_gc = boolean__false;
+	  status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
 	}
       }
     } else {
@@ -1237,7 +1219,7 @@ void funk2_memory__handle(funk2_memory_t* memory) {
       status ("***********************************************************");
       status ("");
     }
-    memory->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;
   }
 }
@@ -1383,6 +1365,23 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
     funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
   }
   status("...done collecting garbage.");
+  return did_something;
+}
+
+boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this) {
+  boolean_t did_something      = boolean__false;
+  int       try_generation_num = 1;
+  while (try_generation_num <= maximum_generation_num && (! did_something)) {
+    status("funk2_memory__garbage_collect_generations_until_did_something try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
+    if (funk2_memory__garbage_collect_generation(&(__funk2.memory), try_generation_num)) {
+      did_something = boolean__true;
+    }
+    try_generation_num ++;
+  }
+  int index;
+  for (index = 0; index < memory_pool_num; index ++) {
+    funk2_memorypool__increment_generation(&(__funk2.memory.pool[index]));
+  }
   return did_something;
 }
 

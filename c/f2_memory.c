@@ -308,7 +308,47 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   return did_something;
 }
 
+u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
+  status("freeing all untouched blocks for pool generation %d.", generation_num);
+  funk2_memorypool__debug_memory_test(this, 1);
+  u8 did_something = 0;
+  rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
+  rbt_node_t* next;
+  while (iter) {
+    next = rbt_node__next(iter);
+    if (((funk2_memblock_t*)iter)->generation_num <= generation_num && (! ((funk2_memblock_t*)iter)->gc_touch)) {
+      // remove from used list
+      rbt_tree__remove(&(this->used_memory_tree), iter);
+      // set to free
+      ((funk2_memblock_t*)iter)->used = 0;
+      this->total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
+      // add to free list
+      funk2_memorypool__link_funk2_memblock_to_freelist(this, (funk2_memblock_t*)iter);
+      // set did_something flag
+      did_something = 1;
+    }
+    iter = next;
+  }
+  funk2_memorypool__debug_memory_test(this, 1);
+  return did_something;
+}
 
+void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
+  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  while(iter < end_of_blocks) {
+    if (iter->used) {
+      if (iter->generation_num < maximum_generation_num) {
+	iter->generation_num ++;
+      }
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+}
+
+
+
+// funk2_gc_touch_circle_buffer
 
 void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this) {
   this->num         = GC_TOUCH_CIRCLE_BUF_START_SIZE;
@@ -494,104 +534,9 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 }
 
 
-u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
-  status("freeing all untouched blocks for pool generation %d.", generation_num);
-  funk2_memorypool__debug_memory_test(this, 1);
-  u8 did_something = 0;
-  rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
-  rbt_node_t* next;
-  while (iter) {
-    next = rbt_node__next(iter);
-    if (((funk2_memblock_t*)iter)->generation_num <= generation_num && (! ((funk2_memblock_t*)iter)->gc_touch)) {
-      // remove from used list
-      rbt_tree__remove(&(this->used_memory_tree), iter);
-      // set to free
-      ((funk2_memblock_t*)iter)->used = 0;
-      this->total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
-      // add to free list
-      funk2_memorypool__link_funk2_memblock_to_freelist(this, (funk2_memblock_t*)iter);
-      // set did_something flag
-      did_something = 1;
-    }
-    iter = next;
-  }
-  funk2_memorypool__debug_memory_test(this, 1);
-  return did_something;
-}
 
-void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num) {
-  if (pool_index < 0 || pool_index >= memory_pool_num) {
-    error(nil, "pool_index out of range.");
-  }
-  funk2_memorypool_t* pool          = &(this->pool[pool_index]);
-  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(pool)));
-  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
-  while(iter < end_of_blocks) {
-    if (iter->used && iter->generation_num == touch_generation_num) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), to_ptr(iter));
-    }
-    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
 
-void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
-  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
-  while(iter < end_of_blocks) {
-    if (iter->used) {
-      if (iter->generation_num < maximum_generation_num) {
-	iter->generation_num ++;
-      }
-    }
-    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
 
-void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    u64 i;
-    for (i = 0; i < this->pool[pool_index].protected_alloc_array__used_num; i ++) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), this->pool[pool_index].protected_alloc_array[i]);
-    }
-  }
-}
-
-void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
-  }
-  funk2_memory__touch_all_symbols(this);
-  funk2_memory__touch_all_protected_alloc_arrays(this);
-}
-
-u8 garbage_collect_generation(int generation_num) {
-  status("collecting garbage...");
-  int pool_index;
-#ifdef DEBUG_MEMORY
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  }
-#endif
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(__funk2.memory.pool[pool_index]), generation_num);
-  }
-  
-  // this is where we touch everything we want to keep!
-  funk2_memory__touch_everything(&(__funk2.memory), generation_num);
-  
-  u8 did_something = 0;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(__funk2.memory.pool[pool_index]), generation_num);
-    __funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc = 0;
-  }
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  }
-  status("...done collecting garbage."); fflush(stdout);
-  return did_something;
-}
 
 u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
   //printf("\ngarbage_collect(%d, " f2size_t__fstr ") note: running.", pool_index, goal_free_block_byte_num); fflush(stdout);
@@ -603,7 +548,7 @@ u8 garbage_collect(int pool_index, f2size_t goal_free_block_byte_num) {
     //if (max_size_block && funk2_memblock__byte_num(max_size_block) >= goal_free_block_byte_num) {
     //  break;
     //}
-    if (garbage_collect_generation(try_generation_num)) {
+    if (funk2_memory__garbage_collect_generation(&(__funk2.memory), try_generation_num)) {
       did_something = 1;
     }
     try_generation_num ++;
@@ -1378,6 +1323,67 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
     }
   }
   return p;
+}
+
+void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    u64 i;
+    for (i = 0; i < this->pool[pool_index].protected_alloc_array__used_num; i ++) {
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), this->pool[pool_index].protected_alloc_array[i]);
+    }
+  }
+}
+
+void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
+  }
+  funk2_memory__touch_all_symbols(this);
+  funk2_memory__touch_all_protected_alloc_arrays(this);
+}
+
+void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num) {
+  if (pool_index < 0 || pool_index >= memory_pool_num) {
+    error(nil, "pool_index out of range.");
+  }
+  funk2_memorypool_t* pool          = &(this->pool[pool_index]);
+  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(pool)));
+  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
+  while(iter < end_of_blocks) {
+    if (iter->used && iter->generation_num == touch_generation_num) {
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), to_ptr(iter));
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+}
+
+u8 funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
+  status("collecting garbage...");
+  int pool_index;
+#ifdef DEBUG_MEMORY
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
+  }
+#endif
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(this->pool[pool_index]), generation_num);
+  }
+  
+  // this is where we touch everything we want to keep!
+  funk2_memory__touch_everything(this, generation_num);
+  
+  u8 did_something = 0;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(this->pool[pool_index]), generation_num);
+    this->pool[pool_index].total_allocated_memory_since_last_gc = 0;
+  }
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
+  }
+  status("...done collecting garbage.");
+  return did_something;
 }
 
 

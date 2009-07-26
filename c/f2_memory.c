@@ -450,7 +450,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
   __funk2.memory.gc_touch_circle_buffer.end_index      = __funk2.memory.gc_touch_circle_buffer.start_index + 1;
   __funk2.memory.gc_touch_circle_buffer.start_index[0] = (funk2_memblock_t*)start_block;
   ptype_block_t* block;
-  while (__circle_buf_end_index != __circle_buf_start_index) {
+  while (__funk2.memory.gc_touch_circle_buffer.end_index != __funk2.memory.gc_touch_circle_buffer.start_index) {
     block = (ptype_block_t*)(__funk2.memory.gc_touch_circle_buffer.start_index[0]);
     if (block && (! block->block.gc_touch)) {
       gc_touch__f2ptr(block->cause);

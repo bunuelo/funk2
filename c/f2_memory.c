@@ -346,6 +346,25 @@ void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
   }
 }
 
+// look for memory block that is not used and is big enough for us to split up
+funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num) {
+  funk2_memorypool__debug_memory_test(this, 3);
+  funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
+  if (max_size_block && funk2_memblock__byte_num(max_size_block) >= byte_num) {
+    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)max_size_block);
+    max_size_block->used = 1;
+  } else {
+    if (!max_size_block) {
+      status("there are no free memory blocks left.");
+    } else {
+      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(max_size_block));
+    }
+    max_size_block = NULL; // largest free memory block is not large enough.  fail.
+  }
+  // debug_memory_test(pool_index, 3); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
+  return max_size_block;
+}
+
 
 
 // funk2_gc_touch_circle_buffer
@@ -537,25 +556,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-
-// look for memory block that is not used and is big enough for us to split up
-funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num) {
-  funk2_memorypool__debug_memory_test(this, 3);
-  funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
-  if (max_size_block && funk2_memblock__byte_num(max_size_block) >= byte_num) {
-    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)max_size_block);
-    max_size_block->used = 1;
-  } else {
-    if (!max_size_block) {
-      status("there are no free memory blocks left.");
-    } else {
-      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(max_size_block));
-    }
-    max_size_block = NULL; // largest free memory block is not large enough.  fail.
-  }
-  // debug_memory_test(pool_index, 3); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
-  return max_size_block;
-}
 
 ptr find_or_create_free_splittable_funk2_memblock_and_unfree(int pool_index, f2size_t byte_num) {
   ptr block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(__funk2.memory.pool[pool_index]), byte_num));

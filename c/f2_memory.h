@@ -19,6 +19,9 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2_MEMORY_TYPEDEF_STRUCTS
+#define F2_MEMORY_TYPEDEF_STRUCTS
+
 typedef enum ptype_e {
   ptype_free_memory     = 0x40 + 0x0,
   ptype_newly_allocated = 0x40 + 0x1,
@@ -85,6 +88,8 @@ typedef struct funk2_memory_s {
   boolean_t                      gc_touch_circle_buffer__initialized;
   funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 } funk2_memory_t;
+
+#endif // F2_MEMORY_TYPEDEF_STRUCTS
 
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H

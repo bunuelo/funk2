@@ -173,6 +173,8 @@ typedef struct funk2_gc_touch_circle_buffer_s {
   funk2_memblock_t** end_index;
 } funk2_gc_touch_circle_buffer_t;
 
+void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr);
+
 typedef struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
   ptr                            global_environment_ptr;

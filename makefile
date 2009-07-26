@@ -70,6 +70,7 @@ funk2_server_objs = \
   c/f2_funktional.o \
   c/f2_html.o \
   c/f2_load.o \
+  c/f2_malloc.o \
   c/f2_memory.o \
   c/f2_object.o \
   c/f2_packet.o \
@@ -143,6 +144,7 @@ funk2_headers = \
   c/f2_html.h \
   c/f2_load.h \
   c/f2_peer_command_server.h \
+  c/f2_malloc.h \
   c/f2_memory.h \
   c/f2_object.h \
   c/f2_packet.h \

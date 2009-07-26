@@ -453,7 +453,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
   while (__funk2.memory.gc_touch_circle_buffer.end_index != __funk2.memory.gc_touch_circle_buffer.start_index) {
     block = (ptype_block_t*)(__funk2.memory.gc_touch_circle_buffer.start_index[0]);
     if (block && (! block->block.gc_touch)) {
-      gc_touch__f2ptr(block->cause);
+      funk2_gc_touch_circle_buffer__touch_f2ptr(&(__funk2.memory.gc_touch_circle_buffer), block->cause);
       switch(block->ptype) {
       case ptype_free_memory:
 	{
@@ -506,7 +506,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 	int i;
 	f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
 	for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
-	  gc_touch__f2ptr(*iter);
+	  funk2_gc_touch_circle_buffer__touch_f2ptr(&(__funk2.memory.gc_touch_circle_buffer), *iter);
 	  iter ++;
 	}
       } break;

@@ -596,13 +596,13 @@ void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
   }
 }
 
-void garbage_collect__touch_everything(int generation_num) {
+void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memory__touch_all_referenced_from_pool_generation(&(__funk2.memory), pool_index, generation_num);
+    funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
   }
   gc_touch_all_symbols();
-  funk2_memory__touch_all_protected_alloc_arrays(&(__funk2.memory));
+  funk2_memory__touch_all_protected_alloc_arrays(this);
 }
 
 u8 garbage_collect_generation(int generation_num) {
@@ -618,7 +618,7 @@ u8 garbage_collect_generation(int generation_num) {
   }
   
   // this is where we touch everything we want to keep!
-  garbage_collect__touch_everything(generation_num);
+  funk2_memory__touch_everything(&(__funk2.memory), generation_num);
   
   u8 did_something = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

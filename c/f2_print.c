@@ -1221,7 +1221,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	char temp_str[128];
 	f2__write__ansi_color(cause, stream, print__ansi__error__foreground, use_ansi_colors, use_html);
 	sprintf(temp_str, "<illegal-type-%d>", (int)ptype); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	found_illegal_type(); // set breakpoint on this function to stop here.
+	if (stream) {found_illegal_type();} // set breakpoint on this function to stop here.
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       }

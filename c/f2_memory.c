@@ -1200,7 +1200,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
 	  status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
 	}
       }
-      boolean_t did_something = funk2_memory__garbage_collect_generations_until_did_something(this, 0);
+      boolean_t did_something = funk2_memory__garbage_collect_generations_until_did_something(this);
       if (did_something) {
 	status ("garbage collection did something.");
       } else {

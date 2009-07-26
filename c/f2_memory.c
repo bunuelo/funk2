@@ -514,7 +514,7 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
 	int i;
 	dptr_t* iter = (dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
 	for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
-	  gc_touch__dptr((dptr_t*)iter);
+	  funk2_gc_touch_circle_buffer__touch_dptr(&(__funk2.memory.gc_touch_circle_buffer), (dptr_t*)iter);
 	  iter ++;
 	}
       } break;

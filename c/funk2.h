@@ -95,7 +95,6 @@
 #include "f2_load.h"
 #include "f2_malloc.h"
 #include "f2_memory.h"
-#include "f2_memory_protected.h"
 #include "f2_object.h"
 #include "f2_packet.h"
 #include "f2_peer_command_server.h"

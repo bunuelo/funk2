@@ -19,12 +19,81 @@
 // rights to redistribute these changes.
 // 
 
+typedef enum ptype_e {
+  ptype_free_memory     = 0x40 + 0x0,
+  ptype_newly_allocated = 0x40 + 0x1,
+  ptype_integer         = 0x40 + 0x2,
+  ptype_double          = 0x40 + 0x3,
+  ptype_float           = 0x40 + 0x4,
+  ptype_pointer         = 0x40 + 0x5,
+  ptype_gfunkptr        = 0x40 + 0x6,
+  ptype_mutex           = 0x40 + 0x7,
+  ptype_char            = 0x40 + 0x8,
+  ptype_string          = 0x40 + 0x9,
+  ptype_symbol          = 0x40 + 0xA,
+  ptype_chunk           = 0x40 + 0xB,
+  ptype_simple_array    = 0x40 + 0xC,
+  ptype_traced_array    = 0x40 + 0xD,
+  ptype_larva           = 0x40 + 0xE,
+} ptype_t;
+
+struct funk2_memblock_s {
+  rbt_node_t rbt_node;
+  u8         used           : 1;
+  u8         gc_touch       : 1;
+  u8         generation_num : 3;
+  u8         ptype          : ptype__min_bits;
+  u8         raw_mem[0];
+} __attribute__((__packed__));
+typedef struct funk2_memblock_s funk2_memblock_t;
+
+typedef struct funk2_memorypool_s {
+  funk2_processor_mutex_t global_memory_allocate_mutex;
+  uint                    disable_gc; // incremented/decremented by pause_gc/resume_gc
+  boolean_t               should_run_gc; // if disabled when needed more memory (and allocated more) then True
+  boolean_t               should_enlarge_memory_now;
+  f2size_t                should_enlarge_memory_now__need_at_least_byte_num;
+  f2size_t                total_global_memory;
+  f2size_t                total_free_memory;
+  f2dynamicmemory_t       dynamic_memory;
+  rbt_tree_t              used_memory_tree;
+  rbt_tree_t              free_memory_tree; // free memory does grow on trees!
+  ptr                     global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
+  f2size_t                total_allocated_memory_since_last_gc;
+  uint                    next_unique_block_id;
+  u64                     protected_alloc_array__used_num;
+  u64                     protected_alloc_array__length;
+  f2ptr*                  protected_alloc_array;
+  u64                     protected_alloc_array__reentrance_count;
+} funk2_memorypool_t;
+
+typedef struct funk2_gc_touch_circle_buffer_s {
+  int                num;
+  funk2_memblock_t** start;
+  funk2_memblock_t** end;
+  funk2_memblock_t** start_index;
+  funk2_memblock_t** end_index;
+} funk2_gc_touch_circle_buffer_t;
+
+typedef struct funk2_memory_s {
+  funk2_memorypool_t             pool[memory_pool_num];
+  ptr                            global_environment_ptr;
+  f2ptr                          global_environment_f2ptr;
+  u64                            last_garbage_collect_nanoseconds_since_1970;
+  pthread_t                      memory_handling_thread;
+  boolean_t                      bootstrapping_mode;
+  boolean_t                      gc_touch_circle_buffer__initialized;
+  funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
+} funk2_memory_t;
+
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
 
 #include "f2_global.h"
 //#include "f2_ptypes_memory.h"
 //#include "f2_memory.h"
+#include "f2_time.h"
+
 
 #define nil ((f2ptr)0)
 
@@ -50,26 +119,6 @@ u8 __ptype__str[][128] = {
   "larva",
 };
 #endif // F2__PTYPE__C__COMPILING
-
-typedef enum ptype_e {
-  ptype_free_memory     = 0x40 + 0x0,
-  ptype_newly_allocated = 0x40 + 0x1,
-  ptype_integer         = 0x40 + 0x2,
-  ptype_double          = 0x40 + 0x3,
-  ptype_float           = 0x40 + 0x4,
-  ptype_pointer         = 0x40 + 0x5,
-  ptype_gfunkptr        = 0x40 + 0x6,
-  ptype_mutex           = 0x40 + 0x7,
-  ptype_char            = 0x40 + 0x8,
-  ptype_string          = 0x40 + 0x9,
-  ptype_symbol          = 0x40 + 0xA,
-  ptype_chunk           = 0x40 + 0xB,
-  ptype_simple_array    = 0x40 + 0xC,
-  ptype_traced_array    = 0x40 + 0xD,
-  ptype_larva           = 0x40 + 0xE,
-} ptype_t;
-
-#include "f2_time.h"
 
 ptr  f2__malloc(f2size_t byte_num);
 void f2__free(ptr this);
@@ -115,49 +164,9 @@ void f2__memory__destroy();
 
 #define maximum_generation_num 7
 
-struct funk2_memblock_s {
-  rbt_node_t rbt_node;
-  u8         used           : 1;
-  u8         gc_touch       : 1;
-  u8         generation_num : 3;
-  u8         ptype          : ptype__min_bits;
-  u8         raw_mem[0];
-} __attribute__((__packed__));
-typedef struct funk2_memblock_s funk2_memblock_t;
-
 #define funk2_memblock__byte_num(this)         ((this)->rbt_node.key)
 
-typedef struct funk2_memorypool_s {
-  funk2_processor_mutex_t global_memory_allocate_mutex;
-  uint                    disable_gc; // incremented/decremented by pause_gc/resume_gc
-  boolean_t               should_run_gc; // if disabled when needed more memory (and allocated more) then True
-  boolean_t               should_enlarge_memory_now;
-  f2size_t                should_enlarge_memory_now__need_at_least_byte_num;
-  f2size_t                total_global_memory;
-  f2size_t                total_free_memory;
-#if defined(STATIC_MEMORY)
-  f2staticmemory_t*       static_memory;
-#elif defined(DYNAMIC_MEMORY)
-  f2dynamicmemory_t       dynamic_memory;
-#endif 
-  rbt_tree_t              used_memory_tree;
-  rbt_tree_t              free_memory_tree; // free memory does grow on trees!
-  ptr                     global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
-  f2size_t                total_allocated_memory_since_last_gc;
-  uint                    next_unique_block_id;
-  u64                     protected_alloc_array__used_num;
-  u64                     protected_alloc_array__length;
-  f2ptr*                  protected_alloc_array;
-  u64                     protected_alloc_array__reentrance_count;
-} funk2_memorypool_t;
-
-#if defined(DYNAMIC_MEMORY)
-#  define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
-#elif defined(STATIC_MEMORY)
-#  define funk2_memorypool__memory__ptr(this) ((this)->static_memory->ptr)
-#else
-#  error DYNAMIC_MEMORY or STATIC_MEMORY must be defined.
-#endif
+#define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
 
 f2ptr             pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
 f2ptr             pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num);
@@ -246,26 +255,11 @@ f2ptr fast__ptr_to_f2ptr(ptr   p);
 
 #define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
 
-typedef struct funk2_gc_touch_circle_buffer_s {
-  int                num;
-  funk2_memblock_t** start;
-  funk2_memblock_t** end;
-  funk2_memblock_t** start_index;
-  funk2_memblock_t** end_index;
-} funk2_gc_touch_circle_buffer_t;
+// funk2_gc_touch_circle_buffer
 
 void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr);
 
-typedef struct funk2_memory_s {
-  funk2_memorypool_t             pool[memory_pool_num];
-  ptr                            global_environment_ptr;
-  f2ptr                          global_environment_f2ptr;
-  u64                            last_garbage_collect_nanoseconds_since_1970;
-  pthread_t                      memory_handling_thread;
-  boolean_t                      bootstrapping_mode;
-  boolean_t                      gc_touch_circle_buffer__initialized;
-  funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
-} funk2_memory_t;
+// funk2_memory
 
 void      funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
 void      funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread

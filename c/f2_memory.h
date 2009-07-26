@@ -274,7 +274,7 @@ void      funk2_memory__handle(funk2_memory_t* memory); // only called by memory
 void      funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
 void      funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num);
-u8        funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
+boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 
 
 #endif // F2__MEMORY__H

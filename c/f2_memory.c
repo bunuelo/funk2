@@ -1359,7 +1359,7 @@ void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* thi
   }
 }
 
-u8 funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
+boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
   int pool_index;
 #ifdef DEBUG_MEMORY
@@ -1374,7 +1374,7 @@ u8 funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation
   // this is where we touch everything we want to keep!
   funk2_memory__touch_everything(this, generation_num);
   
-  u8 did_something = 0;
+  boolean_t did_something = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(this->pool[pool_index]), generation_num);
     this->pool[pool_index].total_allocated_memory_since_last_gc = 0;

@@ -20,7 +20,6 @@
 // 
 
 #include "funk2.h"
-#include "f2_memory_protected.h"
 
 void funk2_packet_header__init(funk2_packet_header_t* this, u16 payload_length) {
   this->start_of_packet_byte = funk2_start_of_packet_byte;

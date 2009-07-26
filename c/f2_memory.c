@@ -586,12 +586,12 @@ void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
   }
 }
 
-void gc_touch_all_protected_alloc_arrays() {
+void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     u64 i;
-    for (i = 0; i < __funk2.memory.pool[pool_index].protected_alloc_array__used_num; i ++) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(__funk2.memory.gc_touch_circle_buffer), __funk2.memory.pool[pool_index].protected_alloc_array[i]);
+    for (i = 0; i < this->pool[pool_index].protected_alloc_array__used_num; i ++) {
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), this->pool[pool_index].protected_alloc_array[i]);
     }
   }
 }
@@ -602,7 +602,7 @@ void garbage_collect__touch_everything(int generation_num) {
     funk2_memory__touch_all_referenced_from_pool_generation(&(__funk2.memory), pool_index, generation_num);
   }
   gc_touch_all_symbols();
-  gc_touch_all_protected_alloc_arrays();
+  funk2_memory__touch_all_protected_alloc_arrays(&(__funk2.memory));
 }
 
 u8 garbage_collect_generation(int generation_num) {

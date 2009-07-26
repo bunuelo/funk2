@@ -163,13 +163,25 @@ f2ptr fast__ptr_to_f2ptr(ptr   p);
 
 #define fast__f2ptr_to_ptr(f2p) __f2ptr_to_ptr(f2p)
 
+#define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
+
+typedef struct funk2_gc_touch_circle_buffer_s {
+  int                num;
+  funk2_memblock_t** start;
+  funk2_memblock_t** end;
+  funk2_memblock_t** circle_buf_start_index;
+  funk2_memblock_t** circle_buf_end_index;
+} funk2_gc_touch_circle_buffer_t;
+
 typedef struct funk2_memory_s {
-  funk2_memorypool_t pool[memory_pool_num];
-  ptr                global_environment_ptr;
-  f2ptr              global_environment_f2ptr;
-  u64                last_garbage_collect_nanoseconds_since_1970;
-  pthread_t          memory_handling_thread;
-  boolean_t          bootstrapping_mode;
+  funk2_memorypool_t             pool[memory_pool_num];
+  ptr                            global_environment_ptr;
+  f2ptr                          global_environment_f2ptr;
+  u64                            last_garbage_collect_nanoseconds_since_1970;
+  pthread_t                      memory_handling_thread;
+  boolean_t                      bootstrapping_mode;
+  boolean_t                      gc_touch_circle_buffer__initialized;
+  funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 } funk2_memory_t;
 
 void      funk2_memory__init(funk2_memory_t* this); // only called by memory management thread

@@ -422,16 +422,16 @@ void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buf
   }
 }
 
-#define funk2_gc_touch_circle_buffer__touch_f2ptr(this, block_f2ptr) { \
-  if (block_f2ptr) { \
-    ptr block_ptr = __f2ptr_to_ptr(block_f2ptr); \
-    debug__assert(!block_ptr || funk2_memory__is_valid_funk2_memblock_ptr(&(__funk2.memory), block_ptr), nil, "funk2_memory__is_valid_funk2_memblock_ptr(block_ptr) failed"); \
-    (this)->circle_buf_end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr); \
-    funk2_gc_touch_circle_buffer__advance_end(this); \
-  } \
+void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr block_f2ptr) {
+  if (block_f2ptr) {
+    ptr block_ptr = __f2ptr_to_ptr(block_f2ptr);
+    //debug__assert(!block_ptr || funk2_memory__is_valid_funk2_memblock_ptr(&(__funk2.memory), block_ptr), nil, "funk2_memory__is_valid_funk2_memblock_ptr(block_ptr) failed");
+    (this)->circle_buf_end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr);
+    funk2_gc_touch_circle_buffer__advance_end(this);
+  }
 }
 
-void funk2_gc_touch_circle_buffer__dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr) {
+void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr) {
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->p);
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->tracing_on);
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->trace);

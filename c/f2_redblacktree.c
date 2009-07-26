@@ -1,20 +1,35 @@
-#include "f2_redblacktree.h"
+// 
+// Copyright (c) 2007-2009 Bo Morgan.
+// All rights reserved.
+// 
+// Author: Bo Morgan
+// 
+// Permission to use, copy, modify and distribute this software and its
+// documentation is hereby granted, provided that both the copyright
+// notice and this permission notice appear in all copies of the
+// software, derivative works or modified versions, and any portions
+// thereof, and that both notices appear in supporting documentation.
+// 
+// BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+// BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+// WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+// 
+// Bo Morgan requests users of this software to return to bo@mit.edu any
+// improvements or extensions that they make and grant Bo Morgan the
+// rights to redistribute these changes.
+// 
 
-//LEFT-ROTATE(T, x)
-// 1  y ’¢« right[x]            %Gâ–¹%@ Set y.
-// 2  right[x] ’¢« left[y]      %Gâ–¹%@ Turn y's left subtree into x's right subtree.
-// 3  p[left[y]] ’¢« x
-// 4  p[y] ’¢« p[x]             %Gâ–¹%@ Link x's parent to y.
-// 5  if p[x] = nil[T]
-// 6     then root[T] ’¢« y
-// 7     else if x = left[p[x]]
-// 8             then left[p[x]] ’¢« y
-// 9             else right[p[x]] ’¢« y
-//10  left[y] ’¢« x             %Gâ–¹%@ Put x on y's left.
-//11  p[x] ’¢« y
+#include "funk2.h"
 
-// preconditions:
-//   x->right->left != NULL
+// ****************************************************************
+// **                                                            **
+// ** This code was not originally written by Bo Morgan, but was **
+// ** downloaded from a webpage and modified.  The original      **
+// ** source was found here:                                     **
+// **                                                            **
+// **   http://en.wikipedia.org/wiki/Red-black_tree              **
+// **                                                            **
+// ****************************************************************
 
 int rbt_node__is_black(rbt_node_t* node) {
   if (!node || node->color == rbt_color__black) {

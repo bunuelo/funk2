@@ -21,45 +21,6 @@
 
 #include "funk2.h"
 
-void assert_failed(f2ptr thread, char* filename, int line_num, char* str) {
-  status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
-  fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
-  exit(-1);
-}
-
-ptr malloc_executable(size_t required_bytes) {
-  size_t page_size   = getpagesize();
-  size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
-  void* p = malloc(alloc_bytes);
-  if (! p) {
-    perror("malloc_executable() malloc");
-    error(nil, "malloc_executable malloc failed.");
-  }
-  return to_ptr(p);
-}
-
-void free_executable(ptr p) {
-  munmap(from_ptr(p), 1);
-}
-
-ptr f2__malloc(f2size_t byte_num) {
-  ptr this = malloc_executable(byte_num);
-  if (! this) {error(nil, "f2__malloc error: out of memory.");}
-  return this;
-}
-
-void f2__free(ptr this) {
-  free_executable(this);
-}
-
-ptr f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num) {
-  ptr new_mem = f2__malloc(new_byte_num);
-  memcpy(from_ptr(new_mem), from_ptr(this), (old_byte_num < new_byte_num) ? old_byte_num : new_byte_num);
-  f2__free(this);
-  return new_mem;
-}
-
-
 // funk2_memblock
 
 void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch) {

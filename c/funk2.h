@@ -93,6 +93,7 @@
 #include "f2_globalenv.h"
 #include "f2_html.h"
 #include "f2_load.h"
+#include "f2_malloc.h"
 #include "f2_memory.h"
 #include "f2_memory_protected.h"
 #include "f2_object.h"

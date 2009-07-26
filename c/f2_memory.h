@@ -24,6 +24,7 @@
 
 #include "f2_dynamic_memory.h"
 #include "f2_redblacktree.h"
+#include "f2_processor_mutex.h"
 
 #define ptype__total_num 14
 #define ptype__min_bits   4

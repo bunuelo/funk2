@@ -24,7 +24,6 @@
 
 #include "f2_redblacktree.h"
 #include "f2_processor_mutex.h"
-#include "f2_dynamic_memory.h"
 
 #define def_pcfunk__funkvar(name)            pcfunk__##name
 #define def_pcfunk__prototype__declare(name) f2ptr def_pcfunk__funkvar(name) (f2ptr simple_cause, f2ptr simple_thread, f2ptr simple_env, f2ptr simple_args)

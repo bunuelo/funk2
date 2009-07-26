@@ -22,6 +22,8 @@
 #ifndef F2_MEMORY_TYPEDEF_STRUCTS
 #define F2_MEMORY_TYPEDEF_STRUCTS
 
+#include "f2_dynamic_memory.h"
+
 #define ptype__total_num 14
 #define ptype__min_bits   4
 

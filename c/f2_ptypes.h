@@ -24,6 +24,7 @@
 
 #include "f2_print.h"
 #include "f2_memory.h"
+#include "f2_memory_protected.h"
 #include "f2_processor_thread.h"
 #include "f2_bytecodes.h"
 #include "f2_packet_memaccess.h"

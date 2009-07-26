@@ -22,7 +22,7 @@
 #ifndef F2__PRIMCFUNKS__H
 #define F2__PRIMCFUNKS__H
 
-#include "f2_memory.h"
+#include "f2_redblacktree.h"
 
 #define def_pcfunk__funkvar(name)            pcfunk__##name
 #define def_pcfunk__prototype__declare(name) f2ptr def_pcfunk__funkvar(name) (f2ptr simple_cause, f2ptr simple_thread, f2ptr simple_env, f2ptr simple_args)

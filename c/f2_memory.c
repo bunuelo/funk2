@@ -532,52 +532,29 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
   funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(this, to_ptr(exp_block));
 }
 
-u8 pool__free_all_gc_untouched_blocks(int pool_index) {
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  u8 did_something = 0;
-  rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
-  rbt_node_t* next;
-  while (iter) {
-    next = rbt_node__next(iter);
-    if (! ((funk2_memblock_t*)iter)->gc_touch) {
-      // remove from used list
-      rbt_tree__remove(&(__funk2.memory.pool[pool_index].used_memory_tree), iter);
-      // set to free
-      ((funk2_memblock_t*)iter)->used = 0;
-      __funk2.memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
-      // add to free list
-      funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), (funk2_memblock_t*)iter);
-      // set did_something flag
-      did_something = 1;
-    }
-    iter = next;
-  }
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  return did_something;
-}
 
-u8 pool__free_all_gc_untouched_blocks_from_generation(int pool_index, int generation_num) {
-  status("freeing all untouched blocks for pool %d, generation %d.", pool_index, generation_num);
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
+u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
+  status("freeing all untouched blocks for pool generation %d.", generation_num);
+  funk2_memorypool__debug_memory_test(this, 1);
   u8 did_something = 0;
-  rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
+  rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
   rbt_node_t* next;
   while (iter) {
     next = rbt_node__next(iter);
     if (((funk2_memblock_t*)iter)->generation_num <= generation_num && (! ((funk2_memblock_t*)iter)->gc_touch)) {
       // remove from used list
-      rbt_tree__remove(&(__funk2.memory.pool[pool_index].used_memory_tree), iter);
+      rbt_tree__remove(&(this->used_memory_tree), iter);
       // set to free
       ((funk2_memblock_t*)iter)->used = 0;
-      __funk2.memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
+      this->total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
       // add to free list
-      funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), (funk2_memblock_t*)iter);
+      funk2_memorypool__link_funk2_memblock_to_freelist(this, (funk2_memblock_t*)iter);
       // set did_something flag
       did_something = 1;
     }
     iter = next;
   }
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
+  funk2_memorypool__debug_memory_test(this, 1);
   return did_something;
 }
 
@@ -641,7 +618,7 @@ u8 garbage_collect_generation(int generation_num) {
   
   u8 did_something = 0;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    did_something |= pool__free_all_gc_untouched_blocks_from_generation(pool_index, generation_num);
+    did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(__funk2.memory.pool[pool_index]), generation_num);
     __funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc = 0;
   }
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

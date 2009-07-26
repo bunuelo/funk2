@@ -601,7 +601,7 @@ void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
   }
-  gc_touch_all_symbols();
+  funk2_memory__touch_all_symbols(this);
   funk2_memory__touch_all_protected_alloc_arrays(this);
 }
 

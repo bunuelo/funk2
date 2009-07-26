@@ -1019,7 +1019,7 @@ void gc_touch_all_symbols() {
   int i;
   for (i = __symbol_hash.array_length; i > 0; i --) {
     for (node_iter = array_iter[0]; node_iter; node_iter = node_iter->next) {
-      exp__gc_touch_all_referenced(__f2ptr_to_ptr(node_iter->symbol));
+      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(__funk2.memory.gc_touch_circle_buffer), __f2ptr_to_ptr(node_iter->symbol));
     }
     array_iter ++;
   }

@@ -22,7 +22,7 @@
 #ifndef F2__DYNAMIC_MEMORY__H
 #define F2__DYNAMIC_MEMORY__H
 
-#include "f2_memory.h"
+//#include "f2_memory.h"
 #include "f2_archconfig.h"
 
 typedef struct f2dynamicmemory_s {

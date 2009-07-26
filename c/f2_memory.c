@@ -350,21 +350,21 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 
 
 void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this) {
-  this->num                    = GC_TOUCH_CIRCLE_BUF_START_SIZE;
-  this->start                  = (funk2_memblock_t**)from_ptr(f2__malloc(GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
-  this->end                    = this->start + GC_TOUCH_CIRCLE_BUF_START_SIZE;  
-  this->circle_buf_start_index = NULL;
-  this->circle_buf_end_index   = NULL;
+  this->num         = GC_TOUCH_CIRCLE_BUF_START_SIZE;
+  this->start       = (funk2_memblock_t**)from_ptr(f2__malloc(GC_TOUCH_CIRCLE_BUF_START_SIZE * sizeof(funk2_memblock_t*)));
+  this->end         = this->start + GC_TOUCH_CIRCLE_BUF_START_SIZE;  
+  this->start_index = NULL;
+  this->end_index   = NULL;
 }
 
 void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message) {
   ptr* iter = (ptr*)this->start;
   printf("\n%16s: {", message);
   for(; iter < (ptr*)this->end; iter++) {
-    if (iter == (ptr*)this->circle_buf_start_index) {
+    if (iter == (ptr*)this->start_index) {
       printf(" *S*");
     }
-    if (iter == (ptr*)this->circle_buf_end_index) {
+    if (iter == (ptr*)this->end_index) {
       printf(" *E*");
     }
     printf(" %lx", (long)*iter);
@@ -375,15 +375,15 @@ void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, c
 }
 
 void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* this) {
-  this->circle_buf_end_index ++;
-  if (this->circle_buf_end_index == this->end) {
-    this->circle_buf_end_index = this->start;
+  this->end_index ++;
+  if (this->end_index == this->end) {
+    this->end_index = this->start;
   }
-  if (this->circle_buf_end_index == this->circle_buf_start_index) {
+  if (this->end_index == this->start_index) {
     //funk2_gc_touch_circle_buffer__print(this, "buffer");
     //printf("\nincreasing buffer."); fflush(stdout);
-    //printf("\n  start = %lx.", (int)(this->circle_buf_start_index - this->start)); fflush(stdout);
-    //printf("\n  end   = %lx.", (int)(this->circle_buf_end_index   - this->start)); fflush(stdout);
+    //printf("\n  start = %lx.", (int)(this->start_index - this->start)); fflush(stdout);
+    //printf("\n  end   = %lx.", (int)(this->end_index   - this->start)); fflush(stdout);
     //funk2_gc_touch_circle_buffer__print(this, "debug 0");
     // increasing size by two makes a lot of these memory moves conveniently easy.
     int old_num = this->num;
@@ -394,17 +394,17 @@ void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* t
     int location_diff = new_location - this->start;
     this->start = new_location;
     
-    this->circle_buf_start_index += location_diff;
-    this->circle_buf_end_index   += location_diff;
+    this->start_index += location_diff;
+    this->end_index   += location_diff;
     
     this->end = this->start + this->num;
     //printf("\n  copying %d bytes ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start).", ((u8*)__circle_buf_end_index) - ((u8*)__gc_touch_circle_buffer.start));
     //printf("\n  sizeof(funk2_memblock_t**) = %d bytes.", sizeof(funk2_memblock_t**));
     //printf("\n  old_num = %d", old_num);
     //funk2_gc_touch_circle_buffer__print(this, "just before copy");
-    memcpy(this->start + old_num, this->start, ((u8*)this->circle_buf_end_index) - ((u8*)this->start));
+    memcpy(this->start + old_num, this->start, ((u8*)this->end_index) - ((u8*)this->start));
     //funk2_gc_touch_circle_buffer__print(this, "just after copy");
-    this->circle_buf_end_index += old_num;
+    this->end_index += old_num;
     //printf("\ncircle_buffer size increased to %d.", this->num); fflush(stdout);
     //printf("\n  start = %lx.", (int)(this->circle_buf_start_index - this->start)); fflush(stdout);
     //printf("\n  end   = %lx.", (int)(this->circle_buf_end_index   - this->start)); fflush(stdout);
@@ -416,9 +416,9 @@ void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buf
   //printf("\nadvance start."); fflush(stdout);
   //printf("\n  start = %x.", (int)(this->circle_buf_start_index - this->start)); fflush(stdout);
   //printf("\n  end   = %x.", (int)(this->circle_buf_end_index   - this->start)); fflush(stdout);
-  this->circle_buf_start_index ++;
-  if (this->circle_buf_start_index == this->end) {
-    this->circle_buf_start_index = this->start;
+  this->start_index ++;
+  if (this->start_index == this->end) {
+    this->start_index = this->start;
   }
 }
 
@@ -426,7 +426,7 @@ void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* t
   if (block_f2ptr) {
     ptr block_ptr = __f2ptr_to_ptr(block_f2ptr);
     //debug__assert(!block_ptr || funk2_memory__is_valid_funk2_memblock_ptr(&(__funk2.memory), block_ptr), nil, "funk2_memory__is_valid_funk2_memblock_ptr(block_ptr) failed");
-    (this)->circle_buf_end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr);
+    (this)->end_index[0] = (funk2_memblock_t*)from_ptr(block_ptr);
     funk2_gc_touch_circle_buffer__advance_end(this);
   }
 }
@@ -446,12 +446,12 @@ void exp__gc_touch_all_referenced(ptr start_block_ptr) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
   }
-  __circle_buf_start_index    = __gc_touch_circle_buffer.start;
-  __circle_buf_end_index      = __circle_buf_start_index + 1;
-  __circle_buf_start_index[0] = (funk2_memblock_t*)start_block;
+  __funk2.memory.gc_touch_circle_buffer.start_index    = __funk2.memory.gc_touch_circle_buffer.start;
+  __funk2.memory.gc_touch_circle_buffer.end_index      = __funk2.memory.gc_touch_circle_buffer.start_index + 1;
+  __funk2.memory.gc_touch_circle_buffer.start_index[0] = (funk2_memblock_t*)start_block;
   ptype_block_t* block;
   while (__circle_buf_end_index != __circle_buf_start_index) {
-    block = (ptype_block_t*)(__circle_buf_start_index[0]);
+    block = (ptype_block_t*)(__funk2.memory.gc_touch_circle_buffer.start_index[0]);
     if (block && (! block->block.gc_touch)) {
       gc_touch__f2ptr(block->cause);
       switch(block->ptype) {

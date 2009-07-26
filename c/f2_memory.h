@@ -23,6 +23,8 @@
 #define F2__MEMORY__H
 
 #include "f2_global.h"
+//#include "f2_ptypes_memory.h"
+//#include "f2_memory.h"
 
 #define nil ((f2ptr)0)
 
@@ -156,9 +158,6 @@ typedef struct funk2_memorypool_s {
 #else
 #  error DYNAMIC_MEMORY or STATIC_MEMORY must be defined.
 #endif
-
-#include "f2_ptypes_memory.h"
-#include "f2_memory.h"
 
 f2ptr             pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
 f2ptr             pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num);

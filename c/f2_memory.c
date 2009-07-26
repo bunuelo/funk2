@@ -431,7 +431,7 @@ void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buf
   } \
 }
 
-void funk2_gc_touch_circle_buffer__dptr(funk2_memory_dptr_t* this, dptr) {
+void funk2_gc_touch_circle_buffer__dptr(funk2_memory_t this, dptr_t* dptr) {
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->p);
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->tracing_on);
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->trace);

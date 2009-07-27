@@ -1110,7 +1110,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("rebuilding memory pool[%d] info from image.", pool_index);
     rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL);
-    this->memory.pool[pool_index].total_free_memory  = 0;
+    this->pool[pool_index].total_free_memory  = 0;
     rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL);
     
     {

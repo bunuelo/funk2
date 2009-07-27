@@ -571,47 +571,47 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-void f2__thought_process__reinitialize_globalvars();             // defined in f2_thought_process.c
-void f2__funk2_node__reinitialize_globalvars();                  // defined in f2_funk2_node.c
-void f2__globalenv__reinitialize_globalvars();                   // defined in f2_globalenv.c
-void f2__peer_command_server__reinitialize_globalvars();         // defined in f2_peer_command_server.c
-void f2__primobjects__reinitialize_globalvars();                 // defined in f2_primobjects.c
-void f2__primobject__action__reinitialize_globalvars();          // defined in f2_primobject__action.c
-void f2__primobject_tensor__reinitialize_globalvars();           // defined in f2_primobject__tensor.c
-void f2__primobject_object__reinitialize_globalvars();           // defined in f2_primobject__object.c
-void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
-void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f2_primobject__circular_buffer.c
-void f2__primobject__semantic_graph__reinitialize_globalvars();  // defined in f2_primobject__semantic_graph.c
-void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
-void f2__primobject__text_buffer__reinitialize_globalvars();     // defined in f2_primobject__text_buffer.c
-void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
-void f2__reader__reinitialize_globalvars();                      // defined in f2_reader.c
-void f2__compile__reinitialize_globalvars();                     // defined in f2_compile.c
-void f2__thread__reinitialize_globalvars();                      // defined in f2_thread.c
-void f2__bytecodes__reinitialize_globalvars();                   // defined in f2_bytecodes.c
-void f2__signal__reinitialize_globalvars();                      // defined in f2_signal.c
-void f2__scheduler__reinitialize_globalvars();                   // defined in f2_scheduler.c
-void f2__socket__reinitialize_globalvars();                      // defined in f2_socket.c
-void f2__trace__reinitialize_globalvars();                       // defined in f2_trace.c
-void f2__serialize__reinitialize_globalvars();                   // defined in f2_serialize.c
-void f2__primfunks__errno__reinitialize_globalvars();            // defined in f2_primfunks__errno.c
-void f2__primfunks__fcntl__reinitialize_globalvars();            // defined in f2_primfunks__fcntl.c
-void f2__primfunks__ioctl__reinitialize_globalvars();            // defined in f2_primfunks__ioctl.c
-void f2__primfunks__locale__reinitialize_globalvars();           // defined in f2_primfunks__locale.c
-void f2__ansi__reinitialize_globalvars();                        // defined in f2_ansi.c
-void f2__termios__reinitialize_globalvars();                     // defined in f2_termios.c
-void f2__blocks_world__reinitialize_globalvars();                // defined in f2_blocks_world.c
-void f2__primobject__dynamic_library__reinitialize_globalvars(); // defined in f2_primobject__dynamic_library.c
-void f2__dlfcn__reinitialize_globalvars();                       // defined in f2_dlfcn.c
-void f2__gmodule__reinitialize_globalvars();                     // defined in f2_gmodule.c
-void f2__string__reinitialize_globalvars();                      // defined in f2_string.c
-void f2__child_handler__reinitialize_globalvars();               // defined in f2_child_handler.c
-void f2__apropos__reinitialize_globalvars();                     // defined in f2_apropos.c
-void f2__object__reinitialize_globalvars();                      // defined in f2_object.c
-void f2__primobject_type_handler__reinitialize_globalvars();     // defined in f2_primobject_type_handler.c
-void f2__primobject_type__reinitialize_globalvars();             // defined in f2_primobject_type.c
-void f2__sort__reinitialize_globalvars();                        // defined in f2_sort.c
-void f2__search__reinitialize_globalvars();                      // defined in f2_search.c
+//void f2__thought_process__reinitialize_globalvars();             // defined in f2_thought_process.c
+//void f2__funk2_node__reinitialize_globalvars();                  // defined in f2_funk2_node.c
+//void f2__globalenv__reinitialize_globalvars();                   // defined in f2_globalenv.c
+//void f2__peer_command_server__reinitialize_globalvars();         // defined in f2_peer_command_server.c
+//void f2__primobjects__reinitialize_globalvars();                 // defined in f2_primobjects.c
+//void f2__primobject__action__reinitialize_globalvars();          // defined in f2_primobject__action.c
+//void f2__primobject_tensor__reinitialize_globalvars();           // defined in f2_primobject__tensor.c
+//void f2__primobject_object__reinitialize_globalvars();           // defined in f2_primobject__object.c
+//void f2__primobject_object_type__reinitialize_globalvars();      // defined in f2_primobject__object_type.c
+//void f2__primobject_circular_buffer__reinitialize_globalvars();  // defined in f2_primobject__circular_buffer.c
+//void f2__primobject__semantic_graph__reinitialize_globalvars();  // defined in f2_primobject__semantic_graph.c
+//void f2__primobject__stream__reinitialize_globalvars();          // defined in f2_primobject__stream.c
+//void f2__primobject__text_buffer__reinitialize_globalvars();     // defined in f2_primobject__text_buffer.c
+//void f2__primcfunks__reinitialize_globalvars();                  // defined in f2_primfunks.c
+//void f2__reader__reinitialize_globalvars();                      // defined in f2_reader.c
+//void f2__compile__reinitialize_globalvars();                     // defined in f2_compile.c
+//void f2__thread__reinitialize_globalvars();                      // defined in f2_thread.c
+//void f2__bytecodes__reinitialize_globalvars();                   // defined in f2_bytecodes.c
+//void f2__signal__reinitialize_globalvars();                      // defined in f2_signal.c
+//void f2__scheduler__reinitialize_globalvars();                   // defined in f2_scheduler.c
+//void f2__socket__reinitialize_globalvars();                      // defined in f2_socket.c
+//void f2__trace__reinitialize_globalvars();                       // defined in f2_trace.c
+//void f2__serialize__reinitialize_globalvars();                   // defined in f2_serialize.c
+//void f2__primfunks__errno__reinitialize_globalvars();            // defined in f2_primfunks__errno.c
+//void f2__primfunks__fcntl__reinitialize_globalvars();            // defined in f2_primfunks__fcntl.c
+//void f2__primfunks__ioctl__reinitialize_globalvars();            // defined in f2_primfunks__ioctl.c
+//void f2__primfunks__locale__reinitialize_globalvars();           // defined in f2_primfunks__locale.c
+//void f2__ansi__reinitialize_globalvars();                        // defined in f2_ansi.c
+//void f2__termios__reinitialize_globalvars();                     // defined in f2_termios.c
+//void f2__blocks_world__reinitialize_globalvars();                // defined in f2_blocks_world.c
+//void f2__primobject__dynamic_library__reinitialize_globalvars(); // defined in f2_primobject__dynamic_library.c
+//void f2__dlfcn__reinitialize_globalvars();                       // defined in f2_dlfcn.c
+//void f2__gmodule__reinitialize_globalvars();                     // defined in f2_gmodule.c
+//void f2__string__reinitialize_globalvars();                      // defined in f2_string.c
+//void f2__child_handler__reinitialize_globalvars();               // defined in f2_child_handler.c
+//void f2__apropos__reinitialize_globalvars();                     // defined in f2_apropos.c
+//void f2__object__reinitialize_globalvars();                      // defined in f2_object.c
+//void f2__primobject_type_handler__reinitialize_globalvars();     // defined in f2_primobject_type_handler.c
+//void f2__primobject_type__reinitialize_globalvars();             // defined in f2_primobject_type.c
+//void f2__sort__reinitialize_globalvars();                        // defined in f2_sort.c
+//void f2__search__reinitialize_globalvars();                      // defined in f2_search.c
 
 f2ptr ptr_to_f2ptr__slow(ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -679,49 +679,50 @@ void rebuild_memory_info_from_image() {
       }
     }
     
-    f2__primobjects__reinitialize_globalvars();
-    f2__primobject_hashtable__reinitialize_globalvars();
-    f2__primobject_frame__reinitialize_globalvars();
-    f2__primobject_environment__reinitialize_globalvars();
-    f2__primobject__action__reinitialize_globalvars();
-    f2__primobject_tensor__reinitialize_globalvars();
-    f2__primobject_object__reinitialize_globalvars();
-    f2__primobject_object_type__reinitialize_globalvars();
-    f2__primobject_circular_buffer__reinitialize_globalvars();
-    f2__primobject__semantic_graph__reinitialize_globalvars();
-    f2__primobject__stream__reinitialize_globalvars();
-    f2__primobject__text_buffer__reinitialize_globalvars();
-    f2__globalenv__reinitialize_globalvars();
-    f2__primcfunks__reinitialize_globalvars();
-    f2__reader__reinitialize_globalvars();
-    f2__compile__reinitialize_globalvars();
-    f2__thread__reinitialize_globalvars();
-    f2__bytecodes__reinitialize_globalvars();
-    f2__signal__reinitialize_globalvars();
-    f2__scheduler__reinitialize_globalvars();
-    f2__socket__reinitialize_globalvars();
-    f2__trace__reinitialize_globalvars();
-    f2__serialize__reinitialize_globalvars();
-    f2__thought_process__reinitialize_globalvars();
-    f2__primfunks__errno__reinitialize_globalvars();
-    f2__primfunks__fcntl__reinitialize_globalvars();
-    f2__primfunks__ioctl__reinitialize_globalvars();
-    f2__primfunks__locale__reinitialize_globalvars();
-    f2__funk2_node__reinitialize_globalvars();
-    f2__peer_command_server__reinitialize_globalvars();
-    f2__ansi__reinitialize_globalvars();
-    f2__termios__reinitialize_globalvars();
-    f2__blocks_world__reinitialize_globalvars();
-    f2__dlfcn__reinitialize_globalvars();
-    f2__gmodule__reinitialize_globalvars();
-    f2__string__reinitialize_globalvars();
-    f2__child_handler__reinitialize_globalvars();
-    f2__apropos__reinitialize_globalvars();
-    f2__object__reinitialize_globalvars();
-    f2__primobject_type_handler__reinitialize_globalvars();
-    f2__primobject_type__reinitialize_globalvars();
-    f2__sort__reinitialize_globalvars();
-    f2__search__reinitialize_globalvars();
+    funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+    //f2__primobjects__reinitialize_globalvars();
+    //f2__primobject_hashtable__reinitialize_globalvars();
+    //f2__primobject_frame__reinitialize_globalvars();
+    //f2__primobject_environment__reinitialize_globalvars();
+    //f2__primobject__action__reinitialize_globalvars();
+    //f2__primobject_tensor__reinitialize_globalvars();
+    //f2__primobject_object__reinitialize_globalvars();
+    //f2__primobject_object_type__reinitialize_globalvars();
+    //f2__primobject_circular_buffer__reinitialize_globalvars();
+    //f2__primobject__semantic_graph__reinitialize_globalvars();
+    //f2__primobject__stream__reinitialize_globalvars();
+    //f2__primobject__text_buffer__reinitialize_globalvars();
+    //f2__globalenv__reinitialize_globalvars();
+    //f2__primcfunks__reinitialize_globalvars();
+    //f2__reader__reinitialize_globalvars();
+    //f2__compile__reinitialize_globalvars();
+    //f2__thread__reinitialize_globalvars();
+    //f2__bytecodes__reinitialize_globalvars();
+    //f2__signal__reinitialize_globalvars();
+    //f2__scheduler__reinitialize_globalvars();
+    //f2__socket__reinitialize_globalvars();
+    //f2__trace__reinitialize_globalvars();
+    //f2__serialize__reinitialize_globalvars();
+    //f2__thought_process__reinitialize_globalvars();
+    //f2__primfunks__errno__reinitialize_globalvars();
+    //f2__primfunks__fcntl__reinitialize_globalvars();
+    //f2__primfunks__ioctl__reinitialize_globalvars();
+    //f2__primfunks__locale__reinitialize_globalvars();
+    //f2__funk2_node__reinitialize_globalvars();
+    //f2__peer_command_server__reinitialize_globalvars();
+    //f2__ansi__reinitialize_globalvars();
+    //f2__termios__reinitialize_globalvars();
+    //f2__blocks_world__reinitialize_globalvars();
+    //f2__dlfcn__reinitialize_globalvars();
+    //f2__gmodule__reinitialize_globalvars();
+    //f2__string__reinitialize_globalvars();
+    //f2__child_handler__reinitialize_globalvars();
+    //f2__apropos__reinitialize_globalvars();
+    //f2__object__reinitialize_globalvars();
+    //f2__primobject_type_handler__reinitialize_globalvars();
+    //f2__primobject_type__reinitialize_globalvars();
+    //f2__sort__reinitialize_globalvars();
+    //f2__search__reinitialize_globalvars();
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

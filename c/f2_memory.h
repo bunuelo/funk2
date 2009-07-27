@@ -28,25 +28,7 @@
 #include "f2_processor_mutex.h"
 #include "f2_memblock.h"
 #include "f2_ptype.h"
-
-typedef struct funk2_memorypool_s {
-  funk2_processor_mutex_t global_memory_allocate_mutex;
-  boolean_t               should_run_gc; // if disabled when needed more memory (and allocated more) then True
-  boolean_t               should_enlarge_memory_now;
-  f2size_t                should_enlarge_memory_now__need_at_least_byte_num;
-  f2size_t                total_global_memory;
-  f2size_t                total_free_memory;
-  f2dynamicmemory_t       dynamic_memory;
-  rbt_tree_t              used_memory_tree;
-  rbt_tree_t              free_memory_tree; // free memory does grow on trees!
-  ptr                     global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
-  f2size_t                total_allocated_memory_since_last_gc;
-  uint                    next_unique_block_id;
-  u64                     protected_alloc_array__used_num;
-  u64                     protected_alloc_array__length;
-  f2ptr*                  protected_alloc_array;
-  u64                     protected_alloc_array__reentrance_count;
-} funk2_memorypool_t;
+#include "f2_memorypool.h"
 
 typedef struct funk2_gc_touch_circle_buffer_s {
   int                num;
@@ -81,6 +63,7 @@ typedef struct funk2_memory_s {
 #include "f2_dynamic_memory.h"
 #include "f2_memblock.h"
 #include "f2_ptype.h"
+#include "f2_memorypool.h"
 
 #define nil ((f2ptr)0)
 
@@ -88,12 +71,6 @@ typedef struct funk2_memory_s {
 #define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))
 
 #define maximum_generation_num 7
-
-#define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
-
-#define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
-#define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&((this)->global_memory_allocate_mutex))
-#define funk2_memorypool__memory_mutex__unlock(this)   funk2_processor_mutex__unlock(&((this)->global_memory_allocate_mutex))
 
 #define f2ptr__computer_id__bit_num  computer_id__bit_num
 #define f2ptr__pool_index__bit_num   pool_index__bit_num
@@ -147,16 +124,6 @@ typedef struct funk2_memory_s {
 
 #define ptr_to_f2ptr(pool_index, p) __ptr_to_f2ptr(pool_index, p)
 
-#ifdef DEBUG_MEMORY
-#  if (DEBUG_MEMORY > 0)
-#    define funk2_memorypool__debug_memory_test(this, level) {if (DEBUG_MEMORY >= level) {funk2_memorypool__memory_test(this);}}
-#  else
-#    define funk2_memorypool__debug_memory_test(this, level)
-#  endif
-#else
-#  define funk2_memorypool__debug_memory_test(this, level)
-#endif
-
 #define fast__f2ptr_to_ptr(f2p) __f2ptr_to_ptr(f2p)
 
 #define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
@@ -168,27 +135,6 @@ typedef struct funk2_memory_s {
 
 void safe_write(int fd, void* ptr, size_t object_size);
 void safe_read(int fd, void* ptr, size_t object_size);
-
-// funk2_memorypool
-
-void funk2_memorypool__init(funk2_memorypool_t* pool);
-void funk2_memorypool__destroy(funk2_memorypool_t* this);
-void funk2_memorypool__add_protected_alloc_f2ptr(funk2_memorypool_t* this, f2ptr exp);
-void funk2_memorypool__signal_enter_protected_region(funk2_memorypool_t* this);
-void funk2_memorypool__signal_exit_protected_region(funk2_memorypool_t* this);
-f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this);
-f2size_t funk2_memorypool__total_free_memory(funk2_memorypool_t* this);
-void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this);
-void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this);
-void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this);
-void funk2_memorypool__memory_test(funk2_memorypool_t* this);
-void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num);
-void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num);
-void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block);
-u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this);
-u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num);
-void funk2_memorypool__increment_generation(funk2_memorypool_t* this);
-funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
 
 // funk2_gc_touch_circle_buffer
 

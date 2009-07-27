@@ -74,6 +74,7 @@ funk2_server_objs = \
   c/f2_malloc.o \
   c/f2_memblock.o \
   c/f2_memory.o \
+  c/f2_memorypool.o \
   c/f2_module_registration.o \
   c/f2_object.o \
   c/f2_packet.o \
@@ -152,6 +153,7 @@ funk2_headers = \
   c/f2_malloc.h \
   c/f2_memblock.h \
   c/f2_memory.h \
+  c/f2_memorypool.h \
   c/f2_module_registration.h \
   c/f2_object.h \
   c/f2_packet.h \

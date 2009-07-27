@@ -21,6 +21,21 @@
 
 #include "funk2.h"
 
+void safe_write(int fd, void* ptr, size_t object_size) {
+  size_t result = write(fd, ptr, object_size);
+  if (result != object_size) {
+    error(nil, "safe_write error.");
+  }
+}
+
+void safe_read(int fd, void* ptr, size_t object_size) {
+  size_t result = read(fd, ptr, object_size);
+  if (result != object_size) {
+    error(nil, "safe_read error.");
+  }
+}
+
+
 // funk2_memblock
 
 void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch) {
@@ -555,51 +570,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-
-void safe_write(int fd, void* ptr, size_t object_size) {
-  size_t result = write(fd, ptr, object_size);
-  if (result != object_size) {
-    error(nil, "safe_write error.");
-  }
-}
-
-void safe_read(int fd, void* ptr, size_t object_size) {
-  size_t result = read(fd, ptr, object_size);
-  if (result != object_size) {
-    error(nil, "safe_read error.");
-  }
-}
-
-int raw__memory_image__save(char* filename) {
-  status("saving memory image.");
-  funk2_memory__print_gc_stats(&(__funk2.memory));
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  }
-  // should collect garbage probably
-  int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-  if (fd == -1) {
-    printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
-    return -1;
-  }
-  f2ptr    f2_i;
-  f2size_t size_i;
-  int      i;
-  i = 0xfaded;             safe_write(fd, &i, sizeof(int));
-  i = F2__COMPILE_TIME_ID; safe_write(fd, &i, sizeof(int));
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    size_i = __funk2.memory.pool[pool_index].total_global_memory;      safe_write(fd, &size_i, sizeof(f2size_t));
-    size_i = __funk2.memory.pool[pool_index].next_unique_block_id;     safe_write(fd, &size_i, sizeof(f2size_t));
-    safe_write(fd, from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
-  }
-  f2_i = __funk2.memory.global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
-  close(fd);
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  }
-  return 0;
-}
 
 void f2__thought_process__reinitialize_globalvars();             // defined in f2_thought_process.c
 void f2__env__reinitialize_globalvars();                         // defined in f2_env.c
@@ -1250,6 +1220,37 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   return retval;
+}
+
+boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
+  status("saving memory image.");
+  funk2_memory__print_gc_stats(this);
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+  }
+  // should collect garbage probably
+  int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+  if (fd == -1) {
+    printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
+    return boolean__true;
+  }
+  f2ptr    f2_i;
+  f2size_t size_i;
+  int      i;
+  i = 0xfaded;             safe_write(fd, &i, sizeof(int));
+  i = F2__COMPILE_TIME_ID; safe_write(fd, &i, sizeof(int));
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    size_i = this->pool[pool_index].total_global_memory;  safe_write(fd, &size_i, sizeof(f2size_t));
+    size_i = this->pool[pool_index].next_unique_block_id; safe_write(fd, &size_i, sizeof(f2size_t));
+    safe_write(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);
+  }
+  f2_i = this->global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
+  close(fd);
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+  }
+  return boolean__false;
 }
 
 

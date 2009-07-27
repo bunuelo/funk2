@@ -141,7 +141,6 @@ boolean_t pool__should_run_gc(int pool_index);
 boolean_t should_run_gc();
 int       gc__is_disabled();
 
-int raw__memory_image__save(char* filename);
 int raw__memory_image__load(char* filename);
 
 void f2__memory__initialize();
@@ -272,6 +271,8 @@ void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
 f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
 void      funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
 f2ptr     funk2_memory__global_environment(funk2_memory_t* this);
+boolean_t funk2_memory__save_image(funk2_memory_t* this, char* filename);
+
 
 #define global_environment()       funk2_memory__global_environment(&(__funk2.memory))
 #define global_environment__set(x) funk2_memory__global_environment__set(&(__funk2.memory), x)

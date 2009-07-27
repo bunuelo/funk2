@@ -630,7 +630,7 @@ int raw__memory_image__load(char* filename) {
       __funk2.memory.global_environment_f2ptr = global_environment_f2ptr;
       __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
       
-      rebuild_memory_info_from_image();
+      funk2_memory__rebuild_memory_info_from_image(&(__funk2.memory));
       
       status("loaded memory image successfully.");
       break;
@@ -1097,11 +1097,8 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 
-
-// funk2
-
 // precondition: each and every memory pool's global_memory_mutex is locked!
-void funk2__rebuild_memory_info_from_image(funk2_t* this) {
+void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // each and every pool's global_memory_mutex is locked (we need to return that way).
   //
   // note: all memory being locked allows us to assume that we are the
@@ -1111,21 +1108,21 @@ void funk2__rebuild_memory_info_from_image(funk2_t* this) {
   
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("rebuilding memory pool[%d] info from image.", pool_index); fflush(stdout);
-    rbt_tree__init(&(this->memory.pool[pool_index].free_memory_tree), NULL);
+    status("rebuilding memory pool[%d] info from image.", pool_index);
+    rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL);
     this->memory.pool[pool_index].total_free_memory  = 0;
-    rbt_tree__init(&(this->memory.pool[pool_index].used_memory_tree), NULL);
+    rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL);
     
     {
-      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(&(this->memory.pool[pool_index])));
-      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(this->memory.pool[pool_index])))) + this->memory.pool[pool_index].total_global_memory);
+      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index])));
+      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index])))) + this->pool[pool_index].total_global_memory);
       while(iter < end_of_blocks) {
 	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
 	if (iter->used) {
-	  rbt_tree__insert(&(this->memory.pool[pool_index].used_memory_tree), (rbt_node_t*)iter);
+	  rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)iter);
 	} else {
-	  funk2_memorypool__link_funk2_memblock_to_freelist(&(this->memory.pool[pool_index]), iter);
-	  this->memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
+	  funk2_memorypool__link_funk2_memblock_to_freelist(&(this->pool[pool_index]), iter);
+	  this->pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
 	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
       }
@@ -1135,7 +1132,7 @@ void funk2__rebuild_memory_info_from_image(funk2_t* this) {
   
   // temporarily unlocks all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->memory.pool[pool_index]));
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   // temporary period of all memory mutexes locked
   {
@@ -1143,30 +1140,31 @@ void funk2__rebuild_memory_info_from_image(funk2_t* this) {
     
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       // add all symbols to symbol_hash in ptypes.c
-      rbt_node_t* iter = rbt_tree__minimum(&(this->memory.pool[pool_index].used_memory_tree));
+      rbt_node_t* iter = rbt_tree__minimum(&(this->pool[pool_index].used_memory_tree));
       while(iter) {
 	ptype_block_t* block = (ptype_block_t*)iter;
 	if(block->ptype == ptype_symbol) {
-	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(this->memory), to_ptr(block));
+	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 	  symbol_hash__add_symbol(block_f2ptr);
 	}
 	iter = rbt_node__next(iter);
       }
     }
     
-    funk2_module_registration__reinitialize_all_modules(&(this->module_registration));
+    funk2_module_registration__reinitialize_all_modules(&(__funk2->module_registration));
   }
   // end temporary unlocking of all memory mutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->memory.pool[pool_index]));
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(this->memory.pool[pool_index]), 1);
+    funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
   }
   
   status("done rebuilding memory info from image."); fflush(stdout);
 }
+
 
 
 

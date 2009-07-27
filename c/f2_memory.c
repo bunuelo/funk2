@@ -1002,15 +1002,15 @@ void funk2_memory__destroy(funk2_memory_t* this) {
 }
 
 // memory handling thread should never call this function
-void funk2_memory__signal_enter_bytecode(funk2_memory_t* this) {
+void funk2_memory__signal_enter_protected_region(funk2_memory_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__signal_enter_bytecode(&(this->pool[pool_index]));
+  funk2_memorypool__signal_enter_protected_region(&(this->pool[pool_index]));
 }
 
 // memory handling thread should never call this function
-void funk2_memory__signal_exit_bytecode(funk2_memory_t* this) {
+void funk2_memory__signal_exit_protected_region(funk2_memory_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__signal_exit_bytecode(&(this->pool[pool_index]));
+  funk2_memorypool__signal_exit_protected_region(&(this->pool[pool_index]));
 }
 
 void funk2_memory__handle(funk2_memory_t* this) {

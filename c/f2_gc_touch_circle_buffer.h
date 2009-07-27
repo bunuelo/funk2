@@ -25,7 +25,7 @@
 #include "f2_memblock.h"
 
 typedef struct funk2_gc_touch_circle_buffer_s {
-  int                num;
+  s64                num;
   funk2_memblock_t** start;
   funk2_memblock_t** end;
   funk2_memblock_t** start_index;

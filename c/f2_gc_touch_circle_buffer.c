@@ -64,12 +64,12 @@ void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* t
     //printf("\n  end   = %lx.", (int)(this->end_index   - this->start)); fflush(stdout);
     //funk2_gc_touch_circle_buffer__print(this, "debug 0");
     // increasing size by two makes a lot of these memory moves conveniently easy.
-    int old_num = this->num;
+    s64 old_num = this->num;
     this->num = old_num << 1;
     //printf("\n__gc_touch_circle_buffer.start = %x", (int)this->start);
     funk2_memblock_t** new_location = (funk2_memblock_t**)from_ptr(f2__new_alloc(to_ptr(this->start), sizeof(funk2_memblock_t*) * old_num, sizeof(funk2_memblock_t*) * this->num));
     //printf("\nnew_location = %lx", (int)new_location); fflush(stdout);
-    int location_diff = new_location - this->start;
+    s64 location_diff = new_location - this->start;
     this->start = new_location;
     
     this->start_index += location_diff;
@@ -140,7 +140,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
       case ptype_symbol:       block->block.gc_touch = 1; break;
       case ptype_chunk:        block->block.gc_touch = 1; break;
       case ptype_simple_array: block->block.gc_touch = 1; {
-	int i;
+	s64 i;
 	f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
 	for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
 	  funk2_gc_touch_circle_buffer__touch_f2ptr(this, *iter);
@@ -148,7 +148,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
 	}
       } break;
       case ptype_traced_array: block->block.gc_touch = 1; {
-	int i;
+	s64 i;
 	dptr_t* iter = (dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
 	for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
 	  funk2_gc_touch_circle_buffer__touch_dptr(this, (dptr_t*)iter);
@@ -159,7 +159,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
       default:
 	{
 	  char str[1024];
-	  sprintf(str, "unknown type (%d) of block in garbage collector.", (int)(block->ptype));
+	  sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->ptype));
 	  error(nil, str);
 	}
       }
@@ -174,4 +174,5 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
   if (exp_block->block.gc_touch) {return;}
   funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(this, to_ptr(exp_block));
 }
+
 

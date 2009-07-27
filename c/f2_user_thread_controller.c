@@ -39,6 +39,7 @@ void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__s
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
     sched_yield();
+    f2__sleep(1);
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -73,6 +74,7 @@ void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__si
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
     sched_yield();
+    f2__sleep(1);
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -86,6 +88,7 @@ void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__us
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
     sched_yield();
+    f2__sleep(1);
   }
 }
 
@@ -105,6 +108,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
     sched_yield();
+    f2__sleep(1);
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -118,6 +122,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_proces
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
     sched_yield();
+    f2__sleep(1);
   }
 }
 
@@ -138,6 +143,7 @@ boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_genera
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
     sched_yield();
+    f2__sleep(1);
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -153,6 +159,7 @@ void funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
     sched_yield();
+    f2__sleep(1);
   }
 }
 
@@ -182,6 +189,7 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
   while (this->waiting_count < memory_pool_num) {
     sched_yield();
+    f2__sleep(1);
   }
 }
 

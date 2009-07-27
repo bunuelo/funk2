@@ -25,7 +25,6 @@
 #include "f2_dptr.h"
 #include "f2_print.h"
 #include "f2_memory.h"
-//#include "f2_memory_protected.h"
 #include "f2_processor_thread.h"
 #include "f2_bytecodes.h"
 #include "f2_packet_memaccess.h"
@@ -46,11 +45,6 @@
    ((uint)PRIME_NUMBER__32_BIT))
 
 typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
-
-extern u8 __ptype__str[][128];
-
-extern boolean_t __ptypes_please_wait_for_gc_to_take_place;
-extern s64       __ptypes_waiting_count;
 
 void wait_politely();
 

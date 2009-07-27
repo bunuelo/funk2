@@ -27,25 +27,6 @@
 #  define F2__PTYPE__TYPE_CHECK
 #endif
 
-boolean_t               __ptypes_please_wait_for_gc_to_take_place = boolean__false;
-s64                     __ptypes_waiting_count                    = 0;
-funk2_processor_mutex_t __ptypes_waiting_count_mutex;
-
-void wait_politely() {
-  funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
-  __ptypes_waiting_count ++;
-  funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
-  while (__ptypes_please_wait_for_gc_to_take_place) {
-    f2__sleep(1);
-    sched_yield();
-  }
-  funk2_processor_mutex__lock(&__ptypes_waiting_count_mutex);
-  __ptypes_waiting_count --;
-  funk2_processor_mutex__unlock(&__ptypes_waiting_count_mutex);
-}
-
-#define check_wait_politely() if (__ptypes_please_wait_for_gc_to_take_place) {wait_politely();}
-
 void print_mutex_error(int retval) {
   switch (retval) {
   case EINVAL: error(nil, "error unlocking ptype_mutex: mutex is not initialized.");              break;
@@ -117,6 +98,8 @@ boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
 void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
   error(nil, "ptype_error.");
 }
+
+#define check_wait_politely() funk2_user_thread_controller__user_check_wait_politely(&(__funk2.memory.user_thread_controller))
 
 // ptype
 
@@ -2231,7 +2214,6 @@ void f2__ptypes__initialize__object_slots() {
 
 void f2__ptypes__initialize() {
   symbol_hash__initialize();
-  funk2_processor_mutex__init(&(__ptypes_waiting_count_mutex));
 }
 
 

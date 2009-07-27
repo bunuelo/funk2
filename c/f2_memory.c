@@ -559,13 +559,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 // UNPROTECTED-USE MEMORY FUNCTIONS
 
-void funk2_memorypool__pause_gc(funk2_memorypool_t* this) {
-  funk2_memorypool__memory_mutex__lock(this);
-  funk2_memorypool__signal_enter_protected_region(this);
-  funk2_memorypool__memory_mutex__unlock(this);
-}
-
-int pool__try_pause_gc (int pool_index) {
+int funk2_memorypool__try_pause_gc(int pool_index) {
   int lock_failed = funk2_memorypool__memory_mutex__try_lock(&(__funk2.memory.pool[pool_index]));
   if (lock_failed == 0) {
     funk2_memorypool__signal_enter_protected_region(&(__funk2.memory.pool[pool_index]));
@@ -578,7 +572,7 @@ int pool__try_pause_gc (int pool_index) {
 void raw_pause_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__pause_gc(&(__funk2.memory.pool[pool_index]));
+    funk2_memorypool__signal_enter_protected_region(&(__funk2.memory.pool[pool_index]));
   }
 }
 

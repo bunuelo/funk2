@@ -89,7 +89,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
   }
   if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
     status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
-    __ptypes_please_wait_for_gc_to_take_place = boolean__true;
+    this->user_thread_controller.please_wait = boolean__true;
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
     }

@@ -966,35 +966,27 @@ void funk2_memory__handle(funk2_memory_t* this) {
     while (__ptypes_waiting_count < memory_pool_num) {
       sched_yield();
     }
-    if (! gc__is_disabled()) {
-      status ("");
-      status ("**********************************");
-      status ("**** DOING GARBAGE COLLECTION ****");
-      status ("**********************************");
-      status ("");
-      for (index = 0; index < memory_pool_num; index ++) {
-	if (this->pool[index].should_run_gc) {
-	  status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
-	}
+    status ("");
+    status ("**********************************");
+    status ("**** DOING GARBAGE COLLECTION ****");
+    status ("**********************************");
+    status ("");
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (this->pool[index].should_run_gc) {
+	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
       }
-      boolean_t did_something = funk2_memory__garbage_collect_generations_until_did_something(this);
-      if (did_something) {
-	status ("garbage collection did something.");
-      } else {
-	status ("garbage collection did nothing.");
-      }
-      for (index = 0; index < memory_pool_num; index ++) {
-	if (this->pool[index].should_run_gc) {
-	  this->pool[index].should_run_gc = boolean__false;
-	  status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
-	}
-      }
+    }
+    boolean_t did_something = funk2_memory__garbage_collect_generations_until_did_something(this);
+    if (did_something) {
+      status ("garbage collection did something.");
     } else {
-      status ("");
-      status ("***********************************************************");
-      status ("**** should do garbage collection, but gc is disabled. ****");
-      status ("***********************************************************");
-      status ("");
+      status ("garbage collection did nothing.");
+    }
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (this->pool[index].should_run_gc) {
+	this->pool[index].should_run_gc = boolean__false;
+	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+      }
     }
     this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     __ptypes_please_wait_for_gc_to_take_place = boolean__false;

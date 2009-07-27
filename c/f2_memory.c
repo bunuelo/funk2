@@ -211,15 +211,6 @@ void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
   }
 }
 
-void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
-  }
-  funk2_memory__touch_all_symbols(this);
-  funk2_memory__touch_all_protected_alloc_arrays(this);
-}
-
 void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num) {
   if (pool_index < 0 || pool_index >= memory_pool_num) {
     error(nil, "pool_index out of range.");
@@ -243,21 +234,32 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
     funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
   }
 #endif
+  // can be parallelized
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(this->pool[pool_index]), generation_num);
   }
   
   // this is where we touch everything we want to keep!
-  funk2_memory__touch_everything(this, generation_num);
+  {
+    // can be parallelized
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
+    }
+    funk2_memory__touch_all_symbols(this);
+    funk2_memory__touch_all_protected_alloc_arrays(this);
+  }
   
   boolean_t did_something = 0;
+  // can be parallelized
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(this->pool[pool_index]), generation_num);
     this->pool[pool_index].total_allocated_memory_since_last_gc = 0;
   }
+#ifdef DEBUG_MEMORY
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
   }
+#endif // DEBUG_MEMORY
   status("...done collecting garbage.");
   return did_something;
 }

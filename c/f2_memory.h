@@ -125,7 +125,6 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
 ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 void      funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this);
-void      funk2_memory__touch_everything(funk2_memory_t* this, int generation_num);
 void      funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num);
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);

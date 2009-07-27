@@ -124,7 +124,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
     if (block && (! block->block.gc_touch)) {
       funk2_gc_touch_circle_buffer__touch_f2ptr(this, block->cause);
       switch(block->ptype) {
-      case ptype_free_memory:  error(nil, "block of type free_memory (%lu bytes) in garbage collector.", (unsigned long)funk2_memblock__byte_num((funk2_memblock_t*)block));
+      case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
       case ptype_integer:      block->block.gc_touch = 1; break;
       case ptype_double:       block->block.gc_touch = 1; break;
       case ptype_float:        block->block.gc_touch = 1; break;

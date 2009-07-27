@@ -342,6 +342,8 @@ void f2__thought_process__reinitialize_globalvars() {
 }
 
 void f2__thought_process__initialize() {
+  funk2_module_registration__add(&(__funk2.memory.module_registration), "thought_process", "", &f2__thought_process__reinitialize_globalvars);
+  
   pause_gc();
   f2__thought_process__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_thought_process_c__cause__new(initial_cause(), nil, nil);

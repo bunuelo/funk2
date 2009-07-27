@@ -22,6 +22,8 @@
 #ifndef F2__MEMORYPOOL__H
 #define F2__MEMORYPOOL__H
 
+#include "f2_gc_touch_circle_buffer.h"
+
 typedef struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;
   boolean_t                      should_run_gc; // if disabled when needed more memory (and allocated more) then True

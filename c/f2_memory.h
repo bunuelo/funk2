@@ -29,7 +29,6 @@
 #include "f2_memblock.h"
 #include "f2_ptype.h"
 #include "f2_memorypool.h"
-#include "f2_gc_touch_circle_buffer.h"
 #include "f2_processor_mutex.h"
 
 //#define DEBUG_MEMORY 3

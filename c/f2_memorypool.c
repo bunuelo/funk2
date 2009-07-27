@@ -368,7 +368,7 @@ void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this,
 }
 
 void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num) {
-  status("funk2_memorypool__touch_all_referenced_from_pool_generation: generation_num=%d.", generation_num);
+  status("funk2_memorypool__touch_all_referenced_from_pool_generation: generation_num=%d.", touch_generation_num);
   funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
   funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   while(iter < end_of_blocks) {

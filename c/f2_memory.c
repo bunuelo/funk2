@@ -35,7 +35,6 @@ void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, 
 
 void funk2_memorypool__init(funk2_memorypool_t* pool) {
   funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex));
-  pool->disable_gc                           = 0;
   pool->should_run_gc                        = boolean__false;
   pool->should_enlarge_memory_now            = boolean__false;
   pool->total_allocated_memory_since_last_gc = 0;
@@ -556,16 +555,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-
-int gc__is_disabled() {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    if(__funk2.memory.pool[pool_index].disable_gc) {
-      return 1;
-    }
-  }
-  return 0;
-}
 
 // use this after pausing and resuming garbage collection
 //

@@ -22,6 +22,8 @@
 #ifndef F2__MEMBLOCK__H
 #define F2__MEMBLOCK__H
 
+#include "f2_ptype.h"
+
 struct funk2_memblock_s {
   rbt_node_t rbt_node;
   u8         used           : 1;

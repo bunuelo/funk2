@@ -2596,9 +2596,8 @@ void send_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr th
 }
 
 void recv_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, pcs_respond__f2symbol__str_copy_t* packet) {
-  int str__size = funk2_packet__sizeof((funk2_packet_t*)packet) - sizeof(pcs_respond__f2symbol__str_copy_t);
-  str__size;
-  packet_status("recv_packet__respond__f2symbol__str_copy: len=%d str='%s'.", str__size - 1, packet->payload.str);
+  //int str__size = funk2_packet__sizeof((funk2_packet_t*)packet) - sizeof(pcs_respond__f2symbol__str_copy_t);
+  packet_status("recv_packet__respond__f2symbol__str_copy: len=%d str='%s'.", funk2_packet__sizeof((funk2_packet_t*)packet) - sizeof(pcs_respond__f2symbol__str_copy_t) - 1, packet->payload.str);
   f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
   funk2_node_handler__report_thread_response_packet(&(__funk2.node_handler), thread, (funk2_packet_t*)packet);
 }

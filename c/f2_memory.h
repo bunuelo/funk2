@@ -268,8 +268,8 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
 
 void      funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
 void      funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread
-void      funk2_memory__signal_enter_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
-void      funk2_memory__signal_exit_bytecode(funk2_memory_t* this); // memory handling thread should never call this function
+void      funk2_memory__signal_enter_protected_region(funk2_memory_t* this); // memory handling thread should never call this function
+void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this); // memory handling thread should never call this function
 void      funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
 void      funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);

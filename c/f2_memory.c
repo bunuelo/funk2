@@ -559,16 +559,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 // UNPROTECTED-USE MEMORY FUNCTIONS
 
-int funk2_memorypool__try_pause_gc(int pool_index) {
-  int lock_failed = funk2_memorypool__memory_mutex__try_lock(&(__funk2.memory.pool[pool_index]));
-  if (lock_failed == 0) {
-    funk2_memorypool__signal_enter_protected_region(&(__funk2.memory.pool[pool_index]));
-    //__funk2.memory.pool[pool_index].disable_gc ++;
-    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  }
-  return lock_failed;
-}
-
 void raw_pause_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -576,36 +566,17 @@ void raw_pause_gc() {
   }
 }
 
-int raw_try_pause_gc() {
-  int pool_index;
-  int lock_failed = 0;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    lock_failed = pool__try_pause_gc(pool_index);
-    if (lock_failed) {
-      break;
-    }
-  }
-  if (lock_failed) {
-    int resume_pool_index;
-    for (resume_pool_index = 0; resume_pool_index < pool_index; resume_pool_index ++) {
-      pool__resume_gc(resume_pool_index);
-    }
-  }
-  return lock_failed;
-}
-
-void pool__resume_gc (int pool_index) {
-  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
-  funk2_memorypool__signal_exit_protected_region(&(__funk2.memory.pool[pool_index]));
-  //__funk2.memory.pool[pool_index].disable_gc --;
-  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-}
+//void pool__resume_gc (int pool_index) {
+//  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
+//  release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
+//  //__funk2.memory.pool[pool_index].disable_gc --;
+//  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
+//}
 
 void raw_resume_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    pool__resume_gc(pool_index);
+    funk2_memorypool__signal_exit_protected_region(&(__funk2.memory.pool[pool_index]));
   }
 }
 

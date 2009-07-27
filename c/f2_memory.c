@@ -1306,20 +1306,6 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
   }
 }
 
-void funk2_memory__signal_enter_protected_region(funk2_memory_t* this) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__signal_enter_protected_region(&(this->pool[pool_index]));
-  }
-}
-
-void funk2_memory__signal_exit_protected_region(funk2_memory_t* this) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__signal_exit_protected_region(&(this->pool[pool_index]));
-  }
-}
-
 
 
 

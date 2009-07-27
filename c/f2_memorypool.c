@@ -366,3 +366,14 @@ void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this,
   funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), exp);
 }
 
+void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num) {
+  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  while(iter < end_of_blocks) {
+    if (iter->used && iter->generation_num == touch_generation_num) {
+      funk2_memorypool__touch_all_referenced_from_block(this, to_ptr(iter));
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+}
+

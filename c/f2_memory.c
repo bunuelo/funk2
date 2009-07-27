@@ -211,21 +211,6 @@ void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
   }
 }
 
-void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num) {
-  if (pool_index < 0 || pool_index >= memory_pool_num) {
-    error(nil, "pool_index out of range.");
-  }
-  funk2_memorypool_t* pool          = &(this->pool[pool_index]);
-  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(pool)));
-  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
-  while(iter < end_of_blocks) {
-    if (iter->used && iter->generation_num == touch_generation_num) {
-      funk2_memorypool__touch_all_referenced_from_block(&(this->pool[pool_index]), to_ptr(iter));
-    }
-    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
-
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
   int pool_index;
@@ -243,13 +228,13 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   {
     // can be parallelized
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_memory__touch_all_referenced_from_pool_generation(this, pool_index, generation_num);
+      funk2_memorypool__touch_all_referenced_from_pool_generation(&(this->pool[pool_index]), generation_num);
     }
     funk2_memory__touch_all_symbols(this);
     funk2_memory__touch_all_protected_alloc_arrays(this);
   }
   
-  boolean_t did_something = 0;
+  boolean_t did_something = boolean__false;
   // can be parallelized
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(this->pool[pool_index]), generation_num);

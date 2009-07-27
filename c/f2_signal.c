@@ -19,8 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include <signal.h>
-#include "f2_signal.h"
+#include "funk2.h"
 
 boolean_t __received_signal__sigint     = 0;
 boolean_t __received_segmentation_fault = 0;

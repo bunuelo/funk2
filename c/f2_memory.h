@@ -30,6 +30,7 @@
 #include "f2_ptype.h"
 #include "f2_memorypool.h"
 #include "f2_processor_mutex.h"
+#include "f2_user_thread_controller.h"
 
 //#define DEBUG_MEMORY 3
 

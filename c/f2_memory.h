@@ -22,17 +22,17 @@
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
 
-#ifndef F2_MEMORY_TYPEDEF_STRUCTS
-#define F2_MEMORY_TYPEDEF_STRUCTS
-
 #include "f2_dptr.h"
-#include "f2_dynamic_memory.h"
+#include "f2_global.h"
 #include "f2_redblacktree.h"
-#include "f2_processor_mutex.h"
+#include "f2_dynamic_memory.h"
 #include "f2_memblock.h"
 #include "f2_ptype.h"
 #include "f2_memorypool.h"
 #include "f2_gc_touch_circle_buffer.h"
+#include "f2_processor_mutex.h"
+
+//#define DEBUG_MEMORY 3
 
 typedef struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
@@ -44,20 +44,6 @@ typedef struct funk2_memory_s {
   boolean_t                      gc_touch_circle_buffer__initialized;
   funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 } funk2_memory_t;
-
-#endif // F2_MEMORY_TYPEDEF_STRUCTS
-
-//#define DEBUG_MEMORY 3
-
-#include "f2_dptr.h"
-#include "f2_global.h"
-#include "f2_redblacktree.h"
-#include "f2_memory.h"
-#include "f2_dynamic_memory.h"
-#include "f2_memblock.h"
-#include "f2_ptype.h"
-#include "f2_memorypool.h"
-#include "f2_gc_touch_circle_buffer.h"
 
 #define nil ((f2ptr)0)
 

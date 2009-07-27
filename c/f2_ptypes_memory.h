@@ -208,32 +208,6 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 #define __pure__f2chunk__bit64__elt(this, index)              (*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
 #define __pure__f2chunk__bit64__elt__set(this, index, value) ((*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u64)(value))
 
-// dptr struct
-
-struct dptr_s {
-  f2ptr p;
-  f2ptr tracing_on;
-  f2ptr trace;
-  f2ptr imagination_frame;
-} __attribute__((__packed__));
-typedef struct dptr_s dptr_t;
-
-void dptr__init(dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagination_frame);
-
-#define dptr__gf2_p(this)                 ((this)->p)
-#define dptr__gf2_tracing_on(this)        ((this)->tracing_on)
-#define dptr__gf2_trace(this)             ((this)->trace)
-#define dptr__gf2_imagination_frame(this) ((this)->imagination_frame)
-
-#define dptr__p(this)                              dptr__gf2_p(this)
-#define dptr__p__set(this, value)                 (dptr__gf2_p(this) = (value))
-#define dptr__tracing_on(this)                     dptr__gf2_tracing_on(this)
-#define dptr__tracing_on__set(this, value)        (dptr__gf2_tracing_on(this) = (value))
-#define dptr__trace(this)                          dptr__gf2_trace(this)
-#define dptr__trace__set(this, value)             (dptr__gf2_trace(this) = (value))
-#define dptr__imagination_frame(this)              dptr__gf2_imagination_frame(this)
-#define dptr__imagination_frame__set(this, value) (dptr__gf2_imagination_frame(this) = (value))
-
 // simple_array
 
 struct ptype_simple_array_block_s {

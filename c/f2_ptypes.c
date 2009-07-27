@@ -1449,16 +1449,6 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause) {
 }
 
 
-// struct dptr
-
-void dptr__init(dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr trace, f2ptr imagination_frame) {
-  dptr->p                 = p;
-  dptr->tracing_on        = tracing_on;
-  dptr->trace             = trace;
-  dptr->imagination_frame = imagination_frame;
-}
-
-
 // simple_array
 
 f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {

@@ -22,6 +22,7 @@
 #ifndef F2_MEMORY_TYPEDEF_STRUCTS
 #define F2_MEMORY_TYPEDEF_STRUCTS
 
+#include "f2_dptr.h"
 #include "f2_dynamic_memory.h"
 #include "f2_redblacktree.h"
 #include "f2_processor_mutex.h"
@@ -102,7 +103,7 @@ typedef struct funk2_memory_s {
 
 //#define DEBUG_MEMORY 3
 
-#include "f2_global.h"
+#include "f2_dptr.h"
 #include "f2_global.h"
 #include "f2_redblacktree.h"
 #include "f2_memory.h"

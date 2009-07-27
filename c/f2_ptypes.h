@@ -22,6 +22,7 @@
 #ifndef F2__PTYPES__H
 #define F2__PTYPES__H
 
+#include "f2_dptr.h"
 #include "f2_print.h"
 #include "f2_memory.h"
 //#include "f2_memory_protected.h"

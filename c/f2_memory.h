@@ -29,24 +29,6 @@
 #include "f2_memblock.h"
 #include "f2_ptype.h"
 
-typedef enum ptype_e {
-  ptype_free_memory     = 0x40 + 0x0,
-  ptype_newly_allocated = 0x40 + 0x1,
-  ptype_integer         = 0x40 + 0x2,
-  ptype_double          = 0x40 + 0x3,
-  ptype_float           = 0x40 + 0x4,
-  ptype_pointer         = 0x40 + 0x5,
-  ptype_gfunkptr        = 0x40 + 0x6,
-  ptype_mutex           = 0x40 + 0x7,
-  ptype_char            = 0x40 + 0x8,
-  ptype_string          = 0x40 + 0x9,
-  ptype_symbol          = 0x40 + 0xA,
-  ptype_chunk           = 0x40 + 0xB,
-  ptype_simple_array    = 0x40 + 0xC,
-  ptype_traced_array    = 0x40 + 0xD,
-  ptype_larva           = 0x40 + 0xE,
-} ptype_t;
-
 typedef struct funk2_memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;
   boolean_t               should_run_gc; // if disabled when needed more memory (and allocated more) then True

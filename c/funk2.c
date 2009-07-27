@@ -155,13 +155,13 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_primobject_type_handler__add_builtin_primobjects(&(this->primobject_type_handler), cause);
   
   // try to load the default system-wide bootstrap image
-  if (raw__memory_image__load(install__bootstrap_img__filename)) {
+  if (funk2_memory__load_image_from_file(&(__funk2.memory), install__bootstrap_img__filename)) {
     // try to load the local bootstrap image
-    if (raw__memory_image__load(compile__bootstrap_img__filename)) {
+    if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_img__filename)) {
       // if we can't load the default system-wide bootstrap image or a local bootstrap image, then we are in the middle of compiling and depending on compiling progress we can load this intermediate image.
-      if (raw__memory_image__load(compile__bootstrap_repl_img__filename)) {
+      if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_repl_img__filename)) {
 	// try to load the other bootstrap image
-	if (raw__memory_image__load(other__bootstrap_img__filename)) {
+	if (funk2_memory__load_image_from_file(&(__funk2.memory), other__bootstrap_img__filename)) {
 	  status("warning: couldn't load \"%s\" or \"%s\" or \"%s\".", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename, other__bootstrap_img__filename);
 	  status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
 	} else {

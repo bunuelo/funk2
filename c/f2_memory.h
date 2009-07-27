@@ -35,13 +35,12 @@
 //#define DEBUG_MEMORY 3
 
 typedef struct funk2_memory_s {
-  funk2_memorypool_t             pool[memory_pool_num];
-  ptr                            global_environment_ptr;
-  f2ptr                          global_environment_f2ptr;
-  u64                            last_garbage_collect_nanoseconds_since_1970;
-  pthread_t                      memory_handling_thread;
-  boolean_t                      bootstrapping_mode;
-  funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
+  funk2_memorypool_t pool[memory_pool_num];
+  ptr                global_environment_ptr;
+  f2ptr              global_environment_f2ptr;
+  u64                last_garbage_collect_nanoseconds_since_1970;
+  pthread_t          memory_handling_thread;
+  boolean_t          bootstrapping_mode;
 } funk2_memory_t;
 
 #define nil ((f2ptr)0)

@@ -50,9 +50,13 @@ void funk2_memorypool__init(funk2_memorypool_t* pool) {
     pool->protected_alloc_array[i] = nil;
   }
   pool->protected_alloc_array__reentrance_count = 0;
+  
+  funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
+  funk2_gc_touch_circle_buffer__destroy(&(this->gc_touch_circle_buffer));
+  
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
 }
 
@@ -353,3 +357,12 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
   // debug_memory_test(pool_index, 3); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
   return max_size_block;
 }
+
+void funk2_memorypool__touch_all_referenced_from_block(funk2_memorypool_t* this, ptr block) {
+  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), to_ptr(iter));
+}
+
+void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
+  funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), exp);
+}
+

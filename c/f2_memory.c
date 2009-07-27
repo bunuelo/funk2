@@ -44,8 +44,6 @@ void funk2_memory__init(funk2_memory_t* this) {
   
   this->memory_handling_thread = pthread_self();
   this->bootstrapping_mode     = boolean__true;
-  
-  funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {
@@ -209,7 +207,7 @@ void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     u64 i;
     for (i = 0; i < this->pool[pool_index].protected_alloc_array__used_num; i ++) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), this->pool[pool_index].protected_alloc_array[i]);
+      funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), this->pool[pool_index].protected_alloc_array[i]);
     }
   }
 }
@@ -232,7 +230,7 @@ void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* thi
   funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
   while(iter < end_of_blocks) {
     if (iter->used && iter->generation_num == touch_generation_num) {
-      funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), to_ptr(iter));
+      funk2_memorypool__touch_all_referenced_from_block(&(this->pool[pool_index]), to_ptr(iter));
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }

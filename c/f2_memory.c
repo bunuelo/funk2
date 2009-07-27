@@ -201,16 +201,6 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   return p;
 }
 
-void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    u64 i;
-    for (i = 0; i < this->pool[pool_index].protected_alloc_array__used_num; i ++) {
-      funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), this->pool[pool_index].protected_alloc_array[i]);
-    }
-  }
-}
-
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
   //int pool_index;
@@ -219,30 +209,23 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
     funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
   }
 #endif
-  // can be parallelized
+  // parallelized
   funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(&(this->user_thread_controller), generation_num);
-  //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-  //  funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(this->pool[pool_index]), generation_num);
-  //}
   
   // this is where we touch everything we want to keep!
   {
-    // can be parallelized
+    // parallelized
     funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
-    //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    //  funk2_memorypool__touch_all_referenced_from_pool_generation(&(this->pool[pool_index]), generation_num);
-    //}
+    // could be parallelized
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__touch_all_protected_alloc_arrays(&(this->pool[pool_index]));
+    }
     funk2_memory__touch_all_symbols(this);
-    funk2_memory__touch_all_protected_alloc_arrays(this);
   }
   
-  // can be parallelized
+  // parallelized
   boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
-  //boolean_t did_something = boolean__false;
-  //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-  //  did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(this->pool[pool_index]), generation_num);
-  //  this->pool[pool_index].total_allocated_memory_since_last_gc = 0;
-  //}
 #ifdef DEBUG_MEMORY
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);

@@ -213,7 +213,7 @@ void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this) {
 
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
-  int pool_index;
+  //int pool_index;
 #ifdef DEBUG_MEMORY
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);

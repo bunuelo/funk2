@@ -19,6 +19,9 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__MEMORY__H
+#define F2__MEMORY__H
+
 #ifndef F2_MEMORY_TYPEDEF_STRUCTS
 #define F2_MEMORY_TYPEDEF_STRUCTS
 
@@ -43,9 +46,6 @@ typedef struct funk2_memory_s {
 } funk2_memory_t;
 
 #endif // F2_MEMORY_TYPEDEF_STRUCTS
-
-#ifndef F2__MEMORY__H
-#define F2__MEMORY__H
 
 //#define DEBUG_MEMORY 3
 

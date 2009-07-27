@@ -145,7 +145,7 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
 // integer
 
 f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
-  f2ptr integer_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_integer_block_t));
+  f2ptr integer_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_integer_block_t));
   ptype_integer_block_t* integer_block = (ptype_integer_block_t*)from_ptr(raw__f2ptr_to_ptr(integer_f2ptr));
   debug__assert(integer_block, nil, "block is nil.");
   integer_block->ptype.ptype = ptype_integer;
@@ -216,7 +216,7 @@ f2ptr f2integer__primobject_type__new(f2ptr cause) {
 // double
 
 f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
-  f2ptr double_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_double_block_t));
+  f2ptr double_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_double_block_t));
   ptype_double_block_t* double_block = (ptype_double_block_t*)from_ptr(raw__f2ptr_to_ptr(double_f2ptr));
   debug__assert(double_block, nil, "block is nil.");
   double_block->ptype.ptype = ptype_double;
@@ -291,7 +291,7 @@ f2ptr f2double__primobject_type__new(f2ptr cause) {
 // float
 
 f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
-  f2ptr float_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_float_block_t));
+  f2ptr float_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_float_block_t));
   ptype_float_block_t* float_block = (ptype_float_block_t*)from_ptr(raw__f2ptr_to_ptr(float_f2ptr));
   debug__assert(float_block, nil, "block is nil.");
   float_block->ptype.ptype = ptype_float;
@@ -366,7 +366,7 @@ f2ptr f2float__primobject_type__new(f2ptr cause) {
 // pointer
 
 f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
-  f2ptr pointer_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_pointer_block_t));
+  f2ptr pointer_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_pointer_block_t));
   ptype_pointer_block_t* pointer_block = (ptype_pointer_block_t*)from_ptr(raw__f2ptr_to_ptr(pointer_f2ptr));
   debug__assert(pointer_block, nil, "block is nil.");
   pointer_block->ptype.ptype = ptype_pointer;
@@ -441,7 +441,7 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause) {
 // gfunkptr
 
 f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_computer_id, pool_index_t gf2_pool_index, pool_address_t gf2_pool_address) {
-  f2ptr gfunkptr_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_gfunkptr_block_t));
+  f2ptr gfunkptr_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_gfunkptr_block_t));
   ptype_gfunkptr_block_t* gfunkptr_block = (ptype_gfunkptr_block_t*)from_ptr(raw__f2ptr_to_ptr(gfunkptr_f2ptr));
   debug__assert(gfunkptr_block, nil, "block is nil.");
   gfunkptr_block->ptype.ptype = ptype_gfunkptr;
@@ -575,7 +575,7 @@ f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
 // mutex
 
 f2ptr ptype_mutex__new(int pool_index, f2ptr cause) {
-  f2ptr mutex_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_mutex_block_t));
+  f2ptr mutex_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_mutex_block_t));
   ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)from_ptr(raw__f2ptr_to_ptr(mutex_f2ptr));
   debug__assert(mutex_block, nil, "block is nil.");
   mutex_block->ptype.ptype = ptype_mutex;
@@ -713,7 +713,7 @@ f2ptr f2__mutexp(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutexp(x, cause)
 // char
 
 f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
-  f2ptr char_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_char_block_t));
+  f2ptr char_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_char_block_t));
   ptype_char_block_t* char_block = (ptype_char_block_t*)from_ptr(raw__f2ptr_to_ptr(char_f2ptr));
   debug__assert(char_block, nil, "block is nil.");
   char_block->ptype.ptype = ptype_char;
@@ -785,7 +785,7 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
 // string
 
 f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
-  f2ptr string_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_string_block_t) + length + 1);
+  f2ptr string_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_string_block_t) + length + 1);
   ptype_string_block_t* string_block = (ptype_string_block_t*)from_ptr(raw__f2ptr_to_ptr(string_f2ptr));
   debug__assert(string_block, nil, "block is nil.");
   string_block->ptype.ptype = ptype_string;
@@ -995,7 +995,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   }
   
   // otherwise, create a new symbol
-  f2ptr symbol_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_symbol_block_t) + length + 1);
+  f2ptr symbol_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_symbol_block_t) + length + 1);
   symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
   debug__assert(symbol_block, nil, "block is nil.");
   symbol_block->ptype.ptype = ptype_symbol;
@@ -1167,7 +1167,7 @@ f2ptr f2symbol__primobject_type__new(f2ptr cause) {
 
 f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   u64 data_byte_num = (sizeof(u8) * length);
-  f2ptr chunk_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_chunk_block_t) + data_byte_num);
+  f2ptr chunk_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_chunk_block_t) + data_byte_num);
   ptype_chunk_block_t* chunk_block = (ptype_chunk_block_t*)from_ptr(raw__f2ptr_to_ptr(chunk_f2ptr));
   debug__assert(chunk_block, nil, "block is nil.");
   chunk_block->ptype.ptype = ptype_chunk;
@@ -1181,7 +1181,7 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
 f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
   ptype_chunk_block_t* init_chunk_block = (ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(init_chunk)));
   u64 data_byte_num = (sizeof(u8) * init_chunk_block->length);
-  f2ptr chunk_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_chunk_block_t));
+  f2ptr chunk_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_chunk_block_t));
   ptype_chunk_block_t* chunk_block = (ptype_chunk_block_t*)from_ptr(raw__f2ptr_to_ptr(chunk_f2ptr));
   debug__assert(chunk_block, nil, "block is nil.");
   chunk_block->ptype.ptype = ptype_chunk;
@@ -1463,7 +1463,7 @@ void dptr__init(dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr trace, f2ptr imag
 
 f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {
   u64 data_byte_num = (sizeof(f2ptr) * length);
-  f2ptr simple_array_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_simple_array_block_t) + data_byte_num);
+  f2ptr simple_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_simple_array_block_t) + data_byte_num);
   ptype_simple_array_block_t* simple_array_block = (ptype_simple_array_block_t*)from_ptr(raw__f2ptr_to_ptr(simple_array_f2ptr));
   debug__assert(simple_array_block, nil, "block is nil.");
   //debug__assert(!cause || valid_funk2_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_funk2_memblock_ptr(cause) failed");
@@ -1623,7 +1623,7 @@ f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
 f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_ptr) {
   boolean_t tracing_on = raw__cause__is_traced(cause, cause);
   u64 data_byte_num = (sizeof(dptr_t) * length);
-  f2ptr traced_array_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
+  f2ptr traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   traced_array_block->ptype.ptype = ptype_traced_array;
@@ -1644,7 +1644,7 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
 f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
   boolean_t tracing_on = raw__cause__is_traced(cause, cause);
   u64 data_byte_num = (sizeof(dptr_t) * length);
-  f2ptr traced_array_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
+  f2ptr traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   traced_array_block->ptype.ptype = ptype_traced_array;
@@ -2012,7 +2012,7 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
 // larva
 
 f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 type) {
-  f2ptr larva_f2ptr = pool__funk2_memblock_f2ptr__new(pool_index, sizeof(ptype_larva_block_t));
+  f2ptr larva_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_larva_block_t));
   ptype_larva_block_t* larva_block = (ptype_larva_block_t*)from_ptr(raw__f2ptr_to_ptr(larva_f2ptr));
   debug__assert(larva_block, nil, "block is nil.");
   larva_block->ptype.ptype = ptype_larva;

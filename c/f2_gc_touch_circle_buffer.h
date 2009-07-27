@@ -37,6 +37,7 @@ typedef struct funk2_gc_touch_circle_buffer_s {
 // funk2_gc_touch_circle_buffer
 
 void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this);
+void funk2_gc_touch_circle_buffer__destroy(funk2_gc_touch_circle_buffer_t* this);
 void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message);
 void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* this);
 void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buffer_t* this);

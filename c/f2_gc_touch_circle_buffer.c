@@ -31,6 +31,10 @@ void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this) {
   this->end_index   = NULL;
 }
 
+void funk2_gc_touch_circle_buffer__destroy(funk2_gc_touch_circle_buffer_t* this) {
+  free(this->start);
+}
+
 void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message) {
   ptr* iter = (ptr*)this->start;
   printf("\n%16s: {", message);

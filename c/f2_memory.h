@@ -160,7 +160,7 @@ int raw__memory_image__load(char* filename);
 void f2__memory__initialize();
 void f2__memory__destroy();
 
-//#define DEBUG_MEMORY 3
+#define DEBUG_MEMORY 3
 
 #include "f2_global.h"
 #include "f2_redblacktree.h"

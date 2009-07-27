@@ -556,22 +556,22 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-boolean_t pool__should_run_gc(int pool_index) {
-  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  boolean_t should_gc = __funk2.memory.pool[pool_index].should_run_gc;
-  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  return should_gc;
-}
+//boolean_t pool__should_run_gc(int pool_index) {
+//  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
+//  boolean_t should_gc = __funk2.memory.pool[pool_index].should_run_gc;
+//  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
+//  return should_gc;
+//}
 
-boolean_t should_run_gc() {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    if (pool__should_run_gc(pool_index)) {
-      return 1;
-    }
-  }
-  return 0;
-}
+//boolean_t should_run_gc() {
+//  int pool_index;
+//  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+//    if (pool__should_run_gc(pool_index)) {
+//      return 1;
+//    }
+//  }
+//  return 0;
+//}
 
 void global_environment__set(f2ptr global_environment) {
   int pool_index;

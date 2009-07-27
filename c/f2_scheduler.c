@@ -43,11 +43,9 @@ void f2__processor__add_active_thread__thread_unsafe(f2ptr cause, f2ptr this, f2
   }
   //f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   //f2mutex__lock(active_threads_mutex, cause);
-  f2ptr active_threads       = f2processor__active_threads(this, cause);
-  pool__pause_gc(this_processor_thread__pool_index());
-  f2ptr new_cons             = f2cons__new(cause, thread, active_threads);
-  f2processor__active_threads__set(this, cause, new_cons);
-  pool__resume_gc(this_processor_thread__pool_index());
+  funk2_memory__signal_enter_protected_region(&(__funk2.memory));
+  f2processor__active_threads__set(this, cause, f2cons__new(cause, thread, f2processor__active_threads(this, cause)));
+  funk2_memory__signal_exit_protected_region(&(__funk2.memory));
   //f2mutex__unlock(active_threads_mutex, cause);
 }
 

@@ -578,7 +578,7 @@ int pool__try_pause_gc (int pool_index) {
 void raw_pause_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    pool__pause_gc(&(__funk2.memory.pool[pool_index]));
+    funk2_memorypool__pause_gc(&(__funk2.memory.pool[pool_index]));
   }
 }
 

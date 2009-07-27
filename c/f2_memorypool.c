@@ -23,33 +23,33 @@
 
 // funk2_memorypool
 
-void funk2_memorypool__init(funk2_memorypool_t* pool) {
-  funk2_processor_mutex__init(&(pool->global_memory_allocate_mutex));
-  pool->should_run_gc                        = boolean__false;
-  pool->should_enlarge_memory_now            = boolean__false;
-  pool->total_allocated_memory_since_last_gc = 0;
-  pool->next_unique_block_id                 = 0;
-  pool->total_global_memory = sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY;
-  f2dynamicmemory__init_and_alloc(&(pool->dynamic_memory), sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY);
+void funk2_memorypool__init(funk2_memorypool_t* this) {
+  funk2_processor_mutex__init(&(this->global_memory_allocate_mutex));
+  this->should_run_gc                        = boolean__false;
+  this->should_enlarge_memory_now            = boolean__false;
+  this->total_allocated_memory_since_last_gc = 0;
+  this->next_unique_block_id                 = 0;
+  this->total_global_memory = sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY;
+  f2dynamicmemory__init_and_alloc(&(this->dynamic_memory), sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY);
   
-  pool->total_free_memory = pool->total_global_memory;
+  this->total_free_memory = this->total_global_memory;
   
-  pool->global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(pool) - 1);
-  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(pool));
-  funk2_memblock__init(block, pool->total_global_memory, 0, 0);
+  this->global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(this) - 1);
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(this));
+  funk2_memblock__init(block, this->total_global_memory, 0, 0);
   
-  rbt_tree__init(&(pool->free_memory_tree), NULL);
-  rbt_tree__insert(&(pool->free_memory_tree), (rbt_node_t*)block);
-  rbt_tree__init(&(pool->used_memory_tree), NULL);
+  rbt_tree__init(&(this->free_memory_tree), NULL);
+  rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
+  rbt_tree__init(&(this->used_memory_tree), NULL);
   
-  pool->protected_alloc_array__used_num = 0;
-  pool->protected_alloc_array__length   = 1024;
+  this->protected_alloc_array__used_num = 0;
+  this->protected_alloc_array__length   = 1024;
   u64 i;
-  pool->protected_alloc_array = (f2ptr*)f2__malloc(sizeof(f2ptr) * pool->protected_alloc_array__length);
-  for (i = 0; i < pool->protected_alloc_array__length; i ++) {
-    pool->protected_alloc_array[i] = nil;
+  this->protected_alloc_array = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->protected_alloc_array__length);
+  for (i = 0; i < this->protected_alloc_array__length; i ++) {
+    this->protected_alloc_array[i] = nil;
   }
-  pool->protected_alloc_array__reentrance_count = 0;
+  this->protected_alloc_array__reentrance_count = 0;
   
   funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
 }

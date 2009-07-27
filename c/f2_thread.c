@@ -93,7 +93,7 @@ f2ptr __thread__environment_critics__symbol = -1;
 
 boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
   boolean_t bytecode_is_yield = boolean__false;
-  funk2_memory__signal_enter_bytecode(&(__funk2.memory));
+  funk2_memory__signal_enter_protected_region(&(__funk2.memory));
   {  
     debug__assert(raw__thread__is_type(nil, thread), nil, "thread type assertion failed.");
     debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "thread type assertion failed.");
@@ -106,7 +106,7 @@ boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread) {
     
     bytecode_is_yield = f2__thread__execute_bytecode(cause, thread, bytecode);
   }
-  funk2_memory__signal_exit_bytecode(&(__funk2.memory));
+  funk2_memory__signal_exit_protected_region(&(__funk2.memory));
   return bytecode_is_yield;
 }
 

@@ -137,6 +137,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
 f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
 void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
 boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
+void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
 
 // **
 

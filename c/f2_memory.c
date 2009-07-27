@@ -626,7 +626,10 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   return retval;
 }
 
-
+void funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), exp);
+}
 
 // **
 

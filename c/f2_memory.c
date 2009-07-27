@@ -556,24 +556,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-// use this after pausing and resuming garbage collection
-//
-// bug: pool__try_gc has thread lock conditions with find_or_create_free_splittable_funk2_memblock_and_unfree.
-//
-boolean_t pool__try_gc(int pool_index) {
-  u8 result = 0;
-  return result;
-}
-
-boolean_t try_gc() {
-  boolean_t did_something = 0;
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    did_something |= pool__try_gc(pool_index);
-  }
-  return did_something;
-}
-
 boolean_t pool__should_run_gc(int pool_index) {
   funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
   boolean_t should_gc = __funk2.memory.pool[pool_index].should_run_gc;

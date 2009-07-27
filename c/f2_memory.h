@@ -138,7 +138,6 @@ boolean_t pool__should_run_gc(int pool_index);
 #define pause_gc()  funk2_memory__signal_enter_protected_region(&(__funk2.memory))
 #define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))
 
-boolean_t try_gc();
 boolean_t should_run_gc();
 int       gc__is_disabled();
 

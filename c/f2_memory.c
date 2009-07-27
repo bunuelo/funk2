@@ -220,7 +220,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   }
 #endif
   // can be parallelized
-  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(&(__funk2.user_thread_controller), generation_num);
+  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(&(this->user_thread_controller), generation_num);
   //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
   //  funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(this->pool[pool_index]), generation_num);
   //}
@@ -228,7 +228,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   // this is where we touch everything we want to keep!
   {
     // can be parallelized
-    funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(__funk2.user_thread_controller), generation_num);
+    funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
     //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     //  funk2_memorypool__touch_all_referenced_from_pool_generation(&(this->pool[pool_index]), generation_num);
     //}
@@ -237,7 +237,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   }
   
   // can be parallelized
-  boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(__funk2.user_thread_controller), generation_num);
+  boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
   //boolean_t did_something = boolean__false;
   //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
   //  did_something |= funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(this->pool[pool_index]), generation_num);

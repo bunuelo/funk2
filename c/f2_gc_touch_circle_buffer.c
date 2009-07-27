@@ -124,42 +124,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
     if (block && (! block->block.gc_touch)) {
       funk2_gc_touch_circle_buffer__touch_f2ptr(this, block->cause);
       switch(block->ptype) {
-      case ptype_free_memory:
-	{
-	  char str[1024];
-	  sprintf(str,
-		  "\nblock of type free_memory (%lu bytes) in garbage collector."
-		  "\n  FYI:"
-		  "\n    sizeof(integer_block)      = %lu"
-		  "\n    sizeof(double_block)       = %lu"
-		  "\n    sizeof(float_block)        = %lu"
-		  "\n    sizeof(pointer_block)      = %lu"
-		  "\n    sizeof(gfunkptr_block)     = %lu"
-		  "\n    sizeof(mutex_block)        = %lu"
-		  "\n    sizeof(char_block)         = %lu"
-		  "\n    sizeof(string_block)       = %lu"
-		  "\n    sizeof(symbol_block)       = %lu"
-		  "\n    sizeof(chunk_block)        = %lu"
-		  "\n    sizeof(simple_array_block) = %lu"
-		  "\n    sizeof(array_block)        = %lu"
-		  "\n    sizeof(larva_block)        = %lu",
-		  (unsigned long)funk2_memblock__byte_num((funk2_memblock_t*)block),
-		  (unsigned long)sizeof(ptype_integer_block_t),
-		  (unsigned long)sizeof(ptype_double_block_t),
-		  (unsigned long)sizeof(ptype_float_block_t),
-		  (unsigned long)sizeof(ptype_pointer_block_t),
-		  (unsigned long)sizeof(ptype_gfunkptr_block_t),
-		  (unsigned long)sizeof(ptype_mutex_block_t),
-		  (unsigned long)sizeof(ptype_char_block_t),
-		  (unsigned long)sizeof(ptype_string_block_t),
-		  (unsigned long)sizeof(ptype_symbol_block_t),
-		  (unsigned long)sizeof(ptype_chunk_block_t),
-		  (unsigned long)sizeof(ptype_simple_array_block_t),
-		  (unsigned long)sizeof(ptype_traced_array_block_t),
-		  (unsigned long)sizeof(ptype_larva_block_t));
-	  error(nil, str);
-	}
-	break;
+      case ptype_free_memory:  error(nil "block of type free_memory (%lu bytes) in garbage collector.", (unsigned long)funk2_memblock__byte_num((funk2_memblock_t*)block));
       case ptype_integer:      block->block.gc_touch = 1; break;
       case ptype_double:       block->block.gc_touch = 1; break;
       case ptype_float:        block->block.gc_touch = 1; break;
@@ -205,3 +170,4 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
   if (exp_block->block.gc_touch) {return;}
   funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(this, to_ptr(exp_block));
 }
+

@@ -41,7 +41,6 @@ typedef struct funk2_memory_s {
   u64                            last_garbage_collect_nanoseconds_since_1970;
   pthread_t                      memory_handling_thread;
   boolean_t                      bootstrapping_mode;
-  boolean_t                      gc_touch_circle_buffer__initialized;
   funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 } funk2_memory_t;
 

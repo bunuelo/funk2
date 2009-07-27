@@ -557,25 +557,12 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-f2ptr funk2_memblock_f2ptr__new(f2size_t byte_num) {
-  int pool_index;
-  while (1) {
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(&(__funk2.memory), pool_index, byte_num);
-      if (funk2_memblock_f2ptr) {
-	return funk2_memblock_f2ptr;
-      }
-    }
-    sched_yield();
-  }
-}
-
 funk2_memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num) {
   return (funk2_memblock_t*)from_ptr(f2ptr_to_ptr(funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, byte_num)));
 }
 
 funk2_memblock_t* funk2_memblock__new(f2size_t byte_num) {
-  return (funk2_memblock_t*)from_ptr(f2ptr_to_ptr(funk2_memblock_f2ptr__new(byte_num)));
+  return (funk2_memblock_t*)from_ptr(f2ptr_to_ptr(funk2_memory__funk2_memblock_f2ptr__new(&(__funk2.memory), byte_num)));
 }
 
 // UNPROTECTED-USE MEMORY FUNCTIONS
@@ -1376,6 +1363,19 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, in
     f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(this, pool_index, byte_num);
     if (funk2_memblock_f2ptr) {
       return funk2_memblock_f2ptr;
+    }
+    sched_yield();
+  }
+}
+
+f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num) {
+  int pool_index;
+  while (1) {
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(this, pool_index, byte_num);
+      if (funk2_memblock_f2ptr) {
+	return funk2_memblock_f2ptr;
+      }
     }
     sched_yield();
   }

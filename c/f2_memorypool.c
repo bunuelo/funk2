@@ -250,6 +250,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
 }
 
 void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num) {
+  status("funk2_memorypool__clear_all_gc_touch_flags_before_generation: generation_num=%d.", generation_num);
   funk2_memorypool__debug_memory_test(this, 3);
   rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
   while (iter) {
@@ -302,7 +303,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 }
 
 u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
-  status("freeing all untouched blocks for pool generation %d.", generation_num);
+  status("funk2_memorypool__free_all_gc_untouched_blocks_from_generation: generation_num=%d.", generation_num);
   funk2_memorypool__debug_memory_test(this, 1);
   u8 did_something = 0;
   rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
@@ -367,6 +368,7 @@ void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this,
 }
 
 void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num) {
+  status("funk2_memorypool__touch_all_referenced_from_pool_generation: generation_num=%d.", generation_num);
   funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
   funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   while(iter < end_of_blocks) {

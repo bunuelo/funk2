@@ -558,12 +558,9 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 // note that byte_num must be at least sizeof(u8) for ptype! because of type checking in garbage collection
-f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
-  //if ((! __funk2.memory.bootstrapping_mode) && (pthread_self() == __funk2.memory.memory_handling_thread)) {
-  //  status("warning: memory handling thread trying to allocate %d bytes from pool %d.", byte_num, pool_index);
-  //}
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
-  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(&(__funk2.memory), pool_index, byte_num));
+f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
+  funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 3);
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(this, pool_index, byte_num));
 #ifdef DEBUG_MEMORY
   if (block == NULL) {
     status("shouldn't ever get a NULL pointer here.");
@@ -575,20 +572,20 @@ f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
     funk2_memblock__init(new_block, new_block__byte_num, 0, 0);
     
-    funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), new_block);
+    funk2_memorypool__link_funk2_memblock_to_freelist(&(this->pool[pool_index]), new_block);
     
     funk2_memblock__byte_num(block) = byte_num;
   }
   
-  __funk2.memory.pool[pool_index].total_free_memory                    -= funk2_memblock__byte_num(block);
-  __funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc += funk2_memblock__byte_num(block);
-  //if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= __funk2.memory.pool[pool_index].total_free_memory) {
-  //  __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
-  //}
-  rbt_tree__insert(&(__funk2.memory.pool[pool_index].used_memory_tree), (rbt_node_t*)block);
-  block->used        = 1;
+  this->pool[pool_index].total_free_memory                    -= funk2_memblock__byte_num(block);
+  this->pool[pool_index].total_allocated_memory_since_last_gc += funk2_memblock__byte_num(block);
+  if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= __funk2.memory.pool[pool_index].total_free_memory) {
+    __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
+  }
+  rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
+  block->used = 1;
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
-  funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 3);
+  funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 3);
 #ifdef DEBUG_MEMORY
   {
     ptr block_ptr = to_ptr(block);
@@ -597,7 +594,7 @@ f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
       status("pool_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
       status("  pool_index = " pool_index__fstr, (pool_index_t)pool_index);
       status("  block_ptr  = " ptr__fstr,        (ptr)block_ptr);
-      funk2_memory__print_gc_stats(&(__funk2.memory));
+      funk2_memory__print_gc_stats(this);
       error(nil, "pool_address is out of range.");
     }
   }
@@ -608,32 +605,32 @@ f2ptr pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num) {
     u64 check_computer_id  = __f2ptr__computer_id(block_f2ptr);
     if (check_computer_id != 0) {
       status("[ERROR] computer_id must be zero for a local memory allocation.");
-      funk2_memory__print_gc_stats(&(__funk2.memory));
+      funk2_memory__print_gc_stats(this);
       error(nil, "computer_id must be zero for a local memory allocation.");
     }
     u64 check_pool_index   = __f2ptr__pool_index(block_f2ptr);
     if (check_pool_index > f2ptr__pool_index__max_value) {
       status("[ERROR] pool_index is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_index, f2ptr__pool_index__max_value);
-      funk2_memory__print_gc_stats(&(__funk2.memory));
+      funk2_memory__print_gc_stats(this);
       error(nil, "pool_index is out of range.");
     }
     u64 check_pool_address = __f2ptr__pool_address(block_f2ptr);
     if (check_pool_address > f2ptr__pool_address__max_value) {
       status("[ERROR] pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
-      funk2_memory__print_gc_stats(&(__funk2.memory));
+      funk2_memory__print_gc_stats(this);
       error(nil, "pool_address is out of range.");
     }
   }
 #endif
   if (block_f2ptr) {
-    funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[pool_index]), block_f2ptr);
+    funk2_memorypool__add_protected_alloc_f2ptr(&(this->pool[pool_index]), block_f2ptr);
   }
   return block_f2ptr;
 }
 
 f2ptr pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num) {
   while (1) {
-    f2ptr funk2_memblock_f2ptr = pool__funk2_memblock_f2ptr__try_new(pool_index, byte_num);
+    f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(&(__funk2.memory), pool_index, byte_num);
     if (funk2_memblock_f2ptr) {
       return funk2_memblock_f2ptr;
     }
@@ -645,7 +642,7 @@ f2ptr funk2_memblock_f2ptr__new(f2size_t byte_num) {
   int pool_index;
   while (1) {
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      f2ptr funk2_memblock_f2ptr = pool__funk2_memblock_f2ptr__try_new(pool_index, byte_num);
+      f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(&(__funk2.memory), pool_index, byte_num);
       if (funk2_memblock_f2ptr) {
 	return funk2_memblock_f2ptr;
       }

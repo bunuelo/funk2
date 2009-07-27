@@ -274,6 +274,6 @@ void      funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr glob
 f2ptr     funk2_memory__global_environment(funk2_memory_t* this);
 
 #define global_environment()       funk2_memory__global_environment(&(__funk2.memory))
-#define global_environment__set(x) funk2_memory__global_environment(&(__funk2.memory), x)
+#define global_environment__set(x) funk2_memory__global_environment__set(&(__funk2.memory), x)
 
 #endif // F2__MEMORY__H

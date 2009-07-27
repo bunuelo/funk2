@@ -77,9 +77,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
     }
   }
   if (should_enlarge_memory_now) {
-    while (__ptypes_waiting_count < memory_pool_num) {
-      sched_yield();
-    }
+    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(this->user_thread_controller));
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_enlarge_memory_now) {
 	funk2_memorypool__change_total_memory_available(&(this->pool[index]), this->pool[index].total_global_memory + (this->pool[index].total_global_memory >> 3) + this->pool[index].should_enlarge_memory_now__need_at_least_byte_num);
@@ -87,7 +85,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
 	this->pool[index].should_enlarge_memory_now                         = boolean__false;
       }
     }
-    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+    this->user_thread_controller.please_wait = boolean__false;
   }
   if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
     status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
@@ -118,7 +116,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
       }
     }
     this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-    __ptypes_please_wait_for_gc_to_take_place = boolean__false;
+    this->user_thread_controller.please_wait = boolean__false;
   }
 }
 

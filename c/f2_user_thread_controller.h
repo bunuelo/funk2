@@ -30,6 +30,7 @@ typedef struct funk2_user_thread_controller_s {
 
 void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this);
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this);
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this);
 void funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_controller_t* this);
 

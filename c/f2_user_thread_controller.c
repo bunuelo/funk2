@@ -31,6 +31,12 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_processor_mutex__destroy(&(this->waiting_count_mutex));
 }
 
+void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
+  while (this->waiting_count < memory_pool_num) {
+    sched_yield();
+  }
+}
+
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count ++;

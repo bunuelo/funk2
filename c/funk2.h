@@ -91,6 +91,7 @@
 #include "f2_event_router.h"
 #include "f2_funk2_node.h"
 #include "f2_funktional.h"
+#include "f2_gc_touch_circle_buffer.h"
 #include "f2_globalenv.h"
 #include "f2_html.h"
 #include "f2_load.h"

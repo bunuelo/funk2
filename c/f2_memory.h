@@ -29,14 +29,7 @@
 #include "f2_memblock.h"
 #include "f2_ptype.h"
 #include "f2_memorypool.h"
-
-typedef struct funk2_gc_touch_circle_buffer_s {
-  int                num;
-  funk2_memblock_t** start;
-  funk2_memblock_t** end;
-  funk2_memblock_t** start_index;
-  funk2_memblock_t** end_index;
-} funk2_gc_touch_circle_buffer_t;
+#include "f2_gc_touch_circle_buffer.h"
 
 typedef struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
@@ -64,6 +57,7 @@ typedef struct funk2_memory_s {
 #include "f2_memblock.h"
 #include "f2_ptype.h"
 #include "f2_memorypool.h"
+#include "f2_gc_touch_circle_buffer.h"
 
 #define nil ((f2ptr)0)
 
@@ -126,8 +120,6 @@ typedef struct funk2_memory_s {
 
 #define fast__f2ptr_to_ptr(f2p) __f2ptr_to_ptr(f2p)
 
-#define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
-
 #define global_environment()       funk2_memory__global_environment(&(__funk2.memory))
 #define global_environment__set(x) funk2_memory__global_environment__set(&(__funk2.memory), x)
 
@@ -136,43 +128,32 @@ typedef struct funk2_memory_s {
 void safe_write(int fd, void* ptr, size_t object_size);
 void safe_read(int fd, void* ptr, size_t object_size);
 
-// funk2_gc_touch_circle_buffer
-
-void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message);
-void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr block_f2ptr);
-void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
-void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr);
-void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp);
-
 // funk2_memory
 
-void funk2_memory__init(funk2_memory_t* this);
-void funk2_memory__destroy(funk2_memory_t* this);
-void funk2_memory__signal_enter_protected_region(funk2_memory_t* this);
-void funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
-void funk2_memory__handle(funk2_memory_t* this);
-void funk2_memory__print_gc_stats(funk2_memory_t* this);
+void      funk2_memory__init(funk2_memory_t* this);
+void      funk2_memory__destroy(funk2_memory_t* this);
+void      funk2_memory__signal_enter_protected_region(funk2_memory_t* this);
+void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
+void      funk2_memory__handle(funk2_memory_t* this);
+void      funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
-ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
-ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
-void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this);
-void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num);
-void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num);
+ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
+ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
+void      funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this);
+void      funk2_memory__touch_everything(funk2_memory_t* this, int generation_num);
+void      funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num);
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
-ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
-void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
-f2ptr funk2_memory__global_environment(funk2_memory_t* this);
+ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr     funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr     funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
+void      funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
+f2ptr     funk2_memory__global_environment(funk2_memory_t* this);
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename);
-f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
-void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
-int funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
+f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
+void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
+boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
 
 // **
 

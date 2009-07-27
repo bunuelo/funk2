@@ -738,8 +738,8 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   status("done rebuilding memory info from image."); fflush(stdout);
 }
 
-int funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
-  int retval = 0; // success
+boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
+  int retval = boolean__false; // success
   status("loading memory image.");
   
   f2__global_scheduler__execute_mutex__lock(initial_cause());
@@ -753,7 +753,7 @@ int funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
   int fd = open(filename, O_RDONLY);
   if (fd == -1) {
     status("load_image_from_disk failure: could not open file \"%s\".", filename);
-    retval = -1;
+    retval = boolean__true;
   } else {
     while(1) {
       int      i;
@@ -762,14 +762,14 @@ int funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
       safe_read(fd, &i, sizeof(int));
       if (i != 0xfaded) {
 	status("load_image_from_disk failure: file is not a funk memory image.");
-	retval = -1;
+	retval = boolean__true;
 	break;
       }
       
       safe_read(fd, &i, sizeof(int));
       if (i != F2__COMPILE_TIME_ID) {
 	status("load_image_from_disk failure: file is saved from a different version of funk2.");
-	retval = -1;
+	retval = boolean__true;
 	break;
       }
       

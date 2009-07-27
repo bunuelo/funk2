@@ -2102,6 +2102,8 @@ def_pcfunk2(bytecode_event__context__set, x, y, return f2__bytecode_event__conte
 // **
 
 void f2__primobjects__reinitialize_globalvars() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
+  
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   __primobject__symbol       = f2symbol__new(cause, strlen("primobject"),       (u8*)"primobject");

@@ -220,6 +220,8 @@ void f2__globalenv__reinitialize_globalvars() {
 }
 
 void f2__globalenv__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "globalenv", "", &f2__globalenv__reinitialize_globalvars);
+  
   funk2_globalenv__init(&(__funk2.globalenv));
 }
 

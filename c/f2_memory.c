@@ -572,7 +572,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 void f2__thought_process__reinitialize_globalvars();             // defined in f2_thought_process.c
-void f2__env__reinitialize_globalvars();                         // defined in f2_env.c
 void f2__funk2_node__reinitialize_globalvars();                  // defined in f2_funk2_node.c
 void f2__globalenv__reinitialize_globalvars();                   // defined in f2_globalenv.c
 void f2__peer_command_server__reinitialize_globalvars();         // defined in f2_peer_command_server.c

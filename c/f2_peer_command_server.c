@@ -584,6 +584,8 @@ void f2__peer_command_server__reinitialize_globalvars() {
 }
 
 void f2__peer_command_server__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "peer_command_server", "", &f2__peer_command_server__reinitialize_globalvars);
+  
   f2__peer_command_server__reinitialize_globalvars();
   //f2ptr cause = f2_peer_command_server_c__cause__new(initial_cause(), nil, nil);
   

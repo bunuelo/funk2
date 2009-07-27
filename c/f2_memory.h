@@ -136,13 +136,9 @@ void f2__gc_touch_all_referenced(f2ptr exp);
 
 boolean_t pool__should_run_gc(int pool_index);
 
-#define pause_gc()     raw_pause_gc()
-#define try_pause_gc() raw_try_pause_gc()
-#define resume_gc()    raw_resume_gc()
+#define pause_gc()  funk2_memory__signal_enter_protected_region(&(__funk2.memory))
+#define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))
 
-void      raw_pause_gc();
-int       raw_try_pause_gc();
-void      raw_resume_gc();
 boolean_t try_gc();
 boolean_t should_run_gc();
 int       gc__is_disabled();
@@ -276,5 +272,7 @@ ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree
 f2ptr     funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
 f2ptr     funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);
 f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
+void      funk2_memory__signal_enter_protected_region(funk2_memory_t* this);
+void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
 
 #endif // F2__MEMORY__H

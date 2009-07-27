@@ -179,6 +179,5 @@ void f2__sort__initialize() {
   f2__primcfunk__init__2(array__quicksort, array, comparison_funk, "sort an array of elements in place by user provided comparison_funk.");
   
   resume_gc();
-  try_gc();
 }
 

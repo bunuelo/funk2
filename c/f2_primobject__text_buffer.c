@@ -343,6 +343,5 @@ void f2__primobject__text_buffer__initialize() {
   f2__primcfunk__init__8(text_window__stream__render, this, stream, screen_x0, screen_y0, x0, y0, x1, y1, "");
   
   resume_gc();
-  try_gc();
 }
 

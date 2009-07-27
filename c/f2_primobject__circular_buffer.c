@@ -103,6 +103,5 @@ void f2__primobject_circular_buffer__initialize() {
   environment__add_var_value(initial_cause(), global_environment(), __funk2.primobject__circular_buffer.full__symbol,  nil);
   
   resume_gc();
-  try_gc();
 }
 

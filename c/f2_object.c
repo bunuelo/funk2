@@ -511,6 +511,5 @@ void f2__object__initialize() {
   f2__primcfunk__init__2(object__slot__execute_funk, this, slot, "returns the slot execute funk for the object, i.e. a general executor (e.g. print-value).");
   
   resume_gc();
-  try_gc();
 }
 

@@ -275,6 +275,5 @@ void f2__primobject__semantic_graph__initialize() {
   f2__primcfunk__init__1(semantic_graph__new_right_concept_relations_hash, this, "");
   
   resume_gc();
-  try_gc();
 }
 

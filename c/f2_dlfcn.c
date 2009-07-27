@@ -219,6 +219,5 @@ void f2__dlfcn__initialize() {
   f2__funktional_primcfunk__init__0(dlfcn__rtld_noload, "");
   
   resume_gc();
-  try_gc();
 }
 

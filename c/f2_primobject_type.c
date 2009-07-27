@@ -130,7 +130,6 @@ void f2__primobject_type__initialize() {
   f2__primcfunk__init__1(primobject_type__execute_funk__slot_names, this, "get a list of execute_funk slot names.");
   
   resume_gc();
-  try_gc();
 }
 
 

@@ -102,6 +102,5 @@ void f2__primobject_tensor__initialize() {
   environment__add_var_value(initial_cause(), global_environment(), __tensor__symbol, nil);
   
   resume_gc();
-  try_gc();
 }
 

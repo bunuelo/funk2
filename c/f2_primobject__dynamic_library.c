@@ -58,6 +58,5 @@ void f2__primobject__dynamic_library__initialize() {
   environment__add_var_value(cause, global_environment(), __dynamic_library__symbol, nil);
   
   resume_gc();
-  try_gc();
 }
 

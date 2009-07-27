@@ -45,6 +45,5 @@ void f2__trace__initialize() {
   environment__add_var_value(initial_cause(), global_environment(), __do_not_remember__symbol, nil);
   
   resume_gc();
-  try_gc();
 }
 

@@ -346,7 +346,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     thread_iter = next_thread_iter;
   }
   //pool__resume_gc(this_processor_thread__pool_index());
-  //pool__try_gc(this_processor_thread__pool_index());
   
   //if (did_something) {
   //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) thread_num = %d", this_processor_thread__pool_index(), processor, thread_num);
@@ -389,7 +388,6 @@ void f2__scheduler__yield(f2ptr cause) {
     if (__ptypes_please_wait_for_gc_to_take_place && pthread_self() != __funk2.memory.memory_handling_thread) {
       wait_politely();
     }
-    //pool__try_gc(this_processor_thread__pool_index());
   }
 }
 

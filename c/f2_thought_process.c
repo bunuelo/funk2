@@ -391,6 +391,5 @@ void f2__thought_process__initialize() {
   f2__primcfunk__init(thought_process, "");
   
   resume_gc();
-  try_gc();
 }
 

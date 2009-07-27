@@ -279,7 +279,6 @@ void f2__serialize__initialize() {
   f2__primcfunk__init(f2__deserialize, "");
   
   resume_gc();
-  try_gc();
 }
 
 

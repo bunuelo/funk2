@@ -158,6 +158,5 @@ void f2__primobject_environment__initialize() {
   environment__add_var_value(cause, global_environment(), __current_environment__symbol, nil);
   
   resume_gc();
-  try_gc();
 }
 

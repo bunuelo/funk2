@@ -224,6 +224,5 @@ void f2__gmodule__initialize() {
   f2__primcfunk__init__0(           gmodule__error, "");
   
   resume_gc();
-  try_gc();
 }
 

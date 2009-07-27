@@ -296,6 +296,5 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init(text_window_stream, "");
   
   resume_gc();
-  try_gc();
 }
 

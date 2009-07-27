@@ -372,6 +372,5 @@ void f2__string__initialize() {
   f2__primcfunk__init__2(string__contains, this, substring, "returns true when the string contains the specified substring.");
   
   resume_gc();
-  try_gc();
 }
 

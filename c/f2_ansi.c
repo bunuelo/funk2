@@ -468,7 +468,6 @@ void f2__ansi__initialize() {
   f2__primcfunk__init(ansi__stream__bordered_rectangle, "");
   
   resume_gc();
-  try_gc();
 }
 
 

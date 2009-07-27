@@ -726,6 +726,5 @@ void f2__blocks_world__initialize() {
   f2__primcfunk__init(blocks_world_physics__objects, "");
   
   resume_gc();
-  try_gc();
 }
 

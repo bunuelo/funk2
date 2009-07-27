@@ -187,7 +187,6 @@ void f2__child_handler__initialize() {
   f2__primcfunk__init(environ, "");
   
   resume_gc();
-  try_gc();
 }
 
 

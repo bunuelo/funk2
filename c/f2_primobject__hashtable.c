@@ -177,6 +177,5 @@ void f2__primobject_hashtable__initialize() {
   environment__add_var_value(initial_cause(), global_environment(), __hashtable__symbol, nil);
   
   resume_gc();
-  try_gc();
 }
 

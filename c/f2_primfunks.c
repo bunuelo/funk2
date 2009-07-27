@@ -2185,7 +2185,6 @@ void f2__primcfunks__initialize() {
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
   
   resume_gc();
-  try_gc();
 }
 
 

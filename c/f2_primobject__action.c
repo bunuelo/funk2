@@ -154,6 +154,5 @@ void f2__primobject__action__initialize() {
   f2__primcfunk__init__1(action__end,   this, "");
   
   resume_gc();
-  try_gc();
 }
 

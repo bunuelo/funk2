@@ -116,6 +116,5 @@ void f2__primobject_type_handler__initialize() {
   f2__primcfunk__init__1(lookup_type, type_name, "returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
   
   resume_gc();
-  try_gc();
 }
 

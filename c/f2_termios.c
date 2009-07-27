@@ -115,7 +115,6 @@ void f2__termios__initialize() {
   f2__primcfunk__init(termios__canon, "(as defined in termios.h)");
   
   resume_gc();
-  try_gc();
 }
 
 

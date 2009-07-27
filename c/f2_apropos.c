@@ -105,6 +105,5 @@ void f2__apropos__initialize() {
   f2__primcfunk__init(apropos, "");
   
   resume_gc();
-  try_gc();
 }
 

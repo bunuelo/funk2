@@ -207,5 +207,4 @@ void f2__primobject_frame__initialize() {
   __frame__funk_variable_type__symbol = f2symbol__new(initial_cause(), strlen("funk_variable"), (u8*)"funk_variable");
   
   resume_gc();
-  try_gc();
 }

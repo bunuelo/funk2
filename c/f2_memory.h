@@ -100,7 +100,13 @@ typedef struct funk2_memory_s {
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
 
+//#define DEBUG_MEMORY 3
+
 #include "f2_global.h"
+#include "f2_global.h"
+#include "f2_redblacktree.h"
+#include "f2_memory.h"
+#include "f2_dynamic_memory.h"
 
 #define nil ((f2ptr)0)
 
@@ -124,44 +130,14 @@ u8 __ptype__str[][128] = {
 };
 #endif // F2__PTYPE__C__COMPILING
 
-ptr  f2__malloc(f2size_t byte_num);
-void f2__free(ptr this);
-ptr  f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
-
-void assert_failed(f2ptr thread, char* filename, int line_num, char* str);
-
-void exp__gc_touch_all_referenced(ptr start_block_ptr);
-void f2__gc_touch_all_referenced(f2ptr exp);
-
-boolean_t pool__should_run_gc(int pool_index);
-
 #define pause_gc()  funk2_memory__signal_enter_protected_region(&(__funk2.memory))
 #define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))
-
-boolean_t should_run_gc();
-int       gc__is_disabled();
-
-void f2__memory__initialize();
-void f2__memory__destroy();
-
-//#define DEBUG_MEMORY 3
-
-#include "f2_global.h"
-#include "f2_redblacktree.h"
-#include "f2_memory.h"
-#include "f2_dynamic_memory.h"
 
 #define maximum_generation_num 7
 
 #define funk2_memblock__byte_num(this)         ((this)->rbt_node.key)
 
 #define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
-
-f2ptr             pool__funk2_memblock_f2ptr__try_new(int pool_index, f2size_t byte_num);
-f2ptr             pool__funk2_memblock_f2ptr__new(int pool_index, f2size_t byte_num);
-f2ptr             funk2_memblock_f2ptr__new(f2size_t byte_num);
-funk2_memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num);
-funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
 #define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&((this)->global_memory_allocate_mutex))
@@ -229,52 +205,84 @@ funk2_memblock_t* funk2_memblock__new(f2size_t byte_num);
 #  define funk2_memorypool__debug_memory_test(this, level)
 #endif
 
-u8 garbage_collect();
-
-ptr   f2ptr_to_ptr__debug(f2ptr f2p);
-f2ptr ptr_to_f2ptr__debug(ptr   p);
-
-ptr   used_f2ptr_to_ptr__debug(f2ptr f2p);
-f2ptr used_ptr_to_f2ptr__debug(ptr   p);
-
-//ptr   fast__f2ptr_to_ptr(f2ptr f2p);
-f2ptr fast__ptr_to_f2ptr(ptr   p);
-
 #define fast__f2ptr_to_ptr(f2p) __f2ptr_to_ptr(f2p)
 
 #define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
 
+#define global_environment()       funk2_memory__global_environment(&(__funk2.memory))
+#define global_environment__set(x) funk2_memory__global_environment__set(&(__funk2.memory), x)
+
+// misc
+
+void safe_write(int fd, void* ptr, size_t object_size);
+void safe_read(int fd, void* ptr, size_t object_size);
+
+// funk2_memblock
+
+void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch);
+
+// funk2_memorypool
+
+void funk2_memorypool__init(funk2_memorypool_t* pool);
+void funk2_memorypool__destroy(funk2_memorypool_t* this);
+void funk2_memorypool__add_protected_alloc_f2ptr(funk2_memorypool_t* this, f2ptr exp);
+void funk2_memorypool__signal_enter_protected_region(funk2_memorypool_t* this);
+void funk2_memorypool__signal_exit_protected_region(funk2_memorypool_t* this);
+f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this);
+f2size_t funk2_memorypool__total_free_memory(funk2_memorypool_t* this);
+void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this);
+void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this);
+void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this);
+void funk2_memorypool__memory_test(funk2_memorypool_t* this);
+void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num);
+void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num);
+void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block);
+u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this);
+u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num);
+void funk2_memorypool__increment_generation(funk2_memorypool_t* this);
+funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
+
 // funk2_gc_touch_circle_buffer
 
+void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this);
+void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message);
+void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* this);
+void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buffer_t* this);
+void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr block_f2ptr);
+void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
 void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr);
+void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp);
 
 // funk2_memory
 
-void      funk2_memory__init(funk2_memory_t* this); // only called by memory management thread
-void      funk2_memory__destroy(funk2_memory_t* this); // only called by memory management thread
-void      funk2_memory__signal_enter_protected_region(funk2_memory_t* this); // memory handling thread should never call this function
-void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this); // memory handling thread should never call this function
-void      funk2_memory__handle(funk2_memory_t* memory); // only called by memory management thread
-void      funk2_memory__print_gc_stats(funk2_memory_t* this);
+void funk2_memory__init(funk2_memory_t* this);
+void funk2_memory__destroy(funk2_memory_t* this);
+void funk2_memory__signal_enter_protected_region(funk2_memory_t* this);
+void funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
+void funk2_memory__handle(funk2_memory_t* this);
+void funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
-void      funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num);
+ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
+ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
+void funk2_memory__touch_all_protected_alloc_arrays(funk2_memory_t* this);
+void funk2_memory__touch_everything(funk2_memory_t* this, int generation_num);
+void funk2_memory__touch_all_referenced_from_pool_generation(funk2_memory_t* this, int pool_index, int touch_generation_num);
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
-ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
-void      funk2_memory__signal_enter_protected_region(funk2_memory_t* this);
-void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
-void      funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
-f2ptr     funk2_memory__global_environment(funk2_memory_t* this);
+ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
+void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
+f2ptr funk2_memory__global_environment(funk2_memory_t* this);
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename);
-f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
-void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
-int       funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
+f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
+void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
+int funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
 
-#define global_environment()       funk2_memory__global_environment(&(__funk2.memory))
-#define global_environment__set(x) funk2_memory__global_environment__set(&(__funk2.memory), x)
+// **
+
+void f2__memory__initialize();
+void f2__memory__destroy();
 
 #endif // F2__MEMORY__H

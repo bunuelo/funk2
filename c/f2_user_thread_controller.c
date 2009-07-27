@@ -41,11 +41,10 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count ++;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
-  while (this->please_wait) {
+  while (this->please_wait || funk2_processor_mutex__trylock(&(this->waiting_count_mutex))) {
     f2__sleep(1);
     sched_yield();
   }
-  funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count --;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
 }

@@ -21,3 +21,66 @@
 
 #include "funk2.h"
 
+// funk2_module_registration_node
+
+void funk2_module_registration_node__init(funk2_module_registration_node_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
+  {
+    int name__length = strlen(name);
+    this->name = (char*)f2__malloc(name__length + 1);
+    memcpy(this->name, name, name__length + 1);
+  }
+  {
+    int description__length = strlen(description);
+    this->description = (char*)f2__malloc(description__length + 1);
+    memcpy(this->description, description, description__length + 1);
+  }
+  this->reinitialize_function = reinitialize_function;
+}
+
+void funk2_module_registration_node__destroy(funk2_module_registration_node_t* this) {
+  free(this->name);
+  free(this->description);
+}
+
+void funk2_module_registration_node__reinitialize(funk2_module_registration_node_t* this) {
+  (*(this->reinitialize_function))();
+}
+
+// funk2_module_registration
+
+void funk2_module_registration__init(funk2_module_registration_t* this) {
+  this->module_list = NULL;
+}
+
+void funk2_module_registration__destroy(funk2_module_registration_t* this) {
+  funk2_module_registration_node_t* iter = this->module_list;
+  while (iter) {
+    funk2_module_registration_node_t* next = iter->next;
+    funk2_module_registration_node__destroy(iter);
+    iter = next;
+  }
+}
+
+void funk2_module_registration__add_module(funk2_module_registration_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
+  funk2_module_registration_node_t* new_node = (funk2_module_registration_node_t*)f2__malloc(sizeof(funk2_module_registration_node_t));
+  funk2_module_registration_node__init(new_node, name, description, reinitialize_function);
+  new_node->next = this->module_list;
+  this->module_list = new_node;
+}
+
+void funk2_module_registration__reinitialize_all_modules(funk2_module_registration_t* this) {
+  funk2_module_registration_node_t* iter = this->module_list;
+  while (iter) {
+    funk2_module_registration_node__reinitialize(iter);
+    iter = iter->next;
+  }
+}
+
+
+// **
+
+void f2__module_registration__initialize() {
+  funk2_module_registration__init(&(__funk2.module_registration));
+}
+
+

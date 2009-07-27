@@ -46,7 +46,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
     sched_yield();
   }
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
-  __ptypes_waiting_count --;
+  this->waiting_count --;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
 }
 

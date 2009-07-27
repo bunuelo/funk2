@@ -27,9 +27,7 @@
 #include "f2_redblacktree.h"
 #include "f2_processor_mutex.h"
 #include "f2_memblock.h"
-
-#define ptype__total_num 14
-#define ptype__min_bits   4
+#include "f2_ptype.h"
 
 typedef enum ptype_e {
   ptype_free_memory     = 0x40 + 0x0,
@@ -100,28 +98,9 @@ typedef struct funk2_memory_s {
 #include "f2_memory.h"
 #include "f2_dynamic_memory.h"
 #include "f2_memblock.h"
+#include "f2_ptype.h"
 
 #define nil ((f2ptr)0)
-
-#ifdef F2__PTYPE__C__COMPILING
-u8 __ptype__str[][128] = {
-  "free_memory",
-  "newly_allocated",
-  "integer",
-  "double",
-  "float",
-  "pointer",
-  "gfunkptr",
-  "mutex",
-  "char",
-  "string",
-  "symbol",
-  "chunk",
-  "simple_array",
-  "traced_array",
-  "larva",
-};
-#endif // F2__PTYPE__C__COMPILING
 
 #define pause_gc()  funk2_memory__signal_enter_protected_region(&(__funk2.memory))
 #define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))

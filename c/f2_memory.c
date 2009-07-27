@@ -88,7 +88,7 @@ void funk2_memorypool__signal_exit_bytecode(funk2_memorypool_t* this) {
   }
   this->protected_alloc_array__reentrance_count --;
   if (this->protected_alloc_array__reentrance_count == 0) {
-    // bytecode stack is done
+    // protected counter is back to zero so reset array__used_num to zero.
     this->protected_alloc_array__used_num = 0;
   }
 }

@@ -556,48 +556,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-//boolean_t pool__should_run_gc(int pool_index) {
-//  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-//  boolean_t should_gc = __funk2.memory.pool[pool_index].should_run_gc;
-//  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-//  return should_gc;
-//}
-
-//boolean_t should_run_gc() {
-//  int pool_index;
-//  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-//    if (pool__should_run_gc(pool_index)) {
-//      return 1;
-//    }
-//  }
-//  return 0;
-//}
-
-void global_environment__set(f2ptr global_environment) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  }
-  __funk2.memory.global_environment_f2ptr = global_environment;
-  __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  }
-}
-
-f2ptr global_environment() {
-  f2ptr retval;
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  }
-  retval = __funk2.memory.global_environment_f2ptr;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  }
-  return retval;
-}
-
 void safe_write(int fd, void* ptr, size_t object_size) {
   size_t result = write(fd, ptr, object_size);
   if (result != object_size) {
@@ -1267,6 +1225,31 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
     }
     sched_yield();
   }
+}
+
+void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+  }
+  __funk2.memory.global_environment_f2ptr = global_environment;
+  __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+  }
+}
+
+f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
+  f2ptr retval;
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+  }
+  retval = __funk2.memory.global_environment_f2ptr;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+  }
+  return retval;
 }
 
 

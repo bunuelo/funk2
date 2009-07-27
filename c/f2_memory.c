@@ -557,21 +557,12 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-// UNPROTECTED-USE MEMORY FUNCTIONS
-
 void raw_pause_gc() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__signal_enter_protected_region(&(__funk2.memory.pool[pool_index]));
   }
 }
-
-//void pool__resume_gc (int pool_index) {
-//  funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-//  release__assert(__funk2.memory.pool[pool_index].disable_gc != 0, nil, "__funk2.memory.pool[].disable_gc == 0 before decrement... too many calls to resume_gc.");
-//  //__funk2.memory.pool[pool_index].disable_gc --;
-//  funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-//}
 
 void raw_resume_gc() {
   int pool_index;

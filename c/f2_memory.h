@@ -134,9 +134,6 @@ void assert_failed(f2ptr thread, char* filename, int line_num, char* str);
 void exp__gc_touch_all_referenced(ptr start_block_ptr);
 void f2__gc_touch_all_referenced(f2ptr exp);
 
-int       pool__try_pause_gc(int pool_index);
-void      pool__resume_gc(int pool_index);
-boolean_t pool__try_gc(int pool_index);
 boolean_t pool__should_run_gc(int pool_index);
 
 #define pause_gc()     raw_pause_gc()

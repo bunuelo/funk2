@@ -557,10 +557,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-funk2_memblock_t* pool__funk2_memblock__new(int pool_index, f2size_t byte_num) {
-  return (funk2_memblock_t*)from_ptr(f2ptr_to_ptr(funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, byte_num)));
-}
-
 funk2_memblock_t* funk2_memblock__new(f2size_t byte_num) {
   return (funk2_memblock_t*)from_ptr(f2ptr_to_ptr(funk2_memory__funk2_memblock_f2ptr__new(&(__funk2.memory), byte_num)));
 }
@@ -1380,6 +1376,10 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
     sched_yield();
   }
 }
+
+//funk2_memblock_t* funk2_memory__funk2_memblock__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
+ // return (funk2_memblock_t*)from_ptr(f2ptr_to_ptr(funk2_memory__funk2_memblock_f2ptr__new_from_pool(this, pool_index, byte_num)));
+//}
 
 
 

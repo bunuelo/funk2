@@ -294,7 +294,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
   do {
     this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
     this->pool[pool_index].should_enlarge_memory_now                         = boolean__true;
-    __ptypes_please_wait_for_gc_to_take_place                                = boolean__true;
+    this->user_thread_controller.please_wait                                 = boolean__true;
     if (pthread_self() == this->memory_handling_thread) {
       if (! this->bootstrapping_mode) {
 	while (__ptypes_waiting_count < memory_pool_num) {
@@ -304,7 +304,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
       funk2_memorypool__change_total_memory_available(&(this->pool[pool_index]), this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory >> 3) + this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
       this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
       this->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
-      __ptypes_please_wait_for_gc_to_take_place                                = boolean__false;
+      this->user_thread_controller.please_wait                                 = boolean__false;
     } else {
       wait_politely();
     }

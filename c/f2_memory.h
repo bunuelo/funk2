@@ -26,6 +26,7 @@
 #include "f2_dynamic_memory.h"
 #include "f2_redblacktree.h"
 #include "f2_processor_mutex.h"
+#include "f2_memblock.h"
 
 #define ptype__total_num 14
 #define ptype__min_bits   4
@@ -47,16 +48,6 @@ typedef enum ptype_e {
   ptype_traced_array    = 0x40 + 0xD,
   ptype_larva           = 0x40 + 0xE,
 } ptype_t;
-
-struct funk2_memblock_s {
-  rbt_node_t rbt_node;
-  u8         used           : 1;
-  u8         gc_touch       : 1;
-  u8         generation_num : 3;
-  u8         ptype          : ptype__min_bits;
-  u8         raw_mem[0];
-} __attribute__((__packed__));
-typedef struct funk2_memblock_s funk2_memblock_t;
 
 typedef struct funk2_memorypool_s {
   funk2_processor_mutex_t global_memory_allocate_mutex;
@@ -108,6 +99,7 @@ typedef struct funk2_memory_s {
 #include "f2_redblacktree.h"
 #include "f2_memory.h"
 #include "f2_dynamic_memory.h"
+#include "f2_memblock.h"
 
 #define nil ((f2ptr)0)
 
@@ -135,8 +127,6 @@ u8 __ptype__str[][128] = {
 #define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))
 
 #define maximum_generation_num 7
-
-#define funk2_memblock__byte_num(this)         ((this)->rbt_node.key)
 
 #define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
 
@@ -217,10 +207,6 @@ u8 __ptype__str[][128] = {
 
 void safe_write(int fd, void* ptr, size_t object_size);
 void safe_read(int fd, void* ptr, size_t object_size);
-
-// funk2_memblock
-
-void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch);
 
 // funk2_memorypool
 

@@ -89,6 +89,37 @@ void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__us
   }
 }
 
+// funk2_user_thread_controller__touch_all_protected_alloc_arrays
+
+void funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
+  this->start = boolean__false;
+  funk2_processor_mutex__init(&(this->done_mutex));
+}
+
+void funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
+}
+
+void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_execute(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
+  this->done_count     = 0;
+  this->everyone_done  = boolean__false;
+  this->start          = boolean__true;
+  while (this->done_count < memory_pool_num) {
+    sched_yield();
+  }
+  this->start         = boolean__false;
+  this->everyone_done = boolean__true;
+}
+
+void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_memorypool__touch_all_protected_alloc_arrays(&(__funk2.memory.pool[pool_index]));
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count ++;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
+  while (! (this->everyone_done)) {
+    sched_yield();
+  }
+}
 
 // funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation
 
@@ -135,6 +166,7 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
 
   funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__init(&(this->clear_all_gc_touch_flags_before_generation));
   funk2_user_thread_controller__touch_all_referenced_from_pool_generation__init(&(this->touch_all_referenced_from_pool_generation));
+  funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__init(&(this->free_all_gc_untouched_blocks_from_generation));
 }
 
@@ -143,6 +175,7 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   
   funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__destroy(&(this->clear_all_gc_touch_flags_before_generation));
   funk2_user_thread_controller__touch_all_referenced_from_pool_generation__destroy(&(this->touch_all_referenced_from_pool_generation));
+  funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__destroy(&(this->free_all_gc_untouched_blocks_from_generation));
 }
 
@@ -159,6 +192,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
   while (this->please_wait || funk2_processor_mutex__trylock(&(this->waiting_count_mutex))) {
     if        (this->clear_all_gc_touch_flags_before_generation.start) {funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__user_process(    &(this->clear_all_gc_touch_flags_before_generation));}
     else if    (this->touch_all_referenced_from_pool_generation.start) {funk2_user_thread_controller__touch_all_referenced_from_pool_generation__user_process(      &(this->touch_all_referenced_from_pool_generation));}
+    else if             (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(                        &(this->touch_all_protected_alloc_arrays));}
     else if (this->free_all_gc_untouched_blocks_from_generation.start) {funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__user_process(&(this->free_all_gc_untouched_blocks_from_generation));}
     f2__sleep(1);
     sched_yield();
@@ -179,6 +213,10 @@ void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(fu
 
 void funk2_user_thread_controller__touch_all_referenced_from_pool_generation(funk2_user_thread_controller_t* this, int generation_num) {
   funk2_user_thread_controller__touch_all_referenced_from_pool_generation__signal_execute(&(this->touch_all_referenced_from_pool_generation), generation_num);
+}
+
+void funk2_user_thread_controller__touch_all_protected_alloc_arrays(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_execute(&(this->touch_all_protected_alloc_arrays));
 }
 
 boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(funk2_user_thread_controller_t* this, int generation_num) {

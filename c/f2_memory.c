@@ -217,10 +217,11 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
     // parallelized
     funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
     // could be parallelized
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_memorypool__touch_all_protected_alloc_arrays(&(this->pool[pool_index]));
-    }
+    funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(this->user_thread_controller));
+    //int pool_index;
+    //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    //  funk2_memorypool__touch_all_protected_alloc_arrays(&(this->pool[pool_index]));
+    //}
     funk2_memory__touch_all_symbols(this);
   }
   

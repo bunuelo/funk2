@@ -272,6 +272,11 @@ f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t
 void      funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
 f2ptr     funk2_memory__global_environment(funk2_memory_t* this);
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename);
+f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
+
+// funk2
+
+void funk2__rebuild_memory_info_from_image(funk2_t* this);
 
 
 #define global_environment()       funk2_memory__global_environment(&(__funk2.memory))

@@ -571,89 +571,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
-  if (p == to_ptr(NULL)) {return nil;}
-  int i;
-  for (i = 0; i < memory_pool_num; i ++) {
-    if (p >= funk2_memorypool__memory__ptr(&(this->pool[i])) &&
-	p <  funk2_memorypool__memory__ptr(&(this->pool[i])) + this->pool[i].total_global_memory) {
-      return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset)));
-    }
-  }
-  error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
-}
-
-// precondition: each and every memory pool's global_memory_mutex is locked!
-void rebuild_memory_info_from_image() {
-  // each and every pool's global_memory_mutex is locked (we need to return that way).
-  //
-  // note: all memory being locked allows us to assume that we are the
-  //       only pthread executing.
-  
-  int pool_index;
-  
-  
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("rebuilding memory pool[%d] info from image.", pool_index); fflush(stdout);
-    rbt_tree__init(&(__funk2.memory.pool[pool_index].free_memory_tree), NULL);
-    __funk2.memory.pool[pool_index].total_free_memory  = 0;
-    rbt_tree__init(&(__funk2.memory.pool[pool_index].used_memory_tree), NULL);
-    
-    {
-      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])));
-      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index])))) + __funk2.memory.pool[pool_index].total_global_memory);
-      while(iter < end_of_blocks) {
-	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
-	if (iter->used) {
-	  rbt_tree__insert(&(__funk2.memory.pool[pool_index].used_memory_tree), (rbt_node_t*)iter);
-	} else {
-	  funk2_memorypool__link_funk2_memblock_to_freelist(&(__funk2.memory.pool[pool_index]), iter);
-	  __funk2.memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
-	}
-	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-      }
-      release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
-    }
-  }
-  
-  // temporarily unlocks all memory mutexes
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  }
-  // temporary period of all memory mutexes locked
-  {
-    symbol_hash__reinitialize();
-    
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      // add all symbols to symbol_hash in ptypes.c
-      rbt_node_t* iter = rbt_tree__minimum(&(__funk2.memory.pool[pool_index].used_memory_tree));
-      while(iter) {
-	ptype_block_t* block = (ptype_block_t*)iter;
-	if(block->ptype == ptype_symbol) {
-	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
-	  symbol_hash__add_symbol(block_f2ptr);
-	}
-	iter = rbt_node__next(iter);
-      }
-    }
-    
-    funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
-  }
-  // end temporary unlocking of all memory mutexes
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  }
-  
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  }
-  
-  status("done rebuilding memory info from image."); fflush(stdout);
-}
-
-void f2__global_scheduler__execute_mutex__lock(f2ptr cause);
-void f2__global_scheduler__execute_mutex__unlock(f2ptr cause);
-
 int raw__memory_image__load(char* filename) {
   int retval = 0; // success
   status("loading memory image.");
@@ -1168,6 +1085,88 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   return boolean__false;
 }
 
+f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
+  if (p == to_ptr(NULL)) {return nil;}
+  int i;
+  for (i = 0; i < memory_pool_num; i ++) {
+    if (p >= funk2_memorypool__memory__ptr(&(this->pool[i])) &&
+	p <  funk2_memorypool__memory__ptr(&(this->pool[i])) + this->pool[i].total_global_memory) {
+      return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset)));
+    }
+  }
+  error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
+}
+
+
+// funk2
+
+// precondition: each and every memory pool's global_memory_mutex is locked!
+void funk2__rebuild_memory_info_from_image(funk2_t* this) {
+  // each and every pool's global_memory_mutex is locked (we need to return that way).
+  //
+  // note: all memory being locked allows us to assume that we are the
+  //       only pthread executing.
+  
+  int pool_index;
+  
+  
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    status("rebuilding memory pool[%d] info from image.", pool_index); fflush(stdout);
+    rbt_tree__init(&(this->memory.pool[pool_index].free_memory_tree), NULL);
+    this->memory.pool[pool_index].total_free_memory  = 0;
+    rbt_tree__init(&(this->memory.pool[pool_index].used_memory_tree), NULL);
+    
+    {
+      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(&(this->memory.pool[pool_index])));
+      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(this->memory.pool[pool_index])))) + this->memory.pool[pool_index].total_global_memory);
+      while(iter < end_of_blocks) {
+	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
+	if (iter->used) {
+	  rbt_tree__insert(&(this->memory.pool[pool_index].used_memory_tree), (rbt_node_t*)iter);
+	} else {
+	  funk2_memorypool__link_funk2_memblock_to_freelist(&(this->memory.pool[pool_index]), iter);
+	  this->memory.pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
+	}
+	iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+      }
+      release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+    }
+  }
+  
+  // temporarily unlocks all memory mutexes
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__unlock(&(this->memory.pool[pool_index]));
+  }
+  // temporary period of all memory mutexes locked
+  {
+    symbol_hash__reinitialize();
+    
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      // add all symbols to symbol_hash in ptypes.c
+      rbt_node_t* iter = rbt_tree__minimum(&(this->memory.pool[pool_index].used_memory_tree));
+      while(iter) {
+	ptype_block_t* block = (ptype_block_t*)iter;
+	if(block->ptype == ptype_symbol) {
+	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(this->memory), to_ptr(block));
+	  symbol_hash__add_symbol(block_f2ptr);
+	}
+	iter = rbt_node__next(iter);
+      }
+    }
+    
+    funk2_module_registration__reinitialize_all_modules(&(this->module_registration));
+  }
+  // end temporary unlocking of all memory mutexes
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__lock(&(this->memory.pool[pool_index]));
+  }
+  
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__debug_memory_test(&(this->memory.pool[pool_index]), 1);
+  }
+  
+  status("done rebuilding memory info from image."); fflush(stdout);
+}
 
 
 

@@ -568,88 +568,6 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-
-
-
-int raw__memory_image__load(char* filename) {
-  int retval = 0; // success
-  status("loading memory image.");
-  
-  f2__global_scheduler__execute_mutex__lock(initial_cause());
-  
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
-  }
-  
-  
-  int fd = open(filename, O_RDONLY);
-  if (fd == -1) {
-    status("load_image_from_disk failure: could not open file \"%s\".", filename);
-    retval = -1;
-  } else {
-    while(1) {
-      int      i;
-      f2ptr    f2_i;
-      f2size_t size_i;
-      safe_read(fd, &i, sizeof(int));
-      if (i != 0xfaded) {
-	status("load_image_from_disk failure: file is not a funk memory image.");
-	retval = -1;
-	break;
-      }
-      
-      safe_read(fd, &i, sizeof(int));
-      if (i != F2__COMPILE_TIME_ID) {
-	status("load_image_from_disk failure: file is saved from a different version of funk2.");
-	retval = -1;
-	break;
-      }
-      
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	safe_read(fd, &size_i, sizeof(f2size_t));
-	__funk2.memory.pool[pool_index].total_global_memory = size_i;
-	
-	safe_read(fd, &size_i, sizeof(f2size_t));
-	__funk2.memory.pool[pool_index].next_unique_block_id = size_i;
-	
-	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(__funk2.memory.pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
-	f2dynamicmemory__realloc(&(__funk2.memory.pool[pool_index].dynamic_memory), &old_dynamic_memory, __funk2.memory.pool[pool_index].total_global_memory);
-	safe_read(fd, from_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))), __funk2.memory.pool[pool_index].total_global_memory);
-      }
-      
-      safe_read(fd, &f2_i, sizeof(f2ptr));
-      f2ptr global_environment_f2ptr = f2_i;
-      
-      status("done loading memory image."); fflush(stdout);
-      
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	__funk2.memory.pool[pool_index].global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(&(__funk2.memory.pool[pool_index]))) - 1;
-      }
-      
-      __funk2.memory.global_environment_f2ptr = global_environment_f2ptr;
-      __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
-      
-      funk2_memory__rebuild_memory_info_from_image(&(__funk2.memory));
-      
-      status("loaded memory image successfully.");
-      break;
-    }
-    close(fd);      
-  }
-  
-  f2__global_scheduler__execute_mutex__unlock(initial_cause());
-  
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
-  }
-  
-  funk2_memory__print_gc_stats(&(__funk2.memory));
-  return retval;
-}
-
-
-
 // funk2_memory
 
 void funk2_memory__init(funk2_memory_t* this) {
@@ -1165,7 +1083,82 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   status("done rebuilding memory info from image."); fflush(stdout);
 }
 
-
+int funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
+  int retval = 0; // success
+  status("loading memory image.");
+  
+  f2__global_scheduler__execute_mutex__lock(initial_cause());
+  
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+  }
+  
+  
+  int fd = open(filename, O_RDONLY);
+  if (fd == -1) {
+    status("load_image_from_disk failure: could not open file \"%s\".", filename);
+    retval = -1;
+  } else {
+    while(1) {
+      int      i;
+      f2ptr    f2_i;
+      f2size_t size_i;
+      safe_read(fd, &i, sizeof(int));
+      if (i != 0xfaded) {
+	status("load_image_from_disk failure: file is not a funk memory image.");
+	retval = -1;
+	break;
+      }
+      
+      safe_read(fd, &i, sizeof(int));
+      if (i != F2__COMPILE_TIME_ID) {
+	status("load_image_from_disk failure: file is saved from a different version of funk2.");
+	retval = -1;
+	break;
+      }
+      
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	safe_read(fd, &size_i, sizeof(f2size_t));
+	this->pool[pool_index].total_global_memory = size_i;
+	
+	safe_read(fd, &size_i, sizeof(f2size_t));
+	this->pool[pool_index].next_unique_block_id = size_i;
+	
+	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
+	f2dynamicmemory__realloc(&(this->pool[pool_index].dynamic_memory), &old_dynamic_memory, this->pool[pool_index].total_global_memory);
+	safe_read(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);
+      }
+      
+      safe_read(fd, &f2_i, sizeof(f2ptr));
+      f2ptr global_environment_f2ptr = f2_i;
+      
+      status("done loading memory image."); fflush(stdout);
+      
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	this->pool[pool_index].global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))) - 1;
+      }
+      
+      this->global_environment_f2ptr = global_environment_f2ptr;
+      this->global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
+      
+      funk2_memory__rebuild_memory_info_from_image(this);
+      
+      status("loaded memory image successfully.");
+      break;
+    }
+    close(fd);      
+  }
+  
+  f2__global_scheduler__execute_mutex__unlock(initial_cause());
+  
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+  }
+  
+  funk2_memory__print_gc_stats(this);
+  return retval;
+}
 
 
 

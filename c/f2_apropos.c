@@ -97,6 +97,8 @@ void f2__apropos__reinitialize_globalvars() {
 }
 
 void f2__apropos__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "apropos", "", &f2__apropos__reinitialize_globalvars);
+  
   //f2ptr cause = initial_cause(); //f2_apropos_c__cause__new(initial_cause(), nil, global_environment());
   pause_gc();
   

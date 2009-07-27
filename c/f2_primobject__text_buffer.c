@@ -329,6 +329,8 @@ void f2__primobject__text_buffer__reinitialize_globalvars() {
 }
 
 void f2__primobject__text_buffer__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__text_buffer", "", &f2__primobject__text_buffer__reinitialize_globalvars);
+  
   pause_gc();
   f2__primobject__text_buffer__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);

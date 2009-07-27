@@ -452,6 +452,8 @@ void f2__scheduler__reinitialize_globalvars() {
 }
 
 void f2__scheduler__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars);
+  
   funk2_processor_mutex__init(&(__funk2.operating_system.scheduler__execute_mutex));
   f2__global_scheduler__execute_mutex__lock(initial_cause());
   

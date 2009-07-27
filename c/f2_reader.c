@@ -650,6 +650,8 @@ void f2__reader__reinitialize_globalvars() {
 }
 
 void f2__reader__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars);
+  
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   char* symbol_str;
   f2ptr symbol;

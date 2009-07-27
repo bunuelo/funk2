@@ -83,6 +83,8 @@ void f2__primfunks__fcntl__reinitialize_globalvars() {
 }
 
 void f2__primfunks__fcntl__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__fcntl", "", &f2__primfunks__fcntl__reinitialize_globalvars);
+  
   pause_gc();
   //f2ptr cause = f2_primfunks__fcntl_c__cause__new(initial_cause(), nil, nil);
   

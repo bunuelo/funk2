@@ -202,6 +202,8 @@ void f2__dlfcn__reinitialize_globalvars() {
 }
 
 void f2__dlfcn__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars);
+  
   pause_gc();
   f2__dlfcn__reinitialize_globalvars();
   //f2ptr cause = initial_cause(); //f2_dlfcn_c__cause__new(initial_cause(), nil, nil);

@@ -171,6 +171,8 @@ void f2__sort__reinitialize_globalvars() {
 }
 
 void f2__sort__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "sort", "", &f2__sort__reinitialize_globalvars);
+  
   pause_gc();
   
   f2__sort__reinitialize_globalvars();

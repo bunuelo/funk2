@@ -302,6 +302,8 @@ void f2__socket__reinitialize_globalvars() {
 }
 
 void f2__socket__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "socket", "", &f2__socket__reinitialize_globalvars);
+  
   pause_gc();
   //f2ptr cause = f2_socket_c__cause__new(initial_cause(), nil, nil);
   

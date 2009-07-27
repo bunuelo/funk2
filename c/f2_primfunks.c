@@ -1854,6 +1854,8 @@ void f2__primcfunks__reinitialize_globalvars() {
 }
 
 void f2__primcfunks__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__text_buffer__reinitialize_globalvars);
+  
   pause_gc();
   
   //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());

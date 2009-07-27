@@ -39,6 +39,8 @@ void f2__trace__reinitialize_globalvars() {
 }
 
 void f2__trace__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "trace", "", &f2__trace__reinitialize_globalvars);
+  
   pause_gc();
   f2__trace__reinitialize_globalvars();
   

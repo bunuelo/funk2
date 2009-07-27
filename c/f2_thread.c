@@ -124,6 +124,8 @@ void f2__thread__reinitialize_globalvars() {
 }
 
 void f2__thread__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "thread", "", &f2__thread__reinitialize_globalvars);
+  
   f2__thread__reinitialize_globalvars();
   f2ptr cause = f2_thread_c__cause__new(initial_cause());
   

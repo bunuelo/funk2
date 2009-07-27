@@ -107,6 +107,8 @@ void f2__primobject_object_type__reinitialize_globalvars() {
 }
 
 void f2__primobject_object_type__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_object_type", "", &f2__primobject_object_type__reinitialize_globalvars);
+  
   pause_gc();
   f2__primobject_object_type__reinitialize_globalvars();
   

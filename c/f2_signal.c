@@ -56,6 +56,8 @@ void f2__signal__reinitialize_globalvars() {
 }
 
 void f2__signal__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "signal", "", &f2__signal__reinitialize_globalvars);
+  
   //f2ptr cause =
   f2_signal_c__cause__new(initial_cause());
   

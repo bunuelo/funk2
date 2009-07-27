@@ -666,6 +666,8 @@ void f2__blocks_world__reinitialize_globalvars() {
 }
 
 void f2__blocks_world__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "blocks_world", "", &f2__blocks_world__reinitialize_globalvars);
+  
   pause_gc();
   f2__blocks_world__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_blocks_world_c__cause__new(initial_cause(), nil, nil);

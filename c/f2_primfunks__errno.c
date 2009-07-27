@@ -265,6 +265,8 @@ void f2__primfunks__errno__reinitialize_globalvars() {
 }
 
 void f2__primfunks__errno__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__errno", "", &f2__primfunks__errno__reinitialize_globalvars);
+  
   pause_gc();
   //f2ptr cause = f2_primfunks__errno_c__cause__new(initial_cause(), nil, nil);
   

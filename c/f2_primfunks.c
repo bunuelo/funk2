@@ -1319,7 +1319,7 @@ def_pcfunk1(coerce_to_int, exp, return f2__coerce_to_int(this_cause, exp));
 f2ptr f2__memory_image__save(f2ptr cause, f2ptr filename) {
   char* str = (char*)from_ptr(f2__malloc(f2string__length(filename, cause)));
   f2string__str_copy(filename, cause, (u8*)str);
-  f2ptr retval = f2bool__new(raw__memory_image__save(str));
+  f2ptr retval = f2bool__new(funk2_memory__save_image(&(__funk2.memory), str));
   f2__free(to_ptr(str));
   return retval;
 }

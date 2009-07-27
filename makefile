@@ -127,6 +127,7 @@ funk2_server_objs = \
   c/f2_thread.o \
   c/f2_time.o \
   c/f2_trace.o \
+  c/f2_user_thread_controller.o \
   c/funk2.o
 funk2_headers = \
   c/f2_ansi.h \
@@ -203,7 +204,8 @@ funk2_headers = \
   c/f2_thought_process.h \
   c/f2_thread.h \
   c/f2_time.h \
-  c/f2_trace.h
+  c/f2_trace.h \
+  c/f2_user_thread_controller.o
 
 include config.mak
 include makefile.cfg

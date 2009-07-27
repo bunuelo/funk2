@@ -571,16 +571,16 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
 
 
 
-f2ptr ptr_to_f2ptr__slow(ptr p) {
+f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
   int i;
   for (i = 0; i < memory_pool_num; i ++) {
-    if (p >= funk2_memorypool__memory__ptr(&(__funk2.memory.pool[i])) &&
-	p <  funk2_memorypool__memory__ptr(&(__funk2.memory.pool[i])) + __funk2.memory.pool[i].total_global_memory) {
-      return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(__funk2.memory.pool[i].global_f2ptr_offset)));
+    if (p >= funk2_memorypool__memory__ptr(&(this->pool[i])) &&
+	p <  funk2_memorypool__memory__ptr(&(this->pool[i])) + this->pool[i].total_global_memory) {
+      return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset)));
     }
   }
-  error(nil, "ptr_to_f2ptr__slow error: p is not in any memory pool.");
+  error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 
 // precondition: each and every memory pool's global_memory_mutex is locked!
@@ -630,7 +630,7 @@ void rebuild_memory_info_from_image() {
       while(iter) {
 	ptype_block_t* block = (ptype_block_t*)iter;
 	if(block->ptype == ptype_symbol) {
-	  f2ptr block_f2ptr = ptr_to_f2ptr__slow(to_ptr(block));
+	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
 	  symbol_hash__add_symbol(block_f2ptr);
 	}
 	iter = rbt_node__next(iter);

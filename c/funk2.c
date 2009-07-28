@@ -189,11 +189,13 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // try to find a nice user-friendly load
       f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
-      if (! raw__funkable__is_type(cause, load_funk)) {
+      if (raw__larva__is_type(cause, repl_funk)) {
 	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
 	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
       }
-      release__assert(raw__funkable__is_type(cause, load_funk), nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
+      if (raw__larva__is_type(cause, repl_funk)) {
+	error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
+      }
       
       f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
       
@@ -209,11 +211,13 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // try to find a nice user-friendly repl
       f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
-      if (! raw__funkable__is_type(cause, repl_funk)) {
+      if (raw__larva__is_type(cause, repl_funk)) {
 	// if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
 	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:repl"), (u8*)"primfunk:repl"));
       }
-      release__assert(raw__funkable__is_type(cause, repl_funk), nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
+      if (raw__larva__is_type(cause, repl_funk)) {
+	error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
+      }
       
       // start a thread executing the user read-eval-print loop
       f2__thread(cause,

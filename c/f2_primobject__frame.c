@@ -47,7 +47,7 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 defprimobject__static_slot(frame__type_hashtable, 0);
 
 f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
-  release__assert(__frame__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
+  release__assert(__funk2.primobject__frame.frame__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __funk2.primobject__frame.frame__symbol, 1, nil);
   f2frame__type_hashtable__set(this, cause, type_hashtable);
   return this;

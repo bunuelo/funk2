@@ -193,6 +193,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
 	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
 	if (raw__larva__is_type(cause, load_funk)) {
+	  f2__print(cause, global_environment());
 	  error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
 	}
       }

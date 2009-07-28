@@ -33,9 +33,9 @@ void funk2_primobject__frame__init(funk2_primobject__frame_t* this) {
 void funk2_primobject__frame__reinit(funk2_primobject__frame_t* this) {
   f2ptr cause = initial_cause(); //f2_primobject_frame_c__cause__new(initial_cause(), nil, global_environment());
   char* symbol_str;
-  symbol_str = "frame";                     this->frame__symbol                     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "variable";                  this->variable__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "funk_variable";             this->funk_variable__symbol             = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "frame";         this->frame__symbol         = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "variable";      this->variable__symbol      = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "funk_variable"; this->funk_variable__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   
   this->type_variable_not_defined__larva = f2larva__new(cause, 23);
 }

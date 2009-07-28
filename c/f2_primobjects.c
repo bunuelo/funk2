@@ -1657,12 +1657,12 @@ def_pcfunk2(cause__current_events__set, x, y, return f2__cause__current_events__
 
 
 f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
-  return f2__cause__define_type_var(cause, this, __frame__variable_type__symbol, var, value);
+  return f2__cause__define_type_var(cause, this, __funk2.primobject_frame.variable__symbol, var, value);
 }
 def_pcfunk3(cause__define, this, var, value, return f2__cause__define(this_cause, this, var, value));
 
 f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
-  return f2__cause__define_type_var(cause, this, __frame__funk_variable_type__symbol, funkvar, value);
+  return f2__cause__define_type_var(cause, this, __funk2.primobject_frame.funk_variable__symbol, funkvar, value);
 }
 def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
 

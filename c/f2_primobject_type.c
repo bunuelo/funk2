@@ -23,7 +23,7 @@
 
 f2ptr f2__primobject_type__new(f2ptr cause) {
   f2ptr this = frame__new_empty(cause);
-  frame__add_type_var_value(cause, this, __frame__variable_type__symbol, f2symbol__new(cause, strlen("type"), (u8*)"type"), f2symbol__new(cause, strlen("primobject_type"), (u8*)"primobject_type"));
+  frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("type"), (u8*)"type"), f2symbol__new(cause, strlen("primobject_type"), (u8*)"primobject_type"));
   return this;
 }
 def_pcfunk0(primobject_type__new, return f2__primobject_type__new(this_cause));

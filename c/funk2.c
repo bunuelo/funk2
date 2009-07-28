@@ -189,11 +189,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // try to find a nice user-friendly load
       f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
-      if (raw__larva__is_type(cause, repl_funk)) {
+      if (raw__larva__is_type(cause, load_funk)) {
 	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
 	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
       }
-      if (raw__larva__is_type(cause, repl_funk)) {
+      if (raw__larva__is_type(cause, load_funk)) {
 	error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
       }
       

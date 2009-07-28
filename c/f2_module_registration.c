@@ -26,12 +26,12 @@
 void funk2_module_registration_node__init(funk2_module_registration_node_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
   {
     int name__length = strlen(name);
-    this->name = (char*)f2__malloc(name__length + 1);
+    this->name = (char*)from_ptr(f2__malloc(name__length + 1));
     memcpy(this->name, name, name__length + 1);
   }
   {
     int description__length = strlen(description);
-    this->description = (char*)f2__malloc(description__length + 1);
+    this->description = (char*)from_ptr(f2__malloc(description__length + 1));
     memcpy(this->description, description, description__length + 1);
   }
   this->reinitialize_function = reinitialize_function;

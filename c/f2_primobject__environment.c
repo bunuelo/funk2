@@ -123,9 +123,9 @@ void f2__primobject_environment__reinitialize_globalvars() {
 void f2__primobject_environment__initialize() {
   f2__primobject_environment__reinitialize_globalvars();
   
-  global_environment__set(f2environment__new(cause, frame__new_empty_globalsize(cause),
+  global_environment__set(f2environment__new(initial_cause(), frame__new_empty_globalsize(initial_cause()),
 					     nil,
-					     f2symbol__new(cause, strlen("global_environment"), (u8*)"global_environment")));
+					     f2symbol__new(initial_cause(), strlen("global_environment"), (u8*)"global_environment")));
   
   funk2_primobject__environment__init(&(__funk2.primobject__environment));
 }

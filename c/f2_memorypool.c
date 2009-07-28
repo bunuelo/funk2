@@ -149,7 +149,7 @@ void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
 	printf("\ntotal_free_memory                       = %d", (int)free_memory_num);
 	printf("\ntotal_used_memory + total_free_memory() = %d", (int)free_memory_num + used_memory_num);
 	printf("\nthis->total_global_memory               = %d", (int)this->total_global_memory);
-	fflush(stdout)
+	fflush(stdout);
       });
   funk2_memorypool__memory_test__dynamic_memory(this);
   funk2_memorypool__memory_test__byte_num_zero(this);

@@ -35,8 +35,8 @@ f2ptr f2cause__compiled_from__new(f2ptr cause, f2ptr name, f2ptr args) {
 f2ptr check_bcs_valid(f2ptr bytecodes) {
   f2ptr iter = bytecodes;
   while (iter) {
-    debug__assert(raw__cons__is_type(nil, iter), nil, "bytecodes not cons (should be a list of bytecodes).");
-    debug__assert(raw__bytecode__is_type(nil, f2cons__car(iter, nil)), nil, "bytecode type is not correct.");
+    release__assert(raw__cons__is_type(nil, iter), nil, "bytecodes not cons (should be a list of bytecodes).");
+    release__assert(raw__bytecode__is_type(nil, f2cons__car(iter, nil)), nil, "bytecode type is not correct.");
     iter = f2cons__cdr(iter, nil);
   }
   return bytecodes;

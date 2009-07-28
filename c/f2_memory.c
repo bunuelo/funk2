@@ -203,12 +203,21 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   return p;
 }
 
+void funk2_memory__touch_never_delete_list(funk2_memory_t* this) {
+  u64 i;
+  for (i = 0; i < this->never_delete_list->used_num; i++) {
+    funk2_memory__touch_all_referenced_from_f2ptr(this, this->never_delete_list.data[i]);
+  }
+}
+
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
-  //int pool_index;
 #ifdef DEBUG_MEMORY
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
+    }
   }
 #endif
   // parallelized
@@ -218,20 +227,22 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   {
     // parallelized
     funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
-    // could be parallelized
+    // parallelized
     funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(this->user_thread_controller));
-    //int pool_index;
-    //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    //  funk2_memorypool__touch_all_protected_alloc_arrays(&(this->pool[pool_index]));
-    //}
+    // serial
     funk2_memory__touch_all_symbols(this);
+    // serial
+    funk2_memory__touch_never_delete_list(this);
   }
   
   // parallelized
   boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
 #ifdef DEBUG_MEMORY
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
+    }
   }
 #endif // DEBUG_MEMORY
   status("...done collecting garbage.");
@@ -287,7 +298,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
     // might need to loop more than once if two requests for memory from memory handling process occur at the same time.
   } while (1);
   // shouldn't get here if we have DYNAMIC_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
-  printf("\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
+  printf(  "\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
   error(nil, "find_free_memory_for_new_memblock error: shouldn't get here.\n");
   return to_ptr(NULL);
 }

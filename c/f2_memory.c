@@ -310,9 +310,11 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
 
 // note that byte_num must be at least sizeof(u8) for ptype! because of type checking in garbage collection
 f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
+#ifdef DEBUG_MEMORY
   if (! funk2_memorypool__in_protected_region(&(this->pool[pool_index]))) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new used without protection.");
   }
+#endif
   funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 3);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(this, pool_index, byte_num));
 #ifdef DEBUG_MEMORY

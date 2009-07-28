@@ -47,28 +47,27 @@ def_pcfunk0(object_type__new, return object_type__new(this_cause));
 
 // this lookup fails if binding is not strictly in local frame of object
 f2ptr object_type__lookup_local_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  return frame__lookup_type_var_assignment_cons(cause, f2object_type__frame(this, cause), type, var, __type_variable_not_defined__symbol);
+  return frame__lookup_type_var_assignment_cons(cause, f2object_type__frame(this, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__symbol);
 }
 
 // this lookup first attempts to find a local binding, but also checks all inherited type frames for type bindings.
 f2ptr object_type__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  pause_gc();
   f2ptr assignment_cons = object_type__lookup_local_type_var_assignment_cons(cause, this, type, var);
-  if (assignment_cons != __type_variable_not_defined__symbol) {
-    resume_gc(); return assignment_cons;
+  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
+    return assignment_cons;
   }
   // cycle through type bindings here if there is no local binding.
   f2ptr type_iter = f2object_type__types(this, cause);
   while (type_iter) {
     f2ptr parent_type = f2cons__car(type_iter, cause);
     assignment_cons = object_type__lookup_type_var_assignment_cons(cause, parent_type, type, var);
-    if (assignment_cons != __type_variable_not_defined__symbol) {
-      resume_gc(); return assignment_cons;
+    if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
+      return assignment_cons;
     }
     type_iter = f2cons__cdr(type_iter, cause);
   }
   // return exception
-  resume_gc(); return assignment_cons;
+  return assignment_cons;
 }
 
 // this add only modifies the local object frame
@@ -78,26 +77,24 @@ void object_type__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
 
 // this lookup first attempts the local object frame and then tries to find a type frame binding
 f2ptr object_type__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  pause_gc();
   f2ptr assignment_cons = object_type__lookup_type_var_assignment_cons(cause, this, type, var);
-  if (assignment_cons != __type_variable_not_defined__symbol) {
+  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
     f2ptr value = f2cons__cdr(assignment_cons, cause);
-    resume_gc(); return value;
+    return value;
   }
   // return exception
-  resume_gc(); return assignment_cons;
+  return assignment_cons;
 }
 
 f2ptr object_type__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  pause_gc();
   f2ptr assignment_cons = object_type__lookup_local_type_var_assignment_cons(cause, this, type, var);
-  if (assignment_cons != __type_variable_not_defined__symbol) {
+  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
     f2cons__cdr__set(assignment_cons, cause, value);
     // success
-    resume_gc(); return nil;
+    return nil;
   }
   // return exception
-  resume_gc(); return assignment_cons;
+  return assignment_cons;
 }
 
 // end of object_type
@@ -109,13 +106,10 @@ void f2__primobject_object_type__reinitialize_globalvars() {
 void f2__primobject_object_type__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_object_type", "", &f2__primobject_object_type__reinitialize_globalvars);
   
-  pause_gc();
   f2__primobject_object_type__reinitialize_globalvars();
   
   f2__primcfunk__init(object_type__new, "");
   
   environment__add_var_value(initial_cause(), global_environment(), __object_type__symbol, nil);
-  
-  resume_gc();
 }
 

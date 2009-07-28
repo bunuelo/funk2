@@ -24,7 +24,7 @@
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
 void funk2_processor_mutex__error() {
   printf("\nfunk2_processor_mutex__error here.\n");
-  exit(-1);
+  error(nil, "funk2_processor_mutex__error here.");
 }
 #endif
 

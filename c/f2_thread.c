@@ -30,7 +30,7 @@ f2ptr __thread__value_reg__symbol;
 
 boolean_t f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode) {
   debug__assert(raw__thread__is_type(nil, thread), nil, "thread type assertion failed.");
-  release__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
+  debug__assert(raw__bytecode__is_type(nil, bytecode), nil, "bytecode type assertion failed.");
   debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "thread type assertion failed.");
   //f2ptr cause = f2thread__execute_bytecode__cause__new(f2thread__cause_reg(thread), thread, f2thread__env(thread), bytecode);
   //f2thread__cause_reg__set(thread, cause, cause);

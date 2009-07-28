@@ -69,7 +69,7 @@ void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* t
     //printf("\n__gc_touch_circle_buffer.start = %x", (int)this->start);
     funk2_memblock_t** new_location = (funk2_memblock_t**)from_ptr(f2__new_alloc(to_ptr(this->start), sizeof(funk2_memblock_t*) * old_num, sizeof(funk2_memblock_t*) * this->num));
     //printf("\nnew_location = %lx", (int)new_location); fflush(stdout);
-    s64 location_diff = new_location - this->start;
+    s64 location_diff = (u64)(new_location) - (u64)(this->start);
     this->start = new_location;
     
     this->start_index += location_diff;

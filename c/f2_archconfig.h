@@ -52,23 +52,23 @@ typedef u8 byte;
 typedef u64 f2size_t;
 
 #if int__bit_num == 64
-#  define s64__fstr                   "%d"
-#  define u64__fstr                   "%u"
-#  define x64__fstr                   "%X"
-#  define X64__fstr                   "%x"
-#  define nanosecond_decimal_fraction "%09d"
+#  define s64__fstr             "%d"
+#  define u64__fstr             "%u"
+#  define x64__fstr             "%X"
+#  define X64__fstr             "%x"
+#  define nano_decimal_fraction "%09d"
 #elif long__bit_num == 64
-#  define s64__fstr                   "%ld"
-#  define u64__fstr                   "%lu"
-#  define x64__fstr                   "%lx"
-#  define X64__fstr                   "%lX"
-#  define nanosecond_decimal_fraction "%09ld"
+#  define s64__fstr             "%ld"
+#  define u64__fstr             "%lu"
+#  define x64__fstr             "%lx"
+#  define X64__fstr             "%lX"
+#  define nano_decimal_fraction "%09ld"
 #elif long_long__bit_num == 64
-#  define s64__fstr                   "%lld"
-#  define u64__fstr                   "%llu"
-#  define x64__fstr                   "%llx"
-#  define X64__fstr                   "%llX"
-#  define nanosecond_decimal_fraction "%09lld"
+#  define s64__fstr             "%lld"
+#  define u64__fstr             "%llu"
+#  define x64__fstr             "%llx"
+#  define X64__fstr             "%llX"
+#  define nano_decimal_fraction "%09lld"
 #else
 #  error configuration not defined.  try: make clean; make configure; make
 #endif

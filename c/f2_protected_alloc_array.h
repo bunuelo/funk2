@@ -27,6 +27,7 @@ typedef struct funk2_protected_alloc_array_s {
   u64    length;
   f2ptr* data;
   u64    reentrance_count;
+  u64    max_reentrance_count;
 } funk2_protected_alloc_array_t;
 
 void funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this);

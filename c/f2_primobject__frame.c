@@ -32,10 +32,8 @@ f2ptr __frame__symbol = -1;
 
 f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
   release__assert(__frame__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
-  pause_gc();
   f2ptr this = f2__primobject__new(cause, __frame__symbol, 1, nil);
   f2frame__type_hashtable__set(this, cause, type_hashtable);
-  resume_gc();
   return this;
 }
 
@@ -62,55 +60,50 @@ void  frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, 
 }
 
 f2ptr frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
-  pause_gc();
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
     if (keyvalue_pair) {
-      resume_gc(); return keyvalue_pair;
+      return keyvalue_pair;
     }
   }
-  resume_gc(); return not_defined_value;
+  return not_defined_value;
 }
 
 f2ptr frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
-  pause_gc();
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
     if (keyvalue_pair) {
       f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
-      resume_gc(); return retval;
+      return retval;
     }
   }
-  resume_gc(); return not_defined_value;
+  return not_defined_value;
 }
 
 f2ptr frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
-  pause_gc();
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
     if (keyvalue_pair) {
       f2cons__cdr__set(keyvalue_pair, cause, value);
-      resume_gc(); return nil;
+      return nil;
     }
   }
-  resume_gc(); return not_defined_value;
+  return not_defined_value;
 }
 
 f2ptr frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr retval = nil;
-  pause_gc();
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     retval = f2__hashtable__slot_names(cause, type__hashtable);
   }
-  resume_gc();
   return retval;
 }
 
@@ -141,7 +134,6 @@ f2ptr frame__funkvar_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value,
 def_pcfunk4(frame__funkvar_value__set, this, funkvar, value, not_defined_value, return frame__var_value__set(this_cause, this, funkvar, value, not_defined_value));
 
 f2ptr frame__new_empty(f2ptr cause) {
-  pause_gc();
   f2ptr this = f2frame__new(cause,
 			    f2__hashtable__new(cause, f2integer__new(cause, 5)),
 			    f2__hashtable__new(cause, f2integer__new(cause, 5)));
@@ -151,11 +143,9 @@ f2ptr frame__new_empty(f2ptr cause) {
 def_pcfunk0(frame__new, return frame__new_empty(this_cause));
 
 f2ptr frame__new_empty_globalsize(f2ptr cause) {
-  pause_gc();
   f2ptr this = f2frame__new(cause,
 			    f2__hashtable__new(cause, f2integer__new(cause, 24)),
 			    f2__hashtable__new(cause, f2integer__new(cause, 24)));
-  resume_gc();
   return this;
 }
 
@@ -188,8 +178,6 @@ void f2__primobject_frame__reinitialize_globalvars() {
 }
 
 void f2__primobject_frame__initialize() {
-  pause_gc();
-  
   f2__primobject_frame__reinitialize_globalvar__symbols();
   
   f2__primcfunk__init__1(frame__is_type, exp, "checks to see if object is a frame.  returns true is object is a frame and false otherwise.");
@@ -205,6 +193,4 @@ void f2__primobject_frame__initialize() {
   
   __frame__variable_type__symbol      = f2symbol__new(initial_cause(), strlen("variable"),      (u8*)"variable");
   __frame__funk_variable_type__symbol = f2symbol__new(initial_cause(), strlen("funk_variable"), (u8*)"funk_variable");
-  
-  resume_gc();
 }

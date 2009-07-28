@@ -36,12 +36,10 @@ f2ptr __environment__symbol;
 f2ptr __environment__last_23_larva_symbol = nil;
 
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc) {
-  pause_gc();
   f2ptr this = f2__primobject__new(cause, __environment__symbol, 3, nil);
   f2environment__frame__set(     this, cause, frame);
   f2environment__parent_env__set(this, cause, parent_env);
   f2environment__desc__set(      this, cause, desc);
-  resume_gc();
   return this;
 }
 
@@ -51,14 +49,13 @@ f2ptr f2__environment__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw_
 void  environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value)     {frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);}
 
 f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  pause_gc();
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr value;
   while (env) {
     value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __type_variable_not_defined__symbol);
     if (value != __type_variable_not_defined__symbol) {
-      resume_gc(); return value;
+      return value;
     }
     env = f2environment__parent_env(env, cause);
   }
@@ -66,18 +63,17 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
   __environment__last_23_larva_symbol = var;
   f2ptr rv = f2larva__new(cause, 23);
-  resume_gc(); return rv;
+  return rv;
 }
 
 f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  pause_gc();
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr value;
   while (env) {
     value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __type_variable_not_defined__symbol);
     if (value != __type_variable_not_defined__symbol) {
-      resume_gc(); return value;
+      return value;
     }
     env = f2environment__parent_env(env, cause);
   }
@@ -85,7 +81,7 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
   __environment__last_23_larva_symbol = var;
   f2ptr rv = f2larva__new(cause, 23);
-  resume_gc(); return rv;
+  return rv;
 }
 
 f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
@@ -97,22 +93,19 @@ f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr typ
 }
 
 f2ptr environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  pause_gc();
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);
-  resume_gc();
   return nil;
 }
 
 f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  pause_gc();
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr result;
   while (env) {
     result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __type_variable_not_defined__symbol);
     if (result != __type_variable_not_defined__symbol) {
-      resume_gc(); return result;
+      return result;
     }
     env = f2environment__parent_env(env, cause);
   }
@@ -120,7 +113,7 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   //f2ptr rv = f2type_variable_not_defined__exception__new(cause, var);
   __environment__last_23_larva_symbol = var;
   f2ptr rv = f2larva__new(cause, 23);
-  resume_gc(); return rv;
+  return rv;
 }
 
 
@@ -143,7 +136,6 @@ void f2__primobject_environment__reinitialize_globalvars() {
 }
 
 void f2__primobject_environment__initialize() {
-  pause_gc();
   f2__primobject_environment__reinitialize_globalvar__symbols();
   
   f2ptr cause = initial_cause();//f2_primobject_environment_c__cause__new(initial_cause(), nil, nil);
@@ -156,7 +148,5 @@ void f2__primobject_environment__initialize() {
   
   environment__add_var_value(cause, global_environment(), __environment__symbol,         nil);
   environment__add_var_value(cause, global_environment(), __current_environment__symbol, nil);
-  
-  resume_gc();
 }
 

@@ -31,6 +31,7 @@
 #include "f2_memorypool.h"
 #include "f2_processor_mutex.h"
 #include "f2_user_thread_controller.h"
+#include "f2_never_delete_list.h"
 
 //#define DEBUG_MEMORY 3
 
@@ -42,6 +43,7 @@ typedef struct funk2_memory_s {
   pthread_t                      memory_handling_thread;
   boolean_t                      bootstrapping_mode;
   funk2_user_thread_controller_t user_thread_controller;
+  funk2_never_delete_list_t      never_delete_list;
 } funk2_memory_t;
 
 #define nil ((f2ptr)0)

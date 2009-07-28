@@ -46,10 +46,12 @@ void funk2_memory__init(funk2_memory_t* this) {
   this->bootstrapping_mode     = boolean__true;
   
   funk2_user_thread_controller__init(&(this->user_thread_controller));
+  funk2_never_delete_list__init(&(this->never_delete_list));
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {
   funk2_user_thread_controller__destroy(&(this->user_thread_controller));
+  funk2_never_delete_list__destroy(&(this->never_delete_list));
 }
 
 // memory handling thread should never call this function

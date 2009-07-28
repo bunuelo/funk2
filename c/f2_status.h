@@ -22,19 +22,14 @@
 #ifndef F2__STATUS__H
 #define F2__STATUS__H
 
-#define STATUS_LOGGING 1
-
 typedef struct funk2_status_s {
   funk2_processor_mutex_t trace_mutex;
 } funk2_status_t;
 
 void funk2_status(char* filename, int line_num, char* msg, ...);
 
-#ifdef STATUS_LOGGING
-#  define status(msg, rest...) funk2_status(__FILE__, __LINE__, msg, ## rest)
-#else
-#  define status(msg, rest...)
-#endif
+// to disable status, there is a boolean global variable in f2_status.c
+#define status(msg, rest...) funk2_status(__FILE__, __LINE__, msg, ## rest)
 
 ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...);
 ssize_t writef(int fd, char* msg, ...);

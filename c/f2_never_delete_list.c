@@ -37,7 +37,7 @@ void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr e
   if (this->used_num == this->alloc_num) {
     u64 old_alloc_num = this->alloc_num;
     this->alloc_num <<= 1;
-    this->data = f2__new_alloc(this->data, old_alloc_num * sizeof(f2ptr), this->alloc_num * sizeof(f2ptr));
+    this->data = (f2ptr*)from_ptr(f2__new_alloc(to_ptr(this->data), old_alloc_num * sizeof(f2ptr), this->alloc_num * sizeof(f2ptr)));
   }
   this->data[this->used_num] = exp;
   this->used_num ++;

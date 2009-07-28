@@ -121,7 +121,7 @@ void f2__primobject_environment__reinitialize_globalvars() {
 }
 
 void f2__primobject_environment__initialize() {
-  f2__primobject_environment__reinitialize_globalvar__symbols();
+  f2__primobject_environment__reinitialize_globalvars();
   
   global_environment__set(f2environment__new(cause, frame__new_empty_globalsize(cause),
 					     nil,

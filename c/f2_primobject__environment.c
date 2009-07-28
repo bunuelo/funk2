@@ -65,7 +65,7 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
     }
     env = f2environment__parent_env(env, cause);
   }
-  __environment__last_23_larva_symbol = var;
+  __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return __funk2.primobject__frame.type_variable_not_defined__symbol;
 }
 
@@ -80,7 +80,7 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
     }
     env = f2environment__parent_env(env, cause);
   }
-  __environment__last_23_larva_symbol = var;
+  __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return __funk2.primobject__frame.type_variable_not_defined__symbol;
 }
 

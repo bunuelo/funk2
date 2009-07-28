@@ -102,17 +102,17 @@ f2ptr f2__compile__compile(f2ptr cause, f2ptr protect_environment)              
 f2ptr f2__compile__yield(f2ptr cause)                                                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__yield__symbol, nil, nil, nil), nil));}
 f2ptr f2__compile__newenv(f2ptr cause)                                                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__newenv__symbol, nil, nil, nil), nil));}
 
-f2ptr f2__compile__lookup_var(f2ptr cause, f2ptr var)         {return bcs_valid(f2__compile__lookup_type_var(cause, __frame__variable_type__symbol,      var));}
-f2ptr f2__compile__lookup_funkvar(f2ptr cause, f2ptr funkvar) {return bcs_valid(f2__compile__lookup_type_var(cause, __frame__funk_variable_type__symbol, funkvar));}
+f2ptr f2__compile__lookup_var(f2ptr cause, f2ptr var)         {return bcs_valid(f2__compile__lookup_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
+f2ptr f2__compile__lookup_funkvar(f2ptr cause, f2ptr funkvar) {return bcs_valid(f2__compile__lookup_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, funkvar));}
 
-f2ptr f2__compile__define_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__define_type_var(cause, __frame__variable_type__symbol,      var));}
-f2ptr f2__compile__define_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__define_type_var(cause, __frame__funk_variable_type__symbol, var));}
+f2ptr f2__compile__define_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__define_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
+f2ptr f2__compile__define_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__define_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
-f2ptr f2__compile__var__mutate(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__type_var__mutate(cause, __frame__variable_type__symbol,      var));}
-f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__type_var__mutate(cause, __frame__funk_variable_type__symbol, var));}
+f2ptr f2__compile__var__mutate(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__type_var__mutate(cause, __funk2.primobject__frame.variable__symbol,      var));}
+f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__type_var__mutate(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
-f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __frame__variable_type__symbol,      var));}
-f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __frame__funk_variable_type__symbol, var));}
+f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
+f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
 f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   if (is_locally_funktional) {

@@ -26,7 +26,7 @@
 void funk2_never_delete_list__init(funk2_never_delete_list_t* this) {
   this->alloc_num = 1024;
   this->used_num  = 0;
-  this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_num);
+  this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_num));
 }
 
 void funk2_never_delete_list__destroy(funk2_never_delete_list_t* this) {

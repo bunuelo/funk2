@@ -43,6 +43,8 @@ typedef unsigned char boolean_t;
 #  define debug__assert_and_on_failure(cond, thread, desc, on_failure)
 #endif
 
+#define F2__ASSERTIONS__RELEASE
+
 #ifdef F2__ASSERTIONS__RELEASE
 #  define release__assert(cond, thread, desc)                            {if(! (cond)) {assert_failed(thread, __FILE__, __LINE__, desc);}}
 #  define release__assert_and_on_failure(cond, thread, desc, on_failure) {if(! (cond)) {{on_failure;} assert_failed(thread, __FILE__, __LINE__, desc);}}

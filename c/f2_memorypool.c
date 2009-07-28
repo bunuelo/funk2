@@ -359,7 +359,7 @@ void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypoo
 void funk2_memorypool__touch_all_protected_alloc_arrays(funk2_memorypool_t* this) {
   u64 i;
   for (i = 0; i < this->protected_alloc_array__used_num; i ++) {
-    funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array[i]);
+    funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array.data[i]);
   }
 }
 

@@ -70,45 +70,31 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
 }
 
 void f2__thread__stack__push_value(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__value(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 void f2__thread__stack__push_iter(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__iter(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 void f2__thread__stack__push_program_counter(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__program_counter(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 void f2__thread__stack__push_args(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__args(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 void f2__thread__stack__push_return(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__return(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 void f2__thread__stack__push_env(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__env(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 void f2__thread__stack__push_trace(f2ptr cause, f2ptr thread) {
-  pause_gc();
   f2thread__stack__set(thread, cause, f2cons__new(cause, f2thread__trace(thread, cause), f2thread__stack(thread, cause)));
-  resume_gc();
 }
 
 // pop registers

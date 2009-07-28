@@ -22,6 +22,8 @@
 #ifndef F2__COMPILE__H
 #define F2__COMPILE__H
 
+#define DEBUG_COMPILE
+
 #ifdef DEBUG_COMPILE
 #  define bcs_valid(value) check_bcs_valid(value)
 #else

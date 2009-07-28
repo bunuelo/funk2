@@ -54,7 +54,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   u64 seconds      = seconds_since_1970      - (minutes_since_1970         * 60);
   u64 nanoseconds  = nanoseconds_since_1970  - (seconds_since_1970         * nanoseconds_per_second);
   char temp_msg2[2048];
-  sprintf(temp_msg2, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d.%09ld funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (u64)nanoseconds, temp_msg);
+  sprintf(temp_msg2, "\n[%-32s %5d] 0x%X_%02d_%02d_%02d." nanosecond_decimal_fraction__fstr " funk2 status: %s", filename, line_num, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (u64)nanoseconds, temp_msg);
   size_t size_to_write = strlen(temp_msg2) + 1;
   size_t size_written  = write(trace_fd, temp_msg2, size_to_write);
   if (size_written != size_to_write) {

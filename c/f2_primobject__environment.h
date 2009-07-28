@@ -33,7 +33,7 @@
 boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc);
-#define f2primobject__is_environment(this, cause) raw__eq(cause, f2primobject__type(this, cause), __environment__symbol)
+#define f2primobject__is_environment(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__environment.environment__symbol)
 
 defprimobject__static_slot__prototype(environment__frame);
 #define f2environment__frame(                 this, cause)        primobject__static_slot__accessor(  this, environment__frame, cause)

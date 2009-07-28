@@ -47,13 +47,13 @@ def_pcfunk0(object_type__new, return object_type__new(this_cause));
 
 // this lookup fails if binding is not strictly in local frame of object
 f2ptr object_type__lookup_local_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  return frame__lookup_type_var_assignment_cons(cause, f2object_type__frame(this, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__symbol);
+  return frame__lookup_type_var_assignment_cons(cause, f2object_type__frame(this, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
 }
 
 // this lookup first attempts to find a local binding, but also checks all inherited type frames for type bindings.
 f2ptr object_type__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr assignment_cons = object_type__lookup_local_type_var_assignment_cons(cause, this, type, var);
-  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
+  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__larva) {
     return assignment_cons;
   }
   // cycle through type bindings here if there is no local binding.
@@ -61,7 +61,7 @@ f2ptr object_type__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   while (type_iter) {
     f2ptr parent_type = f2cons__car(type_iter, cause);
     assignment_cons = object_type__lookup_type_var_assignment_cons(cause, parent_type, type, var);
-    if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
+    if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__larva) {
       return assignment_cons;
     }
     type_iter = f2cons__cdr(type_iter, cause);
@@ -78,7 +78,7 @@ void object_type__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
 // this lookup first attempts the local object frame and then tries to find a type frame binding
 f2ptr object_type__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr assignment_cons = object_type__lookup_type_var_assignment_cons(cause, this, type, var);
-  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
+  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__larva) {
     f2ptr value = f2cons__cdr(assignment_cons, cause);
     return value;
   }
@@ -88,7 +88,7 @@ f2ptr object_type__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
 
 f2ptr object_type__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr assignment_cons = object_type__lookup_local_type_var_assignment_cons(cause, this, type, var);
-  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__symbol) {
+  if (assignment_cons != __funk2.primobject__frame.type_variable_not_defined__larva) {
     f2cons__cdr__set(assignment_cons, cause, value);
     // success
     return nil;

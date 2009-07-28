@@ -1149,11 +1149,8 @@ int f2__thread__bytecode__lookup_type_var(f2ptr thread, f2ptr bytecode, f2ptr ty
   
   f2ptr env = f2thread__env(thread, cause);
   f2ptr thread_value = environment__lookup_type_var_value(cause, env, type, var);
-  if (raw__symbol__eq(cause, thread_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
+  if (raw__larva__is_type(cause, thread_value)) {
     thread_value = f2__cause__lookup_type_var_value(cause, cause, type, var);
-    if (raw__symbol__eq(cause, thread_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
-      thread_value = f2larva__new(cause, 23);
-    }
   }
   f2thread__value__set(thread, cause, thread_value);
   return 0;
@@ -1184,9 +1181,6 @@ int f2__thread__bytecode__type_var__mutate(f2ptr thread, f2ptr bytecode, f2ptr t
   f2ptr env        = f2thread__env(thread, cause);
   f2ptr value      = f2thread__value(thread, cause);
   f2ptr new_value = environment__type_var_value__set(cause, env, type, var, value);
-  if (raw__symbol__eq(cause, new_value, __funk2.primobject__frame.type_variable_not_defined__symbol)) {
-    new_value = f2larva__new(cause, 23);
-  }
   f2thread__value__set(thread, cause, new_value);
   return 0;
 }

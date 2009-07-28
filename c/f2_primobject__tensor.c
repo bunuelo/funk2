@@ -39,7 +39,6 @@ f2ptr f2tensor__new(f2ptr cause, f2ptr dimensions, f2ptr data) {
 // hardcoded functions
 
 f2ptr f2__tensor__new_from_array_of_integer_dimensions(f2ptr cause, f2ptr dimensions, f2ptr fill_element) {
-  pause_gc();
   int   dimensions__length = raw__array__length(cause, dimensions);
   f2ptr new_dimensions     = raw__array__new(cause, dimensions__length);
   int   data__length       = 1;
@@ -54,7 +53,6 @@ f2ptr f2__tensor__new_from_array_of_integer_dimensions(f2ptr cause, f2ptr dimens
     raw__array__elt__set(cause, data, i, fill_element);
   }
   f2ptr this = f2tensor__new(cause, new_dimensions, data);
-  resume_gc();
   return this;
 }
 
@@ -98,11 +96,8 @@ void f2__primobject_tensor__reinitialize_globalvars() {
 void f2__primobject_tensor__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_tensor", "", &f2__primobject_tensor__reinitialize_globalvars);
   
-  pause_gc();
   f2__primobject_tensor__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __tensor__symbol, nil);
-  
-  resume_gc();
 }
 

@@ -97,13 +97,10 @@ void f2__primobject_circular_buffer__reinitialize_globalvars() {
 void f2__primobject_circular_buffer__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_circular_buffer", "", &f2__primobject_circular_buffer__reinitialize_globalvars);
   
-  pause_gc();
   f2__primobject_circular_buffer__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __funk2.primobject__circular_buffer.symbol,        nil);
   environment__add_var_value(initial_cause(), global_environment(), __funk2.primobject__circular_buffer.empty__symbol, nil);
   environment__add_var_value(initial_cause(), global_environment(), __funk2.primobject__circular_buffer.full__symbol,  nil);
-  
-  resume_gc();
 }
 

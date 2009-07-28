@@ -502,16 +502,11 @@ void f2__object__reinitialize_globalvars() {
 void f2__object__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "object", "", &f2__object__reinitialize_globalvars);
   
-  //f2ptr cause = initial_cause(); //f2_object_c__cause__new(initial_cause(), nil, global_environment());
-  pause_gc();
-  
   f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init__1(object__type,               this,       "returns the symbolic type name of the object.");
   f2__primcfunk__init__2(object__slot__get_funk,     this, slot, "returns the slot get funk for the object, i.e. an accessor (e.g. value).");
   f2__primcfunk__init__2(object__slot__set_funk,     this, slot, "returns the slot set funk for the object, i.e. a mutator (e.g. value-set).");
   f2__primcfunk__init__2(object__slot__execute_funk, this, slot, "returns the slot execute funk for the object, i.e. a general executor (e.g. print-value).");
-  
-  resume_gc();
 }
 

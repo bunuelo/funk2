@@ -590,7 +590,6 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args
 }
 
 void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
-  pause_gc();
   f2ptr env;
   if      (raw__funk__is_type(cause, cfunkable))       {env = f2funk__env(cfunkable, cause);}
   else if (raw__metro__is_type(cause, cfunkable))      {env = f2metro__env(cfunkable, cause);}
@@ -605,7 +604,6 @@ void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args
   
   f2__thread__bytecode_helper__funk__no_increment_pc_reg(thread, cause);
   //f2__global_scheduler__add_thread(cause, thread);
-  resume_gc();
 }
 
 boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp) {
@@ -1857,10 +1855,6 @@ void f2__primcfunks__reinitialize_globalvars() {
 void f2__primcfunks__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__reinitialize_globalvars);
   
-  pause_gc();
-  
-  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
-  
   f2__primcfunks__reinitialize_globalvars();
   
   // system
@@ -2186,8 +2180,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
-  
-  resume_gc();
 }
 
 

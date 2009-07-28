@@ -150,10 +150,8 @@ f2ptr f2__serialize(f2ptr cause, f2ptr exp) {
   int chunk__length;
   raw__serialize_to_chunk_index(cause, nil, 0, &chunk__length, exp);
   printf("\nserialize: chunk__length = %d", chunk__length); fflush(stdout);
-  pause_gc();
   f2ptr chunk = f2chunk__new(cause, chunk__length, NULL);
   raw__serialize_to_chunk_index(cause, chunk, 0, &chunk__length, exp);
-  resume_gc();
   return chunk;
 }
 def_pcfunk1(f2__serialize, exp, return f2__serialize(this_cause, exp));
@@ -271,16 +269,10 @@ void f2__serialize__reinitialize_globalvars() {
 void f2__serialize__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "serialize", "", &f2__serialize__reinitialize_globalvars);
   
-  pause_gc();
-  
-  //f2ptr cause = f2_serialize_c__cause__new(initial_cause(), nil, nil);
-  
   f2__serialize__reinitialize_globalvars();
   
   f2__primcfunk__init(f2__serialize, "");
   f2__primcfunk__init(f2__deserialize, "");
-  
-  resume_gc();
 }
 
 

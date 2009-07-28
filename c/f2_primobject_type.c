@@ -117,9 +117,6 @@ void f2__primobject_type__reinitialize_globalvars() {
 void f2__primobject_type__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type", "", &f2__primobject_type__reinitialize_globalvars);
   
-  //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
-  pause_gc();
-  
   f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init__0(primobject_type__new, "create a new Funk2 object type.");
@@ -130,8 +127,6 @@ void f2__primobject_type__initialize() {
   f2__primcfunk__init__1(primobject_type__get_funk__slot_names, this, "get a list of get_funk slot names.");
   f2__primcfunk__init__1(primobject_type__set_funk__slot_names, this, "get a list of set_funk slot names.");
   f2__primcfunk__init__1(primobject_type__execute_funk__slot_names, this, "get a list of execute_funk slot names.");
-  
-  resume_gc();
 }
 
 

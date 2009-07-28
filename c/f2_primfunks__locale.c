@@ -80,9 +80,6 @@ void f2__primfunks__locale__reinitialize_globalvars() {
 void f2__primfunks__locale__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__locale", "", &f2__primfunks__locale__reinitialize_globalvars);
   
-  pause_gc();
-  //f2ptr cause = f2_primfunks__locale_c__cause__new(initial_cause(), nil, nil);
-  
   f2__primfunks__locale__reinitialize_globalvars();
   
   f2__primcfunk__init(locale__setlocale, "(as defined in locale.h)");
@@ -93,8 +90,6 @@ void f2__primfunks__locale__initialize() {
   f2__primcfunk__init(locale__lc_monetary, "(as defined in locale.h)");
   f2__primcfunk__init(locale__lc_numeric, "(as defined in locale.h)");
   f2__primcfunk__init(locale__lc_time, "(as defined in locale.h)");
-  
-  resume_gc();
 }
 
 void f2__primfunks__locale__destroy() {

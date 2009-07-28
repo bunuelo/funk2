@@ -1410,7 +1410,6 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t prot
   __compile__recursion_count ++;
 #endif // DEBUG_COMPILE
   f2ptr result_bcs = nil;
-  pause_gc();
   if      (!exp)                        {result_bcs = f2__compile__value__set(cause, nil);}
   else if (raw__integer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__pointer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
@@ -1434,7 +1433,6 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr thread, f2ptr exp, boolean_t prot
   if (! raw__larva__is_type(cause, result_bcs)) {
     result_bcs = bcs_valid(result_bcs);
   }
-  resume_gc();
   __compile__recursion_count --;
 #ifdef DEBUG_COMPILE
   if (__compile__recursion_count == 0) {

@@ -103,10 +103,6 @@ void f2__termios__reinitialize_globalvars() {
 void f2__termios__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "termios", "", &f2__termios__reinitialize_globalvars);
   
-  pause_gc();
-  
-  //f2ptr cause = f2_termios_c__cause__new(initial_cause());
-  
   f2__termios__reinitialize_globalvars();
   
   f2__primcfunk__init(termios__width, "returns the current width of the terminal. (as defined in termios.h)");
@@ -115,8 +111,6 @@ void f2__termios__initialize() {
   f2__primcfunk__init(termios__echo, "(as defined in termios.h)");
   f2__primcfunk__init(termios__nocanon, "(as defined in termios.h)");
   f2__primcfunk__init(termios__canon, "(as defined in termios.h)");
-  
-  resume_gc();
 }
 
 

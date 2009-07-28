@@ -54,10 +54,8 @@ boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
-  pause_gc();
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
   f2ptr this = f2hashtable__new(cause, f2integer__new(cause, bin_num_power), bin_array);
-  resume_gc();
   debug__assert(raw__hashtable__valid(cause, this), nil, "raw__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }
@@ -66,9 +64,7 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
   if(! raw__integer__is_type(cause, bin_num_power)) {
     return f2larva__new(cause, 1);
   }
-  pause_gc();
   f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
-  resume_gc();
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }
@@ -78,7 +74,6 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
   //if(! raw__symbolp(key, cause)) {
   //  return f2larva__new(cause, 1);
   //}
-  pause_gc();
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
@@ -103,7 +98,6 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
-  resume_gc();
   return nil;
 }
 
@@ -112,7 +106,6 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   //if(! raw__symbolp(key, cause)) {
   //  return f2larva__new(cause, 1);
   //}
-  pause_gc();
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
@@ -125,28 +118,26 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
     if (raw__equals(cause, key, keyvalue_pair__key)) {
-      resume_gc(); return keyvalue_pair;
+      return keyvalue_pair;
     }
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
-  resume_gc(); return nil;
+  return nil;
 }
 
 f2ptr f2__hashtable__lookup_value(f2ptr this, f2ptr cause, f2ptr key) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_value assert failed: f2__hashtable__valid(this)");
-  pause_gc();
   f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(this, cause, key);
   if (keyvalue_pair) {
     f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
-    resume_gc(); return retval;
+    return retval;
   }
-  resume_gc(); return nil;
+  return nil;
 }
 
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  pause_gc();
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
   s64   bin_array__length  = raw__array__length(cause, bin_array);
   s64   index;
@@ -160,7 +151,7 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
       keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
     }
   }
-  resume_gc(); return new_list;
+  return new_list;
 }
 
 
@@ -171,11 +162,8 @@ void f2__primobject_hashtable__reinitialize_globalvars() {
 }
 
 void f2__primobject_hashtable__initialize() {
-  pause_gc();
   f2__primobject_hashtable__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __hashtable__symbol, nil);
-  
-  resume_gc();
 }
 

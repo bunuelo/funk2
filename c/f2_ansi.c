@@ -420,8 +420,6 @@ void f2__ansi__reinitialize_globalvars() {
 void f2__ansi__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "ansi", "", &f2__ansi__reinitialize_globalvars);
   
-  pause_gc();
-  
   //f2ptr cause = f2_ansi_c__cause__new(initial_cause());
   
   f2__ansi__reinitialize_globalvars();
@@ -468,8 +466,6 @@ void f2__ansi__initialize() {
   f2__primcfunk__init(ansi__stream__background, "");
   f2__primcfunk__init(ansi__stream__rectangle, "");
   f2__primcfunk__init(ansi__stream__bordered_rectangle, "");
-  
-  resume_gc();
 }
 
 

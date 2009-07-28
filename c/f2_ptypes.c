@@ -1522,7 +1522,6 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   
   //int pool_index = __f2ptr__pool_index(this);
   
-  //pool__pause_gc(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_simple_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
@@ -1534,7 +1533,6 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
     //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
   }
   __pure__f2simple_array__elt__set(this, index, value);
-  //pool__resume_gc(pool_index);
   return nil;
 }
 
@@ -1729,7 +1727,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
   
   //int pool_index = __f2ptr__pool_index(this);
   
-  //pool__pause_gc(pool_index);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_traced_array) {
     ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
@@ -1744,7 +1741,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     f2ptr old_elt    = __pure__f2traced_array__elt(this, index);
     f2ptr prev_elts  = __pure__f2traced_array__elt__trace(this, index);
     int   tracing_on = __pure__f2traced_array__elt__tracing_on(this, index);
-    //pool__resume_gc(pool_index);
     
     f2ptr new_tracing_doublelink = nil;
     f2ptr new_tracing_transframe = nil;
@@ -1757,7 +1753,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       new_tracing_doublelink = f2doublelink__new__trace_depth(cause, prev_elts, nil, new_tracing_transframe, trace_depth - 1);
     }
     
-    //pool__pause_gc(pool_index);
     if (new_tracing_doublelink) {
       if (prev_elts) {
 	f2doublelink__next__set__trace_depth(prev_elts, nil, new_tracing_doublelink, trace_depth - 1);
@@ -1788,7 +1783,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       f2__imagination_link__set_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, slot, next, value, trace_depth - 1);
     }
   }
-  //pool__resume_gc(pool_index);
   return nil;
 }
 

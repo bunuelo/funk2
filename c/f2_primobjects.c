@@ -398,7 +398,6 @@ defprimobject__static_slot(cfunk__documentation, 5);
 f2ptr __cfunk__symbol = -1;
 
 f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
-  /*pause_gc();*/
   release__assert(__cfunk__symbol != -1, nil, "f2cfunk__new error: used before primobjects initialized.");
   if (!cfunkptr) {return primobject_error("cfunk-cfunkptr cannot be nil.");}
   f2ptr this = f2__primobject__new(cause, __cfunk__symbol, 6, nil);
@@ -408,7 +407,6 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr en
   f2cfunk__env__set(          this, cause, env);
   f2cfunk__is_funktional__set(this, cause, is_funktional);
   f2cfunk__documentation__set(this, cause, documentation);
-  /*resume_gc();*/
   return this;
 }
 
@@ -492,7 +490,6 @@ defprimobject__static_slot(metrocfunk__documentation, 5);
 f2ptr __metrocfunk__symbol = -1;
 
 f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
-  /*pause_gc();*/
   release__assert(__metrocfunk__symbol != -1, nil, "f2metrocfunk__new error: used before primobjects initialized.");
   if (!cfunkptr) {return primobject_error("metrocfunk-cfunkptr cannot be nil.");}
   f2ptr this = f2__primobject__new(cause, __metrocfunk__symbol, 6, nil);
@@ -502,7 +499,6 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2p
   f2metrocfunk__env__set(          this, cause, env);
   f2metrocfunk__is_funktional__set(this, cause, is_funktional);
   f2metrocfunk__documentation__set(this, cause, documentation);
-  /*resume_gc();*/
   return this;
 }
 
@@ -589,7 +585,6 @@ defprimobject__static_slot(funk__documentation,       8);
 f2ptr __funk__symbol = -1;
 
 f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation) {
-  /*pause_gc();*/
   release__assert(__funk__symbol != -1, nil, "f2funk__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __funk__symbol, 9, nil);
   f2funk__name__set(               this, cause, name);
@@ -601,7 +596,6 @@ f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2p
   f2funk__machine_code__set(       this, cause, machine_code);
   f2funk__is_funktional__set(      this, cause, is_funktional);
   f2funk__documentation__set(      this, cause, documentation);
-  /*resume_gc();*/
   return this;
 }
 
@@ -709,7 +703,6 @@ defprimobject__static_slot(metro__documentation,       8);
 f2ptr __metro__symbol = -1;
 
 f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation) {
-  /*pause_gc();*/
   release__assert(__metro__symbol != -1, nil, "f2metro__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __metro__symbol, 9, nil);
   f2metro__name__set(               this, cause, name);
@@ -721,7 +714,6 @@ f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2
   f2metro__machine_code__set(       this, cause, machine_code);
   f2metro__is_funktional__set(      this, cause, is_funktional);
   f2metro__documentation__set(      this, cause, documentation);
-  /*resume_gc();*/
   return this;
 }
 
@@ -822,12 +814,10 @@ defprimobject__static_slot(exception__value, 1);
 f2ptr __exception__symbol = -1;
 
 f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
-  /*pause_gc();*/
   release__assert(__exception__symbol != -1, nil, "f2exception__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __exception__symbol, 2, nil);
   f2exception__tag__set(  this, cause, tag);
   f2exception__value__set(this, cause, value);
-  /*resume_gc();*/
   return this;
 }
 
@@ -876,14 +866,12 @@ defprimobject__static_slot(bytecode__arg2,    3);
 f2ptr __bytecode__symbol = -1;
 
 f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {
-  /*pause_gc();*/
   release__assert(__bytecode__symbol != -1, nil, "f2bytecode__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __bytecode__symbol, 4, nil);
   f2bytecode__command__set(this, cause, command);
   f2bytecode__arg0__set(   this, cause, arg0);
   f2bytecode__arg1__set(   this, cause, arg1);
   f2bytecode__arg2__set(   this, cause, arg2);
-  /*resume_gc();*/
   return this;
 }
 
@@ -979,7 +967,6 @@ f2ptr f2thread__new(f2ptr cause,
 		    f2ptr last_executed_time,
 		    f2ptr sleep_until_time,
 		    f2ptr larva_args) {
-  /*pause_gc();*/
   release__assert(__thread__symbol != -1, nil, "f2thread__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __thread__symbol, 19, nil);
   f2thread__program_counter__set(   this, cause, program_counter);
@@ -1001,7 +988,6 @@ f2ptr f2thread__new(f2ptr cause,
   f2thread__last_executed_time__set(this, cause, last_executed_time);
   f2thread__sleep_until_time__set(  this, cause, sleep_until_time);
   f2thread__larva_args__set(        this, cause, larva_args);
-  /*resume_gc();*/
   return this;
 }
 
@@ -2131,7 +2117,6 @@ void f2__primobjects__reinitialize_globalvars() {
 }
 
 void f2__primobjects__initialize() {
-  pause_gc();
   f2__primobjects__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
@@ -2778,7 +2763,5 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode_event__context, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__funk = never_gc(cfunk);}
   {char* symbol_str = "context-set"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode_event__context__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__set__funk = never_gc(cfunk);}
-  
-  resume_gc();
 }
 

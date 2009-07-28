@@ -54,33 +54,25 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
       if (raw__exception__is_type(cause, read_exp)) {
 	printf("\nload exception: "); f2__write(thread, read_exp); fflush(stdout);
       } else {
-	pause_gc();
-	
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause,
 					  thread, load_funk);
 	if(raw__exception__is_type(cause, load_funk_bcs)) {
 	  f2thread__value__set(thread, cause, load_funk_bcs);
-	  resume_gc();
 	} else {
 	  f2thread__program_counter__set(load_thread, cause, nil);
-	  resume_gc();
 	  f2thread__force_funk(load_thread, cause, load_funk, nil);
 	}
 	
 	
 	f2__scheduler__complete_thread(cause, load_thread);
 	
-	pause_gc();
 	//printf("\nload_thread stack size = %d", raw__length(f2thread__stack(load_thread))); fflush(stdout);
 	f2ptr eval_exp = f2thread__value(load_thread, cause);
 	if (raw__exception__is_type(cause, eval_exp)) {
 	  printf("\nload eval exception: "); f2__write(cause, eval_exp); fflush(stdout);
 	  f2__stream__close(cause, stream);
-	  resume_gc();
 	  return f2integer__new(f2thread__cause_reg(load_thread, cause), 1);
-	} else {
-	  resume_gc();
 	}
 #ifdef DEBUG_LOAD
 	printf ("\nLoad-F-Out> "); f2__write(cause, eval_exp); fflush(stdout);

@@ -51,14 +51,12 @@ defprimobject__static_slot(blocks_world_rectangle__y1, 3);
 f2ptr __blocks_world_rectangle__symbol = -1;
 
 f2ptr f2blocks_world_rectangle__new(f2ptr cause, f2ptr x0, f2ptr y0, f2ptr x1, f2ptr y1) {
-  /*pause_gc();*/
   release__assert(__blocks_world_rectangle__symbol != -1, nil, "f2blocks_world_rectangle__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __blocks_world_rectangle__symbol, 4, nil);
   f2blocks_world_rectangle__x0__set(this, cause, x0);
   f2blocks_world_rectangle__y0__set(this, cause, y0);
   f2blocks_world_rectangle__x1__set(this, cause, x1);
   f2blocks_world_rectangle__y1__set(this, cause, y1);
-  /*resume_gc();*/
   return this;
 }
 def_pcfunk4(blocks_world_rectangle__new, x0, y0, x1, y1, return f2blocks_world_rectangle__new(this_cause, x0, y0, x1, y1));
@@ -358,11 +356,9 @@ defprimobject__static_slot(blocks_world_color__name, 0);
 f2ptr __blocks_world_color__symbol = -1;
 
 f2ptr f2blocks_world_color__new(f2ptr cause, f2ptr name) {
-  /*pause_gc();*/
   release__assert(__blocks_world_color__symbol != -1, nil, "f2blocks_world_color__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __blocks_world_color__symbol, 1, nil);
   f2blocks_world_color__name__set(this, cause, name);
-  /*resume_gc();*/
   return this;
 }
 def_pcfunk1(blocks_world_color__new, name, return f2blocks_world_color__new(this_cause, name));
@@ -414,7 +410,6 @@ defprimobject__static_slot(blocks_world_object__holding_object, 5);
 f2ptr __blocks_world_object__symbol = -1;
 
 f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rectangle, f2ptr color, f2ptr ignore_gravity, f2ptr holding_object) {
-  /*pause_gc();*/
   release__assert(__blocks_world_object__symbol != -1, nil, "f2blocks_world_object__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __blocks_world_object__symbol, 6, nil);
   f2blocks_world_object__name__set(          this, cause, name);
@@ -423,7 +418,6 @@ f2ptr f2blocks_world_object__new(f2ptr cause, f2ptr name, f2ptr type, f2ptr rect
   f2blocks_world_object__color__set(         this, cause, color);
   f2blocks_world_object__ignore_gravity__set(this, cause, ignore_gravity);
   f2blocks_world_object__holding_object__set(this, cause, holding_object);
-  /*resume_gc();*/
   return this;
 }
 def_pcfunk6(blocks_world_object__new, name, type, rectangle, color, ignore_gravity, holding_object, return f2blocks_world_object__new(this_cause, name, type, rectangle, color, ignore_gravity, holding_object));
@@ -617,11 +611,9 @@ defprimobject__static_slot(blocks_world_physics__objects, 0);
 f2ptr __blocks_world_physics__symbol = -1;
 
 f2ptr f2blocks_world_physics__new(f2ptr cause, f2ptr objects) {
-  /*pause_gc();*/
   release__assert(__blocks_world_physics__symbol != -1, nil, "f2blocks_world_physics__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __blocks_world_physics__symbol, 1, nil);
   f2blocks_world_physics__objects__set(this, cause, objects);
-  /*resume_gc();*/
   return this;
 }
 def_pcfunk1(blocks_world_physics__new, objects, return f2blocks_world_physics__new(this_cause, objects));
@@ -668,7 +660,6 @@ void f2__blocks_world__reinitialize_globalvars() {
 void f2__blocks_world__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "blocks_world", "", &f2__blocks_world__reinitialize_globalvars);
   
-  pause_gc();
   f2__blocks_world__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_blocks_world_c__cause__new(initial_cause(), nil, nil);
   
@@ -726,7 +717,5 @@ void f2__blocks_world__initialize() {
   f2__primcfunk__init(blocks_world_physics__new, "");
   f2__primcfunk__init(blocks_world_physics__is_type, "");
   f2__primcfunk__init(blocks_world_physics__objects, "");
-  
-  resume_gc();
 }
 

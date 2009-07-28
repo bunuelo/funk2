@@ -360,8 +360,6 @@ void f2__string__reinitialize_globalvars() {
 void f2__string__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "string", "", &f2__string__reinitialize_globalvars);
   
-  pause_gc();
-  
   f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init__1(stringlist__concat, this, "concatenate a list of strings together into a new resultant string.");
@@ -372,7 +370,5 @@ void f2__string__initialize() {
   f2__primcfunk__init__1(string__load, filename, "load a string from a filename");
   f2__primcfunk__init__2(string__split, this, token, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse.");
   f2__primcfunk__init__2(string__contains, this, substring, "returns true when the string contains the specified substring.");
-  
-  resume_gc();
 }
 

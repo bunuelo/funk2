@@ -60,12 +60,10 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       f2ptr     documentation = f2__exp__documentation(cause, value);
       boolean_t matches       = boolean__false;
       
-      pause_gc();
       f2ptr key_string = f2__exp__to_new_string(cause, key);
       if (f2__string__contains(cause, key_string, find_string) != nil) {
 	matches = boolean__true;
       }
-      resume_gc();
       if (! matches) {
 	if (raw__string__is_type(cause, documentation)) {
 	  if (f2__string__contains(cause, documentation, find_string) != nil) {
@@ -99,13 +97,8 @@ void f2__apropos__reinitialize_globalvars() {
 void f2__apropos__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "apropos", "", &f2__apropos__reinitialize_globalvars);
   
-  //f2ptr cause = initial_cause(); //f2_apropos_c__cause__new(initial_cause(), nil, global_environment());
-  pause_gc();
-  
   f2__apropos__reinitialize_globalvars();
   
   f2__primcfunk__init(apropos, "");
-  
-  resume_gc();
 }
 

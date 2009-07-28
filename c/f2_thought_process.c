@@ -205,9 +205,7 @@ f2ptr f2__thought_process__execute_funk__put(f2ptr cause, f2ptr this, f2ptr slot
 def_pcfunk3(thought_process__execute_funk__put, this, slot, value, return f2__thought_process__execute_funk__put(this_cause, this, slot, value));
 
 f2ptr f2__abstract(f2ptr cause, f2ptr exp) {
-  pause_gc();
   f2ptr retval = f2thought_process__new_from_exp(cause, exp, f2integer__new(cause, 4));
-  resume_gc();
   return retval;
 }
 def_pcfunk1(abstract, x, return f2__abstract(this_cause, x));
@@ -344,7 +342,6 @@ void f2__thought_process__reinitialize_globalvars() {
 void f2__thought_process__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "thought_process", "", &f2__thought_process__reinitialize_globalvars);
   
-  pause_gc();
   f2__thought_process__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_thought_process_c__cause__new(initial_cause(), nil, nil);
   
@@ -391,7 +388,5 @@ void f2__thought_process__initialize() {
   f2__primcfunk__init(abstract, "");
   f2__primcfunk__init(realize, "");
   f2__primcfunk__init(thought_process, "");
-  
-  resume_gc();
 }
 

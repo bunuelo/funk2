@@ -267,9 +267,6 @@ void f2__primfunks__errno__reinitialize_globalvars() {
 void f2__primfunks__errno__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__errno", "", &f2__primfunks__errno__reinitialize_globalvars);
   
-  pause_gc();
-  //f2ptr cause = f2_primfunks__errno_c__cause__new(initial_cause(), nil, nil);
-  
   f2__primfunks__errno__reinitialize_globalvars();
   
   f2__primcfunk__init(f2__errno, "(as defined in errno.h)");
@@ -353,8 +350,6 @@ void f2__primfunks__errno__initialize() {
   f2__primcfunk__init(f2__errno__etxtbsy, "(as defined in errno.h)");
   f2__primcfunk__init(f2__errno__ewouldblock, "(as defined in errno.h)");
   f2__primcfunk__init(f2__errno__exdev, "(as defined in errno.h)");
-  
-  resume_gc();
 }
 
   

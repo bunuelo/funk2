@@ -204,9 +204,7 @@ void f2__dlfcn__reinitialize_globalvars() {
 void f2__dlfcn__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars);
   
-  pause_gc();
   f2__dlfcn__reinitialize_globalvars();
-  //f2ptr cause = initial_cause(); //f2_dlfcn_c__cause__new(initial_cause(), nil, nil);
   
   f2__funktional_primcfunk__init__0(dlfcn__supported, "");
   f2__primcfunk__init__2(           dlfcn__dlopen, filename, flag, "");
@@ -219,7 +217,5 @@ void f2__dlfcn__initialize() {
   f2__funktional_primcfunk__init__0(dlfcn__rtld_local, "");
   f2__funktional_primcfunk__init__0(dlfcn__rtld_nodelete, "");
   f2__funktional_primcfunk__init__0(dlfcn__rtld_noload, "");
-  
-  resume_gc();
 }
 

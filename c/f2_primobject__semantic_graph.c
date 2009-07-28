@@ -265,7 +265,6 @@ void f2__primobject__semantic_graph__reinitialize_globalvars() {
 void f2__primobject__semantic_graph__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__semantic_graph", "", &f2__primobject__semantic_graph__reinitialize_globalvars);
   
-  pause_gc();
   f2__primobject__semantic_graph__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
@@ -275,7 +274,5 @@ void f2__primobject__semantic_graph__initialize() {
   f2__primcfunk__init__1(semantic_graph__load_conceptnet_r3_format,        filename, "");
   f2__primcfunk__init__1(semantic_graph__new_left_concept_relations_hash,  this, "");
   f2__primcfunk__init__1(semantic_graph__new_right_concept_relations_hash, this, "");
-  
-  resume_gc();
 }
 

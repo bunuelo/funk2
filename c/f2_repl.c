@@ -34,29 +34,19 @@ int f2__repl(f2ptr cause, f2ptr thread) {
     if (raw__exception__is_type(cause, read_exp)) {
       printf("\nrepl exception: "); f2__write(thread, read_exp); fflush(stdout);
     } else {
-      pause_gc();
-      
       repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
       repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
       if(raw__larva__is_type(cause, repl_funk_bcs)) {
 	f2thread__value__set(thread, cause, repl_funk_bcs);
-	resume_gc();
       } else {
 	f2thread__program_counter__set(repl_thread, cause, nil);
-	resume_gc();
 	f2thread__force_funk(repl_thread, cause, repl_funk, nil);
       }
       
       f2__scheduler__complete_thread(cause, repl_thread);
       
-      pause_gc();
       f2ptr eval_exp = f2thread__value(repl_thread, cause);
       printf ("\nF-Out> "); f2__write(cause, eval_exp); fflush(stdout);
-      //printf("\nrepl_thread stack size = %d", raw__length(f2thread__stack(repl_thread))); fflush(stdout);
-      resume_gc();
-      
-      //printf("\nglobal_environment.frame   : %d", f2environment__frame(global_environment())); fflush(stdout);
-      //printf("\nglobal_scheduler.processors: %d", f2scheduler__processors(__global__scheduler)); fflush(stdout);
     }
   }
   f2thread__keep_undead__set(repl_thread, cause, nil);

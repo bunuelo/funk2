@@ -180,15 +180,12 @@ void f2__child_handler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "child_handler", "", &f2__child_handler__reinitialize_globalvars);
   
   //f2ptr cause = initial_cause(); //f2_child_handler_c__cause__new(initial_cause(), nil, global_environment());
-  pause_gc();
   
   f2__child_handler__reinitialize_globalvars();
   
   f2__primcfunk__init(child_handler__add_new_child_process, "");
   f2__primcfunk__init(child_handler__process_exists, "");
   f2__primcfunk__init(environ, "");
-  
-  resume_gc();
 }
 
 

@@ -304,9 +304,6 @@ void f2__socket__reinitialize_globalvars() {
 void f2__socket__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "socket", "", &f2__socket__reinitialize_globalvars);
   
-  pause_gc();
-  //f2ptr cause = f2_socket_c__cause__new(initial_cause(), nil, nil);
-  
   f2__socket__reinitialize_globalvars();
   
   f2__primcfunk__init(f2__inaddr_any, "(as defined in socket.h)");
@@ -362,8 +359,6 @@ void f2__socket__initialize() {
   
   f2__primcfunk__init(f2__chunk__recv, "recv a chunk of data (as defined in socket.h)");
   f2__primcfunk__init(f2__recv, "(as defined in socket.h)");
-  
-  resume_gc();
 }
 
   

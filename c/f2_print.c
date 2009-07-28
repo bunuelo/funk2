@@ -85,13 +85,11 @@ void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2]
 
 void f2__fwrite__raw_string(f2ptr cause, f2ptr stream, f2ptr str, f2ptr use_html) {
   if ((! str) || (! raw__string__is_type(cause, str))) {error(nil, "f2__write__raw_string error: str must be of type ptype_string.");}
-  pause_gc();
   int length = f2string__length(str, cause);
   int i;
   for(i = 0; i < length; i ++) {
     f2__fwrite__raw_char(cause, stream, f2string__elt(str, i, cause), NULL, (use_html != nil) ? 1 : 0);
   }
-  resume_gc();
 }
 
 void f2__write_pretty__dptr(f2ptr cause, f2ptr stream,
@@ -392,9 +390,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	int  subexp_size[2];
 	if (stream) {raw__stream__writef(cause, stream, "%c", chunk__begin_char);} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	if (show_slot_causes) {
-	  pause_gc();
 	  f2__write_pretty(cause, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
-	  resume_gc();
 	  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	}
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
@@ -408,9 +404,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, ":gfunkptr "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	pause_gc();
 	f2__write_pretty(cause, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
-	resume_gc();
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, ":bytes"); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
@@ -1234,9 +1228,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, ":gfunkptr ");     if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	pause_gc();
 	f2__write_pretty(cause, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
-	resume_gc();
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, ":cause "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	if (! try_wide) {if (stream) {raw__stream__writef(cause, stream, "   ");} width += 3;}

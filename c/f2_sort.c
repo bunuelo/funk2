@@ -173,13 +173,9 @@ void f2__sort__reinitialize_globalvars() {
 void f2__sort__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "sort", "", &f2__sort__reinitialize_globalvars);
   
-  pause_gc();
-  
   f2__sort__reinitialize_globalvars();
   
   f2__primcfunk__init__1(sort_integer_array, this, "sort an array of integers in place.");
   f2__primcfunk__init__2(array__quicksort, array, comparison_funk, "sort an array of elements in place by user provided comparison_funk.");
-  
-  resume_gc();
 }
 

@@ -144,7 +144,6 @@ void f2__primobject__action__reinitialize_globalvars() {
 void f2__primobject__action__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__action", "", &f2__primobject__action__reinitialize_globalvars);
   
-  pause_gc();
   f2__primobject__action__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
@@ -154,7 +153,5 @@ void f2__primobject__action__initialize() {
   f2__primcfunk__init__1(action__new,   funk, "");
   f2__primcfunk__init__1(action__begin, this, "");
   f2__primcfunk__init__1(action__end,   this, "");
-  
-  resume_gc();
 }
 

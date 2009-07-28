@@ -109,14 +109,9 @@ void f2__primobject_type_handler__reinitialize_globalvars() {
 void f2__primobject_type_handler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars);
   
-  //f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
-  pause_gc();
-  
   f2__primobject_type_handler__reinitialize_globalvars();
   
   f2__primcfunk__init__2(add_type, type_name, type, "adds the symbolic type_name associated with type to the primobject_type_handler.");
   f2__primcfunk__init__1(lookup_type, type_name, "returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
-  
-  resume_gc();
 }
 

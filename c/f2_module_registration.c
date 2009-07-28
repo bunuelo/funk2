@@ -62,7 +62,7 @@ void funk2_module_registration__destroy(funk2_module_registration_t* this) {
 }
 
 void funk2_module_registration__add_module(funk2_module_registration_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
-  funk2_module_registration_node_t* new_node = (funk2_module_registration_node_t*)f2__malloc(sizeof(funk2_module_registration_node_t));
+  funk2_module_registration_node_t* new_node = (funk2_module_registration_node_t*)from_ptr(f2__malloc(sizeof(funk2_module_registration_node_t)));
   funk2_module_registration_node__init(new_node, name, description, reinitialize_function);
   new_node->next = this->module_list;
   this->module_list = new_node;

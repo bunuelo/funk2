@@ -24,9 +24,8 @@
 void funk2_primobject__frame__init(funk2_primobject__frame_t* this) {
   f2ptr cause = initial_cause();
   
-  environment__add_var_value(cause, global_environment(), this->type_variable_not_defined__larva, nil);
   environment__add_var_value(cause, global_environment(), this->frame__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), this->variable__symbol,                 nil);
+  environment__add_var_value(cause, global_environment(), this->variable__symbol,                 this->type_variable_not_defined__larva);
   environment__add_var_value(cause, global_environment(), this->funk_variable__symbol,            nil);
 }
 

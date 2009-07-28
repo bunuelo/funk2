@@ -106,6 +106,7 @@ funk2_server_objs = \
   c/f2_processor_mutex.o \
   c/f2_processor_thread.o \
   c/f2_processor_thread_handler.o \
+  c/f2_protected_alloc_array.o \
   c/f2_ptype.o \
   c/f2_ptypes.o \
   c/f2_reader.o \
@@ -186,6 +187,7 @@ funk2_headers = \
   c/f2_processor_mutex.h \
   c/f2_processor_thread.h \
   c/f2_processor_thread_handler.h \
+  c/f2_protected_alloc_array.h \
   c/f2_ptype.h \
   c/f2_ptypes.h \
   c/f2_reader.h \

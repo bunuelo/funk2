@@ -41,49 +41,26 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   rbt_tree__init(&(this->free_memory_tree), NULL);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
   rbt_tree__init(&(this->used_memory_tree), NULL);
-  
-  this->protected_alloc_array__used_num = 0;
-  this->protected_alloc_array__length   = 1024;
-  u64 i;
-  this->protected_alloc_array = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->protected_alloc_array__length);
-  for (i = 0; i < this->protected_alloc_array__length; i ++) {
-    this->protected_alloc_array[i] = nil;
-  }
-  this->protected_alloc_array__reentrance_count = 0;
-  
+  funk2_protected_alloc_array__init(&(this->protected_alloc_array));
   funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
   funk2_gc_touch_circle_buffer__destroy(&(this->gc_touch_circle_buffer));
-  
+  funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
 }
 
 void funk2_memorypool__add_protected_alloc_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
-  this->protected_alloc_array[this->protected_alloc_array__used_num] = exp;
-  this->protected_alloc_array__used_num ++;
-  if (this->protected_alloc_array__used_num >= this->protected_alloc_array__length) {
-    u64 old_length = this->protected_alloc_array__length;
-    this->protected_alloc_array__length <<= 1;
-    status("funk2_memorypool__add_protected_alloc_f2ptr: doubling size of protected_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->protected_alloc_array__length);
-    this->protected_alloc_array = from_ptr(f2__new_alloc(to_ptr(this->protected_alloc_array), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->protected_alloc_array__length));
-  }
+  funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
 }
 
 void funk2_memorypool__signal_enter_protected_region(funk2_memorypool_t* this) {
-  this->protected_alloc_array__reentrance_count ++;
+  funk2_protected_alloc_array__signal_enter_protected_region(&(this->protected_alloc_array));
 }
 
 void funk2_memorypool__signal_exit_protected_region(funk2_memorypool_t* this) {
-  if (this->protected_alloc_array__reentrance_count == 0) {
-    error(nil, "funk2_memorypool__signal_exit_protected_region error: bytecode reentrance underflow.");
-  }
-  this->protected_alloc_array__reentrance_count --;
-  if (this->protected_alloc_array__reentrance_count == 0) {
-    // protected counter is back to zero so reset array__used_num to zero.
-    this->protected_alloc_array__used_num = 0;
-  }
+  funk2_protected_alloc_array__signal_exit_protected_region(&(this->protected_alloc_array));
 }
 
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {

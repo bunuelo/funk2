@@ -37,10 +37,7 @@ typedef struct funk2_memorypool_s {
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   uint                           next_unique_block_id;
-  u64                            protected_alloc_array__used_num;
-  u64                            protected_alloc_array__length;
-  f2ptr*                         protected_alloc_array;
-  u64                            protected_alloc_array__reentrance_count;
+  funk2_protected_alloc_array_t  protected_alloc_array;
   funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 } funk2_memorypool_t;
 

@@ -63,6 +63,10 @@ void funk2_memorypool__signal_exit_protected_region(funk2_memorypool_t* this) {
   funk2_protected_alloc_array__signal_exit_protected_region(&(this->protected_alloc_array));
 }
 
+boolean_t funk2_memorypool__in_protected_region(funk2_memorypool_t* this) {
+  funk2_protected_alloc_array__in_protected_region(&(this->protected_alloc_array));
+}
+
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
   f2size_t used_memory_count = 0;
   rbt_node_t* node = rbt_tree__minimum(&(this->used_memory_tree));

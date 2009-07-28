@@ -65,6 +65,7 @@ void              funk2_memorypool__destroy(funk2_memorypool_t* this);
 void              funk2_memorypool__add_protected_alloc_f2ptr(funk2_memorypool_t* this, f2ptr exp);
 void              funk2_memorypool__signal_enter_protected_region(funk2_memorypool_t* this);
 void              funk2_memorypool__signal_exit_protected_region(funk2_memorypool_t* this);
+boolean_t         funk2_memorypool__in_protected_region(funk2_memorypool_t* this);
 f2size_t          funk2_memorypool__total_used_memory(funk2_memorypool_t* this);
 f2size_t          funk2_memorypool__total_free_memory(funk2_memorypool_t* this);
 void              funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this);

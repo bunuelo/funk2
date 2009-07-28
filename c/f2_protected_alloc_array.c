@@ -71,3 +71,7 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
   }
 }
 
+boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this) {
+  return (this->reentrance_count > 0);
+}
+

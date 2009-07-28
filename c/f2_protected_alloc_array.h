@@ -30,11 +30,12 @@ typedef struct funk2_protected_alloc_array_s {
   u64    max_reentrance_count;
 } funk2_protected_alloc_array_t;
 
-void funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this);
-void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this);
-void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp);
-void funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_alloc_array_t* this);
-void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp);
+void      funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_alloc_array_t* this);
+boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this);
 
 #endif // F2__PROTECTED_ALLOC_ARRAY__H
 

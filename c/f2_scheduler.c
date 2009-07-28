@@ -104,7 +104,7 @@ u64 raw__processor__active_threads__length(f2ptr cause, f2ptr processor) {
 f2ptr f2__scheduler__processor_with_fewest_threads(f2ptr cause, f2ptr scheduler) {
   f2ptr processors = f2scheduler__processors(scheduler, cause);
   u64 processors__length = raw__array__length(cause, processors);
-  u64   min_length    = 0xffffffffffffffff;
+  u64   min_length    = 0xffffffffffffffffull;
   f2ptr min_processor = nil;
   u64 i;
   status("processor thread list:");

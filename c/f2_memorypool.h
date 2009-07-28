@@ -23,6 +23,7 @@
 #define F2__MEMORYPOOL__H
 
 #include "f2_gc_touch_circle_buffer.h"
+#include "f2_protected_alloc_array.h"
 
 typedef struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;

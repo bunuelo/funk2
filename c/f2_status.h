@@ -22,7 +22,7 @@
 #ifndef F2__STATUS__H
 #define F2__STATUS__H
 
-#define STATUS_LOGGING 1
+//#define STATUS_LOGGING 1
 
 typedef struct funk2_status_s {
   funk2_processor_mutex_t trace_mutex;

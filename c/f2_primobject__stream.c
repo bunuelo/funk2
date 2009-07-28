@@ -274,14 +274,8 @@ void f2__primobject__stream__reinitialize_globalvars() {
 void f2__primobject__stream__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__stream", "", &f2__primobject__stream__reinitialize_globalvars);
   
-  pause_gc();
   f2__primobject__stream__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
-  
-  environment__add_var_value(cause, global_environment(), __stream__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), __file_stream__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __string_stream__symbol,      nil);
-  environment__add_var_value(cause, global_environment(), __text_window_stream__symbol, nil);
   
   f2__primcfunk__init(file_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");
@@ -296,7 +290,5 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init(stream__try_read_character, "");
   f2__primcfunk__init(text_window_stream__new, "");
   f2__primcfunk__init(text_window_stream, "");
-  
-  resume_gc();
 }
 

@@ -25,7 +25,7 @@ void funk2_primobject__frame__init(funk2_primobject__frame_t* this) {
   f2ptr cause = initial_cause();
   
   environment__add_var_value(cause, global_environment(), this->frame__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), this->variable__symbol,                 this->type_variable_not_defined__larva);
+  environment__add_var_value(cause, global_environment(), this->variable__symbol,                 nil);
   environment__add_var_value(cause, global_environment(), this->funk_variable__symbol,            nil);
 }
 
@@ -36,7 +36,7 @@ void funk2_primobject__frame__reinit(funk2_primobject__frame_t* this) {
   symbol_str = "variable";      this->variable__symbol      = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "funk_variable"; this->funk_variable__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   
-  this->type_variable_not_defined__larva = f2larva__new(cause, 23);
+  this->type_variable_not_defined__larva = never_gc(f2larva__new(cause, 23));
 }
 
 void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {

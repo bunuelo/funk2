@@ -210,6 +210,11 @@ void funk2_memory__touch_never_delete_list(funk2_memory_t* this) {
   }
 }
 
+f2ptr funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr exp) {
+  funk2_never_delete_list__add_f2ptr(&(this->never_delete_list), exp);
+  return exp;
+}
+
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
 #ifdef DEBUG_MEMORY

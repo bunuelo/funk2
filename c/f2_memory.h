@@ -127,6 +127,7 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
 ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 void      funk2_memory__touch_never_delete_list(funk2_memory_t* this);
+f2ptr     funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr exp);
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
 ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
@@ -140,6 +141,9 @@ f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
 void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
 boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
 void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
+
+#define never_gc(exp) funk2_memory__add_f2ptr_to_never_delete_list(&(__funk2.memory), exp);
+
 
 // **
 

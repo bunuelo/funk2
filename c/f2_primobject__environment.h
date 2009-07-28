@@ -30,13 +30,6 @@
 #include "f2_primobject__hashtable.h"
 #include "f2_primobject__frame.h"
 
-extern f2ptr __type_variable_not_defined__symbol;
-
-extern f2ptr __environment__symbol;
-extern f2ptr __current_environment__symbol;
-
-extern f2ptr __environment__last_23_larva_symbol;
-
 boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__environment__is_type(f2ptr cause, f2ptr this);
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc);
@@ -86,6 +79,16 @@ void print_environment_backtrace(f2ptr env);
 
 void f2__primobject_environment__reinitialize_globalvars();
 void f2__primobject_environment__initialize();
+
+typedef struct funk2_primobject__environment_s {
+  f2ptr environment__symbol;
+  f2ptr current_environment__symbol;
+  f2ptr environment__last_23_larva_symbol;
+} funk2_primobject__environment_t;
+
+void funk2_primobject__environment__init(funk2_primobject__environment_t* this);
+void funk2_primobject__environment__reinit(funk2_primobject__environment_t* this);
+void funk2_primobject__environment__destroy(funk2_primobject__environment_t* this);
 
 #endif // F2__PRIMOBJECT__ENVIRONMENT__H
 

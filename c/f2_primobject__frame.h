@@ -26,11 +26,6 @@
 #include "f2_primobject__hashtable.h"
 #include "f2_primobject__environment.h"
 
-// default variable types
-
-extern f2ptr __frame__variable_type__symbol;
-extern f2ptr __frame__funk_variable_type__symbol;
-
 // frame
 
 extern f2ptr __frame__symbol;
@@ -70,6 +65,17 @@ void f2__primobject_frame__reinitialize_globalvar__symbols();
 void f2__primobject_frame__reinitialize_globalvar__exceptions();
 void f2__primobject_frame__reinitialize_globalvars();
 void f2__primobject_frame__initialize();
+
+typedef struct funk2_primobject__frame_s {
+  f2ptr type_variable_not_defined__symbol;
+  f2ptr frame__symbol;
+  f2ptr variable__symbol;
+  f2ptr funk_variable__symbol;
+} funk2_primobject__frame_t;
+
+void funk2_primobject__frame__init(funk2_primobject__environment_t* this);
+void funk2_primobject__frame__reinit(funk2_primobject__environment_t* this);
+void funk2_primobject__frame__destroy(funk2_primobject__environment_t* this);
 
 #endif // F2__PRIMOBJECT__FRAME__H
 

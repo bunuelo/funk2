@@ -21,26 +21,42 @@
 
 #include "funk2.h"
 
-f2ptr __frame__variable_type__symbol = -1;
-f2ptr __frame__funk_variable_type__symbol = -1;
+void funk2_primobject__frame__init(funk2_primobject__frame_t* this) {
+  f2ptr cause = initial_cause();
+  
+  environment__add_var_value(cause, global_environment(), this->type_variable_not_defined__symbol, nil);
+  environment__add_var_value(cause, global_environment(), this->frame__symbol,                     nil);
+  environment__add_var_value(cause, global_environment(), this->variable__symbol,                  nil);
+  environment__add_var_value(cause, global_environment(), this->funk_variable__symbol,             nil);
+}
+
+void funk2_primobject__frame__reinit(funk2_primobject__frame_t* this) {
+  f2ptr cause = initial_cause(); //f2_primobject_frame_c__cause__new(initial_cause(), nil, global_environment());
+  char* symbol_str;
+  symbol_str = "type_variable_not_defined"; this->type_variable_not_defined__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "frame";                     this->frame__symbol                     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "variable";                  this->variable__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "funk_variable";             this->funk_variable__symbol             = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+}
+
+void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
+}
 
 // frame
 
 defprimobject__static_slot(frame__type_hashtable, 0);
 
-f2ptr __frame__symbol = -1;
-
 f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
   release__assert(__frame__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __frame__symbol, 1, nil);
+  f2ptr this = f2__primobject__new(cause, __funk2.globalenv.primobject__frame.frame__symbol, 1, nil);
   f2frame__type_hashtable__set(this, cause, type_hashtable);
   return this;
 }
 
 f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
   f2ptr type_hashtable = f2__hashtable__new(cause, f2integer__new(cause, 3));
-  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __frame__variable_type__symbol,      var_hashtable);
-  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __frame__funk_variable_type__symbol, funkvar_hashtable);
+  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.globalenv.primobject__frame.variable__symbol,      var_hashtable);
+  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.globalenv.primobject__frame.funk_variable__symbol, funkvar_hashtable);
   f2ptr result = f2frame__new__raw(cause, type_hashtable);
   return result;
 }
@@ -159,22 +175,11 @@ f2ptr frame__funkvar__slot_names(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(frame__funkvar__slot_names, this, return frame__funkvar__slot_names(this_cause, this));
 
-void f2__primobject_frame__reinitialize_globalvar__symbols() {
-  __frame__symbol = f2symbol__new(initial_cause(), strlen("frame"), (u8*)"frame");
-}
 
-void f2__primobject_frame__reinitialize_globalvar__exceptions() {
-  f2ptr cause = initial_cause(); //f2_primobject_frame_c__cause__new(initial_cause(), nil, global_environment());
-  char* symbol_str;
-  
-  symbol_str = "variable";                                   __frame__variable_type__symbol      = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "funk_variable";                              __frame__funk_variable_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  
-}
+// **
 
 void f2__primobject_frame__reinitialize_globalvars() {
-  f2__primobject_frame__reinitialize_globalvar__symbols();
-  f2__primobject_frame__reinitialize_globalvar__exceptions();
+  funk2_primobject__frame__reinit(&(__funk2.globalenv.primobject__frame));
 }
 
 void f2__primobject_frame__initialize() {
@@ -191,6 +196,6 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__var__slot_names, "");
   f2__primcfunk__init(frame__funkvar__slot_names, "");
   
-  __frame__variable_type__symbol      = f2symbol__new(initial_cause(), strlen("variable"),      (u8*)"variable");
-  __frame__funk_variable_type__symbol = f2symbol__new(initial_cause(), strlen("funk_variable"), (u8*)"funk_variable");
+  funk2_primobject__frame__init(&(__funk2.globalenv.primobject__frame));
 }
+

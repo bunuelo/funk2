@@ -177,6 +177,8 @@ typedef struct funk2_s {
   funk2_child_process_handler_t      child_process_handler;
   funk2_processor_thread_handler_t   processor_thread_handler;
   funk2_primobject_type_handler_t    primobject_type_handler;
+  funk2_primobject__frame_t          primobject__frame;
+  funk2_primobject__environment_t    primobject__environment;
 } funk2_t;
 
 boolean_t funk2__handle(funk2_t* this);

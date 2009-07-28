@@ -109,8 +109,6 @@ typedef struct funk2_globalenv_s {
   
   funk2_object_types_t            object_type;
   funk2_blocks_world_t            blocks_world;
-  funk2_primobject__frame_t       primobject__frame;
-  funk2_primobject__environment_t primobject__environment;
   
 } funk2_globalenv_t;
 

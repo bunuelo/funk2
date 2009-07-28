@@ -48,15 +48,15 @@ defprimobject__static_slot(frame__type_hashtable, 0);
 
 f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
   release__assert(__frame__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __funk2.globalenv.primobject__frame.frame__symbol, 1, nil);
+  f2ptr this = f2__primobject__new(cause, __funk2.primobject__frame.frame__symbol, 1, nil);
   f2frame__type_hashtable__set(this, cause, type_hashtable);
   return this;
 }
 
 f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
   f2ptr type_hashtable = f2__hashtable__new(cause, f2integer__new(cause, 3));
-  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.globalenv.primobject__frame.variable__symbol,      var_hashtable);
-  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.globalenv.primobject__frame.funk_variable__symbol, funkvar_hashtable);
+  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.primobject__frame.variable__symbol,      var_hashtable);
+  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.primobject__frame.funk_variable__symbol, funkvar_hashtable);
   f2ptr result = f2frame__new__raw(cause, type_hashtable);
   return result;
 }
@@ -179,7 +179,7 @@ def_pcfunk1(frame__funkvar__slot_names, this, return frame__funkvar__slot_names(
 // **
 
 void f2__primobject_frame__reinitialize_globalvars() {
-  funk2_primobject__frame__reinit(&(__funk2.globalenv.primobject__frame));
+  funk2_primobject__frame__reinit(&(__funk2.primobject__frame));
 }
 
 void f2__primobject_frame__initialize() {
@@ -196,6 +196,6 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__var__slot_names, "");
   f2__primcfunk__init(frame__funkvar__slot_names, "");
   
-  funk2_primobject__frame__init(&(__funk2.globalenv.primobject__frame));
+  funk2_primobject__frame__init(&(__funk2.primobject__frame));
 }
 

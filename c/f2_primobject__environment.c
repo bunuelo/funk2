@@ -59,14 +59,14 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   f2ptr env = this;
   f2ptr value;
   while (env) {
-    value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol);
-    if (value != __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol) {
+    value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__symbol);
+    if (value != __funk2.primobject__frame.type_variable_not_defined__symbol) {
       return value;
     }
     env = f2environment__parent_env(env, cause);
   }
   __environment__last_23_larva_symbol = var;
-  return __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol;
+  return __funk2.primobject__frame.type_variable_not_defined__symbol;
 }
 
 f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
@@ -74,14 +74,14 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   f2ptr env = this;
   f2ptr value;
   while (env) {
-    value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol);
-    if (value != __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol) {
+    value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__symbol);
+    if (value != __funk2.primobject__frame.type_variable_not_defined__symbol) {
       return value;
     }
     env = f2environment__parent_env(env, cause);
   }
   __environment__last_23_larva_symbol = var;
-  return __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol;
+  return __funk2.primobject__frame.type_variable_not_defined__symbol;
 }
 
 f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
@@ -103,21 +103,21 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   f2ptr env = this;
   f2ptr result;
   while (env) {
-    result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol);
-    if (result != __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol) {
+    result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __funk2.primobject__frame.type_variable_not_defined__symbol);
+    if (result != __funk2.primobject__frame.type_variable_not_defined__symbol) {
       return result;
     }
     env = f2environment__parent_env(env, cause);
   }
   printf ("\nset-var not defined: "); f2__write(nil, var); fflush(stdout);
   __environment__last_23_larva_symbol = var;
-  return __funk2.globalenv.primobject__frame.type_variable_not_defined__symbol;
+  return __funk2.primobject__frame.type_variable_not_defined__symbol;
 }
 
 // **
 
 void f2__primobject_environment__reinitialize_globalvars() {
-  funk2_primobject__environment__reinit(&(__funk2.globalenv.primobject__environment));
+  funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
 }
 
 void f2__primobject_environment__initialize() {
@@ -127,6 +127,6 @@ void f2__primobject_environment__initialize() {
 					     nil,
 					     f2symbol__new(cause, strlen("global_environment"), (u8*)"global_environment")));
   
-  funk2_primobject__environment__init(&(__funk2.globalenv.primobject__environment));
+  funk2_primobject__environment__init(&(__funk2.primobject__environment));
 }
 

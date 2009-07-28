@@ -53,6 +53,7 @@ void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__u
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
     sched_yield();
+    f2__sleep(1);
   }
 }
 

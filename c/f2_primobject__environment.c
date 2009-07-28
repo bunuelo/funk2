@@ -42,7 +42,7 @@ defprimobject__static_slot(environment__parent_env, 1);
 defprimobject__static_slot(environment__desc,       2);
 
 f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc) {
-  f2ptr this = f2__primobject__new(cause, __environment__symbol, 3, nil);
+  f2ptr this = f2__primobject__new(cause, __funk2.primobject__environment.environment__symbol, 3, nil);
   f2environment__frame__set(     this, cause, frame);
   f2environment__parent_env__set(this, cause, parent_env);
   f2environment__desc__set(      this, cause, desc);

@@ -62,10 +62,10 @@ void f2__primobject_frame__reinitialize_globalvars();
 void f2__primobject_frame__initialize();
 
 typedef struct funk2_primobject__frame_s {
-  f2ptr type_variable_not_defined__symbol;
   f2ptr frame__symbol;
   f2ptr variable__symbol;
   f2ptr funk_variable__symbol;
+  f2ptr type_variable_not_defined__larva;
 } funk2_primobject__frame_t;
 
 void funk2_primobject__frame__init(funk2_primobject__frame_t* this);

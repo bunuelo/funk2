@@ -31,7 +31,7 @@
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable);
-#define f2primobject__is_frame(this, cause) raw__eq(cause, f2primobject__type(this, cause), __frame__symbol)
+#define f2primobject__is_frame(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__frame.frame__symbol)
 
 defprimobject__static_slot__prototype(frame__type_hashtable);
 #define f2frame__type_hashtable(            this, cause)        primobject__static_slot__accessor(  this, frame__type_hashtable, cause)

@@ -43,9 +43,9 @@ void f2__processor__add_active_thread__thread_unsafe(f2ptr cause, f2ptr this, f2
   }
   //f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
   //f2mutex__lock(active_threads_mutex, cause);
-  funk2_memory__signal_enter_protected_region(&(__funk2.memory));
+  pause_gc();
   f2processor__active_threads__set(this, cause, f2cons__new(cause, thread, f2processor__active_threads(this, cause)));
-  funk2_memory__signal_exit_protected_region(&(__funk2.memory));
+  resume_gc();
   //f2mutex__unlock(active_threads_mutex, cause);
 }
 
@@ -158,7 +158,9 @@ void execute_next_bytecodes__helper__found_larva_in_thread(f2ptr cause, f2ptr th
   f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
   f2ptr critics = f2thread__critics(thread, cause);
   if (critics) {
+    pause_gc();
     f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+    resume_gc();
   } else {
     f2thread__program_counter__set(thread, cause, nil);
   }
@@ -242,7 +244,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      
 	      scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, thread);
 	      
+	      pause_gc();
 	      f2thread__last_executed_time__set(thread, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
+	      resume_gc();
 	      
 	      if(exit_reason == exit_reason__found_larva) {
 		need_to_launch_larva_handling_critic_thread = 1;
@@ -306,7 +310,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	f2ptr thread_cause = f2thread__cause_reg(thread, cause);
 	printf("\nlarva found in thread and thread has a critic, so launching critic thread in serial."); fflush(stdout);
 	printf("\n  critic="); f2__print(cause, critics); fflush(stdout);
+	pause_gc();
 	f2ptr new_thread = f2__thread__new(thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
+	resume_gc();
 	{
 	  f2ptr processor__active_threads_mutex;
 	  int lock_failed;
@@ -317,7 +323,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      f2__sleep(1);
 	    }
 	  } while (lock_failed);
+	  pause_gc();
 	  f2processor__active_threads__set(processor, cause, f2cons__new(cause, new_thread, f2processor__active_threads(processor, cause)));
+	  resume_gc();
 	  f2mutex__unlock(processor__active_threads_mutex, cause);
 	}	
 	//printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
@@ -423,9 +431,11 @@ void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) 
   //if(pthread_create(&raw_pthread, NULL, (pthread_start_routine)processor__start_routine, (void*)(long)processor_index)) {
   //  error(nil, "couldn't create processor pthread.");
   //}
+  pause_gc();
   f2ptr processor_thread = f2pointer__new(cause, to_ptr(new_processor_thread));
   f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_index);
   f2processor__processor_thread__set(processor, cause, processor_thread);
+  resume_gc();
 }
 
 //void f2__scheduler__exec_with_main_pthread(f2ptr cause) {
@@ -433,11 +443,13 @@ void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) 
 //}
 
 void f2__scheduler__start_processors() {
+  pause_gc();
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   int i;
   for (i = 0; i < scheduler_processor_num; i ++) {
     f2processor__start_new_processor_thread(cause, i);
   }
+  resume_gc();
 }
 
 void f2__scheduler__stop_processors() {

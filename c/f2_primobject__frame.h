@@ -28,7 +28,6 @@
 
 // frame
 
-extern f2ptr __frame__symbol;
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable);

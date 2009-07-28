@@ -45,7 +45,7 @@ void f2__initialize() {
     f2__globalenv__initialize();
     pause_gc(); f2__primobject_hashtable__initialize(); resume_gc();
     pause_gc(); f2__primobject_frame__initialize();     resume_gc();
-  } resume_gc(); release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
+  } resume_gc();// release__assert(! gc__is_disabled(), nil, "garbage collection should be enabled at this point.");
   // ** 
   // **********************************************************************************************************************************************************************************
   

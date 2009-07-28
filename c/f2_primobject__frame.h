@@ -40,8 +40,6 @@ defprimobject__static_slot__prototype(frame__type_hashtable);
 #define f2frame__type_hashtable__trace(     this, cause)        primobject__static_slot__trace(     this, frame__type_hashtable, cause)
 #define f2frame__type_hashtable__cause(     this, cause)        primobject__static_slot__cause(     this, frame__type_hashtable, cause)
 
-extern f2ptr __type_variable_not_defined__exception;
-
 void  frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr frame__var_hashtable                  (f2ptr cause, f2ptr this);
 f2ptr frame__funkvar_hashtable              (f2ptr cause, f2ptr this);

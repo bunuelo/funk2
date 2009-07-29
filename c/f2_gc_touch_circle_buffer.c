@@ -151,6 +151,7 @@ void funk2_gc_touch_circle_buffer__test() {
   for (i = 0; i < 1000; i++) {
     if ((i % 10) != 0) {
       funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
+      printf("\npopped value %d", ((int)to_ptr(block)));
       if (((int)to_ptr(block)) != i) {
 	printf("\nerror: circle buffer error");
 	exit(-1);

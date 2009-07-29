@@ -133,7 +133,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
 }
 
 void funk2_gc_touch_circle_buffer__test() {
-  printf("funk2_gc_touch_circle_buffer__test: beginning.");
+  printf("\nfunk2_gc_touch_circle_buffer__test: beginning.");
   funk2_gc_touch_circle_buffer_t test_buffer;
   funk2_gc_touch_circle_buffer__init(&test_buffer);
   funk2_gc_touch_circle_buffer__empty(&test_buffer);
@@ -143,18 +143,25 @@ void funk2_gc_touch_circle_buffer__test() {
   int i;
   for (i = 0; i < 1000; i++) {
     funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)from_ptr(i));
+    if ((i % 10) == 0) {
+      funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
+    }
   }
+  int j = 0;
   for (i = 0; i < 1000; i++) {
-    funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
-    if (((u32)to_ptr(block)) != i) {
-      error(nil, "circle buffer error.");
+    if ((i % 10) == 0) {
+      funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
+      if (((int)to_ptr(block)) != j) {
+	error(nil, "circle buffer error.");
+      }
+      j ++;
     }
   }
   if (! funk2_gc_touch_circle_buffer__is_empty(&test_buffer)) {
     error(nil, "should be empty");
   }
   funk2_gc_touch_circle_buffer__destroy(&test_buffer);
-  printf("funk2_gc_touch_circle_buffer__test: success.");
+  printf("\nfunk2_gc_touch_circle_buffer__test: success.\n");
 }
 
 /*

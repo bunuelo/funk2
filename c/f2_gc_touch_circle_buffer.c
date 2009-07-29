@@ -88,7 +88,7 @@ void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* th
 void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr start_exp) {
   debug__assert(start_exp, nil, "exp__gc_touch_all_referenced assertion failed: got nil value.");
   funk2_gc_touch_circle_buffer__empty(this);
-  funk2_gc_touch_cirlce_buffer__add_f2ptr(start_exp);
+  funk2_gc_touch_circle_buffer__add_f2ptr(start_exp);
   
   while(! funk2_gc_touch_circle_buffer__is_empty(this) {
     f2ptr exp = funk2_gc_touch_circle_buffer__pop_f2ptr(this);

@@ -130,7 +130,6 @@ void f2__thread__increment_pc(f2ptr thread, f2ptr cause) {
 }
 
 
-#define DEBUG_BYTECODES
 #ifdef DEBUG_BYTECODES
 #  define bytecode_status(msg, rest...) status(msg, ## rest)
 #else

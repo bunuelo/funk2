@@ -258,7 +258,6 @@ void f2__destroy() {
 }
 
 void funk2__destroy(funk2_t* this) {
-  print_bytecode_stats(stdout);
   funk2_memory__print_gc_stats(&(this->memory));
   
   funk2_primobject_type_handler__destroy(&(this->primobject_type_handler));

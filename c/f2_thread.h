@@ -50,18 +50,12 @@ extern f2ptr __thread__value_reg__symbol;
 f2ptr global_critics();
 void global_critics__set(f2ptr critics);
 
-//extern f2ptr __global__user_thread;
-
-void print_bytecode_stats__cfunk(FILE* fptr);
-
 void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 
 boolean_t f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode);
 boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread);
 
 void f2__thread__initialize();
-
-//#define global_user_thread() __global__user_thread
 
 #endif // F2__THREAD__H
 

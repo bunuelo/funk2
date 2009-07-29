@@ -115,6 +115,7 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   u64   index              = hash_value & hash_value_mask;
   f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
   while(keyvalue_pair_iter) {
+    debug__assert(raw__cons__is_type(cause, keyvalue_pair_iter), nil, "keyvalue_pair_iter is not cons.");
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
     if (raw__equals(cause, key, keyvalue_pair__key)) {

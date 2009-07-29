@@ -1520,7 +1520,7 @@ def_pcfunk1(larva, type, return f2__larva(this_cause, type));
 // events
 
 f2ptr f2__publish_event(f2ptr cause, f2ptr type, f2ptr data) {
-  funk2_processor_mutex__lock(&(__funk2.event_id_mutex));
+  funk2_processor_mutex__user_lock(&(__funk2.event_id_mutex));
   event_id_t event_id = __funk2.event_id;
   __funk2.event_id ++;
   funk2_processor_mutex__unlock(&(__funk2.event_id_mutex));

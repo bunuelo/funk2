@@ -93,22 +93,23 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 #endif
   while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
     sched_yield();
+    f2__sleep(1);
+  }
+}
+
+void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
+  if (! this->is_initialized) {
+    printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
+    funk2_processor_mutex__error();
+  }
+#endif
+  while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+    sched_yield();
     if (__funk2.memory.user_thread_controller.please_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.memory.user_thread_controller));
     }
-    //f2__sleep(1);
+    f2__sleep(1);
   }
 }
-
-void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {
-#if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
-    printf("\nfunk2_processor_mutex__raw_unlock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
-    funk2_processor_mutex__error();
-  }
-  this->is_locked = boolean__false;
-#endif
-  pthread_mutex_unlock(&(this->pthread_mutex));
-}
-
 

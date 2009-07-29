@@ -47,11 +47,14 @@ void                                   funk2_processor_mutex__destroy(funk2_proc
 boolean_t                              funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this);
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
+void                                   funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num);
 
-#define funk2_processor_mutex__trylock(this) funk2_processor_mutex__raw_trylock(this, __FILE__, __LINE__)
-#define funk2_processor_mutex__lock(   this) funk2_processor_mutex__raw_lock(   this, __FILE__, __LINE__)
-#define funk2_processor_mutex__unlock( this) funk2_processor_mutex__raw_unlock( this, __FILE__, __LINE__)
+#define funk2_processor_mutex__trylock(  this) funk2_processor_mutex__raw_trylock(  this, __FILE__, __LINE__)
+#define funk2_processor_mutex__lock(     this) funk2_processor_mutex__raw_lock(     this, __FILE__, __LINE__)
+#define funk2_processor_mutex__user_lock(this) funk2_processor_mutex__raw_user_lock(this, __FILE__, __LINE__)
+#define funk2_processor_mutex__unlock(   this) funk2_processor_mutex__raw_unlock(   this, __FILE__, __LINE__)
+
 
 #endif // F2__PROCESSOR_MUTEX__H
 

@@ -33,7 +33,7 @@ void funk2_locale__destroy(funk2_locale_t* this) {
 // char *setlocale(int category, const char *locale);
 
 f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
-  funk2_processor_mutex__lock(&(__funk2.locale.interface_mutex));
+  funk2_processor_mutex__user_lock(&(__funk2.locale.interface_mutex));
   char* old_locale_str = setlocale(f2integer__i(category, cause), locale_str);
   if (old_locale_str == NULL) {
     funk2_processor_mutex__unlock(&(__funk2.locale.interface_mutex));

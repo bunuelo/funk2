@@ -139,6 +139,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   funk2_primobject_type_handler__init(&(this->primobject_type_handler));
   
+  funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
+  
   f2ptr cause = initial_cause();
   
   char* install__bootstrap_img__filename      = F2__INSTALL__BOOTSTRAP_IMG__FILENAME;
@@ -271,6 +273,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_peer_command_server__destroy(&(this->peer_command_server));
   funk2_child_process_handler__destroy(&(this->child_process_handler));
   funk2_processor_thread_handler__destroy(&(this->processor_thread_handler));
+  funk2_scheduler_thread_controller__destroy(&(this->scheduler_thread_controller));
   
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }

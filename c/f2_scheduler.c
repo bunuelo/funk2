@@ -363,6 +363,9 @@ void* processor__start_routine(void *ptr) {
   }
   f2ptr cause     = nil;
   f2ptr processor = f2__global_scheduler__this_processor(cause);
+  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+  release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
+  
 #ifdef DEBUG_SCHEDULER
   printf("\nstarting processor %d (%d)", this_processor_thread__pool_index(), processor); fflush(stdout);
 #endif // DEBUG_SCHEDULER
@@ -370,6 +373,7 @@ void* processor__start_routine(void *ptr) {
     f2ptr did_something = nil;
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);
+      funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
       f2__sleep(1);
       sched_yield();
     } while (did_something);
@@ -408,17 +412,6 @@ void f2__scheduler__complete_thread(f2ptr cause, f2ptr thread) {
       f2__scheduler__yield(cause);
     }
   } while (!complete);
-}
-
-void f2__print_threads_stacks() {
-  //f2ptr threads = f2__global_scheduler__threads();
-  //while(threads) {
-  //  f2ptr thread = f2cons__car(threads);
-  //  printf("\nthread #x%x stack:", (int)thread);
-  //  f2ptr env = f2thread__env(thread);
-  //  f2__print_environment_stack(global_environment(), env);
-  //  threads = f2cons__cdr(threads);
-  //}
 }
 
 void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) {
@@ -462,8 +455,6 @@ void f2__scheduler__reinitialize_globalvars() {
 void f2__scheduler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars);
   
-  //funk2_processor_mutex__init(&(__funk2.operating_system.scheduler__execute_mutex));
-  
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
   f2ptr processors = raw__array__new(cause, scheduler_processor_num);
@@ -493,13 +484,6 @@ void f2__scheduler__initialize() {
   __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
   
   f2__scheduler__reinitialize_globalvars();
-  
-  // **
-  
-  //f2__primcfunk__init(global_scheduler__add_thread_to_pool);
-  //f2__primcfunk__init(global_scheduler__remove_thread_from_pool);
-  //f2__primcfunk__init(global_scheduler__thread_num_in_pool);
-  
 }
 
 void f2__scheduler__destroy() {

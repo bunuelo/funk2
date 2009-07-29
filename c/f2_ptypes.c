@@ -597,10 +597,7 @@ void pfunk2__f2mutex__lock(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   int lock_failed;
-  do {
-    //int pool_index = __f2ptr__pool_index(this);
-    lock_failed = funk2_processor_mutex__trylock(ptype_mutex__m(this, cause));
-  } while (lock_failed);
+  lock_failed = funk2_processor_mutex__user_lock(ptype_mutex__m(this, cause));
 }
 
 void pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause) {
@@ -953,7 +950,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   if (length == 0) {
     return nil;
   }
-  funk2_processor_mutex__lock(&symbol_hash_mutex);
+  funk2_processor_mutex__user_lock(&symbol_hash_mutex);
   if (! __symbol_hash__initialized) {symbol_hash__initialize();}
   ptype_symbol_block_t* symbol_block = NULL;
   

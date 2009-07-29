@@ -916,7 +916,6 @@ def_pcfunk0_and_rest(list, seq, return f2__list(this_cause, seq));
 void raw__exit(int value) {
   status("funk2: exit.");
 #ifdef DEBUG
-  print_bytecode_stats(stdout);
   funk2_memory__print_gc_stats(&(__funk2.memory));
 #endif // DEBUG
   f2__destroy();

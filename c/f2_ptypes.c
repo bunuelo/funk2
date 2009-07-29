@@ -23,10 +23,6 @@
 
 #include "funk2.h"
 
-#ifdef DEBUG
-#  define F2__PTYPE__TYPE_CHECK
-#endif
-
 void print_mutex_error(int retval) {
   switch (retval) {
   case EINVAL: error(nil, "error unlocking ptype_mutex: mutex is not initialized.");              break;

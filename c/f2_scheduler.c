@@ -230,7 +230,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}
 	if (! thread_needs_sleep) {
 	  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	  if (funk2_memorypool__in_protected_region(&(this->pool[pool_index]))) {
+	  if (funk2_memorypool__in_protected_region(&(__funk2.memory.pool[pool_index]))) {
 	    error(nil, "f2processor__execute_next_bytecodes error: should not be in protected memory region at this point.");
 	  }
 	  release__assert(pool_index == this_processor_thread__pool_index(), thread, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");

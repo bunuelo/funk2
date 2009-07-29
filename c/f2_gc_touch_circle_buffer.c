@@ -62,7 +62,7 @@ void funk2_gc_touch_circle_buffer__add_block(funk2_gc_touch_circle_buffer_t* thi
 }
 
 funk2_memblock_t* funk2_gc_touch_circle_buffer__pop_block(funk2_gc_touch_circle_buffer_t* this) {
-  debug_assert(! funk2_gc_touch_circle_buffer__is_empty(this), nil, "funk2_gc_touch_circle_buffer__pop_block error: buffer is empty.");
+  debug__assert(! funk2_gc_touch_circle_buffer__is_empty(this), nil, "funk2_gc_touch_circle_buffer__pop_block error: buffer is empty.");
   funk2_memblock_t* pop_value = this->data[this->start_index];
   this->start_index ++;
   if (this->start_index == this->length) {

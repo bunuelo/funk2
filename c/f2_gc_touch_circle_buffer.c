@@ -149,7 +149,7 @@ void funk2_gc_touch_circle_buffer__test() {
       error(nil, "circle buffer error.");
     }
   }
-  if (! funk2_gc_touch_circle_buffer__empty(&test_buffer)) {
+  if (! funk2_gc_touch_circle_buffer__is_empty(&test_buffer)) {
     error(nil, "should be empty");
   }
   funk2_gc_touch_circle_buffer__destroy(&test_buffer);

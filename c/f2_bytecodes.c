@@ -1306,8 +1306,6 @@ int f2__thread__bytecode__yield(f2ptr thread, f2ptr bytecode) {
   f2ptr cause = f2thread__cause_reg(thread, nil);
   
   f2__thread__increment_pc(thread, cause);
-  
-  error(nil, "f2__thread__bytecode__yield error: not yet implemented!");
   return 0;
 }
 

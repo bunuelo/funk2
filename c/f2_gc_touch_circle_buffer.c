@@ -133,6 +133,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
 }
 
 void funk2_gc_touch_circle_buffer__test() {
+  printf("funk2_gc_touch_circle_buffer__test: beginning.");
   funk2_gc_touch_circle_buffer_t test_buffer;
   funk2_gc_touch_circle_buffer__init(&test_buffer);
   funk2_gc_touch_circle_buffer__empty(&test_buffer);
@@ -153,6 +154,7 @@ void funk2_gc_touch_circle_buffer__test() {
     error(nil, "should be empty");
   }
   funk2_gc_touch_circle_buffer__destroy(&test_buffer);
+  printf("funk2_gc_touch_circle_buffer__test: success.");
 }
 
 /*

@@ -113,3 +113,15 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
   }
 }
 
+void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
+  if (! this->is_initialized) {
+    printf("\nfunk2_processor_mutex__raw_unlock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
+    funk2_processor_mutex__error();
+  }
+  this->is_locked = boolean__false;
+#endif
+  pthread_mutex_unlock(&(this->pthread_mutex));
+}
+
+

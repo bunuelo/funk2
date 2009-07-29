@@ -549,7 +549,9 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   int retval = boolean__false; // success
   status("loading memory image.");
   
-  funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
+  if (! __funk2.memory.bootstrapping_mode) {
+    funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
+  }
   
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -612,7 +614,9 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
     close(fd);      
   }
   
-  funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));  
+  if (! __funk2.memory.bootstrapping_mode) {
+    funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));  
+  }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));

@@ -25,7 +25,7 @@
 
 void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this) {
   this->length      = 1024;
-  this->data        = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->length);
+  this->data        = (funk2_memblock_t**)f2__malloc(sizeof(funk2_memblock_t*) * this->length);
   this->start_index = 0;
   this->end_index   = 0;
 }
@@ -43,17 +43,17 @@ boolean_t funk2_gc_touch_circle_buffer__is_empty(funk2_gc_touch_circle_buffer_t*
   return (this->start_index == this->end_index);
 }
 
-void funk2_gc_touch_circle_buffer__add_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp) {
+void funk2_gc_touch_circle_buffer__add_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* block) {
   this->data[this->end_index] = exp;
   this->end_index ++;
   if (this->end_index == this->length) {
     this->end_index = 0;
   }
   if (this->end_index == this->start_index) {
-    s64    new_length = this->length << 1;
-    f2ptr* new_data   = (f2ptr*)f2__malloc(sizeof(f2ptr) * new_length);
-    memcpy(new_data,                                      this->data + this->start_index, (this->length - this->start_index) * sizeof(f2ptr));
-    memcpy(new_data + (this->length - this->start_index), this->data,                     this->end_index                    * sizeof(f2ptr));
+    s64                new_length = this->length << 1;
+    funk2_memblock_t** new_data   = (funk2_memblock_t**)f2__malloc(sizeof(funk2_memblock_t*) * new_length);
+    memcpy(new_data,                                      this->data + this->start_index, (this->length - this->start_index) * sizeof(funk2_memblock_t*));
+    memcpy(new_data + (this->length - this->start_index), this->data,                     this->end_index                    * sizeof(funk2_memblock_t*));
     this->start_index = 0;
     this->end_index   = this->length;
     this->length      = new_length;
@@ -61,11 +61,9 @@ void funk2_gc_touch_circle_buffer__add_f2ptr(funk2_gc_touch_circle_buffer_t* thi
   }
 }
 
-f2ptr funk2_gc_touch_circle_buffer__pop_f2ptr(funk2_gc_touch_circle_buffer_t* this) {
-  if (this->start_index == this->end_index) {
-    return nil;
-  }
-  f2ptr pop_value = this->data[this->start_index];
+funk2_memblock_t* funk2_gc_touch_circle_buffer__pop_block(funk2_gc_touch_circle_buffer_t* this) {
+  debug_assert(! funk2_gc_touch_circle_buffer__is_empty(this), nil, "funk2_gc_touch_circle_buffer__pop_block error: buffer is empty.");
+  funk2_memblock_t* pop_value = this->data[this->start_index];
   this->start_index ++;
   if (this->start_index == this->length) {
     this->start_index = 0;
@@ -73,9 +71,9 @@ f2ptr funk2_gc_touch_circle_buffer__pop_f2ptr(funk2_gc_touch_circle_buffer_t* th
   return pop_value;
 }
 
-void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp) {
-  if (exp) {
-    funk2_gc_touch_circle_buffer__add_f2ptr(this, exp);
+void funk2_gc_touch_circle_buffer__touch_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* block) {
+  if (block) {
+    funk2_gc_touch_circle_buffer__add_f2ptr(this, block);
   }
 }
 
@@ -85,14 +83,13 @@ void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* th
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->trace);
 }
 
-void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr start_exp) {
-  debug__assert(start_exp, nil, "exp__gc_touch_all_referenced assertion failed: got nil value.");
+void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* start_block) {
+  debug__assert(start_block, nil, "funk2_gc_touch_circle_buffer__touch_all_referenced_from_block assertion failed: got NULL value.");
   funk2_gc_touch_circle_buffer__empty(this);
-  funk2_gc_touch_circle_buffer__add_f2ptr(this, start_exp);
+  funk2_gc_touch_circle_buffer__add_block(this, start_block);
   
   while(! funk2_gc_touch_circle_buffer__is_empty(this)) {
-    f2ptr exp = funk2_gc_touch_circle_buffer__pop_f2ptr(this);
-    ptype_block_t* block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
+    ptype_block_t* block = funk2_gc_touch_circle_buffer__pop_block(this);
     if (block && (! block->block.gc_touch)) {
       funk2_gc_touch_circle_buffer__touch_f2ptr(this, block->cause);
       switch(block->ptype) {

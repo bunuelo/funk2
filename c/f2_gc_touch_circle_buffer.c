@@ -74,8 +74,8 @@ void funk2_gc_touch_circle_buffer__add_block(funk2_gc_touch_circle_buffer_t* thi
     this->start_index = 0;
     this->end_index   = this->length;
     this->length      = new_length;
-    this->data = new_data;
     free(this->data);
+    this->data = new_data;
   }
 }
 

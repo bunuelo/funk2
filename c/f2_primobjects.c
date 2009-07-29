@@ -2118,59 +2118,7 @@ void f2__primobjects__reinitialize_globalvars() {
 
 void f2__primobjects__initialize() {
   f2__primobjects__reinitialize_globalvars();
-  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
-  
-  environment__add_var_value(cause, global_environment(), __primobject__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __place__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __cons__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), __doublelink__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __imagination_link__symbol, nil);
-  environment__add_var_value(cause, global_environment(), __cfunk__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __metrocfunk__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), __metro__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __exception__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __bytecode__symbol,         nil);
-  environment__add_var_value(cause, global_environment(), __thread__symbol,           nil);
-  environment__add_var_value(cause, global_environment(), __processor__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __scheduler__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __event_subscriber__symbol, nil);
-  environment__add_var_value(cause, global_environment(), __cause__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __transframe__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __bug__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), __time__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), __size_2d__symbol,          nil);
-  environment__add_var_value(cause, global_environment(), __event__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __bytecode_event__symbol,   nil);
-  
-  // place
-  
-  
-  //f2__funktional_primcfunk__init(placep, "");
-  
-  //f2__primcfunk__init(place__thing, "");
-  //f2__primcfunk__init(place__thing__set, "");
-  
-  // cons
-  
-  //f2__funktional_primcfunk__init(consp, "");
-  //f2__primcfunk__init(cons, "");
-  //f2__primcfunk__init(cons__car, "");
-  //f2__primcfunk__init(cons__car__set, "");
-  //f2__primcfunk__init(cons__cdr, "");
-  //f2__primcfunk__init(cons__cdr__set, "");
-  
-  // doublelink
-  
-  //f2__primcfunk__init(doublelink, "");
-  //f2__funktional_primcfunk__init(doublelinkp, "");
-  //f2__primcfunk__init(doublelink__prev, "");
-  //f2__primcfunk__init(doublelink__prev__set, "");
-  //f2__primcfunk__init(doublelink__next, "");
-  //f2__primcfunk__init(doublelink__next__set, "");
-  //f2__primcfunk__init(doublelink__value, "");
-  //f2__primcfunk__init(doublelink__value__set, "");
-  
+  f2ptr cause = initial_cause();
   
   // place
   

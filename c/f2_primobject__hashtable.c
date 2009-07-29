@@ -30,6 +30,7 @@ f2ptr __hashtable__symbol = -1;
 
 f2ptr f2hashtable__new(f2ptr cause, f2ptr bin_num_power, f2ptr bin_array) {
   release__assert(__hashtable__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
+  release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2hashtable__new error: bin_num_power or bin_array are of wrong type.");
   f2ptr this = f2__primobject__new(cause, __hashtable__symbol, 2, nil);
   f2hashtable__bin_num_power__set(this, cause, bin_num_power);
   f2hashtable__bin_array__set(    this, cause, bin_array);

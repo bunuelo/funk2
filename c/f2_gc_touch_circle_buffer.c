@@ -136,7 +136,7 @@ void funk2_gc_touch_circle_buffer__test() {
   funk2_gc_touch_circle_buffer_t test_buffer;
   funk2_gc_touch_circle_buffer__init(&test_buffer);
   funk2_gc_touch_circle_buffer__empty(&test_buffer);
-  if (! funk2_gc_touch_circle_buffer__empty(&test_buffer)) {
+  if (! funk2_gc_touch_circle_buffer__is_empty(&test_buffer)) {
     error(nil, "should be empty");
   }
   int i;

@@ -227,7 +227,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     }
   }
   this->total_free_memory += (byte_num - old_total_global_memory);
-  funk2_memorypool__debug_memory_test(this, 1);
+  funk2_memorypool__debug_memory_test(this, 2);
 }
 
 void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num) {
@@ -248,7 +248,7 @@ void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this,
 }
 
 u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this) {
-  funk2_memorypool__debug_memory_test(this, 1);
+  funk2_memorypool__debug_memory_test(this, 2);
   status("defragmenting funk2_memorypool");
   u8 did_something = 0;
   funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(this));
@@ -279,13 +279,13 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
   release__assert(iter == end_of_blocks, nil, "failed.");
-  funk2_memorypool__debug_memory_test(this, 1);
+  funk2_memorypool__debug_memory_test(this, 2);
   return did_something;
 }
 
 u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
   //status("funk2_memorypool__free_all_gc_untouched_blocks_from_generation: generation_num=%d.", generation_num);
-  funk2_memorypool__debug_memory_test(this, 1);
+  funk2_memorypool__debug_memory_test(this, 2);
   u8 did_something = 0;
   rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
   rbt_node_t* next;
@@ -304,7 +304,7 @@ u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypo
     }
     iter = next;
   }
-  funk2_memorypool__debug_memory_test(this, 1);
+  funk2_memorypool__debug_memory_test(this, 2);
   return did_something;
 }
 
@@ -336,7 +336,7 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
     }
     max_size_block = NULL; // largest free memory block is not large enough.  fail.
   }
-  // debug_memory_test(pool_index, 3); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
+  debug_memory_test(pool_index, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
   return max_size_block;
 }
 

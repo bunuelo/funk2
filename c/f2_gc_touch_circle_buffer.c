@@ -44,7 +44,7 @@ boolean_t funk2_gc_touch_circle_buffer__is_empty(funk2_gc_touch_circle_buffer_t*
 }
 
 void funk2_gc_touch_circle_buffer__add_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* block) {
-  this->data[this->end_index] = exp;
+  this->data[this->end_index] = block;
   this->end_index ++;
   if (this->end_index == this->length) {
     this->end_index = 0;

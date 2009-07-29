@@ -34,6 +34,23 @@ void funk2_gc_touch_circle_buffer__destroy(funk2_gc_touch_circle_buffer_t* this)
   free(this->data);
 }
 
+void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this) {
+  printf("\n[gc_touch_circle_buffer");
+  printf(" :length " s64__fstr, this->length);
+  printf(" :data (");
+  s64 i;
+  for (i = 0; i < this->length; i ++) {
+    if (i != 0) {
+      printf(" ");
+    }
+    printf(u64__fstr, (u64)(to_ptr(this->data[i])));
+  }
+  printf(")");
+  printf(" :start_index " s64__fstr, this->start_index);
+  printf(" :end_index " s64__fstr, this->end_index);
+  printf("]");
+}
+
 void funk2_gc_touch_circle_buffer__empty(funk2_gc_touch_circle_buffer_t* this) {
   this->start_index = 0;
   this->end_index   = 0;
@@ -137,19 +154,27 @@ void funk2_gc_touch_circle_buffer__test() {
   funk2_gc_touch_circle_buffer_t test_buffer;
   funk2_gc_touch_circle_buffer__init(&test_buffer);
   funk2_gc_touch_circle_buffer__empty(&test_buffer);
+  funk2_gc_touch_circle_buffer__print(&test_buffer);
+  printf("\nchecking if empty.");
   if (! funk2_gc_touch_circle_buffer__is_empty(&test_buffer)) {
     printf("\nerror: should be empty");
     exit(-1);
   }
   int i;
   for (i = 0; i < 1000; i++) {
+    funk2_gc_touch_circle_buffer__print(&test_buffer);
+    printf("\nadding %d", i);
     funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)from_ptr(i));
-    if ((i % 10) == 10) {
+    funk2_gc_touch_circle_buffer__print(&test_buffer);
+    if ((i % 10) == 0) {
+      printf("\npopping");
       funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
     }
   }
   for (i = 0; i < 1000; i++) {
-    if ((i % 10) != 10) {
+    if ((i % 10) != 0) {
+      funk2_gc_touch_circle_buffer__print(&test_buffer);
+      printf("\npopping");
       funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
       printf("\npopped value %d", ((int)to_ptr(block)));
       if (((int)to_ptr(block)) != i) {
@@ -158,6 +183,8 @@ void funk2_gc_touch_circle_buffer__test() {
       }
     }
   }
+  funk2_gc_touch_circle_buffer__print(&test_buffer);
+  printf("\nchecking if empty.");
   if (! funk2_gc_touch_circle_buffer__is_empty(&test_buffer)) {
     printf("\nerror: should be empty");
     exit(-1);

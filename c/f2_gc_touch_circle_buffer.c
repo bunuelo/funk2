@@ -144,12 +144,12 @@ void funk2_gc_touch_circle_buffer__test() {
   int i;
   for (i = 0; i < 1000; i++) {
     funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)from_ptr(i));
-    if ((i % 10) == 0) {
+    if ((i % 10) == 10) {
       funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
     }
   }
   for (i = 0; i < 1000; i++) {
-    if ((i % 10) != 0) {
+    if ((i % 10) != 10) {
       funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
       printf("\npopped value %d", ((int)to_ptr(block)));
       if (((int)to_ptr(block)) != i) {

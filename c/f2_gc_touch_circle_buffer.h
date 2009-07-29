@@ -25,25 +25,42 @@
 #include "f2_memblock.h"
 
 typedef struct funk2_gc_touch_circle_buffer_s {
+  s64    length;
+  f2ptr* data;
+  s64    start_index;
+  s64    end_index;
+} funk2_gc_touch_circle_buffer_t;
+
+void      funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this);
+void      funk2_gc_touch_circle_buffer__destroy(funk2_gc_touch_circle_buffer_t* this);
+void      funk2_gc_touch_circle_buffer__empty(funk2_gc_touch_circle_buffer_t* this);
+boolean_t funk2_gc_touch_circle_buffer__is_empty(funk2_gc_touch_circle_buffer_t* this);
+void      funk2_gc_touch_circle_buffer__add_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp);
+f2ptr     funk2_gc_touch_circle_buffer__pop_f2ptr(funk2_gc_touch_circle_buffer_t* this);
+void      funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp);
+void      funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
+void      funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr start_exp);
+
+/*
+typedef struct funk2_gc_touch_circle_buffer_s {
   s64                num;
   funk2_memblock_t** start;
   funk2_memblock_t** end;
   funk2_memblock_t** start_index;
   funk2_memblock_t** end_index;
 } funk2_gc_touch_circle_buffer_t;
-
-#define GC_TOUCH_CIRCLE_BUF_START_SIZE (2)
+*/
 
 // funk2_gc_touch_circle_buffer
 
-void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__destroy(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message);
-void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buffer_t* this);
-void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr block_f2ptr);
-void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
-void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr);
-void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp);
+//void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this);
+//void funk2_gc_touch_circle_buffer__destroy(funk2_gc_touch_circle_buffer_t* this);
+//void funk2_gc_touch_circle_buffer__print(funk2_gc_touch_circle_buffer_t* this, char* message);
+//void funk2_gc_touch_circle_buffer__advance_end(funk2_gc_touch_circle_buffer_t* this);
+//void funk2_gc_touch_circle_buffer__advance_start_index(funk2_gc_touch_circle_buffer_t* this);
+//void funk2_gc_touch_circle_buffer__touch_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr block_f2ptr);
+//void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
+//void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, ptr start_block_ptr);
+//void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touch_circle_buffer_t* this, f2ptr exp);
 
 #endif // F2__GC_TOUCH_CIRCLE_BUFFER__H

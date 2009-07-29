@@ -139,13 +139,13 @@ void funk2_gc_touch_circle_buffer__test() {
   if (! funk2_gc_touch_circle_buffer__is_empty(&test_buffer)) {
     error(nil, "should be empty");
   }
-  u32 i;
+  int i;
   for (i = 0; i < 1000; i++) {
-    funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)i);
+    funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)from_ptr(i));
   }
   for (i = 0; i < 1000; i++) {
     funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
-    if (((u32)block) != i) {
+    if (((u32)to_ptr(block)) != i) {
       error(nil, "circle buffer error.");
     }
   }

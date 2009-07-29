@@ -90,7 +90,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(funk2_gc_touc
   funk2_gc_touch_circle_buffer__empty(this);
   funk2_gc_touch_circle_buffer__add_f2ptr(this, start_exp);
   
-  while(! funk2_gc_touch_circle_buffer__is_empty(this) {
+  while(! funk2_gc_touch_circle_buffer__is_empty(this)) {
     f2ptr exp = funk2_gc_touch_circle_buffer__pop_f2ptr(this);
     ptype_block_t* block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
     if (block && (! block->block.gc_touch)) {

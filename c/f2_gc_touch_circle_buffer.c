@@ -24,7 +24,7 @@
 // funk2_gc_touch_circle_buffer
 
 void funk2_gc_touch_circle_buffer__init(funk2_gc_touch_circle_buffer_t* this) {
-  this->length      = 1024;
+  this->length      = 2;
   this->data        = (funk2_memblock_t**)f2__malloc(sizeof(funk2_memblock_t*) * this->length);
   this->start_index = 0;
   this->end_index   = 0;
@@ -161,7 +161,7 @@ void funk2_gc_touch_circle_buffer__test() {
     exit(-1);
   }
   int i;
-  for (i = 0; i < 1000; i++) {
+  for (i = 0; i < 10; i++) {
     funk2_gc_touch_circle_buffer__print(&test_buffer);
     printf("\nadding %d", i);
     funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)from_ptr(i));
@@ -171,7 +171,7 @@ void funk2_gc_touch_circle_buffer__test() {
       funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
     }
   }
-  for (i = 0; i < 1000; i++) {
+  for (i = 0; i < 10; i++) {
     if ((i % 10) != 0) {
       funk2_gc_touch_circle_buffer__print(&test_buffer);
       printf("\npopping");

@@ -44,6 +44,8 @@ void              funk2_gc_touch_circle_buffer__touch_block(funk2_gc_touch_circl
 void              funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
 void              funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* start_block);
 
+void funk2_gc_touch_circle_buffer__test();
+
 /*
 typedef struct funk2_gc_touch_circle_buffer_s {
   s64                num;

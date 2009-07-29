@@ -132,7 +132,28 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
   }
 }
 
-
+void funk2_gc_touch_circle_buffer__test() {
+  funk2_gc_touch_circle_buffer_t test_buffer;
+  funk2_gc_touch_circle_buffer__init(&test_buffer);
+  funk2_gc_touch_circle_buffer__empty(&test_buffer);
+  if (! funk2_gc_touch_circle_buffer__empty(&test_buffer)) {
+    error(nil, "should be empty");
+  }
+  int i;
+  for (i = 0; i < 1000; i++) {
+    funk2_gc_touch_circle_buffer__add_block(&test_buffer, (funk2_memblock_t*)i);
+  }
+  for (i = 0; i < 1000; i++) {
+    funk2_memblock_t* block = funk2_gc_touch_circle_buffer__pop_block(&test_buffer);
+    if (((int)block) != i) {
+      error(nil, "circle buffer error.");
+    }
+  }
+  if (! funk2_gc_touch_circle_buffer__empty(&test_buffer)) {
+    error(nil, "should be empty");
+  }
+  funk2_gc_touch_circle_buffer__destroy(&test_buffer);
+}
 
 /*
 

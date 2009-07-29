@@ -288,7 +288,16 @@ boolean_t funk2__handle(funk2_t* this) {
   return boolean__true;
 }
 
+#define TEST
+
+void funk2_test() {
+  funk2_gc_touch_circle_buffer__test();
+}
+
 int funk2__main(funk2_t* this, int argc, char** argv) {
+#ifdef TEST
+  funk2_test();
+#endif // TEST
   funk2__init(this, argc, argv);
   
   while (1) {

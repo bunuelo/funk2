@@ -73,7 +73,7 @@ funk2_memblock_t* funk2_gc_touch_circle_buffer__pop_block(funk2_gc_touch_circle_
 
 void funk2_gc_touch_circle_buffer__touch_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* block) {
   if (block) {
-    funk2_gc_touch_circle_buffer__add_f2ptr(this, block);
+    funk2_gc_touch_circle_buffer__add_block(this, block);
   }
 }
 

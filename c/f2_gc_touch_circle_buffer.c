@@ -54,9 +54,10 @@ void funk2_gc_touch_circle_buffer__add_f2ptr(funk2_gc_touch_circle_buffer_t* thi
     f2ptr* new_data   = (f2ptr*)f2__malloc(sizeof(f2ptr) * new_length);
     memcpy(new_data,                                      this->data + this->start_index, (this->length - this->start_index) * sizeof(f2ptr));
     memcpy(new_data + (this->length - this->start_index), this->data,                     this->end_index                    * sizeof(f2ptr));
-    free(this->data);
     this->start_index = 0;
-    this->end_index   = old_length;
+    this->end_index   = this->length;
+    this->length      = new_length;
+    free(this->data);
   }
 }
 

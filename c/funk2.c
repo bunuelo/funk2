@@ -146,100 +146,103 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   char* compile__bootstrap_repl_img__filename = F2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME;
   char* other__bootstrap_img__filename        = "/mit/6.868/funk2/img/bootstrap.img";
   
-
-  f2__initialize();
-  
-  funk2_primobject_type_handler__add_builtin_ptype_primobjects(&(this->primobject_type_handler), cause);
-  funk2_primobject_type_handler__add_builtin_primobjects(&(this->primobject_type_handler), cause);
-  
-  // try to load the default system-wide bootstrap image
-  if (funk2_memory__load_image_from_file(&(__funk2.memory), install__bootstrap_img__filename)) {
-    // try to load the local bootstrap image
-    if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_img__filename)) {
-      // if we can't load the default system-wide bootstrap image or a local bootstrap image, then we are in the middle of compiling and depending on compiling progress we can load this intermediate image.
-      if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_repl_img__filename)) {
-	// try to load the other bootstrap image
-	if (funk2_memory__load_image_from_file(&(__funk2.memory), other__bootstrap_img__filename)) {
-	  status("warning: couldn't load \"%s\" or \"%s\" or \"%s\".", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename, other__bootstrap_img__filename);
-	  status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
+  pause_gc();
+  {
+    f2__initialize();
+    
+    funk2_primobject_type_handler__add_builtin_ptype_primobjects(&(this->primobject_type_handler), cause);
+    funk2_primobject_type_handler__add_builtin_primobjects(&(this->primobject_type_handler), cause);
+    
+    // try to load the default system-wide bootstrap image
+    if (funk2_memory__load_image_from_file(&(__funk2.memory), install__bootstrap_img__filename)) {
+      // try to load the local bootstrap image
+      if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_img__filename)) {
+	// if we can't load the default system-wide bootstrap image or a local bootstrap image, then we are in the middle of compiling and depending on compiling progress we can load this intermediate image.
+	if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_repl_img__filename)) {
+	  // try to load the other bootstrap image
+	  if (funk2_memory__load_image_from_file(&(__funk2.memory), other__bootstrap_img__filename)) {
+	    status("warning: couldn't load \"%s\" or \"%s\" or \"%s\".", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename, other__bootstrap_img__filename);
+	    status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
+	  } else {
+	    status("warning: couldn't load \"%s\" or \"%s\".", install__bootstrap_img__filename, other__bootstrap_img__filename);
+	    status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
+	  }
 	} else {
-	  status("warning: couldn't load \"%s\" or \"%s\".", install__bootstrap_img__filename, other__bootstrap_img__filename);
-	  status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
+	  status("warning: we must be in a compile process because couldn't load \"%s\" so reverted to loading \"%s\"", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
 	}
       } else {
-	status("warning: we must be in a compile process because couldn't load \"%s\" so reverted to loading \"%s\"", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
+	status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
       }
-    } else {
-      status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
     }
-  }
-  
-  cause = f2__cause__new_with_default_properties(cause);
-  //cause = f2__cause__new_default_with_memory_tracing_on(cause);
-  
-  // try to find a boot function
-  f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));
-  if (! raw__funkable__is_type(cause, boot_funk)) {
-    status("warning: no boot function defined.");
     
-    // load file specified by user on command line
-    if (this->command_line.load_source_filename != NULL) {
+    cause = f2__cause__new_with_default_properties(cause);
+    //cause = f2__cause__new_default_with_memory_tracing_on(cause);
+    
+    // try to find a boot function
+    f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));
+    if (! raw__funkable__is_type(cause, boot_funk)) {
+      status("warning: no boot function defined.");
       
-      // try to find a nice user-friendly load
-      f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
-      if (raw__larva__is_type(cause, load_funk)) {
-	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
-	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
+      // load file specified by user on command line
+      if (this->command_line.load_source_filename != NULL) {
+	
+	// try to find a nice user-friendly load
+	f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
 	if (raw__larva__is_type(cause, load_funk)) {
-	  f2__print(cause, global_environment());
-	  error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
+	  // if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
+	  load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
+	  if (raw__larva__is_type(cause, load_funk)) {
+	    f2__print(cause, global_environment());
+	    error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
+	  }
 	}
-      }
-      
-      f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
-      
-      // start a thread executing the user read-eval-print loop
-      f2__thread(cause,
-		 cause,
-		 nil,
+	
+	f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
+	
+	// start a thread executing the user read-eval-print loop
+	f2__thread(cause,
+		   cause,
+		   nil,
+		   global_environment(),
+		   load_funk,
+		   args);
+	
+      } else {
+	
+	// try to find a nice user-friendly repl
+	f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
+	if (raw__larva__is_type(cause, repl_funk)) {
+	  // if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
+	  repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:repl"), (u8*)"primfunk:repl"));
+	  if (raw__larva__is_type(cause, repl_funk)) {
+	    error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
+	  }
+	}
+	
+	// start a thread executing the user read-eval-print loop
+	f2__thread(cause,
+		   cause,
+		   nil,
 		 global_environment(),
-		 load_funk,
-		 args);
+		   repl_funk,
+		   nil);
+    }
       
     } else {
-      
-      // try to find a nice user-friendly repl
-      f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
-      if (raw__larva__is_type(cause, repl_funk)) {
-	// if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
-	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:repl"), (u8*)"primfunk:repl"));
-	if (raw__larva__is_type(cause, repl_funk)) {
-	  error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
-	}
-      }
-      
-      // start a thread executing the user read-eval-print loop
+      // start a thread executing the boot function
       f2__thread(cause,
 		 cause,
 		 nil,
 		 global_environment(),
-		 repl_funk,
+		 boot_funk,
 		 nil);
     }
     
-  } else {
-    // start a thread executing the boot function
-    f2__thread(cause,
-	       cause,
-	       nil,
-	       global_environment(),
-	       boot_funk,
-	       nil);
+    // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
+    f2__scheduler__start_processors();
+    this->memory.bootstrapping_mode = boolean__false;
   }
-  
-  // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
-  f2__scheduler__start_processors();
-  this->memory.bootstrapping_mode = boolean__false;
+  resume_gc();
 }
 
 void f2__destroy() {

@@ -917,7 +917,7 @@ void raw__exit(int value) {
   status("funk2: exit.");
 #ifdef DEBUG
   print_bytecode_stats(stdout);
-  print_gc_stats();
+  funk2_memory__print_gc_stats(&(__funk2.memory));
 #endif // DEBUG
   f2__destroy();
   exit(value);

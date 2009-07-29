@@ -275,7 +275,6 @@ void f2__primobject__stream__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__stream", "", &f2__primobject__stream__reinitialize_globalvars);
   
   f2__primobject__stream__reinitialize_globalvars();
-  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   f2__primcfunk__init(file_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");

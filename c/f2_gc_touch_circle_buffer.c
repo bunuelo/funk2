@@ -89,7 +89,7 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
   funk2_gc_touch_circle_buffer__add_block(this, start_block);
   
   while(! funk2_gc_touch_circle_buffer__is_empty(this)) {
-    ptype_block_t* block = funk2_gc_touch_circle_buffer__pop_block(this);
+    ptype_block_t* block = (ptype_block_t*)funk2_gc_touch_circle_buffer__pop_block(this);
     if (block && (! block->block.gc_touch)) {
       funk2_gc_touch_circle_buffer__touch_f2ptr(this, block->cause);
       switch(block->ptype) {

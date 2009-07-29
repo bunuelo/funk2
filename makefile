@@ -114,6 +114,7 @@ funk2_server_objs = \
   c/f2_redblacktree.o \
   c/f2_repl.o \
   c/f2_scheduler.o \
+  c/f2_scheduler_thread_controller.o \
   c/f2_search.o \
   c/f2_serialize.o \
   c/f2_signal.o \
@@ -196,6 +197,7 @@ funk2_headers = \
   c/f2_redblacktree.h \
   c/f2_repl.h \
   c/f2_scheduler.h \
+  c/f2_scheduler_thread_controller.h \
   c/f2_search.h \
   c/f2_serialize.h \
   c/f2_signal.h \

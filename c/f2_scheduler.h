@@ -29,7 +29,7 @@
 #include "f2_processor_mutex.h"
 
 typedef struct funk2_operating_system_s {
-  funk2_processor_mutex_t scheduler__execute_mutex;
+  //  funk2_processor_mutex_t scheduler__execute_mutex;
   f2ptr                   scheduler;
   f2ptr                   scheduler__symbol;
   f2ptr                   processor_thread__current_thread[memory_pool_num];
@@ -62,8 +62,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
 
 f2ptr f2__add_thread(f2ptr cause, f2ptr this, f2ptr thread);
 
-void f2__global_scheduler__execute_mutex__lock(f2ptr cause);
-void f2__global_scheduler__execute_mutex__unlock(f2ptr cause);
+//void f2__global_scheduler__execute_mutex__lock(f2ptr cause);
+//void f2__global_scheduler__execute_mutex__unlock(f2ptr cause);
 
 void f2__scheduler__yield(f2ptr cause);
 void f2__scheduler__complete_thread(f2ptr cause, f2ptr thread);

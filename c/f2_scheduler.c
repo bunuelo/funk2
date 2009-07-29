@@ -136,13 +136,13 @@ void f2__global_scheduler__add_thread_parallel(f2ptr cause, f2ptr thread) {
   f2__scheduler__add_thread_to_least_used_processor(cause, __funk2.operating_system.scheduler, thread);
 }
 
-void f2__global_scheduler__execute_mutex__lock(f2ptr cause) {
-  funk2_processor_mutex__lock(&(__funk2.operating_system.scheduler__execute_mutex));
-}
+//void f2__global_scheduler__execute_mutex__lock(f2ptr cause) {
+//  funk2_processor_mutex__lock(&(__funk2.operating_system.scheduler__execute_mutex));
+//}
 
-void f2__global_scheduler__execute_mutex__unlock(f2ptr cause) {
-  funk2_processor_mutex__unlock(&(__funk2.operating_system.scheduler__execute_mutex));
-}
+//void f2__global_scheduler__execute_mutex__unlock(f2ptr cause) {
+//  funk2_processor_mutex__unlock(&(__funk2.operating_system.scheduler__execute_mutex));
+//}
 
 f2ptr f2__scheduler__processor_thread_current_thread(int pool_index) {
   f2ptr thread = __funk2.operating_system.processor_thread__current_thread[pool_index];
@@ -202,10 +202,6 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   //pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something    = nil;
-  {
-    f2__global_scheduler__execute_mutex__lock(cause);
-    f2__global_scheduler__execute_mutex__unlock(cause);
-  }
   f2ptr thread_iter      = f2processor__active_threads(processor, cause);
   f2ptr prev_thread_iter = nil;
   int thread_num         = 0;
@@ -466,8 +462,7 @@ void f2__scheduler__reinitialize_globalvars() {
 void f2__scheduler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars);
   
-  funk2_processor_mutex__init(&(__funk2.operating_system.scheduler__execute_mutex));
-  f2__global_scheduler__execute_mutex__lock(initial_cause());
+  //funk2_processor_mutex__init(&(__funk2.operating_system.scheduler__execute_mutex));
   
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
@@ -499,8 +494,6 @@ void f2__scheduler__initialize() {
   
   f2__scheduler__reinitialize_globalvars();
   
-  f2__global_scheduler__execute_mutex__unlock(cause);
-  
   // **
   
   //f2__primcfunk__init(global_scheduler__add_thread_to_pool);
@@ -511,7 +504,6 @@ void f2__scheduler__initialize() {
 
 void f2__scheduler__destroy() {
   f2__scheduler__stop_processors();
-  f2__global_scheduler__execute_mutex__lock(initial_cause()); // unlock to restart...
 }
 
 

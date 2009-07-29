@@ -241,7 +241,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   }
   
   // parallelized
-  boolean_t did_something = boolean__false;//funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
+  boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
 #ifdef DEBUG_MEMORY
   {
     int pool_index;

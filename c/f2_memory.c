@@ -205,7 +205,7 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
 
 void funk2_memory__touch_never_delete_list(funk2_memory_t* this) {
   u64 i;
-  for (i = 0; i < this->never_delete_list->used_num; i++) {
+  for (i = 0; i < this->never_delete_list.used_num; i++) {
     funk2_memory__touch_all_referenced_from_f2ptr(this, this->never_delete_list.data[i]);
   }
 }

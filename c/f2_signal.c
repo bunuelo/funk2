@@ -36,7 +36,6 @@ void f2__receive_signal(int sig) {
   case SIGSEGV:
     printf ("\nsignal note: received segmentation fault\n"); fflush(stdout);
     __received_segmentation_fault = 1;
-    f2__print_threads_stacks();
     //print_gc_stats();
     //memory_test();
     exit(f2__repl(initial_cause(), nil)); // these thread pointers might need to be valid

@@ -2145,8 +2145,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(float__to_integer, "");
   f2__funktional_primcfunk__init(float__to_double, "");
   
-  f2__primcfunk__init(repl, "");
-  
   f2__primcfunk__init(hashtable__add_keyvalue_pair, "");
   f2__primcfunk__init(hashtable__lookup_keyvalue_pair, "");
   f2__primcfunk__init(hashtable__lookup_value, "");

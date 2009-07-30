@@ -26,7 +26,8 @@
 
 typedef enum funk2_management_thread_command_type_e {
   funk2_management_thread_command_type__save_memory_image,
-  funk2_management_thread_command_type__load_memory_image
+  funk2_management_thread_command_type__load_memory_image,
+  funk2_management_thread_command_type__exit
 } funk2_management_thread_command_type_t;
 
 // management_thread_command_header

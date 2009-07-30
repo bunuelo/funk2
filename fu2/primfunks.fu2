@@ -228,7 +228,8 @@
 [globalize-funk float-to_integer                            &primfunk:float__to_integer]
 [globalize-funk float-to_double                             &primfunk:float__to_double]
 
-[globalize-funk repl                                        &primfunk:repl]
+[globalize-funk simple_repl                                 &primfunk:simple_repl]
+[globalize-funk repl                                        &simple_repl]
 
 [globalize-funk hashtable-add_keyvalue_pair                 &primfunk:hashtable__add_keyvalue_pair]
 [globalize-funk hashtable-lookup_keyvalue_pair              &primfunk:hashtable__lookup_keyvalue_pair]

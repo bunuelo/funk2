@@ -34,7 +34,7 @@ funk2_management_thread_command__save_memory_image_t* funk2_management_thread_co
 
 void funk2_management_thread_command__save_memory_image__execute(funk2_management_thread_command__save_memory_image_t* this) {
   funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
-  status("funk2_management_thread_command__save_memory_image__execute: saving memory image.");
+  status("funk2_management_thread_command__save_memory_image__execute: saving memory image to %s.", (char*)this->filename);
   this->result = funk2_memory__save_image_to_file(&(__funk2.memory), (char*)this->filename);
   status("funk2_management_thread_command__save_memory_image__execute: done saving memory image.");
   funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));
@@ -53,8 +53,9 @@ funk2_management_thread_command__load_memory_image_t* funk2_management_thread_co
 
 void funk2_management_thread_command__load_memory_image__execute(funk2_management_thread_command__load_memory_image_t* this) {
   funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
-  
-  this->result = boolean__false;
+  status("funk2_management_thread_command__load_memory_image__execute: loading memory image from %s.", (char*)this->filename);
+  this->result = funk2_memory__load_image_from_file(&(__funk2.memory), (char*)this->filename);
+  status("funk2_management_thread_command__load_memory_image__execute: done loading memory image.");
   funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));
 }
 

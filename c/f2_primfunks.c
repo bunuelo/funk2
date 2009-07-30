@@ -1303,14 +1303,14 @@ def_pcfunk1(coerce_to_int, exp, return f2__coerce_to_int(this_cause, exp));
 //}
 //def_pcfunk1(memory_image__save, filename, return f2__memory_image__save(this_cause, filename));
 
-f2ptr f2__memory_image__load(f2ptr cause, f2ptr filename) {
-  char* str = (char*)from_ptr(f2__malloc(f2string__length(filename, cause)));
-  f2string__str_copy(filename, cause, (u8*)str);
-  f2ptr retval = f2bool__new(funk2_memory__load_image_from_file(&(__funk2.memory), str));
-  f2__free(to_ptr(str));
-  return retval;
-}
-def_pcfunk1(memory_image__load, filename, return f2__memory_image__load(this_cause, filename));
+//f2ptr f2__memory_image__load(f2ptr cause, f2ptr filename) {
+//  char* str = (char*)from_ptr(f2__malloc(f2string__length(filename, cause)));
+//  f2string__str_copy(filename, cause, (u8*)str);
+//  f2ptr retval = f2bool__new(funk2_memory__load_image_from_file(&(__funk2.memory), str));
+//  f2__free(to_ptr(str));
+//  return retval;
+//}
+//def_pcfunk1(memory_image__load, filename, return f2__memory_image__load(this_cause, filename));
 
 def_pcfunk1(funkall__raw_c_funk__v__v,      cfunk_ptr,                                                                  (* (void   (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(); return nil);
 def_pcfunk2(funkall__raw_c_funk__v__i,      cfunk_ptr, a0,                                                              (* (void   (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause)); return nil);
@@ -2005,7 +2005,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(wrong_argument_number_error__set, "");
   
   //f2__primcfunk__init(memory_image__save, "");
-  f2__primcfunk__init(memory_image__load, "");
+  //f2__primcfunk__init(memory_image__load, "");
   
   f2__primcfunk__init(funkall__raw_c_funk__v__v, "");
   f2__primcfunk__init(funkall__raw_c_funk__v__i, "");

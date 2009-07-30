@@ -65,6 +65,15 @@ typedef struct funk2_management_thread_command__load_memory_image_s {
 
 funk2_management_thread_command__load_memory_image_t* funk2_management_thread_command__load_memory_image__new(u8* filename);
 
+// exit
+
+typedef struct funk2_management_thread_command__exit_s {
+  funk2_management_thread_command_header_t header;
+  s64                                      value;
+} funk2_management_thread_command__load_memory_image_t;
+
+funk2_management_thread_command__exit_t* funk2_management_thread_command__exit__new(s64 value);
+
 // management_thread__command_node
 
 typedef struct funk2_management_thread_command_node_s {
@@ -93,6 +102,7 @@ boolean_t                          funk2_management_thread__command_list__is_emp
 funk2_management_thread_command_t* funk2_management_thread__pop_command(funk2_management_thread_t* this);
 u64                                funk2_management_thread__add_save_command(funk2_management_thread_t* this, u8* filename);
 u64                                funk2_management_thread__add_load_command(funk2_management_thread_t* this, u8* filename);
+u64                                funk2_management_thread__add_exit_command(funk2_management_thread_t* this, s64 value);
 void                               funk2_management_thread__add_command_node_to_finished_command_list(funk2_management_thread_t* this, funk2_management_thread_command_node_t* node);
 void                               funk2_management_thread__command_finished(funk2_management_thread_t* this, funk2_management_thread_command_t* command);
 void                               funk2_management_thread__handle_user_threads(funk2_management_thread_t* this);

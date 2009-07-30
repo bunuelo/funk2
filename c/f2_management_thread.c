@@ -108,7 +108,7 @@ void funk2_management_thread__add_command_node_to_command_list(funk2_management_
 }
 
 u64 funk2_management_thread__add_command(funk2_management_thread_t* this, funk2_management_thread_command_t* command) {
-  funk2_management_thread__command_node_t* new_node = (funk2_management_thread__command_node_t*)f2__malloc(sizeof(funk2_management_thread__command_node_t));
+  funk2_management_thread_command_node_t* new_node = (funk2_management_thread_command_node_t*)f2__malloc(sizeof(funk2_management_thread_command_node_t));
   command->header.uid = funk2_management_thread__new_uid(this);
   new_node->command = command;
   funk2_management_thread__add_command_node_to_command_list(this, new_node);
@@ -155,7 +155,7 @@ void funk2_management_thread__add_command_node_to_finished_command_list(funk2_ma
 }
 
 void funk2_management_thread__command_finished(funk2_management_thread_t* this, funk2_management_thread_command_t* command) {
-  funk2_management_thread__command_node_t* new_node = (funk2_management_thread__command_node_t*)f2__malloc(sizeof(funk2_management_thread__command_node_t));
+  funk2_management_thread_command_node_t* new_node = (funk2_management_thread_command_node_t*)f2__malloc(sizeof(funk2_management_thread_command_node_t));
   new_node->command = command;
   funk2_management_thread__add_command_node_to_finished_command_list(this, new_node);
 }

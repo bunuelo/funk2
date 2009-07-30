@@ -35,7 +35,7 @@ funk2_management_thread_command__save_memory_image_t* funk2_management_thread_co
 void funk2_management_thread_command__save_memory_image__execute(funk2_management_thread_command__save_memory_image_t* this) {
   funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
   status("funk2_management_thread_command__save_memory_image__execute: saving memory image.");
-  this->result = funk2_memory__save_image_to_file(&(__funk2.memory), (u8*)this->filename);
+  this->result = funk2_memory__save_image_to_file(&(__funk2.memory), (char*)this->filename);
   status("funk2_management_thread_command__save_memory_image__execute: done saving memory image.");
   funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));
 }

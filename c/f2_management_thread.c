@@ -182,8 +182,14 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
     if (command->header.uid == uid) {
       if (user_result) {
 	switch(command->header.type) {
-	case funk2_management_thread_command_type__save_memory_image: *((boolean_t*)user_result) = command->result; break;
-	case funk2_management_thread_command_type__load_memory_image: *((boolean_t*)user_result) = command->result; break;
+	case funk2_management_thread_command_type__save_memory_image: {
+	  funk2_management_thread_command__save_memory_image_t* save_command = (funk2_management_thread_command__save_memory_image_t*)command;
+	  *((boolean_t*)user_result) = save_command->result;
+	} break;
+	case funk2_management_thread_command_type__load_memory_image: {
+	  funk2_management_thread_command__load_memory_image_t* load_command = (funk2_management_thread_command__load_memory_image_t*)command;
+	  *((boolean_t*)user_result) = load_command->result;
+	} break;
 	}
       }
       if (prev) {

@@ -648,5 +648,5 @@
 	'funk2: done saving half-baked memory_image.' '\n'
 	'\n']
 
-[quit]
+[management_thread-add_exit_command 0]
 

@@ -32,7 +32,7 @@ int f2__simple_repl(f2ptr cause, f2ptr thread) {
     f2ptr read_exp = raw__read(cause, __funk2.globalenv.stdin_stream);
     
     if (raw__exception__is_type(cause, read_exp)) {
-      printf("\nrepl exception: "); f2__write(thread, read_exp); fflush(stdout);
+      printf("\nrepl exception: "); f2__write(cause, read_exp); fflush(stdout);
     } else {
       repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
       repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);

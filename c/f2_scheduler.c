@@ -363,15 +363,16 @@ void* processor__start_routine(void *ptr) {
   while (__funk2.memory.bootstrapping_mode) {
     sched_yield();
   }
-  f2ptr cause     = nil;
-  f2ptr processor = f2__global_scheduler__this_processor(cause);
-  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-  release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
   
 #ifdef DEBUG_SCHEDULER
   printf("\nstarting processor %d (%d)", this_processor_thread__pool_index(), processor); fflush(stdout);
 #endif // DEBUG_SCHEDULER
   while(1) {
+    f2ptr cause     = nil;
+    f2ptr processor = f2__global_scheduler__this_processor(cause);
+    int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+    release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
+    
     f2ptr did_something = nil;
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);
@@ -452,6 +453,7 @@ void f2__scheduler__reinitialize_globalvars() {
   
   __funk2.operating_system.scheduler__symbol = f2symbol__new(cause, strlen("scheduler:global_scheduler"), (u8*)"scheduler:global_scheduler");
   __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+  
 }
 
 void f2__scheduler__initialize() {

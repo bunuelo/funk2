@@ -635,6 +635,15 @@
 [defunk quit []
   [exit 0]]
 
+[defunk save_memory_image [filename]
+  [let [[uid          [management_thread-add_save_memory_image_command filename]]
+	[done         nil]
+	[result_place [new place nil]]]
+    [while [not [management_thread-check_command_uid_finished uid result_place]]
+      [yield]]
+    [get result_place thing]]]
+
+
 [primfunk:load 'fu2/bootstrap-reader.fu2']
 [primfunk:load 'fu2/repl.fu2']
 
@@ -642,7 +651,9 @@
 	'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'
 	'funk2: saving half-baked memory_image to img/bootstrap-repl.img.']
 
-[primfunk:memory_image__save 'img/bootstrap-repl.img']
+`[primfunk:memory_image__save 'img/bootstrap-repl.img']
+
+[management_thread-add_save_memory_image_command 'img/bootstrap-repl.img']
 
 [format stdout '\n'
 	'funk2: done saving half-baked memory_image.' '\n'

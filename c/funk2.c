@@ -92,6 +92,7 @@ void f2__initialize() {
   f2__primobject_type__initialize();
   f2__sort__initialize();
   f2__search__initialize();
+  f2__management_thread__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

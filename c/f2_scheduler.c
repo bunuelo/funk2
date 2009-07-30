@@ -363,16 +363,15 @@ void* processor__start_routine(void *ptr) {
   while (__funk2.memory.bootstrapping_mode) {
     sched_yield();
   }
+  f2ptr cause     = nil;
+  f2ptr processor = f2__global_scheduler__this_processor(cause);
+  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+  release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
   
 #ifdef DEBUG_SCHEDULER
   printf("\nstarting processor %d (%d)", this_processor_thread__pool_index(), processor); fflush(stdout);
 #endif // DEBUG_SCHEDULER
   while(1) {
-    f2ptr cause     = nil;
-    f2ptr processor = f2__global_scheduler__this_processor(cause);
-    int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-    release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
-    
     f2ptr did_something = nil;
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);

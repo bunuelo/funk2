@@ -68,7 +68,7 @@ funk2_management_thread_command__exit_t* funk2_management_thread_command__exit__
 
 void funk2_management_thread_command__exit__execute(funk2_management_thread_command__exit_t* this) {
   funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
-  
+  printf("\nexit executing.\n"); fflush(stdout);
   // exit(this->value);
   funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));
 }

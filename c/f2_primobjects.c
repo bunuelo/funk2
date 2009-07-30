@@ -1210,24 +1210,30 @@ def_pcfunk2(thread__larva_args__set, x, y, return f2__thread__larva_args__set(th
 
 // processor
 
-defprimobject__static_slot(processor__scheduler,              0);
-defprimobject__static_slot(processor__processor_thread,       1);
-defprimobject__static_slot(processor__active_threads_mutex,   2);
-defprimobject__static_slot(processor__active_threads,         3);
-defprimobject__static_slot(processor__sleeping_threads_mutex, 4);
-defprimobject__static_slot(processor__sleeping_threads,       5);
-defprimobject__static_slot(processor__pool_index,             6);
-defprimobject__static_slot(processor__desc,                   7);
+defprimobject__static_slot(processor__scheduler,               0);
+defprimobject__static_slot(processor__processor_thread,        1);
+defprimobject__static_slot(processor__active_threads_mutex,    2);
+defprimobject__static_slot(processor__active_threads,          3);
+defprimobject__static_slot(processor__active_threads_iter,     4);
+defprimobject__static_slot(processor__active_threads_prev,     5);
+defprimobject__static_slot(processor__active_threads_next,     6);
+defprimobject__static_slot(processor__sleeping_threads_mutex,  7);
+defprimobject__static_slot(processor__sleeping_threads,        8);
+defprimobject__static_slot(processor__pool_index,              9);
+defprimobject__static_slot(processor__desc,                   10);
 
 f2ptr __processor__symbol = -1;
 
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc) {
+f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr active_threads_iter, f2ptr active_threads_prev, f2ptr active_threads_next, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc) {
   release__assert(__processor__symbol != -1, nil, "f2processor__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __processor__symbol, 8, nil);
+  f2ptr this = f2__primobject__new(cause, __processor__symbol, 11, nil);
   f2processor__scheduler__set(             this, cause, scheduler);
   f2processor__processor_thread__set(      this, cause, processor_thread);
   f2processor__active_threads_mutex__set(  this, cause, active_threads_mutex);
   f2processor__active_threads__set(        this, cause, active_threads);
+  f2processor__active_threads_iter__set(   this, cause, active_threads_iter);
+  f2processor__active_threads_prev__set(   this, cause, active_threads_prev);
+  f2processor__active_threads_next__set(   this, cause, active_threads_next);
   f2processor__sleeping_threads_mutex__set(this, cause, sleeping_threads_mutex);
   f2processor__sleeping_threads__set(      this, cause, sleeping_threads);
   f2processor__pool_index__set(            this, cause, pool_index);
@@ -1247,6 +1253,12 @@ f2ptr f2processor__primobject_type__new(f2ptr cause) {
 									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_mutex__set__funk, nil);}
   {char* slot_name = "active_threads";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__set__funk, nil);}
+  {char* slot_name = "active_threads_iter";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_iter__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_iter__set__funk, nil);}
+  {char* slot_name = "active_threads_prev";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_prev__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_prev__set__funk, nil);}
+  {char* slot_name = "active_threads_next";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_next__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_next__set__funk, nil);}
   {char* slot_name = "sleeping_threads_mutex"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__set__funk, nil);}
   {char* slot_name = "sleeping_threads";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
@@ -1290,6 +1302,24 @@ def_pcfunk1(processor__active_threads, x, return f2__processor__active_threads(t
 
 f2ptr f2__processor__active_threads__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__active_threads__set(this, cause, value);}
 def_pcfunk2(processor__active_threads__set, x, y, return f2__processor__active_threads__set(this_cause, x, y));
+
+f2ptr f2__processor__active_threads_iter(f2ptr cause, f2ptr this) {return f2processor__active_threads_iter(this, cause);}
+def_pcfunk1(processor__active_threads_iter, x, return f2__processor__active_threads_iter(this_cause, x));
+
+f2ptr f2__processor__active_threads_iter__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__active_threads_iter__set(this, cause, value);}
+def_pcfunk2(processor__active_threads_iter__set, x, y, return f2__processor__active_threads_iter__set(this_cause, x, y));
+
+f2ptr f2__processor__active_threads_prev(f2ptr cause, f2ptr this) {return f2processor__active_threads_prev(this, cause);}
+def_pcfunk1(processor__active_threads_prev, x, return f2__processor__active_threads_prev(this_cause, x));
+
+f2ptr f2__processor__active_threads_prev__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__active_threads_prev__set(this, cause, value);}
+def_pcfunk2(processor__active_threads_prev__set, x, y, return f2__processor__active_threads_prev__set(this_cause, x, y));
+
+f2ptr f2__processor__active_threads_next(f2ptr cause, f2ptr this) {return f2processor__active_threads_next(this, cause);}
+def_pcfunk1(processor__active_threads_next, x, return f2__processor__active_threads_next(this_cause, x));
+
+f2ptr f2__processor__active_threads_next__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__active_threads_next__set(this, cause, value);}
+def_pcfunk2(processor__active_threads_next__set, x, y, return f2__processor__active_threads_next__set(this_cause, x, y));
 
 f2ptr f2__processor__sleeping_threads_mutex(f2ptr cause, f2ptr this) {return f2processor__sleeping_threads_mutex(this, cause);}
 def_pcfunk1(processor__sleeping_threads_mutex, x, return f2__processor__sleeping_threads_mutex(this_cause, x));
@@ -2488,6 +2518,18 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__active_threads, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__funk = never_gc(cfunk);}
   {char* symbol_str = "active_threads-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__active_threads__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "active_threads_iter"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_iter__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__active_threads_iter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_iter__funk = never_gc(cfunk);}
+  {char* symbol_str = "active_threads_iter-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_iter__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__active_threads_iter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_iter__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "active_threads_prev"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_prev__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__active_threads_prev, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_prev__funk = never_gc(cfunk);}
+  {char* symbol_str = "active_threads_prev-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_prev__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__active_threads_prev__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_prev__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "active_threads_next"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_next__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__active_threads_next, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_next__funk = never_gc(cfunk);}
+  {char* symbol_str = "active_threads_next-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_next__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__active_threads_prev__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_threads_next__set__funk = never_gc(cfunk);}
   {char* symbol_str = "sleeping_threads_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__sleeping_threads_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__funk = never_gc(cfunk);}
   {char* symbol_str = "sleeping_threads_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.sleeping_threads_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

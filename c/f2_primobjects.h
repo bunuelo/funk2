@@ -782,7 +782,7 @@ f2ptr f2__thread__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanosecon
 extern f2ptr __processor__symbol;
 boolean_t raw__processor__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__processor__is_type(f2ptr cause, f2ptr x);
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc);
+f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_threads_mutex, f2ptr active_threads, f2ptr active_threads_iter, f2ptr active_threads_prev, f2ptr active_threads_next, f2ptr sleeping_threads_mutex, f2ptr sleeping_threads, f2ptr pool_index, f2ptr desc);
 f2ptr f2processor__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_processor(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __processor__symbol)
@@ -802,18 +802,39 @@ defprimobject__static_slot__prototype(processor__processor_thread);
 #define f2processor__processor_thread__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__processor_thread, cause)
 
 defprimobject__static_slot__prototype(processor__active_threads_mutex);
-#define f2processor__active_threads_mutex(            this, cause)        primobject__static_slot__accessor(  this, processor__active_threads_mutex, cause)
-#define f2processor__active_threads_mutex__set(       this, cause, value) primobject__static_slot__set(       this, processor__active_threads_mutex, cause, value)
-#define f2processor__active_threads_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, processor__active_threads_mutex, cause)
-#define f2processor__active_threads_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, processor__active_threads_mutex, cause)
-#define f2processor__active_threads_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, processor__active_threads_mutex, cause)
+#define f2processor__active_threads_mutex(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_threads_mutex, cause)
+#define f2processor__active_threads_mutex__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_threads_mutex, cause, value)
+#define f2processor__active_threads_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_threads_mutex, cause)
+#define f2processor__active_threads_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_threads_mutex, cause)
+#define f2processor__active_threads_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_threads_mutex, cause)
 
 defprimobject__static_slot__prototype(processor__active_threads);
-#define f2processor__active_threads(                   this, cause)        primobject__static_slot__accessor(  this, processor__active_threads, cause)
-#define f2processor__active_threads__set(              this, cause, value) primobject__static_slot__set(       this, processor__active_threads, cause, value)
-#define f2processor__active_threads__tracing_on(       this, cause)        primobject__static_slot__tracing_on(this, processor__active_threads, cause)
-#define f2processor__active_threads__trace(            this, cause)        primobject__static_slot__trace(     this, processor__active_threads, cause)
-#define f2processor__active_threads__imagination_frame(            this, cause)        primobject__static_slot__imagination_frame(     this, processor__active_threads, cause)
+#define f2processor__active_threads(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_threads, cause)
+#define f2processor__active_threads__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_threads, cause, value)
+#define f2processor__active_threads__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_threads, cause)
+#define f2processor__active_threads__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_threads, cause)
+#define f2processor__active_threads__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_threads, cause)
+
+defprimobject__static_slot__prototype(processor__active_threads_iter);
+#define f2processor__active_threads_iter(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_threads_iter, cause)
+#define f2processor__active_threads_iter__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_threads_iter, cause, value)
+#define f2processor__active_threads_iter__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_threads_iter, cause)
+#define f2processor__active_threads_iter__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_threads_iter, cause)
+#define f2processor__active_threads_iter__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_threads_iter, cause)
+
+defprimobject__static_slot__prototype(processor__active_threads_prev);
+#define f2processor__active_threads_prev(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_threads_prev, cause)
+#define f2processor__active_threads_prev__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_threads_prev, cause, value)
+#define f2processor__active_threads_prev__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_threads_prev, cause)
+#define f2processor__active_threads_prev__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_threads_prev, cause)
+#define f2processor__active_threads_prev__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_threads_prev, cause)
+
+defprimobject__static_slot__prototype(processor__active_threads_next);
+#define f2processor__active_threads_next(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_threads_next, cause)
+#define f2processor__active_threads_next__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_threads_next, cause, value)
+#define f2processor__active_threads_next__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_threads_next, cause)
+#define f2processor__active_threads_next__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_threads_next, cause)
+#define f2processor__active_threads_next__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_threads_next, cause)
 
 defprimobject__static_slot__prototype(processor__sleeping_threads_mutex);
 #define f2processor__sleeping_threads_mutex(            this, cause)        primobject__static_slot__accessor(  this, processor__sleeping_threads_mutex, cause)
@@ -1617,6 +1638,18 @@ typedef struct funk2_object_type__processor__slot_s {
   f2ptr active_threads__funk;
   f2ptr active_threads__set__symbol;
   f2ptr active_threads__set__funk;
+  f2ptr active_threads_iter__symbol;
+  f2ptr active_threads_iter__funk;
+  f2ptr active_threads_iter__set__symbol;
+  f2ptr active_threads_iter__set__funk;
+  f2ptr active_threads_prev__symbol;
+  f2ptr active_threads_prev__funk;
+  f2ptr active_threads_prev__set__symbol;
+  f2ptr active_threads_prev__set__funk;
+  f2ptr active_threads_next__symbol;
+  f2ptr active_threads_next__funk;
+  f2ptr active_threads_next__set__symbol;
+  f2ptr active_threads_next__set__funk;
   f2ptr sleeping_threads_mutex__symbol;
   f2ptr sleeping_threads_mutex__funk;
   f2ptr sleeping_threads_mutex__set__symbol;

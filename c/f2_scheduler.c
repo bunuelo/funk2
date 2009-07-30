@@ -201,16 +201,18 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   //pool__pause_gc(this_processor_thread__pool_index());
-  f2ptr did_something    = nil;
-  f2ptr thread_iter      = f2processor__active_threads(processor, cause);
-  f2ptr prev_thread_iter = nil;
-  int thread_num         = 0;
+  f2ptr did_something = nil;
+  
+  f2processor__active_threads_iter__set(processor, cause, f2processor__active_threads(processor, cause));
+  f2processor__active_threads_prev__set(processor, cause, nil);
+  
+  int thread_num = 0;
   while (thread_iter) {
-    f2ptr next_thread_iter = f2cons__cdr(thread_iter, cause);
+    f2processor__active_threads_next__set(processor, cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
     thread_num ++;
-    f2ptr thread = f2cons__car(thread_iter, cause);
-    int   prev_thread_iter__already_set = 0;
-    boolean_t  need_to_launch_larva_handling_critic_thread = 0;
+    f2ptr thread = f2cons__car(f2processor__active_threads_iter(processor, cause), cause);
+    int       prev_thread_iter__already_set = 0;
+    boolean_t need_to_launch_larva_handling_critic_thread = 0;
     if (f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) { // successful lock
       if (! f2thread__paused(thread, cause)) {
 	f2ptr sleep_until_time = f2thread__sleep_until_time(thread, cause);
@@ -277,10 +279,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      	    f2__sleep(1);
 		      	  }
 		      	} while (lock_failed);
-		      	if (prev_thread_iter) {
-		      	  f2cons__cdr__set(prev_thread_iter, cause, f2cons__cdr(thread_iter, cause));
+		      	if (f2processor__active_threads_prev(processor, cause)) {
+		      	  f2cons__cdr__set(f2processor__active_threads_prev(processor, cause), cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
 		      	} else {
-		      	  f2processor__active_threads__set(processor, cause, f2cons__cdr(thread_iter, cause));
+		      	  f2processor__active_threads__set(processor, cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
 		      	}
 		      	f2mutex__unlock(processor__active_threads_mutex, cause);
 		      }
@@ -344,10 +346,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     }
     
     if (! prev_thread_iter__already_set) {
-      prev_thread_iter = thread_iter;
+      f2processor__active_threads_prev__set(processor, cause, f2processor__active_threads_iter(processor, cause));
     }
     
-    thread_iter = next_thread_iter;
+    f2processor__active_threads_iter__set(processor, cause, f2processor__active_threads_next(processor, cause));
   }
   //pool__resume_gc(this_processor_thread__pool_index());
   

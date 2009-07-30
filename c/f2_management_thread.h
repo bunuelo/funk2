@@ -67,21 +67,21 @@ funk2_management_thread_command__load_memory_image_t* funk2_management_thread_co
 
 // management_thread__command_node
 
-typedef struct funk2_management_thread__command_node_s {
+typedef struct funk2_management_thread_command_node_s {
   funk2_management_thread_command_t*              command;
   struct funk2_management_thread__command_node_s* next;
-} funk2_management_thread__command_node_t;
+} funk2_management_thread_command_node_t;
 
 // management_thread
 
 typedef struct funk2_management_thread_s {
-  funk2_processor_mutex_t                  next_uid__mutex;
-  u64                                      next_uid;
-  funk2_processor_mutex_t                  command_list__mutex;
-  funk2_management_thread__command_node_t* command_list__first;
-  funk2_management_thread__command_node_t* command_list__last;
-  funk2_processor_mutex_t                  finished_command_list__mutex;
-  funk2_management_thread__command_node_t* finished_command_list;
+  funk2_processor_mutex_t                 next_uid__mutex;
+  u64                                     next_uid;
+  funk2_processor_mutex_t                 command_list__mutex;
+  funk2_management_thread_command_node_t* command_list__first;
+  funk2_management_thread_command_node_t* command_list__last;
+  funk2_processor_mutex_t                 finished_command_list__mutex;
+  funk2_management_thread_command_node_t* finished_command_list;
 } funk2_management_thread_t;
 
 void                               funk2_management_thread__init(funk2_management_thread_t* this);

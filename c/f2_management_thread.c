@@ -241,7 +241,7 @@ def_pcfunk1(management_thread__add_load_command, filename, return f2__management
 boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user_result) {return funk2_management_thread__check_command_uid_finished(&(__funk2.management_thread), uid, user_result);}
 f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr uid, f2ptr user_result_place) {
   if ((! raw__integer__is_type(cause, uid)) ||
-      ((! user_result_place) && (! raw__place__is_type(cause, user_result_place)))) {
+      (user_result_place && (! raw__place__is_type(cause, user_result_place)))) {
     return f2larva__new(cause, 1);
   }
   u64 raw_uid = (u64)f2integer__i(uid, cause);

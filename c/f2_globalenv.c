@@ -162,8 +162,8 @@ void funk2_globalenv__init(funk2_globalenv_t* this) {
   environment__add_var_value(cause, global_environment(), this->bytecode__symbol,                           nil);
   environment__add_var_value(cause, global_environment(), this->rawcode__symbol,                            nil);
   
-  environment__add_var_value(cause, global_environment(), this->trace_all_compiles__symbol,                 trace_all_compiles__value);
-
+  environment__add_var_value(cause, global_environment(), this->trace_all_compiles__symbol,                 nil);
+  
   environment__add_var_value(cause, global_environment(), this->create_event__symbol,                       nil);
   environment__add_var_value(cause, global_environment(), this->read_event__symbol,                         nil);
   environment__add_var_value(cause, global_environment(), this->write_event__symbol,                        nil);

@@ -23,7 +23,6 @@
 #define F2__SIGNAL__H
 
 #include "f2_global.h"
-#include "f2_repl.h"
 
 extern boolean_t __received_signal__sigint;
 

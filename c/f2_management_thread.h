@@ -109,6 +109,17 @@ void                               funk2_management_thread__command_finished(fun
 void                               funk2_management_thread__handle_user_threads(funk2_management_thread_t* this);
 boolean_t                          funk2_management_thread__check_command_uid_finished(funk2_management_thread_t* this, u64 uid, void* user_result);
 
+// --
+
+u64       raw__management_thread__add_save_memory_image_command(u8* filename);
+f2ptr      f2__management_thread__add_save_memory_image_command(f2ptr cause, f2ptr filename);
+u64       raw__management_thread__add_load_memory_image_command(u8* filename);
+f2ptr      f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr filename);
+u64       raw__management_thread__add_exit_command(s64 value);
+f2ptr      f2__management_thread__add_exit_command(f2ptr cause, f2ptr value);
+boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user_result);
+f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr uid, f2ptr user_result_place);
+
 // **
 
 void f2__management_thread__initialize();

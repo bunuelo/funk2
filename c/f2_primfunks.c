@@ -913,26 +913,6 @@ f2ptr f2__list(f2ptr cause, f2ptr seq) {
 }
 def_pcfunk0_and_rest(list, seq, return f2__list(this_cause, seq));
 
-void raw__exit(int value) {
-  status("funk2: exit.");
-#ifdef DEBUG
-  funk2_memory__print_gc_stats(&(__funk2.memory));
-#endif // DEBUG
-  f2__destroy();
-  exit(value);
-}
-f2ptr f2__quit(f2ptr cause, f2ptr value) {
-  if (raw__integer__is_type(cause, value)) {
-    raw__exit(f2integer__i(cause, value));
-  } else {
-    raw__exit((int)value);
-  }
-  printf("\nfunk2 error: shouldn't get here at exit.\n");
-  return f2larva__new(cause, 1);
-  //exit(-1);
-}
-def_pcfunk0(quit, f2__quit(this_cause, nil); return nil);
-
 def_pcfunk0(nanoseconds_since_1970, return f2__nanoseconds_since_1970(this_cause));
 
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
@@ -1988,8 +1968,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(not,                        x, "");
   
   f2__funktional_primcfunk__init__2(eq,                         x, y, "");
-  
-  f2__primcfunk__init__0(quit, "");
   
   f2__primcfunk__init__1(exp__print, exp, "");
   f2__primcfunk__init(write, "");

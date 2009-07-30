@@ -181,6 +181,7 @@ typedef struct funk2_s {
   funk2_primobject__frame_t           primobject__frame;
   funk2_primobject__environment_t     primobject__environment;
   funk2_scheduler_thread_controller_t scheduler_thread_controller;
+  funk2_management_thread_t           management_thread;
 } funk2_t;
 
 boolean_t funk2__handle(funk2_t* this);

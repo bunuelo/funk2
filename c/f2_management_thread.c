@@ -139,11 +139,11 @@ funk2_management_thread_command_t* funk2_management_thread__pop_command(funk2_ma
   return command;
 }
 
-u64 funk2_management_thread__add_save_command(funk2_management_thread_t* this, char* filename) {
+u64 funk2_management_thread__add_save_command(funk2_management_thread_t* this, u8* filename) {
   return funk2_management_thread__add_command(this, (funk2_management_thread_command_t*)funk2_management_thread_command__save_memory_image__new(filename));
 }
 
-u64 funk2_management_thread__add_load_command(funk2_management_thread_t* this) {
+u64 funk2_management_thread__add_load_command(funk2_management_thread_t* this, u8* filename) {
   return funk2_management_thread__add_command(this, (funk2_management_thread_command_t*)funk2_management_thread_command__load_memory_image__new(filename));
 }
 

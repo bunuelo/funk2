@@ -29,6 +29,7 @@ funk2_management_thread_command__save_memory_image_t* funk2_management_thread_co
   this->header.type      = funk2_management_thread_command_type__save_memory_image;
   this->filename__length = filename__length;
   strcpy((char*)this->filename, (char*)filename);
+  return this;
 }
 
 void funk2_management_thread_command__save_memory_image__execute(funk2_management_thread_command__save_memory_image_t* this) {
@@ -43,6 +44,7 @@ funk2_management_thread_command__load_memory_image_t* funk2_management_thread_co
   this->header.type      = funk2_management_thread_command_type__load_memory_image;
   this->filename__length = filename__length;
   strcpy((char*)this->filename, (char*)filename);
+  return this;
 }
 
 void funk2_management_thread_command__load_memory_image__execute(funk2_management_thread_command__load_memory_image_t* this) {

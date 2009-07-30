@@ -107,7 +107,6 @@
 
 [globalize-funk wrong_argument_number_error-set             &primfunk:wrong_argument_number_error__set]
 
-[globalize-funk memory_image-save                           &primfunk:memory_image__save]
 [globalize-funk memory_image-load                           &primfunk:memory_image__load]
 
 [globalize-funk funkall-raw_c_funk-v-v                      &primfunk:funkall__raw_c_funk__v__v]

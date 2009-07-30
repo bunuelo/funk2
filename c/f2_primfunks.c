@@ -1433,8 +1433,6 @@ def_pcfunk3(funkall__raw_c_funk__p__pp,     cfunk_ptr, a0, a1,                 r
 def_pcfunk4(funkall__raw_c_funk__p__ppp,    cfunk_ptr, a0, a1, a2,             return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))))));
 def_pcfunk5(funkall__raw_c_funk__p__pppp,   cfunk_ptr, a0, a1, a2, a3,         return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))))));
 
-def_pcfunk0(repl, return f2integer__new(this_cause, f2__repl(this_cause, simple_thread)));
-
 def_pcfunk2(tensor__new_from_array_of_integer_dimensions, dimensions, fill_element, return f2__tensor__new_from_array_of_integer_dimensions(this_cause, dimensions, fill_element));
 def_pcfunk2(tensor__elt_from_array_of_integer_indices,    this, indices,            return f2tensor__elt_from_array_of_integer_indices(this, indices, this_cause));
 

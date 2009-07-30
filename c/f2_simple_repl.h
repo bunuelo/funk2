@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__REPL__H
-#define F2__REPL__H
+#ifndef F2__SIMPLE_REPL__H
+#define F2__SIMPLE_REPL__H
 
 #include "f2_primobject__environment.h"
 #include "f2_print.h"
@@ -33,6 +33,11 @@
 #include "f2_signal.h"
 #include "f2_scheduler.h"
 
-int f2__repl(f2ptr cause, f2ptr thread);
+int f2__simple_repl(f2ptr cause, f2ptr thread);
 
-#endif //F2__REPL__H
+// **
+
+void f2__simple_repl__initialize();
+
+#endif //F2__SIMPLE_REPL__H
+

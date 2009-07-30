@@ -21,8 +21,8 @@
 
 #include "funk2.h"
 
-int f2__repl(f2ptr cause, f2ptr thread) {
-  printf("\nfunk2 warning: garbage collection is disabled in this repl.");
+int f2__simple_repl(f2ptr cause, f2ptr thread) {
+  printf("\nfunk2 warning: garbage collection is disabled in this simple_repl.");
   f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil);
   f2ptr repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
   f2ptr repl_thread   = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), repl_funk, nil);
@@ -52,4 +52,19 @@ int f2__repl(f2ptr cause, f2ptr thread) {
   f2thread__keep_undead__set(repl_thread, cause, nil);
   return 0;
 }
+def_pcfunk0(simple_repl, return f2integer__new(this_cause, f2__simple_repl(this_cause, simple_thread)));
+
+// **
+
+void f2__simple_repl__reinitialize_globalvars() {
+}
+
+void f2__simple_repl__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "simple_repl", "", &f2__simple_repl__reinitialize_globalvars);
+  
+  f2__simple_repl__reinitialize_globalvars();
+  
+  f2__primcfunk__init__0(simple_repl, "");
+}
+
 

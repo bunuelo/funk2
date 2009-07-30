@@ -93,6 +93,7 @@ void f2__initialize() {
   f2__sort__initialize();
   f2__search__initialize();
   f2__management_thread__initialize();
+  f2__simple_repl__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)
@@ -216,7 +217,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
       if (raw__larva__is_type(cause, repl_funk)) {
 	// if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
-	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:repl"), (u8*)"primfunk:repl"));
+	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:simple_repl"), (u8*)"primfunk:simple_repl"));
 	if (raw__larva__is_type(cause, repl_funk)) {
 	  error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
 	}

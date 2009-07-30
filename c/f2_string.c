@@ -353,6 +353,7 @@ f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
 }
 def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_cause, this, substring));
 
+// **
 
 void f2__string__reinitialize_globalvars() {
 }

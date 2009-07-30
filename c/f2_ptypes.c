@@ -1524,6 +1524,10 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
     //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
   }
+  
+  // protect the old value
+  funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), __pure__f2simple_array__elt(this, index));
+  
   __pure__f2simple_array__elt__set(this, index, value);
   return nil;
 }
@@ -1751,6 +1755,10 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       }
       __pure__f2traced_array__elt__trace__set(this, index, new_tracing_doublelink);
     }
+    
+    // protect the old value
+    funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), __pure__f2traced_array__elt(this, index));
+    
     __pure__f2traced_array__elt__set(this, index, value);
   } else {
     // cause has imaginary effects

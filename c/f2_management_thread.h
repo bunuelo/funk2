@@ -69,7 +69,7 @@ funk2_management_thread_command__load_memory_image_t* funk2_management_thread_co
 
 typedef struct funk2_management_thread_command_node_s {
   funk2_management_thread_command_t*              command;
-  struct funk2_management_thread__command_node_s* next;
+  struct funk2_management_thread_command_node_s* next;
 } funk2_management_thread_command_node_t;
 
 // management_thread

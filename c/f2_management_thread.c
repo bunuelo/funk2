@@ -67,7 +67,7 @@ void funk2_management_thread__destroy(funk2_management_thread_t* this) {
   funk2_processor_mutex__destroy(&(this->command_list__mutex));
   funk2_processor_mutex__destroy(&(this->finished_command_list__mutex));
   {
-    funk2_management_thread_command_node_t* iter = this->command_list__start;
+    funk2_management_thread_command_node_t* iter = this->command_list__first;
     while (iter) {
       funk2_management_thread_command_node_t* next = iter->next;
       free(iter->command);

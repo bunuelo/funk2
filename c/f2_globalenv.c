@@ -110,12 +110,6 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->ptype_larva__symbol        = f2symbol__new(cause, strlen("ptype_larva"),        (u8*)"ptype_larva");
 }
 
-#ifdef F2__TRACE__ALL_COMPILES
-#  define trace_all_compiles__value __true__symbol
-#else
-#  define trace_all_compiles__value nil
-#endif
-
 void funk2_globalenv__init(funk2_globalenv_t* this) {
   funk2_globalenv__reinit(this);
 

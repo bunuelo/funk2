@@ -202,6 +202,7 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
       found_uid = boolean__true;
       break;
     }
+    prev = iter;
     iter = next;
   }
   funk2_processor_mutex__unlock(&(this->finished_command_list__mutex));
@@ -250,7 +251,7 @@ f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr 
   if (user_result_place) {
     f2place__thing__set(user_result_place, cause, f2bool__new(result));
   }
-  return is_finished;
+  return f2bool__new(is_finished);
 }
 def_pcfunk2(management_thread__check_command_uid_finished, uid, user_result_place, return f2__management_thread__check_command_uid_finished(this_cause, uid, user_result_place));
 

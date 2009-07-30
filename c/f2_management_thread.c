@@ -208,5 +208,64 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
   return found_uid;
 }
 
+// --
 
+u64  raw__management_thread__add_save_command(u8* filename) {return funk2_management_thread__add_save_command(&(__funk2.management_thread), filename);}
+f2ptr f2__management_thread__add_save_command(f2ptr cause, f2ptr filename) {
+  if (! raw__string__is_type(cause, filename)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 filename__length = f2string__length(filename, cause);
+  u8* raw_filename = (u8*)alloca(filename__length + 1);
+  f2string__str_copy(filename, cause, raw_filename);
+  raw_filename[filename__length] = 0;
+  f2ptr uid = f2integer__new(cause, raw__management_thread__add_save_command(raw_filename));
+  return uid;
+}
+def_pcfunk1(management_thread__add_save_command, filename, return f2__management_thread__add_save_command(this_cause, filename));
+
+u64  raw__management_thread__add_load_command(u8* filename) {return funk2_management_thread__add_load_command(&(__funk2.management_thread), filename);}
+f2ptr f2__management_thread__add_load_command(f2ptr cause, f2ptr filename) {
+  if (! raw__string__is_type(cause, filename)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 filename__length = f2string__length(filename, cause);
+  u8* raw_filename = (u8*)alloca(filename__length + 1);
+  f2string__str_copy(filename, cause, raw_filename);
+  raw_filename[filename__length] = 0;
+  f2ptr uid = f2integer__new(cause, raw__management_thread__add_load_command(raw_filename));
+  return uid;
+}
+def_pcfunk1(management_thread__add_load_command, filename, return f2__management_thread__add_load_command(this_cause, filename));
+
+boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user_result) {return funk2_management_thread__check_command_uid_finished(&(__funk2.management_thread), uid, user_result);}
+f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr uid, f2ptr user_result_place) {
+  if ((! raw__integer__is_type(cause, uid)) ||
+      ((! user_result_place) && (! raw__place__is_type(cause, user_result_place)))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 raw_uid = (u64)f2integer__i(uid, cause);
+  boolean_t result;
+  boolean_t is_finished = raw__management_thread__check_command_uid_finished(raw_uid, &result);
+  if (user_result_place) {
+    f2place__thing__set(user_result_place, cause, f2bool__new(result));
+  }
+  return is_finished;
+}
+def_pcfunk2(management_thread__check_command_uid_finished, uid, user_result_place, return f2__management_thread__check_command_uid_finished(this_cause, uid, user_result_place));
+
+// **
+
+void f2__management_thread__reinitialize_globalvars() {
+}
+
+void f2__management_thread__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "management_thread", "", &f2__management_thread__reinitialize_globalvars);
+  
+  f2__management_thread__reinitialize_globalvars();
+  
+  f2__primcfunk__init__1(management_thread__add_save_command,           filename,               "add save command to management thread command list.");
+  f2__primcfunk__init__1(management_thread__add_load_command,           filename,               "add load command to management thread command list.");
+  f2__primcfunk__init__2(management_thread__check_command_uid_finished, uid, user_result_place, "check to see if a management thread command has finished.");
+}
 

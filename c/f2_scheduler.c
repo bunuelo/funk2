@@ -471,7 +471,10 @@ void f2__scheduler__initialize() {
 				       scheduler,
 				       nil,
 				       f2mutex__new(cause),
-				       nil,
+				       nil, // active_threads
+				       nil, // active_threads_iter
+				       nil, // active_threads_prev
+				       nil, // active_threads_next
 				       f2mutex__new(cause),
 				       nil,
 				       f2integer__new(cause, i),

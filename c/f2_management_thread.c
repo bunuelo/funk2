@@ -169,8 +169,8 @@ u64 funk2_management_thread__add_load_memory_image_command(funk2_management_thre
   return funk2_management_thread__add_command(this, (funk2_management_thread_command_t*)funk2_management_thread_command__load_memory_image__new(filename));
 }
 
-u64 funk2_management_thread__add_exit_command(funk2_management_thread_t* this, u8* filename) {
-  return funk2_management_thread__add_command(this, (funk2_management_thread_command_t*)funk2_management_thread_command__exit__new(filename));
+u64 funk2_management_thread__add_exit_command(funk2_management_thread_t* this, s64 value) {
+  return funk2_management_thread__add_command(this, (funk2_management_thread_command_t*)funk2_management_thread_command__exit__new(value));
 }
 
 void funk2_management_thread__add_command_node_to_finished_command_list(funk2_management_thread_t* this, funk2_management_thread_command_node_t* node) {

@@ -218,7 +218,7 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
 	  *((boolean_t*)user_result) = load_command->result;
 	} break;
 	case funk2_management_thread_command_type__exit: {
-	  funk2_management_thread_command__exit_t* exit_command = (funk2_management_thread_command__exit_t*)command;
+	  //funk2_management_thread_command__exit_t* exit_command = (funk2_management_thread_command__exit_t*)command;
 	  *((boolean_t*)user_result) = boolean__false;
 	} break;
 	}

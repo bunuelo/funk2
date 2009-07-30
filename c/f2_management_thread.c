@@ -33,7 +33,10 @@ funk2_management_thread_command__save_memory_image_t* funk2_management_thread_co
 }
 
 void funk2_management_thread_command__save_memory_image__execute(funk2_management_thread_command__save_memory_image_t* this) {
+  funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
+  
   this->result = boolean__false;
+  funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));
 }
 
 // management_thread_command__load_memory_image
@@ -48,7 +51,10 @@ funk2_management_thread_command__load_memory_image_t* funk2_management_thread_co
 }
 
 void funk2_management_thread_command__load_memory_image__execute(funk2_management_thread_command__load_memory_image_t* this) {
+  funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(&(__funk2.scheduler_thread_controller));
+  
   this->result = boolean__false;
+  funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));
 }
 
 // management_thread

@@ -25,7 +25,7 @@
 
 funk2_management_thread_command__save_memory_image_t* funk2_management_thread_command__save_memory_image__new(u8* filename) {
   u64 filename__length = strlen((char*)filename);
-  management_thread_command__save_memory_image_t* this = (management_thread_command__save_memory_image_t*)f2__malloc(sizeof(management_thread_command__save_memory_image_t) + this->filename__length + 1);
+  funk2_management_thread_command__save_memory_image_t* this = (funk2_management_thread_command__save_memory_image_t*)f2__malloc(sizeof(funk2_management_thread_command__save_memory_image_t) + filename__length + 1);
   this->header.type      = funk2_management_thread_command_type__save_memory_image;
   this->filename__length = filename__length;
   strcpy((char*)this->filename, (char*)filename);
@@ -39,7 +39,7 @@ void funk2_management_thread_command__save_memory_image__execute(funk2_managemen
 
 funk2_management_thread_command__load_memory_image_t* funk2_management_thread_command__load_memory_image__new(u8* filename) {
   u64 filename__length = strlen((char*)filename);
-  management_thread_command__save_memory_image_t* this = (management_thread_command__save_memory_image_t*)f2__malloc(sizeof(management_thread_command__save_memory_image_t) + this->filename__length + 1);
+  funk2_management_thread_command__save_memory_image_t* this = (funk2_management_thread_command__save_memory_image_t*)f2__malloc(sizeof(funk2_management_thread_command__save_memory_image_t) + filename__length + 1);
   this->header.type      = funk2_management_thread_command_type__load_memory_image;
   this->filename__length = filename__length;
   strcpy((char*)this->filename, (char*)filename);

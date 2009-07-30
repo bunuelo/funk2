@@ -98,5 +98,9 @@ void                               funk2_management_thread__command_finished(fun
 void                               funk2_management_thread__handle_user_threads(funk2_management_thread_t* this);
 boolean_t                          funk2_management_thread__check_command_uid_finished(funk2_management_thread_t* this, u64 uid, void* user_result);
 
+// **
+
+void f2__management_thread__initialize();
+
 #endif // F2__MANAGEMENT_THREAD__H
 

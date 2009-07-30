@@ -150,7 +150,7 @@ u64 funk2_management_thread__add_load_command(funk2_management_thread_t* this, u
 void funk2_management_thread__add_command_node_to_finished_command_list(funk2_management_thread_t* this, funk2_management_thread_command_node_t* node) {
   funk2_processor_mutex__lock(&(this->finished_command_list__mutex));
   node->next    = this->finished_command_list;
-  this->finished_command_list->next = node;
+  this->finished_command_list = node;
   funk2_processor_mutex__unlock(&(this->finished_command_list__mutex));
 }
 

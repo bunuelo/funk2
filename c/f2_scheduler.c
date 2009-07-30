@@ -207,7 +207,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   f2processor__active_threads_prev__set(processor, cause, nil);
   
   int thread_num = 0;
-  while (thread_iter) {
+  while (f2processor__active_threads_iter(processor, cause)) {
     f2processor__active_threads_next__set(processor, cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
     thread_num ++;
     f2ptr thread = f2cons__car(f2processor__active_threads_iter(processor, cause), cause);

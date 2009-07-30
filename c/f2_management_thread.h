@@ -70,7 +70,7 @@ funk2_management_thread_command__load_memory_image_t* funk2_management_thread_co
 typedef struct funk2_management_thread_command__exit_s {
   funk2_management_thread_command_header_t header;
   s64                                      value;
-} funk2_management_thread_command__load_memory_image_t;
+} funk2_management_thread_command__exit_t;
 
 funk2_management_thread_command__exit_t* funk2_management_thread_command__exit__new(s64 value);
 

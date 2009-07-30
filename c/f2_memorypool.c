@@ -52,7 +52,9 @@ void funk2_memorypool__destroy(funk2_memorypool_t* this) {
 }
 
 void funk2_memorypool__add_protected_alloc_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
-  funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
+  if (exp) {
+    funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
+  }
 }
 
 void funk2_memorypool__signal_enter_protected_region(funk2_memorypool_t* this) {

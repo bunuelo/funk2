@@ -22,7 +22,7 @@
 #ifndef F2__MEMORYPOOL__H
 #define F2__MEMORYPOOL__H
 
-typedef struct funk2_memorypool_s funk2_memorypool_t
+typedef struct funk2_memorypool_s funk2_memorypool_t;
 
 #include "f2_gc_touch_circle_buffer.h"
 #include "f2_protected_alloc_array.h"

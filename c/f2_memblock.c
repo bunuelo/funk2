@@ -60,5 +60,6 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
       }
     }
   }
+  return boolean__false;
 }
 

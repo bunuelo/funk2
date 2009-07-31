@@ -21,3 +21,52 @@
 
 #include "funk2.h"
 
+// garbage_collector_set
+
+void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this) {
+  this->nodes = NULL;
+}
+
+void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {
+  funk2_garbage_collector_set_node_t* iter;
+  while (iter) {
+    funk2_garbage_collector_set_node_t* next = iter->next;
+    free(iter);
+    iter = next;
+  }
+}
+
+void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block) {
+  funk2_garbage_collector_set_node_t* new_node = (funk2_garbage_collector_set_node_t*)f2__malloc(sizeof(funk2_garbage_collector_set_node_t));
+  new_node->block   = block;
+  new_node->prev    = NULL;
+  new_node->next    = this->first;
+  this->first->prev = new_node;
+  this->first       = new_node;
+}
+
+void funk2_garbage_collector_set__remove_and_free_node(funk2_garbage_collector_set_t* this, funk2_garbage_collector_set_node_t* node) {
+  if (node->prev) {
+    node->prev->next = node->next;
+  } else {
+    this->first = node->next;
+  }
+  if (node->next) {
+    node->next->prev = node->last;
+  }
+  free(node);
+}
+
+// garbage_collector
+
+void funk2_garbage_collector__init(funk2_garbage_collector_t* this) {
+  funk2_garbage_collector_set__init(&(this->black_set));
+  funk2_garbage_collector_set__init(&(this->grey_set));
+  funk2_garbage_collector_set__init(&(this->white_set));
+}
+
+void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
+  funk2_garbage_collector_set__destroy(&(this->black_set));
+  funk2_garbage_collector_set__destroy(&(this->grey_set));
+  funk2_garbage_collector_set__destroy(&(this->white_set));
+}

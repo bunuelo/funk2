@@ -32,12 +32,13 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 #include "f2_ptype.h"
 
 struct funk2_memblock_s {
-  rbt_node_t rbt_node;
-  u8         used           : 1;
-  u8         gc_touch       : 1;
-  u8         generation_num : 3;
-  u8         ptype          : ptype__min_bits;
-  u8         raw_mem[0];
+  rbt_node_t                             rbt_node;
+  funk2_garbage_collector_block_header_t gc;
+  u8                                     used           : 1;
+  u8                                     gc_touch       : 1;
+  u8                                     generation_num : 3;
+  u8                                     ptype          : ptype__min_bits;
+  u8                                     raw_mem[0];
 } __attribute__((__packed__));
 
 #define funk2_memblock__byte_num(this) ((this)->rbt_node.key)

@@ -33,30 +33,47 @@ typedef struct funk2_garbage_collector_s              funk2_garbage_collector_t;
 #ifndef F2__GARBAGE_COLLECTOR__H
 #define F2__GARBAGE_COLLECTOR__H
 
+// garbage_collector_tricolor
+
 enum funk2_garbage_collector_tricolor_e {
   funk2_garbage_collector_tricolor__black = 1,
   funk2_garbage_collector_tricolor__grey,
   funk2_garbage_collector_tricolor__white
 };
 
+// garbage_collector_block_header
+
 struct funk2_garbage_collector_block_header_s {
   funk2_garbage_collector_tricolor_t tricolor;
-};
+} __attribute__((__packed__));
+
+// garbage_collector_set_node
 
 struct funk2_garbage_collector_set_node_s {
   funk2_memblock_t*                   block;
+  funk2_garbage_collector_set_node_t* prev;
   funk2_garbage_collector_set_node_t* next;
 };
 
+// garbage_collector_set
+
 struct funk2_garbage_collector_set_s {
-  funk2_garbage_collector_set_node_t* nodes;
+  funk2_garbage_collector_set_node_t* first;
 };
+
+void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
+void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
+
+// garbage_collector
 
 struct funk2_garbage_collector_s {
   funk2_garbage_collector_set_t black_set;
   funk2_garbage_collector_set_t grey_set;
   funk2_garbage_collector_set_t white_set;
 };
+
+void funk2_garbage_collector__init(funk2_garbage_collector_t* this);
+void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR__H
 

@@ -43,13 +43,13 @@ struct funk2_garbage_collector_block_header_s {
   funk2_garbage_collector_tricolor_t tricolor;
 };
 
-struct funk2_garbage_collector_node_s {
-  funk2_memblock_t*               block;
-  funk2_garbage_collector_node_t* next;
+struct funk2_garbage_collector_set_node_s {
+  funk2_memblock_t*                   block;
+  funk2_garbage_collector_set_node_t* next;
 };
 
 struct funk2_garbage_collector_set_s {
-  funk2_garbage_collector_node_t* nodes;
+  funk2_garbage_collector_set_node_t* nodes;
 };
 
 struct funk2_garbage_collector_s {

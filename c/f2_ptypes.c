@@ -1601,7 +1601,7 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
     int i;
     funk2_dptr_t* dptr_iter = (funk2_dptr_t*)(traced_array_block->dptr_data);
     for (i = length; i > 0; i --) {
-      dptr__init(dptr_iter, nil, tracing_on, nil, nil);
+      funk2_dptr__init(dptr_iter, nil, tracing_on, nil, nil);
       dptr_iter  ++;
     }
   }

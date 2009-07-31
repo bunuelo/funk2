@@ -245,14 +245,14 @@ ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr 
 #define __pure__f2traced_array__immutable__set(this, value)                        (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
 #define __pure__f2traced_array__length(this)                                       (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2traced_array__elt_dptr(this, index)                              (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->dptr_data[index])
-#define __pure__f2traced_array__elt(this, index)                                   dptr__p(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__set(this, index, value)                       dptr__p__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__tracing_on(this, index)                       dptr__tracing_on(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__tracing_on__set(this, index, value)           dptr__tracing_on__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__trace(this, index)                            dptr__trace(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__trace__set(this, index, value)                dptr__trace__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__imagination_frame(this, index)                dptr__imagination_frame(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__imagination_frame__set(this, index, value)    dptr__imagination_frame__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+#define __pure__f2traced_array__elt(this, index)                                   funk2_dptr__p(&(__pure__f2traced_array__elt_dptr(this, index)))
+#define __pure__f2traced_array__elt__set(this, index, value)                       funk2_dptr__p__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+#define __pure__f2traced_array__elt__tracing_on(this, index)                       funk2_dptr__tracing_on(&(__pure__f2traced_array__elt_dptr(this, index)))
+#define __pure__f2traced_array__elt__tracing_on__set(this, index, value)           funk2_dptr__tracing_on__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+#define __pure__f2traced_array__elt__trace(this, index)                            funk2_dptr__trace(&(__pure__f2traced_array__elt_dptr(this, index)))
+#define __pure__f2traced_array__elt__trace__set(this, index, value)                funk2_dptr__trace__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+#define __pure__f2traced_array__elt__imagination_frame(this, index)                funk2_dptr__imagination_frame(&(__pure__f2traced_array__elt_dptr(this, index)))
+#define __pure__f2traced_array__elt__imagination_frame__set(this, index, value)    funk2_dptr__imagination_frame__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
 
 // larva
 

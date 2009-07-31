@@ -91,6 +91,7 @@
 #include "f2_event_router.h"
 #include "f2_funk2_node.h"
 #include "f2_funktional.h"
+#include "f2_garbage_collector.h"
 #include "f2_gc_touch_circle_buffer.h"
 #include "f2_globalenv.h"
 #include "f2_html.h"
@@ -183,6 +184,7 @@ typedef struct funk2_s {
   funk2_primobject__environment_t     primobject__environment;
   funk2_scheduler_thread_controller_t scheduler_thread_controller;
   funk2_management_thread_t           management_thread;
+  funk2_garbage_collector_t           garbage_collector;
 } funk2_t;
 
 boolean_t funk2__handle(funk2_t* this);

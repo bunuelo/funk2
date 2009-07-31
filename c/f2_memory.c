@@ -298,7 +298,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
 
 boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this) {
   boolean_t did_something      = boolean__false;
-  int       try_generation_num = 7;
+  int       try_generation_num = 1;
   while (try_generation_num <= maximum_generation_num && (! did_something)) {
     status("funk2_memory__garbage_collect_generations_until_did_something try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
     if (funk2_memory__garbage_collect_generation(&(__funk2.memory), try_generation_num)) {

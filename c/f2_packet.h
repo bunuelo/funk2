@@ -2596,15 +2596,15 @@ void funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_t
 void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
-//  funk2_packet_type__pcs_request__f2traced_array__new                               = 0x38, //f2ptr            (f2ptr cause, u64 length, dptr_t* dptr_array);
+//  funk2_packet_type__pcs_request__f2traced_array__new                               = 0x38, //f2ptr            (f2ptr cause, u64 length, funk2_dptr_t* dptr_array);
 
 // request f2traced_array__new
 
 struct pcs_packet_payload_request__f2traced_array__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   u64                                                length;
-  boolean_t                                               dptr_array__defined;
-  dptr_t                                             dptr_array[0];
+  boolean_t                                          dptr_array__defined;
+  funk2_dptr_t                                       dptr_array[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2traced_array__new_s pcs_packet_payload_request__f2traced_array__new_t;
 

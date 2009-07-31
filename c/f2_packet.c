@@ -3977,7 +3977,7 @@ void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
 
 void send_packet__request__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, ptr dptr_array) {
   packet_status("send_packet__request__f2traced_array__new: executing.");
-  int dptr_array__size = dptr_array ? (sizeof(dptr_t) * length) : 0;
+  int dptr_array__size = dptr_array ? (sizeof(funk2_dptr_t) * length) : 0;
   pcs_request__f2traced_array__new_t* packet = (pcs_request__f2traced_array__new_t*)alloca(sizeof(pcs_request__f2traced_array__new_t) + dptr_array__size);
   funk2_packet_header__init(&(packet->header), sizeof(packet->payload) + dptr_array__size);
   packet->payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2traced_array__new;
@@ -3996,10 +3996,10 @@ void recv_packet__request__f2traced_array__new(funk2_node_t* funk2_node, pcs_req
   f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
   f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
   u64   length = packet->payload.length;
-  dptr_t* remote_dptr_array = (dptr_t*)(packet->payload.dptr_array__defined ? packet->payload.dptr_array : NULL);
-  dptr_t* dptr_array        = NULL;
+  funk2_dptr_t* remote_dptr_array = (dptr_t*)(packet->payload.dptr_array__defined ? packet->payload.dptr_array : NULL);
+  funk2_dptr_t* dptr_array        = NULL;
   if (remote_dptr_array) {
-    dptr_array = alloca(sizeof(dptr_t) * length);
+    dptr_array = alloca(sizeof(funk2_dptr_t) * length);
     u64 i;
     for (i = 0; i < length; i ++) {
       f2ptr dptr__p                 = rf2_to_lf2(remote_dptr_array[i].p);

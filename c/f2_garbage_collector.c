@@ -60,7 +60,7 @@ void funk2_garbage_collector_set__remove_and_free_node(funk2_garbage_collector_s
 }
 
 void funk2_garbage_collector_set__print(funk2_garbage_collector_set_t* this) {
-  funk2_garbage_collector_set_node_t* iter = set.first;
+  funk2_garbage_collector_set_node_t* iter = this->first;
   printf("\n[gc-set");
   while (iter) {
     int prev = (int)(iter->prev ? to_ptr(iter->prev->block) : 0);

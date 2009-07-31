@@ -30,6 +30,7 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 #define F2__MEMBLOCK__H
 
 #include "f2_ptype.h"
+#include "f2_garbage_collector.h"
 
 struct funk2_memblock_s {
   rbt_node_t                             rbt_node;

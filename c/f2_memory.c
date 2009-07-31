@@ -639,7 +639,7 @@ boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("scanning pool %d for invalid memory pointers.");
-    found_invalid |= funk2_memorypool__check_all_memory_pointers_valid(&(this->pool[pool_index]), this);
+    found_invalid |= funk2_memorypool__check_all_memory_pointers_valid_in_memory(&(this->pool[pool_index]), this);
   }
   return found_invalid;
 }

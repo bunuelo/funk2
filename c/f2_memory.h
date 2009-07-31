@@ -22,7 +22,7 @@
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
 
-typedef struct funk2_memory_s funk2_memory_t;
+struct funk2_memory_s;
 
 #include "f2_dptr.h"
 #include "f2_global.h"
@@ -37,6 +37,7 @@ typedef struct funk2_memory_s funk2_memory_t;
 
 #define DEBUG_MEMORY 1
 
+typedef struct funk2_memory_s funk2_memory_t;
 struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
   ptr                            global_environment_ptr;

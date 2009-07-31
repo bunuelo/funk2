@@ -22,10 +22,11 @@
 #ifndef F2__MEMBLOCK__H
 #define F2__MEMBLOCK__H
 
-typedef struct funk2_memblock_s funk2_memblock_t;
+struct funk2_memblock_s;
 
 #include "f2_ptype.h"
 
+typedef struct funk2_memblock_s funk2_memblock_t;
 struct funk2_memblock_s {
   rbt_node_t rbt_node;
   u8         used           : 1;

@@ -22,10 +22,11 @@
 #ifndef F2__GC_TOUCH_CIRCLE_BUFFER__H
 #define F2__GC_TOUCH_CIRCLE_BUFFER__H
 
-typedef struct funk2_gc_touch_circle_buffer_s funk2_gc_touch_circle_buffer_t;
+struct funk2_gc_touch_circle_buffer_s;
 
 #include "f2_memblock.h"
 
+typedef struct funk2_gc_touch_circle_buffer_s funk2_gc_touch_circle_buffer_t;
 struct funk2_gc_touch_circle_buffer_s {
   s64                length;
   funk2_memblock_t** data;

@@ -11,24 +11,25 @@ void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, 
 
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory) {
   if (! this) {
-    return boolean__true;
+    return boolean__false;
   }
   
   ptype_block_t* block = (ptype_block_t*)this;
   switch(block->ptype) {
   case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
-  case ptype_integer:      return boolean__true;
-  case ptype_double:       return boolean__true;
-  case ptype_float:        return boolean__true;
-  case ptype_pointer:      return boolean__true;
-  case ptype_gfunkptr:     return boolean__true;
-  case ptype_mutex:        return boolean__true;
-  case ptype_char:         return boolean__true;
-  case ptype_string:       return boolean__true;
-  case ptype_symbol:       return boolean__true;
-  case ptype_chunk:        return boolean__true;
+  case ptype_integer:      return boolean__false;
+  case ptype_double:       return boolean__false;
+  case ptype_float:        return boolean__false;
+  case ptype_pointer:      return boolean__false;
+  case ptype_gfunkptr:     return boolean__false;
+  case ptype_mutex:        return boolean__false;
+  case ptype_char:         return boolean__false;
+  case ptype_string:       return boolean__false;
+  case ptype_symbol:       return boolean__false;
+  case ptype_chunk:        return boolean__false;
   case ptype_simple_array: {
     boolean_t found_invalid = boolean__false;
+    /*
     s64 i;
     f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
     for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
@@ -38,19 +39,22 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
       }
       iter ++;
     }
+    */
     return found_invalid;
   }
   case ptype_traced_array: {
     boolean_t found_invalid = boolean__false;
+    /*
     s64 i;
     funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
     for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
       found_invalid |= funk2_dptr__check_all_memory_pointers_valid_in_memory(iter, memory);
       iter ++;
     }
+    */
     return found_invalid;
   }
-  case ptype_larva:        return boolean__true;
+  case ptype_larva:        return boolean__false;
   default:
     {
       char str[1024];

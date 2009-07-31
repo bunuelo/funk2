@@ -137,10 +137,6 @@ boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* t
     return boolean__true;
   }
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
-  if (! block->used) {
-    error(nil, "found unused memory block.");
-    return boolean__false;
-  }
   if (! funk2_memblock__is_self_consistently_valid(block)) {
     error(nil, "found self-inconsistent block");
     return boolean__false;
@@ -159,6 +155,18 @@ boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* t
     return boolean__false;
   }
   return boolean__true;
+}
+
+boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {
+  if (! p) {
+    return boolean__true;
+  }
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
+  if (! block->used) {
+    error(nil, "found unused memory block.");
+    return boolean__false;
+  }
+  return funk2_memory__is_reasonably_valid_funk2_memblock_ptr(this, p);
 }
 
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {

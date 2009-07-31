@@ -131,6 +131,7 @@ void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
 void      funk2_memory__handle(funk2_memory_t* this);
 void      funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
+boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
 ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);

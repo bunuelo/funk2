@@ -1589,7 +1589,7 @@ f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
 
 f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_ptr) {
   boolean_t tracing_on = raw__cause__is_traced(cause, cause);
-  u64 data_byte_num = (sizeof(dptr_t) * length);
+  u64 data_byte_num = (sizeof(funk2_dptr_t) * length);
   f2ptr traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
@@ -1599,9 +1599,9 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
   if (dptr_ptr) {memcpy(traced_array_block->dptr_data, from_ptr(dptr_ptr), data_byte_num);}
   else {
     int i;
-    dptr_t* dptr_iter = (dptr_t*)(traced_array_block->dptr_data);
+    funk2_dptr_t* dptr_iter = (dptr_t*)(traced_array_block->dptr_data);
     for (i = length; i > 0; i --) {
-      dptr__init((dptr_t*)dptr_iter, nil, tracing_on, nil, nil);
+      dptr__init(dptr_iter, nil, tracing_on, nil, nil);
       dptr_iter  ++;
     }
   }
@@ -1610,7 +1610,7 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
 
 f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
   boolean_t tracing_on = raw__cause__is_traced(cause, cause);
-  u64 data_byte_num = (sizeof(dptr_t) * length);
+  u64 data_byte_num = (sizeof(funk2_dptr_t) * length);
   f2ptr traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
@@ -1620,17 +1620,17 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
   if (f2ptr_ptr) {
     int i;
     f2ptr*  f2ptr_iter = f2ptr_ptr;
-    dptr_t* dptr_iter  = traced_array_block->dptr_data;
+    funk2_dptr_t* dptr_iter  = traced_array_block->dptr_data;
     for (i = length; i > 0; i --) {
-      dptr__init((dptr_t*)dptr_iter, *f2ptr_iter, tracing_on, nil, nil);
+      dptr__init(dptr_iter, *f2ptr_iter, tracing_on, nil, nil);
       f2ptr_iter ++;
       dptr_iter  ++;
     }
   } else {
     int i;
-    dptr_t* dptr_iter  = traced_array_block->dptr_data;
+    funk2_dptr_t* dptr_iter  = traced_array_block->dptr_data;
     for (i = length; i > 0; i --) {
-      dptr__init((dptr_t*)dptr_iter, nil, tracing_on, nil, nil);
+      dptr__init(dptr_iter, nil, tracing_on, nil, nil);
       dptr_iter  ++;
     }
   }

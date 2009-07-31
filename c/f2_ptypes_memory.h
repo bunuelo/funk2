@@ -233,7 +233,7 @@ struct ptype_traced_array_block_s {
   ptype_block_t ptype;
   u8            immutable;
   u64           length;
-  dptr_t        dptr_data[0];
+  funk2_dptr_t  dptr_data[0];
 } __attribute__((__packed__));
 typedef struct ptype_traced_array_block_s ptype_traced_array_block_t;
 

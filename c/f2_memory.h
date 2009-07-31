@@ -22,6 +22,8 @@
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
 
+typedef struct funk2_memory_s funk2_memory_t;
+
 #include "f2_dptr.h"
 #include "f2_global.h"
 #include "f2_redblacktree.h"
@@ -35,7 +37,7 @@
 
 #define DEBUG_MEMORY 1
 
-typedef struct funk2_memory_s {
+struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
   ptr                            global_environment_ptr;
   f2ptr                          global_environment_f2ptr;
@@ -44,7 +46,7 @@ typedef struct funk2_memory_s {
   boolean_t                      bootstrapping_mode;
   funk2_user_thread_controller_t user_thread_controller;
   funk2_never_delete_list_t      never_delete_list;
-} funk2_memory_t;
+};
 
 #define nil ((f2ptr)0)
 

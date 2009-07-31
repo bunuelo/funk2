@@ -22,7 +22,9 @@
 #ifndef F2__DPTR__H
 #define F2__DPTR__H
 
-// funk2_dptr struct
+typedef struct funk2_dptr_s funk2_dptr_t;
+
+// dptr
 
 struct funk2_dptr_s {
   f2ptr p;
@@ -30,7 +32,6 @@ struct funk2_dptr_s {
   f2ptr trace;
   f2ptr imagination_frame;
 } __attribute__((__packed__));
-typedef struct funk2_dptr_s funk2_dptr_t;
 
 void funk2_dptr__init(funk2_dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagination_frame);
 

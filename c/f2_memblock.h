@@ -22,6 +22,8 @@
 #ifndef F2__MEMBLOCK__H
 #define F2__MEMBLOCK__H
 
+typedef struct funk2_memblock_s funk2_memblock_t;
+
 #include "f2_ptype.h"
 
 struct funk2_memblock_s {
@@ -32,7 +34,6 @@ struct funk2_memblock_s {
   u8         ptype          : ptype__min_bits;
   u8         raw_mem[0];
 } __attribute__((__packed__));
-typedef struct funk2_memblock_s funk2_memblock_t;
 
 #define funk2_memblock__byte_num(this)         ((this)->rbt_node.key)
 

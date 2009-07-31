@@ -22,10 +22,12 @@
 #ifndef F2__MEMORYPOOL__H
 #define F2__MEMORYPOOL__H
 
+typedef struct funk2_memorypool_s funk2_memorypool_t
+
 #include "f2_gc_touch_circle_buffer.h"
 #include "f2_protected_alloc_array.h"
 
-typedef struct funk2_memorypool_s {
+struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;
   boolean_t                      should_run_gc; // if disabled when needed more memory (and allocated more) then True
   boolean_t                      should_enlarge_memory_now;
@@ -40,7 +42,7 @@ typedef struct funk2_memorypool_s {
   uint                           next_unique_block_id;
   funk2_protected_alloc_array_t  protected_alloc_array;
   funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
-} funk2_memorypool_t;
+};
 
 #define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
 

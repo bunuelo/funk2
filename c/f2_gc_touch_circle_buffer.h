@@ -48,7 +48,7 @@ boolean_t         funk2_gc_touch_circle_buffer__is_empty(funk2_gc_touch_circle_b
 void              funk2_gc_touch_circle_buffer__add_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* block);
 funk2_memblock_t* funk2_gc_touch_circle_buffer__pop_block(funk2_gc_touch_circle_buffer_t* this);
 void              funk2_gc_touch_circle_buffer__touch_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* block);
-void              funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, dptr_t* dptr);
+void              funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* this, funk2_dptr_t* dptr);
 void              funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* start_block);
 
 void funk2_gc_touch_circle_buffer__test();

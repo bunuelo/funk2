@@ -133,9 +133,9 @@ void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touc
       } break;
       case ptype_traced_array: block->block.gc_touch = 1; {
 	s64 i;
-	dptr_t* iter = (dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
+	funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
 	for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
-	  funk2_gc_touch_circle_buffer__touch_dptr(this, (dptr_t*)iter);
+	  funk2_gc_touch_circle_buffer__touch_dptr(this, iter);
 	  iter ++;
 	}
       } break;

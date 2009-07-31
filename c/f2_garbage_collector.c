@@ -24,7 +24,7 @@
 // garbage_collector_set
 
 void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this) {
-  this->nodes = NULL;
+  this->first = NULL;
 }
 
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {

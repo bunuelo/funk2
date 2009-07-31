@@ -3996,7 +3996,7 @@ void recv_packet__request__f2traced_array__new(funk2_node_t* funk2_node, pcs_req
   f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
   f2ptr thread = rf2_to_lf2(packet->payload.action_payload_header.thread);
   u64   length = packet->payload.length;
-  funk2_dptr_t* remote_dptr_array = (dptr_t*)(packet->payload.dptr_array__defined ? packet->payload.dptr_array : NULL);
+  funk2_dptr_t* remote_dptr_array = (funk2_dptr_t*)(packet->payload.dptr_array__defined ? packet->payload.dptr_array : NULL);
   funk2_dptr_t* dptr_array        = NULL;
   if (remote_dptr_array) {
     dptr_array = alloca(sizeof(funk2_dptr_t) * length);

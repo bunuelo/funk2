@@ -43,6 +43,8 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   rbt_tree__init(&(this->used_memory_tree), NULL);
   funk2_protected_alloc_array__init(&(this->protected_alloc_array));
   funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
+  
+  funk2_memorypool__debug_memory_test(this, 1);
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {

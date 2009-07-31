@@ -29,7 +29,6 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
   case ptype_chunk:        return boolean__false;
   case ptype_simple_array: {
     boolean_t found_invalid = boolean__false;
-    /*
     s64 i;
     f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
     for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
@@ -39,19 +38,16 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
       }
       iter ++;
     }
-    */
     return found_invalid;
   }
   case ptype_traced_array: {
     boolean_t found_invalid = boolean__false;
-    /*
     s64 i;
     funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
     for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
       found_invalid |= funk2_dptr__check_all_memory_pointers_valid_in_memory(iter, memory);
       iter ++;
     }
-    */
     return found_invalid;
   }
   case ptype_larva:        return boolean__false;

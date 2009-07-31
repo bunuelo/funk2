@@ -22,14 +22,16 @@
 #ifndef F2__GC_TOUCH_CIRCLE_BUFFER__H
 #define F2__GC_TOUCH_CIRCLE_BUFFER__H
 
+typedef struct funk2_gc_touch_circle_buffer_s funk2_gc_touch_circle_buffer_t;
+
 #include "f2_memblock.h"
 
-typedef struct funk2_gc_touch_circle_buffer_s {
+struct funk2_gc_touch_circle_buffer_s {
   s64                length;
   funk2_memblock_t** data;
   s64                start_index;
   s64                end_index;
-} funk2_gc_touch_circle_buffer_t;
+};
 
 #define funk2_gc_touch_circle_buffer__touch_f2ptr(this, exp)                     funk2_gc_touch_circle_buffer__touch_block(this, (funk2_memblock_t*)(from_ptr(__f2ptr_to_ptr(exp))))
 #define funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(this, exp) funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(this, (funk2_memblock_t*)(from_ptr(__f2ptr_to_ptr(exp))))

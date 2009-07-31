@@ -41,7 +41,9 @@ void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this,
   new_node->block   = block;
   new_node->prev    = NULL;
   new_node->next    = this->first;
-  this->first->prev = new_node;
+  if (this->first) {
+    this->first->prev = new_node;
+  }
   this->first       = new_node;
 }
 

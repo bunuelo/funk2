@@ -144,8 +144,8 @@ void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this) {
 
 void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
   status("testing memory in pool...");
-  status("  pool.total_free_memory                    = " f2size_t__fstr, this->total_free_memory); fflush(stdout);
-  status("  funk2_memorypool__total_free_memory(this) = " f2size_t__fstr, funk2_memorypool__total_free_memory(this)); fflush(stdout);
+  status("  pool.total_free_memory                    = " f2size_t__fstr, this->total_free_memory);
+  status("  funk2_memorypool__total_free_memory(this) = " f2size_t__fstr, funk2_memorypool__total_free_memory(this));
   release__assert(funk2_memorypool__total_free_memory(this) == this->total_free_memory, nil, "funk2_memorypool__memory_test (funk2_memorypool__total_free_memory(this) == this->total_free_memory) failure.");
   release__assert_and_on_failure((int)(funk2_memorypool__total_used_memory(this) + funk2_memorypool__total_free_memory(this)) == (int)this->total_global_memory,
 				 nil,

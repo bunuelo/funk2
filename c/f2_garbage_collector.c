@@ -57,6 +57,25 @@ void funk2_garbage_collector_set__remove_and_free_node(funk2_garbage_collector_s
   free(node);
 }
 
+void funk2_garbage_collector_set__test() {
+  funk2_garbage_collector_set_t set;
+  funk2_garbage_collector_set__init(&set);
+  int i;
+  for (i = 1; i <= 10; i ++) {
+    funk2_garbage_collector_set__add_block(&set, (funk2_memblock_t*)i);
+  }
+  funk2_garbage_collector_set_node_t* iter = set->first;
+  printf("\ngc set test:", prev, (int)(iter->block), next);
+  while (iter) {
+    int prev = (int)(iter->prev ? iter->prev->block : 0);
+    int next = (int)(iter->next ? iter->next->block : 0);
+    printf("\n  [(%d) %d (%d)]", prev, (int)(iter->block), next);
+    iter = iter->next;
+  }
+  printf("\n");
+  funk2_garbage_collector_set__destroy(&set);
+}
+
 // garbage_collector
 
 void funk2_garbage_collector__init(funk2_garbage_collector_t* this) {

@@ -68,7 +68,7 @@ void funk2_garbage_collector_set__print(funk2_garbage_collector_set_t* this) {
     printf("\n  [(%d) %d (%d)]", prev, (int)to_ptr(iter->block), next);
     iter = iter->next;
   }
-  printf("]\n");
+  printf("]\n"); fflush(stdout);
 }
 
 void funk2_garbage_collector_set__test() {

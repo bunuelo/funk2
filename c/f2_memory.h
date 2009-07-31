@@ -42,7 +42,6 @@ typedef struct funk2_memory_s funk2_memory_t;
 
 #define DEBUG_MEMORY 1
 
-typedef struct funk2_memory_s funk2_memory_t;
 struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
   ptr                            global_environment_ptr;

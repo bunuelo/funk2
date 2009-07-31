@@ -67,9 +67,9 @@ void funk2_garbage_collector_set__test() {
   funk2_garbage_collector_set_node_t* iter = set.first;
   printf("\ngc set test:");
   while (iter) {
-    int prev = (int)(iter->prev ? iter->prev->block : 0);
-    int next = (int)(iter->next ? iter->next->block : 0);
-    printf("\n  [(%d) %d (%d)]", prev, (int)(iter->block), next);
+    int prev = (int)(iter->prev ? to_ptr(iter->prev->block) : 0);
+    int next = (int)(iter->next ? to_ptr(iter->next->block) : 0);
+    printf("\n  [(%d) %d (%d)]", prev, (int)to_ptr(iter->block), next);
     iter = iter->next;
   }
   printf("\n");

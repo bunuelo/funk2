@@ -654,6 +654,7 @@ void f2__memory__initialize() {
 void f2__memory__destroy() {
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);
   
+  int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
     funk2_memorypool__destroy(&(__funk2.memory.pool[pool_index]));
   }

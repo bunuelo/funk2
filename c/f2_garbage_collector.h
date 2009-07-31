@@ -63,6 +63,7 @@ struct funk2_garbage_collector_set_s {
 
 void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
+void funk2_garbage_collector_set__test();
 
 // garbage_collector
 

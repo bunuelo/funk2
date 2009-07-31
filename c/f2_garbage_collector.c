@@ -78,7 +78,7 @@ void funk2_garbage_collector_set__test() {
   for (i = 1; i <= 10; i ++) {
     funk2_garbage_collector_set__add_block(&set, (funk2_memblock_t*)from_ptr(i));
   }
-  funk2_garbage_collector_set__destroy(&set);
+  funk2_garbage_collector_set__print(&set);
   {
     int count = 0;
     funk2_garbage_collector_set_node_t* iter = set.first;

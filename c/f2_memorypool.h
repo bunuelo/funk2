@@ -19,10 +19,15 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__MEMORYPOOL__H
-#define F2__MEMORYPOOL__H
+#ifndef F2__MEMORYPOOL__TYPES__H
+#define F2__MEMORYPOOL__TYPES__H
 
 typedef struct funk2_memorypool_s funk2_memorypool_t;
+
+#endif // F2__MEMORYPOOL__TYPES__H
+
+#ifndef F2__MEMORYPOOL__H
+#define F2__MEMORYPOOL__H
 
 #include "f2_gc_touch_circle_buffer.h"
 #include "f2_protected_alloc_array.h"

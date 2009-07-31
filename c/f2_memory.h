@@ -19,10 +19,15 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__MEMORY__TYPES__H
+#define F2__MEMORY__TYPES__H
+
+typedef struct funk2_memory_s funk2_memory_t;
+
+#endif // F2__MEMORY__TYPES__H
+
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
-
-struct funk2_memory_s;
 
 #include "f2_dptr.h"
 #include "f2_global.h"

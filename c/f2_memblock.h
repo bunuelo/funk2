@@ -19,10 +19,15 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__MEMBLOCK__H
-#define F2__MEMBLOCK__H
+#ifndef F2__MEMBLOCK__TYPES__H
+#define F2__MEMBLOCK__TYPES__H
 
 typedef struct funk2_memblock_s funk2_memblock_t;
+
+#endif // F2__MEMBLOCK__TYPES__H
+
+#ifndef F2__MEMBLOCK__H
+#define F2__MEMBLOCK__H
 
 #include "f2_ptype.h"
 

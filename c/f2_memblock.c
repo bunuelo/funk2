@@ -4,6 +4,7 @@
 
 void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch) {
   funk2_memblock__byte_num(block) = byte_num;
+  funk2_garbage_collector_block_header__init(&(block->gc));
   block->used                     = used;
   block->gc_touch                 = gc_touch;
   block->generation_num           = 0;

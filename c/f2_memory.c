@@ -654,6 +654,9 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
     close(fd);      
   }
   
+  funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
+  funk2_garbage_collector__init(&(__funk2.garbage_collector), this);
+  
   if (! __funk2.memory.bootstrapping_mode) {
     funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));  
   }

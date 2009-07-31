@@ -47,6 +47,9 @@ struct funk2_garbage_collector_block_header_s {
   funk2_garbage_collector_tricolor_t tricolor;
 } __attribute__((__packed__));
 
+void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this);
+void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this);
+
 // garbage_collector_set_node
 
 struct funk2_garbage_collector_set_node_s {

@@ -129,21 +129,16 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_memory__init(&(this->memory));
   funk2_thought_process__init(&(this->thought_process));
   funk2_bytecode__init(&(this->bytecode));
-  
   funk2_operating_system__init(&(this->operating_system));
   funk2_locale__init(&(this->locale));
-  
   int event_buffer__byte_num = 32768;
   funk2_event_router__init(&(this->event_router), event_buffer__byte_num);
-  
   funk2_child_process_handler__init(&(this->child_process_handler));
   funk2_processor_thread_handler__init(&(this->processor_thread_handler));
-  
   funk2_primobject_type_handler__init(&(this->primobject_type_handler));
-  
   funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
-
   funk2_management_thread__init(&(this->management_thread));
+  funk2_garbage_collector__init(&(this->garbage_collector), &(this->memory));
   
   f2ptr cause = initial_cause();
   
@@ -279,6 +274,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_processor_thread_handler__destroy(&(this->processor_thread_handler));
   funk2_scheduler_thread_controller__destroy(&(this->scheduler_thread_controller));
   funk2_management_thread__destroy(&(this->management_thread));
+  funk2_garbage_collector__destroy(&(this->garbage_collector));
   
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }
@@ -297,7 +293,7 @@ boolean_t funk2__handle(funk2_t* this) {
   return boolean__true;
 }
 
-#define TEST
+//#define TEST
 
 void funk2_test() {
   funk2_garbage_collector_set__test();

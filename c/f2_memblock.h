@@ -25,6 +25,7 @@
 struct funk2_memblock_s;
 
 #include "f2_ptype.h"
+#include "f2_memory.h"
 
 typedef struct funk2_memblock_s funk2_memblock_t;
 struct funk2_memblock_s {

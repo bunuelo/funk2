@@ -133,6 +133,9 @@ void funk2_memory__print_gc_stats(funk2_memory_t* this) {
 }
 
 boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {
+  if (! p) {
+    return boolean__true;
+  }
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
   if (! funk2_memblock__is_self_consistently_valid(block)) {
     error(nil, "found self-inconsistent block");

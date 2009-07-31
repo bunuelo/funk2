@@ -99,6 +99,7 @@ void funk2_gc_touch_circle_buffer__touch_dptr(funk2_gc_touch_circle_buffer_t* th
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->p);
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->tracing_on);
   funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->trace);
+  funk2_gc_touch_circle_buffer__touch_f2ptr(this, dptr->imagination_frame);
 }
 
 void funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(funk2_gc_touch_circle_buffer_t* this, funk2_memblock_t* start_block) {

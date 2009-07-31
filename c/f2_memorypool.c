@@ -369,3 +369,20 @@ void funk2_memorypool__touch_all_protected_alloc_arrays(funk2_memorypool_t* this
   }
 }
 
+boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {
+  boolean_t         found_invalid = boolean__false;
+  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  while(iter < end_of_blocks) {
+    if (! funk2_memory__is_valid_funk2_memblock_ptr(this, to_ptr(iter))) {
+      status("funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");
+      found_invalid = boolean__true;
+      error( "funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");
+    }
+    found_invalid |= funk2_memblock__check_all_memory_pointers_valid_in_memory(iter, memory);
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  return found_invalid;
+}
+
+

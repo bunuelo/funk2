@@ -133,6 +133,9 @@ void funk2_memory__print_gc_stats(funk2_memory_t* this) {
 }
 
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {
+  if (! p) {
+    return boolean__true;
+  }
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))));
@@ -629,6 +632,15 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 void funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp) {
   int pool_index = this_processor_thread__pool_index();
   funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), exp);
+}
+
+boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
+  boolean_t found_invalid = boolean__false;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    status("scanning pool %d for invalid memory pointers.");
+    found_invalid |= funk2_memorypool__check_all_memory_pointers_valid(&(this->pool[pool_index]), this);
+  }
+  return found_invalid;
 }
 
 // **

@@ -634,8 +634,8 @@ boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
 
 void funk2_memory__memory_test(funk2_memory_t* this) {
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__init((&(this->pool[pool_index])));
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memorypool__memory_test(&(this->pool[pool_index]));
   }
   funk2_memory__check_all_memory_pointers_valid(this);
 }

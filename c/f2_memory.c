@@ -636,6 +636,7 @@ void funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr e
 
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;
+  int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("scanning pool %d for invalid memory pointers.");
     found_invalid |= funk2_memorypool__check_all_memory_pointers_valid(&(this->pool[pool_index]), this);

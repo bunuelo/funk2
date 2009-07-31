@@ -76,7 +76,7 @@ struct funk2_garbage_collector_s {
   funk2_garbage_collector_set_t white_set;
 };
 
-void funk2_garbage_collector__init(funk2_garbage_collector_t* this);
+void funk2_garbage_collector__init(funk2_garbage_collector_t* this, funk2_memory_t* memory);
 void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR__H

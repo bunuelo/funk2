@@ -85,7 +85,7 @@ void funk2_garbage_collector_set__test() {
     while (iter) {
       funk2_garbage_collector_set_node_t* next = iter->next;
       if ((count % 3) == 0) {
-	funk2_garbage_collector_set__remove_and_free_node(iter);
+	funk2_garbage_collector_set__remove_and_free_node(&set, iter);
       }
       iter = next;
       count ++;

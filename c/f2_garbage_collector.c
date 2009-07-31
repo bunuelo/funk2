@@ -52,7 +52,7 @@ void funk2_garbage_collector_set__remove_and_free_node(funk2_garbage_collector_s
     this->first = node->next;
   }
   if (node->next) {
-    node->next->prev = node->last;
+    node->next->prev = node->prev;
   }
   free(node);
 }

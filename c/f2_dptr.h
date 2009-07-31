@@ -33,8 +33,6 @@ struct funk2_dptr_s {
   f2ptr imagination_frame;
 } __attribute__((__packed__));
 
-void funk2_dptr__init(funk2_dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagination_frame);
-
 #define funk2_dptr__gf2_p(this)                 ((this)->p)
 #define funk2_dptr__gf2_tracing_on(this)        ((this)->tracing_on)
 #define funk2_dptr__gf2_trace(this)             ((this)->trace)
@@ -48,6 +46,9 @@ void funk2_dptr__init(funk2_dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev,
 #define funk2_dptr__trace__set(this, value)             (funk2_dptr__gf2_trace(this) = (value))
 #define funk2_dptr__imagination_frame(this)              funk2_dptr__gf2_imagination_frame(this)
 #define funk2_dptr__imagination_frame__set(this, value) (funk2_dptr__gf2_imagination_frame(this) = (value))
+
+void      funk2_dptr__init(funk2_dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagination_frame);
+boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory);
 
 #endif // F2__DPTR__H
 

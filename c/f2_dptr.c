@@ -30,11 +30,13 @@ void funk2_dptr__init(funk2_dptr_t* this, f2ptr p, f2ptr tracing_on, f2ptr trace
   this->imagination_frame = imagination_frame;
 }
 
-void funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory) {
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->p));
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->tracing_on));
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->trace));
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->imagination_frame));
+boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory) {
+  boolean_t found_invalid = boolean__false;
+  found_invalid |= funk2_memblock__check_all_memory_pointers_valid_in_memory((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->p)),                 memory);
+  found_invalid |= funk2_memblock__check_all_memory_pointers_valid_in_memory((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->tracing_on)),        memory);
+  found_invalid |= funk2_memblock__check_all_memory_pointers_valid_in_memory((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->trace)),             memory);
+  found_invalid |= funk2_memblock__check_all_memory_pointers_valid_in_memory((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->imagination_frame)), memory);
+  return found_invalid;
 }
 
 

@@ -132,6 +132,28 @@ void funk2_memory__print_gc_stats(funk2_memory_t* this) {
   }
 }
 
+boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
+  if (! funk2_memblock__is_self_consistently_valid(block)) {
+    error(nil, "found self-inconsistent block");
+    return boolean__false;
+  }
+  boolean_t is_within_memory_pool_range = boolean__false;
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))))) + (this->pool[pool_index].total_global_memory));
+    if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
+      is_within_memory_pool_range = boolean__true;
+    }
+  }
+  if (! is_within_memory_pool_range) {
+    error(nil, "found block outside of all memory pool ranges.");
+    return boolean__false;
+  }
+  return boolean__true;
+}
+
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p) {
   if (! p) {
     return boolean__true;
@@ -145,11 +167,11 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
       while(iter < end_of_blocks) {
 	if ((to_ptr(iter)) == p) {return boolean__true;}
 	byte_num = funk2_memblock__byte_num(iter);
-	//if (byte_num <= 0) {
-	//  char str[1024];
-	//  sprintf(str, "funk2_memory__is_valid_funk2_memblock_ptr error: byte_num <= 0 (%d).", byte_num);
-	//  error(nil, str);
-	//}
+	if (byte_num <= 0) {
+	  char str[1024];
+	  sprintf(str, "funk2_memory__is_valid_funk2_memblock_ptr error: byte_num <= 0 (%d).", byte_num);
+	  error(nil, str);
+	}
 	iter = (funk2_memblock_t*)(((u8*)iter) + byte_num);
       }
     }

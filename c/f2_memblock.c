@@ -63,3 +63,32 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
   return boolean__false;
 }
 
+boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
+  if (iter->used) {
+    ptype_block_t* ptype_block = (ptype_block_t*)iter;
+    switch(ptype_block->ptype) {
+    case ptype_free_memory:
+    case ptype_newly_allocated:
+    case ptype_integer:
+    case ptype_double:
+    case ptype_float:
+    case ptype_pointer:
+    case ptype_gfunkptr:
+    case ptype_mutex:
+    case ptype_char:
+    case ptype_string:
+    case ptype_symbol:
+    case ptype_chunk:
+    case ptype_simple_array:
+    case ptype_traced_array:
+    case ptype_larva:
+      break;
+    default: {
+      status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->ptype), (long)ptype_block);
+      return boolean__false;
+    } break;
+    }
+  }
+  return boolean__true;
+}
+

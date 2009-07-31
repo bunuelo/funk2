@@ -32,10 +32,10 @@ void funk2_dptr__init(funk2_dptr_t* this, f2ptr p, f2ptr tracing_on, f2ptr trace
 
 boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory) {
   boolean_t found_invalid = boolean__false;
-  found_invalid |= (! funk2_memory__is_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->p)));
-  found_invalid |= (! funk2_memory__is_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->tracing_on)));
-  found_invalid |= (! funk2_memory__is_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->trace)));
-  found_invalid |= (! funk2_memory__is_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->imagination_frame)));
+  found_invalid |= (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->p)));
+  found_invalid |= (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->tracing_on)));
+  found_invalid |= (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->trace)));
+  found_invalid |= (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, __f2ptr_to_ptr(this->imagination_frame)));
   return found_invalid;
 }
 

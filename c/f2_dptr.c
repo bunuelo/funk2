@@ -31,10 +31,10 @@ void funk2_dptr__init(funk2_dptr_t* this, f2ptr p, f2ptr tracing_on, f2ptr trace
 }
 
 void funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory) {
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(dptr->p));
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(dptr->tracing_on));
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(dptr->trace));
-  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(dptr->imagination_frame));
+  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->p));
+  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->tracing_on));
+  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->trace));
+  funk2_memblock__check_valid_in_memory(this, __f2ptr_to_ptr(this->imagination_frame));
 }
 
 

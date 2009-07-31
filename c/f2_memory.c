@@ -220,14 +220,7 @@ f2ptr funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr e
 
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
-#ifdef DEBUG_MEMORY
-  {
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
-    }
-  }
-#endif
+  funk2_memory__debug_memory_test(this, 1);
   // parallelized
   funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(&(this->user_thread_controller), generation_num);
   
@@ -247,10 +240,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
   boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
 #ifdef DEBUG_MEMORY
   {
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
-    }
+    funk2_memory__debug_memory_test(this, 1);
   }
 #endif // DEBUG_MEMORY
   status("...done collecting garbage.");
@@ -278,7 +268,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
   ptr block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
   if (block) {return block;}  
   // If we get here then we failed to allocate enough memory from pool.
-  funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 3);
+  funk2_memory__debug_memory_test(this, 3);
   if (funk2_memorypool__defragment_free_memory_blocks_in_place(&(this->pool[pool_index]))) {
     block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
     if (block) {return block;}
@@ -318,7 +308,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new used without protection outside of bootstrapping mode.");
   }
 #endif
-  funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 3);
+  funk2_memory__debug_memory_test(this, 3);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(this, pool_index, byte_num));
 #ifdef DEBUG_MEMORY
   if (block == NULL) {
@@ -344,7 +334,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->used = 1;
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
-  funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 3);
+  funk2_memory__debug_memory_test(this, 3);
 #ifdef DEBUG_MEMORY
   {
     ptr block_ptr = to_ptr(block);
@@ -541,9 +531,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__debug_memory_test(&(this->pool[pool_index]), 1);
-  }
+  funk2_memory__debug_memory_test(this, 1);
   
   status("done rebuilding memory info from image."); fflush(stdout);
 }
@@ -644,6 +632,14 @@ boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   return found_invalid;
 }
 
+void funk2_memory__memory_test(funk2_memory_t* this) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
+    funk2_memorypool__init((&(this->pool[pool_index])));
+  }
+  funk2_memory__check_all_memory_pointers_valid(this);
+}
+
 // **
 
 void f2__memory__initialize() {
@@ -652,16 +648,11 @@ void f2__memory__initialize() {
     funk2_memorypool__init((&__funk2.memory.pool[pool_index]));
   }
   
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  }
+  funk2_memory__debug_memory_test(&(__funk2.memory), 1);
 }
 
 void f2__memory__destroy() {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__debug_memory_test(&(__funk2.memory.pool[pool_index]), 1);
-  }
+  funk2_memory__debug_memory_test(&(__funk2.memory), 1);
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
     funk2_memorypool__destroy(&(__funk2.memory.pool[pool_index]));

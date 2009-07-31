@@ -149,6 +149,17 @@ void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
 boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
 void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this);
+void      funk2_memory__memory_test(funk2_memory_t* this);
+
+#ifdef DEBUG_MEMORY
+#  if (DEBUG_MEMORY > 0)
+#    define funk2_memory__debug_memory_test(this, level) {if (DEBUG_MEMORY >= level) {funk2_memory__memory_test(this);}}
+#  else
+#    define funk2_memory__debug_memory_test(this, level)
+#  endif
+#else
+#  define funk2_memorypool__debug_memory_test(this, level)
+#endif
 
 #define never_gc(exp) funk2_memory__add_f2ptr_to_never_delete_list(&(__funk2.memory), exp);
 

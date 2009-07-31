@@ -64,8 +64,8 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
 }
 
 boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
-  if (iter->used) {
-    ptype_block_t* ptype_block = (ptype_block_t*)iter;
+  if (this->used) {
+    ptype_block_t* ptype_block = (ptype_block_t*)this;
     switch(ptype_block->ptype) {
     case ptype_free_memory:
     case ptype_newly_allocated:

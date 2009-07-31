@@ -352,7 +352,7 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
   while(iter < end_of_blocks) {
-    if (! funk2_memory__is_valid_funk2_memblock_ptr(memory, to_ptr(iter))) {
+    if (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, to_ptr(iter))) {
       status("funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");
       found_invalid = boolean__true;
       error(nil, "funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");

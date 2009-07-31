@@ -62,7 +62,7 @@ void funk2_garbage_collector_set__test() {
   funk2_garbage_collector_set__init(&set);
   int i;
   for (i = 1; i <= 10; i ++) {
-    funk2_garbage_collector_set__add_block(&set, (funk2_memblock_t*)i);
+    funk2_garbage_collector_set__add_block(&set, (funk2_memblock_t*)from_ptr(i));
   }
   funk2_garbage_collector_set_node_t* iter = set->first;
   printf("\ngc set test:", prev, (int)(iter->block), next);

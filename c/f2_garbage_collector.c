@@ -68,7 +68,17 @@ void funk2_garbage_collector__know_of_no_more_references(funk2_garbage_collector
 }
 
 void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
-  
+  // this is where we touch everything we want to keep!
+  {
+    // parallelized
+    //funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
+    // parallelized
+    funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(this->user_thread_controller));
+    // serial
+    funk2_memory__touch_all_symbols(this);
+    // serial
+    funk2_memory__touch_never_delete_list(this);
+  }
 }
 
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
@@ -77,6 +87,18 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
     funk2_garbage_collector_pool__flush_other_knowledge(&(this->gc_pool[pool_index]));
   }
   funk2_garbage_collector__touch_all_roots(this);
+}
+
+// memory handling thread should never call this function
+void funk2_garbage_collector__signal_enter_protected_region(funk2_memory_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_garbage_collector_pool__signal_enter_protected_region(&(this->gc_pool[pool_index]));
+}
+
+// memory handling thread should never call this function
+void funk2_garbage_collector__signal_exit_protected_region(funk2_memory_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]));
 }
 
 

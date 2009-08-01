@@ -54,18 +54,6 @@ void funk2_memory__destroy(funk2_memory_t* this) {
   funk2_never_delete_list__destroy(&(this->never_delete_list));
 }
 
-// memory handling thread should never call this function
-void funk2_memory__signal_enter_protected_region(funk2_memory_t* this) {
-  int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__signal_enter_protected_region(&(this->pool[pool_index]));
-}
-
-// memory handling thread should never call this function
-void funk2_memory__signal_exit_protected_region(funk2_memory_t* this) {
-  int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__signal_exit_protected_region(&(this->pool[pool_index]));
-}
-
 void funk2_memory__handle(funk2_memory_t* this) {
   boolean_t should_collect_garbage    = boolean__false;
   boolean_t should_enlarge_memory_now = boolean__false;
@@ -354,7 +342,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
 // note that byte_num must be at least sizeof(u8) for ptype! because of type checking in garbage collection
 f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
 #ifdef DEBUG_MEMORY
-  if ((! funk2_memorypool__in_protected_region(&(this->pool[pool_index]))) && (! this->bootstrapping_mode)) {
+  if ((! funk2_garbage_collector_pool__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index]))) && (! this->bootstrapping_mode)) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new used without protection outside of bootstrapping mode.");
   }
 #endif
@@ -423,7 +411,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   }
 #endif
   if (block_f2ptr) {
-    funk2_memorypool__add_protected_alloc_f2ptr(&(this->pool[pool_index]), block_f2ptr);
+    funk2_garbage_collector_pool__add_protected_alloc_f2ptr(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
     funk2_garbage_collector_pool__add_used_exp(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
   }
   return block_f2ptr;

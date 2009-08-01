@@ -197,6 +197,7 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   funk2_garbage_collector_set__init(&(this->white_set));
   funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
+  funk2_protected_alloc_array__init(&(this->protected_alloc_array));
   
   funk2_garbage_collector_pool__init_sets_from_memorypool(this, pool, pool_index);
 }
@@ -209,6 +210,32 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_garbage_collector_set__destroy(&(this->white_set));
   funk2_garbage_collector_mutation_buffer__destroy(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
+  funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
+}
+
+void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
+  if (exp) {
+    funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
+  }
+}
+
+void funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_collector_pool_t* this) {
+  funk2_protected_alloc_array__signal_enter_protected_region(&(this->protected_alloc_array));
+}
+
+void funk2_garbage_collector_pool__signal_exit_protected_region(funk2_garbage_collector_pool_t* this) {
+  funk2_protected_alloc_array__signal_exit_protected_region(&(this->protected_alloc_array));
+}
+
+boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collector_pool_t* this) {
+  return funk2_protected_alloc_array__in_protected_region(&(this->protected_alloc_array));
+}
+
+void funk2_memorypool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
+  u64 i;
+  for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
+    funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array.data[i]);
+  }
 }
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp) {

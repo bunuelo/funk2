@@ -41,7 +41,6 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   rbt_tree__init(&(this->free_memory_tree), NULL);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
   rbt_tree__init(&(this->used_memory_tree), NULL);
-  funk2_protected_alloc_array__init(&(this->protected_alloc_array));
   funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
   
   funk2_memorypool__debug_memory_test(this, 1);
@@ -49,26 +48,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
   funk2_gc_touch_circle_buffer__destroy(&(this->gc_touch_circle_buffer));
-  funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
-}
-
-void funk2_memorypool__add_protected_alloc_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
-  if (exp) {
-    funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
-  }
-}
-
-void funk2_memorypool__signal_enter_protected_region(funk2_memorypool_t* this) {
-  funk2_protected_alloc_array__signal_enter_protected_region(&(this->protected_alloc_array));
-}
-
-void funk2_memorypool__signal_exit_protected_region(funk2_memorypool_t* this) {
-  funk2_protected_alloc_array__signal_exit_protected_region(&(this->protected_alloc_array));
-}
-
-boolean_t funk2_memorypool__in_protected_region(funk2_memorypool_t* this) {
-  return funk2_protected_alloc_array__in_protected_region(&(this->protected_alloc_array));
 }
 
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
@@ -337,13 +317,6 @@ void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypoo
       funk2_memorypool__touch_all_referenced_from_block(this, to_ptr(iter));
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
-
-void funk2_memorypool__touch_all_protected_alloc_arrays(funk2_memorypool_t* this) {
-  u64 i;
-  for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
-    funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array.data[i]);
   }
 }
 

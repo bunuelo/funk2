@@ -460,6 +460,8 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   }
   __funk2.memory.global_environment_f2ptr = global_environment;
   __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
+  funk2_garbage_collector__know_of_used_exp_mutation(&(__funk2.garbage_collector), __funk2.memory.global_environment_f2ptr);
+  
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }

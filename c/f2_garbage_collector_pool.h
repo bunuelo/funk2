@@ -116,6 +116,7 @@ void      funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_
 void      funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__signal_exit_protected_region(funk2_garbage_collector_pool_t* this);
 boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__know_of_used_exp_self_mutation( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
 void      funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread

@@ -232,10 +232,17 @@ boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collec
   return funk2_protected_alloc_array__in_protected_region(&(this->protected_alloc_array));
 }
 
+void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  if (block->gc.tricolor == funk2_garbage_collector_tricolor__white) {
+    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__grey);
+  }
+}
+
 void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
   u64 i;
   for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
-    //funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array.data[i]);
+    funk2_garbage_collector_pool__touch_f2ptr(this, this->protected_alloc_array.data[i]);
   }
 }
 

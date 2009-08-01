@@ -93,7 +93,7 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
     funk2_garbage_collector__touch_all_symbols(this);
     // serial
     funk2_garbage_collector__touch_never_delete_list(this);
-    funk2_garbage_collector__touch_f2ptr(funk2_memory__global_environment(&(__funk2.memory))); // touch root environment
+    funk2_garbage_collector__touch_f2ptr(this, funk2_memory__global_environment(&(__funk2.memory))); // touch root environment
   }
 }
 

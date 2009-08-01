@@ -69,10 +69,8 @@ void funk2_set__double_size(funk2_set_t* this) {
   free(old_bin);
 }
 
-void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
-  u64 i = funk2_set__element_bin_index(this, element);
-  funk2_set_node_t* node = (funk2_set_node_t*)f2__malloc(sizeof(funk2_set_node_t));
-  node->element = element;
+void funk2_set__add_node(funk2_set_t* this, funk2_set_node_t* node) {
+  u64 i = funk2_set__element_bin_index(this, node->element);
   node->next = this->bin[i];
   this->bin[i] = node;
   this->element_count ++;
@@ -81,7 +79,13 @@ void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
   }
 }
 
-void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element) {
+void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
+  funk2_set_node_t* node = (funk2_set_node_t*)f2__malloc(sizeof(funk2_set_node_t));
+  node->element = element;
+  funk2_set__add_node(this, node);
+}
+
+funk2_set_node_t* funk2_set__remove_node(funk2_set_t* this, funk2_set_element_t element) {
   u64 i = funk2_set__element_bin_index(this, element);
   funk2_set_node_t* prev = NULL;
   funk2_set_node_t* iter = this->bin[i];
@@ -93,13 +97,20 @@ void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element) {
       } else {
 	this->bin[i] = iter->next;
       }
-      free(iter);
-      return;
+      return iter;
     }
     prev = iter;
     iter = next;
   }
-  error(nil, "funk2_set__remove error: element is not in set.");
+  error(nil, "funk2_set__remove_node error: element is not in set.");
+}
+
+void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element) {
+  free(funk2_set__remove_node(this, element));
+}
+
+void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element, funk2_set_t* to_set) {
+  funk2_set__add_node(to_set, funk2_set__remove_node(this, element));
 }
 
 void funk2_set__print(funk2_set_t* this) {

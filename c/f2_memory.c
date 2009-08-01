@@ -103,7 +103,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
 	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
       }
     }
-    boolean_t did_something = funk2_memory__garbage_collect_generations_until_did_something(this);
+    boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
     status ("");
     status ("**************************************");
     status ("**** DONE WITH GARBAGE COLLECTION ****");
@@ -381,6 +381,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     __funk2.memory.pool[pool_index].should_run_gc = boolean__true;
   }
   rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
+  block->gc.tricolor = funk2_garbage_collector_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
   block->used = 1;
   ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
   funk2_memory__debug_memory_test(this, 3);
@@ -422,6 +423,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
 #endif
   if (block_f2ptr) {
     funk2_memorypool__add_protected_alloc_f2ptr(&(this->pool[pool_index]), block_f2ptr);
+    funk2_garbage_collector_pool__add_used_exp(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
   }
   return block_f2ptr;
 }

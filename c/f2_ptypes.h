@@ -170,7 +170,7 @@ f2ptr f2__string__is_type(f2ptr cause, f2ptr exp);
 
 // symbol
 
-void funk2_memory__touch_all_symbols(funk2_memory_t* this);
+void funk2_garbage_collector__touch_all_symbols(funk2_garbage_collector_t* this);
 
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init);

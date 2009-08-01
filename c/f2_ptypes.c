@@ -988,13 +988,13 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   return symbol_f2ptr;
 }
 
-void funk2_memory__touch_all_symbols(funk2_memory_t* this) {
+void funk2_garbage_collector__touch_all_symbols(funk2_garbage_collector_t* this) {
   symbol_hash_node_t** array_iter = __symbol_hash.array;
   symbol_hash_node_t*  node_iter;
   int i;
   for (i = __symbol_hash.array_length; i > 0; i --) {
     for (node_iter = array_iter[0]; node_iter; node_iter = node_iter->next) {
-      funk2_memory__touch_all_referenced_from_f2ptr(this, node_iter->symbol);
+      funk2_garbage_collector__touch_f2ptr(this, node_iter->symbol);
     }
     array_iter ++;
   }

@@ -117,3 +117,47 @@ f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_coll
   return exp;
 }
 
+void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
+  boolean_t should_collect_garbage    = boolean__false;
+  int index;
+  for (index = 0; index < memory_pool_num; index ++) {
+    if (this->pool[index].should_run_gc) {
+      should_collect_garbage = boolean__true;
+    }
+  }
+  if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
+    status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
+    this->user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(this->user_thread_controller));
+    status ("");
+    status ("**********************************");
+    status ("**** DOING GARBAGE COLLECTION ****");
+    status ("**********************************");
+    status ("");
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (this->pool[index].should_run_gc) {
+	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+      }
+    }
+    //boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
+    funk2_garbage_collector__collect_garbage(&(__funk2.garbage_collector));
+    status ("");
+    status ("**************************************");
+    status ("**** DONE WITH GARBAGE COLLECTION ****");
+    status ("**************************************");
+    status ("");
+    //if (did_something) {
+    //  status ("garbage collection did something.");
+    //} else {
+    //  status ("garbage collection did nothing.");
+    //}
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (this->pool[index].should_run_gc) {
+	this->pool[index].should_run_gc = boolean__false;
+	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+      }
+    }
+    this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    this->user_thread_controller.please_wait = boolean__false;
+  }
+}

@@ -285,6 +285,7 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_node_handler__handle_nodes(&(this->node_handler));
   funk2_child_process_handler__handle_child_processes(&(this->child_process_handler));
   funk2_memory__handle(&(this->memory));
+  funk2_garbage_collector__handle(&(this->garbage_collector));
   funk2_management_thread__handle_user_threads(&(this->management_thread));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);

@@ -51,6 +51,7 @@ void  funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_colle
 void  funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this);
 void  funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this);
 f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp);
+void  funk2_garbage_collector__handle(funk2_garbage_collector_t* this);
 
 #define pause_gc()    funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector))
 #define resume_gc()   funk2_garbage_collector__signal_exit_protected_region(&(__funk2.garbage_collector))

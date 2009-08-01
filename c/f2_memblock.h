@@ -48,7 +48,7 @@ struct funk2_memblock_s {
 
 // funk2_memblock
 
-void      funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch);
+void      funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used);
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory);
 boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this);
 

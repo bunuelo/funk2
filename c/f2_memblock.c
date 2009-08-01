@@ -2,12 +2,12 @@
 
 // funk2_memblock
 
-void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used, int gc_touch) {
+void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used) {
   funk2_memblock__byte_num(block) = byte_num;
   funk2_garbage_collector_block_header__init(&(block->gc));
   block->used                     = used;
-  block->gc_touch                 = gc_touch;
-  block->generation_num           = 0;
+  //block->gc_touch                 = gc_touch;
+  //block->generation_num           = 0;
 }
 
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory) {

@@ -117,7 +117,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_garbage_collector__touch_all_protected_alloc_arrays(&(__funk2.garbage_collector.gc_pool[pool_index]));
+  funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));

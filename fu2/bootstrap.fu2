@@ -68,7 +68,7 @@
 
 [format stdout '\nsaving img/bootstrap.img.']
 
-[memory_image-save 'img/bootstrap.img']
+[save_memory_image 'img/bootstrap.img']
 
 [format stdout '\ndone.\n']
 

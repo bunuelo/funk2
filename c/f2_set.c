@@ -124,13 +124,14 @@ void funk2_set__test() {
   {
     int i;
     for (i = 0; i < 10; i++) {
+      funk2_set__print(&set);
       funk2_set__add(&set, i);
     }
   }
-  funk2_set__print(&set);
   {
     int i;
     for (i = 0; i < 10; i++) {
+      funk2_set__print(&set);
       if ((i % 3) == 0) {
 	funk2_set__remove(&set, i);
       }

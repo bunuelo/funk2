@@ -71,8 +71,10 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_set_t white_set;
 };
 
-void funk2_garbage_collector_pool__init(funk2_garbage_collector_t* this, funk2_memorypool_t* pool);
-void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_t* this);
+void funk2_garbage_collector_pool__init_sets_from_memblock(funk2_garbage_collector_pool_t* this, funk2_memblock_t* block);
+void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool);
+void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool);
+void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

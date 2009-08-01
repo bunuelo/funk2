@@ -49,8 +49,8 @@ u64 funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element)
 }
 
 void funk2_set__double_size(funk2_set_t* this) {
-  u64               old_bin_power = this->bin_power;
-  funk2_set_node_t* old_bin       = this->bin;
+  u64                old_bin_power = this->bin_power;
+  funk2_set_node_t** old_bin       = this->bin;
   this->bin_power ++;
   this->bin = (funk2_set_node_t**)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
   memset(this->bin, 0, 1ull << (this->bin_power));

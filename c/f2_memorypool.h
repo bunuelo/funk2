@@ -82,7 +82,6 @@ void              funk2_memorypool__increment_generation(funk2_memorypool_t* thi
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
 void              funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp);
 void              funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num);
-void              funk2_memorypool__touch_all_protected_alloc_arrays(funk2_memorypool_t* this);
 boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory);
 
 #endif // F2__MEMORYPOOL__H

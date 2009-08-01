@@ -58,7 +58,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
     }
   }
   if (should_enlarge_memory_now) {
-    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(this->user_thread_controller));
+    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_enlarge_memory_now) {
 	funk2_memorypool__change_total_memory_available(&(this->pool[index]), this->pool[index].total_global_memory + (this->pool[index].total_global_memory >> 3) + this->pool[index].should_enlarge_memory_now__need_at_least_byte_num);

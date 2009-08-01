@@ -244,18 +244,6 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   return p;
 }
 
-void funk2_memory__touch_never_delete_list(funk2_memory_t* this) {
-  u64 i;
-  for (i = 0; i < this->never_delete_list.used_num; i++) {
-    funk2_memory__touch_all_referenced_from_f2ptr(this, this->never_delete_list.data[i]);
-  }
-}
-
-f2ptr funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr exp) {
-  funk2_never_delete_list__add_f2ptr(&(this->never_delete_list), exp);
-  return exp;
-}
-
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
   funk2_memory__debug_memory_test(this, 1);
@@ -678,10 +666,10 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   return retval;
 }
 
-void funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp) {
-  int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), exp);
-}
+//void funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp) {
+//  int pool_index = this_processor_thread__pool_index();
+//  funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), exp);
+//}
 
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;

@@ -50,7 +50,6 @@ struct funk2_memory_s {
   pthread_t                      memory_handling_thread;
   boolean_t                      bootstrapping_mode;
   funk2_user_thread_controller_t user_thread_controller;
-  funk2_never_delete_list_t      never_delete_list;
 };
 
 #define nil ((f2ptr)0)
@@ -130,8 +129,6 @@ boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(funk2_memory
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
 ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
-void      funk2_memory__touch_never_delete_list(funk2_memory_t* this);
-f2ptr     funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr exp);
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
 boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
 ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
@@ -144,7 +141,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
 f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
 void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
 boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
-void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
+//void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this);
 void      funk2_memory__memory_test(funk2_memory_t* this);
 

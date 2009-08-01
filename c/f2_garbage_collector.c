@@ -101,4 +101,15 @@ void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collect
   funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]));
 }
 
+void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this) {
+  u64 i;
+  for (i = 0; i < this->never_delete_list.used_num; i++) {
+    //funk2_memory__touch_all_referenced_from_f2ptr(this, this->never_delete_list.data[i]);
+  }
+}
+
+f2ptr funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr exp) {
+  funk2_never_delete_list__add_f2ptr(&(this->never_delete_list), exp);
+  return exp;
+}
 

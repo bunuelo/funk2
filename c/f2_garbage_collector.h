@@ -32,6 +32,8 @@ typedef struct funk2_garbage_collector_s              funk2_garbage_collector_t;
 #ifndef F2__GARBAGE_COLLECTOR__H
 #define F2__GARBAGE_COLLECTOR__H
 
+#include "f2_set.h"
+
 // garbage_collector_tricolor
 
 enum funk2_garbage_collector_tricolor_e {

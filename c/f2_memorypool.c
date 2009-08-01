@@ -41,13 +41,13 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   rbt_tree__init(&(this->free_memory_tree), NULL);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
   rbt_tree__init(&(this->used_memory_tree), NULL);
-  funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
+  //funk2_gc_touch_circle_buffer__init(&(this->gc_touch_circle_buffer));
   
   funk2_memorypool__debug_memory_test(this, 1);
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
-  funk2_gc_touch_circle_buffer__destroy(&(this->gc_touch_circle_buffer));
+  //funk2_gc_touch_circle_buffer__destroy(&(this->gc_touch_circle_buffer));
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
 }
 
@@ -243,6 +243,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   return did_something;
 }
 
+/*
 u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
   //status("funk2_memorypool__free_all_gc_untouched_blocks_from_generation: generation_num=%d.", generation_num);
   funk2_memorypool__debug_memory_test(this, 2);
@@ -267,6 +268,7 @@ u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypo
   funk2_memorypool__debug_memory_test(this, 2);
   return did_something;
 }
+*/
 
 void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
@@ -300,25 +302,25 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
   return max_size_block;
 }
 
-void funk2_memorypool__touch_all_referenced_from_block(funk2_memorypool_t* this, ptr block) {
-  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), (funk2_memblock_t*)(to_ptr(block)));
-}
+//void funk2_memorypool__touch_all_referenced_from_block(funk2_memorypool_t* this, ptr block) {
+//  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), (funk2_memblock_t*)(to_ptr(block)));
+//}
 
-void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
-  funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), exp);
-}
+//void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
+//  funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), exp);
+//}
 
-void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num) {
-  //status("funk2_memorypool__touch_all_referenced_from_pool_generation: generation_num=%d.", touch_generation_num);
-  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
-  while(iter < end_of_blocks) {
-    if (iter->used && iter->generation_num == touch_generation_num) {
-      funk2_memorypool__touch_all_referenced_from_block(this, to_ptr(iter));
-    }
-    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
+//void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num) {
+//  //status("funk2_memorypool__touch_all_referenced_from_pool_generation: generation_num=%d.", touch_generation_num);
+//  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
+//  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+//  while(iter < end_of_blocks) {
+//    if (iter->used && iter->generation_num == touch_generation_num) {
+//      funk2_memorypool__touch_all_referenced_from_block(this, to_ptr(iter));
+//    }
+//    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+//  }
+//}
 
 boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {
   boolean_t         found_invalid = boolean__false;

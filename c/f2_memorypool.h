@@ -29,7 +29,7 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 #ifndef F2__MEMORYPOOL__H
 #define F2__MEMORYPOOL__H
 
-#include "f2_gc_touch_circle_buffer.h"
+//#include "f2_gc_touch_circle_buffer.h"
 
 struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;
@@ -44,7 +44,7 @@ struct funk2_memorypool_s {
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   uint                           next_unique_block_id;
-  funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
+  //funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 };
 
 #define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
@@ -74,14 +74,14 @@ void              funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_
 void              funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this);
 void              funk2_memorypool__memory_test(funk2_memorypool_t* this);
 void              funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num);
-void              funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num);
+//void              funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num);
 void              funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block);
 u8                funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this);
-u8                funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num);
+//u8                funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num);
 void              funk2_memorypool__increment_generation(funk2_memorypool_t* this);
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
-void              funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp);
-void              funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num);
+//void              funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp);
+//void              funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num);
 boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory);
 
 #endif // F2__MEMORYPOOL__H

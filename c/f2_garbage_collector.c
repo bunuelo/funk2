@@ -86,6 +86,11 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
 }
 
 void funk2_garbage_collector__touch_f2ptr(funk2_garbage_collector_t* this, f2ptr exp) {
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  if (block.gc.tricolor == funk2_garbage_collector_tricolor__white) {
+    int pool_index = __f2ptr__pool_index(exp);
+    funk2_garbage_collector_pool__change_used_exp_color(&(this->gc_pool[pool_index]), exp, funk2_garbage_collector_tricolor__grey);
+  }
 }
 
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {

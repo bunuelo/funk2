@@ -22,10 +22,11 @@
 #ifndef F2__GARBAGE_COLLECTOR_POOL__TYPES__H
 #define F2__GARBAGE_COLLECTOR_POOL__TYPES__H
 
-typedef enum   funk2_garbage_collector_tricolor_e     funk2_garbage_collector_tricolor_t;
-typedef struct funk2_garbage_collector_block_header_s funk2_garbage_collector_block_header_t;
-typedef struct funk2_garbage_collector_set_s          funk2_garbage_collector_set_t;
-typedef struct funk2_garbage_collector_pool_s         funk2_garbage_collector_pool_t;
+typedef enum   funk2_garbage_collector_tricolor_e        funk2_garbage_collector_tricolor_t;
+typedef struct funk2_garbage_collector_block_header_s    funk2_garbage_collector_block_header_t;
+typedef struct funk2_garbage_collector_set_s             funk2_garbage_collector_set_t;
+typedef struct funk2_garbage_collector_mutation_buffer_s funk2_garbage_collector_mutation_buffer_t;
+typedef struct funk2_garbage_collector_pool_s            funk2_garbage_collector_pool_t;
 
 #endif // F2__GARBAGE_COLLECTOR__TYPES__H
 
@@ -63,12 +64,27 @@ void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
 void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr block);
 void funk2_garbage_collector_set__remove_exp(funk2_garbage_collector_set_t* this, f2ptr block);
 
-// garbage_collector
+// garbage_collector_mutation_buffer
+
+struct funk2_garbage_collector_mutation_buffer_s {
+  funk2_processor_mutex_t mutex;
+  u64                     count;
+  u64                     alloc_length;
+  f2ptr*                  data;
+};
+
+void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this);
+void funk2_garbage_collector_mutation_buffer__destroy(funk2_garbage_collector_mutation_buffer_t* this);
+void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_collector_mutation_buffer_t* this, f2ptr exp);
+void funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_pool(funk2_garbage_collector_mutation_buffer_t* this, funk2_garbage_collector_pool_t* pool);
+
+// garbage_collector_pool
 
 struct funk2_garbage_collector_pool_s {
-  funk2_garbage_collector_set_t black_set;
-  funk2_garbage_collector_set_t grey_set;
-  funk2_garbage_collector_set_t white_set;
+  funk2_garbage_collector_set_t             black_set;
+  funk2_garbage_collector_set_t             grey_set;
+  funk2_garbage_collector_set_t             white_set;
+  funk2_garbage_collector_mutation_buffer_t other_mutations;
 };
 
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);

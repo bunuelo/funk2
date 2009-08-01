@@ -65,7 +65,7 @@ void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_colle
   funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(pool)));
   funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(pool))) + pool->total_global_memory);
   while(iter < end_of_blocks) {
-    funk2_garbage_collector__init_sets_from_memblock(this, iter);
+    funk2_garbage_collector_pool__init_sets_from_memblock(this, iter);
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
 }
@@ -77,7 +77,7 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   funk2_garbage_collector_set__init(&(this->grey_set));
   funk2_garbage_collector_set__init(&(this->white_set));
   
-  funk2_garbage_collector__init_sets_from_memorypool(this, pool);
+  funk2_garbage_collector_pool__init_sets_from_memorypool(this, pool);
 }
 
 void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this) {

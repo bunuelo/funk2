@@ -72,6 +72,7 @@ void funk2_garbage_collector__know_of_no_more_references(funk2_garbage_collector
 }
 
 void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector: touch_all_roots.");
   // this is where we touch everything we want to keep!
   {
     // parallelized
@@ -91,6 +92,7 @@ void funk2_garbage_collector__touch_f2ptr(funk2_garbage_collector_t* this, f2ptr
 }
 
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector: collect_garbage.");
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_pool__flush_other_knowledge(&(this->gc_pool[pool_index]));

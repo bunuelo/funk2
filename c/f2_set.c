@@ -54,9 +54,9 @@ void funk2_set__double_size(funk2_set_t* this) {
   this->bin_power ++;
   this->bin = (funk2_set_node_t**)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
   memset(this->bin, 0, 1ull << (this->bin_power));
-  u64 bin_num = 1ull << (this->bin_power);
+  u64 old_bin_num = 1ull << old_bin_power;
   u64 i;
-  for (i = 0; i < bin_num; i ++) {
+  for (i = 0; i < old_bin_num; i ++) {
     funk2_set_node_t* iter = old_bin[i];
     while (iter) {
       funk2_set_node_t* next = iter->next;

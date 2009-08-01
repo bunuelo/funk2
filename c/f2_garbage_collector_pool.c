@@ -229,4 +229,8 @@ void funk2_garbage_collector_pool__know_of_used_exp_other_no_more_references(fun
   funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references(&(this->other_no_more_references), exp);
 }
 
+void funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector_pool_t* this) {
+  funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_pool(&(this->other_mutations), this);
+  funk2_garbage_collector_no_more_references_buffer__flush_no_more_references_knowledge_to_gc_pool(&(this->other_no_more_references), this);
+}
 

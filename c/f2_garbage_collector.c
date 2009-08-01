@@ -72,6 +72,10 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
 }
 
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_garbage_collector_pool__flush_other_knowledge(&(this->gc_pool[pool_index]));
+  }
   funk2_garbage_collector__touch_all_roots(this);
 }
 

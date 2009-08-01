@@ -458,8 +458,23 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
+  
+  if (__funk2.memory.global_environment_f2ptr) {
+    funk2_memblock_t* old_global_env = (funk2_memblock_t*)from_ptr(__funk2.memory.global_environment_ptr);
+    boolean_t no_more_references = atomic_dec_and_test(&(old_global_env->reference_count));
+    if (no_more_references) {
+      // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
+      funk2_garbage_collector__know_of_no_more_references(this, __funk2.memory.global_environment_f2ptr);
+    }
+  }
+  
   __funk2.memory.global_environment_f2ptr = global_environment;
   __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
+  
+  if (__funk2.memory.global_environment_f2ptr) {
+    // increment the reference count of the new global environment
+    atomic_inc(&(__funk2.memory.global_environment_ptr->reference_count));
+  }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));

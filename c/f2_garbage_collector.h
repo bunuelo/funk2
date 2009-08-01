@@ -43,6 +43,11 @@ void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_
 void funk2_garbage_collector__know_of_no_more_references(funk2_garbage_collector_t* this, f2ptr exp);
 void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this);
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this);
+void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this);
+void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this);
+
+#define pause_gc()  funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector))
+#define resume_gc() funk2_garbage_collector__signal_exit_protected_region(&(__funk2.garbage_collector))
 
 #endif // F2__GARBAGE_COLLECTOR__H
 

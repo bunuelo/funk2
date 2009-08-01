@@ -55,9 +55,6 @@ struct funk2_memory_s {
 
 #define nil ((f2ptr)0)
 
-#define pause_gc()  funk2_memory__signal_enter_protected_region(&(__funk2.memory))
-#define resume_gc() funk2_memory__signal_exit_protected_region(&(__funk2.memory))
-
 #define maximum_generation_num 7
 
 #define f2ptr__computer_id__bit_num  computer_id__bit_num
@@ -126,8 +123,6 @@ void safe_read(int fd, void* ptr, size_t object_size);
 
 void      funk2_memory__init(funk2_memory_t* this);
 void      funk2_memory__destroy(funk2_memory_t* this);
-void      funk2_memory__signal_enter_protected_region(funk2_memory_t* this);
-void      funk2_memory__signal_exit_protected_region(funk2_memory_t* this);
 void      funk2_memory__handle(funk2_memory_t* this);
 void      funk2_memory__print_gc_stats(funk2_memory_t* this);
 boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);

@@ -43,7 +43,7 @@ void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
 
 void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor != tricolor) {
+  if (block->gc.tricolor == funk2_garbage_collector_tricolor__black) {
     int pool_index = this_processor_thread__pool_index();
     int exp__pool_index = __f2ptr__pool_index(exp);
     if (pool_index == exp__pool_index) {

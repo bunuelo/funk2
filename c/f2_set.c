@@ -134,7 +134,7 @@ void funk2_set__test() {
       }
     }
   }
-  funk2_set_print(&set);
+  funk2_set__print(&set);
   funk2_set__destroy(&set);
 }
 

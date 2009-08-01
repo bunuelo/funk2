@@ -127,8 +127,8 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
   }
   if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
     status("funk2_memory__handle asking all user threads to wait_politely so that we can begin collecting garbage.");
-    this->user_thread_controller.please_wait = boolean__true;
-    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(this->user_thread_controller));
+    __funk2.user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     status ("");
     status ("**********************************");
     status ("**** DOING GARBAGE COLLECTION ****");
@@ -158,6 +158,6 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       }
     }
     this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-    this->user_thread_controller.please_wait = boolean__false;
+    __funk2.user_thread_controller.please_wait = boolean__false;
   }
 }

@@ -93,6 +93,8 @@ void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector
 void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
+void funk2_garbage_collector_pool__know_of_used_exp_self_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp);
+void funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

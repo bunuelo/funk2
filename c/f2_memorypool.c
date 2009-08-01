@@ -271,6 +271,7 @@ u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypo
 }
 */
 
+/*
 void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
@@ -283,6 +284,7 @@ void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
 }
+*/
 
 // look for memory block that is not used and is big enough for us to split up
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num) {

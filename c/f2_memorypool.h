@@ -77,7 +77,7 @@ void              funk2_memorypool__change_total_memory_available(funk2_memorypo
 void              funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block);
 u8                funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this);
 //u8                funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num);
-void              funk2_memorypool__increment_generation(funk2_memorypool_t* this);
+//void              funk2_memorypool__increment_generation(funk2_memorypool_t* this);
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
 //void              funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp);
 //void              funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num);

@@ -47,7 +47,7 @@ void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__s
 
 void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__user_process(funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
+  //funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
@@ -83,7 +83,7 @@ void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__si
 
 void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__user_process(funk2_user_thread_controller__touch_all_referenced_from_pool_generation_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__touch_all_referenced_from_pool_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
+  //funk2_memorypool__touch_all_referenced_from_pool_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
@@ -117,7 +117,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_memorypool__touch_all_protected_alloc_arrays(&(__funk2.memory.pool[pool_index]));
+  funk2_garbage_collector__touch_all_protected_alloc_arrays(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
@@ -153,7 +153,7 @@ boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_genera
 
 void funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__user_process(funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  boolean_t did_something = funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
+  boolean_t did_something = boolean__false; //funk2_memorypool__free_all_gc_untouched_blocks_from_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   this->did_something |= did_something;

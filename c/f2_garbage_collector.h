@@ -50,23 +50,16 @@ struct funk2_garbage_collector_block_header_s {
 void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this);
 void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this);
 
-// garbage_collector_set_node
-
-struct funk2_garbage_collector_set_node_s {
-  funk2_memblock_t*                   block;
-  funk2_garbage_collector_set_node_t* prev;
-  funk2_garbage_collector_set_node_t* next;
-};
-
 // garbage_collector_set
 
 struct funk2_garbage_collector_set_s {
-  funk2_garbage_collector_set_node_t* first;
+  funk2_set_t set;
 };
 
 void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
-void funk2_garbage_collector_set__test();
+void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block);
+void funk2_garbage_collector_set__remove_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block);
 
 // garbage_collector
 

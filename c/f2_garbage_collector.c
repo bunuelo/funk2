@@ -34,75 +34,19 @@ void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block
 // garbage_collector_set
 
 void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this) {
-  this->first = NULL;
+  funk2_set__init(&(this->set));
 }
 
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {
-  funk2_garbage_collector_set_node_t* iter = this->first;
-  while (iter) {
-    funk2_garbage_collector_set_node_t* next = iter->next;
-    free(iter);
-    iter = next;
-  }
+  funk2_set__destroy(&(this->set));
 }
 
 void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block) {
-  funk2_garbage_collector_set_node_t* new_node = (funk2_garbage_collector_set_node_t*)f2__malloc(sizeof(funk2_garbage_collector_set_node_t));
-  new_node->block   = block;
-  new_node->prev    = NULL;
-  new_node->next    = this->first;
-  if (this->first) {
-    this->first->prev = new_node;
-  }
-  this->first       = new_node;
+  funk2_set__add(&(this->set), (funk2_set_element_t)to_ptr(block));
 }
 
-void funk2_garbage_collector_set__remove_and_free_node(funk2_garbage_collector_set_t* this, funk2_garbage_collector_set_node_t* node) {
-  if (node->prev) {
-    node->prev->next = node->next;
-  } else {
-    this->first = node->next;
-  }
-  if (node->next) {
-    node->next->prev = node->prev;
-  }
-  free(node);
-}
-
-void funk2_garbage_collector_set__print(funk2_garbage_collector_set_t* this) {
-  funk2_garbage_collector_set_node_t* iter = this->first;
-  printf("\n[gc-set");
-  while (iter) {
-    int prev = (int)(iter->prev ? to_ptr(iter->prev->block) : 0);
-    int next = (int)(iter->next ? to_ptr(iter->next->block) : 0);
-    printf("\n  [(%d) %d (%d)]", prev, (int)to_ptr(iter->block), next);
-    iter = iter->next;
-  }
-  printf("]\n"); fflush(stdout);
-}
-
-void funk2_garbage_collector_set__test() {
-  funk2_garbage_collector_set_t set;
-  funk2_garbage_collector_set__init(&set);
-  int i;
-  for (i = 1; i <= 10; i ++) {
-    funk2_garbage_collector_set__add_block(&set, (funk2_memblock_t*)from_ptr(i));
-  }
-  funk2_garbage_collector_set__print(&set);
-  {
-    int count = 0;
-    funk2_garbage_collector_set_node_t* iter = set.first;
-    while (iter) {
-      funk2_garbage_collector_set_node_t* next = iter->next;
-      if ((count % 3) == 0) {
-	funk2_garbage_collector_set__remove_and_free_node(&set, iter);
-      }
-      iter = next;
-      count ++;
-    }
-  }
-  funk2_garbage_collector_set__print(&set);
-  funk2_garbage_collector_set__destroy(&set);
+void funk2_garbage_collector_set__remove_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block) {
+  funk2_set__remove(&(this->set), (funk2_set_element_t)to_ptr(block));
 }
 
 // garbage_collector

@@ -257,7 +257,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
     block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
     if (block) {return block;}
   }
-  this->pool[pool_index].should_run_gc = boolean__true;
+  __funk2.garbage_collector.gc_pool[pool_index].should_run_gc = boolean__true;
   status ("this->pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(this->pool[pool_index].total_global_memory));
   status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory >> 3) + byte_num));
   do {

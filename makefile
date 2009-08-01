@@ -119,6 +119,7 @@ funk2_server_objs = \
   c/f2_scheduler_thread_controller.o \
   c/f2_search.o \
   c/f2_serialize.o \
+  c/f2_set.o \
   c/f2_signal.o \
   c/f2_socket.o \
   c/f2_socket_client.o \
@@ -204,6 +205,7 @@ funk2_headers = \
   c/f2_scheduler_thread_controller.h \
   c/f2_search.h \
   c/f2_serialize.h \
+  c/f2_set.h \
   c/f2_signal.h \
   c/f2_socket.h \
   c/f2_sort.h \

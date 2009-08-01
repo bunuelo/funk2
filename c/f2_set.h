@@ -1,0 +1,58 @@
+// 
+// Copyright (c) 2007-2008 Bo Morgan.
+// All rights reserved.
+// 
+// Author: Bo Morgan
+// 
+// Permission to use, copy, modify and distribute this software and its
+// documentation is hereby granted, provided that both the copyright
+// notice and this permission notice appear in all copies of the
+// software, derivative works or modified versions, and any portions
+// thereof, and that both notices appear in supporting documentation.
+// 
+// BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+// BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+// WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+// 
+// Bo Morgan requests users of this software to return to bo@mit.edu any
+// improvements or extensions that they make and grant Bo Morgan the
+// rights to redistribute these changes.
+// 
+
+#ifndef F2__SET__TYPES__H
+#define F2__SET__TYPES__H
+
+typedef struct funk2_set_s      funk2_set_t;
+typedef struct funk2_set_node_s funk2_set_node_t;
+typedef u64                     funk2_set_element_t;
+
+#define funk2_set_prime_number__16_bit (65521ull)
+#define funk2_set_prime_number__32_bit (3267000013ull)
+
+#endif // F2__SET__TYPES__H
+
+#ifndef F2__SET__H
+#define F2__SET__H
+
+struct funk2_set_node_s {
+  funk2_set_element_t element;
+  funk2_set_node_t*   next;
+};
+
+struct funk2_set_s {
+  u64               element_count;
+  u64               bin_power;
+  funk2_set_node_t* bin;
+};
+
+void funk2_set__init(funk2_set_t* this);
+void funk2_set__destroy(funk2_set_t* this);
+u64  funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element);
+void funk2_set__double_size(funk2_set_t* this);
+void funk2_set__add(funk2_set_t* this, funk2_set_element_t element);
+void funk2_set__remove(funk2_set_t* this, funk2_set_element element);
+void funk2_set__print(funk2_set_t* this);
+void funk2_set__test();
+
+#endif // F2__SET__H
+

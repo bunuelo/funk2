@@ -66,7 +66,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
 	this->pool[index].should_enlarge_memory_now                         = boolean__false;
       }
     }
-    this->user_thread_controller.please_wait = boolean__false;
+    __funk2.user_thread_controller.please_wait = boolean__false;
   }
 }
 

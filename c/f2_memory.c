@@ -273,7 +273,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
       this->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
       __funk2.user_thread_controller.please_wait                               = boolean__false;
     } else {
-      funk2_user_thread_controller__user_wait_politely(&(this->user_thread_controller));
+      funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
     }
     block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
     if (block) {return block;}  

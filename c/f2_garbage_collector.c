@@ -140,7 +140,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       }
     }
     //boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
-    funk2_garbage_collector__collect_garbage(&(this->garbage_collector));
+    funk2_garbage_collector__collect_garbage(this);
     status ("");
     status ("**************************************");
     status ("**** DONE WITH GARBAGE COLLECTION ****");

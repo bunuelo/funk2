@@ -36,7 +36,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   
   this->global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(this) - 1);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(this));
-  funk2_memblock__init(block, this->total_global_memory, 0, 0);
+  funk2_memblock__init(block, this->total_global_memory, 0);
   
   rbt_tree__init(&(this->free_memory_tree), NULL);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);

@@ -135,12 +135,12 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
     status ("**********************************");
     status ("");
     for (index = 0; index < memory_pool_num; index ++) {
-      if (this->pool[index].should_run_gc) {
-	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+      if (this->gc_pool[index].should_run_gc) {
+	status ("this->gc_pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
       }
     }
     //boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
-    funk2_garbage_collector__collect_garbage(&(__funk2.garbage_collector));
+    funk2_garbage_collector__collect_garbage(&(this->garbage_collector));
     status ("");
     status ("**************************************");
     status ("**** DONE WITH GARBAGE COLLECTION ****");

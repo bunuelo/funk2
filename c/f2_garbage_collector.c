@@ -71,6 +71,17 @@ void funk2_garbage_collector__know_of_no_more_references(funk2_garbage_collector
   }
 }
 
+void funk2_garbage_collector__know_of_protected_f2ptr(funk2_garbage_collector_t* this, f2ptr exp) {
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  int pool_index = this_processor_thread__pool_index();
+  int exp__pool_index = __f2ptr__pool_index(exp);
+  if (pool_index == exp__pool_index) {
+    funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr(&(this->gc_pool[exp__pool_index]), exp);
+  } else {
+    funk2_garbage_collector_pool__know_of_used_exp_other_protected_f2ptr(&(this->gc_pool[exp__pool_index]), exp);
+  }
+}
+
 void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
   status("funk2_garbage_collector: touch_all_roots.");
   // this is where we touch everything we want to keep!
@@ -83,6 +94,7 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
     funk2_garbage_collector__touch_all_symbols(this);
     // serial
     funk2_garbage_collector__touch_never_delete_list(this);
+    funk2_garbage_collector__touch_f2ptr(funk2_memory__global_environment(&(__funk2.memory))); // touch root environment
   }
 }
 

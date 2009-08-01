@@ -94,6 +94,20 @@ void funk2_garbage_collector_no_more_references_buffer__destroy(funk2_garbage_co
 void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references(funk2_garbage_collector_no_more_references_buffer_t* this, f2ptr exp);
 void funk2_garbage_collector_no_more_references_buffer__flush_no_more_references_knowledge_to_gc_pool(funk2_garbage_collector_no_more_references_buffer_t* this, funk2_garbage_collector_pool_t* pool);
 
+// garbage_collector_protected_f2ptr_buffer
+
+struct funk2_garbage_collector_protected_f2ptr_buffer_s {
+  funk2_processor_mutex_t mutex;
+  u64                     count;
+  u64                     alloc_length;
+  f2ptr*                  data;
+};
+
+void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collector_protected_f2ptr_buffer_t* this);
+void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_collector_protected_f2ptr_buffer_t* this);
+void funk2_garbage_collector_protected_f2ptr_buffer__know_of_no_more_references(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp);
+void funk2_garbage_collector_protected_f2ptr_buffer__flush_no_more_references_knowledge_to_gc_pool(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_garbage_collector_pool_t* pool);
+
 // garbage_collector_pool
 
 struct funk2_garbage_collector_pool_s {
@@ -102,6 +116,7 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_set_t                       white_set;
   funk2_garbage_collector_mutation_buffer_t           other_mutations;
   funk2_garbage_collector_no_more_references_buffer_t other_no_more_references;
+  funk2_garbage_collector_protected_f2ptr_buffer_t    other_protected_f2ptr;
   funk2_protected_alloc_array_t                       protected_alloc_array;
   boolean_t                                           should_run_gc;
 };
@@ -122,6 +137,8 @@ void      funk2_garbage_collector_pool__know_of_used_exp_self_mutation( funk2_ga
 void      funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
 void      funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
 void      funk2_garbage_collector_pool__know_of_used_exp_other_no_more_references(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
+void      funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
+void      funk2_garbage_collector_pool__know_of_used_exp_other_protected_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
 void      funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector_pool_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H

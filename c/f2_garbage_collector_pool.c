@@ -135,6 +135,47 @@ void funk2_garbage_collector_no_more_references_buffer__flush_no_more_references
 }
 
 
+// garbage_collector_protected_f2ptr_buffer
+
+void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
+  funk2_processor_mutex__init(&(this->mutex));
+  this->count        = 0;
+  this->alloc_length = 1;
+  this->data         = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+}
+
+void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
+  funk2_processor_mutex__destroy(&(this->mutex));
+  free(this->data);
+}
+
+void funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp) {
+  funk2_processor_mutex__user_lock(&(this->mutex));
+  if (this->count == this->alloc_length) {
+    u64    old_alloc_length = this->alloc_length;
+    f2ptr* old_data         = this->data;
+    this->alloc_length = 2 * old_alloc_length;
+    this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+    memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
+    free(old_data);
+    status("funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
+  }
+  this->data[this->count] = exp;
+  this->count ++;
+  funk2_processor_mutex__unlock(&(this->mutex));
+}
+
+void funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowledge_to_gc_pool(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_garbage_collector_pool_t* pool) {
+  funk2_processor_mutex__lock(&(this->mutex));
+  u64 i;
+  for (i = 0; i < this->count; i ++) {
+    funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr(pool, this->data[i]);
+  }
+  this->count = 0;
+  funk2_processor_mutex__unlock(&(this->mutex));
+}
+
+
 // garbage_collector_pool
 
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
@@ -197,6 +238,7 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   funk2_garbage_collector_set__init(&(this->white_set));
   funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
+  funk2_garbage_collector_protected_f2ptr_buffer__init(&(this->other_protected_f2ptr));
   funk2_protected_alloc_array__init(&(this->protected_alloc_array));
   this->should_run_gc = boolean__false;
   
@@ -211,6 +253,7 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_garbage_collector_set__destroy(&(this->white_set));
   funk2_garbage_collector_mutation_buffer__destroy(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
+  funk2_garbage_collector_protected_f2ptr_buffer__destroy(&(this->other_protected_f2ptr));
   funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
 }
 
@@ -269,8 +312,17 @@ void funk2_garbage_collector_pool__know_of_used_exp_other_no_more_references(fun
   funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references(&(this->other_no_more_references), exp);
 }
 
+void funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr( funk2_garbage_collector_pool_t* this, f2ptr exp) {
+  funk2_garbage_collector_pool__add_protected_alloc_f2ptr(this, exp);
+}
+
+void funk2_garbage_collector_pool__know_of_used_exp_other_protected_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
+  funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(&(this->other_protected_f2ptr), exp);
+}
+
 void funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector_pool_t* this) {
   funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_pool(&(this->other_mutations), this);
   funk2_garbage_collector_no_more_references_buffer__flush_no_more_references_knowledge_to_gc_pool(&(this->other_no_more_references), this);
+  funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowledge_to_gc_pool(&(this->other_protected_f2ptr), this);
 }
 

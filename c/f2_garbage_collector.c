@@ -136,7 +136,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
     status ("");
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->gc_pool[index].should_run_gc) {
-	status ("this->gc_pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
       }
     }
     //boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
@@ -154,7 +154,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_run_gc) {
 	this->pool[index].should_run_gc = boolean__false;
-	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
+	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.pool[index].total_global_memory));
       }
     }
     this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();

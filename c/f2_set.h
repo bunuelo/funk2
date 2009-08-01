@@ -50,7 +50,7 @@ void funk2_set__destroy(funk2_set_t* this);
 u64  funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element);
 void funk2_set__double_size(funk2_set_t* this);
 void funk2_set__add(funk2_set_t* this, funk2_set_element_t element);
-void funk2_set__remove(funk2_set_t* this, funk2_set_element element);
+void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element);
 void funk2_set__print(funk2_set_t* this);
 void funk2_set__test();
 

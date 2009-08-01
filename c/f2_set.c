@@ -81,7 +81,7 @@ void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
   }
 }
 
-void funk2_set__remove(funk2_set_t* this, funk2_set_element element) {
+void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element) {
   u64 i = funk2_set__element_bin_index(this, element);
   funk2_set_node_t* prev = NULL;
   funk2_set_node_t* iter = this->bin[i];

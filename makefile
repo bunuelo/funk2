@@ -67,7 +67,6 @@ funk2_server_objs = \
   c/f2_event_router.o \
   c/f2_garbage_collector.o \
   c/f2_garbage_collector_pool.o \
-  c/f2_gc_touch_circle_buffer.o \
   c/f2_globalenv.o \
   c/f2_gmodule.o \
   c/f2_funk2_node.o \
@@ -151,7 +150,6 @@ funk2_headers = \
   c/f2_dlfcn.h \
   c/f2_dptr.h \
   c/f2_event_router.h \
-  c/f2_gc_touch_circle_buffer.h \
   c/f2_garbage_collector.h \
   c/f2_garbage_collector_pool.h \
   c/f2_global.h \

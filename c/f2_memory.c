@@ -357,7 +357,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   if (funk2_memblock__byte_num(block) > byte_num + sizeof(funk2_memblock_t)) {
     funk2_memblock_t* new_block           = (funk2_memblock_t*)(((u8*)(block)) + byte_num);
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
-    funk2_memblock__init(new_block, new_block__byte_num, 0, 0);
+    funk2_memblock__init(new_block, new_block__byte_num, 0);
     
     funk2_memorypool__link_funk2_memblock_to_freelist(&(this->pool[pool_index]), new_block);
     

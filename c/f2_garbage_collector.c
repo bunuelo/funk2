@@ -73,11 +73,11 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
     // parallelized
     //funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
     // parallelized
-    funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(this->user_thread_controller));
+    //funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(__this->user_thread_controller));
     // serial
-    funk2_memory__touch_all_symbols(this);
+    //funk2_memory__touch_all_symbols(this);
     // serial
-    funk2_memory__touch_never_delete_list(this);
+    //funk2_memory__touch_never_delete_list(this);
   }
 }
 

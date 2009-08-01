@@ -44,6 +44,7 @@
 #endif
 
 #include <arpa/inet.h>
+#include <asm-generic/atomic.h>
 #ifdef F2__DLFCN__SUPPORTED
 #  include <dlfcn.h>
 #endif

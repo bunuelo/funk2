@@ -198,6 +198,7 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
   funk2_protected_alloc_array__init(&(this->protected_alloc_array));
+  this->should_run_gc = boolean__false;
   
   funk2_garbage_collector_pool__init_sets_from_memorypool(this, pool, pool_index);
 }

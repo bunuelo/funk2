@@ -33,7 +33,6 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 
 struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;
-  boolean_t                      should_run_gc; // if disabled when needed more memory (and allocated more) then True
   boolean_t                      should_enlarge_memory_now;
   f2size_t                       should_enlarge_memory_now__need_at_least_byte_num;
   f2size_t                       total_global_memory;

@@ -121,7 +121,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
   boolean_t should_collect_garbage    = boolean__false;
   int index;
   for (index = 0; index < memory_pool_num; index ++) {
-    if (this->pool[index].should_run_gc) {
+    if (this->gc_pool[index].should_run_gc) {
       should_collect_garbage = boolean__true;
     }
   }

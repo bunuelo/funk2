@@ -38,7 +38,7 @@ void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this) {
 }
 
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {
-  funk2_garbage_collector_set_node_t* iter;
+  funk2_garbage_collector_set_node_t* iter = this->first;
   while (iter) {
     funk2_garbage_collector_set_node_t* next = iter->next;
     free(iter);

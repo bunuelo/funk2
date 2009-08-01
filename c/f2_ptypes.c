@@ -95,7 +95,7 @@ void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
   error(nil, "ptype_error.");
 }
 
-#define check_wait_politely() funk2_user_thread_controller__user_check_wait_politely(&(__funk2.memory.user_thread_controller))
+#define check_wait_politely() funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller))
 
 // ptype
 

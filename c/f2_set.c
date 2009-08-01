@@ -74,9 +74,7 @@ void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
   funk2_set_node_t* node = (funk2_set_node_t*)f2__malloc(sizeof(funk2_set_node_t));
   node->element = element;
   node->next = this->bin[i];
-  if (this->bin[i]) {
-    this->bin[i]->next = node;
-  }
+  this->bin[i] = node;
   this->element_count ++;
   if (this->element_count >= (1ull << this->bin_power)) {
     funk2_set__double_size(this);

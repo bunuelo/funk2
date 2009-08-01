@@ -92,6 +92,7 @@
 #include "f2_funk2_node.h"
 #include "f2_funktional.h"
 #include "f2_garbage_collector.h"
+#include "f2_garbage_collector_pool.h"
 #include "f2_gc_touch_circle_buffer.h"
 #include "f2_globalenv.h"
 #include "f2_html.h"

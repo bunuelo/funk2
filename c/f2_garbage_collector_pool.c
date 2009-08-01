@@ -41,15 +41,15 @@ void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {
   funk2_set__destroy(&(this->set));
 }
 
-void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this, f2ptr exp) {
+void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr exp) {
   funk2_set__add(&(this->set), (funk2_set_element_t)exp);
 }
 
-void funk2_garbage_collector_set__remove_block(funk2_garbage_collector_set_t* this, f2ptr exp) {
+void funk2_garbage_collector_set__remove_exp(funk2_garbage_collector_set_t* this, f2ptr exp) {
   funk2_set__remove(&(this->set), (funk2_set_element_t)exp);
 }
 
-void funk2_garbage_collector_set__remove_block_and_add_to(funk2_garbage_collector_set_t* this, f2ptr exp, funk2_garbage_collector_set_t* to_set) {
+void funk2_garbage_collector_set__remove_exp_and_add_to(funk2_garbage_collector_set_t* this, f2ptr exp, funk2_garbage_collector_set_t* to_set) {
   funk2_set__remove_and_add_to(&(this->set), (funk2_set_element_t)exp, &(to_set->set));
 }
 
@@ -59,9 +59,9 @@ void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* 
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   debug__assert(block->used, nil, "funk2_garbage_collector_pool__add_memblock error: block is not used.");
   switch(block->gc.tricolor) {
-  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__add_block(&(this->black_set), block); break;
-  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__add_block(&(this->grey_set),  block); break;
-  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__add_block(&(this->white_set), block); break;
+  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__add_exp(&(this->black_set), exp); break;
+  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__add_exp(&(this->grey_set),  exp); break;
+  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__add_exp(&(this->white_set), exp); break;
   }
 }
 
@@ -69,9 +69,9 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   debug__assert(! block->used, nil, "funk2_garbage_collector_pool__remove_memblock error: block is used.");
   switch(block->gc.tricolor) {
-  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__remove_block(&(this->black_set), block); break;
-  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__remove_block(&(this->grey_set),  block); break;
-  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__remove_block(&(this->white_set), block); break;
+  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__remove_exp(&(this->black_set), exp); break;
+  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__remove_exp(&(this->grey_set),  exp); break;
+  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__remove_exp(&(this->white_set), exp); break;
   }
 }
 

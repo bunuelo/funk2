@@ -60,8 +60,8 @@ struct funk2_garbage_collector_set_s {
 
 void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
-void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this, f2ptr block);
-void funk2_garbage_collector_set__remove_block(funk2_garbage_collector_set_t* this, f2ptr block);
+void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr block);
+void funk2_garbage_collector_set__remove_exp(funk2_garbage_collector_set_t* this, f2ptr block);
 
 // garbage_collector
 

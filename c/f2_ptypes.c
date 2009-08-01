@@ -1529,7 +1529,7 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), __pure__f2simple_array__elt(this, index));
   
   __pure__f2simple_array__elt__set(this, index, value);
-  funk2_garbage_collector__know_of_used_exp_mutation(&(__funk2.garbage_collector), );
+  funk2_garbage_collector__know_of_used_exp_mutation(&(__funk2.garbage_collector), this);
   return nil;
 }
 

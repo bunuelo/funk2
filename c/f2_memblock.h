@@ -31,12 +31,10 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 
 #include "f2_ptype.h"
 #include "f2_garbage_collector.h"
-#include <asm-generic/atomic.h>
 
 struct funk2_memblock_s {
   rbt_node_t                             rbt_node;
   funk2_garbage_collector_block_header_t gc;
-  atomic_t                               reference_count;
   u8                                     used           : 1;
   u8                                     gc_touch       : 1;
   u8                                     generation_num : 3;

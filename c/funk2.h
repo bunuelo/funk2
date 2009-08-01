@@ -44,7 +44,6 @@
 #endif
 
 #include <arpa/inet.h>
-#include <asm-generic/atomic.h>
 #ifdef F2__DLFCN__SUPPORTED
 #  include <dlfcn.h>
 #endif
@@ -76,6 +75,7 @@
 
 #include "f2_ansi.h"
 #include "f2_apropos.h"
+#include "f2_atomic.h"
 #include "f2_blocks_world.h"
 #include "f2_buffered_file.h"
 #include "f2_buffered_socket.h"

@@ -472,8 +472,9 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(global_environment);
   
   if (__funk2.memory.global_environment_f2ptr) {
+    funk2_memblock_t* global_env = (funk2_memblock_t*)from_ptr(__funk2.memory.global_environment_ptr);
     // increment the reference count of the new global environment
-    atomic_inc(&(__funk2.memory.global_environment_ptr->reference_count));
+    atomic_inc(&(global_env->reference_count));
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

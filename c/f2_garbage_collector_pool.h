@@ -27,6 +27,7 @@ typedef struct funk2_garbage_collector_block_header_s              funk2_garbage
 typedef struct funk2_garbage_collector_set_s                       funk2_garbage_collector_set_t;
 typedef struct funk2_garbage_collector_mutation_buffer_s           funk2_garbage_collector_mutation_buffer_t;
 typedef struct funk2_garbage_collector_no_more_references_buffer_s funk2_garbage_collector_no_more_references_buffer_t;
+typedef struct funk2_garbage_collector_protected_f2ptr_buffer_s    funk2_garbage_collector_protected_f2ptr_buffer_t;
 typedef struct funk2_garbage_collector_pool_s                      funk2_garbage_collector_pool_t;
 
 #endif // F2__GARBAGE_COLLECTOR__TYPES__H

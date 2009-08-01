@@ -103,17 +103,18 @@ void funk2_memory__handle(funk2_memory_t* this) {
 	status ("this->pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(this->pool[index].total_global_memory));
       }
     }
-    boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
+    //boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
+    funk2_garbage_collector__collect_garbage(&(__funk2.garbage_collector));
     status ("");
     status ("**************************************");
     status ("**** DONE WITH GARBAGE COLLECTION ****");
     status ("**************************************");
     status ("");
-    if (did_something) {
-      status ("garbage collection did something.");
-    } else {
-      status ("garbage collection did nothing.");
-    }
+    //if (did_something) {
+    //  status ("garbage collection did something.");
+    //} else {
+    //  status ("garbage collection did nothing.");
+    //}
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_run_gc) {
 	this->pool[index].should_run_gc = boolean__false;

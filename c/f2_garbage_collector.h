@@ -41,6 +41,8 @@ void funk2_garbage_collector__init(funk2_garbage_collector_t* this, funk2_memory
 void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this);
 void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_t* this, f2ptr exp);
 void funk2_garbage_collector__know_of_no_more_references(funk2_garbage_collector_t* this, f2ptr exp);
+void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this);
+void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR__H
 

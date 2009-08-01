@@ -101,7 +101,7 @@ void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_colle
   while(iter < end_of_blocks) {
     if (iter->used) {
       f2ptr exp = ptr_to_f2ptr(pool_index, to_ptr(iter));
-      funk2_garbage_collector_pool__add_used_memblock(this, exp);
+      funk2_garbage_collector_pool__add_used_exp(this, exp);
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }

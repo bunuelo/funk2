@@ -46,7 +46,7 @@ struct funk2_memory_s {
   funk2_memorypool_t             pool[memory_pool_num];
   ptr                            global_environment_ptr;
   f2ptr                          global_environment_f2ptr;
-  u64                            last_garbage_collect_nanoseconds_since_1970;
+  //u64                            last_garbage_collect_nanoseconds_since_1970;
   pthread_t                      memory_handling_thread;
   boolean_t                      bootstrapping_mode;
   funk2_user_thread_controller_t user_thread_controller;
@@ -129,8 +129,8 @@ boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(funk2_memory
 boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
 ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
 ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
-boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
-boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
+//boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
+//boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
 ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
 f2ptr     funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
 f2ptr     funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);

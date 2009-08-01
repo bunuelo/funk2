@@ -30,6 +30,7 @@ typedef struct funk2_garbage_collector_s funk2_garbage_collector_t;
 #define F2__GARBAGE_COLLECTOR__H
 
 #include "f2_garbage_collector_pool.h"
+#include "f2_never_delete_list.h"
 
 // garbage_collector
 

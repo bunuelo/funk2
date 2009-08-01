@@ -30,6 +30,8 @@ void funk2_garbage_collector__init(funk2_garbage_collector_t* this, funk2_memory
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_pool__init(&(this->gc_pool[pool_index]), &(memory->pool[pool_index]), pool_index);
   }
+  
+  funk2_never_delete_list__init(&(this->never_delete_list));
 }
 
 void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
@@ -39,6 +41,8 @@ void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_pool__destroy(&(this->gc_pool[pool_index]));
   }
+
+  funk2_never_delete_list__destroy(&(this->never_delete_list));
 }
 
 void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_t* this, f2ptr exp) {

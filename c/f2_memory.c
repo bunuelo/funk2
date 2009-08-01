@@ -46,12 +46,10 @@ void funk2_memory__init(funk2_memory_t* this) {
   this->bootstrapping_mode     = boolean__true;
   
   funk2_user_thread_controller__init(&(this->user_thread_controller));
-  funk2_never_delete_list__init(&(this->never_delete_list));
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {
   funk2_user_thread_controller__destroy(&(this->user_thread_controller));
-  funk2_never_delete_list__destroy(&(this->never_delete_list));
 }
 
 void funk2_memory__handle(funk2_memory_t* this) {
@@ -244,6 +242,7 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   return p;
 }
 
+/*
 boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
   status("collecting garbage...");
   funk2_memory__debug_memory_test(this, 1);
@@ -259,7 +258,7 @@ boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int gen
     // serial
     funk2_memory__touch_all_symbols(this);
     // serial
-    funk2_memory__touch_never_delete_list(this);
+    //funk2_memory__touch_never_delete_list(this);
   }
   
   // parallelized
@@ -289,6 +288,7 @@ boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_me
   }
   return did_something;
 }
+*/
 
 ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
   ptr block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));

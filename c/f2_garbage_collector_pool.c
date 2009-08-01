@@ -91,7 +91,7 @@ void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector
   }
   { // not thread safe, but don't need to mutex because this is only ever done by the one thread that owns this pool.
     block->gc.tricolor = new_tricolor;
-    funk2_garbage_collector_set__remove_exp_and_add_to(from_set, block, to_set);
+    funk2_garbage_collector_set__remove_exp_and_add_to(from_set, exp, to_set);
   }
 }
 

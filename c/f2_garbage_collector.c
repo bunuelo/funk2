@@ -108,7 +108,7 @@ void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t*
   }
 }
 
-f2ptr funk2_memory__add_f2ptr_to_never_delete_list(funk2_memory_t* this, f2ptr exp) {
+f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp) {
   funk2_never_delete_list__add_f2ptr(&(this->never_delete_list), exp);
   return exp;
 }

@@ -113,9 +113,10 @@ void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collect
 }
 
 void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector: touch_never_delete_list.");
   u64 i;
   for (i = 0; i < this->never_delete_list.used_num; i++) {
-    //funk2_memory__touch_all_referenced_from_f2ptr(this, this->never_delete_list.data[i]);
+    funk2_garbage_collector__touch_f2ptr(this, this->never_delete_list.data[i]);
   }
 }
 

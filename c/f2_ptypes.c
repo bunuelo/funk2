@@ -989,6 +989,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
 }
 
 void funk2_garbage_collector__touch_all_symbols(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector: touch_all_symbols.");
   symbol_hash_node_t** array_iter = __symbol_hash.array;
   symbol_hash_node_t*  node_iter;
   int i;

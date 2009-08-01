@@ -139,6 +139,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
   funk2_management_thread__init(&(this->management_thread));
   funk2_garbage_collector__init(&(this->garbage_collector), &(this->memory));
+  funk2_user_thread_controller__init(&(this->user_thread_controller));
   
   f2ptr cause = initial_cause();
   
@@ -275,6 +276,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_scheduler_thread_controller__destroy(&(this->scheduler_thread_controller));
   funk2_management_thread__destroy(&(this->management_thread));
   funk2_garbage_collector__destroy(&(this->garbage_collector));
+  funk2_user_thread_controller__destroy(&(this->user_thread_controller));
   
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }

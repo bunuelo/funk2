@@ -48,7 +48,6 @@ struct funk2_memory_s {
   f2ptr                          global_environment_f2ptr;
   pthread_t                      memory_handling_thread;
   boolean_t                      bootstrapping_mode;
-  funk2_user_thread_controller_t user_thread_controller;
 };
 
 #define nil ((f2ptr)0)

@@ -44,12 +44,9 @@ void funk2_memory__init(funk2_memory_t* this) {
   
   this->memory_handling_thread = pthread_self();
   this->bootstrapping_mode     = boolean__true;
-  
-  funk2_user_thread_controller__init(&(this->user_thread_controller));
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {
-  funk2_user_thread_controller__destroy(&(this->user_thread_controller));
 }
 
 void funk2_memory__handle(funk2_memory_t* this) {

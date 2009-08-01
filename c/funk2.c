@@ -296,6 +296,7 @@ boolean_t funk2__handle(funk2_t* this) {
 //#define TEST
 
 void funk2_test() {
+  funk2_set__test();
   funk2_garbage_collector_set__test();
   funk2_gc_touch_circle_buffer__test();
 }

@@ -108,10 +108,12 @@ void funk2_garbage_collector_set__test() {
 // garbage_collector
 
 void funk2_garbage_collector__init_sets_from_memblock(funk2_garbage_collector_t* this, funk2_memblock_t* block) {
-  switch(block->gc.tricolor) {
-  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__add_block(&(this->black_set), block); break;
-  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__add_block(&(this->grey_set),  block); break;
-  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__add_block(&(this->white_set), block); break;
+  if (block->used) {
+    switch(block->gc.tricolor) {
+    case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__add_block(&(this->black_set), block); break;
+    case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__add_block(&(this->grey_set),  block); break;
+    case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__add_block(&(this->white_set), block); break;
+    }
   }
 }
 

@@ -40,9 +40,9 @@ struct funk2_set_node_s {
 };
 
 struct funk2_set_s {
-  u64               element_count;
-  u64               bin_power;
-  funk2_set_node_t* bin;
+  u64                element_count;
+  u64                bin_power;
+  funk2_set_node_t** bin;
 };
 
 void funk2_set__init(funk2_set_t* this);

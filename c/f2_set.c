@@ -26,7 +26,7 @@
 void funk2_set__init(funk2_set_t* this) {
   this->element_count = 0;
   this->bin_power     = 0;
-  this->bin           = (funk2_set_node_t*)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
+  this->bin           = (funk2_set_node_t**)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
   memset(this->bin, 0, 1ull << (this->bin_power));
 }
 
@@ -52,7 +52,7 @@ void funk2_set__double_size(funk2_set_t* this) {
   u64               old_bin_power = this->bin_power;
   funk2_set_node_t* old_bin       = this->bin;
   this->bin_power ++;
-  this->bin = (funk2_set_node_t*)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
+  this->bin = (funk2_set_node_t**)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
   memset(this->bin, 0, 1ull << (this->bin_power));
   u64 bin_num = 1ull << (this->bin_power);
   u64 i;

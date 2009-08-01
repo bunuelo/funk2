@@ -36,6 +36,7 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 
 #include "f2_set.h"
 #include "f2_memorypool.h"
+#include "f2_protected_alloc_array.h"
 
 // garbage_collector_tricolor
 
@@ -101,6 +102,7 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_set_t                       white_set;
   funk2_garbage_collector_mutation_buffer_t           other_mutations;
   funk2_garbage_collector_no_more_references_buffer_t other_no_more_references;
+  funk2_protected_alloc_array_t                       protected_alloc_array;
 };
 
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);

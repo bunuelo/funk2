@@ -46,7 +46,7 @@ void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__s
 }
 
 void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__user_process(funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation_t* this) {
-  int pool_index = this_processor_thread__pool_index();
+  //int pool_index = this_processor_thread__pool_index();
   //funk2_memorypool__clear_all_gc_touch_flags_before_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
@@ -82,7 +82,7 @@ void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__si
 }
 
 void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__user_process(funk2_user_thread_controller__touch_all_referenced_from_pool_generation_t* this) {
-  int pool_index = this_processor_thread__pool_index();
+  //int pool_index = this_processor_thread__pool_index();
   //funk2_memorypool__touch_all_referenced_from_pool_generation(&(__funk2.memory.pool[pool_index]), this->generation_num);
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;

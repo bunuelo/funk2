@@ -234,7 +234,7 @@ boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collec
 void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
   u64 i;
   for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
-    funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array.data[i]);
+    //funk2_memorypool__touch_all_referenced_from_f2ptr(this, this->protected_alloc_array.data[i]);
   }
 }
 

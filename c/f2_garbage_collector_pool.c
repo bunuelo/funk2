@@ -195,6 +195,8 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   funk2_garbage_collector_set__init(&(this->black_set));
   funk2_garbage_collector_set__init(&(this->grey_set));
   funk2_garbage_collector_set__init(&(this->white_set));
+  funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
+  funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
   
   funk2_garbage_collector_pool__init_sets_from_memorypool(this, pool, pool_index);
 }
@@ -205,6 +207,8 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_garbage_collector_set__destroy(&(this->black_set));
   funk2_garbage_collector_set__destroy(&(this->grey_set));
   funk2_garbage_collector_set__destroy(&(this->white_set));
+  funk2_garbage_collector_mutation_buffer__destroy(&(this->other_mutations));
+  funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
 }
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp) {

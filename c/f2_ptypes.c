@@ -1508,6 +1508,29 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
   return rv;
 }
 
+// notify garbage collector of changed references and mutated memory.
+void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector_t* this, f2ptr exp, f2ptr old_value, f2ptr value) {
+  if (old_value) {
+    { // decrement old value reference count
+      funk2_memblock_t* old_value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(old_value));
+      boolean_t no_more_references = atomic_dec_and_test(&(old_value_block->reference_count));
+      if (no_more_references) {
+	// notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
+	funk2_garbage_collector__know_of_no_more_references(this, exp);
+      }
+    }
+  }
+  if (value) {
+    { // increment new value reference count
+      funk2_memblock_t* value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(value));
+      atomic_inc(&(value_block->reference_count));
+    }
+  }
+  
+  // notify garbage collector to grey this memory if it is black because it has been mutated.
+  funk2_garbage_collector__know_of_used_exp_mutation(this, exp);
+} 
+
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
@@ -1525,27 +1548,11 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
     //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
   }
   
-  // protect the old value
   f2ptr old_value = __pure__f2simple_array__elt(this, index);
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
+  // protect the old value
   funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), old_value);
-  
-  if (old_value) {
-    { // decrement old value reference count
-      funk2_memblock_t* old_value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(old_value));
-      boolean_t no_more_references = atomic_dec_and_test(&(old_value_block->reference_count));
-      if (no_more_references) {
-	funk2_garbage_collector__know_of_no_more_references(&(__funk2.garbage_collector), this);
-      }
-    }
-  }
-  if (value) {
-    { // increment new value reference count
-      funk2_memblock_t* value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(value));
-      atomic_inc(&(value_block->reference_count));
-    }
-  }
-  
-  funk2_garbage_collector__know_of_used_exp_mutation(&(__funk2.garbage_collector), this);
   
   __pure__f2simple_array__elt__set(this, index, value);
   return nil;
@@ -1775,8 +1782,12 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       __pure__f2traced_array__elt__trace__set(this, index, new_tracing_doublelink);
     }
     
+    f2ptr old_value = __pure__f2traced_array__elt(this, index);
+    
+    funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+    
     // protect the old value
-    funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), __pure__f2traced_array__elt(this, index));
+    funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), old_value);
     
     __pure__f2traced_array__elt__set(this, index, value);
   } else {

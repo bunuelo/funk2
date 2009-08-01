@@ -22,52 +22,19 @@
 #ifndef F2__GARBAGE_COLLECTOR__TYPES__H
 #define F2__GARBAGE_COLLECTOR__TYPES__H
 
-typedef enum   funk2_garbage_collector_tricolor_e     funk2_garbage_collector_tricolor_t;
-typedef struct funk2_garbage_collector_block_header_s funk2_garbage_collector_block_header_t;
-typedef struct funk2_garbage_collector_set_s          funk2_garbage_collector_set_t;
-typedef struct funk2_garbage_collector_s              funk2_garbage_collector_t;
+typedef struct funk2_garbage_collector_s funk2_garbage_collector_t;
 
 #endif // F2__GARBAGE_COLLECTOR__TYPES__H
 
 #ifndef F2__GARBAGE_COLLECTOR__H
 #define F2__GARBAGE_COLLECTOR__H
 
-#include "f2_set.h"
-
-// garbage_collector_tricolor
-
-enum funk2_garbage_collector_tricolor_e {
-  funk2_garbage_collector_tricolor__black = 1,
-  funk2_garbage_collector_tricolor__grey,
-  funk2_garbage_collector_tricolor__white
-};
-
-// garbage_collector_block_header
-
-struct funk2_garbage_collector_block_header_s {
-  funk2_garbage_collector_tricolor_t tricolor;
-} __attribute__((__packed__));
-
-void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this);
-void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this);
-
-// garbage_collector_set
-
-struct funk2_garbage_collector_set_s {
-  funk2_set_t set;
-};
-
-void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
-void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
-void funk2_garbage_collector_set__add_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block);
-void funk2_garbage_collector_set__remove_block(funk2_garbage_collector_set_t* this, funk2_memblock_t* block);
+#include "f2_garbage_collector_pool.h"
 
 // garbage_collector
 
 struct funk2_garbage_collector_s {
-  funk2_garbage_collector_set_t black_set;
-  funk2_garbage_collector_set_t grey_set;
-  funk2_garbage_collector_set_t white_set;
+  funk2_garbage_collector_pool_t gc_pool[memory_pool_num];
 };
 
 void funk2_garbage_collector__init(funk2_garbage_collector_t* this, funk2_memory_t* memory);

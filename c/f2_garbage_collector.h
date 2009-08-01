@@ -24,7 +24,6 @@
 
 typedef enum   funk2_garbage_collector_tricolor_e     funk2_garbage_collector_tricolor_t;
 typedef struct funk2_garbage_collector_block_header_s funk2_garbage_collector_block_header_t;
-typedef struct funk2_garbage_collector_set_node_s     funk2_garbage_collector_set_node_t;
 typedef struct funk2_garbage_collector_set_s          funk2_garbage_collector_set_t;
 typedef struct funk2_garbage_collector_s              funk2_garbage_collector_t;
 

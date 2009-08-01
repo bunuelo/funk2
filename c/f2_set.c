@@ -107,11 +107,13 @@ void funk2_set__print(funk2_set_t* this) {
   u64 bin_num = 1ull << (this->bin_power);
   u64 i;
   for (i = 0; i < bin_num; i ++) {
+    printf(" [");
     funk2_set_node_t* iter = this->bin[i];
     while (iter) {
       printf(" %d", (int)(iter->element));
       iter = iter->next;
     }
+    printf("]");
   }
   printf("]\n");
 }

@@ -125,7 +125,7 @@ void funk2_set__test() {
       funk2_set__add(&set, i);
     }
   }
-  funk2_set_print(&set);
+  funk2_set__print(&set);
   {
     int i;
     for (i = 0; i < 10; i++) {

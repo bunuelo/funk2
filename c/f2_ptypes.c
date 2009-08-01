@@ -1552,7 +1552,7 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   // protect the old value
-  funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), old_value);
+  funk2_garbage_collector_pool__add_protected_alloc_f2ptr(&(__funk2.garbage_collector.gc_pool[this_processor_thread__pool_index()]), old_value);
   
   __pure__f2simple_array__elt__set(this, index, value);
   return nil;

@@ -71,9 +71,9 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_set_t white_set;
 };
 
-void funk2_garbage_collector_pool__add_used_memblock(funk2_garbage_collector_pool_t* this, f2ptr block);
-void funk2_garbage_collector_pool__remove_unused_memblock(funk2_garbage_collector_pool_t* this, f2ptr block);
-void funk2_garbage_collector_pool__change_used_memblock_color(funk2_garbage_collector_pool_t* this, f2ptr block, funk2_garbage_collector_tricolor_t new_tricolor);
+void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
+void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
+void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t new_tricolor);
 void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);

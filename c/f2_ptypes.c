@@ -1526,10 +1526,24 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   }
   
   // protect the old value
-  funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), __pure__f2simple_array__elt(this, index));
+  f2ptr old_value = __pure__f2simple_array__elt(this, index);
+  funk2_memorypool__add_protected_alloc_f2ptr(&(__funk2.memory.pool[this_processor_thread__pool_index()]), old_value);
+  
+  { // decrement old value reference count
+    funk2_memblock_t* old_value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(old_value));
+    boolean_t no_more_references = atomic_dec_and_test(&(old_value_block->reference_count));
+    if (no_more_references) {
+      funk2_garbage_collector__know_of_no_more_references(&(__funk2.garbage_collector), this);
+    }
+  }
+  { // increment new value reference count
+    funk2_memblock_t* value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(value));
+    atomic_inc(&(value_block->reference_count));
+  }
+  
+  funk2_garbage_collector__know_of_used_exp_mutation(&(__funk2.garbage_collector), this);
   
   __pure__f2simple_array__elt__set(this, index, value);
-  funk2_garbage_collector__know_of_used_exp_mutation(&(__funk2.garbage_collector), this);
   return nil;
 }
 

@@ -90,13 +90,13 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
 }
 
 // memory handling thread should never call this function
-void funk2_garbage_collector__signal_enter_protected_region(funk2_memory_t* this) {
+void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this) {
   int pool_index = this_processor_thread__pool_index();
   funk2_garbage_collector_pool__signal_enter_protected_region(&(this->gc_pool[pool_index]));
 }
 
 // memory handling thread should never call this function
-void funk2_garbage_collector__signal_exit_protected_region(funk2_memory_t* this) {
+void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this) {
   int pool_index = this_processor_thread__pool_index();
   funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]));
 }

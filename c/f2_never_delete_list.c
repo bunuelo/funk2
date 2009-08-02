@@ -48,7 +48,7 @@ void funk2_never_delete_list__save_to_stream(funk2_never_delete_list_t* this, in
   write(fd, &used_num, sizeof(used_num));
   u64 index;
   for (index = 0; index < used_num; index ++) {
-    f2ptr exp = data[index];
+    f2ptr exp = this->data[index];
     write(fd, &exp, sizeof(exp));
   }
 }

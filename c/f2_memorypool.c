@@ -244,6 +244,16 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   return did_something;
 }
 
+void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_t* block) {
+  // remove from used list
+  rbt_tree__remove(&(this->used_memory_tree), (rbt_node_t*)block);
+  // set to free
+  block->used = 0;
+  this->total_free_memory += funk2_memblock__byte_num(block);
+  // add to free list
+  funk2_memorypool__link_funk2_memblock_to_freelist(this, block);
+}
+
 /*
 u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
   //status("funk2_memorypool__free_all_gc_untouched_blocks_from_generation: generation_num=%d.", generation_num);

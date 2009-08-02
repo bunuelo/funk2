@@ -110,6 +110,20 @@ void funk2_user_thread_controller__grey_from_other_nodes__destroy(funk2_user_thr
 void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_user_thread_controller__grey_from_other_nodes_t* this);
 void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_user_thread_controller__grey_from_other_nodes_t* this);
 
+// funk2_user_thread_controller__free_whiteness
+
+typedef struct funk2_user_thread_controller__free_whiteness_s {
+  boolean_t               start;
+  funk2_processor_mutex_t done_mutex;
+  s64                     done_count;
+  boolean_t               everyone_done;
+} funk2_user_thread_controller__free_whiteness_t;
+
+void funk2_user_thread_controller__free_whiteness__init(funk2_user_thread_controller__free_whiteness_t* this);
+void funk2_user_thread_controller__free_whiteness__destroy(funk2_user_thread_controller__free_whiteness_t* this);
+void funk2_user_thread_controller__free_whiteness__signal_execute(funk2_user_thread_controller__free_whiteness_t* this);
+void funk2_user_thread_controller__free_whiteness__user_process(funk2_user_thread_controller__free_whiteness_t* this);
+
 
 
 // funk2_user_thread_controller
@@ -124,6 +138,7 @@ typedef struct funk2_user_thread_controller_s {
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_t free_all_gc_untouched_blocks_from_generation;
   funk2_user_thread_controller__blacken_grey_nodes_t                           blacken_grey_nodes;
   funk2_user_thread_controller__grey_from_other_nodes_t                        grey_from_other_nodes;
+  funk2_user_thread_controller__free_whiteness_t                               free_whiteness;
 } funk2_user_thread_controller_t;
 
 void      funk2_user_thread_controller__init(funk2_user_thread_controller_t* this);
@@ -137,6 +152,7 @@ void      funk2_user_thread_controller__touch_all_protected_alloc_arrays(funk2_u
 boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(funk2_user_thread_controller_t* this, int generation_num);
 void      funk2_user_thread_controller__blacken_grey_nodes(funk2_user_thread_controller_t* this);
 void      funk2_user_thread_controller__grey_from_other_nodes(funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__free_whiteness(funk2_user_thread_controller_t* this);
 
 #endif // F2__USER_THREAD_CONTROLLER__H
 

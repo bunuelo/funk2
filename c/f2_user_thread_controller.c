@@ -232,6 +232,40 @@ void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_use
   }
 }
 
+// funk2_user_thread_controller__free_whiteness
+
+void funk2_user_thread_controller__free_whiteness__init(funk2_user_thread_controller__free_whiteness_t* this) {
+  this->start = boolean__false;
+  funk2_processor_mutex__init(&(this->done_mutex));
+}
+
+void funk2_user_thread_controller__free_whiteness__destroy(funk2_user_thread_controller__free_whiteness_t* this) {
+}
+
+void funk2_user_thread_controller__free_whiteness__signal_execute(funk2_user_thread_controller__free_whiteness_t* this) {
+  this->done_count     = 0;
+  this->everyone_done  = boolean__false;
+  this->start          = boolean__true;
+  while (this->done_count < memory_pool_num) {
+    sched_yield();
+    f2__sleep(1);
+  }
+  this->start         = boolean__false;
+  this->everyone_done = boolean__true;
+}
+
+void funk2_user_thread_controller__free_whiteness__user_process(funk2_user_thread_controller__free_whiteness_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_garbage_collector_pool__free_whiteness(&(__funk2.garbage_collector.gc_pool[pool_index]));
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count ++;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
+  while (! (this->everyone_done)) {
+    sched_yield();
+    f2__sleep(1);
+  }
+}
+
 
 // funk2_user_thread_controller
 
@@ -246,6 +280,7 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__init(&(this->free_all_gc_untouched_blocks_from_generation));
   funk2_user_thread_controller__blacken_grey_nodes__init(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
+  funk2_user_thread_controller__free_whiteness__init(&(this->free_whiteness));
 }
 
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
@@ -257,6 +292,7 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__destroy(&(this->free_all_gc_untouched_blocks_from_generation));
   funk2_user_thread_controller__blacken_grey_nodes__destroy(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__destroy(&(this->grey_from_other_nodes));
+  funk2_user_thread_controller__free_whiteness__destroy(&(this->free_whiteness));
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
@@ -277,6 +313,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
     else if (this->free_all_gc_untouched_blocks_from_generation.start) {funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__user_process(&(this->free_all_gc_untouched_blocks_from_generation));}
     else if                           (this->blacken_grey_nodes.start) {funk2_user_thread_controller__blacken_grey_nodes__user_process(                                                    &(this->blacken_grey_nodes));}
     else if                        (this->grey_from_other_nodes.start) {funk2_user_thread_controller__grey_from_other_nodes__user_process(                                              &(this->grey_from_other_nodes));}
+    else if                               (this->free_whiteness.start) {funk2_user_thread_controller__free_whiteness__user_process(                                                            &(this->free_whiteness));}
     f2__sleep(1);
     sched_yield();
   }
@@ -312,6 +349,10 @@ void funk2_user_thread_controller__blacken_grey_nodes(funk2_user_thread_controll
 
 void funk2_user_thread_controller__grey_from_other_nodes(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__grey_from_other_nodes__signal_execute(&(this->grey_from_other_nodes));
+}
+
+void funk2_user_thread_controller__free_whiteness(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__free_whiteness__signal_execute(&(this->free_whiteness));
 }
 
 

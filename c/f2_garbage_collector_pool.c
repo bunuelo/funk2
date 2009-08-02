@@ -480,3 +480,32 @@ void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector
   }
 }
 
+void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this) {
+  status("funk2_garbage_collector_pool: free_whiteness.");
+  u64                white_count = this->white_set.set.element_count;
+  f2ptr*             white_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * white_count));
+  u64                white_index = 0;
+  {
+    u64                bin_num = 1ull << this->white_set.set.bin_power;
+    funk2_set_node_t** bin     = this->white_set.set.bin;
+    u64 i;
+    for (i = 0; i < bin_num; i ++) {
+      funk2_set_node_t* iter = bin[i];
+      while (iter) {
+	f2ptr exp = (f2ptr)(iter->element);
+	white_array[white_index] = exp;
+	white_index ++;
+	iter = iter->next;
+      }
+    }
+  }
+  debug__assert(white_index == white_count, nil, "error white_index should equal white_count.");
+  for (white_index = 0; white_index < white_count; white_index ++) {
+    f2ptr exp = white_array[white_index];
+    funk2_garbage_collector_set__remove_exp(&(this->white_set), exp);
+    funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+    block->used = 0;
+  }
+  free(white_array);
+}
+

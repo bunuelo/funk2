@@ -129,6 +129,7 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   }
   funk2_garbage_collector__touch_all_roots(this);
   funk2_garbage_collector__spread_all_blackness(this);
+  funk2_user_thread_controller__free_whiteness(&(__funk2.user_thread_controller));
 }
 
 // memory handling thread should never call this function

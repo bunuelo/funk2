@@ -258,7 +258,7 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
 }
 
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this) {
-  return ((this->grey_set.element_count) != 0);
+  return ((this->grey_set.set.element_count) != 0);
 }
 
 void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {

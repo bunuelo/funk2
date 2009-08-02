@@ -107,7 +107,7 @@ void funk2_garbage_collector_mutation_buffer__save_to_stream(funk2_garbage_colle
   write(fd, &count, sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = data[index];
+    f2ptr exp = this->data[index];
     write(fd, &exp, sizeof(exp));
   }
 }
@@ -168,7 +168,7 @@ void funk2_garbage_collector_no_more_references_buffer__save_to_stream(funk2_gar
   write(fd, &count, sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = data[index];
+    f2ptr exp = this->data[index];
     write(fd, &exp, sizeof(exp));
   }
 }
@@ -229,7 +229,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbag
   write(fd, &count, sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = data[index];
+    f2ptr exp = this->data[index];
     write(fd, &exp, sizeof(exp));
   }
 }
@@ -285,7 +285,7 @@ void funk2_garbage_collector_other_grey_buffer__save_to_stream(funk2_garbage_col
   write(fd, &count, sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = data[index];
+    f2ptr exp = this->data[index];
     write(fd, &exp, sizeof(exp));
   }
 }

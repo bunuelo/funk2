@@ -96,11 +96,11 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
   return boolean__true;
 }
 
-void funk2_memblock__decrement_reference_count(funk2_memblock_t* this, funk2_garbage_collector_t* garbage_collector) {
+void funk2_memblock__decrement_reference_count(funk2_memblock_t* this, f2ptr this_f2ptr, funk2_garbage_collector_t* garbage_collector) {
   boolean_t no_more_references = atomic_dec_and_test(&(this->reference_count));
   if (no_more_references) {
     // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
-    funk2_garbage_collector__know_of_no_more_references(garbage_collector, *iter);
+    funk2_garbage_collector__know_of_no_more_references(garbage_collector, this_f2ptr);
   }
 }
 

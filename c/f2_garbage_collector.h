@@ -47,8 +47,8 @@ void      funk2_garbage_collector__know_of_no_more_references(funk2_garbage_coll
 void      funk2_garbage_collector__know_of_protected_f2ptr(funk2_garbage_collector_t* this, f2ptr exp);
 void      funk2_garbage_collector__touch_f2ptr(funk2_garbage_collector_t* this, f2ptr exp);
 void      funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this);
-boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector_t* this) {
-void      funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this) {
+boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector_t* this);
+void      funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this);

@@ -443,6 +443,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
 }
 
 void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
+  status("funk2_garbage_collector_pool: blacken_grey_nodes.");
   int pool_index = this_processor_thread__pool_index();
   u64                bin_num = 1ull << this->grey_set.set.bin_power;
   funk2_set_node_t** bin     = this->grey_set.set.bin;
@@ -458,6 +459,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
 }
 
 void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {
+  status("funk2_garbage_collector_pool: grey_from_other_nodes.");
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_other_grey_buffer__flush_other_greys(&(this->other_grey_buffer[pool_index]), this);

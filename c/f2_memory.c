@@ -600,12 +600,12 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       this->global_environment_f2ptr = global_environment_f2ptr;
       this->global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
       
+      funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
+      funk2_garbage_collector__init(&(__funk2.garbage_collector), this);
+      
       funk2_memory__rebuild_memory_info_from_image(this);
       
       status("loaded memory image successfully.");
-      
-      funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
-      funk2_garbage_collector__init(&(__funk2.garbage_collector), this);
       
       break;
     }

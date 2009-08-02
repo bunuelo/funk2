@@ -278,7 +278,7 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   this->should_run_gc = boolean__false;
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index) {
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       funk2_garbage_collector_other_grey_buffer__init(&(this->other_grey_buffer[pool_index]));
     }
   }
@@ -297,7 +297,7 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index) {
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       funk2_garbage_collector_other_grey_buffer__destroy(&(this->other_grey_buffer[pool_index]));
     }
   }

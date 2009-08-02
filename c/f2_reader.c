@@ -622,29 +622,28 @@ void f2__reader__reinitialize_globalvars() {
   
   __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof");
   
-  __char__space                  = f2char__new(cause, ' ');
-  __char__tab                    = f2char__new(cause, '\t');
-  __char__newline                = f2char__new(cause, '\n');
-  __char__return                 = f2char__new(cause, '\r');
-  __char__left_paren             = f2char__new(cause, __left_paren_char);
-  __char__right_paren            = f2char__new(cause, __right_paren_char);
-  __char__array_left_paren       = f2char__new(cause, __array_left_paren_char);
-  __char__array_right_paren      = f2char__new(cause, __array_right_paren_char);
-  __char__doublelink_right_paren = f2char__new(cause, __doublelink_right_paren_char);
-  __char__doublelink_left_paren  = f2char__new(cause, __doublelink_left_paren_char);
-  __char__quote                  = f2char__new(cause, __quote_char);
-  __char__backquote              = f2char__new(cause, __backquote_char);
-  __char__comma                  = f2char__new(cause, __comma_char);
-  __char__cdr_comma              = f2char__new(cause, __cdr_comma_char);
-  __char__funktion               = f2char__new(cause, __funktion_char);
-  __char__escape                 = f2char__new(cause, __escape_char);
-  __char__escape_hex             = f2char__new(cause, __escape_hex_char);
-  __char__escape_hex_char        = f2char__new(cause, __escape_hex_char_char);
-  __char__escape_larva           = f2char__new(cause, __escape_larva_char);
-  __char__escape_gfunkptr        = f2char__new(cause, __escape_gfunkptr_char);
-  __char__string_quote           = f2char__new(cause, __string_quote_char);
-  __char__symbol_quote           = f2char__new(cause, __symbol_quote_char);
-
+  {char* str = "char:space";                  __char__space                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:tab";                    __char__tab                    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:newline";                __char__newline                = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:reeturn";                __char__return                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:left_paren";             __char__left_paren             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:right_paren";            __char__right_paren            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:array_left_paren";       __char__array_left_paren       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:array_right_paren";      __char__array_right_paren      = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:doublelink_right_paren"; __char__doublelink_right_paren = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:doublelink_left_paren";  __char__doublelink_left_paren  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:quote";                  __char__quote                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:backquote";              __char__backquote              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:comma";                  __char__comma                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:cdr_comma";              __char__cdr_comma              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:funktion";               __char__funktion               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape";                 __char__escape                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_hex";             __char__escape_hex             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_hex_char";        __char__escape_hex_char        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_larva";           __char__escape_larva           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_gfunkptr";        __char__escape_gfunkptr        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:string_quote";           __char__string_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:symbol_quote";           __char__symbol_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
 }
 
 void f2__reader__initialize() {
@@ -662,8 +661,6 @@ void f2__reader__initialize() {
   symbol_str = "reader:invalid_argument_type-exception";       symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __invalid_argument_type_exception);
   symbol_str = "reader:illegal_escape_reader_metro-exception"; symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __illegal_escape_reader_metro_exception);
   symbol_str = "reader:gfunkptr_read-exception";               symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __gfunkptr_read__exception              = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __gfunkptr_read__exception);
-  
-  f2__reader__reinitialize_globalvars();
   
   __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof"); environment__add_var_value(cause, global_environment(), __eof__symbol, __eof__symbol);
   
@@ -689,6 +686,8 @@ void f2__reader__initialize() {
   __char__escape_gfunkptr        = f2char__new(cause, __escape_gfunkptr_char);        {char* str = "char:escape_gfunkptr";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__escape_gfunkptr);}
   __char__string_quote           = f2char__new(cause, __string_quote_char);           {char* str = "char:string_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__string_quote);}
   __char__symbol_quote           = f2char__new(cause, __symbol_quote_char);           {char* str = "char:symbol_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__symbol_quote);}
+  
+  f2__reader__reinitialize_globalvars();
   
   f2__primcfunk__init__1(read, stream, "main funk2 reader funktion for reading from a stream (such as stdin).");
 }

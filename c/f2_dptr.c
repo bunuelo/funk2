@@ -40,10 +40,10 @@ boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* th
 }
 
 void funk2_dptr__decrement_reference_counts(funk2_dptr_t* this, funk2_garbage_collector_t* garbage_collector) {
-  funk2_memblock__decrement_reference_count(this->p,                 garbage_collector);
-  funk2_memblock__decrement_reference_count(this->tracing_on,        garbage_collector);
-  funk2_memblock__decrement_reference_count(this->trace,             garbage_collector);
-  funk2_memblock__decrement_reference_count(this->imagination_frame, garbage_collector);
+  funk2_memblock__decrement_reference_count((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->p)),                 garbage_collector);
+  funk2_memblock__decrement_reference_count((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->tracing_on)),        garbage_collector);
+  funk2_memblock__decrement_reference_count((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->trace)),             garbage_collector);
+  funk2_memblock__decrement_reference_count((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->imagination_frame)), garbage_collector);
 }
 
 

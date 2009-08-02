@@ -39,5 +39,12 @@ boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* th
   return found_invalid;
 }
 
+void funk2_dptr__decrement_reference_counts(funk2_dptr_t* this, funk2_garbage_collector_t* garbage_collector) {
+  funk2_memblock__decrement_reference_count(this->p,                 garbage_collector);
+  funk2_memblock__decrement_reference_count(this->tracing_on,        garbage_collector);
+  funk2_memblock__decrement_reference_count(this->trace,             garbage_collector);
+  funk2_memblock__decrement_reference_count(this->imagination_frame, garbage_collector);
+}
+
 
 

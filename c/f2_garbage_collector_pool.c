@@ -590,9 +590,10 @@ void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t
   u64 freed_byte_count = 0;
   for (white_index = 0; white_index < white_count; white_index ++) {
     f2ptr exp = white_array[white_index];
-    funk2_garbage_collector_set__remove_exp(&(this->white_set), exp);
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
     freed_byte_count += funk2_memblock__byte_num(block);
+    
+    funk2_garbage_collector_set__remove_exp(&(this->white_set), exp);
     funk2_memorypool__free_used_block(&(__funk2.memory.pool[pool_index]), block);
   }
   free(white_array);

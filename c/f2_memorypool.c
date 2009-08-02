@@ -252,6 +252,47 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   this->total_free_memory += funk2_memblock__byte_num(block);
   // add to free list
   funk2_memorypool__link_funk2_memblock_to_freelist(this, block);
+  // remove reference counts
+  {  
+    ptype_block_t* ptype_block = (ptype_block_t*)block;
+    switch(ptype_block->ptype) {
+    case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
+    case ptype_integer:      break;
+    case ptype_double:       break;
+    case ptype_float:        break;
+    case ptype_pointer:      break;
+    case ptype_gfunkptr:     break;
+    case ptype_mutex:        break;
+    case ptype_char:         break;
+    case ptype_string:       break;
+    case ptype_symbol:       break;
+    case ptype_chunk:        break;
+    case ptype_simple_array: {
+      s64 i;
+      f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)ptype_block)->f2ptr_data;
+      for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
+	funk2_memblock_t* subblock = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(*iter));
+	funk2_memblock__decrement_reference_count(subblock, &(__funk2.garbage_collector));
+	iter ++;
+      }
+    } break;
+    case ptype_traced_array: {
+      s64 i;
+      funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)ptype_block)->dptr_data;
+      for (i = ((ptype_traced_array_block_t*)ptype_block)->length; i > 0; i --) {
+	funk2_dptr__decrement_reference_counts(iter, &(__funk2.garbage_collector));
+	iter ++;
+      }
+    } break;
+    case ptype_larva:        break;
+    default:
+      {
+	char str[1024];
+	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(ptype_block->ptype));
+	error(nil, str);
+      }
+    }
+  }
 }
 
 /*

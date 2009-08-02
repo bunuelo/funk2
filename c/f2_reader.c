@@ -625,7 +625,7 @@ void f2__reader__reinitialize_globalvars() {
   {char* str = "char:space";                  __char__space                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:tab";                    __char__tab                    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:newline";                __char__newline                = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:reeturn";                __char__return                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:return";                 __char__return                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:left_paren";             __char__left_paren             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:right_paren";            __char__right_paren            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:array_left_paren";       __char__array_left_paren       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

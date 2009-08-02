@@ -188,7 +188,7 @@ void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user
 
 void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_garbage_collector_pool__blacken_grey_nodes(&(__funk2.garbage_collection.gc_pool[pool_index]));
+  funk2_garbage_collector_pool__blacken_grey_nodes(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
@@ -222,7 +222,7 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
 
 void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_garbage_collector_pool__grey_from_other_nodes(&(__funk2.garbage_collection.gc_pool[pool_index]));
+  funk2_garbage_collector_pool__grey_from_other_nodes(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));

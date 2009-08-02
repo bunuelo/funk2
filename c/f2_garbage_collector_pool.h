@@ -28,6 +28,7 @@ typedef struct funk2_garbage_collector_set_s                       funk2_garbage
 typedef struct funk2_garbage_collector_mutation_buffer_s           funk2_garbage_collector_mutation_buffer_t;
 typedef struct funk2_garbage_collector_no_more_references_buffer_s funk2_garbage_collector_no_more_references_buffer_t;
 typedef struct funk2_garbage_collector_protected_f2ptr_buffer_s    funk2_garbage_collector_protected_f2ptr_buffer_t;
+typedef struct funk2_garbage_collector_other_grey_buffer_s         funk2_garbage_collector_other_grey_buffer_t;
 typedef struct funk2_garbage_collector_pool_s                      funk2_garbage_collector_pool_t;
 
 #endif // F2__GARBAGE_COLLECTOR__TYPES__H
@@ -109,6 +110,19 @@ void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_colle
 void funk2_garbage_collector_protected_f2ptr_buffer__know_of_no_more_references(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp);
 void funk2_garbage_collector_protected_f2ptr_buffer__flush_no_more_references_knowledge_to_gc_pool(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_garbage_collector_pool_t* pool);
 
+// garbage_collector_other_grey_buffer
+
+struct funk2_garbage_collector_other_grey_buffer_s {
+  u64    count;
+  u64    alloc_length;
+  f2ptr* data;
+};
+
+void funk2_garbage_collector_other_grey_buffer__init(funk2_garbage_collector_other_grey_buffer_t* this);
+void funk2_garbage_collector_other_grey_buffer__destroy(funk2_garbage_collector_other_grey_buffer_t* this);
+void funk2_garbage_collector_other_grey_buffer__know_of_other_grey(funk2_garbage_collector_other_grey_buffer_t* this, f2ptr exp);
+void funk2_garbage_collector_other_grey_buffer__flush_other_greys(funk2_garbage_collector_other_grey_buffer_t* this, funk2_garbage_collector_pool_t* pool);
+
 // garbage_collector_pool
 
 struct funk2_garbage_collector_pool_s {
@@ -120,6 +134,7 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_protected_f2ptr_buffer_t    other_protected_f2ptr;
   funk2_protected_alloc_array_t                       protected_alloc_array;
   boolean_t                                           should_run_gc;
+  funk2_garbage_collector_other_grey_buffer_t         other_grey_buffer[memory_pool_num];
 };
 
 void      funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);

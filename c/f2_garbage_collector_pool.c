@@ -176,6 +176,41 @@ void funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowl
 }
 
 
+// garbage_collector_other_grey_buffer
+
+void funk2_garbage_collector_other_grey_buffer__init(funk2_garbage_collector_other_grey_buffer_t* this) {
+  this->count        = 0;
+  this->alloc_length = 1;
+  this->data         = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+}
+
+void funk2_garbage_collector_other_grey_buffer__destroy(funk2_garbage_collector_other_grey_buffer_t* this) {
+  free(this->data);
+}
+
+void funk2_garbage_collector_other_grey_buffer__know_of_other_grey(funk2_garbage_collector_other_grey_buffer_t* this, f2ptr exp) {
+  if (this->count == this->alloc_length) {
+    u64    old_alloc_length = this->alloc_length;
+    f2ptr* old_data         = this->data;
+    this->alloc_length = 2 * old_alloc_length;
+    this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+    memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
+    free(old_data);
+    status("funk2_garbage_collector_other_grey_buffer__know_of_protected_f2ptr: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
+  }
+  this->data[this->count] = exp;
+  this->count ++;
+}
+
+void funk2_garbage_collector_other_grey_buffer__flush_other_greys(funk2_garbage_collector_other_grey_buffer_t* this, funk2_garbage_collector_pool_t* pool) {
+  u64 i;
+  for (i = 0; i < this->count; i ++) {
+    funk2_garbage_collector_pool__grey_element(pool, this->data[i]);
+  }
+  this->count = 0;
+}
+
+
 // garbage_collector_pool
 
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
@@ -241,7 +276,12 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, fu
   funk2_garbage_collector_protected_f2ptr_buffer__init(&(this->other_protected_f2ptr));
   funk2_protected_alloc_array__init(&(this->protected_alloc_array));
   this->should_run_gc = boolean__false;
-  
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index) {
+      funk2_garbage_collector_other_grey_buffer__init(&(this->other_grey_buffer[pool_index]));
+    }
+  }
   funk2_garbage_collector_pool__init_sets_from_memorypool(this, pool, pool_index);
 }
 
@@ -255,6 +295,12 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
   funk2_garbage_collector_protected_f2ptr_buffer__destroy(&(this->other_protected_f2ptr));
   funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index) {
+      funk2_garbage_collector_other_grey_buffer__destroy(&(this->other_grey_buffer[pool_index]));
+    }
+  }
 }
 
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this) {
@@ -330,11 +376,90 @@ void funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector
   funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowledge_to_gc_pool(&(this->other_protected_f2ptr), this);
 }
 
+void funk2_garbage_collector_pool__grey_element(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  if (block->gc.tricolor == funk2_garbage_collector_tricolor__white) {
+    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__grey);
+  }
+}
+
+void funk2_garbage_collector_pool__grey_maybe_other_element(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {
+  if (exp) {
+    int exp__pool_index = __f2ptr__pool_index(exp);
+    if (exp__pool_index == pool_index) {
+      funk2_garbage_collector_pool__grey_element(this, pool_index, exp);
+    } else {
+      funk2_garbage_collector_other_grey_buffer__know_of_other_grey(&(__funk2.garbage_collector.gc_pool[exp__pool_index].other_grey_buffer[pool_index]), exp);
+    }
+  }
+}
+
+void funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(funk2_garbage_collector_pool_t* this, int pool_index, funk2_dptr_t* dptr) {
+  funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->p);
+  funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->tracing_on);
+  funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->trace);
+  funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->imagination_frame);
+}
+
+void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  switch(block->ptype) {
+  case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
+  case ptype_integer:      return boolean__false;
+  case ptype_double:       return boolean__false;
+  case ptype_float:        return boolean__false;
+  case ptype_pointer:      return boolean__false;
+  case ptype_gfunkptr:     return boolean__false;
+  case ptype_mutex:        return boolean__false;
+  case ptype_char:         return boolean__false;
+  case ptype_string:       return boolean__false;
+  case ptype_symbol:       return boolean__false;
+  case ptype_chunk:        return boolean__false;
+  case ptype_simple_array: {
+    s64 i;
+    f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
+    for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
+      funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, *iter);
+      iter ++;
+    }
+  } break;
+  case ptype_traced_array: {
+    boolean_t found_invalid = boolean__false;
+    s64 i;
+    funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
+    for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
+      funk2_garbage_collector_pool__grey_referenced_element_from_dptr(this, pool_index, iter);
+      iter ++;
+    }
+  } break;
+  case ptype_larva:        return boolean__false;
+  default:
+    {
+      char str[1024];
+      sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->ptype));
+      error(nil, str);
+    }
+  }
+}
+
 void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
-  error(nil, "not implemented yet.");
+  int pool_index = this_processor_thread__pool_index();
+  u64                bin_num = 1ull << this->grey_set.set.bin_power;
+  funk2_set_node_t** bin     = this->grey_set.set.bin;
+  u64 i;
+  for (i = 0; i < bin_num; i ++) {
+    funk2_set_node_t* iter = bin[i];
+    while (iter) {
+      funk2_garbage_collector_pool__change_used_exp_color(this, (f2ptr)(iter->element), funk2_garbage_collector_tricolor__black);
+      funk2_garbage_collector_pool__grey_referenced_elements(this, pool_index, );
+    }
+  }
 }
 
 void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {
-  error(nil, "not implemented yet.");
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index) {
+    funk2_garbage_collector_other_grey_buffer__flush_other_greys(&(this->other_grey_buffer[pool_index]), this);
+  }
 }
 

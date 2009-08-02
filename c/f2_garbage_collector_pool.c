@@ -446,7 +446,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
   status("funk2_garbage_collector_pool: blacken_grey_nodes.");
   int pool_index = this_processor_thread__pool_index();
   u64                grey_count = this->grey_set.set.element_count;
-  f2ptr*             grey_array = (f2ptr*)f2__alloc(sizeof(f2ptr) * grey_count);
+  f2ptr*             grey_array = (f2ptr*)from_ptr(f2__alloc(sizeof(f2ptr) * grey_count));
   u64                grey_index = 0;
   {
     u64                bin_num = 1ull << this->grey_set.set.bin_power;

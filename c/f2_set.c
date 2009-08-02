@@ -115,6 +115,7 @@ void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element
 }
 
 void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
+  u64 bin_num = 1ull << this->bin_power;
   u64 element_count = this->element_count;
   write(fd, &element_count, sizeof(element_count));
   for (i = 0; i < bin_num; i ++) {

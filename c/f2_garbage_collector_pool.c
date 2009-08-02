@@ -458,6 +458,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
 	f2ptr exp = (f2ptr)(iter->element);
 	grey_array[grey_index] = exp;
 	grey_index ++;
+	iter = iter->next;
       }
     }
   }

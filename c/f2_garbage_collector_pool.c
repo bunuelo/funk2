@@ -466,6 +466,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
     funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__black);
     funk2_garbage_collector_pool__grey_referenced_elements(this, pool_index, exp);
   }
+  free(grey_array);
 }
 
 void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {

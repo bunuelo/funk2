@@ -454,6 +454,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     safe_write(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
+  funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
   close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
@@ -589,6 +590,10 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       safe_read(fd, &f2_i, sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
       
+      funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
+      funk2_garbage_collector__init(&(__funk2.garbage_collector), this);
+      funk2_garbage_collector__load_from_stream(&(__funk2.garbage_collector), fd);
+      
       status("done loading memory image."); fflush(stdout);
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -598,8 +603,6 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       this->global_environment_f2ptr = global_environment_f2ptr;
       this->global_environment_ptr   = raw__f2ptr_to_ptr(global_environment_f2ptr);
       
-      funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
-      funk2_garbage_collector__init(&(__funk2.garbage_collector), this);
       
       funk2_memory__rebuild_memory_info_from_image(this);
       

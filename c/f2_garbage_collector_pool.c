@@ -54,6 +54,14 @@ void funk2_garbage_collector_set__remove_exp_and_add_to(funk2_garbage_collector_
   funk2_set__remove_and_add_to(&(this->set), (funk2_set_element_t)exp, &(to_set->set));
 }
 
+void funk2_garbage_collector_set__save_to_stream(funk2_garbage_collector_set_t* this, int fd) {
+  funk2_set__save_to_stream(&(this->set), fd);
+}
+
+void funk2_garbage_collector_set__load_from_stream(funk2_garbage_collector_set_t* this, int fd) {
+  funk2_set__load_from_stream(&(this->set), fd);
+}
+
 // garbage_collector_mutation_buffer
 
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this) {
@@ -510,5 +518,33 @@ void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t
   }
   free(white_array);
   status("funk2_garbage_collector_pool: free_whiteness freed_byte_count=" u64__fstr ".", freed_byte_count);
+}
+
+void funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd) {
+  funk2_garbage_collector_set__save_to_stream(&(this->black_set), fd);
+  funk2_garbage_collector_set__save_to_stream(&(this->grey_set),  fd);
+  funk2_garbage_collector_set__save_to_stream(&(this->white_set), fd);
+  funk2_garbage_collector_mutation_buffer__save_to_stream(&(this->other_mutations), fd);
+  funk2_garbage_collector_no_more_references_buffer__save_to_stream(&(this->other_no_more_references), fd);
+  funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(&(this->other_protected_f2ptr), fd);
+  funk2_protected_alloc_array__save_to_stream(&(this->protected_alloc_array), fd);
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_garbage_collector_other_grey_buffer__save_to_stream(&(this->other_grey_buffer[pool_index]), fd);
+  }
+}
+
+void funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool_t* this, int fd) {
+  funk2_garbage_collector_set__load_from_stream(&(this->black_set), fd);
+  funk2_garbage_collector_set__load_from_stream(&(this->grey_set),  fd);
+  funk2_garbage_collector_set__load_from_stream(&(this->white_set), fd);
+  funk2_garbage_collector_mutation_buffer__load_from_stream(&(this->other_mutations), fd);
+  funk2_garbage_collector_no_more_references_buffer__load_from_stream(&(this->other_no_more_references), fd);
+  funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(&(this->other_protected_f2ptr), fd);
+  funk2_protected_alloc_array__load_from_stream(&(this->protected_alloc_array), fd);
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_garbage_collector_other_grey_buffer__load_from_stream(&(this->other_grey_buffer[pool_index]), fd);
+  }
 }
 

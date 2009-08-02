@@ -67,6 +67,8 @@ void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
 void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
 void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr block);
 void funk2_garbage_collector_set__remove_exp(funk2_garbage_collector_set_t* this, f2ptr block);
+void funk2_garbage_collector_set__save_to_stream(funk2_garbage_collector_set_t* this, int fd);
+void funk2_garbage_collector_set__load_from_stream(funk2_garbage_collector_set_t* this, int fd);
 
 // garbage_collector_mutation_buffer
 
@@ -164,6 +166,8 @@ void      funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_c
 void      funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd);
+void      funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool_t* this, int fd);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

@@ -114,6 +114,13 @@ void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element
   funk2_set__add_node(to_set, funk2_set__remove_node(this, element));
 }
 
+void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
+  
+}
+
+void funk2_set__load_to_stream(funk2_set_t* this, int fd) {
+}
+
 void funk2_set__print(funk2_set_t* this) {
   printf("\n[set");
   u64 bin_num = 1ull << (this->bin_power);

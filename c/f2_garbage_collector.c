@@ -201,3 +201,20 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
     __funk2.user_thread_controller.please_wait = boolean__false;
   }
 }
+
+void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_garbage_collector_pool__save_to_stream(&(this->gc_pool[pool_index]), fd);
+  }
+  funk2_never_delete_list__save_to_stream(&(this->never_delete_list), fd);
+}
+
+void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_garbage_collector_pool__load_from_stream(&(this->gc_pool[pool_index]), fd);
+  }
+  funk2_never_delete_list__load_from_stream(&(this->never_delete_list), fd);
+}
+

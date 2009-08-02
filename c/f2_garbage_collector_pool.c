@@ -428,7 +428,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
     s64 i;
     funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
     for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
-      funk2_garbage_collector_pool__grey_referenced_element_from_dptr(this, pool_index, iter);
+      funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(this, pool_index, iter);
       iter ++;
     }
   } return;

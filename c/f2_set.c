@@ -97,6 +97,7 @@ funk2_set_node_t* funk2_set__remove_node(funk2_set_t* this, funk2_set_element_t 
       } else {
 	this->bin[i] = iter->next;
       }
+      this->element_count --;
       return iter;
     }
     prev = iter;

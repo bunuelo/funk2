@@ -43,3 +43,24 @@ void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr e
   this->used_num ++;
 }
 
+void funk2_never_delete_list__save_to_stream(funk2_never_delete_list_t* this, int fd) {
+  u64 used_num = this->used_num;
+  write(fd, &used_num, sizeof(used_num));
+  u64 index;
+  for (index = 0; index < used_num; index ++) {
+    f2ptr exp = data[index];
+    write(fd, &exp, sizeof(exp));
+  }
+}
+
+void funk2_never_delete_list__load_from_stream(funk2_never_delete_list_t* this, int fd) {
+  u64 used_num;
+  read(fd, &used_num, sizeof(used_num));
+  u64 index;
+  for (index = 0; index < used_num; index ++) {
+    f2ptr exp;
+    read(fd, &exp, sizeof(exp));
+    funk2_never_delete_list__add_f2ptr(this, exp);
+  }
+}
+

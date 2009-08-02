@@ -115,10 +115,27 @@ void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element
 }
 
 void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
-  
+  u64 element_count = this->element_count;
+  write(fd, &element_count, sizeof(element_count));
+  for (i = 0; i < bin_num; i ++) {
+    funk2_set_node_t* iter = this->bin[i];
+    while (iter) {
+      funk2_set_element_t element = iter->element;
+      write(fd, &element, sizeof(element));
+      iter = iter->next;
+    }
+  }
 }
 
-void funk2_set__load_to_stream(funk2_set_t* this, int fd) {
+void funk2_set__load_from_stream(funk2_set_t* this, int fd) {
+  u64 element_count;
+  read(fd, &element_count, sizeof(element_count));
+  u64 index;
+  for (index = 0; index < element_count; index ++) {
+    funk2_set_element_t element;
+    read(fd, &element, sizeof(element));
+    funk2_set__add(this, element);
+  }
 }
 
 void funk2_set__print(funk2_set_t* this) {

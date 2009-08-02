@@ -591,7 +591,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       f2ptr global_environment_f2ptr = f2_i;
       
       funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
-      funk2_garbage_collector__init(&(__funk2.garbage_collector), this);
+      funk2_garbage_collector__init(&(__funk2.garbage_collector));
       funk2_garbage_collector__load_from_stream(&(__funk2.garbage_collector), fd);
       
       status("done loading memory image."); fflush(stdout);

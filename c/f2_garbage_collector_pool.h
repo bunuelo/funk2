@@ -147,12 +147,12 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_other_grey_buffer_t         other_grey_buffer[memory_pool_num];
 };
 
+void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t new_tricolor);
 void      funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
-void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
-void      funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_collector_pool_t* this);

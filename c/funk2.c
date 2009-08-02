@@ -127,7 +127,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   }
   
   funk2_memory__init(&(this->memory));
-  funk2_garbage_collector__init(&(this->garbage_collector), &(this->memory));
+  funk2_garbage_collector__init(&(this->garbage_collector));
+  funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
   funk2_thought_process__init(&(this->thought_process));
   funk2_bytecode__init(&(this->bytecode));
   funk2_operating_system__init(&(this->operating_system));

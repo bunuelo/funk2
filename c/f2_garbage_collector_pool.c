@@ -303,6 +303,43 @@ void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_c
 
 // garbage_collector_pool
 
+void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this) {
+  status("initializing garbage collector pool.");
+  
+  funk2_garbage_collector_set__init(&(this->black_set));
+  funk2_garbage_collector_set__init(&(this->grey_set));
+  funk2_garbage_collector_set__init(&(this->white_set));
+  funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
+  funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
+  funk2_garbage_collector_protected_f2ptr_buffer__init(&(this->other_protected_f2ptr));
+  funk2_protected_alloc_array__init(&(this->protected_alloc_array));
+  this->should_run_gc = boolean__false;
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_garbage_collector_other_grey_buffer__init(&(this->other_grey_buffer[pool_index]));
+    }
+  }
+}
+
+void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this) {
+  status("destroying garbage collector pool.");
+  
+  funk2_garbage_collector_set__destroy(&(this->black_set));
+  funk2_garbage_collector_set__destroy(&(this->grey_set));
+  funk2_garbage_collector_set__destroy(&(this->white_set));
+  funk2_garbage_collector_mutation_buffer__destroy(&(this->other_mutations));
+  funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
+  funk2_garbage_collector_protected_f2ptr_buffer__destroy(&(this->other_protected_f2ptr));
+  funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_garbage_collector_other_grey_buffer__destroy(&(this->other_grey_buffer[pool_index]));
+    }
+  }
+}
+
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   debug__assert(block->used, nil, "funk2_garbage_collector_pool__add_memblock error: block is not used.");
@@ -352,44 +389,6 @@ void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_colle
       funk2_garbage_collector_pool__add_used_exp(this, exp);
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
-
-void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index) {
-  status("initializing garbage collector pool.");
-  
-  funk2_garbage_collector_set__init(&(this->black_set));
-  funk2_garbage_collector_set__init(&(this->grey_set));
-  funk2_garbage_collector_set__init(&(this->white_set));
-  funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
-  funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
-  funk2_garbage_collector_protected_f2ptr_buffer__init(&(this->other_protected_f2ptr));
-  funk2_protected_alloc_array__init(&(this->protected_alloc_array));
-  this->should_run_gc = boolean__false;
-  {
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_other_grey_buffer__init(&(this->other_grey_buffer[pool_index]));
-    }
-  }
-  funk2_garbage_collector_pool__init_sets_from_memorypool(this, pool, pool_index);
-}
-
-void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this) {
-  status("destroying garbage collector pool.");
-  
-  funk2_garbage_collector_set__destroy(&(this->black_set));
-  funk2_garbage_collector_set__destroy(&(this->grey_set));
-  funk2_garbage_collector_set__destroy(&(this->white_set));
-  funk2_garbage_collector_mutation_buffer__destroy(&(this->other_mutations));
-  funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
-  funk2_garbage_collector_protected_f2ptr_buffer__destroy(&(this->other_protected_f2ptr));
-  funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
-  {
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_other_grey_buffer__destroy(&(this->other_grey_buffer[pool_index]));
-    }
   }
 }
 

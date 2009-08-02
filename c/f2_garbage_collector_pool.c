@@ -450,8 +450,9 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
   for (i = 0; i < bin_num; i ++) {
     funk2_set_node_t* iter = bin[i];
     while (iter) {
-      funk2_garbage_collector_pool__change_used_exp_color(this, (f2ptr)(iter->element), funk2_garbage_collector_tricolor__black);
-      funk2_garbage_collector_pool__grey_referenced_elements(this, pool_index, );
+      f2ptr exp = (f2ptr)(iter->element);
+      funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__black);
+      funk2_garbage_collector_pool__grey_referenced_elements(this, pool_index, exp);
     }
   }
 }

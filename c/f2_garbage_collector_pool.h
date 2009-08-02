@@ -163,6 +163,7 @@ void      funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(funk2
 void      funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp);
 void      funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

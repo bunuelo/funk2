@@ -42,6 +42,7 @@ void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {
 }
 
 void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr exp) {
+  debug__assert(exp, nil, "funk2_garbage_collector_set__add_exp error: added a nil expression.");
   funk2_set__add(&(this->set), (funk2_set_element_t)exp);
 }
 
@@ -462,6 +463,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
       }
     }
   }
+  debug__assert(grey_index == grey_count, nil, "error grey_index should equal grey_count.");
   for (grey_index = 0; grey_index < grey_count; grey_index ++) {
     f2ptr exp = grey_array[grey_index];
     funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__black);

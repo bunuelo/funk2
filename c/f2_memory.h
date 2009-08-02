@@ -29,12 +29,6 @@ typedef struct funk2_memory_s funk2_memory_t;
 #ifndef F2__MEMORY__H
 #define F2__MEMORY__H
 
-#include "f2_dptr.h"
-#include "f2_global.h"
-#include "f2_redblacktree.h"
-#include "f2_dynamic_memory.h"
-#include "f2_memblock.h"
-#include "f2_ptype.h"
 #include "f2_memorypool.h"
 #include "f2_processor_mutex.h"
 #include "f2_user_thread_controller.h"

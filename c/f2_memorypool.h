@@ -29,7 +29,12 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 #ifndef F2__MEMORYPOOL__H
 #define F2__MEMORYPOOL__H
 
-//#include "f2_gc_touch_circle_buffer.h"
+#include "f2_dptr.h"
+#include "f2_global.h"
+#include "f2_redblacktree.h"
+#include "f2_dynamic_memory.h"
+#include "f2_memblock.h"
+#include "f2_ptype.h"
 
 struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;

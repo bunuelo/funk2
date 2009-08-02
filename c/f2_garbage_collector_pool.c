@@ -203,9 +203,10 @@ void funk2_garbage_collector_other_grey_buffer__know_of_other_grey(funk2_garbage
 }
 
 void funk2_garbage_collector_other_grey_buffer__flush_other_greys(funk2_garbage_collector_other_grey_buffer_t* this, funk2_garbage_collector_pool_t* pool) {
+  int pool_index = this_processor_thread__pool_index();
   u64 i;
   for (i = 0; i < this->count; i ++) {
-    funk2_garbage_collector_pool__grey_element(pool, this->data[i]);
+    funk2_garbage_collector_pool__grey_element(pool, pool_index, this->data[i]);
   }
   this->count = 0;
 }

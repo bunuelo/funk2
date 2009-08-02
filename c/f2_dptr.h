@@ -19,10 +19,17 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__DPTR__TYPES__H
+#define F2__DPTR__TYPES__H
+
+typedef struct funk2_dptr_s funk2_dptr_t;
+
+#endif // F2__DPTR__TYPES__H
+
 #ifndef F2__DPTR__H
 #define F2__DPTR__H
 
-typedef struct funk2_dptr_s funk2_dptr_t;
+#include "f2_garbage_collector.h"
 
 // dptr
 

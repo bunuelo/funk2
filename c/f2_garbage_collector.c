@@ -81,6 +81,11 @@ void funk2_garbage_collector__know_of_protected_f2ptr(funk2_garbage_collector_t*
   }
 }
 
+void funk2_garbage_collector__touch_f2ptr(funk2_garbage_collector_t* this, f2ptr exp) {
+  int pool_index = __f2ptr__pool_index(exp);
+  funk2_garbage_collector_pool__touch_f2ptr(&(this->gc_pool[pool_index]), exp);
+}
+
 void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
   status("funk2_garbage_collector: touch_all_roots.");
   // this is where we touch everything we want to keep!
@@ -97,9 +102,23 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
   }
 }
 
-void funk2_garbage_collector__touch_f2ptr(funk2_garbage_collector_t* this, f2ptr exp) {
-  int pool_index = __f2ptr__pool_index(exp);
-  funk2_garbage_collector_pool__touch_f2ptr(&(this->gc_pool[pool_index]), exp);
+boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector_t* this) {
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    if (funk2_garbage_collector_pool__still_have_grey_nodes(&(this->gc_pool[pool_index]))) {
+      return boolean__true;
+    }
+  }
+  return boolean__false;
+}
+
+void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this) {
+  while (funk2_garbage_collector__still_have_grey_nodes() {
+    // parallelized
+    funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
+    // parallelized
+    funk2_user_thread_controller__grey_from_other_nodes(&(__funk2.user_thread_controller));
+  }
 }
 
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
@@ -109,6 +128,7 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
     funk2_garbage_collector_pool__flush_other_knowledge(&(this->gc_pool[pool_index]));
   }
   funk2_garbage_collector__touch_all_roots(this);
+  funk2_garbage_collector__spread_all_blackness(this);
 }
 
 // memory handling thread should never call this function

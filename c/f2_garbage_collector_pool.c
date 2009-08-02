@@ -257,6 +257,10 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_protected_alloc_array__destroy(&(this->protected_alloc_array));
 }
 
+boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this) {
+  return ((this->grey_set.element_count) != 0);
+}
+
 void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   if (exp) {
     funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
@@ -324,5 +328,13 @@ void funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector
   funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_pool(&(this->other_mutations), this);
   funk2_garbage_collector_no_more_references_buffer__flush_no_more_references_knowledge_to_gc_pool(&(this->other_no_more_references), this);
   funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowledge_to_gc_pool(&(this->other_protected_f2ptr), this);
+}
+
+void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
+  error(nil, "not implemented yet.");
+}
+
+void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {
+  error(nil, "not implemented yet.");
 }
 

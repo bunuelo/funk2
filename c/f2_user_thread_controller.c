@@ -164,6 +164,74 @@ void funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_
   }
 }
 
+// funk2_user_thread_controller__blacken_grey_nodes
+
+void funk2_user_thread_controller__blacken_grey_nodes__init(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
+  this->start = boolean__false;
+  funk2_processor_mutex__init(&(this->done_mutex));
+}
+
+void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
+}
+
+void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
+  this->done_count     = 0;
+  this->everyone_done  = boolean__false;
+  this->start          = boolean__true;
+  while (this->done_count < memory_pool_num) {
+    sched_yield();
+    f2__sleep(1);
+  }
+  this->start         = boolean__false;
+  this->everyone_done = boolean__true;
+}
+
+void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_garbage_collection_pool__blacken_grey_nodes(&(__funk2.garbage_collection.gc_pool[pool_index]));
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count ++;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
+  while (! (this->everyone_done)) {
+    sched_yield();
+    f2__sleep(1);
+  }
+}
+
+// funk2_user_thread_controller__grey_from_other_nodes
+
+void funk2_user_thread_controller__grey_from_other_nodes__init(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
+  this->start = boolean__false;
+  funk2_processor_mutex__init(&(this->done_mutex));
+}
+
+void funk2_user_thread_controller__grey_from_other_nodes__destroy(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
+}
+
+void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
+  this->done_count     = 0;
+  this->everyone_done  = boolean__false;
+  this->start          = boolean__true;
+  while (this->done_count < memory_pool_num) {
+    sched_yield();
+    f2__sleep(1);
+  }
+  this->start         = boolean__false;
+  this->everyone_done = boolean__true;
+}
+
+void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
+  int pool_index = this_processor_thread__pool_index();
+  funk2_garbage_collection_pool__grey_from_other_nodes(&(__funk2.garbage_collection.gc_pool[pool_index]));
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count ++;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
+  while (! (this->everyone_done)) {
+    sched_yield();
+    f2__sleep(1);
+  }
+}
+
 
 // funk2_user_thread_controller
 
@@ -176,6 +244,8 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__touch_all_referenced_from_pool_generation__init(&(this->touch_all_referenced_from_pool_generation));
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__init(&(this->free_all_gc_untouched_blocks_from_generation));
+  funk2_user_thread_controller__blacken_grey_nodes__init(&(this->blacken_grey_nodes));
+  funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
 }
 
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
@@ -185,6 +255,8 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_user_thread_controller__touch_all_referenced_from_pool_generation__destroy(&(this->touch_all_referenced_from_pool_generation));
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__destroy(&(this->free_all_gc_untouched_blocks_from_generation));
+  funk2_user_thread_controller__blacken_grey_nodes__destroy(&(this->blacken_grey_nodes));
+  funk2_user_thread_controller__grey_from_other_nodes__destroy(&(this->grey_from_other_nodes));
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
@@ -230,6 +302,14 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays(funk2_user_t
 
 boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(funk2_user_thread_controller_t* this, int generation_num) {
   return funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__signal_execute(&(this->free_all_gc_untouched_blocks_from_generation), generation_num);
+}
+
+void funk2_user_thread_controller__blacken_grey_nodes(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__blacken_grey_nodes__signal_execute(&(this->blacken_grey_nodes));
+}
+
+void funk2_user_thread_controller__grey_from_other_nodes(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__grey_from_other_nodes__signal_execute(&(this->grey_from_other_nodes));
 }
 
 

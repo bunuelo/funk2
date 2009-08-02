@@ -82,6 +82,36 @@ void      funk2_user_thread_controller__free_all_gc_untouched_blocks_from_genera
 boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__signal_execute(funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_t* this, int generation_num);
 void      funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__user_process(funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_t* this);
 
+// funk2_user_thread_controller__blacken_grey_nodes
+
+typedef struct funk2_user_thread_controller__blacken_grey_nodes_s {
+  boolean_t               start;
+  funk2_processor_mutex_t done_mutex;
+  s64                     done_count;
+  boolean_t               everyone_done;
+} funk2_user_thread_controller__blacken_grey_nodes_t;
+
+void      funk2_user_thread_controller__blacken_grey_nodes__init(funk2_user_thread_controller__blacken_grey_nodes_t* this);
+void      funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread_controller__blacken_grey_nodes_t* this);
+boolean_t funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this, int generation_num);
+void      funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_thread_controller__blacken_grey_nodes_t* this);
+
+// funk2_user_thread_controller__grey_from_other_nodes
+
+typedef struct funk2_user_thread_controller__grey_from_other_nodes_s {
+  boolean_t               start;
+  funk2_processor_mutex_t done_mutex;
+  s64                     done_count;
+  boolean_t               everyone_done;
+} funk2_user_thread_controller__grey_from_other_nodes_t;
+
+void      funk2_user_thread_controller__grey_from_other_nodes__init(funk2_user_thread_controller__grey_from_other_nodes_t* this);
+void      funk2_user_thread_controller__grey_from_other_nodes__destroy(funk2_user_thread_controller__grey_from_other_nodes_t* this);
+boolean_t funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_user_thread_controller__grey_from_other_nodes_t* this, int generation_num);
+void      funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_user_thread_controller__grey_from_other_nodes_t* this);
+
+
+
 // funk2_user_thread_controller
 
 typedef struct funk2_user_thread_controller_s {
@@ -92,6 +122,8 @@ typedef struct funk2_user_thread_controller_s {
   funk2_user_thread_controller__touch_all_referenced_from_pool_generation_t    touch_all_referenced_from_pool_generation;
   funk2_user_thread_controller__touch_all_protected_alloc_arrays_t             touch_all_protected_alloc_arrays;
   funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_t free_all_gc_untouched_blocks_from_generation;
+  funk2_user_thread_controller__blacken_grey_nodes_t                           blacken_grey_nodes;
+  funk2_user_thread_controller__grey_from_other_nodes_t                        grey_from_other_nodes;
 } funk2_user_thread_controller_t;
 
 void      funk2_user_thread_controller__init(funk2_user_thread_controller_t* this);
@@ -103,6 +135,8 @@ void      funk2_user_thread_controller__clear_all_gc_touch_flags_before_generati
 void      funk2_user_thread_controller__touch_all_referenced_from_pool_generation(funk2_user_thread_controller_t* this, int generation_num);
 void      funk2_user_thread_controller__touch_all_protected_alloc_arrays(funk2_user_thread_controller_t* this);
 boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(funk2_user_thread_controller_t* this, int generation_num);
+void      funk2_user_thread_controller__blacken_grey_nodes(funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__grey_from_other_nodes(funk2_user_thread_controller_t* this);
 
 #endif // F2__USER_THREAD_CONTROLLER__H
 

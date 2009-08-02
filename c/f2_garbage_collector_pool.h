@@ -128,6 +128,7 @@ void      funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_coll
 void      funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 void      funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
+boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__signal_exit_protected_region(funk2_garbage_collector_pool_t* this);
@@ -141,6 +142,8 @@ void      funk2_garbage_collector_pool__know_of_used_exp_other_no_more_reference
 void      funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
 void      funk2_garbage_collector_pool__know_of_used_exp_other_protected_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
 void      funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

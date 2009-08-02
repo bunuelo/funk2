@@ -330,11 +330,11 @@ void funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector
   funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowledge_to_gc_pool(&(this->other_protected_f2ptr), this);
 }
 
-void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
+void funk2_garbage_collector_pool__blacken_grey_nodes__user_process(funk2_garbage_collector_pool_t* this) {
   error(nil, "not implemented yet.");
 }
 
-void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {
+void funk2_garbage_collector_pool__grey_from_other_nodes__user_process(funk2_garbage_collector_pool_t* this) {
   error(nil, "not implemented yet.");
 }
 

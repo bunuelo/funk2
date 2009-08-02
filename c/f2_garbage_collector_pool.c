@@ -406,16 +406,16 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   ptype_block_t* block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
   switch(block->ptype) {
   case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
-  case ptype_integer:      return boolean__false;
-  case ptype_double:       return boolean__false;
-  case ptype_float:        return boolean__false;
-  case ptype_pointer:      return boolean__false;
-  case ptype_gfunkptr:     return boolean__false;
-  case ptype_mutex:        return boolean__false;
-  case ptype_char:         return boolean__false;
-  case ptype_string:       return boolean__false;
-  case ptype_symbol:       return boolean__false;
-  case ptype_chunk:        return boolean__false;
+  case ptype_integer:      return;
+  case ptype_double:       return;
+  case ptype_float:        return;
+  case ptype_pointer:      return;
+  case ptype_gfunkptr:     return;
+  case ptype_mutex:        return;
+  case ptype_char:         return;
+  case ptype_string:       return;
+  case ptype_symbol:       return;
+  case ptype_chunk:        return;
   case ptype_simple_array: {
     s64 i;
     f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
@@ -423,17 +423,16 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, *iter);
       iter ++;
     }
-  } break;
+  } return;
   case ptype_traced_array: {
-    boolean_t found_invalid = boolean__false;
     s64 i;
     funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
     for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
       funk2_garbage_collector_pool__grey_referenced_element_from_dptr(this, pool_index, iter);
       iter ++;
     }
-  } break;
-  case ptype_larva:        return boolean__false;
+  } return;
+  case ptype_larva:        return;
   default:
     {
       char str[1024];

@@ -481,8 +481,6 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   //       only pthread executing.
   
   int pool_index;
-  
-  
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("rebuilding memory pool[%d] info from image.", pool_index);
     rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL);

@@ -40,7 +40,7 @@ struct funk2_memblock_s {
   u8                                     used           : 1;
   //u8                                     gc_touch       : 1;
   //u8                                     generation_num : 3;
-  u8                                     ptype          : ptype__min_bits;
+  u8                                     ptype;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));
 

@@ -40,7 +40,7 @@ struct funk2_garbage_collector_s {
   u64                            last_garbage_collect_nanoseconds_since_1970;
 };
 
-void      funk2_garbage_collector__init(funk2_garbage_collector_t* this, funk2_memory_t* memory);
+void      funk2_garbage_collector__init(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__destroy(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__init_sets_from_memory(funk2_garbage_collector_t* this, funk2_memory_t* memory);
 void      funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_t* this, f2ptr exp);

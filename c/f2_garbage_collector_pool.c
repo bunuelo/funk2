@@ -446,9 +446,9 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
 void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
   //status("funk2_garbage_collector_pool: blacken_grey_nodes.");
   int pool_index = this_processor_thread__pool_index();
-  u64                grey_count = this->grey_set.set.element_count;
-  f2ptr*             grey_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * grey_count));
-  u64                grey_index = 0;
+  u64    grey_count = this->grey_set.set.element_count;
+  f2ptr* grey_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * grey_count));
+  u64    grey_index = 0;
   {
     u64                bin_num = 1ull << this->grey_set.set.bin_power;
     funk2_set_node_t** bin     = this->grey_set.set.bin;
@@ -481,10 +481,9 @@ void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector
 }
 
 void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this) {
-  status("funk2_garbage_collector_pool: free_whiteness.");
-  u64                white_count = this->white_set.set.element_count;
-  f2ptr*             white_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * white_count));
-  u64                white_index = 0;
+  u64    white_count = this->white_set.set.element_count;
+  f2ptr* white_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * white_count));
+  u64    white_index = 0;
   {
     u64                bin_num = 1ull << this->white_set.set.bin_power;
     funk2_set_node_t** bin     = this->white_set.set.bin;
@@ -501,12 +500,15 @@ void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t
   }
   debug__assert(white_index == white_count, nil, "error white_index should equal white_count.");
   int pool_index = this_processor_thread__pool_index();
+  u64 freed_byte_count = 0;
   for (white_index = 0; white_index < white_count; white_index ++) {
     f2ptr exp = white_array[white_index];
     funk2_garbage_collector_set__remove_exp(&(this->white_set), exp);
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+    freed_byte_count += funk2_memblock__byte_num(block);
     funk2_memorypool__free_used_block(&(__funk2.memory.pool[pool_index]), block);
   }
   free(white_array);
+  status("funk2_garbage_collector_pool: free_whiteness freed_byte_count=" u64__fstr ".", freed_byte_count);
 }
 

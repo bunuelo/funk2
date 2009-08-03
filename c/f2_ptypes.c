@@ -261,10 +261,6 @@ f2ptr f2double__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__doublep(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_double);}
-//f2ptr f2__doublep(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublep(x, cause));}
-//def_pcfunk1(doublep, x, return f2__doublep(this_cause, x));
 
 
 // float
@@ -336,10 +332,6 @@ f2ptr f2float__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__floatp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_float);}
-//f2ptr f2__floatp(f2ptr cause, f2ptr x) {return f2bool__new(raw__floatp(x, cause));}
-//def_pcfunk1(floatp, x, return f2__floatp(this_cause, x));
 
 
 // pointer
@@ -411,10 +403,6 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__pointerp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_pointer);}
-//f2ptr f2__pointerp(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointerp(x, cause));}
-//def_pcfunk1(pointerp, x, return f2__pointerp(this_cause, x));
 
 
 // gfunkptr
@@ -680,8 +668,8 @@ f2ptr f2mutex__primobject_type__new(f2ptr cause) {
 }
 
 // deprecated
-boolean_t raw__mutexp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
-f2ptr f2__mutexp(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutexp(x, cause));}
+//boolean_t raw__mutexp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
+//f2ptr f2__mutexp(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutexp(x, cause));}
 //def_pcfunk1(mutexp, x, return f2__mutexp(this_cause, x));
 
 
@@ -754,8 +742,6 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__charp(f2ptr x, f2ptr cause) {return raw__char__is_type(cause, x);}
 
 // string
 

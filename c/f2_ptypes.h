@@ -578,4 +578,9 @@ typedef struct funk2_ptype_object_types_s {
   funk2_object_type__larva__slot_t        ptype_larva;
 } funk2_ptype_object_types_t;
 
+
+typedef struct funk2_ptypes_s {
+  
+} funk2_ptypes_t;
+
 #endif // F2__PTYPES__OBJECT_TYPES

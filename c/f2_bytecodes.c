@@ -1319,7 +1319,7 @@ int f2__thread__bytecode__newenv(f2ptr thread, f2ptr bytecode) {
   
   f2ptr parent_env = f2thread__env(thread, cause);
   f2ptr new_env    = f2environment__new(cause,
-					frame__new_empty(cause),
+					f2__frame__new(cause),
 					parent_env,
 					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
   release__assert(new_env, thread, "new_env is nil");

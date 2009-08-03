@@ -586,7 +586,7 @@ typedef struct funk2_ptypes_s           funk2_ptypes_t;
 struct funk2_symbol_hash_node_s {
   f2ptr                     symbol;
   funk2_symbol_hash_node_t* next;
-}
+};
 
 struct funk2_symbol_hash_s {
   funk2_processor_mutex_t    mutex;
@@ -594,11 +594,11 @@ struct funk2_symbol_hash_s {
   u64                        hash_value_bit_mask;
   int                        total_symbol_num;
   int                        array_length;
-}
+};
 
 struct funk2_ptypes_s {
   symbol_hash_t           symbol_hash;
-}
+};
 
 void funk2_ptypes__init(funk2_ptypes_t* this);
 void funk2_ptypes__destroy(funk2_ptypes_t* this);

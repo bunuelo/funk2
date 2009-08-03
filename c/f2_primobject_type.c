@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 f2ptr f2__primobject_type__new(f2ptr cause) {
-  f2ptr this = frame__new_empty(cause);
+  f2ptr this = f2__frame__new(cause);
   frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("type"), (u8*)"type"), f2symbol__new(cause, strlen("primobject_type"), (u8*)"primobject_type"));
   return this;
 }

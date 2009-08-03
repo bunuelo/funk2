@@ -2034,7 +2034,7 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   
   // otherwise, create a new symbol
   symbol_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_symbol_block_t) + length + 1);
-  symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
+  ptype_symbol_block_t* symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
   debug__assert(symbol_block, nil, "block is nil.");
   symbol_block->ptype.ptype = ptype_symbol;
   symbol_block->ptype.cause = cause;

@@ -178,9 +178,6 @@ ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint 
 #define __pure__f2symbol__hash_value(this)      (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->hash_value)
 #define __pure__f2symbol__str(this)             (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
 
-void symbol_hash__reinitialize();
-void symbol_hash__add_symbol(f2ptr symbol_f2ptr);
-
 // chunk
 
 struct ptype_chunk_block_s {

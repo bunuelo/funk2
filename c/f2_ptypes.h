@@ -597,7 +597,7 @@ struct funk2_symbol_hash_s {
 };
 
 struct funk2_ptypes_s {
-  symbol_hash_t           symbol_hash;
+  funk2_symbol_hash_t symbol_hash;
 };
 
 void funk2_ptypes__init(funk2_ptypes_t* this);

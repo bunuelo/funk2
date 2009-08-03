@@ -1995,7 +1995,7 @@ void funk2_symbol_hash__reinit(funk2_symbol_hash_t* this) {
 void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr) {
   ptype_symbol_block_t*     symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(symbol_f2ptr));
   u64                       bin_index    = symbol_block->hash_value & (this->hash_value_bit_mask);
-  funk2_symbol_hash_node_t* new_node     = (funk2_symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(symbol_hash_node_t)));
+  funk2_symbol_hash_node_t* new_node     = (funk2_symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t)));
   new_node->symbol = symbol_f2ptr;
   new_node->next = this->array[bin_index];
   this->array[bin_index] = new_node;

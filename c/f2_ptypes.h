@@ -603,8 +603,8 @@ void  funk2_symbol_hash__reinit(funk2_symbol_hash_t* this);
 void  funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr);
 f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, uint length, u8* str);
 f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, uint length, u8* str);
-f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str);
-f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str);
+f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, uint length, u8* str);
+f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, uint length, u8* str);
 void  funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector);
 
 // ptypes

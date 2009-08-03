@@ -888,7 +888,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   if (length == 0) {
     return nil;
   }
-  return funk2_symbol_hash__lookup_or_create_symbol(&(__funk2.ptypes.symbol_hash), cause, length, str);
+  return funk2_symbol_hash__lookup_or_create_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause, length, str);
 }
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
@@ -2026,7 +2026,7 @@ f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, uint length, u
   return result;
 }
 
-f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str) {
+f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, uint length, u8* str) {
   f2ptr symbol_f2ptr = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, length, str);
   if (symbol_f2ptr) {
     return symbol_f2ptr;
@@ -2049,9 +2049,9 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   return symbol_f2ptr;
 }
 
-f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str) {
+f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, uint length, u8* str) {
   funk2_processor_mutex__user_lock(&this->mutex);
-  f2ptr result = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, cause, length, str);
+  f2ptr result = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, pool_index, cause, length, str);
   funk2_processor_mutex__unlock(&(this->mutex));
   return result;
 }

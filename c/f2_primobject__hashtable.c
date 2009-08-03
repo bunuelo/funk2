@@ -94,7 +94,7 @@ void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
     }
   }
   f2hashtable__bin_num_power__set(this, cause, f2hashtable__bin_num_power(temp_hashtable, cause));
-  f2hashtable__bin_array(         this, cause, f2hashtable__bin_array(    temp_hashtable, cause));
+  f2hashtable__bin_array__set(    this, cause, f2hashtable__bin_array(    temp_hashtable, cause));
 }
 
 f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {

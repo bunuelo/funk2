@@ -104,7 +104,7 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
     // parallelized
     funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(__funk2.user_thread_controller));
     // serial
-    funk2_garbage_collector__touch_all_symbols(this);
+    funk2_symbol_hash__touch_all_symbols(&(__funk2.ptypes.symbol_hash), this);
     // serial
     funk2_garbage_collector__touch_never_delete_list(this);
     funk2_garbage_collector__touch_f2ptr(this, funk2_memory__global_environment(&(__funk2.memory))); // touch root environment

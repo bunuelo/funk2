@@ -44,21 +44,19 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 
 // frame
 
-defprimobject__static_slot(frame__type_hashtable, 0);
+defprimobject__static_slot(frame__new_type_mutex, 0);
+defprimobject__static_slot(frame__type_hashtable, 1);
 
-f2ptr f2frame__new__raw(f2ptr cause, f2ptr type_hashtable) {
+f2ptr f2frame__new__raw(f2ptr cause, f2ptr new_type_mutex, f2ptr type_hashtable) {
   release__assert(__funk2.primobject__frame.frame__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __funk2.primobject__frame.frame__symbol, 1, nil);
+  f2ptr this = f2__primobject__new(cause, __funk2.primobject__frame.frame__symbol, 2, nil);
+  f2frame__new_type_mutex__set(this, cause, new_type_mutex);
   f2frame__type_hashtable__set(this, cause, type_hashtable);
   return this;
 }
 
-f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable) {
-  f2ptr type_hashtable = f2__hashtable__new(cause, f2integer__new(cause, 3));
-  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.primobject__frame.variable__symbol,      var_hashtable);
-  f2__hashtable__add_keyvalue_pair(cause, type_hashtable, __funk2.primobject__frame.funk_variable__symbol, funkvar_hashtable);
-  f2ptr result = f2frame__new__raw(cause, type_hashtable);
-  return result;
+f2ptr f2frame__new(f2ptr cause) {
+  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, f2integer__new(cause, 3)));
 }
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}
@@ -69,8 +67,13 @@ void  frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, 
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
   f2ptr type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
   if (! type__hashtable) {
-    type__hashtable = f2__hashtable__new(cause, f2integer__new(cause, 5));
-    f2__hashtable__add_keyvalue_pair(cause, frame__type_hashtable, type, type__hashtable);
+    f2mutex__lock(f2frame__new_type_mutex(this, cause));
+    type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
+    if (! type__hashtable) {
+      type__hashtable = f2__hashtable__new(cause, f2integer__new(cause, 5));
+      f2__hashtable__add_keyvalue_pair(cause, frame__type_hashtable, type, type__hashtable);
+    }
+    f2mutex__unlock(f2frame__new_type_mutex(this, cause));
   }
   f2__hashtable__add_keyvalue_pair(cause, type__hashtable, var, value);
 }

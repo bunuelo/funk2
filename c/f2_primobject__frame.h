@@ -30,8 +30,15 @@
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x);
-f2ptr f2frame__new(f2ptr cause, f2ptr var_hashtable, f2ptr funkvar_hashtable);
+f2ptr f2frame__new(f2ptr cause);
 #define f2primobject__is_frame(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__frame.frame__symbol)
+
+defprimobject__static_slot__prototype(frame__new_type_mutex);
+#define f2frame__new_type_mutex(            this, cause)        primobject__static_slot__accessor(  this, frame__new_type_mutex, cause)
+#define f2frame__new_type_mutex__set(       this, cause, value) primobject__static_slot__set(       this, frame__new_type_mutex, cause, value)
+#define f2frame__new_type_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, frame__new_type_mutex, cause)
+#define f2frame__new_type_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, frame__new_type_mutex, cause)
+#define f2frame__new_type_mutex__cause(     this, cause)        primobject__static_slot__cause(     this, frame__new_type_mutex, cause)
 
 defprimobject__static_slot__prototype(frame__type_hashtable);
 #define f2frame__type_hashtable(            this, cause)        primobject__static_slot__accessor(  this, frame__type_hashtable, cause)

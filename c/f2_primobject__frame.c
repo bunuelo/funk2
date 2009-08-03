@@ -152,21 +152,10 @@ def_pcfunk3(frame__lookup_funkvar_value, this, funkvar, not_defined_value, retur
 f2ptr frame__funkvar_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value) {return frame__type_var_value__set(cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value, not_defined_value);}
 def_pcfunk4(frame__funkvar_value__set, this, funkvar, value, not_defined_value, return frame__var_value__set(this_cause, this, funkvar, value, not_defined_value));
 
-f2ptr frame__new_empty(f2ptr cause) {
-  f2ptr this = f2frame__new(cause,
-			    f2__hashtable__new(cause, f2integer__new(cause, 5)),
-			    f2__hashtable__new(cause, f2integer__new(cause, 5)));
-  return this;
+f2ptr f2__frame__new(f2ptr cause) {
+  return f2frame__new(cause);
 }
-
-def_pcfunk0(frame__new, return frame__new_empty(this_cause));
-
-f2ptr frame__new_empty_globalsize(f2ptr cause) {
-  f2ptr this = f2frame__new(cause,
-			    f2__hashtable__new(cause, f2integer__new(cause, 24)),
-			    f2__hashtable__new(cause, f2integer__new(cause, 24)));
-  return this;
-}
+def_pcfunk0(frame__new, return f2__frame__new(this_cause));
 
 f2ptr frame__var__slot_names(f2ptr cause, f2ptr this) {
   return f2__hashtable__slot_names(cause, frame__var_hashtable(cause, this));

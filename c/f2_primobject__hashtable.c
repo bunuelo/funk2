@@ -23,15 +23,17 @@
 
 // hashtable primobject definition
 
-defprimobject__static_slot(hashtable__bin_num_power, 0);
-defprimobject__static_slot(hashtable__bin_array,     1);
+defprimobject__static_slot(hashtable__write_mutex,   0);
+defprimobject__static_slot(hashtable__bin_num_power, 1);
+defprimobject__static_slot(hashtable__bin_array,     2);
 
 f2ptr __hashtable__symbol = -1;
 
-f2ptr f2hashtable__new(f2ptr cause, f2ptr bin_num_power, f2ptr bin_array) {
+f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr bin_num_power, f2ptr bin_array) {
   release__assert(__hashtable__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
   release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2hashtable__new error: bin_num_power or bin_array are of wrong type.");
-  f2ptr this = f2__primobject__new(cause, __hashtable__symbol, 2, nil);
+  f2ptr this = f2__primobject__new(cause, __hashtable__symbol, 3, nil);
+  f2hashtable__write_mutex__set(  this, cause, write_mutex);
   f2hashtable__bin_num_power__set(this, cause, bin_num_power);
   f2hashtable__bin_array__set(    this, cause, bin_array);
   return this;
@@ -56,7 +58,7 @@ boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
 
 f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
-  f2ptr this = f2hashtable__new(cause, f2integer__new(cause, bin_num_power), bin_array);
+  f2ptr this = f2hashtable__new(cause, f2mutex__new(cause), f2integer__new(cause, bin_num_power), bin_array);
   debug__assert(raw__hashtable__valid(cause, this), nil, "raw__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }
@@ -65,16 +67,14 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
   if(! raw__integer__is_type(cause, bin_num_power)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
+  f2ptr this = raw__hashtable__new(cause, f2mutex__new(cause), f2integer__i(bin_num_power, cause));
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }
 
 f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  //if(! raw__symbolp(key, cause)) {
-  //  return f2larva__new(cause, 1);
-  //}
+  f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
@@ -99,6 +99,7 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
+  f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
   return nil;
 }
 

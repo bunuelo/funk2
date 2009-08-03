@@ -29,22 +29,29 @@
 extern f2ptr __hashtable__symbol;
 boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this);
-f2ptr f2hashtable__new(f2ptr cause, f2ptr bin_num_power, f2ptr bin_array);
+f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr bin_num_power, f2ptr bin_array);
 #define f2primobject__is_hashtable(this, cause)                    raw__eq(cause, f2primobject__type(this, cause), __hashtable__symbol)
 
+defprimobject__static_slot__prototype(hashtable__write_mutex);
+#define f2hashtable__write_mutex(                   this, cause)        primobject__static_slot__accessor(         this, hashtable__write_mutex, cause)
+#define f2hashtable__write_mutex__set(              this, cause, value) primobject__static_slot__set(              this, hashtable__write_mutex, cause, value)
+#define f2hashtable__write_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, hashtable__write_mutex, cause)
+#define f2hashtable__write_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, hashtable__write_mutex, cause)
+#define f2hashtable__write_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, hashtable__write_mutex, cause)
+
 defprimobject__static_slot__prototype(hashtable__bin_num_power);
-#define f2hashtable__bin_num_power(            this, cause)        primobject__static_slot__accessor(  this, hashtable__bin_num_power, cause)
-#define f2hashtable__bin_num_power__set(       this, cause, value) primobject__static_slot__set(       this, hashtable__bin_num_power, cause, value)
-#define f2hashtable__bin_num_power__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, hashtable__bin_num_power, cause)
-#define f2hashtable__bin_num_power__trace(     this, cause)        primobject__static_slot__trace(     this, hashtable__bin_num_power, cause)
-#define f2hashtable__bin_num_power__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, hashtable__bin_num_power, cause)
+#define f2hashtable__bin_num_power(                   this, cause)        primobject__static_slot__accessor(         this, hashtable__bin_num_power, cause)
+#define f2hashtable__bin_num_power__set(              this, cause, value) primobject__static_slot__set(              this, hashtable__bin_num_power, cause, value)
+#define f2hashtable__bin_num_power__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, hashtable__bin_num_power, cause)
+#define f2hashtable__bin_num_power__trace(            this, cause)        primobject__static_slot__trace(            this, hashtable__bin_num_power, cause)
+#define f2hashtable__bin_num_power__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, hashtable__bin_num_power, cause)
 
 defprimobject__static_slot__prototype(hashtable__bin_array);
-#define f2hashtable__bin_array(            this, cause)        primobject__static_slot__accessor(  this, hashtable__bin_array, cause)
-#define f2hashtable__bin_array__set(       this, cause, value) primobject__static_slot__set(       this, hashtable__bin_array, cause, value)
-#define f2hashtable__bin_array__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, hashtable__bin_array, cause)
-#define f2hashtable__bin_array__trace(     this, cause)        primobject__static_slot__trace(     this, hashtable__bin_array, cause)
-#define f2hashtable__bin_array__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, hashtable__bin_array, cause)
+#define f2hashtable__bin_array(                   this, cause)        primobject__static_slot__accessor(         this, hashtable__bin_array, cause)
+#define f2hashtable__bin_array__set(              this, cause, value) primobject__static_slot__set(              this, hashtable__bin_array, cause, value)
+#define f2hashtable__bin_array__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, hashtable__bin_array, cause)
+#define f2hashtable__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, hashtable__bin_array, cause)
+#define f2hashtable__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, hashtable__bin_array, cause)
 
 f2ptr raw__hashtable__new                (f2ptr cause, s64 bin_num_power);
 f2ptr f2__hashtable__new                 (f2ptr cause, f2ptr bin_num_power);

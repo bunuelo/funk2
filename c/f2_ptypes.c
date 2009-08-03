@@ -966,7 +966,14 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   return f2symbol__new(cause, str__length, str__bytes);
 }
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__symbol__is_type(cause, this)) || (! raw__symbol__is_type(cause, that))) {return boolean__false;}
+  if (raw__symbol__is_type(cause, this)) {
+    if (this == that) {
+      return boolean__true;
+    }
+  } else {
+    return boolean__false;
+  }
+  if (! raw__symbol__is_type(cause, that)) {return boolean__false;}
   u64 this__length = f2symbol__length(this, cause);
   u64 that__length = f2symbol__length(that, cause);
   if (this__length != that__length) {

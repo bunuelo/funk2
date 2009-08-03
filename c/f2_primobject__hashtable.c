@@ -24,16 +24,18 @@
 // hashtable primobject definition
 
 defprimobject__static_slot(hashtable__write_mutex,   0);
-defprimobject__static_slot(hashtable__bin_num_power, 1);
-defprimobject__static_slot(hashtable__bin_array,     2);
+defprimobject__static_slot(hashtable__key_count,     2);
+defprimobject__static_slot(hashtable__bin_num_power, 3);
+defprimobject__static_slot(hashtable__bin_array,     4);
 
 f2ptr __hashtable__symbol = -1;
 
-f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr bin_num_power, f2ptr bin_array) {
+f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_power, f2ptr bin_array) {
   release__assert(__hashtable__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
   release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2hashtable__new error: bin_num_power or bin_array are of wrong type.");
-  f2ptr this = f2__primobject__new(cause, __hashtable__symbol, 3, nil);
+  f2ptr this = f2__primobject__new(cause, __hashtable__symbol, 4, nil);
   f2hashtable__write_mutex__set(  this, cause, write_mutex);
+  f2hashtable__key_count__set(    this, cause, key_count);
   f2hashtable__bin_num_power__set(this, cause, bin_num_power);
   f2hashtable__bin_array__set(    this, cause, bin_array);
   return this;
@@ -72,6 +74,28 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
   return this;
 }
 
+void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
+  f2ptr bin_num_power    = f2hashtable__bin_num_power(this, cause);
+  u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
+  f2ptr temp_hashtable   = raw__hashtable__new(cause, bin_num_power + 1);
+  {
+    u64 bin_num = 1ull << bin_num_power__i;
+    u64 bin_index;
+    for (bin_index = 0; bin_index < bin_num; bin_index ++) {
+      f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
+      while(keyvalue_pair_iter) {
+	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
+	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);
+	f2ptr keyvalue_pair__value = f2cons__cdr(iter__keyvalue_pair, cause);
+	f2hashtable__add_keyvalue_pair(cause, temp_hashtable, keyvalue_pair__key, keyvalue_pair__value);
+	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+      }
+    }
+  }
+  f2hashtable__bin_num_power__set(this, cause, f2hashtable__bin_num_power(temp_hashtable, cause));
+  f2hashtable__bin_array(         this, cause, f2hashtable__bin_array(    temp_hashtable, cause));
+}
+
 f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add_keyvalue_pair assert failed: f2__hashtable__valid(this)");
   f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
@@ -98,6 +122,11 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
     raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
+  }
+  s64 key_count__i = f2integer__i(f2hashtable__key_count(this, cause), cause);
+  f2hashtable__key_count__set(this, cause, f2integer__new(cause, key_count__i + 1));
+  if (raw_key_count + 1 >= (1ll << bin_num_power__i)) {
+    f2__hashtable__double_size__thread_unsafe(cause, this);
   }
   f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
   return nil;

@@ -77,6 +77,7 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
 void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
+  f2ptr bin_array        = f2hashtable__bin_array(this, cause);
   f2ptr temp_hashtable   = raw__hashtable__new(cause, bin_num_power + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;

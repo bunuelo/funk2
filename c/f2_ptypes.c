@@ -667,10 +667,6 @@ f2ptr f2mutex__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-// deprecated
-//boolean_t raw__mutexp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_mutex);}
-//f2ptr f2__mutexp(f2ptr cause, f2ptr x) {return f2bool__new(raw__mutexp(x, cause));}
-//def_pcfunk1(mutexp, x, return f2__mutexp(this_cause, x));
 
 
 // char
@@ -887,49 +883,6 @@ f2ptr f2string__primobject_type__new(f2ptr cause) {
 
 
 // symbol
-
-funk2_processor_mutex_t symbol_hash_mutex; // must initialize
-
-typedef struct symbol_hash_node_s {
-  f2ptr                      symbol;
-  struct symbol_hash_node_s* next;
-} symbol_hash_node_t;
-
-typedef struct symbol_hash_s {
-  symbol_hash_node_t** array;
-  u64                  hash_value_bit_mask;
-  int                  total_symbol_num;
-  int                  array_length;
-} symbol_hash_t;
-boolean_t     __symbol_hash__initialized = 0;
-symbol_hash_t __symbol_hash;
-
-void symbol_hash__initialize() {
-  funk2_processor_mutex__init(&symbol_hash_mutex);
-  __symbol_hash.array               = (symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
-  bzero(__symbol_hash.array, sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
-  __symbol_hash.total_symbol_num    = 0;
-  __symbol_hash.hash_value_bit_mask = SYMBOL_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes SYMBOL_HASH__INITIAL_ARRAY_LENGTH is power of 2
-  __symbol_hash.array_length        = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
-  __symbol_hash__initialized        = 1;
-}
-
-void symbol_hash__reinitialize() {
-  f2__free(to_ptr(__symbol_hash.array));
-  symbol_hash__initialize();
-}
-
-void symbol_hash__add_symbol(f2ptr symbol_f2ptr) {
-  ptype_symbol_block_t* symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(symbol_f2ptr));
-  u64                   bin_index    = symbol_block->hash_value & __symbol_hash.hash_value_bit_mask;
-  symbol_hash_node_t*   new_node     = (symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(symbol_hash_node_t)));
-  new_node->symbol = symbol_f2ptr;
-  new_node->next = __symbol_hash.array[bin_index];
-  __symbol_hash.array[bin_index] = new_node;
-}
-
-// 2^64 = 18, 446,744,073,709,551,616
-//   or = 18  sextillion
 
 f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   if (length == 0) {
@@ -2067,6 +2020,53 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 }
 
 
+
+// symbol_hash
+
+void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
+  funk2_processor_mutex__init(&(this->mutex));
+  this->array               = (symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
+  bzero(this->array, sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
+  this->total_symbol_num    = 0;
+  this->hash_value_bit_mask = SYMBOL_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes SYMBOL_HASH__INITIAL_ARRAY_LENGTH is power of 2
+  this->array_length        = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
+}
+
+void funk2_symbol_hash__destroy(funk2_symbol_hash_t* this) {
+  f2__free(to_ptr(this->array));
+}
+
+void funk2_symbol_hash__reinit(funk2_symbol_hash_t* this) {
+  funk2_symbol_hash__destroy();
+  funk2_symbol_hash__init();
+}
+
+void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr) {
+  ptype_symbol_block_t* symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(symbol_f2ptr));
+  u64                   bin_index    = symbol_block->hash_value & (this->hash_value_bit_mask);
+  symbol_hash_node_t*   new_node     = (symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(symbol_hash_node_t)));
+  new_node->symbol = symbol_f2ptr;
+  new_node->next = this->array[bin_index];
+  this->array[bin_index] = new_node;
+}
+
+// 2^64 = 18, 446,744,073,709,551,616
+//   or = 18  sextillion
+
+
+
+// ptypes
+
+void funk2_ptypes__init(funk2_ptypes_t* this) {
+  symbol_hash__initialize();
+  
+}
+
+void funk2_ptypes__destroy(funk2_ptypes_t* this) {
+  
+}
+
+
 // **
 
 void f2__ptypes__initialize__object_slots() {
@@ -2228,7 +2228,7 @@ void f2__ptypes__initialize__object_slots() {
 // initialize ptypes
 
 void f2__ptypes__initialize() {
-  symbol_hash__initialize();
+  funk2_ptypes__init(&(__funk2.ptypes));
 }
 
 

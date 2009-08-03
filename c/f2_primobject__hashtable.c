@@ -88,7 +88,7 @@ void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
 	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);
 	f2ptr keyvalue_pair__value = f2cons__cdr(iter__keyvalue_pair, cause);
-	f2hashtable__add_keyvalue_pair(cause, temp_hashtable, keyvalue_pair__key, keyvalue_pair__value);
+	f2__hashtable__add_keyvalue_pair(cause, temp_hashtable, keyvalue_pair__key, keyvalue_pair__value);
 	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
       }
     }

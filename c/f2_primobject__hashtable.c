@@ -139,9 +139,7 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
 
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  //if(! raw__symbolp(key, cause)) {
-  //  return f2larva__new(cause, 1);
-  //}
+  f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
@@ -154,10 +152,12 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
     if (raw__equals(cause, key, keyvalue_pair__key)) {
+      f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
       return keyvalue_pair;
     }
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
+  f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
   return nil;
 }
 
@@ -174,6 +174,7 @@ f2ptr f2__hashtable__lookup_value(f2ptr this, f2ptr cause, f2ptr key) {
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
+  f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
   s64   bin_array__length  = raw__array__length(cause, bin_array);
   s64   index;
@@ -187,6 +188,7 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
       keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
     }
   }
+  f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
   return new_list;
 }
 

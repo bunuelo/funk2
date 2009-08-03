@@ -83,7 +83,7 @@ void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
     u64 bin_num = 1ull << bin_num_power__i;
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
-      f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
+      f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);
       while(keyvalue_pair_iter) {
 	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
 	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);

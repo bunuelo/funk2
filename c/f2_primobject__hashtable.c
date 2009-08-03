@@ -67,7 +67,7 @@ f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
   if(! raw__integer__is_type(cause, bin_num_power)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr this = raw__hashtable__new(cause, f2mutex__new(cause), f2integer__i(bin_num_power, cause));
+  f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }

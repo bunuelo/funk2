@@ -24,9 +24,9 @@
 // hashtable primobject definition
 
 defprimobject__static_slot(hashtable__write_mutex,   0);
-defprimobject__static_slot(hashtable__key_count,     2);
-defprimobject__static_slot(hashtable__bin_num_power, 3);
-defprimobject__static_slot(hashtable__bin_array,     4);
+defprimobject__static_slot(hashtable__key_count,     1);
+defprimobject__static_slot(hashtable__bin_num_power, 2);
+defprimobject__static_slot(hashtable__bin_array,     3);
 
 f2ptr __hashtable__symbol = -1;
 

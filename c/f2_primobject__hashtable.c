@@ -125,8 +125,11 @@ f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
   s64 key_count__i = f2integer__i(f2hashtable__key_count(this, cause), cause);
-  f2hashtable__key_count__set(this, cause, f2integer__new(cause, key_count__i + 1));
-  if (raw_key_count + 1 >= (1ll << bin_num_power__i)) {
+  {
+    key_count__i ++;
+    f2hashtable__key_count__set(this, cause, f2integer__new(cause, key_count__i));
+  }
+  if (key_count__i >= (1ll << bin_num_power__i)) {
     f2__hashtable__double_size__thread_unsafe(cause, this);
   }
   f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);

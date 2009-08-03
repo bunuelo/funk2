@@ -1976,8 +1976,8 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 
 void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
   funk2_processor_mutex__init(&(this->mutex));
-  this->array               = (symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
-  bzero(this->array, sizeof(symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
+  this->array               = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
+  bzero(this->array, sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
   this->total_symbol_num    = 0;
   this->hash_value_bit_mask = SYMBOL_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes SYMBOL_HASH__INITIAL_ARRAY_LENGTH is power of 2
   this->array_length        = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
@@ -1995,7 +1995,7 @@ void funk2_symbol_hash__reinit(funk2_symbol_hash_t* this) {
 void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr) {
   ptype_symbol_block_t* symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(symbol_f2ptr));
   u64                   bin_index    = symbol_block->hash_value & (this->hash_value_bit_mask);
-  symbol_hash_node_t*   new_node     = (symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(symbol_hash_node_t)));
+  symbol_hash_node_t*   new_node     = (funk2_symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(symbol_hash_node_t)));
   new_node->symbol = symbol_f2ptr;
   new_node->next = this->array[bin_index];
   this->array[bin_index] = new_node;
@@ -2005,7 +2005,7 @@ f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this,
   ptype_symbol_block_t* symbol_block = NULL;
   // search for chararray in hashed symbols
   uint bin_index = (uint)((uint)chararray__hash_value(length, str) & (uint)(this->hash_value_bit_mask));
-  symbol_hash_node_t* node = (this->array[bin_index]);
+  funk2_symbol_hash_node_t* node = (this->array[bin_index]);
   while (node) {
     symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(node->symbol));
     //if we find a symbol that matches chararray, return it.
@@ -2058,8 +2058,8 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, f2pt
 
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
   status("funk2_garbage_collector: touch_all_symbols.");
-  symbol_hash_node_t** array_iter = this->array;
-  symbol_hash_node_t*  node_iter;
+  funk2_symbol_hash_node_t** array_iter = this->array;
+  funk2_symbol_hash_node_t*  node_iter;
   int i;
   for (i = this->array_length; i > 0; i --) {
     for (node_iter = array_iter[0]; node_iter; node_iter = node_iter->next) {

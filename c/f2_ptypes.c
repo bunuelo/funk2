@@ -2045,7 +2045,7 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   symbol_block->hash_value  = (u64)((uint)chararray__hash_value(length, str));
   
   // and add new symbol to hash table
-  symbol_hash__add_symbol(symbol_f2ptr);
+  funk2_symbol_hash__add_symbol(this, symbol_f2ptr);
   return symbol_f2ptr;
 }
 

@@ -60,7 +60,7 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   f2ptr value;
   while (env) {
     value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
-    if (value != __funk2.primobject__frame.type_variable_not_defined__larva) {
+    if (! raw__larva__is_type(cause, value)) {
       return value;
     }
     env = f2environment__parent_env(env, cause);
@@ -75,7 +75,7 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   f2ptr value;
   while (env) {
     value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
-    if (value != __funk2.primobject__frame.type_variable_not_defined__larva) {
+    if (! raw__larva__is_type(cause, value)) {
       return value;
     }
     env = f2environment__parent_env(env, cause);
@@ -104,7 +104,7 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   f2ptr result;
   while (env) {
     result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __funk2.primobject__frame.type_variable_not_defined__larva);
-    if (result != __funk2.primobject__frame.type_variable_not_defined__larva) {
+    if (! raw__larva__is_type(cause, result)) {
       return result;
     }
     env = f2environment__parent_env(env, cause);

@@ -67,13 +67,13 @@ void  frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, 
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
   f2ptr type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
   if (! type__hashtable) {
-    f2mutex__lock(f2frame__new_type_mutex(this, cause));
+    f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
     type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
     if (! type__hashtable) {
       type__hashtable = f2__hashtable__new(cause, f2integer__new(cause, 5));
       f2__hashtable__add_keyvalue_pair(cause, frame__type_hashtable, type, type__hashtable);
     }
-    f2mutex__unlock(f2frame__new_type_mutex(this, cause));
+    f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   }
   f2__hashtable__add_keyvalue_pair(cause, type__hashtable, var, value);
 }

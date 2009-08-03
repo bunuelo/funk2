@@ -56,7 +56,7 @@ f2ptr f2frame__new__raw(f2ptr cause, f2ptr new_type_mutex, f2ptr type_hashtable)
 }
 
 f2ptr f2frame__new(f2ptr cause) {
-  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, raw__integer__new(cause, 1)));
+  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, f2integer__new(cause, 1)));
 }
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}

@@ -24,9 +24,9 @@
 void funk2_primobject__frame__init(funk2_primobject__frame_t* this) {
   f2ptr cause = initial_cause();
   
-  environment__add_var_value(cause, global_environment(), this->frame__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), this->variable__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), this->funk_variable__symbol,            nil);
+  environment__add_var_value(cause, global_environment(), this->frame__symbol,         nil);
+  environment__add_var_value(cause, global_environment(), this->variable__symbol,      nil);
+  environment__add_var_value(cause, global_environment(), this->funk_variable__symbol, nil);
 }
 
 void funk2_primobject__frame__reinit(funk2_primobject__frame_t* this) {
@@ -56,25 +56,27 @@ f2ptr f2frame__new__raw(f2ptr cause, f2ptr new_type_mutex, f2ptr type_hashtable)
 }
 
 f2ptr f2frame__new(f2ptr cause) {
-  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, f2integer__new(cause, 3)));
+  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, raw__integer__new(cause, 1)));
 }
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__frame__is_type(cause, x));}
 def_pcfunk1(frame__is_type, x, return f2__frame__is_type(this_cause, x));
 
-void  frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+void frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
+  release__assert(raw__hashtable__is_type(cause, frame__type_hashtable), nil, "frame__type_hashtable is not hashtable.");
   f2ptr type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
   if (! type__hashtable) {
     f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
     type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
     if (! type__hashtable) {
-      type__hashtable = f2__hashtable__new(cause, f2integer__new(cause, 5));
+      type__hashtable = raw__hashtable__new(cause, 1);
       f2__hashtable__add_keyvalue_pair(cause, frame__type_hashtable, type, type__hashtable);
     }
     f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   }
+  release__assert(raw__hashtable__is_type(cause, type__hashtable), nil, "type__hashtable is not hashtable.");
   f2__hashtable__add_keyvalue_pair(cause, type__hashtable, var, value);
 }
 

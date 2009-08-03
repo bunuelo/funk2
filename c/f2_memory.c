@@ -511,7 +511,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   }
   // temporary period of all memory mutexes locked
   {
-    symbol_hash__reinitialize();
+    funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       // add all symbols to symbol_hash in ptypes.c
@@ -520,7 +520,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	ptype_block_t* block = (ptype_block_t*)iter;
 	if(block->ptype == ptype_symbol) {
 	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
-	  symbol_hash__add_symbol(block_f2ptr);
+	  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	}
 	iter = rbt_node__next(iter);
       }

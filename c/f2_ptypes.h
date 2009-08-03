@@ -170,9 +170,6 @@ f2ptr f2__string__is_type(f2ptr cause, f2ptr exp);
 
 // symbol
 
-void funk2_garbage_collector__touch_all_symbols(funk2_garbage_collector_t* this);
-
-
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init);
 u64   pfunk2__f2symbol__length(f2ptr this, f2ptr cause);
 u8    pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause);
@@ -583,10 +580,14 @@ typedef struct funk2_symbol_hash_node_s funk2_symbol_hash_node_t;
 typedef struct funk2_symbol_hash_s      funk2_symbol_hash_t;
 typedef struct funk2_ptypes_s           funk2_ptypes_t;
 
+// symbol_hash_node
+
 struct funk2_symbol_hash_node_s {
   f2ptr                     symbol;
   funk2_symbol_hash_node_t* next;
 };
+
+// symbol_hash
 
 struct funk2_symbol_hash_s {
   funk2_processor_mutex_t    mutex;
@@ -596,11 +597,26 @@ struct funk2_symbol_hash_s {
   int                        array_length;
 };
 
+void  funk2_symbol_hash__init(funk2_symbol_hash_t* this);
+void  funk2_symbol_hash__destroy(funk2_symbol_hash_t* this);
+void  funk2_symbol_hash__reinit(funk2_symbol_hash_t* this);
+void  funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr);
+f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, uint length, u8* str);
+f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, uint length, u8* str);
+f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str);
+f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str);
+void  funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector);
+
+// ptypes
+
 struct funk2_ptypes_s {
   funk2_symbol_hash_t symbol_hash;
 };
 
 void funk2_ptypes__init(funk2_ptypes_t* this);
 void funk2_ptypes__destroy(funk2_ptypes_t* this);
+
+
+
 
 #endif // F2__PTYPES__OBJECT_TYPES

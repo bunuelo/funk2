@@ -888,56 +888,7 @@ f2ptr ptype_symbol__new(int pool_index, f2ptr cause, uint length, u8* str) {
   if (length == 0) {
     return nil;
   }
-  funk2_processor_mutex__user_lock(&symbol_hash_mutex);
-  if (! __symbol_hash__initialized) {symbol_hash__initialize();}
-  ptype_symbol_block_t* symbol_block = NULL;
-  
-  // search for chararray in hashed symbols
-  uint bin_index = (uint)((uint)chararray__hash_value(length, str) & (uint)__symbol_hash.hash_value_bit_mask);
-  symbol_hash_node_t* node = __symbol_hash.array[bin_index];
-  while (node) {
-    symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(node->symbol));
-    //if we find a symbol that matches chararray, return it.
-    if (!symbol_block->ptype.block.used) {
-      printf("\nfound unused symbol."); fflush(stdout);
-    }
-    if (symbol_block->length == length && (! memcmp(symbol_block->str, str, length))) {
-      funk2_processor_mutex__unlock(&symbol_hash_mutex);
-      return node->symbol;
-    }
-    node = node->next;
-  }
-  
-  // otherwise, create a new symbol
-  f2ptr symbol_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_symbol_block_t) + length + 1);
-  symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
-  debug__assert(symbol_block, nil, "block is nil.");
-  symbol_block->ptype.ptype = ptype_symbol;
-  symbol_block->ptype.cause = cause;
-  symbol_block->length      = length;
-  if (str) {memcpy(symbol_block->str, str, length);}
-  else     {bzero(symbol_block->str, length);}
-  symbol_block->str[length] = 0x00;
-  symbol_block->hash_value  = (u64)((uint)chararray__hash_value(length, str));
-  
-  // and add new symbol to hash table
-  symbol_hash__add_symbol(symbol_f2ptr);
-  
-  funk2_processor_mutex__unlock(&symbol_hash_mutex);
-  return symbol_f2ptr;
-}
-
-void funk2_garbage_collector__touch_all_symbols(funk2_garbage_collector_t* this) {
-  status("funk2_garbage_collector: touch_all_symbols.");
-  symbol_hash_node_t** array_iter = __symbol_hash.array;
-  symbol_hash_node_t*  node_iter;
-  int i;
-  for (i = __symbol_hash.array_length; i > 0; i --) {
-    for (node_iter = array_iter[0]; node_iter; node_iter = node_iter->next) {
-      funk2_garbage_collector__touch_f2ptr(this, node_iter->symbol);
-    }
-    array_iter ++;
-  }
+  return funk2_symbol_hash__lookup_or_create_symbol(&(__funk2.ptypes.symbol_hash), cause, length, str);
 }
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
@@ -2048,6 +1999,74 @@ void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr
   new_node->symbol = symbol_f2ptr;
   new_node->next = this->array[bin_index];
   this->array[bin_index] = new_node;
+}
+
+f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, uint length, u8* str) {
+  ptype_symbol_block_t* symbol_block = NULL;
+  // search for chararray in hashed symbols
+  uint bin_index = (uint)((uint)chararray__hash_value(length, str) & (uint)(this->hash_value_bit_mask));
+  symbol_hash_node_t* node = (this->array[bin_index]);
+  while (node) {
+    symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(node->symbol));
+    //if we find a symbol that matches chararray, return it.
+    debug__assert(symbol_block->ptype.block.used, nil, "funk2_symbol_hash__lookup_symbol error: found unused symbol.");
+    if (symbol_block->length == length && (! memcmp(symbol_block->str, str, length))) {
+      funk2_processor_mutex__unlock(&(this->mutex));
+      return node->symbol;
+    }
+    node = node->next;
+  }
+  return nil;
+}
+
+f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, uint length, u8* str) {
+  funk2_processor_mutex__user_lock(&this->mutex);
+  f2ptr result = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, length, str);
+  funk2_processor_mutex__unlock(&(this->mutex));
+  return result;
+}
+
+f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str) {
+  f2ptr symbol_f2ptr = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, length, str);
+  if (symbol_f2ptr) {
+    return symbol_f2ptr;
+  }
+  
+  // otherwise, create a new symbol
+  symbol_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_symbol_block_t) + length + 1);
+  symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
+  debug__assert(symbol_block, nil, "block is nil.");
+  symbol_block->ptype.ptype = ptype_symbol;
+  symbol_block->ptype.cause = cause;
+  symbol_block->length      = length;
+  if (str) {memcpy(symbol_block->str, str, length);}
+  else     {bzero(symbol_block->str, length);}
+  symbol_block->str[length] = 0x00;
+  symbol_block->hash_value  = (u64)((uint)chararray__hash_value(length, str));
+  
+  // and add new symbol to hash table
+  symbol_hash__add_symbol(symbol_f2ptr);
+  return symbol_f2ptr;
+}
+
+f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, f2ptr cause, uint length, u8* str) {
+  funk2_processor_mutex__user_lock(&this->mutex);
+  f2ptr result = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, cause, length, str);
+  funk2_processor_mutex__unlock(&(this->mutex));
+  return result;
+}
+
+void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
+  status("funk2_garbage_collector: touch_all_symbols.");
+  symbol_hash_node_t** array_iter = this->array;
+  symbol_hash_node_t*  node_iter;
+  int i;
+  for (i = this->array_length; i > 0; i --) {
+    for (node_iter = array_iter[0]; node_iter; node_iter = node_iter->next) {
+      funk2_garbage_collector__touch_f2ptr(garbage_collector, node_iter->symbol);
+    }
+    array_iter ++;
+  }
 }
 
 // 2^64 = 18, 446,744,073,709,551,616

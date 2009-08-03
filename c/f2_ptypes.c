@@ -2077,11 +2077,11 @@ void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garba
 // ptypes
 
 void funk2_ptypes__init(funk2_ptypes_t* this) {
-  funk2_symbol_hash__initialize(&(__funk2.symbol_hash));
+  funk2_symbol_hash__init(&(this->symbol_hash));
 }
 
 void funk2_ptypes__destroy(funk2_ptypes_t* this) {
-  
+  funk2_symbol_hash__destroy(&(this->symbol_hash));
 }
 
 

@@ -1988,8 +1988,8 @@ void funk2_symbol_hash__destroy(funk2_symbol_hash_t* this) {
 }
 
 void funk2_symbol_hash__reinit(funk2_symbol_hash_t* this) {
-  funk2_symbol_hash__destroy();
-  funk2_symbol_hash__init();
+  funk2_symbol_hash__destroy(this);
+  funk2_symbol_hash__init(this);
 }
 
 void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr) {

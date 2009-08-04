@@ -41,13 +41,13 @@
 											   The larva signifies that a function argument did not have the correct type.
 											   ]]
 	  [[eq symbolic_type `tried_to_funk_object_that_is_not_funkable-bug_type]    `[Bug is from primitive virtual machine larva.
-											   The larva signifies that the thread tried to execute an object that was not an executable object.
+											   The larva signifies that the fiber tried to execute an object that was not an executable object.
 											   ]]
 	  [[eq symbolic_type `failed_to_lookup_variable_in_environment-bug_type]     `[Bug is from primitive virtual machine larva.
-											   The larva signifies that the thread tried to lookup a symbol that could not be found in the current environment.
+											   The larva signifies that the fiber tried to lookup a symbol that could not be found in the current environment.
 											   ]]
 	  [[eq symbolic_type `cfunkable_must_be_funk_or_metro-bug_type]              `[Bug is from primitive virtual machine larva.
-											   The larva signifies that the thread tried to execute an object that was not a funkable object, such as a funk or a metro.
+											   The larva signifies that the fiber tried to execute an object that was not a funkable object, such as a funk or a metro.
 											   ]]
 	  [[eq symbolic_type `unspecified_error_occured-bug_type]                    `[Bug is from primitive virtual machine larva.
 											   The larva signifies that an unspecified error occured.

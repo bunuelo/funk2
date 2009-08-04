@@ -21,8 +21,8 @@
 
 [print 'beginning bootstrap-default_critics.fu2']
 
-[defunk default-larva-critic [thread]
-  [thread-critics-set [this-thread] &default-larva-critic]
+[defunk default-larva-critic [fiber]
+  [fiber-critics-set [this-fiber] &default-larva-critic]
   [format stdout
 	  '\n'
 	  '\n*********************************************************************************************'
@@ -30,11 +30,11 @@
 	  '\n**  ' `default-larva-critic ' is here.'
 	  '\n**  '
 	  '\n**  This is a very simple larva response that starts a new user read-eval-print-loop, so'
-	  '\n**  that the user can inspect the problematic thread.  Happy automated debugging!'
+	  '\n**  that the user can inspect the problematic fiber.  Happy automated debugging!'
 	  '\n**  '
 	  '\n*********************************************************************************************'
 	  '\n']
   [repl]]
 
-[thread-critics-set [this-thread] &default-larva-critic]
+[fiber-critics-set [this-fiber] &default-larva-critic]
 

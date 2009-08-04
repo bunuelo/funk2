@@ -741,7 +741,6 @@
 #include "f2_compile.h"
 #include "f2_time.h"
 #include "f2_gmodule.h"
-#include "f2_critic.h"
 #include "f2_compile_x86.h"
 
 

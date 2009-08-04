@@ -33,15 +33,12 @@
 #define PRIME_NUMBER__16_BIT 65521
 #define PRIME_NUMBER__32_BIT 3267000013u
 
-// length must be greater than zero.
-//#define chararray__hash_value(length, str) ((((uint)((str)[0])) + (((uint)((str)[(length)>>3]))<<8) + (((uint)((str)[(length)>>2]))<<16) + (((uint)((str)[(length)>>1]))<<24)) * PRIME_NUMBER__16_BIT)
-
 #define chararray__hash_value(length, str)                 \
   (((u64)(*((u8*)(((u8*)(str))+(0)))))                   * \
-   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>4))))) * \
-   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>3))))) * \
-   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>2))))) * \
-   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>1))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>4))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>3))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>2))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>1))))) * \
    ((u64)PRIME_NUMBER__32_BIT))
 
 typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
@@ -601,10 +598,10 @@ void  funk2_symbol_hash__init(funk2_symbol_hash_t* this);
 void  funk2_symbol_hash__destroy(funk2_symbol_hash_t* this);
 void  funk2_symbol_hash__reinit(funk2_symbol_hash_t* this);
 void  funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr);
-f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, uint length, u8* str);
-f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, uint length, u8* str);
-f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, uint length, u8* str);
-f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, uint length, u8* str);
+f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, u64 length, u8* str);
+f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, u64 length, u8* str);
+f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, u8* str);
+f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, u8* str);
 void  funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector);
 
 // ptypes

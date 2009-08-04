@@ -794,12 +794,12 @@ defprimobject__static_slot__prototype(processor__scheduler);
 #define f2processor__scheduler__trace(          this, cause)        primobject__static_slot__trace(     this, processor__scheduler, cause)
 #define f2processor__scheduler__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, processor__scheduler, cause)
 
-defprimobject__static_slot__prototype(processor__processor_fiber);
-#define f2processor__processor_fiber(                   this, cause)        primobject__static_slot__accessor(         this, processor__processor_fiber, cause)
-#define f2processor__processor_fiber__set(              this, cause, value) primobject__static_slot__set(              this, processor__processor_fiber, cause, value)
-#define f2processor__processor_fiber__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__processor_fiber, cause)
-#define f2processor__processor_fiber__trace(            this, cause)        primobject__static_slot__trace(            this, processor__processor_fiber, cause)
-#define f2processor__processor_fiber__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__processor_fiber, cause)
+defprimobject__static_slot__prototype(processor__processor_thread);
+#define f2processor__processor_thread(                   this, cause)        primobject__static_slot__accessor(         this, processor__processor_thread, cause)
+#define f2processor__processor_thread__set(              this, cause, value) primobject__static_slot__set(              this, processor__processor_thread, cause, value)
+#define f2processor__processor_thread__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__processor_thread, cause)
+#define f2processor__processor_thread__trace(            this, cause)        primobject__static_slot__trace(            this, processor__processor_thread, cause)
+#define f2processor__processor_thread__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__processor_thread, cause)
 
 defprimobject__static_slot__prototype(processor__active_fibers_mutex);
 #define f2processor__active_fibers_mutex(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_mutex, cause)
@@ -1626,10 +1626,10 @@ typedef struct funk2_object_type__processor__slot_s {
   f2ptr scheduler__funk;
   f2ptr scheduler__set__symbol;
   f2ptr scheduler__set__funk;
-  f2ptr processor_fiber__symbol;
-  f2ptr processor_fiber__funk;
-  f2ptr processor_fiber__set__symbol;
-  f2ptr processor_fiber__set__funk;
+  f2ptr processor_thread__symbol;
+  f2ptr processor_thread__funk;
+  f2ptr processor_thread__set__symbol;
+  f2ptr processor_thread__set__funk;
   f2ptr active_fibers_mutex__symbol;
   f2ptr active_fibers_mutex__funk;
   f2ptr active_fibers_mutex__set__symbol;

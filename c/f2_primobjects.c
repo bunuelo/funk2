@@ -1211,7 +1211,7 @@ def_pcfunk2(fiber__larva_args__set, x, y, return f2__fiber__larva_args__set(this
 // processor
 
 defprimobject__static_slot(processor__scheduler,               0);
-defprimobject__static_slot(processor__processor_fiber,        1);
+defprimobject__static_slot(processor__processor_thread,        1);
 defprimobject__static_slot(processor__active_fibers_mutex,    2);
 defprimobject__static_slot(processor__active_fibers,          3);
 defprimobject__static_slot(processor__active_fibers_iter,     4);
@@ -1224,11 +1224,11 @@ defprimobject__static_slot(processor__desc,                   10);
 
 f2ptr __processor__symbol = -1;
 
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_fiber, f2ptr active_fibers_mutex, f2ptr active_fibers, f2ptr active_fibers_iter, f2ptr active_fibers_prev, f2ptr active_fibers_next, f2ptr sleeping_fibers_mutex, f2ptr sleeping_fibers, f2ptr pool_index, f2ptr desc) {
+f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2ptr active_fibers_mutex, f2ptr active_fibers, f2ptr active_fibers_iter, f2ptr active_fibers_prev, f2ptr active_fibers_next, f2ptr sleeping_fibers_mutex, f2ptr sleeping_fibers, f2ptr pool_index, f2ptr desc) {
   release__assert(__processor__symbol != -1, nil, "f2processor__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __processor__symbol, 11, nil);
   f2processor__scheduler__set(             this, cause, scheduler);
-  f2processor__processor_fiber__set(      this, cause, processor_fiber);
+  f2processor__processor_thread__set(      this, cause, processor_thread);
   f2processor__active_fibers_mutex__set(  this, cause, active_fibers_mutex);
   f2processor__active_fibers__set(        this, cause, active_fibers);
   f2processor__active_fibers_iter__set(   this, cause, active_fibers_iter);
@@ -1247,8 +1247,8 @@ f2ptr f2processor__primobject_type__new(f2ptr cause) {
   //{char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk);}
   {char* slot_name = "scheduler";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__set__funk, nil);}
-  {char* slot_name = "processor_fiber";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-									     __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_fiber__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_fiber__set__funk, nil);}
+  {char* slot_name = "processor_thread";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__set__funk, nil);}
   {char* slot_name = "active_fibers_mutex";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers_mutex__set__funk, nil);}
   {char* slot_name = "active_fibers";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
@@ -1285,11 +1285,11 @@ def_pcfunk1(processor__scheduler, x, return f2__processor__scheduler(this_cause,
 f2ptr f2__processor__scheduler__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__scheduler__set(this, cause, value);}
 def_pcfunk2(processor__scheduler__set, x, y, return f2__processor__scheduler__set(this_cause, x, y));
 
-f2ptr f2__processor__processor_fiber(f2ptr cause, f2ptr this) {return f2processor__processor_fiber(this, cause);}
-def_pcfunk1(processor__processor_fiber, x, return f2__processor__processor_fiber(this_cause, x));
+f2ptr f2__processor__processor_thread(f2ptr cause, f2ptr this) {return f2processor__processor_thread(this, cause);}
+def_pcfunk1(processor__processor_thread, x, return f2__processor__processor_thread(this_cause, x));
 
-f2ptr f2__processor__processor_fiber__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__processor_fiber__set(this, cause, value);}
-def_pcfunk2(processor__processor_fiber__set, x, y, return f2__processor__processor_fiber__set(this_cause, x, y));
+f2ptr f2__processor__processor_thread__set(f2ptr cause, f2ptr this, f2ptr value) {return f2processor__processor_thread__set(this, cause, value);}
+def_pcfunk2(processor__processor_thread__set, x, y, return f2__processor__processor_thread__set(this_cause, x, y));
 
 f2ptr f2__processor__active_fibers_mutex(f2ptr cause, f2ptr this) {return f2processor__active_fibers_mutex(this, cause);}
 def_pcfunk1(processor__active_fibers_mutex, x, return f2__processor__active_fibers_mutex(this_cause, x));
@@ -2500,16 +2500,16 @@ void f2__primobjects__initialize() {
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_processor.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.is_type__funk = never_gc(cfunk);}
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_processor.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  //{f2__primcfunk__init__with_c_cfunk_var__8_arg(processor__new, scheduler, processor_fiber, active_fibers_mutex, active_fibers, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
+  //{f2__primcfunk__init__with_c_cfunk_var__8_arg(processor__new, scheduler, processor_thread, active_fibers_mutex, active_fibers, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
   //                                              cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk = never_gc(cfunk);}
   {char* symbol_str = "scheduler"; __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__scheduler, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__funk = never_gc(cfunk);}
   {char* symbol_str = "scheduler-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__scheduler__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "processor_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__processor_fiber, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_fiber__funk = never_gc(cfunk);}
-  {char* symbol_str = "processor_fiber-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_fiber__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__processor_fiber__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_fiber__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "processor_thread"; __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__processor_thread, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__funk = never_gc(cfunk);}
+  {char* symbol_str = "processor_thread-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__processor_thread__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.processor_thread__set__funk = never_gc(cfunk);}
   {char* symbol_str = "active_fibers_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__active_fibers_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers_mutex__funk = never_gc(cfunk);}
   {char* symbol_str = "active_fibers_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

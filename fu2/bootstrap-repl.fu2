@@ -246,7 +246,7 @@
 [defunk parseq [proc seq]
   [if [null seq]
       nil
-    [cons [thread proc [cons [car seq] nil]]
+    [cons [fiber proc [cons [car seq] nil]]
 	  [parseq proc [cdr seq]]]]]
 
 [defunk mapcar [proc seq]
@@ -344,13 +344,13 @@
   `[let ,[mapcar [funk [varpair]
 		       [let [[var       [first varpair]]
 			     [value_exp [second varpair]]]
-			 `[,var [thread [funk [] ,value_exp] []]]]]
+			 `[,var [fiber [funk [] ,value_exp] []]]]]
 		 varpairs]
      [define-funk parlet-wait-loop
        [funk []
 	     [if [and @[mapcar [funk [varpair]
 				     [let [[var [first varpair]]]
-				       `[thread-complete? ,var]]]
+				       `[fiber-complete? ,var]]]
 			       varpairs]]
 		 []
 	       [prog [yield]
@@ -359,26 +359,26 @@
      [let ,[mapcar [funk [varpair]
 			 [let [[var       [first varpair]]
 			       [value_exp [second varpair]]]
-			   `[,var [thread-value ,var]]]]
+			   `[,var [fiber-value ,var]]]]
 		   varpairs]
        @body]]]
 
-[defunk join [:rest threads]
-  [define-funk threads-wait-loop
+[defunk join [:rest fibers]
+  [define-funk fibers-wait-loop
     [funk []
-	  [define-funk threads-scan-loop
-	    [funk [thread_iter]
-		  [if [null thread_iter]
+	  [define-funk fibers-scan-loop
+	    [funk [fiber_iter]
+		  [if [null fiber_iter]
 		      t
-		    [let [[thread [car thread_iter]]]
-		      [if [null [thread-complete? thread]]
+		    [let [[fiber [car fiber_iter]]]
+		      [if [null [fiber-complete? fiber]]
 			  nil
-			[threads-scan-loop [cdr thread_iter]]]]]]]
-	  [if [threads-scan-loop threads]
+			[fibers-scan-loop [cdr fiber_iter]]]]]]]
+	  [if [fibers-scan-loop fibers]
 	      nil
 	    [prog [yield]
-		  [threads-wait-loop]]]]]
-  [threads-wait-loop]]
+		  [fibers-wait-loop]]]]]
+  [fibers-wait-loop]]
 
 [defunk sleep_for_nanoseconds [nanoseconds]
   [sleep_for_nanoseconds_without_yield nanoseconds]
@@ -389,25 +389,25 @@
 
 [defmetro parog [:rest codes]
   'run commands in parallel'
-  `[let [[parog-threads [list @[mapcar [funk [code]
-					     `[thread [funk [] ,code] []]]
+  `[let [[parog-fibers [list @[mapcar [funk [code]
+					     `[fiber [funk [] ,code] []]]
 				       codes]]]]
-     [apply &join parog-threads]]]
+     [apply &join parog-fibers]]]
 
 [defunk parc [proc seq]
   'run mapc commands in parallel'
-  [let [[parc-threads [mapcar [funk [exp]
-				    [thread proc [cons exp nil]]]
+  [let [[parc-fibers [mapcar [funk [exp]
+				    [fiber proc [cons exp nil]]]
 			      seq]]]
-    [apply &join parc-threads]]]
+    [apply &join parc-fibers]]]
 
 [defunk parcar [proc seq]
   'run mapcar commands in parallel'
-  [let [[parcar-threads [mapcar [funk [exp]
-				      [thread proc [cons exp nil]]]
+  [let [[parcar-fibers [mapcar [funk [exp]
+				      [fiber proc [cons exp nil]]]
 				seq]]]
-    [apply &join parcar-threads]
-    [mapcar [funk [x] [thread-value x]] parcar-threads]]]
+    [apply &join parcar-fibers]
+    [mapcar [funk [x] [fiber-value x]] parcar-fibers]]]
 
 [defmetro cond [:rest clauses]
   [if [null clauses]
@@ -534,8 +534,8 @@
 	    car
 	  [find exp [cdr seq] key test]]]]]]
 
-[defunk thread-find_last_trace_env [thread]
-  [find `trace_env [thread-trace thread] [funk [x] [car x]] &eq]]
+[defunk fiber-find_last_trace_env [fiber]
+  [find `trace_env [fiber-trace fiber] [funk [x] [car x]] &eq]]
 
 [defunk array-new [:rest lengths]
   [if [null lengths]

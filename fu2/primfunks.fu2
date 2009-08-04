@@ -40,8 +40,8 @@
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]
-[globalize-funk thread                                      &primfunk:thread]
-[globalize-funk thread-imagine                              &primfunk:thread__imagine]
+[globalize-funk fiber                                       &primfunk:fiber]
+[globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
 
 [globalize-funk length                                      &primfunk:length]
 [globalize-funk integer-greater_than                        &primfunk:integer__greater_than]
@@ -87,7 +87,7 @@
 [globalize-funk fclose                                      &primfunk:fclose]
 
 [globalize-funk this-cause                                  &primfunk:this__cause]
-[globalize-funk this-thread                                 &primfunk:this__thread]
+[globalize-funk this-fiber                                  &primfunk:this__fiber]
 [globalize-funk this-env                                    &primfunk:this__env]
 [globalize-funk this-args                                   &primfunk:this__args]
 
@@ -242,7 +242,7 @@
 [globalize-funk event_subscriber                            &primfunk:event_subscriber]
 [globalize-funk subscribe                                   &primfunk:subscribe]
 
-`[globalize-funk thread-subversion_cause                     &primfunk:thread__subversion_cause]
+`[globalize-funk fiber-subversion_cause                     &primfunk:fiber__subversion_cause]
 
 [globalize-funk first                                       &primfunk:first]
 [globalize-funk first-set                                   &primfunk:first__set]

@@ -56,7 +56,7 @@ f2ptr f2frame__new__raw(f2ptr cause, f2ptr new_type_mutex, f2ptr type_hashtable)
 }
 
 f2ptr f2frame__new(f2ptr cause) {
-  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, f2integer__new(cause, 1)));
+  return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause, f2integer__new(cause, 3)));
 }
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}
@@ -71,7 +71,7 @@ void frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f
     f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
     type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
     if (! type__hashtable) {
-      type__hashtable = raw__hashtable__new(cause, 1);
+      type__hashtable = raw__hashtable__new(cause, 3);
       f2__hashtable__add_keyvalue_pair(cause, frame__type_hashtable, type, type__hashtable);
     }
     f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);

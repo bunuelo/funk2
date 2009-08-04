@@ -135,9 +135,9 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2chunk__bit64__elt                        ,
   funk2_packet_type__pcs_request__f2chunk__bit64__elt__set                   , //void             (f2ptr cause, f2ptr this, u64 index, u64 value);
   funk2_packet_type__pcs_respond__f2chunk__bit64__elt__set                   ,
-  funk2_packet_type__pcs_request__f2chunk__cfunk_jump                        , //f2ptr            (f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args);
+  funk2_packet_type__pcs_request__f2chunk__cfunk_jump                        , //f2ptr            (f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
   funk2_packet_type__pcs_respond__f2chunk__cfunk_jump                        ,
-  funk2_packet_type__pcs_request__f2chunk__bytecode_jump                     , //int              (f2ptr cause, f2ptr this, f2ptr thread);
+  funk2_packet_type__pcs_request__f2chunk__bytecode_jump                     , //int              (f2ptr cause, f2ptr this, f2ptr fiber);
   funk2_packet_type__pcs_respond__f2chunk__bytecode_jump                     ,
   funk2_packet_type__pcs_request__f2chunk__send                              , //f2ptr            (f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
   funk2_packet_type__pcs_respond__f2chunk__send                              ,
@@ -322,7 +322,7 @@ typedef struct pcs_client_request_received_packet_s pcs_client_request_received_
 struct pcs_packet_payload_header__action_payload_header_s {
   funk2_packet_payload_header_t payload_header;
   f2ptr                         cause;
-  f2ptr                         thread;
+  f2ptr                         fiber;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_header__action_payload_header_s pcs_packet_payload_header__action_payload_header_t;
 
@@ -377,12 +377,12 @@ struct pcs_respond__system__environment_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__system__environment_s pcs_respond__system__environment_t;
 
-void send_packet__request__system__environment(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__request__system__environment(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__request__system__environment(funk2_node_t* funk2_node, pcs_request__system__environment_t* packet);
-void send_packet__respond__system__environment(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr environment);
+void send_packet__respond__system__environment(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr environment);
 void recv_packet__respond__system__environment(funk2_node_t* funk2_node, pcs_respond__system__environment_t* packet);
 
-f2ptr funk2_node__system__environment(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+f2ptr funk2_node__system__environment(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 f2ptr f2system__environment(f2ptr cause, node_id_t node_id);
 
 
@@ -416,12 +416,12 @@ struct pcs_respond__f2ptype__raw_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2ptype__raw_s pcs_respond__f2ptype__raw_t;
 
-void send_packet__request__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2ptype__raw(funk2_node_t* funk2_node, pcs_request__f2ptype__raw_t* packet);
-void send_packet__respond__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, ptype_t raw);
+void send_packet__respond__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, ptype_t raw);
 void recv_packet__respond__f2ptype__raw(funk2_node_t* funk2_node, pcs_respond__f2ptype__raw_t* packet);
 
-ptype_t funk2_node__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+ptype_t funk2_node__f2ptype__raw(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 ptype_t f2ptype__raw(f2ptr this, f2ptr cause);
 
 
@@ -455,12 +455,12 @@ struct pcs_respond__f2ptype__cause_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2ptype__cause_s pcs_respond__f2ptype__cause_t;
 
-void send_packet__request__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2ptype__cause(funk2_node_t* funk2_node, pcs_request__f2ptype__cause_t* packet);
-void send_packet__respond__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr ptype__cause);
+void send_packet__respond__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr ptype__cause);
 void recv_packet__respond__f2ptype__cause(funk2_node_t* funk2_node, pcs_respond__f2ptype__cause_t* packet);
 
-f2ptr funk2_node__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+f2ptr funk2_node__f2ptype__cause(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 f2ptr f2ptype__cause(f2ptr this, f2ptr cause);
 
 
@@ -494,12 +494,12 @@ struct pcs_respond__f2ptype__cause__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2ptype__cause__set_s pcs_respond__f2ptype__cause__set_t;
 
-void send_packet__request__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, f2ptr value);
+void send_packet__request__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value);
 void recv_packet__request__f2ptype__cause__set(funk2_node_t* funk2_node, pcs_request__f2ptype__cause__set_t* packet);
-void send_packet__respond__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2ptype__cause__set(funk2_node_t* funk2_node, pcs_respond__f2ptype__cause__set_t* packet);
 
-void funk2_node__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, f2ptr value);
+void funk2_node__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value);
 void f2ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value);
 
 
@@ -533,12 +533,12 @@ struct pcs_respond__f2integer__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2integer__new_s pcs_respond__f2integer__new_t;
 
-void send_packet__request__f2integer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 i);
+void send_packet__request__f2integer__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 i);
 void recv_packet__request__f2integer__new(funk2_node_t* funk2_node, pcs_request__f2integer__new_t* packet);
-void send_packet__respond__f2integer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2integer__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2integer__new(funk2_node_t* funk2_node, pcs_respond__f2integer__new_t* packet);
 
-f2ptr funk2_node__f2integer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 i);
+f2ptr funk2_node__f2integer__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 i);
 f2ptr f2integer__new(f2ptr cause, u64 i);
 
 
@@ -572,12 +572,12 @@ struct pcs_respond__f2integer__i_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2integer__i_s pcs_respond__f2integer__i_t;
 
-void send_packet__request__f2integer__i(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2integer__i(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2integer__i(funk2_node_t* funk2_node, pcs_request__f2integer__i_t* packet);
-void send_packet__respond__f2integer__i(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, s64 i);
+void send_packet__respond__f2integer__i(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, s64 i);
 void recv_packet__respond__f2integer__i(funk2_node_t* funk2_node, pcs_respond__f2integer__i_t* packet);
 
-s64 funk2_node__f2integer__i(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+s64 funk2_node__f2integer__i(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 s64 f2integer__i(f2ptr this, f2ptr cause);
 
 
@@ -611,12 +611,12 @@ struct pcs_respond__f2double__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2double__new_s pcs_respond__f2double__new_t;
 
-void send_packet__request__f2double__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, double d);
+void send_packet__request__f2double__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, double d);
 void recv_packet__request__f2double__new(funk2_node_t* funk2_node, pcs_request__f2double__new_t* packet);
-void send_packet__respond__f2double__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2double__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2double__new(funk2_node_t* funk2_node, pcs_respond__f2double__new_t* packet);
 
-f2ptr funk2_node__f2double__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, double d);
+f2ptr funk2_node__f2double__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, double d);
 f2ptr f2double__new(f2ptr cause, double d);
 
 
@@ -650,12 +650,12 @@ struct pcs_respond__f2double__d_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2double__d_s pcs_respond__f2double__d_t;
 
-void send_packet__request__f2double__d(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2double__d(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2double__d(funk2_node_t* funk2_node, pcs_request__f2double__d_t* packet);
-void send_packet__respond__f2double__d(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, double d);
+void send_packet__respond__f2double__d(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, double d);
 void recv_packet__respond__f2double__d(funk2_node_t* funk2_node, pcs_respond__f2double__d_t* packet);
 
-double funk2_node__f2double__d(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+double funk2_node__f2double__d(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 double f2double__d(f2ptr cause, f2ptr this);
 
 
@@ -689,12 +689,12 @@ struct pcs_respond__f2float__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2float__new_s pcs_respond__f2float__new_t;
 
-void send_packet__request__f2float__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, float f);
+void send_packet__request__f2float__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, float f);
 void recv_packet__request__f2float__new(funk2_node_t* funk2_node, pcs_request__f2float__new_t* packet);
-void send_packet__respond__f2float__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2float__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2float__new(funk2_node_t* funk2_node, pcs_respond__f2float__new_t* packet);
 
-f2ptr funk2_node__f2float__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, float f);
+f2ptr funk2_node__f2float__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, float f);
 f2ptr f2float__new(f2ptr cause, float f);
 
 
@@ -728,12 +728,12 @@ struct pcs_respond__f2float__f_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2float__f_s pcs_respond__f2float__f_t;
 
-void send_packet__request__f2float__f(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2float__f(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2float__f(funk2_node_t* funk2_node, pcs_request__f2float__f_t* packet);
-void send_packet__respond__f2float__f(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, float f);
+void send_packet__respond__f2float__f(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, float f);
 void recv_packet__respond__f2float__f(funk2_node_t* funk2_node, pcs_respond__f2float__f_t* packet);
 
-float funk2_node__f2float__f(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+float funk2_node__f2float__f(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 float f2float__f(f2ptr cause, f2ptr this);
 
 
@@ -765,12 +765,12 @@ struct pcs_respond__f2pointer__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2pointer__new_s pcs_respond__f2pointer__new_t;
 
-void send_packet__request__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, ptr p);
+void send_packet__request__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, ptr p);
 void recv_packet__request__f2pointer__new(funk2_node_t* funk2_node, pcs_request__f2pointer__new_t* packet);
-void send_packet__respond__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2pointer__new(funk2_node_t* funk2_node, pcs_respond__f2pointer__new_t* packet);
 
-f2ptr funk2_node__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, ptr p);
+f2ptr funk2_node__f2pointer__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, ptr p);
 f2ptr f2pointer__new(f2ptr cause, ptr p);
 
 
@@ -804,12 +804,12 @@ struct pcs_respond__f2pointer__p_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2pointer__p_s pcs_respond__f2pointer__p_t;
 
-void send_packet__request__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2pointer__p(funk2_node_t* funk2_node, pcs_request__f2pointer__p_t* packet);
-void send_packet__respond__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, ptr p);
+void send_packet__respond__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, ptr p);
 void recv_packet__respond__f2pointer__p(funk2_node_t* funk2_node, pcs_respond__f2pointer__p_t* packet);
 
-ptr funk2_node__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+ptr funk2_node__f2pointer__p(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 ptr f2pointer__p(f2ptr this, f2ptr cause);
 
 
@@ -845,12 +845,12 @@ struct pcs_respond__f2gfunkptr__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2gfunkptr__new_s pcs_respond__f2gfunkptr__new_t;
 
-void send_packet__request__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address);
+void send_packet__request__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address);
 void recv_packet__request__f2gfunkptr__new(funk2_node_t* funk2_node, pcs_request__f2gfunkptr__new_t* packet);
-void send_packet__respond__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2gfunkptr__new(funk2_node_t* funk2_node, pcs_respond__f2gfunkptr__new_t* packet);
 
-f2ptr funk2_node__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address);
+f2ptr funk2_node__f2gfunkptr__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address);
 f2ptr f2gfunkptr__new(f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address);
 
 
@@ -884,12 +884,12 @@ struct pcs_respond__f2gfunkptr__new_from_f2ptr_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2gfunkptr__new_from_f2ptr_s pcs_respond__f2gfunkptr__new_from_f2ptr_t;
 
-void send_packet__request__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr f2p);
+void send_packet__request__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr f2p);
 void recv_packet__request__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, pcs_request__f2gfunkptr__new_from_f2ptr_t* packet);
-void send_packet__respond__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new_from_f2ptr);
+void send_packet__respond__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new_from_f2ptr);
 void recv_packet__respond__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, pcs_respond__f2gfunkptr__new_from_f2ptr_t* packet);
 
-f2ptr funk2_node__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr f2p);
+f2ptr funk2_node__f2gfunkptr__new_from_f2ptr(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr f2p);
 f2ptr f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p);
 
 
@@ -923,12 +923,12 @@ struct pcs_respond__f2gfunkptr__gfunkptr_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2gfunkptr__gfunkptr_s pcs_respond__f2gfunkptr__gfunkptr_t;
 
-void send_packet__request__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, pcs_request__f2gfunkptr__gfunkptr_t* packet);
-void send_packet__respond__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr gfunkptr);
+void send_packet__respond__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr gfunkptr);
 void recv_packet__respond__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, pcs_respond__f2gfunkptr__gfunkptr_t* packet);
 
-f2ptr funk2_node__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+f2ptr funk2_node__f2gfunkptr__gfunkptr(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 f2ptr f2gfunkptr__gfunkptr(f2ptr cause, f2ptr this);
 
 
@@ -962,12 +962,12 @@ struct pcs_respond__f2gfunkptr__computer_id_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2gfunkptr__computer_id_s pcs_respond__f2gfunkptr__computer_id_t;
 
-void send_packet__request__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2gfunkptr__computer_id(funk2_node_t* funk2_node, pcs_request__f2gfunkptr__computer_id_t* packet);
-void send_packet__respond__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, computer_id_t computer_id);
+void send_packet__respond__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, computer_id_t computer_id);
 void recv_packet__respond__f2gfunkptr__computer_id(funk2_node_t* funk2_node, pcs_respond__f2gfunkptr__computer_id_t* packet);
 
-computer_id_t funk2_node__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+computer_id_t funk2_node__f2gfunkptr__computer_id(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 computer_id_t f2gfunkptr__computer_id(f2ptr cause, f2ptr this);
 
 
@@ -1001,12 +1001,12 @@ struct pcs_respond__f2gfunkptr__pool_index_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2gfunkptr__pool_index_s pcs_respond__f2gfunkptr__pool_index_t;
 
-void send_packet__request__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2gfunkptr__pool_index(funk2_node_t* funk2_node, pcs_request__f2gfunkptr__pool_index_t* packet);
-void send_packet__respond__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, pool_index_t pool_index);
+void send_packet__respond__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, pool_index_t pool_index);
 void recv_packet__respond__f2gfunkptr__pool_index(funk2_node_t* funk2_node, pcs_respond__f2gfunkptr__pool_index_t* packet);
 
-pool_index_t funk2_node__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+pool_index_t funk2_node__f2gfunkptr__pool_index(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 pool_index_t f2gfunkptr__pool_index(f2ptr cause, f2ptr this);
 
 
@@ -1040,12 +1040,12 @@ struct pcs_respond__f2gfunkptr__pool_address_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2gfunkptr__pool_address_s pcs_respond__f2gfunkptr__pool_address_t;
 
-void send_packet__request__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2gfunkptr__pool_address(funk2_node_t* funk2_node, pcs_request__f2gfunkptr__pool_address_t* packet);
-void send_packet__respond__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, pool_address_t pool_address);
+void send_packet__respond__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, pool_address_t pool_address);
 void recv_packet__respond__f2gfunkptr__pool_address(funk2_node_t* funk2_node, pcs_respond__f2gfunkptr__pool_address_t* packet);
 
-pool_address_t funk2_node__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+pool_address_t funk2_node__f2gfunkptr__pool_address(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 pool_address_t f2gfunkptr__pool_address(f2ptr cause, f2ptr this);
 
 
@@ -1078,12 +1078,12 @@ struct pcs_respond__f2mutex__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2mutex__new_s pcs_respond__f2mutex__new_t;
 
-void send_packet__request__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__request__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__request__f2mutex__new(funk2_node_t* funk2_node, pcs_request__f2mutex__new_t* packet);
-void send_packet__respond__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2mutex__new(funk2_node_t* funk2_node, pcs_respond__f2mutex__new_t* packet);
 
-f2ptr funk2_node__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+f2ptr funk2_node__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 f2ptr f2mutex__new(f2ptr cause);
 
 
@@ -1117,12 +1117,12 @@ struct pcs_respond__f2mutex__is_locked_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2mutex__is_locked_s pcs_respond__f2mutex__is_locked_t;
 
-void send_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2mutex__is_locked_t* packet);
-void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, boolean_t is_locked);
+void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked);
 void recv_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2mutex__is_locked_t* packet);
 
-boolean_t funk2_node__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+boolean_t funk2_node__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 boolean_t f2mutex__is_locked(f2ptr this, f2ptr cause);
 
 
@@ -1155,12 +1155,12 @@ struct pcs_respond__f2mutex__lock_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2mutex__lock_s pcs_respond__f2mutex__lock_t;
 
-void send_packet__request__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2mutex__lock(funk2_node_t* funk2_node, pcs_request__f2mutex__lock_t* packet);
-void send_packet__respond__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2mutex__lock(funk2_node_t* funk2_node, pcs_respond__f2mutex__lock_t* packet);
 
-void funk2_node__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void funk2_node__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void f2mutex__lock(f2ptr this, f2ptr cause);
 
 
@@ -1193,12 +1193,12 @@ struct pcs_respond__f2mutex__unlock_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2mutex__unlock_s pcs_respond__f2mutex__unlock_t;
 
-void send_packet__request__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2mutex__unlock(funk2_node_t* funk2_node, pcs_request__f2mutex__unlock_t* packet);
-void send_packet__respond__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2mutex__unlock(funk2_node_t* funk2_node, pcs_respond__f2mutex__unlock_t* packet);
 
-void funk2_node__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void funk2_node__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void f2mutex__unlock(f2ptr this, f2ptr cause);
 
 
@@ -1232,12 +1232,12 @@ struct pcs_respond__f2mutex__trylock_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2mutex__trylock_s pcs_respond__f2mutex__trylock_t;
 
-void send_packet__request__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2mutex__trylock(funk2_node_t* funk2_node, pcs_request__f2mutex__trylock_t* packet);
-void send_packet__respond__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, int trylock);
+void send_packet__respond__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock);
 void recv_packet__respond__f2mutex__trylock(funk2_node_t* funk2_node, pcs_respond__f2mutex__trylock_t* packet);
 
-int funk2_node__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+int funk2_node__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 int f2mutex__trylock(f2ptr this, f2ptr cause);
 
 
@@ -1271,12 +1271,12 @@ struct pcs_respond__f2char__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2char__new_s pcs_respond__f2char__new_t;
 
-void send_packet__request__f2char__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 ch);
+void send_packet__request__f2char__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 ch);
 void recv_packet__request__f2char__new(funk2_node_t* funk2_node, pcs_request__f2char__new_t* packet);
-void send_packet__respond__f2char__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2char__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2char__new(funk2_node_t* funk2_node, pcs_respond__f2char__new_t* packet);
 
-f2ptr funk2_node__f2char__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 ch);
+f2ptr funk2_node__f2char__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 ch);
 f2ptr f2char__new(f2ptr cause, u64 ch);
 
 
@@ -1310,12 +1310,12 @@ struct pcs_respond__f2char__ch_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2char__ch_s pcs_respond__f2char__ch_t;
 
-void send_packet__request__f2char__ch(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2char__ch(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2char__ch(funk2_node_t* funk2_node, pcs_request__f2char__ch_t* packet);
-void send_packet__respond__f2char__ch(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 ch);
+void send_packet__respond__f2char__ch(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 ch);
 void recv_packet__respond__f2char__ch(funk2_node_t* funk2_node, pcs_respond__f2char__ch_t* packet);
 
-u64 funk2_node__f2char__ch(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2char__ch(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2char__ch(f2ptr this, f2ptr cause);
 
 
@@ -1350,12 +1350,12 @@ struct pcs_respond__f2string__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2string__new_s pcs_respond__f2string__new_t;
 
-void send_packet__request__f2string__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, u8* init);
+void send_packet__request__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
 void recv_packet__request__f2string__new(funk2_node_t* funk2_node, pcs_request__f2string__new_t* packet);
-void send_packet__respond__f2string__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2string__new(funk2_node_t* funk2_node, pcs_respond__f2string__new_t* packet);
 
-f2ptr funk2_node__f2string__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, u8* init);
+f2ptr funk2_node__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
 f2ptr f2string__new(f2ptr cause, u64 length, u8* init);
 
 
@@ -1389,12 +1389,12 @@ struct pcs_respond__f2string__length_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2string__length_s pcs_respond__f2string__length_t;
 
-void send_packet__request__f2string__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2string__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2string__length(funk2_node_t* funk2_node, pcs_request__f2string__length_t* packet);
-void send_packet__respond__f2string__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length);
+void send_packet__respond__f2string__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length);
 void recv_packet__respond__f2string__length(funk2_node_t* funk2_node, pcs_respond__f2string__length_t* packet);
 
-u64 funk2_node__f2string__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2string__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2string__length(f2ptr this, f2ptr cause);
 
 
@@ -1428,12 +1428,12 @@ struct pcs_respond__f2string__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2string__elt_s pcs_respond__f2string__elt_t;
 
-void send_packet__request__f2string__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int index);
+void send_packet__request__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 void recv_packet__request__f2string__elt(funk2_node_t* funk2_node, pcs_request__f2string__elt_t* packet);
-void send_packet__respond__f2string__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 elt);
+void send_packet__respond__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 elt);
 void recv_packet__respond__f2string__elt(funk2_node_t* funk2_node, pcs_respond__f2string__elt_t* packet);
 
-u8 funk2_node__f2string__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int index);
+u8 funk2_node__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 u8 f2string__elt(f2ptr this, int index, f2ptr cause);
 
 
@@ -1467,12 +1467,12 @@ struct pcs_respond__f2string__str_copy_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2string__str_copy_s pcs_respond__f2string__str_copy_t;
 
-void send_packet__request__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2string__str_copy(funk2_node_t* funk2_node, pcs_request__f2string__str_copy_t* packet);
-void send_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8* str);
+void send_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8* str);
 void recv_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, pcs_respond__f2string__str_copy_t* packet);
 
-void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8* str);
+void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8* str);
 void f2string__str_copy(f2ptr this, f2ptr cause, u8* str);
 
 
@@ -1506,12 +1506,12 @@ struct pcs_respond__f2string__hash_value_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2string__hash_value_s pcs_respond__f2string__hash_value_t;
 
-void send_packet__request__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2string__hash_value(funk2_node_t* funk2_node, pcs_request__f2string__hash_value_t* packet);
-void send_packet__respond__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, int hash_value);
+void send_packet__respond__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int hash_value);
 void recv_packet__respond__f2string__hash_value(funk2_node_t* funk2_node, pcs_respond__f2string__hash_value_t* packet);
 
-int funk2_node__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+int funk2_node__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 int f2string__hash_value(f2ptr cause, f2ptr this);
 
 
@@ -1546,12 +1546,12 @@ struct pcs_respond__f2symbol__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2symbol__new_s pcs_respond__f2symbol__new_t;
 
-void send_packet__request__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, u8* init);
+void send_packet__request__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
 void recv_packet__request__f2symbol__new(funk2_node_t* funk2_node, pcs_request__f2symbol__new_t* packet);
-void send_packet__respond__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2symbol__new(funk2_node_t* funk2_node, pcs_respond__f2symbol__new_t* packet);
 
-f2ptr funk2_node__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, u8* init);
+f2ptr funk2_node__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
 f2ptr f2symbol__new(f2ptr cause, u64 length, u8* init);
 
 
@@ -1585,12 +1585,12 @@ struct pcs_respond__f2symbol__length_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2symbol__length_s pcs_respond__f2symbol__length_t;
 
-void send_packet__request__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2symbol__length(funk2_node_t* funk2_node, pcs_request__f2symbol__length_t* packet);
-void send_packet__respond__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length);
+void send_packet__respond__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length);
 void recv_packet__respond__f2symbol__length(funk2_node_t* funk2_node, pcs_respond__f2symbol__length_t* packet);
 
-u64 funk2_node__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2symbol__length(f2ptr this, f2ptr cause);
 
 
@@ -1624,12 +1624,12 @@ struct pcs_respond__f2symbol__hash_value_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2symbol__hash_value_s pcs_respond__f2symbol__hash_value_t;
 
-void send_packet__request__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2symbol__hash_value(funk2_node_t* funk2_node, pcs_request__f2symbol__hash_value_t* packet);
-void send_packet__respond__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 hash_value);
+void send_packet__respond__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 hash_value);
 void recv_packet__respond__f2symbol__hash_value(funk2_node_t* funk2_node, pcs_respond__f2symbol__hash_value_t* packet);
 
-u64 funk2_node__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2symbol__hash_value(f2ptr this, f2ptr cause);
 
 
@@ -1664,12 +1664,12 @@ struct pcs_respond__f2symbol__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2symbol__elt_s pcs_respond__f2symbol__elt_t;
 
-void send_packet__request__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int index);
+void send_packet__request__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 void recv_packet__request__f2symbol__elt(funk2_node_t* funk2_node, pcs_request__f2symbol__elt_t* packet);
-void send_packet__respond__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 elt);
+void send_packet__respond__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 elt);
 void recv_packet__respond__f2symbol__elt(funk2_node_t* funk2_node, pcs_respond__f2symbol__elt_t* packet);
 
-u8 funk2_node__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int index);
+u8 funk2_node__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 u8 f2symbol__elt(f2ptr this, int index, f2ptr cause);
 
 
@@ -1703,12 +1703,12 @@ struct pcs_respond__f2symbol__str_copy_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2symbol__str_copy_s pcs_respond__f2symbol__str_copy_t;
 
-void send_packet__request__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2symbol__str_copy(funk2_node_t* funk2_node, pcs_request__f2symbol__str_copy_t* packet);
-void send_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8* str);
+void send_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8* str);
 void recv_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, pcs_respond__f2symbol__str_copy_t* packet);
 
-void funk2_node__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8* str);
+void funk2_node__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8* str);
 void f2symbol__str_copy(f2ptr cause, f2ptr this, u8* str);
 
 
@@ -1743,12 +1743,12 @@ struct pcs_respond__f2chunk__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__new_s pcs_respond__f2chunk__new_t;
 
-void send_packet__request__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, byte* bytes);
+void send_packet__request__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, byte* bytes);
 void recv_packet__request__f2chunk__new(funk2_node_t* funk2_node, pcs_request__f2chunk__new_t* packet);
-void send_packet__respond__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2chunk__new(funk2_node_t* funk2_node, pcs_respond__f2chunk__new_t* packet);
 
-f2ptr funk2_node__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, byte* bytes);
+f2ptr funk2_node__f2chunk__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, byte* bytes);
 f2ptr f2chunk__new(f2ptr cause, u64 length, byte* bytes);
 
 
@@ -1782,12 +1782,12 @@ struct pcs_respond__f2chunk__new_copy_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__new_copy_s pcs_respond__f2chunk__new_copy_t;
 
-void send_packet__request__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr init_chunk);
+void send_packet__request__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr init_chunk);
 void recv_packet__request__f2chunk__new_copy(funk2_node_t* funk2_node, pcs_request__f2chunk__new_copy_t* packet);
-void send_packet__respond__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new_copy);
+void send_packet__respond__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new_copy);
 void recv_packet__respond__f2chunk__new_copy(funk2_node_t* funk2_node, pcs_respond__f2chunk__new_copy_t* packet);
 
-f2ptr funk2_node__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr init_chunk);
+f2ptr funk2_node__f2chunk__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr init_chunk);
 f2ptr f2chunk__new_copy(f2ptr cause, f2ptr init_chunk);
 
 
@@ -1821,12 +1821,12 @@ struct pcs_respond__f2chunk__length_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__length_s pcs_respond__f2chunk__length_t;
 
-void send_packet__request__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2chunk__length(funk2_node_t* funk2_node, pcs_request__f2chunk__length_t* packet);
-void send_packet__respond__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length);
+void send_packet__respond__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length);
 void recv_packet__respond__f2chunk__length(funk2_node_t* funk2_node, pcs_respond__f2chunk__length_t* packet);
 
-u64 funk2_node__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2chunk__length(f2ptr cause, f2ptr this);
 
 
@@ -1861,12 +1861,12 @@ struct pcs_respond__f2chunk__bit8__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit8__elt_s pcs_respond__f2chunk__bit8__elt_t;
 
-void send_packet__request__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2chunk__bit8__elt(funk2_node_t* funk2_node, pcs_request__f2chunk__bit8__elt_t* packet);
-void send_packet__respond__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 elt);
+void send_packet__respond__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 elt);
 void recv_packet__respond__f2chunk__bit8__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit8__elt_t* packet);
 
-u8 funk2_node__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+u8 funk2_node__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 u8 f2chunk__bit8__elt(f2ptr cause, f2ptr this, u64 index);
 
 
@@ -1901,12 +1901,12 @@ struct pcs_respond__f2chunk__bit8__elt__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit8__elt__set_s pcs_respond__f2chunk__bit8__elt__set_t;
 
-void send_packet__request__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u8 value);
+void send_packet__request__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u8 value);
 void recv_packet__request__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, pcs_request__f2chunk__bit8__elt__set_t* packet);
-void send_packet__respond__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit8__elt__set_t* packet);
 
-void funk2_node__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u8 value);
+void funk2_node__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u8 value);
 void f2chunk__bit8__elt__set(f2ptr cause, f2ptr this, u64 index, u8 value);
 
 
@@ -1941,12 +1941,12 @@ struct pcs_respond__f2chunk__bit16__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit16__elt_s pcs_respond__f2chunk__bit16__elt_t;
 
-void send_packet__request__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2chunk__bit16__elt(funk2_node_t* funk2_node, pcs_request__f2chunk__bit16__elt_t* packet);
-void send_packet__respond__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u16 elt);
+void send_packet__respond__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u16 elt);
 void recv_packet__respond__f2chunk__bit16__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit16__elt_t* packet);
 
-u16 funk2_node__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+u16 funk2_node__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 u16 f2chunk__bit16__elt(f2ptr cause, f2ptr this, u64 index);
 
 
@@ -1981,12 +1981,12 @@ struct pcs_respond__f2chunk__bit16__elt__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit16__elt__set_s pcs_respond__f2chunk__bit16__elt__set_t;
 
-void send_packet__request__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u16 value);
+void send_packet__request__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u16 value);
 void recv_packet__request__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, pcs_request__f2chunk__bit16__elt__set_t* packet);
-void send_packet__respond__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit16__elt__set_t* packet);
 
-void funk2_node__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u16 value);
+void funk2_node__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u16 value);
 void f2chunk__bit16__elt__set(f2ptr cause, f2ptr this, u64 index, u16 value);
 
 
@@ -2021,12 +2021,12 @@ struct pcs_respond__f2chunk__bit32__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit32__elt_s pcs_respond__f2chunk__bit32__elt_t;
 
-void send_packet__request__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2chunk__bit32__elt(funk2_node_t* funk2_node, pcs_request__f2chunk__bit32__elt_t* packet);
-void send_packet__respond__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u32 elt);
+void send_packet__respond__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 elt);
 void recv_packet__respond__f2chunk__bit32__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit32__elt_t* packet);
 
-u32 funk2_node__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+u32 funk2_node__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 u32 f2chunk__bit32__elt(f2ptr cause, f2ptr this, u64 index);
 
 
@@ -2061,12 +2061,12 @@ struct pcs_respond__f2chunk__bit32__elt__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit32__elt__set_s pcs_respond__f2chunk__bit32__elt__set_t;
 
-void send_packet__request__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u32 value);
+void send_packet__request__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u32 value);
 void recv_packet__request__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, pcs_request__f2chunk__bit32__elt__set_t* packet);
-void send_packet__respond__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit32__elt__set_t* packet);
 
-void funk2_node__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u32 value);
+void funk2_node__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u32 value);
 void f2chunk__bit32__elt__set(f2ptr cause, f2ptr this, u64 index, u32 value);
 
 
@@ -2101,12 +2101,12 @@ struct pcs_respond__f2chunk__bit64__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit64__elt_s pcs_respond__f2chunk__bit64__elt_t;
 
-void send_packet__request__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2chunk__bit64__elt(funk2_node_t* funk2_node, pcs_request__f2chunk__bit64__elt_t* packet);
-void send_packet__respond__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 elt);
+void send_packet__respond__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 elt);
 void recv_packet__respond__f2chunk__bit64__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit64__elt_t* packet);
 
-u64 funk2_node__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+u64 funk2_node__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 u64 f2chunk__bit64__elt(f2ptr cause, f2ptr this, u64 index);
 
 
@@ -2141,23 +2141,23 @@ struct pcs_respond__f2chunk__bit64__elt__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bit64__elt__set_s pcs_respond__f2chunk__bit64__elt__set_t;
 
-void send_packet__request__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 value);
+void send_packet__request__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u64 value);
 void recv_packet__request__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, pcs_request__f2chunk__bit64__elt__set_t* packet);
-void send_packet__respond__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit64__elt__set_t* packet);
 
-void funk2_node__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 value);
+void funk2_node__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u64 value);
 void f2chunk__bit64__elt__set(f2ptr cause, f2ptr this, u64 index, u64 value);
 
 
-//  funk2_packet_type__pcs_request__f2chunk__cfunk_jump                        = 0x34, //f2ptr            (f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args);
+//  funk2_packet_type__pcs_request__f2chunk__cfunk_jump                        = 0x34, //f2ptr            (f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
 
 // request f2chunk__cfunk_jump
 
 struct pcs_packet_payload_request__f2chunk__cfunk_jump_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
-  f2ptr                                              thread;
+  f2ptr                                              fiber;
   f2ptr                                              env;
   f2ptr                                              args;
 } __attribute__((__packed__));
@@ -2183,23 +2183,23 @@ struct pcs_respond__f2chunk__cfunk_jump_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__cfunk_jump_s pcs_respond__f2chunk__cfunk_jump_t;
 
-void send_packet__request__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args);
+void send_packet__request__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
 void recv_packet__request__f2chunk__cfunk_jump(funk2_node_t* funk2_node, pcs_request__f2chunk__cfunk_jump_t* packet);
-void send_packet__respond__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr cfunk_jump_return);
+void send_packet__respond__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr cfunk_jump_return);
 void recv_packet__respond__f2chunk__cfunk_jump(funk2_node_t* funk2_node, pcs_respond__f2chunk__cfunk_jump_t* packet);
 
-f2ptr funk2_node__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args);
-f2ptr f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr thread, f2ptr env, f2ptr args);
+f2ptr funk2_node__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
+f2ptr f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
 
 
-//  funk2_packet_type__pcs_request__f2chunk__bytecode_jump                     = 0x35, //int              (f2ptr cause, f2ptr this, f2ptr thread);
+//  funk2_packet_type__pcs_request__f2chunk__bytecode_jump                     = 0x35, //int              (f2ptr cause, f2ptr this, f2ptr fiber);
 
 // request f2chunk__bytecode_jump
 
 struct pcs_packet_payload_request__f2chunk__bytecode_jump_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
-  f2ptr                                              thread;
+  f2ptr                                              fiber;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2chunk__bytecode_jump_s pcs_packet_payload_request__f2chunk__bytecode_jump_t;
 
@@ -2223,13 +2223,13 @@ struct pcs_respond__f2chunk__bytecode_jump_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__bytecode_jump_s pcs_respond__f2chunk__bytecode_jump_t;
 
-void send_packet__request__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, f2ptr thread);
+void send_packet__request__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber);
 void recv_packet__request__f2chunk__bytecode_jump(funk2_node_t* funk2_node, pcs_request__f2chunk__bytecode_jump_t* packet);
-void send_packet__respond__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, int bytecode_jump_return);
+void send_packet__respond__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int bytecode_jump_return);
 void recv_packet__respond__f2chunk__bytecode_jump(funk2_node_t* funk2_node, pcs_respond__f2chunk__bytecode_jump_t* packet);
 
-int funk2_node__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, f2ptr thread);
-int f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr thread);
+int funk2_node__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber);
+int f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__send                              = 0x36, //f2ptr            (f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
@@ -2266,12 +2266,12 @@ struct pcs_respond__f2chunk__send_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__send_s pcs_respond__f2chunk__send_t;
 
-void send_packet__request__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
+void send_packet__request__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
 void recv_packet__request__f2chunk__send(funk2_node_t* funk2_node, pcs_request__f2chunk__send_t* packet);
-void send_packet__respond__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr send_return);
+void send_packet__respond__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr send_return);
 void recv_packet__respond__f2chunk__send(funk2_node_t* funk2_node, pcs_respond__f2chunk__send_t* packet);
 
-f2ptr funk2_node__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
+f2ptr funk2_node__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
 f2ptr f2chunk__send(f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
 
 
@@ -2309,12 +2309,12 @@ struct pcs_respond__f2chunk__recv_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2chunk__recv_s pcs_respond__f2chunk__recv_t;
 
-void send_packet__request__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
+void send_packet__request__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
 void recv_packet__request__f2chunk__recv(funk2_node_t* funk2_node, pcs_request__f2chunk__recv_t* packet);
-void send_packet__respond__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr recv_return);
+void send_packet__respond__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr recv_return);
 void recv_packet__respond__f2chunk__recv(funk2_node_t* funk2_node, pcs_respond__f2chunk__recv_t* packet);
 
-f2ptr funk2_node__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
+f2ptr funk2_node__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
 f2ptr f2chunk__recv(f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
 
 
@@ -2350,12 +2350,12 @@ struct pcs_respond__f2simple_array__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__new_s pcs_respond__f2simple_array__new_t;
 
-void send_packet__request__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, ptr f2ptr_array);
+void send_packet__request__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, ptr f2ptr_array);
 void recv_packet__request__f2simple_array__new(funk2_node_t* funk2_node, pcs_request__f2simple_array__new_t* packet);
-void send_packet__respond__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2simple_array__new(funk2_node_t* funk2_node, pcs_respond__f2simple_array__new_t* packet);
 
-f2ptr funk2_node__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, ptr f2ptr_array);
+f2ptr funk2_node__f2simple_array__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, ptr f2ptr_array);
 f2ptr f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_array);
 
 
@@ -2390,12 +2390,12 @@ struct pcs_respond__f2simple_array__new_copy_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__new_copy_s pcs_respond__f2simple_array__new_copy_t;
 
-void send_packet__request__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, f2ptr init_array);
+void send_packet__request__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, f2ptr init_array);
 void recv_packet__request__f2simple_array__new_copy(funk2_node_t* funk2_node, pcs_request__f2simple_array__new_copy_t* packet);
-void send_packet__respond__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new_copy);
+void send_packet__respond__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new_copy);
 void recv_packet__respond__f2simple_array__new_copy(funk2_node_t* funk2_node, pcs_respond__f2simple_array__new_copy_t* packet);
 
-f2ptr funk2_node__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, f2ptr init_array);
+f2ptr funk2_node__f2simple_array__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, f2ptr init_array);
 f2ptr f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
 
 
@@ -2429,12 +2429,12 @@ struct pcs_respond__f2simple_array__immutable_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__immutable_s pcs_respond__f2simple_array__immutable_t;
 
-void send_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2simple_array__immutable(funk2_node_t* funk2_node, pcs_request__f2simple_array__immutable_t* packet);
-void send_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 immutable);
+void send_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 immutable);
 void recv_packet__respond__f2simple_array__immutable(funk2_node_t* funk2_node, pcs_respond__f2simple_array__immutable_t* packet);
 
-f2ptr funk2_node__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+f2ptr funk2_node__f2simple_array__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 f2ptr f2simple_array__immutable(f2ptr this, f2ptr cause);
 
 
@@ -2468,12 +2468,12 @@ struct pcs_respond__f2simple_array__immutable__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__immutable__set_s pcs_respond__f2simple_array__immutable__set_t;
 
-void send_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void send_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8 value);
 void recv_packet__request__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__immutable__set_t* packet);
-void send_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2simple_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__immutable__set_t* packet);
 
-void funk2_node__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void funk2_node__f2simple_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8 value);
 void f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
 
 
@@ -2507,12 +2507,12 @@ struct pcs_respond__f2simple_array__length_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__length_s pcs_respond__f2simple_array__length_t;
 
-void send_packet__request__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2simple_array__length(funk2_node_t* funk2_node, pcs_request__f2simple_array__length_t* packet);
-void send_packet__respond__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length);
+void send_packet__respond__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length);
 void recv_packet__respond__f2simple_array__length(funk2_node_t* funk2_node, pcs_respond__f2simple_array__length_t* packet);
 
-u64 funk2_node__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2simple_array__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2simple_array__length(f2ptr this, f2ptr cause);
 
 
@@ -2547,12 +2547,12 @@ struct pcs_respond__f2simple_array__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__elt_s pcs_respond__f2simple_array__elt_t;
 
-void send_packet__request__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2simple_array__elt(funk2_node_t* funk2_node, pcs_request__f2simple_array__elt_t* packet);
-void send_packet__respond__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr elt);
+void send_packet__respond__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr elt);
 void recv_packet__respond__f2simple_array__elt(funk2_node_t* funk2_node, pcs_respond__f2simple_array__elt_t* packet);
 
-f2ptr funk2_node__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+f2ptr funk2_node__f2simple_array__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 f2ptr f2simple_array__elt(f2ptr this, u64 index, f2ptr cause);
 
 
@@ -2587,12 +2587,12 @@ struct pcs_respond__f2simple_array__elt__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__elt__set_s pcs_respond__f2simple_array__elt__set_t;
 
-void send_packet__request__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void send_packet__request__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void recv_packet__request__f2simple_array__elt__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__elt__set_t* packet);
-void send_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__elt__set_t* packet);
 
-void funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
@@ -2628,12 +2628,12 @@ struct pcs_respond__f2traced_array__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__new_s pcs_respond__f2traced_array__new_t;
 
-void send_packet__request__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, ptr dptr_array);
+void send_packet__request__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, ptr dptr_array);
 void recv_packet__request__f2traced_array__new(funk2_node_t* funk2_node, pcs_request__f2traced_array__new_t* packet);
-void send_packet__respond__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2traced_array__new(funk2_node_t* funk2_node, pcs_respond__f2traced_array__new_t* packet);
 
-f2ptr funk2_node__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, ptr dptr_array);
+f2ptr funk2_node__f2traced_array__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, ptr dptr_array);
 f2ptr f2traced_array__new(f2ptr cause, u64 length, ptr dptr_array);
 
 
@@ -2668,12 +2668,12 @@ struct pcs_respond__f2traced_array__new_copy_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__new_copy_s pcs_respond__f2traced_array__new_copy_t;
 
-void send_packet__request__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, f2ptr init_array);
+void send_packet__request__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, f2ptr init_array);
 void recv_packet__request__f2traced_array__new_copy(funk2_node_t* funk2_node, pcs_request__f2traced_array__new_copy_t* packet);
-void send_packet__respond__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new_copy);
+void send_packet__respond__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new_copy);
 void recv_packet__respond__f2traced_array__new_copy(funk2_node_t* funk2_node, pcs_respond__f2traced_array__new_copy_t* packet);
 
-f2ptr funk2_node__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length, f2ptr init_array);
+f2ptr funk2_node__f2traced_array__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, f2ptr init_array);
 f2ptr f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
 
 
@@ -2707,12 +2707,12 @@ struct pcs_respond__f2traced_array__immutable_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__immutable_s pcs_respond__f2traced_array__immutable_t;
 
-void send_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2traced_array__immutable(funk2_node_t* funk2_node, pcs_request__f2traced_array__immutable_t* packet);
-void send_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u8 immutable);
+void send_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 immutable);
 void recv_packet__respond__f2traced_array__immutable(funk2_node_t* funk2_node, pcs_respond__f2traced_array__immutable_t* packet);
 
-f2ptr funk2_node__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+f2ptr funk2_node__f2traced_array__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 f2ptr f2traced_array__immutable(f2ptr this, f2ptr cause);
 
 
@@ -2746,12 +2746,12 @@ struct pcs_respond__f2traced_array__immutable__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__immutable__set_s pcs_respond__f2traced_array__immutable__set_t;
 
-void send_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void send_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8 value);
 void recv_packet__request__f2traced_array__immutable__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__immutable__set_t* packet);
-void send_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2traced_array__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__immutable__set_t* packet);
 
-void funk2_node__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u8 value);
+void funk2_node__f2traced_array__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8 value);
 void f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
 
 
@@ -2785,12 +2785,12 @@ struct pcs_respond__f2traced_array__length_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__length_s pcs_respond__f2traced_array__length_t;
 
-void send_packet__request__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2traced_array__length(funk2_node_t* funk2_node, pcs_request__f2traced_array__length_t* packet);
-void send_packet__respond__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u64 length);
+void send_packet__respond__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length);
 void recv_packet__respond__f2traced_array__length(funk2_node_t* funk2_node, pcs_respond__f2traced_array__length_t* packet);
 
-u64 funk2_node__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u64 funk2_node__f2traced_array__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u64 f2traced_array__length(f2ptr this, f2ptr cause);
 
 
@@ -2829,12 +2829,12 @@ struct pcs_respond__f2traced_array__elt__trace_depth_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__trace_depth_s pcs_respond__f2traced_array__elt__trace_depth_t;
 
-void send_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 trace_depth);
+void send_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u64 trace_depth);
 void recv_packet__request__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__trace_depth_t* packet);
-void send_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr elt);
+void send_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr elt);
 void recv_packet__respond__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__trace_depth_t* packet);
 
-f2ptr funk2_node__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, u64 trace_depth);
+f2ptr funk2_node__f2traced_array__elt__trace_depth(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u64 trace_depth);
 f2ptr f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, u64 trace_depth);
 
 
@@ -2871,12 +2871,12 @@ struct pcs_respond__f2traced_array__elt_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt_s pcs_respond__f2traced_array__elt_t;
 
-void send_packet__request__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2traced_array__elt(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt_t* packet);
-void send_packet__respond__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr elt);
+void send_packet__respond__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr elt);
 void recv_packet__respond__f2traced_array__elt(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt_t* packet);
 
-f2ptr funk2_node__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+f2ptr funk2_node__f2traced_array__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 f2ptr f2traced_array__elt(f2ptr this, u64 index, f2ptr cause);
 
 
@@ -2912,12 +2912,12 @@ struct pcs_respond__f2traced_array__elt__set__trace_depth_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__set__trace_depth_s pcs_respond__f2traced_array__elt__set__trace_depth_t;
 
-void send_packet__request__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);
+void send_packet__request__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);
 void recv_packet__request__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__set__trace_depth_t* packet);
-void send_packet__respond__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__set__trace_depth_t* packet);
 
-void funk2_node__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);
+void funk2_node__f2traced_array__elt__set__trace_depth(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);
 void f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f2ptr value, int trace_depth);
 
 
@@ -2952,12 +2952,12 @@ struct pcs_respond__f2traced_array__elt__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__set_s pcs_respond__f2traced_array__elt__set_t;
 
-void send_packet__request__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void send_packet__request__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void recv_packet__request__f2traced_array__elt__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__set_t* packet);
-void send_packet__respond__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2traced_array__elt__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__set_t* packet);
 
-void funk2_node__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void funk2_node__f2traced_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
@@ -2992,12 +2992,12 @@ struct pcs_respond__f2traced_array__elt__tracing_on_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__tracing_on_s pcs_respond__f2traced_array__elt__tracing_on_t;
 
-void send_packet__request__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__tracing_on_t* packet);
-void send_packet__respond__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr tracing_on);
+void send_packet__respond__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr tracing_on);
 void recv_packet__respond__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__tracing_on_t* packet);
 
-f2ptr funk2_node__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+f2ptr funk2_node__f2traced_array__elt__tracing_on(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 f2ptr f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause);
 
 
@@ -3032,12 +3032,12 @@ struct pcs_respond__f2traced_array__elt__tracing_on__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__tracing_on__set_s pcs_respond__f2traced_array__elt__tracing_on__set_t;
 
-void send_packet__request__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void send_packet__request__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void recv_packet__request__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__tracing_on__set_t* packet);
-void send_packet__respond__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__tracing_on__set_t* packet);
 
-void funk2_node__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void funk2_node__f2traced_array__elt__tracing_on__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
@@ -3073,12 +3073,12 @@ struct pcs_respond__f2traced_array__elt__trace_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__trace_s pcs_respond__f2traced_array__elt__trace_t;
 
-void send_packet__request__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2traced_array__elt__trace(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__trace_t* packet);
-void send_packet__respond__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr trace);
+void send_packet__respond__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr trace);
 void recv_packet__respond__f2traced_array__elt__trace(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__trace_t* packet);
 
-f2ptr funk2_node__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+f2ptr funk2_node__f2traced_array__elt__trace(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 f2ptr f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause);
 
 
@@ -3113,12 +3113,12 @@ struct pcs_respond__f2traced_array__elt__trace__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__trace__set_s pcs_respond__f2traced_array__elt__trace__set_t;
 
-void send_packet__request__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void send_packet__request__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void recv_packet__request__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__trace__set_t* packet);
-void send_packet__respond__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__trace__set_t* packet);
 
-void funk2_node__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void funk2_node__f2traced_array__elt__trace__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
@@ -3153,12 +3153,12 @@ struct pcs_respond__f2traced_array__elt__imagination_frame_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__imagination_frame_s pcs_respond__f2traced_array__elt__imagination_frame_t;
 
-void send_packet__request__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+void send_packet__request__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 void recv_packet__request__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__imagination_frame_t* packet);
-void send_packet__respond__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr imagination_frame);
+void send_packet__respond__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr imagination_frame);
 void recv_packet__respond__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__imagination_frame_t* packet);
 
-f2ptr funk2_node__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index);
+f2ptr funk2_node__f2traced_array__elt__imagination_frame(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
 f2ptr f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause);
 
 
@@ -3193,12 +3193,12 @@ struct pcs_respond__f2traced_array__elt__imagination_frame__set_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2traced_array__elt__imagination_frame__set_s pcs_respond__f2traced_array__elt__imagination_frame__set_t;
 
-void send_packet__request__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void send_packet__request__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void recv_packet__request__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__imagination_frame__set_t* packet);
-void send_packet__respond__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause);
+void send_packet__respond__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
 void recv_packet__respond__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__imagination_frame__set_t* packet);
 
-void funk2_node__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void funk2_node__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
@@ -3232,12 +3232,12 @@ struct pcs_respond__f2larva__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2larva__new_s pcs_respond__f2larva__new_t;
 
-void send_packet__request__f2larva__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u32 type);
+void send_packet__request__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type);
 void recv_packet__request__f2larva__new(funk2_node_t* funk2_node, pcs_request__f2larva__new_t* packet);
-void send_packet__respond__f2larva__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr new);
+void send_packet__respond__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2larva__new(funk2_node_t* funk2_node, pcs_respond__f2larva__new_t* packet);
 
-f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u32 type);
+f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type);
 f2ptr f2larva__new(f2ptr cause, u32 type);
 
 
@@ -3271,12 +3271,12 @@ struct pcs_respond__f2larva__type_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2larva__type_s pcs_respond__f2larva__type_t;
 
-void send_packet__request__f2larva__type(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+void send_packet__request__f2larva__type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2larva__type(funk2_node_t* funk2_node, pcs_request__f2larva__type_t* packet);
-void send_packet__respond__f2larva__type(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, u32 type);
+void send_packet__respond__f2larva__type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type);
 void recv_packet__respond__f2larva__type(funk2_node_t* funk2_node, pcs_respond__f2larva__type_t* packet);
 
-u32 funk2_node__f2larva__type(funk2_node_t* funk2_node, f2ptr this_thread, f2ptr cause, f2ptr this);
+u32 funk2_node__f2larva__type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u32 f2larva__type(f2ptr this, f2ptr cause);
 
 #define rf2_to_lf2(rf2) (funk2_node__remote_f2ptr_to_local_f2ptr(funk2_node, rf2))

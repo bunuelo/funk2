@@ -24,7 +24,7 @@
 void funk2_operating_system__init(funk2_operating_system_t* this) {
   int i;
   for (i = 0; i < memory_pool_num; i++) {
-    this->processor_thread__current_thread[i] = nil;
+    this->processor_thread__current_fiber[i] = nil;
   }
 }
 
@@ -36,104 +36,104 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
   return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
 }
 
-void f2__processor__add_active_thread__thread_unsafe(f2ptr cause, f2ptr this, f2ptr thread) {
-  f2ptr thread_cause = f2thread__cause_reg(thread, cause);
-  if (thread_cause) {
-    f2__cause__add_thread(cause, thread_cause, thread);
+void f2__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+  if (fiber_cause) {
+    f2__cause__add_fiber(cause, fiber_cause, fiber);
   }
-  //f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
-  //f2mutex__lock(active_threads_mutex, cause);
+  //f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  //f2mutex__lock(active_fibers_mutex, cause);
   pause_gc();
-  f2processor__active_threads__set(this, cause, f2cons__new(cause, thread, f2processor__active_threads(this, cause)));
+  f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
   resume_gc();
-  //f2mutex__unlock(active_threads_mutex, cause);
+  //f2mutex__unlock(active_fibers_mutex, cause);
 }
 
-void f2__processor__add_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
-  f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
-  f2mutex__lock(active_threads_mutex, cause);
-  f2__processor__add_active_thread__thread_unsafe(cause, this, thread);
-  f2mutex__unlock(active_threads_mutex, cause);
+void f2__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  f2mutex__lock(active_fibers_mutex, cause);
+  f2__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
+  f2mutex__unlock(active_fibers_mutex, cause);
 }
 
-boolean_t f2__processor__remove_active_thread__thread_unsafe(f2ptr cause, f2ptr this, f2ptr thread) {
-  f2ptr thread_cause = f2thread__cause_reg(thread, cause);
-  if (thread_cause) {
-    f2__cause__remove_thread(cause, thread_cause, thread);
+boolean_t f2__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+  if (fiber_cause) {
+    f2__cause__remove_fiber(cause, fiber_cause, fiber);
   }
-  boolean_t found_and_removed_thread = boolean__false;
-  //f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
-  //f2mutex__lock(active_threads_mutex, cause);
-  f2ptr active_threads_iter = f2processor__active_threads(this, cause);
-  f2ptr active_threads_prev = nil;
-  while (active_threads_iter) {
-    f2ptr active_thread       = f2cons__car(active_threads_iter, cause);
-    f2ptr active_threads_next = f2cons__cdr(active_threads_iter, cause);
-    if (thread == active_thread) {
-      if (active_threads_prev) {
-	f2cons__cdr__set(active_threads_prev, cause, active_threads_next);
+  boolean_t found_and_removed_fiber = boolean__false;
+  //f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  //f2mutex__lock(active_fibers_mutex, cause);
+  f2ptr active_fibers_iter = f2processor__active_fibers(this, cause);
+  f2ptr active_fibers_prev = nil;
+  while (active_fibers_iter) {
+    f2ptr active_fiber       = f2cons__car(active_fibers_iter, cause);
+    f2ptr active_fibers_next = f2cons__cdr(active_fibers_iter, cause);
+    if (fiber == active_fiber) {
+      if (active_fibers_prev) {
+	f2cons__cdr__set(active_fibers_prev, cause, active_fibers_next);
       } else {
-	f2processor__active_threads__set(this, cause, active_threads_next);
+	f2processor__active_fibers__set(this, cause, active_fibers_next);
       }
-      found_and_removed_thread = boolean__true;
+      found_and_removed_fiber = boolean__true;
     }
-    active_threads_iter = active_threads_next;
+    active_fibers_iter = active_fibers_next;
   }
-  //f2mutex__unlock(active_threads_mutex, cause);
-  return found_and_removed_thread;
+  //f2mutex__unlock(active_fibers_mutex, cause);
+  return found_and_removed_fiber;
 }
 
-boolean_t f2__processor__remove_active_thread(f2ptr cause, f2ptr this, f2ptr thread) {
-  f2ptr active_threads_mutex = f2processor__active_threads_mutex(this, cause);
-  f2mutex__lock(active_threads_mutex, cause);
-  boolean_t result = f2__processor__remove_active_thread__thread_unsafe(cause, this, thread);
-  f2mutex__unlock(active_threads_mutex, cause);
+boolean_t f2__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr active_fibers_mutex = f2processor__active_fibers_mutex(this, cause);
+  f2mutex__lock(active_fibers_mutex, cause);
+  boolean_t result = f2__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
+  f2mutex__unlock(active_fibers_mutex, cause);
   return result;
 }
 
-u64 raw__processor__active_threads__length(f2ptr cause, f2ptr processor) {
-  f2ptr processor__active_threads_mutex;
-  processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-  f2mutex__lock(processor__active_threads_mutex, cause);
-  f2ptr active_threads = f2processor__active_threads(processor, cause);
-  u64 thread_num = raw__length(cause, active_threads);
-  f2mutex__unlock(processor__active_threads_mutex, cause);
-  return thread_num;
+u64 raw__processor__active_fibers__length(f2ptr cause, f2ptr processor) {
+  f2ptr processor__active_fibers_mutex;
+  processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
+  f2mutex__lock(processor__active_fibers_mutex, cause);
+  f2ptr active_fibers = f2processor__active_fibers(processor, cause);
+  u64 fiber_num = raw__length(cause, active_fibers);
+  f2mutex__unlock(processor__active_fibers_mutex, cause);
+  return fiber_num;
 }
 
-f2ptr f2__scheduler__processor_with_fewest_threads(f2ptr cause, f2ptr scheduler) {
+f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) {
   f2ptr processors = f2scheduler__processors(scheduler, cause);
   u64 processors__length = raw__array__length(cause, processors);
   u64   min_length    = 0xffffffffffffffffull;
   f2ptr min_processor = nil;
   u64 i;
-  status("processor thread list:");
+  status("processor fiber list:");
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
-    f2ptr active_threads = f2processor__active_threads(processor, cause);
-    u64 threads__length = raw__length(cause, active_threads);
-    status("  processor pool_index=" s64__fstr " active_thread_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), threads__length);
-    if (threads__length < min_length) {
-      min_length = threads__length;
+    f2ptr active_fibers = f2processor__active_fibers(processor, cause);
+    u64 fibers__length = raw__length(cause, active_fibers);
+    status("  processor pool_index=" s64__fstr " active_fiber_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), fibers__length);
+    if (fibers__length < min_length) {
+      min_length = fibers__length;
       min_processor = processor;
     }
   }
   return min_processor;
 }
 
-void f2__global_scheduler__add_thread_serial(f2ptr cause, f2ptr thread) {
+void f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
   f2ptr processor = f2__global_scheduler__this_processor(cause);
-  f2__processor__add_active_thread(cause, processor, thread);
+  f2__processor__add_active_fiber(cause, processor, fiber);
 }
 
-void f2__scheduler__add_thread_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr thread) {
-  f2ptr processor = f2__scheduler__processor_with_fewest_threads(cause, this);
-  status("[adding thread to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
-  f2__processor__add_active_thread(cause, processor, thread);
+void f2__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr processor = f2__scheduler__processor_with_fewest_fibers(cause, this);
+  status("[adding fiber to least used processor " s64__fstr "]", f2integer__i(f2processor__pool_index(processor, cause), cause));
+  f2__processor__add_active_fiber(cause, processor, fiber);
 }
 
-void f2__global_scheduler__add_thread_parallel(f2ptr cause, f2ptr thread) {
-  f2__scheduler__add_thread_to_least_used_processor(cause, __funk2.operating_system.scheduler, thread);
+void f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
+  f2__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
 }
 
 //void f2__global_scheduler__execute_mutex__lock(f2ptr cause) {
@@ -144,25 +144,25 @@ void f2__global_scheduler__add_thread_parallel(f2ptr cause, f2ptr thread) {
 //  funk2_processor_mutex__unlock(&(__funk2.operating_system.scheduler__execute_mutex));
 //}
 
-f2ptr f2__scheduler__processor_thread_current_thread(int pool_index) {
-  f2ptr thread = __funk2.operating_system.processor_thread__current_thread[pool_index];
-  if (! thread) {
-    error(nil, "f2__scheduler__processor_thread_current_thread: thread=nil");
+f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
+  f2ptr fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
+  if (! fiber) {
+    error(nil, "f2__scheduler__processor_thread_current_fiber: fiber=nil");
   }
-  return thread;
+  return fiber;
 }
 
 
-void execute_next_bytecodes__helper__found_larva_in_thread(f2ptr cause, f2ptr thread) {
-  f2ptr larva = f2thread__value(thread, cause);
-  f2thread__paused__set(thread, cause, __funk2.globalenv.true__symbol);
-  f2ptr critics = f2thread__critics(thread, cause);
+void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fiber) {
+  f2ptr larva = f2fiber__value(fiber, cause);
+  f2fiber__paused__set(fiber, cause, __funk2.globalenv.true__symbol);
+  f2ptr critics = f2fiber__critics(fiber, cause);
   if (critics) {
     pause_gc();
-    f2thread__value__set(thread, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+    f2fiber__value__set(fiber, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
     resume_gc();
   } else {
-    f2thread__program_counter__set(thread, cause, nil);
+    f2fiber__program_counter__set(fiber, cause, nil);
   }
 }
 
@@ -174,7 +174,7 @@ typedef enum scheduler_fast_loop_exit_reason_e {
   exit_reason__found_larva
 } scheduler_fast_loop_exit_reason_t;
 
-scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr thread) {
+scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr fiber) {
   scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
   
   int i = 1000;
@@ -182,14 +182,14 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     if(i == 0) {
       exit_reason = exit_reason__too_many_loops;
       break;
-    } else if (f2__thread__execute_next_bytecode(cause, thread)) {
+    } else if (f2__fiber__execute_next_bytecode(cause, fiber)) {
       exit_reason = exit_reason__reached_yield;
       break;
-    } else if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
-      execute_next_bytecodes__helper__found_larva_in_thread(cause, thread);
+    } else if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
+      execute_next_bytecodes__helper__found_larva_in_fiber(cause, fiber);
       exit_reason = exit_reason__found_larva;
       break;
-    } else if (f2thread__is_complete(thread, cause)) {
+    } else if (f2fiber__is_complete(fiber, cause)) {
       exit_reason = exit_reason__is_complete;
       break;
     } 
@@ -203,134 +203,134 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
   //pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something = nil;
   
-  f2processor__active_threads_iter__set(processor, cause, f2processor__active_threads(processor, cause));
-  f2processor__active_threads_prev__set(processor, cause, nil);
+  f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers(processor, cause));
+  f2processor__active_fibers_prev__set(processor, cause, nil);
   
-  int thread_num = 0;
-  while (f2processor__active_threads_iter(processor, cause)) {
-    f2processor__active_threads_next__set(processor, cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
-    thread_num ++;
-    f2ptr thread = f2cons__car(f2processor__active_threads_iter(processor, cause), cause);
-    int       prev_thread_iter__already_set = 0;
-    boolean_t need_to_launch_larva_handling_critic_thread = 0;
-    if (f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) { // successful lock
-      if (! f2thread__paused(thread, cause)) {
-	f2ptr sleep_until_time = f2thread__sleep_until_time(thread, cause);
-	boolean_t thread_needs_sleep = boolean__false;
+  int fiber_num = 0;
+  while (f2processor__active_fibers_iter(processor, cause)) {
+    f2processor__active_fibers_next__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
+    fiber_num ++;
+    f2ptr fiber = f2cons__car(f2processor__active_fibers_iter(processor, cause), cause);
+    int       prev_fiber_iter__already_set = 0;
+    boolean_t need_to_launch_larva_handling_critic_fiber = 0;
+    if (f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) { // successful lock
+      if (! f2fiber__paused(fiber, cause)) {
+	f2ptr sleep_until_time = f2fiber__sleep_until_time(fiber, cause);
+	boolean_t fiber_needs_sleep = boolean__false;
 	if (sleep_until_time) {
 	  f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(sleep_until_time, cause);
 	  s64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
 	  if (raw__nanoseconds_since_1970() >= nanoseconds_since_1970__i) {
-	    f2thread__sleep_until_time__set(thread, cause, nil);
+	    f2fiber__sleep_until_time__set(fiber, cause, nil);
 	  } else {
-	    thread_needs_sleep = boolean__true;
+	    fiber_needs_sleep = boolean__true;
 	  }
 	}
-	if (! thread_needs_sleep) {
+	if (! fiber_needs_sleep) {
 	  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	  release__assert(pool_index == this_processor_thread__pool_index(), thread, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
-	  f2ptr popped_thread = __funk2.operating_system.processor_thread__current_thread[pool_index];
-	  __funk2.operating_system.processor_thread__current_thread[pool_index] = thread;
-	  //printf("\n  got thread lock.");
-	  if (raw__larva__is_type(cause, f2thread__value(thread, cause))) {
-	    //printf("\nthread paused due to larva in value register.");
+	  release__assert(pool_index == this_processor_thread__pool_index(), fiber, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	  f2ptr popped_fiber = __funk2.operating_system.processor_thread__current_fiber[pool_index];
+	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = fiber;
+	  //printf("\n  got fiber lock.");
+	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
+	    //printf("\nfiber paused due to larva in value register.");
 	  } else {
-	    if ((! f2thread__is_complete(thread, cause))) {
-	      //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing thread 0x%X", (int)thread); fflush(stdout);
+	    if ((! f2fiber__is_complete(fiber, cause))) {
+	      //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing fiber 0x%X", (int)fiber); fflush(stdout);
 	      
 	      did_something = __funk2.globalenv.true__symbol;
 	      
-	      scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, thread);
+	      scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, fiber);
 	      
 	      pause_gc();
-	      f2thread__last_executed_time__set(thread, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
+	      f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
 	      resume_gc();
 	      
 	      if(exit_reason == exit_reason__found_larva) {
-		need_to_launch_larva_handling_critic_thread = 1;
+		need_to_launch_larva_handling_critic_fiber = 1;
 	      }
 	      
 	    } else {
-	      if (! f2thread__is_zombie(thread, cause)) {
-		f2thread__is_zombie__set(thread, cause, __funk2.globalenv.true__symbol);
+	      if (! f2fiber__is_zombie(fiber, cause)) {
+		f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
 	      } else {
-		//printf("\n  thread completed.");
-		if (! f2thread__keep_undead(thread, cause)) {
-		  f2ptr last_executed_time = f2thread__last_executed_time(thread, cause);
+		//printf("\n  fiber completed.");
+		if (! f2fiber__keep_undead(fiber, cause)) {
+		  f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
 		  if (last_executed_time) {
 		    f2ptr nanoseconds_since_1970 = f2time__nanoseconds_since_1970(last_executed_time, cause);
 		    u64 nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
 		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 1 * nanoseconds_per_second) {
-		      // anytime a thread is removed from processor active threads, it should be removed from it's cause so that it can be garbage collected.
-		      f2ptr thread_cause = f2thread__cause_reg(thread, cause);
-		      if (thread_cause) {
-			f2__cause__remove_thread(cause, thread_cause, thread);
+		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
+		      f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+		      if (fiber_cause) {
+			f2__cause__remove_fiber(cause, fiber_cause, fiber);
 		      }
-		      // bug: removing a thread here seems to drop needed threads sometimes.  (why?)
+		      // bug: removing a fiber here seems to drop needed fibers sometimes.  (why?)
 		      {
-		      	f2ptr processor__active_threads_mutex;
+		      	f2ptr processor__active_fibers_mutex;
 		      	int lock_failed;
 		      	do {
 		      	  //f2__global_scheduler__execute_mutex__lock(cause);
-		      	  processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-		      	  lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+		      	  processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
+		      	  lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
 		      	  //f2__global_scheduler__execute_mutex__unlock(cause);
 		      	  if (lock_failed) {
 		      	    f2__sleep(1);
 		      	  }
 		      	} while (lock_failed);
-		      	if (f2processor__active_threads_prev(processor, cause)) {
-		      	  f2cons__cdr__set(f2processor__active_threads_prev(processor, cause), cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
+		      	if (f2processor__active_fibers_prev(processor, cause)) {
+		      	  f2cons__cdr__set(f2processor__active_fibers_prev(processor, cause), cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
 		      	} else {
-		      	  f2processor__active_threads__set(processor, cause, f2cons__cdr(f2processor__active_threads_iter(processor, cause), cause));
+		      	  f2processor__active_fibers__set(processor, cause, f2cons__cdr(f2processor__active_fibers_iter(processor, cause), cause));
 		      	}
-		      	f2mutex__unlock(processor__active_threads_mutex, cause);
+		      	f2mutex__unlock(processor__active_fibers_mutex, cause);
 		      }
-		      prev_thread_iter__already_set = 1;
+		      prev_fiber_iter__already_set = 1;
 		    }
 		  }
 		}
 	      }
 	    }
 	  }
-	  __funk2.operating_system.processor_thread__current_thread[pool_index] = popped_thread;
+	  __funk2.operating_system.processor_thread__current_fiber[pool_index] = popped_fiber;
 	}
-      } else { // (thread__paused)
+      } else { // (fiber__paused)
       }
-      f2mutex__unlock(f2thread__execute_mutex(thread, cause), cause);
+      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     } else {
-      //printf("\nthread locked couldn't execute...");
+      //printf("\nfiber locked couldn't execute...");
     }
     
-    if(need_to_launch_larva_handling_critic_thread) {
-      f2ptr critics = f2thread__critics(thread, cause);
+    if(need_to_launch_larva_handling_critic_fiber) {
+      f2ptr critics = f2fiber__critics(fiber, cause);
       if (critics) {
-	f2ptr thread_cause = f2thread__cause_reg(thread, cause);
-	printf("\nlarva found in thread and thread has a critic, so launching critic thread in serial."); fflush(stdout);
+	f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+	printf("\nlarva found in fiber and fiber has a critic, so launching critic fiber in serial."); fflush(stdout);
 	printf("\n  critic="); f2__print(cause, critics); fflush(stdout);
 	pause_gc();
-	f2ptr new_thread = f2__thread__new(thread_cause, thread, f2thread__env(thread, cause), critics, f2cons__new(cause, thread, nil));
+	f2ptr new_fiber = f2__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	resume_gc();
 	{
-	  f2ptr processor__active_threads_mutex;
+	  f2ptr processor__active_fibers_mutex;
 	  int lock_failed;
 	  do {
-	    processor__active_threads_mutex = f2processor__active_threads_mutex(processor, cause);
-	    lock_failed = f2mutex__trylock(processor__active_threads_mutex, cause);
+	    processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
+	    lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
 	    if (lock_failed) {
 	      f2__sleep(1);
 	    }
 	  } while (lock_failed);
 	  pause_gc();
-	  f2processor__active_threads__set(processor, cause, f2cons__new(cause, new_thread, f2processor__active_threads(processor, cause)));
+	  f2processor__active_fibers__set(processor, cause, f2cons__new(cause, new_fiber, f2processor__active_fibers(processor, cause)));
 	  resume_gc();
-	  f2mutex__unlock(processor__active_threads_mutex, cause);
+	  f2mutex__unlock(processor__active_fibers_mutex, cause);
 	}	
 	//printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
       } else {
-	f2__print(cause, thread);
-	printf("\nlarva found in thread and thread has no critics, so doing nothing."); fflush(stdout);
-	f2ptr larva = f2thread__value(thread, cause);
+	f2__print(cause, fiber);
+	printf("\nlarva found in fiber and fiber has no critics, so doing nothing."); fflush(stdout);
+	f2ptr larva = f2fiber__value(fiber, cause);
 	if (! raw__larva__is_type(cause, larva)) {
 	  printf("\n  larva is not a larva."); fflush(stdout);
 	} else {
@@ -345,16 +345,16 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       }
     }
     
-    if (! prev_thread_iter__already_set) {
-      f2processor__active_threads_prev__set(processor, cause, f2processor__active_threads_iter(processor, cause));
+    if (! prev_fiber_iter__already_set) {
+      f2processor__active_fibers_prev__set(processor, cause, f2processor__active_fibers_iter(processor, cause));
     }
     
-    f2processor__active_threads_iter__set(processor, cause, f2processor__active_threads_next(processor, cause));
+    f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
   }
   //pool__resume_gc(this_processor_thread__pool_index());
   
   //if (did_something) {
-  //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) thread_num = %d", this_processor_thread__pool_index(), processor, thread_num);
+  //printf("\nprocessor__execute_next_bytecodes: processor %d (%d) fiber_num = %d", this_processor_thread__pool_index(), processor, fiber_num);
   //}
   return did_something;
 }
@@ -380,7 +380,7 @@ void* processor__start_routine(void *ptr) {
       sched_yield();
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
-    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (thread_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
+    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__fibers(processor))); fflush(stdout);
     f2__sleep(100000);
     sched_yield();
   }
@@ -391,7 +391,7 @@ void f2__scheduler__yield(f2ptr cause) {
   f2ptr processor = f2__global_scheduler__this_processor(cause);
   if(! f2processor__execute_next_bytecodes(processor, cause)) {
     //f2ptr processor = f2__global_scheduler__this_processor();
-    //printf("\nscheduler__yield: processor %d (%d) sleeping (thread_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__threads(processor))); fflush(stdout);
+    //printf("\nscheduler__yield: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__fibers(processor))); fflush(stdout);
     //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
     sched_yield();
     f2__sleep(1);
@@ -401,14 +401,14 @@ void f2__scheduler__yield(f2ptr cause) {
   }
 }
 
-void f2__scheduler__complete_thread(f2ptr cause, f2ptr thread) {
+void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = 0;
   do {
-    if(f2mutex__trylock(f2thread__execute_mutex(thread, cause), cause) == 0) {
-      if(f2thread__is_complete(thread, cause)) {
+    if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
+      if(f2fiber__is_complete(fiber, cause)) {
 	complete = 1;
       }
-      f2mutex__unlock(f2thread__execute_mutex(thread, cause), cause);
+      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
     }
     if (! complete) {
       f2__scheduler__yield(cause);
@@ -472,10 +472,10 @@ void f2__scheduler__initialize() {
 				       scheduler,
 				       nil,
 				       f2mutex__new(cause),
-				       nil, // active_threads
-				       nil, // active_threads_iter
-				       nil, // active_threads_prev
-				       nil, // active_threads_next
+				       nil, // active_fibers
+				       nil, // active_fibers_iter
+				       nil, // active_fibers_prev
+				       nil, // active_fibers_next
 				       f2mutex__new(cause),
 				       nil,
 				       f2integer__new(cause, i),

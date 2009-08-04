@@ -28,12 +28,12 @@
 #include "f2_primfunks.h"
 #include "f2_reader.h"
 #include "f2_compile.h"
-#include "f2_thread.h"
+#include "f2_fiber.h"
 #include "f2_bytecodes.h"
 #include "f2_signal.h"
 #include "f2_scheduler.h"
 
-int f2__simple_repl(f2ptr cause, f2ptr thread);
+int f2__simple_repl(f2ptr cause, f2ptr fiber);
 
 // **
 

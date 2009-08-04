@@ -876,7 +876,7 @@ void f2__chunk__compile_x86__mov_addr_to_reg(f2ptr this, uint index, f2ptr cause
 
 // **
 //
-// prepare stack with one f2ptr argument (the thread pointer)
+// prepare stack with one f2ptr argument (the fiber pointer)
 //
 //   80483c8:	55                   	push   %ebp
 //   80483c9:	89 e5                	mov    %esp,%ebp
@@ -900,46 +900,46 @@ void f2__chunk__compile_x86__mov_addr_to_reg(f2ptr this, uint index, f2ptr cause
 
 // **
 //
-// prepare to call bytecode__thread function
+// prepare to call bytecode__fiber function
 //
-//   mov thread argument to call stack
+//   mov fiber argument to call stack
 //
 //     80483da:	8b 45 f8             	mov    0xfffffff8(%ebp),%eax
 //     80483dd:	8b 55 fc             	mov    0xfffffffc(%ebp),%edx
 //     80483e0:	89 04 24             	mov    %eax,(%esp)
 //     80483e3:	89 54 24 04          	mov    %edx,0x4(%esp)
 //
-// call bytecode__thread
+// call bytecode__fiber
 //
-//   80483e7:	e8 58 ff ff ff       	call   8048344 <bytecode__thread>
+//   80483e7:	e8 58 ff ff ff       	call   8048344 <bytecode__fiber>
 //
 // **
 
 // **
 //
-// prepare to call bytecode__thread_arg0
+// prepare to call bytecode__fiber_arg0
 //
 //   mov arg0 constant to call stack
 //
 //     80483ec:	c7 44 24 08 ef cd ab 89	movl   $0x89abcdef,0x8(%esp)
 //     80483f4:	c7 44 24 0c 67 45 23 01	movl   $0x01234567,0xc(%esp)
 //
-//   mov thread argument to call stack
+//   mov fiber argument to call stack
 //
 //     80483fc:	8b 45 f8             	mov    0xfffffff8(%ebp),%eax
 //     80483ff:	8b 55 fc             	mov    0xfffffffc(%ebp),%edx
 //     8048402:	89 04 24             	mov    %eax,(%esp)
 //     8048405:	89 54 24 04          	mov    %edx,0x4(%esp)
 //
-// call bytecode__thread_arg0
+// call bytecode__fiber_arg0
 //
-//   8048409:	e8 50 ff ff ff       	call   804835e <bytecode__thread_arg0>
+//   8048409:	e8 50 ff ff ff       	call   804835e <bytecode__fiber_arg0>
 //
 // **
 
 // **
 //
-// prepare to call bytecode__thread_arg0_arg1
+// prepare to call bytecode__fiber_arg0_arg1
 //
 //   mov arg1 constant to call stack
 //
@@ -951,16 +951,16 @@ void f2__chunk__compile_x86__mov_addr_to_reg(f2ptr this, uint index, f2ptr cause
 //     804841e:	c7 44 24 08 de bc 9a 78	movl   $0x789abcde,0x8(%esp)
 //     8048426:	c7 44 24 0c 56 34 12 f0	movl   $0xf0123456,0xc(%esp)
 //
-//   mov thread argument to call stack
+//   mov fiber argument to call stack
 //
 //     804842e:	8b 45 f8             	mov    0xfffffff8(%ebp),%eax
 //     8048431:	8b 55 fc             	mov    0xfffffffc(%ebp),%edx
 //     8048434:	89 04 24             	mov    %eax,(%esp)
 //     8048437:	89 54 24 04          	mov    %edx,0x4(%esp)
 //
-// call bytecode__thread_arg0_arg1
+// call bytecode__fiber_arg0_arg1
 //
-//   804843b:	e8 4a ff ff ff       	call   804838a <bytecode__thread_arg0_arg1>
+//   804843b:	e8 4a ff ff ff       	call   804838a <bytecode__fiber_arg0_arg1>
 //
 // **
 
@@ -972,11 +972,11 @@ void f2__chunk__compile_x86__mov_addr_to_reg(f2ptr this, uint index, f2ptr cause
 
 // **
 //
-// prepare to call bytecode__thread function
+// prepare to call bytecode__fiber function
 //
-// call bytecode__thread
+// call bytecode__fiber
 //
-//   80483e7:	e8 58 ff ff ff       	call   8048344 <bytecode__thread>
+//   80483e7:	e8 58 ff ff ff       	call   8048344 <bytecode__fiber>
 //
 // **
 
@@ -989,16 +989,16 @@ void f2__chunk__compile_x86__jump_bytecode(f2ptr this, uint index, f2ptr cause, 
 
 // **
 //
-// prepare to call bytecode__thread_arg0
+// prepare to call bytecode__fiber_arg0
 //
 //   mov arg0 constant to call stack
 //
 //     80483ec:	c7 44 24 08 ef cd ab 89	movl   $0x89abcdef,0x8(%esp)
 //     80483f4:	c7 44 24 0c 67 45 23 01	movl   $0x01234567,0xc(%esp)
 //
-// call bytecode__thread_arg0
+// call bytecode__fiber_arg0
 //
-//   8048409:	e8 50 ff ff ff       	call   804835e <bytecode__thread_arg0>
+//   8048409:	e8 50 ff ff ff       	call   804835e <bytecode__fiber_arg0>
 //
 // **
 
@@ -1015,7 +1015,7 @@ void f2__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, uint index, f2ptr 
 
 // **
 //
-// prepare to call bytecode__thread_arg0_arg1
+// prepare to call bytecode__fiber_arg0_arg1
 //
 //   mov arg1 constant to call stack
 //
@@ -1027,9 +1027,9 @@ void f2__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, uint index, f2ptr 
 //     804841e:	c7 44 24 08 de bc 9a 78	movl   $0x789abcde,0x8(%esp)
 //     8048426:	c7 44 24 0c 56 34 12 f0	movl   $0xf0123456,0xc(%esp)
 //
-// call bytecode__thread_arg0_arg1
+// call bytecode__fiber_arg0_arg1
 //
-//   804843b:	e8 4a ff ff ff       	call   804838a <bytecode__thread_arg0_arg1>
+//   804843b:	e8 4a ff ff ff       	call   804838a <bytecode__fiber_arg0_arg1>
 //
 // **
 
@@ -1052,27 +1052,27 @@ void f2__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint*
   else if (command == __funk2.bytecode.bytecode__pop__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__pop( cause, f2bytecode__arg0(bytecode, cause)));}
   else if (command == __funk2.bytecode.bytecode__copy__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__copy(cause, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause)));}
   else if (command == __funk2.bytecode.bytecode__swap__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__swap(cause, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause)));}
-  else if (command == __funk2.bytecode.bytecode__cons__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__cons);}
-  else if (command == __funk2.bytecode.bytecode__car__set__symbol)           {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__car__set);}
-  else if (command == __funk2.bytecode.bytecode__funk__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__funk);}
-  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)          {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__jump_funk);}
+  else if (command == __funk2.bytecode.bytecode__cons__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__cons);}
+  else if (command == __funk2.bytecode.bytecode__car__set__symbol)           {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__car__set);}
+  else if (command == __funk2.bytecode.bytecode__funk__symbol)               {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__funk);}
+  else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)          {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__jump_funk);}
   else if (command == __funk2.bytecode.bytecode__set__symbol)                {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index,  f2__compile__bytecode__set(cause, f2bytecode__arg0(bytecode, cause)), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)           {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__cdr__set);}
-  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)    {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__thread__bytecode__lookup_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)    {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__thread__bytecode__define_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)          {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__thread__bytecode__else_jump, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__car__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__car);}
-  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__cdr);}
-  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)   {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__thread__bytecode__type_var__mutate, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol) {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__thread__bytecode__globalize_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__jump__symbol)               {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__thread__bytecode__jump, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)           {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__cdr__set);}
+  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)    {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__lookup_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)    {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__define_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__else_jump__symbol)          {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__else_jump, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__car__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__car);}
+  else if (command == __funk2.bytecode.bytecode__cdr__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__cdr);}
+  else if (command == __funk2.bytecode.bytecode__type_var__mutate__symbol)   {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__type_var__mutate, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__globalize_type_var__symbol) {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__globalize_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__jump__symbol)               {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__jump, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__nop__symbol)                {}
-  else if (command == __funk2.bytecode.bytecode__debug__symbol)              {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__thread__bytecode__debug, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__trace__symbol)              {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__thread__bytecode__trace, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__debug__symbol)              {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__debug, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__trace__symbol)              {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__trace, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__compile__symbol)            {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__compile(f2bytecode__arg0(bytecode, cause)));}
   else if (command == __funk2.bytecode.bytecode__yield__symbol)              {}
-  else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__thread__bytecode__newenv);}
-  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)       {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__thread__bytecode__machine_code, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__newenv);}
+  else if (command == __funk2.bytecode.bytecode__machine_code__symbol)       {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__machine_code, f2bytecode__arg0(bytecode, cause));}
   else {f2__print(nil, command); fflush(stdout); error(nil, "f2__chunk__compile_x86__bytecode error: unrecognized bytecode command.");}
 }
 
@@ -1097,7 +1097,7 @@ void f2__chunk__compile_x86__bytecodes(f2ptr this, uint index, f2ptr cause, uint
 
 // **
 //
-// prepare stack with one f2ptr argument (the thread pointer)
+// prepare stack with one f2ptr argument (the fiber pointer)
 //
 //   80483c8:	55                   	push   %ebp
 //   80483c9:	89 e5                	mov    %esp,%ebp
@@ -1107,7 +1107,7 @@ void f2__chunk__compile_x86__bytecodes(f2ptr this, uint index, f2ptr cause, uint
 //   80483d4:	8b 45 0c             	mov    0xc(%ebp),%eax
 //   80483d7:	89 45 fc             	mov    %eax,0xfffffffc(%ebp)
 //
-//   mov thread argument to call stack
+//   mov fiber argument to call stack
 //
 //     80483da:	8b 45 f8             	mov    0xfffffff8(%ebp),%eax
 //     80483dd:	8b 55 fc             	mov    0xfffffffc(%ebp),%edx

@@ -61,7 +61,7 @@ void f2__initialize() {
   f2__primcfunks__initialize();
   f2__reader__initialize();
   f2__compile__initialize();
-  f2__thread__initialize();
+  f2__fiber__initialize();
   f2__bytecodes__initialize();
   f2__signal__initialize();
   f2__load__initialize();
@@ -200,8 +200,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
       
-      // start a thread executing the user read-eval-print loop
-      f2__thread(cause,
+      // start a fiber executing the user read-eval-print loop
+      f2__fiber(cause,
 		 cause,
 		 nil,
 		 global_environment(),
@@ -220,8 +220,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	}
       }
       
-      // start a thread executing the user read-eval-print loop
-      f2__thread(cause,
+      // start a fiber executing the user read-eval-print loop
+      f2__fiber(cause,
 		 cause,
 		 nil,
 		 global_environment(),
@@ -230,8 +230,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     }
     
   } else {
-    // start a thread executing the boot function
-    f2__thread(cause,
+    // start a fiber executing the boot function
+    f2__fiber(cause,
 	       cause,
 	       nil,
 	       global_environment(),
@@ -316,7 +316,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
       f2__sleep(1000000);
     }
   }
-  //int repl_result = f2__repl(main_thread);
+  //int repl_result = f2__repl(main_fiber);
   
   funk2__destroy(this);
   f2__destroy();

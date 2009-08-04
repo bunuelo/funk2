@@ -31,7 +31,7 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
   return retval;
 }
 
-f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
+f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   if (!raw__string__is_type(cause, filename)) {printf("\nload error: filename must be a string."); return nil;}
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {f2__print(cause, filename); printf("\nload error: couldn't open file for reading."); return nil;}
@@ -40,8 +40,8 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
 #endif // DEBUG_LOAD
   
   f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil);
-  f2ptr load_funk_bcs = f2__compile__funk(cause, thread, load_funk);
-  f2ptr load_thread   = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), load_funk, nil);
+  f2ptr load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
+  f2ptr load_fiber   = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
   f2ptr read_exp      = nil;
   
   while (read_exp != __end_of_file_exception) {
@@ -52,27 +52,27 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
       f2__print_prompt(cause, "Load-F-In-> ", read_exp); fflush(stdout);
 #endif
       if (raw__exception__is_type(cause, read_exp)) {
-	printf("\nload exception: "); f2__write(thread, read_exp); fflush(stdout);
+	printf("\nload exception: "); f2__write(fiber, read_exp); fflush(stdout);
       } else {
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause,
-					  thread, load_funk);
+					  fiber, load_funk);
 	if(raw__exception__is_type(cause, load_funk_bcs)) {
-	  f2thread__value__set(thread, cause, load_funk_bcs);
+	  f2fiber__value__set(fiber, cause, load_funk_bcs);
 	} else {
-	  f2thread__program_counter__set(load_thread, cause, nil);
-	  f2thread__force_funk(load_thread, cause, load_funk, nil);
+	  f2fiber__program_counter__set(load_fiber, cause, nil);
+	  f2fiber__force_funk(load_fiber, cause, load_funk, nil);
 	}
 	
 	
-	f2__scheduler__complete_thread(cause, load_thread);
+	f2__scheduler__complete_fiber(cause, load_fiber);
 	
-	//printf("\nload_thread stack size = %d", raw__length(f2thread__stack(load_thread))); fflush(stdout);
-	f2ptr eval_exp = f2thread__value(load_thread, cause);
+	//printf("\nload_fiber stack size = %d", raw__length(f2fiber__stack(load_fiber))); fflush(stdout);
+	f2ptr eval_exp = f2fiber__value(load_fiber, cause);
 	if (raw__exception__is_type(cause, eval_exp)) {
 	  printf("\nload eval exception: "); f2__write(cause, eval_exp); fflush(stdout);
 	  f2__stream__close(cause, stream);
-	  return f2integer__new(f2thread__cause_reg(load_thread, cause), 1);
+	  return f2integer__new(f2fiber__cause_reg(load_fiber, cause), 1);
 	}
 #ifdef DEBUG_LOAD
 	printf ("\nLoad-F-Out> "); f2__write(cause, eval_exp); fflush(stdout);
@@ -81,7 +81,7 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
     }
   }  
   
-  f2thread__keep_undead__set(load_thread, cause, nil);
+  f2fiber__keep_undead__set(load_fiber, cause, nil);
   
 #ifdef DEBUG_LOAD
   printf("\nload done."); fflush(stdout);
@@ -89,7 +89,7 @@ f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename) {
   f2__stream__close(cause, stream);
   return nil;
 }
-def_pcfunk1(load, filename, return raw__load(this_cause, simple_thread, filename));
+def_pcfunk1(load, filename, return raw__load(this_cause, simple_fiber, filename));
 
 void f2__load__reinitialize_globalvars() {
 }

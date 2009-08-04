@@ -32,7 +32,7 @@ f2ptr f2__search_node__state(          f2ptr cause, f2ptr this) {return raw__arr
 f2ptr f2__search_node__heuristic_value(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 1);}
 
 
-f2ptr f2__search(f2ptr thread, f2ptr cause, f2ptr start_states, f2ptr expand_funk, f2ptr beam_width, f2ptr heuristic_funk) {
+f2ptr f2__search(f2ptr fiber, f2ptr cause, f2ptr start_states, f2ptr expand_funk, f2ptr beam_width, f2ptr heuristic_funk) {
   if ((! raw__cons__is_type(    cause, start_states)) ||
       (! raw__funkable__is_type(cause, expand_funk)) ||
       (! raw__integer__is_type( cause, beam_width)) ||
@@ -45,7 +45,7 @@ f2ptr f2__search(f2ptr thread, f2ptr cause, f2ptr start_states, f2ptr expand_fun
     f2ptr iter = start_states;
     while (iter) {
       f2ptr start_state     = f2cons__car(iter, cause);
-      f2ptr heuristic_value = f2__force_funk_apply(cause, thread, heuristic_funk, f2list1__new(cause, start_state));
+      f2ptr heuristic_value = f2__force_funk_apply(cause, fiber, heuristic_funk, f2list1__new(cause, start_state));
       f2ptr search_node     = f2__search_node__new(cause, start_state, nil);
       search_nodes = f2cons__new(cause, search_node, search_nodes);
       search_nodes__count ++;
@@ -65,7 +65,7 @@ f2ptr f2__search(f2ptr thread, f2ptr cause, f2ptr start_states, f2ptr expand_fun
   return nil;
 }
 
-def_pcfunk4(search, start_states, expand_funk, beam_width, heuristic_funk, return f2__search(simple_thread, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
+def_pcfunk4(search, start_states, expand_funk, beam_width, heuristic_funk, return f2__search(simple_fiber, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
 
 // **
 

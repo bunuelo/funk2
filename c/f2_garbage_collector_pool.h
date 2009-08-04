@@ -160,12 +160,12 @@ void      funk2_garbage_collector_pool__signal_exit_protected_region(funk2_garba
 boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this);
-void      funk2_garbage_collector_pool__know_of_used_exp_self_mutation( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
-void      funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
-void      funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
-void      funk2_garbage_collector_pool__know_of_used_exp_other_no_more_references(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
-void      funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user thread
-void      funk2_garbage_collector_pool__know_of_used_exp_other_protected_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user thread
+void      funk2_garbage_collector_pool__know_of_used_exp_self_mutation( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user processor thread
+void      funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user processor thread
+void      funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user processor thread
+void      funk2_garbage_collector_pool__know_of_used_exp_other_no_more_references(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user processor thread
+void      funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr( funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user processor thread
+void      funk2_garbage_collector_pool__know_of_used_exp_other_protected_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by other user processor thread
 void      funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__grey_element(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp);
 void      funk2_garbage_collector_pool__grey_maybe_other_element(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp);

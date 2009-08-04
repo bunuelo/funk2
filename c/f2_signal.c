@@ -29,16 +29,10 @@ void f2__receive_signal(int sig) {
   case SIGINT:
     printf ("\nsignal note: received ctrl-c\n"); fflush(stdout);
     __received_signal__sigint = 1;
-    //print_gc_stats();
-    //memory_test();
-    //exit(f2__repl(initial_cause(), nil)); // these thread pointers might need to be valid
     break;
   case SIGSEGV:
     printf ("\nsignal note: received segmentation fault\n"); fflush(stdout);
     __received_segmentation_fault = 1;
-    //print_gc_stats();
-    //memory_test();
-    //exit(f2__repl(initial_cause(), nil)); // these thread pointers might need to be valid
     break;
   default:
     printf ("\nsignal warning: received unknown signal (%d)\n", sig);

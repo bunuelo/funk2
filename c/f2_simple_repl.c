@@ -21,11 +21,11 @@
 
 #include "funk2.h"
 
-int f2__simple_repl(f2ptr cause, f2ptr thread) {
+int f2__simple_repl(f2ptr cause, f2ptr fiber) {
   printf("\nfunk2 warning: garbage collection is disabled in this simple_repl.");
   f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil);
-  f2ptr repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
-  f2ptr repl_thread   = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), repl_funk, nil);
+  f2ptr repl_funk_bcs = f2__compile__funk(cause, fiber, repl_funk);
+  f2ptr repl_fiber   = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), repl_funk, nil);
   while (1) {
 
     printf ("\nF-In-> "); fflush(stdout);
@@ -36,24 +36,24 @@ int f2__simple_repl(f2ptr cause, f2ptr thread) {
       break;
     } else {
       repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
-      repl_funk_bcs = f2__compile__funk(cause, thread, repl_funk);
+      repl_funk_bcs = f2__compile__funk(cause, fiber, repl_funk);
       if(raw__larva__is_type(cause, repl_funk_bcs)) {
-	f2thread__value__set(thread, cause, repl_funk_bcs);
+	f2fiber__value__set(fiber, cause, repl_funk_bcs);
       } else {
-	f2thread__program_counter__set(repl_thread, cause, nil);
-	f2thread__force_funk(repl_thread, cause, repl_funk, nil);
+	f2fiber__program_counter__set(repl_fiber, cause, nil);
+	f2fiber__force_funk(repl_fiber, cause, repl_funk, nil);
       }
       
-      f2__scheduler__complete_thread(cause, repl_thread);
+      f2__scheduler__complete_fiber(cause, repl_fiber);
       
-      f2ptr eval_exp = f2thread__value(repl_thread, cause);
+      f2ptr eval_exp = f2fiber__value(repl_fiber, cause);
       printf ("\nF-Out> "); f2__write(cause, eval_exp); fflush(stdout);
     }
   }
-  f2thread__keep_undead__set(repl_thread, cause, nil);
+  f2fiber__keep_undead__set(repl_fiber, cause, nil);
   return 0;
 }
-def_pcfunk0(simple_repl, return f2integer__new(this_cause, f2__simple_repl(this_cause, simple_thread)));
+def_pcfunk0(simple_repl, return f2integer__new(this_cause, f2__simple_repl(this_cause, simple_fiber)));
 
 // **
 

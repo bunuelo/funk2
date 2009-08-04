@@ -31,7 +31,7 @@ typedef struct funk2_event_router_s {
 
 void  funk2_event_router__init(funk2_event_router_t* this, u32 input_buffer__byte_num);
 void  funk2_event_router__destroy(funk2_event_router_t* this);
-void  funk2_event_router__add_subscriber(funk2_event_router_t* this, f2ptr event_type_list, f2ptr thread, f2ptr funkable);
+void  funk2_event_router__add_subscriber(funk2_event_router_t* this, f2ptr event_type_list, f2ptr fiber, f2ptr funkable);
 f2ptr funk2_event_router__know_of_event(funk2_event_router_t* this, f2ptr event_cause, node_id_t node_id, event_id_t event_id, f2ptr type, f2ptr data);
 void  funk2_event_router__handle_input_events(funk2_event_router_t* this);
 void  funk2_event_router__handle_subscriber_scheduling(funk2_event_router_t* this);

@@ -36,27 +36,27 @@ typedef unsigned char boolean_t;
 #define F2__INITIAL_MEMORY (10 * 1024 * 1024ull)
 
 #ifdef F2__ASSERTIONS__DEBUG
-#  define debug__assert(cond, thread, desc)                            {if(! (cond)) {assert_failed(thread, __FILE__, __LINE__, desc);}}
-#  define debug__assert_and_on_failure(cond, thread, desc, on_failure) {if(! (cond)) {{on_failure;} assert_failed(thread, __FILE__, __LINE__, desc);}}
+#  define debug__assert(cond, fiber, desc)                            {if(! (cond)) {assert_failed(fiber, __FILE__, __LINE__, desc);}}
+#  define debug__assert_and_on_failure(cond, fiber, desc, on_failure) {if(! (cond)) {{on_failure;} assert_failed(fiber, __FILE__, __LINE__, desc);}}
 #else
-#  define debug__assert(cond, thread, desc)
-#  define debug__assert_and_on_failure(cond, thread, desc, on_failure)
+#  define debug__assert(cond, fiber, desc)
+#  define debug__assert_and_on_failure(cond, fiber, desc, on_failure)
 #endif
 
 #define F2__ASSERTIONS__RELEASE
 
 #ifdef F2__ASSERTIONS__RELEASE
-#  define release__assert(cond, thread, desc)                            {if(! (cond)) {assert_failed(thread, __FILE__, __LINE__, desc);}}
-#  define release__assert_and_on_failure(cond, thread, desc, on_failure) {if(! (cond)) {{on_failure;} assert_failed(thread, __FILE__, __LINE__, desc);}}
+#  define release__assert(cond, fiber, desc)                            {if(! (cond)) {assert_failed(fiber, __FILE__, __LINE__, desc);}}
+#  define release__assert_and_on_failure(cond, fiber, desc, on_failure) {if(! (cond)) {{on_failure;} assert_failed(fiber, __FILE__, __LINE__, desc);}}
 #else
-#  define release__assert(cond, thread, desc)
-#  define release__assert_and_on_failure(cond, thread, desc, on_failure)
+#  define release__assert(cond, fiber, desc)
+#  define release__assert_and_on_failure(cond, fiber, desc, on_failure)
 #endif
 
 #define boolean__false ((boolean_t)0)
 #define boolean__true  (! boolean__false)
 
-#define error(thread, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(thread, __FILE__, __LINE__, str); exit(-1);}
+#define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
 // Single user 32 bit mode is only used for very old computers or those with very little (less than 1 gigabyte of usable disk space for a demo of the language).
 #ifdef F2__SINGLE_USER_32BIT_VERSION

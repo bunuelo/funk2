@@ -41,7 +41,7 @@
    ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>1))))) * \
    ((u64)PRIME_NUMBER__32_BIT))
 
-typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
+typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr args);
 
 void wait_politely();
 
@@ -198,8 +198,8 @@ u32   pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause);
 void  pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 value);
 u64   pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause);
 void  pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 value);
-f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
-int   pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr thread);
+f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr env, f2ptr args);
+int   pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr fiber);
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags);
 f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int flags);
 

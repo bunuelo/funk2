@@ -26,7 +26,7 @@
 #include "f2_processor_mutex.h"
 
 #define def_pcfunk__funkvar(name)            pcfunk__##name
-#define def_pcfunk__prototype__declare(name) f2ptr def_pcfunk__funkvar(name) (f2ptr simple_cause, f2ptr simple_thread, f2ptr simple_env, f2ptr simple_args)
+#define def_pcfunk__prototype__declare(name) f2ptr def_pcfunk__funkvar(name) (f2ptr simple_cause, f2ptr simple_fiber, f2ptr simple_env, f2ptr simple_args)
 
 #define def_pcfunk__symbolvar(name)          __symbol__##name
 #define def_pcfunk__symbolvar_string(name)   "primfunk:" #name
@@ -45,7 +45,7 @@
 
 
 //#  define def_pcfunk__this_cause__define(name) 
-//     f2ptr this_cause = f2cause__new(simple_cause, simple_thread, simple_env, def_pcfunk__symbolvar(name), simple_args, nil); 
+//     f2ptr this_cause = f2cause__new(simple_cause, simple_fiber, simple_env, def_pcfunk__symbolvar(name), simple_args, nil); 
 //     this_cause = this_cause;
 //#  define def_pcfunk__this_cause__define(name) 
 //     f2ptr this_cause = f2__cause__new(simple_cause, nil); 
@@ -341,7 +341,7 @@
   }
 
 #define def_pcfunk__metrovar(name)  pcmetro__##name
-#define def_pmetro_simple(name) f2ptr def_pcfunk__metrovar(name) (f2ptr simple_cause, f2ptr simple_thread, f2ptr simple_env, f2ptr simple_args)
+#define def_pmetro_simple(name) f2ptr def_pcfunk__metrovar(name) (f2ptr simple_cause, f2ptr simple_fiber, f2ptr simple_env, f2ptr simple_args)
 
 #define def_pmetro0(def_name, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
@@ -898,14 +898,14 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 // primobject thought_process
 
 
-// primobject thread
+// primobject fiber
 
-f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args);
-void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args);
-void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args);
-f2ptr f2__thread__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
-f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
-f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
+f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args);
+void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args);
+void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args);
+f2ptr f2__fiber__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
+f2ptr f2__fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
+f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 
 // sequence (array, list, doublelist, etc.)
 
@@ -931,12 +931,12 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode);
 f2ptr f2__fclose(f2ptr cause, f2ptr fptr);
-f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr exp, f2ptr protect_environment);
+f2ptr f2__compile(f2ptr cause, f2ptr fiber, f2ptr exp, f2ptr protect_environment);
 f2ptr f2__identity(f2ptr cause, f2ptr exp);
-f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation);
-f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentationg);
-f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args);
-f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr thread, f2ptr args);
+f2ptr f2__make_funk(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation);
+f2ptr f2__make_metro(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentationg);
+f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr fiber, f2ptr args);
+f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args);
 f2ptr f2__random(f2ptr cause, f2ptr max_value);
 f2ptr f2__array__new(f2ptr cause, u64 length);
 f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest);
@@ -951,11 +951,11 @@ f2ptr f2__chunk__read_16bit_signed(f2ptr cause, f2ptr chunk, f2ptr offset);
 f2ptr f2__chunk__read_32bit(f2ptr cause, f2ptr chunk, f2ptr offset);
 f2ptr f2__chunk__write_32bit_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value);
 f2ptr f2__chunk__read_32bit_signed(f2ptr cause, f2ptr chunk, f2ptr offset);
-f2ptr f2__demetropolize_full(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp);
-f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp);
+f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp);
+f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp);
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value);
 f2ptr f2__wrong_argument_number_error__set(f2ptr cause, f2ptr error_bcs);
-f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp, f2ptr args);
+f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr args);
 f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp);
 f2ptr f2__memory_image__save(f2ptr cause, f2ptr filename);
 f2ptr f2__memory_image__load(f2ptr cause, f2ptr filename);

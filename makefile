@@ -61,7 +61,6 @@ funk2_server_objs = \
   c/f2_command_line.o \
   c/f2_compile.o \
   c/f2_compile_x86.o \
-  c/f2_critic.o \
   c/f2_dlfcn.o \
   c/f2_dptr.o \
   c/f2_event_router.o \
@@ -130,7 +129,7 @@ funk2_server_objs = \
   c/f2_dynamic_memory.o \
   c/f2_termios.o \
   c/f2_thought_process.o \
-  c/f2_thread.o \
+  c/f2_fiber.o \
   c/f2_time.o \
   c/f2_trace.o \
   c/f2_user_thread_controller.o \
@@ -146,7 +145,6 @@ funk2_headers = \
   c/f2_child_handler.h \
   c/f2_compile.h \
   c/f2_compile_x86.h \
-  c/f2_critic.h \
   c/f2_dlfcn.h \
   c/f2_dptr.h \
   c/f2_event_router.h \
@@ -214,7 +212,7 @@ funk2_headers = \
   c/f2_dynamic_memory.h \
   c/f2_termios.h \
   c/f2_thought_process.h \
-  c/f2_thread.h \
+  c/f2_fiber.h \
   c/f2_time.h \
   c/f2_trace.h \
   c/f2_user_thread_controller.o

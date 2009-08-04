@@ -49,7 +49,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   symbol_str = "globalenv:f2_signal.c";                 this->f2_signal_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_socket.c";                 this->f2_socket_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_swapmemory.c";             this->f2_swapmemory_c__cause__symbol             = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_thread.c";                 this->f2_thread_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "globalenv:f2_fiber.c";                  this->f2_fiber_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_time.c";                   this->f2_time_c__cause__symbol                   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_trace.c";                  this->f2_trace_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_serialize.c";              this->f2_serialize_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
@@ -136,7 +136,7 @@ void funk2_globalenv__init(funk2_globalenv_t* this) {
   environment__add_var_value(cause, global_environment(), this->f2_signal_c__cause__symbol,                 nil);
   environment__add_var_value(cause, global_environment(), this->f2_socket_c__cause__symbol,                 nil);
   environment__add_var_value(cause, global_environment(), this->f2_swapmemory_c__cause__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), this->f2_thread_c__cause__symbol,                 nil);
+  environment__add_var_value(cause, global_environment(), this->f2_fiber_c__cause__symbol,                  nil);
   environment__add_var_value(cause, global_environment(), this->f2_time_c__cause__symbol,                   nil);
   environment__add_var_value(cause, global_environment(), this->f2_trace_c__cause__symbol,                  nil);
   environment__add_var_value(cause, global_environment(), this->f2_serialize_c__cause__symbol,              nil);
@@ -199,7 +199,7 @@ f2ptr              f2_scheduler_c__cause__new(f2ptr cause) {return raw__c_source
 f2ptr                 f2_signal_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_signal.c");}
 f2ptr                 f2_socket_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_socket.c");}
 f2ptr             f2_swapmemory_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_swapmemory.c");}
-f2ptr                 f2_thread_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_thread.c");}
+f2ptr                  f2_fiber_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_fiber.c");}
 f2ptr                   f2_time_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_time.c");}
 f2ptr                  f2_trace_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_trace.c");}
 f2ptr              f2_serialize_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_serialize.c");}

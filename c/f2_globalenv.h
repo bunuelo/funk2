@@ -52,7 +52,7 @@ typedef struct funk2_globalenv_s {
   f2ptr                 f2_signal_c__cause__symbol;
   f2ptr                 f2_socket_c__cause__symbol;
   f2ptr             f2_swapmemory_c__cause__symbol;
-  f2ptr                 f2_thread_c__cause__symbol;
+  f2ptr                  f2_fiber_c__cause__symbol;
   f2ptr                   f2_time_c__cause__symbol;
   f2ptr                  f2_trace_c__cause__symbol;
   f2ptr              f2_serialize_c__cause__symbol;
@@ -135,7 +135,7 @@ f2ptr              f2_scheduler_c__cause__new(f2ptr cause);
 f2ptr                 f2_signal_c__cause__new(f2ptr cause);
 f2ptr                 f2_socket_c__cause__new(f2ptr cause);
 f2ptr             f2_swapmemory_c__cause__new(f2ptr cause);
-f2ptr                 f2_thread_c__cause__new(f2ptr cause);
+f2ptr                  f2_fiber_c__cause__new(f2ptr cause);
 f2ptr                   f2_time_c__cause__new(f2ptr cause);
 f2ptr                  f2_trace_c__cause__new(f2ptr cause);
 f2ptr              f2_serialize_c__cause__new(f2ptr cause);

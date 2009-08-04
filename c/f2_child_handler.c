@@ -55,7 +55,7 @@ pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_han
   return child_process_node->child_process.pid;
 }
 
-// manager thread function (calls lock)
+// manager processor_thread function (calls lock)
 void funk2_child_process_handler__handle_child_processes(funk2_child_process_handler_t* this) {
   funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_child_process_list_t* iter = this->child_process_list;

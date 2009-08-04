@@ -76,67 +76,67 @@ typedef struct funk2_bytecode_s {
 void funk2_bytecode__init(funk2_bytecode_t* this);
 void funk2_bytecode__destroy(funk2_bytecode_t* this);
 
-// there is no significance to the fact that the cause and thread variables appear in different orders for the thread push and pop functions.
+// there is no significance to the fact that the cause and fiber variables appear in different orders for the fiber push and pop functions.
 // a global decision should be made as to the correct order, which is typically now: function_name(f2ptr object, [f2ptr index,] f2ptr cause, f2ptr arg0, f2ptr arg1, ...)
 
-void f2__thread__stack__push_value(f2ptr cause, f2ptr thread);
-void f2__thread__stack__push_iter(f2ptr cause, f2ptr thread);
-void f2__thread__stack__push_program_counter(f2ptr cause, f2ptr thread);
-void f2__thread__stack__push_args(f2ptr cause, f2ptr thread);
-void f2__thread__stack__push_return(f2ptr cause, f2ptr thread);
-void f2__thread__stack__push_env(f2ptr cause, f2ptr thread);
-void f2__thread__stack__push_trace(f2ptr cause, f2ptr thread);
+void f2__fiber__stack__push_value(f2ptr cause, f2ptr fiber);
+void f2__fiber__stack__push_iter(f2ptr cause, f2ptr fiber);
+void f2__fiber__stack__push_program_counter(f2ptr cause, f2ptr fiber);
+void f2__fiber__stack__push_args(f2ptr cause, f2ptr fiber);
+void f2__fiber__stack__push_return(f2ptr cause, f2ptr fiber);
+void f2__fiber__stack__push_env(f2ptr cause, f2ptr fiber);
+void f2__fiber__stack__push_trace(f2ptr cause, f2ptr fiber);
 
-void f2__thread__stack__pop_value(f2ptr thread, f2ptr cause);
-void f2__thread__stack__pop_iter(f2ptr thread, f2ptr cause);
-void f2__thread__stack__pop_program_counter(f2ptr thread, f2ptr cause);
-void f2__thread__stack__pop_args(f2ptr thread, f2ptr cause);
-void f2__thread__stack__pop_return(f2ptr thread, f2ptr cause);
-void f2__thread__stack__pop_env(f2ptr thread, f2ptr cause);
-void f2__thread__stack__pop_trace(f2ptr thread, f2ptr cause);
+void f2__fiber__stack__pop_value(f2ptr fiber, f2ptr cause);
+void f2__fiber__stack__pop_iter(f2ptr fiber, f2ptr cause);
+void f2__fiber__stack__pop_program_counter(f2ptr fiber, f2ptr cause);
+void f2__fiber__stack__pop_args(f2ptr fiber, f2ptr cause);
+void f2__fiber__stack__pop_return(f2ptr fiber, f2ptr cause);
+void f2__fiber__stack__pop_env(f2ptr fiber, f2ptr cause);
+void f2__fiber__stack__pop_trace(f2ptr fiber, f2ptr cause);
 
 
 // bytecode_jump_t is used for compiling bytecodes to machine code jump pointers
 
-typedef int (*bytecode_jump_t)(             f2ptr thread, f2ptr bytecode);
-typedef int (*bytecode_jump__f2ptr_t)(      f2ptr thread, f2ptr bytecode, f2ptr arg0);
-typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr thread, f2ptr bytecode, f2ptr arg0, f2ptr arg1);
+typedef int (*bytecode_jump_t)(             f2ptr fiber, f2ptr bytecode);
+typedef int (*bytecode_jump__f2ptr_t)(      f2ptr fiber, f2ptr bytecode, f2ptr arg0);
+typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr fiber, f2ptr bytecode, f2ptr arg0, f2ptr arg1);
 
 
 // bytecode definitions (and bytecode_jump compiling functions)
 
-int                    f2__thread__bytecode__funk(                            f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode_helper__funk__no_increment_pc_reg(f2ptr thread, f2ptr cause);
-int                    f2__thread__bytecode__jump_funk(                       f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__array(                           f2ptr thread, f2ptr bytecode, f2ptr length);
-int                    f2__thread__bytecode__cons(                            f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__consp(                           f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__car(                             f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__cdr(                             f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__car__set(                        f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__cdr__set(                        f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__array_elt(                       f2ptr thread, f2ptr bytecode, f2ptr array, f2ptr index);
-int                    f2__thread__bytecode__array_elt__set(                  f2ptr thread, f2ptr bytecode, f2ptr array, f2ptr index);
-int                    f2__thread__bytecode__set(                             f2ptr thread, f2ptr bytecode, f2ptr reg, f2ptr exp);
-int                    f2__thread__bytecode__nop(                             f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__swap(                            f2ptr thread, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
-int                    f2__thread__bytecode__push(                            f2ptr thread, f2ptr bytecode, f2ptr reg);
-int                    f2__thread__bytecode__pop(                             f2ptr thread, f2ptr bytecode, f2ptr reg);
-int                    f2__thread__bytecode__copy(                            f2ptr thread, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);
-int                    f2__thread__bytecode__lookup_type_var(                 f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__define_type_var(                 f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__type_var__mutate(                f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__globalize_type_var(              f2ptr thread, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__thread__bytecode__jump(                            f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);
-int                    f2__thread__bytecode__else_jump(                       f2ptr thread, f2ptr bytecode, f2ptr new_program_counter);
-int                    f2__thread__bytecode__debug(                           f2ptr thread, f2ptr bytecode, f2ptr value);
-int                    f2__thread__bytecode__trace(                           f2ptr thread, f2ptr bytecode, f2ptr value);
-int                    f2__thread__bytecode__compile(                         f2ptr thread, f2ptr bytecode, f2ptr protect_environment);
-int                    f2__thread__bytecode__yield(                           f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__newenv(                          f2ptr thread, f2ptr bytecode);
-int                    f2__thread__bytecode__machine_code(                    f2ptr thread, f2ptr bytecode, f2ptr chunk);
-int                    f2__thread__bytecode__reg_array__elt(                  f2ptr thread, f2ptr bytecode, f2ptr reg);
-int                    f2__thread__bytecode__reg_array__elt__set(             f2ptr thread, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__funk(                            f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause);
+int                    f2__fiber__bytecode__jump_funk(                       f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__array(                           f2ptr fiber, f2ptr bytecode, f2ptr length);
+int                    f2__fiber__bytecode__cons(                            f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__consp(                           f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__car(                             f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__cdr(                             f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__car__set(                        f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__cdr__set(                        f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__array_elt(                       f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index);
+int                    f2__fiber__bytecode__array_elt__set(                  f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index);
+int                    f2__fiber__bytecode__set(                             f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp);
+int                    f2__fiber__bytecode__nop(                             f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__swap(                            f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
+int                    f2__fiber__bytecode__push(                            f2ptr fiber, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__pop(                             f2ptr fiber, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__copy(                            f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);
+int                    f2__fiber__bytecode__lookup_type_var(                 f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__define_type_var(                 f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__type_var__mutate(                f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__globalize_type_var(              f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__jump(                            f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__fiber__bytecode__else_jump(                       f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__fiber__bytecode__debug(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
+int                    f2__fiber__bytecode__trace(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
+int                    f2__fiber__bytecode__compile(                         f2ptr fiber, f2ptr bytecode, f2ptr protect_environment);
+int                    f2__fiber__bytecode__yield(                           f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__newenv(                          f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__machine_code(                    f2ptr fiber, f2ptr bytecode, f2ptr chunk);
+int                    f2__fiber__bytecode__reg_array__elt(                  f2ptr fiber, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__reg_array__elt__set(             f2ptr fiber, f2ptr bytecode, f2ptr reg);
 
 bytecode_jump__f2ptr_t f2__compile__bytecode__set(    f2ptr cause, f2ptr reg);
 bytecode_jump_t        f2__compile__bytecode__swap(   f2ptr cause, f2ptr reg0, f2ptr reg1);

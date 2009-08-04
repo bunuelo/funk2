@@ -25,7 +25,7 @@
 // *** Abstraction Barrier Warning: Memory Manager (memory.c) and Primitive Type (ptype.c) Access Only ***
 //
 // These definitions are only used in the funk memory manager and the ptypes implementations themselves.
-// These definitions are not thread safe because they allow unmutexed access to the raw memory objects (which may change locations due to gc in other heavy threads).
+// These definitions are not thread safe because they allow unmutexed access to the raw memory objects (which may change locations due to gc in other processor threads).
 // Outside of the memory manager, the safely abstracted f2ptr interfaces provided in ptypes.h should be used.
 
 #include "f2_global.h"

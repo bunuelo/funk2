@@ -370,12 +370,12 @@ f2ptr f2__time(f2ptr cause) {
 }
 def_pcfunk0(time, return f2__time(this_cause));
 
-// thread
+// fiber
 
-f2ptr f2__sleep_for_nanoseconds_without_yield(f2ptr thread, f2ptr cause, f2ptr nanoseconds) {
-  return f2__thread__sleep_for_nanoseconds(cause, thread, nanoseconds);
+f2ptr f2__sleep_for_nanoseconds_without_yield(f2ptr fiber, f2ptr cause, f2ptr nanoseconds) {
+  return f2__fiber__sleep_for_nanoseconds(cause, fiber, nanoseconds);
 }
-def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds, return f2__sleep_for_nanoseconds_without_yield(simple_thread, this_cause, nanoseconds));
+def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds, return f2__sleep_for_nanoseconds_without_yield(simple_fiber, this_cause, nanoseconds));
 
 // array interface
 
@@ -579,31 +579,31 @@ def_pcfunk3(hashtable__add_keyvalue_pair,    this, key, value,        f2__hashta
 def_pcfunk2(hashtable__lookup_keyvalue_pair, this, key,        return f2__hashtable__lookup_keyvalue_pair(this,   this_cause, key));
 def_pcfunk2(hashtable__lookup_value,         this, key,        return f2__hashtable__lookup_value(        this,   this_cause, key));
 
-// primobject thread
+// primobject fiber
 
-f2ptr f2__force_funk_apply(f2ptr cause, f2ptr thread, f2ptr funkable, f2ptr args) {
-  f2ptr new_thread = f2__thread_serial(cause, cause, thread, f2thread__env(thread, cause), funkable, args);
-  f2__scheduler__complete_thread(cause, new_thread);
-  f2ptr value = f2thread__value(new_thread, cause);
-  f2thread__keep_undead__set(new_thread, cause, nil);
+f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
+  f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
+  f2__scheduler__complete_fiber(cause, new_fiber);
+  f2ptr value = f2fiber__value(new_fiber, cause);
+  f2fiber__keep_undead__set(new_fiber, cause, nil);
   return value;
 }
 
-void f2thread__force_funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
+void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2ptr env;
   if      (raw__funk__is_type(cause, cfunkable))       {env = f2funk__env(cfunkable, cause);}
   else if (raw__metro__is_type(cause, cfunkable))      {env = f2metro__env(cfunkable, cause);}
-  else if (raw__cfunk__is_type(cause, cfunkable))      {env = f2thread__env(thread, cause);}
-  else if (raw__metrocfunk__is_type(cause, cfunkable)) {env = f2thread__env(thread, cause);}
-  else                                         {error(nil, "f2thread__force_funk error: cfunkable must be funk or metro.");}
+  else if (raw__cfunk__is_type(cause, cfunkable))      {env = f2fiber__env(fiber, cause);}
+  else if (raw__metrocfunk__is_type(cause, cfunkable)) {env = f2fiber__env(fiber, cause);}
+  else                                         {error(nil, "f2fiber__force_funk error: cfunkable must be funk or metro.");}
   
-  f2thread__env__set(thread, cause, env);
-  f2thread__args__set(thread, cause, args);
-  f2thread__value__set(thread, cause, cfunkable);
-  //f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause, nil));
+  f2fiber__env__set(fiber, cause, env);
+  f2fiber__args__set(fiber, cause, args);
+  f2fiber__value__set(fiber, cause, cfunkable);
+  //f2fiber__program_counter__set(fiber, cause, f2__compile__funk_bc(cause, nil));
   
-  f2__thread__bytecode_helper__funk__no_increment_pc_reg(thread, cause);
-  //f2__global_scheduler__add_thread(cause, thread);
+  f2__fiber__bytecode_helper__funk__no_increment_pc_reg(fiber, cause);
+  //f2__global_scheduler__add_fiber(cause, fiber);
 }
 
 boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp) {
@@ -622,50 +622,50 @@ f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
   return f2larva__new(cause, 1);
 }
 
-void debug__f2thread__funk__unfunkable_error() {
-  status("debug__f2thread__funk__unfunkable_error here.");
+void debug__f2fiber__funk__unfunkable_error() {
+  status("debug__f2fiber__funk__unfunkable_error here.");
 }
 
-void f2thread__funk(f2ptr thread, f2ptr cause, f2ptr cfunkable, f2ptr args) {
-  f2thread__args__set(           thread, cause, args);
-  f2thread__value__set(          thread, cause, cfunkable);
-  f2thread__program_counter__set(thread, cause, f2__compile__funk_bc(cause));
+void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
+  f2fiber__args__set(           fiber, cause, args);
+  f2fiber__value__set(          fiber, cause, cfunkable);
+  f2fiber__program_counter__set(fiber, cause, f2__compile__funk_bc(cause));
   
   if (raw__funkable__is_type(cause, cfunkable)) {
     f2ptr env = raw__funkable__env(cause, cfunkable);
     if (env) {
-      f2thread__env__set(thread, cause, env);
+      f2fiber__env__set(fiber, cause, env);
     }
   } else {
-    status(  "[ERROR] f2thread__funk error: cfunkable must be funk or metro.");
-    printf("\n[ERROR] f2thread__funk error: cfunkable must be funk or metro.\n"); fflush(stdout);
+    status(  "[ERROR] f2fiber__funk error: cfunkable must be funk or metro.");
+    printf("\n[ERROR] f2fiber__funk error: cfunkable must be funk or metro.\n"); fflush(stdout);
     printf("\n[ERROR] cfunkable="); fflush(stdout); f2__print(cause, cfunkable); fflush(stdout); printf("\n"); fflush(stdout);
-    error(nil, "[ERROR] f2thread__funk error: cfunkable must be funk or metro.");
-    f2thread__value__set(thread, cause, f2larva__new(cause, 24));
-    debug__f2thread__funk__unfunkable_error();
+    error(nil, "[ERROR] f2fiber__funk error: cfunkable must be funk or metro.");
+    f2fiber__value__set(fiber, cause, f2larva__new(cause, 24));
+    debug__f2fiber__funk__unfunkable_error();
   }
 }
 
-f2ptr f2__thread(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_thread = f2__thread__new(cause, parent_thread, parent_env, cfunkable, args);
-  f2__global_scheduler__add_thread_parallel(cause, new_thread);
-  f2thread__keep_undead__set(new_thread, cause, nil);
-  return new_thread;
+f2ptr f2__fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+  f2__global_scheduler__add_fiber_parallel(cause, new_fiber);
+  f2fiber__keep_undead__set(new_fiber, cause, nil);
+  return new_fiber;
 }
-def_pcfunk2(thread, funk, args, return f2__thread(this_cause, this_cause, simple_thread, simple_env, funk, args));
+def_pcfunk2(fiber, funk, args, return f2__fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
-f2ptr f2__thread_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
-  f2ptr new_thread = f2__thread__new(cause, parent_thread, parent_env, cfunkable, args);
-  f2__global_scheduler__add_thread_serial(cause, new_thread);
-  return new_thread;
+f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+  f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
+  f2__global_scheduler__add_fiber_serial(cause, new_fiber);
+  return new_fiber;
 }
 
-f2ptr f2__thread__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_thread, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
+f2ptr f2__fiber__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr imaginary_cause = f2__cause__new_imaginary(cause, imagination_name);
-  f2ptr new_thread = f2__thread(cause, imaginary_cause, parent_thread, parent_env, cfunkable, args);
-  return new_thread;
+  f2ptr new_fiber = f2__fiber(cause, imaginary_cause, parent_fiber, parent_env, cfunkable, args);
+  return new_fiber;
 }
-def_pcfunk3(thread__imagine, imagination_name, funk, args, return f2__thread__imagine(this_cause, imagination_name, simple_thread, simple_env, funk, args));
+def_pcfunk3(fiber__imagine, imagination_name, funk, args, return f2__fiber__imagine(this_cause, imagination_name, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
   f2ptr i_cause = f2__cause__new_imaginary(cause, imagination_name);
@@ -828,9 +828,9 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
 
 // primobject thought_process
 
-// primobject thread
+// primobject fiber
 
-//boolean_t raw__threadp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_thread(x, cause));}
+//boolean_t raw__fiberp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_fiber(x, cause));}
 
 // primobject circular_buffer
 
@@ -983,7 +983,7 @@ def_pcfunk1(debug, value,
 	   return value);
 
 def_pcfunk1(trace, value,
-	   f2thread__trace__set(simple_thread, this_cause, f2cons__new(this_cause, value, f2thread__trace(simple_thread, this_cause)));
+	   f2fiber__trace__set(simple_fiber, this_cause, f2cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
 	   return value);
 
 boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
@@ -1047,37 +1047,37 @@ f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
 }
 def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
 
-f2ptr f2__compile(f2ptr cause, f2ptr thread, f2ptr exp, f2ptr protect_environment) {
+f2ptr f2__compile(f2ptr cause, f2ptr fiber, f2ptr exp, f2ptr protect_environment) {
   boolean_t is_funktional = boolean__true;
-  return raw__compile(cause, thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
+  return raw__compile(cause, fiber, exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
 }
-def_pcfunk2(compile, exp, protect_environment, return f2__compile(this_cause, simple_thread, exp, protect_environment));
+def_pcfunk2(compile, exp, protect_environment, return f2__compile(this_cause, simple_fiber, exp, protect_environment));
 
 f2ptr f2__identity(f2ptr cause, f2ptr exp) {return exp;}
 def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
 
-f2ptr f2__make_funk(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+f2ptr f2__make_funk(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
   //f2__print_prompt("make-funk args: ", args);
   //f2__print_prompt("  body        : ", body);
-  //f2__print_prompt("  env         : ", f2thread__env(simple_thread));
+  //f2__print_prompt("  env         : ", f2fiber__env(simple_fiber));
   //f2__print_prompt("  tracewrap   : ", tracewrap);
-  f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional, documentation);
-  f2ptr result = f2__compile__funk(cause, thread, funk);
+  f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
+  f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
   return funk;
 }
-def_pcfunk7(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_funk(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+def_pcfunk7(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_funk(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
-f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+f2ptr f2__make_metro(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
   //f2__print_prompt("make-metro args: ", args);
   //f2__print_prompt("  body         : ", body);
-  //f2__print_prompt("  env          : ", f2thread__env(simple_thread));
+  //f2__print_prompt("  env          : ", f2fiber__env(simple_fiber));
   //f2__print_prompt("  tracewrap    : ", tracewrap);
-  f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2thread__env(thread, cause), nil, is_funktional, documentation);
-  f2ptr result = f2__compile__metro(cause, thread, metro);
+  f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
+  f2ptr result = f2__compile__metro(cause, fiber, metro);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
@@ -1087,11 +1087,11 @@ f2ptr f2__make_metro(f2ptr cause, f2ptr thread, f2ptr name, f2ptr args, f2ptr de
   
   return metro;
 }
-def_pcfunk7(make_metro, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_metro(this_cause, simple_thread, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+def_pcfunk7(make_metro, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_metro(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
-f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args) {
+f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr fiber, f2ptr args) {
   release__assert(raw__cfunk__is_type(cause, cfunk),        nil, "cfunk failed type assertion.");
-  release__assert(raw__thread__is_type(cause, thread),      nil, "thread failed type assertion.");
+  release__assert(raw__fiber__is_type(cause, fiber),      nil, "fiber failed type assertion.");
   release__assert(!args || raw__cons__is_type(cause, args), nil, "args failed type assertion.");
   if (!f2cfunk__cfunkptr(cfunk, cause)) {
     printf("\ncfunk-apply error: cfunkptr object was null for cfunk.");
@@ -1104,15 +1104,15 @@ f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr thread, f2ptr args) {
     return f2larva__new(cause, 1);
     //return f2__argument_type_check_failure__exception__new(cause, cfunk);
   }
-  return ((cfunkptr_t)(from_ptr(cfunk_ptr)))(cause, thread, f2cfunk__env(cfunk, cause), args);
+  return ((cfunkptr_t)(from_ptr(cfunk_ptr)))(cause, fiber, f2cfunk__env(cfunk, cause), args);
 }
 def_pcfunk3(cfunk__apply, x, y, z, return f2__cfunk__apply(this_cause, x, y, z));
 
-f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr thread, f2ptr args) {
+f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
   release__assert(raw__metrocfunk__is_type(cause, metrocfunk), nil, "metrocfunk failed type assertion.");
-  release__assert(raw__thread__is_type(cause, thread),         nil, "thread failed type assertion.");
+  release__assert(raw__fiber__is_type(cause, fiber),         nil, "fiber failed type assertion.");
   release__assert(raw__cons__is_type(cause, args),             nil, "args failed type assertion.");
-  return ((cfunkptr_t)from_ptr(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, thread, f2metrocfunk__env(metrocfunk, cause), args);
+  return ((cfunkptr_t)from_ptr(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
 }
 def_pcfunk3(metrocfunk__apply, x, y, z, return f2__metrocfunk__apply(this_cause, x, y, z));
 
@@ -1138,7 +1138,7 @@ f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
   }
   int raw_length = f2integer__i(length, cause);
   f2ptr init = nil;
-  //printf ("\nand_rest: "); fflush(stdout); f2__print(simple_thread, and_rest); fflush(stdout);
+  //printf ("\nand_rest: "); fflush(stdout); f2__print(simple_fiber, and_rest); fflush(stdout);
   if (and_rest) {
     init = f2cons__car(and_rest, cause);
     if (!init || !raw__array__is_type(cause, init)) {
@@ -1213,17 +1213,17 @@ def_pcfunk3(chunk__write_bit32_integer, chunk, offset, value, return f2__chunk__
 f2ptr f2__chunk__read_bit32_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((short)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));}
 def_pcfunk2(chunk__read_bit32_signed, chunk, offset, return f2__chunk__read_bit32_signed(this_cause, chunk, offset));
 
-def_pcfunk1(demetropolize_once, exp, return f2__demetropolize_once(this_cause, simple_thread, simple_env, exp));
+def_pcfunk1(demetropolize_once, exp, return f2__demetropolize_once(this_cause, simple_fiber, simple_env, exp));
 
-f2ptr f2__demetropolize_full(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp) {return f2cons__cdr(f2__demetropolize_full__with_status(cause, thread, env, exp), cause);}
-def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_thread, simple_env, exp));
+f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {return f2cons__cdr(f2__demetropolize_full__with_status(cause, fiber, env, exp), cause);}
+def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk0(this__cause,  return this_cause);
-def_pcfunk0(this__thread, return simple_thread);
+def_pcfunk0(this__fiber, return simple_fiber);
 def_pcfunk0(this__env,    return simple_env);
 def_pcfunk0(this__args,   return simple_args);
 
-f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp) {
+f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   if (!exp) {return nil;}
   if (!raw__cons__is_type(cause, exp)) {
     printf("\nexps-demetropolize_full error: exp type must be list.");
@@ -1231,15 +1231,15 @@ f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr thread, f2ptr env, f2ptr ex
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
   return f2cons__new(cause,
-		     f2cons__cdr(f2__demetropolize_full__with_status(cause, thread, env, f2cons__car(exp, cause)), cause),
-		     f2__exps_demetropolize_full(cause, thread, env, f2cons__cdr(exp, cause)));
+		     f2cons__cdr(f2__demetropolize_full__with_status(cause, fiber, env, f2cons__car(exp, cause)), cause),
+		     f2__exps_demetropolize_full(cause, fiber, env, f2cons__cdr(exp, cause)));
 }
 
 def_pcfunk1(exps_demetropolize_full, exp,
-	    return f2__exps_demetropolize_full(this_cause, simple_thread, simple_env, exp));
+	    return f2__exps_demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk2(compile__special_symbol_exp, exp, protect_environment,
-	    return f2__compile__special_symbol_exp(this_cause, simple_thread, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
+	    return f2__compile__special_symbol_exp(this_cause, simple_fiber, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
 
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value) {
   f2ptr value = environment__lookup_funkvar_value(cause, env, funkvar);
@@ -1256,7 +1256,7 @@ f2ptr f2__wrong_argument_number_error__set(f2ptr cause, f2ptr error_bcs) {
 }
 def_pcfunk1(wrong_argument_number_error__set, error_bcs, return f2__wrong_argument_number_error__set(this_cause, error_bcs));
 
-f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp, f2ptr args) {
+f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr args) {
   if((! exp)) {
     printf("\njump-to-pointer error: exp is nil."); 
     return f2larva__new(cause, 1);
@@ -1265,17 +1265,17 @@ f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr thread, f2ptr env, f2ptr exp, f2ptr a
   switch(f2ptype__raw(exp, cause)) {
   case ptype_pointer: {
     cfunkptr_t jump = (cfunkptr_t)from_ptr(f2pointer__p(exp, cause));
-    return jump(cause, thread, env, args);
+    return jump(cause, fiber, env, args);
   }
   case ptype_chunk:
-    return f2chunk__cfunk_jump(exp, cause, thread, env, args);
+    return f2chunk__cfunk_jump(exp, cause, fiber, env, args);
   default:
     printf("\njump-to-pointer error: exp must be pointer or chunk.");
     return f2larva__new(cause, 1);
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
 }
-def_pcfunk2(jump_to_chunk, p, args, return f2__jump_to_chunk(this_cause, simple_thread, simple_env, p, args));
+def_pcfunk2(jump_to_chunk, p, args, return f2__jump_to_chunk(this_cause, simple_fiber, simple_env, p, args));
 
 f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp) {
   if(! exp) {
@@ -1520,10 +1520,10 @@ f2ptr f2__funkable__parent_env(f2ptr cause, f2ptr funkable) {
   }
 }
 
-f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f2ptr funkable) {
+f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_fiber, f2ptr event_type, f2ptr funkable) {
   /*
   f2ptr parent_env         = f2__funkable__parent_env(cause, funkable);
-  f2ptr thread             = f2thread__new(cause,
+  f2ptr fiber             = f2fiber__new(cause,
 					   nil,
 					   nil,
 					   nil,
@@ -1536,7 +1536,7 @@ f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f
 					   cause,
 					   __funk2.globalenv.true__symbol,
 					   nil,
-					   parent_thread,
+					   parent_fiber,
 					   parent_env,
 					   f2mutex__new(cause),
 					   nil,
@@ -1544,18 +1544,18 @@ f2ptr f2__event_subscriber(f2ptr cause, f2ptr parent_thread, f2ptr event_type, f
 					   nil);
   f2ptr event_buffer       = raw__circular_buffer__new_empty(cause, 1024);
   f2ptr event_buffer_mutex = f2mutex__new(cause);
-  f2ptr subscriber         = f2event_subscriber__new(cause, event_type, thread, funkable, event_buffer, event_buffer_mutex);
+  f2ptr subscriber         = f2event_subscriber__new(cause, event_type, fiber, funkable, event_buffer, event_buffer_mutex);
   return subscriber;
   */
   return nil;
 }
-def_pcfunk2(event_subscriber, event_type, funkable, return f2__event_subscriber(this_cause, simple_thread, event_type, funkable));
+def_pcfunk2(event_subscriber, event_type, funkable, return f2__event_subscriber(this_cause, simple_fiber, event_type, funkable));
 
-f2ptr f2__subscribe(f2ptr cause, f2ptr thread, f2ptr event_types, f2ptr funkable) {
+f2ptr f2__subscribe(f2ptr cause, f2ptr fiber, f2ptr event_types, f2ptr funkable) {
   if (! raw__cons__is_type(cause, event_types)) {
     event_types = f2cons__new(cause, event_types, nil);
   }
-  f2ptr event_subscriber = f2__event_subscriber(cause, thread, event_types, funkable);
+  f2ptr event_subscriber = f2__event_subscriber(cause, fiber, event_types, funkable);
   if (cause && (! raw__cause__is_type(cause, cause))) {
     return f2larva__new(cause, 1);
   }
@@ -1578,7 +1578,7 @@ f2ptr f2__subscribe(f2ptr cause, f2ptr thread, f2ptr event_types, f2ptr funkable
   //f2__print(cause, cause);
   return nil;
 }
-def_pcfunk2(subscribe, event_type, funkable, return f2__subscribe(this_cause, simple_thread, event_type, funkable));
+def_pcfunk2(subscribe, event_type, funkable, return f2__subscribe(this_cause, simple_fiber, event_type, funkable));
 
 f2ptr f2__first(f2ptr cause, f2ptr exp) {
   if (raw__cons__is_type(cause, exp)) {
@@ -1817,12 +1817,12 @@ f2ptr f2__equals(f2ptr cause, f2ptr x, f2ptr y) {
 }
 def_pcfunk2(equals, x, y, return f2__equals(this_cause, x, y));
 
-f2ptr f2__is_funktional(f2ptr cause, f2ptr thread, f2ptr exp) {
+f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
   boolean_t exp__is_funktional = boolean__true;
-  raw__compile(cause, thread, exp, boolean__false, boolean__false, NULL, &exp__is_funktional, nil, NULL);
+  raw__compile(cause, fiber, exp, boolean__false, boolean__false, NULL, &exp__is_funktional, nil, NULL);
   return f2bool__new(exp__is_funktional);
 }
-def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_thread, exp));
+def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fiber, exp));
 
 void f2__primcfunks__reinitialize_globalvars() {
   //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
@@ -1917,9 +1917,9 @@ void f2__primcfunks__initialize() {
   
   // cause
   
-  // thread
+  // fiber
   
-  f2__primcfunk__init__1(sleep_for_nanoseconds_without_yield, nanoseconds, "tells current executing thread to sleep for given number of nanoseconds.  [yield] should immediately follow.");
+  f2__primcfunk__init__1(sleep_for_nanoseconds_without_yield, nanoseconds, "tells current executing fiber to sleep for given number of nanoseconds.  [yield] should immediately follow.");
   
   // time
   
@@ -1936,8 +1936,8 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init(make_funk, "");
   f2__primcfunk__init(make_metro, "");
-  f2__primcfunk__init(thread, "");
-  f2__primcfunk__init(thread__imagine, "");
+  f2__primcfunk__init(fiber, "");
+  f2__primcfunk__init(fiber__imagine, "");
   f2__primcfunk__init(test_imagine, "");
   
   f2__primcfunk__init__1(           length,                     seq, "");
@@ -1984,7 +1984,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(fclose, "");
   
   f2__primcfunk__init__0(this__cause, "");
-  f2__primcfunk__init__0(this__thread, "");
+  f2__primcfunk__init__0(this__fiber, "");
   f2__primcfunk__init__0(this__env, "");
   f2__primcfunk__init__0(this__args, "");
   

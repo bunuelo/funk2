@@ -102,7 +102,7 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
 }
 def_pcfunk1(sort_integer_array, integers, return f2__integer_array__quicksort(this_cause, integers));
 
-f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
+f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
   f2ptr key;
   s64   raw_key;
   s64   i, j, k;
@@ -118,7 +118,7 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comp
       do {
 	keep_looping = boolean__false;
 	if (i <= last_element) {
-	  f2ptr comparison_result = f2__force_funk_apply(cause, thread, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, i), key));
+	  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, i), key));
 	  if (! comparison_result) {
 	    i ++;
 	    keep_looping = boolean__true;
@@ -129,7 +129,7 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comp
       do {
 	keep_looping = boolean__false;
 	if (j >= first_element) {
-	  f2ptr comparison_result = f2__force_funk_apply(cause, thread, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, j), key));
+	  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, raw__array__elt(cause, array, j), key));
 	  if (comparison_result) {
 	    j --;
 	    keep_looping = boolean__true;
@@ -142,13 +142,13 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comp
     }
     quicksort_swap_f2ptr(cause, array, first_element, j);
     {
-      f2ptr result = array__quicksort_helper(cause, thread, array, comparison_funk, first_element, j - 1);
+      f2ptr result = array__quicksort_helper(cause, fiber, array, comparison_funk, first_element, j - 1);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
     {
-      f2ptr result = array__quicksort_helper(cause, thread, array, comparison_funk, j + 1, last_element);
+      f2ptr result = array__quicksort_helper(cause, fiber, array, comparison_funk, j + 1, last_element);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
@@ -157,10 +157,10 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comp
   return array;
 }
 
-f2ptr f2__array__quicksort(f2ptr cause, f2ptr thread, f2ptr array, f2ptr comparison_funk) {
-  return array__quicksort_helper(cause, thread, array, comparison_funk, 0, raw__length(cause, array) - 1);
+f2ptr f2__array__quicksort(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk) {
+  return array__quicksort_helper(cause, fiber, array, comparison_funk, 0, raw__length(cause, array) - 1);
 }
-def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, simple_thread, array, comparison_funk));
+def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, simple_fiber, array, comparison_funk));
 
 
 

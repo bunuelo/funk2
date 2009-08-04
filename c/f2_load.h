@@ -24,9 +24,9 @@
 
 #include "f2_reader.h"
 #include "f2_compile.h"
-#include "f2_thread.h"
+#include "f2_fiber.h"
 
-extern f2ptr raw__load(f2ptr cause, f2ptr thread, f2ptr filename);
+extern f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename);
 extern def_pcfunk__prototype__declare(pcfunk__load);
 
 extern void f2__load__initialize();

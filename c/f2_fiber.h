@@ -19,8 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__THREAD__H
-#define F2__THREAD__H
+#ifndef F2__FIBER__H
+#define F2__FIBER__H
 
 #ifdef DEBUG_BYTECODES
 #  define debug_bc(code) code
@@ -38,24 +38,24 @@
 #include "f2_primfunks.h"
 #include "f2_print.h"
 
-extern f2ptr __thread__execute_bytecode__cause__symbol;
+extern f2ptr __fiber__execute_bytecode__cause__symbol;
 
-extern f2ptr __thread__program_counter_reg__symbol;
-extern f2ptr __thread__iter_reg__symbol;
-extern f2ptr __thread__env_reg__symbol;
-extern f2ptr __thread__args_reg__symbol;
-extern f2ptr __thread__return_reg__symbol;
-extern f2ptr __thread__value_reg__symbol;
+extern f2ptr __fiber__program_counter_reg__symbol;
+extern f2ptr __fiber__iter_reg__symbol;
+extern f2ptr __fiber__env_reg__symbol;
+extern f2ptr __fiber__args_reg__symbol;
+extern f2ptr __fiber__return_reg__symbol;
+extern f2ptr __fiber__value_reg__symbol;
 
 f2ptr global_critics();
 void global_critics__set(f2ptr critics);
 
 void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 
-boolean_t f2__thread__execute_bytecode(f2ptr cause, f2ptr thread, f2ptr bytecode);
-boolean_t f2__thread__execute_next_bytecode(f2ptr cause, f2ptr thread);
+boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode);
+boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber);
 
-void f2__thread__initialize();
+void f2__fiber__initialize();
 
-#endif // F2__THREAD__H
+#endif // F2__FIBER__H
 

@@ -22,7 +22,7 @@
 #ifndef F2__MALLOC__H
 #define F2__MALLOC__H
 
-void assert_failed    (f2ptr thread, char* filename, int line_num, char* str);
+void assert_failed    (f2ptr fiber, char* filename, int line_num, char* str);
 ptr  malloc_executable(size_t required_bytes);
 void free_executable  (ptr p);
 ptr  f2__malloc       (f2size_t byte_num);

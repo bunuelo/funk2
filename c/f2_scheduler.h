@@ -24,7 +24,7 @@
 
 #define global_scheduler() __global__scheduler
 
-#include "f2_thread.h"
+#include "f2_fiber.h"
 #include "f2_time.h"
 #include "f2_processor_mutex.h"
 
@@ -32,45 +32,40 @@ typedef struct funk2_operating_system_s {
   //  funk2_processor_mutex_t scheduler__execute_mutex;
   f2ptr                   scheduler;
   f2ptr                   scheduler__symbol;
-  f2ptr                   processor_thread__current_thread[memory_pool_num];
+  f2ptr                   processor_thread__current_fiber[memory_pool_num];
 } funk2_operating_system_t;
 
-//extern f2ptr f2scheduler__new(f2ptr context, f2ptr processors, f2ptr threads, f2ptr thread_num);
+//extern f2ptr f2scheduler__new(f2ptr context, f2ptr processors, f2ptr fibers, f2ptr fiber_num);
 //extern f2ptr f2scheduler__processors(f2ptr this);
 //extern f2ptr f2scheduler__processors__set(f2ptr this, f2ptr value);
-//extern f2ptr f2scheduler__threads(f2ptr this);
-//extern f2ptr f2scheduler__threads__set(f2ptr this, f2ptr value);
-//extern f2ptr f2scheduler__thread_num(f2ptr this);
-//extern f2ptr f2scheduler__thread_num__set(f2ptr this, f2ptr value);
-//extern f2ptr f2scheduler__add_thread(f2ptr context, f2ptr this, f2ptr thread);
+//extern f2ptr f2scheduler__fibers(f2ptr this);
+//extern f2ptr f2scheduler__fibers__set(f2ptr this, f2ptr value);
+//extern f2ptr f2scheduler__fiber_num(f2ptr this);
+//extern f2ptr f2scheduler__fiber_num__set(f2ptr this, f2ptr value);
+//extern f2ptr f2scheduler__add_fiber(f2ptr context, f2ptr this, f2ptr fiber);
 
 void funk2_operating_system__init(funk2_operating_system_t* this);
 void funk2_operating_system__destroy(funk2_operating_system_t* this);
 
 f2ptr f2__global_scheduler__processors();
 f2ptr f2__global_scheduler__processors__set(f2ptr cause, f2ptr value);
-f2ptr f2__global_scheduler__threads();
-f2ptr f2__global_scheduler__threads__set(f2ptr cause, f2ptr value);
-f2ptr f2__global_scheduler__thread_num();
-f2ptr f2__global_scheduler__thread_num__set(f2ptr cause, f2ptr value);
-void  f2__global_scheduler__add_thread_serial(f2ptr cause, f2ptr thread);
-void  f2__global_scheduler__add_thread_parallel(f2ptr cause, f2ptr thread);
+f2ptr f2__global_scheduler__fibers();
+f2ptr f2__global_scheduler__fibers__set(f2ptr cause, f2ptr value);
+f2ptr f2__global_scheduler__fiber_num();
+f2ptr f2__global_scheduler__fiber_num__set(f2ptr cause, f2ptr value);
+void  f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber);
+void  f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
 
-f2ptr f2__scheduler__processor_thread_current_thread(int pool_index);
+f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index);
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
 
-f2ptr f2__add_thread(f2ptr cause, f2ptr this, f2ptr thread);
-
-//void f2__global_scheduler__execute_mutex__lock(f2ptr cause);
-//void f2__global_scheduler__execute_mutex__unlock(f2ptr cause);
+f2ptr f2__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
 void f2__scheduler__yield(f2ptr cause);
-void f2__scheduler__complete_thread(f2ptr cause, f2ptr thread);
+void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber);
 
-void f2__print_threads_stacks();
-
-//void f2__scheduler__exec_with_main_processor_thread(f2ptr cause);
+void f2__print_fibers_stacks();
 
 void f2__scheduler__start_processors();
 void f2__scheduler__stop_processors();

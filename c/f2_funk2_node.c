@@ -21,40 +21,40 @@
 
 #include "funk2.h"
 
-void thread_hash__init(thread_hash_t* this) {
-  this->array               = (thread_hash_node_t**)from_ptr(f2__malloc(sizeof(thread_hash_node_t*) * THREAD_HASH__INITIAL_ARRAY_LENGTH));
-  bzero(this->array, sizeof(thread_hash_node_t*) * THREAD_HASH__INITIAL_ARRAY_LENGTH);
-  this->hash_value_bit_mask = THREAD_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes THREAD_HASH__INITIAL_ARRAY_LENGTH is power of 2
-  this->array_length        = THREAD_HASH__INITIAL_ARRAY_LENGTH;
+void fiber_hash__init(fiber_hash_t* this) {
+  this->array               = (fiber_hash_node_t**)from_ptr(f2__malloc(sizeof(fiber_hash_node_t*) * FIBER_HASH__INITIAL_ARRAY_LENGTH));
+  bzero(this->array, sizeof(fiber_hash_node_t*) * FIBER_HASH__INITIAL_ARRAY_LENGTH);
+  this->hash_value_bit_mask = FIBER_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes FIBER_HASH__INITIAL_ARRAY_LENGTH is power of 2
+  this->array_length        = FIBER_HASH__INITIAL_ARRAY_LENGTH;
 }
 
-void thread_hash__destroy(thread_hash_t* this) {
+void fiber_hash__destroy(fiber_hash_t* this) {
   f2__free(to_ptr(this->array));
 }
 
-void thread_hash__add_thread_funk2_node(thread_hash_t* this, f2ptr thread, funk2_node_t* funk2_node) {
-  uint                bin_index = thread & this->hash_value_bit_mask;
-  thread_hash_node_t* new_node  = (thread_hash_node_t*)from_ptr(f2__malloc(sizeof(thread_hash_node_t)));
-  new_node->thread     = thread;
+void fiber_hash__add_fiber_funk2_node(fiber_hash_t* this, f2ptr fiber, funk2_node_t* funk2_node) {
+  uint                bin_index = fiber & this->hash_value_bit_mask;
+  fiber_hash_node_t* new_node  = (fiber_hash_node_t*)from_ptr(f2__malloc(sizeof(fiber_hash_node_t)));
+  new_node->fiber     = fiber;
   new_node->funk2_node = funk2_node;
   new_node->next       = this->array[bin_index];
   this->array[bin_index] = new_node;
 }
 
-void thread_hash__add_thread_funk2_packet(thread_hash_t* this, f2ptr thread, funk2_packet_t* funk2_packet) {
-  uint                bin_index = thread & this->hash_value_bit_mask;
-  thread_hash_node_t* new_node  = (thread_hash_node_t*)from_ptr(f2__malloc(sizeof(thread_hash_node_t)));
-  new_node->thread       = thread;
+void fiber_hash__add_fiber_funk2_packet(fiber_hash_t* this, f2ptr fiber, funk2_packet_t* funk2_packet) {
+  uint                bin_index = fiber & this->hash_value_bit_mask;
+  fiber_hash_node_t* new_node  = (fiber_hash_node_t*)from_ptr(f2__malloc(sizeof(fiber_hash_node_t)));
+  new_node->fiber       = fiber;
   new_node->funk2_packet = funk2_packet;
   new_node->next         = this->array[bin_index];
   this->array[bin_index] = new_node;
 }
 
-thread_hash_node_t* thread_hash__lookup_thread_hash_node(thread_hash_t* this, f2ptr thread) {
-  uint bin_index = thread & this->hash_value_bit_mask;
-  thread_hash_node_t* node = this->array[bin_index];
+fiber_hash_node_t* fiber_hash__lookup_fiber_hash_node(fiber_hash_t* this, f2ptr fiber) {
+  uint bin_index = fiber & this->hash_value_bit_mask;
+  fiber_hash_node_t* node = this->array[bin_index];
   while (node) {
-    if (node->thread == thread) {
+    if (node->fiber == fiber) {
       return node;
     }
     node = node->next;
@@ -62,46 +62,46 @@ thread_hash_node_t* thread_hash__lookup_thread_hash_node(thread_hash_t* this, f2
   return NULL;
 }
 
-funk2_node_t* thread_hash__lookup_funk2_node(thread_hash_t* this, f2ptr thread) {
-  thread_hash_node_t* thread_hash_node = thread_hash__lookup_thread_hash_node(this, thread);
+funk2_node_t* fiber_hash__lookup_funk2_node(fiber_hash_t* this, f2ptr fiber) {
+  fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_node_t* funk2_node;
-  if (thread_hash_node) {
-    funk2_node = thread_hash_node->funk2_node;
+  if (fiber_hash_node) {
+    funk2_node = fiber_hash_node->funk2_node;
   } else {
     funk2_node = NULL;
   }
   return funk2_node;
 }
 
-funk2_node_t* thread_hash__pop_funk2_node(thread_hash_t* this, f2ptr thread) {
-  thread_hash_node_t* thread_hash_node = thread_hash__lookup_thread_hash_node(this, thread);
+funk2_node_t* fiber_hash__pop_funk2_node(fiber_hash_t* this, f2ptr fiber) {
+  fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_node_t* funk2_node;
-  if (thread_hash_node) {
-    funk2_node = thread_hash_node->funk2_node;
-    thread_hash_node->funk2_node = NULL;
+  if (fiber_hash_node) {
+    funk2_node = fiber_hash_node->funk2_node;
+    fiber_hash_node->funk2_node = NULL;
   } else {
     funk2_node = NULL;
   }
   return funk2_node;
 }
 
-funk2_packet_t* thread_hash__lookup_funk2_packet(thread_hash_t* this, f2ptr thread) {
-  thread_hash_node_t* thread_hash_node = thread_hash__lookup_thread_hash_node(this, thread);
+funk2_packet_t* fiber_hash__lookup_funk2_packet(fiber_hash_t* this, f2ptr fiber) {
+  fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_packet_t* packet;
-  if (thread_hash_node) {
-    packet = thread_hash_node->funk2_packet;
+  if (fiber_hash_node) {
+    packet = fiber_hash_node->funk2_packet;
   } else {
     packet = NULL;
   }
   return packet;
 }
 
-funk2_packet_t* thread_hash__pop_funk2_packet(thread_hash_t* this, f2ptr thread) {
-  thread_hash_node_t* thread_hash_node = thread_hash__lookup_thread_hash_node(this, thread);
+funk2_packet_t* fiber_hash__pop_funk2_packet(fiber_hash_t* this, f2ptr fiber) {
+  fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_packet_t* packet;
-  if (thread_hash_node) {
-    packet = thread_hash_node->funk2_packet;
-    thread_hash_node->funk2_packet = NULL;
+  if (fiber_hash_node) {
+    packet = fiber_hash_node->funk2_packet;
+    fiber_hash_node->funk2_packet = NULL;
   } else {
     packet = NULL;
   }
@@ -246,10 +246,10 @@ void funk2_node_handler__init(funk2_node_handler_t* this, u32 new_node__send_buf
   this->node_list                      = NULL;
   this->new_node__send_buffer_byte_num = new_node__send_buffer_byte_num;
   this->new_node__recv_buffer_byte_num = new_node__recv_buffer_byte_num;
-  funk2_processor_mutex__init(&(this->remote_thread_hash_mutex));
-  thread_hash__init(&(this->remote_thread_hash));
-  funk2_processor_mutex__init(&(this->local_thread_hash_mutex));
-  thread_hash__init(&(this->local_thread_hash));
+  funk2_processor_mutex__init(&(this->remote_fiber_hash_mutex));
+  fiber_hash__init(&(this->remote_fiber_hash));
+  funk2_processor_mutex__init(&(this->local_fiber_hash_mutex));
+  fiber_hash__init(&(this->local_fiber_hash));
   int i;
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {
     this->funk2_node_by_computer_id_array[i] = NULL;
@@ -265,10 +265,10 @@ void funk2_node_handler__destroy(funk2_node_handler_t* this) {
     free(iter);
     iter = next;
   }
-  funk2_processor_mutex__destroy(&(this->remote_thread_hash_mutex));
-  thread_hash__destroy(&(this->remote_thread_hash));
-  funk2_processor_mutex__destroy(&(this->local_thread_hash_mutex));
-  thread_hash__destroy(&(this->local_thread_hash));
+  funk2_processor_mutex__destroy(&(this->remote_fiber_hash_mutex));
+  fiber_hash__destroy(&(this->remote_fiber_hash));
+  funk2_processor_mutex__destroy(&(this->local_fiber_hash_mutex));
+  fiber_hash__destroy(&(this->local_fiber_hash));
   funk2_processor_mutex__destroy(&(this->next_computer_id_mutex));
 }
 
@@ -344,64 +344,64 @@ void funk2_node_handler__handle_nodes(funk2_node_handler_t* this) {
   }
 }
 
-void funk2_node_handler__add_remote_thread_funk2_node(funk2_node_handler_t* this, f2ptr thread, funk2_node_t* funk2_node) {
-  thread_hash__add_thread_funk2_node(&(this->remote_thread_hash), thread, funk2_node);
+void funk2_node_handler__add_remote_fiber_funk2_node(funk2_node_handler_t* this, f2ptr fiber, funk2_node_t* funk2_node) {
+  fiber_hash__add_fiber_funk2_node(&(this->remote_fiber_hash), fiber, funk2_node);
 }
 
-void funk2_node_handler__add_local_thread_funk2_packet(funk2_node_handler_t* this, f2ptr thread, funk2_packet_t* funk2_packet) {
-  thread_hash__add_thread_funk2_packet(&(this->local_thread_hash), thread, funk2_packet);
+void funk2_node_handler__add_local_fiber_funk2_packet(funk2_node_handler_t* this, f2ptr fiber, funk2_packet_t* funk2_packet) {
+  fiber_hash__add_fiber_funk2_packet(&(this->local_fiber_hash), fiber, funk2_packet);
 }
 
-funk2_node_t* funk2_node_handler__lookup_remote_thread_funk2_node(funk2_node_handler_t* this, f2ptr thread) {
-  funk2_processor_mutex__lock(&(this->remote_thread_hash_mutex));
-  funk2_node_t* funk2_node = thread_hash__lookup_funk2_node(&(this->remote_thread_hash), thread);
-  funk2_processor_mutex__unlock(&(this->remote_thread_hash_mutex));
+funk2_node_t* funk2_node_handler__lookup_remote_fiber_funk2_node(funk2_node_handler_t* this, f2ptr fiber) {
+  funk2_processor_mutex__lock(&(this->remote_fiber_hash_mutex));
+  funk2_node_t* funk2_node = fiber_hash__lookup_funk2_node(&(this->remote_fiber_hash), fiber);
+  funk2_processor_mutex__unlock(&(this->remote_fiber_hash_mutex));
   return funk2_node;
 }
 
-funk2_node_t* funk2_node_handler__pop_remote_thread_funk2_node(funk2_node_handler_t* this, f2ptr thread) {
-  funk2_processor_mutex__lock(&(this->remote_thread_hash_mutex));
-  funk2_node_t* funk2_node = thread_hash__pop_funk2_node(&(this->remote_thread_hash), thread);
-  funk2_processor_mutex__unlock(&(this->remote_thread_hash_mutex));
+funk2_node_t* funk2_node_handler__pop_remote_fiber_funk2_node(funk2_node_handler_t* this, f2ptr fiber) {
+  funk2_processor_mutex__lock(&(this->remote_fiber_hash_mutex));
+  funk2_node_t* funk2_node = fiber_hash__pop_funk2_node(&(this->remote_fiber_hash), fiber);
+  funk2_processor_mutex__unlock(&(this->remote_fiber_hash_mutex));
   return funk2_node;
 }
 
-funk2_packet_t* funk2_node_handler__lookup_local_thread_funk2_packet(funk2_node_handler_t* this, f2ptr thread) {
-  funk2_processor_mutex__lock(&(this->local_thread_hash_mutex));
-  funk2_packet_t* funk2_packet = thread_hash__lookup_funk2_packet(&(this->local_thread_hash), thread);
-  funk2_processor_mutex__unlock(&(this->local_thread_hash_mutex));
+funk2_packet_t* funk2_node_handler__lookup_local_fiber_funk2_packet(funk2_node_handler_t* this, f2ptr fiber) {
+  funk2_processor_mutex__lock(&(this->local_fiber_hash_mutex));
+  funk2_packet_t* funk2_packet = fiber_hash__lookup_funk2_packet(&(this->local_fiber_hash), fiber);
+  funk2_processor_mutex__unlock(&(this->local_fiber_hash_mutex));
   return funk2_packet;
 }
 
-funk2_packet_t* funk2_node_handler__pop_local_thread_funk2_packet(funk2_node_handler_t* this, f2ptr thread) {
-  funk2_processor_mutex__lock(&(this->local_thread_hash_mutex));
-  funk2_packet_t* funk2_packet = thread_hash__pop_funk2_packet(&(this->local_thread_hash), thread);
-  funk2_processor_mutex__unlock(&(this->local_thread_hash_mutex));
+funk2_packet_t* funk2_node_handler__pop_local_fiber_funk2_packet(funk2_node_handler_t* this, f2ptr fiber) {
+  funk2_processor_mutex__lock(&(this->local_fiber_hash_mutex));
+  funk2_packet_t* funk2_packet = fiber_hash__pop_funk2_packet(&(this->local_fiber_hash), fiber);
+  funk2_processor_mutex__unlock(&(this->local_fiber_hash_mutex));
   return funk2_packet;
 }
 
-funk2_node_t* funk2_node_handler__lookup_thread_execution_node(funk2_node_handler_t* this, f2ptr thread) {
-  funk2_node_t* remote_node = funk2_node_handler__lookup_remote_thread_funk2_node(this, thread);
+funk2_node_t* funk2_node_handler__lookup_fiber_execution_node(funk2_node_handler_t* this, f2ptr fiber) {
+  funk2_node_t* remote_node = funk2_node_handler__lookup_remote_fiber_funk2_node(this, fiber);
   if (! remote_node) {
-    error(nil, "funk2_node_handler__lookup_thread_execution_node error: don't know of thread.");
+    error(nil, "funk2_node_handler__lookup_fiber_execution_node error: don't know of fiber.");
   }
   return remote_node;
 }
 
-void funk2_node_handler__report_thread_response_packet(funk2_node_handler_t* this, f2ptr thread, funk2_packet_t* packet) {
-  //printf ("\nfunk2_node_handler__report_thread_response_packet: thread=" f2ptr__fstr "\n", thread); fflush(stdout);
-  funk2_node_handler__add_local_thread_funk2_packet(this, thread, packet);
+void funk2_node_handler__report_fiber_response_packet(funk2_node_handler_t* this, f2ptr fiber, funk2_packet_t* packet) {
+  //printf ("\nfunk2_node_handler__report_fiber_response_packet: fiber=" f2ptr__fstr "\n", fiber); fflush(stdout);
+  funk2_node_handler__add_local_fiber_funk2_packet(this, fiber, packet);
 }
 
-funk2_packet_t* funk2_node_handler__wait_for_new_thread_packet(funk2_node_handler_t* this, f2ptr thread) {
-  //printf ("\nfunk2_node_handler__wait_for_new_thread_packet: thread=" f2ptr__fstr "\n", thread); fflush(stdout);
-  funk2_node_t*   funk2_node = funk2_node_handler__lookup_remote_thread_funk2_node(this, thread);;
+funk2_packet_t* funk2_node_handler__wait_for_new_fiber_packet(funk2_node_handler_t* this, f2ptr fiber) {
+  //printf ("\nfunk2_node_handler__wait_for_new_fiber_packet: fiber=" f2ptr__fstr "\n", fiber); fflush(stdout);
+  funk2_node_t*   funk2_node = funk2_node_handler__lookup_remote_fiber_funk2_node(this, fiber);;
   funk2_packet_t* response_packet = NULL;
   while (response_packet == NULL) {
-    response_packet = funk2_node_handler__pop_local_thread_funk2_packet(this, thread);
+    response_packet = funk2_node_handler__pop_local_fiber_funk2_packet(this, fiber);
     if ((funk2_node != NULL) &&
 	(response_packet->header.stream_iter == funk2_node->last_recv_packet__stream_iter)) {
-      status("funk2_node_handler__wait_for_new_thread_packet warning: detected and dumped duplicate received packet.");
+      status("funk2_node_handler__wait_for_new_fiber_packet warning: detected and dumped duplicate received packet.");
       f2__free(to_ptr(response_packet));
       response_packet = NULL;
     }

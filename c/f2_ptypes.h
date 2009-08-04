@@ -36,13 +36,13 @@
 // length must be greater than zero.
 //#define chararray__hash_value(length, str) ((((uint)((str)[0])) + (((uint)((str)[(length)>>3]))<<8) + (((uint)((str)[(length)>>2]))<<16) + (((uint)((str)[(length)>>1]))<<24)) * PRIME_NUMBER__16_BIT)
 
-#define chararray__hash_value(length, str)    \
-  ((*((uint*)(((u8*)(str))+(0))))           * \
-   (*((uint*)(((u8*)(str))+(((uint)(length))>>4)))) * \
-   (*((uint*)(((u8*)(str))+(((uint)(length))>>3)))) * \
-   (*((uint*)(((u8*)(str))+(((uint)(length))>>2)))) * \
-   (*((uint*)(((u8*)(str))+(((uint)(length))>>1)))) * \
-   ((uint)PRIME_NUMBER__32_BIT))
+#define chararray__hash_value(length, str)                 \
+  (((u64)(*((u8*)(((u8*)(str))+(0)))))                   * \
+   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>4))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>3))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>2))))) * \
+   ((u64)(*((u8*)(((u8*)(str))+(((uint)(length))>>1))))) * \
+   ((u64)PRIME_NUMBER__32_BIT))
 
 typedef f2ptr (*cfunkptr_t)(f2ptr cause, f2ptr thread, f2ptr env, f2ptr args);
 

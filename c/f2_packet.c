@@ -615,7 +615,7 @@ f2ptr f2system__environment(f2ptr cause, node_id_t node_id) {
   if (computer_id == 0) {
     return pfunk2__system__environment(cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__system__environment(funk2_node, fiber, cause);
   }
@@ -676,7 +676,7 @@ ptype_t f2ptype__raw(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2ptype__raw(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2ptype__raw(funk2_node, fiber, cause, this);
   }
@@ -737,7 +737,7 @@ f2ptr f2ptype__cause(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2ptype__cause(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2ptype__cause(funk2_node, fiber, cause, this);
   }
@@ -796,7 +796,7 @@ void f2ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {
   if (computer_id == 0) {
     pfunk2__f2ptype__cause__set(this, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2ptype__cause__set(funk2_node, fiber, cause, this, value);
   }
@@ -910,7 +910,7 @@ s64 f2integer__i(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2integer__i(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2integer__i(funk2_node, fiber, cause, this);
   }
@@ -1024,7 +1024,7 @@ double f2double__d(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2double__d(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2double__d(funk2_node, fiber, cause, this);
   }
@@ -1138,7 +1138,7 @@ float f2float__f(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2float__f(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2float__f(funk2_node, fiber, cause, this);
   }
@@ -1252,7 +1252,7 @@ ptr f2pointer__p(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2pointer__p(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2pointer__p(funk2_node, fiber, cause, this);
   }
@@ -1423,7 +1423,7 @@ f2ptr f2gfunkptr__gfunkptr(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__gfunkptr(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2gfunkptr__gfunkptr(funk2_node, fiber, cause, this);
   }
@@ -1484,7 +1484,7 @@ computer_id_t f2gfunkptr__computer_id(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__computer_id(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2gfunkptr__computer_id(funk2_node, fiber, cause, this);
   }
@@ -1545,7 +1545,7 @@ pool_index_t f2gfunkptr__pool_index(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__pool_index(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2gfunkptr__pool_index(funk2_node, fiber, cause, this);
   }
@@ -1606,7 +1606,7 @@ pool_address_t f2gfunkptr__pool_address(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2gfunkptr__pool_address(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2gfunkptr__pool_address(funk2_node, fiber, cause, this);
   }
@@ -1719,7 +1719,7 @@ boolean_t f2mutex__is_locked(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2mutex__is_locked(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2mutex__is_locked(funk2_node, fiber, cause, this);
   }
@@ -1777,7 +1777,7 @@ void f2mutex__lock(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2mutex__lock(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2mutex__lock(funk2_node, fiber, cause, this);
   }
@@ -1835,7 +1835,7 @@ void f2mutex__unlock(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2mutex__unlock(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2mutex__unlock(funk2_node, fiber, cause, this);
   }
@@ -1896,7 +1896,7 @@ int f2mutex__trylock(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2mutex__trylock(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2mutex__trylock(funk2_node, fiber, cause, this);
   }
@@ -2010,7 +2010,7 @@ u64 f2char__ch(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2char__ch(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2char__ch(funk2_node, fiber, cause, this);
   }
@@ -2125,7 +2125,7 @@ u64 f2string__length(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2string__length(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2string__length(funk2_node, fiber, cause, this);
   }
@@ -2187,7 +2187,7 @@ u8 f2string__elt(f2ptr this, int index, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2string__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2string__elt(funk2_node, fiber, cause, this, index);
   }
@@ -2250,7 +2250,7 @@ void f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
   if (computer_id == 0) {
     return pfunk2__f2string__str_copy(this, cause, str);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2string__str_copy(funk2_node, fiber, cause, this, str);
   }
@@ -2311,7 +2311,7 @@ int f2string__hash_value(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2string__hash_value(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2string__hash_value(funk2_node, fiber, cause, this);
   }
@@ -2426,7 +2426,7 @@ u64 f2symbol__length(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2symbol__length(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2symbol__length(funk2_node, fiber, cause, this);
   }
@@ -2487,7 +2487,7 @@ u64 f2symbol__hash_value(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2symbol__hash_value(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2symbol__hash_value(funk2_node, fiber, cause, this);
   }
@@ -2549,7 +2549,7 @@ u8 f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2symbol__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2symbol__elt(funk2_node, fiber, cause, this, index);
   }
@@ -2614,7 +2614,7 @@ void f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   if (computer_id == 0) {
     return pfunk2__f2symbol__str_copy(this, cause, str);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2symbol__str_copy(funk2_node, fiber, cause, this, str);
   }
@@ -2783,7 +2783,7 @@ u64 f2chunk__length(f2ptr cause, f2ptr this) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__length(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__length(funk2_node, fiber, cause, this);
   }
@@ -2845,7 +2845,7 @@ u8 f2chunk__bit8__elt(f2ptr cause, f2ptr this, u64 index) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit8__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit8__elt(funk2_node, fiber, cause, this, index);
   }
@@ -2905,7 +2905,7 @@ void f2chunk__bit8__elt__set(f2ptr cause, f2ptr this, u64 index, u8 value) {
   if (computer_id == 0) {
     pfunk2__f2chunk__bit8__elt__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit8__elt__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -2967,7 +2967,7 @@ u16 f2chunk__bit16__elt(f2ptr cause, f2ptr this, u64 index) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit16__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit16__elt(funk2_node, fiber, cause, this, index);
   }
@@ -3027,7 +3027,7 @@ void f2chunk__bit16__elt__set(f2ptr cause, f2ptr this, u64 index, u16 value) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit16__elt__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit16__elt__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -3089,7 +3089,7 @@ u32 f2chunk__bit32__elt(f2ptr cause, f2ptr this, u64 index) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit32__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit32__elt(funk2_node, fiber, cause, this, index);
   }
@@ -3149,7 +3149,7 @@ void f2chunk__bit32__elt__set(f2ptr cause, f2ptr this, u64 index, u32 value) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit32__elt__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit32__elt__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -3211,7 +3211,7 @@ u64 f2chunk__bit64__elt(f2ptr cause, f2ptr this, u64 index) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit64__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit64__elt(funk2_node, fiber, cause, this, index);
   }
@@ -3271,7 +3271,7 @@ void f2chunk__bit64__elt__set(f2ptr cause, f2ptr this, u64 index, u64 value) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit64__elt__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bit64__elt__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -3338,7 +3338,7 @@ f2ptr f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr
   if (computer_id == 0) {
     return pfunk2__f2chunk__cfunk_jump(this, cause, fiber, env, args);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__cfunk_jump(funk2_node, fiber, cause, this, fiber, env, args);
   }
@@ -3401,7 +3401,7 @@ int f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr user_fiber) {
   if (computer_id == 0) {
     return pfunk2__f2chunk__bytecode_jump(this, cause, user_fiber);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__bytecode_jump(funk2_node, fiber, cause, this, user_fiber);
   }
@@ -3466,7 +3466,7 @@ f2ptr f2chunk__send(f2ptr cause, f2ptr this, int start, int length, int fd, int 
   if (computer_id == 0) {
     return pfunk2__f2chunk__send(this, cause, start, length, fd, flags);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__send(funk2_node, fiber, cause, this, start, length, fd, flags);
   }
@@ -3531,7 +3531,7 @@ f2ptr f2chunk__recv(f2ptr cause, f2ptr this, int start, int length, int fd, int 
   if (computer_id == 0) {
     return pfunk2__f2chunk__recv(this, cause, start, length, fd, flags);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__recv(funk2_node, fiber, cause, this, start, length, fd, flags);
   }
@@ -3717,7 +3717,7 @@ f2ptr f2simple_array__immutable(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2simple_array__immutable(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2simple_array__immutable(funk2_node, fiber, cause, this);
   }
@@ -3778,7 +3778,7 @@ void f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   if (computer_id == 0) {
     pfunk2__f2simple_array__immutable__set(this, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2simple_array__immutable__set(funk2_node, fiber, cause, this, value);
   }
@@ -3839,7 +3839,7 @@ u64 f2simple_array__length(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2simple_array__length(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2simple_array__length(funk2_node, fiber, cause, this);
   }
@@ -3903,7 +3903,7 @@ f2ptr f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2simple_array__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2simple_array__elt(funk2_node, fiber, cause, this, index);
   }
@@ -3965,7 +3965,7 @@ void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   if (computer_id == 0) {
     pfunk2__f2simple_array__elt__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2simple_array__elt__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -4155,7 +4155,7 @@ f2ptr f2traced_array__immutable(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2traced_array__immutable(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__immutable(funk2_node, fiber, cause, this);
   }
@@ -4216,7 +4216,7 @@ void f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   if (computer_id == 0) {
     pfunk2__f2traced_array__immutable__set(this, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__immutable__set(funk2_node, fiber, cause, this, value);
   }
@@ -4277,7 +4277,7 @@ u64 f2traced_array__length(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2traced_array__length(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__length(funk2_node, fiber, cause, this);
   }
@@ -4342,7 +4342,7 @@ f2ptr f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, u64 t
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__trace_depth(this, index, cause, trace_depth);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__elt__trace_depth(funk2_node, fiber, cause, this, index, trace_depth);
   }
@@ -4406,7 +4406,7 @@ f2ptr f2traced_array__elt(f2ptr this, u64 index, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__elt(funk2_node, fiber, cause, this, index);
   }
@@ -4468,7 +4468,7 @@ void f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__set__trace_depth(this, index, cause, value, trace_depth);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__elt__set__trace_depth(funk2_node, fiber, cause, this, index, value, trace_depth);
   }
@@ -4530,7 +4530,7 @@ void f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__elt__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -4592,7 +4592,7 @@ f2ptr f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__tracing_on(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__elt__tracing_on(funk2_node, fiber, cause, this, index);
   }
@@ -4653,7 +4653,7 @@ void f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__tracing_on__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__elt__tracing_on__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -4715,7 +4715,7 @@ f2ptr f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__trace(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__elt__trace(funk2_node, fiber, cause, this, index);
   }
@@ -4776,7 +4776,7 @@ void f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr v
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__trace__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__elt__trace__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -4838,7 +4838,7 @@ f2ptr f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause)
   if (computer_id == 0) {
     return pfunk2__f2traced_array__elt__imagination_frame(this, index, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2traced_array__elt__imagination_frame(funk2_node, fiber, cause, this, index);
   }
@@ -4899,7 +4899,7 @@ void f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr ca
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__imagination_frame__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__elt__imagination_frame__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -5013,7 +5013,7 @@ u32 f2larva__type(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2larva__type(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_fiber_current_fiber(this_processor_fiber__pool_index());
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_fiber__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2larva__type(funk2_node, fiber, cause, this);
   }

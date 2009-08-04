@@ -74,8 +74,8 @@ typedef struct funk2_primobject__frame_s {
   f2ptr type_variable_not_defined__larva;
 } funk2_primobject__frame_t;
 
-void funk2_primobject__frame__init(funk2_primobject__frame_t* this);
-void funk2_primobject__frame__reinit(funk2_primobject__frame_t* this);
+void funk2_primobject__frame__init(   funk2_primobject__frame_t* this);
+void funk2_primobject__frame__reinit( funk2_primobject__frame_t* this);
 void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this);
 
 #endif // F2__PRIMOBJECT__FRAME__H

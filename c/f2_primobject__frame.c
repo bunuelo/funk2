@@ -64,67 +64,80 @@ f2ptr f2__frame__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__frame__i
 def_pcfunk1(frame__is_type, x, return f2__frame__is_type(this_cause, x));
 
 void frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
   release__assert(raw__hashtable__is_type(cause, frame__type_hashtable), nil, "frame__type_hashtable is not hashtable.");
   f2ptr type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
   if (! type__hashtable) {
-    f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
+    //f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
     type__hashtable = f2__hashtable__lookup_value(frame__type_hashtable, cause, type);
     if (! type__hashtable) {
       type__hashtable = raw__hashtable__new(cause, 1);
       f2__hashtable__add_keyvalue_pair(cause, frame__type_hashtable, type, type__hashtable);
     }
-    f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
+    //f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   }
   release__assert(raw__hashtable__is_type(cause, type__hashtable), nil, "type__hashtable is not hashtable.");
   f2__hashtable__add_keyvalue_pair(cause, type__hashtable, var, value);
+  f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
 }
 
 f2ptr frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+  f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
     if (keyvalue_pair) {
+      f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
       return keyvalue_pair;
     }
   }
+  f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   return not_defined_value;
 }
 
 f2ptr frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+  f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
     if (keyvalue_pair) {
       f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
+      f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
       return retval;
     }
   }
+  f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   return not_defined_value;
 }
 
 f2ptr frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
+  f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
     if (keyvalue_pair) {
       f2cons__cdr__set(keyvalue_pair, cause, value);
+      f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
       return nil;
     }
   }
+  f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   return not_defined_value;
 }
 
 f2ptr frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
+  f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
   f2ptr retval = nil;
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     retval = f2__hashtable__slot_names(cause, type__hashtable);
   }
+  f2mutex__unlock(f2frame__new_type_mutex(this, cause), cause);
   return retval;
 }
 

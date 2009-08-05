@@ -146,7 +146,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u8* temp_str     = alloca(exp__length * 2);
     u64 index;
     u64 new_index = 0;
-    temp_str[new_index] = f2char__ch(__funk2.reader.string_quote, cause);
+    temp_str[new_index] = f2char__ch(__funk2.reader.char__string_quote, cause);
     new_index ++;
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];

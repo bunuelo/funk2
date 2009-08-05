@@ -333,19 +333,19 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	char ch;
 	int subexp_size[2];
 	
-	f2__fwrite__raw_char(cause, stream, __string_quote_char, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__string_quote, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	
 	for(i = 0; i < length; i ++) {
 	  ch = f2string__elt(exp, i, cause);
-	  if (ch == __string_quote_char) {
+	  if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	    f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__escape, cause)_char,  subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
-	    f2__fwrite__raw_char(cause, stream, __string_quote_char, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	    f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__string_quote, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else {
 	    f2__fwrite__raw_char(cause, stream, ch, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  }
 	}
 
-	f2__fwrite__raw_char(cause, stream, __string_quote_char, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__string_quote, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       case ptype_symbol: {
@@ -358,7 +358,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	boolean_t all_cool = 1;
 	for (i = 0; i < length; i ++) {
 	  ch = temp_str_buf[i];
-	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == __symbol_quote_char || ch == __string_quote_char) {
+	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == __symbol_quote_char || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	    all_cool = 0;
 	  }
 	}

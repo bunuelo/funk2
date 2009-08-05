@@ -460,8 +460,8 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 	return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
-      if (ch == __funk2.reader.symbol_quote_char) {break;}
-      if (ch == __funk2.reader.symbol_escape_char) {
+      if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {break;}
+      if (ch == f2char__ch(__funk2.reader.char__symbol_escape, cause)) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}

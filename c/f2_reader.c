@@ -22,35 +22,6 @@
 #include "funk2.h"
 #include <stdio.h>
 
-// changing these to parens makes funk much more like lisp (and you will press shift-9 and shift-0 a lot more)
-const char __left_paren_char              = '[';
-const char __right_paren_char             = ']';
-const char __array_left_paren_char        = '(';
-const char __array_right_paren_char       = ')';
-const char __doublelink_left_paren_char   = '{';
-const char __doublelink_right_paren_char  = '}';
-const char __quote_char                   = '\\';
-const char __backquote_char               = '`';
-const char __comma_char                   = ',';
-const char __cdr_comma_char               = '@';
-const char __string_quote_char            = '\'';
-const char __string_escape_newline_char   = 'n';
-const char __string_escape_return_char    = 'r';
-const char __string_escape_tab_char       = 't';
-const char __string_escape_backspace_char = 'b';
-const char __funktion_char                = '&';
-const char __escape_char                  = '#';
-const char __escape_hex_char              = 'x';
-const char __escape_hex_char_char         = 'c';
-const char __escape_gfunkptr_char         = 'g';
-const char __escape_char_char             = '\\';
-const char __escape_larva_char            = '!';
-const char __symbol_quote_char            = '|';
-const char __symbol_escape_char           = '\\';
-const char __symbol_key_char              = ':';
-
-const boolean_t __reader__all_caps = 0;
-
 f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
   f2ptr read_ch = nil;
@@ -540,17 +511,6 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2__free(to_ptr(str));
     return exp;
   }
-  // convert token to capitalized symbol (if in all-caps mode)
-  if (__reader__all_caps) {
-    int j;
-    char ch;
-    for (j = i - 1; j >= 0; j --) {
-      ch = str[j];
-      if (ch >= 'A' && ch <= 'Z') {
-	str[j] = ch - 'A' + 'a';
-      }
-    }
-  }
   if (i == 3 && str[0] == 'n' && str[1] == 'i' && str[2] == 'l') {
     return nil;
   }
@@ -559,6 +519,35 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   return exp;
 }
 def_pcfunk1(read, stream, return raw__read(this_cause, stream));
+
+
+// changing these to parens makes funk much more like lisp (and you will press shift-9 and shift-0 a lot more)
+const char __left_paren_char              = '[';
+const char __right_paren_char             = ']';
+const char __array_left_paren_char        = '(';
+const char __array_right_paren_char       = ')';
+const char __doublelink_left_paren_char   = '{';
+const char __doublelink_right_paren_char  = '}';
+const char __quote_char                   = '\\';
+const char __backquote_char               = '`';
+const char __comma_char                   = ',';
+const char __cdr_comma_char               = '@';
+const char __string_quote_char            = '\'';
+const char __string_escape_newline_char   = 'n';
+const char __string_escape_return_char    = 'r';
+const char __string_escape_tab_char       = 't';
+const char __string_escape_backspace_char = 'b';
+const char __funktion_char                = '&';
+const char __escape_char                  = '#';
+const char __escape_hex_char              = 'x';
+const char __escape_hex_char_char         = 'c';
+const char __escape_gfunkptr_char         = 'g';
+const char __escape_char_char             = '\\';
+const char __escape_larva_char            = '!';
+const char __symbol_quote_char            = '|';
+const char __symbol_escape_char           = '\\';
+const char __symbol_key_char              = ':';
+
 
 void funk2_reader__init(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());

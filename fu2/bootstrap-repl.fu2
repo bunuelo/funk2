@@ -224,12 +224,6 @@
      [funk-unlabeled label ,args
 		     @body]]]
 
-`[defunk mapc [proc seq]
-   [if [null seq]
-       nil
-     [prog [apply proc [cons [car seq] nil]]
-	   [mapc  proc [cdr seq]]]]]
-
 [defunk mapc [proc seq]
   [while seq
     [apply proc [cons [car seq] nil]]
@@ -442,19 +436,28 @@
 	[elt-set [elt collection [car indices]] [cdr indices] value]]
     [elt-1d-set collection indices value]]]
 
+`[defmetro dotimes [var-max_index :rest body]
+   [let [[var       [car  var-max_index]]
+	 [max_index [cadr var-max_index]]]
+     `[let [[,var      0]
+	    [max_index ,max_index]]
+	[define-funk dotimes-loop
+	  [funk []
+		[prog @body]
+		[mutate ,var [integer-add ,var 1]]
+		[if [integer-less_than ,var max_index]
+		    [dotimes-loop]]]]
+	[if [integer-less_than ,var max_index]
+	    [dotimes-loop]]]]]
+
 [defmetro dotimes [var-max_index :rest body]
   [let [[var       [car  var-max_index]]
 	[max_index [cadr var-max_index]]]
     `[let [[,var      0]
 	   [max_index ,max_index]]
-       [define-funk dotimes-loop
-	 [funk []
-	       [prog @body]
-	       [mutate ,var [integer-add ,var 1]]
-	       [if [integer-less_than ,var max_index]
-		   [dotimes-loop]]]]
-       [if [integer-less_than ,var max_index]
-	   [dotimes-loop]]]]]
+       [while [integer-less_than ,var max_index]
+	 [prog @body]
+	 [mutate ,var [integer-add ,var 1]]]]]]
 
 [defunk range [min max]
   [if [integer-less_than min max]

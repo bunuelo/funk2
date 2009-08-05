@@ -175,7 +175,10 @@ void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread
 }
 
 void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
-  this->done_count     = 0;
+  while (this->done_count > 0) {
+    sched_yield();
+    f2__sleep(1);
+  }
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
@@ -196,6 +199,9 @@ void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_t
     sched_yield();
     f2__sleep(1);
   }
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count --;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
 }
 
 // funk2_user_thread_controller__grey_from_other_nodes

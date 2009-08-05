@@ -88,6 +88,7 @@ typedef struct funk2_user_thread_controller__blacken_grey_nodes_s {
   boolean_t               start;
   funk2_processor_mutex_t done_mutex;
   s64                     done_count;
+  atomic_t                not_exited_count;
   boolean_t               everyone_done;
 } funk2_user_thread_controller__blacken_grey_nodes_t;
 

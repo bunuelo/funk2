@@ -636,7 +636,7 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:escape";                  this->char__escape                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:escape_hex";              this->char__escape_hex              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:escape_hex_char";         this->char__escape_hex_char         = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_char";             this->char__escape_char_char        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_char";             this->char__escape_char             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:escape_larva";            this->char__escape_larva            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:escape_gfunkptr";         this->char__escape_gfunkptr         = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_quote";            this->char__string_quote            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

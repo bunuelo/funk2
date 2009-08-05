@@ -232,7 +232,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
   } else {
     if (! exp) {
       f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
-      if (stream) {raw__stream__writef(cause, stream, "%c", __left_paren_char);} width ++;
+      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__left_paren, cause));} width ++;
       if (stream) {raw__stream__writef(cause, stream, "%c", __right_paren_char);} width ++;
       f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
     } else {
@@ -358,7 +358,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	boolean_t all_cool = 1;
 	for (i = 0; i < length; i ++) {
 	  ch = temp_str_buf[i];
-	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char || ch == __symbol_quote_char || ch == __string_quote_char) {
+	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == __right_paren_char || ch == __symbol_quote_char || ch == __string_quote_char) {
 	    all_cool = 0;
 	  }
 	}
@@ -475,7 +475,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		f2ptr cdr;
 		f2ptr iter = exp;
 		int write_car_with_space = 0;
-		if (stream) {raw__stream__writef(cause, stream, "%c", __left_paren_char);} indent_space_num ++; available_width --;
+		if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__left_paren, cause));} indent_space_num ++; available_width --;
 		while (iter) {
 		  cdr = f2cons__cdr(iter, cause);
 		  f2ptr car = f2cons__car(iter, cause);

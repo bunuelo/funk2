@@ -150,7 +150,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     new_index ++;
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];
-      if (ch == __string_quote_char) {
+      if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	temp_str[new_index] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	new_index ++;
       }

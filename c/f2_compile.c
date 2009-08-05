@@ -1378,6 +1378,7 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))        {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                     {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {return f2cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {return f2cons__new(cause, nil, exp);}
@@ -1519,10 +1520,10 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__compile__funk";                     __f2__compile__funk__symbol                     = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__metro";                    __f2__compile__metro__symbol                    = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__if";                       __f2__compile__if__symbol                       = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {char* str = "compile:f2__compile__rawcode";                  __f2__compile__rawcode__symbol                  = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "compile:f2__compile__if_exp";                   __f2__compile__if_exp__symbol                   = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__while";                    __f2__compile__while__symbol                    = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__while_exp";                __f2__compile__while_exp__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {char* str = "compile:f2__compile__if_exp";                   __f2__compile__if_exp__symbol                   = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "compile:f2__compile__rawcode";                  __f2__compile__rawcode__symbol                  = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__lookup_funkvar_exp";       __f2__compile__lookup_funkvar_exp__symbol       = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__eval_args";                __f2__compile__eval_args__symbol                = f2symbol__new(cause, strlen(str), (u8*)str);}
   {char* str = "compile:f2__compile__eval_args__current_arg";   __f2__compile__eval_args__current_arg__symbol   = f2symbol__new(cause, strlen(str), (u8*)str);}

@@ -42,7 +42,7 @@ void funk2_protected_alloc_array_event_array__add_event(funk2_protected_alloc_ar
   if (this->used_num >= this->length) {
     u64 old_length = this->length;
     this->length <<= 1;
-    status("funk2_protected_alloc_array_event_array__add_event: doubling size of event_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->length);
+    status("funk2_protected_alloc_array_event_array__add_event: doubling size of event_array from " u64__fstr " to " u64__fstr " events.", old_length, this->length);
     this->data = from_ptr(f2__new_alloc(to_ptr(this->data), sizeof(funk2_protected_alloc_array_event_t) * old_length, sizeof(funk2_protected_alloc_array_event_t) * this->length));
   }
 }

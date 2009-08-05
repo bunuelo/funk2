@@ -531,21 +531,6 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
 }
 
 void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
-  int pool_index = this_processor_thread__pool_index();
-  u64                bin_num = 1ull << this->grey_set.set.bin_power;
-  funk2_set_node_t** bin     = this->grey_set.set.bin;
-  u64 i;
-  for (i = 0; i < bin_num; i ++) {
-    while (bin[i]) {
-      f2ptr exp = (f2ptr)(bin[i]->element);
-      funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__black);
-      funk2_garbage_collector_pool__grey_referenced_elements(this, pool_index, exp);
-    }
-  }
-}
-
-/*
-void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
   //status("funk2_garbage_collector_pool: blacken_grey_nodes.");
   int pool_index = this_processor_thread__pool_index();
   u64    grey_count = this->grey_set.set.element_count;
@@ -573,7 +558,6 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
   }
   free(grey_array);
 }
-*/
 
 void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {
   //status("funk2_garbage_collector_pool: grey_from_other_nodes.");

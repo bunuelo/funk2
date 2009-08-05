@@ -188,6 +188,7 @@ typedef struct funk2_s {
   funk2_garbage_collector_t           garbage_collector;
   funk2_user_thread_controller_t      user_thread_controller;
   funk2_ptypes_t                      ptypes;
+  funk2_reader_t                      reader;
 } funk2_t;
 
 boolean_t funk2__handle(funk2_t* this);

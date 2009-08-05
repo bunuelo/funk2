@@ -144,7 +144,7 @@ void      funk2_memory__memory_test(funk2_memory_t* this);
 #    define funk2_memory__debug_memory_test(this, level)
 #  endif
 #else
-#  define funk2_memorypool__debug_memory_test(this, level)
+#  define funk2_memory__debug_memory_test(this, level)
 #endif
 
 

@@ -130,6 +130,13 @@ void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* th
   }
 }
 
+//void funk2_garbage_collector__whiten_all_used_memory(funk2_garbage_collector_t* this) {
+//  int pool_index;
+//  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+//    funk2_garbage_collector_pool__whiten_all_used_memory(&(this->gc_pool[pool_index]));
+//  }
+//}
+
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   status("funk2_garbage_collector: collect_garbage.");
   int pool_index;

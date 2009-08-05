@@ -202,11 +202,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // start a fiber executing the user read-eval-print loop
       f2__fiber(cause,
-		 cause,
-		 nil,
-		 global_environment(),
-		 load_funk,
-		 args);
+		cause,
+		nil,
+		global_environment(),
+		load_funk,
+		args);
       
     } else {
       
@@ -222,21 +222,21 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       // start a fiber executing the user read-eval-print loop
       f2__fiber(cause,
-		 cause,
-		 nil,
-		 global_environment(),
-		 repl_funk,
-		 nil);
+		cause,
+		nil,
+		global_environment(),
+		repl_funk,
+		nil);
     }
     
   } else {
     // start a fiber executing the boot function
     f2__fiber(cause,
-	       cause,
-	       nil,
-	       global_environment(),
-	       boot_funk,
-	       nil);
+	      cause,
+	      nil,
+	      global_environment(),
+	      boot_funk,
+	      nil);
   }
   
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)

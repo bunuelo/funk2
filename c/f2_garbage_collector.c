@@ -122,12 +122,15 @@ boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector
 }
 
 void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector: spread_all_blackness.");
+  u64 cycle_count = 0;
   while (funk2_garbage_collector__still_have_grey_nodes(this)) {
     // parallelized
     funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
     // parallelized
     funk2_user_thread_controller__grey_from_other_nodes(&(__funk2.user_thread_controller));
   }
+  status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr, cycle_count);
 }
 
 //void funk2_garbage_collector__whiten_all_used_memory(funk2_garbage_collector_t* this) {
@@ -166,7 +169,6 @@ void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t*
   for (i = 0; i < this->never_delete_list.used_num; i++) {
     funk2_garbage_collector__touch_f2ptr(this, this->never_delete_list.data[i]);
   }
-  status("funk2_garbage_collector: done with touch_never_delete_list.");
 }
 
 f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp) {

@@ -22,7 +22,7 @@
 #ifndef F2__PROTECTED_ALLOC_ARRAY__H
 #define F2__PROTECTED_ALLOC_ARRAY__H
 
-//#define F2__DEBUG__PROTECTED_ALLOC_ARRAY
+#define F2__DEBUG__PROTECTED_ALLOC_ARRAY
 
 typedef enum funk2_protected_alloc_array_event_type_e {
   funk2_protected_alloc_array_event_type__enter,

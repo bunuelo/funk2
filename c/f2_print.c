@@ -581,7 +581,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		write_value_with_space = 1;
 		if (!next) {
 		  f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-		  if (stream) {raw__stream__writef(cause, stream, "%c", __doublelink_right_paren_char);} width ++;
+		  if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__doublelink_right_paren, cause));} width ++;
 		  iter = nil;
 		} else if (! raw__doublelink__is_type(cause, next)) {
 		  f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
@@ -589,7 +589,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 		  f2__write_pretty(cause, stream, next, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 		  f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-		  if (stream) {raw__stream__writef(cause, stream, "%c", __doublelink_right_paren_char);} width ++;
+		  if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__doublelink_right_paren, cause));} width ++;
 		  iter = nil;
 		} else {
 		  iter = next;

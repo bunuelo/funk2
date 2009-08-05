@@ -651,10 +651,10 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   
   boolean_t loop__popped_env_and_return = boolean__false;
   boolean_t optimize_unused_beginning = boolean__true;
-  f2ptr loop_bcs = f2__compile__rawcode(cause, fiber, loop_exps, protect_environment, optimize_tail_recursion, &loop__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
+  boolean_t protect_subexp_environment = boolean__true || protect_environment;
+  boolean_t optimize_subexp_tail_recursion = boolean__false && optimize_tail_recursion;
+  f2ptr loop_bcs = f2__compile__rawcode(cause, fiber, loop_exps, protect_subexp_environment, optimize_subexp_tail_recursion, &loop__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
   if (loop_bcs && (! raw__cons__is_type(cause, loop_bcs))) {return loop_bcs;}
-  
-  //*popped_env_and_return = boolean__true;
   
   return bcs_valid(f2__compile__while(cause, cond_bcs, loop_bcs));
 }

@@ -25,41 +25,49 @@
 #include "f2_primfunks.h"
 #include "f2_signal.h"
 
-extern f2ptr __end_parens_exception;
-extern f2ptr __array_end_parens_exception;
-extern f2ptr __doublelink_end_parens_exception;
-extern f2ptr __end_of_file_exception;
-extern f2ptr __invalid_argument_type_exception;
-extern f2ptr __illegal_escape_reader_metro_exception;
+typedef struct funk2_reader_s funk2_reader_t;
 
-extern const char __left_paren_char;
-extern const char __right_paren_char;
-extern const char __array_left_paren_char;
-extern const char __array_right_paren_char;
-extern const char __doublelink_left_paren_char;
-extern const char __doublelink_right_paren_char;
-extern const char __quote_char;
-extern const char __comma_char;
-extern const char __backquote_char;
-extern const char __string_quote_char;
-extern const char __string_escape_newline_char;
-extern const char __string_escape_return_char;
-extern const char __string_escape_tab_char;
-extern const char __string_escape_backspace_char;
-extern const char __funktion_char;
-extern const char __escape_char;
-extern const char __escape_hex_char;
-extern const char __escape_hex_char_char;
-extern const char __escape_larva_char;
-extern const char __escape_gfunkptr_char;
-extern const char __escape_char_char;
-extern const char __symbol_quote_char;
-extern const char __symbol_escape_char;
-extern const char __symbol_key_char;
+struct funk2_reader_s {
+  f2ptr end_parens_exception;
+  f2ptr unmatched_begin_paren_exception;
+  f2ptr array_end_parens_exception;
+  f2ptr doublelink_end_parens_exception;
+  f2ptr end_of_file_exception;
+  f2ptr invalid_argument_type_exception;
+  f2ptr illegal_escape_reader_metro_exception;
+  f2ptr gfunkptr_read__exception;
+  
+  f2ptr char__space;
+  f2ptr char__tab;
+  f2ptr char__newline;
+  f2ptr char__return;
+  f2ptr eof__symbol;
+  
+  f2ptr char__left_paren;
+  f2ptr char__right_paren;
+  f2ptr char__array_left_paren;
+  f2ptr char__array_right_paren;
+  f2ptr char__doublelink_right_paren;
+  f2ptr char__doublelink_left_paren;
+  f2ptr char__quote;
+  f2ptr char__backquote;
+  f2ptr char__comma;
+  f2ptr char__cdr_comma;
+  f2ptr char__funktion;
+  f2ptr char__escape;
+  f2ptr char__escape_hex;
+  f2ptr char__escape_hex_char;
+  f2ptr char__escape_larva;
+  f2ptr char__escape_gfunkptr;
+  f2ptr char__string_quote;
+  f2ptr char__symbol_quote;
+};
 
-extern f2ptr raw__read(f2ptr context, f2ptr stream);
-extern def_pcfunk__prototype__declare(pcfunk__read);
+void funk2_reader__init(funk2_reader_t* this);
+void funk2_reader__destroy(funk2_reader_t* this);
 
-extern void f2__reader__initialize();
+f2ptr raw__read(f2ptr context, f2ptr stream);
+
+void f2__reader__initialize();
 
 #endif // F2__READER__H

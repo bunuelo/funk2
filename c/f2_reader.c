@@ -51,45 +51,6 @@ const char __symbol_key_char              = ':';
 
 const boolean_t __reader__all_caps = 0;
 
-f2ptr __end_parens_exception                  = -1;
-f2ptr __unmatched_begin_paren_exception       = -1;
-f2ptr __array_end_parens_exception            = -1;
-f2ptr __doublelink_end_parens_exception       = -1;
-f2ptr __end_of_file_exception                 = -1;
-f2ptr __invalid_argument_type_exception       = -1;
-f2ptr __illegal_escape_reader_metro_exception = -1;
-f2ptr __gfunkptr_read__exception              = -1;
-
-f2ptr __char__space   = -1;
-f2ptr __char__tab     = -1;
-f2ptr __char__newline = -1;
-f2ptr __char__return  = -1;
-f2ptr __eof__symbol   = -1;
-
-f2ptr __char__left_paren             = -1;
-f2ptr __char__right_paren            = -1;
-f2ptr __char__array_left_paren       = -1;
-f2ptr __char__array_right_paren      = -1;
-f2ptr __char__doublelink_right_paren = -1;
-f2ptr __char__doublelink_left_paren  = -1;
-f2ptr __char__quote                  = -1;
-f2ptr __char__backquote              = -1;
-f2ptr __char__comma                  = -1;
-f2ptr __char__cdr_comma              = -1;
-f2ptr __char__funktion               = -1;
-f2ptr __char__escape                 = -1;
-f2ptr __char__escape_hex             = -1;
-f2ptr __char__escape_hex_char        = -1;
-f2ptr __char__escape_larva           = -1;
-f2ptr __char__escape_gfunkptr        = -1;
-f2ptr __char__string_quote           = -1;
-f2ptr __char__symbol_quote           = -1;
-
-//char __fgetc(FILE* fptr) {
-//  //if (__received_signal__sigint) {return 0;}
-//  return fgetc(fptr);
-//}
-
 f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
   f2ptr read_ch = nil;
@@ -100,14 +61,6 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
       f2__sleep(10000);
     }
   }
-  //{
-  //  f2ptr file_descriptor = f2stream__file_descriptor(stream, cause);
-  //  int   fd = f2integer__i(file_descriptor, cause);
-  //  if (fd == 0) {
-  //    printf("\nfd=0 getc: ");
-  //    f2__print(cause, read_ch); 
-  //  }
-  //}
   if (raw__eq(cause, read_ch, __eof__symbol)) {
     status("f2__stream__getc() note: eof reached.");
   }
@@ -607,85 +560,96 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 }
 def_pcfunk1(read, stream, return raw__read(this_cause, stream));
 
-void f2__reader__reinitialize_globalvars() {
+void funk2_reader__init(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
-  char* symbol_str;
   
-  symbol_str = "reader:end_parens-exception";                  __end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:unmatched_begin_paren-exception";       __unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:array_end_parens-exception";            __array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:doublelink_end_parens-exception";       __doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:end_of_file-exception";                 __end_of_file_exception                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:invalid_argument_type-exception";       __invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:illegal_escape_reader_metro-exception"; __illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
-  symbol_str = "reader:gfunkptr_read-exception";               __gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str));
+  {char* str = "reader:end_parens-exception";                  symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->end_parens_exception                  = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->end_parens_exception);}
+  {char* str = "reader:unmatched_begin_paren-exception";       symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
+  {char* str = "reader:array_end_parens-exception";            symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->array_end_parens_exception            = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->array_end_parens_exception);}
+  {char* str = "reader:doublelink_end_parens-exception";       symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->doublelink_end_parens_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->doublelink_end_parens_exception);}
+  {char* str = "reader:end_of_file-exception";                 symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->end_of_file_exception                 = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->end_of_file_exception);}
+  {char* str = "reader:invalid_argument_type-exception";       symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->invalid_argument_type_exception);}
+  {char* str = "reader:illegal_escape_reader_metro-exception"; symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->illegal_escape_reader_metro_exception);}
+  {char* str = "reader:gfunkptr_read-exception";               symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->gfunkptr_read__exception              = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->gfunkptr_read__exception);}
   
-  __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof");
+  {char* str = "eof"; this->eof__symbol = f2symbol__new(cause, strlen(str), (u8*)str); environment__add_var_value(cause, global_environment(), this->eof__symbol, this->eof__symbol);}
   
-  {char* str = "char:space";                  __char__space                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:tab";                    __char__tab                    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:newline";                __char__newline                = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:return";                 __char__return                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:left_paren";             __char__left_paren             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:right_paren";            __char__right_paren            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:array_left_paren";       __char__array_left_paren       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:array_right_paren";      __char__array_right_paren      = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:doublelink_right_paren"; __char__doublelink_right_paren = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:doublelink_left_paren";  __char__doublelink_left_paren  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:quote";                  __char__quote                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:backquote";              __char__backquote              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:comma";                  __char__comma                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:cdr_comma";              __char__cdr_comma              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:funktion";               __char__funktion               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape";                 __char__escape                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_hex";             __char__escape_hex             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_hex_char";        __char__escape_hex_char        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_larva";           __char__escape_larva           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_gfunkptr";        __char__escape_gfunkptr        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_quote";           __char__string_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:symbol_quote";           __char__symbol_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {this->char__space                  = f2char__new(cause, ' ');                           char* str = "char:space";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
+  {this->char__tab                    = f2char__new(cause, '\t');                          char* str = "char:tab";                    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
+  {this->char__newline                = f2char__new(cause, '\n');                          char* str = "char:newline";                environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__newline);}
+  {this->char__return                 = f2char__new(cause, '\r');                          char* str = "char:return";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__return);}
+  {this->char__left_paren             = f2char__new(cause, __left_paren_char);             char* str = "char:left_paren";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__left_paren);}
+  {this->char__right_paren            = f2char__new(cause, __right_paren_char);            char* str = "char:right_paren";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__right_paren);}
+  {this->char__array_left_paren       = f2char__new(cause, __array_left_paren_char);       char* str = "char:array_left_paren";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_left_paren);}
+  {this->char__array_right_paren      = f2char__new(cause, __array_right_paren_char);      char* str = "char:array_right_paren";      environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_right_paren);}
+  {this->char__doublelink_right_paren = f2char__new(cause, __doublelink_right_paren_char); char* str = "char:doublelink_right_paren"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_right_paren);}
+  {this->char__doublelink_left_paren  = f2char__new(cause, __doublelink_left_paren_char);  char* str = "char:doublelink_left_paren";  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_left_paren);}
+  {this->char__quote                  = f2char__new(cause, __quote_char);                  char* str = "char:quote";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__quote);}
+  {this->char__backquote              = f2char__new(cause, __backquote_char);              char* str = "char:backquote";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__backquote);}
+  {this->char__comma                  = f2char__new(cause, __comma_char);                  char* str = "char:comma";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__comma);}
+  {this->char__cdr_comma              = f2char__new(cause, __cdr_comma_char);              char* str = "char:cdr_comma";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__cdr_comma);}
+  {this->char__funktion               = f2char__new(cause, __funktion_char);               char* str = "char:funktion";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__funktion);}
+  {this->char__escape                 = f2char__new(cause, __escape_char);                 char* str = "char:escape";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape);}
+  {this->char__escape_hex             = f2char__new(cause, __escape_hex_char);             char* str = "char:escape_hex";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex);}
+  {this->char__escape_hex_char        = f2char__new(cause, __escape_hex_char_char);        char* str = "char:escape_hex_char";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex_char);}
+  {this->char__escape_larva           = f2char__new(cause, __escape_larva_char);           char* str = "char:escape_larva";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_larva);}
+  {this->char__escape_gfunkptr        = f2char__new(cause, __escape_gfunkptr_char);        char* str = "char:escape_gfunkptr";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_gfunkptr);}
+  {this->char__string_quote           = f2char__new(cause, __string_quote_char);           char* str = "char:string_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
+  {this->char__symbol_quote           = f2char__new(cause, __symbol_quote_char);           char* str = "char:symbol_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_quote);}
+  
+}
+
+void funk2_reader__reinit(funk2_reader_t* this) {
+  f2ptr cause = f2_reader_c__cause__new(initial_cause());
+  
+  {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:doublelink_end_parens-exception";       this->doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:end_of_file-exception";                 this->end_of_file_exception                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:invalid_argument_type-exception";       this->invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:illegal_escape_reader_metro-exception"; this->illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:gfunkptr_read-exception";               this->gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  
+  {char* str = "char:space";                  this->char__space                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:tab";                    this->char__tab                    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:newline";                this->char__newline                = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:return";                 this->char__return                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:left_paren";             this->char__left_paren             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:right_paren";            this->char__right_paren            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:array_left_paren";       this->char__array_left_paren       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:array_right_paren";      this->char__array_right_paren      = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:doublelink_right_paren"; this->char__doublelink_right_paren = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:doublelink_left_paren";  this->char__doublelink_left_paren  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:quote";                  this->char__quote                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:backquote";              this->char__backquote              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:comma";                  this->char__comma                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:cdr_comma";              this->char__cdr_comma              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:funktion";               this->char__funktion               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape";                 this->char__escape                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_hex";             this->char__escape_hex             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_hex_char";        this->char__escape_hex_char        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_larva";           this->char__escape_larva           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:escape_gfunkptr";        this->char__escape_gfunkptr        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:string_quote";           this->char__string_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:symbol_quote";           this->char__symbol_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  
+  {char* str = "eof"; this->eof__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+}
+
+void funk2_reader__destroy(funk2_reader_t* this) {
+}
+
+// **
+
+void f2__reader__reinitialize_globalvars() {
+  funk2_reader__reinit(&(__funk2.reader));
 }
 
 void f2__reader__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars);
   
-  f2ptr cause = f2_reader_c__cause__new(initial_cause());
-  char* symbol_str;
-  f2ptr symbol;
-  
-  symbol_str = "reader:end_parens-exception";                  symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __end_parens_exception                  = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __end_parens_exception);
-  symbol_str = "reader:unmatched_begin_paren-exception";       symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __unmatched_begin_paren_exception);
-  symbol_str = "reader:array_end_parens-exception";            symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __array_end_parens_exception            = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __array_end_parens_exception);
-  symbol_str = "reader:doublelink_end_parens-exception";       symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __doublelink_end_parens_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __doublelink_end_parens_exception);
-  symbol_str = "reader:end_of_file-exception";                 symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __end_of_file_exception                 = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __end_of_file_exception);
-  symbol_str = "reader:invalid_argument_type-exception";       symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __invalid_argument_type_exception);
-  symbol_str = "reader:illegal_escape_reader_metro-exception"; symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __illegal_escape_reader_metro_exception);
-  symbol_str = "reader:gfunkptr_read-exception";               symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str); __gfunkptr_read__exception              = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, __gfunkptr_read__exception);
-  
-  __eof__symbol   = f2symbol__new(cause, strlen("eof"), (u8*)"eof"); environment__add_var_value(cause, global_environment(), __eof__symbol, __eof__symbol);
-  
-  __char__space                  = f2char__new(cause, ' ');                           {char* str = "char:space";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__space);}
-  __char__tab                    = f2char__new(cause, '\t');                          {char* str = "char:tab";                    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__tab);}
-  __char__newline                = f2char__new(cause, '\n');                          {char* str = "char:newline";                environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__newline);}
-  __char__return                 = f2char__new(cause, '\r');                          {char* str = "char:return";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__return);}
-  __char__left_paren             = f2char__new(cause, __left_paren_char);             {char* str = "char:left_paren";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__left_paren);}
-  __char__right_paren            = f2char__new(cause, __right_paren_char);            {char* str = "char:right_paren";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__right_paren);}
-  __char__array_left_paren       = f2char__new(cause, __array_left_paren_char);       {char* str = "char:array_left_paren";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__array_left_paren);}
-  __char__array_right_paren      = f2char__new(cause, __array_right_paren_char);      {char* str = "char:array_right_paren";      environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__array_right_paren);}
-  __char__doublelink_right_paren = f2char__new(cause, __doublelink_right_paren_char); {char* str = "char:doublelink_right_paren"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__doublelink_right_paren);}
-  __char__doublelink_left_paren  = f2char__new(cause, __doublelink_left_paren_char);  {char* str = "char:doublelink_left_paren";  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__doublelink_left_paren);}
-  __char__quote                  = f2char__new(cause, __quote_char);                  {char* str = "char:quote";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__quote);}
-  __char__backquote              = f2char__new(cause, __backquote_char);              {char* str = "char:backquote";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__backquote);}
-  __char__comma                  = f2char__new(cause, __comma_char);                  {char* str = "char:comma";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__comma);}
-  __char__cdr_comma              = f2char__new(cause, __cdr_comma_char);              {char* str = "char:cdr_comma";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__cdr_comma);}
-  __char__funktion               = f2char__new(cause, __funktion_char);               {char* str = "char:funktion";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__funktion);}
-  __char__escape                 = f2char__new(cause, __escape_char);                 {char* str = "char:escape";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__escape);}
-  __char__escape_hex             = f2char__new(cause, __escape_hex_char);             {char* str = "char:escape_hex";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__escape_hex);}
-  __char__escape_hex_char        = f2char__new(cause, __escape_hex_char_char);        {char* str = "char:escape_hex_char";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__escape_hex_char);}
-  __char__escape_larva           = f2char__new(cause, __escape_larva_char);           {char* str = "char:escape_larva";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__escape_larva);}
-  __char__escape_gfunkptr        = f2char__new(cause, __escape_gfunkptr_char);        {char* str = "char:escape_gfunkptr";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__escape_gfunkptr);}
-  __char__string_quote           = f2char__new(cause, __string_quote_char);           {char* str = "char:string_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__string_quote);}
-  __char__symbol_quote           = f2char__new(cause, __symbol_quote_char);           {char* str = "char:symbol_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), __char__symbol_quote);}
+  funk2_reader__init(&(__funk2.reader));
   
   f2__reader__reinitialize_globalvars();
   

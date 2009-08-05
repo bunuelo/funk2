@@ -368,7 +368,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    if (i == 0 && ch == f2char__ch(__funk2.reader.char__symbol_key, cause)) {
 	      f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 	    }
-	    if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {f2__fwrite__raw_char(cause, stream, __symbol_escape_char, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];}
+	    if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__symbol_escape, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];}
 	    f2__fwrite__raw_char(cause, stream, ch, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  }
 	} else {
@@ -376,7 +376,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  for(i = 0; i < length; i ++) {
 	    ch = temp_str_buf[i];
 	    if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
-	      f2__fwrite__raw_char(cause, stream, __symbol_escape_char, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	      f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__symbol_escape, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	    }
 	    f2__fwrite__raw_char(cause, stream, ch, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  }

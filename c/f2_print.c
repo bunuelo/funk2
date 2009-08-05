@@ -273,7 +273,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	f2__write__ansi_color(cause, stream, print__ansi__pointer__foreground, use_ansi_colors, use_html);
 	char temp_str[128]; 
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
-	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_hex_char);} width ++;
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_hex, cause));} width ++;
 	sprintf(temp_str, ptr__fstr, f2pointer__p(exp, cause)); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
@@ -321,7 +321,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  if(stream) {raw__stream__writef(cause, stream, "%c", ch);} width ++;
 	} else {
 	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
-	  if(stream) {raw__stream__writef(cause, stream, "%c", __escape_hex_char_char);} width ++;
+	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_hex, cause)_char);} width ++;
 	  sprintf(temp_str, "%X", (uint)ch); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	}
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);

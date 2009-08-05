@@ -597,6 +597,7 @@ void funk2_reader__init(funk2_reader_t* this) {
   {this->char__escape_gfunkptr        = f2char__new(cause, __escape_gfunkptr_char);        char* str = "char:escape_gfunkptr";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_gfunkptr);}
   {this->char__string_quote           = f2char__new(cause, __string_quote_char);           char* str = "char:string_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
   {this->char__symbol_quote           = f2char__new(cause, __symbol_quote_char);           char* str = "char:symbol_quote";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_quote);}
+  {this->char__symbol_key             = f2char__new(cause, __symbol_key_char);             char* str = "char:symbol_key";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_key);}
   
 }
 
@@ -635,6 +636,7 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:escape_gfunkptr";        this->char__escape_gfunkptr        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_quote";           this->char__string_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:symbol_quote";           this->char__symbol_quote           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:symbol_key";             this->char__symbol_key             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   
   {char* str = "eof"; this->eof__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
 }

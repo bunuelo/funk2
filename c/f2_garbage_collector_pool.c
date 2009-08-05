@@ -403,6 +403,7 @@ void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_colle
 }
 
 void funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_collector_pool_t* this) {
+  debug__assert(pthread_self() != __funk2.memory.memory_handling_thread, nil, "memory handling thread attempted to protect memory.");
   funk2_protected_alloc_array__signal_enter_protected_region(&(this->protected_alloc_array));
 }
 

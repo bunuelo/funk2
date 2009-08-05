@@ -200,54 +200,6 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
   return p;
 }
 
-/*
-boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num) {
-  status("collecting garbage...");
-  funk2_memory__debug_memory_test(this, 1);
-  // parallelized
-  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(&(this->user_thread_controller), generation_num);
-  
-  // this is where we touch everything we want to keep!
-  {
-    // parallelized
-    funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
-    // parallelized
-    funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(this->user_thread_controller));
-    // serial
-    funk2_memory__touch_all_symbols(this);
-    // serial
-    //funk2_memory__touch_never_delete_list(this);
-  }
-  
-  // parallelized
-  boolean_t did_something = funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(&(this->user_thread_controller), generation_num);
-#ifdef DEBUG_MEMORY
-  {
-    funk2_memory__debug_memory_test(this, 1);
-  }
-#endif // DEBUG_MEMORY
-  status("...done collecting garbage.");
-  return did_something;
-}
-
-boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this) {
-  boolean_t did_something      = boolean__false;
-  int       try_generation_num = 1;
-  while (try_generation_num <= maximum_generation_num && (! did_something)) {
-    status("funk2_memory__garbage_collect_generations_until_did_something try_generation_num=%d, maximum_generation_num=%d", try_generation_num, maximum_generation_num);
-    if (funk2_memory__garbage_collect_generation(&(__funk2.memory), try_generation_num)) {
-      did_something = boolean__true;
-    }
-    try_generation_num ++;
-  }
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    funk2_memorypool__increment_generation(&(__funk2.memory.pool[index]));
-  }
-  return did_something;
-}
-*/
-
 ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
   ptr block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
   if (block) {return block;}  
@@ -624,11 +576,6 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   funk2_memory__print_gc_stats(this);
   return retval;
 }
-
-//void funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp) {
-//  int pool_index = this_processor_thread__pool_index();
-//  funk2_memorypool__touch_all_referenced_from_f2ptr(&(this->pool[pool_index]), exp);
-//}
 
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;

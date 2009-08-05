@@ -37,10 +37,8 @@ struct funk2_memblock_s {
   rbt_node_t                             rbt_node;
   funk2_garbage_collector_block_header_t gc;
   atomic_t                               reference_count;
-  u8                                     used           : 1;
-  //u8                                     gc_touch       : 1;
-  //u8                                     generation_num : 3;
-  //u8                                     ptype;
+  u8                                     used      : 1;
+  u8                                     protected : 1;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));
 
@@ -48,7 +46,7 @@ struct funk2_memblock_s {
 
 // funk2_memblock
 
-void      funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, int used);
+void      funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used, boolean_t protected);
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory);
 boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this);
 void      funk2_memblock__decrement_reference_count(funk2_memblock_t* this, f2ptr this_f2ptr, funk2_garbage_collector_t* garbage_collector);

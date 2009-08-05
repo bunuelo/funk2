@@ -272,7 +272,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
       case ptype_pointer: {
 	f2__write__ansi_color(cause, stream, print__ansi__pointer__foreground, use_ansi_colors, use_html);
 	char temp_str[128]; 
-	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_char);} width ++;
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
 	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_hex_char);} width ++;
 	sprintf(temp_str, ptr__fstr, f2pointer__p(exp, cause)); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
@@ -280,7 +280,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
       case ptype_gfunkptr: {
 	f2__write__ansi_color(cause, stream, print__ansi__gfunkptr__foreground, use_ansi_colors, use_html);
 	char temp_str[128];
-	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_char);} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_gfunkptr_char);} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	if (stream) {raw__stream__writef(cause, stream, "%c", __array_left_paren_char);} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__computer_id(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
@@ -316,11 +316,11 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	char temp_str[128]; 
 	unsigned char ch = f2char__ch(exp, cause);
 	if (ch >= 28) {
-	  if(stream) {raw__stream__writef(cause, stream, "%c", __escape_char);} width ++;
-	  if(stream) {raw__stream__writef(cause, stream, "%c", __escape_char_char);} width ++;
+	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
+	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause)_char);} width ++;
 	  if(stream) {raw__stream__writef(cause, stream, "%c", ch);} width ++;
 	} else {
-	  if(stream) {raw__stream__writef(cause, stream, "%c", __escape_char);} width ++;
+	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
 	  if(stream) {raw__stream__writef(cause, stream, "%c", __escape_hex_char_char);} width ++;
 	  sprintf(temp_str, "%X", (uint)ch); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	}
@@ -338,7 +338,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	for(i = 0; i < length; i ++) {
 	  ch = f2string__elt(exp, i, cause);
 	  if (ch == __string_quote_char) {
-	    f2__fwrite__raw_char(cause, stream, __escape_char_char,  subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	    f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__escape, cause)_char,  subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	    f2__fwrite__raw_char(cause, stream, __string_quote_char, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else {
 	    f2__fwrite__raw_char(cause, stream, ch, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
@@ -1206,7 +1206,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
       case ptype_larva: {
 	f2__write__ansi_color(cause, stream, print__ansi__larva__foreground, use_ansi_colors, use_html);
 	char temp_str[128]; 
-	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_char);} width ++;
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
 	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_larva_char);} width ++;
 	sprintf(temp_str, u32__fstr, f2larva__type(exp, cause)); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);

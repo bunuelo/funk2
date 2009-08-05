@@ -422,11 +422,11 @@ void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) 
   //if(pthread_create(&raw_pthread, NULL, (pthread_start_routine)processor__start_routine, (void*)(long)processor_index)) {
   //  error(nil, "couldn't create processor pthread.");
   //}
-  //pause_gc();
+  pause_gc();
   f2ptr processor_thread = f2pointer__new(cause, to_ptr(new_processor_thread));
   f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_index);
   f2processor__processor_thread__set(processor, cause, processor_thread);
-  //resume_gc();
+  resume_gc();
 }
 
 //void f2__scheduler__exec_with_main_pthread(f2ptr cause) {
@@ -434,13 +434,13 @@ void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) 
 //}
 
 void f2__scheduler__start_processors() {
-  //pause_gc();
+  pause_gc();
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   int i;
   for (i = 0; i < scheduler_processor_num; i ++) {
     f2processor__start_new_processor_thread(cause, i);
   }
-  //resume_gc();
+  resume_gc();
 }
 
 void f2__scheduler__stop_processors() {

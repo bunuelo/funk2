@@ -224,24 +224,16 @@
      [funk-unlabeled label ,args
 		     @body]]]
 
-`[defmetro mapc [proc seq]
-   `[rawcode [bytecode push   iter     nil  nil]
-	     [bytecode push   args     nil  nil]
-	     
-	     [bytecode lookup variable proc nil]
-	     [bytecode copy   value    args nil]
-	     [bytecode lookup variable seq  nil]
-	     [bytecode copy   value    iter nil]
-	     
-	     [bytecode pop    args     nil  nil]
-	     [bytecode pop    iter     nil  nil]
-	     ]]
+`[defunk mapc [proc seq]
+   [if [null seq]
+       nil
+     [prog [apply proc [cons [car seq] nil]]
+	   [mapc  proc [cdr seq]]]]]
 
 [defunk mapc [proc seq]
-  [if [null seq]
-      nil
-    [prog [apply proc [cons [car seq] nil]]
-	  [mapc  proc [cdr seq]]]]]
+  [while seq
+    [apply proc [cons [car seq] nil]]
+    [= seq [cdr seq]]]]
 
 [defunk parseq [proc seq]
   [if [null seq]

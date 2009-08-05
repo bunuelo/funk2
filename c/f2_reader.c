@@ -430,9 +430,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 	}
 	ch = f2char__ch(read_ch, cause);
 	if      (ch == f2char__ch(__funk2.reader.char__string_escape_newline, cause))   {ch = '\n';}
-	else if (ch == f2char__ch(__funk2.reader.char__string_escape_return))    {ch = '\r';}
-	else if (ch == f2char__ch(__funk2.reader.char__string_escape_tab))       {ch = '\t';}
-	else if (ch == f2char__ch(__funk2.reader.char__string_escape_backspace)) {ch = '\b';}
+	else if (ch == f2char__ch(__funk2.reader.char__string_escape_return, cause))    {ch = '\r';}
+	else if (ch == f2char__ch(__funk2.reader.char__string_escape_tab, cause))       {ch = '\t';}
+	else if (ch == f2char__ch(__funk2.reader.char__string_escape_backspace, cause)) {ch = '\b';}
 	// otherwise ignore next character
       }
       str[i] = ch;

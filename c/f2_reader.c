@@ -366,7 +366,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     } else if (raw__eq(cause, read_ch, __funk2.reader.char__escape_gfunkptr)) {
       // read gfunkptr of form #g(ip_addr pool_index pool_address)
       f2ptr gfunkptr_read_array = raw__read(cause, stream);
-      if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {return __gfunkptr_read__exception;}
+      if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {return __funk2.reader.gfunkptr_read__exception;}
       f2ptr computer_id__integer  = raw__array__elt(cause, gfunkptr_read_array, 0);
       f2ptr pool_index__integer   = raw__array__elt(cause, gfunkptr_read_array, 1);
       f2ptr pool_address__integer = raw__array__elt(cause, gfunkptr_read_array, 2);

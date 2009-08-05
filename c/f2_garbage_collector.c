@@ -166,6 +166,7 @@ void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t*
   for (i = 0; i < this->never_delete_list.used_num; i++) {
     funk2_garbage_collector__touch_f2ptr(this, this->never_delete_list.data[i]);
   }
+  status("funk2_garbage_collector: done with touch_never_delete_list.");
 }
 
 f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp) {

@@ -233,7 +233,7 @@
 [defunk mapc [proc seq]
   [while seq
     [apply proc [cons [car seq] nil]]
-    [= seq [cdr seq]]]]
+    [mutate seq [cdr seq]]]]
 
 [defunk parseq [proc seq]
   [if [null seq]

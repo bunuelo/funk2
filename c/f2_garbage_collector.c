@@ -123,19 +123,15 @@ boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector
 
 void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this) {
   status("funk2_garbage_collector: spread_all_blackness.");
-  u64 subcycle_count = 0;
   u64 cycle_count    = 0;
   while (funk2_garbage_collector__still_have_grey_nodes(this)) {
-    do {
-      // parallelized
-      funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
-      subcycle_count ++;
-    } while (funk2_garbage_collector__still_have_grey_nodes(this));
+    // parallelized
+    funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
     // parallelized
     funk2_user_thread_controller__grey_from_other_nodes(&(__funk2.user_thread_controller));
     cycle_count ++;
   }
-  status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr " subcycle_count=" u64__fstr, cycle_count, subcycle_count);
+  status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr, cycle_count);
 }
 
 //void funk2_garbage_collector__whiten_all_used_memory(funk2_garbage_collector_t* this) {

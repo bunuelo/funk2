@@ -568,7 +568,6 @@ void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector
 }
 
 void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this) {
-  u64                white_count      = this->white_set.set.element_count;
   int                pool_index       = this_processor_thread__pool_index();
   u64                freed_byte_count = 0;
   u64                bin_num          = 1ull << this->white_set.set.bin_power;

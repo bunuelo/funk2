@@ -288,7 +288,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__pool_index(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__pool_address(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	if (stream) {raw__stream__writef(cause, stream, "%c", __array_right_paren_char);} width ++;
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_right_paren, cause));} width ++;
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       case ptype_mutex: {
@@ -1186,7 +1186,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  } else {
 	    f2__write__ansi_color(cause, stream, print__ansi__traced_array__foreground, use_ansi_colors, use_html);
 	  }
-	  if (stream) {raw__stream__writef(cause, stream, "%c", __array_right_paren_char);} width ++;
+	  if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_right_paren, cause));} width ++;
 	}
 	if (raw__primobject__is_type(cause, exp)) {
 	  if (show_slot_causes ||

@@ -637,7 +637,7 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__while_exp__symbol, exps);
   
   if (! raw__cons__is_type(cause, exps)) {return __compile__exception;}
-  exps = f2cons__cdr(exps, cause); // skip |if|
+  exps = f2cons__cdr(exps, cause); // skip |while|
   f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __compile__exception;}
   
   f2ptr loop_exps = exps;
@@ -654,24 +654,7 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   f2ptr loop_bcs = f2__compile__rawcode(cause, fiber, loop_exps, protect_environment, optimize_tail_recursion, &loop__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
   if (loop_bcs && (! raw__cons__is_type(cause, loop_bcs))) {return loop_bcs;}
   
-  if (loop__popped_env_and_return) {
-    *popped_env_and_return = boolean__true;
-    
-    if (!loop__popped_env_and_return) {
-      // add pop env and pop return to loop_bcs
-      f2ptr iter;
-      {
-	f2ptr compile_pop = f2__compile__pop_debug_funk_call(cause);
-	if (loop_bcs) {
-	  iter = f2__list_cdr__set(cause, loop_bcs, compile_pop);
-	} else {
-	  iter = loop_bcs = compile_pop;
-	}
-      }
-      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-      iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-    }
-  }
+  //*popped_env_and_return = boolean__true;
   
   return bcs_valid(f2__compile__while(cause, cond_bcs, loop_bcs));
 }

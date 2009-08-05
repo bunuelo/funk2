@@ -133,9 +133,9 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u8 temp_str[1024];
     u8 ch_value = f2char__ch(exp, cause);
     if (ch_value >= 28) {
-      snprintf((char*)temp_str, 1024, "%c%c%c", __escape_char, __escape_char_char, ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%c", f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_char, cause), ch_value);
     } else {
-      snprintf((char*)temp_str, 1024, "%c%c%X", __escape_char, __escape_hex_char_char, (uint)ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%X", f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch_value);
     }
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
@@ -151,13 +151,13 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];
       if (ch == __string_quote_char) {
-	temp_str[new_index] = __escape_char_char;
+	temp_str[new_index] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	new_index ++;
       }
       temp_str[new_index] = ch;
       new_index ++;
     }
-    temp_str[new_index] = __string_quote_char;
+    temp_str[new_index] = f2char__ch(__funk2.reader.char__string_quote, cause);
     new_index ++;
     return f2string__new(cause, new_index, temp_str);
   } break;
@@ -169,7 +169,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u64 index;
     for (index = 0; index < exp__length; index ++) {
       u8 ch = temp_old_str[index];
-      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == __left_paren_char || ch == __right_paren_char || ch == __symbol_quote_char || ch == __string_quote_char) {
+      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	all_cool = boolean__false;
       }
     }
@@ -178,18 +178,18 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     } else {
       u64 new_index = 0;
       u8* temp_str = alloca(exp__length * 2);
-      temp_str[new_index] = __symbol_quote_char;
+      temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
       new_index ++;
       for (index = 0; index < exp__length; index ++) {
 	u8 ch = temp_old_str[index];
 	if (ch == __symbol_quote_char) {
-	  temp_str[new_index] = __symbol_escape_char;
+	  temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_escape, cause);
 	  new_index ++;
 	}
 	temp_str[new_index] = ch;
 	new_index ++;
       }
-      temp_str[new_index] = __symbol_quote_char;
+      temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
       new_index ++;
       return f2string__new(cause, new_index, temp_str);
     }
@@ -203,7 +203,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   case ptype_larva: {
     u8 temp_str[1024];
     u32 larva_type = f2larva__type(exp, cause);
-    snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, __escape_char, __escape_larva_char, larva_type);
+    snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_larva, cause), larva_type);
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   }

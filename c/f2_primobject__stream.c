@@ -302,9 +302,9 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init(stream__file_mode__creat, "");
   f2__primcfunk__init(stream__file_mode__rdwr, "");
   f2__primcfunk__init(stream__nonblocking__set, "");
-  f2__primcfunk__init(stream__ungetc, "");
-  f2__primcfunk__init(stream__try_read_character, "");
-  f2__primcfunk__init(stream__getc, stream, "");
+  f2__primcfunk__init__2(stream__ungetc,             this, character, "");
+  f2__primcfunk__init__1(stream__try_read_character, this, "");
+  f2__primcfunk__init__1(stream__getc,               this, "");
   f2__primcfunk__init(text_window_stream__new, "");
   f2__primcfunk__init(text_window_stream, "");
 }

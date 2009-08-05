@@ -497,9 +497,9 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       }
       char ch = f2char__ch(read_ch, cause);
       if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' ||
-	  ch == __funk2.reader.left_paren_char            || ch == __funk2.reader.right_paren_char ||
-	  ch == __funk2.reader.array_left_paren_char      || ch == __funk2.reader.array_right_paren_char ||
-	  ch == __funk2.reader.doublelink_left_paren_char || ch == __funk2.reader.doublelink_right_paren_char) {
+	  ch == f2char__ch(__funk2.reader.char__left_paren, cause)            || ch == f2char__ch(__funk2.reader.char__right_paren, cause) ||
+	  ch == f2char__ch(__funk2.reader.char__array_left_paren, cause)      || ch == f2char__ch(__funk2.reader.char__array_right_paren, cause) ||
+	  ch == f2char__ch(__funk2.reader.char__doublelink_left_paren, cause) || ch == f2char__ch(__funk2.reader.char__doublelink_right_paren, cause)) {
 	f2__stream__ungetc(cause, stream, read_ch);
 	break;
       }

@@ -133,9 +133,9 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     u8 temp_str[1024];
     u8 ch_value = f2char__ch(exp, cause);
     if (ch_value >= 28) {
-      snprintf((char*)temp_str, 1024, "%c%c%c", f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_char, cause), ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch_value);
     } else {
-      snprintf((char*)temp_str, 1024, "%c%c%X", f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch_value);
     }
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
@@ -203,7 +203,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   case ptype_larva: {
     u8 temp_str[1024];
     u32 larva_type = f2larva__type(exp, cause);
-    snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, f2char__ch(__funk2.reader.char__escape, cause), f2char__ch(__funk2.reader.char__escape_larva, cause), larva_type);
+    snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_larva, cause), larva_type);
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   }

@@ -233,7 +233,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
     if (! exp) {
       f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
       if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__left_paren, cause));} width ++;
-      if (stream) {raw__stream__writef(cause, stream, "%c", __right_paren_char);} width ++;
+      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
       f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
     } else {
       ptype_t ptype = f2ptype__raw(exp, cause);
@@ -358,7 +358,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	boolean_t all_cool = 1;
 	for (i = 0; i < length; i ++) {
 	  ch = temp_str_buf[i];
-	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == __right_paren_char || ch == __symbol_quote_char || ch == __string_quote_char) {
+	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == __symbol_quote_char || ch == __string_quote_char) {
 	    all_cool = 0;
 	  }
 	}
@@ -505,7 +505,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		    } else {
 		      f2__write__ansi_color(cause, stream, print__ansi__traced_array__foreground, use_ansi_colors, use_html);
 		    }
-		    if (stream) {raw__stream__writef(cause, stream, "%c", __right_paren_char);} width ++;
+		    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
 		    iter = nil;
 		  } else if (! raw__cons__is_type(cause, cdr)) {
 		    if (ptype == ptype_simple_array) {
@@ -521,7 +521,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 		    } else {
 		      f2__write__ansi_color(cause, stream, print__ansi__traced_array__foreground, use_ansi_colors, use_html);
 		    }
-		    if (stream) {raw__stream__writef(cause, stream, "%c", __right_paren_char);} width ++;
+		    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
 		    iter = nil;
 		  } else {
 		    iter = cdr;
@@ -1197,7 +1197,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    } else {
 	      f2__write__ansi_color(cause, stream, print__ansi__traced_array__foreground, use_ansi_colors, use_html);
 	    }
-	    if (stream) {raw__stream__writef(cause, stream, "%c", __right_paren_char);} width ++;
+	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
 	    indent_space_num -= 2; available_width += 2;
 	  }
 	}

@@ -52,17 +52,17 @@ boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector
 void      funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__whiten_all_used_memory(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this);
-void      funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this);
-void      funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this);
+void      funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num);
+void      funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num);
 void      funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this);
-f2ptr     funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp);
+f2ptr     funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp, char* source_filename, int source_line_num);
 void      funk2_garbage_collector__handle(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd);
 void      funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd);
 
-#define pause_gc()    funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector))
-#define resume_gc()   funk2_garbage_collector__signal_exit_protected_region(&(__funk2.garbage_collector))
-#define never_gc(exp) funk2_garbage_collector__add_f2ptr_to_never_delete_list(&(__funk2.garbage_collector), exp);
+#define pause_gc()    funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector), __FILE__, __LINE__)
+#define resume_gc()   funk2_garbage_collector__signal_exit_protected_region(&(__funk2.garbage_collector), __FILE__, __LINE__)
+#define never_gc(exp) funk2_garbage_collector__add_f2ptr_to_never_delete_list(&(__funk2.garbage_collector), exp, __FILE__, __LINE__);
 
 #endif // F2__GARBAGE_COLLECTOR__H
 

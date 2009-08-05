@@ -153,15 +153,15 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
 }
 
 // memory handling thread should never call this function
-void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this) {
+void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_garbage_collector_pool__signal_enter_protected_region(&(this->gc_pool[pool_index]));
+  funk2_garbage_collector_pool__signal_enter_protected_region(&(this->gc_pool[pool_index]), source_filename, source_line_num);
 }
 
 // memory handling thread should never call this function
-void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this) {
+void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {
   int pool_index = this_processor_thread__pool_index();
-  funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]));
+  funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]), source_filename, source_line_num);
 }
 
 void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this) {
@@ -172,7 +172,7 @@ void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t*
   }
 }
 
-f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp) {
+f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp, char* source_filename, int source_line_num) {
   funk2_never_delete_list__add_f2ptr(&(this->never_delete_list), exp);
   return exp;
 }

@@ -1119,6 +1119,7 @@ f2ptr f2__is_compile_special_symbol(f2ptr cause, f2ptr exp) {
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))        ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol)) ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                     ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                  ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                  ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))            ||
@@ -1390,7 +1391,6 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                  {return f2cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return f2cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                  {return f2cons__new(cause, nil, exp);}
   status("tried to compile special symbol exp: "); f2__write(cause, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   status("f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");

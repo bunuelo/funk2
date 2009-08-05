@@ -514,13 +514,13 @@
 
 [defunk print-html [exp] [format-html stdout '\n'] [fwrite_html stdout exp]]
 
-[defmetro while [cond :rest body]
-  `[prog [define-funk while-loop
-	   [funk-unlabeled while []
-			   [if ,cond
-			       [prog [prog @body]
-				     [while-loop]]]]]
-	 [while-loop]]]
+`[defmetro while [cond :rest body]
+   `[prog [define-funk while-loop
+	    [funk-unlabeled while []
+			    [if ,cond
+				[prog [prog @body]
+				      [while-loop]]]]]
+	  [while-loop]]]
 
 [defmetro funkall [funk :rest args]
   `[apply ,funk [list @args]]]

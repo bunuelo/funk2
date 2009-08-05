@@ -1207,7 +1207,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	f2__write__ansi_color(cause, stream, print__ansi__larva__foreground, use_ansi_colors, use_html);
 	char temp_str[128]; 
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
-	if (stream) {raw__stream__writef(cause, stream, "%c", __escape_larva_char);} width ++;
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_larva, cause));} width ++;
 	sprintf(temp_str, u32__fstr, f2larva__type(exp, cause)); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;

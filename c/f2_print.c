@@ -24,8 +24,8 @@
 #define causal_debug__begin_char __funk2.reader.char__left_paren
 #define causal_debug__end_char   __funk2.reader.char__right_paren
 
-#define chunk__begin_char __left_paren_char
-#define chunk__end_char   __right_paren_char
+#define chunk__begin_char __funk2.reader.char__left_paren
+#define chunk__end_char   __funk2.reader.char__right_paren
 
 f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
 
@@ -388,7 +388,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	f2__write__ansi_color(cause, stream, print__ansi__chunk__foreground, use_ansi_colors, use_html);
 	char temp_str[128]; 
 	int  subexp_size[2];
-	if (stream) {raw__stream__writef(cause, stream, "%c", chunk__begin_char);} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(chunk__begin_char, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	if (show_slot_causes) {
 	  f2__write_pretty(cause, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
@@ -428,7 +428,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  sprintf(temp_str, "#x%02x", f2chunk__bit8__elt(exp, i, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	}
 	f2__write__ansi_color(cause, stream, print__ansi__chunk__foreground, use_ansi_colors, use_html);
-	if (stream) {raw__stream__writef(cause, stream, "%c", chunk__end_char);} width ++;
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(chunk__end_char, cause));} width ++;
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       case ptype_simple_array:

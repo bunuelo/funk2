@@ -62,6 +62,7 @@ struct funk2_reader_s {
   f2ptr char__escape_gfunkptr;
   f2ptr char__string_quote;
   f2ptr char__symbol_quote;
+  f2ptr char__symbol_escape;
   f2ptr char__symbol_key;
 };
 

@@ -129,6 +129,7 @@ void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* th
     funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
     // parallelized
     funk2_user_thread_controller__grey_from_other_nodes(&(__funk2.user_thread_controller));
+    cycle_count ++;
   }
   status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr, cycle_count);
 }

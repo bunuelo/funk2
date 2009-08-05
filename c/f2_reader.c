@@ -520,7 +520,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 }
 def_pcfunk1(read, stream, return raw__read(this_cause, stream));
 
-
+/*
 // changing these to parens makes funk much more like lisp (and you will press shift-9 and shift-0 a lot more)
 const char __left_paren_char              = '[';
 const char __right_paren_char             = ']';
@@ -547,7 +547,7 @@ const char __escape_larva_char            = '!';
 const char __symbol_quote_char            = '|';
 const char __symbol_escape_char           = '\\';
 const char __symbol_key_char              = ':';
-
+*/
 
 void funk2_reader__init(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
@@ -563,35 +563,35 @@ void funk2_reader__init(funk2_reader_t* this) {
   
   {char* str = "eof"; this->eof__symbol = f2symbol__new(cause, strlen(str), (u8*)str); environment__add_var_value(cause, global_environment(), this->eof__symbol, this->eof__symbol);}
   
-  {this->char__space                   = f2char__new(cause, ' ');                            char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
-  {this->char__tab                     = f2char__new(cause, '\t');                           char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
-  {this->char__newline                 = f2char__new(cause, '\n');                           char* str = "char:newline";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__newline);}
-  {this->char__return                  = f2char__new(cause, '\r');                           char* str = "char:return";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__return);}
-  {this->char__left_paren              = f2char__new(cause, __left_paren_char);              char* str = "char:left_paren";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__left_paren);}
-  {this->char__right_paren             = f2char__new(cause, __right_paren_char);             char* str = "char:right_paren";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__right_paren);}
-  {this->char__array_left_paren        = f2char__new(cause, __array_left_paren_char);        char* str = "char:array_left_paren";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_left_paren);}
-  {this->char__array_right_paren       = f2char__new(cause, __array_right_paren_char);       char* str = "char:array_right_paren";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_right_paren);}
-  {this->char__doublelink_right_paren  = f2char__new(cause, __doublelink_right_paren_char);  char* str = "char:doublelink_right_paren";  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_right_paren);}
-  {this->char__doublelink_left_paren   = f2char__new(cause, __doublelink_left_paren_char);   char* str = "char:doublelink_left_paren";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_left_paren);}
-  {this->char__quote                   = f2char__new(cause, __quote_char);                   char* str = "char:quote";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__quote);}
-  {this->char__backquote               = f2char__new(cause, __backquote_char);               char* str = "char:backquote";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__backquote);}
-  {this->char__comma                   = f2char__new(cause, __comma_char);                   char* str = "char:comma";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__comma);}
-  {this->char__cdr_comma               = f2char__new(cause, __cdr_comma_char);               char* str = "char:cdr_comma";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__cdr_comma);}
-  {this->char__funktion                = f2char__new(cause, __funktion_char);                char* str = "char:funktion";                environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__funktion);}
-  {this->char__escape                  = f2char__new(cause, __escape_char);                  char* str = "char:escape";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape);}
-  {this->char__escape_hex              = f2char__new(cause, __escape_hex_char);              char* str = "char:escape_hex";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex);}
-  {this->char__escape_hex_char         = f2char__new(cause, __escape_hex_char_char);         char* str = "char:escape_hex_char";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex_char);}
-  {this->char__escape_char             = f2char__new(cause, __escape_char_char);             char* str = "char:escape_char";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_char);}
-  {this->char__escape_larva            = f2char__new(cause, __escape_larva_char);            char* str = "char:escape_larva";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_larva);}
-  {this->char__escape_gfunkptr         = f2char__new(cause, __escape_gfunkptr_char);         char* str = "char:escape_gfunkptr";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_gfunkptr);}
-  {this->char__string_quote            = f2char__new(cause, __string_quote_char);            char* str = "char:string_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
-  {this->char__string_escape_newline   = f2char__new(cause, __string_escape_newline_char);   char* str = "char:string_escape_newline";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_newline);}
-  {this->char__string_escape_return    = f2char__new(cause, __string_escape_return_char);    char* str = "char:string_escape_return";    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_return);}
-  {this->char__string_escape_tab       = f2char__new(cause, __string_escape_tab_char);       char* str = "char:string_escape_tab";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_tab);}
-  {this->char__string_escape_backspace = f2char__new(cause, __string_escape_backspace_char); char* str = "char:string_escape_backspace"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_backspace);}
-  {this->char__symbol_quote            = f2char__new(cause, __symbol_quote_char);            char* str = "char:symbol_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_quote);}
-  {this->char__symbol_escape           = f2char__new(cause, __symbol_escape_char);           char* str = "char:symbol_escape";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_escape);}
-  {this->char__symbol_key              = f2char__new(cause, __symbol_key_char);              char* str = "char:symbol_key";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_key);}
+  {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
+  {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
+  {this->char__newline                 = f2char__new(cause, '\n'); char* str = "char:newline";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__newline);}
+  {this->char__return                  = f2char__new(cause, '\r'); char* str = "char:return";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__return);}
+  {this->char__left_paren              = f2char__new(cause, '[');  char* str = "char:left_paren";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__left_paren);}
+  {this->char__right_paren             = f2char__new(cause, ']');  char* str = "char:right_paren";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__right_paren);}
+  {this->char__array_left_paren        = f2char__new(cause, '(');  char* str = "char:array_left_paren";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_left_paren);}
+  {this->char__array_right_paren       = f2char__new(cause, ')');  char* str = "char:array_right_paren";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_right_paren);}
+  {this->char__doublelink_right_paren  = f2char__new(cause, '}');  char* str = "char:doublelink_right_paren";  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_right_paren);}
+  {this->char__doublelink_left_paren   = f2char__new(cause, '{');  char* str = "char:doublelink_left_paren";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_left_paren);}
+  {this->char__quote                   = f2char__new(cause, '\\'); char* str = "char:quote";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__quote);}
+  {this->char__backquote               = f2char__new(cause, '`');  char* str = "char:backquote";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__backquote);}
+  {this->char__comma                   = f2char__new(cause, ',');  char* str = "char:comma";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__comma);}
+  {this->char__cdr_comma               = f2char__new(cause, '@');  char* str = "char:cdr_comma";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__cdr_comma);}
+  {this->char__funktion                = f2char__new(cause, '&');  char* str = "char:funktion";                environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__funktion);}
+  {this->char__escape                  = f2char__new(cause, '#');  char* str = "char:escape";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape);}
+  {this->char__escape_hex              = f2char__new(cause, 'x');  char* str = "char:escape_hex";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex);}
+  {this->char__escape_hex_char         = f2char__new(cause, 'c');  char* str = "char:escape_hex_char";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex_char);}
+  {this->char__escape_char             = f2char__new(cause, '\\'); char* str = "char:escape_char";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_char);}
+  {this->char__escape_larva            = f2char__new(cause, '!');  char* str = "char:escape_larva";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_larva);}
+  {this->char__escape_gfunkptr         = f2char__new(cause, 'g');  char* str = "char:escape_gfunkptr";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_gfunkptr);}
+  {this->char__string_quote            = f2char__new(cause, '\''); char* str = "char:string_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
+  {this->char__string_escape_newline   = f2char__new(cause, 'n');  char* str = "char:string_escape_newline";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_newline);}
+  {this->char__string_escape_return    = f2char__new(cause, 'r');  char* str = "char:string_escape_return";    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_return);}
+  {this->char__string_escape_tab       = f2char__new(cause, 't');  char* str = "char:string_escape_tab";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_tab);}
+  {this->char__string_escape_backspace = f2char__new(cause, 'b');  char* str = "char:string_escape_backspace"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_backspace);}
+  {this->char__symbol_quote            = f2char__new(cause, '|');  char* str = "char:symbol_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_quote);}
+  {this->char__symbol_escape           = f2char__new(cause, '\\'); char* str = "char:symbol_escape";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_escape);}
+  {this->char__symbol_key              = f2char__new(cause, ':');  char* str = "char:symbol_key";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_key);}
   
 }
 

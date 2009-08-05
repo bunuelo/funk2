@@ -22,15 +22,6 @@
 #include "funk2.h"
 #include <stdio.h>
 
-f2ptr __end_parens_exception                  = -1;
-f2ptr __unmatched_begin_paren_exception       = -1;
-f2ptr __array_end_parens_exception            = -1;
-f2ptr __doublelink_end_parens_exception       = -1;
-f2ptr __end_of_file_exception                 = -1;
-f2ptr __invalid_argument_type_exception       = -1;
-f2ptr __illegal_escape_reader_metro_exception = -1;
-f2ptr __gfunkptr_read__exception              = -1;
-
 // changing these to parens makes funk much more like lisp (and you will press shift-9 and shift-0 a lot more)
 const char __left_paren_char              = '[';
 const char __right_paren_char             = ']';
@@ -59,6 +50,15 @@ const char __symbol_escape_char           = '\\';
 const char __symbol_key_char              = ':';
 
 const boolean_t __reader__all_caps = 0;
+
+f2ptr __end_parens_exception                  = -1;
+f2ptr __unmatched_begin_paren_exception       = -1;
+f2ptr __array_end_parens_exception            = -1;
+f2ptr __doublelink_end_parens_exception       = -1;
+f2ptr __end_of_file_exception                 = -1;
+f2ptr __invalid_argument_type_exception       = -1;
+f2ptr __illegal_escape_reader_metro_exception = -1;
+f2ptr __gfunkptr_read__exception              = -1;
 
 f2ptr __char__space   = -1;
 f2ptr __char__tab     = -1;
@@ -173,7 +173,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   if (!stream) {printf("\nraw__read: stream is nil."); return __invalid_argument_type_exception;}
   if (! raw__stream__is_type(cause, stream)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); return __invalid_argument_type_exception;}
   f2ptr first_char;
-
+  
   //char * line = readline (">>>");
   //if (strlen(line) > 0)
   //  add_history (line);

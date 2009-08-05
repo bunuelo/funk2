@@ -52,6 +52,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__array_elt__symbol)           {f2__fiber__bytecode__array_elt(          fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)     {f2__fiber__bytecode__lookup_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)     {f2__fiber__bytecode__define_type_var(    fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__if_jump__symbol)             {f2__fiber__bytecode__if_jump(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__else_jump__symbol)           {f2__fiber__bytecode__else_jump(          fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__car__symbol)                 {f2__fiber__bytecode__car(                fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__cdr__symbol)                 {f2__fiber__bytecode__cdr(                fiber, bytecode);}

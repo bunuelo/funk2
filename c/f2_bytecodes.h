@@ -48,6 +48,7 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__type_var__mutate__symbol;
   f2ptr bytecode__globalize_type_var__symbol;
   f2ptr bytecode__jump__symbol;
+  f2ptr bytecode__if_jump__symbol;
   f2ptr bytecode__else_jump__symbol;
   f2ptr bytecode__nop__symbol;
   f2ptr bytecode__debug__symbol;
@@ -128,6 +129,7 @@ int                    f2__fiber__bytecode__define_type_var(                 f2p
 int                    f2__fiber__bytecode__type_var__mutate(                f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
 int                    f2__fiber__bytecode__globalize_type_var(              f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
 int                    f2__fiber__bytecode__jump(                            f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__fiber__bytecode__if_jump(                         f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__fiber__bytecode__else_jump(                       f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__fiber__bytecode__debug(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
 int                    f2__fiber__bytecode__trace(                           f2ptr fiber, f2ptr bytecode, f2ptr value);

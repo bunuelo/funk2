@@ -41,6 +41,7 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__type_var__mutate__symbol   = -1;
   this->bytecode__globalize_type_var__symbol = -1;
   this->bytecode__jump__symbol               = -1;
+  this->bytecode__if_jump__symbol            = -1;
   this->bytecode__else_jump__symbol          = -1;
   this->bytecode__nop__symbol                = -1; // null operation (should be stripped out before executing [ideally])
   this->bytecode__debug__symbol              = -1;
@@ -1216,6 +1217,24 @@ int f2__fiber__bytecode__jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_cou
 }
 
 
+// bytecode if_jump [f2ptr]
+
+int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  if(f2fiber__value(fiber, cause)) {
+    if (raw__exception__is_type(cause, new_program_counter)) {
+      f2fiber__value__set(fiber, cause, new_program_counter);
+    } else {
+      f2fiber__program_counter__set(fiber, cause, new_program_counter);
+    }
+  }
+  return 1;
+}
+
+
 // bytecode else_jump [f2ptr]
 
 int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
@@ -1590,6 +1609,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__type_var__mutate__symbol    = f2symbol__new(cause, strlen("mutate-type_var"),    (u8*)"mutate-type_var");
   __funk2.bytecode.bytecode__globalize_type_var__symbol  = f2symbol__new(cause, strlen("globalize-type_var"), (u8*)"globalize-type_var");
   __funk2.bytecode.bytecode__jump__symbol                = f2symbol__new(cause, strlen("jump"),               (u8*)"jump");
+  __funk2.bytecode.bytecode__if_jump__symbol             = f2symbol__new(cause, strlen("if-jump"),            (u8*)"if-jump");
   __funk2.bytecode.bytecode__else_jump__symbol           = f2symbol__new(cause, strlen("else-jump"),          (u8*)"else-jump");
   __funk2.bytecode.bytecode__nop__symbol                 = f2symbol__new(cause, strlen("nop"),                (u8*)"nop");
   __funk2.bytecode.bytecode__debug__symbol               = f2symbol__new(cause, strlen("debug"),              (u8*)"debug");

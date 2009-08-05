@@ -44,10 +44,10 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   f2ptr load_fiber   = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
   f2ptr read_exp      = nil;
   
-  while (read_exp != __end_of_file_exception) {
+  while (read_exp != __funk2.reader.end_of_file_exception) {
     
     read_exp = raw__read(cause, stream);
-    if (read_exp != __end_of_file_exception) {
+    if (read_exp != __funk2.reader.end_of_file_exception) {
 #ifdef DEBUG_LOAD
       f2__print_prompt(cause, "Load-F-In-> ", read_exp); fflush(stdout);
 #endif

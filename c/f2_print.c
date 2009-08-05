@@ -546,7 +546,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	      f2ptr next;
 	      f2ptr iter = exp;
 	      int   write_value_with_space = 0;
-	      if (stream) {raw__stream__writef(cause, stream, "%c", __doublelink_left_paren_char);} indent_space_num ++; available_width --;
+	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__doublelink_left_paren, cause));} indent_space_num ++; available_width --;
 	      f2ptr iter__prev = f2doublelink__prev(iter, cause);
 	      boolean_t prev__exists = 0;
 	      while (iter__prev) {

@@ -127,6 +127,7 @@ void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* th
   u64 cycle_count    = 0;
   while (funk2_garbage_collector__still_have_grey_nodes(this)) {
     do {
+      status("funk2_garbage_collector: in subcycle.");
       // parallelized
       funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
       subcycle_count ++;

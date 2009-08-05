@@ -317,7 +317,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	unsigned char ch = f2char__ch(exp, cause);
 	if (ch >= 28) {
 	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
-	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_char, cause));} width ++;
+	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_char_char, cause));} width ++;
 	  if(stream) {raw__stream__writef(cause, stream, "%c", ch);} width ++;
 	} else {
 	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;

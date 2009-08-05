@@ -421,18 +421,18 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
 	return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
-      if (ch == __funk2.reader.string_quote_char) {break;}
-      if (ch == __funk2.reader.escape_char_char) {
+      if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {break;}
+      if (ch == f2char__ch(__funk2.reader.char__escape_char, cause)) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
 	ch = f2char__ch(read_ch, cause);
-	if      (ch == __funk2.reader.string_escape_newline_char)   {ch = '\n';}
-	else if (ch == __funk2.reader.string_escape_return_char)    {ch = '\r';}
-	else if (ch == __funk2.reader.string_escape_tab_char)       {ch = '\t';}
-	else if (ch == __funk2.reader.string_escape_backspace_char) {ch = '\b';}
+	if      (ch == f2char__ch(__funk2.reader.char__string_escape_newline, cause))   {ch = '\n';}
+	else if (ch == f2char__ch(__funk2.reader.char__string_escape_return))    {ch = '\r';}
+	else if (ch == f2char__ch(__funk2.reader.char__string_escape_tab))       {ch = '\t';}
+	else if (ch == f2char__ch(__funk2.reader.char__string_escape_backspace)) {ch = '\b';}
 	// otherwise ignore next character
       }
       str[i] = ch;

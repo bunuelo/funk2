@@ -88,7 +88,9 @@ void found_max_reentrance(u64 max_reentrance_count) {
 }
 
 void funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num) {
+#ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array__add_event(&(this->event_array), funk2_protected_alloc_array_event_type__enter, source_filename, source_line_num);
+#endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
   this->reentrance_count ++;
   if (this->reentrance_count > this->max_reentrance_count) {
     this->max_reentrance_count = this->reentrance_count;
@@ -97,7 +99,9 @@ void funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_
 }
 
 void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num) {
+#ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array__add_event(&(this->event_array), funk2_protected_alloc_array_event_type__exit, source_filename, source_line_num);
+#endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
   if (this->reentrance_count == 0) {
     error(nil, "funk2_protected_alloc_array__signal_exit_protected_region error: bytecode reentrance underflow.");
   }
@@ -105,7 +109,9 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
   if (this->reentrance_count == 0) {
     // protected counter is back to zero so reset used_num to zero.
     this->used_num = 0;
+#ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
     funk2_protected_alloc_array_event_array__reset(&(this->event_array));
+#endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
   }
 }
 

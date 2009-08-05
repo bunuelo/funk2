@@ -422,7 +422,7 @@ void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* t
 }
 
 void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
-  status("funk2_garbage_collector_pool: touch_all_protected_alloc_arrays.");
+  status("funk2_garbage_collector_pool: touch_all_protected_alloc_arrays.  length=" u64__fstr, this->protected_alloc_array.used_num);
   u64 i;
   for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
     funk2_garbage_collector_pool__touch_f2ptr(this, this->protected_alloc_array.data[i]);

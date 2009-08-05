@@ -243,6 +243,23 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_character(this_cause, stream));
 
+f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
+  if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
+  f2ptr read_ch = nil;
+  while (read_ch == nil) {
+    read_ch = f2__stream__try_read_character(cause, stream);
+    if (read_ch == nil) {
+      f2__scheduler__yield(cause);
+      f2__sleep(10000);
+    }
+  }
+  if (raw__eq(cause, read_ch, __funk2.reader.eof__symbol)) {
+    status("f2__stream__getc() note: eof reached.");
+  }
+  return read_ch;
+}
+def_pcfunk1(stream__getc, stream, return f2__stream__getc(this_cause, stream));
+
 f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
   if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
   return f2stream__new(cause, __text_window_stream__symbol, nil, nil, text_window, nil);
@@ -287,6 +304,7 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init(stream__nonblocking__set, "");
   f2__primcfunk__init(stream__ungetc, "");
   f2__primcfunk__init(stream__try_read_character, "");
+  f2__primcfunk__init(stream__getc, stream, "");
   f2__primcfunk__init(text_window_stream__new, "");
   f2__primcfunk__init(text_window_stream, "");
 }

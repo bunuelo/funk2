@@ -87,6 +87,7 @@ f2ptr f2__stream__new_open_file__rdwr(f2ptr cause, f2ptr filename);
 f2ptr  f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character);
 void  raw__stream__ungetc(f2ptr cause, f2ptr this, char ch);
 f2ptr  f2__stream__try_read_character(f2ptr cause, f2ptr this);
+f2ptr  f2__stream__getc(f2ptr cause, f2ptr stream);
 
 // **
 

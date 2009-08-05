@@ -22,22 +22,6 @@
 #include "funk2.h"
 #include <stdio.h>
 
-f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
-  if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
-  f2ptr read_ch = nil;
-  while (read_ch == nil) {
-    read_ch = f2__stream__try_read_character(cause, stream);
-    if (read_ch == nil) {
-      f2__scheduler__yield(cause);
-      f2__sleep(10000);
-    }
-  }
-  if (raw__eq(cause, read_ch, __funk2.reader.eof__symbol)) {
-    status("f2__stream__getc() note: eof reached.");
-  }
-  return read_ch;
-}
-
 boolean_t contains_comma(f2ptr cause, f2ptr exp) {
   if (raw__cons__is_type(cause, exp)) {
     f2ptr car = f2cons__car(exp, cause);
@@ -98,30 +82,10 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); return __funk2.reader.invalid_argument_type_exception;}
   f2ptr first_char;
   
-  //char * line = readline (">>>");
-  //if (strlen(line) > 0)
-  //  add_history (line);
-  // skip to first non-whitespace char  
-  
-  
   do {first_char = f2__stream__getc(cause, stream);} while (raw__eq(cause, first_char, __funk2.reader.char__space)   ||
 							    raw__eq(cause, first_char, __funk2.reader.char__tab)     ||
 							    raw__eq(cause, first_char, __funk2.reader.char__newline) ||
 							    raw__eq(cause, first_char, __funk2.reader.char__return));
-  //{
-  //  f2ptr file_descriptor = f2stream__file_descriptor(stream, cause);
-  //  int   fd = f2integer__i(file_descriptor, cause);
-  //  if (fd == 0) {
-  //    printf("\n__char__space   = "); f2__print(cause, __char__space);
-  //    printf("\n__char__tab     = "); f2__print(cause, __char__tab);
-  //    printf("\n__char__newline = "); f2__print(cause, __char__newline);
-  //    printf("\n__char__return  = "); f2__print(cause, __char__return);
-  //    printf("\neq(space)       = ");   f2__print(cause, f2bool__new(raw__eq(cause, first_char, __char__space)));
-  //    printf("\neq(tab)         = ");     f2__print(cause, f2bool__new(raw__eq(cause, first_char, __char__tab)));
-  //    printf("\neq(newline)     = "); f2__print(cause, f2bool__new(raw__eq(cause, first_char, __char__newline)));
-  //    printf("\neq(return)      = ");  f2__print(cause, f2bool__new(raw__eq(cause, first_char, __char__return)));
-  //  }
-  //}
   if (f2__eq(cause, first_char, __funk2.reader.eof__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   // check all posibilities for first_char
   if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}

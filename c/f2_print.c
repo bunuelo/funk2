@@ -282,7 +282,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	char temp_str[128];
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_gfunkptr, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
-	if (stream) {raw__stream__writef(cause, stream, "%c", __array_left_paren_char);} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
+	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_left_paren, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__computer_id(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__pool_index(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
@@ -1160,7 +1160,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	  int i;
 	  int write_elt_with_space = 0;
 	  int length = raw__array__length(cause, exp);
-	  if (stream) {raw__stream__writef(cause, stream, "%c", __array_left_paren_char);} indent_space_num ++; available_width --;
+	  if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_left_paren, cause));} indent_space_num ++; available_width --;
 	  for(i = 0; i < length; i ++) {
 	    f2ptr elt = raw__array__elt(cause, exp, i);
 	    

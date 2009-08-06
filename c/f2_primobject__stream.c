@@ -311,6 +311,8 @@ void f2__primobject__stream__initialize() {
   
   f2__primobject__stream__reinitialize_globalvars();
   
+  f2ptr cause = initial_cause();
+  
   // stream
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

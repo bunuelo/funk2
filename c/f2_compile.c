@@ -669,9 +669,9 @@ f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs) {
   f2ptr iter     = value_bcs;
   
   //if (!popped_env_and_return) {
-  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
+  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
   //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
   //}
   

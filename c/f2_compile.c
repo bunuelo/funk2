@@ -660,7 +660,7 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
 }
 
 f2ptr __f2__compile__return__symbol = -1;
-f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs) {
+f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs, boolean_t popped_env_and_return) {
   release__assert(__f2__compile__return__symbol != -1, nil, "__f2__compile__return__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__return__symbol, f2list1__new(simple_cause, value_bcs));
   
@@ -668,12 +668,12 @@ f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs) {
   f2ptr full_bcs = value_bcs;
   f2ptr iter     = value_bcs;
   
-  //if (!popped_env_and_return) {
-  //  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-  //  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-  //  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-  //  //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
-  //}
+  if (!popped_env_and_return) {
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
+    iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
+    //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
+  }
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
   
@@ -694,13 +694,14 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
     if (exps) {return __compile__exception;}
   }
   
-  f2ptr value_bcs = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+  boolean_t popped_env_and_return = boolean__false;
+  f2ptr value_bcs = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, &popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
   
-  return bcs_valid(f2__compile__return(cause, value_bcs));
+  return bcs_valid(f2__compile__return(cause, value_bcs, popped_env_and_return));
 }
 
 f2ptr __f2__compile__lookup_funkvar_exp__symbol = -1;

@@ -24,6 +24,35 @@
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
 
+// funk
+
+struct funk2_object_type__stream__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr type__set__symbol;
+  f2ptr type__set__funk;
+  f2ptr ungetc_stack__symbol;
+  f2ptr ungetc_stack__funk;
+  f2ptr ungetc_stack__set__symbol;
+  f2ptr ungetc_stack__set__funk;
+  f2ptr file_descriptor__symbol;
+  f2ptr file_descriptor__funk;
+  f2ptr file_descriptor__set__symbol;
+  f2ptr file_descriptor__set__funk;
+  f2ptr string__symbol;
+  f2ptr string__funk;
+  f2ptr string__set__symbol;
+  f2ptr string__set__funk;
+  f2ptr index__symbol;
+  f2ptr index__funk;
+  f2ptr index__set__symbol;
+  f2ptr index__set__funk;
+};
+
 #endif // F2__PRIMOBJECT__STREAM__TYPES__H
 
 #ifndef F2__PRIMOBJECT__STREAM__H
@@ -95,36 +124,6 @@ f2ptr  f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character);
 void  raw__stream__ungetc(f2ptr cause, f2ptr this, char ch);
 f2ptr  f2__stream__try_read_character(f2ptr cause, f2ptr this);
 f2ptr  f2__stream__getc(f2ptr cause, f2ptr stream);
-
-
-// funk
-
-struct funk2_object_type__stream__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr type__set__symbol;
-  f2ptr type__set__funk;
-  f2ptr ungetc_stack__symbol;
-  f2ptr ungetc_stack__funk;
-  f2ptr ungetc_stack__set__symbol;
-  f2ptr ungetc_stack__set__funk;
-  f2ptr file_descriptor__symbol;
-  f2ptr file_descriptor__funk;
-  f2ptr file_descriptor__set__symbol;
-  f2ptr file_descriptor__set__funk;
-  f2ptr string__symbol;
-  f2ptr string__funk;
-  f2ptr string__set__symbol;
-  f2ptr string__set__funk;
-  f2ptr index__symbol;
-  f2ptr index__funk;
-  f2ptr index__set__symbol;
-  f2ptr index__set__funk;
-};
 
 
 // **

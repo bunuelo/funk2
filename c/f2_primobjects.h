@@ -1937,7 +1937,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__metro__slot_t            primobject_type_metro;
   funk2_object_type__exception__slot_t        primobject_type_exception;
   funk2_object_type__bytecode__slot_t         primobject_type_bytecode;
-  funk2_object_type__fiber__slot_t           primobject_type_fiber;
+  funk2_object_type__fiber__slot_t            primobject_type_fiber;
   funk2_object_type__processor__slot_t        primobject_type_processor;
   funk2_object_type__scheduler__slot_t        primobject_type_scheduler;
   funk2_object_type__event_subscriber__slot_t primobject_type_event_subscriber;

@@ -21,14 +21,14 @@
 
 [globalize char:enter #cA]
 
-[defunk stream-read_character [stream]
+[deftypefunk stream read_character []
   [let [[ch nil]]
     [while [not ch]
-      [= ch [stream-try_read_character stream]]]
+      [= ch [have this try_read_character]]]
     ch]]
 
 [defunk read_character []
-  [stream-read_character [stream 0]]]
+  [have stdin read_character]]
 
 [defunk read-test [stream]
   [let [[done nil]

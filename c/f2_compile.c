@@ -662,15 +662,13 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
 f2ptr __f2__compile__return__symbol = -1;
 f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs) {
   release__assert(__f2__compile__return__symbol != -1, nil, "__f2__compile__return__symbol not yet defined.");
-  f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__return__symbol, f2list2__new(simple_cause, cond_bcs, loop_bcs));
+  f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__return__symbol, f2list1__new(simple_cause, value_bcs));
   
-  release__assert(cond_bcs, nil, "cond_bcs is nil");
+  release__assert(value_bcs, nil, "value_bcs is nil");
   if (! value_bcs) {value_bcs = f2__compile__nop(cause);}
-  f2ptr full_bcs = cond_bcs;
-  f2ptr iter     = cond_bcs;
+  f2ptr full_bcs = value_bcs;
+  f2ptr iter     = value_bcs;
   iter = f2__list_cdr__set(cause, iter, value_bcs);
-  iter = f2__list_cdr__set(cause, iter, loop_done_jump_cond_bcs);
-  iter = f2__list_cdr__set(cause, iter, end_nop_bcs);
   
   //if (!popped_env_and_return) {
   iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));

@@ -117,7 +117,7 @@ typedef struct funk2_object_type__stream__slot_s {
   f2ptr index__funk;
   f2ptr index__set__symbol;
   f2ptr index__set__funk;
-} funk2_object_type__funk__slot_t;
+} funk2_object_type__stream__slot_t;
 
 
 // **

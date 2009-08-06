@@ -694,14 +694,16 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
     if (exps) {return __compile__exception;}
   }
   
-  boolean_t popped_env_and_return = boolean__false;
-  f2ptr value_bcs = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, &popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
+  boolean_t value_popped_env_and_return = boolean__false;
+  f2ptr value_bcs = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, &value_popped_env_and_return, is_funktional, local_variables, is_locally_funktional);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
-  
-  return bcs_valid(f2__compile__return(cause, value_bcs, popped_env_and_return));
+  if (popped_env_and_return) {
+    *popped_env_and_return = boolean__true;
+  }
+  return bcs_valid(f2__compile__return(cause, value_bcs, value_popped_env_and_return));
 }
 
 f2ptr __f2__compile__lookup_funkvar_exp__symbol = -1;

@@ -669,10 +669,10 @@ f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs) {
   f2ptr iter     = value_bcs;
   
   //if (!popped_env_and_return) {
-  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
-  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
-  //iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
-  //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
+  //  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
+  //  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
+  //  iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
+  //  //printf("\nnot popped_env_and_return!!!!"); fflush(stdout);
   //}
   
   iter = f2__list_cdr__set(cause, iter, f2__compile__copy_return_to_pc(cause));
@@ -690,8 +690,8 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
   exps = f2cons__cdr(exps, cause); // skip |return|
   f2ptr value_exp = nil;
   if (exps) {
-    value_exp = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __compile__exception;}
-    if (f2cons__cdr(exps, cause)) {return __compile__exception;}
+    value_exp = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause);
+    if (exps) {return __compile__exception;}
   }
   
   f2ptr value_bcs = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);

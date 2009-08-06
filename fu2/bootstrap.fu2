@@ -20,6 +20,7 @@
 '
 
 [load 'fu2/bootstrap-primobject.fu2']
+[load 'fu2/bootstrap-reader.fu2']
 [load 'fu2/bootstrap-cons.fu2']
 [load 'fu2/bootstrap-array.fu2']
 [load 'fu2/bootstrap-type_conversions.fu2']

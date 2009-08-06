@@ -647,7 +647,6 @@
     [get result_place thing]]]
 
 
-[primfunk:load 'fu2/bootstrap-reader.fu2']
 [primfunk:load 'fu2/repl.fu2']
 
 [format stdout '\n'

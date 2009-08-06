@@ -696,7 +696,7 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
-  if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return cond_bcs;}
+  if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
   
   return bcs_valid(f2__compile__return(cause, value_bcs));
 }

@@ -46,13 +46,6 @@ typedef struct funk2_object_type__bytecode_event__slot_s   funk2_object_type__by
 
 typedef struct funk2_primobject_object_types_s funk2_primobject_object_types_t;
 
-#endif // F2__PRIMOBJECTS__TYPE__H
-
-#ifndef F2__PRIMOBJECTS__H
-#define F2__PRIMOBJECTS__H
-
-#include "f2_primobject__stream.h"
-
 #define defarray_slot__index_var(name)        array_slot__##name##__index
 #define defarray_slot(           name, index)        int defarray_slot__index_var(name) = index
 #define defarray_slot__prototype(name)        extern int defarray_slot__index_var(name)
@@ -105,6 +98,13 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #define primobject__static_slot__imagination_frame(             this, name, cause)                     array_slot__imagination_frame(             this, name, cause)
 
 #define raw__primobject__is_type(cause, exp) (raw__array__is_type(cause, exp) && (raw__array__length(cause, exp) > defarray_slot__index_var(primobject__primobject_label)) && (raw__eq(cause, f2primobject__primobject_label(exp, cause), __primobject__symbol)))
+
+#endif // F2__PRIMOBJECTS__TYPE__H
+
+#ifndef F2__PRIMOBJECTS__H
+#define F2__PRIMOBJECTS__H
+
+#include "f2_primobject__stream.h"
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"

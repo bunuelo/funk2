@@ -1151,6 +1151,7 @@ f2ptr f2__is_compile_special_symbol(f2ptr cause, f2ptr exp) {
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol)) ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                     ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                  ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.return__symbol))                 ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                  ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))            ||
@@ -1175,6 +1176,7 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp
   if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__backquote_append_exp(cause, fiber, exp));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                                                                                                                               {return bcs_valid(f2__compile__if_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                                                                                                                            {return bcs_valid(f2__compile__while_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                                                                                                                           {return bcs_valid(f2__compile__return_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__apply_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, exp));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_funk_exp(cause, fiber, exp));}
@@ -1203,7 +1205,7 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   f2ptr demetro_exp  = f2cons__new(cause, f2cons__car(exp, cause), nil);
   f2ptr iter         = args;
   f2ptr demetro_iter = demetro_exp;
-  while(iter) {
+  while (iter) {
     f2ptr arg                 = f2cons__car(iter, cause);
     
     f2ptr demetro_arg__values = f2__demetropolize_once(cause, fiber, env, arg);
@@ -1411,6 +1413,7 @@ f2ptr   f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                     {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                 {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {return f2cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {return f2cons__new(cause, nil, exp);}

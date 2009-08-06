@@ -668,7 +668,7 @@ f2ptr f2__compile__return(f2ptr simple_cause, f2ptr value_bcs, boolean_t popped_
   f2ptr full_bcs = value_bcs;
   f2ptr iter     = value_bcs;
   
-  if (!popped_env_and_return) {
+  if (! popped_env_and_return) {
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_env(cause));
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_return(cause));
@@ -700,9 +700,9 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
-  if (popped_env_and_return) {
-    *popped_env_and_return = boolean__true;
-  }
+  //if (popped_env_and_return) {
+  //  *popped_env_and_return = boolean__true;
+  //}
   return bcs_valid(f2__compile__return(cause, value_bcs, value_popped_env_and_return));
 }
 

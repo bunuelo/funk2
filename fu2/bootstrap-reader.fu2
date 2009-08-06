@@ -32,7 +32,7 @@
 [defunk read_character []
   [have stdin read_character]]
 
-[deftypefunk read-test []
+[deftypefunk stream read-test []
   [let [[done nil]
 	[seq  nil]]
     [while [not done]

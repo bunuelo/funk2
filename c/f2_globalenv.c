@@ -77,6 +77,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->bytecode__symbol               = f2symbol__new(cause, strlen("bytecode"),              (u8*)"bytecode");
   this->rawcode__symbol                = f2symbol__new(cause, strlen("rawcode"),               (u8*)"rawcode");
   this->while__symbol                  = f2symbol__new(cause, strlen("while"),                 (u8*)"while");
+  this->return__symbol                 = f2symbol__new(cause, strlen("return"),                (u8*)"return");
   
   this->stdin_stream__symbol  = f2symbol__new(cause, strlen("stdin"), (u8*)"stdin");
   this->stdin_stream = f2__file_stream__new(cause, f2integer__new(cause, STDIN_FILENO));

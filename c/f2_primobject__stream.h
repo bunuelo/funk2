@@ -19,6 +19,13 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PRIMOBJECT__STREAM__TYPES__H
+#define F2__PRIMOBJECT__STREAM__TYPES__H
+
+typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
+
+#endif // F2__PRIMOBJECT__STREAM__TYPES__H
+
 #ifndef F2__PRIMOBJECT__STREAM__H
 #define F2__PRIMOBJECT__STREAM__H
 
@@ -92,7 +99,7 @@ f2ptr  f2__stream__getc(f2ptr cause, f2ptr stream);
 
 // funk
 
-typedef struct funk2_object_type__stream__slot_s {
+struct funk2_object_type__stream__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
   f2ptr new__symbol;
@@ -117,7 +124,7 @@ typedef struct funk2_object_type__stream__slot_s {
   f2ptr index__funk;
   f2ptr index__set__symbol;
   f2ptr index__set__funk;
-} funk2_object_type__stream__slot_t;
+};
 
 
 // **

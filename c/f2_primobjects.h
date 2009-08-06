@@ -22,6 +22,8 @@
 #ifndef F2__PRIMOBJECTS__H
 #define F2__PRIMOBJECTS__H
 
+#include "f2_primobject__stream.h"
+
 #define defarray_slot__index_var(name)        array_slot__##name##__index
 #define defarray_slot(           name, index)        int defarray_slot__index_var(name) = index
 #define defarray_slot__prototype(name)        extern int defarray_slot__index_var(name)

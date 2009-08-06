@@ -51,6 +51,8 @@ struct funk2_object_type__stream__slot_s {
   f2ptr index__funk;
   f2ptr index__set__symbol;
   f2ptr index__set__funk;
+  f2ptr try_read_character__symbol;
+  f2ptr try_read_character__funk;
 };
 
 #endif // F2__PRIMOBJECT__STREAM__TYPES__H

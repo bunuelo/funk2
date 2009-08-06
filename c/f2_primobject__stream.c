@@ -304,18 +304,19 @@ def_pcfunk1(stream__getc, stream, return f2__stream__getc(this_cause, stream));
 
 f2ptr f2stream__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "is_type";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk);}
-  {char* slot_name = "new";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.new__funk);}
-  {char* slot_name = "type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								      __funk2.globalenv.object_type.primobject.primobject_type_stream.type__funk,            __funk2.globalenv.object_type.primobject.primobject_type_stream.type__set__funk, nil);}
-  {char* slot_name = "ungetc_stack";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								      __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__funk,    __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__set__funk, nil);}
-  {char* slot_name = "file_descriptor"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								      __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__funk, __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__set__funk, nil);}
-  {char* slot_name = "string";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								      __funk2.globalenv.object_type.primobject.primobject_type_stream.string__funk,          __funk2.globalenv.object_type.primobject.primobject_type_stream.string__set__funk, nil);}
-  {char* slot_name = "index";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								      __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk,           __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk, nil);}
+  {char* slot_name = "is_type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk);}
+  {char* slot_name = "new";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.new__funk);}
+  {char* slot_name = "type";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_stream.type__funk,            __funk2.globalenv.object_type.primobject.primobject_type_stream.type__set__funk, nil);}
+  {char* slot_name = "ungetc_stack";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__funk,    __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__set__funk, nil);}
+  {char* slot_name = "file_descriptor";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__funk, __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__set__funk, nil);}
+  {char* slot_name = "string";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_stream.string__funk,          __funk2.globalenv.object_type.primobject.primobject_type_stream.string__set__funk, nil);}
+  {char* slot_name = "index";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									 __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk,           __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk, nil);}
+  {char* slot_name = "try_read_character"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk);}
   return this;
 }
 
@@ -381,6 +382,8 @@ void f2__primobject__stream__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__index, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk = never_gc(cfunk);}
   {char* symbol_str = "index-set"; __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__index__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}
   
   f2__primcfunk__init(file_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");

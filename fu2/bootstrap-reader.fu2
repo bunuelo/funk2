@@ -36,7 +36,7 @@
   [let [[done nil]
 	[seq  nil]]
     [while [not done]
-      [let [[read_ch [have this read_character]]]
+      [let [[read_ch [have stdin read_character]]]
 	[if [eq read_ch char:enter]
 	    [= done t]
 	  [= seq [cons read_ch seq]]]]]

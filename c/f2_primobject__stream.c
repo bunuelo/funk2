@@ -45,8 +45,50 @@ f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_desc
   return this;
 }
 
-boolean_t raw__stream__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && raw__array__length(cause, this) >= 2 && f2primobject__is__stream(this, cause));}
-f2ptr f2__stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__stream__is_type(cause, this));}
+boolean_t raw__stream__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PRIMOBJECT__TYPE_CHECK
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+#endif // F2__PRIMOBJECT__TYPE_CHECK
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__stream(x, cause));
+}
+f2ptr f2__stream__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__stream__is_type(cause, x));}
+def_pcfunk1(stream__is_type, x, return f2__stream__is_type(this_cause, x));
+
+f2ptr f2__stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_descriptor, f2ptr string, f2ptr index) {return f2stream__new(cause, type, ungetc_stack, file_descriptor, string, index);}
+def_pcfunk5(stream__new, type, ungetc_stack, file_descriptor, string, index, return f2__stream__new(this_cause, type, ungetc_stack, file_descriptor, string, index));
+
+f2ptr f2__stream__type(f2ptr cause, f2ptr this) {return f2stream__type(this, cause);}
+def_pcfunk1(stream__type, x, return f2__stream__type(this_cause, x));
+
+f2ptr f2__stream__type__set(f2ptr cause, f2ptr this, f2ptr value) {return f2stream__type__set(this, cause, value);}
+def_pcfunk2(stream__type__set, x, y, return f2__stream__type__set(this_cause, x, y));
+
+f2ptr f2__stream__ungetc_stack(f2ptr cause, f2ptr this) {return f2stream__ungetc_stack(this, cause);}
+def_pcfunk1(stream__ungetc_stack, x, return f2__stream__ungetc_stack(this_cause, x));
+
+f2ptr f2__stream__ungetc_stack__set(f2ptr cause, f2ptr this, f2ptr value) {return f2stream__ungetc_stack__set(this, cause, value);}
+def_pcfunk2(stream__ungetc_stack__set, x, y, return f2__stream__ungetc_stack__set(this_cause, x, y));
+
+f2ptr f2__stream__file_descriptor(f2ptr cause, f2ptr this) {return f2stream__file_descriptor(this, cause);}
+def_pcfunk1(stream__file_descriptor, x, return f2__stream__file_descriptor(this_cause, x));
+
+f2ptr f2__stream__file_descriptor__set(f2ptr cause, f2ptr this, f2ptr value) {return f2stream__file_descriptor__set(this, cause, value);}
+def_pcfunk2(stream__file_descriptor__set, x, y, return f2__stream__file_descriptor__set(this_cause, x, y));
+
+f2ptr f2__stream__string(f2ptr cause, f2ptr this) {return f2stream__string(this, cause);}
+def_pcfunk1(stream__string, x, return f2__stream__string(this_cause, x));
+
+f2ptr f2__stream__string__set(f2ptr cause, f2ptr this, f2ptr value) {return f2stream__string__set(this, cause, value);}
+def_pcfunk2(stream__string__set, x, y, return f2__stream__string__set(this_cause, x, y));
+
+f2ptr f2__stream__index(f2ptr cause, f2ptr this) {return f2stream__index(this, cause);}
+def_pcfunk1(stream__index, x, return f2__stream__index(this_cause, x));
+
+f2ptr f2__stream__index__set(f2ptr cause, f2ptr this, f2ptr value) {return f2stream__index__set(this, cause, value);}
+def_pcfunk2(stream__index__set, x, y, return f2__stream__index__set(this_cause, x, y));
+
+
+
 
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}

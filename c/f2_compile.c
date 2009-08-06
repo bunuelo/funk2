@@ -692,7 +692,7 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
   exps = f2cons__cdr(exps, cause); // skip |return|
   f2ptr value_exp = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __compile__exception;}
   
-  f2ptr value_bcs   = raw__compile(cause, fiber, cond_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+  f2ptr value_bcs   = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
   if (raw__larva__is_type(cause, value_bcs)) {
     return cond_bcs;
   }

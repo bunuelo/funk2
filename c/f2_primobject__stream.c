@@ -260,6 +260,24 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
 }
 def_pcfunk1(stream__getc, stream, return f2__stream__getc(this_cause, stream));
 
+f2ptr f2stream__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type";         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk);}
+  {char* slot_name = "new";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.new__funk);}
+  {char* slot_name = "type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								      __funk2.globalenv.object_type.primobject.primobject_type_stream.type__funk,            __funk2.globalenv.object_type.primobject.primobject_type_stream.type__set__funk, nil);}
+  {char* slot_name = "ungetc_stack";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								      __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__funk,    __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__set__funk, nil);}
+  {char* slot_name = "file_descriptor"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								      __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__funk, __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__set__funk, nil);}
+  {char* slot_name = "string";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								      __funk2.globalenv.object_type.primobject.primobject_type_stream.string__funk,          __funk2.globalenv.object_type.primobject.primobject_type_stream.string__set__funk, nil);}
+  {char* slot_name = "index";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								      __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk,           __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk, nil);}
+  return this;
+}
+
+
 f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
   if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
   return f2stream__new(cause, __text_window_stream__symbol, nil, nil, text_window, nil);
@@ -292,6 +310,33 @@ void f2__primobject__stream__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__stream", "", &f2__primobject__stream__reinitialize_globalvars);
   
   f2__primobject__stream__reinitialize_globalvars();
+  
+  // stream
+  
+  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_stream.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var(stream__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_stream.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type-set"; __funk2.globalenv.object_type.primobject.primobject_type_stream.type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__type__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.type__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "ungetc_stack"; __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__ungetc_stack, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__funk = never_gc(cfunk);}
+  {char* symbol_str = "ungetc_stack-set"; __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__ungetc_stack__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.ungetc_stack__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "file_descriptor"; __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__file_descriptor, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__funk = never_gc(cfunk);}
+  {char* symbol_str = "file_descriptor-set"; __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__file_descriptor__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.file_descriptor__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "string"; __funk2.globalenv.object_type.primobject.primobject_type_stream.string__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__string, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.string__funk = never_gc(cfunk);}
+  {char* symbol_str = "string-set"; __funk2.globalenv.object_type.primobject.primobject_type_stream.string__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__string__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.string__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "index"; __funk2.globalenv.object_type.primobject.primobject_type_stream.index__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__index, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk = never_gc(cfunk);}
+  {char* symbol_str = "index-set"; __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__index__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk = never_gc(cfunk);}
   
   f2__primcfunk__init(file_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");

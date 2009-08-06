@@ -1917,6 +1917,7 @@ typedef struct funk2_primobject_object_types_s {
   funk2_object_type__size_2d__slot_t          primobject_type_size_2d;
   funk2_object_type__event__slot_t            primobject_type_event;
   funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
+  funk2_object_type__funk__slot_t             primobject_type_stream;
 } funk2_primobject_object_types_t;
 
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS

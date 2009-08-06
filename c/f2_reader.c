@@ -154,13 +154,13 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, first_char, __funk2.reader.char__backquote)) {
     f2ptr exp = raw__read(cause, stream);
     if (raw__exception__is_type(cause, exp)) {return exp;}
-    if (raw__cons__is_type(cause, exp) && (contains_comma(cause, exp) || contains_cdr_comma(cause, exp))) {
-      if (contains_cdr_comma_at_this_level(cause, exp)) {
-	exp = comma_filter_backquoted_exp(cause, exp);
+    if (raw__cons__is_type(cause, exp) && (raw__exp__contains_comma(cause, exp) || raw__exp__contains_cdr_comma(cause, exp))) {
+      if (raw__exp__contains_cdr_comma_at_this_level(cause, exp)) {
+	exp = f2__exp__comma_filter_backquoted(cause, exp);
 	if (raw__exception__is_type(cause, exp)) {return exp;}
 	return f2cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, exp);
       } else {
-	exp = comma_filter_backquoted_exp(cause, exp);
+	exp = f2__exp__comma_filter_backquoted(cause, exp);
 	if (raw__exception__is_type(cause, exp)) {return exp;}
 	return f2cons__new(cause, __funk2.globalenv.backquote__list__symbol, exp);
       }

@@ -694,7 +694,7 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
     if (f2cons__cdr(exps, cause)) {return __compile__exception;}
   }
   
-  f2ptr value_bcs   = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
+  f2ptr value_bcs = raw__compile(cause, fiber, value_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
   if (raw__larva__is_type(cause, value_bcs)) {
     return value_bcs;
   }
@@ -1172,7 +1172,7 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp
   if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__backquote_append_exp(cause, fiber, exp));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                                                                                                                               {return bcs_valid(f2__compile__if_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                                                                                                                            {return bcs_valid(f2__compile__while_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                                                                                                                           {return bcs_valid(f2__compile__return_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__return_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__apply_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, exp));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_funk_exp(cause, fiber, exp));}

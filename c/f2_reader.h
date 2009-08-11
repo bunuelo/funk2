@@ -32,6 +32,7 @@ struct funk2_reader_s {
   f2ptr end_parens_exception__symbol;
   f2ptr unmatched_begin_paren_exception;
   f2ptr array_end_parens_exception;
+  f2ptr array_end_parens_exception__symbol;
   f2ptr doublelink_end_parens_exception;
   f2ptr doublelink_end_parens_exception__symbol;
   f2ptr end_of_file_exception;

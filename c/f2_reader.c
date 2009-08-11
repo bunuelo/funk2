@@ -119,7 +119,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     while (1) {
       exp = raw__read(cause, stream);
       if (exp == __funk2.reader.end_parens_exception) {return seq;} // successfully read end of list
-      if (exp == __funk2.reader.end_of_file_exception) {return __funk2.reader.unmatched_begin_paren_exception;}
+      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {return __funk2.reader.unmatched_begin_paren_exception;}
       if (raw__exception__is_type(cause, exp)) {return exp;} // other exceptions should be propagated
       new_cons = f2cons__new(cause, exp, nil);
       if (seq) {
@@ -196,7 +196,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   }
   if (raw__eq(cause, first_char, __funk2.reader.char__escape)) {
     f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-    if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+    if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
     // read hex pointer
     if (raw__eq(cause, read_ch, __funk2.reader.char__escape_hex)) {
       int buf_size = 10; // not bigint, so no more buffer really needed
@@ -205,7 +205,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -246,7 +246,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -287,7 +287,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -370,7 +370,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
@@ -378,7 +378,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {break;}
       if (ch == f2char__ch(__funk2.reader.char__escape_char, cause)) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -409,7 +409,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
@@ -418,7 +418,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       if (ch == f2char__ch(__funk2.reader.char__symbol_escape, cause)) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -445,7 +445,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
@@ -460,7 +460,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       if (ch == '\\') {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}

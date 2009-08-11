@@ -319,19 +319,19 @@ f2ptr f2__char__decimal_digit_value(f2ptr cause, f2ptr this) {
 }
 
 s64 raw__char__hex_digit_value(f2ptr cause, f2ptr this) {
-  if (raw__char__is_decimal_digit(cause, this))                {return raw__char__decimal_digit_value(cause, this);}
-  if (raw__eq(cause, this, __funk2.reader.char__lowercase__a)) {return 10;}
-  if (raw__eq(cause, this, __funk2.reader.char__uppercase__a)) {return 10;}
-  if (raw__eq(cause, this, __funk2.reader.char__lowercase__b)) {return 11;}
-  if (raw__eq(cause, this, __funk2.reader.char__uppercase__b)) {return 11;}
-  if (raw__eq(cause, this, __funk2.reader.char__lowercase__c)) {return 12;}
-  if (raw__eq(cause, this, __funk2.reader.char__uppercase__c)) {return 12;}
-  if (raw__eq(cause, this, __funk2.reader.char__lowercase__d)) {return 13;}
-  if (raw__eq(cause, this, __funk2.reader.char__uppercase__d)) {return 13;}
-  if (raw__eq(cause, this, __funk2.reader.char__lowercase__e)) {return 14;}
-  if (raw__eq(cause, this, __funk2.reader.char__uppercase__e)) {return 14;}
-  if (raw__eq(cause, this, __funk2.reader.char__lowercase__f)) {return 15;}
-  if (raw__eq(cause, this, __funk2.reader.char__uppercase__f)) {return 15;}
+  if (raw__char__is_decimal_digit(cause, this))               {return raw__char__decimal_digit_value(cause, this);}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase_a)) {return 10;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase_a)) {return 10;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase_b)) {return 11;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase_b)) {return 11;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase_c)) {return 12;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase_c)) {return 12;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase_d)) {return 13;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase_d)) {return 13;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase_e)) {return 14;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase_e)) {return 14;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase_f)) {return 15;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase_f)) {return 15;}
   error(nil, "raw__char__hex_digit_value error: tried to convert non-hexadecimal digit to value.");
 }
 

@@ -700,9 +700,6 @@ f2ptr f2__compile__return_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boole
     return value_bcs;
   }
   if (value_bcs && (! raw__cons__is_type(cause, value_bcs))) {return value_bcs;}
-  //if (popped_env_and_return) {
-  //  *popped_env_and_return = boolean__true;
-  //}
   return bcs_valid(f2__compile__return(cause, value_bcs, value_popped_env_and_return));
 }
 

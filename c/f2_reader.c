@@ -86,17 +86,26 @@ f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(exp__comma_filter_backquoted, this, return f2__exp__comma_filter_backquoted(this_cause, this));
 
-f2ptr raw__read(f2ptr cause, f2ptr stream) {
-  // basic type checking for stream argument
-  if (!stream) {printf("\nraw__read: stream is nil."); return __funk2.reader.invalid_argument_type_exception;}
-  if (! raw__stream__is_type(cause, stream)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); return __funk2.reader.invalid_argument_type_exception;}
+f2ptr f2__stream__first_non_whitespace_character(f2ptr cause, f2ptr stream) {
   f2ptr first_char;
-  
   do {first_char = f2__stream__getc(cause, stream);} while (raw__eq(cause, first_char, __funk2.reader.char__space)   ||
 							    raw__eq(cause, first_char, __funk2.reader.char__tab)     ||
 							    raw__eq(cause, first_char, __funk2.reader.char__newline) ||
 							    raw__eq(cause, first_char, __funk2.reader.char__return));
-  if (f2__eq(cause, first_char, __funk2.reader.eof__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  return first_char;
+}
+
+f2ptr f2__stream__skip_whitespace(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__first_non_whitespace_character(cause, stream);
+  f2__stream__ungetc(cause, stream, first_char);
+  return nil;
+}
+
+f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
+  f2__stream__skip_whitespace(cause, stream);
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  
+  if (raw__eq(cause, first_char, __funk2.reader.eof__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   // check all posibilities for first_char
   if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}
   if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren))      {return __funk2.reader.array_end_parens_exception;}
@@ -187,7 +196,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   }
   if (raw__eq(cause, first_char, __funk2.reader.char__escape)) {
     f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-    if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+    if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
     // read hex pointer
     if (raw__eq(cause, read_ch, __funk2.reader.char__escape_hex)) {
       int buf_size = 10; // not bigint, so no more buffer really needed
@@ -196,7 +205,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -237,7 +246,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -278,7 +287,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       f2ptr read_ch;
       do {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -361,7 +370,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
@@ -369,7 +378,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {break;}
       if (ch == f2char__ch(__funk2.reader.char__escape_char, cause)) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -400,7 +409,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
@@ -409,7 +418,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == f2char__ch(__funk2.reader.char__symbol_escape, cause)) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -436,7 +445,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
@@ -451,7 +460,7 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
       if (ch == '\\') {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (f2__eq(cause, read_ch, __funk2.reader.eof__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (f2__eq(cause, read_ch, __funk2.reader.end_of_file_exception)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
@@ -491,6 +500,13 @@ f2ptr raw__read(f2ptr cause, f2ptr stream) {
   f2ptr exp = f2symbol__new(cause, i, (u8*)str);
   f2__free(to_ptr(str));
   return exp;
+  }
+
+f2ptr raw__read(f2ptr cause, f2ptr stream) {
+  // basic type checking for stream argument
+  if (!stream) {printf("\nraw__read: stream is nil."); return __funk2.reader.invalid_argument_type_exception;}
+  if (! raw__stream__is_type(cause, stream)) {printf("\nraw__read: stream is not stream."); f2__print(nil, stream); return __funk2.reader.invalid_argument_type_exception;}
+  return f2__stream__read(cause, stream);
 }
 def_pcfunk1(read, stream, return raw__read(this_cause, stream));
 
@@ -501,12 +517,16 @@ void funk2_reader__init(funk2_reader_t* this) {
   {char* str = "reader:unmatched_begin_paren-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
   {char* str = "reader:array_end_parens-exception";            f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->array_end_parens_exception            = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->array_end_parens_exception);}
   {char* str = "reader:doublelink_end_parens-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->doublelink_end_parens_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->doublelink_end_parens_exception);}
-  {char* str = "reader:end_of_file-exception";                 f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->end_of_file_exception                 = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->end_of_file_exception);}
+  {
+    char* str = "reader:end_of_file-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->end_of_file_exception__symbol = symbol;
+    this->end_of_file_exception = f2exception__new(cause, symbol, nil);
+    environment__add_var_value(cause, global_environment(), symbol, this->end_of_file_exception);
+  }
   {char* str = "reader:invalid_argument_type-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->invalid_argument_type_exception);}
   {char* str = "reader:illegal_escape_reader_metro-exception"; f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->illegal_escape_reader_metro_exception);}
   {char* str = "reader:gfunkptr_read-exception";               f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->gfunkptr_read__exception              = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->gfunkptr_read__exception);}
-  
-  {char* str = "eof"; this->eof__symbol = f2symbol__new(cause, strlen(str), (u8*)str); environment__add_var_value(cause, global_environment(), this->eof__symbol, this->eof__symbol);}
   
   {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
   {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
@@ -547,7 +567,12 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:doublelink_end_parens-exception";       this->doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "reader:end_of_file-exception";                 this->end_of_file_exception                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {
+    char* str = "reader:end_of_file-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->end_of_file_exception__symbol = symbol;
+    this->end_of_file_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
+  }
   {char* str = "reader:invalid_argument_type-exception";       this->invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:illegal_escape_reader_metro-exception"; this->illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:gfunkptr_read-exception";               this->gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
@@ -581,8 +606,6 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:symbol_quote";            this->char__symbol_quote            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:symbol_escape";           this->char__symbol_escape           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:symbol_key";              this->char__symbol_key              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  
-  {char* str = "eof"; this->eof__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
 }
 
 void funk2_reader__destroy(funk2_reader_t* this) {
@@ -601,10 +624,10 @@ void f2__reader__initialize() {
   
   f2__reader__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(exp__contains_comma,                   this, "");
-  f2__primcfunk__init__1(exp__contains_cdr_comma,               this, "");
-  f2__primcfunk__init__1(exp__contains_cdr_comma_at_this_level, this, "");
-  f2__primcfunk__init__1(exp__comma_filter_backquoted,          this, "");
-  f2__primcfunk__init__1(read, stream, "main funk2 reader funktion for reading from a stream (such as stdin).");
+  f2__primcfunk__init__1(exp__contains_comma,                   this,   "");
+  f2__primcfunk__init__1(exp__contains_cdr_comma,               this,   "");
+  f2__primcfunk__init__1(exp__contains_cdr_comma_at_this_level, this,   "");
+  f2__primcfunk__init__1(exp__comma_filter_backquoted,          this,   "");
+  f2__primcfunk__init__1(read,                                  stream, "simple hardcoded reader funktion for reading from a stream (such as stdin).");
 }
 

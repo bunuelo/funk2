@@ -239,7 +239,7 @@ f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
     }
     break;
   case read_nonblocking_result__end_of_file:
-    return f2symbol__new(cause, strlen("eof"), (u8*)"eof");
+    return __funk2.reader.end_of_file_exception;
   case read_nonblocking_result__read_failure:
   case read_nonblocking_result__select_failure:
   case read_nonblocking_result__unknown_failure:
@@ -262,7 +262,7 @@ f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) 
     f2stream__index__set(this, cause, f2integer__new(cause, raw_index));
     return return_value;
   }
-  return f2symbol__new(cause, strlen("eof"), (u8*)"eof");
+  return __funk2.reader.end_of_file_exception;
 }
 
 f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
@@ -295,7 +295,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
       f2__sleep(10000);
     }
   }
-  if (raw__eq(cause, read_ch, __funk2.reader.eof__symbol)) {
+  if (raw__exception__is_type(cause, read_ch)) {
     status("f2__stream__getc() note: eof reached.");
   }
   return read_ch;

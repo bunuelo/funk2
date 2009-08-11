@@ -41,7 +41,7 @@ struct funk2_reader_s {
   f2ptr char__tab;
   f2ptr char__newline;
   f2ptr char__return;
-  f2ptr eof__symbol;
+  f2ptr end_of_file_exception__symbol;
   
   f2ptr char__left_paren;
   f2ptr char__right_paren;

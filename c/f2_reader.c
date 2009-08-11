@@ -335,6 +335,54 @@ f2ptr f2__stream__try_read_unescaped_hex_char(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
+f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  
+  // read larva
+  if (raw__eq(cause, read_ch, __funk2.reader.char__escape_larva)) {
+    int buf_size = 10; // not bigint, so no more buffer really needed
+    char* str = (char*)from_ptr(f2__malloc(buf_size));
+    int i = 0;
+    f2ptr read_ch;
+    do {
+      read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (! raw__char__is_type(cause, read_ch)) {
+	return f2larva__new(cause, 19);
+      }
+      char ch = f2char__ch(stream, cause);
+      if (ch < '0' || ch > '9') {
+	f2__stream__ungetc(cause, stream, read_ch);
+	break;
+      }
+      if (ch >= '0' && ch <= '9') {str[i] = ch - '0';}
+      i ++;
+      if (i >= buf_size) {
+	int old_buf_size = buf_size;
+	buf_size <<= 1;
+	str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
+      }
+    } while(1);
+    int j = 0;
+    u32 type = 0;
+    u32 t;
+    for (; i > 0; i --) {
+      t = (u64)(str[j]);
+      u32 i_power = 1;
+      int k; for (k = i - 1; k > 0; k --) {i_power *= 10;}
+      type += (t * i_power);
+      j ++;
+    }
+    f2__free(to_ptr(str));
+    f2ptr exp = f2larva__new(cause, type);
+    return exp;
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
 f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
   // read escaped expression
@@ -354,48 +402,17 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
       }
     }
     
+    {
+      f2ptr try_read_result = f2__stream__try_read_unescaped_larva(cause, stream);
+      if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+	return try_read_result;
+      }
+    }
+    
     f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
     if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
     
-    // read larva pointer
-    if (raw__eq(cause, read_ch, __funk2.reader.char__escape_larva)) {
-      int buf_size = 10; // not bigint, so no more buffer really needed
-      char* str = (char*)from_ptr(f2__malloc(buf_size));
-      int i = 0;
-      f2ptr read_ch;
-      do {
-	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
-	if (! raw__char__is_type(cause, read_ch)) {
-	  return f2larva__new(cause, 19);
-	}
-	char ch = f2char__ch(stream, cause);
-	if (ch < '0' || ch > '9') {
-	  f2__stream__ungetc(cause, stream, read_ch);
-	  break;
-	}
-	if (ch >= '0' && ch <= '9') {str[i] = ch - '0';}
-	i ++;
-	if (i >= buf_size) {
-	  int old_buf_size = buf_size;
-	  buf_size <<= 1;
-	  str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
-	}
-      } while(1);
-      int j = 0;
-      u32 type = 0;
-      u32 t;
-      for (; i > 0; i --) {
-	t = (u64)(str[j]);
-	u32 i_power = 1;
-	int k; for (k = i - 1; k > 0; k --) {i_power *= 10;}
-	type += (t * i_power);
-	j ++;
-      }
-      f2__free(to_ptr(str));
-      f2ptr exp = f2larva__new(cause, type);
-      return exp;
-    } else if (raw__eq(cause, read_ch, __funk2.reader.char__escape_gfunkptr)) {
+    if (raw__eq(cause, read_ch, __funk2.reader.char__escape_gfunkptr)) {
       // read gfunkptr of form #g(ip_addr pool_index pool_address)
       f2ptr gfunkptr_read_array = raw__read(cause, stream);
       if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {return __funk2.reader.gfunkptr_read__exception;}

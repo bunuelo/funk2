@@ -676,17 +676,20 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
 f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
   // otherwise read a token (might be a number or a caps-insensitive symbol)
   int buf_size = 64;
-  char* str = (char*)from_ptr(f2__malloc(buf_size));
+  f2ptr* str = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * buf_size));
   int i = 0;
   {
     f2ptr read_ch;
     do {
       read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
+	f2__free(to_ptr(str));
+	status("raw_read() note: eof_except.");
+	return __funk2.reader.end_of_file_exception;
+      }
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
-      char ch = f2char__ch(read_ch, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__space)                 ||
 	  raw__eq(cause, read_ch, __funk2.reader.char__tab)                   ||
 	  raw__eq(cause, read_ch, __funk2.reader.char__newline)               ||
@@ -700,21 +703,24 @@ f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
 	f2__stream__ungetc(cause, stream, read_ch);
 	break;
       }
-      if (ch == '\\') {
+      if (raw__eq(cause, read_ch, __funk2.reader.char__escape_char)) {
 	// ignore next character
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
+	  f2__free(to_ptr(str));
+	  status("raw_read() note: eof_except.");
+	  return __funk2.reader.end_of_file_exception;
+	}
 	if (! raw__char__is_type(cause, read_ch)) {
 	  return f2larva__new(cause, 19);
 	}
-	ch = f2char__ch(read_ch, cause);
       }
-      str[i] = ch;
+      str[i] = read_ch;
       i ++;
       if (i >= buf_size - 1) { // -1 because we need to add a null to end for number conversion
 	int old_buf_size = buf_size;
 	buf_size <<= 1;
-	str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
+	str = (f2ptr*)from_ptr(f2__new_alloc(to_ptr(str), sizeof(f2ptr) * old_buf_size, sizeof(f2ptr) * buf_size));
       }
     } while(1);
   }
@@ -725,15 +731,31 @@ f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
     int j;
     char ch;
     for (j = i - 1; j >= 0; j --) {
-      ch = str[j];
-      if (ch >= '0' && ch <= '9') {has_numeric = 1;}
-      else if (ch != '.' && ch != '-') {all_numeric = 0; break;}
+      f2ptr read_ch = str[j];
+      if (raw__char__is_decimal_digit(cause, read_ch)) {has_numeric = 1;}
+      else if ((! raw__eq(cause, read_ch, __funk2.reader.char__period)) && (! raw__eq(cause, read_ch, __funk2.reader.char__dash))) {all_numeric = 0; break;}
     }
   }
   // convert token to number
   if (has_numeric && all_numeric) {
-    str[i] = (char)0;
-    f2ptr exp = f2integer__new(cause, atoll(str));
+    str[i] = f2char__new(cause, (char)0);
+    
+    int j = 0;
+    u64 value = 0;
+    u64 t;
+    for (j = 0; j < i; j ++) {
+      f2ptr read_ch = str[j];
+      if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_decimal_digit(cause, read_ch))) {
+	return f2larva__new(cause, 19);
+      }
+      t = raw__char__decimal_digit_value(cause, read_ch);
+      i --;
+      u32 i_power = 1;
+      {int k; for (k = i; k > 0; k --) {i_power *= 10;}}
+      type += (t * i_power);
+    }
+    
+    f2ptr exp = f2integer__new(cause, value);
     f2__free(to_ptr(str));
     return exp;
   }

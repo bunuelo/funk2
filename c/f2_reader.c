@@ -470,40 +470,46 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
       }
     }
     
-    //return __funk2.reader.illegal_escape_reader_metro_exception;
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
   return __funk2.reader.could_not_read_type_exception;
 }
 
+f2ptr f2__stream__read_array_sequence_of_elements(f2ptr cause, f2ptr stream) {
+  f2ptr subexp = raw__read(cause, stream);
+  if (subexp == __funk2.reader.array_end_parens_exception) {
+    return nil;
+  }
+  if (raw__exception__is_type(cause, subexp)) {
+    return subexp;
+  }
+  f2ptr rest_sequence = f2__stream__read_array_sequence_of_elements(cause, stream);
+  if (raw__exception__is_type(cause, rest_sequence)) {
+    return rest_sequence;
+  }
+  return f2cons__new(cause, subexp, rest_sequence);
+}
+
 f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
   // read array
   if (raw__eq(cause, first_char, __funk2.reader.char__array_left_paren)) {
-    int buf_size = 16;
-    f2ptr* buf = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * buf_size));
-    int i = 0;
-    f2ptr subexp;
-    do {
-      subexp = raw__read(cause, stream);
-      if (subexp == __funk2.reader.array_end_parens_exception) {break;}
-      if (raw__exception__is_type(cause, subexp)) {return subexp;}
-      buf[i] = subexp;
-      i ++;
-      if (i >= buf_size) {
-	int old_buf_size = buf_size;
-	buf_size <<= 1;
-	buf = (f2ptr*)from_ptr(f2__new_alloc(to_ptr(buf), sizeof(f2ptr) * old_buf_size, sizeof(f2ptr) * buf_size));
-      }
-    } while(1);
-    f2ptr exp = raw__array__new(cause, i);
-    int j;
-    for (j = 0; j < i; j++) {
-      raw__array__elt__set(cause, exp, j, buf[j]);
+    f2ptr elements      = f2__stream__read_array_sequence_of_elements(cause, stream);
+    if (elements && (! raw__cons__is_type(cause, elements))) {
+      return elements;
     }
-    f2__free(to_ptr(buf));
-    return exp;
+    u64   array__length = raw__length(cause, elements);
+    f2ptr array         = raw__array__new(cause, array__length);
+    f2ptr iter          = elements;
+    u64   index         = array__length - 1;
+    while (iter) {
+      f2ptr element = f2cons__car(iter, cause);
+      raw__array__elt__set(cause, array, index, element);
+      index --;
+      iter = f2cons__cdr(iter, cause);
+    }
+    return array;
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }

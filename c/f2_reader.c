@@ -234,55 +234,73 @@ f2ptr f2__stream__try_read_funktion_name(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
+f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  // read hex pointer
+  if (raw__eq(cause, read_ch, __funk2.reader.char__escape_hex)) {
+    int buf_size = 10; // not bigint, so no more buffer really needed
+    char* str = (char*)from_ptr(f2__malloc(buf_size));
+    int i = 0;
+    f2ptr read_ch;
+    do {
+      read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+      if (! raw__char__is_type(cause, read_ch)) {
+	return f2larva__new(cause, 19);
+      }
+      char ch = f2char__ch(read_ch, cause);
+      if ((ch < '0' || ch > '9') &&
+	  (ch < 'a' || ch > 'f') &&
+	  (ch < 'A' || ch > 'F')) {
+	f2__stream__ungetc(cause, stream, read_ch);
+	break;
+      }
+      if (ch >= '0' && ch <= '9') {str[i] = ch - '0';}
+      if (ch >= 'a' && ch <= 'f') {str[i] = ch - 'a' + 10;}
+      if (ch >= 'A' && ch <= 'F') {str[i] = ch - 'A' + 10;}
+      i ++;
+      if (i >= buf_size) {
+	int old_buf_size = buf_size;
+	buf_size <<= 1;
+	str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
+      }
+    } while(1);
+    int j = 0;
+    ptr p = 0;
+    u64 t;
+    i --;
+    for (; i >= 0; i --) {
+      t = (unsigned long long)(str[j]);
+      p += (t << (i << 2));
+      j ++;
+    } 
+    f2__free(to_ptr(str));
+    f2ptr exp = f2pointer__new(cause, p);
+    return exp;
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
 f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
   // read escaped expression
   if (raw__eq(cause, first_char, __funk2.reader.char__escape)) {
+    
+    {
+      f2ptr try_read_result = f2__stream__try_read_unescaped_hex_pointer(cause, stream);
+      if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+	return try_read_result;
+      }
+    }
+    
     f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
     if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
-    // read hex pointer
-    if (raw__eq(cause, read_ch, __funk2.reader.char__escape_hex)) {
-      int buf_size = 10; // not bigint, so no more buffer really needed
-      char* str = (char*)from_ptr(f2__malloc(buf_size));
-      int i = 0;
-      f2ptr read_ch;
-      do {
-	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
-	if (! raw__char__is_type(cause, read_ch)) {
-	  return f2larva__new(cause, 19);
-	}
-	char ch = f2char__ch(read_ch, cause);
-	if ((ch < '0' || ch > '9') &&
-	    (ch < 'a' || ch > 'f') &&
-	    (ch < 'A' || ch > 'F')) {
-	  f2__stream__ungetc(cause, stream, read_ch);
-	  break;
-	}
-	if (ch >= '0' && ch <= '9') {str[i] = ch - '0';}
-	if (ch >= 'a' && ch <= 'f') {str[i] = ch - 'a' + 10;}
-	if (ch >= 'A' && ch <= 'F') {str[i] = ch - 'A' + 10;}
-	i ++;
-	if (i >= buf_size) {
-	  int old_buf_size = buf_size;
-	  buf_size <<= 1;
-	  str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
-	}
-      } while(1);
-      int j = 0;
-      ptr p = 0;
-      u64 t;
-      i --;
-      for (; i >= 0; i --) {
-	t = (unsigned long long)(str[j]);
-	p += (t << (i << 2));
-	j ++;
-      } 
-      f2__free(to_ptr(str));
-      f2ptr exp = f2pointer__new(cause, p);
-      return exp;
+    
     // read char hex
-    } else if (f2__eq(cause, read_ch, __funk2.reader.char__escape_hex_char)) {
+    if (f2__eq(cause, read_ch, __funk2.reader.char__escape_hex_char)) {
       int buf_size = 10; // not bigint, so no more buffer really needed
       char* str = (char*)from_ptr(f2__malloc(buf_size));
       int i = 0;

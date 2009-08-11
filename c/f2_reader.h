@@ -33,15 +33,17 @@ struct funk2_reader_s {
   f2ptr array_end_parens_exception;
   f2ptr doublelink_end_parens_exception;
   f2ptr end_of_file_exception;
+  f2ptr end_of_file_exception__symbol;
   f2ptr invalid_argument_type_exception;
   f2ptr illegal_escape_reader_metro_exception;
   f2ptr gfunkptr_read__exception;
+  f2ptr could_not_read_type_exception;
+  f2ptr could_not_read_type_exception__symbol;
   
   f2ptr char__space;
   f2ptr char__tab;
   f2ptr char__newline;
   f2ptr char__return;
-  f2ptr end_of_file_exception__symbol;
   
   f2ptr char__left_paren;
   f2ptr char__right_paren;

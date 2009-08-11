@@ -101,15 +101,8 @@ f2ptr f2__stream__skip_whitespace(f2ptr cause, f2ptr stream) {
   return nil;
 }
 
-f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
-  f2__stream__skip_whitespace(cause, stream);
+f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
-  
-  if (raw__exception__is_type(cause, first_char) && raw__eq(cause, f2exception__tag(first_char, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
-  // check all posibilities for first_char
-  if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}
-  if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren))      {return __funk2.reader.array_end_parens_exception;}
-  if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {return __funk2.reader.doublelink_end_parens_exception;}
   // read list
   if (raw__eq(cause, first_char, __funk2.reader.char__left_paren)) {
     f2ptr seq  = nil;
@@ -131,7 +124,33 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       }
     }
     return seq;
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
   }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
+  f2__stream__skip_whitespace(cause, stream);
+  
+  {
+    f2ptr first_char = f2__stream__getc(cause, stream);
+    if (raw__exception__is_type(cause, first_char) && raw__eq(cause, f2exception__tag(first_char, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+    // check all posibilities for first_char
+    if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}
+    if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren))      {return __funk2.reader.array_end_parens_exception;}
+    if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {return __funk2.reader.doublelink_end_parens_exception;}
+    f2__stream__ungetc(cause, stream, first_char);
+  }
+  
+  {
+    f2ptr try_read_result = f2__stream__try_read_list(cause, stream);
+    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+      return try_read_result;
+    }
+  }
+  
+  f2ptr first_char = f2__stream__getc(cause, stream);
   // read doublelink list
   if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_left_paren)) {
     f2ptr seq  = nil;
@@ -527,6 +546,13 @@ void funk2_reader__init(funk2_reader_t* this) {
   {char* str = "reader:invalid_argument_type-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->invalid_argument_type_exception);}
   {char* str = "reader:illegal_escape_reader_metro-exception"; f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->illegal_escape_reader_metro_exception);}
   {char* str = "reader:gfunkptr_read-exception";               f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->gfunkptr_read__exception              = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->gfunkptr_read__exception);}
+  {
+    char* str = "reader:could_not_read_type-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->could_not_read_type_exception__symbol = symbol;
+    this->could_not_read_type_exception = f2exception__new(cause, symbol, nil);
+    environment__add_var_value(cause, global_environment(), symbol, this->could_not_read_type_exception);
+  }
   
   {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
   {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
@@ -576,6 +602,12 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "reader:invalid_argument_type-exception";       this->invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:illegal_escape_reader_metro-exception"; this->illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:gfunkptr_read-exception";               this->gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {
+    char* str = "reader:could_not_read_type-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->could_not_read_type_exception__symbol = symbol;
+    this->could_not_read_type_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
+  }
   
   {char* str = "char:space";                   this->char__space                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:tab";                     this->char__tab                     = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

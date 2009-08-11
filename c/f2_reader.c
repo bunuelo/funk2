@@ -105,7 +105,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   f2__stream__skip_whitespace(cause, stream);
   f2ptr first_char = f2__stream__getc(cause, stream);
   
-  if (raw__eq(cause, first_char, __funk2.reader.eof__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  if (raw__eq(cause, first_char, __funk2.reader.end_of_file_exception)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   // check all posibilities for first_char
   if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}
   if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren))      {return __funk2.reader.array_end_parens_exception;}

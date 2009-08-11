@@ -728,7 +728,13 @@ void funk2_reader__init(funk2_reader_t* this) {
   }
   {char* str = "reader:unmatched_begin_paren-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
   {char* str = "reader:array_end_parens-exception";            f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->array_end_parens_exception            = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->array_end_parens_exception);}
-  {char* str = "reader:doublelink_end_parens-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->doublelink_end_parens_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->doublelink_end_parens_exception);}
+  {
+    char* str = "reader:doublelink_end_parens-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->doublelink_end_parens_exception__symbol = symbol;
+    this->doublelink_end_parens_exception = f2exception__new(cause, symbol, nil);
+    environment__add_var_value(cause, global_environment(), symbol, this->doublelink_end_parens_exception);
+  }
   {
     char* str = "reader:end_of_file-exception";
     f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);

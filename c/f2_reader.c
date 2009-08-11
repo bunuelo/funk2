@@ -171,6 +171,9 @@ f2ptr f2__stream__try_read_quoted(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
+f2ptr f2__stream__try_read_backquoted(f2ptr cause, f2ptr stream) {
+}
+
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   f2__stream__skip_whitespace(cause, stream);
   
@@ -205,24 +208,14 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     }
   }
   
-  f2ptr first_char = f2__stream__getc(cause, stream);
-  // read backquoted expression
-  if (raw__eq(cause, first_char, __funk2.reader.char__backquote)) {
-    f2ptr exp = raw__read(cause, stream);
-    if (raw__exception__is_type(cause, exp)) {return exp;}
-    if (raw__cons__is_type(cause, exp) && (raw__exp__contains_comma(cause, exp) || raw__exp__contains_cdr_comma(cause, exp))) {
-      if (raw__exp__contains_cdr_comma_at_this_level(cause, exp)) {
-	exp = f2__exp__comma_filter_backquoted(cause, exp);
-	if (raw__exception__is_type(cause, exp)) {return exp;}
-	return f2cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, exp);
-      } else {
-	exp = f2__exp__comma_filter_backquoted(cause, exp);
-	if (raw__exception__is_type(cause, exp)) {return exp;}
-	return f2cons__new(cause, __funk2.globalenv.backquote__list__symbol, exp);
-      }
+  {
+    f2ptr try_read_result = f2__stream__try_read_backquoted(cause, stream);
+    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+      return try_read_result;
     }
-    return f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, exp, nil));
   }
+  
+  f2ptr first_char = f2__stream__getc(cause, stream);
   // read comma expression (hopefully within backquote)
   if (raw__eq(cause, first_char, __funk2.reader.char__comma)) {
     f2ptr exp = raw__read(cause, stream);

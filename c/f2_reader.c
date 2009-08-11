@@ -195,6 +195,45 @@ f2ptr f2__stream__try_read_backquoted(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
+f2ptr f2__stream__try_read_comma_exp(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  // read comma expression (hopefully within backquote)
+  if (raw__eq(cause, first_char, __funk2.reader.char__comma)) {
+    f2ptr exp = raw__read(cause, stream);
+    if (raw__exception__is_type(cause, exp)) {return exp;}
+    return f2cons__new(cause, __funk2.globalenv.comma__symbol, f2cons__new(cause, exp, nil));
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_cdr_comma_exp(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  // read cdr comma expression (hopefully within backquote)
+  if (raw__eq(cause, first_char, __funk2.reader.char__cdr_comma)) {
+    f2ptr exp = raw__read(cause, stream);
+    if (raw__exception__is_type(cause, exp)) {return exp;}
+    return f2cons__new(cause, __funk2.globalenv.cdr_comma__symbol, f2cons__new(cause, exp, nil));
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_funktion_name(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  // read funktion name
+  if (raw__eq(cause, first_char, __funk2.reader.char__funktion)) {
+    f2ptr exp = raw__read(cause, stream);
+    if (raw__exception__is_type(cause, exp)) {return exp;}
+    return f2cons__new(cause, __funk2.globalenv.funkvar__symbol, f2cons__new(cause, exp, nil));
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   f2__stream__skip_whitespace(cause, stream);
   
@@ -236,25 +275,28 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     }
   }
   
+  {
+    f2ptr try_read_result = f2__stream__try_read_comma_exp(cause, stream);
+    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+      return try_read_result;
+    }
+  }
+  
+  {
+    f2ptr try_read_result = f2__stream__try_read_cdr_comma_exp(cause, stream);
+    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+      return try_read_result;
+    }
+  }
+  
+  {
+    f2ptr try_read_result = f2__stream__try_read_funktion_name(cause, stream);
+    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+      return try_read_result;
+    }
+  }
+  
   f2ptr first_char = f2__stream__getc(cause, stream);
-  // read comma expression (hopefully within backquote)
-  if (raw__eq(cause, first_char, __funk2.reader.char__comma)) {
-    f2ptr exp = raw__read(cause, stream);
-    if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.comma__symbol, f2cons__new(cause, exp, nil));
-  }
-  // read comma expression (hopefully within backquote)
-  if (raw__eq(cause, first_char, __funk2.reader.char__cdr_comma)) {
-    f2ptr exp = raw__read(cause, stream);
-    if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.cdr_comma__symbol, f2cons__new(cause, exp, nil));
-  }
-  // read funktion name
-  if (raw__eq(cause, first_char, __funk2.reader.char__funktion)) {
-    f2ptr exp = raw__read(cause, stream);
-    if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.funkvar__symbol, f2cons__new(cause, exp, nil));
-  }
   if (raw__eq(cause, first_char, __funk2.reader.char__escape)) {
     f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
     if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}

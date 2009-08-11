@@ -383,6 +383,32 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
+f2ptr f2__stream__try_read_unescaped_gfunkptr(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  
+  if (raw__eq(cause, read_ch, __funk2.reader.char__escape_gfunkptr)) {
+    // read gfunkptr of form #g(ip_addr pool_index pool_address)
+    f2ptr gfunkptr_read_array = raw__read(cause, stream);
+    if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {return __funk2.reader.gfunkptr_read__exception;}
+    f2ptr computer_id__integer  = raw__array__elt(cause, gfunkptr_read_array, 0);
+    f2ptr pool_index__integer   = raw__array__elt(cause, gfunkptr_read_array, 1);
+    f2ptr pool_address__integer = raw__array__elt(cause, gfunkptr_read_array, 2);
+    if ((! raw__integer__is_type(cause, computer_id__integer)) ||
+	(! raw__integer__is_type(cause, pool_index__integer)) ||
+	(! raw__integer__is_type(cause, pool_address__integer))) {
+      return __funk2.reader.gfunkptr_read__exception;
+    }
+    computer_id_t  computer_id  = f2integer__i(computer_id__integer, cause);
+    pool_index_t   pool_index   = f2integer__i(pool_index__integer, cause);
+    pool_address_t pool_address = f2integer__i(pool_address__integer, cause);
+    return f2gfunkptr__new(cause, computer_id, pool_index, pool_address);
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
 f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
   // read escaped expression
@@ -409,27 +435,14 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
       }
     }
     
-    f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-    if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
-    
-    if (raw__eq(cause, read_ch, __funk2.reader.char__escape_gfunkptr)) {
-      // read gfunkptr of form #g(ip_addr pool_index pool_address)
-      f2ptr gfunkptr_read_array = raw__read(cause, stream);
-      if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {return __funk2.reader.gfunkptr_read__exception;}
-      f2ptr computer_id__integer  = raw__array__elt(cause, gfunkptr_read_array, 0);
-      f2ptr pool_index__integer   = raw__array__elt(cause, gfunkptr_read_array, 1);
-      f2ptr pool_address__integer = raw__array__elt(cause, gfunkptr_read_array, 2);
-      if ((! raw__integer__is_type(cause, computer_id__integer)) ||
-	  (! raw__integer__is_type(cause, pool_index__integer)) ||
-	  (! raw__integer__is_type(cause, pool_address__integer))) {
-	return __funk2.reader.gfunkptr_read__exception;
+    {
+      f2ptr try_read_result = f2__stream__try_read_unescaped_gfunkptr(cause, stream);
+      if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
+	return try_read_result;
       }
-      computer_id_t  computer_id  = f2integer__i(computer_id__integer, cause);
-      pool_index_t   pool_index   = f2integer__i(pool_index__integer, cause);
-      pool_address_t pool_address = f2integer__i(pool_address__integer, cause);
-      return f2gfunkptr__new(cause, computer_id, pool_index, pool_address);
     }
-    return __funk2.reader.illegal_escape_reader_metro_exception;
+    
+    //return __funk2.reader.illegal_escape_reader_metro_exception;
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }

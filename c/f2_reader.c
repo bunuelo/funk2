@@ -516,11 +516,6 @@ f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-f2ptr f2__stream__read_rest_of_string(f2ptr cause, f2ptr stream) {
-  f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-  
-}
-
 f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
   // read string

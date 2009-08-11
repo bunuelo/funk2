@@ -85,14 +85,18 @@ f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(exp__comma_filter_backquoted, this, return f2__exp__comma_filter_backquoted(this_cause, this));
 
+boolean_t raw__char__is_whitespace(f2ptr cause, f2ptr this) {
+  return (raw__eq(cause, this, __funk2.reader.char__space)   ||
+	  raw__eq(cause, this, __funk2.reader.char__tab)     ||
+	  raw__eq(cause, this, __funk2.reader.char__newline) ||
+	  raw__eq(cause, this, __funk2.reader.char__return));
+}
+
 f2ptr f2__stream__first_non_whitespace_character(f2ptr cause, f2ptr stream) {
   f2ptr first_char;
   do {
     first_char = f2__stream__getc(cause, stream);
-  } while (raw__eq(cause, first_char, __funk2.reader.char__space)   ||
-	   raw__eq(cause, first_char, __funk2.reader.char__tab)     ||
-	   raw__eq(cause, first_char, __funk2.reader.char__newline) ||
-	   raw__eq(cause, first_char, __funk2.reader.char__return));
+  } while (raw__char__is_whitespace(cause, first_char));
   return first_char;
 }
 
@@ -247,8 +251,32 @@ f2ptr f2__stream__try_read_funktion_name(f2ptr cause, f2ptr stream) {
 }
 
 boolean_t raw__char__is_decimal_digit(f2ptr cause, f2ptr this) {
-  char ch = f2char__ch(this, cause);
-  return (ch >= '0' && ch <= '9');
+  return (raw__eq(cause, this, __funk2.reader.char__0) ||
+	  raw__eq(cause, this, __funk2.reader.char__1) ||
+	  raw__eq(cause, this, __funk2.reader.char__2) ||
+	  raw__eq(cause, this, __funk2.reader.char__3) ||
+	  raw__eq(cause, this, __funk2.reader.char__4) ||
+	  raw__eq(cause, this, __funk2.reader.char__5) ||
+	  raw__eq(cause, this, __funk2.reader.char__6) ||
+	  raw__eq(cause, this, __funk2.reader.char__7) ||
+	  raw__eq(cause, this, __funk2.reader.char__8) ||
+	  raw__eq(cause, this, __funk2.reader.char__9));
+}
+
+boolean_t raw__char__is_hex_digit(f2ptr cause, f2ptr this) {
+  return (raw__char__is_decimal_digit(cause, this) ||
+	  raw__eq(cause, this, __funk2.reader.char__lowercase_a) ||
+	  raw__eq(cause, this, __funk2.reader.char__lowercase_b) ||
+	  raw__eq(cause, this, __funk2.reader.char__lowercase_c) ||
+	  raw__eq(cause, this, __funk2.reader.char__lowercase_d) ||
+	  raw__eq(cause, this, __funk2.reader.char__lowercase_e) ||
+	  raw__eq(cause, this, __funk2.reader.char__lowercase_f) ||
+	  raw__eq(cause, this, __funk2.reader.char__uppercase_a) ||
+	  raw__eq(cause, this, __funk2.reader.char__uppercase_b) ||
+	  raw__eq(cause, this, __funk2.reader.char__uppercase_c) ||
+	  raw__eq(cause, this, __funk2.reader.char__uppercase_d) ||
+	  raw__eq(cause, this, __funk2.reader.char__uppercase_e) ||
+	  raw__eq(cause, this, __funk2.reader.char__uppercase_f));
 }
 
 f2ptr f2__stream__try_read_hex_digits(f2ptr cause, f2ptr stream) {
@@ -257,10 +285,7 @@ f2ptr f2__stream__try_read_hex_digits(f2ptr cause, f2ptr stream) {
   if (! raw__char__is_type(cause, read_ch)) {
     return f2larva__new(cause, 19);
   }
-  char ch = f2char__ch(read_ch, cause);
-  if ((ch < '0' || ch > '9') &&
-      (ch < 'a' || ch > 'f') &&
-      (ch < 'A' || ch > 'F')) {
+  if (raw__char__is_hex_digit(cause, read_ch)) {
     f2__stream__ungetc(cause, stream, read_ch);
     return nil;
   }
@@ -270,6 +295,51 @@ f2ptr f2__stream__try_read_hex_digits(f2ptr cause, f2ptr stream) {
     return rest_list;
   }
   return f2cons__new(cause, read_ch, rest_list);
+}
+
+s64 raw__char__decimal_digit_value(f2ptr cause, f2ptr this) {
+  if (raw__eq(cause, this, __funk2.reader.char__0)) {return 0;}
+  if (raw__eq(cause, this, __funk2.reader.char__1)) {return 1;}
+  if (raw__eq(cause, this, __funk2.reader.char__2)) {return 2;}
+  if (raw__eq(cause, this, __funk2.reader.char__3)) {return 3;}
+  if (raw__eq(cause, this, __funk2.reader.char__4)) {return 4;}
+  if (raw__eq(cause, this, __funk2.reader.char__5)) {return 5;}
+  if (raw__eq(cause, this, __funk2.reader.char__6)) {return 6;}
+  if (raw__eq(cause, this, __funk2.reader.char__7)) {return 7;}
+  if (raw__eq(cause, this, __funk2.reader.char__8)) {return 8;}
+  if (raw__eq(cause, this, __funk2.reader.char__9)) {return 9;}
+  error(nil, "raw__char__decimal_digit_value error: tried to convert non-decimal digit to value.");
+}
+
+f2ptr f2__char__decimal_digit_value(f2ptr cause, f2ptr this) {
+  if (! raw__char__is_decimal_digit(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2integer__new(cause, raw__char__decimal_digit_value(cause, this));
+}
+
+s64 raw__char__hex_digit_value(f2ptr cause, f2ptr this) {
+  if (raw__char__is_decimal_digit(cause, this))                {return raw__char__decimal_digit_value(cause, this);}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase__a)) {return 10;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase__a)) {return 10;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase__b)) {return 11;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase__b)) {return 11;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase__c)) {return 12;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase__c)) {return 12;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase__d)) {return 13;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase__d)) {return 13;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase__e)) {return 14;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase__e)) {return 14;}
+  if (raw__eq(cause, this, __funk2.reader.char__lowercase__f)) {return 15;}
+  if (raw__eq(cause, this, __funk2.reader.char__uppercase__f)) {return 15;}
+  error(nil, "raw__char__hex_digit_value error: tried to convert non-hexadecimal digit to value.");
+}
+
+f2ptr f2__char__hex_digit_value(f2ptr cause, f2ptr this) {
+  if (! raw__char__is_hex_digit(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2integer__new(cause, raw__char__hex_digit_value(cause, this));
 }
 
 f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
@@ -289,15 +359,11 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
     f2ptr iter = digits;
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
-      if (! raw__char__is_type(cause, read_ch)) {
+      if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_hex_digit(cause, read_ch))) {
 	return f2larva__new(cause, 19);
       }
-      char ch = f2char__ch(read_ch, cause);
-      if (ch >= '0' && ch <= '9') {ch -= '0';}
-      if (ch >= 'a' && ch <= 'f') {ch -= 'a' + 10;}
-      if (ch >= 'A' && ch <= 'F') {ch -= 'A' + 10;}
+      t = raw__char__hex_digit_value(cause, read_ch);
       i --;
-      t = (unsigned long long)(ch);
       p += (t << (i << 2));
       j ++;
       
@@ -330,15 +396,11 @@ f2ptr f2__stream__try_read_unescaped_hex_char(f2ptr cause, f2ptr stream) {
     f2ptr iter = digits;
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
-      if (! raw__char__is_type(cause, read_ch)) {
+      if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_hex_digit(cause, read_ch))) {
 	return f2larva__new(cause, 19);
       }
-      char ch = f2char__ch(read_ch, cause);
-      if (ch >= '0' && ch <= '9') {ch -= '0';}
-      if (ch >= 'a' && ch <= 'f') {ch -= 'a' + 10;}
-      if (ch >= 'A' && ch <= 'F') {ch -= 'A' + 10;}
+      t = raw__char__hex_digit_value(cause, read_ch);
       i --;
-      t = (unsigned long long)(ch);
       p += (t << (i << 2));
       j ++;
       
@@ -359,8 +421,7 @@ f2ptr f2__stream__try_read_decimal_digits(f2ptr cause, f2ptr stream) {
   if (! raw__char__is_type(cause, read_ch)) {
     return f2larva__new(cause, 19);
   }
-  char ch = f2char__ch(read_ch, cause);
-  if (ch < '0' || ch > '9') {
+  if (! raw__char__is_decimal_digit(cause, read_ch)) {
     f2__stream__ungetc(cause, stream, read_ch);
     return nil;
   }
@@ -390,15 +451,11 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
     f2ptr iter = digits;
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
-      if (! raw__char__is_type(cause, read_ch)) {
+      if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_decimal_digit(cause, read_ch))) {
 	return f2larva__new(cause, 19);
       }
-      char ch = f2char__ch(read_ch, cause);
-      if (ch >= '0' && ch <= '9') {ch -= '0';}
-      if (ch >= 'a' && ch <= 'f') {ch -= 'a' + 10;}
-      if (ch >= 'A' && ch <= 'F') {ch -= 'A' + 10;}
+      t = raw__char__decimal_digit_value(cause, read_ch);
       i --;
-      t = (unsigned long long)(ch);
       u32 i_power = 1;
       {int k; for (k = i; k > 0; k --) {i_power *= 10;}}
       type += (t * i_power);

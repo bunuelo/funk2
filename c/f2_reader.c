@@ -374,7 +374,7 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
   
   // read larva
   if (raw__eq(cause, read_ch, __funk2.reader.char__escape_larva)) {
-    f2ptr digits = f2__stream__try_read_hex_digits(cause, stream);
+    f2ptr digits = f2__stream__try_read_decimal_digits(cause, stream);
     if (digits && (! raw__cons__is_type(cause, digits))) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;

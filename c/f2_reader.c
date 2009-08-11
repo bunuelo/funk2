@@ -155,6 +155,7 @@ f2ptr f2__stream__try_read_doublelink_list(f2ptr cause, f2ptr stream) {
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
+  return __funk2.reader.could_not_read_type_exception;
 }
 
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {

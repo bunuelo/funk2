@@ -274,7 +274,7 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
   // read hex pointer
   if (raw__eq(cause, read_ch, __funk2.reader.char__escape_hex)) {
     f2ptr digits = f2__stream__try_read_unescaped_hex_pointer__digits(cause, stream);
-    if (rest_list && (! raw__cons__is_type(cause, rest_list))) {
+    if (digits && (! raw__cons__is_type(cause, digits))) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;
     }

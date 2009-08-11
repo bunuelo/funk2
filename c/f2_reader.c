@@ -172,6 +172,27 @@ f2ptr f2__stream__try_read_quoted(f2ptr cause, f2ptr stream) {
 }
 
 f2ptr f2__stream__try_read_backquoted(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  // read backquoted expression
+  if (raw__eq(cause, first_char, __funk2.reader.char__backquote)) {
+    f2ptr exp = raw__read(cause, stream);
+    if (raw__exception__is_type(cause, exp)) {return exp;}
+    if (raw__cons__is_type(cause, exp) && (raw__exp__contains_comma(cause, exp) || raw__exp__contains_cdr_comma(cause, exp))) {
+      if (raw__exp__contains_cdr_comma_at_this_level(cause, exp)) {
+	exp = f2__exp__comma_filter_backquoted(cause, exp);
+	if (raw__exception__is_type(cause, exp)) {return exp;}
+	return f2cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, exp);
+      } else {
+	exp = f2__exp__comma_filter_backquoted(cause, exp);
+	if (raw__exception__is_type(cause, exp)) {return exp;}
+	return f2cons__new(cause, __funk2.globalenv.backquote__list__symbol, exp);
+      }
+    }
+    return f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, exp, nil));
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
+  }
+  return __funk2.reader.could_not_read_type_exception;
 }
 
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {

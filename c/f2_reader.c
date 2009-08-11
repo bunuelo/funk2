@@ -493,79 +493,7 @@ f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
-  f2__stream__skip_whitespace(cause, stream);
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_impossibility(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_list(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_doublelink_list(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_quoted(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_backquoted(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_comma_exp(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_cdr_comma_exp(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_funktion_name(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_escaped(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
-  {
-    f2ptr try_read_result = f2__stream__try_read_array(cause, stream);
-    if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-      return try_read_result;
-    }
-  }
-  
+f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__getc(cause, stream);
   // read string
   if (raw__eq(cause, first_char, __funk2.reader.char__string_quote)) {
@@ -605,8 +533,15 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     f2ptr exp = f2string__new(cause, i, (u8*)str);
     f2__free(to_ptr(str));
     return exp;
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
   }
-  // read explicit symbol
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  // read symbol quote
   if (raw__eq(cause, first_char, __funk2.reader.char__symbol_quote)) {
     int buf_size = 64;
     char* str = (char*)from_ptr(f2__malloc(buf_size));
@@ -640,9 +575,14 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
     f2ptr exp = f2symbol__new(cause, i, (u8*)str);
     f2__free(to_ptr(str));
     return exp;
+  } else {
+    f2__stream__ungetc(cause, stream, first_char);
   }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
   // otherwise read a token (might be a number or a caps-insensitive symbol)
-  f2__stream__ungetc(cause, stream, first_char);
   int buf_size = 64;
   char* str = (char*)from_ptr(f2__malloc(buf_size));
   int i = 0;
@@ -705,7 +645,27 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   f2ptr exp = f2symbol__new(cause, i, (u8*)str);
   f2__free(to_ptr(str));
   return exp;
-  }
+}
+
+f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
+  f2__stream__skip_whitespace(cause, stream);
+  
+  {f2ptr try_read_result = f2__stream__try_read_impossibility(  cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_list(           cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_doublelink_list(cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_quoted(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_backquoted(     cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_comma_exp(      cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_cdr_comma_exp(  cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_funktion_name(  cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_escaped(        cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_array(          cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_string(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_symbol_quote(   cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_token(          cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  
+  return nil;
+}
 
 f2ptr raw__read(f2ptr cause, f2ptr stream) {
   // basic type checking for stream argument

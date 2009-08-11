@@ -295,7 +295,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
       f2__sleep(10000);
     }
   }
-  if (raw__exception__is_type(cause, read_ch)) {
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
     status("f2__stream__getc() note: eof reached.");
   }
   return read_ch;

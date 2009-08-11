@@ -278,7 +278,7 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;
     }
-    int i = raw__length(cause, digits) - 1;
+    int i = raw__length(cause, digits);
     int j = 0;
     ptr p = 0;
     u64 t;

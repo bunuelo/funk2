@@ -502,11 +502,11 @@ f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
     u64   array__length = raw__length(cause, elements);
     f2ptr array         = raw__array__new(cause, array__length);
     f2ptr iter          = elements;
-    u64   index         = array__length - 1;
+    u64   index         = 0;
     while (iter) {
       f2ptr element = f2cons__car(iter, cause);
       raw__array__elt__set(cause, array, index, element);
-      index --;
+      index ++;
       iter = f2cons__cdr(iter, cause);
     }
     return array;

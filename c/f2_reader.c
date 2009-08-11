@@ -249,7 +249,7 @@ f2ptr f2__stream__try_read_funktion_name(f2ptr cause, f2ptr stream) {
 
 f2ptr f2__stream__try_read_unescaped_hex_pointer__digits(f2ptr cause, f2ptr stream) {
   f2ptr read_ch = f2__stream__getc(cause, stream);
-  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   if (! raw__char__is_type(cause, read_ch)) {
     return f2larva__new(cause, 19);
   }

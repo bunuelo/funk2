@@ -88,10 +88,14 @@ def_pcfunk1(exp__comma_filter_backquoted, this, return f2__exp__comma_filter_bac
 
 f2ptr f2__stream__first_non_whitespace_character(f2ptr cause, f2ptr stream) {
   f2ptr first_char;
-  do {first_char = f2__stream__getc(cause, stream);} while (raw__eq(cause, first_char, __funk2.reader.char__space)   ||
-							    raw__eq(cause, first_char, __funk2.reader.char__tab)     ||
-							    raw__eq(cause, first_char, __funk2.reader.char__newline) ||
-							    raw__eq(cause, first_char, __funk2.reader.char__return));
+  do {
+    first_char = f2__stream__try_read_character(cause, stream);
+    if (! first_char) {
+    }
+  } while (raw__eq(cause, first_char, __funk2.reader.char__space)   ||
+	   raw__eq(cause, first_char, __funk2.reader.char__tab)     ||
+	   raw__eq(cause, first_char, __funk2.reader.char__newline) ||
+	   raw__eq(cause, first_char, __funk2.reader.char__return));
   return first_char;
 }
 
@@ -699,6 +703,13 @@ void funk2_reader__init(funk2_reader_t* this) {
     this->could_not_read_type_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->could_not_read_type_exception);
   }
+  {
+    char* str = "reader:no_character_waiting-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->no_character_waiting_exception__symbol = symbol;
+    this->no_character_waiting_exception = f2exception__new(cause, symbol, nil);
+    environment__add_var_value(cause, global_environment(), symbol, this->no_character_waiting_exception);
+  }
   
   {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
   {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
@@ -753,6 +764,12 @@ void funk2_reader__reinit(funk2_reader_t* this) {
     f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
     this->could_not_read_type_exception__symbol = symbol;
     this->could_not_read_type_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
+  }
+  {
+    char* str = "reader:no_character_waiting-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->no_character_waiting_exception__symbol = symbol;
+    this->no_character_waiting_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
   }
   
   {char* str = "char:space";                   this->char__space                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

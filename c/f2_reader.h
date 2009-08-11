@@ -39,6 +39,8 @@ struct funk2_reader_s {
   f2ptr gfunkptr_read__exception;
   f2ptr could_not_read_type_exception;
   f2ptr could_not_read_type_exception__symbol;
+  f2ptr no_character_waiting_exception;
+  f2ptr no_character_waiting_exception__symbol;
   
   f2ptr char__space;
   f2ptr char__tab;

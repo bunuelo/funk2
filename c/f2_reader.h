@@ -45,6 +45,9 @@ struct funk2_reader_s {
   f2ptr no_character_waiting_exception;
   f2ptr no_character_waiting_exception__symbol;
   
+  f2ptr char__decimal_point;
+  f2ptr char__minus_sign;
+  
   f2ptr char__space;
   f2ptr char__tab;
   f2ptr char__newline;

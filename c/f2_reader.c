@@ -733,7 +733,7 @@ f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
     for (j = i - 1; j >= 0; j --) {
       f2ptr read_ch = str[j];
       if (raw__char__is_decimal_digit(cause, read_ch)) {has_numeric = 1;}
-      else if ((! raw__eq(cause, read_ch, __funk2.reader.char__period)) && (! raw__eq(cause, read_ch, __funk2.reader.char__dash))) {all_numeric = 0; break;}
+      else if ((! raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) && (! raw__eq(cause, read_ch, __funk2.reader.char__minus_sign))) {all_numeric = 0; break;}
     }
   }
   // convert token to number
@@ -844,6 +844,9 @@ void funk2_reader__init(funk2_reader_t* this) {
     this->no_character_waiting_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->no_character_waiting_exception);
   }
+  
+  {this->char__decimal_point           = f2char__new(cause, '.');  char* str = "char:decimal_point";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__decimal_point);}
+  {this->char__minus_sign              = f2char__new(cause, '-');  char* str = "char:minus_sign";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__minus_sign);}
   
   {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
   {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
@@ -973,6 +976,9 @@ void funk2_reader__reinit(funk2_reader_t* this) {
     this->no_character_waiting_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
   }
   
+  {char* str = "char:decimal_point";           this->char__decimal_point           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:minus_sign";              this->char__minus_sign              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+
   {char* str = "char:space";                   this->char__space                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:tab";                     this->char__tab                     = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:newline";                 this->char__newline                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

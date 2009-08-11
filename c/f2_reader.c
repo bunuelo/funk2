@@ -247,7 +247,7 @@ f2ptr f2__stream__try_read_funktion_name(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-f2ptr f2__stream__try_read_unescaped_hex_pointer__digits(f2ptr cause, f2ptr stream) {
+f2ptr f2__stream__try_read_unescaped_hex__digits(f2ptr cause, f2ptr stream) {
   f2ptr read_ch = f2__stream__getc(cause, stream);
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   if (! raw__char__is_type(cause, read_ch)) {
@@ -260,7 +260,7 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer__digits(f2ptr cause, f2ptr stre
     f2__stream__ungetc(cause, stream, read_ch);
     return nil;
   }
-  f2ptr rest_list = f2__stream__try_read_unescaped_hex_pointer__digits(cause, stream);
+  f2ptr rest_list = f2__stream__try_read_unescaped_hex__digits(cause, stream);
   if (rest_list && (! raw__cons__is_type(cause, rest_list))) {
     f2__stream__ungetc(cause, stream, read_ch);
     return rest_list;
@@ -273,7 +273,7 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   // read hex pointer
   if (raw__eq(cause, read_ch, __funk2.reader.char__escape_hex)) {
-    f2ptr digits = f2__stream__try_read_unescaped_hex_pointer__digits(cause, stream);
+    f2ptr digits = f2__stream__try_read_unescaped_hex__digits(cause, stream);
     if (digits && (! raw__cons__is_type(cause, digits))) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;
@@ -314,43 +314,33 @@ f2ptr f2__stream__try_read_unescaped_hex_char(f2ptr cause, f2ptr stream) {
   
   // read char hex
   if (f2__eq(cause, read_ch, __funk2.reader.char__escape_hex_char)) {
-    int buf_size = 10; // not bigint, so no more buffer really needed
-    char* str = (char*)from_ptr(f2__malloc(buf_size));
-    int i = 0;
-    f2ptr read_ch;
-    do {
-      read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+    f2ptr digits = f2__stream__try_read_unescaped_hex__digits(cause, stream);
+    if (digits && (! raw__cons__is_type(cause, digits))) {
+      f2__stream__ungetc(cause, stream, read_ch);
+      return digits;
+    }
+    int i = raw__length(cause, digits);
+    int j = 0;
+    ptr p = 0;
+    u64 t;
+    f2ptr iter = digits;
+    while (iter) {
+      f2ptr read_ch = f2cons__car(iter, cause);
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
-      if ((ch < '0' || ch > '9') &&
-	  (ch < 'a' || ch > 'f') &&
-	  (ch < 'A' || ch > 'F')) {
-	f2__stream__ungetc(cause, stream, read_ch);
-	break;
-      }
-      if (ch >= '0' && ch <= '9') {str[i] = ch - '0';}
-      if (ch >= 'a' && ch <= 'f') {str[i] = ch - 'a' + 10;}
-      if (ch >= 'A' && ch <= 'F') {str[i] = ch - 'A' + 10;}
-      i ++;
-      if (i >= buf_size) {
-	int old_buf_size = buf_size;
-	buf_size <<= 1;
-	str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
-      }
-    } while(1);
-    int j = 0;
-    ptr p = 0;
-    u64 t;
-    i --;
-    for (; i >= 0; i --) {
-      t = (unsigned long long)(str[j]);
+      if (ch >= '0' && ch <= '9') {ch -= '0';}
+      if (ch >= 'a' && ch <= 'f') {ch -= 'a' + 10;}
+      if (ch >= 'A' && ch <= 'F') {ch -= 'A' + 10;}
+      i --;
+      t = (unsigned long long)(ch);
       p += (t << (i << 2));
       j ++;
-    } 
-    f2__free(to_ptr(str));
+      
+      iter = f2cons__cdr(iter, cause);
+    }
+    
     f2ptr exp = f2char__new(cause, (char)p);
     return exp;
   } else {

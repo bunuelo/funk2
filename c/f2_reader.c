@@ -535,8 +535,8 @@ f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
 	return f2larva__new(cause, 19);
       }
       char ch = f2char__ch(read_ch, cause);
-      if (raw__eq(cause, read_ch, __funk2.reader.char__string_quote, cause)) {break;}
-      if (raw__eq(cause, read_ch, __funk2.reader.char__escape_char, cause)) {
+      if (raw__eq(cause, read_ch, __funk2.reader.char__string_quote)) {break;}
+      if (raw__eq(cause, read_ch, __funk2.reader.char__escape_char)) {
 	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
 	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
 	  f2__free(to_ptr(str));

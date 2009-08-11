@@ -729,7 +729,6 @@ f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
   boolean_t all_numeric = 1;
   {
     int j;
-    char ch;
     for (j = i - 1; j >= 0; j --) {
       f2ptr read_ch = str[j];
       if (raw__char__is_decimal_digit(cause, read_ch)) {has_numeric = 1;}

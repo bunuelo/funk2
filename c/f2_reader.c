@@ -70,8 +70,7 @@ def_pcfunk1(exp__contains_cdr_comma_at_this_level, this, return f2__exp__contain
 f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
-    f2ptr car_car;
-    if(raw__cons__is_type(cause, car) && raw__eq(cause, (car_car = f2cons__car(car, cause)), __funk2.globalenv.comma__symbol) || raw__eq(cause, car_car, __funk2.globalenv.cdr_comma__symbol)) {
+    if(raw__cons__is_type(cause, car) && raw__eq(cause, f2cons__car(car, cause), __funk2.globalenv.comma__symbol) || raw__eq(cause, f2cons__car(car, cause), __funk2.globalenv.cdr_comma__symbol)) {
       f2cons__car__set(this, cause, f2cons__car(f2cons__cdr(f2cons__car(this, cause), cause), cause));
     } else if (! (raw__exp__contains_comma(cause, car) || raw__exp__contains_cdr_comma(cause, car))) {
       f2cons__car__set(this, cause, f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, car, nil)));

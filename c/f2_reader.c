@@ -720,7 +720,13 @@ def_pcfunk1(read, stream, return raw__read(this_cause, stream));
 void funk2_reader__init(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
-  {char* str = "reader:end_parens-exception";                  f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->end_parens_exception                  = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->end_parens_exception);}
+  {
+    char* str = "reader:end_parens-exception";
+    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    this->end_parens_exception__symbol = symbol;
+    this->end_parens_exception = f2exception__new(cause, symbol, nil);
+    environment__add_var_value(cause, global_environment(), symbol, this->end_parens_exception);
+  }
   {char* str = "reader:unmatched_begin_paren-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
   {char* str = "reader:array_end_parens-exception";            f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->array_end_parens_exception            = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->array_end_parens_exception);}
   {char* str = "reader:doublelink_end_parens-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->doublelink_end_parens_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->doublelink_end_parens_exception);}

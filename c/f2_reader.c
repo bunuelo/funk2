@@ -26,7 +26,7 @@ boolean_t raw__exp__contains_comma(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
     f2ptr cdr = f2cons__cdr(this, cause);
-    if (car == __funk2.globalenv.comma__symbol || cdr == __funk2.globalenv.comma__symbol) {
+    if (raw__eq(cause, car, __funk2.globalenv.comma__symbol) || raw__eq(cause, cdr, __funk2.globalenv.comma__symbol)) {
       return 1;
     }
     return (raw__exp__contains_comma(cause, car) || raw__exp__contains_comma(cause, cdr));
@@ -41,7 +41,7 @@ boolean_t raw__exp__contains_cdr_comma(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
     f2ptr cdr = f2cons__cdr(this, cause);
-    if (car == __funk2.globalenv.cdr_comma__symbol || cdr == __funk2.globalenv.cdr_comma__symbol) {
+    if (raw__eq(cause, car, __funk2.globalenv.cdr_comma__symbol) || raw__eq(cause, cdr, __funk2.globalenv.cdr_comma__symbol)) {
       return 1;
     }
     return (raw__exp__contains_cdr_comma(cause, car) || raw__exp__contains_cdr_comma(cause, cdr));
@@ -56,7 +56,7 @@ boolean_t raw__exp__contains_cdr_comma_at_this_level(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
     f2ptr cdr = f2cons__cdr(this, cause);
-    if (raw__cons__is_type(cause, car) && f2cons__car(car, cause) == __funk2.globalenv.cdr_comma__symbol) {
+    if (raw__cons__is_type(cause, car) && raw__eq(cause, f2cons__car(car, cause), __funk2.globalenv.cdr_comma__symbol)) {
       return 1;
     }
     return raw__exp__contains_cdr_comma_at_this_level(cause, cdr);
@@ -71,7 +71,7 @@ f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
     f2ptr car_car;
-    if(raw__cons__is_type(cause, car) && ((car_car = f2cons__car(car, cause)) == __funk2.globalenv.comma__symbol || car_car == __funk2.globalenv.cdr_comma__symbol)) {
+    if(raw__cons__is_type(cause, car) && raw__eq(cause, (car_car = f2cons__car(car, cause)), __funk2.globalenv.comma__symbol) || raw__eq(cause, car_car, __funk2.globalenv.cdr_comma__symbol)) {
       f2cons__car__set(this, cause, f2cons__car(f2cons__cdr(f2cons__car(this, cause), cause), cause));
     } else if (! (raw__exp__contains_comma(cause, car) || raw__exp__contains_cdr_comma(cause, car))) {
       f2cons__car__set(this, cause, f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, car, nil)));
@@ -124,7 +124,7 @@ f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
     f2ptr exp;
     while (1) {
       exp = raw__read(cause, stream);
-      if (exp == __funk2.reader.end_parens_exception) {return seq;} // successfully read end of list
+      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {return seq;} // successfully read end of list
       if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {return __funk2.reader.unmatched_begin_paren_exception;}
       if (raw__exception__is_type(cause, exp)) {return exp;} // other exceptions should be propagated
       new_cons = f2cons__new(cause, exp, nil);
@@ -153,7 +153,7 @@ f2ptr f2__stream__try_read_doublelink_list(f2ptr cause, f2ptr stream) {
     f2ptr exp;
     while (1) {
       exp = raw__read(cause, stream);
-      if (exp == __funk2.reader.doublelink_end_parens_exception) {return seq;} // successfully read end of doublelink list
+      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.doublelink_end_parens_exception__symbol)) {return seq;} // successfully read end of doublelink list
       if (raw__exception__is_type(cause, exp)) {return exp;} // other exceptions should be propagated
       new_doublelink = f2doublelink__new(cause, iter, nil, exp);
       if (seq) {
@@ -483,7 +483,7 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
 
 f2ptr f2__stream__read_array_sequence_of_elements(f2ptr cause, f2ptr stream) {
   f2ptr subexp = raw__read(cause, stream);
-  if (subexp == __funk2.reader.array_end_parens_exception) {
+  if (raw__exception__is_type(cause, subexp) && raw__eq(cause, f2exception__tag(subexp, cause), __funk2.reader.array_end_parens_exception__symbol)) {
     return nil;
   }
   if (raw__exception__is_type(cause, subexp)) {

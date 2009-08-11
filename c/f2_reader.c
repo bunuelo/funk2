@@ -751,7 +751,7 @@ f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
       i --;
       u32 i_power = 1;
       {int k; for (k = i; k > 0; k --) {i_power *= 10;}}
-      type += (t * i_power);
+      value += (t * i_power);
     }
     
     f2ptr exp = f2integer__new(cause, value);

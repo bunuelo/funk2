@@ -101,7 +101,7 @@ f2ptr f2__stream__first_non_whitespace_character(f2ptr cause, f2ptr stream) {
 }
 
 f2ptr f2__stream__try_getc(f2ptr cause, f2ptr this) {
-  f2ptr read_ch = f2__stream__try_read_character(cause, stream);
+  f2ptr read_ch = f2__stream__try_read_character(cause, this);
   if (! read_ch) {
     return __funk2.reader.no_character_waiting_exception;
   }

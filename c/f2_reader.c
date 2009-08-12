@@ -705,7 +705,7 @@ f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
     }
-  } else if (raw__char__is_decimal(cause, read_ch)) {
+  } else if (raw__char__is_decimal_digit(cause, read_ch)) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
       return f2cons__new(cause, read_ch, number_list);

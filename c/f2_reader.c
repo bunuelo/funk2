@@ -673,6 +673,17 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
+boolean_t raw__char__is_symbolizable(f2ptr cause, f2ptr this) {
+  return (raw__char__is_type(cause, this)                                      &&
+	  (! raw__char__is_whitespace(cause, this))                            &&
+	  (! raw__eq(cause, this, __funk2.reader.char__left_paren))            &&
+	  (! raw__eq(cause, this, __funk2.reader.char__right_paren))           &&
+	  (! raw__eq(cause, this, __funk2.reader.char__array_left_paren))      &&
+	  (! raw__eq(cause, this, __funk2.reader.char__array_right_paren))     &&
+	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_left_paren)) &&
+	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_right_paren)));
+}
+
 f2ptr f2__stream__try_read_number_list_without_sign_or_decimal(f2ptr cause, f2ptr stream) {
   f2ptr read_ch = f2__stream__getc(cause, stream);
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
@@ -688,6 +699,9 @@ f2ptr f2__stream__try_read_number_list_without_sign_or_decimal(f2ptr cause, f2pt
     }
   } else {
     f2__stream__ungetc(cause, stream, read_ch);
+    if (! raw__char__is_symbolizable(cause, read_ch)) {
+      return nil;
+    }
   }
   return __funk2.reader.could_not_read_type_exception;
 }
@@ -714,6 +728,9 @@ f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
     }
   } else {
     f2__stream__ungetc(cause, stream, read_ch);
+    if (! raw__char__is_symbolizable(cause, read_ch)) {
+      return nil;
+    }
   }
   return __funk2.reader.could_not_read_type_exception;
 }
@@ -808,17 +825,6 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
     }
   }
   return __funk2.reader.could_not_read_type_exception;
-}
-
-boolean_t raw__char__is_symbolizable(f2ptr cause, f2ptr this) {
-  return (raw__char__is_type(cause, this)                                      &&
-	  (! raw__char__is_whitespace(cause, this))                            &&
-	  (! raw__eq(cause, this, __funk2.reader.char__left_paren))            &&
-	  (! raw__eq(cause, this, __funk2.reader.char__right_paren))           &&
-	  (! raw__eq(cause, this, __funk2.reader.char__array_left_paren))      &&
-	  (! raw__eq(cause, this, __funk2.reader.char__array_right_paren))     &&
-	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_left_paren)) &&
-	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_right_paren)));
 }
 
 f2ptr f2__stream__try_read_symbol_list(f2ptr cause, f2ptr stream) {

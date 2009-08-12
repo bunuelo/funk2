@@ -767,8 +767,8 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       f2ptr read_ch = f2cons__car(iter, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__minus_sign)) {
 	is_negative = boolean__true;
+	iter = f2cons__cdr(iter, cause);
       }
-      iter = f2cons__cdr(iter, cause);
     }
     f2ptr whole_decimal_start  = iter;
     s64   whole_decimal_length = 0;

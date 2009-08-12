@@ -760,7 +760,6 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) {
-	found_decimal_point = boolean__true;
 	iter = f2cons__cdr(iter, cause);
 	break;
       } else {

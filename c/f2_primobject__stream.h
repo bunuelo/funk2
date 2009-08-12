@@ -24,7 +24,7 @@
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
 
-// funk
+// stream
 
 struct funk2_object_type__stream__slot_s {
   f2ptr is_type__symbol;
@@ -39,6 +39,10 @@ struct funk2_object_type__stream__slot_s {
   f2ptr ungetc_stack__funk;
   f2ptr ungetc_stack__set__symbol;
   f2ptr ungetc_stack__set__funk;
+  f2ptr rewind_stack__symbol;
+  f2ptr rewind_stack__funk;
+  f2ptr rewind_stack__set__symbol;
+  f2ptr rewind_stack__set__funk;
   f2ptr file_descriptor__symbol;
   f2ptr file_descriptor__funk;
   f2ptr file_descriptor__set__symbol;
@@ -78,11 +82,11 @@ defprimobject__static_slot__prototype(stream__type);
 #define      f2stream__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__file_descriptor, cause)
 
 defprimobject__static_slot__prototype(stream__ungetc_stack);
-#define      f2stream__ungetc_stack(            this, cause)        primobject__static_slot__accessor(  this, stream__ungetc_stack, cause)
-#define      f2stream__ungetc_stack__set(       this, cause, value) primobject__static_slot__set(       this, stream__ungetc_stack, cause, value)
-#define      f2stream__ungetc_stack__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, stream__ungetc_stack, cause)
-#define      f2stream__ungetc_stack__trace(     this, cause)        primobject__static_slot__trace(     this, stream__ungetc_stack, cause)
-#define      f2stream__ungetc_stack__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack(                   this, cause)        primobject__static_slot__accessor(         this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack__set(              this, cause, value) primobject__static_slot__set(              this, stream__ungetc_stack, cause, value)
+#define      f2stream__ungetc_stack__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack__trace(            this, cause)        primobject__static_slot__trace(            this, stream__ungetc_stack, cause)
+#define      f2stream__ungetc_stack__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__ungetc_stack, cause)
 
 defprimobject__static_slot__prototype(stream__rewind_stack);
 #define      f2stream__rewind_stack(                   this, cause)        primobject__static_slot__accessor(         this, stream__rewind_stack, cause)

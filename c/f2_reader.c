@@ -813,13 +813,13 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
 }
 
 boolean_t raw__char__is_tokenizable(f2ptr cause, f2ptr this) {
-  return ((! raw__char__is_whitespace(cause, this))                               &&
-	  (! raw__eq(cause, read_ch, __funk2.reader.char__left_paren))            &&
-	  (! raw__eq(cause, read_ch, __funk2.reader.char__right_paren))           &&
-	  (! raw__eq(cause, read_ch, __funk2.reader.char__array_left_paren))      &&
-	  (! raw__eq(cause, read_ch, __funk2.reader.char__array_right_paren))     &&
-	  (! raw__eq(cause, read_ch, __funk2.reader.char__doublelink_left_paren)) &&
-	  (! raw__eq(cause, read_ch, __funk2.reader.char__doublelink_right_paren)));
+  return ((! raw__char__is_whitespace(cause, this))                            &&
+	  (! raw__eq(cause, this, __funk2.reader.char__left_paren))            &&
+	  (! raw__eq(cause, this, __funk2.reader.char__right_paren))           &&
+	  (! raw__eq(cause, this, __funk2.reader.char__array_left_paren))      &&
+	  (! raw__eq(cause, this, __funk2.reader.char__array_right_paren))     &&
+	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_left_paren)) &&
+	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_right_paren)));
 }
 
 f2ptr f2__stream__try_read_token_list(f2ptr cause, f2ptr stream) {

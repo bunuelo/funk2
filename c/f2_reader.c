@@ -787,7 +787,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       }
     }
     u64 part_decimal_denomenator = 1;
-    {u64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denometor *= 10;}}
+    {u64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}
     u64 part_decimal_value = 0;
     {
       u64 part_decimal_digit = whole_decimal_length - 1;

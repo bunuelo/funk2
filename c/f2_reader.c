@@ -673,97 +673,198 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-f2ptr f2__stream__try_read_token(f2ptr cause, f2ptr stream) {
-  // otherwise read a token (might be a number or a caps-insensitive symbol)
-  int buf_size = 64;
-  f2ptr* str = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * buf_size));
-  int i = 0;
-  {
-    f2ptr read_ch;
-    do {
-      read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-      if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
-	f2__free(to_ptr(str));
-	status("raw_read() note: eof_except.");
-	return __funk2.reader.end_of_file_exception;
+f2ptr f2__stream__try_read_number_list_without_sign_or_decimal(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream);
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
+    status("raw_read() note: eof_except.");
+    return __funk2.reader.end_of_file_exception;
+  }
+  if (raw__char__is_decimal(cause, read_ch)) {
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign_or_decimal(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return f2cons__new(cause, read_ch, number_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream);
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
+    status("raw_read() note: eof_except.");
+    return __funk2.reader.end_of_file_exception;
+  }
+  if (raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) {
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign_or_decimal(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return f2cons__new(cause, read_ch, number_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else if (raw__char__is_decimal(cause, read_ch)) {
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return f2cons__new(cause, read_ch, number_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_number_list(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream);
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
+    status("raw_read() note: eof_except.");
+    return __funk2.reader.end_of_file_exception;
+  }
+  if (raw__eq(cause, read_ch, __funk2.reader.char__minus_sign)) {
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return f2cons__new(cause, read_ch, number_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return number_list;
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
+  f2ptr number_list = f2__stream__try_read_number_list(cause, stream);
+  if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+    boolean_t is_negative = boolean__false;
+    f2ptr iter = number_list;
+    if (iter) {
+      f2ptr read_ch = f2cons__car(iter, cause);
+      if (raw__eq(cause, read_ch, __funk2.reader.char__minus_sign)) {
+	is_negative = boolean__true;
       }
-      if (! raw__char__is_type(cause, read_ch)) {
-	return f2larva__new(cause, 19);
-      }
-      if (raw__eq(cause, read_ch, __funk2.reader.char__space)                 ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__tab)                   ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__newline)               ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__return)                ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__left_paren)            ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__right_paren)           ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__array_left_paren)      ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__array_right_paren)     ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__doublelink_left_paren) ||
-	  raw__eq(cause, read_ch, __funk2.reader.char__doublelink_right_paren)) {
-	f2__stream__ungetc(cause, stream, read_ch);
+      iter = f2cons__cdr(iter, cause);
+    }
+    f2ptr whole_decimal_start  = iter;
+    u64   whole_decimal_length = 0;
+    while (iter) {
+      f2ptr read_ch = f2cons__car(iter, cause);
+      if (raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) {
+	found_decimal_point = boolean__true;
+	iter = f2cons__cdr(iter, cause);
 	break;
+      } else {
+	whole_part_length ++;
       }
-      if (raw__eq(cause, read_ch, __funk2.reader.char__escape_char)) {
-	// ignore next character
-	read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
-	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
-	  f2__free(to_ptr(str));
-	  status("raw_read() note: eof_except.");
-	  return __funk2.reader.end_of_file_exception;
-	}
-	if (! raw__char__is_type(cause, read_ch)) {
-	  return f2larva__new(cause, 19);
-	}
+      iter = f2cons__cdr(iter, cause);
+    }
+    f2ptr part_decimal_start  = iter;
+    u64   part_decimal_length = 0;
+    while (iter) {
+      part_decimal_length ++;
+      iter = f2cons__cdr(iter, cause);
+    }
+    u64 whole_decimal_value = 0;
+    {
+      u64 whole_decimal_digit = whole_decimal_length - 1;
+      iter = whole_decimal_start;
+      while (whole_decimal_digit >= 0) {
+	u64 power_i = 1;
+	{u64 k; for (k = 0; k < whole_decimal_digit; k ++) {power_i *= 10;}}
+	f2ptr read_ch = f2cons__car(iter, cause);
+	whole_decimal_value += (((u64)raw__char__decimal_digit_value(cause, read_ch)) * power_i);
+	iter = f2cons__cdr(iter, cause);
+	whole_decimal_digit --;
       }
-      str[i] = read_ch;
+    }
+    u64 part_decimal_denomenator = 1;
+    {u64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denometor *= 10;}}
+    u64 part_decimal_value = 0;
+    {
+      u64 part_decimal_digit = whole_decimal_length - 1;
+      iter = part_decimal_start;
+      while (part_decimal_digit >= 0) {
+	u64 power_i = 1;
+	{u64 k; for (k = 0; k < part_decimal_digit; k ++) {power_i *= 10;}}
+	f2ptr read_ch = f2cons__car(iter, cause);
+	part_decimal_value += (((u64)raw__char__decimal_digit_value(cause, read_ch)) * power_i);
+	iter = f2cons__cdr(iter, cause);
+	part_decimal_digit --;
+      }
+    }
+    if (part_decimal_start) {
+      double d = ((is_negative ? -1.0d0 : 1.0d0) * (((double)whole_decimal_value) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
+      return f2double__new(cause, d);
+    } else {
+      s64 i = ((is_negative ? ((s64)-1) : ((s64)1)) * ((s64)whole_decimal_value));
+      return f2integer__new(cause, i);
+    }
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+boolean_t raw__char__is_tokenizable(f2ptr cause, f2ptr this) {
+  return ((! raw__char__is_whitespace(cause, this))                               &&
+	  (! raw__eq(cause, read_ch, __funk2.reader.char__left_paren))            &&
+	  (! raw__eq(cause, read_ch, __funk2.reader.char__right_paren))           &&
+	  (! raw__eq(cause, read_ch, __funk2.reader.char__array_left_paren))      &&
+	  (! raw__eq(cause, read_ch, __funk2.reader.char__array_right_paren))     &&
+	  (! raw__eq(cause, read_ch, __funk2.reader.char__doublelink_left_paren)) &&
+	  (! raw__eq(cause, read_ch, __funk2.reader.char__doublelink_right_paren)));
+}
+
+f2ptr f2__stream__try_read_token_list(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
+    status("raw_read() note: eof_except.");
+    return __funk2.reader.end_of_file_exception;
+  }
+  if (raw__char__is_tokenizable(cause, read_ch)) {
+    f2ptr token_list = f2__stream__try_read_token_list(cause, stream);
+    if ((! token_list) || raw__cons__is_type(cause, token_list)) {
+      return f2cons__new(cause, read_ch, token_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else {
+    f2__stream__ungetc(cause, stream, read_ch);
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
+  f2ptr token_list = f2__stream__try_read_token_list(cause, stream);
+  if (raw__cons__is_type(cause, token_list)) {
+    u64 length = raw__length(token_list);
+    char* str = (char*)from_ptr(f2__malloc(length + 1));
+    u64 i = 0;
+    f2ptr iter = token_list;
+    while (iter) {
+      f2ptr read_ch = f2cons__car(iter, cause);
+      str[i] = f2char__ch(read_ch, cause);
       i ++;
-      if (i >= buf_size - 1) { // -1 because we need to add a null to end for number conversion
-	int old_buf_size = buf_size;
-	buf_size <<= 1;
-	str = (f2ptr*)from_ptr(f2__new_alloc(to_ptr(str), sizeof(f2ptr) * old_buf_size, sizeof(f2ptr) * buf_size));
-      }
-    } while(1);
-  }
-  // see if is partly and completely a number
-  boolean_t has_numeric = 0;
-  boolean_t all_numeric = 1;
-  {
-    int j;
-    for (j = i - 1; j >= 0; j --) {
-      f2ptr read_ch = str[j];
-      if (raw__char__is_decimal_digit(cause, read_ch)) {has_numeric = 1;}
-      else if ((! raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) && (! raw__eq(cause, read_ch, __funk2.reader.char__minus_sign))) {all_numeric = 0; break;}
+      iter = f2cons__cdr(iter, cause);
     }
-  }
-  // convert token to number
-  if (has_numeric && all_numeric) {
-    str[i] = f2char__new(cause, (char)0);
-    
-    int j = 0;
-    u64 value = 0;
-    u64 t;
-    for (j = 0; j < i; j ++) {
-      f2ptr read_ch = str[j];
-      if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_decimal_digit(cause, read_ch))) {
-	return f2larva__new(cause, 19);
-      }
-      t = raw__char__decimal_digit_value(cause, read_ch);
-      i --;
-      u32 i_power = 1;
-      {int k; for (k = i; k > 0; k --) {i_power *= 10;}}
-      value += (t * i_power);
+    str[i] = (char)0;
+    f2ptr symbol = nil;
+    if (length != 3 || str[0] != 'n' && str[1] != 'i' && str[2] != 'l') {
+      symbol = f2symbol__new(cause, length, (u8*)str);
     }
-    
-    f2ptr exp = f2integer__new(cause, value);
     f2__free(to_ptr(str));
-    return exp;
+    return symbol;
+  } else {
+    return __funk2.reader.could_not_read_type_exception;
   }
-  if (i == 3 && str[0] == 'n' && str[1] == 'i' && str[2] == 'l') {
-    return nil;
-  }
-  f2ptr exp = f2symbol__new(cause, i, (u8*)str);
-  f2__free(to_ptr(str));
-  return exp;
 }
 
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
@@ -781,7 +882,8 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   {f2ptr try_read_result = f2__stream__try_read_array(          cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
   {f2ptr try_read_result = f2__stream__try_read_string(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
   {f2ptr try_read_result = f2__stream__try_read_symbol_quote(   cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
-  {f2ptr try_read_result = f2__stream__try_read_token(          cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_number(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
+  {f2ptr try_read_result = f2__stream__try_read_symbol(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
   
   return nil;
 }

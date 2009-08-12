@@ -805,7 +805,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
     {s64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}
     s64 part_decimal_value = 0;
     {
-      s64 part_decimal_digit = whole_decimal_length - 1;
+      s64 part_decimal_digit = part_decimal_length - 1;
       iter = part_decimal_start;
       while (part_decimal_digit >= 0) {
 	s64 power_i = 1;

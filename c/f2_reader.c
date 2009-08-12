@@ -679,7 +679,7 @@ f2ptr f2__stream__try_read_number_list_without_sign_or_decimal(f2ptr cause, f2pt
     status("raw_read() note: eof_except.");
     return __funk2.reader.end_of_file_exception;
   }
-  if (raw__char__is_decimal(cause, read_ch)) {
+  if (raw__char__is_decimal_digit(cause, read_ch)) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign_or_decimal(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
       return f2cons__new(cause, read_ch, number_list);

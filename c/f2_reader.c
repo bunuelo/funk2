@@ -838,6 +838,7 @@ f2ptr f2__stream__try_read_symbol_list(f2ptr cause, f2ptr stream) {
       return f2cons__new(cause, read_ch, symbol_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
+      return nil;
     }
   } else {
     f2__stream__ungetc(cause, stream, read_ch);

@@ -100,10 +100,27 @@ f2ptr f2__stream__first_non_whitespace_character(f2ptr cause, f2ptr stream) {
   return first_char;
 }
 
-f2ptr f2__stream__try_skip_whitespace(f2ptr cause, f2ptr stream) {
-  f2ptr first_char = f2__stream__first_non_whitespace_character(cause, stream);
+f2ptr f2__stream__try_skip_whitespace_chars(f2ptr cause, f2ptr stream) {
+  f2ptr first_char = f2__stream__getc(cause, stream);
+  if (raw__char__is_whitespace(cause, stream)) {
+    f2ptr whitespace_chars = f2__stream__try_skip_whitespace_chars(cause, stream);
+    if ((! whitespace_chars) || raw__cons__is_type(cause, whitespace_chars)) {
+      return f2cons__new(cause, first_char, whitespace_chars);
+    } else {
+      f2__stream__ungetc(cause, stream, first_char);
+      return whitespace_chars;
+    }
+  }
   f2__stream__ungetc(cause, stream, first_char);
-  return __funk2.reader.could_not_read_type_exception;
+  return nil;
+}
+
+f2ptr f2__stream__try_skip_whitespace(f2ptr cause, f2ptr stream) {
+  f2ptr whitespace_chars = f2__stream__try_skip_whitespace_chars(cause, stream);
+  if ((! whitespace_chars) || raw__cons__is_type(cause, whitespace_chars)) {
+    return __funk2.reader.could_not_read_type_exception; // we never read whitespace as a type
+  }
+  return whitespace_chars; // an exception
 }
 
 f2ptr f2__stream__try_read_impossibility(f2ptr cause, f2ptr stream) {

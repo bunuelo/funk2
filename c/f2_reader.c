@@ -856,7 +856,7 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
     }
     str[i] = (char)0;
     f2ptr symbol = nil;
-    if (length != 3 || str[0] != 'n' && str[1] != 'i' && str[2] != 'l') {
+    if (length != 3 || (str[0] != 'n' && str[1] != 'i' && str[2] != 'l')) {
       symbol = f2symbol__new(cause, length, (u8*)str);
     }
     f2__free(to_ptr(str));

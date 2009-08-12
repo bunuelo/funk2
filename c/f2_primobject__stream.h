@@ -75,7 +75,7 @@ struct funk2_object_type__stream__slot_s {
 extern f2ptr __stream__symbol;
 boolean_t raw__stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__stream__is_type(f2ptr cause, f2ptr this);
-f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr file_descriptor, f2ptr string, f2ptr index);
+f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr file_descriptor, f2ptr string, f2ptr index);
 #define      f2primobject__is__stream(this, cause) raw__eq(cause, f2primobject__type(this, cause), __stream__symbol)
 
 defprimobject__static_slot__prototype(stream__type);

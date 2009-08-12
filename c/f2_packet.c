@@ -2306,7 +2306,7 @@ int funk2_node__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber,
   return hash_value;
 }
 
-int f2string__hash_value(f2ptr cause, f2ptr this) {
+int f2string__hash_value(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2string__hash_value(this, cause);

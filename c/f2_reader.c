@@ -732,7 +732,6 @@ f2ptr f2__stream__try_read_number_list(f2ptr cause, f2ptr stream) {
       f2__stream__ungetc(cause, stream, read_ch);
     }
   } else {
-    f2__stream__ungetc(cause, stream, read_ch);
     f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
       return number_list;

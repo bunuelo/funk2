@@ -999,6 +999,10 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return (f2pointer__p(x, cause) == f2pointer__p(y, cause));
   case ptype_char:
     return (f2char__ch(x, cause) == f2char__ch(y, cause));
+  case ptype_double:
+    return (f2double__d(x, cause) == f2double__d(y, cause));
+  case ptype_float:
+    return (f2float__f(x, cause) == f2float__f(y, cause));
   case ptype_string:
     return f2__string__eq(cause, x, y);
   case ptype_simple_array:

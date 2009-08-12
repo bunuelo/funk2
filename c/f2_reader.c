@@ -846,6 +846,9 @@ f2ptr f2__stream__try_read_symbol_list(f2ptr cause, f2ptr stream) {
 
 f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
   f2ptr symbol_list = f2__stream__try_read_symbol_list(cause, stream);
+  if (raw__exception__is_type(cause, symbol_list)) {
+    return symbol_list;
+  }
   if (raw__cons__is_type(cause, symbol_list)) {
     u64 length = raw__length(cause, symbol_list);
     char* str = (char*)from_ptr(f2__malloc(length + 1));
@@ -864,9 +867,8 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
     }
     f2__free(to_ptr(str));
     return symbol;
-  } else {
-    return __funk2.reader.could_not_read_type_exception;
   }
+  return __funk2.reader.could_not_read_type_exception;
 }
 
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {

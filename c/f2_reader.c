@@ -771,7 +771,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       iter = f2cons__cdr(iter, cause);
     }
     f2ptr whole_decimal_start  = iter;
-    u64   whole_decimal_length = 0;
+    s64   whole_decimal_length = 0;
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) {
@@ -783,35 +783,35 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       iter = f2cons__cdr(iter, cause);
     }
     f2ptr part_decimal_start  = iter;
-    u64   part_decimal_length = 0;
+    s64   part_decimal_length = 0;
     while (iter) {
       part_decimal_length ++;
       iter = f2cons__cdr(iter, cause);
     }
-    u64 whole_decimal_value = 0;
+    s64 whole_decimal_value = 0;
     {
-      u64 whole_decimal_digit = whole_decimal_length - 1;
+      s64 whole_decimal_digit = whole_decimal_length - 1;
       iter = whole_decimal_start;
       while (whole_decimal_digit >= 0) {
-	u64 power_i = 1;
-	{u64 k; for (k = 0; k < whole_decimal_digit; k ++) {power_i *= 10;}}
+	s64 power_i = 1;
+	{s64 k; for (k = 0; k < whole_decimal_digit; k ++) {power_i *= 10;}}
 	f2ptr read_ch = f2cons__car(iter, cause);
-	whole_decimal_value += (((u64)raw__char__decimal_digit_value(cause, read_ch)) * power_i);
+	whole_decimal_value += (((s64)raw__char__decimal_digit_value(cause, read_ch)) * power_i);
 	iter = f2cons__cdr(iter, cause);
 	whole_decimal_digit --;
       }
     }
-    u64 part_decimal_denomenator = 1;
-    {u64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}
-    u64 part_decimal_value = 0;
+    s64 part_decimal_denomenator = 1;
+    {s64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}
+    s64 part_decimal_value = 0;
     {
-      u64 part_decimal_digit = whole_decimal_length - 1;
+      s64 part_decimal_digit = whole_decimal_length - 1;
       iter = part_decimal_start;
       while (part_decimal_digit >= 0) {
-	u64 power_i = 1;
-	{u64 k; for (k = 0; k < part_decimal_digit; k ++) {power_i *= 10;}}
+	s64 power_i = 1;
+	{s64 k; for (k = 0; k < part_decimal_digit; k ++) {power_i *= 10;}}
 	f2ptr read_ch = f2cons__car(iter, cause);
-	part_decimal_value += (((u64)raw__char__decimal_digit_value(cause, read_ch)) * power_i);
+	part_decimal_value += (((s64)raw__char__decimal_digit_value(cause, read_ch)) * power_i);
 	iter = f2cons__cdr(iter, cause);
 	part_decimal_digit --;
       }

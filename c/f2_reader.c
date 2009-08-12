@@ -802,7 +802,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       }
     }
     if (part_decimal_start) {
-      double d = ((is_negative ? -1.0d0 : 1.0d0) * (((double)whole_decimal_value) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
+      double d = ((is_negative ? -1.0 : 1.0) * (((double)whole_decimal_value) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
       return f2double__new(cause, d);
     } else {
       s64 i = ((is_negative ? ((s64)-1) : ((s64)1)) * ((s64)whole_decimal_value));

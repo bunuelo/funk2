@@ -57,7 +57,7 @@ f2ptr f2__stream__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__stream_
 def_pcfunk1(stream__is_type, x, return f2__stream__is_type(this_cause, x));
 
 f2ptr f2__stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr file_descriptor, f2ptr string, f2ptr index) {return f2stream__new(cause, type, ungetc_stack, rewind_stack, file_descriptor, string, index);}
-def_pcfunk5(stream__new, type, ungetc_stack, rewind_stack, file_descriptor, string, index, return f2__stream__new(this_cause, type, ungetc_stack, rewind_stack, file_descriptor, string, index));
+def_pcfunk6(stream__new, type, ungetc_stack, rewind_stack, file_descriptor, string, index, return f2__stream__new(this_cause, type, ungetc_stack, rewind_stack, file_descriptor, string, index));
 
 f2ptr f2__stream__type(f2ptr cause, f2ptr this) {return f2stream__type(this, cause);}
 def_pcfunk1(stream__type, x, return f2__stream__type(this_cause, x));

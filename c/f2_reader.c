@@ -812,8 +812,9 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-boolean_t raw__char__is_tokenizable(f2ptr cause, f2ptr this) {
-  return ((! raw__char__is_whitespace(cause, this))                            &&
+boolean_t raw__char__is_symbolizable(f2ptr cause, f2ptr this) {
+  return (raw__char__is_type(cause, this)                                      &&
+	  (! raw__char__is_whitespace(cause, this))                            &&
 	  (! raw__eq(cause, this, __funk2.reader.char__left_paren))            &&
 	  (! raw__eq(cause, this, __funk2.reader.char__right_paren))           &&
 	  (! raw__eq(cause, this, __funk2.reader.char__array_left_paren))      &&
@@ -822,16 +823,16 @@ boolean_t raw__char__is_tokenizable(f2ptr cause, f2ptr this) {
 	  (! raw__eq(cause, this, __funk2.reader.char__doublelink_right_paren)));
 }
 
-f2ptr f2__stream__try_read_token_list(f2ptr cause, f2ptr stream) {
+f2ptr f2__stream__try_read_symbol_list(f2ptr cause, f2ptr stream) {
   f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
     status("raw_read() note: eof_except.");
     return __funk2.reader.end_of_file_exception;
   }
-  if (raw__char__is_tokenizable(cause, read_ch)) {
-    f2ptr token_list = f2__stream__try_read_token_list(cause, stream);
-    if ((! token_list) || raw__cons__is_type(cause, token_list)) {
-      return f2cons__new(cause, read_ch, token_list);
+  if (raw__char__is_symbolizable(cause, read_ch)) {
+    f2ptr symbol_list = f2__stream__try_read_symbol_list(cause, stream);
+    if ((! symbol_list) || raw__cons__is_type(cause, symbol_list)) {
+      return f2cons__new(cause, read_ch, symbol_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
     }
@@ -842,12 +843,12 @@ f2ptr f2__stream__try_read_token_list(f2ptr cause, f2ptr stream) {
 }
 
 f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
-  f2ptr token_list = f2__stream__try_read_token_list(cause, stream);
-  if (raw__cons__is_type(cause, token_list)) {
-    u64 length = raw__length(cause, token_list);
+  f2ptr symbol_list = f2__stream__try_read_symbol_list(cause, stream);
+  if (raw__cons__is_type(cause, symbol_list)) {
+    u64 length = raw__length(cause, symbol_list);
     char* str = (char*)from_ptr(f2__malloc(length + 1));
     u64 i = 0;
-    f2ptr iter = token_list;
+    f2ptr iter = symbol_list;
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       str[i] = f2char__ch(read_ch, cause);

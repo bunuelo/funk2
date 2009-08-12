@@ -67,7 +67,7 @@ struct funk2_object_type__stream__slot_s {
 extern f2ptr __stream__symbol;
 boolean_t raw__stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__stream__is_type(f2ptr cause, f2ptr this);
-f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr file_descriptor, f2ptr string, f2ptr index);
+f2ptr f2stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr file_descriptor, f2ptr string, f2ptr index);
 #define      f2primobject__is__stream(this, cause) raw__eq(cause, f2primobject__type(this, cause), __stream__symbol)
 
 defprimobject__static_slot__prototype(stream__type);
@@ -83,6 +83,13 @@ defprimobject__static_slot__prototype(stream__ungetc_stack);
 #define      f2stream__ungetc_stack__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, stream__ungetc_stack, cause)
 #define      f2stream__ungetc_stack__trace(     this, cause)        primobject__static_slot__trace(     this, stream__ungetc_stack, cause)
 #define      f2stream__ungetc_stack__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, stream__ungetc_stack, cause)
+
+defprimobject__static_slot__prototype(stream__rewind_stack);
+#define      f2stream__rewind_stack(                   this, cause)        primobject__static_slot__accessor(         this, stream__rewind_stack, cause)
+#define      f2stream__rewind_stack__set(              this, cause, value) primobject__static_slot__set(              this, stream__rewind_stack, cause, value)
+#define      f2stream__rewind_stack__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__rewind_stack, cause)
+#define      f2stream__rewind_stack__trace(            this, cause)        primobject__static_slot__trace(            this, stream__rewind_stack, cause)
+#define      f2stream__rewind_stack__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__rewind_stack, cause)
 
 defprimobject__static_slot__prototype(stream__file_descriptor);
 #define      f2stream__file_descriptor(            this, cause)        primobject__static_slot__accessor(  this, stream__file_descriptor, cause)

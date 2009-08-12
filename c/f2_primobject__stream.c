@@ -112,7 +112,7 @@ f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw_
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
-  return f2stream__new(cause, __string_stream__symbol, nil, nil, string, index);
+  return f2stream__new(cause, __string_stream__symbol, nil, nil, nil, string, index);
 }
 def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(this_cause, string, index));
 

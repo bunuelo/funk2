@@ -894,7 +894,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   {f2ptr try_read_result = f2__stream__try_read_number(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
   {f2ptr try_read_result = f2__stream__try_read_symbol(         cause, stream); if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {return try_read_result;}}
   
-  return nil;
+  return __funk2.reader.could_not_read_type_exception;
 }
 
 f2ptr raw__read(f2ptr cause, f2ptr stream) {

@@ -52,7 +52,8 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
       f2__print_prompt(cause, "Load-F-In-> ", read_exp); fflush(stdout);
 #endif
       if (raw__exception__is_type(cause, read_exp)) {
-	printf("\nload exception: "); f2__write(cause, read_exp); fflush(stdout);
+	printf("\nload exception..: "); f2__write(cause, read_exp); fflush(stdout);
+	printf("\ncurrent filename: "); f2__write(cause, filename); fflush(stdout);
       } else {
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause,

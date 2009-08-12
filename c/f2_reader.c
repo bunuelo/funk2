@@ -818,8 +818,6 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
     }
     if (part_decimal_start) {
       double d = ((is_negative ? -1.0 : 1.0) * (((double)whole_decimal_value) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
-      printf("\ndouble=%f", d);
-      //return f2list4__new(cause, f2symbol__new(cause, strlen("list"), (u8*)"list"), f2integer__new(cause, whole_decimal_value), f2integer__new(cause, part_decimal_value), f2integer__new(cause, part_decimal_denomenator));
       return f2double__new(cause, d);
     } else {
       s64 i = ((is_negative ? ((s64)-1) : ((s64)1)) * ((s64)whole_decimal_value));

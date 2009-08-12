@@ -844,7 +844,7 @@ f2ptr f2__stream__try_read_token_list(f2ptr cause, f2ptr stream) {
 f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
   f2ptr token_list = f2__stream__try_read_token_list(cause, stream);
   if (raw__cons__is_type(cause, token_list)) {
-    u64 length = raw__length(token_list);
+    u64 length = raw__length(cause, token_list);
     char* str = (char*)from_ptr(f2__malloc(length + 1));
     u64 i = 0;
     f2ptr iter = token_list;

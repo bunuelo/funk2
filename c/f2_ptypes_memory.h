@@ -62,7 +62,7 @@ typedef struct ptype_integer_block_s ptype_integer_block_t;
 ptype_integer_block_t* ptype_integer_block__new(int pool_index, f2ptr cause, s64 i);
 
 #define __pure__f2integer__new(pool_index, cause, i) ptype_integer__new(pool_index, cause, i)
-#define __pure__f2integer__i(this)       (((ptype_integer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->i)
+#define __pure__f2integer__i(this)                   (((ptype_integer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->i)
 
 // double
 
@@ -75,7 +75,7 @@ typedef struct ptype_double_block_s ptype_double_block_t;
 ptype_double_block_t* ptype_double_block__new(int pool_index, f2ptr cause, double d);
 
 #define __pure__f2double__new(pool_index, cause, d) ptype_double__new(pool_index, cause, d)
-#define __pure__f2double__d(this)       (((ptype_double_block_t*)(from_ptr(f2ptr_to_ptr(this))))->d)
+#define __pure__f2double__d(this)                   (((ptype_double_block_t*)(from_ptr(f2ptr_to_ptr(this))))->d)
 
 // float
 
@@ -88,7 +88,7 @@ typedef struct ptype_float_block_s ptype_float_block_t;
 ptype_float_block_t* ptype_float_block__new(int pool_index, f2ptr cause, float f);
 
 #define __pure__f2float__new(pool_index, cause, f) ptype_float__new(pool_index, cause, f)
-#define __pure__f2float__f(this)       (((ptype_float_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f)
+#define __pure__f2float__f(this)                   (((ptype_float_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f)
 
 // pointer
 
@@ -101,7 +101,7 @@ typedef struct ptype_pointer_block_s ptype_pointer_block_t;
 ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr p);
 
 #define __pure__f2pointer__new(pool_index, cause, p) ptype_pointer__new(pool_index, cause, p)
-#define __pure__f2pointer__p(this)       (((ptype_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->p)
+#define __pure__f2pointer__p(this)                   (((ptype_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->p)
 
 // gfunkptr
 

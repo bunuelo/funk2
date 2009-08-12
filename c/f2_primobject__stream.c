@@ -108,7 +108,7 @@ def_pcfunk2(stream__index__set, x, y, return f2__stream__index__set(this_cause, 
 
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
-  return f2stream__new(cause, __file_stream__symbol, nil, nil, file_descriptor, nil, nil);
+  return f2stream__new(cause, __file_stream__symbol, nil, nil, nil, file_descriptor, nil, nil);
 }
 def_pcfunk1(file_stream__new, file_descriptor, return f2__file_stream__new(this_cause, file_descriptor));
 
@@ -120,7 +120,7 @@ f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw_
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
-  return f2stream__new(cause, __string_stream__symbol, nil, nil, nil, string, index);
+  return f2stream__new(cause, __string_stream__symbol, nil, nil, nil, nil, string, index);
 }
 def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(this_cause, string, index));
 
@@ -347,7 +347,7 @@ f2ptr f2stream__primobject_type__new(f2ptr cause) {
 
 f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
   if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
-  return f2stream__new(cause, __text_window_stream__symbol, nil, nil, nil, text_window, nil);
+  return f2stream__new(cause, __text_window_stream__symbol, nil, nil, nil, nil, text_window, nil);
 }
 def_pcfunk1(text_window_stream__new, text_window, return f2__text_window_stream__new(this_cause, text_window));
 

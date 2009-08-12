@@ -763,7 +763,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
 	iter = f2cons__cdr(iter, cause);
 	break;
       } else {
-	whole_part_length ++;
+	whole_decimal_length ++;
       }
       iter = f2cons__cdr(iter, cause);
     }

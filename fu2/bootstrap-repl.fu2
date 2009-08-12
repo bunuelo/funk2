@@ -194,7 +194,7 @@
        ,[funk-apply &and [next conds]]]]]
 
 [defunk error [type value]
-  [new larva 63]]
+  [primfunk:larva 63]]
 
 'Now we have defunk, basic logic (and, or), and errors (almost! :-) [exceptions are defined below])!  We can define "safe" type-checked primitive accessors and mutators:'
 

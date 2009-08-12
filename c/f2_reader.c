@@ -824,10 +824,13 @@ boolean_t raw__char__is_symbolizable(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__stream__try_read_symbol_list(f2ptr cause, f2ptr stream) {
-  f2ptr read_ch = f2__stream__getc(cause, stream); if (! read_ch) {return nil;}
+  f2ptr read_ch = f2__stream__getc(cause, stream);
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {
     status("raw_read() note: eof_except.");
     return __funk2.reader.end_of_file_exception;
+  }
+  if (! raw__char__is_type(cause, read_ch)) {
+    return read_ch;
   }
   if (raw__char__is_symbolizable(cause, read_ch)) {
     f2ptr symbol_list = f2__stream__try_read_symbol_list(cause, stream);

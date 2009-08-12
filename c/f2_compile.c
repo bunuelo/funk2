@@ -1512,6 +1512,7 @@ f2ptr   raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t prote
   if      (!exp)                        {result_bcs = f2__compile__value__set(cause, nil);}
   else if (raw__integer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__pointer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__float__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__double__is_type(cause, exp))    {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__gfunkptr__is_type(cause, exp))  {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__string__is_type(cause, exp))    {result_bcs = f2__compile__value__set(cause, exp);}

@@ -1019,7 +1019,7 @@ double funk2_node__f2double__d(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr
   return d;
 }
 
-double f2double__d(f2ptr cause, f2ptr this) {
+double f2double__d(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2double__d(this, cause);
@@ -1133,7 +1133,7 @@ float funk2_node__f2float__f(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr c
   return f;
 }
 
-float f2float__f(f2ptr cause, f2ptr this) {
+float f2float__f(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2float__f(this, cause);

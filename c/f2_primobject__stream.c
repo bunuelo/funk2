@@ -108,7 +108,8 @@ def_pcfunk2(stream__index__set, x, y, return f2__stream__index__set(this_cause, 
 
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
-  return f2stream__new(cause, __file_stream__symbol, nil, nil, nil, file_descriptor, nil, nil);
+  boolean_t rewindable = boolean__true;
+  return f2stream__new(cause, __file_stream__symbol, nil, nil, f2bool__new(rewindable), file_descriptor, nil, nil);
 }
 def_pcfunk1(file_stream__new, file_descriptor, return f2__file_stream__new(this_cause, file_descriptor));
 
@@ -120,7 +121,8 @@ f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw_
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
-  return f2stream__new(cause, __string_stream__symbol, nil, nil, nil, nil, string, index);
+  boolean_t rewindable = boolean__true;
+  return f2stream__new(cause, __string_stream__symbol, nil, nil, f2bool__new(rewindable), nil, string, index);
 }
 def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(this_cause, string, index));
 
@@ -298,7 +300,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
       character = f2__string_stream__try_ungetcless_read_character(cause, this);
     }
   }
-  if (character) {
+  if (character && f2stream__rewindable(this, cause)) {
     f2stream__rewind_stack__set(this, cause, f2cons__new(cause, character, f2stream__rewind_stack(this, cause)));
   }
   return character;

@@ -861,7 +861,7 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       str[i] = f2char__ch(read_ch, cause);
-      printf("\nstr[" u64__fstr "]='%c'", i, str[i]);
+      //printf("\nstr[" u64__fstr "]='%c'", i, str[i]);
       i ++;
       iter = f2cons__cdr(iter, cause);
     }

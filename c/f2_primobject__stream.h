@@ -43,6 +43,10 @@ struct funk2_object_type__stream__slot_s {
   f2ptr rewind_stack__funk;
   f2ptr rewind_stack__set__symbol;
   f2ptr rewind_stack__set__funk;
+  f2ptr rewindable__symbol;
+  f2ptr rewindable__funk;
+  f2ptr rewindable__set__symbol;
+  f2ptr rewindable__set__funk;
   f2ptr file_descriptor__symbol;
   f2ptr file_descriptor__funk;
   f2ptr file_descriptor__set__symbol;
@@ -94,6 +98,13 @@ defprimobject__static_slot__prototype(stream__rewind_stack);
 #define      f2stream__rewind_stack__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__rewind_stack, cause)
 #define      f2stream__rewind_stack__trace(            this, cause)        primobject__static_slot__trace(            this, stream__rewind_stack, cause)
 #define      f2stream__rewind_stack__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__rewind_stack, cause)
+
+defprimobject__static_slot__prototype(stream__rewindable);
+#define      f2stream__rewindable(                   this, cause)        primobject__static_slot__accessor(         this, stream__rewindable, cause)
+#define      f2stream__rewindable__set(              this, cause, value) primobject__static_slot__set(              this, stream__rewindable, cause, value)
+#define      f2stream__rewindable__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__rewindable, cause)
+#define      f2stream__rewindable__trace(            this, cause)        primobject__static_slot__trace(            this, stream__rewindable, cause)
+#define      f2stream__rewindable__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__rewindable, cause)
 
 defprimobject__static_slot__prototype(stream__file_descriptor);
 #define      f2stream__file_descriptor(            this, cause)        primobject__static_slot__accessor(  this, stream__file_descriptor, cause)

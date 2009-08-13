@@ -642,7 +642,7 @@ f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
 f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__try_getc(cause, stream);
   if (raw__exception__is_type(cause, first_char)) {
-    return read_ch;
+    return first_char;
   }
   // read string
   if (raw__eq(cause, first_char, __funk2.reader.char__string_quote)) {

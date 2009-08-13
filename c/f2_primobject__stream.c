@@ -502,6 +502,6 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init__1(stream__try_read_character, this, "");
   f2__primcfunk__init__1(stream__getc,               this, "");
   f2__primcfunk__init__1(stream__rewind, this, "");
-  f2__primcfunk__init__1(stream__rewind_to_length, this, length, "");
+  f2__primcfunk__init__2(stream__rewind_to_length, this, length, "");
 }
 

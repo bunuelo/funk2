@@ -32,6 +32,9 @@ void funk2_garbage_collector__init(funk2_garbage_collector_t* this) {
   }
   
   funk2_never_delete_list__init(&(this->never_delete_list));
+  
+  funk2_processor_mutex__init(&(this->total_garbage_collection_count__mutex));
+  this->total_garbage_collection_count = 0;
 }
 
 void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
@@ -43,6 +46,7 @@ void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
   }
 
   funk2_never_delete_list__destroy(&(this->never_delete_list));
+  funk2_processor_mutex__destroy(&(this->total_garbage_collection_count__mutex));
 }
 
 void funk2_garbage_collector__init_sets_from_memory(funk2_garbage_collector_t* this, funk2_memory_t* memory) {
@@ -100,8 +104,6 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
   // this is where we touch everything we want to keep!
   {
     // parallelized
-    //funk2_user_thread_controller__touch_all_referenced_from_pool_generation(&(this->user_thread_controller), generation_num);
-    // parallelized
     funk2_user_thread_controller__touch_all_protected_alloc_arrays(&(__funk2.user_thread_controller));
     // serial
     funk2_symbol_hash__touch_all_symbols(&(__funk2.ptypes.symbol_hash), this);
@@ -134,13 +136,6 @@ void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* th
   status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr, cycle_count);
 }
 
-//void funk2_garbage_collector__whiten_all_used_memory(funk2_garbage_collector_t* this) {
-//  int pool_index;
-//  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-//    funk2_garbage_collector_pool__whiten_all_used_memory(&(this->gc_pool[pool_index]));
-//  }
-//}
-
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   status("funk2_garbage_collector: collect_garbage.");
   int pool_index;
@@ -150,7 +145,33 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   funk2_garbage_collector__touch_all_roots(this);
   funk2_garbage_collector__spread_all_blackness(this);
   funk2_user_thread_controller__free_whiteness(&(__funk2.user_thread_controller));
+  funk2_processor_mutex__lock(&(this->total_garbage_collection_count__mutex));
+  this->total_garbage_collection_count ++;
+  funk2_processor_mutex__unlock(&(this->total_garbage_collection_count__mutex));
 }
+
+u64 funk2_garbage_collector__total_garbage_collection_count(funk2_garbage_collector_t* this) {
+  u64 total_count = 0;
+  funk2_processor_mutex__lock(&(this->total_garbage_collection_count__mutex));
+  total_count = this->total_garbage_collection_count;
+  funk2_processor_mutex__unlock(&(this->total_garbage_collection_count__mutex));
+  return total_count;
+}
+
+f2ptr f2__garbage_collector__total_garbage_collection_count() {
+  return f2integer__new(cause, funk2_garbage_collector__total_garbage_collection_count(&(__funk2.garbage_collector)));
+}
+def_pcfunk0(garbage_collector__total_garbage_collection_count, return f2__garbage_collector__total_garbage_collection_count());
+
+void funk2_garbage_collector__user_signal_garbage_collect_now(funk2_garbage_collector_t* this) {
+  this->user_signal_garbage_collect_now = boolean__true;
+}
+
+f2ptr f2__garbage_collector__user_signal_garbage_collect_now() {
+  funk2_garbage_collector__user_signal_garbage_collect_now(&(__funk2.garbage_collector));
+  return nil;
+}
+def_pcfunk0(garbage_collector__user_signal_garbage_collect_now, return f2__garbage_collector__user_signal_garbage_collect_now());
 
 // memory handling thread should never call this function
 void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {
@@ -178,46 +199,52 @@ f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_coll
 }
 
 void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
-  boolean_t should_collect_garbage    = boolean__false;
-  int index;
-  for (index = 0; index < memory_pool_num; index ++) {
-    if (this->gc_pool[index].should_run_gc) {
-      should_collect_garbage = boolean__true;
+  boolean_t doing_garbage_collect_now = boolean__false;
+  {
+    boolean_t should_collect_garbage    = boolean__false;
+    int index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      if (this->gc_pool[index].should_run_gc) {
+	should_collect_garbage = boolean__true;
+      }
+    }
+    if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
+      doing_garbage_collect_now = boolean__true;
     }
   }
-  if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
+  if (this->user_signal_garbage_collect_now) {
+    doing_garbage_collect_now = boolean__true;
+  }
+  if (doing_garbage_collect_now) {
     status("funk2_memory__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
     __funk2.user_thread_controller.please_wait = boolean__true;
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
-    status ("");
-    status ("**********************************");
-    status ("**** DOING GARBAGE COLLECTION ****");
-    status ("**********************************");
-    status ("");
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (this->gc_pool[index].should_run_gc) {
+    status("");
+    status("**********************************");
+    status("**** DOING GARBAGE COLLECTION ****");
+    status("**********************************");
+    status("");
+    {
+      int index;
+      for (index = 0; index < memory_pool_num; index ++) {
 	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
       }
     }
-    //boolean_t did_something = boolean__false; //funk2_memory__garbage_collect_generations_until_did_something(this);
     funk2_garbage_collector__collect_garbage(this);
-    status ("");
-    status ("**************************************");
-    status ("**** DONE WITH GARBAGE COLLECTION ****");
-    status ("**************************************");
-    status ("");
-    //if (did_something) {
-    //  status ("garbage collection did something.");
-    //} else {
-    //  status ("garbage collection did nothing.");
-    //}
-    for (index = 0; index < memory_pool_num; index ++) {
-      if (this->gc_pool[index].should_run_gc) {
+    status("");
+    status("**************************************");
+    status("**** DONE WITH GARBAGE COLLECTION ****");
+    status("**************************************");
+    status("");
+    {
+      int index;
+      for (index = 0; index < memory_pool_num; index ++) {
 	this->gc_pool[index].should_run_gc = boolean__false;
 	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
       }
     }
     this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    this->user_signal_garbage_collect_now = boolean__false;
     __funk2.user_thread_controller.please_wait = boolean__false;
   }
 }
@@ -236,5 +263,19 @@ void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, 
     funk2_garbage_collector_pool__load_from_stream(&(this->gc_pool[pool_index]), fd);
   }
   funk2_never_delete_list__load_from_stream(&(this->never_delete_list), fd);
+}
+
+// **
+
+void f2__garbage_collector__reinitialize_globalvars() {
+}
+
+void f2__garbage_collector__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "garbage_collector", "", &f2__garbage_collector__reinitialize_globalvars);
+  
+  f2__garbage_collector__reinitialize_globalvars();
+  
+  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now, "Tells the garbage collector to collect garbage as soon as possible.");
+  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count,  "Returns to total number of times that the garbage collector has collected garbage.");
 }
 

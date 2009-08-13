@@ -228,9 +228,13 @@ def_pcfunk2(stream__nonblocking__set, this, value, return f2__stream__nonblockin
 f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   if (! raw__stream__is_type(cause, this)) {error(nil, "raw__stream__ungetc error: this must be stream."); return f2larva__new(cause, 1);}
   if ((! raw__char__is_type(cause, character)) && (! raw__exception__is_type(cause, character))) {error(nil, "raw__stream__ungetc error: character must be char or exception."); return f2larva__new(cause, 1);}
-  f2ptr ungetc_stack = f2stream__ungetc_stack(this, cause);
-  f2ptr new_cons = f2cons__new(cause, character, ungetc_stack);
-  f2stream__ungetc_stack__set(this, cause, new_cons);
+  f2ptr rewind_characted = f2__stream__rewind(cause, this);
+  if (! raw__eq(cause, character, rewind_character)) {
+    error(nil, "ungetc rewind character mismatch.");
+  }
+  //f2ptr ungetc_stack = f2stream__ungetc_stack(this, cause);
+  //f2ptr new_cons = f2cons__new(cause, character, ungetc_stack);
+  //f2stream__ungetc_stack__set(this, cause, new_cons);
   return nil;
 }
 def_pcfunk2(stream__ungetc, this, character, return f2__stream__ungetc(this_cause, this, character));

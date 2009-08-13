@@ -161,7 +161,7 @@ u64 funk2_garbage_collector__total_garbage_collection_count(funk2_garbage_collec
 f2ptr f2__garbage_collector__total_garbage_collection_count(f2ptr cause) {
   return f2integer__new(cause, funk2_garbage_collector__total_garbage_collection_count(&(__funk2.garbage_collector)));
 }
-def_pcfunk0(garbage_collector__total_garbage_collection_count, return f2__garbage_collector__total_garbage_collection_count());
+def_pcfunk0(garbage_collector__total_garbage_collection_count, return f2__garbage_collector__total_garbage_collection_count(this_cause));
 
 void funk2_garbage_collector__user_signal_garbage_collect_now(funk2_garbage_collector_t* this) {
   this->user_signal_garbage_collect_now = boolean__true;

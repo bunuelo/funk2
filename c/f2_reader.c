@@ -556,8 +556,8 @@ f2ptr f2__stream__try_read_unescaped_gfunkptr(f2ptr cause, f2ptr stream) {
 
 f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__try_getc(cause, stream);
-  if (raw__exception__is_type(cause, read_ch)) {
-    return read_ch;
+  if (raw__exception__is_type(cause, first_char)) {
+    return first_char;
   }
   // read escaped expression
   if (raw__eq(cause, first_char, __funk2.reader.char__escape)) {

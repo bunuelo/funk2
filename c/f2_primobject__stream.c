@@ -382,8 +382,10 @@ f2ptr f2stream__primobject_type__new(f2ptr cause) {
 }
 
 
+/*
 f2ptr f2__text_window_stream__new(f2ptr cause, f2ptr text_window) {
   if (__text_window_stream__symbol == -1) {__text_window_stream__symbol = f2symbol__new(cause, strlen("text_window_stream"), (u8*)"text_window_stream");}
+  f2ptr 
   return f2stream__new(cause, __text_window_stream__symbol, nil, nil, nil, nil, text_window, nil);
 }
 def_pcfunk1(text_window_stream__new, text_window, return f2__text_window_stream__new(this_cause, text_window));
@@ -398,6 +400,7 @@ f2ptr f2__text_window_stream(f2ptr cause, f2ptr text_window) {
   return f2__text_window_stream__new(cause, text_window);
 }
 def_pcfunk1(text_window_stream, text_window, return f2__text_window_stream(this_cause, text_window));
+*/
 
 // **
 
@@ -473,7 +476,7 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init__1(stream__try_read_character, this, "");
   f2__primcfunk__init__1(stream__getc,               this, "");
   f2__primcfunk__init__1(stream__rewind, this, "");
-  f2__primcfunk__init(text_window_stream__new, "");
-  f2__primcfunk__init(text_window_stream, "");
+  //  f2__primcfunk__init(text_window_stream__new, "");
+  //  f2__primcfunk__init(text_window_stream, "");
 }
 

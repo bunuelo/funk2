@@ -283,10 +283,10 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   this->waiting_count = 0;
   funk2_processor_mutex__init(&(this->waiting_count_mutex));
 
-  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__init(&(this->clear_all_gc_touch_flags_before_generation));
-  funk2_user_thread_controller__touch_all_referenced_from_pool_generation__init(&(this->touch_all_referenced_from_pool_generation));
+  //funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__init(&(this->clear_all_gc_touch_flags_before_generation));
+  //funk2_user_thread_controller__touch_all_referenced_from_pool_generation__init(&(this->touch_all_referenced_from_pool_generation));
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(&(this->touch_all_protected_alloc_arrays));
-  funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__init(&(this->free_all_gc_untouched_blocks_from_generation));
+  //funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__init(&(this->free_all_gc_untouched_blocks_from_generation));
   funk2_user_thread_controller__blacken_grey_nodes__init(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
   funk2_user_thread_controller__free_whiteness__init(&(this->free_whiteness));
@@ -295,10 +295,10 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
   funk2_processor_mutex__destroy(&(this->waiting_count_mutex));
   
-  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__destroy(&(this->clear_all_gc_touch_flags_before_generation));
-  funk2_user_thread_controller__touch_all_referenced_from_pool_generation__destroy(&(this->touch_all_referenced_from_pool_generation));
+  //funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__destroy(&(this->clear_all_gc_touch_flags_before_generation));
+  //funk2_user_thread_controller__touch_all_referenced_from_pool_generation__destroy(&(this->touch_all_referenced_from_pool_generation));
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(&(this->touch_all_protected_alloc_arrays));
-  funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__destroy(&(this->free_all_gc_untouched_blocks_from_generation));
+  //funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__destroy(&(this->free_all_gc_untouched_blocks_from_generation));
   funk2_user_thread_controller__blacken_grey_nodes__destroy(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__destroy(&(this->grey_from_other_nodes));
   funk2_user_thread_controller__free_whiteness__destroy(&(this->free_whiteness));

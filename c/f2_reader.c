@@ -974,7 +974,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -984,7 +986,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -994,7 +998,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1004,7 +1010,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1014,7 +1022,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1024,7 +1034,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1034,7 +1046,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1044,7 +1058,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1054,7 +1070,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1064,7 +1082,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1074,7 +1094,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1084,7 +1106,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1094,7 +1118,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1104,7 +1130,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }
@@ -1114,7 +1142,9 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
       return try_read_result;
     }
     if (raw__exception__is_type(cause, try_read_result) && raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.no_character_waiting_exception__symbol)) {
+      printf("\nbefore rewind: "); f2__print(cause, stream);
       raw__stream__rewind_to_length(cause, stream, begin_rewind_length__i);
+      printf("\n after rewind: "); f2__print(cause, stream);
       return try_read_result;
     }
   }

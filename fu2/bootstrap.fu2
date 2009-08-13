@@ -68,12 +68,13 @@
    ]
 [if load-basic-ai [load-basic-ai]]
 
-[format stdout '\nsaving img/bootstrap.img.']
+[format stdout '\nforcing garbage collection.']
+[garbage_collect]
 
+[format stdout '\nsaving img/bootstrap.img.']
 [save_memory_image 'img/bootstrap.img']
 
 [format stdout '\ndone.\n']
-
 [quit]
 
 

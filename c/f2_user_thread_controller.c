@@ -316,10 +316,11 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
   this->waiting_count ++;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
   while (this->please_wait || funk2_processor_mutex__trylock(&(this->waiting_count_mutex))) {
-    if        (this->clear_all_gc_touch_flags_before_generation.start) {funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__user_process(    &(this->clear_all_gc_touch_flags_before_generation));}
-    else if    (this->touch_all_referenced_from_pool_generation.start) {funk2_user_thread_controller__touch_all_referenced_from_pool_generation__user_process(      &(this->touch_all_referenced_from_pool_generation));}
-    else if             (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(                        &(this->touch_all_protected_alloc_arrays));}
-    else if (this->free_all_gc_untouched_blocks_from_generation.start) {funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__user_process(&(this->free_all_gc_untouched_blocks_from_generation));}
+    //if        (this->clear_all_gc_touch_flags_before_generation.start) {funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__user_process(    &(this->clear_all_gc_touch_flags_before_generation));}
+    //else if    (this->touch_all_referenced_from_pool_generation.start) {funk2_user_thread_controller__touch_all_referenced_from_pool_generation__user_process(      &(this->touch_all_referenced_from_pool_generation));}
+    //else 
+    if                  (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(                        &(this->touch_all_protected_alloc_arrays));}
+    //else if (this->free_all_gc_untouched_blocks_from_generation.start) {funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__user_process(&(this->free_all_gc_untouched_blocks_from_generation));}
     else if                           (this->blacken_grey_nodes.start) {funk2_user_thread_controller__blacken_grey_nodes__user_process(                                                    &(this->blacken_grey_nodes));}
     else if                        (this->grey_from_other_nodes.start) {funk2_user_thread_controller__grey_from_other_nodes__user_process(                                              &(this->grey_from_other_nodes));}
     else if                               (this->free_whiteness.start) {funk2_user_thread_controller__free_whiteness__user_process(                                                            &(this->free_whiteness));}

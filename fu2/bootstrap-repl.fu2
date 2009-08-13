@@ -371,6 +371,15 @@
   [sleep_for_nanoseconds_without_yield nanoseconds]
   [yield]]
 
+[defunk nanosleep [nanoseconds]
+  [sleep_for_nanoseconds nanoseconds]]
+
+[defunk microsleep [microseconds]
+  [nanosleep [* 1000 microseconds]]]
+
+[defunk millisleep [milliseconds]
+  [microsleep [* 1000 milliseconds]]]
+
 [defunk sleep [seconds]
   [sleep_for_nanoseconds [integer-multiply seconds 1000000000]]]
 

@@ -55,7 +55,7 @@
 	    [cond [[eq tag `reader:end_of_file-exception]           [prog [if output-stream [afwrite-maybe_html 'repl-io: got end_of_file exception.' output-stream]]
 									  [= read_successful t]
 									  t]]
-		  [[eq tag `reader:no_character_waiting-exception]  [yield]]
+		  [[eq tag `reader:no_character_waiting-exception]  [millisleep 100]]
 		  [t                                                [prog [if output-stream [afwrite-maybe_html [list 'error repl-io: unexpected exception ' read-exp] output-stream]]
 									  [= read_successful t]
 									  read-exp]]]]

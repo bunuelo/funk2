@@ -880,6 +880,7 @@ f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   
   f2ptr begin_rewind_length = f2stream__rewind_length(cause, stream);
   if (! raw__integer__is_type(cause, begin_rewind_length)) {
+    printf("stream: "); f2__print(cause, stream); fflush(stdout);
     return f2larva__new(cause, 337);
   }
   s64 begin_rewind_length__i = f2integer__i(begin_rewind_length, cause);

@@ -337,11 +337,11 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 234);
   }
   if (! raw__cons__is_type(cause, rewind_stack)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 2);
   }
   f2ptr character = f2cons__car(rewind_stack, cause);
   if (! raw__char__is_type(cause, character)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 3);
   }
   f2stream__rewind_stack__set(this, cause, f2cons__cdr(rewind_stack, cause));
   f2stream__ungetc_stack__set(this, cause, f2cons__new(cause, character, f2stream__ungetc_stack(this, cause)));

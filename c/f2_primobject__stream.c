@@ -324,6 +324,27 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
 }
 def_pcfunk1(stream__getc, stream, return f2__stream__getc(this_cause, stream));
 
+f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
+  if (! raw__stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr rewind_stack = f2stream__rewind_stack(cause, this);
+  if (! rewind_stack) {
+    return f2larva__new(cause, 234);
+  }
+  if (! raw__cons__is_type(cause, rewind_stack)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr character = f2cons__car(rewind_stack, cause);
+  if (! raw__char__is_type(cause, character)) {
+    return f2larva__new(cause, 1);
+  }
+  f2stream__rewind_stack__set(this, cause, f2cons__cdr(rewind_stack, cause));
+  f2stream__ungetc_stack__set(this, cause, f2cons__new(cause, character, f2stream__ungetc_stack(this, cause)));
+  return character;
+}
+def_pcfunk1(stream__rewind, stream, return f2__stream__getc(this_cause, stream));
+
 f2ptr f2stream__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk);}
@@ -343,6 +364,7 @@ f2ptr f2stream__primobject_type__new(f2ptr cause) {
   {char* slot_name = "index";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									 __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk,           __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk, nil);}
   {char* slot_name = "try_read_character"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk);}
+  {char* slot_name = "rewind";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk);}
   return this;
 }
 
@@ -418,6 +440,8 @@ void f2__primobject__stream__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__index__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk = never_gc(cfunk);}
   {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}
+  {char* symbol_str = "rewind"; __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__rewind, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk = never_gc(cfunk);}
   
   f2__primcfunk__init(file_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");
@@ -431,6 +455,7 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init__2(stream__ungetc,             this, character, "");
   f2__primcfunk__init__1(stream__try_read_character, this, "");
   f2__primcfunk__init__1(stream__getc,               this, "");
+  f2__primcfunk__init__1(stream__rewind, this, "");
   f2__primcfunk__init(text_window_stream__new, "");
   f2__primcfunk__init(text_window_stream, "");
 }

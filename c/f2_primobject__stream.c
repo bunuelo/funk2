@@ -369,6 +369,34 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stream__rewind, stream, return f2__stream__getc(this_cause, stream));
 
+f2ptr raw__stream__rewind_to_length(f2ptr cause, f2ptr this, s64 length) {
+  if (! raw__stream__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr rewind_length = f2stream__rewind_length(this, cause);
+  if (! raw__integer__is_type(cause, rewind_length)) {
+    return f2larva__new(cause, 3);
+  }
+  s64 rewind_length__i = f2integer__i(rewind_length, cause);
+  if (rewind_length__i < length) {
+    return f2larva__new(cause, 338);
+  }
+  s64 i;
+  for (i = (rewind_length__i - length); i > 0; i --) {
+    f2ptr rewind_result = f2__stream__rewind(cause, this);
+    if (raw__larva__is_type(rewind_result, cause)) {
+      return rewind_result;
+    }
+  }
+}
+f2ptr f2__stream__rewind_to_length(f2ptr cause, f2ptr this, f2ptr length) {
+  if (! raw__integer__is_type(cause, length)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__stream__rewind_to_length(cause, this, f2integer__i(length, cause));
+}
+def_pcfunk2(stream__rewind_to_length, this, length, return f2__stream__rewind_to_length(this_cause, this, length));
+
 f2ptr f2stream__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk);}
@@ -391,6 +419,7 @@ f2ptr f2stream__primobject_type__new(f2ptr cause) {
 									 __funk2.globalenv.object_type.primobject.primobject_type_stream.index__funk,           __funk2.globalenv.object_type.primobject.primobject_type_stream.index__set__funk, nil);}
   {char* slot_name = "try_read_character"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk);}
   {char* slot_name = "rewind";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk);}
+  {char* slot_name = "rewind_to_length";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__funk);}
   return this;
 }
 
@@ -455,6 +484,8 @@ void f2__primobject__stream__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}
   {char* symbol_str = "rewind"; __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__rewind, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk = never_gc(cfunk);}
+  {char* symbol_str = "rewind_to_length"; __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__rewind_to_length, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__funk = never_gc(cfunk);}
   
   f2__primcfunk__init(file_stream__new, "");
   f2__primcfunk__init(string_stream__new, "");
@@ -469,5 +500,6 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init__1(stream__try_read_character, this, "");
   f2__primcfunk__init__1(stream__getc,               this, "");
   f2__primcfunk__init__1(stream__rewind, this, "");
+  f2__primcfunk__init__1(stream__rewind_to_length, this, length, "");
 }
 

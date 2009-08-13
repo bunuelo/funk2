@@ -67,6 +67,8 @@ struct funk2_object_type__stream__slot_s {
   f2ptr try_read_character__funk;
   f2ptr rewind__symbol;
   f2ptr rewind__funk;
+  f2ptr rewind_to_length__symbol;
+  f2ptr rewind_to_length__funk;
 };
 
 #endif // F2__PRIMOBJECT__STREAM__TYPES__H

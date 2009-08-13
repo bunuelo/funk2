@@ -47,10 +47,10 @@ struct funk2_object_type__stream__slot_s {
   f2ptr rewindable__funk;
   f2ptr rewindable__set__symbol;
   f2ptr rewindable__set__funk;
-  f2ptr rewindable_length__symbol;
-  f2ptr rewindable_length__funk;
-  f2ptr rewindable_length__set__symbol;
-  f2ptr rewindable_length__set__funk;
+  f2ptr rewind_length__symbol;
+  f2ptr rewind_length__funk;
+  f2ptr rewind_length__set__symbol;
+  f2ptr rewind_length__set__funk;
   f2ptr file_descriptor__symbol;
   f2ptr file_descriptor__funk;
   f2ptr file_descriptor__set__symbol;

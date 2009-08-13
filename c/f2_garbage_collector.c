@@ -158,7 +158,7 @@ u64 funk2_garbage_collector__total_garbage_collection_count(funk2_garbage_collec
   return total_count;
 }
 
-f2ptr f2__garbage_collector__total_garbage_collection_count() {
+f2ptr f2__garbage_collector__total_garbage_collection_count(f2ptr cause) {
   return f2integer__new(cause, funk2_garbage_collector__total_garbage_collection_count(&(__funk2.garbage_collector)));
 }
 def_pcfunk0(garbage_collector__total_garbage_collection_count, return f2__garbage_collector__total_garbage_collection_count());
@@ -167,11 +167,11 @@ void funk2_garbage_collector__user_signal_garbage_collect_now(funk2_garbage_coll
   this->user_signal_garbage_collect_now = boolean__true;
 }
 
-f2ptr f2__garbage_collector__user_signal_garbage_collect_now() {
+f2ptr f2__garbage_collector__user_signal_garbage_collect_now(f2ptr cause) {
   funk2_garbage_collector__user_signal_garbage_collect_now(&(__funk2.garbage_collector));
   return nil;
 }
-def_pcfunk0(garbage_collector__user_signal_garbage_collect_now, return f2__garbage_collector__user_signal_garbage_collect_now());
+def_pcfunk0(garbage_collector__user_signal_garbage_collect_now, return f2__garbage_collector__user_signal_garbage_collect_now(this_cause));
 
 // memory handling thread should never call this function
 void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {

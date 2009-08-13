@@ -332,7 +332,7 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   if (! raw__stream__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr rewind_stack = f2stream__rewind_stack(cause, this);
+  f2ptr rewind_stack = f2stream__rewind_stack(this, cause);
   if (! rewind_stack) {
     return f2larva__new(cause, 234);
   }

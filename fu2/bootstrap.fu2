@@ -39,6 +39,7 @@
 [load 'fu2/bootstrap-child_handler.fu2']
 [load 'fu2/bootstrap-apropos.fu2']
 [load 'fu2/bootstrap-sort.fu2']
+[load 'fu2/bootstrap-garbage_collector.fu2']
 
 `[load 'fu2/action.fu2']
 [load 'fu2/time.fu2']

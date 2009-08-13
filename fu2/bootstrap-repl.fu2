@@ -381,7 +381,7 @@
   [microsleep [integer-multiply 1000 milliseconds]]]
 
 [defunk sleep [seconds]
-  [sleep_for_nanoseconds [integer-multiply seconds 1000000000]]]
+  [millisleep [integer-multiply 1000 seconds]]]
 
 [defmetro parog [:rest codes]
   'run commands in parallel'

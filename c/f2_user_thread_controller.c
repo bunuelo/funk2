@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-
+/*
 // funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation
 
 void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__init(funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation_t* this) {
@@ -92,6 +92,7 @@ void funk2_user_thread_controller__touch_all_referenced_from_pool_generation__us
     f2__sleep(1);
   }
 }
+*/
 
 // funk2_user_thread_controller__touch_all_protected_alloc_arrays
 
@@ -127,6 +128,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_proces
   }
 }
 
+/*
 // funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation
 
 void funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__init(funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_t* this) {
@@ -163,6 +165,7 @@ void funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation_
     f2__sleep(1);
   }
 }
+*/
 
 // funk2_user_thread_controller__blacken_grey_nodes
 
@@ -333,21 +336,21 @@ void funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_co
   }
 }
 
-void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(funk2_user_thread_controller_t* this, int generation_num) {
-  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__signal_execute(&(this->clear_all_gc_touch_flags_before_generation), generation_num);
-}
+//void funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation(funk2_user_thread_controller_t* this, int generation_num) {
+//  funk2_user_thread_controller__clear_all_gc_touch_flags_before_generation__signal_execute(&(this->clear_all_gc_touch_flags_before_generation), generation_num);
+//}
 
-void funk2_user_thread_controller__touch_all_referenced_from_pool_generation(funk2_user_thread_controller_t* this, int generation_num) {
-  funk2_user_thread_controller__touch_all_referenced_from_pool_generation__signal_execute(&(this->touch_all_referenced_from_pool_generation), generation_num);
-}
+//void funk2_user_thread_controller__touch_all_referenced_from_pool_generation(funk2_user_thread_controller_t* this, int generation_num) {
+//  funk2_user_thread_controller__touch_all_referenced_from_pool_generation__signal_execute(&(this->touch_all_referenced_from_pool_generation), generation_num);
+//}
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_execute(&(this->touch_all_protected_alloc_arrays));
 }
 
-boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(funk2_user_thread_controller_t* this, int generation_num) {
-  return funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__signal_execute(&(this->free_all_gc_untouched_blocks_from_generation), generation_num);
-}
+//boolean_t funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation(funk2_user_thread_controller_t* this, int generation_num) {
+//  return funk2_user_thread_controller__free_all_gc_untouched_blocks_from_generation__signal_execute(&(this->free_all_gc_untouched_blocks_from_generation), generation_num);
+//}
 
 void funk2_user_thread_controller__blacken_grey_nodes(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__blacken_grey_nodes__signal_execute(&(this->blacken_grey_nodes));

@@ -108,6 +108,13 @@ defprimobject__static_slot__prototype(stream__rewindable);
 #define      f2stream__rewindable__trace(            this, cause)        primobject__static_slot__trace(            this, stream__rewindable, cause)
 #define      f2stream__rewindable__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__rewindable, cause)
 
+defprimobject__static_slot__prototype(stream__rewind_length);
+#define      f2stream__rewind_length(                   this, cause)        primobject__static_slot__accessor(         this, stream__rewind_length, cause)
+#define      f2stream__rewind_length__set(              this, cause, value) primobject__static_slot__set(              this, stream__rewind_length, cause, value)
+#define      f2stream__rewind_length__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__rewind_length, cause)
+#define      f2stream__rewind_length__trace(            this, cause)        primobject__static_slot__trace(            this, stream__rewind_length, cause)
+#define      f2stream__rewind_length__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__rewind_length, cause)
+
 defprimobject__static_slot__prototype(stream__file_descriptor);
 #define      f2stream__file_descriptor(            this, cause)        primobject__static_slot__accessor(  this, stream__file_descriptor, cause)
 #define      f2stream__file_descriptor__set(       this, cause, value) primobject__static_slot__set(       this, stream__file_descriptor, cause, value)

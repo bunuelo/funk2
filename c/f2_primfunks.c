@@ -843,9 +843,9 @@ def_pcfunk1(circular_buffer,         x,    return f2__circular_buffer(this_cause
 def_pcfunk2(circular_buffer__add,    x, y, return f2__circular_buffer__add(   this_cause, x, y));
 def_pcfunk1(circular_buffer__remove, x,    return f2__circular_buffer__remove(this_cause, x));
 
-def_pcfunk1(exp__print, x, return f2__exp__print(this_cause, x));
-def_pcfunk1(write, x, return f2__write(this_cause, x));
-def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, fptr, x));
+def_pcfunk1(exp__print, x, return f2__exp__print(this_cause, simple_fiber, x));
+def_pcfunk1(write, x, return f2__write(this_cause, simple_fiber, x));
+def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, simple_fiber, fptr, x));
 
 f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   if (! raw__stream__is_type(cause, stream)) {

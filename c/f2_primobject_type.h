@@ -27,6 +27,9 @@ f2ptr f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr g
 f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr name);
 f2ptr f2__primobject_type__lookup_slot_set_funk(f2ptr cause, f2ptr this, f2ptr name);
 f2ptr f2__primobject_type__lookup_slot_execute_funk(f2ptr cause, f2ptr this, f2ptr name);
+f2ptr f2__primobject_type__get_funk__slot_names(f2ptr cause, f2ptr this);
+f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this);
+f2ptr f2__primobject_type__execute_funk__slot_names(f2ptr cause, f2ptr this);
 
 // **
 

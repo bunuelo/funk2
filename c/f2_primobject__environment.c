@@ -59,7 +59,7 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   f2ptr env = this;
   f2ptr value;
   while (env) {
-    value = frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
+    value = f2__frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
     if (! raw__larva__is_type(cause, value)) {
       return value;
     }
@@ -74,7 +74,7 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   f2ptr env = this;
   f2ptr value;
   while (env) {
-    value = frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
+    value = f2__frame__lookup_type_var_value(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
     if (! raw__larva__is_type(cause, value)) {
       return value;
     }
@@ -94,7 +94,7 @@ f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr typ
 
 f2ptr environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
-  frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);
+  f2__frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);
   return nil;
 }
 
@@ -103,7 +103,7 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   f2ptr env = this;
   f2ptr result;
   while (env) {
-    result = frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __funk2.primobject__frame.type_variable_not_defined__larva);
+    result = f2__frame__type_var_value__set(cause, f2environment__frame(env, cause), type, var, value, __funk2.primobject__frame.type_variable_not_defined__larva);
     if (! raw__larva__is_type(cause, result)) {
       return result;
     }

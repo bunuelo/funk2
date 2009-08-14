@@ -105,6 +105,7 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #define F2__PRIMOBJECTS__H
 
 #include "f2_primobject__stream.h"
+#include "f2_primobject__hashtable.h"
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"
@@ -1949,6 +1950,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__event__slot_t            primobject_type_event;
   funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
   funk2_object_type__stream__slot_t           primobject_type_stream;
+  funk2_object_type__hashtable__slot_t        primobject_type_hashtable;
 };
 
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS

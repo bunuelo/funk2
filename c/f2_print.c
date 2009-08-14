@@ -1214,9 +1214,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		  
 		  keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
 		}
-	      } else {
-		array_is_not_known_primobject = 1; // we print unknown primobjects in the same format of basic arrays
 	      }
+	    } else {
+	      array_is_not_known_primobject = 1; // we print unknown primobjects in the same format of basic arrays
 	    }
 	  }
 	}

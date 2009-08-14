@@ -1205,6 +1205,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		  f2ptr slot_value    = f2cons__cdr(keyvalue_pair, cause);
 		  if (raw__symbol__is_type(cause, slot_name)) {
 		    f2symbol__str_copy(slot_name, cause, (u8*)temp_slot_name_str);
+		    temp_slot_name_str[f2symbol__length(slot_name, cause)] = (char)0;
 		  } else {
 		    temp_slot_name_str[0] = (char)0;
 		  }

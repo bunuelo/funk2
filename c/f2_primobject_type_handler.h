@@ -25,6 +25,7 @@
 #include "f2_primobjects.h"
 #include "f2_primobject__stream.h"
 #include "f2_primobject__hashtable.h"
+#include "f2_primobject__set.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

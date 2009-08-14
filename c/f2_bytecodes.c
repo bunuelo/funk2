@@ -1260,7 +1260,7 @@ int f2__fiber__bytecode__debug(f2ptr fiber, f2ptr bytecode, f2ptr value) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  printf("\ndebug: *** "); f2__write(fiber, value); printf(" ***"); fflush(stdout);
+  printf("\ndebug: *** "); f2__write(cause, fiber, value); printf(" ***"); fflush(stdout);
   return 0;
 }
 

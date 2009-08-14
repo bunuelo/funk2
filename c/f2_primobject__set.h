@@ -47,6 +47,12 @@ struct funk2_object_type__set__slot_s {
   f2ptr bin_array__funk;
   f2ptr bin_array__set__symbol;
   f2ptr bin_array__set__funk;
+  f2ptr add__symbol;
+  f2ptr add__funk;
+  f2ptr lookup__symbol;
+  f2ptr lookup__funk;
+  f2ptr elements__symbol;
+  f2ptr elements__funk;
 };
 
 #endif // F2__PRIMOBJECT__SET__TYPES__H

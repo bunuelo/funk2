@@ -435,7 +435,7 @@ boolean_t raw__cfunk__is_type(f2ptr cause, f2ptr x) {
 #endif // F2__PRIMOBJECT__TYPE_CHECK
   return (raw__primobject__is_type(cause, x) && f2primobject__is_cfunk(x, cause));
 }
-f2ptr f2__cfunk__is_type(f2ptr cause, f2ptr this) {return f2__cfunk__is_type(cause, this);}
+f2ptr f2__cfunk__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__cfunk__is_type(cause, this));}
 def_pcfunk1(cfunk__is_type, x, return f2__cfunk__is_type(this_cause, x));
 
 f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}

@@ -859,8 +859,8 @@ f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
     f2__fwrite__raw_char(cause, stream, ']', NULL, nil);
   } else {
     switch(f2ptype__raw(exp, cause)) {
-    case ptype_string:f2__fwrite__raw_string(cause, stream, exp, nil); break;
-    default:          f2__fwrite(            cause, stream, exp     ); break;
+    case ptype_string:f2__fwrite__raw_string(cause,        stream, exp, nil); break;
+    default:          f2__fwrite(            cause, fiber, stream, exp     ); break;
     }
   }
   return exp;

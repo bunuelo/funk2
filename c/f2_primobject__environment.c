@@ -95,7 +95,6 @@ f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, 
   __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }
-def_pcfunk4(environment__add_type_var_value, this, type, var, value, return f2__environment__add_type_var_value(this_cause, this, type, var, value));
 
 f2ptr f2__environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");

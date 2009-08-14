@@ -81,7 +81,7 @@ def_pcfunk1(determine_real_thought_process_types, exp, return f2__determine_real
 f2ptr f2thought_process__new_from_exp(f2ptr cause, f2ptr exp, f2ptr bin_num_power) {
   release__assert(__funk2.thought_process.real_value_slot__symbol != -1, nil, "f2thought_process__new_from_exp error: used before thought process initialized.");
   release__assert(raw__integer__is_type(cause, bin_num_power),              nil, "f2thought_process__new_from_exp error: bin_num_power should be integer.");
-  f2ptr read_write_execute_slot_hash = f2__hashtable__new(cause, bin_num_power);
+  f2ptr read_write_execute_slot_hash = f2__hashtable__new(cause);
   f2ptr read_funk                    = nil;
   f2ptr write_funk                   = nil;
   f2ptr execute_funk                 = nil;
@@ -293,7 +293,7 @@ void f2__thought_process__init_default_slots(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__thought_process__new(f2ptr cause) {
-  f2ptr this = f2thought_process__new(cause, f2__hashtable__new(cause, f2integer__new(cause, 4)));
+  f2ptr this = f2thought_process__new(cause, f2__hashtable__new(cause));
   f2__thought_process__init_default_slots(cause, this);
   return this;
 }
@@ -305,7 +305,7 @@ void f2__thought_process_type__init_default_slots(f2ptr cause, f2ptr this) {
 
 void f2__define__thought_process_type__ptype_free_memory(f2ptr cause) {
   //f2ptr thought_process = 
-  f2thought_process__new(cause, f2__hashtable__new(cause, f2integer__new(cause, 4)));
+  f2thought_process__new(cause, f2__hashtable__new(cause));
   f2__thought_process__init_default_slots(cause, __funk2.thought_process.ptype_free_memory__symbol);
 }
 

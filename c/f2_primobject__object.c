@@ -45,7 +45,7 @@ def_pcfunk0(object__new, return object__new(this_cause));
 
 // this lookup fails if binding is not strictly in local frame of object
 f2ptr object__lookup_local_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  return frame__lookup_type_var_assignment_cons(cause, f2object__frame(this, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
+  return f2__frame__lookup_type_var_assignment_cons(cause, f2object__frame(this, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
 }
 
 // this lookup first attempts to find a local binding, but also checks all inherited type frames for type bindings.
@@ -70,7 +70,7 @@ f2ptr object__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr typ
 
 // this add only modifies the local object frame
 void object__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  frame__add_type_var_value(cause, f2object__frame(this, cause), type, var, value);
+  f2__frame__add_type_var_value(cause, f2object__frame(this, cause), type, var, value);
 }
 
 // this lookup first attempts the local object frame and then tries to find a type frame binding

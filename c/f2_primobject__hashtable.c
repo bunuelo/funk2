@@ -45,6 +45,19 @@ f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bi
 
 boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_hashtable(this, cause);}
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
+def_pcfunk1(hashtable__is_type, this, return f2__hashtable__is_type(this_cause, this));
+
+f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__write_mutex(this, cause);}
+def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
+
+f2ptr f2__hashtable__key_count(f2ptr cause, f2ptr this) {return f2hashtable__key_count(this, cause);}
+def_pcfunk1(hashtable__key_count, this, return f2__hashtable__key_count(this_cause, this));
+
+f2ptr f2__hashtable__bin_num_power(f2ptr cause, f2ptr this) {return f2hashtable__bin_num_power(this, cause);}
+def_pcfunk1(hashtable__bin_num_power, this, return f2__hashtable__bin_num_power(this_cause, this));
+
+f2ptr f2__hashtable__bin_array(f2ptr cause, f2ptr this) {return f2hashtable__bin_array(this, cause);}
+def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cause, this));
 
 boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
   if (! raw__hashtable__is_type(cause, this)) {return 0;}
@@ -191,6 +204,8 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
   return new_list;
 }
+
+
 
 f2ptr f2hashtable__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);

@@ -74,7 +74,7 @@ f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__w
 def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
 
 f2ptr f2__hashtable__write_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__write_mutex__set(this, cause, value);}
-def_pcfunk2(hashtable__write_mutex__set, this, value, return f2__hashtable__write_mutex(this_cause, this, value));
+def_pcfunk2(hashtable__write_mutex__set, this, value, return f2__hashtable__write_mutex__set(this_cause, this, value));
 
 f2ptr f2__hashtable__key_count(f2ptr cause, f2ptr this) {return f2hashtable__key_count(this, cause);}
 def_pcfunk1(hashtable__key_count, this, return f2__hashtable__key_count(this_cause, this));

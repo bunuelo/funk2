@@ -86,7 +86,7 @@ f2ptr f2__hashtable__bin_num_power(f2ptr cause, f2ptr this) {return f2hashtable_
 def_pcfunk1(hashtable__bin_num_power, this, return f2__hashtable__bin_num_power(this_cause, this));
 
 f2ptr f2__hashtable__bin_num_power__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__bin_num_power__set(this, cause, value);}
-def_pcfunk1(hashtable__bin_num_power__set, this, value, return f2__hashtable__bin_num_power__set(this_cause, this, value));
+def_pcfunk2(hashtable__bin_num_power__set, this, value, return f2__hashtable__bin_num_power__set(this_cause, this, value));
 
 f2ptr f2__hashtable__bin_array(f2ptr cause, f2ptr this) {return f2hashtable__bin_array(this, cause);}
 def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cause, this));

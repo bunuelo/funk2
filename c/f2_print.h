@@ -34,21 +34,21 @@
 void f2__fwrite__raw_char  (f2ptr cause, f2ptr fptr, char ch, int return_size[2], boolean_t use_html);
 void f2__fwrite__raw_string(f2ptr cause, f2ptr fptr, f2ptr str, f2ptr use_html);
 
-f2ptr f2__fwrite_html     (f2ptr cause, f2ptr fptr, f2ptr exp);
-f2ptr f2__fwrite_depth    (f2ptr cause, f2ptr fptr, f2ptr exp, int recursion_depth);
-f2ptr f2__write_depth     (f2ptr cause, f2ptr exp, int recursion_depth);
-f2ptr f2__exp__print_depth(f2ptr cause, f2ptr exp, int recursion_depth);
-f2ptr f2__print_depth     (f2ptr cause, f2ptr exp, int recursion_depth);
+f2ptr f2__fwrite_html     (f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp);
+f2ptr f2__fwrite_depth    (f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp, int recursion_depth);
+f2ptr f2__write_depth     (f2ptr cause, f2ptr fiber, f2ptr exp, int recursion_depth);
+f2ptr f2__exp__print_depth(f2ptr cause, f2ptr fiber, f2ptr exp, int recursion_depth);
+f2ptr f2__print_depth     (f2ptr cause, f2ptr fiber, f2ptr exp, int recursion_depth);
 
-f2ptr f2__exp__print(f2ptr cause, f2ptr exp);
-f2ptr f2__print     (f2ptr cause, f2ptr exp);
-f2ptr f2__fwrite    (f2ptr cause, f2ptr fptr, f2ptr exp);
-f2ptr f2__write     (f2ptr cause, f2ptr exp);
+f2ptr f2__exp__print(f2ptr cause, f2ptr fiber, f2ptr exp);
+f2ptr f2__print     (f2ptr cause, f2ptr fiber, f2ptr exp);
+f2ptr f2__fwrite    (f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp);
+f2ptr f2__write     (f2ptr cause, f2ptr fiber, f2ptr exp);
 
-f2ptr f2__fprint_prompt      (f2ptr cause, f2ptr stream, char* prompt, f2ptr exp);
-f2ptr f2__fprint_prompt_debug(f2ptr cause, f2ptr stream, char* prompt, f2ptr exp);
+f2ptr f2__fprint_prompt      (f2ptr cause, f2ptr fiber, f2ptr stream, char* prompt, f2ptr exp);
+f2ptr f2__fprint_prompt_debug(f2ptr cause, f2ptr fiber, f2ptr stream, char* prompt, f2ptr exp);
 
-f2ptr f2__print_prompt      (f2ptr cause, char* prompt, f2ptr exp);
-f2ptr f2__print_prompt_debug(f2ptr cause, char* prompt, f2ptr exp);
+f2ptr f2__print_prompt      (f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp);
+f2ptr f2__print_prompt_debug(f2ptr cause, f2ptr fiber, char* prompt, f2ptr exp);
 
 #endif // F2__PRINT__H

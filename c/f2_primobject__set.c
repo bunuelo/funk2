@@ -207,7 +207,7 @@ f2ptr f2set__primobject_type__new(f2ptr cause) {
 								    __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__funk,     __funk2.globalenv.object_type.primobject.primobject_type_set.bin_array__set__funk, nil);}
   {char* slot_name = "add";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
   {char* slot_name = "lookup";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
-  {char* slot_name = "elements";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk, nil, nil);}
+  {char* slot_name = "elements";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk, nil, nil);}
   return this;
 }
 

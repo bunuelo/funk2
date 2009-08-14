@@ -109,7 +109,7 @@ void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
 	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);
 	f2ptr keyvalue_pair__value = f2cons__cdr(iter__keyvalue_pair, cause);
-	f2__hashtable__add_keyvalue_pair(cause, temp_hashtable, keyvalue_pair__key, keyvalue_pair__value);
+	f2__hashtable__add(cause, temp_hashtable, keyvalue_pair__key, keyvalue_pair__value);
 	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
       }
     }
@@ -118,8 +118,8 @@ void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2hashtable__bin_array__set(    this, cause, f2hashtable__bin_array(    temp_hashtable, cause));
 }
 
-f2ptr f2__hashtable__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
-  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add_keyvalue_pair assert failed: f2__hashtable__valid(this)");
+f2ptr f2__hashtable__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__add assert failed: f2__hashtable__valid(this)");
   f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -181,8 +181,8 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   return nil;
 }
 
-f2ptr f2__hashtable__lookup_value(f2ptr this, f2ptr cause, f2ptr key) {
-  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_value assert failed: f2__hashtable__valid(this)");
+f2ptr f2__hashtable__lookup(f2ptr this, f2ptr cause, f2ptr key) {
+  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup assert failed: f2__hashtable__valid(this)");
   f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(this, cause, key);
   if (keyvalue_pair) {
     f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
@@ -212,7 +212,9 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   return new_list;
 }
 
-
+f2ptr f2__hashtable__add(f2ptr cause, f2ptr this, f2ptr key) {
+  
+}
 
 f2ptr f2hashtable__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);

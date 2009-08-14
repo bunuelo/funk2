@@ -94,9 +94,9 @@ defprimobject__static_slot__prototype(hashtable__bin_array);
 
 f2ptr raw__hashtable__new                (f2ptr cause, s64 bin_num_power);
 f2ptr f2__hashtable__new                 (f2ptr cause);
-f2ptr f2__hashtable__add_keyvalue_pair   (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+f2ptr f2__hashtable__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
-f2ptr f2__hashtable__lookup_value        (f2ptr this, f2ptr cause, f2ptr key);
+f2ptr f2__hashtable__lookup              (f2ptr this, f2ptr cause, f2ptr key);
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
 

@@ -1148,7 +1148,7 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
   f2__fiber__increment_pc(fiber, cause);
   
   f2ptr env = f2fiber__env(fiber, cause);
-  f2ptr fiber_value = environment__lookup_type_var_value(cause, env, type, var);
+  f2ptr fiber_value = f2__environment__lookup_type_var_value(cause, env, type, var);
   if (raw__larva__is_type(cause, fiber_value)) {
     fiber_value = f2__cause__lookup_type_var_value(cause, cause, type, var);
   }
@@ -1166,7 +1166,7 @@ int f2__fiber__bytecode__define_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
   
   f2ptr env   = f2fiber__env(fiber, cause);
   f2ptr value = f2fiber__value(fiber, cause);
-  f2fiber__value__set(fiber, cause, environment__define_type_var_value(cause, env, type, var, value));
+  f2fiber__value__set(fiber, cause, f2__environment__define_type_var_value(cause, env, type, var, value));
   return 0;
 }
 
@@ -1180,7 +1180,7 @@ int f2__fiber__bytecode__type_var__mutate(f2ptr fiber, f2ptr bytecode, f2ptr typ
   
   f2ptr env       = f2fiber__env(fiber, cause);
   f2ptr value     = f2fiber__value(fiber, cause);
-  f2ptr new_value = environment__type_var_value__set(cause, env, type, var, value);
+  f2ptr new_value = f2__environment__type_var_value__set(cause, env, type, var, value);
   f2fiber__value__set(fiber, cause, new_value);
   return 0;
 }
@@ -1195,7 +1195,7 @@ int f2__fiber__bytecode__globalize_type_var(f2ptr fiber, f2ptr bytecode, f2ptr t
   
   f2ptr value = f2fiber__value(fiber, cause);
   if (! raw__larva__is_type(cause, value)) {
-    f2fiber__value__set(fiber, cause, environment__define_type_var_value(cause, global_environment(), type, var, value));
+    f2fiber__value__set(fiber, cause, f2__environment__define_type_var_value(cause, global_environment(), type, var, value));
   }
   return 0;
 }

@@ -920,8 +920,8 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause);
 boolean_t raw__funkable__is_type(f2ptr cause, f2ptr exp);
   
   
-f2ptr f2__format(f2ptr cause, f2ptr fptr, f2ptr exp);
-f2ptr f2__format__html(f2ptr cause, f2ptr fptr, f2ptr exp);
+f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp);
+f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp);
 f2ptr f2__list(f2ptr cause, f2ptr seq);
 void raw__exit(int value);
 f2ptr f2__quit(f2ptr cause, f2ptr value);

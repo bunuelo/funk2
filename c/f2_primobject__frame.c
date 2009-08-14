@@ -202,7 +202,6 @@ void f2__primobject_frame__initialize() {
   f2__primobject_frame__reinitialize_globalvars();
   
   f2__primcfunk__init__1(frame__is_type, exp, "checks to see if object is a frame.  returns true if object is a frame and false otherwise.");
-  f2__primcfunk__init(frame__new, "");
   f2__primcfunk__init(frame__add_var_value, "");
   f2__primcfunk__init(frame__lookup_var_value, "");
   f2__primcfunk__init(frame__var_value__set, "");

@@ -44,8 +44,6 @@ typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__si
 typedef struct funk2_object_type__event__slot_s            funk2_object_type__event__slot_t;
 typedef struct funk2_object_type__bytecode_event__slot_s   funk2_object_type__bytecode_event__slot_t;
 
-typedef struct funk2_primobject_object_types_s funk2_primobject_object_types_t;
-
 #define defarray_slot__index_var(name)        array_slot__##name##__index
 #define defarray_slot(           name, index)        int defarray_slot__index_var(name) = index
 #define defarray_slot__prototype(name)        extern int defarray_slot__index_var(name)
@@ -103,9 +101,6 @@ defarray_slot__prototype(primobject__dynamic_slots);
 
 #ifndef F2__PRIMOBJECTS__H
 #define F2__PRIMOBJECTS__H
-
-#include "f2_primobject__stream.h"
-#include "f2_primobject__hashtable.h"
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"
@@ -1923,34 +1918,6 @@ struct funk2_object_type__bytecode_event__slot_s {
   f2ptr context__funk;
   f2ptr context__set__symbol;
   f2ptr context__set__funk;
-};
-
-
-
-struct funk2_primobject_object_types_s {
-  funk2_object_type__place__slot_t            primobject_type_place;
-  funk2_object_type__cons__slot_t             primobject_type_cons;
-  funk2_object_type__doublelink__slot_t       primobject_type_doublelink;
-  funk2_object_type__imagination_link__slot_t primobject_type_imagination_link;
-  funk2_object_type__cfunk__slot_t            primobject_type_cfunk;
-  funk2_object_type__metrocfunk__slot_t       primobject_type_metrocfunk;
-  funk2_object_type__funk__slot_t             primobject_type_funk;
-  funk2_object_type__metro__slot_t            primobject_type_metro;
-  funk2_object_type__exception__slot_t        primobject_type_exception;
-  funk2_object_type__bytecode__slot_t         primobject_type_bytecode;
-  funk2_object_type__fiber__slot_t            primobject_type_fiber;
-  funk2_object_type__processor__slot_t        primobject_type_processor;
-  funk2_object_type__scheduler__slot_t        primobject_type_scheduler;
-  funk2_object_type__event_subscriber__slot_t primobject_type_event_subscriber;
-  funk2_object_type__cause__slot_t            primobject_type_cause;
-  funk2_object_type__transframe__slot_t       primobject_type_transframe;
-  funk2_object_type__bug__slot_t              primobject_type_bug;
-  funk2_object_type__time__slot_t             primobject_type_time;
-  funk2_object_type__size_2d__slot_t          primobject_type_size_2d;
-  funk2_object_type__event__slot_t            primobject_type_event;
-  funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
-  funk2_object_type__stream__slot_t           primobject_type_stream;
-  funk2_object_type__hashtable__slot_t        primobject_type_hashtable;
 };
 
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS

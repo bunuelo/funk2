@@ -54,7 +54,6 @@ struct funk2_object_type__hashtable__slot_s {
 #ifndef F2__PRIMOBJECT__HASHTABLE__H
 #define F2__PRIMOBJECT__HASHTABLE__H
 
-#include "f2_primobject__stream.h"
 #include "f2_primobjects.h"
 
 // hashtable

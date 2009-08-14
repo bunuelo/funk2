@@ -76,7 +76,6 @@ struct funk2_object_type__stream__slot_s {
 #ifndef F2__PRIMOBJECT__STREAM__H
 #define F2__PRIMOBJECT__STREAM__H
 
-#include "f2_primobject__hashtable.h"
 #include "f2_primobjects.h"
 
 // stream

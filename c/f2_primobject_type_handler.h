@@ -22,10 +22,42 @@
 #ifndef F2__PRIMOBJECT_TYPE_HANDLER__H
 #define F2__PRIMOBJECT_TYPE_HANDLER__H
 
+#include "f2_primobjects.h"
+#include "f2_primobject__stream.h"
+#include "f2_primobject__hashtable.h"
+
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
   f2ptr                   type_hash;
 } funk2_primobject_type_handler_t;
+
+typedef struct funk2_primobject_object_types_s funk2_primobject_object_types_t;
+
+struct funk2_primobject_object_types_s {
+  funk2_object_type__place__slot_t            primobject_type_place;
+  funk2_object_type__cons__slot_t             primobject_type_cons;
+  funk2_object_type__doublelink__slot_t       primobject_type_doublelink;
+  funk2_object_type__imagination_link__slot_t primobject_type_imagination_link;
+  funk2_object_type__cfunk__slot_t            primobject_type_cfunk;
+  funk2_object_type__metrocfunk__slot_t       primobject_type_metrocfunk;
+  funk2_object_type__funk__slot_t             primobject_type_funk;
+  funk2_object_type__metro__slot_t            primobject_type_metro;
+  funk2_object_type__exception__slot_t        primobject_type_exception;
+  funk2_object_type__bytecode__slot_t         primobject_type_bytecode;
+  funk2_object_type__fiber__slot_t            primobject_type_fiber;
+  funk2_object_type__processor__slot_t        primobject_type_processor;
+  funk2_object_type__scheduler__slot_t        primobject_type_scheduler;
+  funk2_object_type__event_subscriber__slot_t primobject_type_event_subscriber;
+  funk2_object_type__cause__slot_t            primobject_type_cause;
+  funk2_object_type__transframe__slot_t       primobject_type_transframe;
+  funk2_object_type__bug__slot_t              primobject_type_bug;
+  funk2_object_type__time__slot_t             primobject_type_time;
+  funk2_object_type__size_2d__slot_t          primobject_type_size_2d;
+  funk2_object_type__event__slot_t            primobject_type_event;
+  funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
+  funk2_object_type__stream__slot_t           primobject_type_stream;
+  funk2_object_type__hashtable__slot_t        primobject_type_hashtable;
+};
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);
 void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this);

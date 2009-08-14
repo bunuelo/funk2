@@ -59,9 +59,24 @@ f2ptr f2frame__new(f2ptr cause) {
   return f2frame__new__raw(cause, f2mutex__new(cause), f2__hashtable__new(cause));
 }
 
+f2ptr f2__frame__new(f2ptr cause) {return f2frame__new(cause);}
+def_pcfunk0(frame__new, return f2__frame__new(this_cause));
+
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x) {return (raw__primobject__is_type(cause, x) && f2primobject__is_frame(x, cause));}
 f2ptr f2__frame__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__frame__is_type(cause, x));}
 def_pcfunk1(frame__is_type, x, return f2__frame__is_type(this_cause, x));
+
+f2ptr f2__frame__new_type_mutex(f2ptr cause, f2ptr this) {return f2frame__new_type_mutex(this, cause);}
+def_pcfunk1(frame__new_type_mutex, this, return f2__frame__new_type_mutex(this_cause, this));
+
+f2ptr f2__frame__new_type_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2frame__new_type_mutex__set(this, cause, value);}
+def_pcfunk2(frame__new_type_mutex__set, this, value, return f2__frame__new_type_mutex__set(this_cause, this, value));
+
+f2ptr f2__frame__type_hashtable(f2ptr cause, f2ptr this) {return f2frame__type_hashtable(this, cause);}
+def_pcfunk1(frame__type_hashtable, this, return f2__frame__type_hashtable(this_cause, this));
+
+f2ptr f2__frame__type_hashtable__set(f2ptr cause, f2ptr this, f2ptr value) {return f2frame__type_hashtable__set(this, cause, value);}
+def_pcfunk2(frame__type_hashtable__set, this, value, return f2__frame__type_hashtable__set(this_cause, this, value));
 
 void frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
@@ -170,6 +185,18 @@ f2ptr frame__funkvar__slot_names(f2ptr cause, f2ptr this) {
 def_pcfunk1(frame__funkvar__slot_names, this, return frame__funkvar__slot_names(this_cause, this));
 
 
+f2ptr f2frame__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__funk);}
+  {char* slot_name = "new";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.new__funk);}
+  {char* slot_name = "new_type_mutex"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								     __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__set__funk, nil);}
+  {char* slot_name = "type_hashtable"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								     __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__set__funk, nil);}
+  return this;
+}
+
+
 // **
 
 void f2__primobject_frame__reinitialize_globalvars() {
@@ -191,5 +218,23 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__funkvar__slot_names, "");
   
   funk2_primobject__frame__init(&(__funk2.primobject__frame));
+
+  f2ptr cause = initial_cause();
+  
+  // frame
+  
+  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_frame.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var(frame__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "new_type_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__new_type_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__funk = never_gc(cfunk);}
+  {char* symbol_str = "new_type_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__new_type_mutex__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "type_hashtable"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__type_hashtable, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__funk = never_gc(cfunk);}
+  {char* symbol_str = "type_hashtable-set"; __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__type_hashtable__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__set__funk = never_gc(cfunk);}
+  
 }
 

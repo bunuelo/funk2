@@ -19,6 +19,30 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PRIMOBJECT__FRAME__TYPES__H
+#define F2__PRIMOBJECT__FRAME__TYPES__H
+
+typedef struct funk2_object_type__frame__slot_s funk2_object_type__frame__slot_t;
+
+// frame
+
+struct funk2_object_type__frame__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr new_type_mutex__symbol;
+  f2ptr new_type_mutex__funk;
+  f2ptr new_type_mutex__set__symbol;
+  f2ptr new_type_mutex__set__funk;
+  f2ptr type_hashtable__symbol;
+  f2ptr type_hashtable__funk;
+  f2ptr type_hashtable__set__symbol;
+  f2ptr type_hashtable__set__funk;
+};
+
+#endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
+
 #ifndef F2__PRIMOBJECT__FRAME__H
 #define F2__PRIMOBJECT__FRAME__H
 
@@ -64,9 +88,6 @@ f2ptr frame__lookup_funkvar_value           (f2ptr cause, f2ptr this, f2ptr funk
 f2ptr frame__funkvar_value__set             (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value, f2ptr not_defined_value);         // *
 f2ptr frame__type_var__slot_names           (f2ptr cause, f2ptr this, f2ptr type);
 
-void f2__primobject_frame__reinitialize_globalvars();
-void f2__primobject_frame__initialize();
-
 typedef struct funk2_primobject__frame_s {
   f2ptr frame__symbol;
   f2ptr variable__symbol;
@@ -77,6 +98,13 @@ typedef struct funk2_primobject__frame_s {
 void funk2_primobject__frame__init(   funk2_primobject__frame_t* this);
 void funk2_primobject__frame__reinit( funk2_primobject__frame_t* this);
 void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this);
+
+f2ptr f2frame__primobject_type__new(f2ptr cause);
+
+// **
+
+void f2__primobject_frame__reinitialize_globalvars();
+void f2__primobject_frame__initialize();
 
 #endif // F2__PRIMOBJECT__FRAME__H
 

@@ -57,6 +57,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
   funk2_object_type__stream__slot_t           primobject_type_stream;
   funk2_object_type__hashtable__slot_t        primobject_type_hashtable;
+  funk2_object_type__frame__slot_t            primobject_type_frame;
 };
 
 void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);

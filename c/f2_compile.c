@@ -1236,7 +1236,7 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
   status("don't know how to compile type."); // should throw exception... (or return larva)
   dont_know_how_to_compile();
   return f2larva__new(cause, 125);
-x}
+}
 
 f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   if (! raw__cons__is_type(cause, exp)) {

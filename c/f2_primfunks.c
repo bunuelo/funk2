@@ -979,7 +979,7 @@ f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
 //	    return f2bytecode__new(this_cause, command, arg0, arg1, arg2));
 
 def_pcfunk1(debug, value,
-	   printf("\ndebug: "); f2__write(nil, value); fflush(stdout);
+	   printf("\ndebug: "); f2__write(this_cause, simple_fiber, value); fflush(stdout);
 	   return value);
 
 def_pcfunk1(trace, value,

@@ -67,7 +67,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)              {f2__fiber__bytecode__newenv(             fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)        {f2__fiber__bytecode__machine_code(       fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else {
-    f2__print(cause, bytecode);
+    f2__print(cause, fiber, bytecode);
     f2fiber__value__set(fiber, cause, f2larva__new(cause, 21));
   }
   return boolean__false;
@@ -81,7 +81,7 @@ void f2__print_environment_stack(f2ptr cause, f2ptr fiber, f2ptr env) {
   }
   
   printf("\nenv name: ");
-  f2__write(fiber, env_name);
+  f2__write(cause, fiber, env_name);
   f2ptr parent_env = f2environment__parent_env(env, cause);
   if (parent_env) {
     f2__print_environment_stack(cause, fiber, parent_env);

@@ -202,7 +202,7 @@ f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr 
 	  }
 	}
       } else if (raw__symbol__eq(cause, type, __funk2.primobject__frame.funk_variable__symbol)) {
-	f2ptr funkvar_assignment_cons = environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.funk_variable__symbol, var);
+	f2ptr funkvar_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.funk_variable__symbol, var);
 	if (raw__cons__is_type(cause, funkvar_assignment_cons)) {
 	  f2ptr replacement_bcs = f2__compile__array_elt(cause, funkvar_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
 	  //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize funkvar lookup!");

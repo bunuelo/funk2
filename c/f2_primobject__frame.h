@@ -39,6 +39,16 @@ struct funk2_object_type__frame__slot_s {
   f2ptr type_hashtable__funk;
   f2ptr type_hashtable__set__symbol;
   f2ptr type_hashtable__set__funk;
+  f2ptr add_type_var_value__symbol;
+  f2ptr add_type_var_value__funk;
+  f2ptr lookup_type_var_assignment_cons__symbol;
+  f2ptr lookup_type_var_assignment_cons__funk;
+  f2ptr lookup_type_var_value__symbol;
+  f2ptr lookup_type_var_value__funk;
+  f2ptr type_var_value__set__symbol;
+  f2ptr type_var_value__set__funk;
+  f2ptr type_var__slot_names__symbol;
+  f2ptr type_var__slot_names__funk;
 };
 
 #endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H

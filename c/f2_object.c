@@ -57,7 +57,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
-	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
 	if (test_get_type) {
 	  primobject_type_name = test_get_type;
 	}
@@ -174,7 +174,7 @@ f2ptr f2__object__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
-	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
 	if (test_get_type) {
 	  primobject_type_name = test_get_type;
 	}
@@ -316,7 +316,7 @@ f2ptr f2__object__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot) {
     if (raw__primobject__is_type(cause, this)) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
-	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
 	if (test_get_type) {
 	  primobject_type_name = test_get_type;
 	}
@@ -452,7 +452,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
     if (raw__primobject__is_type(cause, this)) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
-	f2ptr test_get_type = frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
 	if (test_get_type) {
 	  primobject_type_name = test_get_type;
 	}

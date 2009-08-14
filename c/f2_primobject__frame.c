@@ -173,7 +173,7 @@ def_pcfunk4(frame__funkvar_value__set, this, funkvar, value, not_defined_value, 
 f2ptr f2__frame__var__slot_names(f2ptr cause, f2ptr this) {
   return f2__hashtable__slot_names(cause, f2__frame__var_hashtable(cause, this));
 }
-def_pcfunk1(frame__var__slot_names, this, return frame__var__slot_names(this_cause, this));
+def_pcfunk1(frame__var__slot_names, this, return f2__frame__var__slot_names(this_cause, this));
 
 f2ptr f2__frame__funkvar__slot_names(f2ptr cause, f2ptr this) {
   return f2__hashtable__slot_names(cause, f2__frame__funkvar_hashtable(cause, this));

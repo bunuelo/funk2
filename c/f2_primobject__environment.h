@@ -43,6 +43,12 @@ struct funk2_object_type__environment__slot_s {
   f2ptr desc__funk;
   f2ptr desc__set__symbol;
   f2ptr desc__set__funk;
+  f2ptr add_type_var_value__symbol;
+  f2ptr add_type_var_value__funk;
+  f2ptr lookup_type_var_value__symbol;
+  f2ptr lookup_type_var_value__funk;
+  f2ptr type_var_value__set__symbol;
+  f2ptr type_var_value__set__funk;
 };
 
 #endif // F2__PRIMOBJECT__ENVIRONMENT__TYPES__H

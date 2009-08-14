@@ -52,8 +52,8 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
       f2__print_prompt(cause, fiber, "Load-F-In-> ", read_exp); fflush(stdout);
 #endif
       if (raw__exception__is_type(cause, read_exp)) {
-	printf("\nload exception..: "); f2__write(cause, read_exp); fflush(stdout);
-	printf("\ncurrent filename: "); f2__write(cause, filename); fflush(stdout);
+	printf("\nload exception..: "); f2__write(cause, fiber, read_exp); fflush(stdout);
+	printf("\ncurrent filename: "); f2__write(cause, fiber, filename); fflush(stdout);
       } else {
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause,
@@ -71,12 +71,12 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	//printf("\nload_fiber stack size = %d", raw__length(f2fiber__stack(load_fiber))); fflush(stdout);
 	f2ptr eval_exp = f2fiber__value(load_fiber, cause);
 	if (raw__exception__is_type(cause, eval_exp)) {
-	  printf("\nload eval exception: "); f2__write(cause, eval_exp); fflush(stdout);
+	  printf("\nload eval exception: "); f2__write(cause, fiber, eval_exp); fflush(stdout);
 	  f2__stream__close(cause, stream);
 	  return f2integer__new(f2fiber__cause_reg(load_fiber, cause), 1);
 	}
 #ifdef DEBUG_LOAD
-	printf ("\nLoad-F-Out> "); f2__write(cause, eval_exp); fflush(stdout);
+	printf ("\nLoad-F-Out> "); f2__write(cause, fiber, eval_exp); fflush(stdout);
 #endif
       }
     }

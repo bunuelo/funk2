@@ -226,12 +226,9 @@ f2ptr f2hashtable__primobject_type__new(f2ptr cause) {
 								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__funk, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__set__funk, nil);}
   {char* slot_name = "bin_array";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__funk,     __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__set__funk, nil);}
-  {char* slot_name = "slot_names";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.slot_names__funk,    nil, nil);}
-  {char* slot_name = "add";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								    nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.add__funk);}
-  {char* slot_name = "lookup";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								    nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.lookup__funk);}
+  {char* slot_name = "slot_names";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hashtable.slot_names__funk,    nil, nil);}
+  {char* slot_name = "add";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.add__funk);}
+  {char* slot_name = "lookup";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.lookup__funk);}
   return this;
 }
 
@@ -274,9 +271,9 @@ void f2__primobject_hashtable__initialize() {
   {char* symbol_str = "slot_names"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.slot_names__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__slot_names, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.slot_names__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__add, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.add__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(hashtable__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.add__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__lookup, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.lookup__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hashtable__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.lookup__funk = never_gc(cfunk);}
   
 }
 

@@ -226,9 +226,9 @@
 [globalize-funk simple_repl                                 &primfunk:simple_repl]
 [globalize-funk repl                                        &simple_repl]
 
-[globalize-funk hashtable-add_keyvalue_pair                 &primfunk:hashtable__add_keyvalue_pair]
+[globalize-funk hashtable-add                               &primfunk:hashtable__add]
 [globalize-funk hashtable-lookup_keyvalue_pair              &primfunk:hashtable__lookup_keyvalue_pair]
-[globalize-funk hashtable-lookup_value                      &primfunk:hashtable__lookup_value]
+[globalize-funk hashtable-lookup                            &primfunk:hashtable__lookup]
 
 [globalize-funk tensor-new_from_array_of_integer_dimensions &primfunk:tensor__new_from_array_of_integer_dimensions]
 [globalize-funk tensor-elt_from_array_of_integer_indices    &primfunk:tensor__elt_from_array_of_integer_indices]

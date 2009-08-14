@@ -32,7 +32,7 @@ int f2__simple_repl(f2ptr cause, f2ptr fiber) {
     f2ptr read_exp = raw__read(cause, __funk2.globalenv.stdin_stream);
     
     if (raw__exception__is_type(cause, read_exp)) {
-      printf("\nrepl exception: "); f2__write(cause, read_exp); fflush(stdout);
+      printf("\nrepl exception: "); f2__write(cause, fiber, read_exp); fflush(stdout);
       break;
     } else {
       repl_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
@@ -47,7 +47,7 @@ int f2__simple_repl(f2ptr cause, f2ptr fiber) {
       f2__scheduler__complete_fiber(cause, repl_fiber);
       
       f2ptr eval_exp = f2fiber__value(repl_fiber, cause);
-      printf ("\nF-Out> "); f2__write(cause, eval_exp); fflush(stdout);
+      printf ("\nF-Out> "); f2__write(cause, fiber, eval_exp); fflush(stdout);
     }
   }
   f2fiber__keep_undead__set(repl_fiber, cause, nil);

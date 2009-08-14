@@ -108,7 +108,7 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
       while(key_iter) {
 	f2ptr key  = f2cons__car(key_iter,  cause);
 	f2__set__add(cause, temp_set, key);
-	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+	key_iter = f2cons__cdr(key_iter, cause);
       }
     }
   }

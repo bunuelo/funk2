@@ -104,8 +104,8 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #ifndef F2__PRIMOBJECTS__H
 #define F2__PRIMOBJECTS__H
 
-#include "f2_primobject__hashtable.h"
 #include "f2_primobject__stream.h"
+#include "f2_primobject__hashtable.h"
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"

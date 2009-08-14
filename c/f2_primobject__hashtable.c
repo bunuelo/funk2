@@ -73,23 +73,26 @@ def_pcfunk0(hashtable__new, return f2__hashtable__new(this_cause));
 f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__write_mutex(this, cause);}
 def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
 
+f2ptr f2__hashtable__write_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__write_mutex__set(this, cause, value);}
+def_pcfunk2(hashtable__write_mutex__set, this, value, return f2__hashtable__write_mutex(this_cause, this, value));
+
 f2ptr f2__hashtable__key_count(f2ptr cause, f2ptr this) {return f2hashtable__key_count(this, cause);}
 def_pcfunk1(hashtable__key_count, this, return f2__hashtable__key_count(this_cause, this));
+
+f2ptr f2__hashtable__key_count__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__key_count(this, cause, value);}
+def_pcfunk2(hashtable__key_count__set, this, value, return f2__hashtable__key_count__set(this_cause, this, value));
 
 f2ptr f2__hashtable__bin_num_power(f2ptr cause, f2ptr this) {return f2hashtable__bin_num_power(this, cause);}
 def_pcfunk1(hashtable__bin_num_power, this, return f2__hashtable__bin_num_power(this_cause, this));
 
+f2ptr f2__hashtable__bin_num_power__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__bin_num_power(this, cause, value);}
+def_pcfunk1(hashtable__bin_num_power__set, this, value, return f2__hashtable__bin_num_power__set(this_cause, this, value));
+
 f2ptr f2__hashtable__bin_array(f2ptr cause, f2ptr this) {return f2hashtable__bin_array(this, cause);}
 def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cause, this));
 
-//f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
-//  if(! raw__integer__is_type(cause, bin_num_power)) {
-//    return f2larva__new(cause, 1);
-//  }
-//  f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
-//  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
-//  return this;
-//}
+f2ptr f2__hashtable__bin_array__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__bin_array(this, cause, value);}
+def_pcfunk2(hashtable__bin_array__set, this, value, return f2__hashtable__bin_array__set(this_cause, this, value));
 
 void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2hashtable__bin_num_power(this, cause);

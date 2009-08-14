@@ -52,9 +52,9 @@ f2ptr f2environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr desc)
 boolean_t raw__environment__is_type(f2ptr cause, f2ptr this) {return (raw__array__is_type(cause, this) && f2primobject__is_environment(this, cause));}
 f2ptr f2__environment__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__environment__is_type(cause, this));}
 
-void environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {f2__frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);}
+f2ptr f2__environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);}
 
-f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr value;
@@ -69,7 +69,7 @@ f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2pt
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }
 
-f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+f2ptr f2__environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr value;
@@ -84,21 +84,21 @@ f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }
 
-f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  f2ptr result = environment__lookup_type_var_value(cause, this, type, var);
+f2ptr f2__environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr result = f2__environment__lookup_type_var_value(cause, this, type, var);
   if (raw__larva__is_type(cause, result)) {
     error(nil, "environment__safe_lookup_type_var_value failed to lookup variable.");
   }
   return result;
 }
 
-f2ptr environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+f2ptr f2__environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2__frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);
   return nil;
 }
 
-f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+f2ptr f2__environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr result;

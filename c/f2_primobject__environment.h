@@ -84,24 +84,24 @@ defprimobject__static_slot__prototype(environment__desc);
 #define f2environment__desc__trace(           this, cause)        primobject__static_slot__trace(     this, environment__desc, cause)
 #define f2environment__desc__imagination_frame(           this, cause)        primobject__static_slot__imagination_frame(     this, environment__desc, cause)
 
-void  environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
-f2ptr environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
-f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr f2__environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr f2__environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr f2__environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr f2__environment__define_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr f2__environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 
-#define environment__add_var_value(cause, this, var, value)        environment__add_type_var_value(        cause, this, __funk2.primobject__frame.variable__symbol, var, value)
-#define environment__lookup_var_value(cause, this, var)            environment__lookup_type_var_value(     cause, this, __funk2.primobject__frame.variable__symbol, var)
-#define environment__safe_lookup_var_value(cause, this, var)       environment__safe_lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var)
-#define environment__define_var_value(cause, this, var, value)     environment__define_type_var_value(     cause, this, __funk2.primobject__frame.variable__symbol, var, value)
-#define environment__var_value__set(cause, this, var, value)       environment__type_var_value__set(       cause, this, __funk2.primobject__frame.variable__symbol, var, value)
+#define environment__add_var_value(cause, this, var, value)        f2__environment__add_type_var_value(        cause, this, __funk2.primobject__frame.variable__symbol, var, value)
+#define environment__lookup_var_value(cause, this, var)            f2__environment__lookup_type_var_value(     cause, this, __funk2.primobject__frame.variable__symbol, var)
+#define environment__safe_lookup_var_value(cause, this, var)       f2__environment__safe_lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var)
+#define environment__define_var_value(cause, this, var, value)     f2__environment__define_type_var_value(     cause, this, __funk2.primobject__frame.variable__symbol, var, value)
+#define environment__var_value__set(cause, this, var, value)       f2__environment__type_var_value__set(       cause, this, __funk2.primobject__frame.variable__symbol, var, value)
 
-#define environment__add_funkvar_value(cause, this, var, value)    environment__add_type_var_value(        cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value)
-#define environment__lookup_funkvar_value(cause, this, var)        environment__lookup_type_var_value(     cause, this, __funk2.primobject__frame.funk_variable__symbol, var)
-#define environment__safe_lookup_funkvar_value(cause, this, var)   environment__safe_lookup_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, var)
-#define environment__define_funkvar_value(cause, this, var, value) environment__define_type_var_value(     cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value)
-#define environment__funkvar_value__set(cause, this, var, value)   environment__type_var_value__set(       cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value)
+#define environment__add_funkvar_value(cause, this, var, value)    f2__environment__add_type_var_value(        cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value)
+#define environment__lookup_funkvar_value(cause, this, var)        f2__environment__lookup_type_var_value(     cause, this, __funk2.primobject__frame.funk_variable__symbol, var)
+#define environment__safe_lookup_funkvar_value(cause, this, var)   f2__environment__safe_lookup_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, var)
+#define environment__define_funkvar_value(cause, this, var, value) f2__environment__define_type_var_value(     cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value)
+#define environment__funkvar_value__set(cause, this, var, value)   f2__environment__type_var_value__set(       cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value)
 
 void print_environment_backtrace(f2ptr env);
 

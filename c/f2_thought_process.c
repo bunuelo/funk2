@@ -334,7 +334,7 @@ void f2__thought_process__reinitialize_globalvars() {
   __funk2.thought_process.real_value_slot__symbol                  = f2symbol__new(cause, strlen("thought_process:real_value"),                (u8*)"thought_process:real_value");
   
   __funk2.thought_process.global_thought_process_type_hash__symbol = f2symbol__new(cause, strlen("thought_process:thought_process_type_hash"), (u8*)"thought_process:thought_process_type_hash");
-  __funk2.thought_process.global_thought_process_type_hash         = f2__hashtable__new(cause, f2integer__new(cause, 10));
+  __funk2.thought_process.global_thought_process_type_hash         = f2__hashtable__new(cause);
   environment__add_var_value(cause, global_environment(), __funk2.thought_process.global_thought_process_type_hash__symbol, __funk2.thought_process.global_thought_process_type_hash);
   
 }

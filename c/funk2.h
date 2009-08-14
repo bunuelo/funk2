@@ -125,6 +125,7 @@
 #include "f2_primobject__hashtable.h"
 #include "f2_primobject__object.h"
 #include "f2_primobject__object_type.h"
+#include "f2_primobject__set.h"
 #include "f2_primobject__stream.h"
 #include "f2_primobject__tensor.h"
 #include "f2_primobject__dynamic_library.h"

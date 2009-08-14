@@ -56,6 +56,7 @@ void f2__initialize() {
   f2__primobject_object_type__initialize();
   f2__primobject_circular_buffer__initialize();
   f2__primobject__semantic_graph__initialize();
+  f2__primobject_set__initialize();
   f2__primobject__stream__initialize();
   f2__primobject__text_buffer__initialize();
   f2__primcfunks__initialize();

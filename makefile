@@ -95,6 +95,7 @@ funk2_server_objs = \
   c/f2_primobject__object_type.o \
   c/f2_primobject__circular_buffer.o \
   c/f2_primobject__semantic_graph.o \
+  c/f2_primobject__set.o \
   c/f2_primobject__stream.o \
   c/f2_primobject__text_buffer.o \
   c/f2_primobject_type.o \
@@ -180,6 +181,7 @@ funk2_headers = \
   c/f2_primobject__object_type.h \
   c/f2_primobject__circular_buffer.h \
   c/f2_primobject__semantic_graph.h \
+  c/f2_primobject__set.h \
   c/f2_primobject__stream.h \
   c/f2_primobject__text_buffer.h \
   c/f2_primobject_type.h \

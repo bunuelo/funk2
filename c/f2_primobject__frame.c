@@ -188,17 +188,17 @@ def_pcfunk1(frame__funkvar__slot_names, this, return f2__frame__funkvar__slot_na
 
 f2ptr f2frame__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "is_type";                         f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__funk);}
-  {char* slot_name = "new";                             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.new__funk);}
-  {char* slot_name = "new_type_mutex";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-										      __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__set__funk, nil);}
-  {char* slot_name = "type_hashtable";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-										      __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__set__funk, nil);}
-  {char* slot_name = "add_type_var_value";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.add_type_var_value__funk);}
-  {char* slot_name = "lookup_type_var_assignment_cons"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.lookup_type_var_assignment_cons__funk);}
-  {char* slot_name = "lookup_type_var_value";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.lookup_type_var_value__funk);}
-  {char* slot_name = "type_var_value-set";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var_value__set__funk);}
-  {char* slot_name = "type_var-slot_names";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_names__funk);}
+  {char* slot_name = "is_type";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__funk);}
+  {char* slot_name = "new";                      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.new__funk);}
+  {char* slot_name = "new_type_mutex";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									       __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__set__funk, nil);}
+  {char* slot_name = "type_hashtable";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									       __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.type_hashtable__set__funk, nil);}
+  {char* slot_name = "add_type_var_value";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_frame.add_type_var_value__funk);}
+  {char* slot_name = "type_var_assignment_cons"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.lookup_type_var_assignment_cons__funk, nil, nil);}
+  {char* slot_name = "type_var_value";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									       __funk2.globalenv.object_type.primobject.primobject_type_frame.lookup_type_var_value__funk, __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var_value__set__funk, nil);}
+  {char* slot_name = "type_var-slot_names";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.type_var__slot_names__funk, nil, nil);}
   
   return this;
 }

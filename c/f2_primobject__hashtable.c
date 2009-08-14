@@ -233,7 +233,9 @@ void f2__primobject_hashtable__initialize() {
   f2__primobject_hashtable__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __hashtable__symbol, nil);
-
+  
+  f2ptr cause = initial_cause();
+  
   // hashtable
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

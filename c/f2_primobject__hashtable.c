@@ -47,18 +47,6 @@ boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__i
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
 def_pcfunk1(hashtable__is_type, this, return f2__hashtable__is_type(this_cause, this));
 
-f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__write_mutex(this, cause);}
-def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
-
-f2ptr f2__hashtable__key_count(f2ptr cause, f2ptr this) {return f2hashtable__key_count(this, cause);}
-def_pcfunk1(hashtable__key_count, this, return f2__hashtable__key_count(this_cause, this));
-
-f2ptr f2__hashtable__bin_num_power(f2ptr cause, f2ptr this) {return f2hashtable__bin_num_power(this, cause);}
-def_pcfunk1(hashtable__bin_num_power, this, return f2__hashtable__bin_num_power(this_cause, this));
-
-f2ptr f2__hashtable__bin_array(f2ptr cause, f2ptr this) {return f2hashtable__bin_array(this, cause);}
-def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cause, this));
-
 boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
   if (! raw__hashtable__is_type(cause, this)) {return 0;}
   f2ptr bin_num_power = f2hashtable__bin_num_power(this, cause);
@@ -78,14 +66,30 @@ f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
   return this;
 }
 
-f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
-  if(! raw__integer__is_type(cause, bin_num_power)) {
-    return f2larva__new(cause, 1);
-  }
-  f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
-  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
-  return this;
-}
+#define hashtable__default_start_bin_num_power 3
+f2ptr f2__hashtable__new(f2ptr cause) {return raw__hashtable__new(cause, hashtable__default_start_bin_num_power);}
+def_pcfunk0(hashtable__new, return f2__hashtable__new(this_cause));
+
+f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__write_mutex(this, cause);}
+def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
+
+f2ptr f2__hashtable__key_count(f2ptr cause, f2ptr this) {return f2hashtable__key_count(this, cause);}
+def_pcfunk1(hashtable__key_count, this, return f2__hashtable__key_count(this_cause, this));
+
+f2ptr f2__hashtable__bin_num_power(f2ptr cause, f2ptr this) {return f2hashtable__bin_num_power(this, cause);}
+def_pcfunk1(hashtable__bin_num_power, this, return f2__hashtable__bin_num_power(this_cause, this));
+
+f2ptr f2__hashtable__bin_array(f2ptr cause, f2ptr this) {return f2hashtable__bin_array(this, cause);}
+def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cause, this));
+
+//f2ptr f2__hashtable__new(f2ptr cause, f2ptr bin_num_power) {
+//  if(! raw__integer__is_type(cause, bin_num_power)) {
+//    return f2larva__new(cause, 1);
+//  }
+//  f2ptr this = raw__hashtable__new(cause, f2integer__i(bin_num_power, cause));
+//  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__new assert failed: f2__hashtable__valid(this)");
+//  return this;
+//}
 
 void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2hashtable__bin_num_power(this, cause);

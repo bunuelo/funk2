@@ -639,7 +639,7 @@ void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   } else {
     status(  "[ERROR] f2fiber__funk error: cfunkable must be funk or metro.");
     printf("\n[ERROR] f2fiber__funk error: cfunkable must be funk or metro.\n"); fflush(stdout);
-    printf("\n[ERROR] cfunkable="); fflush(stdout); f2__print(cause, cfunkable); fflush(stdout); printf("\n"); fflush(stdout);
+    printf("\n[ERROR] cfunkable="); fflush(stdout); f2__print(cause, fiber, cfunkable); fflush(stdout); printf("\n"); fflush(stdout);
     error(nil, "[ERROR] f2fiber__funk error: cfunkable must be funk or metro.");
     f2fiber__value__set(fiber, cause, f2larva__new(cause, 24));
     debug__f2fiber__funk__unfunkable_error();
@@ -672,12 +672,12 @@ f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
   f2ptr test_array = raw__array__new(i_cause, 10);
   raw__array__elt__set(cause,   test_array, 0, f2integer__new(cause, 0));
   raw__array__elt__set(i_cause, test_array, 1, f2integer__new(cause, 1));
-  f2__print(cause,   cause);
-  f2__print(cause,   test_array);
-  f2__print(cause,   raw__array__elt(cause,   test_array, 0));
-  f2__print(cause,   i_cause);
-  f2__print(i_cause, test_array);
-  f2__print(cause,   raw__array__elt(i_cause, test_array, 1));
+  f2__print(cause,   nil, cause);
+  f2__print(cause,   nil, test_array);
+  f2__print(cause,   nil, raw__array__elt(cause,   test_array, 0));
+  f2__print(cause,   nil, i_cause);
+  f2__print(i_cause, nil, test_array);
+  f2__print(cause,   nil, raw__array__elt(i_cause, test_array, 1));
   return test_array;
 }
 def_pcfunk1(test_imagine, imagination_name, return f2__test_imagine(this_cause, imagination_name));
@@ -847,10 +847,10 @@ def_pcfunk1(exp__print, x, return f2__exp__print(this_cause, x));
 def_pcfunk1(write, x, return f2__write(this_cause, x));
 def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, fptr, x));
 
-f2ptr f2__format(f2ptr cause, f2ptr stream, f2ptr exp) {
+f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   if (! raw__stream__is_type(cause, stream)) {
     printf("\nraw__format error: stream must be stream.");
-    f2__print(cause, stream);
+    f2__print(cause, fiber, stream);
     return f2larva__new(cause, 1);
     //return nil;
   }
@@ -865,12 +865,12 @@ f2ptr f2__format(f2ptr cause, f2ptr stream, f2ptr exp) {
   }
   return exp;
 }
-def_pcfunk2(exp__format, fptr, x, return f2__format(this_cause, fptr, x));
+def_pcfunk2(exp__format, fptr, x, return f2__format(this_cause, simple_fiber, fptr, x));
 
-f2ptr f2__format__html(f2ptr cause, f2ptr stream, f2ptr exp) {
+f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   if (! raw__stream__is_type(cause, stream)) {
     printf("\nraw__format error: stream must be stream.");
-    f2__print(cause, stream);
+    f2__print(cause, fiber, stream);
     return f2larva__new(cause, 1);
     //return nil;
   }
@@ -885,9 +885,9 @@ f2ptr f2__format__html(f2ptr cause, f2ptr stream, f2ptr exp) {
   }
   return exp;
 }
-def_pcfunk2(exp__format__html, stream, x, return f2__format__html(this_cause, stream, x));
+def_pcfunk2(exp__format__html, stream, x, return f2__format__html(this_cause, simple_fiber, stream, x));
 
-def_pcfunk2(exp__fwrite_html, stream, exp, return f2__fwrite_html(this_cause, stream, exp));
+def_pcfunk2(exp__fwrite_html, stream, exp, return f2__fwrite_html(this_cause, simple_fiber, stream, exp));
 
 f2ptr f2__list(f2ptr cause, f2ptr seq) {
   //debug_memory_test();

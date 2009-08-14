@@ -212,10 +212,6 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   return new_list;
 }
 
-f2ptr f2__hashtable__add(f2ptr cause, f2ptr this, f2ptr key) {
-  
-}
-
 f2ptr f2hashtable__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__funk);}

@@ -575,10 +575,6 @@ def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_fro
 
 // primobject hashtable
 
-def_pcfunk3(hashtable__add,                  this, key, value,        f2__hashtable__add(                 this_cause, this, key, value); return nil);
-def_pcfunk2(hashtable__lookup_keyvalue_pair, this, key,        return f2__hashtable__lookup_keyvalue_pair(this_cause, this, key));
-def_pcfunk2(hashtable__lookup,               this, key,        return f2__hashtable__lookup(              this_cause, this, key));
-
 // primobject fiber
 
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
@@ -2126,10 +2122,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(double__divide_by_integer, "");
   f2__funktional_primcfunk__init(float__to_integer, "");
   f2__funktional_primcfunk__init(float__to_double, "");
-  
-  f2__primcfunk__init(hashtable__add, "");
-  f2__primcfunk__init(hashtable__lookup_keyvalue_pair, "");
-  f2__primcfunk__init(hashtable__lookup, "");
   
   f2__primcfunk__init(tensor__new_from_array_of_integer_dimensions, "");
   f2__primcfunk__init(tensor__elt_from_array_of_integer_indices, "");

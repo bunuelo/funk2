@@ -19,6 +19,34 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PRIMOBJECT__ENVIRONMENT__TYPES__H
+#define F2__PRIMOBJECT__ENVIRONMENT__TYPES__H
+
+typedef struct funk2_object_type__environment__slot_s funk2_object_type__environment__slot_t;
+
+// environment
+
+struct funk2_object_type__environment__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr frame__symbol;
+  f2ptr frame__funk;
+  f2ptr frame__set__symbol;
+  f2ptr frame__set__funk;
+  f2ptr parent_env__symbol;
+  f2ptr parent_env__funk;
+  f2ptr parent_env__set__symbol;
+  f2ptr parent_env__set__funk;
+  f2ptr desc__symbol;
+  f2ptr desc__funk;
+  f2ptr desc__set__symbol;
+  f2ptr desc__set__funk;
+};
+
+#endif // F2__PRIMOBJECT__ENVIRONMENT__TYPES__H
+
 #ifndef F2__PRIMOBJECT__ENVIRONMENT__H
 #define F2__PRIMOBJECT__ENVIRONMENT__H
 
@@ -77,9 +105,6 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
 
 void print_environment_backtrace(f2ptr env);
 
-void f2__primobject_environment__reinitialize_globalvars();
-void f2__primobject_environment__initialize();
-
 typedef struct funk2_primobject__environment_s {
   f2ptr environment__symbol;
   f2ptr current_environment__symbol;
@@ -89,6 +114,13 @@ typedef struct funk2_primobject__environment_s {
 void funk2_primobject__environment__init(funk2_primobject__environment_t* this);
 void funk2_primobject__environment__reinit(funk2_primobject__environment_t* this);
 void funk2_primobject__environment__destroy(funk2_primobject__environment_t* this);
+
+f2ptr f2environment__primobject_type__new(f2ptr cause);
+
+// **
+
+void f2__primobject_environment__reinitialize_globalvars();
+void f2__primobject_environment__initialize();
 
 #endif // F2__PRIMOBJECT__ENVIRONMENT__H
 

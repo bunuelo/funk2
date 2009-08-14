@@ -114,6 +114,20 @@ f2ptr environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }
 
+f2ptr f2environment__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_environment.is_type__funk);}
+  {char* slot_name = "new";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk);}
+  {char* slot_name = "frame";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								 __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__funk, __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__set__funk, nil);}
+  {char* slot_name = "parent_env"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								 __funk2.globalenv.object_type.primobject.primobject_type_environment.parent_env__funk, __funk2.globalenv.object_type.primobject.primobject_type_environment.parent_env__set__funk, nil);}
+  {char* slot_name = "desc";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								 __funk2.globalenv.object_type.primobject.primobject_type_environment.desc__funk, __funk2.globalenv.object_type.primobject.primobject_type_environment.desc__set__funk, nil);}
+  
+  return this;
+}
+
 // **
 
 void f2__primobject_environment__reinitialize_globalvars() {

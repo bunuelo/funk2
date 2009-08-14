@@ -1162,7 +1162,59 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth
 	    {f2__write_pretty__slot_key_and_value("nanoseconds_since_1970",    15, cause, stream, f2time__nanoseconds_since_1970(exp, cause), f2time__nanoseconds_since_1970__tracing_on(exp, cause), f2time__nanoseconds_since_1970__trace(exp, cause), f2time__nanoseconds_since_1970__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	  } else {
-	    array_is_not_known_primobject = 1; // we print unknown primobjects in the same format of basic arrays
+	    f2ptr type_name = f2primobject__type(exp, cause);
+	    f2ptr primobject_type = f2__lookup_type(cause, type_name);
+	    if (primobject_type) {
+	      f2ptr keyvalue_pairs       = nil;
+	      f2ptr get_slot_names       = f2__primobject_type__get_funk__slot_names(cause, primobject_type);
+	      u64   max_slot_name_length = 0;
+	      {
+		f2ptr slot_iter = get_slot_names;
+		while (slot_iter) {
+		  f2ptr slot_name  = f2cons__car(slot_iter, cause);
+		  if (raw__symbol__is_type(cause, slot_name)) {
+		    u64 slot_name__length = f2symbol__length(slot_name, cause);
+		    if (slot_name__length > max_slot_name_length) {
+		      max_slot_name_length = slot_name__length;
+		    }
+		  }
+		  f2ptr slot_funk = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot_name);
+		  f2ptr args = nil;
+		  if (f2__cfunk__is_type(cause, slot_funk)) {
+		    args = f2cfunk__args(slot_funk, cause);
+		  } else if (f2__funk__is_type(cause, slot_funk)) {
+		    args = f2funk__args(slot_funk, cause);
+		  }
+		  f2ptr slot_value = nil;
+		  if (raw__length(cause, args) == 1) {
+		    slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2list1__new(cause, exp));
+		  }
+		  keyvalue_pairs = f2cons__new(cause, f2cons__new(cause, slot_name, slot_value), keyvalue_pairs);
+		  slot_iter = f2cons__cdr(slot_iter, cause);
+		}
+	      }
+	      {
+		int subexp_size[2];
+		char* temp_slot_name_str = (char*)alloca(max_slot_name_length + 1);
+		f2ptr keyvalue_pair_iter = keyvalue_pairs;
+		while (keyvalue_pair_iter) {
+		  f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
+		  f2ptr slot_name     = f2cons__car(keyvalue_pair, cause);
+		  f2ptr slot_value    = f2cons__cdr(keyvalue_pair, cause);
+		  if (raw__symbol__is_type(cause, slot_name)) {
+		    f2symbol__str_copy(slot_name, cause, (u8*)temp_slot_name_str);
+		  } else {
+		    temp_slot_name_str[0] = (char)0;
+		  }
+		  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+		  {f2__write_pretty__slot_key_and_value(temp_slot_name_str, max_slot_name_length, cause, stream, slot_value, nil, nil, nil,
+							((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+		  
+		  keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+		}
+	    } else {
+	      array_is_not_known_primobject = 1; // we print unknown primobjects in the same format of basic arrays
+	    }
 	  }
 	}
 	if (array_is_not_known_primobject) {

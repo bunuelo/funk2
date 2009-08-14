@@ -63,12 +63,15 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__set__slot_t              primobject_type_set;
 };
 
-void funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);
-void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this);
-void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type);
+void  funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);
+void  funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this);
+void  funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type);
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name);
-void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
-void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
+void  funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
+void  funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
+
+f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type);
+f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name);
 
 // **
 

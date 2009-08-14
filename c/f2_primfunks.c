@@ -575,9 +575,9 @@ def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_fro
 
 // primobject hashtable
 
-def_pcfunk3(hashtable__add,                  this, key, value,        f2__hashtable__add(                 simple_cause, this, key, value); return nil);
-def_pcfunk2(hashtable__lookup_keyvalue_pair, this, key,        return f2__hashtable__lookup_keyvalue_pair(this,   this_cause, key));
-def_pcfunk2(hashtable__lookup,               this, key,        return f2__hashtable__lookup(              this,   this_cause, key));
+def_pcfunk3(hashtable__add,                  this, key, value,        f2__hashtable__add(                 this_cause, this, key, value); return nil);
+def_pcfunk2(hashtable__lookup_keyvalue_pair, this, key,        return f2__hashtable__lookup_keyvalue_pair(this_cause, this, key));
+def_pcfunk2(hashtable__lookup,               this, key,        return f2__hashtable__lookup(              this_cause, this, key));
 
 // primobject fiber
 

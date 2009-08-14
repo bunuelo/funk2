@@ -47,6 +47,12 @@ struct funk2_object_type__hashtable__slot_s {
   f2ptr bin_array__funk;
   f2ptr bin_array__set__symbol;
   f2ptr bin_array__set__funk;
+  f2ptr slot_names__symbol;
+  f2ptr slot_names__funk;
+  f2ptr add__symbol;
+  f2ptr add__funk;
+  f2ptr lookup__symbol;
+  f2ptr lookup__funk;
 };
 
 #endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
@@ -95,8 +101,8 @@ defprimobject__static_slot__prototype(hashtable__bin_array);
 f2ptr raw__hashtable__new                (f2ptr cause, s64 bin_num_power);
 f2ptr f2__hashtable__new                 (f2ptr cause);
 f2ptr f2__hashtable__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
-f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
-f2ptr f2__hashtable__lookup              (f2ptr this, f2ptr cause, f2ptr key);
+f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
+f2ptr f2__hashtable__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
 

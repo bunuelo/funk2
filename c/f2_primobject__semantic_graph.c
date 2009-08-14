@@ -226,7 +226,7 @@ f2ptr f2__semantic_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr thi
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
     f2ptr left_concept   = f2semantic_relation__left_concept(relation, cause);
-    f2ptr old_hash_value = f2__hashtable__lookup(concept_relations_hash, cause, left_concept);
+    f2ptr old_hash_value = f2__hashtable__lookup(cause, concept_relations_hash, left_concept);
     f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
     f2__hashtable__add(cause, concept_relations_hash, left_concept, new_hash_value);
     relation_iter = f2cons__cdr(relation_iter, cause);
@@ -244,7 +244,7 @@ f2ptr f2__semantic_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr th
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
     f2ptr right_concept  = f2semantic_relation__right_concept(relation, cause);
-    f2ptr old_hash_value = f2__hashtable__lookup(concept_relations_hash, cause, right_concept);
+    f2ptr old_hash_value = f2__hashtable__lookup(cause, concept_relations_hash, right_concept);
     f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
     f2__hashtable__add(cause, concept_relations_hash, right_concept, new_hash_value);
     relation_iter = f2cons__cdr(relation_iter, cause);

@@ -81,10 +81,10 @@ def_pcfunk2(frame__type_hashtable__set, this, value, return f2__frame__type_hash
 f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_hashtable = f2frame__type_hashtable(this, cause);
   release__assert(raw__hashtable__is_type(cause, frame__type_hashtable), nil, "frame__type_hashtable is not hashtable.");
-  f2ptr type__hashtable = f2__hashtable__lookup(frame__type_hashtable, cause, type);
+  f2ptr type__hashtable = f2__hashtable__lookup(cause, frame__type_hashtable, type);
   if (! type__hashtable) {
     f2mutex__lock(f2frame__new_type_mutex(this, cause), cause);
-    type__hashtable = f2__hashtable__lookup(frame__type_hashtable, cause, type);
+    type__hashtable = f2__hashtable__lookup(cause, frame__type_hashtable, type);
     if (! type__hashtable) {
       type__hashtable = raw__hashtable__new(cause, 3);
       f2__hashtable__add(cause, frame__type_hashtable, type, type__hashtable);
@@ -98,10 +98,10 @@ f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
 def_pcfunk4(frame__add_type_var_value, this, type, var, value, return f2__frame__add_type_var_value(this_cause, this, type, var, value));
 
 f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
-  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
+  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
-    f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
+    f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, type__hashtable, var);
     if (keyvalue_pair) {
       return keyvalue_pair;
     }
@@ -111,10 +111,10 @@ f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr 
 def_pcfunk4(frame__lookup_type_var_assignment_cons, this, type, var, not_defined_value, return f2__frame__lookup_type_var_assignment_cons(this_cause, this, type, var, not_defined_value));
 
 f2ptr f2__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
-  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
+  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
-    f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
+    f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, type__hashtable, var);
     if (keyvalue_pair) {
       f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
       return retval;
@@ -125,10 +125,10 @@ f2ptr f2__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
 def_pcfunk4(frame__lookup_type_var_value, this, type, var, not_defined_value, return f2__frame__lookup_type_var_value(this_cause, this, type, var, not_defined_value));
 
 f2ptr f2__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
-  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
+  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
-    f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(type__hashtable, cause, var);
+    f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, type__hashtable, var);
     if (keyvalue_pair) {
       f2cons__cdr__set(keyvalue_pair, cause, value);
       return nil;
@@ -140,7 +140,7 @@ def_pcfunk5(frame__type_var_value__set, this, type, var, value, not_defined_valu
 
 f2ptr f2__frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr retval = nil;
-  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(f2frame__type_hashtable(this, cause), cause, type);
+  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
     retval = f2__hashtable__slot_names(cause, type__hashtable);
@@ -149,7 +149,7 @@ f2ptr f2__frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
 }
 def_pcfunk2(frame__type_var__slot_names, this, type, return f2__frame__type_var__slot_names(this_cause, this, type));
 
-f2ptr f2__frame__var_hashtable(f2ptr cause, f2ptr this) {return f2__hashtable__lookup(f2frame__type_hashtable(this, cause), cause, __funk2.primobject__frame.variable__symbol);}
+f2ptr f2__frame__var_hashtable(f2ptr cause, f2ptr this) {return f2__hashtable__lookup(cause, f2frame__type_hashtable(this, cause), __funk2.primobject__frame.variable__symbol);}
 
 f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, value);}
 def_pcfunk3(frame__add_var_value, this, var, value, return f2__frame__add_var_value(this_cause, this, var, value));
@@ -162,7 +162,7 @@ def_pcfunk3(frame__lookup_var_value, this, var, not_defined_value, return f2__fr
 f2ptr f2__frame__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value) {return f2__frame__type_var_value__set(cause, this, __funk2.primobject__frame.variable__symbol, var, value, not_defined_value);}
 def_pcfunk4(frame__var_value__set, this, var, value, not_defined_value, return f2__frame__var_value__set(this_cause, this, var, value, not_defined_value));
 
-f2ptr f2__frame__funkvar_hashtable(f2ptr cause, f2ptr this) {return f2__hashtable__lookup(f2frame__type_hashtable(this, cause), cause, __funk2.primobject__frame.funk_variable__symbol);}
+f2ptr f2__frame__funkvar_hashtable(f2ptr cause, f2ptr this) {return f2__hashtable__lookup(cause, f2frame__type_hashtable(this, cause), __funk2.primobject__frame.funk_variable__symbol);}
 
 f2ptr f2__frame__add_funkvar_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value);}
 def_pcfunk3(frame__add_funkvar_value, this, funkvar, value, return f2__frame__add_var_value(this_cause, this, funkvar, value));

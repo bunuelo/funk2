@@ -43,7 +43,7 @@ f2ptr f2__thought_process__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw
 
 f2ptr f2thought_process__read_parent_types(f2ptr cause, f2ptr this) {
   f2ptr read_write_execute_slot_hash = f2thought_process__read_write_execute_slot_hash(this, cause);
-  f2ptr read_write_execute           = f2__hashtable__lookup(read_write_execute_slot_hash, cause, f2symbol__new(cause, strlen("parent_types"), (u8*)"parent_types"));
+  f2ptr read_write_execute           = f2__hashtable__lookup(cause, read_write_execute_slot_hash, f2symbol__new(cause, strlen("parent_types"), (u8*)"parent_types"));
   f2ptr read_funk                    = raw__array__elt(cause, read_write_execute, 0);
   return read_funk;
 }
@@ -93,7 +93,7 @@ f2ptr f2thought_process__new_from_exp(f2ptr cause, f2ptr exp, f2ptr bin_num_powe
 f2ptr f2__thought_process__real_value(f2ptr cause, f2ptr this) {
   release__assert(raw__thought_process__is_type(cause, this), cause, "f2thought_process__real_value assertion failed: this must be an thought_process.");
   f2ptr read_write_execute_slot_hash = f2thought_process__read_write_execute_slot_hash(this, cause);
-  return f2__hashtable__lookup(read_write_execute_slot_hash, cause, __funk2.thought_process.real_value_slot__symbol);
+  return f2__hashtable__lookup(cause, read_write_execute_slot_hash, __funk2.thought_process.real_value_slot__symbol);
 }
 
 // thought_process-read_write_execute
@@ -103,14 +103,14 @@ f2ptr f2__thought_process__read_write_execute__lookup(f2ptr cause, f2ptr this, f
   f2ptr this__read_write_execute = nil;
   if (raw__thought_process__is_type(cause, this)) {
     f2ptr thought_process__read_write_execute_hash = f2thought_process__read_write_execute_slot_hash(this, cause);
-    this__read_write_execute = f2__hashtable__lookup(thought_process__read_write_execute_hash, cause, slot);
+    this__read_write_execute = f2__hashtable__lookup(cause, thought_process__read_write_execute_hash, slot);
   } else {
     f2ptr parent_types     = f2__determine_real_thought_process_types(cause, this);
     f2ptr parent_type_iter = parent_types;
     while (parent_type_iter) {
       f2ptr parent_type = f2cons__car(parent_type_iter, cause);
       f2ptr thought_process__read_write_execute_slot_hash = f2thought_process__read_write_execute_slot_hash(cause, parent_type);
-      this__read_write_execute = f2__hashtable__lookup(thought_process__read_write_execute_slot_hash, cause, slot);
+      this__read_write_execute = f2__hashtable__lookup(cause, thought_process__read_write_execute_slot_hash, slot);
       if (! raw__exception__is_type(cause, this__read_write_execute)) {
 	parent_type_iter = nil;
       } else {
@@ -254,7 +254,7 @@ void f2__funk2_thought_process__add_type(f2ptr cause, f2ptr name, f2ptr thought_
 }
 
 f2ptr f2__funk2_thought_process__lookup_type(f2ptr cause, f2ptr name) {
-  return f2__hashtable__lookup(__funk2.thought_process.global_thought_process_type_hash, cause, name);
+  return f2__hashtable__lookup(cause, __funk2.thought_process.global_thought_process_type_hash, name);
 }
 
 // define thought process type ptype_free_memory

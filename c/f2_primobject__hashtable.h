@@ -19,6 +19,38 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PRIMOBJECT__HASHTABLE__TYPES__H
+#define F2__PRIMOBJECT__HASHTABLE__TYPES__H
+
+typedef struct funk2_object_type__hashtable__slot_s funk2_object_type__hashtable__slot_t;
+
+// hashtable
+
+struct funk2_object_type__hashtable__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr write_mutex__symbol;
+  f2ptr write_mutex__funk;
+  f2ptr write_mutex__set__symbol;
+  f2ptr write_mutex__set__funk;
+  f2ptr key_count__symbol;
+  f2ptr key_count__funk;
+  f2ptr key_count__set__symbol;
+  f2ptr key_count__set__funk;
+  f2ptr bin_num_power__symbol;
+  f2ptr bin_num_power__funk;
+  f2ptr bin_num_power__set__symbol;
+  f2ptr bin_num_power__set__funk;
+  f2ptr bin_array__symbol;
+  f2ptr bin_array__funk;
+  f2ptr bin_array__set__symbol;
+  f2ptr bin_array__set__funk;
+};
+
+#endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
+
 #ifndef F2__PRIMOBJECT__HASHTABLE__H
 #define F2__PRIMOBJECT__HASHTABLE__H
 
@@ -67,6 +99,10 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key);
 f2ptr f2__hashtable__lookup_value        (f2ptr this, f2ptr cause, f2ptr key);
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
+
+f2ptr f2hashtable__primobject_type__new(f2ptr cause);
+
+// **
 
 void f2__primobject_hashtable__reinitialize_globalvars();
 void f2__primobject_hashtable__initialize();

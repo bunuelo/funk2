@@ -192,6 +192,21 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   return new_list;
 }
 
+f2ptr f2hashtable__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause);
+  {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__funk);}
+  {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.new__funk);}
+  {char* slot_name = "write_mutex";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.write_mutex__funk,   __funk2.globalenv.object_type.primobject.primobject_type_hashtable.write_mutex__set__funk, nil);}
+  {char* slot_name = "key_count";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.key_count__funk,     __funk2.globalenv.object_type.primobject.primobject_type_hashtable.key_count__set__funk, nil);}
+  {char* slot_name = "bin_num_power"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__funk, __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__set__funk, nil);}
+  {char* slot_name = "bin_array";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+								    __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__funk,     __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__set__funk, nil);}
+  return this;
+}
+
 
 // **
 
@@ -203,5 +218,29 @@ void f2__primobject_hashtable__initialize() {
   f2__primobject_hashtable__reinitialize_globalvars();
   
   environment__add_var_value(initial_cause(), global_environment(), __hashtable__symbol, nil);
+
+  // hashtable
+  
+  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var(hashtable__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "write_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.write_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__write_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.write_mutex__funk = never_gc(cfunk);}
+  {char* symbol_str = "write_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.write_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hashtable__write_mutex__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.write_mutex__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "key_count"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.key_count__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__key_count, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.key_count__funk = never_gc(cfunk);}
+  {char* symbol_str = "key_count-set"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.key_count__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hashtable__key_count__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.key_count__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "bin_num_power"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__bin_num_power, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__funk = never_gc(cfunk);}
+  {char* symbol_str = "bin_num_power-set"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hashtable__bin_num_power__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_num_power__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "bin_array"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__bin_array, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__funk = never_gc(cfunk);}
+  {char* symbol_str = "bin_array-set"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hashtable__bin_array__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__set__funk = never_gc(cfunk);}
+  
 }
 

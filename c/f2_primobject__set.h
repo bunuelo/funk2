@@ -94,7 +94,7 @@ defprimobject__static_slot__prototype(set__bin_array);
 
 f2ptr raw__set__new   (f2ptr cause, s64 bin_num_power);
 f2ptr  f2__set__new   (f2ptr cause);
-f2ptr  f2__set__add   (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+f2ptr  f2__set__add   (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr  f2__set__lookup(f2ptr this, f2ptr cause, f2ptr key);
 
 f2ptr f2__set__slot_names(f2ptr cause, f2ptr this);

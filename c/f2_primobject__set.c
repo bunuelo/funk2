@@ -98,18 +98,16 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2set__bin_array(this, cause);
-  f2ptr temp_set   = raw__set__new(cause, bin_num_power__i + 1);
+  f2ptr temp_set         = raw__set__new(cause, bin_num_power__i + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
     status("f2__set__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, bin_num << 1);
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
-      f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);
-      while(keyvalue_pair_iter) {
-	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
-	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);
-	f2ptr keyvalue_pair__value = f2cons__cdr(iter__keyvalue_pair, cause);
-	f2__set__add_keyvalue_pair(cause, temp_set, keyvalue_pair__key, keyvalue_pair__value);
+      f2ptr key_iter = raw__array__elt(cause, bin_array, bin_index);
+      while(key_iter) {
+	f2ptr key  = f2cons__car(key_iter,  cause);
+	f2__set__add(cause, temp_set, key);
 	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
       }
     }
@@ -118,8 +116,8 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2set__bin_array__set(    this, cause, f2set__bin_array(    temp_set, cause));
 }
 
-f2ptr f2__set__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
-  debug__assert(raw__set__valid(cause, this), nil, "f2__set__add_keyvalue_pair assert failed: f2__set__valid(this)");
+f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
+  debug__assert(raw__set__valid(cause, this), nil, "f2__set__add assert failed: f2__set__valid(this)");
   f2mutex__lock(f2set__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -128,23 +126,15 @@ f2ptr f2__set__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
-  f2ptr keyvalue_pair      = nil;
-  f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
-  while(keyvalue_pair_iter) {
-    f2ptr iter__keyvalue_pair = f2cons__car(keyvalue_pair_iter,  cause);
-    f2ptr keyvalue_pair__key  = f2cons__car(iter__keyvalue_pair, cause);
-    if (raw__equals(cause, key, keyvalue_pair__key)) {
-      keyvalue_pair = iter__keyvalue_pair;
-      break;
+  f2ptr key_iter           = raw__array__elt(cause, bin_array, index);
+  while(key_iter) {
+    f2ptr iter__key = f2cons__car(key_iter,  cause);
+    if (raw__equals(cause, key, iter__key)) {
+      return f2bool__new(boolean__true);
     }
-    keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+    key_iter = f2cons__cdr(key_iter, cause);
   }
-  if (! keyvalue_pair) {
-    keyvalue_pair = f2cons__new(cause, key, value);
-    raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
-  } else {
-    f2cons__cdr__set(keyvalue_pair, cause, value);
-  }
+  raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, key, raw__array__elt(cause, bin_array, index)));
   s64 key_count__i = f2integer__i(f2set__key_count(this, cause), cause);
   {
     key_count__i ++;
@@ -157,7 +147,7 @@ f2ptr f2__set__add_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key, f2ptr value
   return nil;
 }
 
-f2ptr f2__set__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
+f2ptr f2__set__lookup(f2ptr this, f2ptr cause, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup_keyvalue_pair assert failed: f2__set__valid(this)");
   f2mutex__lock(f2set__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
@@ -167,32 +157,20 @@ f2ptr f2__set__lookup_keyvalue_pair(f2ptr this, f2ptr cause, f2ptr key) {
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
-  f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
-  while(keyvalue_pair_iter) {
-    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
-    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-    if (raw__equals(cause, key, keyvalue_pair__key)) {
+  f2ptr key_iter           = raw__array__elt(cause, bin_array, index);
+  while(key_iter) {
+    f2ptr iter__key = f2cons__car(key_iter, cause);
+    if (raw__equals(cause, key, iter__key)) {
       f2mutex__unlock(f2set__write_mutex(this, cause), cause);
-      return keyvalue_pair;
+      return iter__key;
     }
-    keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+    key_iter = f2cons__cdr(key_iter, cause);
   }
   f2mutex__unlock(f2set__write_mutex(this, cause), cause);
   return nil;
 }
 
-f2ptr f2__set__lookup_value(f2ptr this, f2ptr cause, f2ptr key) {
-  debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup_value assert failed: f2__set__valid(this)");
-  f2ptr keyvalue_pair = f2__set__lookup_keyvalue_pair(this, cause, key);
-  if (keyvalue_pair) {
-    f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
-    return retval;
-  }
-  return nil;
-}
-
-
-f2ptr f2__set__slot_names(f2ptr cause, f2ptr this) {
+f2ptr f2__set__elements(f2ptr cause, f2ptr this) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup_keyvalue_pair assert failed: f2__set__valid(this)");
   f2mutex__lock(f2set__write_mutex(this, cause), cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -200,12 +178,11 @@ f2ptr f2__set__slot_names(f2ptr cause, f2ptr this) {
   s64   index;
   f2ptr new_list = nil;
   for (index = 0; index < bin_array__length; index ++) {
-    f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
-    while (keyvalue_pair_iter) {
-      f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
-      f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-      new_list = f2cons__new(cause, keyvalue_pair__key, new_list);
-      keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
+    f2ptr key_iter = raw__array__elt(cause, bin_array, index);
+    while (key_iter) {
+      f2ptr iter__key = f2cons__car(key_iter, cause);
+      new_list = f2cons__new(cause, iter__key, new_list);
+      key_iter = f2cons__cdr(key_iter, cause);
     }
   }
   f2mutex__unlock(f2set__write_mutex(this, cause), cause);

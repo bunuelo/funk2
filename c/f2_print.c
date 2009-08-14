@@ -27,7 +27,7 @@
 #define chunk__begin_char __funk2.reader.char__left_paren
 #define chunk__end_char   __funk2.reader.char__right_paren
 
-f2ptr f2__write_pretty(f2ptr cause, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
+f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
 
 ansi_color_t print__ansi__default__foreground       = ansi_color__white;
 ansi_color_t print__ansi__integer__foreground       = ansi_color__light_blue;

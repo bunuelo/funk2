@@ -41,7 +41,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
   }
   
   f2ptr frame             = f2environment__frame(this, cause);
-  f2ptr funkvar_hashtable = frame__funkvar_hashtable(cause, frame);
+  f2ptr funkvar_hashtable = f2__frame__funkvar_hashtable(cause, frame);
   f2ptr bin_array         = f2hashtable__bin_array(funkvar_hashtable, cause);
   s64   length            = raw__array__length(cause, bin_array);
   
@@ -73,7 +73,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
       }
       
       if (matches) {
-	frame__add_funkvar_value(cause, match_frame, key, value);
+	f2__frame__add_funkvar_value(cause, match_frame, key, value);
       }
       iter = f2cons__cdr(iter, cause);
     }

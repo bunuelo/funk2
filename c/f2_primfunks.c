@@ -578,11 +578,15 @@ def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_fro
 // primobject fiber
 
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
-  f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
-  f2__scheduler__complete_fiber(cause, new_fiber);
-  f2ptr value = f2fiber__value(new_fiber, cause);
-  f2fiber__keep_undead__set(new_fiber, cause, nil);
-  return value;
+  if (raw__cfunk__is_type(cause, funkable)) {
+    f2__cfunk__apply(cause, funkable, fiber, args);
+  } else {
+    f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
+    f2__scheduler__complete_fiber(cause, new_fiber);
+    f2ptr value = f2fiber__value(new_fiber, cause);
+    f2fiber__keep_undead__set(new_fiber, cause, nil);
+    return value;
+  }
 }
 
 void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {

@@ -579,7 +579,7 @@ def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_fro
 
 f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
   if (raw__cfunk__is_type(cause, funkable)) {
-    f2__cfunk__apply(cause, funkable, fiber, args);
+    return f2__cfunk__apply(cause, funkable, fiber, args);
   } else {
     f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
     f2__scheduler__complete_fiber(cause, new_fiber);

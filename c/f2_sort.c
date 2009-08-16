@@ -158,7 +158,7 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr compa
 }
 
 f2ptr f2__array__quicksort(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk) {
-  return array__quicksort_helper(cause, fiber, array, comparison_funk, 0, raw__length(cause, array) - 1);
+  return array__quicksort_helper(cause, fiber, array, comparison_funk, 0, raw__simple_length(cause, array) - 1);
 }
 def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, simple_fiber, array, comparison_funk));
 

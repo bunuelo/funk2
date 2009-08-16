@@ -42,7 +42,7 @@
 [print 'test 3']
 
 [defunk random-elt [seq]
-  [elt seq [random [length seq]]]]
+  [elt seq [random [simple_length seq]]]]
 
 [print 'test 4']
 

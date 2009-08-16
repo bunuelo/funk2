@@ -95,7 +95,7 @@
 		   [if assignment_hashtable
 		       [let [[assignment_values_conslist [hashtable-values assignment_hashtable]]]
 			 [apply ,match_response [mapcar [funk [assignment_values]
-							      [if [!= [length assignment_values] 1]
+							      [if [!= [simple_length assignment_values] 1]
 								  [error `critic_fire `multiple_assignments_to_one_variable]]
 							      [car assignment_values]]
 							assignment_values_conslist]]]

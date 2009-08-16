@@ -1185,7 +1185,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		    args = f2funk__args(slot_funk, cause);
 		  }
 		  f2ptr slot_value = nil;
-		  if (raw__length(cause, args) == 1) {
+		  if (raw__simple_length(cause, args) == 1) {
 		    if (fiber) {
 		      slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2list1__new(cause, exp));
 		    }

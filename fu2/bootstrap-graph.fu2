@@ -11,7 +11,7 @@
 [defunk   graph_node-new   [name edges]  [array `graph_node name edges]]
 [defmetro graph_node-name  [this]       `[elt ,this 1]]
 [defmetro graph_node-edges [this]       `[elt ,this 2]]
-[defunk   graph_node-rank  [this]       [length [graph_node-edges this]]]
+[defunk   graph_node-rank  [this]       [simple_length [graph_node-edges this]]]
 
 [defunk   graph_edge?      [exp]         [and exp [array? exp] [eq [array-elt exp 0] `graph_edge]]]
 [defunk   graph_edge-new   [name nodes]  [array `graph_edge name nodes]]

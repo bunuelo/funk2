@@ -68,7 +68,7 @@
 [defmetro defprimobject [type_name :rest slotdefs]
   [let [[primobject_type [primobject_type-new type_name
 					      [primobject_type_frame-new_from_slotdefs slotdefs]
-					      [+ 3 [length slotdefs]]]]]
+					      [+ 3 [simple_length slotdefs]]]]]
     [hashtable-add_keyvalue_pair -primobject_type-name-hash- type_name primobject_type]
     nil
     ]]

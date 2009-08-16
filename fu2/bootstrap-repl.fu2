@@ -625,7 +625,7 @@
        event_buffer_first]]]
 
 [defunk maparray [map_proc exp]
-  [let [[length [length exp]]]
+  [let [[length [simple_length exp]]]
     [let [[new_array [array-new length]]]
       [dotimes [i length]
 	[array-elt-set new_array i [funkall map_proc [cons [array-elt exp i] nil]]]]

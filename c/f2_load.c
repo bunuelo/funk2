@@ -68,7 +68,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	
 	f2__scheduler__complete_fiber(cause, load_fiber);
 	
-	//printf("\nload_fiber stack size = %d", raw__length(f2fiber__stack(load_fiber))); fflush(stdout);
+	//printf("\nload_fiber stack size = %d", raw__simple_length(f2fiber__stack(load_fiber))); fflush(stdout);
 	f2ptr eval_exp = f2fiber__value(load_fiber, cause);
 	if (raw__exception__is_type(cause, eval_exp)) {
 	  printf("\nload eval exception: "); f2__write(cause, fiber, eval_exp); fflush(stdout);

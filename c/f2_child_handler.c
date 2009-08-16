@@ -98,8 +98,8 @@ boolean_t funk2_child_process_handler__process_exists(funk2_child_process_handle
 }
 
 f2ptr f2__child_handler__add_new_child_process(f2ptr cause, f2ptr argv, f2ptr envp) {
-  u64 argv__length = raw__length(cause, argv);
-  u64 envp__length = raw__length(cause, envp);
+  u64 argv__length = raw__simple_length(cause, argv);
+  u64 envp__length = raw__simple_length(cause, envp);
   
   char** raw_argv;
   {

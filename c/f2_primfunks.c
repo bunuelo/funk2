@@ -684,7 +684,7 @@ def_pcfunk1(test_imagine, imagination_name, return f2__test_imagine(this_cause, 
 
 // sequence (array, list, doublelist, etc.)
 
-u64 raw__length(f2ptr cause, f2ptr seq) {
+u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   if (!seq) {return 0;}
   switch (f2ptype__raw(seq, cause)) {
   case ptype_simple_array:
@@ -704,12 +704,12 @@ u64 raw__length(f2ptr cause, f2ptr seq) {
   case ptype_symbol: return f2symbol__length(seq, cause);
   case ptype_string: return f2string__length(seq, cause);
   default:
-    error(nil, "raw__length error: invalid type");
+    error(nil, "raw__simple_length error: invalid type");
     break;
   }
 }
 
-f2ptr f2__length(f2ptr cause, f2ptr seq) {
+f2ptr f2__simple_length(f2ptr cause, f2ptr seq) {
   if (!seq) {return f2integer__new(cause, 0);}
   switch (f2ptype__raw(seq, cause)) {
   case ptype_simple_array:
@@ -722,7 +722,7 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
 	iter = f2cons__cdr(iter, cause);
       }
       if (iter) {
-	count += f2__length(cause, iter);
+	count += f2__simple_length(cause, iter);
       }
       return f2integer__new(cause, count);
     } else if (raw__doublelink__is_type(cause, seq)) {
@@ -735,7 +735,7 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
 	    iter = f2doublelink__prev(iter, cause);
 	  }
 	  if (iter) {
-	    count += f2__length(cause, iter);
+	    count += f2__simple_length(cause, iter);
 	  }
 	}
 	{
@@ -745,7 +745,7 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
 	    iter = f2doublelink__next(iter, cause);
 	  }
 	  if (iter) {
-	    count += f2__length(cause, iter);
+	    count += f2__simple_length(cause, iter);
 	  }
 	}
       }
@@ -760,7 +760,7 @@ f2ptr f2__length(f2ptr cause, f2ptr seq) {
     return f2integer__new(cause, 1);
   }
 }
-def_pcfunk1(length, seq, return f2__length(this_cause, seq));
+def_pcfunk1(simple_length, seq, return f2__simple_length(this_cause, seq));
 
 f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
   if (! this) {
@@ -1662,7 +1662,7 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
       (! raw__symbol__is_type(cause, exp))) {
     return f2larva__new(cause, 1);
   }
-  u64 length = raw__length(cause, exp);
+  u64 length = raw__simple_length(cause, exp);
   u8* str = alloca(length + 2);
   str[0] = (u8)':';
   raw__str_copy(cause, exp, str + 1);

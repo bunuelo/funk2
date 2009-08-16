@@ -396,7 +396,7 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;
     }
-    int i = raw__length(cause, digits);
+    int i = raw__simple_length(cause, digits);
     int j = 0;
     ptr p = 0;
     u64 t;
@@ -436,7 +436,7 @@ f2ptr f2__stream__try_read_unescaped_hex_char(f2ptr cause, f2ptr stream) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;
     }
-    int i = raw__length(cause, digits);
+    int i = raw__simple_length(cause, digits);
     int j = 0;
     ptr p = 0;
     u64 t;
@@ -497,7 +497,7 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
       f2__stream__ungetc(cause, stream, read_ch);
       return digits;
     }
-    int i = raw__length(cause, digits);
+    int i = raw__simple_length(cause, digits);
     int j = 0;
     u32 type = 0;
     u64 t;
@@ -622,7 +622,7 @@ f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
     if (elements && (! raw__cons__is_type(cause, elements))) {
       return elements;
     }
-    u64   array__length = raw__length(cause, elements);
+    u64   array__length = raw__simple_length(cause, elements);
     f2ptr array         = raw__array__new(cause, array__length);
     f2ptr iter          = elements;
     u64   index         = 0;
@@ -939,7 +939,7 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
     return symbol_list;
   }
   if (raw__cons__is_type(cause, symbol_list)) {
-    u64 length = raw__length(cause, symbol_list);
+    u64 length = raw__simple_length(cause, symbol_list);
     char* str = (char*)from_ptr(f2__malloc(length + 1));
     u64 i = 0;
     f2ptr iter = symbol_list;

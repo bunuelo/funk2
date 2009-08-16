@@ -22,7 +22,7 @@
 [load 'fu2/cardgame.fu2']
 
 [defunk choose [k seq]
-  [let [[len [length seq]]]
+  [let [[len [simple_length seq]]]
     [define-funk choose_len
       [funk [k seq len]
 	    [if [= k 0]
@@ -48,7 +48,7 @@
       nil]]]
 
 [defunk choose-map [proc k seq]
-  [let [[len [length seq]]
+  [let [[len [simple_length seq]]
 	[indices [array k]]]
     [partimes [i k]
 	      [set-elt indices i i]]

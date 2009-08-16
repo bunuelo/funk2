@@ -46,7 +46,7 @@ f2ptr f2__list__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__list__
 def_pcfunk1(list__is_type, this, return f2__list__is_type(this_cause, this));
 
 f2ptr f2__list__new(f2ptr cause, f2ptr elements) {
-  return f2list__new(cause, f2mutex__new(cause), f2__length(cause, elements), elements);
+  return f2list__new(cause, f2mutex__new(cause), f2__simple_length(cause, elements), elements);
 }
 def_pcfunk0_and_rest(list__new, elements, return f2__list__new(this_cause, elements));
 

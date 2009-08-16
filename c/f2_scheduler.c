@@ -96,7 +96,7 @@ u64 raw__processor__active_fibers__length(f2ptr cause, f2ptr processor) {
   processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
   f2mutex__lock(processor__active_fibers_mutex, cause);
   f2ptr active_fibers = f2processor__active_fibers(processor, cause);
-  u64 fiber_num = raw__length(cause, active_fibers);
+  u64 fiber_num = raw__simple_length(cause, active_fibers);
   f2mutex__unlock(processor__active_fibers_mutex, cause);
   return fiber_num;
 }
@@ -111,7 +111,7 @@ f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr scheduler) 
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
     f2ptr active_fibers = f2processor__active_fibers(processor, cause);
-    u64 fibers__length = raw__length(cause, active_fibers);
+    u64 fibers__length = raw__simple_length(cause, active_fibers);
     status("  processor pool_index=" s64__fstr " active_fiber_num=" u64__fstr ".", f2integer__i(f2processor__pool_index(processor, cause), cause), fibers__length);
     if (fibers__length < min_length) {
       min_length = fibers__length;
@@ -380,7 +380,7 @@ void* processor__start_routine(void *ptr) {
       sched_yield();
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
-    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__fibers(processor))); fflush(stdout);
+    //printf("\nprocessor__start_routine: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
     f2__sleep(100000);
     sched_yield();
   }
@@ -391,7 +391,7 @@ void f2__scheduler__yield(f2ptr cause) {
   f2ptr processor = f2__global_scheduler__this_processor(cause);
   if(! f2processor__execute_next_bytecodes(processor, cause)) {
     //f2ptr processor = f2__global_scheduler__this_processor();
-    //printf("\nscheduler__yield: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__length(f2processor__fibers(processor))); fflush(stdout);
+    //printf("\nscheduler__yield: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
     //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
     sched_yield();
     f2__sleep(1);

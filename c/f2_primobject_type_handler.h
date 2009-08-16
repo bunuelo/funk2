@@ -61,6 +61,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__frame__slot_t            primobject_type_frame;
   funk2_object_type__environment__slot_t      primobject_type_environment;
   funk2_object_type__set__slot_t              primobject_type_set;
+  funk2_object_type__list__slot_t             primobject_type_list;
 };
 
 void  funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);

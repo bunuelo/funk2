@@ -61,7 +61,7 @@ struct funk2_object_type__list__slot_s {
 extern f2ptr __list__symbol;
 boolean_t raw__list__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__list__is_type(f2ptr cause, f2ptr this);
-f2ptr f2list__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_power, f2ptr bin_array);
+f2ptr f2list__new(f2ptr cause, f2ptr write_mutex, f2ptr length, f2ptr cons_cells);
 #define f2primobject__is_list(this, cause)                    raw__eq(cause, f2primobject__type(this, cause), __list__symbol)
 
 defprimobject__static_slot__prototype(list__write_mutex);

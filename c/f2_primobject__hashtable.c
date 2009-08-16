@@ -219,7 +219,7 @@ def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(thi
   hashtable__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
                                       f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code);
+                                      code); \
 }
 
 #define hashtable__key__iteration(cause, this, key, code) {\
@@ -227,7 +227,7 @@ def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(thi
   f2ptr iteration__this  = (this); \
   hashtable__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
                                       f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      code);
+                                      code); \
 }
 
 #define hashtable__value__iteration(cause, this, value, code) {\
@@ -235,7 +235,7 @@ def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(thi
   f2ptr iteration__this  = (this); \
   hashtable__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code);
+                                      code); \
 }
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {

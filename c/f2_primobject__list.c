@@ -219,7 +219,7 @@ def_pcfunk2(list__lookup, this, slot_name, return f2__list__lookup(this_cause, t
   list__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
                                       f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code);
+                                      code); \
 }
 
 #define list__key__iteration(cause, this, key, code) {\
@@ -227,7 +227,7 @@ def_pcfunk2(list__lookup, this, slot_name, return f2__list__lookup(this_cause, t
   f2ptr iteration__this  = (this); \
   list__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
                                       f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      code);
+                                      code); \
 }
 
 #define list__value__iteration(cause, this, value, code) {\
@@ -235,7 +235,7 @@ def_pcfunk2(list__lookup, this, slot_name, return f2__list__lookup(this_cause, t
   f2ptr iteration__this  = (this); \
   list__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code);
+                                      code); \
 }
 
 f2ptr f2__list__slot_names(f2ptr cause, f2ptr this) {

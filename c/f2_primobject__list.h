@@ -35,20 +35,14 @@ struct funk2_object_type__list__slot_s {
   f2ptr write_mutex__funk;
   f2ptr write_mutex__set__symbol;
   f2ptr write_mutex__set__funk;
-  f2ptr key_count__symbol;
-  f2ptr key_count__funk;
-  f2ptr key_count__set__symbol;
-  f2ptr key_count__set__funk;
-  f2ptr bin_num_power__symbol;
-  f2ptr bin_num_power__funk;
-  f2ptr bin_num_power__set__symbol;
-  f2ptr bin_num_power__set__funk;
-  f2ptr bin_array__symbol;
-  f2ptr bin_array__funk;
-  f2ptr bin_array__set__symbol;
-  f2ptr bin_array__set__funk;
-  f2ptr slot_names__symbol;
-  f2ptr slot_names__funk;
+  f2ptr length__symbol;
+  f2ptr length__funk;
+  f2ptr length__set__symbol;
+  f2ptr length__set__funk;
+  f2ptr cons_cells__symbol;
+  f2ptr cons_cells__funk;
+  f2ptr cons_cells__set__symbol;
+  f2ptr cons_cells__set__funk;
   f2ptr add__symbol;
   f2ptr add__funk;
   f2ptr lookup__symbol;
@@ -77,34 +71,23 @@ defprimobject__static_slot__prototype(list__write_mutex);
 #define f2list__write_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, list__write_mutex, cause)
 #define f2list__write_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__write_mutex, cause)
 
-defprimobject__static_slot__prototype(list__key_count);
-#define f2list__key_count(                   this, cause)        primobject__static_slot__accessor(         this, list__key_count, cause)
-#define f2list__key_count__set(              this, cause, value) primobject__static_slot__set(              this, list__key_count, cause, value)
-#define f2list__key_count__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, list__key_count, cause)
-#define f2list__key_count__trace(            this, cause)        primobject__static_slot__trace(            this, list__key_count, cause)
-#define f2list__key_count__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__key_count, cause)
+defprimobject__static_slot__prototype(list__length);
+#define f2list__length(                   this, cause)        primobject__static_slot__accessor(         this, list__length, cause)
+#define f2list__length__set(              this, cause, value) primobject__static_slot__set(              this, list__length, cause, value)
+#define f2list__length__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, list__length, cause)
+#define f2list__length__trace(            this, cause)        primobject__static_slot__trace(            this, list__length, cause)
+#define f2list__length__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__length, cause)
 
-defprimobject__static_slot__prototype(list__bin_num_power);
-#define f2list__bin_num_power(                   this, cause)        primobject__static_slot__accessor(         this, list__bin_num_power, cause)
-#define f2list__bin_num_power__set(              this, cause, value) primobject__static_slot__set(              this, list__bin_num_power, cause, value)
-#define f2list__bin_num_power__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, list__bin_num_power, cause)
-#define f2list__bin_num_power__trace(            this, cause)        primobject__static_slot__trace(            this, list__bin_num_power, cause)
-#define f2list__bin_num_power__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__bin_num_power, cause)
+defprimobject__static_slot__prototype(list__cons_cells);
+#define f2list__cons_cells(                   this, cause)        primobject__static_slot__accessor(         this, list__cons_cells, cause)
+#define f2list__cons_cells__set(              this, cause, value) primobject__static_slot__set(              this, list__cons_cells, cause, value)
+#define f2list__cons_cells__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, list__cons_cells, cause)
+#define f2list__cons_cells__trace(            this, cause)        primobject__static_slot__trace(            this, list__cons_cells, cause)
+#define f2list__cons_cells__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__cons_cells, cause)
 
-defprimobject__static_slot__prototype(list__bin_array);
-#define f2list__bin_array(                   this, cause)        primobject__static_slot__accessor(         this, list__bin_array, cause)
-#define f2list__bin_array__set(              this, cause, value) primobject__static_slot__set(              this, list__bin_array, cause, value)
-#define f2list__bin_array__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, list__bin_array, cause)
-#define f2list__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, list__bin_array, cause)
-#define f2list__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__bin_array, cause)
-
-f2ptr raw__list__new                 (f2ptr cause, s64 bin_num_power);
-f2ptr  f2__list__new                 (f2ptr cause);
-f2ptr  f2__list__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
-f2ptr  f2__list__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
-f2ptr  f2__list__lookup              (f2ptr cause, f2ptr this, f2ptr key);
-
-f2ptr f2__list__slot_names(f2ptr cause, f2ptr this);
+f2ptr f2__list__new   (f2ptr cause);
+f2ptr f2__list__add   (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element);
 
 f2ptr f2list__primobject_type__new(f2ptr cause);
 

@@ -30,8 +30,8 @@ defprimobject__static_slot(list__cons_cells,  2);
 f2ptr __list__symbol = -1;
 
 f2ptr f2list__new(f2ptr cause, f2ptr write_mutex, f2ptr length, f2ptr cons_cells) {
-  release__assert(__list__symbol != -1, nil, "f2list__new error: used before primobjects initialized.");
-  release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2list__new error: bin_num_power or bin_array are of wrong type.");
+  debug__assert(__list__symbol != -1, nil, "f2list__new error: used before primobjects initialized.");
+  release__assert((raw__integer__is_type(cause, length)), nil, "f2list__new error: length is of wrong type.");
   f2ptr this = f2__primobject__new(cause, __list__symbol, 3, nil);
   f2list__write_mutex__set(this, cause, write_mutex);
   f2list__length__set(     this, cause, length);

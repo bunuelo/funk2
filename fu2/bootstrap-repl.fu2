@@ -631,6 +631,10 @@
 	[array-elt-set new_array i [funkall map_proc [cons [array-elt exp i] nil]]]]
       new_array]]]
 
+[defmetro list [:rest elements] `[new list @elements]]
+
+[defmetro length [x] `[get ,x length]]
+
 [defmetro = [var value] `[mutate ,var ,value]]
 
 [defunk exit [value]

@@ -43,7 +43,7 @@
 [globalize-funk fiber                                       &primfunk:fiber]
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
 
-[globalize-funk length                                      &primfunk:length]
+[globalize-funk simple_length                               &primfunk:simple_length]
 [globalize-funk integer-greater_than                        &primfunk:integer__greater_than]
 [globalize-funk integer-less_than                           &primfunk:integer__less_than]
 [globalize-funk integer-add                                 &primfunk:integer__add]

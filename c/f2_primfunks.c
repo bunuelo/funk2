@@ -318,7 +318,7 @@ f2ptr f2__cons__as_array(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(cons__as_array, this, return f2__cons__as_array(this_cause, this));
 
-f2ptr f2__list__first_n(f2ptr cause, f2ptr this, f2ptr n) {
+f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   if (! raw__integer__is_type(cause, n)) {
     return f2larva__new(cause, 1);
   }
@@ -342,7 +342,7 @@ f2ptr f2__list__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   }
   return new_seq;
 }
-def_pcfunk2(list__first_n, this, n, return f2__list__first_n(this_cause, this, n));
+def_pcfunk2(conslist__first_n, this, n, return f2__conslist__first_n(this_cause, this, n));
 
 // cause
 
@@ -530,7 +530,7 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
 
 
-f2ptr f2__array__as_list(f2ptr cause, f2ptr this) {
+f2ptr f2__array__as_conslist(f2ptr cause, f2ptr this) {
   if (! raw__array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -542,7 +542,7 @@ f2ptr f2__array__as_list(f2ptr cause, f2ptr this) {
   }
   return new_seq;
 }
-def_pcfunk1(array__as_list, this, return f2__array__as_list(this_cause, this));
+def_pcfunk1(array__as_conslist, this, return f2__array__as_conslist(this_cause, this));
 
 
 // larva
@@ -889,7 +889,7 @@ def_pcfunk2(exp__format__html, stream, x, return f2__format__html(this_cause, si
 
 def_pcfunk2(exp__fwrite_html, stream, exp, return f2__fwrite_html(this_cause, simple_fiber, stream, exp));
 
-f2ptr f2__list(f2ptr cause, f2ptr seq) {
+f2ptr f2__conslist(f2ptr cause, f2ptr seq) {
   //debug_memory_test();
   if (! seq) {return nil;}
   if (! raw__cons__is_type(cause, seq)) {
@@ -911,7 +911,7 @@ f2ptr f2__list(f2ptr cause, f2ptr seq) {
   //debug_memory_test();
   return new_seq;
 }
-def_pcfunk0_and_rest(list, seq, return f2__list(this_cause, seq));
+def_pcfunk0_and_rest(conslist, seq, return f2__conslist(this_cause, seq));
 
 def_pcfunk0(nanoseconds_since_1970, return f2__nanoseconds_since_1970(this_cause));
 
@@ -1912,12 +1912,12 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
   f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
   f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
-  f2__primcfunk__init__1(           array__as_list,                     this, "returns an array represented as a new list.");
+  f2__primcfunk__init__1(           array__as_conslist,                 this, "returns an array represented as a new conslist.");
   
   // cons
   
   f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
-  f2__primcfunk__init__2(list__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
+  f2__primcfunk__init__2(conslist__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
   
   // cause
   

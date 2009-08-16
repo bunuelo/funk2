@@ -635,9 +635,6 @@ def_pcfunk1(mutex__unlock, this, return f2__mutex__unlock(this_cause, this));
 f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__trylock(x, cause));}
 def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
 
-f2ptr f2__mutex__is_locked(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__is_locked(x, cause));}
-def_pcfunk1(mutex__is_locked, this, return f2__mutex__is_locked(this_cause, this));
-
 
 f2ptr f2__mutex__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   return nil;

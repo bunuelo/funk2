@@ -31,7 +31,7 @@ f2ptr __list__symbol = -1;
 
 f2ptr f2list__new(f2ptr cause, f2ptr write_mutex, f2ptr length, f2ptr cons_cells) {
   debug__assert(__list__symbol != -1, nil, "f2list__new error: used before primobjects initialized.");
-  release__assert((raw__integer__is_type(cause, length)), nil, "f2list__new error: length is of wrong type.");
+  debug__assert((raw__integer__is_type(cause, length)), nil, "f2list__new error: length is of wrong type.");
   f2ptr this = f2__primobject__new(cause, __list__symbol, 3, nil);
   f2list__write_mutex__set(this, cause, write_mutex);
   f2list__length__set(     this, cause, length);
@@ -71,6 +71,9 @@ def_pcfunk2(list__cons_cells__set, this, value, return f2__list__cons_cells__set
 f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2mutex__lock(f2list__write_mutex(this, cause), cause);
   f2list__cons_cells__set(this, cause, f2cons__new(cause, element, f2list__cons_cells(this, cause)));
+  f2ptr length = f2list__length(this, cause);
+  s64 length__i = f2integer__i(length, cause);
+  f2list__length__set(this, cause, f2integer__new(cause, length__i + 1));
   f2mutex__unlock(f2list__write_mutex(this, cause), cause);
   return nil;
 }

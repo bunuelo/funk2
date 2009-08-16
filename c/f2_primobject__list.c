@@ -214,35 +214,29 @@ def_pcfunk2(list__lookup, this, slot_name, return f2__list__lookup(this_cause, t
 }
 
 #define list__iteration(cause, this, key, value, code) {\
-  f2ptr iteration__cause = (cause); \
-  f2ptr iteration__this  = (this); \
-  list__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
-                                      f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code); \
+  list__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+                                 f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
+                                 f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                 code); \
 }
 
 #define list__key__iteration(cause, this, key, code) {\
-  f2ptr iteration__cause = (cause); \
-  f2ptr iteration__this  = (this); \
-  list__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
-                                      f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      code); \
+  list__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+                                 f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
+                                 code); \
 }
 
 #define list__value__iteration(cause, this, value, code) {\
-  f2ptr iteration__cause = (cause); \
-  f2ptr iteration__this  = (this); \
-  list__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
-                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code); \
+  list__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+                                 f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                 code); \
 }
 
 f2ptr f2__list__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__list__valid(cause, this), nil, "f2__list__lookup_keyvalue_pair assert failed: f2__list__valid(this)");
   f2ptr new_list = nil;
   list__key__iteration(cause, this, key,
-                            new_list = f2cons__new(cause, key, new_list));
+		       new_list = f2cons__new(cause, key, new_list));
   return new_list;
 }
 def_pcfunk1(list__slot_names, this, return f2__list__slot_names(this_cause, this));

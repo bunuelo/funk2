@@ -1944,7 +1944,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(fiber__imagine, "");
   f2__primcfunk__init(test_imagine, "");
   
-  f2__primcfunk__init__1(           length,                     seq, "");
+  f2__primcfunk__init__1(           simple_length,               seq, "");
   f2__funktional_primcfunk__init__2(integer__greater_than,      x, y, "");
   f2__funktional_primcfunk__init__2(integer__less_than,         x, y, "");
   f2__funktional_primcfunk__init__2(integer__add,               x, y, "");

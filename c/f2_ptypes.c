@@ -635,6 +635,9 @@ def_pcfunk1(mutex__unlock, this, return f2__mutex__unlock(this_cause, this));
 f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__trylock(x, cause));}
 def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
 
+f2ptr f2__mutex__is_locked(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__is_locked(x, cause));}
+def_pcfunk1(mutex__is_locked, this, return f2__mutex__is_locked(this_cause, this));
+
 
 f2ptr f2__mutex__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot) {
   return nil;
@@ -659,11 +662,12 @@ f2ptr f2__mutex__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2mutex__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__funk);}
-  {char* slot_name = "new"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk);}
-  {char* slot_name = "lock"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk);}
-  {char* slot_name = "trylock"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__funk);}
-  {char* slot_name = "unlock"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__funk);}
+  {char* slot_name = "is_type";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__funk);}
+  {char* slot_name = "new";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.new__funk);}
+  {char* slot_name = "lock";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.lock__funk);}
+  {char* slot_name = "trylock";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__funk);}
+  {char* slot_name = "unlock";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__funk);}
+  {char* slot_name = "is_locked"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__funk, nil, nil);}
   return this;
 }
 
@@ -2138,6 +2142,8 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "pool_index"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__pool_index, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk = never_gc(cfunk);}
   
+  // mutex
+  
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_mutex.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -2150,6 +2156,10 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__unlock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.unlock__funk = never_gc(cfunk);}
   {char* str = "trylock"; __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__trylock, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.trylock__funk = never_gc(cfunk);}
+  {char* str = "is_locked"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_locked, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__funk = never_gc(cfunk);}
+  
+  // char
   
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_char.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk = never_gc(cfunk);}

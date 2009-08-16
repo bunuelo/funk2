@@ -45,10 +45,10 @@ boolean_t raw__list__is_type(f2ptr cause, f2ptr this) {return raw__array__is_typ
 f2ptr f2__list__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__list__is_type(cause, this));}
 def_pcfunk1(list__is_type, this, return f2__list__is_type(this_cause, this));
 
-f2ptr f2__list__new(f2ptr cause) {
-  return f2list__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), nil);
+f2ptr f2__list__new(f2ptr cause, f2ptr elements) {
+  return f2list__new(cause, f2mutex__new(cause), f2__length(cause, elements), elements);
 }
-def_pcfunk0(list__new, return f2__list__new(this_cause));
+def_pcfunk0_and_rest(list__new, elements, return f2__list__new(this_cause, elements));
 
 f2ptr f2__list__write_mutex(f2ptr cause, f2ptr this) {return f2list__write_mutex(this, cause);}
 def_pcfunk1(list__write_mutex, this, return f2__list__write_mutex(this_cause, this));
@@ -130,7 +130,7 @@ void f2__primobject_list__initialize() {
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_list.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(list__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.is_type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_list.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var(list__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg_and_rest(list__new, elements, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.new__funk = never_gc(cfunk);}
   {char* symbol_str = "write_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(list__write_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__funk = never_gc(cfunk);}
   {char* symbol_str = "write_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

@@ -193,23 +193,56 @@ f2ptr f2__hashtable__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(this_cause, this, slot_name));
 
+
+
+#define hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
+  f2ptr iteration__cause = (cause); \
+  f2ptr iteration__this  = (this); \
+  f2mutex__lock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
+  f2ptr iteration__bin_array          = f2hashtable__bin_array(iteration__this, iteration__cause); \
+  s64   iteration__bin_array__length  = raw__array__length(iteration__cause, iteration__bin_array); \
+  s64   iteration__index; \
+  for (iteration__index = 0; iteration__index < iteration__bin_array__length; iteration__index ++) { \
+    f2ptr iteration__keyvalue_pair_iter = raw__array__elt(iteration__cause, iteration__bin_array, iteration__index); \
+    while (iteration__keyvalue_pair_iter) { \
+      f2ptr keyvalue_pair = f2cons__car(iteration__keyvalue_pair_iter, iteration__cause); \
+      code; \
+      iteration__keyvalue_pair_iter = f2cons__cdr(iteration__keyvalue_pair_iter, iteration__cause); \
+    } \
+  } \
+  f2mutex__unlock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
+}
+
+#define hashtable__iteration(cause, this, key, value, code) {\
+  f2ptr iteration__cause = (cause); \
+  f2ptr iteration__this  = (this); \
+  hashtable__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
+                                      f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
+                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                      code);
+}
+
+#define hashtable__key__iteration(cause, this, key, code) {\
+  f2ptr iteration__cause = (cause); \
+  f2ptr iteration__this  = (this); \
+  hashtable__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
+                                      f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
+                                      code);
+}
+
+#define hashtable__value__iteration(cause, this, value, code) {\
+  f2ptr iteration__cause = (cause); \
+  f2ptr iteration__this  = (this); \
+  hashtable__keyvalue_pair__iteration(iteration__cause, iteration__this, keyvalue_pair, \
+                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                      code);
+}
+
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
-  f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
-  f2ptr bin_array          = f2hashtable__bin_array(this, cause);
-  s64   bin_array__length  = raw__array__length(cause, bin_array);
-  s64   index;
   f2ptr new_list = nil;
-  for (index = 0; index < bin_array__length; index ++) {
-    f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
-    while (keyvalue_pair_iter) {
-      f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
-      f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-      new_list = f2cons__new(cause, keyvalue_pair__key, new_list);
-      keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
-    }
-  }
-  f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
+  hashtable__key__iteration(cause, this, key,
+                            new_list = f2cons__new(cause, key, new_list));
   return new_list;
 }
 def_pcfunk1(hashtable__slot_names, this, return f2__hashtable__slot_names(this_cause, this));

@@ -90,13 +90,14 @@ funk2_server_objs = \
   c/f2_primobject__environment.o \
   c/f2_primobject__frame.o \
   c/f2_primobject__hashtable.o \
-  c/f2_primobject__tensor.o \
+  c/f2_primobject__list.o \
   c/f2_primobject__object.o \
   c/f2_primobject__object_type.o \
   c/f2_primobject__circular_buffer.o \
   c/f2_primobject__semantic_graph.o \
   c/f2_primobject__set.o \
   c/f2_primobject__stream.o \
+  c/f2_primobject__tensor.o \
   c/f2_primobject__text_buffer.o \
   c/f2_primobject_type.o \
   c/f2_primobject_type_handler.o \
@@ -176,13 +177,14 @@ funk2_headers = \
   c/f2_primobject__environment.h \
   c/f2_primobject__frame.h \
   c/f2_primobject__hashtable.h \
-  c/f2_primobject__tensor.h \
+  c/f2_primobject__list.h \
   c/f2_primobject__object.h \
   c/f2_primobject__object_type.h \
   c/f2_primobject__circular_buffer.h \
   c/f2_primobject__semantic_graph.h \
   c/f2_primobject__set.h \
   c/f2_primobject__stream.h \
+  c/f2_primobject__tensor.h \
   c/f2_primobject__text_buffer.h \
   c/f2_primobject_type.h \
   c/f2_primobject_type_handler.h \

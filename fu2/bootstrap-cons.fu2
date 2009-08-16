@@ -17,8 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk cons as-array [] [cons-as_array this]]
-[deftypefunk cons as-list  [] this]
+[deftypefunk cons as-array    [] [conslist-as_array this]]
+[deftypefunk cons as-conslist [] this]
 
-[deftypefunk cons sort [comparison_funk] [as-list [array-sort [as-array this] comparison_funk]]]
+[deftypefunk cons sort [comparison_funk] [as-conslist [array-sort [as-array this] comparison_funk]]]
 

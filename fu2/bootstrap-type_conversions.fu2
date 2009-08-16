@@ -17,8 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk as-list  [x] [have x as-list]]
-[set &as-list documentation 'makes sure an object is a list by possibly performing an object type-specific conversion process.']
+[defunk as-conslist  [x] [have x as-conslist]]
+[set &as-conslist documentation 'makes sure an object is a conslist by possibly performing an object type-specific conversion process.']
 
 [defunk as-array [x] [have x as-array]]
 [set &as-array documentation 'makes sure an object is an array by possibly performing an object type-specific conversion process.']

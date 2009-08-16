@@ -20,9 +20,9 @@
 '
 
 '  f2ptr full_bcs =                                f2__compile__push_iter(cause, tracewrap); f2ptr iter = full_bcs;'  
-'  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));'
-'  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));'
-'  iter           = f2__list_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));'
+'  iter           = f2__conslist_cdr__set(cause, iter, f2__compile__push_value(cause, tracewrap));'
+'  iter           = f2__conslist_cdr__set(cause, iter, f2__compile__push_return(cause, tracewrap));'
+'  iter           = f2__conslist_cdr__set(cause, iter, f2__compile__push_env(cause, tracewrap));'
 
 
 [defmetro fiber_stack-rest       [this]      `[cdr [cdr [cdr [cdr ,this]]]]]

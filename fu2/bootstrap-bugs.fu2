@@ -35,7 +35,7 @@
 			       `unknown-bug_type]]]]
 	symbolic_type]]]]
 
-[defunk bug-english_sentence_list [this]
+[defunk bug-english_sentence_conslist [this]
   [let [[symbolic_type [bug-symbolic_type this]]]
     [cond [[eq symbolic_type `function_argument_does_not_have_correct_type-bug_type] `[Bug is from primitive virtual machine larva.
 											   The larva signifies that a function argument did not have the correct type.
@@ -66,5 +66,5 @@
 
 [defunk bug-print_english_sentence [this]
   [ansi-stream-foreground stdout 15]
-  [apply &format [cons stdout [bug-english_sentence_list this]]]]
+  [apply &format [cons stdout [bug-english_sentence_conslist this]]]]
 

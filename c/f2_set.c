@@ -26,7 +26,7 @@
 void funk2_set__init(funk2_set_t* this) {
   this->element_count = 0;
   this->bin_power     = 0;
-  this->bin           = (funk2_set_node_t**)f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power);
+  this->bin           = (funk2_set_node_t**)from_ptr(f2__malloc(sizeof(funk2_set_node_t*) << this->bin_power));
   memset(this->bin, 0, sizeof(funk2_set_node_t*) << (this->bin_power));
 }
 
@@ -52,7 +52,7 @@ void funk2_set__double_size(funk2_set_t* this) {
   u64                old_bin_power = this->bin_power;
   funk2_set_node_t** old_bin       = this->bin;
   this->bin_power ++;
-  this->bin = (funk2_set_node_t**)f2__malloc(sizeof(funk2_set_node_t*) << (this->bin_power));
+  this->bin = (funk2_set_node_t**)from_ptr(f2__malloc(sizeof(funk2_set_node_t*) << (this->bin_power)));
   memset(this->bin, 0, sizeof(funk2_set_node_t*) << (this->bin_power));
   u64 old_bin_num = 1ull << old_bin_power;
   u64 i;
@@ -80,7 +80,7 @@ void funk2_set__add_node(funk2_set_t* this, funk2_set_node_t* node) {
 }
 
 void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
-  funk2_set_node_t* node = (funk2_set_node_t*)f2__malloc(sizeof(funk2_set_node_t));
+  funk2_set_node_t* node = (funk2_set_node_t*)from_ptr(f2__malloc(sizeof(funk2_set_node_t)));
   node->element = element;
   funk2_set__add_node(this, node);
 }

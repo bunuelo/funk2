@@ -27,7 +27,7 @@
 void funk2_protected_alloc_array_event_array__init(funk2_protected_alloc_array_event_array_t* this) {
   this->used_num = 0;
   this->length   = 2;
-  this->data     = (funk2_protected_alloc_array_event_t*)f2__malloc(sizeof(funk2_protected_alloc_array_event_t) * this->length);
+  this->data     = (funk2_protected_alloc_array_event_t*)from_ptr(f2__malloc(sizeof(funk2_protected_alloc_array_event_t) * this->length));
 }
 
 void funk2_protected_alloc_array_event_array__destroy(funk2_protected_alloc_array_event_array_t* this) {

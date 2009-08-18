@@ -25,7 +25,7 @@
 
 funk2_management_thread_command__save_memory_image_t* funk2_management_thread_command__save_memory_image__new(u8* filename) {
   u64 filename__length = strlen((char*)filename);
-  funk2_management_thread_command__save_memory_image_t* this = (funk2_management_thread_command__save_memory_image_t*)f2__malloc(sizeof(funk2_management_thread_command__save_memory_image_t) + filename__length + 1);
+  funk2_management_thread_command__save_memory_image_t* this = (funk2_management_thread_command__save_memory_image_t*)from_ptr(f2__malloc(sizeof(funk2_management_thread_command__save_memory_image_t) + filename__length + 1));
   this->header.type      = funk2_management_thread_command_type__save_memory_image;
   this->filename__length = filename__length;
   strcpy((char*)this->filename, (char*)filename);
@@ -44,7 +44,7 @@ void funk2_management_thread_command__save_memory_image__execute(funk2_managemen
 
 funk2_management_thread_command__load_memory_image_t* funk2_management_thread_command__load_memory_image__new(u8* filename) {
   u64 filename__length = strlen((char*)filename);
-  funk2_management_thread_command__load_memory_image_t* this = (funk2_management_thread_command__load_memory_image_t*)f2__malloc(sizeof(funk2_management_thread_command__load_memory_image_t) + filename__length + 1);
+  funk2_management_thread_command__load_memory_image_t* this = (funk2_management_thread_command__load_memory_image_t*)from_ptr(f2__malloc(sizeof(funk2_management_thread_command__load_memory_image_t) + filename__length + 1));
   this->header.type      = funk2_management_thread_command_type__load_memory_image;
   this->filename__length = filename__length;
   strcpy((char*)this->filename, (char*)filename);
@@ -62,7 +62,7 @@ void funk2_management_thread_command__load_memory_image__execute(funk2_managemen
 // management_thread_command__exit
 
 funk2_management_thread_command__exit_t* funk2_management_thread_command__exit__new(s64 value) {
-  funk2_management_thread_command__exit_t* this = (funk2_management_thread_command__exit_t*)f2__malloc(sizeof(funk2_management_thread_command__exit_t));
+  funk2_management_thread_command__exit_t* this = (funk2_management_thread_command__exit_t*)from_ptr(f2__malloc(sizeof(funk2_management_thread_command__exit_t)));
   this->header.type = funk2_management_thread_command_type__exit;
   this->value       = value;
   return this;
@@ -136,7 +136,7 @@ void funk2_management_thread__add_command_node_to_command_list(funk2_management_
 }
 
 u64 funk2_management_thread__add_command(funk2_management_thread_t* this, funk2_management_thread_command_t* command) {
-  funk2_management_thread_command_node_t* new_node = (funk2_management_thread_command_node_t*)f2__malloc(sizeof(funk2_management_thread_command_node_t));
+  funk2_management_thread_command_node_t* new_node = (funk2_management_thread_command_node_t*)from_ptr(f2__malloc(sizeof(funk2_management_thread_command_node_t)));
   command->header.uid = funk2_management_thread__new_uid(this);
   new_node->command = command;
   funk2_management_thread__add_command_node_to_command_list(this, new_node);
@@ -187,7 +187,7 @@ void funk2_management_thread__add_command_node_to_finished_command_list(funk2_ma
 }
 
 void funk2_management_thread__command_finished(funk2_management_thread_t* this, funk2_management_thread_command_t* command) {
-  funk2_management_thread_command_node_t* new_node = (funk2_management_thread_command_node_t*)f2__malloc(sizeof(funk2_management_thread_command_node_t));
+  funk2_management_thread_command_node_t* new_node = (funk2_management_thread_command_node_t*)from_ptr(f2__malloc(sizeof(funk2_management_thread_command_node_t)));
   new_node->command = command;
   funk2_management_thread__add_command_node_to_finished_command_list(this, new_node);
 }

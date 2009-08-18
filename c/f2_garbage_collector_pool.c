@@ -68,7 +68,7 @@ void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutat
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
   this->alloc_length = 1;
-  this->data         = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_mutation_buffer__destroy(funk2_garbage_collector_mutation_buffer_t* this) {
@@ -82,7 +82,7 @@ void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_col
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
     memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_mutation_buffer__know_of_mutation: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
@@ -129,7 +129,7 @@ void funk2_garbage_collector_no_more_references_buffer__init(funk2_garbage_colle
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
   this->alloc_length = 1;
-  this->data         = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_no_more_references_buffer__destroy(funk2_garbage_collector_no_more_references_buffer_t* this) {
@@ -143,7 +143,7 @@ void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_referenc
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
     memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
@@ -190,7 +190,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collecto
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
   this->alloc_length = 1;
-  this->data         = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
@@ -204,7 +204,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(fun
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
     memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
@@ -250,7 +250,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(funk2_garb
 void funk2_garbage_collector_other_grey_buffer__init(funk2_garbage_collector_other_grey_buffer_t* this) {
   this->count        = 0;
   this->alloc_length = 1;
-  this->data         = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 
 void funk2_garbage_collector_other_grey_buffer__destroy(funk2_garbage_collector_other_grey_buffer_t* this) {
@@ -262,7 +262,7 @@ void funk2_garbage_collector_other_grey_buffer__know_of_other_grey(funk2_garbage
     u64    old_alloc_length = this->alloc_length;
     f2ptr* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)f2__malloc(sizeof(f2ptr) * this->alloc_length);
+    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
     memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_other_grey_buffer__know_of_protected_f2ptr: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);

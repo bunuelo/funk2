@@ -401,7 +401,7 @@ funk2_peer_command_server_new_port_result_t funk2_peer_command_server__add_new_s
 	 ip_addr[0], ip_addr[1], ip_addr[2], ip_addr[3],
 	 port_num,
 	 recv_buffer__byte_num,
-	 secd_buffer__byte_num);
+	 send_buffer__byte_num);
   socket_server_list_t* socket_server_node = (socket_server_list_t*)from_ptr(f2__malloc(sizeof(socket_server_list_t)));
   if (socket_server__init(&(socket_server_node->socket_server), bind_device, ip_addr, port_num, recv_buffer__byte_num, send_buffer__byte_num) != socket_server_init_result__success) {
     f2__free(to_ptr(socket_server_node));

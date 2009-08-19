@@ -33,8 +33,8 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   
   this->total_free_memory = this->total_global_memory;
   
-  this->global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(this) - 1);
-  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(this));
+  this->global_f2ptr_offset = to_ptr(this->dynamic_memory.ptr - 1);
+  funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0, 0);
   
   rbt_tree__init(&(this->free_memory_tree), NULL);
@@ -77,8 +77,8 @@ void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this) {
 }
 
 void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this) {
-  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   while(iter < end_of_blocks) {
     release__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
@@ -87,8 +87,8 @@ void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this) {
 }
 
 void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this) {
-  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   while(iter < end_of_blocks) {
     if (! funk2_memblock__is_self_consistently_valid(iter)) {
       error(nil, "found self-inconsistent memblock ptype.");

@@ -51,8 +51,6 @@ struct funk2_memorypool_s {
   //funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
 };
 
-#define funk2_memorypool__memory__ptr(this) ((this)->dynamic_memory.ptr)
-
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
 #define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&((this)->global_memory_allocate_mutex))
 #define funk2_memorypool__memory_mutex__unlock(this)   funk2_processor_mutex__unlock(&((this)->global_memory_allocate_mutex))

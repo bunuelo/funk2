@@ -94,8 +94,8 @@ boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* t
   boolean_t is_within_memory_pool_range = boolean__false;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))))) + (this->pool[pool_index].total_global_memory));
+    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
     if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
       is_within_memory_pool_range = boolean__true;
     }
@@ -130,8 +130,8 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
   }
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))))) + (this->pool[pool_index].total_global_memory));
+    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
     if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
       int byte_num;
       while(iter < end_of_blocks) {
@@ -405,9 +405,9 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     size_i = this->pool[pool_index].next_unique_block_id; safe_write(fd, &size_i, sizeof(f2size_t));
     status("funk2_memory__save_image_to_file: saving pool %d.  ptr=" u64__fstr ", total_global_memory=" u64__fstr ".",
 	   pool_index,
-	   (u64)(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))),
+	   (u64)(this->pool[pool_index].dynamic_memory.ptr),
 	   (u64)(this->pool[pool_index].total_global_memory));
-    safe_write(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);
+    safe_write(fd, from_ptr(this->pool[pool_index].dynamic_memory.ptr), this->pool[pool_index].total_global_memory);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
   funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
@@ -422,8 +422,8 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
   int i;
   for (i = 0; i < memory_pool_num; i ++) {
-    if (p >= funk2_memorypool__memory__ptr(&(this->pool[i])) &&
-	p <  funk2_memorypool__memory__ptr(&(this->pool[i])) + this->pool[i].total_global_memory) {
+    if (p >= this->pool[i].dynamic_memory.ptr &&
+	p <  this->pool[i].dynamic_memory.ptr + this->pool[i].total_global_memory) {
       return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset)));
     }
   }
@@ -445,8 +445,8 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL);
     
     {
-      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index])));
-      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index])))) + this->pool[pool_index].total_global_memory);
+      funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
+      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->pool[pool_index].dynamic_memory.ptr)) + this->pool[pool_index].total_global_memory);
       while(iter < end_of_blocks) {
 	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
 	if (iter->used) {
@@ -540,7 +540,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 	
 	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
 	f2dynamicmemory__realloc(&(this->pool[pool_index].dynamic_memory), &old_dynamic_memory, this->pool[pool_index].total_global_memory);
-	safe_read(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);
+	safe_read(fd, from_ptr(this->pool[pool_index].dynamic_memory.ptr), this->pool[pool_index].total_global_memory);
       }
       
       safe_read(fd, &f2_i, sizeof(f2ptr));
@@ -553,7 +553,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       status("done loading memory image."); fflush(stdout);
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	this->pool[pool_index].global_f2ptr_offset = to_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))) - 1;
+	this->pool[pool_index].global_f2ptr_offset = to_ptr(this->pool[pool_index].dynamic_memory.ptr) - 1;
       }
       
       this->global_environment_f2ptr = global_environment_f2ptr;

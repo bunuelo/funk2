@@ -24,6 +24,7 @@
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
   this->byte_num = byte_num;
   this->ptr      = to_ptr(malloc(byte_num));
+  memset(from_ptr(this->ptr), 0, byte_num);
   if (from_ptr(this->ptr) == NULL) {
     perror("malloc");
     exit(-1);

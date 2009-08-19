@@ -27,7 +27,10 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   exit(-1);
 }
 
+size_t total_bytes_allocated = 0;
+
 ptr malloc_executable(size_t required_bytes) {
+  // mmap requires allocating page-sized blocks.
   //size_t page_size   = getpagesize();
   //size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
   //void* p = malloc(alloc_bytes);
@@ -36,6 +39,7 @@ ptr malloc_executable(size_t required_bytes) {
     perror("malloc_executable() malloc");
     error(nil, "malloc_executable malloc failed.");
   }
+  total_bytes_allocated += required_bytes;
   return to_ptr(p);
 }
 

@@ -136,9 +136,9 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   if (byte_num == this->total_global_memory) {return;}
   f2size_t          old_total_global_memory = this->total_global_memory;
   f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
-  status("funk2_memorypool__change_total_memory_available: old->ptr=" u64__fstr, old_dynamic_memory.ptr);
+  status("funk2_memorypool__change_total_memory_available: old->ptr=0x" X64__fstr, old_dynamic_memory.ptr);
   f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, byte_num);
-  status("funk2_memorypool__change_total_memory_available: new->ptr=" u64__fstr, this->dynamic_memory.ptr);
+  status("funk2_memorypool__change_total_memory_available: new->ptr=0x" X64__fstr, this->dynamic_memory.ptr);
   this->global_f2ptr_offset = this->dynamic_memory.ptr - 1;
   this->total_global_memory = byte_num;
   if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {

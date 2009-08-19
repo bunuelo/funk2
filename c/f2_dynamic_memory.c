@@ -23,16 +23,16 @@
 
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
   this->byte_num = byte_num;
-  this->ptr      = to_ptr(malloc(byte_num));
-  memset(from_ptr(this->ptr), 0, byte_num);
+  this->ptr      = f2__malloc(byte_num);
   if (from_ptr(this->ptr) == NULL) {
     perror("malloc");
     exit(-1);
   }
+  memset(from_ptr(this->ptr), 0, byte_num);
 }
 
 void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
-  free(from_ptr(this->ptr));
+  f2__free(this->ptr);
   this->byte_num = 0;
   this->ptr      = to_ptr(NULL);
 }

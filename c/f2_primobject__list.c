@@ -125,8 +125,8 @@ f2ptr f2list__primobject_type__new(f2ptr cause) {
 								    __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__funk,  __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__set__funk, nil);}
   {char* slot_name = "add";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk);}
   {char* slot_name = "lookup";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk);}
-  {char* slot_name = "car";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk);}
-  {char* slot_name = "cdr";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk);}
+  {char* slot_name = "car";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk, nil, nil);}
+  {char* slot_name = "cdr";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk, nil, nil);}
   return this;
 }
 

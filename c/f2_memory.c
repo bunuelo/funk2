@@ -511,9 +511,8 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
     retval = boolean__true;
   } else {
     while(1) {
-      int      i;
-      f2ptr    f2_i;
-      f2size_t size_i;
+      int   i;
+      f2ptr f2_i;
       safe_read(fd, &i, sizeof(int));
       if (i != 0xfaded) {
 	status("load_image_from_disk failure: file is not a funk memory image.");

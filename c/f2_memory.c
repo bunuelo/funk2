@@ -394,9 +394,8 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
     return boolean__true;
   }
-  f2ptr    f2_i;
-  f2size_t size_i;
-  int      i;
+  f2ptr f2_i;
+  int   i;
   i = 0xfaded;             safe_write(fd, &i, sizeof(int));
   i = F2__COMPILE_TIME_ID; safe_write(fd, &i, sizeof(int));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

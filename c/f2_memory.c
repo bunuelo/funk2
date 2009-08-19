@@ -210,8 +210,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
     if (block) {return block;}
   }
   __funk2.garbage_collector.gc_pool[pool_index].should_run_gc = boolean__true;
-  status ("this->pool[%d].total_global_memory = " f2size_t__fstr, pool_index, (f2size_t)(this->pool[pool_index].total_global_memory));
-  status ("pool %d new size = " f2size_t__fstr, pool_index, (f2size_t)(this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory >> 3) + byte_num));
+  status("funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree: before enlarge memory, this->pool[%d].total_global_memory=" f2size_t__fstr, pool_index, (f2size_t)(this->pool[pool_index].total_global_memory));
   do {
     this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
     this->pool[pool_index].should_enlarge_memory_now                         = boolean__true;
@@ -220,7 +219,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
       if (! this->bootstrapping_mode) {
 	funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
       }
-      funk2_memorypool__change_total_memory_available(&(this->pool[pool_index]), this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory >> 3) + this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
+      funk2_memorypool__change_total_memory_available(&(this->pool[pool_index]), this->pool[pool_index].total_global_memory + (this->pool[pool_index].total_global_memory << 1) + this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num);
       this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
       this->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
       __funk2.user_thread_controller.please_wait                               = boolean__false;
@@ -401,13 +400,11 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   i = 0xfaded;             safe_write(fd, &i, sizeof(int));
   i = F2__COMPILE_TIME_ID; safe_write(fd, &i, sizeof(int));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    size_i = this->pool[pool_index].total_global_memory;  safe_write(fd, &size_i, sizeof(f2size_t));
-    size_i = this->pool[pool_index].next_unique_block_id; safe_write(fd, &size_i, sizeof(f2size_t));
-    status("funk2_memory__save_image_to_file: saving pool %d.  ptr=" u64__fstr ", total_global_memory=" u64__fstr ".",
+    status("funk2_memory__save_image_to_file: saving pool %d.  ptr=0x" X64__fstr ", total_global_memory=" u64__fstr ".",
 	   pool_index,
 	   (u64)(this->pool[pool_index].dynamic_memory.ptr),
 	   (u64)(this->pool[pool_index].total_global_memory));
-    safe_write(fd, from_ptr(this->pool[pool_index].dynamic_memory.ptr), this->pool[pool_index].total_global_memory);
+    funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
   funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
@@ -532,15 +529,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       }
       
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	safe_read(fd, &size_i, sizeof(f2size_t));
-	this->pool[pool_index].total_global_memory = size_i;
-	
-	safe_read(fd, &size_i, sizeof(f2size_t));
-	this->pool[pool_index].next_unique_block_id = size_i;
-	
-	f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->pool[pool_index].dynamic_memory), sizeof(f2dynamicmemory_t));
-	f2dynamicmemory__realloc(&(this->pool[pool_index].dynamic_memory), &old_dynamic_memory, this->pool[pool_index].total_global_memory);
-	safe_read(fd, from_ptr(this->pool[pool_index].dynamic_memory.ptr), this->pool[pool_index].total_global_memory);
+	funk2_memorypool__load_from_stream(&(this->pool[pool_index]), fd);
       }
       
       safe_read(fd, &f2_i, sizeof(f2ptr));

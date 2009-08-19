@@ -383,7 +383,7 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
 }
 
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
-  status("saving memory image.");
+  status("funk2_memory__save_image_to_file: saving memory image.");
   funk2_memory__print_gc_stats(this);
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -403,6 +403,9 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     size_i = this->pool[pool_index].total_global_memory;  safe_write(fd, &size_i, sizeof(f2size_t));
     size_i = this->pool[pool_index].next_unique_block_id; safe_write(fd, &size_i, sizeof(f2size_t));
+    status("funk2_memory__save_image_to_file: saving pool %d.  ptr=" u64__fstr ", total_global_memory=" u64__fstr ".",
+	   (u64)(funk2_memorypool__memory__ptr(&(this->pool[pool_index])))
+	   (u64)(this->pool[pool_index].total_global_memory));
     safe_write(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));

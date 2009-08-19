@@ -42,6 +42,9 @@ void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* 
     perror("realloc");
     exit(-1);
   }
+  if (old_memory->byte_num > byte_num) {
+    memset(((u8*)from_ptr(new_memory->ptr)) + old_memory->byte_num, 0, byte_num - (old_memory->byte_num));
+  }
   new_memory->byte_num = byte_num;
 }
 

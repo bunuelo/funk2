@@ -214,8 +214,8 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
   funk2_memorypool__debug_memory_test(this, 2);
   status("defragmenting funk2_memorypool");
   u8 did_something = 0;
-  funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(funk2_memorypool__memory__ptr(this));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  funk2_memblock_t* iter = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   funk2_memblock_t* segment_first_free_block = NULL;
   rbt_tree__init(&(this->free_memory_tree), NULL);
   while(iter < end_of_blocks) {
@@ -380,8 +380,8 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
 
 boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {
   boolean_t         found_invalid = boolean__false;
-  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
+  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   while(iter < end_of_blocks) {
     if (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, to_ptr(iter))) {
       status("funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");

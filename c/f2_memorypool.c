@@ -132,11 +132,13 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
 	   ((u64)byte_num), ((u64)f2ptr__pool_address__max_value));
     error(nil, "funk2_memorypool__change_total_memory_available error: tried to allocate more memory than is able to be addressed (are you using a 32 bit version still?).");
   }
-  status("funk2_memorypool__change_total_memory_available(" f2size_t__fstr ")", byte_num); fflush(stdout);
+  status("funk2_memorypool__change_total_memory_available(" f2size_t__fstr ")", byte_num);
   if (byte_num == this->total_global_memory) {return;}
-  f2size_t         old_total_global_memory      = this->total_global_memory;
+  f2size_t          old_total_global_memory = this->total_global_memory;
   f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
+  status("funk2_memorypool__change_total_memory_available: old->ptr=" u64__fstr, old_dynamic_memory.ptr);
   f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, byte_num);
+  status("funk2_memorypool__change_total_memory_available: new->ptr=" u64__fstr, this->dynamic_memory.ptr);
   this->global_f2ptr_offset = this->dynamic_memory.ptr - 1;
   this->total_global_memory = byte_num;
   if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {

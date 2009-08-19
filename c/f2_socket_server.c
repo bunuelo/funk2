@@ -2,7 +2,9 @@
 
 void client_id__bind_device__set(client_id_t* this, u8* bind_device) {
   memset(this->bind_device, 0, 16);
-  strncpy((char*)this->bind_device, (char*)bind_device, 16);
+  if (this->bind_device != bind_device) {
+    strncpy((char*)this->bind_device, (char*)bind_device, 16);
+  }
   this->bind_device[15] = 0;
 }
 

@@ -35,7 +35,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this) {
   
   this->global_f2ptr_offset = to_ptr(this->dynamic_memory.ptr - 1);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
-  funk2_memblock__init(block, this->total_global_memory, 0, 0);
+  funk2_memblock__init(block, this->total_global_memory, 0);
   
   rbt_tree__init(&(this->free_memory_tree), NULL);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
@@ -191,21 +191,6 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   funk2_memorypool__debug_memory_test(this, 2);
 }
 
-/*
-void funk2_memorypool__clear_all_gc_touch_flags_before_generation(funk2_memorypool_t* this, int generation_num) {
-  //status("funk2_memorypool__clear_all_gc_touch_flags_before_generation: generation_num=%d.", generation_num);
-  funk2_memorypool__debug_memory_test(this, 3);
-  rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
-  while (iter) {
-    if(((funk2_memblock_t*)iter)->generation_num < generation_num) {
-      ((funk2_memblock_t*)iter)->gc_touch = 0;
-    }
-    iter = rbt_node__next(iter);
-  }
-  funk2_memorypool__debug_memory_test(this, 3);
-}
-*/
-
 void funk2_memorypool__link_funk2_memblock_to_freelist(funk2_memorypool_t* this, funk2_memblock_t* block) {
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
 }
@@ -297,48 +282,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   }
 }
 
-/*
-u8 funk2_memorypool__free_all_gc_untouched_blocks_from_generation(funk2_memorypool_t* this, int generation_num) {
-  //status("funk2_memorypool__free_all_gc_untouched_blocks_from_generation: generation_num=%d.", generation_num);
-  funk2_memorypool__debug_memory_test(this, 2);
-  u8 did_something = 0;
-  rbt_node_t* iter = rbt_tree__minimum(&(this->used_memory_tree));
-  rbt_node_t* next;
-  while (iter) {
-    next = rbt_node__next(iter);
-    if (((funk2_memblock_t*)iter)->generation_num <= generation_num && (! ((funk2_memblock_t*)iter)->gc_touch)) {
-      // remove from used list
-      rbt_tree__remove(&(this->used_memory_tree), iter);
-      // set to free
-      ((funk2_memblock_t*)iter)->used = 0;
-      this->total_free_memory += funk2_memblock__byte_num((funk2_memblock_t*)iter);
-      // add to free list
-      funk2_memorypool__link_funk2_memblock_to_freelist(this, (funk2_memblock_t*)iter);
-      // set did_something flag
-      did_something = 1;
-    }
-    iter = next;
-  }
-  funk2_memorypool__debug_memory_test(this, 2);
-  return did_something;
-}
-*/
-
-/*
-void funk2_memorypool__increment_generation(funk2_memorypool_t* this) {
-  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
-  while(iter < end_of_blocks) {
-    if (iter->used) {
-      if (iter->generation_num < maximum_generation_num) {
-	iter->generation_num ++;
-      }
-    }
-    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-  }
-}
-*/
-
 // look for memory block that is not used and is big enough for us to split up
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num) {
   funk2_memorypool__debug_memory_test(this, 4);
@@ -357,26 +300,6 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
   funk2_memorypool__debug_memory_test(this, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
   return max_size_block;
 }
-
-//void funk2_memorypool__touch_all_referenced_from_block(funk2_memorypool_t* this, ptr block) {
-//  funk2_gc_touch_circle_buffer__touch_all_referenced_from_block(&(this->gc_touch_circle_buffer), (funk2_memblock_t*)(to_ptr(block)));
-//}
-
-//void funk2_memorypool__touch_all_referenced_from_f2ptr(funk2_memorypool_t* this, f2ptr exp) {
-//  funk2_gc_touch_circle_buffer__touch_all_referenced_from_f2ptr(&(this->gc_touch_circle_buffer), exp);
-//}
-
-//void funk2_memorypool__touch_all_referenced_from_pool_generation(funk2_memorypool_t* this, int touch_generation_num) {
-//  //status("funk2_memorypool__touch_all_referenced_from_pool_generation: generation_num=%d.", touch_generation_num);
-//  funk2_memblock_t*   iter          = (funk2_memblock_t*)(from_ptr(funk2_memorypool__memory__ptr(this)));
-//  funk2_memblock_t*   end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__memory__ptr(this))) + this->total_global_memory);
-//  while(iter < end_of_blocks) {
-//    if (iter->used && iter->generation_num == touch_generation_num) {
-//      funk2_memorypool__touch_all_referenced_from_block(this, to_ptr(iter));
-//    }
-//    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-//  }
-//}
 
 boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {
   boolean_t         found_invalid = boolean__false;

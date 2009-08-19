@@ -47,6 +47,10 @@ struct funk2_object_type__list__slot_s {
   f2ptr add__funk;
   f2ptr lookup__symbol;
   f2ptr lookup__funk;
+  f2ptr car__symbol;
+  f2ptr car__funk;
+  f2ptr cdr__symbol;
+  f2ptr cdr__funk;
 };
 
 #endif // F2__PRIMOBJECT__LIST__TYPES__H

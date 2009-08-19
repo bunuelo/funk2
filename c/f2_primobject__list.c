@@ -68,6 +68,24 @@ def_pcfunk1(list__cons_cells, this, return f2__list__cons_cells(this_cause, this
 f2ptr f2__list__cons_cells__set(f2ptr cause, f2ptr this, f2ptr value) {return f2list__cons_cells__set(this, cause, value);}
 def_pcfunk2(list__cons_cells__set, this, value, return f2__list__cons_cells__set(this_cause, this, value));
 
+f2ptr f2__list__car(f2ptr cause, f2ptr this) {
+  f2ptr cons_cells = f2list__cons_cells(this, cause);
+  return f2cons__car(cons_cells, cause);
+}
+def_pcfunk1(list__car, this, return f2__list__car(this_cause, this));
+
+f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
+  f2ptr length     = f2list__length(this, cause);
+  s64   length__i  = f2integer__i(length, cause);
+  f2ptr cons_cells = f2list__cons_cells(this, cause);
+  if (length__i == 0) {
+    return f2list__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), nil);
+  } else {
+    return f2list__new(cause, f2mutex__new(cause), f2integer__new(cause, length__i - 1), f2cons__cdr(cons_cells, cause));
+  }
+}
+def_pcfunk1(list__cdr, this, return f2__list__cdr(this_cause, this));
+
 f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2mutex__lock(f2list__write_mutex(this, cause), cause);
   f2list__cons_cells__set(this, cause, f2cons__new(cause, element, f2list__cons_cells(this, cause)));
@@ -95,7 +113,6 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
 }
 def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, this, element));
 
-
 f2ptr f2list__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.is_type__funk);}
@@ -108,6 +125,8 @@ f2ptr f2list__primobject_type__new(f2ptr cause) {
 								    __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__funk,  __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__set__funk, nil);}
   {char* slot_name = "add";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk);}
   {char* slot_name = "lookup";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk);}
+  {char* slot_name = "car";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk);}
+  {char* slot_name = "cdr";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk);}
   return this;
 }
 
@@ -147,6 +166,10 @@ void f2__primobject_list__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(list__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk = never_gc(cfunk);}
+  {char* symbol_str = "car"; __funk2.globalenv.object_type.primobject.primobject_type_list.car__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__car, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk = never_gc(cfunk);}
+  {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__cdr, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk = never_gc(cfunk);}
   
 }
 

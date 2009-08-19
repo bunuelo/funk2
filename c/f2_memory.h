@@ -107,8 +107,8 @@ struct funk2_memory_s {
 
 // misc
 
-void safe_write(int fd, void* ptr, size_t object_size);
-void safe_read(int fd, void* ptr, size_t object_size);
+void safe_write(int fd, ptr p, f2size_t object_size);
+void safe_read(int fd, ptr p, f2size_t object_size);
 
 // funk2_memory
 

@@ -319,25 +319,25 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
 
 void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
   f2size_t size_i;
-  size_i = this->total_global_memory;  safe_write(fd, &size_i, sizeof(f2size_t));
-  size_i = this->next_unique_block_id; safe_write(fd, &size_i, sizeof(f2size_t));
-  status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr "total_global_memory=" u64__fstr,
+  size_i = this->total_global_memory;  safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+  size_i = this->next_unique_block_id; safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+  status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr,
 	 this->dynamic_memory.ptr, this->dynamic_memory.ptr,
 	 this->total_global_memory);
-  safe_write(fd, from_ptr(this->dynamic_memory.ptr), this->total_global_memory);
+  safe_write(fd, this->dynamic_memory.ptr, this->total_global_memory);
 }
 
 void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   f2size_t size_i;
   
-  safe_read(fd, &size_i, sizeof(f2size_t));
+  safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
   this->total_global_memory = size_i;
   
-  safe_read(fd, &size_i, sizeof(f2size_t));
+  safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
   this->next_unique_block_id = size_i;
   
   f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
   f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, this->total_global_memory);
-  safe_read(fd, from_ptr(this->dynamic_memory.ptr), this->total_global_memory);
+  safe_read(fd, this->dynamic_memory.ptr, this->total_global_memory);
 }
 

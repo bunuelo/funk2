@@ -21,15 +21,15 @@
 
 #include "funk2.h"
 
-void safe_write(int fd, void* ptr, size_t object_size) {
-  size_t result = write(fd, ptr, object_size);
+void safe_write(int fd, ptr p, f2size_t object_size) {
+  size_t result = write(fd, from_ptr(p), (size_t)object_size);
   if (result != object_size) {
     error(nil, "safe_write error.");
   }
 }
 
-void safe_read(int fd, void* ptr, size_t object_size) {
-  size_t result = read(fd, ptr, object_size);
+void safe_read(int fd, ptr p, f2size_t object_size) {
+  size_t result = read(fd, from_ptr(p), (size_t)object_size);
   if (result != object_size) {
     error(nil, "safe_read error.");
   }
@@ -396,16 +396,13 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   f2ptr f2_i;
   int   i;
-  i = 0xfaded;             safe_write(fd, &i, sizeof(int));
-  i = F2__COMPILE_TIME_ID; safe_write(fd, &i, sizeof(int));
+  i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(int));
+  i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(int));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("funk2_memory__save_image_to_file: saving pool %d.  ptr=0x" X64__fstr ", total_global_memory=" u64__fstr ".",
-	   pool_index,
-	   (u64)(this->pool[pool_index].dynamic_memory.ptr),
-	   (u64)(this->pool[pool_index].total_global_memory));
+    status("funk2_memory__save_image_to_file: saving pool %d.", pool_index);
     funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
   }
-  f2_i = this->global_environment_f2ptr; safe_write(fd, &f2_i, sizeof(f2ptr));
+  f2_i = this->global_environment_f2ptr; safe_write(fd, to_ptr(&f2_i), sizeof(f2ptr));
   funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
   close(fd);
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -512,14 +509,14 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
     while(1) {
       int   i;
       f2ptr f2_i;
-      safe_read(fd, &i, sizeof(int));
+      safe_read(fd, to_ptr(&i), sizeof(int));
       if (i != 0xfaded) {
 	status("load_image_from_disk failure: file is not a funk memory image.");
 	retval = boolean__true;
 	break;
       }
       
-      safe_read(fd, &i, sizeof(int));
+      safe_read(fd, to_ptr(&i), sizeof(int));
       if (i != F2__COMPILE_TIME_ID) {
 	status("load_image_from_disk failure: file is saved from a different version of funk2.");
 	retval = boolean__true;
@@ -530,7 +527,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 	funk2_memorypool__load_from_stream(&(this->pool[pool_index]), fd);
       }
       
-      safe_read(fd, &f2_i, sizeof(f2ptr));
+      safe_read(fd, to_ptr(&f2_i), sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
       
       funk2_garbage_collector__destroy(&(__funk2.garbage_collector));

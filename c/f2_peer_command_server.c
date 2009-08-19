@@ -396,13 +396,19 @@ void funk2_peer_command_server__destroy(funk2_peer_command_server_t* this) {
 }
 
 funk2_peer_command_server_new_port_result_t funk2_peer_command_server__add_new_server_port(funk2_peer_command_server_t* this, char* bind_device, u8* ip_addr, u16 port_num, u32 recv_buffer__byte_num, u32 send_buffer__byte_num) {
+  status("funk2_peer_command_server__add_new_server_port: bind_device=\"%s\", ip_addr=%d.%d.%d.%d, port_num=%d, recv_buffer__byte_num=%d, send_buffer__byte_num=%d.",
+	 bind_device,
+	 ip_addr[0], ip_addr[1], ip_addr[2], ip_addr[3],
+	 port_num,
+	 recv_buffer__byte_num,
+	 secd_buffer__byte_num);
   socket_server_list_t* socket_server_node = (socket_server_list_t*)from_ptr(f2__malloc(sizeof(socket_server_list_t)));
   if (socket_server__init(&(socket_server_node->socket_server), bind_device, ip_addr, port_num, recv_buffer__byte_num, send_buffer__byte_num) != socket_server_init_result__success) {
     f2__free(to_ptr(socket_server_node));
     return funk2_peer_command_server_new_port_result__failure;
   }
   socket_server_node->next = this->socket_servers;
-  this->socket_servers = socket_server_node;
+  this->socket_servers     = socket_server_node;
   return funk2_peer_command_server_new_port_result__success;
 }
 

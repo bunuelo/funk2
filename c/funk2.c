@@ -104,6 +104,7 @@ void f2__initialize() {
 void funk2__init(funk2_t* this, int argc, char** argv) {
   f2__status__initialize();
   
+  this->exit_now = boolean__false;
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_mutex));
@@ -252,6 +253,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 }
 
 void f2__destroy() {
+  funk2__destroy(&__funk2);
+  
   status("funk2: destroying scheduler.");
   f2__scheduler__destroy();
   status("funk2: destroying memory.");
@@ -323,15 +326,13 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 #endif // TEST
   funk2__init(this, argc, argv);
   
-  while (1) {
+  while (! (this->exit_now)) {
     boolean_t did_something = funk2__handle(this);
     if (! did_something) {
       f2__sleep(1000000);
     }
   }
-  //int repl_result = f2__repl(main_fiber);
   
-  funk2__destroy(this);
   f2__destroy();
   
   return 0;

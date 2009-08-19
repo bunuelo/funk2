@@ -163,6 +163,7 @@
 void f2__destroy();
 
 typedef struct funk2_s {
+  boolean_t                           exit_now;
   node_id_t                           node_id;
   event_id_t                          event_id;
   funk2_processor_mutex_t             event_id_mutex;

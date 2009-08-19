@@ -28,9 +28,10 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
 }
 
 ptr malloc_executable(size_t required_bytes) {
-  size_t page_size   = getpagesize();
-  size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
-  void* p = malloc(alloc_bytes);
+  //size_t page_size   = getpagesize();
+  //size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
+  //void* p = malloc(alloc_bytes);
+  void* p = malloc(required_bytes);
   if (! p) {
     perror("malloc_executable() malloc");
     error(nil, "malloc_executable malloc failed.");

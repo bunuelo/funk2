@@ -404,6 +404,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     size_i = this->pool[pool_index].total_global_memory;  safe_write(fd, &size_i, sizeof(f2size_t));
     size_i = this->pool[pool_index].next_unique_block_id; safe_write(fd, &size_i, sizeof(f2size_t));
     status("funk2_memory__save_image_to_file: saving pool %d.  ptr=" u64__fstr ", total_global_memory=" u64__fstr ".",
+	   pool_index,
 	   (u64)(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))),
 	   (u64)(this->pool[pool_index].total_global_memory));
     safe_write(fd, from_ptr(funk2_memorypool__memory__ptr(&(this->pool[pool_index]))), this->pool[pool_index].total_global_memory);

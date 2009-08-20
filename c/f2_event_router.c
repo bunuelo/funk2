@@ -42,9 +42,6 @@ f2ptr funk2_event_router__know_of_event(funk2_event_router_t* this, f2ptr event_
     result = f2__circular_buffer__add(event_cause, event_buffer, event);
     f2mutex__unlock(event_buffer_mutex, event_cause);
   }
-  if (result != __funk2.primobject__circular_buffer.full__symbol) {
-    status("funk2_event_router__know_of_event warning: scheduler event buffer is full, so dropping event.");
-  }
   return result;
 }
 

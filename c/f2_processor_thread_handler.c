@@ -70,11 +70,10 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
 	this->processor_thread_list = next;
       }
       funk2_processor_thread__destroy(&(iter->processor_thread));
-      f2__free(iter);
+      f2__free(to_ptr(iter));
     }
     iter = next;
   }
-  return NULL;
 }
 
 void funk2_processor_thread_handler__exit_myself(funk2_processor_thread_handler_t* this) {

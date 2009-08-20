@@ -110,9 +110,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_processor_mutex__init(&(this->event_id_mutex));
   
   status("");
-  status("*****************************************************************");
+  status("*******************************************************************");
   status("**** booting up funk2 p2p node (node_id=#x" X64__fstr ") ****", this->node_id);
-  status("*****************************************************************");
+  status("*******************************************************************");
   status("");
   
   funk2_command_line__init(&(this->command_line), argc, argv);
@@ -275,9 +275,9 @@ void f2__destroy() {
 
 void funk2__destroy(funk2_t* this) {
   status("");
-  status("*****************************************************************");
+  status("*******************************************************************");
   status("**** shutting down funk2 p2p node (node_id=#x" X64__fstr ") ****", this->node_id);
-  status("*****************************************************************");
+  status("*******************************************************************");
   status("");
   
   funk2_memory__print_gc_stats(&(this->memory));

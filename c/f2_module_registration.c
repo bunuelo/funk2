@@ -57,6 +57,7 @@ void funk2_module_registration__destroy(funk2_module_registration_t* this) {
   while (iter) {
     funk2_module_registration_node_t* next = iter->next;
     funk2_module_registration_node__destroy(iter);
+    f2__free(to_ptr(iter));
     iter = next;
   }
 }

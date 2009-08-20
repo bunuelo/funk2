@@ -31,7 +31,7 @@ void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* t
   while (iter) {
     funk2_processor_thread_list_t* next = iter->next;
     funk2_processor_thread__destroy(&(iter->processor_thread));
-    f2__free(iter);
+    f2__free(to_ptr(iter));
     iter = next;
   }
 }

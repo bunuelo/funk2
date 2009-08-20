@@ -832,17 +832,6 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
 
 //boolean_t raw__fiberp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_fiber(x, cause));}
 
-// primobject circular_buffer
-
-//def_pcfunk1(circular_bufferp,        x,    return f2__circular_bufferp(x, this_cause));
-f2ptr f2__circular_buffer(f2ptr cause, f2ptr length) {
-  if (! raw__integer__is_type(cause, length)) {return f2larva__new(cause, 1);}
-  return raw__circular_buffer__new_empty(cause, f2integer__i(length, cause));
-}
-def_pcfunk1(circular_buffer,         x,    return f2__circular_buffer(this_cause, x));
-def_pcfunk2(circular_buffer__add,    x, y, return f2__circular_buffer__add(   this_cause, x, y));
-def_pcfunk1(circular_buffer__remove, x,    return f2__circular_buffer__remove(this_cause, x));
-
 def_pcfunk1(exp__print, x, return f2__exp__print(this_cause, simple_fiber, x));
 def_pcfunk1(write, x, return f2__write(this_cause, simple_fiber, x));
 def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, simple_fiber, fptr, x));
@@ -1930,13 +1919,6 @@ void f2__primcfunks__initialize() {
   // time
   
   f2__primcfunk__init__0(time, "returns the current time.");
-  
-  // circular_buffer
-  
-  //f2__funktional_primcfunk__init(circular_buffer__is_type, "");
-  f2__primcfunk__init(circular_buffer, "");
-  f2__primcfunk__init(circular_buffer__add, "");
-  f2__primcfunk__init(circular_buffer__remove, "");
   
   // other complex functions
   

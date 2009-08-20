@@ -79,6 +79,20 @@ void funk2_user_thread_controller__free_whiteness__destroy(funk2_user_thread_con
 void funk2_user_thread_controller__free_whiteness__signal_execute(funk2_user_thread_controller__free_whiteness_t* this);
 void funk2_user_thread_controller__free_whiteness__user_process(funk2_user_thread_controller__free_whiteness_t* this);
 
+// funk2_user_thread_controller__exit
+
+typedef struct funk2_user_thread_controller__exit_s {
+  boolean_t               start;
+  funk2_processor_mutex_t done_mutex;
+  s64                     done_count;
+  boolean_t               everyone_done;
+} funk2_user_thread_controller__exit_t;
+
+void funk2_user_thread_controller__exit__init(funk2_user_thread_controller__exit_t* this);
+void funk2_user_thread_controller__exit__destroy(funk2_user_thread_controller__exit_t* this);
+void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_controller__exit_t* this);
+void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controller__exit_t* this);
+
 
 
 // funk2_user_thread_controller
@@ -91,17 +105,19 @@ typedef struct funk2_user_thread_controller_s {
   funk2_user_thread_controller__blacken_grey_nodes_t                           blacken_grey_nodes;
   funk2_user_thread_controller__grey_from_other_nodes_t                        grey_from_other_nodes;
   funk2_user_thread_controller__free_whiteness_t                               free_whiteness;
+  funk2_user_thread_controller__exit_t                                         exit;
 } funk2_user_thread_controller_t;
 
-void      funk2_user_thread_controller__init(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__init(                             funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__destroy(                          funk2_user_thread_controller_t* this);
 void      funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__touch_all_protected_alloc_arrays(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__blacken_grey_nodes(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__grey_from_other_nodes(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__free_whiteness(funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__user_wait_politely(               funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__user_check_wait_politely(         funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__touch_all_protected_alloc_arrays( funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__blacken_grey_nodes(               funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__grey_from_other_nodes(            funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__free_whiteness(                   funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__exit(                             funk2_user_thread_controller_t* this);
 
 #endif // F2__USER_THREAD_CONTROLLER__H
 

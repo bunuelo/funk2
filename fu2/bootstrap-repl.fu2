@@ -676,5 +676,10 @@
 	'funk2: done saving half-baked memory_image.' '\n'
 	'\n']
 
-[management_thread-add_exit_command 0]
+[defunk exit
+  [signal_exit]
+  [while t
+    [yield]]]
+
+[signal_exit]
 

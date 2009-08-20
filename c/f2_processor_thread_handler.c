@@ -58,6 +58,30 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   return NULL;
 }
 
+void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handler_t* this, pthread_t tid) {
+  funk2_processor_thread_list_t* prev = NULL;
+  funk2_processor_thread_list_t* iter = this->processor_thread_list;
+  while (iter) {
+    funk2_processor_thread_list_t* next = iter->next;
+    if (iter->processor_thread.pthread == tid) {
+      if (prev) {
+	prev->next = next;
+      } else {
+	this->processor_thread_list = next;
+      }
+      funk2_processor_thread__destroy(&(iter->processor_thread));
+      f2__free(iter);
+    }
+    iter = next;
+  }
+  return NULL;
+}
+
+void funk2_processor_thread_handler__exit_myself(funk2_processor_thread_handler_t* this) {
+  funk2_processor_thread_handler__remove_pthread(this, pthread_self());
+  pthread_exit(0);
+}
+
 u64 this_processor_thread__pool_index() {
   funk2_processor_thread_t* this_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
   if (this_processor_thread == NULL) {

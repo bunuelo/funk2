@@ -333,10 +333,11 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   while (! (this->exit_now)) {
     boolean_t did_something = funk2__handle(this);
     if (! did_something) {
-      f2__sleep(1000000);
+      f2__sleep(100000);
     }
   }
   
+  funk2_user_thread_controller__exit(&(__funk2.user_thread_controller));
   f2__destroy();
   
   return 0;

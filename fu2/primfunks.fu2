@@ -255,6 +255,7 @@
 [globalize-funk hash_value                                  &primfunk:hash_value]
 [globalize-funk equals                                      &primfunk:equals]
 `[globalize-funk funktional?                                 &primfunk:funktionalp]
+[globalize-funk signal_exit                                 &primfunk:signal_exit]
 
 'end of f2_primfunks.c'
 

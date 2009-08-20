@@ -27,11 +27,18 @@ void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this
 }
 
 void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this) {
+  funk2_processor_thread_list_t* iter = this->processor_thread_list;
+  while (iter) {
+    funk2_processor_thread_list_t* next = iter->next;
+    funk2_processor_thread__destroy(&(iter->processor_thread));
+    f2__free(iter);
+    iter = next;
+  }
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
-  funk2_processor_thread_list_t* new_processor_thread_node = (funk2_processor_thread_list_t*)malloc(sizeof(funk2_processor_thread_list_t));
-  funk2_processor_thread_t* processor_thread = &(new_processor_thread_node->processor_thread);
+  funk2_processor_thread_list_t* new_processor_thread_node = (funk2_processor_thread_list_t*)f2__malloc(sizeof(funk2_processor_thread_list_t));
+  funk2_processor_thread_t*      processor_thread          = &(new_processor_thread_node->processor_thread);
   funk2_processor_thread__init(processor_thread, this->processor_thread_next_index, start_function, args);
   this->processor_thread_next_index ++;
   new_processor_thread_node->next = this->processor_thread_list;
@@ -40,7 +47,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
-  pthread_t tid = pthread_self();
+  pthread_t                      tid  = pthread_self();
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
     if (iter->processor_thread.pthread == tid) {

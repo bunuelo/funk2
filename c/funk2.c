@@ -330,7 +330,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 #endif // TEST
   funk2__init(this, argc, argv);
   
-  while (! (this->exit_now)) {
+  while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);
     if (! did_something) {
       f2__sleep(100000);

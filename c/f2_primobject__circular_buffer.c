@@ -86,18 +86,47 @@ f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(circular_buffer__pop, this, return f2__circular_buffer__pop(this_cause, this));
 
+void raw__circular_buffer__double_size(f2ptr cause, f2ptr this) {
+  u64   raw_start             = f2integer__i(f2circular_buffer__start(this, cause), cause);
+  u64   raw_end               = f2integer__i(f2circular_buffer__end(this, cause), cause);
+  f2ptr bin_array             = f2circular_buffer__bin_array(this, cause);
+  u64   bin_array__length     = raw__array__length(cause, bin_array);
+  u64   new_bin_array__length = bin_array__length << 1;
+  f2ptr new_bin_array         = raw__array__new(cause, new_bin_array__length);
+  u64 new_index = 0;
+  u64 index;
+  for (index = raw_start; index != raw_end; index ++) {
+    raw__array__elt__set(cause, new_bin_array, new_index, raw__array__elt(cause, bin_array, index));
+    new_index ++;
+  }
+  f2circular_buffer__start__set(    this, cause, f2integer__new(cause, 0));
+  f2circular_buffer__end__set(      this, cause, f2integer__new(cause, new_index));
+  f2circular_buffer__bin_array__set(this, cause, new_bin_array);
+}
+
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value) {
-  u64   raw_start         = f2integer__i(f2circular_buffer__start(this, cause), cause);
-  u64   raw_end           = f2integer__i(f2circular_buffer__end(this, cause), cause);
-  f2ptr bin_array         = f2circular_buffer__bin_array(this, cause);
-  u64   bin_array__length = raw__array__length(cause, bin_array);
-  u64 next_end = raw_end + 1;
-  if (next_end == bin_array__length) {
-    next_end = 0;
-  }
-  if (next_end == raw_start) {
-    return __funk2.primobject__circular_buffer.full__symbol;
-  }
+  boolean_t just_resized;
+  u64       raw_start;
+  u64       raw_end;
+  f2ptr     bin_array;
+  u64       bin_array__length;
+  u64       next_end;
+  do {
+    just_resized      = boolean__false;
+    raw_start         = f2integer__i(f2circular_buffer__start(this, cause), cause);
+    raw_end           = f2integer__i(f2circular_buffer__end(this, cause), cause);
+    bin_array         = f2circular_buffer__bin_array(this, cause);
+    bin_array__length = raw__array__length(cause, bin_array);
+    next_end = raw_end + 1;
+    if (next_end == bin_array__length) {
+      next_end = 0;
+    }
+    if (next_end == raw_start) {
+      raw__circular_buffer__double_size(cause, this);
+      just_resized = boolean__true;
+      //return __funk2.primobject__circular_buffer.full__symbol;
+    }
+  } while (just_resized);
   raw__array__elt__set(cause, bin_array, raw_end, value);
   f2circular_buffer__end__set(this, cause, f2integer__new(cause, next_end));
   return nil;
@@ -122,11 +151,11 @@ f2ptr f2circular_buffer__primobject_type__new(f2ptr cause) {
   {char* slot_name = "is_type";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_type__funk);}
   {char* slot_name = "new";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk);}
   {char* slot_name = "start";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.start__funk,   __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.start__set__funk, nil);}
+								__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.start__funk,     __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.start__set__funk, nil);}
   {char* slot_name = "end";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.end__funk,     __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.end__set__funk, nil);}
+								__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.end__funk,       __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.end__set__funk, nil);}
   {char* slot_name = "bin_array"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
-								__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.bin_array__funk,     __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.bin_array__set__funk, nil);}
+								__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.bin_array__funk, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.bin_array__set__funk, nil);}
   {char* slot_name = "pop";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__funk);}
   {char* slot_name = "add";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__funk);}
   {char* slot_name = "is_empty";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__funk);}

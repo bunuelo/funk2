@@ -339,6 +339,7 @@ f2ptr f2__larva__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
 
 void f2__ptypes__initialize__object_slots();
 void f2__ptypes__initialize();
+void f2__ptypes__destroy();
 
 #endif // F2__PTYPES__H
 

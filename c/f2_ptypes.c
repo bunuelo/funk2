@@ -1992,6 +1992,20 @@ void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
 }
 
 void funk2_symbol_hash__destroy(funk2_symbol_hash_t* this) {
+  {
+    funk2_symbol_hash_node_t** array_iter = this->array;
+    funk2_symbol_hash_node_t*  node_iter;
+    int i;
+    for (i = this->array_length; i > 0; i --) {
+      node_iter = *array_iter;
+      while (node_iter) {
+	funk2_symbol_hash_node_t* next = node_iter->next;
+	f2__free(iter);
+	node_iter = next;
+      }
+      array_iter ++;
+    }
+  }
   f2__free(to_ptr(this->array));
 }
 
@@ -2263,4 +2277,7 @@ void f2__ptypes__initialize() {
   funk2_ptypes__init(&(__funk2.ptypes));
 }
 
+void f2__ptypes__destroy() {
+  funk2_ptypes__destroy(&(__funk2.ptypes));
+}
 

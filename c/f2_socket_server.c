@@ -191,7 +191,16 @@ socket_server_init_result_t socket_server__init(socket_server_t* this, char* bin
 }
 
 void socket_server__destroy(socket_server_t* this) {
-  status("closing socket server socket_fd=%d", this->socket_fd);
+  status("socket_server__destroy: destroying all socket server clients.", this->socket_fd);
+  socket_server_client_list_t* iter = this->clients;
+  while (iter) {
+    socket_server_client_list_t* next   = iter->next;
+    socket_server_client_t*      client = &(iter->client);
+    socket_server_client__destroy(client);
+    free(iter);
+    iter = next;
+  }
+  status("socket_server__destroy: closing socket server socket_fd=%d", this->socket_fd);
   close(this->socket_fd);
 }
 

@@ -336,6 +336,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
       f2__sleep(100000);
     }
   }
+  status("funk2__main: exiting main loop.");
   
   funk2_user_thread_controller__exit(&(__funk2.user_thread_controller));
   f2__destroy();

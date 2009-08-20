@@ -22,6 +22,7 @@
 #include "funk2.h"
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
+  funk2_processor_mutex__init(&(this->access_mutex));
   this->processor_thread_next_index = 0;
   this->processor_thread_list       = NULL;
 }
@@ -34,6 +35,7 @@ void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* t
     f2__free(to_ptr(iter));
     iter = next;
   }
+  funk2_processor_mutex__destroy(&(this->access_mutex));
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
@@ -41,24 +43,30 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   funk2_processor_thread_t*      processor_thread          = &(new_processor_thread_node->processor_thread);
   funk2_processor_thread__init(processor_thread, this->processor_thread_next_index, start_function, args);
   this->processor_thread_next_index ++;
+  funk2_processor_mutex__lock(&(this->access_mutex));
   new_processor_thread_node->next = this->processor_thread_list;
   this->processor_thread_list = new_processor_thread_node;
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return processor_thread;
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
   pthread_t                      tid  = pthread_self();
+  funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
     if (iter->processor_thread.pthread == tid) {
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return &(iter->processor_thread);
     }
     iter = iter->next;
   }
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return NULL;
 }
 
 void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handler_t* this, pthread_t tid) {
+  funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_processor_thread_list_t* prev = NULL;
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
@@ -74,6 +82,7 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
     }
     iter = next;
   }
+  funk2_processor_mutex__unlock(&(this->access_mutex));
 }
 
 void funk2_processor_thread_handler__exit_myself(funk2_processor_thread_handler_t* this) {

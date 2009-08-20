@@ -661,6 +661,11 @@
       [yield]]
     [get result_place thing]]]
 
+[defunk exit
+  [signal_exit]
+  [while t
+    [yield]]]
+
 
 [primfunk:load 'fu2/repl.fu2']
 
@@ -675,11 +680,6 @@
 [format stdout '\n'
 	'funk2: done saving half-baked memory_image.' '\n'
 	'\n']
-
-[defunk exit
-  [signal_exit]
-  [while t
-    [yield]]]
 
 [signal_exit]
 

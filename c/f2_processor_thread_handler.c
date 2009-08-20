@@ -85,11 +85,6 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
   funk2_processor_mutex__unlock(&(this->access_mutex));
 }
 
-void funk2_processor_thread_handler__exit_myself(funk2_processor_thread_handler_t* this) {
-  //funk2_processor_thread_handler__remove_pthread(this, pthread_self());
-  pthread_exit(0);
-}
-
 u64 this_processor_thread__pool_index() {
   funk2_processor_thread_t* this_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
   if (this_processor_thread == NULL) {

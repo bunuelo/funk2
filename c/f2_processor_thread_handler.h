@@ -31,7 +31,6 @@ typedef struct funk2_processor_thread_handler_s {
 void                      funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this);
 void                      funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this);
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args);
-void                      funk2_processor_thread_handler__exit_myself(funk2_processor_thread_handler_t* this);
 
 u64 this_processor_thread__pool_index();
 

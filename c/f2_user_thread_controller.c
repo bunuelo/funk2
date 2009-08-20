@@ -191,7 +191,7 @@ void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controll
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
-  funk2_processor_thread_handler__exit_myself(&(__funk2.processor_thread_handler));
+  pthread_exit(0);
 }
 
 

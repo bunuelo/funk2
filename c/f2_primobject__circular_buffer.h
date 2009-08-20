@@ -19,6 +19,40 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PRIMOBJECT__CIRCULAR_BUFFER__TYPES__H
+#define F2__PRIMOBJECT__CIRCULAR_BUFFER__TYPES__H
+
+typedef struct funk2_object_type__circular_buffer__slot_s funk2_object_type__circular_buffer__slot_t;
+
+// circular_buffer
+
+struct funk2_object_type__circular_buffer__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr start__symbol;
+  f2ptr start__funk;
+  f2ptr start__set__symbol;
+  f2ptr start__set__funk;
+  f2ptr end__symbol;
+  f2ptr end__funk;
+  f2ptr end__set__symbol;
+  f2ptr end__set__funk;
+  f2ptr bin_array__symbol;
+  f2ptr bin_array__funk;
+  f2ptr bin_array__set__symbol;
+  f2ptr bin_array__set__funk;
+  f2ptr pop__symbol;
+  f2ptr pop__funk;
+  f2ptr add__symbol;
+  f2ptr add__funk;
+  f2ptr is_empty__symbol;
+  f2ptr is_empty__funk;
+};
+
+#endif // F2__PRIMOBJECT__CIRCULAR_BUFFER__TYPES__H
+
 #ifndef F2__PRIMOBJECT__CIRCULAR_BUFFER__H
 #define F2__PRIMOBJECT__CIRCULAR_BUFFER__H
 
@@ -61,8 +95,12 @@ defprimobject__static_slot__prototype(circular_buffer__bin_array);
 f2ptr f2__circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_array);
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value);
-f2ptr f2__circular_buffer__remove(f2ptr cause, f2ptr this);
+f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this);
 boolean_t  raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);
+
+f2ptr f2circular_buffer__primobject_type__new(f2ptr cause);
+
+// **
 
 void f2__primobject_circular_buffer__reinitialize_globalvars();
 void f2__primobject_circular_buffer__initialize();

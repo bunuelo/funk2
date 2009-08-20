@@ -493,6 +493,7 @@ f2ptr f2__object__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 }
 def_pcfunk2(object__slot__execute_funk, this, slot, return f2__object__slot__execute_funk(this_cause, this, slot));
 
+
 // **
 
 void f2__object__reinitialize_globalvars() {

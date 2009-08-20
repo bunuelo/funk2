@@ -1511,8 +1511,8 @@ def_pcfunk2(event_subscriber__event_buffer_mutex__set, x, y, return f2__event_su
 
 // cause
 
-defprimobject__static_slot(cause__fibers_mutex,           0);
-defprimobject__static_slot(cause__fibers,                 1);
+defprimobject__static_slot(cause__fibers_mutex,            0);
+defprimobject__static_slot(cause__fibers,                  1);
 defprimobject__static_slot(cause__frame,                   2);
 defprimobject__static_slot(cause__allocate_traced_arrays,  3);
 defprimobject__static_slot(cause__bytecode_tracing_on,     4);
@@ -1530,8 +1530,8 @@ f2ptr __cause__symbol = -1;
 f2ptr f2cause__new(f2ptr cause, f2ptr fibers_mutex, f2ptr fibers, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events) {
   release__assert(__cause__symbol != -1, nil, "f2cause__new error: used before primobjects initialized.");
   f2ptr this = f2__primobject__new(cause, __cause__symbol, 13, nil);
-  f2cause__fibers_mutex__set(         this, cause, fibers_mutex);
-  f2cause__fibers__set(               this, cause, fibers);
+  f2cause__fibers_mutex__set(          this, cause, fibers_mutex);
+  f2cause__fibers__set(                this, cause, fibers);
   f2cause__frame__set(                 this, cause, frame);
   f2cause__allocate_traced_arrays__set(this, cause, allocate_traced_arrays);
   f2cause__bytecode_tracing_on__set(   this, cause, bytecode_tracing_on);
@@ -1550,9 +1550,9 @@ f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause);
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk);}
   {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
-  {char* slot_name = "fibers_mutex";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+  {char* slot_name = "fibers_mutex";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers_mutex__set__funk, nil);}
-  {char* slot_name = "fibers";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+  {char* slot_name = "fibers";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers__set__funk, nil);}
   {char* slot_name = "frame";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.frame__set__funk, nil);}

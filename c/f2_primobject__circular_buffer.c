@@ -50,6 +50,15 @@ f2ptr f2__circular_buffer__new(f2ptr cause) {
 }
 def_pcfunk0(circular_buffer__new, return f2__circular_buffer__new(this_cause));
 
+f2ptr f2__circular_buffer__start(f2ptr cause, f2ptr this) {return f2circular_buffer__start(this, cause);}
+def_pcfunk1(circular_buffer__start, this, return f2__circular_buffer__start(this_cause, this));
+
+f2ptr f2__circular_buffer__end(f2ptr cause, f2ptr this) {return f2circular_buffer__end(this, cause);}
+def_pcfunk1(circular_buffer__end, this, return f2__circular_buffer__end(this_cause, this));
+
+f2ptr f2__circular_buffer__bin_array(f2ptr cause, f2ptr this) {return f2circular_buffer__bin_array(this, cause);}
+def_pcfunk1(circular_buffer__bin_array, this, return f2__circular_buffer__bin_array(this_cause, this));
+
 f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this) {
   u64 raw_start = f2integer__i(f2circular_buffer__start(this, cause), cause);
   u64 raw_end   = f2integer__i(f2circular_buffer__end(this, cause), cause);

@@ -187,6 +187,7 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
 }
 
 void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controller__exit_t* this) {
+  status("funk2_user_thread_controller__exit__user_process: user exiting.");
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));

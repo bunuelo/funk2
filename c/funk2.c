@@ -329,22 +329,15 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   funk2_test();
 #endif // TEST
   funk2__init(this, argc, argv);
-  boolean_t exited_all_user_threads = boolean__false;
-  while ((! (this->exit_now)) || (! exited_all_user_threads)) {
+  
+  while (! (this->exit_now)) {
     boolean_t did_something = funk2__handle(this);
-    if (this->exit_now) {
-      if (! exited_all_user_threads) {
-	status("funk2__main: exiting all user threads.");
-	funk2_user_thread_controller__exit(&(__funk2.user_thread_controller));
-      }
-      exited_all_user_threads = boolean__true;
-    }
     if (! did_something) {
       f2__sleep(100000);
     }
   }
   status("funk2__main: exiting main loop.");
-  
+  funk2_user_thread_controller__exit(&(__funk2.user_thread_controller));
   f2__destroy();
   
   return 0;

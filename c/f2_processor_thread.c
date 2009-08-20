@@ -34,6 +34,7 @@ void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, fun
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
+  pthread_destroy(&(this->pthread));
 }
 
 

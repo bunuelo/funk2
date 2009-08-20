@@ -92,8 +92,8 @@ defprimobject__static_slot__prototype(circular_buffer__bin_array);
 #define f2circular_buffer__bin_array__trace(     this, cause)        primobject__static_slot__trace(     this, circular_buffer__bin_array, cause)
 #define f2circular_buffer__bin_array__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, circular_buffer__bin_array, cause)
 
-f2ptr f2__circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_array);
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
+f2ptr f2__circular_buffer__new(f2ptr cause);
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value);
 f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this);
 boolean_t  raw__circular_buffer__is_empty(f2ptr cause, f2ptr this);

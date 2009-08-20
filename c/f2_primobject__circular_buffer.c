@@ -81,7 +81,7 @@ f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this) {
   u64 raw_start = f2integer__i(f2circular_buffer__start(this, cause), cause);
   u64 raw_end   = f2integer__i(f2circular_buffer__end(this, cause), cause);
   if (raw_start == raw_end) {
-    return __funk2.primobject__circular_buffer.empty__symbol;
+    return nil;
   }
   f2ptr bin_array = f2circular_buffer__bin_array(this, cause);
   u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -186,9 +186,7 @@ f2ptr f2circular_buffer__primobject_type__new(f2ptr cause) {
 // **
 
 void f2__primobject_circular_buffer__reinitialize_globalvars() {
-  __funk2.primobject__circular_buffer.symbol        = f2symbol__new(initial_cause(), strlen("circular_buffer"),       (u8*)"circular_buffer");
-  __funk2.primobject__circular_buffer.empty__symbol = f2symbol__new(initial_cause(), strlen("circular_buffer-empty"), (u8*)"circular_buffer-empty");
-  __funk2.primobject__circular_buffer.full__symbol  = f2symbol__new(initial_cause(), strlen("circular_buffer-full"),  (u8*)"circular_buffer-full");
+  __funk2.primobject__circular_buffer.symbol = f2symbol__new(initial_cause(), strlen("circular_buffer"), (u8*)"circular_buffer");
 }
 
 void f2__primobject_circular_buffer__initialize() {

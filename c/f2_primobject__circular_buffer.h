@@ -66,8 +66,6 @@ struct funk2_object_type__circular_buffer__slot_s {
 
 typedef struct funk2_primobject_circular_buffer_s {
   f2ptr symbol;
-  f2ptr empty__symbol;
-  f2ptr full__symbol;
 } funk2_primobject_circular_buffer_t;
 
 boolean_t raw__circular_buffer__is_type(f2ptr cause, f2ptr this);

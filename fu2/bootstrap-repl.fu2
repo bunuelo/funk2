@@ -661,7 +661,7 @@
       [yield]]
     [get result_place thing]]]
 
-[defunk exit
+[defunk exit []
   [signal_exit]
   [while t
     [yield]]]

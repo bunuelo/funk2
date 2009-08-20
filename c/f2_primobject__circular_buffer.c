@@ -94,9 +94,13 @@ void raw__circular_buffer__double_size(f2ptr cause, f2ptr this) {
   u64   new_bin_array__length = bin_array__length << 1;
   f2ptr new_bin_array         = raw__array__new(cause, new_bin_array__length);
   u64 new_index = 0;
-  u64 index;
-  for (index = raw_start; index != raw_end; index ++) {
+  u64 index     = raw_start;
+  while (index != raw_end) {
     raw__array__elt__set(cause, new_bin_array, new_index, raw__array__elt(cause, bin_array, index));
+    index ++;
+    if (index == bin_array__length) {
+      index = 0;
+    }
     new_index ++;
   }
   f2circular_buffer__start__set(    this, cause, f2integer__new(cause, 0));

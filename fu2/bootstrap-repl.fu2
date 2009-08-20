@@ -666,7 +666,7 @@
 
 [format stdout '\n'
 	'funk2: done compiling fu2/bootstrap-repl.fu2.' '\n'
-	'funk2: saving half-baked memory_image to img/bootstrap-repl.img.']
+	'funk2: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
 
 `[primfunk:memory_image__save 'img/bootstrap-repl.img']
 

@@ -233,7 +233,8 @@ int socket_server__accept(socket_server_t* this, client_id_t* client_id) {
 void socket_server_client__init(socket_server_client_t* this, int socket_fd, u32 recv_buffer__byte_num, u32 send_buffer__byte_num, client_id_t* client_id) {
   buffered_socket__init(&(this->socket), socket_fd, recv_buffer__byte_num, send_buffer__byte_num);
   client_id__copy(&(this->client_id), client_id);
-  this->data = NULL; // user sets this (we just set to NULL initially and then ignore)
+  this->data                   = NULL; // user sets this (we just set to NULL initially and then ignore)
+  this->data__destroy_and_free = NULL; // user sets this (we just set to NULL and call with data as argument at destroy if non-null)
 }
 
 void socket_server_client__destroy(socket_server_client_t* this) {
@@ -243,6 +244,13 @@ void socket_server_client__destroy(socket_server_client_t* this) {
   char client_id_str[128];
   snprintf(client_id_str, 128, "([%s] %d.%d.%d.%d:%d)", client_id->bind_device, client_id->ip_addr[0], client_id->ip_addr[1], client_id->ip_addr[2], client_id->ip_addr[3], client_id->port_num);
   status("%-45s  closing socket on socket_fd=%d.", client_id_str, this->socket.socket_fd);
+  if (this->data) {
+    if (this->data__destroy_and_free) {
+      (*(this->data__destroy_and_free))(this->data);
+    } else {
+      status("socket_server_client__destroy WARNING: data is non-null and data__destroy_and_free is null.  This is a memory leak!");
+    }
+  }
 }
 
 void socket_server__accept_new_clients(socket_server_t* this) {

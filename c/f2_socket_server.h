@@ -21,10 +21,13 @@ void         client_id__copy(client_id_t* this, client_id_t* client_id);
 client_id_t* client_id__new_copy(client_id_t* client_id);
 boolean_t    client_id__equals(client_id_t* this, client_id_t* client_id);
 
+typedef void (*socket_server_client_data_destroy_and_free_t)(void* data);
+
 typedef struct socket_server_client_s {
-  buffered_socket_t socket;
-  client_id_t       client_id;
-  void*             data; // for super-class use (set to NULL initially and then ignored) [note: should add destroy callback to avoid memory leaks]
+  buffered_socket_t                            socket;
+  client_id_t                                  client_id;
+  void*                                        data; // for super-class use (set to NULL initially and then ignored) [note: should add destroy callback to avoid memory leaks]
+  socket_server_client_data_destroy_and_free_t data__destroy_and_free;
 } socket_server_client_t;
 
 void socket_server_client__init(socket_server_client_t* this, int socket_fd, u32 recv_buffer__byte_num, u32 send_buffer__byte_num, client_id_t* client_id);

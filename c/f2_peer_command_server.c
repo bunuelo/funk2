@@ -412,6 +412,12 @@ funk2_peer_command_server_new_port_result_t funk2_peer_command_server__add_new_s
   return funk2_peer_command_server_new_port_result__success;
 }
 
+void funk2_peer_command_server_client__destroy_and_free_callback(void* data) {
+  funk2_peer_command_server_client_t* client = (funk2_peer_command_server_client_t*)data;
+  funk2_peer_command_server_client__destroy(client);
+  f2__free(client);
+}
+
 void funk2_peer_command_server__handle_clients(funk2_peer_command_server_t* this) {
   socket_server_list_t* socket_server_iter = this->socket_servers;
   while (socket_server_iter) {
@@ -434,12 +440,10 @@ void funk2_peer_command_server__handle_clients(funk2_peer_command_server_t* this
 	  status("%-45s  disconnected.", client_id_str);
 	}
       } else {
-	//if (client->socket.disconnected) {
-	//	status("client disconnected, waiting to empty buffer of (%d) bytes.", buffered_socket__recv_bytes_buffered(&(client->socket)));
-	//}
 	// if client just logged into server, allocate and initialize new command_server_client data.
 	if (client->data == NULL) {
 	  client->data = (void*)from_ptr(f2__malloc(sizeof(funk2_peer_command_server_client_t)));
+	  client->data__destroy_and_free = &funk2_peer_command_server_client__destroy_and_free;
 	  funk2_peer_command_server_client__init((funk2_peer_command_server_client_t*)client->data, client, this);
 	}
 	funk2_peer_command_server_client_t* peer_command_server_client = (funk2_peer_command_server_client_t*)client->data;

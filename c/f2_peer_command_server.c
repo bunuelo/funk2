@@ -443,7 +443,7 @@ void funk2_peer_command_server__handle_clients(funk2_peer_command_server_t* this
 	// if client just logged into server, allocate and initialize new command_server_client data.
 	if (client->data == NULL) {
 	  client->data = (void*)from_ptr(f2__malloc(sizeof(funk2_peer_command_server_client_t)));
-	  client->data__destroy_and_free = &funk2_peer_command_server_client__destroy_and_free;
+	  client->data__destroy_and_free = &funk2_peer_command_server_client__destroy_and_free_callback;
 	  funk2_peer_command_server_client__init((funk2_peer_command_server_client_t*)client->data, client, this);
 	}
 	funk2_peer_command_server_client_t* peer_command_server_client = (funk2_peer_command_server_client_t*)client->data;

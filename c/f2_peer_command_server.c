@@ -415,7 +415,7 @@ funk2_peer_command_server_new_port_result_t funk2_peer_command_server__add_new_s
 void funk2_peer_command_server_client__destroy_and_free_callback(void* data) {
   funk2_peer_command_server_client_t* client = (funk2_peer_command_server_client_t*)data;
   funk2_peer_command_server_client__destroy(client);
-  f2__free(client);
+  f2__free(to_ptr(client));
 }
 
 void funk2_peer_command_server__handle_clients(funk2_peer_command_server_t* this) {

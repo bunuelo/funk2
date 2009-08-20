@@ -2000,7 +2000,7 @@ void funk2_symbol_hash__destroy(funk2_symbol_hash_t* this) {
       node_iter = *array_iter;
       while (node_iter) {
 	funk2_symbol_hash_node_t* next = node_iter->next;
-	f2__free(node_iter);
+	f2__free(to_ptr(node_iter));
 	node_iter = next;
       }
       array_iter ++;

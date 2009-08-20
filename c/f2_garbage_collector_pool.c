@@ -362,8 +362,8 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
 
 void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t new_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  funk2_garbage_collector_set_t* from_set;
-  funk2_garbage_collector_set_t* to_set;
+  funk2_garbage_collector_set_t* from_set = NULL;
+  funk2_garbage_collector_set_t* to_set   = NULL;
   switch(block->gc.tricolor) {
   case funk2_garbage_collector_tricolor__black: from_set = &(this->black_set); break;
   case funk2_garbage_collector_tricolor__grey:  from_set = &(this->grey_set);  break;

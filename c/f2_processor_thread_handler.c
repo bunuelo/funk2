@@ -86,7 +86,7 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
 }
 
 void funk2_processor_thread_handler__exit_myself(funk2_processor_thread_handler_t* this) {
-  funk2_processor_thread_handler__remove_pthread(this, pthread_self());
+  //funk2_processor_thread_handler__remove_pthread(this, pthread_self());
   pthread_exit(0);
 }
 

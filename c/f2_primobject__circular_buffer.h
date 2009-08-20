@@ -31,6 +31,10 @@ struct funk2_object_type__circular_buffer__slot_s {
   f2ptr is_type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr access_mutex__symbol;
+  f2ptr access_mutex__funk;
+  f2ptr access_mutex__set__symbol;
+  f2ptr access_mutex__set__funk;
   f2ptr start__symbol;
   f2ptr start__funk;
   f2ptr start__set__symbol;
@@ -68,29 +72,36 @@ typedef struct funk2_primobject_circular_buffer_s {
 
 boolean_t raw__circular_buffer__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__circular_buffer__is_type(f2ptr cause, f2ptr this);
-f2ptr f2circular_buffer__new(f2ptr cause, f2ptr start, f2ptr end, f2ptr bin_array);
+f2ptr f2circular_buffer__new(f2ptr cause, f2ptr access_mutex, f2ptr start, f2ptr end, f2ptr bin_array);
 #define f2primobject__is_circular_buffer(this, cause) raw__eq(cause, f2primobject__type(this, cause), __funk2.primobject__circular_buffer.symbol)
 
+defprimobject__static_slot__prototype(circular_buffer__access_mutex);
+#define f2circular_buffer__access_mutex(                   this, cause)        primobject__static_slot__accessor(         this, circular_buffer__access_mutex, cause)
+#define f2circular_buffer__access_mutex__set(              this, cause, value) primobject__static_slot__set(              this, circular_buffer__access_mutex, cause, value)
+#define f2circular_buffer__access_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, circular_buffer__access_mutex, cause)
+#define f2circular_buffer__access_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, circular_buffer__access_mutex, cause)
+#define f2circular_buffer__access_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, circular_buffer__access_mutex, cause)
+
 defprimobject__static_slot__prototype(circular_buffer__start);
-#define f2circular_buffer__start(            this, cause)        primobject__static_slot__accessor(  this, circular_buffer__start, cause)
-#define f2circular_buffer__start__set(       this, cause, value) primobject__static_slot__set(       this, circular_buffer__start, cause, value)
-#define f2circular_buffer__start__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, circular_buffer__start, cause)
-#define f2circular_buffer__start__trace(     this, cause)        primobject__static_slot__trace(     this, circular_buffer__start, cause)
-#define f2circular_buffer__start__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, circular_buffer__start, cause)
+#define f2circular_buffer__start(                   this, cause)        primobject__static_slot__accessor(         this, circular_buffer__start, cause)
+#define f2circular_buffer__start__set(              this, cause, value) primobject__static_slot__set(              this, circular_buffer__start, cause, value)
+#define f2circular_buffer__start__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, circular_buffer__start, cause)
+#define f2circular_buffer__start__trace(            this, cause)        primobject__static_slot__trace(            this, circular_buffer__start, cause)
+#define f2circular_buffer__start__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, circular_buffer__start, cause)
 
 defprimobject__static_slot__prototype(circular_buffer__end);
-#define f2circular_buffer__end(            this, cause)        primobject__static_slot__accessor(  this, circular_buffer__end, cause)
-#define f2circular_buffer__end__set(       this, cause, value) primobject__static_slot__set(       this, circular_buffer__end, cause, value)
-#define f2circular_buffer__end__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, circular_buffer__end, cause)
-#define f2circular_buffer__end__trace(     this, cause)        primobject__static_slot__trace(     this, circular_buffer__end, cause)
-#define f2circular_buffer__end__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, circular_buffer__end, cause)
+#define f2circular_buffer__end(                   this, cause)        primobject__static_slot__accessor(         this, circular_buffer__end, cause)
+#define f2circular_buffer__end__set(              this, cause, value) primobject__static_slot__set(              this, circular_buffer__end, cause, value)
+#define f2circular_buffer__end__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, circular_buffer__end, cause)
+#define f2circular_buffer__end__trace(            this, cause)        primobject__static_slot__trace(            this, circular_buffer__end, cause)
+#define f2circular_buffer__end__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, circular_buffer__end, cause)
 
 defprimobject__static_slot__prototype(circular_buffer__bin_array);
-#define f2circular_buffer__bin_array(            this, cause)        primobject__static_slot__accessor(  this, circular_buffer__bin_array, cause)
-#define f2circular_buffer__bin_array__set(       this, cause, value) primobject__static_slot__set(       this, circular_buffer__bin_array, cause, value)
-#define f2circular_buffer__bin_array__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, circular_buffer__bin_array, cause)
-#define f2circular_buffer__bin_array__trace(     this, cause)        primobject__static_slot__trace(     this, circular_buffer__bin_array, cause)
-#define f2circular_buffer__bin_array__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, circular_buffer__bin_array, cause)
+#define f2circular_buffer__bin_array(                   this, cause)        primobject__static_slot__accessor(         this, circular_buffer__bin_array, cause)
+#define f2circular_buffer__bin_array__set(              this, cause, value) primobject__static_slot__set(              this, circular_buffer__bin_array, cause, value)
+#define f2circular_buffer__bin_array__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, circular_buffer__bin_array, cause)
+#define f2circular_buffer__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, circular_buffer__bin_array, cause)
+#define f2circular_buffer__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, circular_buffer__bin_array, cause)
 
 f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length);
 f2ptr f2__circular_buffer__new(f2ptr cause);

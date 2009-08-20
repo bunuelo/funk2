@@ -46,6 +46,7 @@ void funk2_module_registration__reinitialize_all_modules(funk2_module_registrati
 // **
 
 void f2__module_registration__initialize();
+void f2__module_registration__destroy();
 
 #endif // F2__MODULE_REGISTRATION__H
 

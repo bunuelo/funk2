@@ -38,8 +38,8 @@ void funk2_module_registration_node__init(funk2_module_registration_node_t* this
 }
 
 void funk2_module_registration_node__destroy(funk2_module_registration_node_t* this) {
-  free(this->name);
-  free(this->description);
+  f2__free(to_ptr(this->name));
+  f2__free(to_ptr(this->description));
 }
 
 void funk2_module_registration_node__reinitialize(funk2_module_registration_node_t* this) {
@@ -82,6 +82,10 @@ void funk2_module_registration__reinitialize_all_modules(funk2_module_registrati
 
 void f2__module_registration__initialize() {
   funk2_module_registration__init(&(__funk2.module_registration));
+}
+
+void f2__module_registration__destroy() {
+  funk2_module_registration__destroy(&(__funk2.module_registration));
 }
 
 

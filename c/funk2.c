@@ -267,6 +267,8 @@ void f2__destroy() {
   f2__primfunks__locale__destroy();
   status("funk2: destroying ptypes.");
   f2__ptypes__destroy();
+  status("funk2: destroying module registration.");
+  f2__module_registration__destroy();
   status("funk2: destroying status.");
   f2__status__destroy();
 }

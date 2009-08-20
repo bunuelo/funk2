@@ -21,6 +21,7 @@
 
 [globalize-funk management_thread-add_save_memory_image_command &primfunk:management_thread__add_save_memory_image_command]
 [globalize-funk management_thread-add_load_memory_image_command &primfunk:management_thread__add_load_memory_image_command]
+[globalize-funk management_thread-add_exit_command              &primfunk:management_thread__add_exit_command]
 [globalize-funk management_thread-check_command_uid_finished    &primfunk:management_thread__check_command_uid_finished]
 
 

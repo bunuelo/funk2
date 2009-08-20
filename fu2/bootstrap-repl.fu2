@@ -661,11 +661,6 @@
       [yield]]
     [get result_place thing]]]
 
-[defunk exit []
-  [signal_exit]
-  [while t
-    [yield]]]
-
 
 [primfunk:load 'fu2/repl.fu2']
 
@@ -675,11 +670,10 @@
 
 `[primfunk:memory_image__save 'img/bootstrap-repl.img']
 
+
+'
+  These management commands don\'t actually execute until this file reaches EOF.
+'
 [management_thread-add_save_memory_image_command 'img/bootstrap-repl.img']
-
-[format stdout '\n'
-	'funk2: done saving half-baked memory_image.' '\n'
-	'\n']
-
-[signal_exit]
+[management_thread-add_exit_command 0]
 

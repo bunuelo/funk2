@@ -1828,12 +1828,6 @@ f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
 }
 def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fiber, exp));
 
-f2ptr f2__signal_exit(f2ptr cause) {
-  __funk2.exit_now = boolean__true;
-  return nil;
-}
-def_pcfunk0(signal_exit, return f2__signal_exit(this_cause));
-
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {
@@ -2161,8 +2155,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
-  
-  f2__funktional_primcfunk__init__0(signal_exit, "signals master thread to have all user threads exit, destroy and free all resources, and exit funk2.");
   
 }
 

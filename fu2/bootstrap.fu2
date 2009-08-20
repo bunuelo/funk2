@@ -75,7 +75,7 @@
 [save_memory_image 'img/bootstrap.img']
 
 [format stdout '\ndone.\n']
-[exit]
+[quit]
 
 
 

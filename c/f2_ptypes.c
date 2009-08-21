@@ -100,7 +100,10 @@ void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
 // ptype
 
 boolean_t raw__ptype__is_type(f2ptr cause, f2ptr thing) {
-  return boolean__true;
+  if (thing) {
+    return boolean__true;
+  }
+  return boolean__false;
 }
 
 f2ptr f2__ptype__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__ptype__is_type(cause, thing));}
@@ -113,10 +116,13 @@ ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
   return retval;
 }
 
-f2ptr f2__ptype__raw(f2ptr cause, f2ptr this) {
-  return f2integer__new(cause, f2ptype__raw(this, cause));
-}
-def_pcfunk1(ptype__raw, this, return f2__ptype__raw(this_cause, this));
+f2ptr f2__ptype__raw(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2ptype__raw(x, cause));}
+def_pcfunk1(ptype__raw, x, return f2__ptype__raw(this_cause, x));
+
+//f2ptr f2__ptype__raw(f2ptr cause, f2ptr this) {
+//  return f2integer__new(cause, f2ptype__raw(this, cause));
+//}
+//def_pcfunk1(ptype__raw, this, return f2__ptype__raw(this_cause, this));
 
 f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   check_wait_politely();
@@ -125,8 +131,16 @@ f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   return retval;
 }
 
-f2ptr f2__ptype__cause(f2ptr cause, f2ptr this) {return f2ptype__cause(this, cause);}
-def_pcfunk1(ptype__cause, this, return f2__ptype__cause(this_cause, this));
+f2ptr f2__ptype__cause(f2ptr cause, f2ptr x) {
+  if (! x) {
+    return f2larva__new(cause, 1);
+  }
+  return f2ptype__cause(x, cause);
+}
+def_pcfunk1(ptype__cause, x, return f2__ptype__cause(this_cause, x));
+
+//f2ptr f2__ptype__cause(f2ptr cause, f2ptr this) {return f2ptype__cause(this, cause);}
+//def_pcfunk1(ptype__cause, this, return f2__ptype__cause(this_cause, this));
 
 f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   check_wait_politely();
@@ -135,8 +149,17 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   return nil;
 }
 
-f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {f2ptype__cause__set(this, cause, value); return nil;}
-def_pcfunk2(ptype__cause__set, this, value, return f2__ptype__cause__set(this_cause, this, value));
+f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value) {
+  if (! x) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptype__cause__set(x, cause, value);
+  return nil;
+}
+def_pcfunk2(ptype__cause__set, x, value, return f2__ptype__cause__set(this_cause, x, value));
+
+//f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {f2ptype__cause__set(this, cause, value); return nil;}
+//def_pcfunk2(ptype__cause__set, this, value, return f2__ptype__cause__set(this_cause, this, value));
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);

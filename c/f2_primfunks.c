@@ -71,25 +71,6 @@ def_pcfunk1(deref_pointer, x, return f2__deref_pointer(this_cause, x));
 
 // ptype
 
-f2ptr f2__ptype__raw(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2ptype__raw(x, cause));}
-def_pcfunk1(ptype__raw, x, return f2__ptype__raw(this_cause, x));
-
-f2ptr f2__ptype__cause(f2ptr cause, f2ptr x) {
-  if (! x) {
-    return f2larva__new(cause, 1);
-  }
-  return f2ptype__cause(x, cause);
-}
-def_pcfunk1(ptype__cause, x, return f2__ptype__cause(this_cause, x));
-
-f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value) {
-  if (! x) {
-    return f2larva__new(cause, 1);
-  }
-  f2ptype__cause__set(x, cause, value);
-  return nil;
-}
-def_pcfunk2(ptype__cause__set, x, value, return f2__ptype__cause__set(this_cause, x, value));
 
 // integer
 

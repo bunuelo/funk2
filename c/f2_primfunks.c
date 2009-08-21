@@ -1715,7 +1715,7 @@ u64 raw__hash_value(f2ptr cause, f2ptr exp) {
     return hash_value;
   }
   case ptype_larva:
-    return f2larva__type(exp, cause);
+    return f2larva__larva_type(exp, cause);
   default:
     return 0;
   }
@@ -1780,7 +1780,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__true;
   }
   case ptype_larva:
-    return f2larva__type(x, cause) == f2larva__type(y, cause);
+    return f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause);
   default:
     return x == y;
   }

@@ -99,12 +99,24 @@ void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
 
 // ptype
 
+boolean_t raw__ptype__is_type(f2ptr cause, f2ptr thing) {
+  return boolean__true;
+}
+
+f2ptr f2__ptype__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__ptype__is_type(cause, thing));}
+def_pcfunk1(ptype__is_type, thing, return f2__ptype__is_type(this_cause, thing));
+
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   ptype_t retval = __pure__f2ptype__raw(this);
   return retval;
 }
+
+f2ptr f2__ptype__raw(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, f2ptype__raw(this, cause));
+}
+def_pcfunk1(ptype__raw, this, return f2__ptype__raw(this_cause, this));
 
 f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   check_wait_politely();
@@ -113,12 +125,18 @@ f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   return retval;
 }
 
+f2ptr f2__ptype__cause(f2ptr cause, f2ptr this) {return f2ptype__cause(this, cause);}
+def_pcfunk1(ptype__cause, this, return f2__ptype__cause(this_cause, this));
+
 f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   __pure__f2ptype__cause(this) = value;
   return nil;
 }
+
+f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {return f2ptype__cause__set(this, cause, value);}
+def_pcfunk2(ptype__cause__set, this, value, return f2__ptype__cause__set(this_cause, this, value));
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);

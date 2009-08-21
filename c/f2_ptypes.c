@@ -780,7 +780,10 @@ boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__char__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__char__is_type(cause, x));}
 def_pcfunk1(char__is_type, x, return f2__char__is_type(this_cause, x));
-def_pcfunk1(char__type, x, return f2symbol__new(cause, strlen("char"), (u8*)"char"));
+
+f2ptr f2__char__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strlen("char"), (u8*)"char");}
+def_pcfunk1(char__type, this, return f2__char__type(this_cause, this));
+
 def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
 def_pcfunk1(char__ch, this, return this);
 

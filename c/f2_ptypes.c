@@ -202,7 +202,7 @@ boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__integer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__integer__is_type(cause, x));}
 def_pcfunk1(integer__is_type, this, return f2__integer__is_type(this_cause, this));
-def_pcfunk1(integer__type,    this, return f2symbol__new(cause, strlen("integer"), (u8*)"integer"));
+def_pcfunk1(integer__type,    this, return f2symbol__new(this_cause, strlen("integer"), (u8*)"integer"));
 def_pcfunk1(integer__new,     this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
 def_pcfunk1(integer__i,       this, return this);
 
@@ -275,7 +275,7 @@ boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__double__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__double__is_type(cause, x));}
 def_pcfunk1(double__is_type, x,    return f2__double__is_type(this_cause, x));
-def_pcfunk1(double__type,    x,    return f2symbol__new(cause, strlen("double"), (u8*)"double"));
+def_pcfunk1(double__type,    x,    return f2symbol__new(this_cause, strlen("double"), (u8*)"double"));
 def_pcfunk1(double__new,     this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 def_pcfunk1(double__d,       this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 
@@ -348,7 +348,7 @@ boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__float__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__float__is_type(cause, x));}
 def_pcfunk1(float__is_type, x,    return f2__float__is_type(this_cause, x));
-def_pcfunk1(float__type,    x,    return f2symbol__new(cause, strlen("float"), (u8*)"float"));
+def_pcfunk1(float__type,    x,    return f2symbol__new(this_cause, strlen("float"), (u8*)"float"));
 def_pcfunk1(float__new,     this, return f2float__new(this_cause, f2float__f(this_cause, this)));
 def_pcfunk1(float__f,       this, return this);
 

@@ -1945,7 +1945,7 @@ def_pcfunk2(time__nanoseconds_since_1970__set, x, y, return f2__time__nanosecond
 u64 raw__time__years(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.years;
 }
 
@@ -1955,7 +1955,7 @@ def_pcfunk1(time__years, this, return f2__time__years(this_cause, this));
 u64 raw__time__months(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.months;
 }
 
@@ -1965,7 +1965,7 @@ def_pcfunk1(time__months, this, return f2__time__months(this_cause, this));
 u64 raw__time__days(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.days;
 }
 
@@ -1975,7 +1975,7 @@ def_pcfunk1(time__days, this, return f2__time__days(this_cause, this));
 u64 raw__time__hours(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.hours;
 }
 
@@ -1985,7 +1985,7 @@ def_pcfunk1(time__hours, this, return f2__time__hours(this_cause, this));
 u64 raw__time__minutes(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.minutes;
 }
 
@@ -1995,7 +1995,7 @@ def_pcfunk1(time__minutes, this, return f2__time__minutes(this_cause, this));
 u64 raw__time__seconds(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.seconds;
 }
 
@@ -2005,7 +2005,7 @@ def_pcfunk1(time__seconds, this, return f2__time__seconds(this_cause, this));
 u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
   funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   return funk2_date.nanoseconds;
 }
 

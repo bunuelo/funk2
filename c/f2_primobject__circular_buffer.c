@@ -165,7 +165,7 @@ f2ptr f2__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
 def_pcfunk1(circular_buffer__is_empty, this, return f2__circular_buffer__is_empty(this_cause, this));
 
 f2ptr f2circular_buffer__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause);
+  f2ptr this = f2__primobject_type__new(cause, nil);
   {char* slot_name = "is_type";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_type__funk);}
   {char* slot_name = "new";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk);}
   {char* slot_name = "access_mutex"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),

@@ -194,7 +194,7 @@ def_pcfunk1(set__elements, this, return f2__set__elements(this_cause, this));
 
 
 f2ptr f2set__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause);
+  f2ptr this = f2__primobject_type__new(cause, nil);
   {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_set.is_type__funk);}
   {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_set.new__funk);}
   {char* slot_name = "write_mutex";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),

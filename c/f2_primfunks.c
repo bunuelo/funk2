@@ -1817,6 +1817,7 @@ f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
 }
 def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fiber, exp));
 
+
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {

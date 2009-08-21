@@ -114,7 +114,7 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
 def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, this, element));
 
 f2ptr f2list__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause);
+  f2ptr this = f2__primobject_type__new(cause, nil);
   {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.is_type__funk);}
   {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_list.new__funk);}
   {char* slot_name = "write_mutex";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),

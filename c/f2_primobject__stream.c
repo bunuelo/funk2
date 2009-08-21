@@ -400,7 +400,7 @@ f2ptr f2__stream__rewind_to_length(f2ptr cause, f2ptr this, f2ptr length) {
 def_pcfunk2(stream__rewind_to_length, this, length, return f2__stream__rewind_to_length(this_cause, this, length));
 
 f2ptr f2stream__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause);
+  f2ptr this = f2__primobject_type__new(cause, nil);
   {char* slot_name = "is_type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__funk);}
   {char* slot_name = "new";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_stream.new__funk);}
   {char* slot_name = "type";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),

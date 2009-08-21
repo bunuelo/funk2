@@ -21,12 +21,13 @@
 
 #include "funk2.h"
 
-f2ptr f2__primobject_type__new(f2ptr cause) {
+f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents) {
   f2ptr this = f2__frame__new(cause);
-  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("type"), (u8*)"type"), f2symbol__new(cause, strlen("primobject_type"), (u8*)"primobject_type"));
+  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("type"),    (u8*)"type"),    f2symbol__new(cause, strlen("primobject_type"), (u8*)"primobject_type"));
+  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("parents"), (u8*)"parents"), parents);
   return this;
 }
-def_pcfunk0(primobject_type__new, return f2__primobject_type__new(this_cause));
+def_pcfunk1(primobject_type__new, parents, return f2__primobject_type__new(this_cause, parents));
 
 f2ptr f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr get_funk, f2ptr set_funk, f2ptr execute_funk) {
   if ((! raw__frame__is_type(cause, this)) ||
@@ -119,7 +120,7 @@ void f2__primobject_type__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(primobject_type__new, "create a new Funk2 object type.");
+  f2__primcfunk__init__1(primobject_type__new, parents, "create a new Funk2 object type.");
   f2__primcfunk__init__5(primobject_type__add_slot, this, name, get_funk, set_funk, execute_funk, "adds new get, set, and execute slot funktions to add a new slot for an object type.");
   f2__primcfunk__init__2(primobject_type__lookup_slot_get_funk, this, slot_name, "lookup a primobject_type slot get_funk");
   f2__primcfunk__init__2(primobject_type__lookup_slot_set_funk, this, slot_name, "lookup a primobject_type slot set_funk");

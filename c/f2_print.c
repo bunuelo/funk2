@@ -1196,6 +1196,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		  if (raw__simple_length(cause, args) == 1) {
 		    if (fiber) {
 		      slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2list1__new(cause, exp));
+		    } else {
+		      slot_value = f2symbol__new(cause, strlen("<>"), (u8*)"<>");
 		    }
 		  }
 		  keyvalue_pairs = f2cons__new(cause, f2cons__new(cause, slot_name, slot_value), keyvalue_pairs);

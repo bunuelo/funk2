@@ -103,6 +103,9 @@ def_pcfunk1(place__new, x, return f2__place__new(this_cause, x));
 f2ptr f2__place__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__place__is_type(cause, x));}
 def_pcfunk1(place__is_type, x, return f2__place__is_type(this_cause, x));
 
+f2ptr f2__place__type(f2ptr cause, f2ptr x) {return __place__symbol;}
+def_pcfunk1(place__type, x, return f2__place__type(this_cause, x));
+
 f2ptr f2__place__thing(f2ptr cause, f2ptr x) {return f2place__thing(x, cause);}
 def_pcfunk1(place__thing, x, return f2__place__thing(this_cause, x));
 
@@ -112,6 +115,7 @@ def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x,
 f2ptr f2place__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_place.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk);}
   {char* slot_name = "thing";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_place.thing__funk, __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk, nil);}
   return this;
@@ -147,6 +151,9 @@ boolean_t raw__cons__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__cons__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cons__is_type(cause, x));}
 def_pcfunk1(cons__is_type, x, return f2__cons__is_type(this_cause, x));
 
+f2ptr f2__cons__type(f2ptr cause, f2ptr x) {return __cons__symbol;}
+def_pcfunk1(cons__type, x, return f2__cons__type(this_cause, x));
+
 f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
 def_pcfunk2(cons__new, x, y, return f2__cons__new(this_cause, x, y));
 
@@ -165,6 +172,7 @@ def_pcfunk2(cons__cdr__set, x, y, return f2__cons__cdr__set(this_cause, x, y));
 f2ptr f2cons__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cons.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cons.new__funk);}
   {char* slot_name = "car";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.car__funk, __funk2.globalenv.object_type.primobject.primobject_type_cons.car__set__funk, nil);}
   {char* slot_name = "cdr";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.cdr__funk, __funk2.globalenv.object_type.primobject.primobject_type_cons.cdr__set__funk, nil);}
@@ -203,6 +211,9 @@ boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__doublelink__is_type(cause, x));}
 def_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x));
 
+f2ptr f2__doublelink__type(f2ptr cause, f2ptr x) {return __doublelink__symbol;}
+def_pcfunk1(doublelink__type, x, return f2__doublelink(this_cause, x));
+
 f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
 def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));
 
@@ -227,6 +238,7 @@ def_pcfunk2(doublelink__value__set, x, y, return f2__doublelink__value__set(this
 f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_doublelink.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_doublelink.new__funk);}
   {char* slot_name = "prev";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.prev__funk,  __funk2.globalenv.object_type.primobject.primobject_type_doublelink.prev__set__funk, nil);}
   {char* slot_name = "next";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_doublelink.next__funk,  __funk2.globalenv.object_type.primobject.primobject_type_doublelink.next__set__funk, nil);}
@@ -259,6 +271,7 @@ f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, 
 f2ptr f2imagination_link__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.is_type__funk);}
+  {char* slot_name = "type";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.type__funk, nil, nil);}
   {char* slot_name = "new";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.new__funk);}
   {char* slot_name = "next";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__funk,              __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__set__funk, nil);}
@@ -285,6 +298,9 @@ boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__imagination_link__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__imagination_link__is_type(cause, x));}
 def_pcfunk1(imagination_link__is_type, x, return f2__imagination_link__is_type(this_cause, x));
+
+f2ptr f2__imagination_link__type(f2ptr cause, f2ptr x) {return __imagination_link;}
+def_pcfunk1(imagination_link__type, x, return f2__imagination_link__type(this_cause, x));
 
 f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}
 def_pcfunk5(imagination_link__new, next, name, value, trace, imagination_frame, return f2__imagination_link__new(this_cause, next, name, value, trace, imagination_frame));
@@ -437,6 +453,7 @@ f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr en
 f2ptr f2cfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cfunk.is_type__funk);}
+  {char* slot_name = "type";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cfunk.type__funk, nil, nil);}
   {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cfunk.new__funk);}
   {char* slot_name = "name";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 								    __funk2.globalenv.object_type.primobject.primobject_type_cfunk.name__funk,          __funk2.globalenv.object_type.primobject.primobject_type_cfunk.name__set__funk, nil);}
@@ -461,6 +478,9 @@ boolean_t raw__cfunk__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__cfunk__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__cfunk__is_type(cause, this));}
 def_pcfunk1(cfunk__is_type, x, return f2__cfunk__is_type(this_cause, x));
+
+f2ptr f2__cfunk__type(f2ptr cause, f2ptr this) {return __cfunk__symbol;}
+def_pcfunk1(cfunk__type, x, return f2__cfunk__type(this_cause, x));
 
 f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
 def_pcfunk6(cfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__cfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
@@ -529,6 +549,7 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2p
 f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk);}
+  {char* slot_name = "type";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk, nil, nil);}
   {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.new__funk);}
   {char* slot_name = "name";          f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__funk,          __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__set__funk, nil);}
@@ -553,6 +574,9 @@ boolean_t raw__metrocfunk__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__metrocfunk__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__metrocfunk__is_type(cause, this));}
 def_pcfunk1(metrocfunk__is_type, x, return f2__metrocfunk__is_type(this_cause, x));
+
+f2ptr f2__metrocfunk__type(f2ptr cause, f2ptr this) {return __metrocfunk__symbol;}
+def_pcfunk1(metrocfunk__type, x, return f2__metrocfunk__type(this_cause, x));
 
 f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2metrocfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
 def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
@@ -626,6 +650,7 @@ f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2p
 f2ptr f2funk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_funk.is_type__funk);}
+  {char* slot_name = "type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.type__funk, nil, nil);}
   //{char* slot_name = "new";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_funk.new__funk);}
   {char* slot_name = "name";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									  __funk2.globalenv.object_type.primobject.primobject_type_funk.name__funk,                __funk2.globalenv.object_type.primobject.primobject_type_funk.name__set__funk, nil);}
@@ -656,6 +681,9 @@ boolean_t raw__funk__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__funk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__funk__is_type(cause, x));}
 def_pcfunk1(funk__is_type, x, return f2__funk__is_type(this_cause, x));
+
+f2ptr f2__funk__type(f2ptr cause, f2ptr x) {return __funk__symbol;}
+def_pcfunk1(funk__type, x, return f2__funk__type(this_cause, x));
 
 f2ptr f2__funk__name(f2ptr cause, f2ptr this) {return f2funk__name(this, cause);}
 def_pcfunk1(funk__name, x, return f2__funk__name(this_cause, x));
@@ -744,6 +772,7 @@ f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2
 f2ptr f2metro__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";             f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.is_type__funk);}
+  {char* slot_name = "type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.type__funk);}
   //{char* slot_name = "new";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.new__funk);}
   {char* slot_name = "name";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									  __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk, nil);}
@@ -774,6 +803,9 @@ boolean_t raw__metro__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__metro__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__metro__is_type(cause, x));}
 def_pcfunk1(metro__is_type, x, return f2__metro__is_type(this_cause, x));
+
+f2ptr f2__metro__type(f2ptr cause, f2ptr x) {return __metro__symbol;}
+def_pcfunk1(metro__type, x, return f2__metro__type(this_cause, x));
 
 f2ptr f2__metro__name(f2ptr cause, f2ptr this) {return f2metro__name(this, cause);}
 def_pcfunk1(metro__name, x, return f2__metro__name(this_cause, x));
@@ -848,6 +880,7 @@ f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
 f2ptr f2exception__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_exception.new__funk);}
   {char* slot_name = "tag";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__funk, __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__set__funk, nil);}
   {char* slot_name = "value";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.value__funk, __funk2.globalenv.object_type.primobject.primobject_type_exception.value__set__funk, nil);}
@@ -862,6 +895,9 @@ boolean_t raw__exception__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__exception__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__exception__is_type(cause, x));}
 def_pcfunk1(exception__is_type, x, return f2__exception__is_type(this_cause, x));
+
+f2ptr f2__exception__type(f2ptr cause, f2ptr x) {return __exception__symbol;}
+def_pcfunk1(exception__type, x, return f2__exception__type(this_cause, x));
 
 f2ptr f2__exception__new(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
 def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, tag, value));
@@ -902,6 +938,7 @@ f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr 
 f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__funk);}
   {char* slot_name = "command"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__set__funk, nil);}
   {char* slot_name = "arg0";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__set__funk, nil);}
@@ -918,6 +955,9 @@ boolean_t raw__bytecode__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__bytecode__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bytecode__is_type(cause, x));}
 def_pcfunk1(bytecode__is_type, x, return f2__bytecode__is_type(this_cause, x));
+
+f2ptr f2__bytecode__type(f2ptr cause, f2ptr x) {return __bytecode__symbol;}
+def_pcfunk1(bytecode__type, x, return f2__bytecode__type(this_cause, x));
 
 f2ptr f2__bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {return f2bytecode__new(cause, command, arg0, arg1, arg2);}
 def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(this_cause, command, arg0, arg1, arg2));
@@ -1018,6 +1058,7 @@ f2ptr f2fiber__new(f2ptr cause,
 f2ptr f2fiber__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__funk);}
+  {char* slot_name = "type";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__funk, nil, nil);}
   //{char* slot_name = "new";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__funk);}
   {char* slot_name = "program_counter";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__set__funk, nil);}
@@ -1098,6 +1139,9 @@ boolean_t raw__fiber__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__fiber__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__fiber__is_type(cause, x));}
 def_pcfunk1(fiber__is_type, x, return f2__fiber__is_type(this_cause, x));
+
+f2ptr f2__fiber__type(f2ptr cause, f2ptr x) {return __fiber__symbol;}
+def_pcfunk1(fiber__type, x, return f2__fiber__type(this_cause, x));
 
 f2ptr f2__fiber__program_counter(f2ptr cause, f2ptr this) {return f2fiber__program_counter(this, cause);}
 def_pcfunk1(fiber__program_counter, x, return f2__fiber__program_counter(this_cause, x));
@@ -1268,6 +1312,7 @@ f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_thread, f2p
 f2ptr f2processor__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_processor.is_type__funk);}
+  {char* slot_name = "type";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_processor.type__funk, nil, nil);}
   //{char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk);}
   {char* slot_name = "scheduler";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__funk, __funk2.globalenv.object_type.primobject.primobject_type_processor.scheduler__set__funk, nil);}
@@ -1302,6 +1347,9 @@ boolean_t raw__processor__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__processor__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__processor__is_type(cause, x));}
 def_pcfunk1(processor__is_type, x, return f2__processor__is_type(this_cause, x));
+
+f2ptr f2__processor__type(f2ptr cause, f2ptr x) {return __processor__symbol;}
+def_pcfunk1(processor__type, x, return f2__processor__type(this_cause, x));
 
 f2ptr f2__processor__scheduler(f2ptr cause, f2ptr this) {return f2processor__scheduler(this, cause);}
 def_pcfunk1(processor__scheduler, x, return f2__processor__scheduler(this_cause, x));
@@ -1395,6 +1443,7 @@ f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mu
 f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.is_type__funk);}
+  {char* slot_name = "type";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.type__funk, nil, nil);}
   {char* slot_name = "new";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.new__funk);}
   {char* slot_name = "processors";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									      __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__funk, __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__set__funk, nil);}
@@ -1417,6 +1466,9 @@ boolean_t raw__scheduler__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__scheduler__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__scheduler__is_type(cause, x));}
 def_pcfunk1(scheduler__is_type, x, return f2__scheduler__is_type(this_cause, x));
+
+f2ptr f2__scheduler__type(f2ptr cause, f2ptr x) {return __scheduler__symbol;}
+def_pcfunk1(scheduler__type, x, return f2__scheduler__type(this_cause, x));
 
 f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer) {return f2scheduler__new(cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);}
 def_pcfunk5(scheduler__new, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, return f2__scheduler__new(this_cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer));
@@ -1476,6 +1528,7 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr fiber, f2ptr
 f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.is_type__funk);}
+  {char* slot_name = "type";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.type__funk, nil, nil);}
   {char* slot_name = "new";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__funk);}
   {char* slot_name = "event_types";        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__set__funk, nil);}
@@ -1498,6 +1551,9 @@ boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__event_subscriber__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__event_subscriber__is_type(cause, x));}
 def_pcfunk1(event_subscriber__is_type, x, return f2__event_subscriber__is_type(this_cause, x));
+
+f2ptr f2__event_subscriber__type(f2ptr cause, f2ptr x) {return __event_subscriber__symbol;}
+def_pcfunk1(event_subscriber__type, x, return f2__event_subscriber__type(this_cause, x));
 
 f2ptr f2__event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr fiber, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex) {return f2event_subscriber__new(cause, event_types, fiber, funkable, event_buffer, event_buffer_mutex);}
 def_pcfunk5(event_subscriber__new, event_types, fiber, funkable, event_buffer, event_buffer_mutex, return f2__event_subscriber__new(this_cause, event_types, fiber, funkable, event_buffer, event_buffer_mutex));
@@ -1573,6 +1629,7 @@ f2ptr f2cause__new(f2ptr cause, f2ptr fibers_mutex, f2ptr fibers, f2ptr frame, f
 f2ptr f2cause__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk);}
+  {char* slot_name = "type";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type__funk, nil, nil);}
   {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk);}
   {char* slot_name = "fibers_mutex";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers_mutex__set__funk, nil);}
@@ -1611,6 +1668,9 @@ boolean_t raw__cause__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__cause__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cause__is_type(cause, x));}
 def_pcfunk1(cause__is_type, x, return f2__cause__is_type(this_cause, x));
+
+f2ptr f2__cause__type(f2ptr cause, f2ptr x) {return __cause__symbol;}
+def_pcfunk1(cause__type, x, return f2__cause__type(this_cause, x));
 
 f2ptr f2__cause__fibers_mutex(f2ptr cause, f2ptr this) {return f2cause__fibers_mutex(this, cause);}
 def_pcfunk1(cause__fibers_mutex, x, return f2__cause__fibers_mutex(this_cause, x));
@@ -1842,6 +1902,7 @@ f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr nanoseconds_since_1970, 
 f2ptr f2transframe__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__funk);}
+  {char* slot_name = "type";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_transframe.type__funk, nil, nil);}
   {char* slot_name = "new";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk);}
   {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									      __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__funk, nil);}
@@ -1895,6 +1956,7 @@ f2ptr f2bug__new(f2ptr cause, f2ptr type) {
 f2ptr f2bug__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bug.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bug.new__funk);}
   {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk, __funk2.globalenv.object_type.primobject.primobject_type_bug.type__set__funk, nil);}
   return this;
@@ -1908,6 +1970,9 @@ boolean_t raw__bug__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__bug__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bug__is_type(cause, x));}
 def_pcfunk1(bug__is_type, x, return f2__bug__is_type(this_cause, x));
+
+f2ptr f2__bug__type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bug__type(cause, x));}
+def_pcfunk1(bug__type, x, return f2__bug__type(this_cause, x));
 
 f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}
 def_pcfunk1(bug__new, type, return f2__bug__new(this_cause, type));
@@ -1935,6 +2000,7 @@ f2ptr f2time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {
 f2ptr f2time__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
+  {char* slot_name = "type";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.type__funk, nil, nil);}
   {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
   {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									     __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk, nil);}
@@ -1956,6 +2022,9 @@ boolean_t raw__time__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__time__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__time__is_type(cause, x));}
 def_pcfunk1(time__is_type, x, return f2__time__is_type(this_cause, x));
+
+f2ptr f2__time__type(f2ptr cause, f2ptr x) {return __time__symbol;}
+def_pcfunk1(time__type, x, return f2__time__type(this_cause, x));
 
 f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2time__new(cause, nanoseconds_since_1970);}
 def_pcfunk1(time__new, nanoseconds_since_1970, return f2__time__new(this_cause, nanoseconds_since_1970));
@@ -2054,6 +2123,7 @@ f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {
 f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.type__funk, nil, nil);}
   {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__funk);}
   {char* slot_name = "x";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__funk, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__set__funk, nil);}
   {char* slot_name = "y";       f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__funk, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__set__funk, nil);}
@@ -2068,6 +2138,9 @@ boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__size_2d__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__size_2d__is_type(cause, x));}
 def_pcfunk1(size_2d__is_type, x, return f2__size_2d__is_type(this_cause, x));
+
+f2ptr f2__size_2d__type(f2ptr cause, f2ptr x) {return __size_2d__symbol;}
+def_pcfunk1(size_2d__type, x, return f2__size_2d__type(this_cause, x));
 
 f2ptr f2__size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {return f2size_2d__new(cause, x, y);}
 def_pcfunk2(size_2d__new, x, y, return f2__size_2d__new(this_cause, x, y));
@@ -2111,6 +2184,7 @@ f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr
 f2ptr f2event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event.is_type__funk);}
+  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.type__funk, nil, nil);}
   {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event.new__funk);}
   {char* slot_name = "node_id";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__funk, __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__set__funk, nil);}
   {char* slot_name = "event_id"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.event_id__funk, __funk2.globalenv.object_type.primobject.primobject_type_event.event_id__set__funk, nil);}
@@ -2127,6 +2201,9 @@ boolean_t raw__event__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__event__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__event__is_type(cause, x));}
 def_pcfunk1(event__is_type, x, return f2__event__is_type(this_cause, x));
+
+f2ptr f2__event__type(f2ptr cause, f2ptr x) {return __event__symbol;}
+def_pcfunk1(event__type, x, return f2__event__type(this_cause, x));
 
 f2ptr f2__event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {return f2event__new(cause, node_id, event_id, type, data);}
 def_pcfunk4(event__new, node_id, event_id, type, data, return f2__event__new(this_cause, node_id, event_id, type, data));
@@ -2156,6 +2233,9 @@ f2ptr f2__event__data__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event
 def_pcfunk2(event__data__set, x, y, return f2__event__data__set(this_cause, x, y));
 
 
+// larva_event
+
+
 
 
 // bytecode_event
@@ -2180,6 +2260,7 @@ f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
 f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.is_type__funk);}
+  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.type__funk, nil, nil);}
   {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__funk);}
   {char* slot_name = "bytecode"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 							       __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__set__funk, nil);}
@@ -2196,6 +2277,9 @@ boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__bytecode_event__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bytecode_event__is_type(cause, x));}
 def_pcfunk1(bytecode_event__is_type, x, return f2__bytecode_event__is_type(this_cause, x));
+
+f2ptr f2__bytecode_event__type(f2ptr cause, f2ptr x) {return __bytecode_event__symbol;}
+def_pcfunk1(bytecode_event__type, x, return f2__bytecode_event__type(this_cause, x));
 
 f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
 def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
@@ -2268,6 +2352,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_place.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(place__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_place.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_place.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(place__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_place.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_place.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(place__new, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk = never_gc(cfunk);}
   {char* symbol_str = "thing"; __funk2.globalenv.object_type.primobject.primobject_type_place.thing__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2279,6 +2365,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_cons.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cons.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_cons.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cons.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_cons.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cons__new, car, cdr, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cons.new__funk = never_gc(cfunk);}
   {char* symbol_str = "car"; __funk2.globalenv.object_type.primobject.primobject_type_cons.car__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2294,6 +2382,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_doublelink.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(doublelink__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelink.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_doublelink.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(doublelink__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelink.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_doublelink.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(doublelink__new, prev, next, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelink.new__funk = never_gc(cfunk);}
   {char* symbol_str = "prev"; __funk2.globalenv.object_type.primobject.primobject_type_doublelink.prev__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2313,6 +2403,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(imagination_link__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(imagination_link__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(imagination_link__new, next, name, value, trace, imagination_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.new__funk = never_gc(cfunk);}
   {char* symbol_str = "next"; __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2340,6 +2432,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cfunk__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cfunk__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(cfunk__new, name, args, cfunkptr, env, is_funktional, documentation, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.new__funk = never_gc(cfunk);}
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.name__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2371,6 +2465,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metrocfunk__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metrocfunk__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documentation, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.new__funk = never_gc(cfunk);}
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2402,6 +2498,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_funk.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_funk.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.type__funk = never_gc(cfunk);}
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var(funk__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.new__funk = never_gc(cfunk);}
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_funk.name__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2445,6 +2543,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_metro.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_metro.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.type__funk = never_gc(cfunk);}
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_metro.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var(metro__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.new__funk = never_gc(cfunk);}
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2488,6 +2588,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(exception__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_exception.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(exception__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_exception.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(exception__new, tag, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.new__funk = never_gc(cfunk);}
   {char* symbol_str = "tag"; __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2503,6 +2605,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(bytecode__new, command, arg0, arg1, arg2, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__funk = never_gc(cfunk);}
   {char* symbol_str = "command"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2526,6 +2630,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__funk = never_gc(cfunk);}
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var(fiber__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__funk = never_gc(cfunk);}
   {char* symbol_str = "program_counter"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2613,6 +2719,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_processor.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_processor.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(processor__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.type__funk = never_gc(cfunk);}
   //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_processor.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var__8_arg(processor__new, scheduler, processor_thread, active_fibers_mutex, active_fibers, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc,
   //                                              cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_processor.new__funk = never_gc(cfunk);}
@@ -2665,6 +2773,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(scheduler__new, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.new__funk = never_gc(cfunk);}
   {char* symbol_str = "processors"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2692,6 +2802,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(event_subscriber__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(event_subscriber__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(event_subscriber__new, event_type, fiber, funkable, event_buffer, event_buffer_mutex, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__funk = never_gc(cfunk);}
   {char* symbol_str = "event_type"; __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2719,6 +2831,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_cause.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cause__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_cause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var(cause__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.new__funk = never_gc(cfunk);}
   {char* symbol_str = "fibers_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_cause.fibers_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2782,6 +2896,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(transframe__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(transframe__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(transframe__new, nanoseconds_since_1970, symbol_old_news, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk = never_gc(cfunk);}
   {char* symbol_str = "nanoseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2797,6 +2913,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_bug.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(bug__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bug.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_bug.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bug__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_bug.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(bug__new, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bug.new__funk = never_gc(cfunk);}
   {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_bug.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2808,6 +2926,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_time.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_time.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__new, type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk = never_gc(cfunk);}
   {char* symbol_str = "nanoseconds_since_1970"; __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2833,6 +2953,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_size_2d.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(size_2d__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_size_2d.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_size_2d.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(size_2d__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_size_2d.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(size_2d__new, x, y, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__funk = never_gc(cfunk);}
   {char* symbol_str = "x"; __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2848,6 +2970,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_event.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(event__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_event.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_event.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(event__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_event.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_event.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(event__new, node_id, event_id, type, data, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_event.new__funk = never_gc(cfunk);}
   {char* symbol_str = "node_id"; __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -2871,6 +2995,8 @@ void f2__primobjects__initialize() {
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode_event__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode_event__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode_event__new, bytecode, context, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__funk = never_gc(cfunk);}
   {char* symbol_str = "bytecode"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

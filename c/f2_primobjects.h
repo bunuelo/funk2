@@ -1282,6 +1282,8 @@ extern void f2__primobjects__initialize();
 struct funk2_object_type__place__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr thing__symbol;
@@ -1295,6 +1297,8 @@ struct funk2_object_type__place__slot_s {
 struct funk2_object_type__cons__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr car__symbol;
@@ -1312,6 +1316,8 @@ struct funk2_object_type__cons__slot_s {
 struct funk2_object_type__doublelink__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr prev__symbol;
@@ -1333,6 +1339,8 @@ struct funk2_object_type__doublelink__slot_s {
 struct funk2_object_type__imagination_link__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr next__symbol;
@@ -1362,6 +1370,8 @@ struct funk2_object_type__imagination_link__slot_s {
 struct funk2_object_type__cfunk__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr name__symbol;
@@ -1395,6 +1405,8 @@ struct funk2_object_type__cfunk__slot_s {
 struct funk2_object_type__metrocfunk__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr name__symbol;
@@ -1428,6 +1440,8 @@ struct funk2_object_type__metrocfunk__slot_s {
 struct funk2_object_type__funk__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   //f2ptr new__symbol;
   //f2ptr new__funk;
   f2ptr name__symbol;
@@ -1473,6 +1487,8 @@ struct funk2_object_type__funk__slot_s {
 struct funk2_object_type__metro__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   //f2ptr new__symbol;
   //f2ptr new__funk;
   f2ptr name__symbol;
@@ -1518,6 +1534,8 @@ struct funk2_object_type__metro__slot_s {
 struct funk2_object_type__exception__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr tag__symbol;
@@ -1535,6 +1553,8 @@ struct funk2_object_type__exception__slot_s {
 struct funk2_object_type__bytecode__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr command__symbol;
@@ -1560,6 +1580,8 @@ struct funk2_object_type__bytecode__slot_s {
 struct funk2_object_type__fiber__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   //f2ptr new__symbol;
   //f2ptr new__funk;
   f2ptr program_counter__symbol;
@@ -1649,6 +1671,8 @@ struct funk2_object_type__fiber__slot_s {
 struct funk2_object_type__processor__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   //f2ptr new__symbol;
   //f2ptr new__funk;
   f2ptr scheduler__symbol;
@@ -1702,6 +1726,8 @@ struct funk2_object_type__processor__slot_s {
 struct funk2_object_type__scheduler__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr processors__symbol;
@@ -1731,6 +1757,8 @@ struct funk2_object_type__scheduler__slot_s {
 struct funk2_object_type__event_subscriber__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr event_types__symbol;
@@ -1760,6 +1788,8 @@ struct funk2_object_type__event_subscriber__slot_s {
 struct funk2_object_type__cause__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr fibers_mutex__symbol;
@@ -1825,6 +1855,8 @@ struct funk2_object_type__cause__slot_s {
 struct funk2_object_type__transframe__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr nanoseconds_since_1970__symbol;
@@ -1842,6 +1874,8 @@ struct funk2_object_type__transframe__slot_s {
 struct funk2_object_type__bug__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr type__symbol;
@@ -1855,6 +1889,8 @@ struct funk2_object_type__bug__slot_s {
 struct funk2_object_type__time__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr nanoseconds_since_1970__symbol;
@@ -1882,6 +1918,8 @@ struct funk2_object_type__time__slot_s {
 struct funk2_object_type__size_2d__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr x__symbol;
@@ -1899,6 +1937,8 @@ struct funk2_object_type__size_2d__slot_s {
 struct funk2_object_type__event__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr node_id__symbol;
@@ -1924,6 +1964,8 @@ struct funk2_object_type__event__slot_s {
 struct funk2_object_type__bytecode_event__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr bytecode__symbol;

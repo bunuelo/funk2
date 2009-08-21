@@ -1842,10 +1842,6 @@ void f2__primcfunks__initialize() {
   
   // ptype
   
-  f2__funktional_primcfunk__init__1(ptype__raw,        this, "");
-  f2__primcfunk__init__1(           ptype__cause,      this, "");
-  f2__primcfunk__init__2(           ptype__cause__set, this, value, "");
-  
   // integer
   
   // double

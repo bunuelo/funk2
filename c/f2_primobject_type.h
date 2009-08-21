@@ -22,7 +22,7 @@
 #ifndef F2__PRIMOBJECT_TYPE__H
 #define F2__PRIMOBJECT_TYPE__H
 
-f2ptr f2__primobject_type__new(f2ptr cause);
+f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents);
 f2ptr f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr get_funk, f2ptr set_funk, f2ptr execute_funk);
 f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr name);
 f2ptr f2__primobject_type__lookup_slot_set_funk(f2ptr cause, f2ptr this, f2ptr name);

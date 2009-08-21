@@ -120,6 +120,13 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   return nil;
 }
 
+f2ptr f2ptype__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, nil);
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.is_type__funk);}
+  {char* slot_name = "raw";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.raw__funk, nil, nil);}
+  {char* slot_name = "cause";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.cause__funk, __funk2.globalenv.object_type.ptype.cause__set__funk, nil);}
+  return this;
+}
 
 // integer
 
@@ -2112,6 +2119,19 @@ void funk2_ptypes__destroy(funk2_ptypes_t* this) {
 void f2__ptypes__initialize__object_slots() {
   f2ptr cause = initial_cause();
   
+  // ptype
+  
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk = never_gc(cfunk);}
+  {char* str = "raw"; __funk2.globalenv.object_type.ptype.raw__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__raw, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.raw__funk = never_gc(cfunk);}
+  {char* str = "cause"; __funk2.globalenv.object_type.ptype.cause__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__cause, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.cause__funk = never_gc(cfunk);}
+  {char* str = "cause-set"; __funk2.globalenv.object_type.ptype.cause__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__cause__set, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.cause__set__funk = never_gc(cfunk);}
+  
+  // integer
+  
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_integer.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -2178,6 +2198,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.new__funk = never_gc(cfunk);}
   {char* str = "ch"; __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__ch, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.ch__funk = never_gc(cfunk);}
+  
+  // string
   
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_string.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk = never_gc(cfunk);}

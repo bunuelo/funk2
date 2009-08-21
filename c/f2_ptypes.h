@@ -74,6 +74,7 @@ ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
 
+f2ptr f2ptype__primobject_type__new(f2ptr cause);
 
 // integer
 
@@ -558,6 +559,14 @@ typedef struct funk2_object_type__larva__slot_s {
 
 
 typedef struct funk2_ptype_object_types_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr raw__symbol;
+  f2ptr raw__funk;
+  f2ptr cause__symbol;
+  f2ptr cause__funk;
+  f2ptr cause__set__symbol;
+  f2ptr cause__set__funk;
   funk2_object_type__integer__slot_t      ptype_integer;
   funk2_object_type__double__slot_t       ptype_double;
   funk2_object_type__float__slot_t        ptype_float;

@@ -212,7 +212,7 @@ f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__dou
 def_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x));
 
 f2ptr f2__doublelink__type(f2ptr cause, f2ptr x) {return __doublelink__symbol;}
-def_pcfunk1(doublelink__type, x, return f2__doublelink(this_cause, x));
+def_pcfunk1(doublelink__type, x, return f2__doublelink__type(this_cause, x));
 
 f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
 def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));

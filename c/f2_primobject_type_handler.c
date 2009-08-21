@@ -34,7 +34,7 @@ void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handle
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
   f2ptr new_type_hash = raw__hashtable__new(cause, 5);
   this->type_hash = new_type_hash;
-  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("primobject_type_handler-type_hash"), (u8*)"primobject_type_handler-type_hash"), new_type_hash);
+  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("type_hash"), (u8*)"type_hash"), new_type_hash);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 

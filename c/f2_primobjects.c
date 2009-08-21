@@ -1431,7 +1431,7 @@ def_pcfunk2(scheduler__event_buffer__set, x, y, return f2__scheduler__event_buff
 // event_subscriber
 
 defprimobject__static_slot(event_subscriber__event_types,        0);
-defprimobject__static_slot(event_subscriber__fiber,             1);
+defprimobject__static_slot(event_subscriber__fiber,              1);
 defprimobject__static_slot(event_subscriber__funkable,           2);
 defprimobject__static_slot(event_subscriber__event_buffer,       3);
 defprimobject__static_slot(event_subscriber__event_buffer_mutex, 4);

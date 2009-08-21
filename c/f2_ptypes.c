@@ -356,7 +356,7 @@ f2ptr f2__float__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__float__i
 def_pcfunk1(float__is_type, x,    return f2__float__is_type(this_cause, x));
 
 f2ptr f2__float__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strlen("float"), (u8*)"float");}
-def_pcfunk1(float__type,    this, return f2__symbol__type(this_cause, this));
+def_pcfunk1(float__type,    this, return f2__float__type(this_cause, this));
 
 def_pcfunk1(float__new,     this, return f2float__new(this_cause, f2float__f(this_cause, this)));
 def_pcfunk1(float__f,       this, return this);

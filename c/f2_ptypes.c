@@ -430,7 +430,10 @@ boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__pointer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointer__is_type(cause, x));}
 def_pcfunk1(pointer__is_type, x,    return f2__pointer__is_type(this_cause, x));
-def_pcfunk1(pointer__type,    x,    return f2symbol__new(cause, strlen("pointer"), (u8*)"pointer"));
+
+f2ptr f2__pointer__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strlen("pointer"), (u8*)"pointer");}
+def_pcfunk1(pointer__type,    this, return f2__pointer__type(this_cause, this));
+
 def_pcfunk1(pointer__new,     this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
 def_pcfunk1(pointer__p,       this, return this);
 

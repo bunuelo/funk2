@@ -299,7 +299,7 @@ boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__imagination_link__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__imagination_link__is_type(cause, x));}
 def_pcfunk1(imagination_link__is_type, x, return f2__imagination_link__is_type(this_cause, x));
 
-f2ptr f2__imagination_link__type(f2ptr cause, f2ptr x) {return __imagination_link;}
+f2ptr f2__imagination_link__type(f2ptr cause, f2ptr x) {return __imagination_link__symbol;}
 def_pcfunk1(imagination_link__type, x, return f2__imagination_link__type(this_cause, x));
 
 f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}

@@ -44,7 +44,6 @@
 `[load 'fu2/action.fu2']
 [load 'fu2/time.fu2']
 
-`[load 'fu2/bootstrap-primobject_type.fu2']
 `[load 'fu2/bootstrap-graph.fu2']
 `[load 'fu2/bootstrap-dlfcn.fu2']
 `[load 'fu2/bootstrap-gmodule.fu2']

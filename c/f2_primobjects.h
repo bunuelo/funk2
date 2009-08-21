@@ -1949,10 +1949,10 @@ struct funk2_object_type__event__slot_s {
   f2ptr event_id__funk;
   f2ptr event_id__set__symbol;
   f2ptr event_id__set__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr type__set__symbol;
-  f2ptr type__set__funk;
+  f2ptr event_type__symbol;
+  f2ptr event_type__funk;
+  f2ptr event_type__set__symbol;
+  f2ptr event_type__set__funk;
   f2ptr data__symbol;
   f2ptr data__funk;
   f2ptr data__set__symbol;

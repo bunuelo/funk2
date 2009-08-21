@@ -1971,7 +1971,7 @@ boolean_t raw__bug__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__bug__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bug__is_type(cause, x));}
 def_pcfunk1(bug__is_type, x, return f2__bug__is_type(this_cause, x));
 
-f2ptr f2__bug__type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bug__type(cause, x));}
+f2ptr f2__bug__type(f2ptr cause, f2ptr x) {return __bug__symbol;}
 def_pcfunk1(bug__type, x, return f2__bug__type(this_cause, x));
 
 f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}

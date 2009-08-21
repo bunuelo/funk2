@@ -1936,48 +1936,5 @@ struct funk2_object_type__bytecode_event__slot_s {
   f2ptr context__set__funk;
 };
 
-typedef struct funk2_primobject_object_types_s funk2_primobject_object_types_t;
-
-struct funk2_primobject_object_types_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr type__set__symbol;
-  f2ptr type__set__funk;
-  f2ptr dynamic_slots__symbol;
-  f2ptr dynamic_slots__funk;
-  f2ptr dynamic_slots__set__symbol;
-  f2ptr dynamic_slots__set__funk;
-  funk2_object_type__place__slot_t            primobject_type_place;
-  funk2_object_type__cons__slot_t             primobject_type_cons;
-  funk2_object_type__doublelink__slot_t       primobject_type_doublelink;
-  funk2_object_type__imagination_link__slot_t primobject_type_imagination_link;
-  funk2_object_type__cfunk__slot_t            primobject_type_cfunk;
-  funk2_object_type__metrocfunk__slot_t       primobject_type_metrocfunk;
-  funk2_object_type__funk__slot_t             primobject_type_funk;
-  funk2_object_type__metro__slot_t            primobject_type_metro;
-  funk2_object_type__exception__slot_t        primobject_type_exception;
-  funk2_object_type__bytecode__slot_t         primobject_type_bytecode;
-  funk2_object_type__fiber__slot_t            primobject_type_fiber;
-  funk2_object_type__processor__slot_t        primobject_type_processor;
-  funk2_object_type__scheduler__slot_t        primobject_type_scheduler;
-  funk2_object_type__event_subscriber__slot_t primobject_type_event_subscriber;
-  funk2_object_type__cause__slot_t            primobject_type_cause;
-  funk2_object_type__transframe__slot_t       primobject_type_transframe;
-  funk2_object_type__bug__slot_t              primobject_type_bug;
-  funk2_object_type__time__slot_t             primobject_type_time;
-  funk2_object_type__size_2d__slot_t          primobject_type_size_2d;
-  funk2_object_type__event__slot_t            primobject_type_event;
-  funk2_object_type__bytecode_event__slot_t   primobject_type_bytecode_event;
-  funk2_object_type__stream__slot_t           primobject_type_stream;
-  funk2_object_type__hashtable__slot_t        primobject_type_hashtable;
-  funk2_object_type__frame__slot_t            primobject_type_frame;
-  funk2_object_type__environment__slot_t      primobject_type_environment;
-  funk2_object_type__set__slot_t              primobject_type_set;
-  funk2_object_type__list__slot_t             primobject_type_list;
-  funk2_object_type__circular_buffer__slot_t  primobject_type_circular_buffer;
-};
-
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS
 

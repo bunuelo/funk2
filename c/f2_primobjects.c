@@ -1910,9 +1910,17 @@ f2ptr f2time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {
 
 f2ptr f2time__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
-  {char* slot_name = "nanoseconds_since_1970";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk, nil);}
+  {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
+  {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
+  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									     __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk, nil);}
+  {char* slot_name = "years";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk,       nil, nil);}
+  {char* slot_name = "months";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk,      nil, nil);}
+  {char* slot_name = "days";                   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk,        nil, nil);}
+  {char* slot_name = "hours";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk,       nil, nil);}
+  {char* slot_name = "minutes";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk,     nil, nil);}
+  {char* slot_name = "seconds";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk,     nil, nil);}
+  {char* slot_name = "nanoseconds";            f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk, nil, nil);}
   return this;
 }
 
@@ -1934,6 +1942,75 @@ def_pcfunk1(time__nanoseconds_since_1970, x, return f2__time__nanoseconds_since_
 f2ptr f2__time__nanoseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2time__nanoseconds_since_1970__set(this, cause, value);}
 def_pcfunk2(time__nanoseconds_since_1970__set, x, y, return f2__time__nanoseconds_since_1970__set(this_cause, x, y));
 
+u64 raw__time__years(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.years;
+}
+
+f2ptr f2__time__years(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__years(cause, this));}
+def_pcfunk1(time__years, this, return f2__time__years(this_cause, this));
+
+u64 raw__time__months(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.months;
+}
+
+f2ptr f2__time__months(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__months(cause, this));}
+def_pcfunk1(time__months, this, return f2__time__months(this_cause, this));
+
+u64 raw__time__days(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.days;
+}
+
+f2ptr f2__time__days(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__days(cause, this));}
+def_pcfunk1(time__days, this, return f2__time__days(this_cause, this));
+
+u64 raw__time__hours(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.hours;
+}
+
+f2ptr f2__time__hours(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__hours(cause, this));}
+def_pcfunk1(time__hours, this, return f2__time__hours(this_cause, this));
+
+u64 raw__time__minutes(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.minutes;
+}
+
+f2ptr f2__time__minutes(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__minutes(cause, this));}
+def_pcfunk1(time__minutes, this, return f2__time__minutes(this_cause, this));
+
+u64 raw__time__seconds(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.seconds;
+}
+
+f2ptr f2__time__seconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__seconds(cause, this));}
+def_pcfunk1(time__seconds, this, return f2__time__seconds(this_cause, this));
+
+u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
+  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause));
+  funk2_date_t funk2_date;
+  nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, &funk2_date);
+  return funk2_date.nanoseconds;
+}
+
+f2ptr f2__time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__nanoseconds(cause, this));}
+def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, this));
 
 // size_2d
 
@@ -2700,6 +2777,20 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__nanoseconds_since_1970, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk = never_gc(cfunk);}
   {char* symbol_str = "nanoseconds_since_1970-set"; __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__nanoseconds_since_1970__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "years"; __funk2.globalenv.object_type.primobject.primobject_type_time.years__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__years, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk = never_gc(cfunk);}
+  {char* symbol_str = "months"; __funk2.globalenv.object_type.primobject.primobject_type_time.months__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__months, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk = never_gc(cfunk);}
+  {char* symbol_str = "days"; __funk2.globalenv.object_type.primobject.primobject_type_time.days__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__days, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk = never_gc(cfunk);}
+  {char* symbol_str = "hours"; __funk2.globalenv.object_type.primobject.primobject_type_time.hours__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__hours, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk = never_gc(cfunk);}
+  {char* symbol_str = "minutes"; __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__minutes, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk = never_gc(cfunk);}
+  {char* symbol_str = "seconds"; __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__seconds, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk = never_gc(cfunk);}
+  {char* symbol_str = "nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(time__nanoseconds, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk = never_gc(cfunk);}
   
   // size_2d
   

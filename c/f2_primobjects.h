@@ -1859,6 +1859,20 @@ struct funk2_object_type__time__slot_s {
   f2ptr nanoseconds_since_1970__funk;
   f2ptr nanoseconds_since_1970__set__symbol;
   f2ptr nanoseconds_since_1970__set__funk;
+  f2ptr years__symbol;
+  f2ptr years__funk;
+  f2ptr months__symbol;
+  f2ptr months__funk;
+  f2ptr days__symbol;
+  f2ptr days__funk;
+  f2ptr hours__symbol;
+  f2ptr hours__funk;
+  f2ptr minutes__symbol;
+  f2ptr minutes__funk;
+  f2ptr seconds__symbol;
+  f2ptr seconds__funk;
+  f2ptr nanoseconds__symbol;
+  f2ptr nanoseconds__funk;
 };
 
 // size_2d

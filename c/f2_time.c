@@ -35,20 +35,18 @@ f2ptr f2__nanoseconds_since_1970(f2ptr cause) {
   return f2integer__new(cause, raw__nanoseconds_since_1970());
 }
 
-/*
-void nanoseconds_since_1970__to_spinner_date(u64 nanoseconds_since_1970, spinner_date_t* spinner_date) {
+void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date) {
   u64    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
   u64    nanoseconds            = nanoseconds_since_1970 - (seconds_since_1970 * nanoseconds_per_second);
   time_t unix_time              = nanoseconds_since_1970__to_time(nanoseconds_since_1970) - (4 * 60 * 60);
   struct tm unix_tm;
   gmtime_r(&unix_time, &unix_tm);
-  spinner_date->years       = unix_tm.tm_year + 1900;
-  spinner_date->months      = unix_tm.tm_mon + 1;
-  spinner_date->days        = unix_tm.tm_mday;
-  spinner_date->hours       = unix_tm.tm_hour;
-  spinner_date->minutes     = unix_tm.tm_min;
-  spinner_date->seconds     = unix_tm.tm_sec;
-  spinner_date->nanoseconds = nanoseconds;
+  funk2_date->years       = unix_tm.tm_year + 1900;
+  funk2_date->months      = unix_tm.tm_mon + 1;
+  funk2_date->days        = unix_tm.tm_mday;
+  funk2_date->hours       = unix_tm.tm_hour;
+  funk2_date->minutes     = unix_tm.tm_min;
+  funk2_date->seconds     = unix_tm.tm_sec;
+  funk2_date->nanoseconds = nanoseconds;
 }
-*/
 

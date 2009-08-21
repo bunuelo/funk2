@@ -27,11 +27,22 @@
 #include "f2_ptypes.h"
 #include "f2_primfunks.h"
 
+typedef struct funk2_date_s {
+  u64 years;
+  u64 months;
+  u64 days;
+  u64 hours;
+  u64 minutes;
+  u64 seconds;
+  u64 nanoseconds;
+} funk2_date_t;
+
 #define nanoseconds_per_second ((s64)1000000000)
 
-void  f2__sleep(int microseconds);
+void   f2__sleep(int microseconds);
 u64   raw__nanoseconds_since_1970();
-f2ptr f2__nanoseconds_since_1970(f2ptr cause);
+f2ptr  f2__nanoseconds_since_1970(f2ptr cause);
+void       nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date);
 
 
 #endif // F2__TIME__H

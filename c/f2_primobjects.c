@@ -1924,6 +1924,9 @@ boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__transframe__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__transframe__is_type(cause, x));}
 def_pcfunk1(transframe__is_type, x, return f2__transframe__is_type(this_cause, x));
 
+f2ptr f2__transframe__type(f2ptr cause, f2ptr x) {return __transframe__symbol;}
+def_pcfunk1(transframe__type, x, return f2__transframe__type(this_cause, x));
+
 f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, nanoseconds_since_1970, symbol_old_news);}
 def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
 

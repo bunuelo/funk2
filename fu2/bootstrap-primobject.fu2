@@ -19,13 +19,13 @@
  rights to redistribute these changes.
 '
 
-[defmetro deftype [type_name parents slotdefs]
+[defmetro deftype [type_name slotdefs]
   [print `[deftype ,type_name ,[mapcar [funk [slotdef]
 					     [if [is-type `symbol slotdef]
 						 slotdef
 					       [error `type-creation-print `[,type_name ,slotdef]]]]
 				       slotdefs]]]
-  [let [[primobject_type [primobject_type-new parents]]]
+  [let [[primobject_type [primobject_type-new nil]]]
     [primobject_type-add_slot primobject_type `new
 			      nil
 			      nil

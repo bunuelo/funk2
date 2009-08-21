@@ -47,7 +47,7 @@ f2ptr f2__primobject__new(f2ptr cause, f2ptr type, int static_slot_num, f2ptr dy
   return f2__primobject__new__trace_depth(cause, type, static_slot_num, dynamic_slots, 1);
 }
 
-f2ptr f2__primobject__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__primobject__is_type(cause, this));}
+f2ptr f2__primobject__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__primobject__is_type(cause, thing));}
 def_pcfunk1(primobject__is_type, thing, return f2__primobject__is_type(this_cause, thing));
 
 f2ptr f2__primobject__type(f2ptr cause, f2ptr this) {return f2primobject__type(this, cause);}

@@ -202,7 +202,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
     return f2string__new(cause, strlen("<traced_array>"), (u8*)"<traced_array>");
   case ptype_larva: {
     u8 temp_str[1024];
-    u32 larva_type = f2larva__type(exp, cause);
+    u32 larva_type = f2larva__larva_type(exp, cause);
     snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_larva, cause), larva_type);
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;

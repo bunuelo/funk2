@@ -35,6 +35,10 @@ f2ptr f2__nanoseconds_since_1970(f2ptr cause) {
   return f2integer__new(cause, raw__nanoseconds_since_1970());
 }
 
+time_t nanoseconds_since_1970__to_time(u64 nanoseconds_since_1970) {
+  return (nanoseconds_since_1970 / nanoseconds_per_second);
+}
+
 void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date) {
   u64    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
   u64    nanoseconds            = nanoseconds_since_1970 - (seconds_since_1970 * nanoseconds_per_second);

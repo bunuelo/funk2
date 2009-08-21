@@ -135,7 +135,7 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   return nil;
 }
 
-f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {return f2ptype__cause__set(this, cause, value);}
+f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {f2ptype__cause__set(this, cause, value); return nil;}
 def_pcfunk2(ptype__cause__set, this, value, return f2__ptype__cause__set(this_cause, this, value));
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause) {

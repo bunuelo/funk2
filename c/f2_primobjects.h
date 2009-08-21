@@ -1135,16 +1135,16 @@ defprimobject__static_slot__prototype(transframe__symbol_old_news);
 extern f2ptr __bug__symbol;
 boolean_t raw__bug__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__bug__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bug__new(f2ptr cause, f2ptr type);
+f2ptr f2bug__new(f2ptr cause, f2ptr bug_type);
 f2ptr f2bug__primobject_type__new(f2ptr cause);
 #define f2primobject__is_bug(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bug__symbol)
 
 defprimobject__static_slot__prototype(bug__type);
-#define f2bug__type(                   this, cause)        primobject__static_slot__accessor(         this, bug__type, cause)
-#define f2bug__type__set(              this, cause, value) primobject__static_slot__set(              this, bug__type, cause, value)
-#define f2bug__type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bug__type, cause)
-#define f2bug__type__trace(            this, cause)        primobject__static_slot__trace(            this, bug__type, cause)
-#define f2bug__type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bug__type, cause)
+#define f2bug__bug_type(                   this, cause)        primobject__static_slot__accessor(         this, bug__bug_type, cause)
+#define f2bug__bug_type__set(              this, cause, value) primobject__static_slot__set(              this, bug__bug_type, cause, value)
+#define f2bug__bug_type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bug__bug_type, cause)
+#define f2bug__bug_type__trace(            this, cause)        primobject__static_slot__trace(            this, bug__bug_type, cause)
+#define f2bug__bug_type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bug__bug_type, cause)
 
 
 
@@ -1217,13 +1217,13 @@ defprimobject__static_slot__prototype(event__event_id);
 #define f2event__event_id__trace(            this, cause)                     primobject__static_slot__trace(            this, event__event_id, cause)
 #define f2event__event_id__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__event_id, cause)
 
-defprimobject__static_slot__prototype(event__type);
-#define f2event__type(                   this, cause)                     primobject__static_slot__accessor(         this, event__type, cause)
-#define f2event__type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__type, cause, value, trace_depth)
-#define f2event__type__set(              this, cause, value)              primobject__static_slot__set(              this, event__type, cause, value)
-#define f2event__type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__type, cause)
-#define f2event__type__trace(            this, cause)                     primobject__static_slot__trace(            this, event__type, cause)
-#define f2event__type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__type, cause)
+defprimobject__static_slot__prototype(event__event_type);
+#define f2event__event_type(                   this, cause)                     primobject__static_slot__accessor(         this, event__event_type, cause)
+#define f2event__event_type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__event_type, cause, value, trace_depth)
+#define f2event__event_type__set(              this, cause, value)              primobject__static_slot__set(              this, event__event_type, cause, value)
+#define f2event__event_type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__event_type, cause)
+#define f2event__event_type__trace(            this, cause)                     primobject__static_slot__trace(            this, event__event_type, cause)
+#define f2event__event_type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__event_type, cause)
 
 defprimobject__static_slot__prototype(event__data);
 #define f2event__data(                   this, cause)                     primobject__static_slot__accessor(         this, event__data, cause)
@@ -1878,10 +1878,10 @@ struct funk2_object_type__bug__slot_s {
   f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr type__set__symbol;
-  f2ptr type__set__funk;
+  f2ptr bug_type__symbol;
+  f2ptr bug_type__funk;
+  f2ptr bug_type__set__symbol;
+  f2ptr bug_type__set__funk;
 };
 
 // time

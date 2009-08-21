@@ -270,8 +270,8 @@ typedef enum larva_type_e {
   larva_type__invalid_type,
 } larva_type_t;
 
-f2ptr pfunk2__f2larva__new(f2ptr cause, u32 type);
-u32   pfunk2__f2larva__type(f2ptr this, f2ptr cause);
+f2ptr pfunk2__f2larva__new(f2ptr cause, u32 larva_type);
+u32   pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause);
 
 f2ptr f2larva__primobject_type__new(f2ptr cause);
 
@@ -352,6 +352,8 @@ void f2__ptypes__destroy();
 typedef struct funk2_object_type__integer__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr i__symbol;
@@ -363,6 +365,8 @@ typedef struct funk2_object_type__integer__slot_s {
 typedef struct funk2_object_type__double__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr d__symbol;
@@ -374,6 +378,8 @@ typedef struct funk2_object_type__double__slot_s {
 typedef struct funk2_object_type__float__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr f__symbol;
@@ -385,6 +391,8 @@ typedef struct funk2_object_type__float__slot_s {
 typedef struct funk2_object_type__pointer__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr p__symbol;
@@ -396,6 +404,8 @@ typedef struct funk2_object_type__pointer__slot_s {
 typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr new_from_f2ptr__symbol;
@@ -415,6 +425,8 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
 typedef struct funk2_object_type__mutex__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr is_locked__symbol;
@@ -432,6 +444,8 @@ typedef struct funk2_object_type__mutex__slot_s {
 typedef struct funk2_object_type__char__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr ch__symbol;
@@ -443,6 +457,8 @@ typedef struct funk2_object_type__char__slot_s {
 typedef struct funk2_object_type__string__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr length__symbol;
@@ -458,6 +474,8 @@ typedef struct funk2_object_type__string__slot_s {
 typedef struct funk2_object_type__symbol__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr length__symbol;
@@ -473,6 +491,8 @@ typedef struct funk2_object_type__symbol__slot_s {
 typedef struct funk2_object_type__chunk__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr new_copy__symbol;
@@ -506,6 +526,8 @@ typedef struct funk2_object_type__chunk__slot_s {
 typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr new_copy__symbol;
@@ -523,6 +545,8 @@ typedef struct funk2_object_type__simple_array__slot_s {
 typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
   f2ptr length__symbol;
@@ -550,10 +574,12 @@ typedef struct funk2_object_type__traced_array__slot_s {
 typedef struct funk2_object_type__larva__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
   f2ptr type__symbol;
   f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr larva_type__symbol;
+  f2ptr larva_type__funk;
 } funk2_object_type__larva__slot_t;
 
 
@@ -561,6 +587,8 @@ typedef struct funk2_object_type__larva__slot_s {
 typedef struct funk2_ptype_object_types_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
   f2ptr raw__symbol;
   f2ptr raw__funk;
   f2ptr cause__symbol;

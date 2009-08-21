@@ -549,7 +549,10 @@ boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__gfunkptr__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__gfunkptr__is_type(cause, x));}
 def_pcfunk1(gfunkptr__is_type, x, return f2__gfunkptr__is_type(this_cause, x));
-def_pcfunk1(gfunkptr__type, x, return f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr"));
+
+f2ptr f2__gfunkptr__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strlen("gfunkptr"), (u8*)"gfunkptr");}
+def_pcfunk1(gfunkptr__type, this, return f2__gfunkptr__type(this_cause, this));
+
 def_pcfunk3(gfunkptr__new, computer_id, pool_index, pool_address, return f2gfunkptr__new(this_cause, f2integer__i(computer_id, this_cause), f2integer__i(pool_index, this_cause), f2integer__i(pool_address, this_cause)));
 def_pcfunk1(gfunkptr__new_from_f2ptr, f2p, return f2gfunkptr__new_from_f2ptr(this_cause, f2p));
 def_pcfunk1(gfunkptr__gfunkptr, this, return f2gfunkptr__gfunkptr(this, this_cause));

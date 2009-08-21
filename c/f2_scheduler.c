@@ -159,7 +159,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
   f2ptr critics = f2fiber__critics(fiber, cause);
   if (critics) {
     pause_gc();
-    f2fiber__value__set(fiber, cause, f2bug__new(cause, f2integer__new(cause, f2larva__type(larva, cause))));
+    f2fiber__value__set(fiber, cause, f2bug__new(cause, f2integer__new(cause, f2larva__larva_type(larva, cause))));
     resume_gc();
   } else {
     f2fiber__program_counter__set(fiber, cause, nil);
@@ -334,7 +334,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	if (! raw__larva__is_type(cause, larva)) {
 	  printf("\n  larva is not a larva."); fflush(stdout);
 	} else {
-	  u64 raw_type = f2larva__type(larva, cause);
+	  u64 raw_type = f2larva__larva_type(larva, cause);
 	  printf("\n  larva type=" u64__fstr, raw_type); fflush(stdout);
 	  if (raw_type == 23) {
 	    printf("\n  larva is symbol-undefined type"); fflush(stdout);

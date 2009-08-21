@@ -280,7 +280,7 @@ f2ptr f2__double__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__double_
 def_pcfunk1(double__is_type, x,    return f2__double__is_type(this_cause, x));
 
 f2ptr f2__double__type(f2ptr cause, f2ptr this) {return f2symbol__new(cause, strlen("double"), (u8*)"double");}
-def_pcfunk1(double__type,    x,    return f2__double__type(this_cause, this));
+def_pcfunk1(double__type,    this, return f2__double__type(this_cause, this));
 
 def_pcfunk1(double__new,     this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 def_pcfunk1(double__d,       this, return f2double__new(this_cause, f2double__d(this, this_cause)));

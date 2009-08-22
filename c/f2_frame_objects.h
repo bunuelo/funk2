@@ -139,6 +139,7 @@
 
 
 f2ptr f2physical_object__primobject_type__new(f2ptr cause);
+f2ptr f2omega__primobject_type__new(f2ptr cause);
 
 // **
 

@@ -85,7 +85,7 @@ def_f2__frame__object__new__4_slot(physical_object, position, mass, velocity, sh
 
 #define def_frame_object__funk__slot(name, slot_name) \
   f2ptr f2__frame_object__funk__funkvar(name, slot_name)(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, #slot_name), f2larva__new(cause, 325));} \
-  def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, position), this, return f2__frame_object__funk__funkvar(name, slot_name)(this_cause, this)); \
+  def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, slot_name), this, return f2__frame_object__funk__funkvar(name, slot_name)(this_cause, this)); \
    \
   f2ptr f2__frame_object__funk__funkvar(name, slot_name##__set)(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, #slot_name), value, f2larva__new(cause, 325));} \
   def_pcfunk2(frame_object__funk__pcfunkvar(name, slot_name##__set), this, value, return f2__frame_object__funk__funkvar(name, slot_name##__set)(this_cause, this, value))

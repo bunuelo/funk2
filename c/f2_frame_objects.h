@@ -54,11 +54,11 @@
 #define def_f2__frame__object__new__slot_body(name, slot_body) \
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause) { \
     f2ptr this = f2__frame__new(cause); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, "physical_object")); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name)); \
     slot_body; \
     return this; \
   } \
-  def_pcfunk0(frame_object__funk__pcfunkvar(physical_object, new), return f2__frame_object__funk__funkvar(name, new)(this_cause))
+  def_pcfunk0(frame_object__funk__pcfunkvar(name, new), return f2__frame_object__funk__funkvar(name, new)(this_cause))
 
 #define def_f2__frame__object__new__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_f2__frame__object__new__slot_body(name, \
@@ -69,7 +69,7 @@
 
 #define def_frame_object__funk__slot(name, slot_name) \
   f2ptr f2__frame_object__funk__funkvar(name, slot_name)(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, #slot_name), f2larva__new(cause, 325));} \
-  def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, slot_name), this, return f2__frame_object__funk__funkvar(name, slot_name)(this_cause, this)); \
+  def_pcfunk1(frame_object__funk__pcfunkvar(name, slot_name), this, return f2__frame_object__funk__funkvar(name, slot_name)(this_cause, this)); \
    \
   f2ptr f2__frame_object__funk__funkvar(name, slot_name##__set)(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, #slot_name), value, f2larva__new(cause, 325));} \
   def_pcfunk2(frame_object__funk__pcfunkvar(name, slot_name##__set), this, value, return f2__frame_object__funk__funkvar(name, slot_name##__set)(this_cause, this, value))
@@ -122,9 +122,9 @@
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk, 0, "frame_object funktion (defined in " __FILE__ ")"); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
 
 #define init_frame_object__sans_slots(name) \
-  init_frame_object__funk(physical_object, is_type); \
-  init_frame_object__funk(physical_object, type); \
-  init_frame_object__funk(physical_object, new)
+  init_frame_object__funk(name, is_type); \
+  init_frame_object__funk(name, type); \
+  init_frame_object__funk(name, new)
 
 #define init_frame_object__slot(name, slot_name) \
   init_frame_object__funk(name, slot_name); \

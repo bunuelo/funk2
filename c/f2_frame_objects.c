@@ -32,8 +32,8 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 //#define def_pcfunk__symbolvar_string(name)   "primfunk:" #name
 //#define def_pcfunk__symbolvar__define(name)  f2ptr def_pcfunk__symbolvar(name) = nil
 //#define def_pcfunk__symbolvar__init(name)    if(!def_pcfunk__symbolvar(name)) {def_pcfunk__symbolvar(name) = f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name));}
-//#define def_pcfunk__this_symbol__define(name) \
-//   f2ptr this_symbol = def_pcfunk__symbolvar(name); \
+//#define def_pcfunk__this_symbol__define(name) 
+//   f2ptr this_symbol = def_pcfunk__symbolvar(name); 
 //   this_symbol = this_symbol;
 
 #define raw__frame_object__is_type__funkvar(name) raw__##name##__is_type

@@ -106,7 +106,7 @@ def_frame_object__funk__slot(physical_object, shape);
   }
 
 #define f2frame_object__primobject_type__new__slot(name, slot_name) \
-  {char* slot_name = #slot_name; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), frame_object__slot__funk__var(physical_object, slot_name), frame_object__slot__funk__var(physical_object, slot_name#__set), nil);}
+  {char* slot_name = #slot_name; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), frame_object__slot__funk__var(name, slot_name), frame_object__slot__funk__var(name, slot_name##__set), nil);}
 
 #define def_f2frame_object__primobject_type__new__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_f2frame_object__primobject_type__new__slot_body(name, \

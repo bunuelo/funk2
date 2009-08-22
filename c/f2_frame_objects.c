@@ -36,33 +36,39 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 //   f2ptr this_symbol = def_pcfunk__symbolvar(name); 
 //   this_symbol = this_symbol;
 
-#define raw__frame_object__is_type__funkvar(name) raw__##name##__is_type
-#define  f2__frame_object__is_type__funkvar(name)  f2__##name##__is_type
-#define  f2__frame_object__type__funkvar(name)     f2__##name##__type
-#define  f2__frame_object__new__funkvar(name)      f2__##name##__new
+#define raw__frame_object__is_type__funkvar(name)        raw__##name##__is_type
+#define  f2__frame_object__is_type__funkvar(name)         f2__##name##__is_type
+#define  f2__frame_object__type__funkvar(name)            f2__##name##__type
+#define  f2__frame_object__new__funkvar(name)             f2__##name##__new
+#define frame_object__slot__symbol__var(name, slot_name) __frame_object##name##__##slot_name##__symbol
+#define frame_object__slot__funk__var(name, slot_name)   __frame_object##name##__##slot_name##__symbol
 
-f2ptr __frame_object__physical_object__is_type__symbol;
-f2ptr __frame_object__physical_object__is_type__funk;
-f2ptr __frame_object__physical_object__type__symbol;
-f2ptr __frame_object__physical_object__type__funk;
-f2ptr __frame_object__physical_object__new__symbol;
-f2ptr __frame_object__physical_object__new__funk;
-f2ptr __frame_object__physical_object__position__symbol;
-f2ptr __frame_object__physical_object__position__funk;
-f2ptr __frame_object__physical_object__position__set__symbol;
-f2ptr __frame_object__physical_object__position__set__funk;
-f2ptr __frame_object__physical_object__velocity__symbol;
-f2ptr __frame_object__physical_object__velocity__funk;
-f2ptr __frame_object__physical_object__velocity__set__symbol;
-f2ptr __frame_object__physical_object__velocity__set__funk;
-f2ptr __frame_object__physical_object__mass__symbol;
-f2ptr __frame_object__physical_object__mass__funk;
-f2ptr __frame_object__physical_object__mass__set__symbol;
-f2ptr __frame_object__physical_object__mass__set__funk;
-f2ptr __frame_object__physical_object__shape__symbol;
-f2ptr __frame_object__physical_object__shape__funk;
-f2ptr __frame_object__physical_object__shape__set__symbol;
-f2ptr __frame_object__physical_object__shape__set__funk;
+f2ptr frame_object__slot__symbol__var(physical_object, is_type);
+f2ptr frame_object__slot__funk__var(physical_object, is_type);
+f2ptr frame_object__slot__symbol__var(physical_object, type);
+f2ptr frame_object__slot__funk__var(physical_object, type);
+f2ptr frame_object__slot__symbol__var(physical_object, new);
+f2ptr frame_object__slot__funk__var(physical_object, new);
+
+f2ptr frame_object__slot__symbol__var(physical_object, position);
+f2ptr frame_object__slot__funk__var(physical_object, position);
+f2ptr frame_object__slot__symbol__var(physical_object, position__set);
+f2ptr frame_object__slot__funk__var(physical_object, position__set);
+
+f2ptr frame_object__slot__symbol__var(physical_object, velocity);
+f2ptr frame_object__slot__funk__var(physical_object, velocity);
+f2ptr frame_object__slot__symbol__var(physical_object, velocity__set);
+f2ptr frame_object__slot__funk__var(physical_object, velocity__set);
+
+f2ptr frame_object__slot__symbol__var(physical_object, mass);
+f2ptr frame_object__slot__funk__var(physical_object, mass);
+f2ptr frame_object__slot__symbol__var(physical_object, mass__set);
+f2ptr frame_object__slot__funk__var(physical_object, mass__set);
+
+f2ptr frame_object__slot__symbol__var(physical_object, shape);
+f2ptr frame_object__slot__funk__var(physical_object, shape);
+f2ptr frame_object__slot__symbol__var(physical_object, shape__set);
+f2ptr frame_object__slot__funk__var(physical_object, shape__set);
 
 boolean_t raw__physical_object__is_type(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));}
 

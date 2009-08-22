@@ -41,7 +41,7 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 #define  f2__frame_object__type__funkvar(name)     f2__##name##__type
 #define  f2__frame_object__new__funkvar(name)      f2__##name##__new
 
-boolean_t raw__physical_object__is_type(f2ptr cause, f2ptr thing) {return raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, new__symbol(cause, "type")));}
+boolean_t raw__physical_object__is_type(f2ptr cause, f2ptr thing) {return raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, new__symbol(cause, "type"), nil));}
 f2ptr      f2__physical_object__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__physical_object__is_type(cause, thing));}
 f2ptr      f2__physical_object__type(   f2ptr cause, f2ptr this)  {return new__symbol(cause, "physical_object");}
 f2ptr      f2__physical_object__new(f2ptr cause) {

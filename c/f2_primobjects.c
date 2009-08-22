@@ -74,7 +74,7 @@ f2ptr f2__primobject__add_dynamic_slot_type_value(f2ptr cause, f2ptr this, f2ptr
   if (! dynamic_slots) {
     dynamic_slots = f2__primobject__create_new_dynamic_slots_frame(cause, this);
   }
-  f2__frame__add_type_var_value(cause, dynamic_slots, slot_type, slot_name, value);
+  return f2__frame__add_type_var_value(cause, dynamic_slots, slot_type, slot_name, value);
 }
 def_pcfunk4(primobject__add_dynamic_slot_type_value, this, slot_type, slot_name, value, return f2__primobject__add_dynamic_slot_type_value(this_cause, this, slot_type, slot_name, value));
 

@@ -136,6 +136,13 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   init_frame_object__funk(name, slot_name); \
   init_frame_object__funk(name, slot_name##__set)
 
+#define init_frame_object__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  init_frame_object__sans_slots(name); \
+  init_frame_object__slot(name, slot_1); \
+  init_frame_object__slot(name, slot_2); \
+  init_frame_object__slot(name, slot_3); \
+  init_frame_object__slot(name, slot_4);
+
 def_frame_object__global__4_slot(physical_object, position, velocity, mass, shape);
 
 // **
@@ -152,11 +159,7 @@ void f2__frame_objects__initialize() {
   
   f2ptr cause = initial_cause();
   
-  init_frame_object__sans_slots(physical_object);
-  init_frame_object__slot(physical_object, position);
-  init_frame_object__slot(physical_object, velocity);
-  init_frame_object__slot(physical_object, mass);
-  init_frame_object__slot(physical_object, shape);
+  init_frame_object__4_slot(physical_object, position, velocity, mass, shape);
   
 }
 

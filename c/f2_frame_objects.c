@@ -43,33 +43,22 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 #define frame_object__slot__symbol__var(name, slot_name) __frame_object__##name##__##slot_name##__symbol
 #define frame_object__slot__funk__var(name, slot_name)   __frame_object__##name##__##slot_name##__funk
 
+#define def_frame_object__symbol_funk__global_vars(name, funk_name) \
+  f2ptr frame_object__slot__symbol__var(name, funk_name); \
+  f2ptr frame_object__slot__funk__var(name, funk_name);
+
+#define def_frame_object__slot__global_vars(name, slot_name) \
+  def_frame_object__symbol_funk__global_vars(name, slot_name) \
+  def_frame_object__symbol_funk__global_vars(name, slot_name##__set)
+
 #define def_frame_object__global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
-  f2ptr frame_object__slot__symbol__var(name, is_type); \
-  f2ptr frame_object__slot__funk__var(name, is_type); \
-  f2ptr frame_object__slot__symbol__var(name, type); \
-  f2ptr frame_object__slot__funk__var(name, type); \
-  f2ptr frame_object__slot__symbol__var(name, new); \
-  f2ptr frame_object__slot__funk__var(name, new); \
-   \
-  f2ptr frame_object__slot__symbol__var(name, slot_1); \
-  f2ptr frame_object__slot__funk__var(name, slot_1); \
-  f2ptr frame_object__slot__symbol__var(name, slot_1##__set); \
-  f2ptr frame_object__slot__funk__var(name, slot_1##__set); \
-   \
-  f2ptr frame_object__slot__symbol__var(name, slot_2); \
-  f2ptr frame_object__slot__funk__var(name, slot_2); \
-  f2ptr frame_object__slot__symbol__var(name, slot_2##__set); \
-  f2ptr frame_object__slot__funk__var(name, slot_2##__set); \
-   \
-  f2ptr frame_object__slot__symbol__var(name, slot_3); \
-  f2ptr frame_object__slot__funk__var(name, slot_3); \
-  f2ptr frame_object__slot__symbol__var(name, slot_3##__set); \
-  f2ptr frame_object__slot__funk__var(name, slot_3##__set); \
-   \
-  f2ptr frame_object__slot__symbol__var(name, slot_4); \
-  f2ptr frame_object__slot__funk__var(name, slot_4); \
-  f2ptr frame_object__slot__symbol__var(name, slot_4##__set); \
-  f2ptr frame_object__slot__funk__var(name, slot_4##__set);
+  def_frame_object__symbol_funk__global_vars(name, is_type) \
+  def_frame_object__symbol_funk__global_vars(name, type) \
+  def_frame_object__symbol_funk__global_vars(name, new) \
+  def_frame_object__slot__global_vars(name, slot_1) \
+  def_frame_object__slot__global_vars(name, slot_2) \
+  def_frame_object__slot__global_vars(name, slot_3) \
+  def_frame_object__slot__global_vars(name, slot_4)
 
 def_frame_object__global_vars__4_slot(physical_object, position, velocity, mass, shape)
 

@@ -62,17 +62,21 @@ def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, is_type), thing, retu
 f2ptr f2__frame_object__funk__funkvar(physical_object, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, "physical_object");}
 def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, type), this, return f2__frame_object__funk__funkvar(physical_object, type)(this_cause, this));
 
-#define def_f2__frame__object__new__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+#define def_f2__frame__object__new__slot_body(name, slot_body) \
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause) { \
     f2ptr this = f2__frame__new(cause); \
     f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, "physical_object")); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), nil); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), nil); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), nil); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), nil); \
+    slot_body; \
     return this; \
   } \
   def_pcfunk0(frame_object__funk__pcfunkvar(physical_object, new), return f2__frame_object__funk__funkvar(name, new)(this_cause))
+
+#define def_f2__frame__object__new__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_f2__frame__object__new__slot_body(name, \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), nil); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), nil); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), nil); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), nil))
 
 def_f2__frame__object__new__4_slot(physical_object, position, mass, velocity, shape);
 

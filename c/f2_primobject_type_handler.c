@@ -111,7 +111,10 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "physical_object"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2physical_object__primobject_type__new(cause));}
-  {char* type_name = "omega";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2omega__primobject_type__new(cause));}
+  {char* type_name = "delta";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2delta__primobject_type__new(cause));}
+  {char* type_name = "gamma";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2gamma__primobject_type__new(cause));}
+  {char* type_name = "beta";            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2beta__primobject_type__new(cause));}
+  {char* type_name = "alpha";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2alpha__primobject_type__new(cause));}
 }
 
 // **

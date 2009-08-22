@@ -226,7 +226,10 @@
 
 
 f2ptr f2physical_object__primobject_type__new(f2ptr cause);
-f2ptr f2omega__primobject_type__new(f2ptr cause);
+f2ptr f2delta__primobject_type__new(f2ptr cause);
+f2ptr f2gamma__primobject_type__new(f2ptr cause);
+f2ptr f2beta__primobject_type__new(f2ptr cause);
+f2ptr f2alpha__primobject_type__new(f2ptr cause);
 
 // **
 

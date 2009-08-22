@@ -80,6 +80,7 @@ f2ptr f2__physical_object__new(f2ptr cause) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "shape"),    nil);
   return this;
 }
+def_pcfunk0(physical_object__new, return f2__physical_object__new(this_cause));
 
 f2ptr f2__physical_object__position(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "position"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__position, this, return f2__physical_object__position(this_cause, this));

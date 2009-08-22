@@ -162,6 +162,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   funk2_primobject_type_handler__add_builtin_ptype_primobjects(&(this->primobject_type_handler), cause);
   funk2_primobject_type_handler__add_builtin_primobjects(&(this->primobject_type_handler), cause);
+  funk2_primobject_type_handler__add_builtin_frame_objects(&(this->primobject_type_handler), cause);
   
   // try to load the default system-wide bootstrap image
   if (funk2_memory__load_image_from_file(&(__funk2.memory), install__bootstrap_img__filename)) {

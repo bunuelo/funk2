@@ -41,7 +41,7 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 #define  f2__frame_object__type__funkvar(name)            f2__##name##__type
 #define  f2__frame_object__new__funkvar(name)             f2__##name##__new
 #define frame_object__slot__symbol__var(name, slot_name) __frame_object##name##__##slot_name##__symbol
-#define frame_object__slot__funk__var(name, slot_name)   __frame_object##name##__##slot_name##__symbol
+#define frame_object__slot__funk__var(name, slot_name)   __frame_object##name##__##slot_name##__funk
 
 f2ptr frame_object__slot__symbol__var(physical_object, is_type);
 f2ptr frame_object__slot__funk__var(physical_object, is_type);

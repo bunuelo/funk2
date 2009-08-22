@@ -98,7 +98,7 @@ f2ptr f2__physical_object__velocity(f2ptr cause, f2ptr this) {return f2__frame__
 def_pcfunk1(physical_object__velocity, this, return f2__physical_object__velocity(this_cause, this));
 
 f2ptr f2__physical_object__velocity__set(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "velocity"), value, f2larva__new(cause, 325));}
-def_pcfunk2(physical_object__velocity__set, this, value, return f2__physical_object__velocity(this_cause, this, value));
+def_pcfunk2(physical_object__velocity__set, this, value, return f2__physical_object__velocity__set(this_cause, this, value));
 
 f2ptr f2__physical_object__shape(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__shape, this, return f2__physical_object__shape(this_cause, this));

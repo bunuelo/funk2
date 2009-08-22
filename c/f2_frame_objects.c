@@ -62,16 +62,19 @@ def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, is_type), thing, retu
 f2ptr f2__frame_object__funk__funkvar(physical_object, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, "physical_object");}
 def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, type), this, return f2__frame_object__funk__funkvar(physical_object, type)(this_cause, this));
 
-f2ptr f2__frame_object__funk__funkvar(physical_object, new)(f2ptr cause) {
-  f2ptr this = f2__frame__new(cause);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),     new__symbol(cause, "physical_object"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "position"), nil);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "mass"),     nil);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "velocity"), nil);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "shape"),    nil);
-  return this;
-}
-def_pcfunk0(frame_object__funk__pcfunkvar(physical_object, new), return f2__frame_object__funk__funkvar(physical_object, new)(this_cause));
+#define def_f2__frame__object__new__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause) { \
+    f2ptr this = f2__frame__new(cause); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, "physical_object")); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), nil); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), nil); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), nil); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), nil); \
+    return this; \
+  } \
+  def_pcfunk0(frame_object__funk__pcfunkvar(physical_object, new), return f2__frame_object__funk__funkvar(name, new)(this_cause))
+
+def_f2__frame__object__new__4_slot(physical_object, position, mass, velocity, shape);
 
 f2ptr f2__frame_object__funk__funkvar(physical_object, position)(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "position"), f2larva__new(cause, 325));}
 def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, position), this, return f2__frame_object__funk__funkvar(physical_object, position)(this_cause, this));
@@ -135,17 +138,14 @@ void f2__frame_objects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(physical_object__position, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, position) = never_gc(cfunk);}
   {char* symbol_str = "position-set"; frame_object__slot__symbol__var(physical_object, position__set) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(physical_object__position__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, position__set) = never_gc(cfunk);}
-
   {char* symbol_str = "velocity"; frame_object__slot__symbol__var(physical_object, velocity) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(physical_object__velocity, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, velocity) = never_gc(cfunk);}
   {char* symbol_str = "velocity-set"; frame_object__slot__symbol__var(physical_object, velocity__set) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(physical_object__velocity__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, velocity__set) = never_gc(cfunk);}
-
   {char* symbol_str = "mass"; frame_object__slot__symbol__var(physical_object, mass) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(physical_object__mass, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, mass) = never_gc(cfunk);}
   {char* symbol_str = "mass-set"; frame_object__slot__symbol__var(physical_object, mass__set) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(physical_object__mass__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, mass__set) = never_gc(cfunk);}
-
   {char* symbol_str = "shape"; frame_object__slot__symbol__var(physical_object, shape) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(physical_object__shape, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); frame_object__slot__funk__var(physical_object, shape) = never_gc(cfunk);}
   {char* symbol_str = "shape-set"; frame_object__slot__symbol__var(physical_object, shape__set) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

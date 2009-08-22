@@ -24,6 +24,11 @@
 
 
 
+// **
+
+void f2__frame_objects__reinitialize_globalvars();
+void f2__frame_objects__initialize();
+
 #endif // F2__FRAME_OBJECTS__H
 
 

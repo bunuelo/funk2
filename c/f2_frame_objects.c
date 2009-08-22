@@ -21,3 +21,16 @@
 
 #include "funk2.h"
 
+// **
+
+void f2__frame_objects__reinitialize_globalvars() {
+}
+
+void f2__frame_objects__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "frame_objects", "", &f2__frame_objects__reinitialize_globalvars);
+  
+  f2__frame_objects__reinitialize_globalvars();
+  
+  
+}
+

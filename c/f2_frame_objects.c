@@ -43,7 +43,7 @@ void f2__frame_objects__initialize() {
   
   init_frame_object__4_slot(physical_object, position, velocity, mass, shape);
   init_frame_object__4_slot(delta, a, b, c, d);
-  init_frame_object__3_slot(omega, a, b, c);
+  init_frame_object__3_slot(gamma, a, b, c);
   init_frame_object__2_slot(beta, a, b);
   init_frame_object__1_slot(alpha, a);
   

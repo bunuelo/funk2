@@ -22,7 +22,7 @@
 #ifndef F2__FRAME_OBJECTS__H
 #define F2__FRAME_OBJECTS__H
 
-
+f2ptr f2physical_object__primobject_type__new(f2ptr cause);
 
 // **
 

@@ -22,10 +22,6 @@
 #include "funk2.h"
 
 def_frame_object__global__4_slot(physical_object, position, velocity, mass, shape);
-def_frame_object__global__4_slot(delta, a, b, c, d);
-def_frame_object__global__3_slot(gamma, a, b, c);
-def_frame_object__global__2_slot(beta, a, b);
-def_frame_object__global__1_slot(alpha, a);
 
 // **
 
@@ -42,10 +38,6 @@ void f2__frame_objects__initialize() {
   f2ptr cause = initial_cause();
   
   init_frame_object__4_slot(physical_object, position, velocity, mass, shape);
-  init_frame_object__4_slot(delta, a, b, c, d);
-  init_frame_object__3_slot(gamma, a, b, c);
-  init_frame_object__2_slot(beta, a, b);
-  init_frame_object__1_slot(alpha, a);
   
 }
 

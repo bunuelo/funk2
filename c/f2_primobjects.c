@@ -157,6 +157,64 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 
 
 
+// compound_object
+
+defprimobject__static_slot(compound_object__car, 0);
+defprimobject__static_slot(compound_object__cdr, 1);
+
+f2ptr __compound_object__symbol = -1;
+
+f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth) {
+  release__assert(__compound_object__symbol != -1, nil, "f2compound_object__new error: used before primobjects initialized.");
+  f2ptr this = f2__primobject__new__trace_depth(cause, __compound_object__symbol, 2, nil, trace_depth);
+  f2compound_object__car__set__trace_depth(this, cause, car, trace_depth);
+  f2compound_object__cdr__set__trace_depth(this, cause, cdr, trace_depth);
+  return this;
+}
+
+f2ptr f2compound_object__new(f2ptr cause, f2ptr car, f2ptr cdr) {
+  return f2compound_object__new__trace_depth(cause, car, cdr, 1);
+}
+
+boolean_t raw__compound_object__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PRIMOBJECT__TYPE_CHECK
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+#endif // F2__PRIMOBJECT__TYPE_CHECK
+  return (raw__primobject__is_type(cause, x) && f2primobject__is_compound_object(x, cause));
+}
+f2ptr f2__compound_object__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__compound_object__is_type(cause, x));}
+def_pcfunk1(compound_object__is_type, x, return f2__compound_object__is_type(this_cause, x));
+
+f2ptr f2__compound_object__type(f2ptr cause, f2ptr x) {return __compound_object__symbol;}
+def_pcfunk1(compound_object__type, x, return f2__compound_object__type(this_cause, x));
+
+f2ptr f2__compound_object__new(f2ptr cause, f2ptr x, f2ptr y) {return f2compound_object__new(cause, x, y);}
+def_pcfunk2(compound_object__new, x, y, return f2__compound_object__new(this_cause, x, y));
+
+f2ptr f2__compound_object__car(f2ptr cause, f2ptr x) {return f2compound_object__car(x, cause);}
+def_pcfunk1(compound_object__car, x, return f2__compound_object__car(this_cause, x));
+
+f2ptr f2__compound_object__car__set(f2ptr cause, f2ptr x, f2ptr y) {f2compound_object__car__set(x, cause, y); return nil;}
+def_pcfunk2(compound_object__car__set, x, y, return f2__compound_object__car__set(this_cause, x, y));
+
+f2ptr f2__compound_object__cdr(f2ptr cause, f2ptr x) {return f2compound_object__cdr(x, cause);}
+def_pcfunk1(compound_object__cdr, x, return f2__compound_object__cdr(this_cause, x));
+
+f2ptr f2__compound_object__cdr__set(f2ptr cause, f2ptr x, f2ptr y) {f2compound_object__cdr__set(x, cause, y); return nil;}
+def_pcfunk2(compound_object__cdr__set, x, y, return f2__compound_object__cdr__set(this_cause, x, y));
+
+f2ptr f2compound_object__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2compound_object__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk, nil, nil);}
+  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk);}
+  {char* slot_name = "car";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.car__funk, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.car__set__funk, nil);}
+  {char* slot_name = "cdr";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.cdr__funk, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.cdr__set__funk, nil);}
+  return this;
+}
+
+
+
 // cons
 
 defprimobject__static_slot(cons__car, 0);
@@ -2385,6 +2443,23 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(primobject__dynamic_slot_type_value, this, slot_type, slot_name, no_such_slot_value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__funk = never_gc(cfunk);}
   {char* symbol_str = "dynamic_slot_type_value-set"; __funk2.globalenv.object_type.primobject.dynamic_slots__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(primobject__dynamic_slot_type_value__set, this, slot_type, slot_name, value, no_such_slot_value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__funk = never_gc(cfunk);}
+  
+  // compound_object 
+  
+  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk = never_gc(cfunk);}
+  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk = never_gc(cfunk);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__new, car, cdr, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "car"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.car__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__car, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.car__funk = never_gc(cfunk);}
+  {char* symbol_str = "car-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.car__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__car__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.car__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.cdr__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__cdr, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.cdr__funk = never_gc(cfunk);}
+  {char* symbol_str = "cdr-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.cdr__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__cdr__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.cdr__set__funk = never_gc(cfunk);}
   
   // place
   

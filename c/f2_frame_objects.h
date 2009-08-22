@@ -38,6 +38,8 @@
   def_frame_object__symbol_funk__global_vars(name, type); \
   def_frame_object__symbol_funk__global_vars(name, new)
 
+#define def_frame_object__slot_global_vars__0_slot(name)
+
 #define def_frame_object__slot_global_vars__1_slot(name, slot_1) \
   def_frame_object__slot__global_vars(name, slot_1)
 
@@ -71,6 +73,9 @@
     return this; \
   } \
   def_pcfunk0(frame_object__funk__pcfunkvar(name, new), return f2__frame_object__funk__funkvar(name, new)(this_cause))
+
+#define def_f2__frame__object__new__0_slot(name) \
+  def_f2__frame__object__new__slot_body(name, )
 
 #define def_f2__frame__object__new__1_slot(name, slot_1) \
   def_f2__frame__object__new__slot_body(name, \
@@ -114,6 +119,9 @@
 #define f2frame_object__primobject_type__new__slot(name, slot_name) \
   {char* slot_name = #slot_name; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), frame_object__slot__funk__var(name, slot_name), frame_object__slot__funk__var(name, slot_name##__set), nil);}
 
+#define def_f2frame_object__primobject_type__new__0_slot(name) \
+  def_f2frame_object__primobject_type__new__slot_body(name, )
+
 #define def_f2frame_object__primobject_type__new__1_slot(name, slot_1) \
   def_f2frame_object__primobject_type__new__slot_body(name, \
 						      f2frame_object__primobject_type__new__slot(name, slot_1))
@@ -146,6 +154,14 @@
    \
   f2ptr f2__frame_object__funk__funkvar(name, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, #name);} \
   def_pcfunk1(frame_object__funk__pcfunkvar(name, type), this, return f2__frame_object__funk__funkvar(name, type)(this_cause, this))
+
+#define def_frame_object__global__0_slot(name) \
+  def_frame_object__global__sans_slots(name); \
+  def_frame_object__slot_global_vars__0_slot(name); \
+  def_f2__frame__object__new__0_slot(name); \
+   \
+   \
+  def_f2frame_object__primobject_type__new__0_slot(name)
 
 #define def_frame_object__global__1_slot(name, slot_1) \
   def_frame_object__global__sans_slots(name); \
@@ -202,6 +218,9 @@
   init_frame_object__funk(name, slot_name); \
   init_frame_object__funk(name, slot_name##__set)
 
+#define init_frame_object__0_slot(name) \
+  init_frame_object__sans_slots(name);
+
 #define init_frame_object__1_slot(name, slot_1) \
   init_frame_object__sans_slots(name); \
   init_frame_object__slot(name, slot_1);
@@ -226,10 +245,6 @@
 
 
 f2ptr f2physical_object__primobject_type__new(f2ptr cause);
-f2ptr f2delta__primobject_type__new(f2ptr cause);
-f2ptr f2gamma__primobject_type__new(f2ptr cause);
-f2ptr f2beta__primobject_type__new(f2ptr cause);
-f2ptr f2alpha__primobject_type__new(f2ptr cause);
 
 // **
 

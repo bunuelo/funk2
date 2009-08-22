@@ -123,16 +123,25 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   def_frame_object__global__sans_slots(name); \
   def_frame_object__slots__global__4_slot(name, slot_1, slot_2, slot_3, slot_4)
 
+#define init_frame_object__funk(name, funk_name) \
+  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk, 0, "frame_object funktion (defined in " __FILE__ ")"); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
+
+#define init_frame_object__sans_slots(name) \
+  init_frame_object__funk(physical_object, is_type); \
+  init_frame_object__funk(physical_object, type); \
+  init_frame_object__funk(physical_object, new)
+
+#define init_frame_object__slot(name, slot_name) \
+  init_frame_object__funk(name, slot_name); \
+  init_frame_object__funk(name, slot_name##__set)
+
 def_frame_object__global__4_slot(physical_object, position, velocity, mass, shape);
 
 // **
 
 void f2__frame_objects__reinitialize_globalvars() {
 }
-
-#define init_frame_object__funk(name, funk_name) \
-  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk, 0, "frame_object funktion (defined in " __FILE__ ")"); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
 
 void f2__frame_objects__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "frame_objects", "", &f2__frame_objects__reinitialize_globalvars);
@@ -143,17 +152,11 @@ void f2__frame_objects__initialize() {
   
   f2ptr cause = initial_cause();
   
-  init_frame_object__funk(physical_object, is_type);
-  init_frame_object__funk(physical_object, type);
-  init_frame_object__funk(physical_object, new);
-  init_frame_object__funk(physical_object, position);
-  init_frame_object__funk(physical_object, position__set);
-  init_frame_object__funk(physical_object, velocity);
-  init_frame_object__funk(physical_object, velocity__set);
-  init_frame_object__funk(physical_object, mass);
-  init_frame_object__funk(physical_object, mass__set);
-  init_frame_object__funk(physical_object, shape);
-  init_frame_object__funk(physical_object, shape__set);
+  init_frame_object__sans_slots(physical_object);
+  init_frame_object__slot(physical_object, position);
+  init_frame_object__slot(physical_object, velocity);
+  init_frame_object__slot(physical_object, mass);
+  init_frame_object__slot(physical_object, shape);
   
 }
 

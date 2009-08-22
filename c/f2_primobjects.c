@@ -188,8 +188,10 @@ def_pcfunk1(compound_object__is_type, x, return f2__compound_object__is_type(thi
 f2ptr f2__compound_object__type(f2ptr cause, f2ptr x) {return __compound_object__symbol;}
 def_pcfunk1(compound_object__type, x, return f2__compound_object__type(this_cause, x));
 
-f2ptr f2__compound_object__new(f2ptr cause, f2ptr x, f2ptr y) {return f2compound_object__new(cause, x, y);}
-def_pcfunk2(compound_object__new, x, y, return f2__compound_object__new(this_cause, x, y));
+f2ptr f2__compound_object__new(f2ptr cause, f2ptr compound_object_type) {
+  return f2compound_object__new(cause, compound_object_type, f2__frame__new(cause));
+}
+def_pcfunk1(compound_object__new, compound_object_type, return f2__compound_object__new(this_cause, compound_object_type));
 
 f2ptr f2__compound_object__compound_object_type(f2ptr cause, f2ptr x) {return f2compound_object__compound_object_type(x, cause);}
 def_pcfunk1(compound_object__compound_object_type, x, return f2__compound_object__compound_object_type(this_cause, x));
@@ -204,7 +206,7 @@ f2ptr f2__compound_object__part_frame__set(f2ptr cause, f2ptr x, f2ptr y) {f2com
 def_pcfunk2(compound_object__part_frame__set, x, y, return f2__compound_object__part_frame__set(this_cause, x, y));
 
 f2ptr f2compound_object__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2compound_object__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
   {char* slot_name = "is_type";              f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk);}
   {char* slot_name = "type";                 f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk, nil, nil);}
   {char* slot_name = "new";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk);}
@@ -2454,7 +2456,7 @@ void f2__primobjects__initialize() {
   {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__new, compound_object_type, cdr, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__new, compound_object_type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk = never_gc(cfunk);}
   {char* symbol_str = "compound_object_type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__compound_object_type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk = never_gc(cfunk);}
   {char* symbol_str = "compound_object_type-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

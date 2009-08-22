@@ -85,14 +85,26 @@ def_pcfunk0(physical_object__new, return f2__physical_object__new(this_cause));
 f2ptr f2__physical_object__position(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "position"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__position, this, return f2__physical_object__position(this_cause, this));
 
+f2ptr f2__physical_object__position__set(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "position"), value, f2larva__new(cause, 325));}
+def_pcfunk2(physical_object__position__set, this, value, return f2__physical_object__position__set(this_cause, this, value));
+
 f2ptr f2__physical_object__mass(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "mass"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__mass, this, return f2__physical_object__mass(this_cause, this));
+
+f2ptr f2__physical_object__mass__set(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "mass"), value, f2larva__new(cause, 325));}
+def_pcfunk2(physical_object__mass__set, this, value, return f2__physical_object__mass__set(this_cause, this, value));
 
 f2ptr f2__physical_object__velocity(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "velocity"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__velocity, this, return f2__physical_object__velocity(this_cause, this));
 
+f2ptr f2__physical_object__velocity__set(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "velocity"), value, f2larva__new(cause, 325));}
+def_pcfunk2(physical_object__velocity__set, this, value, return f2__physical_object__velocity(this_cause, this, value));
+
 f2ptr f2__physical_object__shape(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__shape, this, return f2__physical_object__shape(this_cause, this));
+
+f2ptr f2__physical_object__shape__set(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "shape"), value, f2larva__new(cause, 325));}
+def_pcfunk2(physical_object__shape__set, this, value, return f2__physical_object__shape__set(this_cause, this, value));
 
 f2ptr f2physical_object__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("frame"), (u8*)"frame"), nil));

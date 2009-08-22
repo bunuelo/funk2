@@ -108,7 +108,7 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   f2ptr f2__frame_object__funk__funkvar(name, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, #name);} \
   def_pcfunk1(frame_object__funk__pcfunkvar(name, type), this, return f2__frame_object__funk__funkvar(name, type)(this_cause, this))
 
-#define def_frame_object__global__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+#define def_frame_object__slots__global__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_frame_object__slot_global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4); \
   def_f2__frame__object__new__4_slot(name, slot_1, slot_2, slot_3, slot_4); \
    \
@@ -121,7 +121,7 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 
 #define def_frame_object__global__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_frame_object__global__sans_slots(name); \
-  def_frame_object__global__4_slot(name, slot_1, slot_2, slot_3, slot_4)
+  def_frame_object__slots__global__4_slot(name, slot_1, slot_2, slot_3, slot_4)
 
 def_frame_object__global__4_slot(physical_object, position, velocity, mass, shape);
 

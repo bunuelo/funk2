@@ -36,14 +36,16 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   def_frame_object__symbol_funk__global_vars(name, slot_name); \
   def_frame_object__symbol_funk__global_vars(name, slot_name##__set);
 
-#define def_frame_object__global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+#define def_frame_object__shared_global_vars(name) \
   def_frame_object__symbol_funk__global_vars(name, is_type); \
   def_frame_object__symbol_funk__global_vars(name, type); \
-  def_frame_object__symbol_funk__global_vars(name, new); \
+  def_frame_object__symbol_funk__global_vars(name, new)
+
+#define def_frame_object__slot_global_vars__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_frame_object__slot__global_vars(name, slot_1); \
   def_frame_object__slot__global_vars(name, slot_2); \
   def_frame_object__slot__global_vars(name, slot_3); \
-  def_frame_object__slot__global_vars(name, slot_4);
+  def_frame_object__slot__global_vars(name, slot_4)
 
 
 #define      frame_object__funk__pcfunkvar(name, funk_name)        name##__##funk_name
@@ -52,7 +54,8 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 
 #define f2frame_object__primobject_type__new__funkvar(name) f2##name##__primobject_type__new
 
-def_frame_object__global_vars__4_slot(physical_object, position, velocity, mass, shape);
+def_frame_object__shared_global_vars(physical_object);
+def_frame_object__slot_global_vars__4_slot(physical_object, position, velocity, mass, shape);
 
 boolean_t raw__frame_object__funk__funkvar(physical_object, is_type)(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));}
 

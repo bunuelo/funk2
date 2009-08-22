@@ -77,11 +77,11 @@ def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, position), this, retu
 f2ptr f2__frame_object__funk__funkvar(physical_object, position__set)(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "position"), value, f2larva__new(cause, 325));}
 def_pcfunk2(frame_object__funk__pcfunkvar(physical_object, position__set), this, value, return f2__frame_object__funk__funkvar(physical_object, position__set)(this_cause, this, value));
 
-f2ptr f2__physical_object__mass(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "mass"), f2larva__new(cause, 325));}
-def_pcfunk1(physical_object__mass, this, return f2__physical_object__mass(this_cause, this));
+f2ptr f2__frame_object__funk__funkvar(physical_object, mass)(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "mass"), f2larva__new(cause, 325));}
+def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, mass), this, return f2__frame_object__funk__funkvar(physical_object, mass)(this_cause, this));
 
-f2ptr f2__physical_object__mass__set(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "mass"), value, f2larva__new(cause, 325));}
-def_pcfunk2(physical_object__mass__set, this, value, return f2__physical_object__mass__set(this_cause, this, value));
+f2ptr f2__frame_object__funk__funkvar(physical_object, mass__set)(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, "mass"), value, f2larva__new(cause, 325));}
+def_pcfunk2(frame_object__funk__pcfunkvar(physical_object, mass__set), this, value, return f2__frame_object__funk__funkvar(physical_object, mass__set)(this_cause, this, value));
 
 f2ptr f2__physical_object__velocity(f2ptr cause, f2ptr this) {return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "velocity"), f2larva__new(cause, 325));}
 def_pcfunk1(physical_object__velocity, this, return f2__physical_object__velocity(this_cause, this));

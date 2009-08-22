@@ -74,6 +74,7 @@ def_pcfunk1(physical_object__type, this, return f2__physical_object__type(this_c
 
 f2ptr f2__physical_object__new(f2ptr cause) {
   f2ptr this = f2__frame__new(cause);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),     new__symbol(cause, "physical_object"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "position"), nil);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "mass"),     nil);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "velocity"), nil);

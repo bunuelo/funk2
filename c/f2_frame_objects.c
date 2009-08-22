@@ -65,9 +65,14 @@ f2ptr __frame_object__physical_object__shape__set__symbol;
 f2ptr __frame_object__physical_object__shape__set__funk;
 
 boolean_t raw__physical_object__is_type(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));}
-f2ptr      f2__physical_object__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__physical_object__is_type(cause, thing));}
-f2ptr      f2__physical_object__type(   f2ptr cause, f2ptr this)  {return new__symbol(cause, "physical_object");}
-f2ptr      f2__physical_object__new(f2ptr cause) {
+
+f2ptr f2__physical_object__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__physical_object__is_type(cause, thing));}
+def_pcfunk1(physical_object__is_type, thing, return f2__physical_object__is_type(this_cause, thing));
+
+f2ptr f2__physical_object__type(f2ptr cause, f2ptr this) {return new__symbol(cause, "physical_object");}
+def_pcfunk1(physical_object__type, this, return f2__physical_object__type(this_cause, this));
+
+f2ptr f2__physical_object__new(f2ptr cause) {
   f2ptr this = f2__frame__new(cause);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "position"), nil);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "mass"),     nil);

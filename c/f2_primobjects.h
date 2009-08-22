@@ -119,29 +119,29 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 // compound_object
 
 extern f2ptr __compound_object__symbol;
-f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth);
-f2ptr f2compound_object__new(f2ptr cause, f2ptr car, f2ptr cdr);
+f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_type, f2ptr part_frame, int trace_depth);
+f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr part_frame);
 f2ptr f2compound_object__primobject_type__new(f2ptr cause);
 
 #define f2primobject__is_compound_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol)
 
-defprimobject__static_slot__prototype(compound_object__car);
-#define f2compound_object__car__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__car, cause, trace_depth)
-#define f2compound_object__car(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__car, cause)
-#define f2compound_object__car__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__car, cause, value, trace_depth)
-#define f2compound_object__car__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__car, cause, value)
-#define f2compound_object__car__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__car, cause)
-#define f2compound_object__car__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__car, cause)
-#define f2compound_object__car__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__car, cause)
+defprimobject__static_slot__prototype(compound_object__compound_object_type);
+#define f2compound_object__compound_object_type__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__compound_object_type, cause, trace_depth)
+#define f2compound_object__compound_object_type(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__compound_object_type, cause)
+#define f2compound_object__compound_object_type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__compound_object_type, cause, value, trace_depth)
+#define f2compound_object__compound_object_type__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__compound_object_type, cause, value)
+#define f2compound_object__compound_object_type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__compound_object_type, cause)
+#define f2compound_object__compound_object_type__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__compound_object_type, cause)
+#define f2compound_object__compound_object_type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__compound_object_type, cause)
 
-defprimobject__static_slot__prototype(compound_object__cdr);
-#define f2compound_object__cdr__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__cdr, cause, trace_depth)
-#define f2compound_object__cdr(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__cdr, cause)
-#define f2compound_object__cdr__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__cdr, cause, value, trace_depth)
-#define f2compound_object__cdr__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__cdr, cause, value)
-#define f2compound_object__cdr__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__cdr, cause)
-#define f2compound_object__cdr__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__cdr, cause)
-#define f2compound_object__cdr__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__cdr, cause)
+defprimobject__static_slot__prototype(compound_object__part_frame);
+#define f2compound_object__part_frame__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__part_frame, cause, trace_depth)
+#define f2compound_object__part_frame(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__part_frame, cause)
+#define f2compound_object__part_frame__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__part_frame, cause, value, trace_depth)
+#define f2compound_object__part_frame__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__part_frame, cause, value)
+#define f2compound_object__part_frame__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__part_frame, cause)
+#define f2compound_object__part_frame__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__part_frame, cause)
+#define f2compound_object__part_frame__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__part_frame, cause)
 
 // place
 
@@ -1314,14 +1314,14 @@ struct funk2_object_type__compound_object__slot_s {
   f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
-  f2ptr car__symbol;
-  f2ptr car__funk;
-  f2ptr car__set__symbol;
-  f2ptr car__set__funk;
-  f2ptr cdr__symbol;
-  f2ptr cdr__funk;
-  f2ptr cdr__set__symbol;
-  f2ptr cdr__set__funk;
+  f2ptr compound_object_type__symbol;
+  f2ptr compound_object_type__funk;
+  f2ptr compound_object_type__set__symbol;
+  f2ptr compound_object_type__set__funk;
+  f2ptr part_frame__symbol;
+  f2ptr part_frame__funk;
+  f2ptr part_frame__set__symbol;
+  f2ptr part_frame__set__funk;
 };
 
 // place

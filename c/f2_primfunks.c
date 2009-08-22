@@ -239,6 +239,10 @@ def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_
 
 // symbol
 
+f2ptr new__symbol(f2ptr cause, char* str) {
+  return f2symbol__new(cause, strlen(str), (u8*)(str));
+}
+
 //boolean_t  pfunk2__f2symbol__equals(f2ptr this, f2ptr cause, f2ptr that) {
 //  int pool_index = __f2ptr__pool_index(this);
 //  ptype_access_num__incr(pool_index);

@@ -846,6 +846,7 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
 
 // symbol
 
+f2ptr new__symbol(f2ptr cause, char* str);
 
 // array
 

@@ -49,12 +49,20 @@ f2ptr __frame_object__physical_object__new__symbol;
 f2ptr __frame_object__physical_object__new__funk;
 f2ptr __frame_object__physical_object__position__symbol;
 f2ptr __frame_object__physical_object__position__funk;
+f2ptr __frame_object__physical_object__position__set__symbol;
+f2ptr __frame_object__physical_object__position__set__funk;
 f2ptr __frame_object__physical_object__velocity__symbol;
 f2ptr __frame_object__physical_object__velocity__funk;
+f2ptr __frame_object__physical_object__velocity__set__symbol;
+f2ptr __frame_object__physical_object__velocity__set__funk;
 f2ptr __frame_object__physical_object__mass__symbol;
 f2ptr __frame_object__physical_object__mass__funk;
+f2ptr __frame_object__physical_object__mass__set__symbol;
+f2ptr __frame_object__physical_object__mass__set__funk;
 f2ptr __frame_object__physical_object__shape__symbol;
 f2ptr __frame_object__physical_object__shape__funk;
+f2ptr __frame_object__physical_object__shape__set__symbol;
+f2ptr __frame_object__physical_object__shape__set__funk;
 
 boolean_t raw__physical_object__is_type(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));}
 f2ptr      f2__physical_object__is_type(f2ptr cause, f2ptr thing) {return f2bool__new(raw__physical_object__is_type(cause, thing));}

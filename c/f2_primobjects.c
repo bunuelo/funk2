@@ -2270,11 +2270,6 @@ f2ptr f2__event__data__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event
 def_pcfunk2(event__data__set, x, y, return f2__event__data__set(this_cause, x, y));
 
 
-// larva_event
-
-
-
-
 // bytecode_event
 
 defprimobject__static_slot(bytecode_event__bytecode, 0);

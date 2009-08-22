@@ -68,6 +68,7 @@ funk2_server_objs = \
   c/f2_garbage_collector_pool.o \
   c/f2_globalenv.o \
   c/f2_gmodule.o \
+  c/f2_frame_objects.o \
   c/f2_funk2_node.o \
   c/f2_funktional.o \
   c/f2_html.o \
@@ -155,6 +156,7 @@ funk2_headers = \
   c/f2_global.h \
   c/f2_globalenv.h \
   c/f2_gmodule.h \
+  c/f2_frame_objects.h \
   c/f2_funk2_node.h \
   c/f2_funktional.h \
   c/f2_html.h \

@@ -77,24 +77,6 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   f2ptr f2__frame_object__funk__funkvar(name, slot_name##__set)(f2ptr cause, f2ptr this, f2ptr value) {return f2__frame__var_value__set(cause, this, new__symbol(cause, #slot_name), value, f2larva__new(cause, 325));} \
   def_pcfunk2(frame_object__funk__pcfunkvar(name, slot_name##__set), this, value, return f2__frame_object__funk__funkvar(name, slot_name##__set)(this_cause, this, value))
 
-def_frame_object__shared_global_vars(physical_object);
-def_frame_object__slot_global_vars__4_slot(physical_object, position, velocity, mass, shape);
-
-boolean_t raw__frame_object__funk__funkvar(physical_object, is_type)(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));}
-
-f2ptr f2__frame_object__funk__funkvar(physical_object, is_type)(f2ptr cause, f2ptr thing) {return f2bool__new(raw__frame_object__funk__funkvar(physical_object, is_type)(cause, thing));}
-def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, is_type), thing, return f2__frame_object__funk__funkvar(physical_object, is_type)(this_cause, thing));
-
-f2ptr f2__frame_object__funk__funkvar(physical_object, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, "physical_object");}
-def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, type), this, return f2__frame_object__funk__funkvar(physical_object, type)(this_cause, this));
-
-def_f2__frame__object__new__4_slot(physical_object, position, mass, velocity, shape);
-
-def_frame_object__funk__slot(physical_object, position);
-def_frame_object__funk__slot(physical_object, mass);
-def_frame_object__funk__slot(physical_object, velocity);
-def_frame_object__funk__slot(physical_object, shape);
-
 #define def_f2frame_object__primobject_type__new__slot_body(name, slot_body) \
   f2ptr f2frame_object__primobject_type__new__funkvar(name)(f2ptr cause) { \
     f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("frame"), (u8*)"frame"), nil)); \
@@ -114,6 +96,24 @@ def_frame_object__funk__slot(physical_object, shape);
 						      f2frame_object__primobject_type__new__slot(name, slot_2); \
 						      f2frame_object__primobject_type__new__slot(name, slot_3); \
 						      f2frame_object__primobject_type__new__slot(name, slot_4))
+
+def_frame_object__shared_global_vars(physical_object);
+
+boolean_t raw__frame_object__funk__funkvar(physical_object, is_type)(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, "physical_object"), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));}
+
+f2ptr f2__frame_object__funk__funkvar(physical_object, is_type)(f2ptr cause, f2ptr thing) {return f2bool__new(raw__frame_object__funk__funkvar(physical_object, is_type)(cause, thing));}
+def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, is_type), thing, return f2__frame_object__funk__funkvar(physical_object, is_type)(this_cause, thing));
+
+f2ptr f2__frame_object__funk__funkvar(physical_object, type)(f2ptr cause, f2ptr this) {return new__symbol(cause, "physical_object");}
+def_pcfunk1(frame_object__funk__pcfunkvar(physical_object, type), this, return f2__frame_object__funk__funkvar(physical_object, type)(this_cause, this));
+
+def_frame_object__slot_global_vars__4_slot(physical_object, position, velocity, mass, shape);
+def_f2__frame__object__new__4_slot(physical_object, position, mass, velocity, shape);
+
+def_frame_object__funk__slot(physical_object, position);
+def_frame_object__funk__slot(physical_object, mass);
+def_frame_object__funk__slot(physical_object, velocity);
+def_frame_object__funk__slot(physical_object, shape);
 
 def_f2frame_object__primobject_type__new__4_slot(physical_object, position, mass, velocity, shape);
 

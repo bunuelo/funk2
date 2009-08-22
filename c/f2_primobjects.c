@@ -160,20 +160,22 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 // compound_object
 
 defprimobject__static_slot(compound_object__compound_object_type, 0);
-defprimobject__static_slot(compound_object__part_frame,           1);
+defprimobject__static_slot(compound_object__frame,                1);
+defprimobject__static_slot(compound_object__part_frame,           2);
 
 f2ptr __compound_object__symbol = -1;
 
-f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_type, f2ptr part_frame, int trace_depth) {
+f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame, int trace_depth) {
   release__assert(__compound_object__symbol != -1, nil, "f2compound_object__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new__trace_depth(cause, __compound_object__symbol, 2, nil, trace_depth);
+  f2ptr this = f2__primobject__new__trace_depth(cause, __compound_object__symbol, 3, nil, trace_depth);
   f2compound_object__compound_object_type__set__trace_depth(this, cause, compound_object_type, trace_depth);
-  f2compound_object__part_frame__set__trace_depth(this, cause, part_frame, trace_depth);
+  f2compound_object__frame__set__trace_depth(               this, cause, frame,                trace_depth);
+  f2compound_object__part_frame__set__trace_depth(          this, cause, part_frame,           trace_depth);
   return this;
 }
 
-f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr part_frame) {
-  return f2compound_object__new__trace_depth(cause, compound_object_type, part_frame, 1);
+f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame) {
+  return f2compound_object__new__trace_depth(cause, compound_object_type, frame, part_frame, 1);
 }
 
 boolean_t raw__compound_object__is_type(f2ptr cause, f2ptr x) {
@@ -189,7 +191,7 @@ f2ptr f2__compound_object__type(f2ptr cause, f2ptr x) {return __compound_object_
 def_pcfunk1(compound_object__type, x, return f2__compound_object__type(this_cause, x));
 
 f2ptr f2__compound_object__new(f2ptr cause, f2ptr compound_object_type) {
-  return f2compound_object__new(cause, compound_object_type, f2__frame__new(cause));
+  return f2compound_object__new(cause, compound_object_type, f2__frame__new(cause), f2__frame__new(cause));
 }
 def_pcfunk1(compound_object__new, compound_object_type, return f2__compound_object__new(this_cause, compound_object_type));
 
@@ -198,6 +200,12 @@ def_pcfunk1(compound_object__compound_object_type, x, return f2__compound_object
 
 f2ptr f2__compound_object__compound_object_type__set(f2ptr cause, f2ptr x, f2ptr y) {f2compound_object__compound_object_type__set(x, cause, y); return nil;}
 def_pcfunk2(compound_object__compound_object_type__set, x, y, return f2__compound_object__compound_object_type__set(this_cause, x, y));
+
+f2ptr f2__compound_object__frame(f2ptr cause, f2ptr x) {return f2compound_object__frame(x, cause);}
+def_pcfunk1(compound_object__frame, x, return f2__compound_object__frame(this_cause, x));
+
+f2ptr f2__compound_object__frame__set(f2ptr cause, f2ptr x, f2ptr y) {f2compound_object__frame__set(x, cause, y); return nil;}
+def_pcfunk2(compound_object__frame__set, x, y, return f2__compound_object__frame__set(this_cause, x, y));
 
 f2ptr f2__compound_object__part_frame(f2ptr cause, f2ptr x) {return f2compound_object__part_frame(x, cause);}
 def_pcfunk1(compound_object__part_frame, x, return f2__compound_object__part_frame(this_cause, x));
@@ -212,6 +220,8 @@ f2ptr f2compound_object__primobject_type__new(f2ptr cause) {
   {char* slot_name = "new";                  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk);}
   {char* slot_name = "compound_object_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									   __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__funk, nil);}
+  {char* slot_name = "frame";                f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
+									   __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__funk,                __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__funk,                nil);}
   {char* slot_name = "part_frame";           f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name),
 									   __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__funk,           __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__funk,           nil);}
   return this;
@@ -2332,6 +2342,11 @@ f2ptr f2__event__data__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event
 def_pcfunk2(event__data__set, x, y, return f2__event__data__set(this_cause, x, y));
 
 
+// larva_event
+
+
+
+
 // bytecode_event
 
 defprimobject__static_slot(bytecode_event__bytecode, 0);
@@ -2461,6 +2476,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__compound_object_type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk = never_gc(cfunk);}
   {char* symbol_str = "compound_object_type-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__compound_object_type__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "frame"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__funk = never_gc(cfunk);}
+  {char* symbol_str = "frame-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__frame__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__funk = never_gc(cfunk);}
   {char* symbol_str = "part_frame"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__part_frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__funk = never_gc(cfunk);}
   {char* symbol_str = "part_frame-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

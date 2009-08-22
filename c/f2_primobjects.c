@@ -2397,28 +2397,29 @@ void f2__primobjects__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
-  __primobject__symbol       = f2symbol__new(cause, strlen("primobject"),       (u8*)"primobject");
-  __place__symbol            = f2symbol__new(cause, strlen("place"),            (u8*)"place");
-  __cons__symbol             = f2symbol__new(cause, strlen("cons"),             (u8*)"cons");
-  __doublelink__symbol       = f2symbol__new(cause, strlen("doublelink"),       (u8*)"doublelink");
-  __imagination_link__symbol = f2symbol__new(cause, strlen("imagination_link"), (u8*)"imagination_link");
-  __cfunk__symbol            = f2symbol__new(cause, strlen("cfunk"),            (u8*)"cfunk");
-  __metrocfunk__symbol       = f2symbol__new(cause, strlen("metrocfunk"),       (u8*)"metrocfunk");
-  __funk__symbol             = f2symbol__new(cause, strlen("funk"),             (u8*)"funk");
-  __metro__symbol            = f2symbol__new(cause, strlen("metro"),            (u8*)"metro");
-  __exception__symbol        = f2symbol__new(cause, strlen("exception"),        (u8*)"exception");
-  __bytecode__symbol         = f2symbol__new(cause, strlen("bytecode"),         (u8*)"bytecode");
-  __fiber__symbol            = f2symbol__new(cause, strlen("fiber"),            (u8*)"fiber");
-  __processor__symbol        = f2symbol__new(cause, strlen("processor"),        (u8*)"processor");
-  __scheduler__symbol        = f2symbol__new(cause, strlen("scheduler"),        (u8*)"scheduler");
-  __event_subscriber__symbol = f2symbol__new(cause, strlen("event_subscriber"), (u8*)"event_subscriber");
-  __cause__symbol            = f2symbol__new(cause, strlen("cause"),            (u8*)"cause");
-  __transframe__symbol       = f2symbol__new(cause, strlen("transframe"),       (u8*)"transframe");
-  __bug__symbol              = f2symbol__new(cause, strlen("bug"),              (u8*)"bug");
-  __time__symbol             = f2symbol__new(cause, strlen("time"),             (u8*)"time");
-  __size_2d__symbol          = f2symbol__new(cause, strlen("size_2d"),          (u8*)"size_2d");
-  __event__symbol            = f2symbol__new(cause, strlen("event"),            (u8*)"event");
-  __bytecode_event__symbol   = f2symbol__new(cause, strlen("bytecode_event"),   (u8*)"bytecode_event");
+  __compound_object__symbol  = new__symbol(cause, "compound_object");
+  __primobject__symbol       = new__symbol(cause, "primobject");
+  __place__symbol            = new__symbol(cause, "place");
+  __cons__symbol             = new__symbol(cause, "cons");
+  __doublelink__symbol       = new__symbol(cause, "doublelink");
+  __imagination_link__symbol = new__symbol(cause, "imagination_link");
+  __cfunk__symbol            = new__symbol(cause, "cfunk");
+  __metrocfunk__symbol       = new__symbol(cause, "metrocfunk");
+  __funk__symbol             = new__symbol(cause, "funk");
+  __metro__symbol            = new__symbol(cause, "metro");
+  __exception__symbol        = new__symbol(cause, "exception");
+  __bytecode__symbol         = new__symbol(cause, "bytecode");
+  __fiber__symbol            = new__symbol(cause, "fiber");
+  __processor__symbol        = new__symbol(cause, "processor");
+  __scheduler__symbol        = new__symbol(cause, "scheduler");
+  __event_subscriber__symbol = new__symbol(cause, "event_subscriber");
+  __cause__symbol            = new__symbol(cause, "cause");
+  __transframe__symbol       = new__symbol(cause, "transframe");
+  __bug__symbol              = new__symbol(cause, "bug");
+  __time__symbol             = new__symbol(cause, "time");
+  __size_2d__symbol          = new__symbol(cause, "size_2d");
+  __event__symbol            = new__symbol(cause, "event");
+  __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");
 }
 
 void f2__primobjects__initialize() {

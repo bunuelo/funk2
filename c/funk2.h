@@ -90,6 +90,7 @@
 #include "f2_dptr.h"
 #include "f2_event_router.h"
 #include "f2_fiber.h"
+#include "f2_frame_objects.h"
 #include "f2_funk2_node.h"
 #include "f2_funktional.h"
 #include "f2_garbage_collector.h"

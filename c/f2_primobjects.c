@@ -886,27 +886,27 @@ f2ptr f2metro__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2
 
 f2ptr f2metro__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.is_type__funk);}
-  {char* slot_name = "type";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.type__funk);}
-  //{char* slot_name = "new";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metro.new__funk);}
-  {char* slot_name = "name";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk, nil);}
-  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk, nil);}
-  {char* slot_name = "args";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__funk, nil);}
-  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__funk, nil);}
-  {char* slot_name = "body";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.body__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__funk, nil);}
-  {char* slot_name = "env";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.env__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__funk, nil);}
-  {char* slot_name = "machine_code";        f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__funk, nil);}
-  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__funk, nil);}
-  {char* slot_name = "documentation";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									  __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__funk, __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__funk, nil);}
+  {char* slot_name = "is_type";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_metro.is_type__funk);}
+  {char* slot_name = "type";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.type__funk);}
+  //{char* slot_name = "new";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_metro.new__funk);}
+  {char* slot_name = "name";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk);}
+  {char* slot_name = "name";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk);}
+  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk);}
+  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk);}
+  {char* slot_name = "args";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk);}
+  {char* slot_name = "args";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__funk);}
+  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__funk);}
+  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__funk);}
+  {char* slot_name = "body";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.body__funk);}
+  {char* slot_name = "body";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__funk);}
+  {char* slot_name = "env";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.env__funk);}
+  {char* slot_name = "env";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__funk);}
+  {char* slot_name = "machine_code";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__funk);}
+  {char* slot_name = "machine_code";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__funk);}
+  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__funk);}
+  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__funk);}
+  {char* slot_name = "documentation";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__funk);}
+  {char* slot_name = "documentation";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__funk);}
   return this;
 }
 

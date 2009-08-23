@@ -155,10 +155,11 @@ def_pcfunk2(ptype__cause__set, x, value, return f2__ptype__cause__set(this_cause
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.ptype.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.type__funk, nil, nil);}
-  {char* slot_name = "raw";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.raw__funk, nil, nil);}
-  {char* slot_name = "cause";   f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.ptype.cause__funk, __funk2.globalenv.object_type.ptype.cause__set__funk, nil);}
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.ptype.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.ptype.type__funk);}
+  {char* slot_name = "raw";     f2__primobject_type__add_slot_type(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.ptype.raw__funk);}
+  {char* slot_name = "cause";   f2__primobject_type__add_slot_type(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.ptype.cause__funk);}
+  {char* slot_name = "cause";   f2__primobject_type__add_slot_type(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.ptype.cause__set__funk);}
   return this;
 }
 

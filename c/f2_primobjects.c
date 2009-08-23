@@ -1645,19 +1645,19 @@ f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr fiber, f2ptr
 
 f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";            f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.is_type__funk);}
-  {char* slot_name = "type";               f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.type__funk, nil, nil);}
-  {char* slot_name = "new";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__funk);}
-  {char* slot_name = "event_types";        f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__set__funk, nil);}
-  {char* slot_name = "fiber";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.fiber__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.fiber__set__funk, nil);}
-  {char* slot_name = "funkable";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__set__funk, nil);}
-  {char* slot_name = "event_buffer";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__set__funk, nil);}
-  {char* slot_name = "event_buffer_mutex"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									 __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__set__funk, nil);}
+  {char* slot_name = "is_type";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.is_type__funk);}
+  {char* slot_name = "type";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.type__funk, nil, nil);}
+  {char* slot_name = "new";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__funk);}
+  {char* slot_name = "event_types";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__funk);}
+  {char* slot_name = "event_types";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__set__funk);}
+  {char* slot_name = "fiber";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.fiber__funk);}
+  {char* slot_name = "fiber";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.fiber__set__funk);}
+  {char* slot_name = "funkable";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__funk);}
+  {char* slot_name = "funkable";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__set__funk);}
+  {char* slot_name = "event_buffer";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__funk);}
+  {char* slot_name = "event_buffer";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__set__funk);}
+  {char* slot_name = "event_buffer_mutex"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__funk);}
+  {char* slot_name = "event_buffer_mutex"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__set__funk);}
   return this;
 }
 

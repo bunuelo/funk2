@@ -17,8 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defmetro defcompound [type_name part_types slot_names]
-  [print `[defcompound ,type_name ,part_types ,slot_names]]
+[defmetro defcompound [type_name part_type_name_pairs slot_names]
+  [print `[defcompound ,type_name ,part_type_name_pairs ,slot_names]]
   [let [[primobject_type [primobject_type-new nil]]]
     [primobject_type-add_slot primobject_type `new
 			      nil
@@ -33,9 +33,11 @@
 									slot_names]]
 							 [set this frame frame]]
 						       [let [[part_frame [get this part_frame]]]
-							 @[mapcar [funk [part_type]
-									`[frame-add_var_value part_frame [quote ,part_type] [object-new [quote ,part_type]]]]
-								  part_types]]
+							 @[mapcar [funk [part_type_name_pair]
+									[let [[part_type [if [is-type `symbol part_type_name_pair] part_type_name_pair [first  part_type_name_pair]]]
+									      [part_name [if [is-type `symbol part_type_name_pair] part_type_name_pair [second part_type_name_pair]]]]
+									  `[frame-add_var_value part_frame [quote ,part_name] [object-new [quote ,part_type]]]]]
+								  part_type_name_pairs]]
 						       this]]]]
     [primobject_type-add_slot primobject_type `is_type
 			      nil

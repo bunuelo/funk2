@@ -21,5 +21,9 @@
     (setq load-path (cons package-dir load-path))
     (autoload 'funk2-mode "funk2-mode"
       "Major mode for editing funk2 files." t)
-    (add-to-list 'auto-mode-alist '("\\.funk2$" . funk2-mode))))
+    (add-to-list 'auto-mode-alist '("\\.fu$"    . funk2-mode))
+    (add-to-list 'auto-mode-alist '("\\.fu2$"   . funk2-mode))
+    (add-to-list 'auto-mode-alist '("\\.funk$"  . funk2-mode))
+    (add-to-list 'auto-mode-alist '("\\.funk2$" . funk2-mode))
+    ))
 

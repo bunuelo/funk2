@@ -36,7 +36,7 @@ f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_typ
       (! raw__funkable__is_type(cause, funkable))) {
     return f2larva__new(cause, 1);
   }
-  f2__frame__add_type_var_value(cause, this, slot_type, name, funkable);
+  f2__frame__add_type_var_value(cause, this, slot_type, slot_name, funkable);
   return nil;
 }
 def_pcfunk4(primobject_type__add_slot_type, this, slot_type, slot_name, funkable, return f2__primobject_type__add_slot_type(this_cause, this, slot_type, slot_name, funkable));

@@ -1178,50 +1178,49 @@ f2ptr f2fiber__new(f2ptr cause,
 
 f2ptr f2fiber__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";               f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__funk);}
-  {char* slot_name = "type";                  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__funk, nil, nil);}
-  //{char* slot_name = "new";                   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__funk);}
-  {char* slot_name = "program_counter";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__set__funk, nil);}
-  {char* slot_name = "stack";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__set__funk, nil);}
-  {char* slot_name = "iter";                  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__set__funk, nil);}
-  {char* slot_name = "env";                   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__set__funk, nil);}
-  {char* slot_name = "args";                  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__funk, nil);}
-  {char* slot_name = "return";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__set__funk, nil);}
-  {char* slot_name = "value";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__set__funk, nil);}
-  {char* slot_name = "trace";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__set__funk, nil);}
-  {char* slot_name = "critics";               f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__set__funk, nil);}
-  {char* slot_name = "cause_reg";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__set__funk, nil);}
-  {char* slot_name = "keep_undead";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__set__funk, nil);}
-  {char* slot_name = "is_zombie";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__set__funk, nil);}
-  {char* slot_name = "parent_fiber";         f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__set__funk, nil);}
-  {char* slot_name = "parent_env";            f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__set__funk, nil);}
-  {char* slot_name = "execute_mutex";         f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__set__funk, nil);}
-  {char* slot_name = "paused";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__set__funk, nil);}
-  {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__funk, nil);}
-  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__get__funk,
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__funk,
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__funk);}
-  {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
-  {char* slot_name = "larva_args";            f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									    __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__funk, __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__set__funk, nil);}
+  {char* slot_name = "is_type";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__funk);}
+  {char* slot_name = "type";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__funk, nil, nil);}
+  //{char* slot_name = "new";                   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__funk);}
+  {char* slot_name = "program_counter";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__funk);}
+  {char* slot_name = "program_counter";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__set__funk);}
+  {char* slot_name = "stack";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__funk);}
+  {char* slot_name = "stack";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__set__funk);}
+  {char* slot_name = "iter";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__funk);}
+  {char* slot_name = "iter";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__set__funk);}
+  {char* slot_name = "env";                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__funk);}
+  {char* slot_name = "env";                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__set__funk);}
+  {char* slot_name = "args";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__funk);}
+  {char* slot_name = "args";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__funk);}
+  {char* slot_name = "return";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__funk);}
+  {char* slot_name = "return";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__set__funk);}
+  {char* slot_name = "value";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__funk);}
+  {char* slot_name = "value";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__set__funk);}
+  {char* slot_name = "trace";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__funk);}
+  {char* slot_name = "trace";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__set__funk);}
+  {char* slot_name = "critics";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__funk);}
+  {char* slot_name = "critics";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__set__funk);}
+  {char* slot_name = "cause_reg";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__funk);}
+  {char* slot_name = "cause_reg";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__set__funk);}
+  {char* slot_name = "keep_undead";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__funk);}
+  {char* slot_name = "keep_undead";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__set__funk);}
+  {char* slot_name = "is_zombie";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__funk);}
+  {char* slot_name = "is_zombie";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__set__funk);}
+  {char* slot_name = "parent_fiber";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__funk);}
+  {char* slot_name = "parent_fiber";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__set__funk);}
+  {char* slot_name = "parent_env";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__funk);}
+  {char* slot_name = "parent_env";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__set__funk);}
+  {char* slot_name = "execute_mutex";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__funk);}
+  {char* slot_name = "execute_mutex";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__set__funk);}
+  {char* slot_name = "paused";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__funk);}
+  {char* slot_name = "paused";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__set__funk);}
+  {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__funk);}
+  {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__funk);}
+  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__get__funk);}
+  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__funk);}
+  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__funk);}
+  {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
+  {char* slot_name = "larva_args";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__funk);}
+  {char* slot_name = "larva_args";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__set__funk);}
   return this;
 }
 

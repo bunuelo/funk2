@@ -235,6 +235,6 @@ void f2__object__initialize() {
   f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init__1(object__type,            this,                       "returns the symbolic type name of the object.");
-  f2__primcfunk__init__2(object__slot__type_funk, this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
+  f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
 }
 

@@ -2388,13 +2388,13 @@ f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
 
 f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.is_type__funk);}
-  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.type__funk, nil, nil);}
-  {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__funk);}
-  {char* slot_name = "bytecode"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-							       __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__set__funk, nil);}
-  {char* slot_name = "context";  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-							       __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__funk, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__set__funk, nil);}
+  {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.is_type__funk);}
+  {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.type__funk);}
+  {char* slot_name = "new";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__funk);}
+  {char* slot_name = "bytecode"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__funk);}
+  {char* slot_name = "bytecode"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__set__funk);}
+  {char* slot_name = "context";  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__funk);}
+  {char* slot_name = "context";  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__set__funk);}
   return this;
 }
 

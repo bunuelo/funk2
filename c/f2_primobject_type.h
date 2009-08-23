@@ -24,6 +24,7 @@
 
 f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents);
 f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable);
+f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr type_name);
 
 // **

@@ -19,8 +19,6 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk object-type              &primfunk:object__type]
-[globalize-funk object-slot-get_funk     &primfunk:object__slot__get_funk]
-[globalize-funk object-slot-set_funk     &primfunk:object__slot__set_funk]
-[globalize-funk object-slot-execute_funk &primfunk:object__slot__execute_funk]
+[globalize-funk object-type           &primfunk:object__type]
+[globalize-funk object-slot-type_funk &primfunk:object__slot__type_funk]
 

@@ -385,19 +385,19 @@ f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, 
 
 f2ptr f2imagination_link__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.type__funk, nil, nil);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.new__funk);}
-  {char* slot_name = "next";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__funk,              __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__set__funk, nil);}
-  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.name__funk,              __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.name__set__funk, nil);}
-  {char* slot_name = "value";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.value__funk,             __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.value__set__funk, nil);}
-  {char* slot_name = "trace";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.trace__funk,             __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.trace__set__funk, nil);}
-  {char* slot_name = "imagination_frame"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									__funk2.globalenv.object_type.primobject.primobject_type_imagination_link.imagination_frame__funk, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.imagination_frame__set__funk, nil);}
+  {char* slot_name = "is_type";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.is_type__funk);}
+  {char* slot_name = "type";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.type__funk);}
+  {char* slot_name = "new";               f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.new__funk);}
+  {char* slot_name = "next";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__funk);}
+  {char* slot_name = "next";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.next__set__funk);}
+  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.name__funk);}
+  {char* slot_name = "name";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.name__set__funk);}
+  {char* slot_name = "value";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.value__funk);}
+  {char* slot_name = "value";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.value__set__funk);}
+  {char* slot_name = "trace";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.trace__funk);}
+  {char* slot_name = "trace";             f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.trace__set__funk);}
+  {char* slot_name = "imagination_frame"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.imagination_frame__funk);}
+  {char* slot_name = "imagination_frame"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_imagination_link.imagination_frame__set__funk);}
   return this;
 }
 

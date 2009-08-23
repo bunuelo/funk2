@@ -109,15 +109,15 @@
 #define def_f2frame_object__primobject_type__new__slot_body(name, slot_body) \
   f2ptr f2frame_object__primobject_type__new__funkvar(name)(f2ptr cause) { \
     f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("frame"), (u8*)"frame"), nil)); \
-    {char* slot_name = "is_type";  f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, frame_object__slot__funk__var(name, is_type));} \
-    {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), frame_object__slot__funk__var(name, type), nil, nil);} \
-    {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, frame_object__slot__funk__var(name, new));} \
+    {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), frame_object__slot__funk__var(name, is_type));} \
+    {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), frame_object__slot__funk__var(name, type));} \
+    {char* slot_name = "new";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), frame_object__slot__funk__var(name, new));} \
     slot_body; \
     return this; \
   }
 
 #define f2frame_object__primobject_type__new__slot(name, slot_name) \
-  {char* slot_name = #slot_name; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), frame_object__slot__funk__var(name, slot_name), frame_object__slot__funk__var(name, slot_name##__set), nil);}
+  {char* slot_name = #slot_name; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), frame_object__slot__funk__var(name, slot_name), frame_object__slot__funk__var(name, slot_name##__set), nil);}
 
 #define def_f2frame_object__primobject_type__new__0_slot(name) \
   def_f2frame_object__primobject_type__new__slot_body(name, )

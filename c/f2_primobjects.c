@@ -219,15 +219,15 @@ def_pcfunk2(compound_object__part_frame__set, x, y, return f2__compound_object__
 
 f2ptr f2compound_object__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";              f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk);}
-  {char* slot_name = "type";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk, nil, nil);}
-  {char* slot_name = "new";                  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk);}
-  {char* slot_name = "compound_object_type"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									   __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__funk, nil);}
-  {char* slot_name = "frame";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									   __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__funk,                __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__funk,                nil);}
-  {char* slot_name = "part_frame";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									   __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__funk,           __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__funk,           nil);}
+  {char* slot_name = "is_type";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk);}
+  {char* slot_name = "type";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk);}
+  {char* slot_name = "new";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk);}
+  {char* slot_name = "compound_object_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk);}
+  {char* slot_name = "compound_object_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__funk);}
+  {char* slot_name = "frame";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__funk);}
+  {char* slot_name = "frame";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__funk);}
+  {char* slot_name = "part_frame";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__funk);}
+  {char* slot_name = "part_frame";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__funk);}
   return this;
 }
 

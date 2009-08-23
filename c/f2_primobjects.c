@@ -151,11 +151,11 @@ def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x,
 
 f2ptr f2place__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_place.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk);}
-  {char* slot_name = "thing";   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__funk);}
-  {char* slot_name = "thing";   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk);}
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_place.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.type__funk);}
+  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk);}
+  {char* slot_name = "thing";   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__funk);}
+  {char* slot_name = "thing";   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk);}
   return this;
 }
 

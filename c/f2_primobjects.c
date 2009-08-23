@@ -663,21 +663,21 @@ f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2p
 
 f2ptr f2metrocfunk__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk);}
-  {char* slot_name = "type";          f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk, nil, nil);}
-  {char* slot_name = "new";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.new__funk);}
-  {char* slot_name = "name";          f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__funk,          __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__set__funk, nil);}
-  {char* slot_name = "args";          f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__funk,          __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__set__funk, nil);}
-  {char* slot_name = "cfunkptr";      f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__funk,      __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__set__funk, nil);}
-  {char* slot_name = "env";           f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__funk,           __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__set__funk, nil);}
-  {char* slot_name = "is_funktional"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__funk, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__set__funk, nil);}
-  {char* slot_name = "documentation"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-								    __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__funk, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__set__funk, nil);}
+  {char* slot_name = "is_type";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk);}
+  {char* slot_name = "type";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_type__funk);}
+  {char* slot_name = "new";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.new__funk);}
+  {char* slot_name = "name";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__funk);}
+  {char* slot_name = "name";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__set__funk);}
+  {char* slot_name = "args";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__funk);}
+  {char* slot_name = "args";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__set__funk);}
+  {char* slot_name = "cfunkptr";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__funk);}
+  {char* slot_name = "cfunkptr";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__set__funk);}
+  {char* slot_name = "env";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__funk);}
+  {char* slot_name = "env";           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__set__funk);}
+  {char* slot_name = "is_funktional"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__funk);}
+  {char* slot_name = "is_funktional"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__set__funk);}
+  {char* slot_name = "documentation"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__funk);}
+  {char* slot_name = "documentation"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__set__funk);}
   return this;
 }
 

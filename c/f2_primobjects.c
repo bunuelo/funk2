@@ -2318,7 +2318,7 @@ f2ptr f2event__primobject_type__new(f2ptr cause) {
   {char* slot_name = "event_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event.event_type__funk);}
   {char* slot_name = "event_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event.event_type__set__funk);}
   {char* slot_name = "data";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event.data__funk);}
-  {char* slot_name = "data";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event.data__set__funknil);}
+  {char* slot_name = "data";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_event.data__set__funk);}
   return this;
 }
 

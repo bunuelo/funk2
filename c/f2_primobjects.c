@@ -2245,11 +2245,13 @@ f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {
 
 f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.type__funk, nil, nil);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__funk);}
-  {char* slot_name = "x";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__funk, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__set__funk, nil);}
-  {char* slot_name = "y";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__funk, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__set__funk, nil);}
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.type__funk);}
+  {char* slot_name = "new";     f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__funk);}
+  {char* slot_name = "x";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__funk);}
+  {char* slot_name = "x";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__set__funk);}
+  {char* slot_name = "y";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__funk);}
+  {char* slot_name = "y";       f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__set__funk);}
   return this;
 }
 

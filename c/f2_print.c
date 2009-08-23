@@ -1173,7 +1173,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    f2ptr primobject_type = f2__lookup_type(cause, type_name);
 	    if (primobject_type) {
 	      f2ptr keyvalue_pairs       = nil;
-	      f2ptr get_slot_names       = f2__primobject_type__get_funk__slot_names(cause, primobject_type);
+	      f2ptr get_slot_names       = f2__primobject_type__type_funk__slot_names(cause, primobject_type, __funk2.globalenv.get__symbol);
 	      u64   max_slot_name_length = 0;
 	      {
 		f2ptr slot_iter = get_slot_names;
@@ -1185,7 +1185,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		      max_slot_name_length = slot_name__length;
 		    }
 		  }
-		  f2ptr slot_funk = f2__primobject_type__lookup_slot_get_funk(cause, primobject_type, slot_name);
+		  f2ptr slot_funk = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, __funk2.globalenv.get__symbol, slot_name);
 		  f2ptr args = nil;
 		  if (f2__cfunk__is_type(cause, slot_funk)) {
 		    args = f2cfunk__args(slot_funk, cause);

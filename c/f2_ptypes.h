@@ -281,59 +281,21 @@ f2ptr f2__larva__is_type(f2ptr cause, f2ptr exp);
 
 
 
-// get, set, and execute slot funk accessors
+// type slot funk accessors
 
-f2ptr f2__integer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__integer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__integer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__double__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__double__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__float__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__float__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__float__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__pointer__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__pointer__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__pointer__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__gfunkptr__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__gfunkptr__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__gfunkptr__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__mutex__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__mutex__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__mutex__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__char__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__char__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__char__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__string__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__string__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__string__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__symbol__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__symbol__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__symbol__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__chunk__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__chunk__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__chunk__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__simple_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__simple_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__simple_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__traced_array__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__traced_array__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__traced_array__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
-
-f2ptr f2__larva__slot__get_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__larva__slot__set_funk(f2ptr cause, f2ptr this, f2ptr slot);
-f2ptr f2__larva__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot);
+f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
 
 // **

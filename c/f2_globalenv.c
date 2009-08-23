@@ -110,6 +110,10 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->ptype_simple_array__symbol = f2symbol__new(cause, strlen("ptype_simple_array"), (u8*)"ptype_simple_array");
   this->ptype_traced_array__symbol = f2symbol__new(cause, strlen("ptype_traced_array"), (u8*)"ptype_traced_array");
   this->ptype_larva__symbol        = f2symbol__new(cause, strlen("ptype_larva"),        (u8*)"ptype_larva");
+  
+  this->get__symbol     = new__symbol(cause, "get");
+  this->set__symbol     = new__symbol(cause, "set");
+  this->execute__symbol = new__symbol(cause, "execute");
 }
 
 void funk2_globalenv__init(funk2_globalenv_t* this) {

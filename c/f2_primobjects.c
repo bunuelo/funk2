@@ -2077,11 +2077,11 @@ f2ptr f2bug__new(f2ptr cause, f2ptr bug_type) {
 
 f2ptr f2bug__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_bug.is_type__funk);}
-  {char* slot_name = "type";     f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk);}
-  {char* slot_name = "new";      f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_bug.new__funk);}
-  {char* slot_name = "bug_type"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bug.bug_type__funk);}
-  {char* slot_name = "bug_type"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bug.bug_type__set__funk);}
+  {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_bug.is_type__funk);}
+  {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk);}
+  {char* slot_name = "new";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_bug.new__funk);}
+  {char* slot_name = "bug_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bug.bug_type__funk);}
+  {char* slot_name = "bug_type"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.primobject_type_bug.bug_type__set__funk);}
   return this;
 }
 
@@ -2122,18 +2122,18 @@ f2ptr f2time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {
 
 f2ptr f2time__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
-  {char* slot_name = "type";                   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.type__funk, nil, nil);}
-  {char* slot_name = "new";                    f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), nil, nil, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
-  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name),
-									     __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk, __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk, nil);}
-  {char* slot_name = "years";                  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk,       nil, nil);}
-  {char* slot_name = "months";                 f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk,      nil, nil);}
-  {char* slot_name = "days";                   f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk,        nil, nil);}
-  {char* slot_name = "hours";                  f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk,       nil, nil);}
-  {char* slot_name = "minutes";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk,     nil, nil);}
-  {char* slot_name = "seconds";                f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk,     nil, nil);}
-  {char* slot_name = "nanoseconds";            f2__primobject_type__add_slot(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk, nil, nil);}
+  {char* slot_name = "is_type";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
+  {char* slot_name = "type";                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.type__funk);}
+  {char* slot_name = "new";                    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
+  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk);}
+  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk);}
+  {char* slot_name = "years";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk);}
+  {char* slot_name = "months";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk);}
+  {char* slot_name = "days";                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk);}
+  {char* slot_name = "hours";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk);}
+  {char* slot_name = "minutes";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk);}
+  {char* slot_name = "seconds";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk);}
+  {char* slot_name = "nanoseconds";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get_symbol,      __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk);}
   return this;
 }
 

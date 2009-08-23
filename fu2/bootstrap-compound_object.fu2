@@ -34,9 +34,9 @@
 									slot_names]]]
 						       [set this frame frame]
 						       [let [[part_frame [get this part_frame]]]
-							 [mapc [funk [part_type]
-								     [frame-add_var_value part_frame part_type [object-new part_type]]]
-							       part_types]]
+							 @[mapcar [funk [part_type]
+									`[frame-add_var_value part_frame [quote ,part_type] [object-new [quote ,part_type]]]]
+								  part_types]]
 						       this]]]]
     [primobject_type-add_slot primobject_type `is_type
 			      nil

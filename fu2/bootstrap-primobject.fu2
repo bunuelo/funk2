@@ -22,15 +22,15 @@
 [defunk frametype-slotdef-name [this]
   [cond [[is-type `symbol this] this]
 	[[is-type `cons   this] [first this]]
-	[t                      [error `deftype `[compound-slotdef-name ,this]]]]]
+	[t                      [error `deframe `[compound-slotdef-name ,this]]]]]
 
 [defunk frametype-slotdef-value [this]
   [cond [[is-type `symbol this] nil]
 	[[is-type `cons   this] [second this]]
-	[t                      [error `deftype `[compound-slotdef-value ,this]]]]]
+	[t                      [error `deframe `[compound-slotdef-value ,this]]]]]
 
-[defmetro deftype [type_name slot_name_value_pairs]
-  [print `[deftype ,type_name ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
+[defmetro deframe [type_name slot_name_value_pairs]
+  [print `[deframe ,type_name ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
   [let [[primobject_type [primobject_type-new nil]]]
     [primobject_type-add_slot primobject_type `new
 			      nil
@@ -51,7 +51,7 @@
 						     [and exp [frame-is_type exp] [eq [quote ,type_name] [frame-lookup_var_value exp `type nil]]]]]]
     [mapc [funk [slot_name_value_pair]
 		[let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
-		  [primobject_type-add_slot primobject_type slotdef
+		  [primobject_type-add_slot primobject_type slot_name
 					    [eval `[funk-unlabeled ,slot_name [this]
 								    [frame-lookup_var_value this [quote ,slot_name] `get-slot-does-not-exist]]]
 					    [eval `[funk-unlabeled ,slot_name [this value]

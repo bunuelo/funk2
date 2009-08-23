@@ -21,7 +21,7 @@
 
 [globalize char:enter #cA]
 
-[deftypefunk stream read_character []
+[deftypefunk stream execute read_character []
   [let [[ch nil]]
     [while [not ch]
       [= ch [have this try_read_character]]
@@ -32,7 +32,7 @@
 [defunk read_character []
   [have stdin read_character]]
 
-[deftypefunk stream read-test []
+[deftypefunk stream execute read-test []
   [let [[done nil]
 	[seq  nil]]
     [while [not done]

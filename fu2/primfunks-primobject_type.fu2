@@ -20,12 +20,8 @@
 '
 
 [globalize-funk primobject_type-new                      &primfunk:primobject_type__new]
-[globalize-funk primobject_type-add_slot                 &primfunk:primobject_type__add_slot]
-[globalize-funk primobject_type-lookup_slot_get_funk     &primfunk:primobject_type__lookup_slot_get_funk]
-[globalize-funk primobject_type-lookup_slot_set_funk     &primfunk:primobject_type__lookup_slot_set_funk]
-[globalize-funk primobject_type-lookup_slot_execute_funk &primfunk:primobject_type__lookup_slot_execute_funk]
-[globalize-funk primobject_type-get_funk-slot_names      &primfunk:primobject_type__get_funk__slot_names]
-[globalize-funk primobject_type-set_funk-slot_names      &primfunk:primobject_type__set_funk__slot_names]
-[globalize-funk primobject_type-execute_funk-slot_names  &primfunk:primobject_type__execute_funk__slot_names]
+[globalize-funk primobject_type-add_slot_type            &primfunk:primobject_type__add_slot_type]
+[globalize-funk primobject_type-lookup_slot_type_funk    &primfunk:primobject_type__lookup_slot_type_funk]
+[globalize-funk primobject_type-type_funk-slot_names     &primfunk:primobject_type__type_funk__slot_names]
 
 

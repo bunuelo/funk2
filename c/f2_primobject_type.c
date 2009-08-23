@@ -23,130 +23,62 @@
 
 f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents) {
   f2ptr this = f2__frame__new(cause);
-  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("type"),    (u8*)"type"),    f2symbol__new(cause, strlen("primobject_type"), (u8*)"primobject_type"));
-  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("parents"), (u8*)"parents"), parents);
+  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "type"),    new__symbol(cause, "primobject_type"));
+  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "parents"), parents);
   return this;
 }
 def_pcfunk1(primobject_type__new, parents, return f2__primobject_type__new(this_cause, parents));
 
-f2ptr f2__primobject_type__add_slot(f2ptr cause, f2ptr this, f2ptr name, f2ptr get_funk, f2ptr set_funk, f2ptr execute_funk) {
-  if ((! raw__frame__is_type(cause, this)) ||
-      (! raw__symbol__is_type(cause, name)) ||
-      (get_funk     && (! raw__funkable__is_type(cause, get_funk))) ||
-      (set_funk     && (! raw__funkable__is_type(cause, set_funk))) ||
-      (execute_funk && (! raw__funkable__is_type(cause, execute_funk)))) {
+f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable) {
+  if ((! raw__frame__is_type(   cause, this)) ||
+      (! raw__symbol__is_type(  cause, slot_type)) ||
+      (! raw__symbol__is_type(  cause, slot_name)) ||
+      (! raw__funkable__is_type(cause, funkable))) {
     return f2larva__new(cause, 1);
   }
-  if (get_funk)     {f2__frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"),     (u8*)"get_funk"),     name, get_funk);}
-  if (set_funk)     {f2__frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"),     (u8*)"set_funk"),     name, set_funk);}
-  if (execute_funk) {f2__frame__add_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), name, execute_funk);}
+  f2__frame__add_type_var_value(cause, this, slot_type, name, funkable);
   return nil;
 }
-def_pcfunk5(primobject_type__add_slot, this, name, get_funk, set_funk, execute_funk, return f2__primobject_type__add_slot(this_cause, this, name, get_funk, set_funk, execute_funk));
+def_pcfunk4(primobject_type__add_slot_type, this, slot_type, slot_name, funkable, return f2__primobject_type__add_slot_type(this_cause, this, slot_type, slot_name, funkable));
 
 // lookup slot type
 
-f2ptr f2__primobject_type__lookup_slot_get_funk(f2ptr cause, f2ptr this, f2ptr slot_name) {
+f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if ((! raw__frame__is_type(cause, this)) ||
+      (! raw__symbol__is_type(cause, slot_type)) ||
       (! raw__symbol__is_type(cause, slot_name))) {
     return f2larva__new(cause, 1);
   }
-  f2ptr this_binding = f2__frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"), slot_name, nil);
+  f2ptr this_binding = f2__frame__lookup_type_var_value(cause, this, slot_type, slot_name, nil);
   if (! this_binding) {
-    f2ptr parents      = f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("parents"), (u8*)"parents"), nil);
+    f2ptr parents      = f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "parents"), nil);
     f2ptr parents_iter = parents;
     while ((! this_binding) && parents_iter) {
       f2ptr parent      = f2cons__car(parents_iter, cause);
       f2ptr parent_type = f2__lookup_type(cause, parent);
       if (parent_type) {
-	this_binding = f2__primobject_type__lookup_slot_get_funk(cause, parent_type, slot_name);
+	this_binding = f2__primobject_type__lookup_slot_type_funk(cause, parent_type, slot_type, slot_name);
       }
       parents_iter = f2cons__cdr(parents_iter, cause);
     }
   }
   return this_binding;
 }
-def_pcfunk2(primobject_type__lookup_slot_get_funk, this, slot_name, return f2__primobject_type__lookup_slot_get_funk(this_cause, this, slot_name));
-
-f2ptr f2__primobject_type__lookup_slot_set_funk(f2ptr cause, f2ptr this, f2ptr slot_name) {
-  if ((! raw__frame__is_type(cause, this)) ||
-      (! raw__symbol__is_type(cause, slot_name))) {
-    return f2larva__new(cause, 1);
-  }
-  f2ptr this_binding = f2__frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("set_funk"), (u8*)"set_funk"), slot_name, nil);
-  if (! this_binding) {
-    f2ptr parents      = f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("parents"), (u8*)"parents"), nil);
-    f2ptr parents_iter = parents;
-    while ((! this_binding) && parents_iter) {
-      f2ptr parent      = f2cons__car(parents_iter, cause);
-      f2ptr parent_type = f2__lookup_type(cause, parent);
-      if (parent_type) {
-	this_binding = f2__primobject_type__lookup_slot_set_funk(cause, parent_type, slot_name);
-      }
-      parents_iter = f2cons__cdr(parents_iter, cause);
-    }
-  }
-  return this_binding;
-}
-def_pcfunk2(primobject_type__lookup_slot_set_funk, this, slot_name, return f2__primobject_type__lookup_slot_set_funk(this_cause, this, slot_name));
-
-f2ptr f2__primobject_type__lookup_slot_execute_funk(f2ptr cause, f2ptr this, f2ptr slot_name) {
-  if ((! raw__frame__is_type(cause, this)) ||
-      (! raw__symbol__is_type(cause, slot_name))) {
-    return f2larva__new(cause, 1);
-  }
-  f2ptr this_binding = f2__frame__lookup_type_var_value(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"), slot_name, nil);
-  if (! this_binding) {
-    f2ptr parents      = f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, f2symbol__new(cause, strlen("parents"), (u8*)"parents"), nil);
-    f2ptr parents_iter = parents;
-    while ((! this_binding) && parents_iter) {
-      f2ptr parent      = f2cons__car(parents_iter, cause);
-      f2ptr parent_type = f2__lookup_type(cause, parent);
-      if (parent_type) {
-	this_binding = f2__primobject_type__lookup_slot_execute_funk(cause, parent_type, slot_name);
-      }
-      parents_iter = f2cons__cdr(parents_iter, cause);
-    }
-  }
-  return this_binding;
-}
-def_pcfunk2(primobject_type__lookup_slot_execute_funk, this, slot_name, return f2__primobject_type__lookup_slot_execute_funk(this_cause, this, slot_name));
-
+def_pcfunk3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name, return f2__primobject_type__lookup_slot_type_funk(this_cause, this, slot_type, slot_name));
 
 // list slot type
 
-f2ptr f2__primobject_type__get_funk__slot_names(f2ptr cause, f2ptr this) {
+f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr type_name) {
   if (! this) {
     return nil;
   }
-  if (! raw__frame__is_type(cause, this)) {
+  if ((! raw__frame__is_type( cause, this)) ||
+      (! raw__symbol__is_type(cause, type_name))) {
     return f2larva__new(cause, 1);
   }
-  return f2__frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("get_funk"), (u8*)"get_funk"));
+  return f2__frame__type_var__slot_names(cause, this, type_name);
 }
-def_pcfunk1(primobject_type__get_funk__slot_names, this, return f2__primobject_type__get_funk__slot_names(this_cause, this));
-
-f2ptr f2__primobject_type__set_funk__slot_names(f2ptr cause, f2ptr this) {
-  if (! this) {
-    return nil;
-  }
-  if (! raw__frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
-  }
-  return f2__frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("set_funk"), (u8*)"set_funk"));
-}
-def_pcfunk1(primobject_type__set_funk__slot_names, this, return f2__primobject_type__set_funk__slot_names(this_cause, this));
-
-f2ptr f2__primobject_type__execute_funk__slot_names(f2ptr cause, f2ptr this) {
-  if (! this) {
-    return nil;
-  }
-  if (! raw__frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
-  }
-  return f2__frame__type_var__slot_names(cause, this, f2symbol__new(cause, strlen("execute_funk"), (u8*)"execute_funk"));
-}
-def_pcfunk1(primobject_type__execute_funk__slot_names, this, return f2__primobject_type__execute_funk__slot_names(this_cause, this));
+def_pcfunk2(primobject_type__type_funk__slot_names, this, type_name, return f2__primobject_type__type_funk__slot_names(this_cause, this, type_name));
 
 
 
@@ -159,14 +91,10 @@ void f2__primobject_type__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(primobject_type__new, parents, "create a new Funk2 object type.");
-  f2__primcfunk__init__5(primobject_type__add_slot, this, name, get_funk, set_funk, execute_funk, "adds new get, set, and execute slot funktions to add a new slot for an object type.");
-  f2__primcfunk__init__2(primobject_type__lookup_slot_get_funk, this, slot_name, "lookup a primobject_type slot get_funk");
-  f2__primcfunk__init__2(primobject_type__lookup_slot_set_funk, this, slot_name, "lookup a primobject_type slot set_funk");
-  f2__primcfunk__init__2(primobject_type__lookup_slot_execute_funk, this, slot_name, "lookup a primobject_type slot execute_funk");
-  f2__primcfunk__init__1(primobject_type__get_funk__slot_names, this, "get a list of get_funk slot names.");
-  f2__primcfunk__init__1(primobject_type__set_funk__slot_names, this, "get a list of set_funk slot names.");
-  f2__primcfunk__init__1(primobject_type__execute_funk__slot_names, this, "get a list of execute_funk slot names.");
+  f2__primcfunk__init__1(primobject_type__new,                   parents,                              "create a new Funk2 object type.");
+  f2__primcfunk__init__4(primobject_type__add_slot_type,         this, slot_type, slot_name, funkable, "adds new type of slot funktion for an object type.");
+  f2__primcfunk__init__3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name,           "lookup a primobject_type slot type funk.");
+  f2__primcfunk__init__2(primobject_type__type_funk__slot_names, this, slot_type,                      "get a list of type funk slot names.");
 }
 
 

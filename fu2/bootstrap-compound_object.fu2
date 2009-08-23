@@ -24,7 +24,7 @@
 			      nil
 			      nil
 			      [eval `[funk-unlabeled new []
-						     [let [[this [new compound_object]]]
+						     [let [[this [new compound_object type_name]]]
 						       [let [[frame [new frame]]]
 							 [frame-add_var_value this `type [quote ,type_name]]
 							 [prog @[mapcar [funk [slot_name]

@@ -296,7 +296,7 @@
 [wrong_argument_number_error-set [object-get &wrong_argument_number_error `body_bytecodes]]
 
 [defunk slots [exp]
-  [primobject_type-get_funk-slot_names [lookup_type [type exp]]]]
+  [primobject_type-type_funk-slot_names [lookup_type [type exp]] `get]]
 
 [defmetro cadr [seq]
   `[car [cdr ,seq]]]

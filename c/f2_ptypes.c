@@ -212,12 +212,12 @@ def_pcfunk1(integer__i,       this, return this);
 
 f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
-    if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_integer.i__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
-    if (f2__symbol__eq(cause, slot, __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.new__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_integer.new__funk;
     }
   }

@@ -98,11 +98,14 @@ def_pcfunk5(primobject__dynamic_slot_type_value__set, this, slot_type, slot_name
 
 f2ptr f2primobject__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("array"), (u8*)"array"), nil));
-  {char* slot_name = "is_type";                     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.is_type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.type__funk,          __funk2.globalenv.object_type.primobject.type__set__funk,          nil);}
-  {char* slot_name = "dynamic_slots";               f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.dynamic_slots__funk, __funk2.globalenv.object_type.primobject.dynamic_slots__set__funk, nil);}
-  {char* slot_name = "add_dynamic_slot_type_value"; f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), nil, nil, __funk2.globalenv.object_type.primobject.add_dynamic_slot_type_value__funk);}
-  {char* slot_name = "dynamic_slot_type_value";     f2__primobject_type__add_slot(cause, this, f2symbol__new(cause, strlen(slot_name), (u8*)slot_name), __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__funk, __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__funk, nil);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.type__set__funk);}
+  {char* slot_name = "dynamic_slots";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.dynamic_slots__funk);}
+  {char* slot_name = "dynamic_slots";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.dynamic_slots__set__funk);}
+  {char* slot_name = "add_dynamic_slot_type_value"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.execute__symbol, __funk2.globalenv.object_type.primobject.add_dynamic_slot_type_value__funk);}
+  {char* slot_name = "dynamic_slot_type_value";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.get__symbol,     __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__funk);}
+  {char* slot_name = "dynamic_slot_type_value";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, slot_name), __funk2.globalenv.set__symbol,     __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__funk);}
   return this;
 }
 

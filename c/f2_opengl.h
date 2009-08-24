@@ -26,13 +26,13 @@ typedef struct funk2_opengl_s funk2_opengl_t;
 
 #include "f2_primfunks.h"
 
-typedef GLint      int;
-typedef GLenum     int;
-typedef GLsizei    int;
-typedef GLdouble   double;
-typedef GLclampf   float;
-typedef GLclampd   double;
-typedef GLbitfield int;
+typedef int    GLint;
+typedef int    GLenum;
+typedef int    GLsizei;
+typedef double GLdouble;
+typedef float  GLclampf;
+typedef double GLclampd;
+typedef int    GLbitfield;
 
 struct funk2_opengl_s {
   boolean_t initialized;

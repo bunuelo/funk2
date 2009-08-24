@@ -78,13 +78,13 @@ ptr raw__gmodule__open(u8* filename, u64 flags) {
 
 f2ptr f2__gmodule__open(f2ptr cause, f2ptr filename, f2ptr flags) {
   if ((! raw__string__is_type(cause, filename)) ||
-      (! raw__integer__is_type(cause, flags))) {
+      (flags && (! raw__integer__is_type(cause, flags)))) {
     return f2larva__new(cause, 1);
   }
   int filename__length = f2string__length(filename, cause);
   u8* filename__str    = (u8*)alloca(filename__length + 1);
   f2string__str_copy(filename, cause, filename__str);
-  u64 raw_flags = f2integer__i(flags, cause);
+  u64 raw_flags = flags ? f2integer__i(flags, cause) : 0;
   ptr module_ptr = raw__gmodule__open(filename__str, raw_flags);
   if (module_ptr == to_ptr(NULL)) {
     return nil;

@@ -203,6 +203,10 @@ def_pcfunk1(gfunkptr__new_from_pointer, x, return f2__gfunkptr__new_from_pointer
 
 // string
 
+f2ptr new__string(f2ptr cause, char* str) {
+  return f2string__new(cause, strlen(str), (u8*)(str));
+}
+
 boolean_t raw__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
   u64 x_len = f2string__length(x, cause);
   u64 y_len = f2string__length(y, cause);

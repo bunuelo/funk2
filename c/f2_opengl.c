@@ -29,3 +29,74 @@ void funk2_opengl__init(funk2_opengl_t* this) {
 void funk2_opengl__destroy(funk2_opengl_t* this) {
 }
 
+
+
+boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
+  if (this->initialized) {
+    return boolean__true;
+  }
+  if (! f2__gmodule__supported(cause)) {
+    status("funk2_opengl__load_library: gmodule is not supported on this system, so could not load opengl.");
+    return boolean__false;
+  }
+  f2ptr filenames = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/usr/X11R6/lib/"), new__string("GL")), nil);
+  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/usr/local/lib/"), new__string("GL")), filenames);
+  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/usr/lib/"),       new__string("GL")), filenames);
+  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/lib/"),           new__string("GL")), filenames);
+  f2ptr gmodule_pointer = nil;
+  {
+    f2ptr filename_iter   = filenames;
+    while ((! gmodule_pointer) && filename_iter) {
+      f2ptr filename        = f2cons__car(filenames, cause);
+      f2ptr gmodule_pointer = f2__gmodule__open(cause, filename, nil);
+      filename_iter = f2cons__cdr(filename_iter, cause);
+    }
+  }
+  if (! gmodule_pointer) {
+    status("funk2_opengl__load_library: failed to open opengl dynamic library.");
+    return boolean__false;
+  }
+  return boolean__true;
+}
+
+boolean_t raw__opengl__load_library(f2ptr cause) {
+  return funk2_opengl__load_library(&(__funk2.opengl), cause);
+}
+
+
+//lesson01.c:(.text+0x164): undefined reference to `glXSwapBuffers'
+//lesson01.c:(.text+0x197): undefined reference to `glXMakeCurrent'
+//lesson01.c:(.text+0x1be): undefined reference to `glXDestroyContext'
+//lesson01.c:(.text+0x375): undefined reference to `glXChooseVisual'
+//lesson01.c:(.text+0x39d): undefined reference to `glXChooseVisual'
+//lesson01.c:(.text+0x3ea): undefined reference to `glXQueryVersion'
+//lesson01.c:(.text+0x429): undefined reference to `glXCreateContext'
+//lesson01.c:(.text+0x834): undefined reference to `glXMakeCurrent'
+//lesson01.c:(.text+0x8ae): undefined reference to `glXIsDirect'
+
+//lesson01.c:(.text+0x1f0): undefined reference to `XF86VidModeSwitchToMode'
+//lesson01.c:(.text+0x217): undefined reference to `XF86VidModeSetViewPort'
+//lesson01.c:(.text+0x224): undefined reference to `XCloseDisplay'
+//lesson01.c:(.text+0x24a): undefined reference to `XOpenDisplay'
+//lesson01.c:(.text+0x27b): undefined reference to `XF86VidModeQueryVersion'
+//lesson01.c:(.text+0x2bb): undefined reference to `XF86VidModeGetAllModeLines'
+//lesson01.c:(.text+0x474): undefined reference to `XCreateColormap'
+//lesson01.c:(.text+0x4c0): undefined reference to `XF86VidModeSwitchToMode'
+//lesson01.c:(.text+0x4e7): undefined reference to `XF86VidModeSetViewPort'
+//lesson01.c:(.text+0x53c): undefined reference to `XFree'
+//lesson01.c:(.text+0x5dc): undefined reference to `XCreateWindow'
+//lesson01.c:(.text+0x630): undefined reference to `XWarpPointer'
+//lesson01.c:(.text+0x647): undefined reference to `XMapRaised'
+//lesson01.c:(.text+0x67e): undefined reference to `XGrabKeyboard'
+//lesson01.c:(.text+0x6cf): undefined reference to `XGrabPointer'
+//lesson01.c:(.text+0x76a): undefined reference to `XCreateWindow'
+//lesson01.c:(.text+0x78c): undefined reference to `XInternAtom'
+//lesson01.c:(.text+0x7b6): undefined reference to `XSetWMProtocols'
+//lesson01.c:(.text+0x7fc): undefined reference to `XSetStandardProperties'
+//lesson01.c:(.text+0x813): undefined reference to `XMapRaised'
+//lesson01.c:(.text+0x882): undefined reference to `XGetGeometry'
+//lesson01.c:(.text+0x95b): undefined reference to `XNextEvent'
+//lesson01.c:(.text+0xa00): undefined reference to `XLookupKeysym'
+//lesson01.c:(.text+0xa21): undefined reference to `XLookupKeysym'
+//lesson01.c:(.text+0xa83): undefined reference to `XGetAtomName'
+//lesson01.c:(.text+0xaaf): undefined reference to `XPending'

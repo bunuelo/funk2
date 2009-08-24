@@ -26,9 +26,31 @@ typedef struct funk2_opengl_s funk2_opengl_t;
 
 #include "f2_primfunks.h"
 
+typedef GLint      int;
+typedef GLenum     int;
+typedef GLsizei    int;
+typedef GLdouble   double;
+typedef GLclampf   float;
+typedef GLclampd   double;
+typedef GLbitfield int;
+
 struct funk2_opengl_s {
   boolean_t initialized;
   f2ptr     gmodule_pointer;
+  void(*    glViewport    )(GLint x, GLint y, GLsizei width, GLsizei height);
+  void(*    glMatrixMode  )(GLenum mode);
+  void(*    glLoadIdentity)();
+  void(*    gluPerspective)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+  void(*    glMatrixMode  )(GLenum mode);
+  void(*    glShadeModel  )(GLenum mode);
+  void(*    glClearColor  )(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+  void(*    glClearDepth  )(GLclampd depth);
+  void(*    glEnable      )(GLenum cap);
+  void(*    glDepthFunc   )(GLenum func);
+  void(*    glHint        )(GLenum target, GLenum mode);
+  void(*    glFlush       )();
+  void(*    glClear       )(GLbitfield mask);
+  void(*    glLoadIdentity)();
 };
 
 void funk2_opengl__init(funk2_opengl_t* this);

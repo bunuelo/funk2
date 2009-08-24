@@ -21,3 +21,11 @@
 
 #include "funk2.h"
 
+void funk2_opengl__init(funk2_opengl_t* this) {
+  this->initialized     = boolean__false;
+  this->gmodule_pointer = nil;
+}
+
+void funk2_opengl__destroy(funk2_opengl_t* this) {
+}
+

@@ -31,6 +31,9 @@ struct funk2_opengl_s {
   f2ptr     gmodule_pointer;
 };
 
+void funk2_opengl__init(funk2_opengl_t* this);
+void funk2_opengl__destroy(funk2_opengl_t* this);
+
 #endif // F2__OPENGL__H
 
 

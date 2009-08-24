@@ -105,6 +105,7 @@
 #include "f2_memorypool.h"
 #include "f2_module_registration.h"
 #include "f2_object.h"
+#include "f2_opengl.h"
 #include "f2_packet.h"
 #include "f2_peer_command_server.h"
 #include "f2_ptype.h"

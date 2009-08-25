@@ -24,6 +24,9 @@
 
 #include <sys/types.h>
 
+#include "../config.h"
+#include "../config_bit_num.h"
+
 typedef __uint64_t ptr; //                        0 to 18.446744073709551615e18
 typedef __uint64_t u64; //                        0 to 18.446744073709551615e18
 typedef  __int64_t s64; // -9.223372036854775808e18 to 9.223372036854775807e18

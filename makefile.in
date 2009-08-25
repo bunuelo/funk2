@@ -288,10 +288,10 @@ s/test.s: c/test.c makefile
 	gcc -o s/test.s -S c/test.c
 
 
-%.o: %.c %.h *.[ch] makefile
+%.o: %.c %.h $(funk2_headers) makefile
 	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
 
-%.o: %.c makefile
+%.o: %.c $(funk2_headers) makefile
 	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
 
 clean-binary:

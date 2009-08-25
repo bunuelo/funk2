@@ -293,6 +293,10 @@ s/test.s: c/test.c makefile
 %.o: %.c config_bit_num.h makefile
 	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
 
+clean-makefile:
+	echo "Removing: makefile"
+	rm -f makefile
+
 clean-binary:
 	echo "Removing: $(compile__funk2) and bin/configurator"
 	rm -f $(compile__funk2)
@@ -323,7 +327,8 @@ clean-install:
 	rm -f $(install__bootstrap__img)
 
 
-clean6:        clean-binary
+clean7:        clean-makefile
+clean6: clean7 clean-binary
 clean5: clean6 clean--bootstrap-repl.img
 clean4: clean5 clean-img
 clean3: clean4 clean-o

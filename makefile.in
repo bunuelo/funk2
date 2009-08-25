@@ -139,6 +139,7 @@ funk2_server_objs = \
   c/f2_user_thread_controller.o \
   c/funk2.o
 funk2_headers = \
+  config_bit_num.h \
   c/f2_ansi.h \
   c/f2_apropos.h \
   c/f2_blocks_world.h \
@@ -253,7 +254,7 @@ config_bit_num.h: bin/configurator
 	echo "#define double__bit_num    `bin/configurator double-bit_num`"
 	echo ""
 
-$(compile__funk2): config_bit_num.h $(funk2_objs) $(funk2_headers) makefile
+$(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
 	mkdir -p bin
 	gcc $(cc_flags) $(type_bits_flags) $(funk2_objs) $(libs) $(dynamic_library_linker_flags) -o $@
 

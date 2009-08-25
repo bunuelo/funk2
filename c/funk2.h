@@ -49,7 +49,6 @@
 #endif
 #include <errno.h>
 #include <fcntl.h>
-#include <gl.h>
 #ifdef F2__GMODULE__SUPPORTED
 #  include <gmodule.h>
 #endif
@@ -73,6 +72,11 @@
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glx.h>
+#include <X11/extensions/xf86vmode.h>
+#include <X11/keysym.h>
 
 #include "f2_ansi.h"
 #include "f2_apropos.h"

@@ -2,9 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(FULL-PACKAGE-NAME, VERSION, BUG-REPORT-ADDRESS)
+AC_INIT(funk2, 2.08, bo@mit.edu)
+AM_INIT_AUTOMAKE(funk2, 2.08)
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADER([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CC
@@ -43,5 +45,9 @@ AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol])
 
-AC_CONFIG_FILES([makefile])
+AX_CHECK_GL
+AX_CHECK_GLU
+ACX_PTHREAD
+
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

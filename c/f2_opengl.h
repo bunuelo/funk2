@@ -61,6 +61,7 @@ struct funk2_openglu_s {
 struct funk2_xxf86vm_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
+  //void(*    glXSwapBuffers) (Display *dpy, GLXDrawable drawable);
 };
 
 void      funk2_opengl__init(funk2_opengl_t* this);

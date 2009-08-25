@@ -1,0 +1,5 @@
+#!/bin/sh
+autoscan
+cp configure.scan configure.ac
+autoconf
+autoheader

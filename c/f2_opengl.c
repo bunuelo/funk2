@@ -39,13 +39,16 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
     status("funk2_opengl__load_library: dlfcn is not supported on this system, so could not load opengl.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGL.so"), nil);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libGL.so"), filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libGL.so"),       filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/lib/libGL.so"),           filenames);
+  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGL.so"),  nil);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libGL.so"),   filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libGL.so"),      filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libGL.so"), filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libGL.so"),  filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libGL.so"),        filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/lib/libGL.so"),            filenames);
   f2ptr dlfcn_pointer = nil;
   {
-    f2ptr filename_iter   = filenames;
+    f2ptr filename_iter = filenames;
     while ((! dlfcn_pointer) && filename_iter) {
       f2ptr filename  = f2cons__car(filename_iter, cause);
       dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, nil);

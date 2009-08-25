@@ -58,6 +58,18 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   }
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_opengl__load_library: loaded opengl dynamic library successfully.");
+  this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));
+  this->glMatrixMode   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));
+  this->glLoadIdentity = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity"));
+  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective"));
+  this->glShadeModel   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));
+  this->glClearColor   = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha))   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));
+  this->glClearDepth   = (void(*)(GLclampd depth))                                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));
+  this->glEnable       = (void(*)(GLenum cap))                                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));
+  this->glDepthFunc    = (void(*)(GLenum func))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));
+  this->glHint         = (void(*)(GLenum target, GLenum mode))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));
+  this->glFlush        = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));
+  this->glClear        = (void(*)(GLbitfield mask))                                               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));
   return boolean__true;
 }
 

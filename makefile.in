@@ -225,7 +225,6 @@ funk2_headers = \
   c/f2_trace.h \
   c/f2_user_thread_controller.o
 
-include config.mak
 include makefile.cfg
 
 bin/configurator: c/configurator.c
@@ -236,41 +235,25 @@ configure: bin/configurator
 	make -s configure-silent
 
 configure-silent:
-	echo "" > config.tmp
-	rm -f config.mak
-	echo "" > config.mak
-	echo "char__bit_num      = `bin/configurator char-bit_num`"      >> config.mak
-	echo "short__bit_num     = `bin/configurator short-bit_num`"     >> config.mak
-	echo "int__bit_num       = `bin/configurator int-bit_num`"       >> config.mak
-	echo "long__bit_num      = `bin/configurator long-bit_num`"      >> config.mak
-	echo "long_long__bit_num = `bin/configurator long_long-bit_num`" >> config.mak
-	echo "pointer__bit_num   = `bin/configurator pointer-bit_num`"   >> config.mak
-	echo "float__bit_num     = `bin/configurator float-bit_num`"     >> config.mak
-	echo "double__bit_num    = `bin/configurator double-bit_num`"    >> config.mak
-	make configure-append-defines
-
-configure-append-defines:
-	echo ""                                                          >> config.mak
-	echo "type_bits_flags = \\"                                      >> config.mak
-	echo "  -Dchar__bit_num=$(char__bit_num) \\"                     >> config.mak
-	echo "  -Dshort__bit_num=$(short__bit_num) \\"                   >> config.mak
-	echo "  -Dint__bit_num=$(int__bit_num) \\"                       >> config.mak
-	echo "  -Dlong__bit_num=$(long__bit_num) \\"                     >> config.mak
-	echo "  -Dlong_long__bit_num=$(long_long__bit_num) \\"           >> config.mak
-	echo "  -Dpointer__bit_num=$(pointer__bit_num) \\"               >> config.mak
-	echo "  -Dfloat__bit_num=$(float__bit_num) \\"                   >> config.mak
-	echo "  -Ddouble__bit_num=$(double__bit_num)"                    >> config.mak
-	echo ""                                                          >> config.mak
+	rm -f config_bit_num.h
+	echo "" > config_bit_num.h
+	echo "#define char__bit_num      `bin/configurator char-bit_num`"      >> config_bit_num.h
+	echo "#define short__bit_num     `bin/configurator short-bit_num`"     >> config_bit_num.h
+	echo "#define int__bit_num       `bin/configurator int-bit_num`"       >> config_bit_num.h
+	echo "#define long__bit_num      `bin/configurator long-bit_num`"      >> config_bit_num.h
+	echo "#define long_long__bit_num `bin/configurator long_long-bit_num`" >> config_bit_num.h
+	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"   >> config_bit_num.h
+	echo "#define float__bit_num     `bin/configurator float-bit_num`"     >> config_bit_num.h
+	echo "#define double__bit_num    `bin/configurator double-bit_num`"    >> config_bit_num.h
 	echo ""
-	echo "type_bits_flags = \\"
-	echo "  -Dchar__bit_num=$(char__bit_num) \\"
-	echo "  -Dshort__bit_num=$(short__bit_num) \\"
-	echo "  -Dint__bit_num=$(int__bit_num) \\"
-	echo "  -Dlong__bit_num=$(long__bit_num) \\"
-	echo "  -Dlong_long__bit_num=$(long_long__bit_num) \\"
-	echo "  -Dpointer__bit_num=$(pointer__bit_num) \\"
-	echo "  -Dfloat__bit_num=$(float__bit_num) \\"
-	echo "  -Ddouble__bit_num=$(double__bit_num)"
+	echo "#define char__bit_num      `bin/configurator char-bit_num`"
+	echo "#define short__bit_num     `bin/configurator short-bit_num`"
+	echo "#define int__bit_num       `bin/configurator int-bit_num`"
+	echo "#define long__bit_num      `bin/configurator long-bit_num`"
+	echo "#define long_long__bit_num `bin/configurator long_long-bit_num`"
+	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"
+	echo "#define float__bit_num     `bin/configurator float-bit_num`"
+	echo "#define double__bit_num    `bin/configurator double-bit_num`"
 	echo ""
 
 $(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
@@ -313,12 +296,6 @@ s/test.s: c/test.c makefile
 %.o: %.c makefile
 	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
 
-clean-config:
-	echo "Resetting config.mak"
-	rm -f config.tmp
-	rm -f config.mak
-	echo "" > config.mak
-
 clean-binary:
 	echo "Removing: $(compile__funk2) and bin/configurator"
 	rm -f $(compile__funk2)
@@ -349,8 +326,7 @@ clean-install:
 	rm -f $(install__bootstrap__img)
 
 
-clean7:        clean-config
-clean6: clean7 clean-binary
+clean6:        clean-binary
 clean5: clean6 clean--bootstrap-repl.img
 clean4: clean5 clean-img
 clean3: clean4 clean-o
@@ -404,3 +380,4 @@ readline:
 rlglue:
 	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue__dir); make; make install
 #	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue__dir) --with-rl-glue=$(install__rlglue__dir); make; make install
+

@@ -24,7 +24,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "../config.h"
+#include "../config_bit_num.h"
+
 #include "f2_archconfig.h"
 #include "f2_debug_macros.h"
 

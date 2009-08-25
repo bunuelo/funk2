@@ -28,14 +28,22 @@
 #include "f2_compile.h"
 #include "f2_time.h"
 
-f2ptr f2__g_module_supported    ();
-f2ptr f2__g_module_build_path   (f2ptr cause, f2ptr directory, f2ptr module_name);
-f2ptr f2__g_module_open         (f2ptr cause, f2ptr file_name, f2ptr flags);
-f2ptr f2__g_module_symbol       (f2ptr cause, f2ptr module, f2ptr symbol_name);
-f2ptr f2__g_module_name         (f2ptr cause, f2ptr module);
-void  f2__g_module_make_resident(f2ptr cause, f2ptr module);
-f2ptr f2__g_module_close        (f2ptr cause, f2ptr module);
-f2ptr f2__g_module_error        (f2ptr cause);
+boolean_t raw__gmodule__supported();
+f2ptr      f2__gmodule__supported(f2ptr cause);
+u8*       raw__gmodule__build_path(u8* directory, u8* module_name);
+f2ptr      f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name);
+ptr       raw__gmodule__open(u8* filename, u64 flags);
+f2ptr      f2__gmodule__open(f2ptr cause, f2ptr filename, f2ptr flags);
+ptr       raw__gmodule__symbol(ptr module, u8* symbol_name);
+f2ptr      f2__gmodule__symbol(f2ptr cause, f2ptr module, f2ptr symbol_name);
+u8*       raw__gmodule__name(ptr module);
+f2ptr      f2__gmodule__name(f2ptr cause, f2ptr module);
+void      raw__gmodule__make_resident(ptr module);
+f2ptr      f2__gmodule__make_resident(f2ptr cause, f2ptr module);
+boolean_t raw__gmodule__close(ptr module);
+f2ptr      f2__gmodule__close(f2ptr cause, f2ptr module);
+u8*       raw__gmodule__error();
+f2ptr      f2__gmodule__error(f2ptr cause);
 
 // **
 

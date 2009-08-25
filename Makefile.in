@@ -58,7 +58,7 @@ subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	config.guess config.sub depcomp install-sh missing
+	compile config.guess config.sub depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/acx_pthread.m4 \
 	$(top_srcdir)/m4/ax_check_gl.m4 \
@@ -292,13 +292,10 @@ target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
-# write seconds since 1980 to file (for version definition)
-seconds_tmp = $(shell date +%s > seconds.tmp)
-
 # get the name of the architecture
-processor = $(shell uname -p)
+#processor = $(shell uname -p)
 # get the name of the operating system
-os_name = $(shell uname -s)
+#os_name = $(shell uname -s)
 
 # determine the number of processor
 #ifeq ($(os_name),Darwin)
@@ -335,8 +332,10 @@ libs = -lpthread
 #endif
 processor_flags = -Dprocessor_num_power=3
 funk2_objs = $(funk2_server_objs)
-version_flags = -DF2__COMPILE_TIME_ID=$(shell cat seconds.tmp)
-gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
+
+#version_flags = -DF2__COMPILE_TIME_ID=$(shell cat seconds.tmp)
+
+#gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
 dlfcn_linker_flags = -ldl
 opengl_linker_flags = -lGL -lGLU -lXxf86vm
 #`pkg-config --cflags --libs GL GLU Xxf86vm`
@@ -349,8 +348,8 @@ trace_flags = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 debug_flags = -O0 -g -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
 optimize_flags = -g -O4
-debug__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(version_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
-release__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(version_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
+debug__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
+release__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -452,8 +451,8 @@ bin_funk2_SOURCES = \
 
 bin_funk2_LDFLAGS = $(dynamic_library_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
-CONFIGURE_DEPENDENCIES = config_bit_num.h
-CONFIG_CLEAN_FILES = config_bit_num.h
+CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
+CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
 AM_MAKEFLAGS = img/bootstrap.img
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -2460,6 +2459,15 @@ uninstall-am: uninstall-binPROGRAMS
 	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-binPROGRAMS
 
+
+# write seconds since 1980 to file (for version definition)
+config_compile_time_id.h:
+	echo "#ifndef F2__CONFIG_COMPILE_TIME_ID__H"    > config_compile_time_id.h
+	echo "#define F2__CONFIG_COMPILE_TIME_ID__H"   >> config_compile_time_id.h
+	echo ""                                        >> config_compile_time_id.h
+	echo "#define F2__COMPILE_TIME_ID "`date +%s`  >> config_compile_time_id.h
+	echo ""                                        >> config_compile_time_id.h
+	echo "#endif // F2__CONFIG_COMPILE_TIME_ID__H" >> config_compile_time_id.h
 #cc_flags = $(athena__cc_flags)
 
 bin/configurator: c/configurator.c

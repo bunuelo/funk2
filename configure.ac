@@ -2,16 +2,19 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(funk2, 2.08, bo@mit.edu)
-AM_INIT_AUTOMAKE([subdir-objects])
-AC_CONFIG_SRCDIR([config.h.in])
+AC_INIT([funk2], [2.08], [bo@mit.edu])
+AC_CONFIG_SRCDIR([c/funk2.c])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
+
+# initialize automake
+AM_INIT_AUTOMAKE([subdir-objects])
 
 # Checks for libraries.
 

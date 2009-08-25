@@ -20,12 +20,18 @@
 # 
 
 # write seconds since 1980 to file (for version definition)
-seconds_tmp = $(shell date +%s > seconds.tmp)
+config_compile_time_id.h:
+	echo "#ifndef F2__CONFIG_COMPILE_TIME_ID__H"    > config_compile_time_id.h
+	echo "#define F2__CONFIG_COMPILE_TIME_ID__H"   >> config_compile_time_id.h
+	echo ""                                        >> config_compile_time_id.h
+	echo "#define F2__COMPILE_TIME_ID "`date +%s`  >> config_compile_time_id.h
+	echo ""                                        >> config_compile_time_id.h
+	echo "#endif // F2__CONFIG_COMPILE_TIME_ID__H" >> config_compile_time_id.h
 
 # get the name of the architecture
-processor = $(shell uname -p)
+#processor = $(shell uname -p)
 # get the name of the operating system
-os_name = $(shell uname -s)
+#os_name = $(shell uname -s)
 
 # determine the number of processor
 #ifeq ($(os_name),Darwin)
@@ -65,9 +71,9 @@ processor_flags = -Dprocessor_num_power=3
 
 funk2_objs   = $(funk2_server_objs)
 
-version_flags = -DF2__COMPILE_TIME_ID=$(shell cat seconds.tmp)
+#version_flags = -DF2__COMPILE_TIME_ID=$(shell cat seconds.tmp)
 
-gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
+#gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
 dlfcn_linker_flags   = -ldl
 
 opengl_linker_flags = -lGL -lGLU -lXxf86vm
@@ -86,8 +92,8 @@ debug_flags    = -O0 -g -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DE
 
 optimize_flags = -g -O4
 
-debug__cc_flags   = -Wall -fPIC $(memory_flags) $(processor_flags) $(version_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
-release__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(version_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
+debug__cc_flags   = -Wall -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
+release__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -232,8 +238,8 @@ bin_funk2_SOURCES = \
 bin_funk2_LDFLAGS = $(dynamic_library_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
 
-CONFIGURE_DEPENDENCIES = config_bit_num.h
-CONFIG_CLEAN_FILES = config_bit_num.h
+CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
+CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
 
 AM_MAKEFLAGS = img/bootstrap.img
 

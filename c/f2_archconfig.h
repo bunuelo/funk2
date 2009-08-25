@@ -26,6 +26,7 @@
 
 #include "../config.h"
 #include "../config_bit_num.h"
+#include "../config_compile_time_id.h"
 
 typedef __uint64_t ptr; //                        0 to 18.446744073709551615e18
 typedef __uint64_t u64; //                        0 to 18.446744073709551615e18

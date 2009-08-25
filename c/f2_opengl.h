@@ -24,6 +24,7 @@
 
 typedef struct funk2_opengl_s funk2_opengl_t;
 typedef struct funk2_openglu_s funk2_openglu_t;
+typedef struct funk2_xxf86vm_s funk2_xxf86vm_t;
 
 #include "f2_primfunks.h"
 
@@ -34,7 +35,6 @@ typedef double GLdouble;
 typedef float  GLclampf;
 typedef double GLclampd;
 typedef int    GLbitfield;
-
 
 struct funk2_opengl_s {
   boolean_t initialized;
@@ -58,15 +58,22 @@ struct funk2_openglu_s {
   void(*    gluPerspective)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
 };
 
-void funk2_opengl__init(funk2_opengl_t* this);
-void funk2_opengl__destroy(funk2_opengl_t* this);
+struct funk2_xxf86vm_s {
+  boolean_t initialized;
+  f2ptr     dlfcn_pointer;
+};
 
-boolean_t raw__opengl__load_library(f2ptr cause);
+void      funk2_opengl__init(funk2_opengl_t* this);
+void      funk2_opengl__destroy(funk2_opengl_t* this);
+boolean_t  raw__opengl__load_library(f2ptr cause);
 
-void funk2_openglu__init(funk2_openglu_t* this);
-void funk2_openglu__destroy(funk2_openglu_t* this);
+void      funk2_openglu__init(funk2_openglu_t* this);
+void      funk2_openglu__destroy(funk2_openglu_t* this);
+boolean_t  raw__openglu__load_library(f2ptr cause);
 
-boolean_t raw__openglu__load_library(f2ptr cause);
+void      funk2_xxf86vm__init(funk2_xxf86vm_t* this);
+void      funk2_xxf86vm__destroy(funk2_xxf86vm_t* this);
+boolean_t  raw__xxf86vm__load_library(f2ptr cause);
 
 #endif // F2__OPENGL__H
 

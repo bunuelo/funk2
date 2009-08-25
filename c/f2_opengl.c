@@ -132,6 +132,55 @@ boolean_t raw__openglu__load_library(f2ptr cause) {
   return funk2_openglu__load_library(&(__funk2.openglu), cause);
 }
 
+// funk2_xxf86vm
+
+void funk2_xxf86vm__init(funk2_xxf86vm_t* this) {
+  this->initialized   = boolean__false;
+  this->dlfcn_pointer = nil;
+}
+
+void funk2_xxf86vm__destroy(funk2_xxf86vm_t* this) {
+}
+
+boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
+  if (this->initialized) {
+    return boolean__true;
+  }
+  if (! f2__dlfcn__supported(cause)) {
+    status("funk2_xxf86vm__load_library: dlfcn is not supported on this system, so could not load xxf86vm.");
+    return boolean__false;
+  }
+  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libXxf86vm.so"),  nil);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libXxf86vm.so"),   filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libXxf86vm.so"),      filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libXxf86vm.so"), filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libXxf86vm.so"),  filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libXxf86vm.so"),        filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/lib/libXxf86vm.so"),            filenames);
+  f2ptr dlfcn_pointer = nil;
+  {
+    f2ptr filename_iter = filenames;
+    while ((! dlfcn_pointer) && filename_iter) {
+      f2ptr filename  = f2cons__car(filename_iter, cause);
+      dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, nil);
+      filename_iter = f2cons__cdr(filename_iter, cause);
+    }
+  }
+  if (! dlfcn_pointer) {
+    status("funk2_xxf86vm__load_library: failed to open xxf86vm dynamic library.");
+    return boolean__false;
+  }
+  this->dlfcn_pointer = dlfcn_pointer;
+  status("funk2_xxf86vm__load_library: loaded xxf86vm dynamic library successfully.");
+  //this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_xxf86vm__load_library: failed symbol, gluPerspective."); return boolean__false;}
+  status("funk2_xxf86vm__load_library: loaded xxf86vm function symbols successfully.");
+  return boolean__true;
+}
+
+boolean_t raw__xxf86vm__load_library(f2ptr cause) {
+  return funk2_xxf86vm__load_library(&(__funk2.xxf86vm), cause);
+}
+
 
 
 //lesson01.c:(.text+0x164): undefined reference to `glXSwapBuffers'

@@ -72,7 +72,6 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glHint         = (void(*)(GLenum target, GLenum mode))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));         if (! (this->glHint))         {status("funk2_opengl__load_library: failed symbol, glHint.");         return boolean__false;}
   this->glFlush        = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));        if (! (this->glFlush))        {status("funk2_opengl__load_library: failed symbol, glFlush.");        return boolean__false;}
   this->glClear        = (void(*)(GLbitfield mask))                                               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));        if (! (this->glClear))        {status("funk2_opengl__load_library: failed symbol, glClear.");        return boolean__false;}
-  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_opengl__load_library: failed symbol, gluPerspective."); return boolean__false;}
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   return boolean__true;
 }
@@ -81,6 +80,8 @@ boolean_t raw__opengl__load_library(f2ptr cause) {
   return funk2_opengl__load_library(&(__funk2.opengl), cause);
 }
 
+
+//  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_opengl__load_library: failed symbol, gluPerspective."); return boolean__false;}
 
 //lesson01.c:(.text+0x164): undefined reference to `glXSwapBuffers'
 //lesson01.c:(.text+0x197): undefined reference to `glXMakeCurrent'

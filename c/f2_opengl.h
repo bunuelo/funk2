@@ -34,13 +34,14 @@ typedef float  GLclampf;
 typedef double GLclampd;
 typedef int    GLbitfield;
 
+//  void(*    gluPerspective)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+
 struct funk2_opengl_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
   void(*    glViewport    )(GLint x, GLint y, GLsizei width, GLsizei height);
   void(*    glMatrixMode  )(GLenum mode);
   void(*    glLoadIdentity)();
-  void(*    gluPerspective)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
   void(*    glShadeModel  )(GLenum mode);
   void(*    glClearColor  )(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
   void(*    glClearDepth  )(GLclampd depth);

@@ -51,7 +51,7 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   u8* raw_filename = (u8*)alloca(filename__length + 1);
   f2string__str_copy(filename, cause, raw_filename);
   raw_filename[filename__length] = 0;
-  int raw_flag = flag ? f2integer__i(flag, cause) : 0;
+  int raw_flag = flag ? f2integer__i(flag, cause) : (RTLD_LAZY | RTLD_LOCAL);
   ptr result = to_ptr(raw__dlfcn__dlopen(raw_filename, raw_flag));
   if (! result) {
     status("f2__dlfcn__dlopen: failed to load library, \"%s\".", raw_filename);

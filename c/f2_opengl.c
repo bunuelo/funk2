@@ -47,7 +47,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   {
     f2ptr filename_iter   = filenames;
     while ((! dlfcn_pointer) && filename_iter) {
-      f2ptr filename  = f2cons__car(filenames, cause);
+      f2ptr filename  = f2cons__car(filename_iter, cause);
       dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, nil);
       filename_iter = f2cons__cdr(filename_iter, cause);
     }

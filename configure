@@ -2105,8 +2105,8 @@ fi
 
 
 # Define the identity of the package.
- PACKAGE=funk2
- VERSION=2.08
+ PACKAGE='funk2'
+ VERSION='2.08'
 
 
 cat >>confdefs.h <<_ACEOF

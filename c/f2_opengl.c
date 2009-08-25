@@ -56,6 +56,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
     status("funk2_opengl__load_library: failed to open opengl dynamic library.");
     return boolean__false;
   }
+  this->gmodule_pointer = gmodule_pointer;
   return boolean__true;
 }
 

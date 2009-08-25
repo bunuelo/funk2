@@ -23,7 +23,7 @@
 
 void funk2_opengl__init(funk2_opengl_t* this) {
   this->initialized     = boolean__false;
-  this->gmodule_pointer = nil;
+  this->dlfcn_pointer = nil;
 }
 
 void funk2_opengl__destroy(funk2_opengl_t* this) {
@@ -35,28 +35,28 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   if (this->initialized) {
     return boolean__true;
   }
-  if (! f2__gmodule__supported(cause)) {
-    status("funk2_opengl__load_library: gmodule is not supported on this system, so could not load opengl.");
+  if (! f2__dlfcn__supported(cause)) {
+    status("funk2_opengl__load_library: dlfcn is not supported on this system, so could not load opengl.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/usr/X11R6/lib/"), new__string(cause, "GL")), nil);
-  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/usr/local/lib/"), new__string(cause, "GL")), filenames);
-  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/usr/lib/"),       new__string(cause, "GL")), filenames);
-  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/lib/"),           new__string(cause, "GL")), filenames);
-  f2ptr gmodule_pointer = nil;
+  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGL.so"), nil);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libGL.so"), filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libGL.so"),       filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/lib/libGL.so"),           filenames);
+  f2ptr dlfcn_pointer = nil;
   {
     f2ptr filename_iter   = filenames;
-    while ((! gmodule_pointer) && filename_iter) {
+    while ((! dlfcn_pointer) && filename_iter) {
       f2ptr filename  = f2cons__car(filenames, cause);
-      gmodule_pointer = f2__gmodule__open(cause, filename, nil);
+      dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, nil);
       filename_iter = f2cons__cdr(filename_iter, cause);
     }
   }
-  if (! gmodule_pointer) {
+  if (! dlfcn_pointer) {
     status("funk2_opengl__load_library: failed to open opengl dynamic library.");
     return boolean__false;
   }
-  this->gmodule_pointer = gmodule_pointer;
+  this->dlfcn_pointer = dlfcn_pointer;
   return boolean__true;
 }
 

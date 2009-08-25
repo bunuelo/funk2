@@ -36,7 +36,7 @@ typedef int    GLbitfield;
 
 struct funk2_opengl_s {
   boolean_t initialized;
-  f2ptr     gmodule_pointer;
+  f2ptr     dlfcn_pointer;
   void(*    glViewport    )(GLint x, GLint y, GLsizei width, GLsizei height);
   void(*    glMatrixMode  )(GLenum mode);
   void(*    glLoadIdentity)();

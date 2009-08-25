@@ -44,14 +44,14 @@ ptr raw__dlfcn__dlopen(u8* filename, int flag) {
 
 f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   if ((! raw__string__is_type(cause, filename)) ||
-      (! raw__integer__is_type(cause, flag))) {
+      (flag && (! raw__integer__is_type(cause, flag)))) {
     return f2larva__new(cause, 1);
   }
   int filename__length = f2string__length(filename, cause);
   u8* raw_filename = (u8*)alloca(filename__length + 1);
   f2string__str_copy(filename, cause, raw_filename);
   raw_filename[filename__length] = 0;
-  int raw_flag = f2integer__i(flag, cause);
+  int raw_flag = flag ? f2integer__i(flag, cause) : 0;
   return f2pointer__new(cause, to_ptr(raw__dlfcn__dlopen(raw_filename, raw_flag)));
 }
 def_pcfunk2(dlfcn__dlopen, filename, flag, return f2__dlfcn__dlopen(this_cause, filename, flag));

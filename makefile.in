@@ -231,10 +231,7 @@ bin/configurator: c/configurator.c
 	mkdir -p bin
 	gcc $(cc_flags) c/configurator.c -o $@
 
-configure: bin/configurator
-	make -s configure-silent
-
-configure-silent:
+config_bit_num.h: bin/configurator
 	rm -f config_bit_num.h
 	echo "" > config_bit_num.h
 	echo "#define char__bit_num      `bin/configurator char-bit_num`"      >> config_bit_num.h
@@ -256,7 +253,7 @@ configure-silent:
 	echo "#define double__bit_num    `bin/configurator double-bit_num`"
 	echo ""
 
-$(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
+$(compile__funk2): config_bit_num.h $(funk2_objs) $(funk2_headers) makefile
 	mkdir -p bin
 	gcc $(cc_flags) $(type_bits_flags) $(funk2_objs) $(libs) $(dynamic_library_linker_flags) -o $@
 

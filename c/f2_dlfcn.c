@@ -54,6 +54,7 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   int raw_flag = flag ? f2integer__i(flag, cause) : 0;
   ptr result = to_ptr(raw__dlfcn__dlopen(raw_filename, raw_flag));
   if (! result) {
+    status("f2__dlfcn__dlopen: failed to load library, \"%s\".", raw_filename);
     return nil;
   }
   return f2pointer__new(cause, result);

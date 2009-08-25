@@ -57,6 +57,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
     return boolean__false;
   }
   this->dlfcn_pointer = dlfcn_pointer;
+  status("funk2_opengl__load_library: loaded opengl dynamic library successfully.");
   return boolean__true;
 }
 

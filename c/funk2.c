@@ -151,6 +151,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_management_thread__init(&(this->management_thread));
   funk2_user_thread_controller__init(&(this->user_thread_controller));
   funk2_opengl__init(&(this->opengl));
+  funk2_openglu__init(&(this->openglu));
   
   f2ptr cause = initial_cause();
   
@@ -302,6 +303,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_management_thread__destroy(&(this->management_thread));
   funk2_user_thread_controller__destroy(&(this->user_thread_controller));
   funk2_opengl__destroy(&(this->opengl));
+  funk2_openglu__destroy(&(this->openglu));
   
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }
@@ -335,6 +337,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   funk2__init(this, argc, argv);
   
   raw__opengl__load_library(nil);
+  raw__openglu__load_library(nil);
   
   while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);

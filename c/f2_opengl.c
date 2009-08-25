@@ -21,6 +21,8 @@
 
 #include "funk2.h"
 
+// funk2_opengl
+
 void funk2_opengl__init(funk2_opengl_t* this) {
   this->initialized     = boolean__false;
   this->dlfcn_pointer = nil;
@@ -61,17 +63,17 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   }
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_opengl__load_library: loaded opengl dynamic library successfully.");
-  this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));     if (! (this->glViewport))     {status("funk2_opengl__load_library: failed symbol, glViewport.");     return boolean__false;}
-  this->glMatrixMode   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));   if (! (this->glMatrixMode))   {status("funk2_opengl__load_library: failed symbol, glMatrixMode.");   return boolean__false;}
-  this->glLoadIdentity = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity")); if (! (this->glLoadIdentity)) {status("funk2_opengl__load_library: failed symbol, glLoadIdentity."); return boolean__false;}
-  this->glShadeModel   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));   if (! (this->glShadeModel))   {status("funk2_opengl__load_library: failed symbol, glShadeModel.");   return boolean__false;}
-  this->glClearColor   = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha))   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));   if (! (this->glClearColor))   {status("funk2_opengl__load_library: failed symbol, glClearColor.");   return boolean__false;}
-  this->glClearDepth   = (void(*)(GLclampd depth))                                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));   if (! (this->glClearDepth))   {status("funk2_opengl__load_library: failed symbol, glClearDepth.");   return boolean__false;}
-  this->glEnable       = (void(*)(GLenum cap))                                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));       if (! (this->glEnable))       {status("funk2_opengl__load_library: failed symbol, glEnable.");       return boolean__false;}
-  this->glDepthFunc    = (void(*)(GLenum func))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));    if (! (this->glDepthFunc))    {status("funk2_opengl__load_library: failed symbol, glDepthFunc.");    return boolean__false;}
-  this->glHint         = (void(*)(GLenum target, GLenum mode))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));         if (! (this->glHint))         {status("funk2_opengl__load_library: failed symbol, glHint.");         return boolean__false;}
-  this->glFlush        = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));        if (! (this->glFlush))        {status("funk2_opengl__load_library: failed symbol, glFlush.");        return boolean__false;}
-  this->glClear        = (void(*)(GLbitfield mask))                                               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));        if (! (this->glClear))        {status("funk2_opengl__load_library: failed symbol, glClear.");        return boolean__false;}
+  this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));     if (! (this->glViewport))     {status("funk2_opengl__load_library: failed symbol, glViewport.");     return boolean__false;}
+  this->glMatrixMode   = (void(*)(GLenum mode))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));   if (! (this->glMatrixMode))   {status("funk2_opengl__load_library: failed symbol, glMatrixMode.");   return boolean__false;}
+  this->glLoadIdentity = (void(*)())                                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity")); if (! (this->glLoadIdentity)) {status("funk2_opengl__load_library: failed symbol, glLoadIdentity."); return boolean__false;}
+  this->glShadeModel   = (void(*)(GLenum mode))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));   if (! (this->glShadeModel))   {status("funk2_opengl__load_library: failed symbol, glShadeModel.");   return boolean__false;}
+  this->glClearColor   = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));   if (! (this->glClearColor))   {status("funk2_opengl__load_library: failed symbol, glClearColor.");   return boolean__false;}
+  this->glClearDepth   = (void(*)(GLclampd depth))                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));   if (! (this->glClearDepth))   {status("funk2_opengl__load_library: failed symbol, glClearDepth.");   return boolean__false;}
+  this->glEnable       = (void(*)(GLenum cap))                                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));       if (! (this->glEnable))       {status("funk2_opengl__load_library: failed symbol, glEnable.");       return boolean__false;}
+  this->glDepthFunc    = (void(*)(GLenum func))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));    if (! (this->glDepthFunc))    {status("funk2_opengl__load_library: failed symbol, glDepthFunc.");    return boolean__false;}
+  this->glHint         = (void(*)(GLenum target, GLenum mode))                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));         if (! (this->glHint))         {status("funk2_opengl__load_library: failed symbol, glHint.");         return boolean__false;}
+  this->glFlush        = (void(*)())                                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));        if (! (this->glFlush))        {status("funk2_opengl__load_library: failed symbol, glFlush.");        return boolean__false;}
+  this->glClear        = (void(*)(GLbitfield mask))                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));        if (! (this->glClear))        {status("funk2_opengl__load_library: failed symbol, glClear.");        return boolean__false;}
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   return boolean__true;
 }
@@ -81,7 +83,56 @@ boolean_t raw__opengl__load_library(f2ptr cause) {
 }
 
 
-//  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_opengl__load_library: failed symbol, gluPerspective."); return boolean__false;}
+// funk2_openglu
+
+void funk2_openglu__init(funk2_openglu_t* this) {
+  this->initialized   = boolean__false;
+  this->dlfcn_pointer = nil;
+}
+
+void funk2_openglu__destroy(funk2_openglu_t* this) {
+}
+
+boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
+  if (this->initialized) {
+    return boolean__true;
+  }
+  if (! f2__dlfcn__supported(cause)) {
+    status("funk2_openglu__load_library: dlfcn is not supported on this system, so could not load openglu.");
+    return boolean__false;
+  }
+  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGLU.so"),  nil);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libGLU.so"),   filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libGLU.so"),      filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libGLU.so"), filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libGLU.so"),  filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libGLU.so"),        filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/lib/libGLU.so"),            filenames);
+  f2ptr dlfcn_pointer = nil;
+  {
+    f2ptr filename_iter = filenames;
+    while ((! dlfcn_pointer) && filename_iter) {
+      f2ptr filename  = f2cons__car(filename_iter, cause);
+      dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, nil);
+      filename_iter = f2cons__cdr(filename_iter, cause);
+    }
+  }
+  if (! dlfcn_pointer) {
+    status("funk2_openglu__load_library: failed to open openglu dynamic library.");
+    return boolean__false;
+  }
+  this->dlfcn_pointer = dlfcn_pointer;
+  status("funk2_openglu__load_library: loaded openglu dynamic library successfully.");
+  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_openglu__load_library: failed symbol, gluPerspective."); return boolean__false;}
+  status("funk2_openglu__load_library: loaded openglu function symbols successfully.");
+  return boolean__true;
+}
+
+boolean_t raw__openglu__load_library(f2ptr cause) {
+  return funk2_openglu__load_library(&(__funk2.openglu), cause);
+}
+
+
 
 //lesson01.c:(.text+0x164): undefined reference to `glXSwapBuffers'
 //lesson01.c:(.text+0x197): undefined reference to `glXMakeCurrent'

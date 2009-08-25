@@ -194,6 +194,7 @@ typedef struct funk2_s {
   funk2_ptypes_t                      ptypes;
   funk2_reader_t                      reader;
   funk2_opengl_t                      opengl;
+  funk2_openglu_t                     openglu;
 } funk2_t;
 
 void      funk2__init(funk2_t* this, int argc, char** argv);

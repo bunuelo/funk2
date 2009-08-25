@@ -39,10 +39,10 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
     status("funk2_opengl__load_library: gmodule is not supported on this system, so could not load opengl.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/usr/X11R6/lib/"), new__string("GL")), nil);
-  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/usr/local/lib/"), new__string("GL")), filenames);
-  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/usr/lib/"),       new__string("GL")), filenames);
-  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string("/lib/"),           new__string("GL")), filenames);
+  f2ptr filenames = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/usr/X11R6/lib/"), new__string(cause, "GL")), nil);
+  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/usr/local/lib/"), new__string(cause, "GL")), filenames);
+  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/usr/lib/"),       new__string(cause, "GL")), filenames);
+  filenames       = f2cons__new(cause, f2__gmodule__build_path(cause, new__string(cause, "/lib/"),           new__string(cause, "GL")), filenames);
   f2ptr gmodule_pointer = nil;
   {
     f2ptr filename_iter   = filenames;

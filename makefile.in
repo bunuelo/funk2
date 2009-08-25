@@ -139,7 +139,6 @@ funk2_server_objs = \
   c/f2_user_thread_controller.o \
   c/funk2.o
 funk2_headers = \
-  config_bit_num.h \
   c/f2_ansi.h \
   c/f2_apropos.h \
   c/f2_blocks_world.h \
@@ -288,10 +287,10 @@ s/test.s: c/test.c makefile
 	gcc -o s/test.s -S c/test.c
 
 
-%.o: %.c %.h $(funk2_headers) makefile
+%.o: %.c %.h config_bit_num.h makefile
 	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
 
-%.o: %.c $(funk2_headers) makefile
+%.o: %.c config_bit_num.h makefile
 	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
 
 clean-binary:

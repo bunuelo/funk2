@@ -49,6 +49,7 @@
 #endif
 #include <errno.h>
 #include <fcntl.h>
+#include <gl.h>
 #ifdef F2__GMODULE__SUPPORTED
 #  include <gmodule.h>
 #endif

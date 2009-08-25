@@ -58,30 +58,19 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   }
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_opengl__load_library: loaded opengl dynamic library successfully.");
-  this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));
-  if (! (this->glViewport)) {return boolean__false;}
-  this->glMatrixMode   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));
-  if (! (this->glMatrixMode)) {return boolean__false;}
-  this->glLoadIdentity = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity"));
-  if (! (this->glLoadIdentity)) {return boolean__false;}
-  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective"));
-  if (! (this->gluPerspective)) {return boolean__false;}
-  this->glShadeModel   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));
-  if (! (this->glShadeModel)) {return boolean__false;}
-  this->glClearColor   = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha))   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));
-  if (! (this->glClearColor)) {return boolean__false;}
-  this->glClearDepth   = (void(*)(GLclampd depth))                                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));
-  if (! (this->glClearDepth)) {return boolean__false;}
-  this->glEnable       = (void(*)(GLenum cap))                                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));
-  if (! (this->glEnable)) {return boolean__false;}
-  this->glDepthFunc    = (void(*)(GLenum func))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));
-  if (! (this->glDepthFunc)) {return boolean__false;}
-  this->glHint         = (void(*)(GLenum target, GLenum mode))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));
-  if (! (this->glHint)) {return boolean__false;}
-  this->glFlush        = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));
-  if (! (this->glFlush)) {return boolean__false;}
-  this->glClear        = (void(*)(GLbitfield mask))                                               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));
-  if (! (this->glClear)) {return boolean__false;}
+  this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));     if (! (this->glViewport))     {return boolean__false;}
+  this->glMatrixMode   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));   if (! (this->glMatrixMode))   {return boolean__false;}
+  this->glLoadIdentity = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity")); if (! (this->glLoadIdentity)) {return boolean__false;}
+  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {return boolean__false;}
+  this->glShadeModel   = (void(*)(GLenum mode))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));   if (! (this->glShadeModel))   {return boolean__false;}
+  this->glClearColor   = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha))   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));   if (! (this->glClearColor))   {return boolean__false;}
+  this->glClearDepth   = (void(*)(GLclampd depth))                                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));   if (! (this->glClearDepth))   {return boolean__false;}
+  this->glEnable       = (void(*)(GLenum cap))                                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));       if (! (this->glEnable))       {return boolean__false;}
+  this->glDepthFunc    = (void(*)(GLenum func))                                                   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));    if (! (this->glDepthFunc))    {return boolean__false;}
+  this->glHint         = (void(*)(GLenum target, GLenum mode))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));         if (! (this->glHint))         {return boolean__false;}
+  this->glFlush        = (void(*)())                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));        if (! (this->glFlush))        {return boolean__false;}
+  this->glClear        = (void(*)(GLbitfield mask))                                               from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));        if (! (this->glClear))        {return boolean__false;}
+  status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   return boolean__true;
 }
 

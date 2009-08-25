@@ -23,10 +23,27 @@
 #define F2__DLFCN__H
 
 boolean_t raw__dlfcn__supported();
+f2ptr      f2__dlfcn__supported(f2ptr cause);
 ptr       raw__dlfcn__dlopen(u8* filename, int flag);
+f2ptr      f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag);
 u8*       raw__dlfcn__dlerror();
+f2ptr      f2__dlfcn__dlerror(f2ptr cause);
 ptr       raw__dlfcn__dlsym(ptr handle, u8* symbol);
+f2ptr      f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol);
 int       raw__dlfcn__dlclose(ptr handle);
+f2ptr      f2__dlfcn__dlclose(f2ptr cause, f2ptr handle);
+u64       raw__dlfcn__rtld_lazy();
+f2ptr      f2__dlfcn__rtld_lazy(f2ptr cause);
+u64       raw__dlfcn__rtld_now();
+f2ptr      f2__dlfcn__rtld_now(f2ptr cause);
+u64       raw__dlfcn__rtld_global();
+f2ptr      f2__dlfcn__rtld_global(f2ptr cause);
+u64       raw__dlfcn__rtld_local();
+f2ptr      f2__dlfcn__rtld_local(f2ptr cause);
+u64       raw__dlfcn__rtld_nodelete();
+f2ptr      f2__dlfcn__rtld_nodelete(f2ptr cause);
+u64       raw__dlfcn__rtld_noload();
+f2ptr      f2__dlfcn__rtld_noload(f2ptr cause);
 
 // **
 

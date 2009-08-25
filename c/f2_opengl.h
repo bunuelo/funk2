@@ -54,6 +54,8 @@ struct funk2_opengl_s {
 void funk2_opengl__init(funk2_opengl_t* this);
 void funk2_opengl__destroy(funk2_opengl_t* this);
 
+boolean_t raw__opengl__load_library(f2ptr cause);
+
 #endif // F2__OPENGL__H
 
 

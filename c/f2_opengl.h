@@ -23,6 +23,7 @@
 #define F2__OPENGL__H
 
 typedef struct funk2_opengl_s funk2_opengl_t;
+typedef struct funk2_openglu_s funk2_openglu_t;
 
 #include "f2_primfunks.h"
 

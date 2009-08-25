@@ -1,3 +1,24 @@
+# 
+# Copyright (c) 2007-2009 Bo Morgan.
+# All rights reserved.
+# 
+# Author: Bo Morgan
+# 
+# Permission to use, copy, modify and distribute this software and its
+# documentation is hereby granted, provided that both the copyright
+# notice and this permission notice appear in all copies of the
+# software, derivative works or modified versions, and any portions
+# thereof, and that both notices appear in supporting documentation.
+# 
+# BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+# BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+# WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+# 
+# Bo Morgan requests users of this software to return to bo@mit.edu any
+# improvements or extensions that they make and grant Bo Morgan the
+# rights to redistribute these changes.
+# 
+
 ACLOCAL_AMFLAGS = -I m4
 
 dist-hook:
@@ -5,3 +26,373 @@ dist-hook:
     (cd $(top_srcdir) && rm ChangeLog && svn2cl --group-by-day); \
     cp $(top_srcdir)/ChangeLog $(distdir); \
 fi
+
+debian_install_root_dir = $(DESTDIR)/
+
+current_dir                  = $(shell pwd | sed -e 's=^/tmp_mnt/=/=')/
+
+source__funk2__dir           = ./
+source__fu2__dir             = $(source__funk2__dir)fu2/
+source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
+source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
+source__icons__dir           = $(source__funk2__dir)icons/
+
+compile__funk2__dir           = $(source__funk2__dir)
+compile__bin__dir             = $(compile__funk2__dir)bin/
+compile__img__dir             = $(compile__funk2__dir)img/
+compile__funk2                = $(compile__bin__dir)funk2
+compile__bootstrap__img       = $(compile__img__dir)bootstrap.img
+compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
+
+install__system_bin__dir     = $(debian_install_root_dir)usr/bin/
+install__bin__dir            = $(debian_install_root_dir)usr/bin/
+install__include__dir        = $(debian_install_root_dir)usr/include/funk2/
+install__img__dir            = $(debian_install_root_dir)usr/share/funk2/img/
+install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/icons/
+install__man__dir            = $(debian_install_root_dir)usr/share/man/man1/
+install__funk2               = $(install__bin__dir)funk2
+install__bootstrap__img      = $(install__img__dir)bootstrap.img
+install__rlglue__dir         = $(current_dir)extern
+
+default: $(compile__funk2) $(compile__bootstrap__img)
+
+funk2_server_objs = \
+  c/f2_ansi.o \
+  c/f2_apropos.o \
+  c/f2_blocks_world.o \
+  c/f2_buffered_file.o \
+  c/f2_buffered_socket.o \
+  c/f2_bytecodes.o \
+  c/f2_child.o \
+  c/f2_child_handler.o \
+  c/f2_circular_buffer.o \
+  c/f2_command_line.o \
+  c/f2_compile.o \
+  c/f2_compile_x86.o \
+  c/f2_dlfcn.o \
+  c/f2_dptr.o \
+  c/f2_event_router.o \
+  c/f2_garbage_collector.o \
+  c/f2_garbage_collector_pool.o \
+  c/f2_globalenv.o \
+  c/f2_gmodule.o \
+  c/f2_frame_objects.o \
+  c/f2_funk2_node.o \
+  c/f2_funktional.o \
+  c/f2_html.o \
+  c/f2_load.o \
+  c/f2_malloc.o \
+  c/f2_management_thread.o \
+  c/f2_memblock.o \
+  c/f2_memory.o \
+  c/f2_memorypool.o \
+  c/f2_module_registration.o \
+  c/f2_never_delete_list.o \
+  c/f2_object.o \
+  c/f2_opengl.o \
+  c/f2_packet.o \
+  c/f2_peer_command_server.o \
+  c/f2_primobjects.o \
+  c/f2_primobject__action.o \
+  c/f2_primobject__boolean.o \
+  c/f2_primobject__char_pointer.o \
+  c/f2_primobject__dynamic_library.o \
+  c/f2_primobject__environment.o \
+  c/f2_primobject__frame.o \
+  c/f2_primobject__hashtable.o \
+  c/f2_primobject__list.o \
+  c/f2_primobject__object.o \
+  c/f2_primobject__object_type.o \
+  c/f2_primobject__circular_buffer.o \
+  c/f2_primobject__semantic_graph.o \
+  c/f2_primobject__set.o \
+  c/f2_primobject__stream.o \
+  c/f2_primobject__tensor.o \
+  c/f2_primobject__text_buffer.o \
+  c/f2_primobject_type.o \
+  c/f2_primobject_type_handler.o \
+  c/f2_print.o \
+  c/f2_primfunks.o \
+  c/f2_primfunks__errno.o \
+  c/f2_primfunks__fcntl.o \
+  c/f2_primfunks__ioctl.o \
+  c/f2_primfunks__locale.o \
+  c/f2_processor_mutex.o \
+  c/f2_processor_thread.o \
+  c/f2_processor_thread_handler.o \
+  c/f2_protected_alloc_array.o \
+  c/f2_ptype.o \
+  c/f2_ptypes.o \
+  c/f2_reader.o \
+  c/f2_redblacktree.o \
+  c/f2_simple_repl.o \
+  c/f2_scheduler.o \
+  c/f2_scheduler_thread_controller.o \
+  c/f2_search.o \
+  c/f2_serialize.o \
+  c/f2_set.o \
+  c/f2_signal.o \
+  c/f2_socket.o \
+  c/f2_socket_client.o \
+  c/f2_socket_server.o \
+  c/f2_sort.o \
+  c/f2_status.o \
+  c/f2_string.o \
+  c/f2_dynamic_memory.o \
+  c/f2_termios.o \
+  c/f2_thought_process.o \
+  c/f2_fiber.o \
+  c/f2_time.o \
+  c/f2_trace.o \
+  c/f2_user_thread_controller.o \
+  c/funk2.o
+funk2_headers = \
+  c/f2_ansi.h \
+  c/f2_apropos.h \
+  c/f2_blocks_world.h \
+  c/f2_buffered_file.h \
+  c/f2_buffered_socket.h \
+  c/f2_bytecodes.h \
+  c/f2_child.h \
+  c/f2_child_handler.h \
+  c/f2_compile.h \
+  c/f2_compile_x86.h \
+  c/f2_dlfcn.h \
+  c/f2_dptr.h \
+  c/f2_event_router.h \
+  c/f2_garbage_collector.h \
+  c/f2_garbage_collector_pool.h \
+  c/f2_global.h \
+  c/f2_globalenv.h \
+  c/f2_gmodule.h \
+  c/f2_frame_objects.h \
+  c/f2_funk2_node.h \
+  c/f2_funktional.h \
+  c/f2_html.h \
+  c/f2_load.h \
+  c/f2_peer_command_server.h \
+  c/f2_malloc.h \
+  c/f2_management_thread.h \
+  c/f2_memblock.h \
+  c/f2_memory.h \
+  c/f2_memorypool.h \
+  c/f2_module_registration.h \
+  c/f2_never_delete_list.h \
+  c/f2_object.h \
+  c/f2_opengl.h \
+  c/f2_packet.h \
+  c/f2_primobjects.h \
+  c/f2_primobject__action.h \
+  c/f2_primobject__boolean.h \
+  c/f2_primobject__char_pointer.h \
+  c/f2_primobject__dynamic_library.h \
+  c/f2_primobject__environment.h \
+  c/f2_primobject__frame.h \
+  c/f2_primobject__hashtable.h \
+  c/f2_primobject__list.h \
+  c/f2_primobject__object.h \
+  c/f2_primobject__object_type.h \
+  c/f2_primobject__circular_buffer.h \
+  c/f2_primobject__semantic_graph.h \
+  c/f2_primobject__set.h \
+  c/f2_primobject__stream.h \
+  c/f2_primobject__tensor.h \
+  c/f2_primobject__text_buffer.h \
+  c/f2_primobject_type.h \
+  c/f2_primobject_type_handler.h \
+  c/f2_print.h \
+  c/f2_primfunks.h \
+  c/f2_primfunks__errno.h \
+  c/f2_primfunks__fcntl.h \
+  c/f2_primfunks__ioctl.h \
+  c/f2_primfunks__locale.h \
+  c/f2_processor_mutex.h \
+  c/f2_processor_thread.h \
+  c/f2_processor_thread_handler.h \
+  c/f2_protected_alloc_array.h \
+  c/f2_ptype.h \
+  c/f2_ptypes.h \
+  c/f2_reader.h \
+  c/f2_redblacktree.h \
+  c/f2_simple_repl.h \
+  c/f2_scheduler.h \
+  c/f2_scheduler_thread_controller.h \
+  c/f2_search.h \
+  c/f2_serialize.h \
+  c/f2_set.h \
+  c/f2_signal.h \
+  c/f2_socket.h \
+  c/f2_sort.h \
+  c/f2_status.h \
+  c/f2_string.h \
+  c/f2_dynamic_memory.h \
+  c/f2_termios.h \
+  c/f2_thought_process.h \
+  c/f2_fiber.h \
+  c/f2_time.h \
+  c/f2_trace.h \
+  c/f2_user_thread_controller.o
+
+include makefile.cfg
+
+bin/configurator: c/configurator.c
+	mkdir -p bin
+	gcc $(cc_flags) c/configurator.c -o $@
+
+config_bit_num.h: bin/configurator
+	rm -f config_bit_num.h
+	echo "" > config_bit_num.h
+	echo "#define char__bit_num      `bin/configurator char-bit_num`"      >> config_bit_num.h
+	echo "#define short__bit_num     `bin/configurator short-bit_num`"     >> config_bit_num.h
+	echo "#define int__bit_num       `bin/configurator int-bit_num`"       >> config_bit_num.h
+	echo "#define long__bit_num      `bin/configurator long-bit_num`"      >> config_bit_num.h
+	echo "#define long_long__bit_num `bin/configurator long_long-bit_num`" >> config_bit_num.h
+	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"   >> config_bit_num.h
+	echo "#define float__bit_num     `bin/configurator float-bit_num`"     >> config_bit_num.h
+	echo "#define double__bit_num    `bin/configurator double-bit_num`"    >> config_bit_num.h
+	echo ""
+	echo "#define char__bit_num      `bin/configurator char-bit_num`"
+	echo "#define short__bit_num     `bin/configurator short-bit_num`"
+	echo "#define int__bit_num       `bin/configurator int-bit_num`"
+	echo "#define long__bit_num      `bin/configurator long-bit_num`"
+	echo "#define long_long__bit_num `bin/configurator long_long-bit_num`"
+	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"
+	echo "#define float__bit_num     `bin/configurator float-bit_num`"
+	echo "#define double__bit_num    `bin/configurator double-bit_num`"
+	echo ""
+
+$(compile__funk2): $(funk2_objs) $(funk2_headers) makefile
+	mkdir -p bin
+	gcc $(cc_flags) $(type_bits_flags) $(funk2_objs) $(libs) $(dynamic_library_linker_flags) -o $@
+
+# compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
+$(compile__bootstrap__repl__img): $(compile__funk2) $(funk2_fu2s)
+	mkdir -p img
+#	echo "break assert_failed"                 >  compile_bootstrap_repl_img.gdb
+#	echo "run $(source__bootstrap__repl__fu2)" >> compile_bootstrap_repl_img.gdb
+#	echo "quit"                                >> compile_bootstrap_repl_img.gdb
+#	gdb -x compile_bootstrap_repl_img.gdb $(compile__funk2)
+	$(compile__funk2) $(source__bootstrap__repl__fu2)
+
+# bootstrap the funk2 processor from a basic repl-prompt.
+$(compile__bootstrap__img): $(compile__bootstrap__repl__img) $(funk2_fu2s)
+	mkdir -p img
+#	echo "break assert_failed"           >  compile_bootstrap_img.gdb
+#	echo "run $(source__bootstrap__fu2)" >> compile_bootstrap_img.gdb
+#	echo "quit"                          >> compile_bootstrap_img.gdb
+#	gdb -x compile_bootstrap_img.gdb $(compile__funk2)
+	$(compile__funk2) $(source__bootstrap__fu2)
+
+# objdump/test.objdump is for reverse engineering a machine code compiler from c/test.c (it would be relatively easy to automate this; it would be nice to have our machine code compiler be machine independent)
+
+objdump/test.objdump: bin/test.o makefile
+	objdump -d bin/test.o > objdump/test.objdump
+
+bin/test.o: s/test.s makefile
+	gcc -c -fPIC -o bin/test.o s/test.s
+
+s/test.s: c/test.c makefile
+	gcc -o s/test.s -S c/test.c
+
+
+%.o: %.c %.h config_bit_num.h makefile
+	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
+
+%.o: %.c config_bit_num.h makefile
+	gcc $(cc_flags) $(type_bits_flags) -c $< -o $@
+
+clean-makefile:
+	echo "Removing: makefile"
+	rm -f makefile
+
+clean-binary:
+	echo "Removing: $(compile__funk2) and bin/configurator"
+	rm -f $(compile__funk2)
+	rm -f bin/configurator
+
+clean--bootstrap-repl.img:
+	echo "Removing:"; ls $(compile__bootstrap__repl__img); echo ""
+	rm -f $(compile__bootstrap__repl__img)
+
+clean-img:
+	echo "Removing:"; ls $(compile__bootstrap__img); echo ""
+	rm -f $(compile__bootstrap__img)
+
+clean-o:
+	echo "Removing:"; ls c/*.o; echo ""
+	rm -f c/*.o
+
+clean-source_backups:
+	echo "Removing:"; ls c/*.*~ c/.\#*.*; echo ""
+	rm -f c/*.*~ c/.\#*.*
+
+clean-trace:
+	echo "Removing:"; ls funk2_trace.log; echo ""
+	rm -f funk2_trace.log
+
+clean-autotools:
+	echo "Removing: configure, makefile.ac, makefile.scan"
+	rm -f configure makefile.ac makefile.scan
+
+
+clean7:        clean-makefile
+clean6: clean7 clean-binary
+clean5: clean6 clean--bootstrap-repl.img
+clean4: clean5 clean-img
+clean3: clean4 clean-o
+clean2: clean3 clean-source_backups
+clean1: clean2 clean-trace
+clean0: clean1 clean-autotools
+
+clean:     clean2
+uninstall: clean1
+distclean: clean0
+
+clean-install:
+	rm -f $(install__funk2)
+	rm -f $(install__bootstrap__img)
+
+make-install-sh:
+	echo "#!/bin/sh"                                                            > install-sh
+	echo "echo \"\""                                                           >> install-sh
+	echo "echo \"make: performing system-wide installation of funk2\""         >> install-sh
+	echo "echo \"\""                                                           >> install-sh
+	echo "echo \"  install__bin__dir     = $(install__bin__dir)\""             >> install-sh
+	echo "echo \"  install__include__dir = $(install__include__dir)\""         >> install-sh
+	echo "echo \"\""                                                           >> install-sh
+	echo "install -d $(install__img__dir)"                                     >> install-sh
+	echo "install -d $(install__bin__dir)"                                     >> install-sh
+	echo "install -d $(install__include__dir)"                                 >> install-sh
+	echo "install -d $(install__system_bin__dir)"                              >> install-sh
+	echo "install -d $(install__icons__dir)"                                   >> install-sh
+	echo "install -d $(install__man__dir)"                                     >> install-sh
+	echo "install -m755 $(compile__funk2) $(install__funk2)"                   >> install-sh
+	echo "install -m644 $(compile__bootstrap__img) $(install__bootstrap__img)" >> install-sh
+	echo "install -m644 c/*.h $(install__include__dir)"                        >> install-sh
+	echo "install -m644 $(source__icons__dir)* $(install__icons__dir)"         >> install-sh
+	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                          >> install-sh
+	echo "install -m644 debian/funk2.1.gz $(install__man__dir)"                >> install-sh
+
+install: make-install-sh
+	./install-sh
+
+sin:
+	sudo make install
+
+unsin:
+	sudo make uninstall
+
+tags:
+	cd c/; etags *.[ch]
+
+link-grammar:
+	cd extern/link-grammar-4.4.2/; ./configure; make
+
+readline:
+	cd extern/readline-6.0; ./configure; make
+
+# RL-Glue Libraries  http://glue.rl-community.org
+rlglue:
+	cd extern/rlglue-3.02; ./configure --prefix=$(install__rlglue__dir); make; make install
+#	cd extern/c-codec-2.0; ./configure --prefix=$(install__rlglue__dir) --with-rl-glue=$(install__rlglue__dir); make; make install
+

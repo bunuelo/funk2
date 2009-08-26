@@ -17,18 +17,30 @@ funk2: causally reflective programming language
         sharing a network interface must be able to allocate a unique
         peer-command-server port number.
 
-    --swap-directory <swap-directory>  [:default ./f2swp/ :try /tmp/]
-        
-        local filesystem directory for storing swap files which should have an
-        absolute minimum of 2 gigabytes of free space.
 
 
-TO INSTALL:
+TO PERFORM LOCAL BUILD:
 
-  make clean
-  make configure
+  ./configure
+  make
+
+
+TO RUN LOCAL BUILD:
+
+  bin/funk2     (from original compile directory)
+
+
+TO PERFORM SYSTEM-WIDE INSTALLATION:
+
+  ./configure
   make
   make install  (as root)
+
+
+TO RUN SYSTEM-WIDE INSTALLATION:
+
+  funk2         (from anywhere on system)
+
 
 
 Homepage:
@@ -36,9 +48,11 @@ Homepage:
   http://neuromin.de/rct/funk2.html
 
 
+
 Git Access:
 
   http://git.neuromin.de/
+
 
 
 Package Downloads:

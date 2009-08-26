@@ -306,6 +306,7 @@ make-install-sh:
 	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh
 	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                  >> install-sh
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
+	chmod a+x install-sh
 
 install: install-am make-install-sh
 	./install-sh

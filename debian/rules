@@ -17,7 +17,7 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-
+	./configure
 	touch configure-stamp
 
 
@@ -27,7 +27,6 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE) configure
 	$(MAKE)
 	#docbook-to-man debian/funk2.sgml > funk2.1
 

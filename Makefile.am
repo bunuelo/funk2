@@ -154,11 +154,14 @@ config_bit_num.h: bin/configurator
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
 img/bootstrap-repl.img: bin/funk2
 	mkdir -p img
+	rm -f img/bootstrap-repl.img
+	rm -f img/bootstrap.img
 	bin/funk2 fu2/bootstrap-repl.fu2
 
 # bootstrap the funk2 processor from a basic repl-prompt.
 img/bootstrap.img: img/bootstrap-repl.img
 	mkdir -p img
+	rm -f img/bootstrap.img
 	bin/funk2 fu2/bootstrap.fu2
 
 ###### Makefile.am specifics below here ######

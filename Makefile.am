@@ -286,3 +286,27 @@ clean: clean-am
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
 
+make-install-sh:
+	echo "#!/bin/sh"                                                                    > install-sh
+	echo "echo \"\""                                                                   >> install-sh
+	echo "echo \"make: performing system-wide installation of funk2\""                 >> install-sh
+	echo "echo \"\""                                                                   >> install-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
+	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
+	echo "echo \"\""                                                                   >> install-sh
+	echo "install -d $(chroot__install__img__dir)"                                     >> install-sh
+#	echo "install -d $(chroot__install__bin__dir)"                                     >> install-sh
+	echo "install -d $(chroot__install__include__dir)"                                 >> install-sh
+	echo "install -d $(chroot__install__system_bin__dir)"                              >> install-sh
+	echo "install -d $(chroot__install__icons__dir)"                                   >> install-sh
+	echo "install -d $(chroot__install__man__dir)"                                     >> install-sh
+#	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
+	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
+	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
+	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh
+	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                  >> install-sh
+	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
+
+install: install-am make-install-sh
+	./install-sh
+

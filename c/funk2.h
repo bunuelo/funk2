@@ -72,11 +72,34 @@
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glx.h>
-#include <X11/extensions/xf86vmode.h>
-#include <X11/keysym.h>
+
+#if defined(HAVE_GL_GL_H)
+#  define  F2__GL__H
+#  include <GL/gl.h>
+#elif defined(HAVE_OPENGL_GL_H)
+#  define  F2__GL__H
+#  include <OpenGL/gl.h>
+#endif
+
+#if defined(HAVE_GL_GLU_H)
+#  define  F2__GLU__H
+#  include <GL/glu.h>
+#elif defined(HAVE_OPENGL_GLU_H)
+#  define  F2__GLU__H
+#  include <OpenGL/glu.h>
+#endif
+
+#ifdef HAVE_GL_GLX_H
+#  include <GL/glx.h>
+#endif
+
+#ifdef HAVE_X11_EXTENSIONS_XF86VMODE_H
+#  include <X11/extensions/xf86vmode.h>
+#endif
+
+#ifdef HAVE_X11_KEYSYM_H
+#  include <X11/keysym.h>
+#endif
 
 #include "f2_ansi.h"
 #include "f2_apropos.h"

@@ -45,6 +45,9 @@
 /* Define to 1 if you have the <GL/glu.h> header file. */
 #undef HAVE_GL_GLU_H
 
+/* Define to 1 if you have the <GL/glx.h> header file. */
+#undef HAVE_GL_GLX_H
+
 /* Define to 1 if you have the <GL/gl.h> header file. */
 #undef HAVE_GL_GL_H
 
@@ -169,6 +172,12 @@
 
 /* Define to 1 if `vfork' works. */
 #undef HAVE_WORKING_VFORK
+
+/* Define to 1 if you have the <X11/extensions/xf86vmode.h> header file. */
+#undef HAVE_X11_EXTENSIONS_XF86VMODE_H
+
+/* Define to 1 if you have the <X11/keysym.h> header file. */
+#undef HAVE_X11_KEYSYM_H
 
 /* Define to 1 if the system has the type `_Bool'. */
 #undef HAVE__BOOL

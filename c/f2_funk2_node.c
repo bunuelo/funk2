@@ -33,19 +33,19 @@ void fiber_hash__destroy(fiber_hash_t* this) {
 }
 
 void fiber_hash__add_fiber_funk2_node(fiber_hash_t* this, f2ptr fiber, funk2_node_t* funk2_node) {
-  uint                bin_index = fiber & this->hash_value_bit_mask;
+  uint               bin_index = fiber & this->hash_value_bit_mask;
   fiber_hash_node_t* new_node  = (fiber_hash_node_t*)from_ptr(f2__malloc(sizeof(fiber_hash_node_t)));
-  new_node->fiber     = fiber;
-  new_node->funk2_node = funk2_node;
-  new_node->next       = this->array[bin_index];
+  new_node->fiber        = fiber;
+  new_node->funk2.node   = funk2_node;
+  new_node->next         = this->array[bin_index];
   this->array[bin_index] = new_node;
 }
 
 void fiber_hash__add_fiber_funk2_packet(fiber_hash_t* this, f2ptr fiber, funk2_packet_t* funk2_packet) {
-  uint                bin_index = fiber & this->hash_value_bit_mask;
+  uint               bin_index = fiber & this->hash_value_bit_mask;
   fiber_hash_node_t* new_node  = (fiber_hash_node_t*)from_ptr(f2__malloc(sizeof(fiber_hash_node_t)));
-  new_node->fiber       = fiber;
-  new_node->funk2_packet = funk2_packet;
+  new_node->fiber        = fiber;
+  new_node->funk2.packet = funk2_packet;
   new_node->next         = this->array[bin_index];
   this->array[bin_index] = new_node;
 }
@@ -66,7 +66,7 @@ funk2_node_t* fiber_hash__lookup_funk2_node(fiber_hash_t* this, f2ptr fiber) {
   fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_node_t* funk2_node;
   if (fiber_hash_node) {
-    funk2_node = fiber_hash_node->funk2_node;
+    funk2_node = fiber_hash_node->funk2.node;
   } else {
     funk2_node = NULL;
   }
@@ -77,8 +77,8 @@ funk2_node_t* fiber_hash__pop_funk2_node(fiber_hash_t* this, f2ptr fiber) {
   fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_node_t* funk2_node;
   if (fiber_hash_node) {
-    funk2_node = fiber_hash_node->funk2_node;
-    fiber_hash_node->funk2_node = NULL;
+    funk2_node = fiber_hash_node->funk2.node;
+    fiber_hash_node->funk2.node = NULL;
   } else {
     funk2_node = NULL;
   }
@@ -89,7 +89,7 @@ funk2_packet_t* fiber_hash__lookup_funk2_packet(fiber_hash_t* this, f2ptr fiber)
   fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_packet_t* packet;
   if (fiber_hash_node) {
-    packet = fiber_hash_node->funk2_packet;
+    packet = fiber_hash_node->funk2.packet;
   } else {
     packet = NULL;
   }
@@ -100,8 +100,8 @@ funk2_packet_t* fiber_hash__pop_funk2_packet(fiber_hash_t* this, f2ptr fiber) {
   fiber_hash_node_t* fiber_hash_node = fiber_hash__lookup_fiber_hash_node(this, fiber);
   funk2_packet_t* packet;
   if (fiber_hash_node) {
-    packet = fiber_hash_node->funk2_packet;
-    fiber_hash_node->funk2_packet = NULL;
+    packet = fiber_hash_node->funk2.packet;
+    fiber_hash_node->funk2.packet = NULL;
   } else {
     packet = NULL;
   }
@@ -185,7 +185,7 @@ void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_hand
 	       this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
 	// after disconnect and reconnect, send last sent packet again.
 	if (this->last_sent_packet__is_valid) {
-	  socket_rpc_layer__funk2_node__send_packet(this, &(this->last_sent_packet));
+	  socket_rpc_layer__funk2_node__send_packet(this, &(this->last_sent.packet));
 	}
       }
     }
@@ -223,7 +223,7 @@ void funk2_node__send_packet(f2ptr cause, funk2_node_t* this, funk2_packet_t* pa
   this->last_sent_packet__stream_iter ++;
   packet->header.stream_iter = this->last_sent_packet__stream_iter;
   u64 packet__size = funk2_packet__sizeof(packet);
-  memcpy(&(this->last_sent_packet), packet, packet__size);
+  memcpy(&(this->last_sent.packet), packet, packet__size);
   this->last_sent_packet__is_valid = boolean__true;
   funk2_packet__send_to_socket(cause, packet, &(this->socket_client.socket));
   funk2_processor_mutex__unlock(&(this->socket_client_mutex));
@@ -234,7 +234,7 @@ void socket_rpc_layer__funk2_node__send_packet(funk2_node_t* this, funk2_packet_
   this->last_sent_packet__stream_iter ++;
   packet->header.stream_iter = this->last_sent_packet__stream_iter;
   u64 packet__size = funk2_packet__sizeof(packet);
-  memcpy(&(this->last_sent_packet), packet, packet__size);
+  memcpy(&(this->last_sent.packet), packet, packet__size);
   this->last_sent_packet__is_valid = boolean__true;
   socket_rpc_layer__funk2_packet__send_to_socket(packet, &(this->socket_client.socket));
   funk2_processor_mutex__unlock(&(this->socket_client_mutex));

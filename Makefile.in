@@ -289,6 +289,26 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+debian_install_root_dir = $(DESTDIR)/
+source__funk2__dir = ./
+source__fu2__dir = $(source__funk2__dir)fu2/
+source__bootstrap__fu2 = $(source__fu2__dir)bootstrap.fu2
+source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
+source__icons__dir = $(source__funk2__dir)icons/
+compile__funk2__dir = $(source__funk2__dir)
+compile__bin__dir = $(compile__funk2__dir)bin/
+compile__img__dir = $(compile__funk2__dir)img/
+compile__funk2 = $(compile__bin__dir)funk2
+compile__bootstrap__img = $(compile__img__dir)bootstrap.img
+compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
+install__system_bin__dir = $(debian_install_root_dir)usr/bin/
+install__bin__dir = $(debian_install_root_dir)usr/bin/
+install__include__dir = $(debian_install_root_dir)usr/include/funk2/
+install__img__dir = $(debian_install_root_dir)usr/share/funk2/img/
+install__icons__dir = $(debian_install_root_dir)usr/share/funk2/icons/
+install__man__dir = $(debian_install_root_dir)usr/share/man/man1/
+install__funk2 = $(install__bin__dir)funk2
+install__bootstrap__img = $(install__img__dir)bootstrap.img
 
 # get the name of the architecture
 #processor = $(shell uname -p)
@@ -346,10 +366,10 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 #dynamic_library_linker_flags = $(gmodule_linker_flags)
 trace_flags = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
-debug_flags = -O0 -g -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
-optimize_flags = -g -O0
-debug__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
-release__cc_flags = -Wall -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
+debug_flags = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
+optimize_flags = 
+debug__cc_flags = -Wall --std=c99 --pedantic -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
+release__cc_flags = -Wall --std=c99 --pedantic -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -451,7 +471,6 @@ bin_funk2_SOURCES = \
 
 bin_funk2_LDFLAGS = $(dynamic_library_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
-AM_CFLAGS = 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
 AM_MAKEFLAGS = img/bootstrap.img

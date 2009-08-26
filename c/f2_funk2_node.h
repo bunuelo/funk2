@@ -33,11 +33,11 @@ typedef struct funk2_node_s funk2_node_t;
 #define FIBER_HASH__INITIAL_ARRAY_LENGTH 1024 // must be power of 2
 
 typedef struct fiber_hash_node_s {
-  f2ptr                      fiber;
+  f2ptr                     fiber;
   union {
-    funk2_node_t*            funk2_node;
-    funk2_packet_t*          funk2_packet;
-  };
+    funk2_node_t*           node;
+    funk2_packet_t*         packet;
+  } funk2;
   struct fiber_hash_node_s* next;
 } fiber_hash_node_t;
 
@@ -63,9 +63,9 @@ struct funk2_node_s {
   stream_iter_t           last_sent_packet__stream_iter;
   boolean_t               last_sent_packet__is_valid;
   union {
-    funk2_packet_t        last_sent_packet;
-    u8                    last_sent_packet_bytes[max_funk2_packet_size];
-  };
+    funk2_packet_t        packet;
+    u8                    packet_bytes[max_funk2_packet_size];
+  } last_sent;
   event_id_t              last_known_event;
 };
 

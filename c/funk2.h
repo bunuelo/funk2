@@ -90,14 +90,17 @@
 #endif
 
 #ifdef HAVE_GL_GLX_H
+#  define  F2__GLX__H
 #  include <GL/glx.h>
 #endif
 
 #ifdef HAVE_X11_EXTENSIONS_XF86VMODE_H
+#  define  F2__XF86VMODE__H
 #  include <X11/extensions/xf86vmode.h>
 #endif
 
 #ifdef HAVE_X11_KEYSYM_H
+#  define  F2__KEYSYM__H
 #  include <X11/keysym.h>
 #endif
 

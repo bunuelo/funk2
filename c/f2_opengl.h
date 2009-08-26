@@ -39,6 +39,7 @@ typedef struct funk2_xxf86vm_s funk2_xxf86vm_t;
 struct funk2_opengl_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
+#if defined(F2__GL__H)
   void(*    glViewport    )(GLint x, GLint y, GLsizei width, GLsizei height);
   void(*    glMatrixMode  )(GLenum mode);
   void(*    glLoadIdentity)();
@@ -50,18 +51,23 @@ struct funk2_opengl_s {
   void(*    glHint        )(GLenum target, GLenum mode);
   void(*    glFlush       )();
   void(*    glClear       )(GLbitfield mask);
+#endif // F2__GL__H
 };
 
 struct funk2_openglu_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
+#if defined(F2__GLU__H)
   void(*    gluPerspective)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+#endif // F2__GLU__H
 };
 
 struct funk2_xxf86vm_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
+#if defined(F2__XF86VMODE__H)
   void(*    glXSwapBuffers) (Display *dpy, GLXDrawable drawable);
+#endif // F2__XF86VMODE__H
 };
 
 void      funk2_opengl__init(funk2_opengl_t* this);

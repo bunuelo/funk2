@@ -19,7 +19,8 @@
 # rights to redistribute these changes.
 # 
 
-debian_install_root_dir = $(DESTDIR)/
+plain_install_root_dir  = /
+chroot_install_root_dir = $(DESTDIR)/
 
 source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
@@ -34,14 +35,23 @@ compile__funk2                = $(compile__bin__dir)funk2
 compile__bootstrap__img       = $(compile__img__dir)bootstrap.img
 compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
 
-install__system_bin__dir     = $(debian_install_root_dir)usr/bin/
-install__bin__dir            = $(debian_install_root_dir)usr/bin/
-install__include__dir        = $(debian_install_root_dir)usr/include/funk2/
-install__img__dir            = $(debian_install_root_dir)usr/share/funk2/img/
-install__icons__dir          = $(debian_install_root_dir)usr/share/funk2/icons/
-install__man__dir            = $(debian_install_root_dir)usr/share/man/man1/
-install__funk2               = $(install__bin__dir)funk2
-install__bootstrap__img      = $(install__img__dir)bootstrap.img
+chroot__install__system_bin__dir     = $(chroot_install_root_dir)usr/bin/
+chroot__install__bin__dir            = $(chroot_install_root_dir)usr/bin/
+chroot__install__include__dir        = $(chroot_install_root_dir)usr/include/funk2/
+chroot__install__img__dir            = $(chroot_install_root_dir)usr/share/funk2/img/
+chroot__install__icons__dir          = $(chroot_install_root_dir)usr/share/funk2/icons/
+chroot__install__man__dir            = $(chroot_install_root_dir)usr/share/man/man1/
+chroot__install__funk2               = $(chroot__install__bin__dir)funk2
+chroot__install__bootstrap__img      = $(chroot__install__img__dir)bootstrap.img
+
+plain__install__system_bin__dir     = $(plain_install_root_dir)usr/bin/
+plain__install__bin__dir            = $(plain_install_root_dir)usr/bin/
+plain__install__include__dir        = $(plain_install_root_dir)usr/include/funk2/
+plain__install__img__dir            = $(plain_install_root_dir)usr/share/funk2/img/
+plain__install__icons__dir          = $(plain_install_root_dir)usr/share/funk2/icons/
+plain__install__man__dir            = $(plain_install_root_dir)usr/share/man/man1/
+plain__install__funk2               = $(plain__install__bin__dir)funk2
+plain__install__bootstrap__img      = $(plain__install__img__dir)bootstrap.img
 
 # write seconds since 1980 to file (for version definition)
 config_compile_time_id.h:
@@ -111,7 +121,7 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 #dynamic_library_linker_flags = $(gmodule_linker_flags)
 
 trace_flags           = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES 
-compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
+compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 
 debug_flags    = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
 

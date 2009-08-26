@@ -245,3 +245,7 @@ CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
 AM_MAKEFLAGS = img/bootstrap.img
 
 
+clean: clean-am
+	rm -f img/bootstrap-repl.img
+	rm -f img/bootstrap.img
+

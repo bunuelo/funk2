@@ -63,6 +63,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   }
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_opengl__load_library: loaded opengl dynamic library successfully.");
+#if defined(F2__GL__H)
   this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));     if (! (this->glViewport))     {status("funk2_opengl__load_library: failed symbol, glViewport.");     return boolean__false;}
   this->glMatrixMode   = (void(*)(GLenum mode))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));   if (! (this->glMatrixMode))   {status("funk2_opengl__load_library: failed symbol, glMatrixMode.");   return boolean__false;}
   this->glLoadIdentity = (void(*)())                                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity")); if (! (this->glLoadIdentity)) {status("funk2_opengl__load_library: failed symbol, glLoadIdentity."); return boolean__false;}
@@ -74,6 +75,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glHint         = (void(*)(GLenum target, GLenum mode))                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));         if (! (this->glHint))         {status("funk2_opengl__load_library: failed symbol, glHint.");         return boolean__false;}
   this->glFlush        = (void(*)())                                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));        if (! (this->glFlush))        {status("funk2_opengl__load_library: failed symbol, glFlush.");        return boolean__false;}
   this->glClear        = (void(*)(GLbitfield mask))                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));        if (! (this->glClear))        {status("funk2_opengl__load_library: failed symbol, glClear.");        return boolean__false;}
+#endif // F2__GL__H
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   return boolean__true;
 }
@@ -123,7 +125,9 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
   }
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_openglu__load_library: loaded openglu dynamic library successfully.");
+#if defined(F2__GLU__H)
   this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_openglu__load_library: failed symbol, gluPerspective."); return boolean__false;}
+#endif // F2__GLU__H
   status("funk2_openglu__load_library: loaded openglu function symbols successfully.");
   return boolean__true;
 }
@@ -172,7 +176,9 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
   }
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_xxf86vm__load_library: loaded xxf86vm dynamic library successfully.");
+#if defined(F2__XF86VMODE__H)
   //this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_xxf86vm__load_library: failed symbol, gluPerspective."); return boolean__false;}
+#endif // F2__XF86VMODE__H
   status("funk2_xxf86vm__load_library: loaded xxf86vm function symbols successfully.");
   return boolean__true;
 }

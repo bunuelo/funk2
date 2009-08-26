@@ -76,12 +76,13 @@ funk2_objs   = $(funk2_server_objs)
 #gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
 dlfcn_linker_flags   = -ldl
 
-opengl_linker_flags = -lGL -lGLU -lXxf86vm
+#opengl_linker_flags = -lGL -lGLU -lXxf86vm
 #`pkg-config --cflags --libs GL GLU Xxf86vm`
 
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
-dynamic_library_linker_flags = $(dlfcn_linker_flags) $(opengl_linker_flags) -lrt
+dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 
+#dynamic_library_linker_flags = $(dlfcn_linker_flags) $(opengl_linker_flags) -lrt
 #dynamic_library_flags        = $(shell pkg-config --cflags gmodule-2.0) -DF2__GMODULE__SUPPORTED 
 #dynamic_library_linker_flags = $(gmodule_linker_flags)
 

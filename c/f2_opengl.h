@@ -22,9 +22,10 @@
 #ifndef F2__OPENGL__H
 #define F2__OPENGL__H
 
-typedef struct funk2_opengl_s funk2_opengl_t;
+typedef struct funk2_opengl_s  funk2_opengl_t;
 typedef struct funk2_openglu_s funk2_openglu_t;
 typedef struct funk2_xxf86vm_s funk2_xxf86vm_t;
+typedef struct funk2_xlib_s    funk2_xlib_t;
 
 #include "f2_primfunks.h"
 

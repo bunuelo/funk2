@@ -339,23 +339,4 @@ boolean_t raw__xlib__load_library(f2ptr cause) {
 }
 
 
-//lesson01.c:(.text+0x224): undefined reference to `XCloseDisplay'
-//lesson01.c:(.text+0x24a): undefined reference to `XOpenDisplay'
-//lesson01.c:(.text+0x474): undefined reference to `XCreateColormap'
-//lesson01.c:(.text+0x53c): undefined reference to `XFree'
-//lesson01.c:(.text+0x5dc): undefined reference to `XCreateWindow'
-//lesson01.c:(.text+0x630): undefined reference to `XWarpPointer'
-//lesson01.c:(.text+0x647): undefined reference to `XMapRaised'
-//lesson01.c:(.text+0x67e): undefined reference to `XGrabKeyboard'
-//lesson01.c:(.text+0x6cf): undefined reference to `XGrabPointer'
-//lesson01.c:(.text+0x76a): undefined reference to `XCreateWindow'
-//lesson01.c:(.text+0x78c): undefined reference to `XInternAtom'
-//lesson01.c:(.text+0x7b6): undefined reference to `XSetWMProtocols'
-//lesson01.c:(.text+0x7fc): undefined reference to `XSetStandardProperties'
-//lesson01.c:(.text+0x813): undefined reference to `XMapRaised'
-//lesson01.c:(.text+0x882): undefined reference to `XGetGeometry'
-//lesson01.c:(.text+0x95b): undefined reference to `XNextEvent'
-//lesson01.c:(.text+0xa00): undefined reference to `XLookupKeysym'
-//lesson01.c:(.text+0xa21): undefined reference to `XLookupKeysym'
-//lesson01.c:(.text+0xa83): undefined reference to `XGetAtomName'
 //lesson01.c:(.text+0xaaf): undefined reference to `XPending'

@@ -279,19 +279,42 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
   return boolean__true;
 }
 
-void raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, void* display, int screen, void* modeline) {
-  if (!__funk2.openglu.initialized) {return;}
+boolean_t raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, void* display, int screen, void* modeline) {
+  if (!__funk2.openglu.initialized) {return boolean__false;;}
 #if defined(F2__GL__H)
-  (*__funk2.xxf86vm.XF86VidModeSwitchToMode)((Display*)display, screen, (XF86VidModeModeInfo*)modeline);
+  return (*__funk2.xxf86vm.XF86VidModeSwitchToMode)((Display*)display, screen, (XF86VidModeModeInfo*)modeline) ? boolean__true : boolean__false;
+#else
+  return boolean__false;
 #endif // F2__GL__H
 }
 
-void raw__xxf86vm__XF86VidModeSetViewPort(f2ptr cause, void* display, int screen, int x, int y) {
-  if (!__funk2.openglu.initialized) {return;}
+boolean_t raw__xxf86vm__XF86VidModeSetViewPort(f2ptr cause, void* display, int screen, int x, int y) {
+  if (!__funk2.openglu.initialized) {return boolean__false;;}
 #if defined(F2__GL__H)
-  (*__funk2.xxf86vm.XF86VidModeSetViewPort)((Display*)display, screen, x, y);
+  return (*__funk2.xxf86vm.XF86VidModeSetViewPort)((Display*)display, screen, x, y) ? boolean__true : boolean__false;
+#else
+  return boolean__false;
 #endif // F2__GL__H
 }
+
+boolean_t raw__xxf86vm__XF86VidModeQueryVersion(f2ptr cause, void* display, int* major_version_return, int* minor_version_return) {
+  if (!__funk2.openglu.initialized) {return boolean__false;}
+#if defined(F2__GL__H)
+  return (*__funk2.xxf86vm.XF86VidModeQueryVersion)((Display*)display, major_version_return, minor_version_return) ? boolean__true : boolean__false;
+#else
+  return boolean__false;
+#endif // F2__GL__H
+}
+
+boolean_t raw__xxf86vm__XF86VidModeGetAllModeLines(f2ptr cause, void* display, int screen, int* modecount_return, void* modesinfo) {
+  if (!__funk2.openglu.initialized) {return boolean__false;}
+#if defined(F2__GL__H)
+  return (*__funk2.xxf86vm.XF86VidModeGetAllModeLines)((Display*)display, screen, modecount_return, (XF86VidModeModeInfo***)modesinfo) ? boolean__true : boolean__false;
+#else
+  return boolean__false;
+#endif // F2__GL__H
+}
+
 
 boolean_t raw__xxf86vm__load_library(f2ptr cause) {
 #if defined(F2__XF86VMODE__H)

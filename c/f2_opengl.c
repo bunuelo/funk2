@@ -88,6 +88,82 @@ boolean_t raw__opengl__load_library(f2ptr cause) {
 #endif // F2__GL__H
 }
 
+void raw__opengl__glViewport(f2ptr cause, s64 x, s64 y, s64 width, s64 height) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glViewport)(x, y, width, height);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glMatrixMode(f2ptr cause, u64 mode) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glMatrixMode)(mode);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glLoadIdentity(f2ptr cause) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glLoadIdentity)();
+#endif // F2__GL__H
+}
+
+void raw__opengl__glShadeModel(f2ptr cause, u64 mode) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glShadeModel)(mode);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glClearColor(f2ptr cause, double red, double green, double blue, double alpha) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glClearColor)(red, green, blue, alpha);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glClearDepth(f2ptr cause, double depth) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glClearDepth)(depth);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glEnable(f2ptr cause, u64 cap) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glEnable)(cap);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glDepthFunc(f2ptr cause, u64 func) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glDepthFunc)(func);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glHint(f2ptr cause, u64 target, u64 mode) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glHint)(target, mode);
+#endif // F2__GL__H
+}
+
+void raw__opengl__glFlush(f2ptr cause) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glFlush)();
+#endif // F2__GL__H
+}
+
+void raw__opengl__glClear(f2ptr cause, u64 bitmask) {
+  if (!__funk2.opengl.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.opengl.glClear)(bitmask);
+#endif // F2__GL__H
+}
 
 // funk2_openglu
 

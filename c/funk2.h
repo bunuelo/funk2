@@ -104,6 +104,11 @@
 #  include <X11/extensions/xf86vmode.h>
 #endif
 
+#ifdef HAVE_X11_XLIB_H
+#  define  F2__XLIB__H
+#  include <X11/xlib.h>
+#endif
+
 #ifdef HAVE_X11_KEYSYM_H
 #  define  F2__KEYSYM__H
 #  include <X11/keysym.h>

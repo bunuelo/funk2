@@ -283,6 +283,62 @@ boolean_t raw__xxf86vm__load_library(f2ptr cause) {
 }
 
 
+// funk2_xlib
+
+void funk2_xlib__init(funk2_xlib_t* this) {
+  this->initialized   = boolean__false;
+  this->dlfcn_pointer = nil;
+}
+
+void funk2_xlib__destroy(funk2_xlib_t* this) {
+}
+
+boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
+  if (this->initialized) {
+    return boolean__true;
+  }
+  if (! f2__dlfcn__supported(cause)) {
+    status("funk2_xlib__load_library: dlfcn is not supported on this system, so could not load xlib.");
+    return boolean__false;
+  }
+  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libX11.so"),  nil);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libX11.so"),   filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libX11.so"),      filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libX11.so"), filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libX11.so"),  filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libX11.so"),        filenames);
+  filenames       = f2cons__new(cause, new__string(cause, "/lib/libX11.so"),            filenames);
+  f2ptr dlfcn_pointer = nil;
+  {
+    f2ptr filename_iter = filenames;
+    while ((! dlfcn_pointer) && filename_iter) {
+      f2ptr filename  = f2cons__car(filename_iter, cause);
+      dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, nil);
+      filename_iter = f2cons__cdr(filename_iter, cause);
+    }
+  }
+  if (! dlfcn_pointer) {
+    status("funk2_xlib__load_library: failed to open xlib dynamic library.");
+    return boolean__false;
+  }
+  this->dlfcn_pointer = dlfcn_pointer;
+  status("funk2_xlib__load_library: loaded xlib dynamic library successfully.");
+#if defined(F2__XLIB__H)
+  //this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_xlib__load_library: failed symbol, gluPerspective."); return boolean__false;}
+#endif // F2__XLIB__H
+  status("funk2_xlib__load_library: loaded xlib function symbols successfully.");
+  return boolean__true;
+}
+
+boolean_t raw__xlib__load_library(f2ptr cause) {
+#if defined(F2__XLIB__H)
+  return funk2_xlib__load_library(&(__funk2.xlib), cause);
+#else
+  return boolean__false;
+#endif // F2__XLIB__H
+}
+
+
 //lesson01.c:(.text+0x224): undefined reference to `XCloseDisplay'
 //lesson01.c:(.text+0x24a): undefined reference to `XOpenDisplay'
 //lesson01.c:(.text+0x474): undefined reference to `XCreateColormap'

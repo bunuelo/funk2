@@ -77,9 +77,16 @@ struct funk2_xxf86vm_s {
   Bool(* XF86VidModeSwitchToMode   )(Display* display, int screen, XF86VidModeModeInfo* modeline);
   Bool(* XF86VidModeSetViewPort    )(Display* display, int screen, int x, int y);
   Bool(* XF86VidModeQueryVersion   )(Display* display, int* major_version_return, int* minor_version_return);
-  Bool(* XF86VidModeGetAllModeLines)(Display* display, int screen, int* modecount_return, XF86VidModeModeInfo ***modesinfo);
+  Bool(* XF86VidModeGetAllModeLines)(Display* display, int screen, int* modecount_return, XF86VidModeModeInfo*** modesinfo);
   Bool(* XF86VidModeSwitchToMode   )(Display* display, int screen, XF86VidModeModeInfo *modeline);
 #endif // F2__XF86VMODE__H
+};
+
+struct funk2_xlib_s {
+  boolean_t      initialized;
+  f2ptr          dlfcn_pointer;
+#if defined(F2__XLIB__H)
+#endif // F2__XLIB__H
 };
 
 void      funk2_opengl__init(funk2_opengl_t* this);
@@ -93,6 +100,10 @@ boolean_t  raw__openglu__load_library(f2ptr cause);
 void      funk2_xxf86vm__init(funk2_xxf86vm_t* this);
 void      funk2_xxf86vm__destroy(funk2_xxf86vm_t* this);
 boolean_t  raw__xxf86vm__load_library(f2ptr cause);
+
+void      funk2_xlib__init(funk2_xlib_t* this);
+void      funk2_xlib__destroy(funk2_xlib_t* this);
+boolean_t  raw__xlib__load_library(f2ptr cause);
 
 #endif // F2__OPENGL__H
 

@@ -28,6 +28,7 @@ AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 #  include <GL/glx.h>
 #endif
 ]])
+AC_CHECK_HEADERS([X11/xlib.h])
 AC_CHECK_HEADERS([X11/keysym.h])
 
 # Checks for typedefs, structures, and compiler characteristics.

@@ -270,7 +270,7 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_xxf86vm__load_library: loaded xxf86vm dynamic library successfully.");
 #if defined(F2__XF86VMODE__H)
-  //this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_xxf86vm__load_library: failed symbol, gluPerspective."); return boolean__false;}
+  this->XF86VidModeSwitchToMode = (Bool(*)(Display* display, int screen, XF86VidModeModeInfo* modeline))   from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XF86VidModeSwitchToMode")); if (! (this->XF86VidModeSwitchToMode)) {status("funk2_xxf86vm__load_library: failed symbol, XF86VidModeSwitchToMode."); return boolean__false;}
 #endif // F2__XF86VMODE__H
   status("funk2_xxf86vm__load_library: loaded xxf86vm function symbols successfully.");
   return boolean__true;

@@ -340,10 +340,10 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 #endif // TEST
   funk2__init(this, argc, argv);
   
-  //raw__opengl__load_library(nil);
-  //raw__openglu__load_library(nil);
-  //raw__xxf86vm__load_library(nil);
-  //raw__xlib__load_library(nil);
+  raw__opengl__load_library(nil);
+  raw__openglu__load_library(nil);
+  raw__xxf86vm__load_library(nil);
+  raw__xlib__load_library(nil);
   
   while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);

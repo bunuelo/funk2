@@ -268,7 +268,7 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
     return boolean__false;
   }
   this->dlfcn_pointer = dlfcn_pointer;
-  status("funk2_xxf86vm__load_library: loaded xxf86vm dynamic library successfully.");
+  //status("funk2_xxf86vm__load_library: loaded xxf86vm dynamic library successfully.");
 #if defined(F2__XF86VMODE__H)
   this->XF86VidModeSwitchToMode    = (Bool(*)(Display* display, int screen, XF86VidModeModeInfo* modeline))                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XF86VidModeSwitchToMode"));    if (! (this->XF86VidModeSwitchToMode))    {status("funk2_xxf86vm__load_library: failed symbol, XF86VidModeSwitchToMode."); return boolean__false;}
   this->XF86VidModeSetViewPort     = (Bool(*)(Display* display, int screen, int x, int y))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XF86VidModeSetViewPort"));     if (! (this->XF86VidModeSetViewPort))     {status("funk2_xxf86vm__load_library: failed symbol, XF86VidModeSetViewPort."); return boolean__false;}
@@ -277,6 +277,13 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
 #endif // F2__XF86VMODE__H
   status("funk2_xxf86vm__load_library: loaded xxf86vm function symbols successfully.");
   return boolean__true;
+}
+
+void raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, int screen, void* modeline) {
+  if (!__funk2.openglu.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.openglu.gluPerspective)(fovy, aspect, zNear, zFar);
+#endif // F2__GL__H
 }
 
 boolean_t raw__xxf86vm__load_library(f2ptr cause) {

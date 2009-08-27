@@ -57,6 +57,7 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
     status("f2__dlfcn__dlopen: failed to load library, \"%s\".", raw_filename);
     return nil;
   }
+  status("f2__dlfcn__dlopen: successfully loaded library, \"%s\".", raw_filename);
   return f2pointer__new(cause, result);
 }
 def_pcfunk2(dlfcn__dlopen, filename, flag, return f2__dlfcn__dlopen(this_cause, filename, flag));

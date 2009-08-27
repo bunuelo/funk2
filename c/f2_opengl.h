@@ -57,7 +57,6 @@ struct funk2_openglx_s {
   XVisualInfo*(* glXChooseVisual  )(Display* dpy, int screen, int* attribList);
   Bool(*         glXQueryVersion  )(Display* dpy, int* Major, int* Minor);
   GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
-  Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
   Bool(*         glXIsDirect      )(Display* dpy, GLXContext ctx);
 #endif // F2__GLX__H
 };

@@ -77,7 +77,6 @@ struct funk2_xxf86vm_s {
   Bool(* XF86VidModeSetViewPort    )(Display* display, int screen, int x, int y);
   Bool(* XF86VidModeQueryVersion   )(Display* display, int* major_version_return, int* minor_version_return);
   Bool(* XF86VidModeGetAllModeLines)(Display* display, int screen, int* modecount_return, XF86VidModeModeInfo*** modesinfo);
-  Bool(* XF86VidModeSwitchToMode   )(Display* display, int screen, XF86VidModeModeInfo *modeline);
 #endif // F2__XF86VMODE__H
 };
 

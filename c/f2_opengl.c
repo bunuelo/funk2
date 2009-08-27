@@ -24,7 +24,7 @@
 // funk2_opengl
 
 void funk2_opengl__init(funk2_opengl_t* this) {
-  this->initialized     = boolean__false;
+  this->initialized   = boolean__false;
   this->dlfcn_pointer = nil;
 }
 
@@ -84,6 +84,7 @@ boolean_t raw__opengl__load_library(f2ptr cause) {
 #if defined(F2__GL__H)
   return funk2_opengl__load_library(&(__funk2.opengl), cause);
 #else
+  status("funk2_opengl__load_library: opengl dynamic library not supported in this compile.");
   return boolean__false;
 #endif // F2__GL__H
 }
@@ -223,6 +224,7 @@ boolean_t raw__openglu__load_library(f2ptr cause) {
 #if defined(F2__GLU__H)
   return funk2_openglu__load_library(&(__funk2.openglu), cause);
 #else
+  status("funk2_openglu__load_library: openglu dynamic library not supported in this compile.");
   return boolean__false;
 #endif // F2__GLU__H
 }
@@ -278,6 +280,7 @@ boolean_t raw__xxf86vm__load_library(f2ptr cause) {
 #if defined(F2__XF86VMODE__H)
   return funk2_xxf86vm__load_library(&(__funk2.xxf86vm), cause);
 #else
+  status("funk2_xxf86vm__load_library: xxf86vm dynamic library not supported in this compile.");
   return boolean__false;
 #endif // F2__XF86VMODE__H
 }
@@ -334,6 +337,7 @@ boolean_t raw__xlib__load_library(f2ptr cause) {
 #if defined(F2__XLIB__H)
   return funk2_xlib__load_library(&(__funk2.xlib), cause);
 #else
+  status("funk2_xlib__load_library: xlib dynamic library not supported in this compile.");
   return boolean__false;
 #endif // F2__XLIB__H
 }

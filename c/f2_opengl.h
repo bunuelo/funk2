@@ -54,7 +54,6 @@ struct funk2_openglx_s {
   void(*         glXSwapBuffers   )(Display* dpy, GLXDrawable drawable);
   Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
   void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
-  void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
   XVisualInfo*(* glXChooseVisual  )(Display* dpy, int screen, int* attribList);
   Bool(*         glXQueryVersion  )(Display* dpy, int* Major, int* Minor);
   GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);

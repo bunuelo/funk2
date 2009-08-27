@@ -286,6 +286,13 @@ void raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, void* display, int scree
 #endif // F2__GL__H
 }
 
+void raw__xxf86vm__XF86VidModeSetViewPort(f2ptr cause, void* display, int screen, int x, int y) {
+  if (!__funk2.openglu.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.xxf86vm.XF86VidModeSetViewPort)((Display*)display, screen, x, y);
+#endif // F2__GL__H
+}
+
 boolean_t raw__xxf86vm__load_library(f2ptr cause) {
 #if defined(F2__XF86VMODE__H)
   return funk2_xxf86vm__load_library(&(__funk2.xxf86vm), cause);

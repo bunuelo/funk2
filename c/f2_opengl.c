@@ -282,7 +282,7 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
 void raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, int screen, void* modeline) {
   if (!__funk2.openglu.initialized) {return;}
 #if defined(F2__GL__H)
-  (*__funk2.openglu.XF86VidModeSwitchToMode)(screen, (XF86VidModeModeInfo*)modeline);
+  (*__funk2.xxf86vm.XF86VidModeSwitchToMode)(screen, (XF86VidModeModeInfo*)modeline);
 #endif // F2__GL__H
 }
 

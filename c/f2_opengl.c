@@ -81,7 +81,11 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
 }
 
 boolean_t raw__opengl__load_library(f2ptr cause) {
+#if defined(F2__GL__H)
   return funk2_opengl__load_library(&(__funk2.opengl), cause);
+#else
+  return boolean__false;
+#endif // F2__GL__H
 }
 
 
@@ -133,7 +137,11 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
 }
 
 boolean_t raw__openglu__load_library(f2ptr cause) {
+#if defined(F2__GLU__H)
   return funk2_openglu__load_library(&(__funk2.openglu), cause);
+#else
+  return boolean__false;
+#endif // F2__GLU__H
 }
 
 // funk2_xxf86vm
@@ -184,7 +192,11 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
 }
 
 boolean_t raw__xxf86vm__load_library(f2ptr cause) {
+#if defined(F2__XF86VMODE__H)
   return funk2_xxf86vm__load_library(&(__funk2.xxf86vm), cause);
+#else
+  return boolean__false;
+#endif // F2__XF86VMODE__H
 }
 
 

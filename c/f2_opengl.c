@@ -367,7 +367,63 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_xlib__load_library: loaded xlib dynamic library successfully.");
 #if defined(F2__XLIB__H)
-  this->XCloseDisplay = (void(*)(Display* display)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XCloseDisplay")); if (! (this->XCloseDisplay)) {status("funk2_xlib__load_library: failed symbol, XCloseDisplay."); return boolean__false;}
+  this->XCloseDisplay           = (void(*)(Display* display))                                          from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XCloseDisplay"));          if (! (this->XCloseDisplay))          {status("funk2_xlib__load_library: failed symbol, XCloseDisplay.");   return boolean__false;}
+  this->XOpenDisplay            = (Display*(*)(char* display_name))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XOpenDisplay"));           if (! (this->XOpenDisplay))           {status("funk2_xlib__load_library: failed symbol, XOpenDisplay.");    return boolean__false;}
+  this->XCreateColormap         = (Colormap(*)(Display* display, Window w, Visual* visual, int alloc)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XCreateColormap"));        if (! (this->XCreateColormap))        {status("funk2_xlib__load_library: failed symbol, XCreateColormap."); return boolean__false;}
+  this->XFree                   = (int(*)(void* data))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XFree"));                  if (! (this->XFree))                  {status("funk2_xlib__load_library: failed symbol, XFree.");           return boolean__false;}
+  this->XCreateWindow           = (Window(*)(Display* display,
+					     Window parent,
+					     int x, int y,
+					     unsigned int width, unsigned int height,
+					     unsigned int border_width,
+					     int depth,
+					     unsigned int class,
+					     Visual* visual,
+					     unsigned long valuemask,
+					     XSetWindowAttributes* attributes))                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XCreateWindow"));          if (! (this->XCreateWindow))          {status("funk2_xlib__load_library: failed symbol, XCreateWindow.");   return boolean__false;};
+  this->XWarpPointer           = (void(*)(Display* display,
+					  Window src_w, Window dest_w,
+					  int src_x, int src_y,
+					  unsigned int src_width, unsigned int src_height,
+					  int dest_x, int dest_y))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XWarpPointer"));           if (! (this->XWarpPointer))           {status("funk2_xlib__load_library: failed symbol, XWarpPointer.");    return boolean__false;};
+  this->XMapRaised             = (void(*)(Display* display, Window w))                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XMapRaised"));             if (! (this->XMapRaised))             {status("funk2_xlib__load_library: failed symbol, XMapRaised.");      return boolean__false;};
+  this->XGrabKeyboard          = (int(*)(Display* display,
+					 Window grab_window,
+					 Bool owner_events,
+					 int pointer_mode,
+					 int keyboard_mode,
+					 Time time))                                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XGrabKeyboard"));          if (! (this->XGrabKeyboard))          {status("funk2_xlib__load_library: failed symbol, XGrabKeyboard.");   return boolean__false;};
+  this->XGrabPointer           = (int(*)(Display* display,
+					 Window grab_window,
+					 Bool owner_events,
+					 unsigned int event_mask,
+					 int pointer_mode,
+					 int keyboard_mode,
+					 Window confine_to,
+					 Cursor cursor,
+					 Time time))                                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XGrabPointer"));           if (! (this->XGrabPointer))           {status("funk2_xlib__load_library: failed symbol, XGrabPointer.");    return boolean__false;};
+  this->XInternAtom            = (Atom(*)(Display* display, char* atom_name, Bool only_if_exists))    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XInternAtom"));            if (! (this->XInternAtom))            {status("funk2_xlib__load_library: failed symbol, XInternAtom.");     return boolean__false;};
+  this->XSetWMProtocols        = (Status(*)(Display* display, Window w, Atom* protocols, int count))  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XSetWMProtocols"));        if (! (this->XSetWMProtocols))        {status("funk2_xlib__load_library: failed symbol, XSetWMProtocols."); return boolean__false;};
+  this->XSetStandardProperties = (void(*)(Display* display,
+					  Window w,
+					  char* window_name,
+					  char* icon_name,
+					  Pixmap icon_pixmap,
+					  char** argv, int argc,
+					  XSizeHints *hints))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XSetStandardProperties")); if (! (this->XSetStandardProperties)) {status("funk2_xlib__load_library: failed symbol, XSetStandardProperties."); return boolean__false;};
+  this->XGetGeometry           = (Status(*)(Display* display,
+					    Drawable d,
+					    Window *root_return,
+					    int* x_return,
+					    int* y_return,
+					    unsigned int* width_return,
+					    unsigned int* height_return,
+					    unsigned int* border_width_return,
+					    unsigned int* depth_return))                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XGetGeometry"));           if (! (this->XGetGeometry))           {status("funk2_xlib__load_library: failed symbol, XGetGeometry.");           return boolean__false;};
+  this->XNextEvent             = (void(*)(Display* display, XEvent* event_return))                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XNextEvent"));             if (! (this->XNextEvent))             {status("funk2_xlib__load_library: failed symbol, XNextEvent.");             return boolean__false;};
+  this->XLookupKeysym          = (KeySym(*)(XKeyEvent* key_event, int index))                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XLookupKeysym"));          if (! (this->XLookupKeysym))          {status("funk2_xlib__load_library: failed symbol, XLookupKeysym.");          return boolean__false;};
+  this->XGetAtomName           = (char*(*)(Display* display, Atom atom))                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XGetAtomName"));           if (! (this->XGetAtomName))           {status("funk2_xlib__load_library: failed symbol, XGetAtomName.");           return boolean__false;};
+  this->XPending               = (int(*)(Display *display))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XPending"));               if (! (this->XPending))               {status("funk2_xlib__load_library: failed symbol, XPending.");               return boolean__false;};
 #endif // F2__XLIB__H
   status("funk2_xlib__load_library: loaded xlib function symbols successfully.");
   return boolean__true;

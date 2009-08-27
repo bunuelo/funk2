@@ -81,6 +81,11 @@
 #  include <OpenGL/gl.h>
 #endif
 
+#if defined(HAVE_GL_GLX_H)
+#  define  F2__GLX__H
+#  include <GL/glx.h>
+#endif
+
 #if defined(HAVE_GL_GLU_H)
 #  define  F2__GLU__H
 #  include <GL/glu.h>

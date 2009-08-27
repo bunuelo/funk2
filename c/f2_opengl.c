@@ -212,6 +212,13 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
   return boolean__true;
 }
 
+void raw__openglu__gluPerspective(f2ptr cause, double fovy, double aspect, double zNear, double zFar) {
+  if (!__funk2.openglu.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.openglu.gluPerspective)(fovy, aspect, zNear, zFar);
+#endif // F2__GL__H
+}
+
 boolean_t raw__openglu__load_library(f2ptr cause) {
 #if defined(F2__GLU__H)
   return funk2_openglu__load_library(&(__funk2.openglu), cause);
@@ -277,14 +284,6 @@ boolean_t raw__xxf86vm__load_library(f2ptr cause) {
 
 
 
-//lesson01.c:(.text+0x164): undefined reference to `glXSwapBuffers'
-//lesson01.c:(.text+0x197): undefined reference to `glXMakeCurrent'
-//lesson01.c:(.text+0x1be): undefined reference to `glXDestroyContext'
-//lesson01.c:(.text+0x375): undefined reference to `glXChooseVisual'
-//lesson01.c:(.text+0x39d): undefined reference to `glXChooseVisual'
-//lesson01.c:(.text+0x3ea): undefined reference to `glXQueryVersion'
-//lesson01.c:(.text+0x429): undefined reference to `glXCreateContext'
-//lesson01.c:(.text+0x834): undefined reference to `glXMakeCurrent'
 //lesson01.c:(.text+0x8ae): undefined reference to `glXIsDirect'
 
 //lesson01.c:(.text+0x1f0): undefined reference to `XF86VidModeSwitchToMode'

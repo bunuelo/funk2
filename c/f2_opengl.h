@@ -28,14 +28,6 @@ typedef struct funk2_xxf86vm_s funk2_xxf86vm_t;
 
 #include "f2_primfunks.h"
 
-//typedef int    GLint;
-//typedef int    GLenum;
-//typedef int    GLsizei;
-//typedef double GLdouble;
-//typedef float  GLclampf;
-//typedef double GLclampd;
-//typedef int    GLbitfield;
-
 struct funk2_opengl_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
@@ -54,6 +46,22 @@ struct funk2_opengl_s {
 #endif // F2__GL__H
 };
 
+struct funk2_openglx_s {
+  boolean_t initialized;
+  f2ptr     dlfcn_pointer;
+#if defined(F2__GLX__H)
+  void(*         glXSwapBuffers   )(Display* dpy, GLXDrawable drawable);
+  Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
+  void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
+  void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
+  XVisualInfo*(* glXChooseVisual  )(Display* dpy, int screen, int *attribList);
+  Bool(*         glXQueryVersion  )(Display* dpy, int* Major, int* Minor);
+  GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
+  Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
+  Bool(*         glXIsDirect      )(Display* dpy, GLXContext ctx);
+#endif // F2__GLX__H
+};
+
 struct funk2_openglu_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
@@ -63,10 +71,9 @@ struct funk2_openglu_s {
 };
 
 struct funk2_xxf86vm_s {
-  boolean_t initialized;
-  f2ptr     dlfcn_pointer;
+  boolean_t      initialized;
+  f2ptr          dlfcn_pointer;
 #if defined(F2__XF86VMODE__H)
-  void(*    glXSwapBuffers) (Display *dpy, GLXDrawable drawable);
 #endif // F2__XF86VMODE__H
 };
 

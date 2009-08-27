@@ -54,7 +54,7 @@ struct funk2_openglx_s {
   Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
   void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
   void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
-  XVisualInfo*(* glXChooseVisual  )(Display* dpy, int screen, int *attribList);
+  XVisualInfo*(* glXChooseVisual  )(Display* dpy, int screen, int* attribList);
   Bool(*         glXQueryVersion  )(Display* dpy, int* Major, int* Minor);
   GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
   Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
@@ -74,6 +74,11 @@ struct funk2_xxf86vm_s {
   boolean_t      initialized;
   f2ptr          dlfcn_pointer;
 #if defined(F2__XF86VMODE__H)
+  Bool(* XF86VidModeSwitchToMode   )(Display* display, int screen, XF86VidModeModeInfo* modeline);
+  Bool(* XF86VidModeSetViewPort    )(Display* display, int screen, int x, int y);
+  Bool(* XF86VidModeQueryVersion   )(Display* display, int* major_version_return, int* minor_version_return);
+  Bool(* XF86VidModeGetAllModeLines)(Display* display, int screen, int* modecount_return, XF86VidModeModeInfo ***modesinfo);
+  Bool(* XF86VidModeSwitchToMode   )(Display* display, int screen, XF86VidModeModeInfo *modeline);
 #endif // F2__XF86VMODE__H
 };
 

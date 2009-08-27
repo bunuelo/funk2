@@ -283,18 +283,9 @@ boolean_t raw__xxf86vm__load_library(f2ptr cause) {
 }
 
 
-
-//lesson01.c:(.text+0x8ae): undefined reference to `glXIsDirect'
-
-//lesson01.c:(.text+0x1f0): undefined reference to `XF86VidModeSwitchToMode'
-//lesson01.c:(.text+0x217): undefined reference to `XF86VidModeSetViewPort'
 //lesson01.c:(.text+0x224): undefined reference to `XCloseDisplay'
 //lesson01.c:(.text+0x24a): undefined reference to `XOpenDisplay'
-//lesson01.c:(.text+0x27b): undefined reference to `XF86VidModeQueryVersion'
-//lesson01.c:(.text+0x2bb): undefined reference to `XF86VidModeGetAllModeLines'
 //lesson01.c:(.text+0x474): undefined reference to `XCreateColormap'
-//lesson01.c:(.text+0x4c0): undefined reference to `XF86VidModeSwitchToMode'
-//lesson01.c:(.text+0x4e7): undefined reference to `XF86VidModeSetViewPort'
 //lesson01.c:(.text+0x53c): undefined reference to `XFree'
 //lesson01.c:(.text+0x5dc): undefined reference to `XCreateWindow'
 //lesson01.c:(.text+0x630): undefined reference to `XWarpPointer'

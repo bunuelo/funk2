@@ -413,7 +413,7 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
 					  XSizeHints *hints))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XSetStandardProperties")); if (! (this->XSetStandardProperties)) {status("funk2_xlib__load_library: failed symbol, XSetStandardProperties."); return boolean__false;};
   this->XGetGeometry           = (Status(*)(Display* display,
 					    Drawable d,
-					    Window *root_return,
+					    Window* root_return,
 					    int* x_return,
 					    int* y_return,
 					    unsigned int* width_return,
@@ -429,6 +429,14 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
   return boolean__true;
 }
 
+void raw__xlib__XCloseDisplay(f2ptr cause, void* display) {
+  if (!__funk2.openglu.initialized) {return;}
+#if defined(F2__GL__H)
+  (*__funk2.xlib.XCloseDisplay)((Display*)display);
+#endif // F2__GL__H
+}
+
+
 boolean_t raw__xlib__load_library(f2ptr cause) {
 #if defined(F2__XLIB__H)
   return funk2_xlib__load_library(&(__funk2.xlib), cause);
@@ -439,4 +447,3 @@ boolean_t raw__xlib__load_library(f2ptr cause) {
 }
 
 
-//lesson01.c:(.text+0xaaf): undefined reference to `XPending'

@@ -22,6 +22,8 @@
 #ifndef FUNK2__H
 #define FUNK2__H
 
+#include "../config.h"
+
 #define _GNU_SOURCE
 
 //#define F2__GMODULE__SUPPORTED

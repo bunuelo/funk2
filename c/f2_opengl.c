@@ -367,7 +367,7 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_xlib__load_library: loaded xlib dynamic library successfully.");
 #if defined(F2__XLIB__H)
-  this->XCloseDisplay = (void(*)(Display* display)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XCloseDisplay")); if (! (this->gluPerspective)) {status("funk2_xlib__load_library: failed symbol, XCloseDisplay."); return boolean__false;}
+  this->XCloseDisplay = (void(*)(Display* display)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XCloseDisplay")); if (! (this->XCloseDisplay)) {status("funk2_xlib__load_library: failed symbol, XCloseDisplay."); return boolean__false;}
 #endif // F2__XLIB__H
   status("funk2_xlib__load_library: loaded xlib function symbols successfully.");
   return boolean__true;

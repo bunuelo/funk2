@@ -438,7 +438,7 @@ Display* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name) {
 #if defined(F2__XLIB__H)
 Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc) {
   if (!__funk2.xlib.initialized) {return (Colormap)0;}
-  return (void*)((*__funk2.xlib.XCreateColormap)(display, w, visual, alloc));
+  return (*__funk2.xlib.XCreateColormap)(display, w, visual, alloc);
 }
 #endif // F2__XLIB__H
 

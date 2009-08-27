@@ -439,7 +439,7 @@ void raw__xlib__XCloseDisplay(f2ptr cause, void* display) {
 void* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name) {
   if (!__funk2.openglu.initialized) {return NULL;}
 #if defined(F2__GL__H)
-  return (void*)((*__funk2.xlib.XCloseDisplay)(display_name));
+  return (void*)((*__funk2.xlib.XOpenDisplay)(display_name));
 #endif // F2__GL__H
   return NULL;
 }

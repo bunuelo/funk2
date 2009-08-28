@@ -23,130 +23,29 @@
 
 #if defined(F2__GLWINDOW__H)
 
-// attributes for a single buffered visual in RGBA format with at least
-// 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
-							      GLX_GREEN_SIZE,          4, 
-							      GLX_BLUE_SIZE,           4, 
-							      GLX_DEPTH_SIZE,         16,
-							      None};
-
-// attributes for a double buffered visual in RGBA format with at least
-// 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
-							      GLX_RED_SIZE,    4, 
-							      GLX_GREEN_SIZE,  4, 
-							      GLX_BLUE_SIZE,   4, 
-							      GLX_DEPTH_SIZE, 16,
-							      None};
-
-static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
-static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
-static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
-
-// function called when our window is resized (should only happen in window mode)
-void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) {
-  if (height == 0) { // Prevent A Divide By Zero If The Window Is Too Small
-    height = 1;
-  }
-  raw__opengl__glViewport(cause, 0, 0, width, height);    // Reset The Current Viewport And Perspective Transformation
-  raw__opengl__glMatrixMode(cause, GL_PROJECTION);
-  raw__opengl__glLoadIdentity(cause);
-  raw__openglu__gluPerspective(cause, 45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
-  raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
-}
-
-// general OpenGL initialization function
-int glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
-  raw__opengl__glShadeModel(cause, GL_SMOOTH);
-  raw__opengl__glClearColor(cause, 0.0f, 0.0f, 0.0f, 0.0f);
-  raw__opengl__glClearDepth(cause, 1.0f);
-  raw__opengl__glEnable(cause, GL_DEPTH_TEST);
-  raw__opengl__glDepthFunc(cause, GL_LEQUAL);
-  raw__opengl__glHint(cause, GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-  
-  raw__opengl__glLightfv(cause, GL_LIGHT1, GL_AMBIENT,  funk2_glwindow__light1_ambient);
-  raw__opengl__glLightfv(cause, GL_LIGHT1, GL_DIFFUSE,  funk2_glwindow__light1_diffuse);
-  raw__opengl__glLightfv(cause, GL_LIGHT1, GL_POSITION, funk2_glwindow__light1_position);
-  raw__opengl__glEnable(cause, GL_LIGHT1);
-  raw__opengl__glEnable(cause, GL_LIGHTING);
-  
-  raw__opengl__glCullFace(cause, GL_BACK);
-  raw__opengl__glEnable(cause, GL_CULL_FACE);
-  
-  // we use raw__resize_gl_scene once to set up our initial perspective
-  raw__resize_gl_scene(cause, this->width, this->height);
-  raw__opengl__glFlush(cause);
-  return True;
-}
-
-// Here goes our drawing code
-int glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
-  raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  raw__opengl__glLoadIdentity(cause);
-  raw__opengl__glTranslatef(cause, 0, 0, -10);
-  raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
-  
-  raw__opengl__glColor4f(cause, 1,1,1,1);
-  raw__opengl__glBegin(cause, GL_QUADS);
-  raw__opengl__glNormal3f(cause, 0,0,1);
-  raw__opengl__glVertex3f(cause, -1,-1,1);
-  raw__opengl__glVertex3f(cause,  1,-1,1);
-  raw__opengl__glVertex3f(cause,  1, 1,1);
-  raw__opengl__glVertex3f(cause, -1, 1,1);
-  
-  raw__opengl__glNormal3f(cause, 0,0,-1);
-  raw__opengl__glVertex3f(cause, -1,-1,-1);
-  raw__opengl__glVertex3f(cause, -1, 1,-1);
-  raw__opengl__glVertex3f(cause,  1, 1,-1);
-  raw__opengl__glVertex3f(cause,  1,-1,-1);
-  
-  raw__opengl__glNormal3f(cause, 0,1,0);
-  raw__opengl__glVertex3f(cause, -1,1,-1);
-  raw__opengl__glVertex3f(cause, -1,1, 1);
-  raw__opengl__glVertex3f(cause,  1,1, 1);
-  raw__opengl__glVertex3f(cause,  1,1,-1);
- 
-  raw__opengl__glNormal3f(cause, 0,-1,0);
-  raw__opengl__glVertex3f(cause, -1,-1,-1);
-  raw__opengl__glVertex3f(cause,  1,-1,-1);
-  raw__opengl__glVertex3f(cause,  1,-1, 1);
-  raw__opengl__glVertex3f(cause, -1,-1, 1);
-  
-  raw__opengl__glNormal3f(cause, 1,0,0);
-  raw__opengl__glVertex3f(cause, 1,-1,-1);
-  raw__opengl__glVertex3f(cause, 1, 1,-1);
-  raw__opengl__glVertex3f(cause, 1, 1, 1);
-  raw__opengl__glVertex3f(cause, 1,-1, 1);
-  
-  raw__opengl__glNormal3f(cause, -1,0,0);
-  raw__opengl__glVertex3f(cause, -1,-1,-1);
-  raw__opengl__glVertex3f(cause, -1,-1, 1);
-  raw__opengl__glVertex3f(cause, -1, 1, 1);
-  raw__opengl__glVertex3f(cause, -1, 1,-1);
-  raw__opengl__glEnd(cause);
-  
-  if (this->double_buffered) {
-    raw__opengl__glXSwapBuffers(cause, this->display, this->x_window);
-  }
-  return True;    
+void funk2_glwindow__init(funk2_glwindow_t* this) {
+  this->window_created = boolean__false;
 }
 
 // function to release/destroy our resources and restoring the old desktop
-GLvoid glwindow__destroy(funk2_glwindow_t* this, f2ptr cause) {
-  if (this->glx_context) {
-    if (!raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
-      printf("Could not release drawing context.\n");
+void funk2_glwindow__destroy(funk2_glwindow_t* this, f2ptr cause) {
+  if (this->window_created) {
+    this->window_created = boolean__false;
+    
+    if (this->glx_context) {
+      if (!raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
+	printf("Could not release drawing context.\n");
+      }
+      raw__opengl__glXDestroyContext(cause, this->display, this->glx_context);
+      this->glx_context = NULL;
     }
-    raw__opengl__glXDestroyContext(cause, this->display, this->glx_context);
-    this->glx_context = NULL;
+    // switch back to original desktop resolution if we were in fs
+    if (this->fullscreen) {
+      raw__xxf86vm__XF86VidModeSwitchToMode(cause, this->display, this->screen, &(this->desk_mode));
+      raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
+    }
+    raw__xlib__XCloseDisplay(cause, this->display);
   }
-  // switch back to original desktop resolution if we were in fs
-  if (this->fullscreen) {
-    raw__xxf86vm__XF86VidModeSwitchToMode(cause, this->display, this->screen, &(this->desk_mode));
-    raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
-  }
-  raw__xlib__XCloseDisplay(cause, this->display);
 }
 
 int int__abs(int x) {
@@ -158,7 +57,7 @@ int int__abs(int x) {
 
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
-boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag) {
+boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag) {
   XVisualInfo *vi;
   Colormap cmap;
   int displayWidth, displayHeight;
@@ -171,6 +70,8 @@ boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int w
   Atom wmDelete;
   Window winDummy;
   unsigned int borderDummy;
+  
+  this->window_created = boolean__true;
   
   this->rotate_angle = 0;
   this->done = boolean__false;
@@ -263,11 +164,11 @@ boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int w
   } else {
     printf("Sorry, no Direct Rendering possible!\n");
   }
-  glwindow__initialize_opengl(this, cause);
+  funk2_glwindow__initialize_opengl(this, cause);
   return True;    
 }
 
-boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
+boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   XEvent event;
   while (raw__xlib__XPending(cause, this->display) > 0) {
     raw__xlib__XNextEvent(cause, this->display, &event);
@@ -275,7 +176,7 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
     case Expose:
       if (event.xexpose.count != 0)
 	break;
-      glwindow__draw_scene(this, cause);
+      funk2_glwindow__draw_scene(this, cause);
       break;
     case ConfigureNotify:
       // call raw__resize_gl_scene only if our window-size changed
@@ -298,10 +199,10 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	this->done = True;
       }
       if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
-	glwindow__destroy(this, cause);
+	funk2_glwindow__destroy(this, cause);
 	this->fullscreen = !this->fullscreen;
 	printf("creating new window: %dx%d\n", this->width, this->height);
-	glwindow__create(this, cause, (u8*)"NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
+	funk2_glwindow__create(this, cause, (u8*)"NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
       }
       break;
     case ClientMessage:
@@ -317,24 +218,133 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   return this->done;
 }
 
-void glwindow__main(f2ptr cause) {
+// attributes for a single buffered visual in RGBA format with at least
+// 4 bits per color and a 16 bit depth buffer
+static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
+							      GLX_GREEN_SIZE,          4, 
+							      GLX_BLUE_SIZE,           4, 
+							      GLX_DEPTH_SIZE,         16,
+							      None};
+
+// attributes for a double buffered visual in RGBA format with at least
+// 4 bits per color and a 16 bit depth buffer
+static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
+							      GLX_RED_SIZE,    4, 
+							      GLX_GREEN_SIZE,  4, 
+							      GLX_BLUE_SIZE,   4, 
+							      GLX_DEPTH_SIZE, 16,
+							      None};
+
+static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
+static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
+static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
+
+// function called when our window is resized (should only happen in window mode)
+void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) {
+  if (height == 0) { // Prevent A Divide By Zero If The Window Is Too Small
+    height = 1;
+  }
+  raw__opengl__glViewport(cause, 0, 0, width, height);    // Reset The Current Viewport And Perspective Transformation
+  raw__opengl__glMatrixMode(cause, GL_PROJECTION);
+  raw__opengl__glLoadIdentity(cause);
+  raw__openglu__gluPerspective(cause, 45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+  raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
+}
+
+// general OpenGL initialization function
+int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
+  raw__opengl__glShadeModel(cause, GL_SMOOTH);
+  raw__opengl__glClearColor(cause, 0.0f, 0.0f, 0.0f, 0.0f);
+  raw__opengl__glClearDepth(cause, 1.0f);
+  raw__opengl__glEnable(cause, GL_DEPTH_TEST);
+  raw__opengl__glDepthFunc(cause, GL_LEQUAL);
+  raw__opengl__glHint(cause, GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+  
+  raw__opengl__glLightfv(cause, GL_LIGHT1, GL_AMBIENT,  funk2_glwindow__light1_ambient);
+  raw__opengl__glLightfv(cause, GL_LIGHT1, GL_DIFFUSE,  funk2_glwindow__light1_diffuse);
+  raw__opengl__glLightfv(cause, GL_LIGHT1, GL_POSITION, funk2_glwindow__light1_position);
+  raw__opengl__glEnable(cause, GL_LIGHT1);
+  raw__opengl__glEnable(cause, GL_LIGHTING);
+  
+  raw__opengl__glCullFace(cause, GL_BACK);
+  raw__opengl__glEnable(cause, GL_CULL_FACE);
+  
+  // we use raw__resize_gl_scene once to set up our initial perspective
+  raw__resize_gl_scene(cause, this->width, this->height);
+  raw__opengl__glFlush(cause);
+  return True;
+}
+
+// Here goes our drawing code
+int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
+  raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  raw__opengl__glLoadIdentity(cause);
+  raw__opengl__glTranslatef(cause, 0, 0, -10);
+  raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
+  
+  raw__opengl__glColor4f(cause, 1,1,1,1);
+  raw__opengl__glBegin(cause, GL_QUADS);
+  raw__opengl__glNormal3f(cause, 0,0,1);
+  raw__opengl__glVertex3f(cause, -1,-1,1);
+  raw__opengl__glVertex3f(cause,  1,-1,1);
+  raw__opengl__glVertex3f(cause,  1, 1,1);
+  raw__opengl__glVertex3f(cause, -1, 1,1);
+  
+  raw__opengl__glNormal3f(cause, 0,0,-1);
+  raw__opengl__glVertex3f(cause, -1,-1,-1);
+  raw__opengl__glVertex3f(cause, -1, 1,-1);
+  raw__opengl__glVertex3f(cause,  1, 1,-1);
+  raw__opengl__glVertex3f(cause,  1,-1,-1);
+  
+  raw__opengl__glNormal3f(cause, 0,1,0);
+  raw__opengl__glVertex3f(cause, -1,1,-1);
+  raw__opengl__glVertex3f(cause, -1,1, 1);
+  raw__opengl__glVertex3f(cause,  1,1, 1);
+  raw__opengl__glVertex3f(cause,  1,1,-1);
+ 
+  raw__opengl__glNormal3f(cause, 0,-1,0);
+  raw__opengl__glVertex3f(cause, -1,-1,-1);
+  raw__opengl__glVertex3f(cause,  1,-1,-1);
+  raw__opengl__glVertex3f(cause,  1,-1, 1);
+  raw__opengl__glVertex3f(cause, -1,-1, 1);
+  
+  raw__opengl__glNormal3f(cause, 1,0,0);
+  raw__opengl__glVertex3f(cause, 1,-1,-1);
+  raw__opengl__glVertex3f(cause, 1, 1,-1);
+  raw__opengl__glVertex3f(cause, 1, 1, 1);
+  raw__opengl__glVertex3f(cause, 1,-1, 1);
+  
+  raw__opengl__glNormal3f(cause, -1,0,0);
+  raw__opengl__glVertex3f(cause, -1,-1,-1);
+  raw__opengl__glVertex3f(cause, -1,-1, 1);
+  raw__opengl__glVertex3f(cause, -1, 1, 1);
+  raw__opengl__glVertex3f(cause, -1, 1,-1);
+  raw__opengl__glEnd(cause);
+  
+  if (this->double_buffered) {
+    raw__opengl__glXSwapBuffers(cause, this->display, this->x_window);
+  }
+  return True;    
+}
+
+void funk2_glwindow__main(f2ptr cause) {
   // default to fullscreen
   boolean_t fullscreen = False;
-  glwindow__create(&(__funk2.glwindow), cause, (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
+  funk2_glwindow__create(&(__funk2.glwindow), cause, (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
   
   // wait for events
   while (!__funk2.glwindow.done) {
     // handle the events in the queue
-    glwindow__handle_events(&(__funk2.glwindow), cause);
+    funk2_glwindow__handle_events(&(__funk2.glwindow), cause);
     if (! __funk2.glwindow.done) {
-      glwindow__draw_scene(&(__funk2.glwindow), cause);
+      funk2_glwindow__draw_scene(&(__funk2.glwindow), cause);
       __funk2.glwindow.rotate_angle += 1;
       if (__funk2.glwindow.rotate_angle >= 360) {
 	__funk2.glwindow.rotate_angle -= 360;
       }
     }
   }
-  glwindow__destroy(&(__funk2.glwindow), cause);
+  funk2_glwindow__destroy(&(__funk2.glwindow), cause);
 }
 
 #endif // F2__GLWINDOW__H
@@ -354,7 +364,7 @@ f2ptr f2__glwindow__supported(f2ptr cause) {
 
 void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
 #if defined(F2__GLWINDOW__H)
-  glwindow__create(&(__funk2.glwindow), cause, title, width, height, depth, fullscreen);
+  funk2_glwindow__create(&(__funk2.glwindow), cause, title, width, height, depth, fullscreen);
 #else
   status("\nglwindow not supported.");
   printf("\nglwindow not supported.");
@@ -366,6 +376,7 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
       (! raw__integer__is_type(cause, width)) ||
       (! raw__integer__is_type(cause, height)) ||
       (! raw__integer__is_type(cause, depth))) {
+    return f2larva__new(cause, 1);
   }
   u64 title__length = f2string__length(title, cause);
   u8* title__str = (u8*)from_ptr(f2__malloc(title__length + 1));
@@ -381,7 +392,7 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
 
 
 boolean_t raw__glwindow__handle_events(f2ptr cause) {
-  return glwindow__handle_events(&(__funk2.glwindow), cause);
+  return funk2_glwindow__handle_events(&(__funk2.glwindow), cause);
 }
 
 f2ptr f2__glwindow__handle_events(f2ptr cause) {
@@ -390,7 +401,7 @@ f2ptr f2__glwindow__handle_events(f2ptr cause) {
 
 
 void raw__glwindow__destroy(f2ptr cause) {
-  glwindow__destroy(&(__funk2.glwindow), cause);
+  funk2_glwindow__destroy(&(__funk2.glwindow), cause);
 }
 
 f2ptr f2__glwindow__destroy(f2ptr cause) {

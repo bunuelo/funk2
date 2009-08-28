@@ -26,6 +26,7 @@
 
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
+  boolean_t            window_created;
   Display*             display;
   int                  screen;
   Window               x_window;

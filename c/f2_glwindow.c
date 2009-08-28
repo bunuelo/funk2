@@ -323,7 +323,7 @@ int glwindow__main(f2ptr cause) {
   
   __funk2.glwindow.done = boolean__false;
   // wait for events
-  while (!glwindow.done) {
+  while (!__funk2.glwindow.done) {
     // handle the events in the queue
     glwindow__handle_events(&(__funk2.glwindow), cause, rotate_angle);
     if (! __funk2.glwindow.done) {

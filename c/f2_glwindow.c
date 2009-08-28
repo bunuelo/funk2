@@ -315,8 +315,6 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double ro
 }
 
 int glwindow__main(f2ptr cause) {
-  int argc = 1;
-  char* argv[] = {"funk2", NULL};
   float rotate_angle = 0;
   
   // default to fullscreen

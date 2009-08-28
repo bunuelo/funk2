@@ -23,6 +23,8 @@
 
 #if defined(F2__GLWINDOW__H)
 
+#error we are compiling glwindow__h.
+
 // attributes for a single buffered visual in RGBA format with at least
 // 4 bits per color and a 16 bit depth buffer
 static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE, 4, 

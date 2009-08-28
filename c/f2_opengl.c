@@ -107,137 +107,137 @@ boolean_t raw__opengl__load_library(f2ptr cause) {
 
 #if defined(F2__GL__H)
 void raw__opengl__glViewport(f2ptr cause, GLint x, GLint y, GLsizei width, GLsizei height) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glViewport)(x, y, width, height);
 }
 
 void raw__opengl__glMatrixMode(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glMatrixMode)(mode);
 }
 
 void raw__opengl__glLoadIdentity(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glLoadIdentity)();
 }
 
 void raw__opengl__glShadeModel(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glShadeModel)(mode);
 }
 
 void raw__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glClearColor)(red, green, blue, alpha);
 }
 
 void raw__opengl__glClearDepth(f2ptr cause, GLclampd depth) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glClearDepth)(depth);
 }
 
 void raw__opengl__glEnable(f2ptr cause, GLenum cap) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glEnable)(cap);
 }
 
 void raw__opengl__glDepthFunc(f2ptr cause, GLenum func) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glDepthFunc)(func);
 }
 
 void raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glHint)(target, mode);
 }
 
 void raw__opengl__glFlush(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glFlush)();
 }
 
 void raw__opengl__glClear(f2ptr cause, GLbitfield mask) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glClear)(mask);
 }
 
 void raw__opengl__glLightfv(f2ptr cause, GLenum light, GLenum pname, const GLfloat* params) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glLightfv)(light, pname, params);
 }
 
 void raw__opengl__glCullFace(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glCullFace)(mode);
 }
 
 void raw__opengl__glTranslatef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glTranslatef)(x, y, z);
 }
 
 void raw__opengl__glRotatef(f2ptr cause, GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glRotatef)(angle, x, y, z);
 }
 
 void raw__opengl__glColor4f(f2ptr cause, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glColor4f)(red, green, blue, alpha);
 }
 
 void raw__opengl__glBegin(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glBegin)(mode);
 }
 
 void raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glNormal3f)(nx, ny, nz);
 }
 
 void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glVertex3f)(x, y, z);
 }
 
 void raw__opengl__glEnd(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glEnd)();
 }
 
 void raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glXSwapBuffers)(dpy, drawable);
 }
 
 Bool raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx) {
-  if (!__funk2.opengl.initialized) {return False;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXMakeCurrent)(dpy, drawable, ctx);
 }
 
 void raw__opengl__glXDestroyContext(f2ptr cause, Display* dpy, GLXContext ctx) {
-  if (!__funk2.opengl.initialized) {return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glXDestroyContext)(dpy, ctx);
 }
 
 XVisualInfo* raw__opengl__glXChooseVisual(f2ptr cause, Display* dpy, int screen, int* attribList) {
-  if (!__funk2.opengl.initialized) {return NULL;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return NULL;}
   return (*__funk2.opengl.glXChooseVisual)(dpy, screen, attribList);
 }
 
 Bool raw__opengl__glXQueryVersion(f2ptr cause, Display* dpy, int* Major, int* Minor) {
-  if (!__funk2.opengl.initialized) {return False;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXQueryVersion)(dpy, Major, Minor);
 }
 
 GLXContext raw__opengl__glXCreateContext(f2ptr cause, Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct) {
-  if (!__funk2.opengl.initialized) {return (GLXContext)NULL;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return (GLXContext)NULL;}
   return (*__funk2.opengl.glXCreateContext)(dpy, vis, shareList, direct);
 }
 
 Bool raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx) {
-  if (!__funk2.opengl.initialized) {return False;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXIsDirect)(dpy, ctx);
 }
 
@@ -292,7 +292,7 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
 
 #if defined(F2__GLU__H)
 void raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar) {
-  if (!__funk2.openglu.initialized) {return;}
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading glu. ***"); return;}
   (*__funk2.openglu.gluPerspective)(fovy, aspect, zNear, zFar);
 }
 #endif // F2__GLU__H
@@ -358,22 +358,22 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
 
 #if defined(F2__XF86VMODE__H)
 Bool raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, Display* display, int screen, XF86VidModeModeInfo* modeline) {
-  if (!__funk2.openglu.initialized) {return boolean__false;;}
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading xxf86vm. ***"); return boolean__false;}
   return (*__funk2.xxf86vm.XF86VidModeSwitchToMode)(display, screen, modeline);
 }
 
 Bool raw__xxf86vm__XF86VidModeSetViewPort(f2ptr cause, Display* display, int screen, int x, int y) {
-  if (!__funk2.openglu.initialized) {return boolean__false;;}
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading xxf86vm. ***"); return boolean__false;}
   return (*__funk2.xxf86vm.XF86VidModeSetViewPort)(display, screen, x, y);
 }
 
 Bool raw__xxf86vm__XF86VidModeQueryVersion(f2ptr cause, Display* display, int* major_version_return, int* minor_version_return) {
-  if (!__funk2.openglu.initialized) {return boolean__false;}
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading xxf86vm. ***"); return boolean__false;}
   return (*__funk2.xxf86vm.XF86VidModeQueryVersion)(display, major_version_return, minor_version_return);
 }
 
 Bool raw__xxf86vm__XF86VidModeGetAllModeLines(f2ptr cause, Display* display, int screen, int* modecount_return, XF86VidModeModeInfo*** modesinfo) {
-  if (!__funk2.openglu.initialized) {return boolean__false;}
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading xxf86vm. ***"); return boolean__false;}
   return (*__funk2.xxf86vm.XF86VidModeGetAllModeLines)(display, screen, modecount_return, modesinfo);
 }
 #endif // F2__XF86VMODE__H
@@ -495,22 +495,22 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
 
 #if defined(F2__XLIB__H)
 void raw__xlib__XCloseDisplay(f2ptr cause, Display* display) {
-  if (!__funk2.xlib.initialized) {return;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return;}
   (*__funk2.xlib.XCloseDisplay)(display);
 }
 
 Display* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name) {
-  if (!__funk2.xlib.initialized) {return NULL;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return NULL;}
   return (*__funk2.xlib.XOpenDisplay)(display_name);
 }
 
 Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc) {
-  if (!__funk2.xlib.initialized) {return (Colormap)0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (Colormap)0;}
   return (*__funk2.xlib.XCreateColormap)(display, w, visual, alloc);
 }
 
 int raw__xlib__XFree(f2ptr cause, void* data) {
-  if (!__funk2.xlib.initialized) {return 0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return 0;}
   return (*__funk2.xlib.XFree)(data);
 }
 
@@ -524,7 +524,7 @@ Window raw__xlib__XCreateWindow(f2ptr cause, Display* display,
 				Visual* visual,
 				unsigned long valuemask,
 				XSetWindowAttributes* attributes) {
-  if (!__funk2.xlib.initialized) {return (Window)0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (Window)0;}
   return (*__funk2.xlib.XCreateWindow)(display,
 				       parent,
 				       x, y,
@@ -542,7 +542,7 @@ void raw__xlib__XWarpPointer(f2ptr cause, Display* display,
 			     int src_x, int src_y,
 			     unsigned int src_width, unsigned int src_height,
 			     int dest_x, int dest_y) {
-  if (!__funk2.xlib.initialized) {return;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return;}
   (*__funk2.xlib.XWarpPointer)(display,
 			       src_w, dest_w,
 			       src_x, src_y,
@@ -551,7 +551,7 @@ void raw__xlib__XWarpPointer(f2ptr cause, Display* display,
 }
 
 void raw__xlib__XMapRaised(f2ptr cause, Display* display, Window w) {
-  if (!__funk2.xlib.initialized) {return;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return;}
   (*__funk2.xlib.XMapRaised)(display, w);
 }
 
@@ -561,7 +561,7 @@ int raw__xlib__XGrabKeyboard(f2ptr cause, Display* display,
 			     int pointer_mode,
 			     int keyboard_mode,
 			     Time time) {
-  if (!__funk2.xlib.initialized) {return 0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return 0;}
   return (*__funk2.xlib.XGrabKeyboard)(display,
 				       grab_window,
 				       owner_events,
@@ -579,7 +579,7 @@ int raw__xlib__XGrabPointer(f2ptr cause, Display* display,
 			    Window confine_to,
 			    Cursor cursor,
 			    Time time) {
-  if (!__funk2.xlib.initialized) {return 0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return 0;}
   return (*__funk2.xlib.XGrabPointer)(display,
 				      grab_window,
 				      owner_events,
@@ -592,12 +592,12 @@ int raw__xlib__XGrabPointer(f2ptr cause, Display* display,
 }
 
 Atom raw__xlib__XInternAtom(f2ptr cause, Display* display, char* atom_name, Bool only_if_exists) {
-  if (!__funk2.xlib.initialized) {return (Atom)0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (Atom)0;}
   return (*__funk2.xlib.XInternAtom)(display, atom_name, only_if_exists);
 }
 
 Status raw__xlib__XSetWMProtocols(f2ptr cause, Display* display, Window w, Atom* protocols, int count) {
-  if (!__funk2.xlib.initialized) {return (Status)0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (Status)0;}
   return (*__funk2.xlib.XSetWMProtocols)(display, w, protocols, count);
 }
 
@@ -608,7 +608,7 @@ void raw__xlib__XSetStandardProperties(f2ptr cause, Display* display,
 				       Pixmap icon_pixmap,
 				       char** argv, int argc,
 				       XSizeHints *hints) {
-  if (!__funk2.xlib.initialized) {return;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return;}
   (*__funk2.xlib.XSetStandardProperties)(display,
 					 w,
 					 window_name,
@@ -627,7 +627,7 @@ Status raw__xlib__XGetGeometry(f2ptr cause, Display* display,
 			       unsigned int* height_return,
 			       unsigned int* border_width_return,
 			       unsigned int* depth_return) {
-  if (!__funk2.xlib.initialized) {return (Status)0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (Status)0;}
   return (*__funk2.xlib.XGetGeometry)(display,
 				      d,
 				      root_return,
@@ -640,27 +640,27 @@ Status raw__xlib__XGetGeometry(f2ptr cause, Display* display,
 }
 
 void raw__xlib__XNextEvent(f2ptr cause, Display* display, XEvent* event_return) {
-  if (!__funk2.xlib.initialized) {return;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return;}
   (*__funk2.xlib.XNextEvent)(display, event_return);
 }
 
 KeySym raw__xlib__XLookupKeysym(f2ptr cause, XKeyEvent* key_event, int index) {
-  if (!__funk2.xlib.initialized) {return (KeySym)0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (KeySym)0;}
   return (*__funk2.xlib.XLookupKeysym)(key_event, index);
 }
 
 char* raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom) {
-  if (!__funk2.xlib.initialized) {return (char*)NULL;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return (char*)NULL;}
   return (*__funk2.xlib.XGetAtomName)(display, atom);
 }
 
 int raw__xlib__XPending(f2ptr cause, Display* display) {
-  if (!__funk2.xlib.initialized) {return 0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return 0;}
   return (*__funk2.xlib.XPending)(display);
 }
 
 int raw__xlib__XDefaultScreen(f2ptr cause, Display* display) {
-  if (!__funk2.xlib.initialized) {return 0;}
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return 0;}
   return (*__funk2.xlib.XDefaultScreen)(display);
 }
 

@@ -154,6 +154,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_openglu__init(&(this->openglu));
   funk2_xxf86vm__init(&(this->xxf86vm));
   funk2_xlib__init(&(this->xlib));
+  funk2_glwindow__init(&(this->glwindow));
   
   f2ptr cause = initial_cause();
   
@@ -308,7 +309,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_openglu__destroy(&(this->openglu));
   funk2_xxf86vm__destroy(&(this->xxf86vm));
   funk2_xlib__destroy(&(this->xlib));
-  
+  funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }
 
@@ -339,17 +340,6 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   funk2_test();
 #endif // TEST
   funk2__init(this, argc, argv);
-  
-  if (raw__glwindow__supported(nil)) {
-    status("glwindow is supported in this funk2 build!");
-  } else {
-    status("glwindow is not supported in this funk2 build.");
-  }
-  
-  //raw__opengl__load_library(nil);
-  //raw__openglu__load_library(nil);
-  //raw__xxf86vm__load_library(nil);
-  //raw__xlib__load_library(nil);
   
   while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);

@@ -368,7 +368,7 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
       (! raw__integer__is_type(cause, depth))) {
   }
   u64 title__length = f2string__length(title, cause);
-  char* title__str = (char*)from_ptr(f2__malloc(title__length + 1));
+  u8* title__str = (u8*)from_ptr(f2__malloc(title__length + 1));
   f2string__str_copy(title, cause, title__str);
   title__str[title__length] = (char)0;
   s64 width__i = f2integer__i(width, cause);

@@ -319,7 +319,7 @@ int glwindow__main(f2ptr cause) {
   
   // default to fullscreen
   boolean_t fullscreen = False;
-  glwindow__create(&(__funk2.glwindow), cause, "NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
+  glwindow__create(&(__funk2.glwindow), cause, (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
   
   __funk2.glwindow.done = boolean__false;
   // wait for events

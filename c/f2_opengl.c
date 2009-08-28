@@ -135,7 +135,7 @@ void    maybe__opengl__glShadeModel(f2ptr cause, GLenum mode) {
 
 #if defined(F2__GL__H)
 #  define raw__opengl__glClearColor(cause, red, green, blue, alpha) \
-        maybe__opengl__glClearColor(cause, red, green, blue, alpha) \
+        maybe__opengl__glClearColor(cause, red, green, blue, alpha)
 void    maybe__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glClearColor)(red, green, blue, alpha);

@@ -96,6 +96,7 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_ansi.$(OBJEXT) \
 	c/bin_funk2-f2_garbage_collector.$(OBJEXT) \
 	c/bin_funk2-f2_garbage_collector_pool.$(OBJEXT) \
 	c/bin_funk2-f2_globalenv.$(OBJEXT) \
+	c/bin_funk2-f2_glwindow.$(OBJEXT) \
 	c/bin_funk2-f2_gmodule.$(OBJEXT) \
 	c/bin_funk2-f2_frame_objects.$(OBJEXT) \
 	c/bin_funk2-f2_funk2_node.$(OBJEXT) \
@@ -289,7 +290,8 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-debian_install_root_dir = $(DESTDIR)/
+plain_install_root_dir = /
+chroot_install_root_dir = $(DESTDIR)/
 source__funk2__dir = ./
 source__fu2__dir = $(source__funk2__dir)fu2/
 source__bootstrap__fu2 = $(source__fu2__dir)bootstrap.fu2
@@ -301,14 +303,22 @@ compile__img__dir = $(compile__funk2__dir)img/
 compile__funk2 = $(compile__bin__dir)funk2
 compile__bootstrap__img = $(compile__img__dir)bootstrap.img
 compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
-install__system_bin__dir = $(debian_install_root_dir)usr/bin/
-install__bin__dir = $(debian_install_root_dir)usr/bin/
-install__include__dir = $(debian_install_root_dir)usr/include/funk2/
-install__img__dir = $(debian_install_root_dir)usr/share/funk2/img/
-install__icons__dir = $(debian_install_root_dir)usr/share/funk2/icons/
-install__man__dir = $(debian_install_root_dir)usr/share/man/man1/
-install__funk2 = $(install__bin__dir)funk2
-install__bootstrap__img = $(install__img__dir)bootstrap.img
+chroot__install__system_bin__dir = $(chroot_install_root_dir)usr/bin/
+chroot__install__bin__dir = $(chroot_install_root_dir)usr/bin/
+chroot__install__include__dir = $(chroot_install_root_dir)usr/include/funk2/
+chroot__install__img__dir = $(chroot_install_root_dir)usr/share/funk2/img/
+chroot__install__icons__dir = $(chroot_install_root_dir)usr/share/funk2/icons/
+chroot__install__man__dir = $(chroot_install_root_dir)usr/share/man/man1/
+chroot__install__funk2 = $(chroot__install__bin__dir)funk2
+chroot__install__bootstrap__img = $(chroot__install__img__dir)bootstrap.img
+plain__install__system_bin__dir = $(plain_install_root_dir)usr/bin/
+plain__install__bin__dir = $(plain_install_root_dir)usr/bin/
+plain__install__include__dir = $(plain_install_root_dir)usr/include/funk2/
+plain__install__img__dir = $(plain_install_root_dir)usr/share/funk2/img/
+plain__install__icons__dir = $(plain_install_root_dir)usr/share/funk2/icons/
+plain__install__man__dir = $(plain_install_root_dir)usr/share/man/man1/
+plain__install__funk2 = $(plain__install__bin__dir)funk2
+plain__install__bootstrap__img = $(plain__install__img__dir)bootstrap.img
 
 # get the name of the architecture
 #processor = $(shell uname -p)
@@ -365,11 +375,11 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 #dynamic_library_flags        = $(shell pkg-config --cflags gmodule-2.0) -DF2__GMODULE__SUPPORTED 
 #dynamic_library_linker_flags = $(gmodule_linker_flags)
 trace_flags = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES 
-compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
+compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 debug_flags = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
 optimize_flags = 
-debug__cc_flags = -Wall --std=c99 --pedantic -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
-release__cc_flags = -Wall --std=c99 --pedantic -fPIC $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
+debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -396,6 +406,7 @@ bin_funk2_SOURCES = \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
+  c/f2_glwindow.c \
   c/f2_gmodule.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
@@ -594,6 +605,8 @@ c/bin_funk2-f2_garbage_collector_pool.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_globalenv.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_glwindow.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_gmodule.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_frame_objects.$(OBJEXT): c/$(am__dirstamp) \
@@ -768,6 +781,7 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_garbage_collector.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_garbage_collector_pool.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_globalenv.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_glwindow.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_gmodule.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_html.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_load.$(OBJEXT)
@@ -861,6 +875,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_garbage_collector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_garbage_collector_pool.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_globalenv.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_glwindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_gmodule.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_html.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_load.Po@am__quote@
@@ -1195,6 +1210,20 @@ c/bin_funk2-f2_globalenv.obj: c/f2_globalenv.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_globalenv.c' object='c/bin_funk2-f2_globalenv.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_globalenv.obj `if test -f 'c/f2_globalenv.c'; then $(CYGPATH_W) 'c/f2_globalenv.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_globalenv.c'; fi`
+
+c/bin_funk2-f2_glwindow.o: c/f2_glwindow.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_glwindow.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_glwindow.Tpo" -c -o c/bin_funk2-f2_glwindow.o `test -f 'c/f2_glwindow.c' || echo '$(srcdir)/'`c/f2_glwindow.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_glwindow.Tpo" "c/$(DEPDIR)/bin_funk2-f2_glwindow.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_glwindow.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_glwindow.c' object='c/bin_funk2-f2_glwindow.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_glwindow.o `test -f 'c/f2_glwindow.c' || echo '$(srcdir)/'`c/f2_glwindow.c
+
+c/bin_funk2-f2_glwindow.obj: c/f2_glwindow.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_glwindow.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_glwindow.Tpo" -c -o c/bin_funk2-f2_glwindow.obj `if test -f 'c/f2_glwindow.c'; then $(CYGPATH_W) 'c/f2_glwindow.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_glwindow.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_glwindow.Tpo" "c/$(DEPDIR)/bin_funk2-f2_glwindow.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_glwindow.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_glwindow.c' object='c/bin_funk2-f2_glwindow.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_glwindow.obj `if test -f 'c/f2_glwindow.c'; then $(CYGPATH_W) 'c/f2_glwindow.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_glwindow.c'; fi`
 
 c/bin_funk2-f2_gmodule.o: c/f2_gmodule.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_gmodule.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_gmodule.Tpo" -c -o c/bin_funk2-f2_gmodule.o `test -f 'c/f2_gmodule.c' || echo '$(srcdir)/'`c/f2_gmodule.c; \
@@ -2373,7 +2402,6 @@ installdirs:
 	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
-install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -2504,16 +2532,44 @@ config_bit_num.h: bin/configurator
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
 img/bootstrap-repl.img: bin/funk2
 	mkdir -p img
+	rm -f img/bootstrap-repl.img
+	rm -f img/bootstrap.img
 	bin/funk2 fu2/bootstrap-repl.fu2
 
 # bootstrap the funk2 processor from a basic repl-prompt.
 img/bootstrap.img: img/bootstrap-repl.img
 	mkdir -p img
+	rm -f img/bootstrap.img
 	bin/funk2 fu2/bootstrap.fu2
 
 clean: clean-am
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
+
+make-install-sh:
+	echo "#!/bin/sh"                                                                    > install-sh
+	echo "echo \"\""                                                                   >> install-sh
+	echo "echo \"make: performing system-wide installation of funk2\""                 >> install-sh
+	echo "echo \"\""                                                                   >> install-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
+	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
+	echo "echo \"\""                                                                   >> install-sh
+	echo "install -d $(chroot__install__img__dir)"                                     >> install-sh
+#	echo "install -d $(chroot__install__bin__dir)"                                     >> install-sh
+	echo "install -d $(chroot__install__include__dir)"                                 >> install-sh
+	echo "install -d $(chroot__install__system_bin__dir)"                              >> install-sh
+	echo "install -d $(chroot__install__icons__dir)"                                   >> install-sh
+	echo "install -d $(chroot__install__man__dir)"                                     >> install-sh
+#	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
+	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
+	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
+	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh
+	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                  >> install-sh
+	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
+	chmod a+x install-sh
+
+install: install-am make-install-sh
+	./install-sh
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

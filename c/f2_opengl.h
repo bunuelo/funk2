@@ -108,17 +108,52 @@ void      funk2_opengl__init(funk2_opengl_t* this);
 void      funk2_opengl__destroy(funk2_opengl_t* this);
 boolean_t  raw__opengl__load_library(f2ptr cause);
 
+#if defined(F2__GL__H)
+void raw__opengl__glViewport(f2ptr cause, GLint x, GLint y, GLsizei width, GLsizei height);
+void raw__opengl__glMatrixMode(f2ptr cause, GLenum mode);
+void raw__opengl__glLoadIdentity(f2ptr cause);
+void raw__opengl__glShadeModel(f2ptr cause, GLenum mode);
+void raw__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+void raw__opengl__glClearDepth(f2ptr cause, GLclampd depth);
+void raw__opengl__glEnable(f2ptr cause, GLenum cap);
+void raw__opengl__glDepthFunc(f2ptr cause, GLenum func);
+void raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode);
+void raw__opengl__glFlush(f2ptr cause);
+void raw__opengl__glClear(f2ptr cause, GLbitfield mask);
+#endif // F2__GL__H
+
+
 void      funk2_openglu__init(funk2_openglu_t* this);
 void      funk2_openglu__destroy(funk2_openglu_t* this);
 boolean_t  raw__openglu__load_library(f2ptr cause);
+
+#if defined(F2__GLU__H)
+void raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+#endif // F2__GLU__H
+
 
 void      funk2_xxf86vm__init(funk2_xxf86vm_t* this);
 void      funk2_xxf86vm__destroy(funk2_xxf86vm_t* this);
 boolean_t  raw__xxf86vm__load_library(f2ptr cause);
 
+#if defined(F2__XF86VMODE__H)
+Bool raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, Display* display, int screen, XF86VidModeModeInfo* modeline);
+Bool raw__xxf86vm__XF86VidModeSetViewPort(f2ptr cause, Display* display, int screen, int x, int y);
+Bool raw__xxf86vm__XF86VidModeQueryVersion(f2ptr cause, Display* display, int* major_version_return, int* minor_version_return);
+Bool raw__xxf86vm__XF86VidModeGetAllModeLines(f2ptr cause, Display* display, int screen, int* modecount_return, XF86VidModeModeInfo*** modesinfo);
+#endif // F2__XF86VMODE__H
+
+
 void      funk2_xlib__init(funk2_xlib_t* this);
 void      funk2_xlib__destroy(funk2_xlib_t* this);
 boolean_t  raw__xlib__load_library(f2ptr cause);
+
+#if defined(F2__XLIB__H)
+void     raw__xlib__XCloseDisplay(f2ptr cause, Display* display);
+Display* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name);
+Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc);
+#endif // F2__XLIB__H
+
 
 #endif // F2__OPENGL__H
 

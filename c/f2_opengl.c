@@ -94,72 +94,52 @@ void raw__opengl__glViewport(f2ptr cause, GLint x, GLint y, GLsizei width, GLsiz
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glViewport)(x, y, width, height);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glMatrixMode(f2ptr cause, GLenum mode) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glMatrixMode)(mode);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glLoadIdentity(f2ptr cause) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glLoadIdentity)();
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glShadeModel(f2ptr cause, GLenum mode) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glShadeModel)(mode);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glClearColor)(red, green, blue, alpha);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glClearDepth(f2ptr cause, GLclampd depth) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glClearDepth)(depth);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glEnable(f2ptr cause, GLenum cap) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glEnable)(cap);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glDepthFunc(f2ptr cause, GLenum func) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glDepthFunc)(func);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glHint)(target, mode);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glFlush(f2ptr cause) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glFlush)();
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 void raw__opengl__glClear(f2ptr cause, GLbitfield mask) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glClear)(mask);
@@ -213,16 +193,12 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
   return boolean__true;
 }
 
-#if defined(F2__GL__H)
-#  define raw__openglu__gluPerspective(cause, fovy, aspect, zNear, zFar) \
-        maybe__openglu__gluPerspective(cause, fovy, aspect, zNear, zFar)
-void    maybe__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar) {
+#if defined(F2__GLU__H)
+void raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar) {
   if (!__funk2.openglu.initialized) {return;}
   (*__funk2.openglu.gluPerspective)(fovy, aspect, zNear, zFar);
 }
-#else
-#  define raw__openglu__gluPerspective(cause, fovy, aspect, zNear, zFar)
-#endif // F2__GL__H
+#endif // F2__GLU__H
 
 boolean_t raw__openglu__load_library(f2ptr cause) {
 #if defined(F2__GLU__H)
@@ -283,33 +259,27 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
   return boolean__true;
 }
 
-#if defined(F2__GL__H)
+#if defined(F2__XF86VMODE__H)
 Bool raw__xxf86vm__XF86VidModeSwitchToMode(f2ptr cause, Display* display, int screen, XF86VidModeModeInfo* modeline) {
   if (!__funk2.openglu.initialized) {return boolean__false;;}
   return (*__funk2.xxf86vm.XF86VidModeSwitchToMode)(display, screen, modeline);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 Bool raw__xxf86vm__XF86VidModeSetViewPort(f2ptr cause, Display* display, int screen, int x, int y) {
   if (!__funk2.openglu.initialized) {return boolean__false;;}
   return (*__funk2.xxf86vm.XF86VidModeSetViewPort)(display, screen, x, y);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 Bool raw__xxf86vm__XF86VidModeQueryVersion(f2ptr cause, Display* display, int* major_version_return, int* minor_version_return) {
   if (!__funk2.openglu.initialized) {return boolean__false;}
   return (*__funk2.xxf86vm.XF86VidModeQueryVersion)(display, major_version_return, minor_version_return);
 }
-#endif // F2__GL__H
 
-#if defined(F2__GL__H)
 Bool raw__xxf86vm__XF86VidModeGetAllModeLines(f2ptr cause, Display* display, int screen, int* modecount_return, XF86VidModeModeInfo*** modesinfo) {
   if (!__funk2.openglu.initialized) {return boolean__false;}
   return (*__funk2.xxf86vm.XF86VidModeGetAllModeLines)(display, screen, modecount_return, modesinfo);
 }
-#endif // F2__GL__H
+#endif // F2__XF86VMODE__H
 
 
 boolean_t raw__xxf86vm__load_library(f2ptr cause) {
@@ -430,16 +400,12 @@ void raw__xlib__XCloseDisplay(f2ptr cause, Display* display) {
   if (!__funk2.xlib.initialized) {return;}
   (*__funk2.xlib.XCloseDisplay)(display);
 }
-#endif // F2__XLIB__H
 
-#if defined(F2__XLIB__H)
 Display* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name) {
   if (!__funk2.xlib.initialized) {return NULL;}
   return (*__funk2.xlib.XOpenDisplay)(display_name);
 }
-#endif // F2__XLIB__H
 
-#if defined(F2__XLIB__H)
 Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc) {
   if (!__funk2.xlib.initialized) {return (Colormap)0;}
   return (*__funk2.xlib.XCreateColormap)(display, w, visual, alloc);

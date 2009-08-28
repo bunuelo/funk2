@@ -55,6 +55,27 @@ int int__abs(int x) {
   return x;
 }
 
+// attributes for a single buffered visual in RGBA format with at least
+// 4 bits per color and a 16 bit depth buffer
+static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
+							      GLX_GREEN_SIZE,          4, 
+							      GLX_BLUE_SIZE,           4, 
+							      GLX_DEPTH_SIZE,         16,
+							      None};
+
+// attributes for a double buffered visual in RGBA format with at least
+// 4 bits per color and a 16 bit depth buffer
+static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
+							      GLX_RED_SIZE,    4, 
+							      GLX_GREEN_SIZE,  4, 
+							      GLX_BLUE_SIZE,   4, 
+							      GLX_DEPTH_SIZE, 16,
+							      None};
+
+static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
+static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
+static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
+
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
 boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag) {
@@ -217,27 +238,6 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   }
   return this->done;
 }
-
-// attributes for a single buffered visual in RGBA format with at least
-// 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
-							      GLX_GREEN_SIZE,          4, 
-							      GLX_BLUE_SIZE,           4, 
-							      GLX_DEPTH_SIZE,         16,
-							      None};
-
-// attributes for a double buffered visual in RGBA format with at least
-// 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
-							      GLX_RED_SIZE,    4, 
-							      GLX_GREEN_SIZE,  4, 
-							      GLX_BLUE_SIZE,   4, 
-							      GLX_DEPTH_SIZE, 16,
-							      None};
-
-static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
-static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
-static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 
 // function called when our window is resized (should only happen in window mode)
 void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) {

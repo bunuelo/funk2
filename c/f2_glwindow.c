@@ -314,7 +314,7 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double ro
   return this->done;
 }
 
-int glwindow__main(f2ptr cause) {
+void glwindow__main(f2ptr cause) {
   float rotate_angle = 0;
   
   // default to fullscreen

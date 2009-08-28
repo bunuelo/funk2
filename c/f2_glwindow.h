@@ -31,14 +31,15 @@ typedef struct funk2_glwindow_s {
   Window               x_window;
   GLXContext           glx_context;
   XSetWindowAttributes set_window_attributes;
-  Bool                 fullscreen;
-  Bool                 double_buffered;
   XF86VidModeModeInfo  desk_mode;
+  boolean_t            fullscreen;
+  boolean_t            double_buffered;
   int                  x;
   int                  y;
   unsigned int         width;
   unsigned int         height;
   unsigned int         depth;
+  boolean_t            done;
 } funk2_glwindow_t;
 
 #endif

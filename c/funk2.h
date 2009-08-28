@@ -151,6 +151,9 @@ typedef struct funk2_s {
   funk2_openglu_t                     openglu;
   funk2_xxf86vm_t                     xxf86vm;
   funk2_xlib_t                        xlib;
+#if defined(F2__GLWINDOW__H)
+  funk2_glwindow_t glwindow;
+#endif
 } funk2_t;
 
 void      funk2__init(funk2_t* this, int argc, char** argv);

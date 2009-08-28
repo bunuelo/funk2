@@ -158,7 +158,7 @@ int int__abs(int x) {
 
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
-Bool glwindow__create(funk2_glwindow_t* this, f2ptr cause, char* title, int width, int height, int bits, Bool fullscreenflag) {
+boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, char* title, int width, int height, int bits, boolean_t fullscreenflag) {
   XVisualInfo *vi;
   Colormap cmap;
   int displayWidth, displayHeight;
@@ -264,8 +264,7 @@ Bool glwindow__create(funk2_glwindow_t* this, f2ptr cause, char* title, int widt
   return True;    
 }
 
-Bool glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double rotate_angle) {
-  Bool done = False;
+boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double rotate_angle) {
   XEvent event;
   while (raw__xlib__XPending(cause, this->display) > 0) {
     raw__xlib__XNextEvent(cause, this->display, &event);
@@ -289,11 +288,11 @@ Bool glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double rotate_
       break;
       // exit in case of a mouse button press
     case ButtonPress:     
-      done = True;
+      this->done = True;
       break;
     case KeyPress:
       if (raw__xlib__XLookupKeysym(cause, &event.xkey, 0) == XK_Escape) {
-	done = True;
+	this->done = True;
       }
       if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
 	glwindow__destroy(this, cause);
@@ -305,39 +304,79 @@ Bool glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double rotate_
     case ClientMessage:
       if (*raw__xlib__XGetAtomName(cause, this->display, event.xclient.message_type) == *"WM_PROTOCOLS") {
 	printf("Exiting sanely...\n");
-	done = True;
+	this->done = True;
       }
       break;
     default:
       break;
     }
   }
-  return done;
+  return this->done;
 }
 
-int glwindow__main(f2ptr cause, int argc, char **argv) {
+int glwindow__main(f2ptr cause) {
+  int argc = 1;
+  char **argv = {"funk2", NULL};
   float rotate_angle = 0;
-  funk2_glwindow_t glwindow;
   
   // default to fullscreen
-  Bool fullscreen = False;
-  glwindow__create(&glwindow, cause, "NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
+  boolean_t fullscreen = False;
+  glwindow__create(&(__funk2.glwindow), cause, "NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
   
-  Bool done = False;
+  glwindow.done = boolean__false;
   // wait for events
-  while (!done) {
+  while (!glwindow.done) {
     // handle the events in the queue
-    done = glwindow__handle_events(&glwindow, cause, rotate_angle);
-    if (! done) {
-      glwindow__draw_scene(&glwindow, cause, rotate_angle);
+    glwindow__handle_events(&(__funk2.glwindow), cause, rotate_angle);
+    if (! __funk2.glwindow.done) {
+      glwindow__draw_scene(&(__funk2.glwindow), cause, rotate_angle);
       rotate_angle += 1;
       if (rotate_angle >= 360) {
 	rotate_angle -= 360;
       }
     }
   }
-  glwindow__destroy(&glwindow, cause);
-  exit (0);
+  glwindow__destroy(&(__funk2.glwindow), cause);
 }
 
 #endif // F2__GLWINDOW__H
+
+boolean_t raw__glwindow__supported(f2ptr cause) {
+#if defined(F2__GLWINDOW__H)
+  return boolean__true;
+#else
+  return boolean__false;
+#endif  
+}
+
+f2ptr f2__glwindow__supported(f2ptr cause) {
+  return f2bool__new(raw__glwindow__supported(cause));
+}
+
+
+void raw__glwindow__create(f2ptr cause, char* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
+#if defined(F2__GLWINDOW__H)
+  glwindow__create(&(__funk2.glwindow), cause, title, width, height, depth, fullscreen);
+#else
+  status("\nglwindow not supported.");
+  printf("\nglwindow not supported.");
+#endif  
+}
+
+f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, f2ptr depth, f2ptr fullscreen) {
+  if ((! raw__string__is_type(cause, title)) ||
+      (! raw__integer__is_type(cause, width)) ||
+      (! raw__integer__is_type(cause, height)) ||
+      (! raw__integer__is_type(cause, depth))) {
+  }
+  u64 title__length = f2string__length(title, cause);
+  char* title__str = f2__malloc(title__length + 1);
+  f2string__str_copy(title, cause, title__str);
+  title__str[title__length] = (char)0;
+  s64 width__i = f2integer__i(width, cause);
+  s64 height__i = f2integer__i(height, cause);
+  s64 depth__i = f2integer__i(height, cause);
+  raw__glwindow__create(cause, title__str, width__i, height__i, depth__i, fullscreen ? boolean__true : boolean__false);
+  return nil;
+}
+

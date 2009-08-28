@@ -340,6 +340,12 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 #endif // TEST
   funk2__init(this, argc, argv);
   
+  if (raw__glwindow__supported(nil)) {
+    status("glwindow is supported in this funk2 build!");
+  } else {
+    status("glwindow is not supported in this funk2 build.");
+  }
+  
   //raw__opengl__load_library(nil);
   //raw__openglu__load_library(nil);
   //raw__xxf86vm__load_library(nil);

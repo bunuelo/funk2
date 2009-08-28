@@ -199,6 +199,7 @@ bin_funk2_SOURCES = \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
+  c/f2_glwindow.c \
   c/f2_gmodule.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \

@@ -213,7 +213,8 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	this->done = True;
       }
       if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
-	funk2_glwindow__destroy(this, cause);
+	funk2_glwindow__destroy(this);
+	funk2_glwindow__init(this);
 	this->fullscreen = !this->fullscreen;
 	printf("creating new window: %dx%d\n", this->width, this->height);
 	funk2_glwindow__create(this, cause, (u8*)"NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
@@ -325,7 +326,7 @@ void funk2_glwindow__main(f2ptr cause) {
       }
     }
   }
-  funk2_glwindow__destroy(&(__funk2.glwindow), cause);
+  funk2_glwindow__destroy(&(__funk2.glwindow));
 }
 
 #endif // F2__GLWINDOW__H

@@ -383,7 +383,7 @@ f2ptr f2__glwindow__handle_events(f2ptr cause) {
 
 
 void raw__glwindow__destroy(f2ptr cause) {
-  funk2_glwindow__destroy(&(__funk2.glwindow), cause);
+  funk2_glwindow__destroy(&(__funk2.glwindow));
 }
 
 f2ptr f2__glwindow__destroy(f2ptr cause) {

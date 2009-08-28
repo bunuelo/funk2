@@ -275,7 +275,7 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
     case Expose:
       if (event.xexpose.count != 0)
 	break;
-      glwindow__draw_scene(this, cause, this->rotate_angle);
+      glwindow__draw_scene(this, cause);
       break;
     case ConfigureNotify:
       // call raw__resize_gl_scene only if our window-size changed

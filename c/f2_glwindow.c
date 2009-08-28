@@ -76,8 +76,8 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
 #if defined(F2__GLWINDOW__SUPPORTED)
     f2ptr cause = nil;
     if (this->glx_context) {
-      if (!raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
-	printf("Could not release drawing context.\n");
+      if (! raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
+        status("WARNING: could not release drawing context.");
       }
       raw__opengl__glXDestroyContext(cause, this->display, this->glx_context);
       this->glx_context = NULL;
@@ -128,7 +128,7 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   this->screen = raw__xlib__XDefaultScreen(cause, this->display);
   raw__xxf86vm__XF86VidModeQueryVersion(cause, this->display, &vidModeMajorVersion,
 					&vidModeMinorVersion);
-  printf("XF86VidModeExtension-Version %d.%d\n", vidModeMajorVersion,
+  status("XF86VidModeExtension version %d.%d", vidModeMajorVersion,
 	 vidModeMinorVersion);
   raw__xxf86vm__XF86VidModeGetAllModeLines(cause, this->display, this->screen, &modeNum, &modes);
   // save desktop-resolution before switching modes
@@ -141,20 +141,20 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
       min_dist = dist;
       bestMode = i;
     }
-    printf("found mode %dx%d.%s\n", modes[i]->hdisplay, modes[i]->vdisplay, (bestMode == i) ? " <-- best mode so far!" : "");
+    status("found mode %dx%d.%s", modes[i]->hdisplay, modes[i]->vdisplay, (bestMode == i) ? " <-- best mode so far!" : "");
   }
   // get an appropriate visual
   vi = raw__opengl__glXChooseVisual(cause, this->display, this->screen, funk2_glwindow__attribute_list__double_buffer);
   if (vi == NULL) {
     vi = raw__opengl__glXChooseVisual(cause, this->display, this->screen, funk2_glwindow__attribute_list__single_buffer);
     this->double_buffered = False;
-    printf("single buffered visual!\n");
+    status("single buffered visual!");
   } else {
     this->double_buffered = True;
-    printf("double buffered visual!\n");
+    status("double buffered visual!");
   }
   raw__opengl__glXQueryVersion(cause, this->display, &glxMajorVersion, &glxMinorVersion);
-  printf("glX-Version %d.%d\n", glxMajorVersion, glxMinorVersion);
+  status("glX version %d.%d", glxMajorVersion, glxMinorVersion);
   // create a GLX context
   this->glx_context = raw__opengl__glXCreateContext(cause, this->display, vi, 0, GL_TRUE);
   // create a color map
@@ -168,7 +168,7 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
     raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
     displayWidth = modes[bestMode]->hdisplay;
     displayHeight = modes[bestMode]->vdisplay;
-    printf("Resolution %dx%d\n", displayWidth, displayHeight);
+    status("resolution %dx%d", displayWidth, displayHeight);
     raw__xlib__XFree(cause, modes);
     
     // create a fullscreen window
@@ -202,11 +202,11 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   raw__xlib__XGetGeometry(cause, this->display, this->x_window, &winDummy, &this->x, &this->y,
 			  &this->width, &this->height, &borderDummy, &this->depth);
-  printf("Depth %d\n", this->depth);
+  status("depth %d", this->depth);
   if (raw__opengl__glXIsDirect(cause, this->display, this->glx_context)) {
-    printf("Congrats, you have Direct Rendering!\n");
+    status("we have direct rendering");
   } else {
-    printf("Sorry, no Direct Rendering possible!\n");
+    status("we do not have direct rendering");
   }
   funk2_glwindow__initialize_opengl(this, cause);
   
@@ -230,7 +230,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	  (event.xconfigure.height != this->height)) {
 	this->width = event.xconfigure.width;
 	this->height = event.xconfigure.height;
-	printf("Resize event: %dx%d\n", this->width, this->height);
+	status("resize event: %dx%d", this->width, this->height);
 	raw__resize_gl_scene(cause,
 			     event.xconfigure.width,
 			     event.xconfigure.height);
@@ -248,13 +248,13 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	funk2_glwindow__destroy(this);
 	funk2_glwindow__init(this);
 	this->fullscreen = !this->fullscreen;
-	printf("creating new window: %dx%d\n", this->width, this->height);
+	status("creating new window: %dx%d", this->width, this->height);
 	funk2_glwindow__create(this, cause, (u8*)"NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
       }
       break;
     case ClientMessage:
       if (*raw__xlib__XGetAtomName(cause, this->display, event.xclient.message_type) == *"WM_PROTOCOLS") {
-	printf("Exiting sanely...\n");
+	status("Exiting sanely...");
 	this->done = True;
       }
       break;
@@ -380,9 +380,8 @@ void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 de
 #if defined(F2__GLWINDOW__H)
   funk2_glwindow__create(&(__funk2.glwindow), cause, title, width, height, depth, fullscreen);
 #else
-  status("\nglwindow not supported.");
-  printf("\nglwindow not supported.");
-#endif  
+  status("glwindow not supported.");
+#endif
 }
 
 f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, f2ptr depth, f2ptr fullscreen) {

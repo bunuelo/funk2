@@ -93,6 +93,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glXIsDirect       = (Bool(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXIsDirect"));       if (! (this->glXIsDirect))       {status("funk2_opengl__load_library: failed symbol, glXIsDirect.");       return boolean__false;}
 #endif // F2__GL__H
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
+  this->initialized = boolean__true;
   return boolean__true;
 }
 
@@ -287,6 +288,7 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
   this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_openglu__load_library: failed symbol, gluPerspective."); return boolean__false;}
 #endif // F2__GLU__H
   status("funk2_openglu__load_library: loaded openglu function symbols successfully.");
+  this->initialized = boolean__true;
   return boolean__true;
 }
 
@@ -353,6 +355,7 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
   this->XF86VidModeGetAllModeLines = (Bool(*)(Display* display, int screen, int* modecount_return, XF86VidModeModeInfo*** modesinfo)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XF86VidModeGetAllModeLines")); if (! (this->XF86VidModeGetAllModeLines)) {status("funk2_xxf86vm__load_library: failed symbol, XF86VidModeGetAllModeLines."); return boolean__false;}
 #endif // F2__XF86VMODE__H
   status("funk2_xxf86vm__load_library: loaded xxf86vm function symbols successfully.");
+  this->initialized = boolean__true;
   return boolean__true;
 }
 
@@ -490,6 +493,7 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
   this->XDefaultScreen         = (int(*)(Display *display))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XDefaultScreen"));         if (! (this->XDefaultScreen))         {status("funk2_xlib__load_library: failed symbol, XDefaultScreen.");         return boolean__false;};
 #endif // F2__XLIB__H
   status("funk2_xlib__load_library: loaded xlib function symbols successfully.");
+  this->initialized = boolean__true;
   return boolean__true;
 }
 

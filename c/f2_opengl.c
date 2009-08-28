@@ -64,17 +64,33 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_opengl__load_library: loaded opengl dynamic library successfully.");
 #if defined(F2__GL__H)
-  this->glViewport     = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));     if (! (this->glViewport))     {status("funk2_opengl__load_library: failed symbol, glViewport.");     return boolean__false;}
-  this->glMatrixMode   = (void(*)(GLenum mode))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));   if (! (this->glMatrixMode))   {status("funk2_opengl__load_library: failed symbol, glMatrixMode.");   return boolean__false;}
-  this->glLoadIdentity = (void(*)())                                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity")); if (! (this->glLoadIdentity)) {status("funk2_opengl__load_library: failed symbol, glLoadIdentity."); return boolean__false;}
-  this->glShadeModel   = (void(*)(GLenum mode))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));   if (! (this->glShadeModel))   {status("funk2_opengl__load_library: failed symbol, glShadeModel.");   return boolean__false;}
-  this->glClearColor   = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));   if (! (this->glClearColor))   {status("funk2_opengl__load_library: failed symbol, glClearColor.");   return boolean__false;}
-  this->glClearDepth   = (void(*)(GLclampd depth))                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));   if (! (this->glClearDepth))   {status("funk2_opengl__load_library: failed symbol, glClearDepth.");   return boolean__false;}
-  this->glEnable       = (void(*)(GLenum cap))                                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));       if (! (this->glEnable))       {status("funk2_opengl__load_library: failed symbol, glEnable.");       return boolean__false;}
-  this->glDepthFunc    = (void(*)(GLenum func))                                                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));    if (! (this->glDepthFunc))    {status("funk2_opengl__load_library: failed symbol, glDepthFunc.");    return boolean__false;}
-  this->glHint         = (void(*)(GLenum target, GLenum mode))                                  from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));         if (! (this->glHint))         {status("funk2_opengl__load_library: failed symbol, glHint.");         return boolean__false;}
-  this->glFlush        = (void(*)())                                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));        if (! (this->glFlush))        {status("funk2_opengl__load_library: failed symbol, glFlush.");        return boolean__false;}
-  this->glClear        = (void(*)(GLbitfield mask))                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));        if (! (this->glClear))        {status("funk2_opengl__load_library: failed symbol, glClear.");        return boolean__false;}
+  this->glViewport        = (void(*)(GLint x, GLint y, GLsizei width, GLsizei height))                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glViewport"));        if (! (this->glViewport))        {status("funk2_opengl__load_library: failed symbol, glViewport.");        return boolean__false;}
+  this->glMatrixMode      = (void(*)(GLenum mode))                                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMatrixMode"));      if (! (this->glMatrixMode))      {status("funk2_opengl__load_library: failed symbol, glMatrixMode.");      return boolean__false;}
+  this->glLoadIdentity    = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadIdentity"));    if (! (this->glLoadIdentity))    {status("funk2_opengl__load_library: failed symbol, glLoadIdentity.");    return boolean__false;}
+  this->glShadeModel      = (void(*)(GLenum mode))                                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glShadeModel"));      if (! (this->glShadeModel))      {status("funk2_opengl__load_library: failed symbol, glShadeModel.");      return boolean__false;}
+  this->glClearColor      = (void(*)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha))             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearColor"));      if (! (this->glClearColor))      {status("funk2_opengl__load_library: failed symbol, glClearColor.");      return boolean__false;}
+  this->glClearDepth      = (void(*)(GLclampd depth))                                                          from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClearDepth"));      if (! (this->glClearDepth))      {status("funk2_opengl__load_library: failed symbol, glClearDepth.");      return boolean__false;}
+  this->glEnable          = (void(*)(GLenum cap))                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnable"));          if (! (this->glEnable))          {status("funk2_opengl__load_library: failed symbol, glEnable.");          return boolean__false;}
+  this->glDepthFunc       = (void(*)(GLenum func))                                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDepthFunc"));       if (! (this->glDepthFunc))       {status("funk2_opengl__load_library: failed symbol, glDepthFunc.");       return boolean__false;}
+  this->glHint            = (void(*)(GLenum target, GLenum mode))                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glHint"));            if (! (this->glHint))            {status("funk2_opengl__load_library: failed symbol, glHint.");            return boolean__false;}
+  this->glFlush           = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glFlush"));           if (! (this->glFlush))           {status("funk2_opengl__load_library: failed symbol, glFlush.");           return boolean__false;}
+  this->glClear           = (void(*)(GLbitfield mask))                                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glClear"));           if (! (this->glClear))           {status("funk2_opengl__load_library: failed symbol, glClear.");           return boolean__false;}
+  this->glLightfv         = (void(*)(GLenum light, GLenum pname, const GLfloat* params))                       from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLightfv"));         if (! (this->glLightfv))         {status("funk2_opengl__load_library: failed symbol, glLightfv.");         return boolean__false;}
+  this->glCullFace        = (void(*)(GLenum mode))                                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glCullFace"));        if (! (this->glCullFace))        {status("funk2_opengl__load_library: failed symbol, glCullFace.");        return boolean__false;}
+  this->glTranslatef      = (void(*)(GLfloat x, GLfloat y, GLfloat z))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTranslatef"));      if (! (this->glTranslatef))      {status("funk2_opengl__load_library: failed symbol, glTranslatef.");      return boolean__false;}
+  this->glRotatef         = (void(*)(GLfloat angle, GLfloat x, GLfloat y, GLfloat z))                          from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glRotatef"));         if (! (this->glRotatef))         {status("funk2_opengl__load_library: failed symbol, glRotatef.");         return boolean__false;}
+  this->glColor4f         = (void(*)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha))                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glColor4f"));         if (! (this->glColor4f))         {status("funk2_opengl__load_library: failed symbol, glColor4f.");         return boolean__false;}
+  this->glBegin           = (void(*)(GLenum mode))                                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glBegin"));           if (! (this->glBegin))           {status("funk2_opengl__load_library: failed symbol, glBegin.");           return boolean__false;}
+  this->glNormal3f        = (void(*)(GLfloat nx, GLfloat ny, GLfloat nz))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glNormal3f"));        if (! (this->glNormal3f))        {status("funk2_opengl__load_library: failed symbol, glNormal3f.");        return boolean__false;}
+  this->glVertex3f        = (void(*)(GLfloat x, GLfloat y, GLfloat z))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glVertex3f"));        if (! (this->glVertex3f))        {status("funk2_opengl__load_library: failed symbol, glVertex3f.");        return boolean__false;}
+  this->glEnd             = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnd"));             if (! (this->glEnd))             {status("funk2_opengl__load_library: failed symbol, glEnd.");             return boolean__false;}
+  this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
+  this->glXMakeCurrent    = (Bool(*)(Display* dpy, GLXDrawable drawable, GLXContext ctx))                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXMakeCurrent"));    if (! (this->glXMakeCurrent))    {status("funk2_opengl__load_library: failed symbol, glXMakeCurrent.");    return boolean__false;}
+  this->glXDestroyContext = (void(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXDestroyContext")); if (! (this->glXDestroyContext)) {status("funk2_opengl__load_library: failed symbol, glXDestroyContext."); return boolean__false;}
+  this->glXChooseVisual   = (XVisualInfo*(*)(Display* dpy, int screen, int* attribList))                       from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXChooseVisual"));   if (! (this->glXChooseVisual))   {status("funk2_opengl__load_library: failed symbol, glXChooseVisual.");   return boolean__false;}
+  this->glXQueryVersion   = (Bool(*)(Display* dpy, int* Major, int* Minor))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXQueryVersion"));   if (! (this->glXQueryVersion))   {status("funk2_opengl__load_library: failed symbol, glXQueryVersion.");   return boolean__false;}
+  this->glXCreateContext  = (GLXContext(*)(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXCreateContext"));  if (! (this->glXCreateContext))  {status("funk2_opengl__load_library: failed symbol, glXCreateContext.");  return boolean__false;}
+  this->glXIsDirect       = (Bool(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXIsDirect"));       if (! (this->glXIsDirect))       {status("funk2_opengl__load_library: failed symbol, glXIsDirect.");       return boolean__false;}
 #endif // F2__GL__H
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   return boolean__true;
@@ -144,6 +160,87 @@ void raw__opengl__glClear(f2ptr cause, GLbitfield mask) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glClear)(mask);
 }
+
+void raw__opengl__glLightfv(f2ptr cause, GLenum light, GLenum pname, const GLfloat* params) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glLightfv)(light, pname, params);
+}
+
+void raw__opengl__glCullFace(f2ptr cause, GLenum mode) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glCullFace)(mode);
+}
+
+void raw__opengl__glTranslatef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glTranslatef)(x, y, z);
+}
+
+void raw__opengl__glRotatef(f2ptr cause, GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glRotatef)(angle, x, y, z);
+}
+
+void raw__opengl__glColor4f(f2ptr cause, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glColor4f)(red, green, blue, alpha);
+}
+
+void raw__opengl__glBegin(f2ptr cause, GLenum mode) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glBegin)(mode);
+}
+
+void raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glNormal3f)(nx, ny, nz);
+}
+
+void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glVertex3f)(x, y, z);
+}
+
+void raw__opengl__glEnd(f2ptr cause) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glEnd)();
+}
+
+void raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glXSwapBuffers)(dpy, drawable);
+}
+
+Bool raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx) {
+  if (!__funk2.opengl.initialized) {return False;}
+  return (*__funk2.opengl.glXMakeCurrent)(dpy, drawable, ctx);
+}
+
+void raw__opengl__glXDestroyContext(f2ptr cause, Display* dpy, GLXContext ctx) {
+  if (!__funk2.opengl.initialized) {return;}
+  (*__funk2.opengl.glXDestroyContext)(dpy, ctx);
+}
+
+XVisualInfo* raw__opengl__glXChooseVisual(f2ptr cause, Display* dpy, int screen, int* attribList) {
+  if (!__funk2.opengl.initialized) {return NULL;}
+  return (*__funk2.opengl.glXChooseVisual)(dpy, screen, attribList);
+}
+
+Bool raw__opengl__glXQueryVersion(f2ptr cause, Display* dpy, int* Major, int* Minor) {
+  if (!__funk2.opengl.initialized) {return False;}
+  return (*__funk2.opengl.glXQueryVersion)(dpy, Major, Minor);
+}
+
+GLXContext raw__opengl__glXCreateContext(f2ptr cause, Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct) {
+  if (!__funk2.opengl.initialized) {return (GLXContext)NULL;}
+  return (*__funk2.opengl.glXCreateContext)(dpy, vis, shareList, direct);
+}
+
+Bool raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx) {
+  if (!__funk2.opengl.initialized) {return False;}
+  return (*__funk2.opengl.glXIsDirect)(dpy, ctx);
+}
+
 #endif // F2__GL__H
 
 // funk2_openglu
@@ -410,6 +507,157 @@ Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Vis
   if (!__funk2.xlib.initialized) {return (Colormap)0;}
   return (*__funk2.xlib.XCreateColormap)(display, w, visual, alloc);
 }
+
+int raw__xlib__XFree(f2ptr cause, void* data) {
+  if (!__funk2.xlib.initialized) {return 0;}
+  return (*__funk2.xlib.XFree)(data);
+}
+
+Window raw__xlib__XCreateWindow(f2ptr cause, Display* display,
+				Window parent,
+				int x, int y,
+				unsigned int width, unsigned int height,
+				unsigned int border_width,
+				int depth,
+				unsigned int class,
+				Visual* visual,
+				unsigned long valuemask,
+				XSetWindowAttributes* attributes) {
+  if (!__funk2.xlib.initialized) {return (Window)0;}
+  return (*__funk2.xlib.XCreateWindow)(display,
+				       parent,
+				       x, y,
+				       width, height,
+				       border_width,
+				       depth,
+				       class,
+				       visual,
+				       valuemask,
+				       attributes);
+}
+
+void raw__xlib__XWarpPointer(f2ptr cause, Display* display,
+			     Window src_w, Window dest_w,
+			     int src_x, int src_y,
+			     unsigned int src_width, unsigned int src_height,
+			     int dest_x, int dest_y) {
+  if (!__funk2.xlib.initialized) {return;}
+  (*__funk2.xlib.XWarpPointer)(display,
+			       src_w, dest_w,
+			       src_x, src_y,
+			       src_width, src_height,
+			       dest_x, dest_y);
+}
+
+void raw__xlib__XMapRaised(f2ptr cause, Display* display, Window w) {
+  if (!__funk2.xlib.initialized) {return;}
+  (*__funk2.xlib.XMapRaised)(display, w);
+}
+
+int raw__xlib__XGrabKeyboard(f2ptr cause, Display* display,
+			     Window grab_window,
+			     Bool owner_events,
+			     int pointer_mode,
+			     int keyboard_mode,
+			     Time time) {
+  if (!__funk2.xlib.initialized) {return 0;}
+  return (*__funk2.xlib.XGrabKeyboard)(display,
+				       grab_window,
+				       owner_events,
+				       pointer_mode,
+				       keyboard_mode,
+				       time);
+}
+
+int raw__xlib__XGrabPointer(f2ptr cause, Display* display,
+			    Window grab_window,
+			    Bool owner_events,
+			    unsigned int event_mask,
+			    int pointer_mode,
+			    int keyboard_mode,
+			    Window confine_to,
+			    Cursor cursor,
+			    Time time) {
+  if (!__funk2.xlib.initialized) {return 0;}
+  return (*__funk2.xlib.XGrabPointer)(display,
+				      grab_window,
+				      owner_events,
+				      event_mask,
+				      pointer_mode,
+				      keyboard_mode,
+				      confine_to,
+				      cursor,
+				      time);
+}
+
+Atom raw__xlib__XInternAtom(f2ptr cause, Display* display, char* atom_name, Bool only_if_exists) {
+  if (!__funk2.xlib.initialized) {return (Atom)0;}
+  return (*__funk2.xlib.XInternAtom)(display, atom_name, only_if_exists);
+}
+
+Status raw__xlib__XSetWMProtocols(f2ptr cause, Display* display, Window w, Atom* protocols, int count) {
+  if (!__funk2.xlib.initialized) {return (Status)0;}
+  return (*__funk2.xlib.XSetWMProtocols)(display, w, protocols, count);
+}
+
+void raw__xlib__XSetStandardProperties(f2ptr cause, Display* display,
+				       Window w,
+				       char* window_name,
+				       char* icon_name,
+				       Pixmap icon_pixmap,
+				       char** argv, int argc,
+				       XSizeHints *hints) {
+  if (!__funk2.xlib.initialized) {return;}
+  (*__funk2.xlib.XSetStandardProperties)(display,
+					 w,
+					 window_name,
+					 icon_name,
+					 icon_pixmap,
+					 argv, argc,
+					 hints);
+}
+
+Status raw__xlib__XGetGeometry(f2ptr cause, Display* display,
+			       Drawable d,
+			       Window* root_return,
+			       int* x_return,
+			       int* y_return,
+			       unsigned int* width_return,
+			       unsigned int* height_return,
+			       unsigned int* border_width_return,
+			       unsigned int* depth_return) {
+  if (!__funk2.xlib.initialized) {return (Status)0;}
+  return (*__funk2.xlib.XGetGeometry)(display,
+				      d,
+				      root_return,
+				      x_return,
+				      y_return,
+				      width_return,
+				      height_return,
+				      border_width_return,
+				      depth_return);
+}
+
+void raw__xlib__XNextEvent(f2ptr cause, Display* display, XEvent* event_return) {
+  if (!__funk2.xlib.initialized) {return;}
+  (*__funk2.xlib.XNextEvent)(display, event_return);
+}
+
+KeySym raw__xlib__XLookupKeysym(f2ptr cause, XKeyEvent* key_event, int index) {
+  if (!__funk2.xlib.initialized) {return (KeySym)0;}
+  return (*__funk2.xlib.XLookupKeysym)(key_event, index);
+}
+
+char* raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom) {
+  if (!__funk2.xlib.initialized) {return (char*)NULL;}
+  return (*__funk2.xlib.XGetAtomName)(display, atom);
+}
+
+int raw__xlib__XPending(f2ptr cause, Display* display) {
+  if (!__funk2.xlib.initialized) {return 0;}
+  return (*__funk2.xlib.XPending)(display);
+}
+
 #endif // F2__XLIB__H
 
 

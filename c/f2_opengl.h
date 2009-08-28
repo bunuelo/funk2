@@ -33,24 +33,29 @@ struct funk2_opengl_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
 #if defined(F2__GL__H)
-  void(*    glViewport    )(GLint x, GLint y, GLsizei width, GLsizei height);
-  void(*    glMatrixMode  )(GLenum mode);
-  void(*    glLoadIdentity)();
-  void(*    glShadeModel  )(GLenum mode);
-  void(*    glClearColor  )(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
-  void(*    glClearDepth  )(GLclampd depth);
-  void(*    glEnable      )(GLenum cap);
-  void(*    glDepthFunc   )(GLenum func);
-  void(*    glHint        )(GLenum target, GLenum mode);
-  void(*    glFlush       )();
-  void(*    glClear       )(GLbitfield mask);
-#endif // F2__GL__H
-};
-
-struct funk2_openglx_s {
-  boolean_t initialized;
-  f2ptr     dlfcn_pointer;
-#if defined(F2__GLX__H)
+  void(*         glViewport    )(GLint x, GLint y, GLsizei width, GLsizei height);
+  void(*         glMatrixMode  )(GLenum mode);
+  void(*         glLoadIdentity)();
+  void(*         glShadeModel  )(GLenum mode);
+  void(*         glClearColor  )(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+  void(*         glClearDepth  )(GLclampd depth);
+  void(*         glEnable      )(GLenum cap);
+  void(*         glDepthFunc   )(GLenum func);
+  void(*         glHint        )(GLenum target, GLenum mode);
+  void(*         glFlush       )();
+  void(*         glClear       )(GLbitfield mask);
+  void(*         glLightfv     )(GLenum light, GLenum pname, const GLfloat* params);
+  void(*         glCullFace    )(GLenum mode);
+  void(*         glTranslatef  )(GLfloat x, GLfloat y, GLfloat z);
+  void(*         glRotatef     )(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+  void(*         glColor4f     )(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+  void(*         glBegin       )(GLenum mode);
+  void(*         glNormal3f    )(GLfloat nx, GLfloat ny, GLfloat nz);
+  void(*         glVertex3f    )(GLfloat x, GLfloat y, GLfloat z);
+  void(*         glEnd         )();
+  // The following functions are included in libGL.so, but are
+  // probably not on non-X environments, so we'll need to deal with
+  // this in a port to those environments.
   void(*         glXSwapBuffers   )(Display* dpy, GLXDrawable drawable);
   Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
   void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
@@ -58,7 +63,7 @@ struct funk2_openglx_s {
   Bool(*         glXQueryVersion  )(Display* dpy, int* Major, int* Minor);
   GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
   Bool(*         glXIsDirect      )(Display* dpy, GLXContext ctx);
-#endif // F2__GLX__H
+#endif // F2__GL__H
 };
 
 struct funk2_openglu_s {
@@ -120,6 +125,23 @@ void raw__opengl__glDepthFunc(f2ptr cause, GLenum func);
 void raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode);
 void raw__opengl__glFlush(f2ptr cause);
 void raw__opengl__glClear(f2ptr cause, GLbitfield mask);
+void raw__opengl__glLightfv(f2ptr cause, GLenum light, GLenum pname, const GLfloat* params);
+void raw__opengl__glCullFace(f2ptr cause, GLenum mode);
+void raw__opengl__glTranslatef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
+void raw__opengl__glRotatef(f2ptr cause, GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+void raw__opengl__glColor4f(f2ptr cause, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+void raw__opengl__glBegin(f2ptr cause, GLenum mode);
+void raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz);
+void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
+void raw__opengl__glEnd(f2ptr cause);
+
+void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
+Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);
+void         raw__opengl__glXDestroyContext(f2ptr cause, Display* dpy, GLXContext ctx);
+XVisualInfo* raw__opengl__glXChooseVisual(f2ptr cause, Display* dpy, int screen, int* attribList);
+Bool         raw__opengl__glXQueryVersion(f2ptr cause, Display* dpy, int* Major, int* Minor);
+GLXContext   raw__opengl__glXCreateContext(f2ptr cause, Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
+Bool         raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx);
 #endif // F2__GL__H
 
 
@@ -152,6 +174,60 @@ boolean_t  raw__xlib__load_library(f2ptr cause);
 void     raw__xlib__XCloseDisplay(f2ptr cause, Display* display);
 Display* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name);
 Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc);
+int      raw__xlib__XFree(f2ptr cause, void* data);
+Window   raw__xlib__XCreateWindow(f2ptr cause, Display* display,
+				  Window parent,
+				  int x, int y,
+				  unsigned int width, unsigned int height,
+				  unsigned int border_width,
+				  int depth,
+				  unsigned int class,
+				  Visual* visual,
+				  unsigned long valuemask,
+				  XSetWindowAttributes* attributes);
+void     raw__xlib__XWarpPointer(f2ptr cause, Display* display,
+				 Window src_w, Window dest_w,
+				 int src_x, int src_y,
+				 unsigned int src_width, unsigned int src_height,
+				 int dest_x, int dest_y);
+void     raw__xlib__XMapRaised(f2ptr cause, Display* display, Window w);
+int      raw__xlib__XGrabKeyboard(f2ptr cause, Display* display,
+				  Window grab_window,
+				  Bool owner_events,
+				  int pointer_mode,
+				  int keyboard_mode,
+				  Time time);
+int      raw__xlib__XGrabPointer(f2ptr cause, Display* display,
+				 Window grab_window,
+				 Bool owner_events,
+				 unsigned int event_mask,
+				 int pointer_mode,
+				 int keyboard_mode,
+				 Window confine_to,
+				 Cursor cursor,
+				 Time time);
+Atom     raw__xlib__XInternAtom(f2ptr cause, Display* display, char* atom_name, Bool only_if_exists);
+Status   raw__xlib__XSetWMProtocols(f2ptr cause, Display* display, Window w, Atom* protocols, int count);
+void     raw__xlib__XSetStandardProperties(f2ptr cause, Display* display,
+					   Window w,
+					   char* window_name,
+					   char* icon_name,
+					   Pixmap icon_pixmap,
+					   char** argv, int argc,
+					   XSizeHints *hints);
+Status   raw__xlib__XGetGeometry(f2ptr cause, Display* display,
+				 Drawable d,
+				 Window* root_return,
+				 int* x_return,
+				 int* y_return,
+				 unsigned int* width_return,
+				 unsigned int* height_return,
+				 unsigned int* border_width_return,
+				 unsigned int* depth_return);
+void     raw__xlib__XNextEvent(f2ptr cause, Display* display, XEvent* event_return);
+KeySym   raw__xlib__XLookupKeysym(f2ptr cause, XKeyEvent* key_event, int index);
+char*    raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom);
+int      raw__xlib__XPending(f2ptr cause, Display* display);
 #endif // F2__XLIB__H
 
 

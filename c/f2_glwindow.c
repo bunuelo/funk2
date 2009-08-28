@@ -57,7 +57,7 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
 }
 
 // general OpenGL initialization function
-int glwindow__init(funk2_glwindow_t* this, f2ptr cause) {
+int glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glShadeModel(cause, GL_SMOOTH);
   raw__opengl__glClearColor(cause, 0.0f, 0.0f, 0.0f, 0.0f);
   raw__opengl__glClearDepth(cause, 1.0f);
@@ -81,11 +81,11 @@ int glwindow__init(funk2_glwindow_t* this, f2ptr cause) {
 }
 
 // Here goes our drawing code
-int glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause, double rotate_angle) {
+int glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   raw__opengl__glLoadIdentity(cause);
   raw__opengl__glTranslatef(cause, 0, 0, -10);
-  raw__opengl__glRotatef(cause, rotate_angle, 1,1,0.5);
+  raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
   
   raw__opengl__glColor4f(cause, 1,1,1,1);
   raw__opengl__glBegin(cause, GL_QUADS);
@@ -171,6 +171,9 @@ boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int w
   Atom wmDelete;
   Window winDummy;
   unsigned int borderDummy;
+  
+  this->rotate_angle = 0;
+  this->done = boolean__false;
   
   this->fullscreen = fullscreenflag;
   // set best mode to current
@@ -260,11 +263,11 @@ boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int w
   } else {
     printf("Sorry, no Direct Rendering possible!\n");
   }
-  glwindow__init(this, cause);
+  glwindow__initialize_opengl(this, cause);
   return True;    
 }
 
-boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double rotate_angle) {
+boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   XEvent event;
   while (raw__xlib__XPending(cause, this->display) > 0) {
     raw__xlib__XNextEvent(cause, this->display, &event);
@@ -272,7 +275,7 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double ro
     case Expose:
       if (event.xexpose.count != 0)
 	break;
-      glwindow__draw_scene(this, cause, rotate_angle);
+      glwindow__draw_scene(this, cause, this->rotate_angle);
       break;
     case ConfigureNotify:
       // call raw__resize_gl_scene only if our window-size changed
@@ -315,22 +318,19 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double ro
 }
 
 void glwindow__main(f2ptr cause) {
-  float rotate_angle = 0;
-  
   // default to fullscreen
   boolean_t fullscreen = False;
   glwindow__create(&(__funk2.glwindow), cause, (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
   
-  __funk2.glwindow.done = boolean__false;
   // wait for events
   while (!__funk2.glwindow.done) {
     // handle the events in the queue
-    glwindow__handle_events(&(__funk2.glwindow), cause, rotate_angle);
+    glwindow__handle_events(&(__funk2.glwindow), cause);
     if (! __funk2.glwindow.done) {
-      glwindow__draw_scene(&(__funk2.glwindow), cause, rotate_angle);
-      rotate_angle += 1;
-      if (rotate_angle >= 360) {
-	rotate_angle -= 360;
+      glwindow__draw_scene(&(__funk2.glwindow), cause);
+      __funk2.glwindow.rotate_angle += 1;
+      if (__funk2.glwindow.rotate_angle >= 360) {
+	__funk2.glwindow.rotate_angle -= 360;
       }
     }
   }
@@ -376,6 +376,25 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
   s64 depth__i = f2integer__i(height, cause);
   raw__glwindow__create(cause, title__str, width__i, height__i, depth__i, fullscreen ? boolean__true : boolean__false);
   f2__free(to_ptr(title__str));
+  return nil;
+}
+
+
+boolean_t raw__glwindow__handle_events(f2ptr cause) {
+  return glwindow__handle_events(&(__funk2.glwindow), cause);
+}
+
+f2ptr f2__glwindow__handle_events(f2ptr cause) {
+  return f2bool__new(raw__glwindow__handle_events(cause));
+}
+
+
+void raw__glwindow__destroy(f2ptr cause) {
+  glwindow__destroy(&(__funk2.glwindow), cause);
+}
+
+f2ptr f2__glwindow__destroy(f2ptr cause) {
+  raw__glwindow__destroy(cause);
   return nil;
 }
 

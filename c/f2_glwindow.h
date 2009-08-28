@@ -41,6 +41,7 @@ typedef struct funk2_glwindow_s {
   unsigned int         height;
   unsigned int         depth;
   boolean_t            done;
+  float                rotate_angle;
 } funk2_glwindow_t;
 
 #endif

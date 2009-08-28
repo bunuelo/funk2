@@ -298,7 +298,7 @@ boolean_t glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause, double ro
 	glwindow__destroy(this, cause);
 	this->fullscreen = !this->fullscreen;
 	printf("creating new window: %dx%d\n", this->width, this->height);
-	glwindow__create(this, cause, "NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
+	glwindow__create(this, cause, (u8*)"NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
       }
       break;
     case ClientMessage:

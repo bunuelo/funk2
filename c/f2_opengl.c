@@ -168,7 +168,7 @@ void raw__opengl__glEnable(f2ptr cause, GLenum cap) {
 
 #if defined(F2__GL__H)
 #  define raw__opengl__glDepthFunc(cause, func) \
-        maybe__opengl__glDepthFunc(cause, func) \
+        maybe__opengl__glDepthFunc(cause, func)
 void    maybe__opengl__glDepthFunc(f2ptr cause, GLenum func) {
   if (!__funk2.opengl.initialized) {return;}
   (*__funk2.opengl.glDepthFunc)(func);

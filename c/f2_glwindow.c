@@ -370,7 +370,7 @@ boolean_t raw__glwindow__supported(f2ptr cause) {
 f2ptr f2__glwindow__supported(f2ptr cause) {
   return f2bool__new(raw__glwindow__supported(cause));
 }
-
+def_pcfunk0(glwindow__supported, return f2__glwindow__supported(this_cause));
 
 void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
 #if defined(F2__GLWINDOW__H)
@@ -399,6 +399,7 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
   f2__free(to_ptr(title__str));
   return nil;
 }
+def_pcfunk5(glwindow__create, title, width, height, depth, fullscreen, return f2__glwindow__create(this_cause, title, width, height, depth, fullscreen));
 
 
 boolean_t raw__glwindow__handle_events(f2ptr cause) {
@@ -408,6 +409,7 @@ boolean_t raw__glwindow__handle_events(f2ptr cause) {
 f2ptr f2__glwindow__handle_events(f2ptr cause) {
   return f2bool__new(raw__glwindow__handle_events(cause));
 }
+def_pcfunk0(glwindow__handle_events, return f2__glwindow__handle_events(this_cause));
 
 
 void raw__glwindow__destroy(f2ptr cause) {
@@ -418,7 +420,7 @@ f2ptr f2__glwindow__destroy(f2ptr cause) {
   raw__glwindow__destroy(cause);
   return nil;
 }
-
+def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 
 // **
@@ -437,5 +439,9 @@ void f2__glwindow__initialize() {
     status("glwindow is not supported in this funk2 build.");
   }
   
+  f2__primcfunk__init__0(glwindow__supported, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__5(glwindow__create, title, width, height, depth, fullscreen, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
 }
 

@@ -76,5 +76,10 @@ f2ptr      f2__glwindow__handle_events(f2ptr cause);
 void      raw__glwindow__destroy(f2ptr cause);
 f2ptr      f2__glwindow__destroy(f2ptr cause);
 
+// **
+
+void f2__glwindow__reinitialize_globalvars();
+void f2__glwindow__initialize();
+
 #endif // F2__GLWINDOW__H
 

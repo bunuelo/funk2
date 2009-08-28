@@ -63,6 +63,34 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
   raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
+void funk2_glwindow__init(funk2_glwindow_t* this) {
+  this->window_created = boolean__false;
+}
+
+
+// function to release/destroy our resources and restoring the old desktop
+void funk2_glwindow__destroy(funk2_glwindow_t* this) {
+  if (this->window_created) {
+    this->window_created = boolean__false;
+    
+#if defined(F2__GLWINDOW__SUPPORTED)
+    f2ptr cause = nil;
+    if (this->glx_context) {
+      if (!raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
+	printf("Could not release drawing context.\n");
+      }
+      raw__opengl__glXDestroyContext(cause, this->display, this->glx_context);
+      this->glx_context = NULL;
+    }
+    // switch back to original desktop resolution if we were in fs
+    if (this->fullscreen) {
+      raw__xxf86vm__XF86VidModeSwitchToMode(cause, this->display, this->screen, &(this->desk_mode));
+      raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
+    }
+    raw__xlib__XCloseDisplay(cause, this->display);
+#endif // F2__GLWINDOW__SUPPORTED
+  }
+}
 
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
@@ -393,39 +421,21 @@ f2ptr f2__glwindow__destroy(f2ptr cause) {
 
 
 
+// **
 
+void f2__glwindow__reinitialize_globalvars() {
+}
 
-void funk2_glwindow__init(funk2_glwindow_t* this) {
-  this->window_created = boolean__false;
+void f2__glwindow__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "glwindow", "", &f2__glwindow__reinitialize_globalvars);
+  
+  f2__glwindow__reinitialize_globalvars();
   
   if (raw__glwindow__supported(nil)) {
     status("glwindow is supported in this funk2 build!");
   } else {
     status("glwindow is not supported in this funk2 build.");
   }
-}
-
-// function to release/destroy our resources and restoring the old desktop
-void funk2_glwindow__destroy(funk2_glwindow_t* this) {
-  if (this->window_created) {
-    this->window_created = boolean__false;
-    
-#if defined(F2__GLWINDOW__SUPPORTED)
-    f2ptr cause = nil;
-    if (this->glx_context) {
-      if (!raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
-	printf("Could not release drawing context.\n");
-      }
-      raw__opengl__glXDestroyContext(cause, this->display, this->glx_context);
-      this->glx_context = NULL;
-    }
-    // switch back to original desktop resolution if we were in fs
-    if (this->fullscreen) {
-      raw__xxf86vm__XF86VidModeSwitchToMode(cause, this->display, this->screen, &(this->desk_mode));
-      raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
-    }
-    raw__xlib__XCloseDisplay(cause, this->display);
-#endif // F2__GLWINDOW__SUPPORTED
-  }
+  
 }
 

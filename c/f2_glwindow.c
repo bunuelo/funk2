@@ -113,8 +113,6 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   if (! raw__xxf86vm__load_library(nil)) {return boolean__false;}
   if (! raw__xlib__load_library(nil))    {return boolean__false;}
   
-  this->window_created = boolean__true;
-  
   this->rotate_angle = 0;
   this->done = boolean__false;
   
@@ -123,6 +121,10 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   bestMode = 0;
   // get a connection
   this->display = raw__xlib__XOpenDisplay(cause, 0);
+  if (! this->display) {
+    status("could not open default display.  check DISPLAY environment variable.");
+    return boolean__false;
+  }
   this->screen = raw__xlib__XDefaultScreen(cause, this->display);
   raw__xxf86vm__XF86VidModeQueryVersion(cause, this->display, &vidModeMajorVersion,
 					&vidModeMinorVersion);
@@ -207,7 +209,9 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
     printf("Sorry, no Direct Rendering possible!\n");
   }
   funk2_glwindow__initialize_opengl(this, cause);
-  return True;    
+  
+  this->window_created = boolean__true;
+  return True;
 }
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {

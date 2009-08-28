@@ -20,6 +20,8 @@
 '
 
 [defunk glwindow-test [title width height depth fullscreen]
+  [if [not [glwindow-supported]]
+      [error `run-time `[glwindow not-supported]]]
   [glwindow-create title width height depth fullscreen]
   [let [[done nil]]
     [while [not done]

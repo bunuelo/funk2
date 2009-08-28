@@ -106,6 +106,7 @@ struct funk2_xlib_s {
   KeySym(*   XLookupKeysym         )(XKeyEvent* key_event, int index);
   char*(*    XGetAtomName          )(Display* display, Atom atom);
   int(*      XPending              )(Display *display);
+  int(*      XDefaultScreen        )(Display *display);
 #endif // F2__XLIB__H
 };
 
@@ -228,6 +229,7 @@ void     raw__xlib__XNextEvent(f2ptr cause, Display* display, XEvent* event_retu
 KeySym   raw__xlib__XLookupKeysym(f2ptr cause, XKeyEvent* key_event, int index);
 char*    raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom);
 int      raw__xlib__XPending(f2ptr cause, Display* display);
+int      raw__xlib__XDefaultScreen(f2ptr cause, Display *display);
 #endif // F2__XLIB__H
 
 

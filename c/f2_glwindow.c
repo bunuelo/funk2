@@ -123,7 +123,7 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   bestMode = 0;
   // get a connection
   this->display = raw__xlib__XOpenDisplay(cause, 0);
-  this->screen = DefaultScreen(this->display);
+  this->screen = raw__xlib__XDefaultScreen(cause, this->display);
   raw__xxf86vm__XF86VidModeQueryVersion(cause, this->display, &vidModeMajorVersion,
 					&vidModeMinorVersion);
   printf("XF86VidModeExtension-Version %d.%d\n", vidModeMajorVersion,

@@ -487,6 +487,7 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
   this->XLookupKeysym          = (KeySym(*)(XKeyEvent* key_event, int index))                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XLookupKeysym"));          if (! (this->XLookupKeysym))          {status("funk2_xlib__load_library: failed symbol, XLookupKeysym.");          return boolean__false;};
   this->XGetAtomName           = (char*(*)(Display* display, Atom atom))                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XGetAtomName"));           if (! (this->XGetAtomName))           {status("funk2_xlib__load_library: failed symbol, XGetAtomName.");           return boolean__false;};
   this->XPending               = (int(*)(Display *display))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XPending"));               if (! (this->XPending))               {status("funk2_xlib__load_library: failed symbol, XPending.");               return boolean__false;};
+  this->XDefaultScreen         = (int(*)(Display *display))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XDefaultScreen"));         if (! (this->XDefaultScreen))         {status("funk2_xlib__load_library: failed symbol, XDefaultScreen.");         return boolean__false;};
 #endif // F2__XLIB__H
   status("funk2_xlib__load_library: loaded xlib function symbols successfully.");
   return boolean__true;
@@ -656,6 +657,11 @@ char* raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom) {
 int raw__xlib__XPending(f2ptr cause, Display* display) {
   if (!__funk2.xlib.initialized) {return 0;}
   return (*__funk2.xlib.XPending)(display);
+}
+
+int raw__xlib__XDefaultScreen(f2ptr cause, Display* display) {
+  if (!__funk2.xlib.initialized) {return 0;}
+  return (*__funk2.xlib.XDefaultScreen)(display);
 }
 
 #endif // F2__XLIB__H

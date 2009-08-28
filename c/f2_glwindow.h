@@ -20,9 +20,16 @@
 // 
 
 #ifndef F2__GLWINDOW__H
-#include "f2_system_headers.h"
-#if defined(F2__GL__H) && defined(F2__GLX__H) && defined(F2__GLU__H) && defined(F2__XF86VMODE__H) && defined(F2__XLIB__H) && defined(F2__KEYSYM__H)
-#define F2__GLWINDOW__H
+#  define F2__GLWINDOW__H
+#  include "f2_system_headers.h"
+
+#  if defined(F2__GL__H) && defined(F2__GLX__H) && defined(F2__GLU__H) && defined(F2__XF86VMODE__H) && defined(F2__XLIB__H) && defined(F2__KEYSYM__H)
+#    define F2__GLWINDOW__SUPPORTED
+#  endif
+
+int int__abs(int x);
+
+#  if defined(F2__GLWINDOW__SUPPORTED)
 
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
@@ -45,6 +52,26 @@ typedef struct funk2_glwindow_s {
   float                rotate_angle;
 } funk2_glwindow_t;
 
-#endif
+void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height);
+
+void      funk2_glwindow__init(funk2_glwindow_t* this);
+void      funk2_glwindow__destroy(funk2_glwindow_t* this, f2ptr cause);
+boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag);
+boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
+int       funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);
+int       funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause);
+void      funk2_glwindow__main(f2ptr cause);
+
+#  endif // F2__GLWINDOW__SUPPORTED
+
+boolean_t raw__glwindow__supported(f2ptr cause);
+f2ptr      f2__glwindow__supported(f2ptr cause);
+void      raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen);
+f2ptr      f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, f2ptr depth, f2ptr fullscreen);
+boolean_t raw__glwindow__handle_events(f2ptr cause);
+f2ptr      f2__glwindow__handle_events(f2ptr cause);
+void      raw__glwindow__destroy(f2ptr cause);
+f2ptr      f2__glwindow__destroy(f2ptr cause);
+
 #endif // F2__GLWINDOW__H
 

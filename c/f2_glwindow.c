@@ -21,7 +21,48 @@
 
 #include "funk2.h"
 
+int int__abs(int x) {
+  if (x < 0) {
+    return -x;
+  }
+  return x;
+}
+
 #if defined(F2__GLWINDOW__H)
+
+// attributes for a single buffered visual in RGBA format with at least
+// 4 bits per color and a 16 bit depth buffer
+static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
+							      GLX_GREEN_SIZE,          4, 
+							      GLX_BLUE_SIZE,           4, 
+							      GLX_DEPTH_SIZE,         16,
+							      None};
+
+// attributes for a double buffered visual in RGBA format with at least
+// 4 bits per color and a 16 bit depth buffer
+static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
+							      GLX_RED_SIZE,    4, 
+							      GLX_GREEN_SIZE,  4, 
+							      GLX_BLUE_SIZE,   4, 
+							      GLX_DEPTH_SIZE, 16,
+							      None};
+
+static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
+static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
+static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
+
+// function called when our window is resized (should only happen in window mode)
+void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) {
+  if (height == 0) { // Prevent A Divide By Zero If The Window Is Too Small
+    height = 1;
+  }
+  raw__opengl__glViewport(cause, 0, 0, width, height);    // Reset The Current Viewport And Perspective Transformation
+  raw__opengl__glMatrixMode(cause, GL_PROJECTION);
+  raw__opengl__glLoadIdentity(cause);
+  raw__openglu__gluPerspective(cause, 45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+  raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
+}
+
 
 void funk2_glwindow__init(funk2_glwindow_t* this) {
   this->window_created = boolean__false;
@@ -47,34 +88,6 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this, f2ptr cause) {
     raw__xlib__XCloseDisplay(cause, this->display);
   }
 }
-
-int int__abs(int x) {
-  if (x < 0) {
-    return -x;
-  }
-  return x;
-}
-
-// attributes for a single buffered visual in RGBA format with at least
-// 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
-							      GLX_GREEN_SIZE,          4, 
-							      GLX_BLUE_SIZE,           4, 
-							      GLX_DEPTH_SIZE,         16,
-							      None};
-
-// attributes for a double buffered visual in RGBA format with at least
-// 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
-							      GLX_RED_SIZE,    4, 
-							      GLX_GREEN_SIZE,  4, 
-							      GLX_BLUE_SIZE,   4, 
-							      GLX_DEPTH_SIZE, 16,
-							      None};
-
-static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
-static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
-static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
@@ -237,18 +250,6 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
     }
   }
   return this->done;
-}
-
-// function called when our window is resized (should only happen in window mode)
-void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) {
-  if (height == 0) { // Prevent A Divide By Zero If The Window Is Too Small
-    height = 1;
-  }
-  raw__opengl__glViewport(cause, 0, 0, width, height);    // Reset The Current Viewport And Perspective Transformation
-  raw__opengl__glMatrixMode(cause, GL_PROJECTION);
-  raw__opengl__glLoadIdentity(cause);
-  raw__openglu__gluPerspective(cause, 45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
-  raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
 // general OpenGL initialization function

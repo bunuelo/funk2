@@ -158,7 +158,7 @@ int int__abs(int x) {
 
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
-boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, char* title, int width, int height, int bits, boolean_t fullscreenflag) {
+boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag) {
   XVisualInfo *vi;
   Colormap cmap;
   int displayWidth, displayHeight;
@@ -246,8 +246,8 @@ boolean_t glwindow__create(funk2_glwindow_t* this, f2ptr cause, char* title, int
     // only set window title and handle wm_delete_events if in windowed mode
     wmDelete = raw__xlib__XInternAtom(cause, this->display, "WM_DELETE_WINDOW", True);
     raw__xlib__XSetWMProtocols(cause, this->display, this->x_window, &wmDelete, 1);
-    raw__xlib__XSetStandardProperties(cause, this->display, this->x_window, title,
-				      title, None, NULL, 0, NULL);
+    raw__xlib__XSetStandardProperties(cause, this->display, this->x_window, (char*)title,
+				      (char*)title, None, NULL, 0, NULL);
     raw__xlib__XMapRaised(cause, this->display, this->x_window);
   }       
   // connect the glx-context to the window
@@ -352,7 +352,7 @@ f2ptr f2__glwindow__supported(f2ptr cause) {
 }
 
 
-void raw__glwindow__create(f2ptr cause, char* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
+void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
 #if defined(F2__GLWINDOW__H)
   glwindow__create(&(__funk2.glwindow), cause, title, width, height, depth, fullscreen);
 #else

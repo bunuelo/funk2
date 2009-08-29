@@ -326,32 +326,9 @@ declare_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body,
 declare_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
 
-
-
 // exception
 
-extern f2ptr __exception__symbol;
-boolean_t raw__exception__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__exception__is_type(f2ptr cause, f2ptr x);
-f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value);
-f2ptr f2exception__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_exception(    this, cause)        raw__eq(cause, f2primobject__type(this, cause), __exception__symbol)
-
-defprimobject__static_slot__prototype(exception__tag);
-#define f2exception__tag(              this, cause)        primobject__static_slot__accessor(  this, exception__tag, cause)
-#define f2exception__tag__set(         this, cause, value) primobject__static_slot__set(       this, exception__tag, cause, value)
-#define f2exception__tag__tracing_on(  this, cause)        primobject__static_slot__tracing_on(this, exception__tag, cause)
-#define f2exception__tag__trace(       this, cause)        primobject__static_slot__trace(     this, exception__tag, cause)
-#define f2exception__tag__imagination_frame(       this, cause)        primobject__static_slot__imagination_frame(     this, exception__tag, cause)
-
-defprimobject__static_slot__prototype(exception__value);
-#define f2exception__value(            this, cause)        primobject__static_slot__accessor(  this, exception__value, cause)
-#define f2exception__value__set(       this, cause, value) primobject__static_slot__set(       this, exception__value, cause, value)
-#define f2exception__value__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, exception__value, cause)
-#define f2exception__value__trace(     this, cause)        primobject__static_slot__trace(     this, exception__value, cause)
-#define f2exception__value__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, exception__value, cause)
-
+declare_primobject_2_slot(exception, tag, value);
 
 
 // bytecode

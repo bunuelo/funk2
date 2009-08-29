@@ -1119,7 +1119,7 @@ f2ptr f2fiber__primobject_type__new(f2ptr cause) {
   {char* slot_name = "paused";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__set__funk);}
   {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__funk);}
   {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__funk);}
-  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__get__funk);}
+  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__funk);}
   {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__funk);}
   {char* slot_name = "do_sleep_until_time";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
   {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
@@ -1269,8 +1269,8 @@ def_pcfunk1(fiber__last_executed_time, x, return f2__fiber__last_executed_time(t
 f2ptr f2__fiber__last_executed_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__last_executed_time__set(this, cause, value);}
 def_pcfunk2(fiber__last_executed_time__set, x, y, return f2__fiber__last_executed_time__set(this_cause, x, y));
 
-f2ptr f2__fiber__sleep_until_time__get(f2ptr cause, f2ptr this) {return f2fiber__sleep_until_time(this, cause);}
-def_pcfunk1(fiber__sleep_until_time__get, x, return f2__fiber__sleep_until_time__get(this_cause, x));
+f2ptr f2__fiber__sleep_until_time(f2ptr cause, f2ptr this) {return f2fiber__sleep_until_time(this, cause);}
+def_pcfunk1(fiber__sleep_until_time, x, return f2__fiber__sleep_until_time(this_cause, x));
 
 f2ptr f2__fiber__sleep_until_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__sleep_until_time__set(this, cause, value);}
 def_pcfunk2(fiber__sleep_until_time__set, x, y, return f2__fiber__sleep_until_time__set(this_cause, x, y));
@@ -2763,8 +2763,8 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__last_executed_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__funk = never_gc(cfunk);}
   {char* symbol_str = "last_executed_time-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__last_executed_time__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "sleep_until_time-get"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__get__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__sleep_until_time__get, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__get__funk = never_gc(cfunk);}
+  {char* symbol_str = "sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__funk = never_gc(cfunk);}
   {char* symbol_str = "sleep_until_time-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__sleep_until_time__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__funk = never_gc(cfunk);}
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

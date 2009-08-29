@@ -170,7 +170,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
   def_pcfunk2(name##__##slot_name##__set, x, y, return f2__##name##__##slot_name##__set(this_cause, x, y));
 
 
-#define def_primobject_3_slot(name, slot_1, slot_2, slot_3)
+#define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   def_primobject_static_slot(name, 0, slot_1); \
   def_primobject_static_slot(name, 1, slot_2); \
   def_primobject_static_slot(name, 2, slot_3); \

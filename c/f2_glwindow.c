@@ -78,7 +78,7 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
 }
 
 void funk2_glwindow__destroy(funk2_glwindow_t* this) {
-  funk2_glwindow__hide(this);
+  funk2_glwindow__hide(this, nil);
   f2__free(to_ptr(this->title));
 }
 

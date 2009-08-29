@@ -254,11 +254,10 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	  this->done = True;
 	}
 	if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
-	  funk2_glwindow__destroy(this);
-	  funk2_glwindow__init(this);
+	  funk2_glwindow__hide(this, cause);
 	  this->fullscreen = !this->fullscreen;
 	  status("creating new window: %dx%d", this->width, this->height);
-	  funk2_glwindow__create(this, cause, (u8*)(this->title), this->width, this->height, this->depth, this->fullscreen);
+	  funk2_glwindow__show(this, cause);
 	}
 	break;
       case ClientMessage:

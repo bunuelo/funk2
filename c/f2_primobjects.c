@@ -1466,136 +1466,18 @@ def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, th
 
 // size_2d
 
-defprimobject__static_slot(size_2d__x, 0);
-defprimobject__static_slot(size_2d__y, 1);
-
-f2ptr __size_2d__symbol = -1;
-
-f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {
-  release__assert(__size_2d__symbol != -1, nil, "f2size_2d__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __size_2d__symbol, 2, nil);
-  f2size_2d__x__set(this, cause, x);
-  f2size_2d__y__set(this, cause, y);
-  return this;
-}
-
-f2ptr f2size_2d__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_size_2d.new__funk);}
-  {char* slot_name = "x";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__funk);}
-  {char* slot_name = "x";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.x__set__funk);}
-  {char* slot_name = "y";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__funk);}
-  {char* slot_name = "y";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_size_2d.y__set__funk);}
-  return this;
-}
-
-boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__size_2d(x, cause));
-}
-f2ptr f2__size_2d__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__size_2d__is_type(cause, x));}
-def_pcfunk1(size_2d__is_type, x, return f2__size_2d__is_type(this_cause, x));
-
-f2ptr f2__size_2d__type(f2ptr cause, f2ptr x) {return __size_2d__symbol;}
-def_pcfunk1(size_2d__type, x, return f2__size_2d__type(this_cause, x));
+def_primobject_2_slot(size_2d, x, y);
 
 f2ptr f2__size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {return f2size_2d__new(cause, x, y);}
 def_pcfunk2(size_2d__new, x, y, return f2__size_2d__new(this_cause, x, y));
 
-f2ptr f2__size_2d__x(f2ptr cause, f2ptr this) {return f2size_2d__x(this, cause);}
-def_pcfunk1(size_2d__x, x, return f2__size_2d__x(this_cause, x));
-
-f2ptr f2__size_2d__x__set(f2ptr cause, f2ptr this, f2ptr value) {return f2size_2d__x__set(this, cause, value);}
-def_pcfunk2(size_2d__x__set, x, y, return f2__size_2d__x__set(this_cause, x, y));
-
-f2ptr f2__size_2d__y(f2ptr cause, f2ptr this) {return f2size_2d__y(this, cause);}
-def_pcfunk1(size_2d__y, x, return f2__size_2d__y(this_cause, x));
-
-f2ptr f2__size_2d__y__set(f2ptr cause, f2ptr this, f2ptr value) {return f2size_2d__y__set(this, cause, value);}
-def_pcfunk2(size_2d__y__set, x, y, return f2__size_2d__y__set(this_cause, x, y));
-
 
 // event
 
-defprimobject__static_slot(event__node_id,    0);
-defprimobject__static_slot(event__event_id,   1);
-defprimobject__static_slot(event__event_type, 2);
-defprimobject__static_slot(event__data,       3);
-
-f2ptr __event__symbol = -1;
-
-f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr event_type, f2ptr data, int trace_depth) {
-  release__assert(__event__symbol != -1, nil, "f2event__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new__trace_depth(cause, __event__symbol, 4, nil, trace_depth);
-  f2event__node_id__set__trace_depth(   this, cause, node_id,    trace_depth);
-  f2event__event_id__set__trace_depth(  this, cause, event_id,   trace_depth);
-  f2event__event_type__set__trace_depth(this, cause, event_type, trace_depth);
-  f2event__data__set__trace_depth(      this, cause, data,       trace_depth);
-  return this;
-}
-
-f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {
-  return f2event__new__trace_depth(cause, node_id, event_id, type, data, 1);
-}
-
-f2ptr f2event__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.is_type__funk);}
-  {char* slot_name = "type";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.type__funk);}
-  {char* slot_name = "new";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event.new__funk);}
-  {char* slot_name = "node_id";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__funk);}
-  {char* slot_name = "node_id";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.node_id__set__funk);}
-  {char* slot_name = "event_id";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.event_id__funk);}
-  {char* slot_name = "event_id";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.event_id__set__funk);}
-  {char* slot_name = "event_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.event_type__funk);}
-  {char* slot_name = "event_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.event_type__set__funk);}
-  {char* slot_name = "data";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.data__funk);}
-  {char* slot_name = "data";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event.data__set__funk);}
-  return this;
-}
-
-boolean_t raw__event__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__event(x, cause));
-}
-f2ptr f2__event__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__event__is_type(cause, x));}
-def_pcfunk1(event__is_type, x, return f2__event__is_type(this_cause, x));
-
-f2ptr f2__event__type(f2ptr cause, f2ptr x) {return __event__symbol;}
-def_pcfunk1(event__type, x, return f2__event__type(this_cause, x));
+def_primobject_4_slot(event, node_id, event_id, event_type, data);
 
 f2ptr f2__event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data) {return f2event__new(cause, node_id, event_id, type, data);}
 def_pcfunk4(event__new, node_id, event_id, type, data, return f2__event__new(this_cause, node_id, event_id, type, data));
-
-f2ptr f2__event__node_id(f2ptr cause, f2ptr this) {return f2event__node_id(this, cause);}
-def_pcfunk1(event__node_id, x, return f2__event__node_id(this_cause, x));
-
-f2ptr f2__event__node_id__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event__node_id__set(this, cause, value);}
-def_pcfunk2(event__node_id__set, x, y, return f2__event__node_id__set(this_cause, x, y));
-
-f2ptr f2__event__event_id(f2ptr cause, f2ptr this) {return f2event__event_id(this, cause);}
-def_pcfunk1(event__event_id, x, return f2__event__event_id(this_cause, x));
-
-f2ptr f2__event__event_id__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event__event_id__set(this, cause, value);}
-def_pcfunk2(event__event_id__set, x, y, return f2__event__event_id__set(this_cause, x, y));
-
-f2ptr f2__event__event_type(f2ptr cause, f2ptr this) {return f2event__event_type(this, cause);}
-def_pcfunk1(event__event_type, x, return f2__event__event_type(this_cause, x));
-
-f2ptr f2__event__event_type__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event__event_type__set(this, cause, value);}
-def_pcfunk2(event__event_type__set, x, y, return f2__event__event_type__set(this_cause, x, y));
-
-f2ptr f2__event__data(f2ptr cause, f2ptr this) {return f2event__data(this, cause);}
-def_pcfunk1(event__data, x, return f2__event__data(this_cause, x));
-
-f2ptr f2__event__data__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event__data__set(this, cause, value);}
-def_pcfunk2(event__data__set, x, y, return f2__event__data__set(this_cause, x, y));
 
 
 // larva_event

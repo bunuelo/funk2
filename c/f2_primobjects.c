@@ -130,7 +130,7 @@ boolean_t raw__place__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_place(x, cause));
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__place(x, cause));
 }
 
 

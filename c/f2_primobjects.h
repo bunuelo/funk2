@@ -559,95 +559,11 @@ f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanosecond
 declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
 
 
-/*
-extern f2ptr __processor__symbol;
-boolean_t raw__processor__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__processor__is_type(f2ptr cause, f2ptr x);
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_fiber, f2ptr active_fibers_mutex, f2ptr active_fibers, f2ptr active_fibers_iter, f2ptr active_fibers_prev, f2ptr active_fibers_next, f2ptr sleeping_fibers_mutex, f2ptr sleeping_fibers, f2ptr pool_index, f2ptr desc);
-f2ptr f2processor__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_processor(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __processor__symbol)
-
-defprimobject__static_slot__prototype(processor__scheduler);
-#define f2processor__scheduler(                 this, cause)        primobject__static_slot__accessor(  this, processor__scheduler, cause)
-#define f2processor__scheduler__set(            this, cause, value) primobject__static_slot__set(       this, processor__scheduler, cause, value)
-#define f2processor__scheduler__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, processor__scheduler, cause)
-#define f2processor__scheduler__trace(          this, cause)        primobject__static_slot__trace(     this, processor__scheduler, cause)
-#define f2processor__scheduler__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, processor__scheduler, cause)
-
-defprimobject__static_slot__prototype(processor__processor_thread);
-#define f2processor__processor_thread(                   this, cause)        primobject__static_slot__accessor(         this, processor__processor_thread, cause)
-#define f2processor__processor_thread__set(              this, cause, value) primobject__static_slot__set(              this, processor__processor_thread, cause, value)
-#define f2processor__processor_thread__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__processor_thread, cause)
-#define f2processor__processor_thread__trace(            this, cause)        primobject__static_slot__trace(            this, processor__processor_thread, cause)
-#define f2processor__processor_thread__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__processor_thread, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_mutex);
-#define f2processor__active_fibers_mutex(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_mutex, cause)
-#define f2processor__active_fibers_mutex__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_mutex, cause, value)
-#define f2processor__active_fibers_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_mutex, cause)
-#define f2processor__active_fibers_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_mutex, cause)
-#define f2processor__active_fibers_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_mutex, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers);
-#define f2processor__active_fibers(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers, cause)
-#define f2processor__active_fibers__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers, cause, value)
-#define f2processor__active_fibers__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers, cause)
-#define f2processor__active_fibers__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers, cause)
-#define f2processor__active_fibers__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_iter);
-#define f2processor__active_fibers_iter(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_iter, cause)
-#define f2processor__active_fibers_iter__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_iter, cause, value)
-#define f2processor__active_fibers_iter__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_iter, cause)
-#define f2processor__active_fibers_iter__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_iter, cause)
-#define f2processor__active_fibers_iter__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_iter, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_prev);
-#define f2processor__active_fibers_prev(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_prev, cause)
-#define f2processor__active_fibers_prev__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_prev, cause, value)
-#define f2processor__active_fibers_prev__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_prev, cause)
-#define f2processor__active_fibers_prev__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_prev, cause)
-#define f2processor__active_fibers_prev__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_prev, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_next);
-#define f2processor__active_fibers_next(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_next, cause)
-#define f2processor__active_fibers_next__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_next, cause, value)
-#define f2processor__active_fibers_next__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_next, cause)
-#define f2processor__active_fibers_next__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_next, cause)
-#define f2processor__active_fibers_next__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_next, cause)
-
-defprimobject__static_slot__prototype(processor__sleeping_fibers_mutex);
-#define f2processor__sleeping_fibers_mutex(            this, cause)        primobject__static_slot__accessor(  this, processor__sleeping_fibers_mutex, cause)
-#define f2processor__sleeping_fibers_mutex__set(       this, cause, value) primobject__static_slot__set(       this, processor__sleeping_fibers_mutex, cause, value)
-#define f2processor__sleeping_fibers_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, processor__sleeping_fibers_mutex, cause)
-#define f2processor__sleeping_fibers_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, processor__sleeping_fibers_mutex, cause)
-#define f2processor__sleeping_fibers_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, processor__sleeping_fibers_mutex, cause)
-
-defprimobject__static_slot__prototype(processor__sleeping_fibers);
-#define f2processor__sleeping_fibers(                   this, cause)        primobject__static_slot__accessor(  this, processor__sleeping_fibers, cause)
-#define f2processor__sleeping_fibers__set(              this, cause, value) primobject__static_slot__set(       this, processor__sleeping_fibers, cause, value)
-#define f2processor__sleeping_fibers__tracing_on(       this, cause)        primobject__static_slot__tracing_on(this, processor__sleeping_fibers, cause)
-#define f2processor__sleeping_fibers__trace(            this, cause)        primobject__static_slot__trace(     this, processor__sleeping_fibers, cause)
-#define f2processor__sleeping_fibers__imagination_frame(            this, cause)        primobject__static_slot__imagination_frame(     this, processor__sleeping_fibers, cause)
-
-defprimobject__static_slot__prototype(processor__pool_index);
-#define f2processor__pool_index(                this, cause)        primobject__static_slot__accessor(  this, processor__pool_index, cause)
-#define f2processor__pool_index__set(           this, cause, value) primobject__static_slot__set(       this, processor__pool_index, cause, value)
-#define f2processor__pool_index__tracing_on(    this, cause)        primobject__static_slot__tracing_on(this, processor__pool_index, cause)
-#define f2processor__pool_index__trace(         this, cause)        primobject__static_slot__trace(     this, processor__pool_index, cause)
-#define f2processor__pool_index__imagination_frame(         this, cause)        primobject__static_slot__imagination_frame(     this, processor__pool_index, cause)
-
-defprimobject__static_slot__prototype(processor__desc);
-#define f2processor__desc(                      this, cause)        primobject__static_slot__accessor(  this, processor__desc, cause)
-#define f2processor__desc__set(                 this, cause, value) primobject__static_slot__set(       this, processor__desc, cause, value)
-#define f2processor__desc__tracing_on(          this, cause)        primobject__static_slot__tracing_on(this, processor__desc, cause)
-#define f2processor__desc__trace(               this, cause)        primobject__static_slot__trace(     this, processor__desc, cause)
-#define f2processor__desc__imagination_frame(               this, cause)        primobject__static_slot__imagination_frame(     this, processor__desc, cause)
-*/
-
 // scheduler
 
+declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
+
+/*
 extern f2ptr __scheduler__symbol;
 boolean_t raw__scheduler__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__scheduler__is_type(f2ptr cause, f2ptr x);
@@ -689,7 +605,7 @@ defprimobject__static_slot__prototype(scheduler__event_buffer);
 #define f2scheduler__event_buffer__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_buffer, cause)
 #define f2scheduler__event_buffer__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_buffer, cause)
 #define f2scheduler__event_buffer__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_buffer, cause)
-
+*/
 
 // event_subscriber
 

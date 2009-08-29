@@ -611,74 +611,11 @@ declare_primobject_2_slot(size_2d, x, y);
 
 declare_primobject_4_slot(event, node_id, event_id, event_type, data);
 
-/*
-extern f2ptr __event__symbol;
-boolean_t raw__event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data, int trace_depth);
-f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data);
-f2ptr f2event__primobject_type__new(f2ptr cause);
-#define f2primobject__is__event(this, cause) raw__eq(cause, f2primobject__type(this, cause), __event__symbol)
-
-defprimobject__static_slot__prototype(event__node_id);
-#define f2event__node_id(                   this, cause)                     primobject__static_slot__accessor(         this, event__node_id, cause)
-#define f2event__node_id__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__node_id, cause, value, trace_depth)
-#define f2event__node_id__set(              this, cause, value)              primobject__static_slot__set(              this, event__node_id, cause, value)
-#define f2event__node_id__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__node_id, cause)
-#define f2event__node_id__trace(            this, cause)                     primobject__static_slot__trace(            this, event__node_id, cause)
-#define f2event__node_id__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__node_id, cause)
-
-defprimobject__static_slot__prototype(event__event_id);
-#define f2event__event_id(                   this, cause)                     primobject__static_slot__accessor(         this, event__event_id, cause)
-#define f2event__event_id__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__event_id, cause, value, trace_depth)
-#define f2event__event_id__set(              this, cause, value)              primobject__static_slot__set(              this, event__event_id, cause, value)
-#define f2event__event_id__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__event_id, cause)
-#define f2event__event_id__trace(            this, cause)                     primobject__static_slot__trace(            this, event__event_id, cause)
-#define f2event__event_id__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__event_id, cause)
-
-defprimobject__static_slot__prototype(event__event_type);
-#define f2event__event_type(                   this, cause)                     primobject__static_slot__accessor(         this, event__event_type, cause)
-#define f2event__event_type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__event_type, cause, value, trace_depth)
-#define f2event__event_type__set(              this, cause, value)              primobject__static_slot__set(              this, event__event_type, cause, value)
-#define f2event__event_type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__event_type, cause)
-#define f2event__event_type__trace(            this, cause)                     primobject__static_slot__trace(            this, event__event_type, cause)
-#define f2event__event_type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__event_type, cause)
-
-defprimobject__static_slot__prototype(event__data);
-#define f2event__data(                   this, cause)                     primobject__static_slot__accessor(         this, event__data, cause)
-#define f2event__data__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__data, cause, value, trace_depth)
-#define f2event__data__set(              this, cause, value)              primobject__static_slot__set(              this, event__data, cause, value)
-#define f2event__data__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__data, cause)
-#define f2event__data__trace(            this, cause)                     primobject__static_slot__trace(            this, event__data, cause)
-#define f2event__data__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__data, cause)
-*/
-
 
 // bytecode_event
 
-extern f2ptr __bytecode_event__symbol;
-boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__bytecode_event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr context, int trace_depth);
-f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context);
-f2ptr f2bytecode_event__primobject_type__new(f2ptr cause);
-#define f2primobject__is__bytecode_event(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode_event__symbol)
+declare_primobject_2_slot(bytecode_event, bytecode, context);
 
-defprimobject__static_slot__prototype(bytecode_event__bytecode);
-#define f2bytecode_event__bytecode(                   this, cause)                     primobject__static_slot__accessor(         this, bytecode_event__bytecode, cause)
-#define f2bytecode_event__bytecode__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, bytecode_event__bytecode, cause, value, trace_depth)
-#define f2bytecode_event__bytecode__set(              this, cause, value)              primobject__static_slot__set(              this, bytecode_event__bytecode, cause, value)
-#define f2bytecode_event__bytecode__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, bytecode_event__bytecode, cause)
-#define f2bytecode_event__bytecode__trace(            this, cause)                     primobject__static_slot__trace(            this, bytecode_event__bytecode, cause)
-#define f2bytecode_event__bytecode__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, bytecode_event__bytecode, cause)
-
-defprimobject__static_slot__prototype(bytecode_event__context);
-#define f2bytecode_event__context(                   this, cause)                     primobject__static_slot__accessor(         this, bytecode_event__context, cause)
-#define f2bytecode_event__context__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, bytecode_event__context, cause, value, trace_depth)
-#define f2bytecode_event__context__set(              this, cause, value)              primobject__static_slot__set(              this, bytecode_event__context, cause, value)
-#define f2bytecode_event__context__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, bytecode_event__context, cause)
-#define f2bytecode_event__context__trace(            this, cause)                     primobject__static_slot__trace(            this, bytecode_event__context, cause)
-#define f2bytecode_event__context__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, bytecode_event__context, cause)
 
 
 

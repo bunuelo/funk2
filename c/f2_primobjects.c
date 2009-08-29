@@ -1233,6 +1233,10 @@ def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__s
 
 def_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
 
+f2ptr f2__processor__new(f2ptr cause) {
+  return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil);
+}
+def_pcfunk0(processor__new, return f2__processor__new(this_cause));
 
 // scheduler
 

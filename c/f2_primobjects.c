@@ -1144,11 +1144,20 @@ def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documenta
 
 def_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
+f2ptr f2__funk__new(f2ptr cause) {
+  return f2funk__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil);
+}
+def_pcfunk0(funk__new, return f2__funk__new(this_cause));
+
 
 // metro
 
 def_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
+f2ptr f2__metro__new(f2ptr cause) {
+  return f2metro__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil);
+}
+def_pcfunk0(metro__new, return f2__metro__new(this_cause));
 
 
 // exception

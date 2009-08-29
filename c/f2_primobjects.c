@@ -355,6 +355,86 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
   def_primobject__18_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
   f2##name##__##slot_19##__set__trace_depth(this, cause, slot_19, trace_depth);
 
+
+#define def_primobject_add_0_slot(name)
+
+#define def_primobject_add_1_slot(name, slot_1) \
+  def_primobject_add_0_slot(name); \
+  def_primobject_add_slot(name, slot_1);
+
+#define def_primobject_add_2_slot(name, slot_1, slot_2) \
+  def_primobject_add_1_slot(name, slot_1); \
+  def_primobject_add_slot(name, slot_2);
+
+#define def_primobject_add_3_slot(name, slot_1, slot_2, slot_3) \
+  def_primobject_add_2_slot(name, slot_1, slot_2); \
+  def_primobject_add_slot(name, slot_3);
+
+#define def_primobject_add_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_primobject_add_3_slot(name, slot_1, slot_2, slot_3); \
+  def_primobject_add_slot(name, slot_4);
+
+#define def_primobject_add_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_primobject_add_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  def_primobject_add_slot(name, slot_5);
+
+#define def_primobject_add_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_primobject_add_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  def_primobject_add_slot(name, slot_6);
+
+#define def_primobject_add_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_primobject_add_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  def_primobject_add_slot(name, slot_7);
+
+#define def_primobject_add_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_primobject_add_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  def_primobject_add_slot(name, slot_8);
+
+#define def_primobject_add_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_primobject_add_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  def_primobject_add_slot(name, slot_9);
+
+#define def_primobject_add_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_primobject_add_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  def_primobject_add_slot(name, slot_10);
+
+#define def_primobject_add_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_primobject_add_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  def_primobject_add_slot(name, slot_11);
+
+#define def_primobject_add_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_primobject_add_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  def_primobject_add_slot(name, slot_12);
+
+#define def_primobject_add_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_primobject_add_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  def_primobject_add_slot(name, slot_13);
+
+#define def_primobject_add_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_primobject_add_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  def_primobject_add_slot(name, slot_14);
+
+#define def_primobject_add_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_primobject_add_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  def_primobject_add_slot(name, slot_15);
+
+#define def_primobject_add_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_primobject_add_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  def_primobject_add_slot(name, slot_16);
+
+#define def_primobject_add_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_primobject_add_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  def_primobject_add_slot(name, slot_17);
+
+#define def_primobject_add_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_primobject_add_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  def_primobject_add_slot(name, slot_18);
+
+#define def_primobject_add_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  def_primobject_add_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  def_primobject_add_slot(name, slot_19);
+
+
 #define def_primobject_1_slot(name, slot_1) \
   def_primobject_static_1_slot(name, slot_1); \
    \
@@ -368,7 +448,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1) { \
       return f2##name##__new__trace_depth(cause, slot_1, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1));
+    def_primobject_add_1_slot(name, slot_1));
 
 #define def_primobject_2_slot(name, slot_1, slot_2) \
   def_primobject_static_2_slot(name, slot_1, slot_2); \
@@ -383,8 +463,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2));
+    def_primobject_add_2_slot(name, slot_1, slot_2));
 
 #define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   def_primobject_static_3_slot(name, slot_1, slot_2, slot_3); \
@@ -399,9 +478,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3));
+    def_primobject_add_3_slot(name, slot_1, slot_2, slot_3));
 
 #define def_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   def_primobject_static_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
@@ -416,10 +493,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4));
+    def_primobject_add_4_slot(name, slot_1, slot_2, slot_3, slot_4));
 
 #define def_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
   def_primobject_static_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
@@ -434,11 +508,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5));
+    def_primobject_add_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5));
 
 #define def_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
   def_primobject_static_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
@@ -453,12 +523,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6));
+    def_primobject_add_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6));
 
 #define def_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
   def_primobject_static_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
@@ -473,13 +538,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7));
+    def_primobject_add_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7));
 
 #define def_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
   def_primobject_static_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
@@ -494,14 +553,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8));
+    def_primobject_add_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8));
 
 #define def_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
   def_primobject_static_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
@@ -516,15 +568,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9));
+    def_primobject_add_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9));
 
 #define def_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
   def_primobject_static_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
@@ -539,16 +583,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10));
+    def_primobject_add_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10));
 
 #define def_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
   def_primobject_static_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
@@ -563,17 +598,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11));
+    def_primobject_add_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11));
 
 #define def_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
   def_primobject_static_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
@@ -588,18 +613,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12));
+    def_primobject_add_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12));
 
 #define def_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
   def_primobject_static_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
@@ -614,19 +628,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13));
+    def_primobject_add_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13));
 
 #define def_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
   def_primobject_static_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
@@ -641,20 +643,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13); \
-    def_primobject_add_slot(name, slot_14));
+    def_primobject_add_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14));
 
 #define def_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
   def_primobject_static_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
@@ -669,21 +658,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13); \
-    def_primobject_add_slot(name, slot_14); \
-    def_primobject_add_slot(name, slot_15));
+    def_primobject_add_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15));
 
 #define def_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
   def_primobject_static_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
@@ -698,22 +673,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13); \
-    def_primobject_add_slot(name, slot_14); \
-    def_primobject_add_slot(name, slot_15); \
-    def_primobject_add_slot(name, slot_16));
+    def_primobject_add_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16));
 
 #define def_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
   def_primobject_static_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
@@ -728,23 +688,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13); \
-    def_primobject_add_slot(name, slot_14); \
-    def_primobject_add_slot(name, slot_15); \
-    def_primobject_add_slot(name, slot_16); \
-    def_primobject_add_slot(name, slot_17));
+    def_primobject_add_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17));
 
 #define def_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
   def_primobject_static_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
@@ -759,24 +703,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13); \
-    def_primobject_add_slot(name, slot_14); \
-    def_primobject_add_slot(name, slot_15); \
-    def_primobject_add_slot(name, slot_16); \
-    def_primobject_add_slot(name, slot_17); \
-    def_primobject_add_slot(name, slot_18));
+    def_primobject_add_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18));
 
 #define def_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
   def_primobject_static_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
@@ -791,25 +718,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19) { \
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, 1); \
     }, \
-    def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2); \
-    def_primobject_add_slot(name, slot_3); \
-    def_primobject_add_slot(name, slot_4); \
-    def_primobject_add_slot(name, slot_5); \
-    def_primobject_add_slot(name, slot_6); \
-    def_primobject_add_slot(name, slot_7); \
-    def_primobject_add_slot(name, slot_8); \
-    def_primobject_add_slot(name, slot_9); \
-    def_primobject_add_slot(name, slot_10); \
-    def_primobject_add_slot(name, slot_11); \
-    def_primobject_add_slot(name, slot_12); \
-    def_primobject_add_slot(name, slot_13); \
-    def_primobject_add_slot(name, slot_14); \
-    def_primobject_add_slot(name, slot_15); \
-    def_primobject_add_slot(name, slot_16); \
-    def_primobject_add_slot(name, slot_17); \
-    def_primobject_add_slot(name, slot_18); \
-    def_primobject_add_slot(name, slot_19));
+    def_primobject_add_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19));
 
 
 // compound_object

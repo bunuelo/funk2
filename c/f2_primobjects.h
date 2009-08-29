@@ -129,13 +129,13 @@ f2ptr f2compound_object__primobject_type__new(f2ptr cause);
 static inline boolean_t f2primobject__is__compound_object(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol);}
 
 defprimobject__static_slot__prototype(compound_object__compound_object_type);
-#define f2compound_object__compound_object_type__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__compound_object_type, cause, trace_depth)
-#define f2compound_object__compound_object_type(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__compound_object_type, cause)
-#define f2compound_object__compound_object_type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__compound_object_type, cause, value, trace_depth)
-#define f2compound_object__compound_object_type__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__compound_object_type, cause, value)
-#define f2compound_object__compound_object_type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__compound_object_type, cause)
-#define f2compound_object__compound_object_type__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__compound_object_type, cause)
-#define f2compound_object__compound_object_type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__compound_object_type, cause)
+static inline f2ptr f2compound_object__compound_object_type__trace_depth(      f2ptr this, f2ptr cause, int trace_depth)              {return primobject__static_slot__accessor__trace_depth(this, compound_object__compound_object_type, cause, trace_depth);}
+static inline f2ptr f2compound_object__compound_object_type(                   f2ptr this, f2ptr cause)                               {return primobject__static_slot__accessor(             this, compound_object__compound_object_type, cause);}
+static inline f2ptr f2compound_object__compound_object_type__set__trace_depth( f2ptr this, f2ptr cause, f2ptr value, int trace_depth) {return primobject__static_slot__set__trace_depth(     this, compound_object__compound_object_type, cause, value, trace_depth);}
+static inline f2ptr f2compound_object__compound_object_type__set(              f2ptr this, f2ptr cause, f2ptr value)                  {return primobject__static_slot__set(                  this, compound_object__compound_object_type, cause, value);}
+static inline f2ptr f2compound_object__compound_object_type__tracing_on(       f2ptr this, f2ptr cause)                               {return primobject__static_slot__tracing_on(           this, compound_object__compound_object_type, cause);}
+static inline f2ptr f2compound_object__compound_object_type__trace(            f2ptr this, f2ptr cause)                               {return primobject__static_slot__trace(                this, compound_object__compound_object_type, cause);}
+static inline f2ptr f2compound_object__compound_object_type__imagination_frame(f2ptr this, f2ptr cause)                               {return primobject__static_slot__imagination_frame(    this, compound_object__compound_object_type, cause);}
 
 defprimobject__static_slot__prototype(compound_object__frame);
 #define f2compound_object__frame__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__frame, cause, trace_depth)

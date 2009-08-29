@@ -318,6 +318,114 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     def_primobject_add_slot(name, slot_5); \
     def_primobject_add_slot(name, slot_6));
 
+#define def_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 7, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7));
+
+#define def_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 8, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8));
+
+#define def_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 9, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9));
+
 
 // compound_object
 
@@ -464,124 +572,7 @@ def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documenta
 
 // funk
 
-defprimobject__static_slot(funk__name,                0);
-defprimobject__static_slot(funk__body_bytecodes,      1);
-defprimobject__static_slot(funk__args,                2);
-defprimobject__static_slot(funk__demetropolized_body, 3);
-defprimobject__static_slot(funk__body,                4);
-defprimobject__static_slot(funk__env,                 5);
-defprimobject__static_slot(funk__machine_code,        6);
-defprimobject__static_slot(funk__is_funktional,       7);
-defprimobject__static_slot(funk__documentation,       8);
-
-f2ptr __funk__symbol = -1;
-
-f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation) {
-  release__assert(__funk__symbol != -1, nil, "f2funk__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __funk__symbol, 9, nil);
-  f2funk__name__set(               this, cause, name);
-  f2funk__body_bytecodes__set(     this, cause, body_bytecodes);
-  f2funk__args__set(               this, cause, args);
-  f2funk__demetropolized_body__set(this, cause, demetropolized_body);
-  f2funk__body__set(               this, cause, body);
-  f2funk__env__set(                this, cause, env);
-  f2funk__machine_code__set(       this, cause, machine_code);
-  f2funk__is_funktional__set(      this, cause, is_funktional);
-  f2funk__documentation__set(      this, cause, documentation);
-  return this;
-}
-
-f2ptr f2funk__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.is_type__funk);}
-  {char* slot_name = "type";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.type__funk);}
-  //{char* slot_name = "new";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.new__funk);}
-  {char* slot_name = "name";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.name__funk);}
-  {char* slot_name = "name";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.name__set__funk);}
-  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.body_bytecodes__funk);}
-  {char* slot_name = "body_bytecodes";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.body_bytecodes__set__funk);}
-  {char* slot_name = "args";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.args__funk);}
-  {char* slot_name = "args";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.args__set__funk);}
-  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.demetropolized_body__funk);}
-  {char* slot_name = "demetropolized_body"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.demetropolized_body__set__funk);}
-  {char* slot_name = "body";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.body__funk);}
-  {char* slot_name = "body";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.body__set__funk);}
-  {char* slot_name = "env";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.env__funk);}
-  {char* slot_name = "env";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.env__set__funk);}
-  {char* slot_name = "machine_code";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.machine_code__funk);}
-  {char* slot_name = "machine_code";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.machine_code__set__funk);}
-  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.is_funktional__funk);}
-  {char* slot_name = "is_funktional";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.is_funktional__set__funk);}
-  {char* slot_name = "documentation";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.documentation__funk);}
-  {char* slot_name = "documentation";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_funk.documentation__set__funk);}
-  return this;
-}
-
-boolean_t raw__funk__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__funk(x, cause));
-}
-f2ptr f2__funk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__funk__is_type(cause, x));}
-def_pcfunk1(funk__is_type, x, return f2__funk__is_type(this_cause, x));
-
-f2ptr f2__funk__type(f2ptr cause, f2ptr x) {return __funk__symbol;}
-def_pcfunk1(funk__type, x, return f2__funk__type(this_cause, x));
-
-f2ptr f2__funk__name(f2ptr cause, f2ptr this) {return f2funk__name(this, cause);}
-def_pcfunk1(funk__name, x, return f2__funk__name(this_cause, x));
-
-f2ptr f2__funk__name__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__name__set(this, cause, value);}
-def_pcfunk2(funk__name__set, x, y, return f2__funk__name__set(this_cause, x, y));
-
-f2ptr f2__funk__body_bytecodes(f2ptr cause, f2ptr this) {return f2funk__body_bytecodes(this, cause);}
-def_pcfunk1(funk__body_bytecodes, x, return f2__funk__body_bytecodes(this_cause, x));
-
-f2ptr f2__funk__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__body_bytecodes__set(this, cause, value);}
-def_pcfunk2(funk__body_bytecodes__set, x, y, return f2__funk__body_bytecodes__set(this_cause, x, y));
-
-f2ptr f2__funk__args(f2ptr cause, f2ptr this) {return f2funk__args(this, cause);}
-def_pcfunk1(funk__args, x, return f2__funk__args(this_cause, x));
-
-f2ptr f2__funk__args__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__args__set(this, cause, value);}
-def_pcfunk2(funk__args__set, x, y, return f2__funk__args__set(this_cause, x, y));
-
-f2ptr f2__funk__demetropolized_body(f2ptr cause, f2ptr this) {return f2funk__demetropolized_body(this, cause);}
-def_pcfunk1(funk__demetropolized_body, x, return f2__funk__demetropolized_body(this_cause, x));
-
-f2ptr f2__funk__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__demetropolized_body__set(this, cause, value);}
-def_pcfunk2(funk__demetropolized_body__set, x, y, return f2__funk__demetropolized_body__set(this_cause, x, y));
-
-f2ptr f2__funk__body(f2ptr cause, f2ptr this) {return f2funk__body(this, cause);}
-def_pcfunk1(funk__body, x, return f2__funk__body(this_cause, x));
-
-f2ptr f2__funk__body__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__body__set(this, cause, value);}
-def_pcfunk2(funk__body__set, x, y, return f2__funk__body__set(this_cause, x, y));
-
-f2ptr f2__funk__env(f2ptr cause, f2ptr this) {return f2funk__env(this, cause);}
-def_pcfunk1(funk__env, x, return f2__funk__env(this_cause, x));
-
-f2ptr f2__funk__env__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__env__set(this, cause, value);}
-def_pcfunk2(funk__env__set, x, y, return f2__funk__env__set(this_cause, x, y));
-
-f2ptr f2__funk__machine_code(f2ptr cause, f2ptr this) {return f2funk__machine_code(this, cause);}
-def_pcfunk1(funk__machine_code, x, return f2__funk__machine_code(this_cause, x));
-
-f2ptr f2__funk__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__machine_code__set(this, cause, value);}
-def_pcfunk2(funk__machine_code__set, x, y, return f2__funk__machine_code__set(this_cause, x, y));
-
-f2ptr f2__funk__is_funktional(f2ptr cause, f2ptr this) {return f2funk__is_funktional(this, cause);}
-def_pcfunk1(funk__is_funktional, x, return f2__funk__is_funktional(this_cause, x));
-
-f2ptr f2__funk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__is_funktional__set(this, cause, value);}
-def_pcfunk2(funk__is_funktional__set, x, y, return f2__funk__is_funktional__set(this_cause, x, y));
-
-f2ptr f2__funk__documentation(f2ptr cause, f2ptr this) {return f2funk__documentation(this, cause);}
-def_pcfunk1(funk__documentation, x, return f2__funk__documentation(this_cause, x));
-
-f2ptr f2__funk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {return f2funk__documentation__set(this, cause, value);}
-def_pcfunk2(funk__documentation__set, x, y, return f2__funk__documentation__set(this_cause, x, y));
+def_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
 
 // metro

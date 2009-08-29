@@ -958,6 +958,15 @@ declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2, );
 
 // fiber
 
+declare_object_type_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time,
+			    f2ptr do_sleep_until_time__symbol;   // execute
+			    f2ptr do_sleep_until_time__funk;
+			    f2ptr sleep_for_nanoseconds__symbol; // execute
+			    f2ptr sleep_for_nanoseconds__funk;
+			    );
+
+
+/*
 struct funk2_object_type__fiber__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
@@ -1046,6 +1055,7 @@ struct funk2_object_type__fiber__slot_s {
   f2ptr larva_args__set__symbol;       // set
   f2ptr larva_args__set__funk;
 };
+*/
 
 // processor
 

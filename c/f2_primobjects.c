@@ -1993,7 +1993,7 @@ boolean_t raw__bug__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_bug(x, cause));
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__bug(x, cause));
 }
 f2ptr f2__bug__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bug__is_type(cause, x));}
 def_pcfunk1(bug__is_type, x, return f2__bug__is_type(this_cause, x));

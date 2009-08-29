@@ -568,67 +568,20 @@ declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_
 
 declare_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
 
-/*
-extern f2ptr __event_subscriber__symbol;
-boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__event_subscriber__is_type(f2ptr cause, f2ptr x);
-f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_type, f2ptr fiber, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex);
-f2ptr f2event_subscriber__primobject_type__new(f2ptr cause);
-#define f2primobject__is__event_subscriber(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __event_subscriber__symbol)
-
-defprimobject__static_slot__prototype(event_subscriber__event_types);
-#define f2event_subscriber__event_types(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__event_types, cause)
-#define f2event_subscriber__event_types__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__event_types, cause, value)
-#define f2event_subscriber__event_types__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_types, cause)
-#define f2event_subscriber__event_types__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_types, cause)
-#define f2event_subscriber__event_types__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_types, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__fiber);
-#define f2event_subscriber__fiber(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__fiber, cause)
-#define f2event_subscriber__fiber__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__fiber, cause, value)
-#define f2event_subscriber__fiber__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__fiber, cause)
-#define f2event_subscriber__fiber__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__fiber, cause)
-#define f2event_subscriber__fiber__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__fiber, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__funkable);
-#define f2event_subscriber__funkable(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__funkable, cause)
-#define f2event_subscriber__funkable__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__funkable, cause, value)
-#define f2event_subscriber__funkable__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__funkable, cause)
-#define f2event_subscriber__funkable__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__funkable, cause)
-#define f2event_subscriber__funkable__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__funkable, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__event_buffer);
-#define f2event_subscriber__event_buffer(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__event_buffer, cause)
-#define f2event_subscriber__event_buffer__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__event_buffer, cause, value)
-#define f2event_subscriber__event_buffer__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_buffer, cause)
-#define f2event_subscriber__event_buffer__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_buffer, cause)
-#define f2event_subscriber__event_buffer__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_buffer, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
-#define f2event_subscriber__event_buffer_mutex(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__event_buffer_mutex, cause)
-#define f2event_subscriber__event_buffer_mutex__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__event_buffer_mutex, cause, value)
-#define f2event_subscriber__event_buffer_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_buffer_mutex, cause)
-#define f2event_subscriber__event_buffer_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_buffer_mutex, cause)
-#define f2event_subscriber__event_buffer_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_buffer_mutex, cause)
-*/
-
 
 // cause
 
 #define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
+declare_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+
+/*
 f2ptr __cause__symbol;
 boolean_t raw__cause__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__cause__is_type(f2ptr cause, f2ptr x);
 f2ptr f2cause__new(f2ptr cause, f2ptr fibers_mutex, f2ptr fibers, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
 f2ptr f2cause__primobject_type__new(f2ptr cause);
-f2ptr f2__cause__new_with_default_properties(f2ptr cause);
-f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
-f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
-f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
-f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
 #define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
 
@@ -723,6 +676,14 @@ defprimobject__static_slot__prototype(cause__current_events);
 #define f2cause__current_events__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__current_events, cause)
 #define f2cause__current_events__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events, cause)
 #define f2cause__current_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events, cause)
+*/
+
+f2ptr f2__cause__new_with_default_properties(f2ptr cause);
+f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
+f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
+f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
+f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
 f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
 void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);

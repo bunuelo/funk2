@@ -111,6 +111,8 @@ f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace
 f2ptr     raw__array__elt(f2ptr cause, f2ptr this, u64 index);                           // from f2_primfunks.h
 f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value);             // from f2_primfunks.h
 f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index);                   // from f2_primfunks.h
+f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index);                        // from f2_primfunks.h
+f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);            // from f2_primfunks.h
 
 // primobject
 

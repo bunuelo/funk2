@@ -63,13 +63,27 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
   raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
-void funk2_glwindow__init(funk2_glwindow_t* this) {
+void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, boolean_t fullscreen) {
+  int title__length = strlen((char*)title);
+  this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
+  strcpy((char*)(this->title), (char*)title);
+  
+  this->width          = width;
+  this->height         = height;
+  this->fullscreen     = fullscreen;
+  
   this->window_created = boolean__false;
+  this->rotate_angle = 0;
+  this->done = boolean__false;
 }
 
+void funk2_glwindow__destroy(funk2_glwindow_t* this) {
+  funk2_glwindow__hide();
+  f2__free(to_ptr(this->title));
+}
 
 // function to release/destroy our resources and restoring the old desktop
-void funk2_glwindow__destroy(funk2_glwindow_t* this) {
+void funk2_glwindow__hide(funk2_glwindow_t* this) {
   if (this->window_created) {
     this->window_created = boolean__false;
     
@@ -88,14 +102,13 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
       raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
     }
     raw__xlib__XCloseDisplay(cause, this->display);
-    f2__free(to_ptr(this->title));
 #endif // F2__GLWINDOW__SUPPORTED
   }
 }
 
 // this function creates our window and sets it up properly
 // FIXME: bits is currently unused
-boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag) {
+boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   XVisualInfo *vi;
   Colormap cmap;
   int displayWidth, displayHeight;
@@ -114,13 +127,6 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   if (! raw__xxf86vm__load_library(nil)) {return boolean__false;}
   if (! raw__xlib__load_library(nil))    {return boolean__false;}
   
-  this->rotate_angle = 0;
-  this->done = boolean__false;
-  int title__length = strlen((char*)title);
-  this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
-  strcpy((char*)(this->title), (char*)title);
-  
-  this->fullscreen = fullscreenflag;
   // set best mode to current
   bestMode = 0;
   // get a connection
@@ -219,51 +225,53 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
 }
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
-  XEvent event;
-  while (raw__xlib__XPending(cause, this->display) > 0) {
-    raw__xlib__XNextEvent(cause, this->display, &event);
-    switch (event.type) {
-    case Expose:
-      if (event.xexpose.count != 0)
+  if (this->window_created) {
+    XEvent event;
+    while (raw__xlib__XPending(cause, this->display) > 0) {
+      raw__xlib__XNextEvent(cause, this->display, &event);
+      switch (event.type) {
+      case Expose:
+	if (event.xexpose.count != 0)
+	  break;
+	funk2_glwindow__draw_scene(this, cause);
 	break;
-      funk2_glwindow__draw_scene(this, cause);
-      break;
-    case ConfigureNotify:
-      // call raw__resize_gl_scene only if our window-size changed
-      if ((event.xconfigure.width != this->width) || 
-	  (event.xconfigure.height != this->height)) {
-	this->width = event.xconfigure.width;
-	this->height = event.xconfigure.height;
-	status("resize event: %dx%d", this->width, this->height);
-	raw__resize_gl_scene(cause,
-			     event.xconfigure.width,
-			     event.xconfigure.height);
-      }
-      break;
-      // exit in case of a mouse button press
-    case ButtonPress:     
-      this->done = True;
-      break;
-    case KeyPress:
-      if (raw__xlib__XLookupKeysym(cause, &event.xkey, 0) == XK_Escape) {
+      case ConfigureNotify:
+	// call raw__resize_gl_scene only if our window-size changed
+	if ((event.xconfigure.width != this->width) || 
+	    (event.xconfigure.height != this->height)) {
+	  this->width = event.xconfigure.width;
+	  this->height = event.xconfigure.height;
+	  status("resize event: %dx%d", this->width, this->height);
+	  raw__resize_gl_scene(cause,
+			       event.xconfigure.width,
+			       event.xconfigure.height);
+	}
+	break;
+	// exit in case of a mouse button press
+      case ButtonPress:     
 	this->done = True;
+	break;
+      case KeyPress:
+	if (raw__xlib__XLookupKeysym(cause, &event.xkey, 0) == XK_Escape) {
+	  this->done = True;
+	}
+	if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
+	  funk2_glwindow__destroy(this);
+	  funk2_glwindow__init(this);
+	  this->fullscreen = !this->fullscreen;
+	  status("creating new window: %dx%d", this->width, this->height);
+	  funk2_glwindow__create(this, cause, (u8*)(this->title), this->width, this->height, this->depth, this->fullscreen);
+	}
+	break;
+      case ClientMessage:
+	if (*raw__xlib__XGetAtomName(cause, this->display, event.xclient.message_type) == *"WM_PROTOCOLS") {
+	  status("Exiting sanely...");
+	  this->done = True;
+	}
+	break;
+      default:
+	break;
       }
-      if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
-	funk2_glwindow__destroy(this);
-	funk2_glwindow__init(this);
-	this->fullscreen = !this->fullscreen;
-	status("creating new window: %dx%d", this->width, this->height);
-	funk2_glwindow__create(this, cause, (u8*)(this->title), this->width, this->height, this->depth, this->fullscreen);
-      }
-      break;
-    case ClientMessage:
-      if (*raw__xlib__XGetAtomName(cause, this->display, event.xclient.message_type) == *"WM_PROTOCOLS") {
-	status("Exiting sanely...");
-	this->done = True;
-      }
-      break;
-    default:
-      break;
     }
   }
   return this->done;
@@ -348,7 +356,8 @@ int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
 void funk2_glwindow__main(f2ptr cause) {
   // default to fullscreen
   boolean_t fullscreen = False;
-  funk2_glwindow__create(&(__funk2.glwindow), cause, (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
+  funk2_glwindow__init(&(__funk2.glwindow), (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
+  funk2_glwindow__show(&(__funk2.glwindow), cause);
   
   // wait for events
   while (!__funk2.glwindow.done) {
@@ -382,7 +391,8 @@ def_pcfunk0(glwindow__supported, return f2__glwindow__supported(this_cause));
 
 void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
 #if defined(F2__GLWINDOW__H)
-  funk2_glwindow__create(&(__funk2.glwindow), cause, title, width, height, depth, fullscreen);
+  funk2_glwindow__init(&(__funk2.glwindow), title, width, height, depth, fullscreen);
+  funk2_glwindow__show(&(__funk2.glwindow), cause);
 #else
   status("glwindow not supported.");
 #endif

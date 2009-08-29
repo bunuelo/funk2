@@ -583,57 +583,10 @@ def_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, bo
 
 // exception
 
-defprimobject__static_slot(exception__tag,   0);
-defprimobject__static_slot(exception__value, 1);
-
-f2ptr __exception__symbol = -1;
-
-f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value) {
-  release__assert(__exception__symbol != -1, nil, "f2exception__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __exception__symbol, 2, nil);
-  f2exception__tag__set(  this, cause, tag);
-  f2exception__value__set(this, cause, value);
-  return this;
-}
-
-f2ptr f2exception__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_exception.new__funk);}
-  {char* slot_name = "tag";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__funk);}
-  {char* slot_name = "tag";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__set__funk);}
-  {char* slot_name = "value";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_exception.value__funk);}
-  {char* slot_name = "value";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_exception.value__set__funk);}
-  return this;
-}
-
-boolean_t raw__exception__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__exception(x, cause));
-}
-f2ptr f2__exception__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__exception__is_type(cause, x));}
-def_pcfunk1(exception__is_type, x, return f2__exception__is_type(this_cause, x));
-
-f2ptr f2__exception__type(f2ptr cause, f2ptr x) {return __exception__symbol;}
-def_pcfunk1(exception__type, x, return f2__exception__type(this_cause, x));
+def_primobject_2_slot(exception, tag, value);
 
 f2ptr f2__exception__new(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
 def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, tag, value));
-
-f2ptr f2__exception__tag(f2ptr cause, f2ptr this) {return f2exception__tag(this, cause);}
-def_pcfunk1(exception__tag, x, return f2__exception__tag(this_cause, x));
-
-f2ptr f2__exception__tag__set(f2ptr cause, f2ptr this, f2ptr value) {return f2exception__tag__set(this, cause, value);}
-def_pcfunk2(exception__tag__set, x, y, return f2__exception__tag__set(this_cause, x, y));
-
-f2ptr f2__exception__value(f2ptr cause, f2ptr this) {return f2exception__value(this, cause);}
-def_pcfunk1(exception__value, x, return f2__exception__value(this_cause, x));
-
-f2ptr f2__exception__value__set(f2ptr cause, f2ptr this, f2ptr value) {return f2exception__value__set(this, cause, value);}
-def_pcfunk2(exception__value__set, x, y, return f2__exception__value__set(this_cause, x, y));
 
 
 

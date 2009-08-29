@@ -120,13 +120,13 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
 #define declare_primobject_slot(name, slot_name) \
   defprimobject__static_slot__prototype(name##__##slot_name); \
-  #define f2##name##__##slot_name##__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, name##__##slot_name, cause, trace_depth) \
-  #define f2##name##__##slot_name(                     this, cause)                     primobject__static_slot__accessor(             this, name##__##slot_name, cause) \
-  #define f2##name##__##slot_name##__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, name##__##slot_name, cause, value, trace_depth) \
-  #define f2##name##__##slot_name##__set(              this, cause, value)              primobject__static_slot__set(                  this, name##__##slot_name, cause, value) \
-  #define f2##name##__##slot_name##__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, name##__##slot_name, cause) \
-  #define f2##name##__##slot_name##__trace(            this, cause)                     primobject__static_slot__trace(                this, name##__##slot_name, cause) \
-  #define f2##name##__##slot_name##__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, name##__##slot_name, cause) \
+  \#define f2##name##__##slot_name##__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, name##__##slot_name, cause, trace_depth) \
+  \#define f2##name##__##slot_name(                     this, cause)                     primobject__static_slot__accessor(             this, name##__##slot_name, cause) \
+  \#define f2##name##__##slot_name##__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, name##__##slot_name, cause, value, trace_depth) \
+  \#define f2##name##__##slot_name##__set(              this, cause, value)              primobject__static_slot__set(                  this, name##__##slot_name, cause, value) \
+  \#define f2##name##__##slot_name##__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, name##__##slot_name, cause) \
+  \#define f2##name##__##slot_name##__trace(            this, cause)                     primobject__static_slot__trace(                this, name##__##slot_name, cause) \
+  \#define f2##name##__##slot_name##__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, name##__##slot_name, cause) \
 
 #define declare_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   extern f2ptr __##name##__symbol; \

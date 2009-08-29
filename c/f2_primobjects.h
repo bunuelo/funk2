@@ -563,52 +563,12 @@ declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers
 
 declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
 
-/*
-extern f2ptr __scheduler__symbol;
-boolean_t raw__scheduler__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__scheduler__is_type(f2ptr cause, f2ptr x);
-f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer);
-f2ptr f2scheduler__primobject_type__new(f2ptr cause);
-#define f2primobject__is_scheduler(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __scheduler__symbol)
-
-defprimobject__static_slot__prototype(scheduler__processors);
-#define f2scheduler__processors(            this, cause)        primobject__static_slot__accessor(  this, scheduler__processors, cause)
-#define f2scheduler__processors__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__processors, cause, value)
-#define f2scheduler__processors__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__processors, cause)
-#define f2scheduler__processors__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__processors, cause)
-#define f2scheduler__processors__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__processors, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_subscribers_mutex);
-#define f2scheduler__event_subscribers_mutex(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_subscribers_mutex, cause)
-#define f2scheduler__event_subscribers_mutex__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_subscribers_mutex, cause, value)
-#define f2scheduler__event_subscribers_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_subscribers_mutex, cause)
-#define f2scheduler__event_subscribers_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_subscribers_mutex, cause)
-#define f2scheduler__event_subscribers_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_subscribers_mutex, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_subscribers);
-#define f2scheduler__event_subscribers(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_subscribers, cause)
-#define f2scheduler__event_subscribers__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_subscribers, cause, value)
-#define f2scheduler__event_subscribers__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_subscribers, cause)
-#define f2scheduler__event_subscribers__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_subscribers, cause)
-#define f2scheduler__event_subscribers__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_subscribers, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_buffer_mutex);
-#define f2scheduler__event_buffer_mutex(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_buffer_mutex, cause)
-#define f2scheduler__event_buffer_mutex__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_buffer_mutex, cause, value)
-#define f2scheduler__event_buffer_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_buffer_mutex, cause)
-#define f2scheduler__event_buffer_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_buffer_mutex, cause)
-#define f2scheduler__event_buffer_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_buffer_mutex, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_buffer);
-#define f2scheduler__event_buffer(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_buffer, cause)
-#define f2scheduler__event_buffer__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_buffer, cause, value)
-#define f2scheduler__event_buffer__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_buffer, cause)
-#define f2scheduler__event_buffer__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_buffer, cause)
-#define f2scheduler__event_buffer__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_buffer, cause)
-*/
 
 // event_subscriber
 
+declare_primobject_5_slot(event_subscriber, event_type, fiber, funkable, event_buffer, event_buffer_mutex);
+
+/*
 extern f2ptr __event_subscriber__symbol;
 boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__event_subscriber__is_type(f2ptr cause, f2ptr x);
@@ -650,7 +610,7 @@ defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
 #define f2event_subscriber__event_buffer_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_buffer_mutex, cause)
 #define f2event_subscriber__event_buffer_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_buffer_mutex, cause)
 #define f2event_subscriber__event_buffer_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_buffer_mutex, cause)
-
+*/
 
 
 // cause

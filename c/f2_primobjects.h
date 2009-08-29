@@ -333,41 +333,8 @@ declare_primobject_2_slot(exception, tag, value);
 
 // bytecode
 
-extern f2ptr __bytecode__symbol;
-boolean_t raw__bytecode__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__bytecode__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2);
-f2ptr f2bytecode__primobject_type__new(f2ptr cause);
+declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 
-#define f2primobject__is_bytecode(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode__symbol)
-
-defprimobject__static_slot__prototype(bytecode__command);
-#define f2bytecode__command(            this, cause)        primobject__static_slot__accessor(  this, bytecode__command, cause)
-#define f2bytecode__command__set(       this, cause, value) primobject__static_slot__set(       this, bytecode__command, cause, value)
-#define f2bytecode__command__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, bytecode__command, cause)
-#define f2bytecode__command__trace(     this, cause)        primobject__static_slot__trace(     this, bytecode__command, cause)
-#define f2bytecode__command__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__command, cause)
-
-defprimobject__static_slot__prototype(bytecode__arg0);
-#define f2bytecode__arg0(               this, cause)        primobject__static_slot__accessor(  this, bytecode__arg0, cause)
-#define f2bytecode__arg0__set(          this, cause, value) primobject__static_slot__set(       this, bytecode__arg0, cause, value)
-#define f2bytecode__arg0__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg0, cause)
-#define f2bytecode__arg0__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg0, cause)
-#define f2bytecode__arg0__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg0, cause)
-
-defprimobject__static_slot__prototype(bytecode__arg1);
-#define f2bytecode__arg1(               this, cause)        primobject__static_slot__accessor(  this, bytecode__arg1, cause)
-#define f2bytecode__arg1__set(          this, cause, value) primobject__static_slot__set(       this, bytecode__arg1, cause, value)
-#define f2bytecode__arg1__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg1, cause)
-#define f2bytecode__arg1__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg1, cause)
-#define f2bytecode__arg1__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg1, cause)
-
-defprimobject__static_slot__prototype(bytecode__arg2);
-#define f2bytecode__arg2(               this, cause)        primobject__static_slot__accessor(  this, bytecode__arg2, cause)
-#define f2bytecode__arg2__set(          this, cause, value) primobject__static_slot__set(       this, bytecode__arg2, cause, value)
-#define f2bytecode__arg2__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg2, cause)
-#define f2bytecode__arg2__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg2, cause)
-#define f2bytecode__arg2__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg2, cause)
 
 
 

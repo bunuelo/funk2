@@ -1014,6 +1014,102 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
     def_primobject_add_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19));
 
 
+
+
+#define initialize_primobject_funk(name, funk_name) \
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+
+#define initialize_primobject_common(name) \
+  initialize_primobject_funk(name, is_type); \
+  initialize_primobject_funk(name, type); \
+  initialize_primobject_funk(name, new);
+
+#define initialize_primobject_slot(name, slot_name) \
+  initialize_primobject_funk(name, slot_name); \
+  initialize_primobject_funk(name, slot_name##__set);
+
+#define initialize_primobject_0_slot(name) \
+  initialize_primobject_common(name);
+
+#define initialize_primobject_1_slot(name, slot_1) \
+  initialize_primobject_0_slot(name); \
+  initialize_primobject_slot(name, slot_1);
+
+#define initialize_primobject_2_slot(name, slot_1, slot_2) \
+  initialize_primobject_1_slot(name, slot_1); \
+  initialize_primobject_slot(name, slot_2);
+
+#define initialize_primobject_3_slot(name, slot_1, slot_2, slot_3) \
+  initialize_primobject_2_slot(name, slot_1, slot_2); \
+  initialize_primobject_slot(name, slot_3);
+
+#define initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  initialize_primobject_3_slot(name, slot_1, slot_2, slot_3); \
+  initialize_primobject_slot(name, slot_4);
+
+#define initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  initialize_primobject_slot(name, slot_5);
+
+#define initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  initialize_primobject_slot(name, slot_6);
+
+#define initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  initialize_primobject_slot(name, slot_7);
+
+#define initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  initialize_primobject_slot(name, slot_8);
+
+#define initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  initialize_primobject_slot(name, slot_9);
+
+#define initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  initialize_primobject_slot(name, slot_10);
+
+#define initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  initialize_primobject_slot(name, slot_11);
+
+#define initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  initialize_primobject_slot(name, slot_12);
+
+#define initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  initialize_primobject_slot(name, slot_13);
+
+#define initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  initialize_primobject_slot(name, slot_14);
+
+#define initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  initialize_primobject_slot(name, slot_15);
+
+#define initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  initialize_primobject_slot(name, slot_16);
+
+#define initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  initialize_primobject_slot(name, slot_17);
+
+#define initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  initialize_primobject_slot(name, slot_18);
+
+#define initialize_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  initialize_primobject_slot(name, slot_19);
+
+
+
 // compound_object
 
 declare_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);

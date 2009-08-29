@@ -251,61 +251,6 @@ f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 
 declare_primobject_5_slot(imagination_link, next, name, value, trace, imagination_frame);
 
-/*
-extern f2ptr __imagination_link__symbol;
-boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__imagination_link__is_type(f2ptr cause, f2ptr this);
-f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame, int trace_depth);
-f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame);
-f2ptr f2imagination_link__primobject_type__new(f2ptr cause);
-#define f2primobject__is_imagination_link(this, cause) raw__eq(cause, f2primobject__type(this, cause), __imagination_link__symbol)
-
-defprimobject__static_slot__prototype(imagination_link__next);
-#define f2imagination_link__next__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__next, cause, trace_depth)
-#define f2imagination_link__next(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__next, cause)
-#define f2imagination_link__next__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__next, cause, value, trace_depth)
-#define f2imagination_link__next__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__next, cause, value)
-#define f2imagination_link__next__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__next, cause)
-#define f2imagination_link__next__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__next, cause)
-#define f2imagination_link__next__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__next, cause)
-
-defprimobject__static_slot__prototype(imagination_link__name);
-#define f2imagination_link__name__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__name, cause, trace_depth)
-#define f2imagination_link__name(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__name, cause)
-#define f2imagination_link__name__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__name, cause, value, trace_depth)
-#define f2imagination_link__name__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__name, cause, value)
-#define f2imagination_link__name__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__name, cause)
-#define f2imagination_link__name__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__name, cause)
-#define f2imagination_link__name__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__name, cause)
-
-defprimobject__static_slot__prototype(imagination_link__value);
-#define f2imagination_link__value__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__value, cause, trace_depth)
-#define f2imagination_link__value(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__value, cause)
-#define f2imagination_link__value__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__value, cause, value, trace_depth)
-#define f2imagination_link__value__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__value, cause, value)
-#define f2imagination_link__value__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__value, cause)
-#define f2imagination_link__value__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__value, cause)
-#define f2imagination_link__value__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__value, cause)
-
-defprimobject__static_slot__prototype(imagination_link__trace);
-#define f2imagination_link__trace__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__trace, cause, trace_depth)
-#define f2imagination_link__trace(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__trace, cause)
-#define f2imagination_link__trace__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__trace, cause, value, trace_depth)
-#define f2imagination_link__trace__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__trace, cause, value)
-#define f2imagination_link__trace__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__trace, cause)
-#define f2imagination_link__trace__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__trace, cause)
-#define f2imagination_link__trace__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__trace, cause)
-
-defprimobject__static_slot__prototype(imagination_link__imagination_frame);
-#define f2imagination_link__imagination_frame__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__imagination_frame, cause, trace_depth)
-#define f2imagination_link__imagination_frame(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__imagination_frame, cause, value, trace_depth)
-#define f2imagination_link__imagination_frame__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__imagination_frame, cause, value)
-#define f2imagination_link__imagination_frame__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__imagination_frame, cause)
-*/
-
 f2ptr raw__imagination_frame__lookup_imagination_link__trace_depth(f2ptr cause, f2ptr this, f2ptr real_value, f2ptr imagination_name_stack, int trace_depth);
 f2ptr raw__imagination_frame__new_with_added_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth);
 void  raw__imagination_link__add_new_imagination_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth);
@@ -323,6 +268,9 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 
 // cfunk
 
+declare_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
+
+/*
 extern f2ptr __cfunk__symbol;
 boolean_t raw__cfunk__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__cfunk__is_type(f2ptr cause, f2ptr this);
@@ -372,7 +320,7 @@ defprimobject__static_slot__prototype(cfunk__documentation);
 #define f2cfunk__documentation__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__documentation, cause)
 #define f2cfunk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__documentation, cause)
 #define f2cfunk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__documentation, cause)
-
+*/
 
 
 // metrocfunk

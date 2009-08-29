@@ -197,7 +197,7 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
     this->set_window_attributes.event_mask = ExposureMask | KeyPressMask | ButtonPressMask |
       StructureNotifyMask;
     this->x_window = raw__xlib__XCreateWindow(cause, this->display, RootWindow(this->display, vi->screen),
-					      0, 0, width, height, 0, vi->depth, InputOutput, vi->visual,
+					      0, 0, this->width, this->height, 0, vi->depth, InputOutput, vi->visual,
 					      CWBorderPixel | CWColormap | CWEventMask, &this->set_window_attributes);
     // only set window title and handle wm_delete_events if in windowed mode
     wmDelete = raw__xlib__XInternAtom(cause, this->display, "WM_DELETE_WINDOW", True);

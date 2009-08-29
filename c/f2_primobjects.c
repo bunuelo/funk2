@@ -159,7 +159,6 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
   return this;
 }
 
-
 #define def_primobject_static_slot(name, slot_number, slot_name) \
   defprimobject__static_slot(name##__##slot_name, slot_number); \
    \
@@ -170,23 +169,17 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
   def_pcfunk2(name##__##slot_name##__set, x, y, return f2__##name##__##slot_name##__set(this_cause, x, y));
 
 
-#define def_primobject_2_slot(name, slot_1, slot_2) \
-  def_primobject_static_slot(name, 0, slot_1); \
-  def_primobject_static_slot(name, 1, slot_2); \
-   \
+#define def_primobject_common(name, new_trace_depth_code, new_f2type_code, add_slots_code) \
   f2ptr __##name##__symbol = -1; \
    \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, int trace_depth) { \
     release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
     f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 2, nil, trace_depth); \
-    f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
-    f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+    new_trace_depth_code; \
     return this; \
   } \
    \
-  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2) { \
-    return f2##name##__new__trace_depth(cause, slot_1, slot_2, 1); \
-  } \
+  new_f2type_code; \
    \
   boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x) { \
     return (raw__primobject__is_type(cause, x) && f2primobject__is_##name(x, cause)); \
@@ -202,12 +195,24 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), __funk2.globalenv.object_type.primobject.primobject_type_##name.is_type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    __funk2.globalenv.object_type.primobject.primobject_type_##name.type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     __funk2.globalenv.object_type.primobject.primobject_type_##name.new__funk); \
+    add_slots_code; \
+    return this; \
+  }
+
+#define def_primobject_2_slot(name, slot_1, slot_2) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+   \
+  def_primobject_common(name, \
+    f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+    f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth), \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, 1); \
+    }, \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_1),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_1##__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_1),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_1##__set__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_2),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_2##__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_2),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_2##__set__funk); \
-    return this; \
-  }
+    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_2),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_2##__set__funk));
 
 #define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   def_primobject_static_slot(name, 0, slot_1); \
@@ -267,61 +272,6 @@ def_pcfunk1(compound_object__new, compound_object_type, return f2__compound_obje
 // cons
 
 def_primobject_2_slot(cons, car, cdr);
-
-/*
-defprimobject__static_slot(cons__car, 0);
-defprimobject__static_slot(cons__cdr, 1);
-
-f2ptr __cons__symbol = -1;
-
-f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth) {
-  release__assert(__cons__symbol != -1, nil, "f2cons__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new__trace_depth(cause, __cons__symbol, 2, nil, trace_depth);
-  f2cons__car__set__trace_depth(this, cause, car, trace_depth);
-  f2cons__cdr__set__trace_depth(this, cause, cdr, trace_depth);
-  return this;
-}
-
-f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
-  return f2cons__new__trace_depth(cause, car, cdr, 1);
-}
-
-boolean_t raw__cons__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_cons(x, cause));
-}
-f2ptr f2__cons__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cons__is_type(cause, x));}
-def_pcfunk1(cons__is_type, x, return f2__cons__is_type(this_cause, x));
-
-f2ptr f2__cons__type(f2ptr cause, f2ptr x) {return __cons__symbol;}
-def_pcfunk1(cons__type, x, return f2__cons__type(this_cause, x));
-
-f2ptr f2__cons__car(f2ptr cause, f2ptr x) {return f2cons__car(x, cause);}
-def_pcfunk1(cons__car, x, return f2__cons__car(this_cause, x));
-
-f2ptr f2__cons__car__set(f2ptr cause, f2ptr x, f2ptr y) {f2cons__car__set(x, cause, y); return nil;}
-def_pcfunk2(cons__car__set, x, y, return f2__cons__car__set(this_cause, x, y));
-
-f2ptr f2__cons__cdr(f2ptr cause, f2ptr x) {return f2cons__cdr(x, cause);}
-def_pcfunk1(cons__cdr, x, return f2__cons__cdr(this_cause, x));
-
-f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y) {f2cons__cdr__set(x, cause, y); return nil;}
-def_pcfunk2(cons__cdr__set, x, y, return f2__cons__cdr__set(this_cause, x, y));
-
-f2ptr f2cons__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_cons.type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.new__funk);}
-  {char* slot_name = "car";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_cons.car__funk);}
-  {char* slot_name = "car";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_cons.car__set__funk);}
-  {char* slot_name = "cdr";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_cons.cdr__funk);}
-  {char* slot_name = "cdr";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_cons.cdr__set__funk);}
-  return this;
-}
-*/
 
 f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
 def_pcfunk2(cons__new, x, y, return f2__cons__new(this_cause, x, y));

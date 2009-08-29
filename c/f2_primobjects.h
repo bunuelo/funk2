@@ -950,49 +950,11 @@ declare_object_type_9_slot(metro, name, body_bytecodes, args, demetropolized_bod
 
 // exception
 
-struct funk2_object_type__exception__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr tag__symbol;
-  f2ptr tag__funk;
-  f2ptr tag__set__symbol;
-  f2ptr tag__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-};
+declare_object_type_2_slot(exception, tag, value, );
 
 // bytecode
 
-struct funk2_object_type__bytecode__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr command__symbol;
-  f2ptr command__funk;
-  f2ptr command__set__symbol;
-  f2ptr command__set__funk;
-  f2ptr arg0__symbol;
-  f2ptr arg0__funk;
-  f2ptr arg0__set__symbol;
-  f2ptr arg0__set__funk;
-  f2ptr arg1__symbol;
-  f2ptr arg1__funk;
-  f2ptr arg1__set__symbol;
-  f2ptr arg1__set__funk;
-  f2ptr arg2__symbol;
-  f2ptr arg2__funk;
-  f2ptr arg2__set__symbol;
-  f2ptr arg2__set__funk;
-};
+declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2, );
 
 // fiber
 

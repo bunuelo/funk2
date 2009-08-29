@@ -254,7 +254,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	  this->done = True;
 	}
 	if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
-	  funk2_glwindow__hide(this, cause);
+	  funk2_glwindow__hide(this);
 	  this->fullscreen = !this->fullscreen;
 	  status("creating new window: %dx%d", this->width, this->height);
 	  funk2_glwindow__show(this, cause);

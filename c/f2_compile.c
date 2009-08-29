@@ -621,13 +621,14 @@ f2ptr f2__compile__while(f2ptr simple_cause, f2ptr cond_bcs, f2ptr loop_bcs) {
   f2ptr end_nop_bcs             = f2__compile__nop(cause);
   f2ptr loop_done_jump_cond_bcs = f2__compile__jump(cause, cond_bcs);
   f2ptr false_jump_end_bcs      = f2__compile__jump(cause, end_nop_bcs);
+  
   f2ptr full_bcs = cond_bcs;
   f2ptr iter     = cond_bcs;
   iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, false_jump_end_bcs));
   iter = f2__list_cdr__set(cause, iter, loop_bcs);
   iter = f2__list_cdr__set(cause, iter, loop_done_jump_cond_bcs);
   iter = f2__list_cdr__set(cause, iter, end_nop_bcs);
-  //printf("\nfull_bcs: "); f2__print(nil, full_bcs); fflush(stdout);
+  printf("\nfull_bcs: "); f2__print(nil, full_bcs); fflush(stdout);
   return bcs_valid(full_bcs);
 }
 

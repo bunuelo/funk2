@@ -30,3 +30,10 @@
   [glwindow-destroy]]
 
 
+[defunk glwindow-test2 []
+  [print [not [print t]]]
+  [while [print [not [print t]]]
+    ]
+  ]
+
+

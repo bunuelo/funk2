@@ -105,7 +105,8 @@ defarray_slot__prototype(primobject__dynamic_slots);
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"
-#include "f2_primfunks.h"
+
+boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y); // from f2_primfunks.h
 
 // primobject
 

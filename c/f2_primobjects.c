@@ -1218,87 +1218,11 @@ def_pcfunk5(scheduler__new, processors, event_subscribers_mutex, event_subscribe
 
 // event_subscriber
 
-defprimobject__static_slot(event_subscriber__event_types,        0);
-defprimobject__static_slot(event_subscriber__fiber,              1);
-defprimobject__static_slot(event_subscriber__funkable,           2);
-defprimobject__static_slot(event_subscriber__event_buffer,       3);
-defprimobject__static_slot(event_subscriber__event_buffer_mutex, 4);
-
-f2ptr __event_subscriber__symbol = -1;
-
-f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr fiber, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex) {
-  release__assert(__event_subscriber__symbol != -1, nil, "f2event_subscriber__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __event_subscriber__symbol, 5, nil);
-  f2event_subscriber__event_types__set(       this, cause, event_types);
-  f2event_subscriber__fiber__set(            this, cause, fiber);
-  f2event_subscriber__funkable__set(          this, cause, funkable);
-  f2event_subscriber__event_buffer__set(      this, cause, event_buffer);
-  f2event_subscriber__event_buffer_mutex__set(this, cause, event_buffer_mutex);
-  return this;
-}
-
-f2ptr f2event_subscriber__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.is_type__funk);}
-  {char* slot_name = "type";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.type__funk);}
-  {char* slot_name = "new";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.new__funk);}
-  {char* slot_name = "event_types";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__funk);}
-  {char* slot_name = "event_types";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_types__set__funk);}
-  {char* slot_name = "fiber";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.fiber__funk);}
-  {char* slot_name = "fiber";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.fiber__set__funk);}
-  {char* slot_name = "funkable";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__funk);}
-  {char* slot_name = "funkable";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.funkable__set__funk);}
-  {char* slot_name = "event_buffer";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__funk);}
-  {char* slot_name = "event_buffer";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer__set__funk);}
-  {char* slot_name = "event_buffer_mutex"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__funk);}
-  {char* slot_name = "event_buffer_mutex"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_event_subscriber.event_buffer_mutex__set__funk);}
-  return this;
-}
-
-boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__event_subscriber(x, cause));
-}
-f2ptr f2__event_subscriber__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__event_subscriber__is_type(cause, x));}
-def_pcfunk1(event_subscriber__is_type, x, return f2__event_subscriber__is_type(this_cause, x));
-
-f2ptr f2__event_subscriber__type(f2ptr cause, f2ptr x) {return __event_subscriber__symbol;}
-def_pcfunk1(event_subscriber__type, x, return f2__event_subscriber__type(this_cause, x));
+def_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
 
 f2ptr f2__event_subscriber__new(f2ptr cause, f2ptr event_types, f2ptr fiber, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex) {return f2event_subscriber__new(cause, event_types, fiber, funkable, event_buffer, event_buffer_mutex);}
 def_pcfunk5(event_subscriber__new, event_types, fiber, funkable, event_buffer, event_buffer_mutex, return f2__event_subscriber__new(this_cause, event_types, fiber, funkable, event_buffer, event_buffer_mutex));
 
-f2ptr f2__event_subscriber__event_types(f2ptr cause, f2ptr this) {return f2event_subscriber__event_types(this, cause);}
-def_pcfunk1(event_subscriber__event_types, x, return f2__event_subscriber__event_types(this_cause, x));
-
-f2ptr f2__event_subscriber__event_types__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event_subscriber__event_types__set(this, cause, value);}
-def_pcfunk2(event_subscriber__event_types__set, x, y, return f2__event_subscriber__event_types__set(this_cause, x, y));
-
-f2ptr f2__event_subscriber__fiber(f2ptr cause, f2ptr this) {return f2event_subscriber__fiber(this, cause);}
-def_pcfunk1(event_subscriber__fiber, x, return f2__event_subscriber__fiber(this_cause, x));
-
-f2ptr f2__event_subscriber__fiber__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event_subscriber__fiber__set(this, cause, value);}
-def_pcfunk2(event_subscriber__fiber__set, x, y, return f2__event_subscriber__fiber__set(this_cause, x, y));
-
-f2ptr f2__event_subscriber__funkable(f2ptr cause, f2ptr this) {return f2event_subscriber__funkable(this, cause);}
-def_pcfunk1(event_subscriber__funkable, x, return f2__event_subscriber__funkable(this_cause, x));
-
-f2ptr f2__event_subscriber__funkable__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event_subscriber__funkable__set(this, cause, value);}
-def_pcfunk2(event_subscriber__funkable__set, x, y, return f2__event_subscriber__funkable__set(this_cause, x, y));
-
-f2ptr f2__event_subscriber__event_buffer(f2ptr cause, f2ptr this) {return f2event_subscriber__event_buffer(this, cause);}
-def_pcfunk1(event_subscriber__event_buffer, x, return f2__event_subscriber__event_buffer(this_cause, x));
-
-f2ptr f2__event_subscriber__event_buffer__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event_subscriber__event_buffer__set(this, cause, value);}
-def_pcfunk2(event_subscriber__event_buffer__set, x, y, return f2__event_subscriber__event_buffer__set(this_cause, x, y));
-
-f2ptr f2__event_subscriber__event_buffer_mutex(f2ptr cause, f2ptr this) {return f2event_subscriber__event_buffer_mutex(this, cause);}
-def_pcfunk1(event_subscriber__event_buffer_mutex, x, return f2__event_subscriber__event_buffer_mutex(this_cause, x));
-
-f2ptr f2__event_subscriber__event_buffer_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2event_subscriber__event_buffer_mutex__set(this, cause, value);}
-def_pcfunk2(event_subscriber__event_buffer_mutex__set, x, y, return f2__event_subscriber__event_buffer_mutex__set(this_cause, x, y));
 
 
 // cause

@@ -23,17 +23,7 @@
   [if [not [glwindow-supported]]
       [error `run-time `[glwindow not-supported]]]
   [glwindow-create title width height depth fullscreen]
-  [let [[done nil]]
-    [while [not done]
-      [if [glwindow-handle_events]
-	  [= done t]]]]
+  [while [not [glwindow-handle_events]]]
   [glwindow-destroy]]
-
-
-[defunk glwindow-test2 []
-  [print [not [print t]]]
-  [while [print [not [print t]]]
-    ]
-  ]
 
 

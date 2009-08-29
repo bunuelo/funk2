@@ -160,8 +160,8 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 }
 
 
-#define def_primobject_static_slot(name, slot_name) \
-  defprimobject__static_slot(name##__##slot_name, 0); \
+#define def_primobject_static_slot(name, slot_number, slot_name) \
+  defprimobject__static_slot(name##__##slot_name, slot_number); \
    \
   f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {return f2##name##__##slot_name(x, cause);} \
   def_pcfunk1(name##__##slot_name, x, return f2__##name##__##slot_name(this_cause, x)); \
@@ -174,25 +174,9 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 
 // compound_object
 
-def_primobject_static_slot(compound_object, compound_object_type);
-
-
-defprimobject__static_slot(compound_object__frame,                1);
-
-f2ptr f2__compound_object__frame(f2ptr cause, f2ptr x) {return f2compound_object__frame(x, cause);}
-def_pcfunk1(compound_object__frame, x, return f2__compound_object__frame(this_cause, x));
-
-f2ptr f2__compound_object__frame__set(f2ptr cause, f2ptr x, f2ptr y) {f2compound_object__frame__set(x, cause, y); return nil;}
-def_pcfunk2(compound_object__frame__set, x, y, return f2__compound_object__frame__set(this_cause, x, y));
-
-
-defprimobject__static_slot(compound_object__part_frame,           2);
-
-f2ptr f2__compound_object__part_frame(f2ptr cause, f2ptr x) {return f2compound_object__part_frame(x, cause);}
-def_pcfunk1(compound_object__part_frame, x, return f2__compound_object__part_frame(this_cause, x));
-
-f2ptr f2__compound_object__part_frame__set(f2ptr cause, f2ptr x, f2ptr y) {f2compound_object__part_frame__set(x, cause, y); return nil;}
-def_pcfunk2(compound_object__part_frame__set, x, y, return f2__compound_object__part_frame__set(this_cause, x, y));
+def_primobject_static_slot(compound_object, 0, compound_object_type);
+def_primobject_static_slot(compound_object, 1, frame);
+def_primobject_static_slot(compound_object, 2, part_frame);
 
 
 

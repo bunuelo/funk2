@@ -194,7 +194,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     return (raw__primobject__is_type(cause, x) && f2primobject__is_##name(x, cause)); \
   } \
   f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__##name##__is_type(cause, x));} \
-  def_pcfunk1(##name##__is_type, x, return f2__##name##__is_type(this_cause, x)); \
+  def_pcfunk1(name##__is_type, x, return f2__##name##__is_type(this_cause, x)); \
    \
   f2ptr f2__##name##__type(f2ptr cause, f2ptr x) {return __##name##__symbol;} \
   def_pcfunk1(name##__type, x, return f2__##name##__type(this_cause, x)); \

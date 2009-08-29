@@ -592,77 +592,10 @@ def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, ta
 
 // bytecode
 
-defprimobject__static_slot(bytecode__command, 0);
-defprimobject__static_slot(bytecode__arg0,    1);
-defprimobject__static_slot(bytecode__arg1,    2);
-defprimobject__static_slot(bytecode__arg2,    3);
-
-f2ptr __bytecode__symbol = -1;
-
-f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {
-  release__assert(__bytecode__symbol != -1, nil, "f2bytecode__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __bytecode__symbol, 4, nil);
-  f2bytecode__command__set(this, cause, command);
-  f2bytecode__arg0__set(   this, cause, arg0);
-  f2bytecode__arg1__set(   this, cause, arg1);
-  f2bytecode__arg2__set(   this, cause, arg2);
-  return this;
-}
-
-f2ptr f2bytecode__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__funk);}
-  {char* slot_name = "command"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__funk);}
-  {char* slot_name = "command"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__set__funk);}
-  {char* slot_name = "arg0";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__funk);}
-  {char* slot_name = "arg0";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__set__funk);}
-  {char* slot_name = "arg1";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__funk);}
-  {char* slot_name = "arg1";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__set__funk);}
-  {char* slot_name = "arg2";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__funk);}
-  {char* slot_name = "arg2";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__set__funk);}
-  return this;
-}
-
-boolean_t raw__bytecode__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__bytecode(x, cause));
-}
-f2ptr f2__bytecode__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bytecode__is_type(cause, x));}
-def_pcfunk1(bytecode__is_type, x, return f2__bytecode__is_type(this_cause, x));
-
-f2ptr f2__bytecode__type(f2ptr cause, f2ptr x) {return __bytecode__symbol;}
-def_pcfunk1(bytecode__type, x, return f2__bytecode__type(this_cause, x));
+def_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 
 f2ptr f2__bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2) {return f2bytecode__new(cause, command, arg0, arg1, arg2);}
 def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(this_cause, command, arg0, arg1, arg2));
-
-f2ptr f2__bytecode__command(f2ptr cause, f2ptr this) {return f2bytecode__command(this, cause);}
-def_pcfunk1(bytecode__command, x, return f2__bytecode__command(this_cause, x));
-
-f2ptr f2__bytecode__command__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode__command__set(this, cause, value);}
-def_pcfunk2(bytecode__command__set, x, y, return f2__bytecode__command__set(this_cause, x, y));
-
-f2ptr f2__bytecode__arg0(f2ptr cause, f2ptr this) {return f2bytecode__arg0(this, cause);}
-def_pcfunk1(bytecode__arg0, x, return f2__bytecode__arg0(this_cause, x));
-
-f2ptr f2__bytecode__arg0__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode__arg0__set(this, cause, value);}
-def_pcfunk2(bytecode__arg0__set, x, y, return f2__bytecode__arg0__set(this_cause, x, y));
-
-f2ptr f2__bytecode__arg1(f2ptr cause, f2ptr this) {return f2bytecode__arg1(this, cause);}
-def_pcfunk1(bytecode__arg1, x, return f2__bytecode__arg1(this_cause, x));
-
-f2ptr f2__bytecode__arg1__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode__arg1__set(this, cause, value);}
-def_pcfunk2(bytecode__arg1__set, x, y, return f2__bytecode__arg1__set(this_cause, x, y));
-
-f2ptr f2__bytecode__arg2(f2ptr cause, f2ptr this) {return f2bytecode__arg2(this, cause);}
-def_pcfunk1(bytecode__arg2, x, return f2__bytecode__arg2(this_cause, x));
-
-f2ptr f2__bytecode__arg2__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode__arg2__set(this, cause, value);}
-def_pcfunk2(bytecode__arg2__set, x, y, return f2__bytecode__arg2__set(this_cause, x, y));
 
 
 // fiber

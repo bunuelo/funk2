@@ -219,7 +219,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 #define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   def_primobject_static_slot(name, 0, slot_1); \
   def_primobject_static_slot(name, 1, slot_2); \
-  def_primobject_static_slot(name, 1, slot_3); \
+  def_primobject_static_slot(name, 2, slot_3); \
    \
   def_primobject_common(name, \
     f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth) { \
@@ -236,6 +236,57 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     def_primobject_add_slot(name, slot_1); \
     def_primobject_add_slot(name, slot_2); \
     def_primobject_add_slot(name, slot_3));
+
+#define def_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 4, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4));
+
+#define def_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 5, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5));
 
 
 // compound_object
@@ -268,6 +319,9 @@ def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, 
 
 // imagination_link
 
+def_primobject_5_slot(imagination_link, next, name, value, trace, imagination_frame);
+
+/*
 defprimobject__static_slot(imagination_link__next,              0);
 defprimobject__static_slot(imagination_link__name,              1);
 defprimobject__static_slot(imagination_link__value,             2);
@@ -321,9 +375,6 @@ def_pcfunk1(imagination_link__is_type, x, return f2__imagination_link__is_type(t
 f2ptr f2__imagination_link__type(f2ptr cause, f2ptr x) {return __imagination_link__symbol;}
 def_pcfunk1(imagination_link__type, x, return f2__imagination_link__type(this_cause, x));
 
-f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}
-def_pcfunk5(imagination_link__new, next, name, value, trace, imagination_frame, return f2__imagination_link__new(this_cause, next, name, value, trace, imagination_frame));
-
 f2ptr f2__imagination_link__next(f2ptr cause, f2ptr this) {return f2imagination_link__next(this, cause);}
 def_pcfunk1(imagination_link__next, x, return f2__imagination_link__next(this_cause, x));
 
@@ -353,7 +404,10 @@ def_pcfunk1(imagination_link__imagination_frame, x, return f2__imagination_link_
 
 f2ptr f2__imagination_link__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr value) {return f2imagination_link__imagination_frame__set(this, cause, value);}
 def_pcfunk2(imagination_link__imagination_frame__set, x, y, return f2__imagination_link__imagination_frame__set(this_cause, x, y));
+*/
 
+f2ptr f2__imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame) {return f2imagination_link__new(cause, next, name, value, trace, imagination_frame);}
+def_pcfunk5(imagination_link__new, next, name, value, trace, imagination_frame, return f2__imagination_link__new(this_cause, next, name, value, trace, imagination_frame));
 
 f2ptr raw__imagination_frame__new_with_added_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth) {
   f2ptr trace             = nil;

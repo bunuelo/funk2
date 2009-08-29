@@ -543,7 +543,7 @@ declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 
 // fiber
 
-declare_primobject_19_slot(fiber, program_counter_reg, stack_reg, iter_reg, env_reg, args_reg, return_reg, value_reg, trace_reg, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
+declare_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
 
 #define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)

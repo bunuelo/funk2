@@ -1208,91 +1208,9 @@ def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__s
 def_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
 
 
-
-
 // scheduler
 
-defprimobject__static_slot(scheduler__processors,              0);
-defprimobject__static_slot(scheduler__event_subscribers_mutex, 1);
-defprimobject__static_slot(scheduler__event_subscribers,       2);
-defprimobject__static_slot(scheduler__event_buffer_mutex,      3);
-defprimobject__static_slot(scheduler__event_buffer,            4);
-
-f2ptr __scheduler__symbol = -1;
-
-f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer) {
-  release__assert(__scheduler__symbol != -1, nil, "f2scheduler__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __scheduler__symbol, 5, nil);
-  f2scheduler__processors__set(             this, cause, processors);
-  f2scheduler__event_subscribers_mutex__set(this, cause, event_subscribers_mutex);
-  f2scheduler__event_subscribers__set(      this, cause, event_subscribers);
-  f2scheduler__event_buffer_mutex__set(     this, cause, event_buffer_mutex);
-  f2scheduler__event_buffer__set(           this, cause, event_buffer);
-  return this;
-}
-
-f2ptr f2scheduler__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.is_type__funk);}
-  {char* slot_name = "type";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.type__funk);}
-  {char* slot_name = "new";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.new__funk);}
-  {char* slot_name = "processors";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__funk);}
-  {char* slot_name = "processors";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processors__set__funk);}
-  {char* slot_name = "event_subscribers_mutex"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers_mutex__funk);}
-  {char* slot_name = "event_subscribers_mutex"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers_mutex__set__funk);}
-  {char* slot_name = "event_subscribers";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers__funk);}
-  {char* slot_name = "event_subscribers";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_subscribers__set__funk);}
-  {char* slot_name = "event_buffer_mutex";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer_mutex__funk);}
-  {char* slot_name = "event_buffer_mutex";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer_mutex__set__funk);}
-  {char* slot_name = "event_buffer";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer__funk);}
-  {char* slot_name = "event_buffer";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_scheduler.event_buffer__set__funk);}
-  return this;
-}
-
-boolean_t raw__scheduler__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__scheduler(x, cause));
-}
-f2ptr f2__scheduler__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__scheduler__is_type(cause, x));}
-def_pcfunk1(scheduler__is_type, x, return f2__scheduler__is_type(this_cause, x));
-
-f2ptr f2__scheduler__type(f2ptr cause, f2ptr x) {return __scheduler__symbol;}
-def_pcfunk1(scheduler__type, x, return f2__scheduler__type(this_cause, x));
-
-f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer) {return f2scheduler__new(cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);}
-def_pcfunk5(scheduler__new, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, return f2__scheduler__new(this_cause, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer));
-
-f2ptr f2__scheduler__processors(f2ptr cause, f2ptr this) {return f2scheduler__processors(this, cause);}
-def_pcfunk1(scheduler__processors, x, return f2__scheduler__processors(this_cause, x));
-
-f2ptr f2__scheduler__processors__set(f2ptr cause, f2ptr this, f2ptr value) {return f2scheduler__processors__set(this, cause, value);}
-def_pcfunk2(scheduler__processors__set, x, y, return f2__scheduler__processors__set(this_cause, x, y));
-
-f2ptr f2__scheduler__event_subscribers_mutex(f2ptr cause, f2ptr this) {return f2scheduler__event_subscribers_mutex(this, cause);}
-def_pcfunk1(scheduler__event_subscribers_mutex, x, return f2__scheduler__event_subscribers_mutex(this_cause, x));
-
-f2ptr f2__scheduler__event_subscribers_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2scheduler__event_subscribers_mutex__set(this, cause, value);}
-def_pcfunk2(scheduler__event_subscribers_mutex__set, x, y, return f2__scheduler__event_subscribers_mutex__set(this_cause, x, y));
-
-f2ptr f2__scheduler__event_subscribers(f2ptr cause, f2ptr this) {return f2scheduler__event_subscribers(this, cause);}
-def_pcfunk1(scheduler__event_subscribers, x, return f2__scheduler__event_subscribers(this_cause, x));
-
-f2ptr f2__scheduler__event_subscribers__set(f2ptr cause, f2ptr this, f2ptr value) {return f2scheduler__event_subscribers__set(this, cause, value);}
-def_pcfunk2(scheduler__event_subscribers__set, x, y, return f2__scheduler__event_subscribers__set(this_cause, x, y));
-
-f2ptr f2__scheduler__event_buffer_mutex(f2ptr cause, f2ptr this) {return f2scheduler__event_buffer_mutex(this, cause);}
-def_pcfunk1(scheduler__event_buffer_mutex, x, return f2__scheduler__event_buffer_mutex(this_cause, x));
-
-f2ptr f2__scheduler__event_buffer_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2scheduler__event_buffer_mutex__set(this, cause, value);}
-def_pcfunk2(scheduler__event_buffer_mutex__set, x, y, return f2__scheduler__event_buffer_mutex__set(this_cause, x, y));
-
-f2ptr f2__scheduler__event_buffer(f2ptr cause, f2ptr this) {return f2scheduler__event_buffer(this, cause);}
-def_pcfunk1(scheduler__event_buffer, x, return f2__scheduler__event_buffer(this_cause, x));
-
-f2ptr f2__scheduler__event_buffer__set(f2ptr cause, f2ptr this, f2ptr value) {return f2scheduler__event_buffer__set(this, cause, value);}
-def_pcfunk2(scheduler__event_buffer__set, x, y, return f2__scheduler__event_buffer__set(this_cause, x, y));
+def_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
 
 
 // event_subscriber

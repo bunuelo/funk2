@@ -1540,10 +1540,10 @@ void f2__primobjects__reinitialize_globalvars() {
   initialize_primobject_funk(name, slot_name##__set);
 
 #define initialize_primobject_0_slot(name) \
-  initialize_primobject_common(name)
+  initialize_primobject_common(name);
 
 #define initialize_primobject_1_slot(name, slot_1) \
-  initialize_primobject_0_slot(name) \
+  initialize_primobject_0_slot(name); \
   initialize_primobject_slot(name, slot_1);
 
 #define initialize_primobject_2_slot(name, slot_1, slot_2) \

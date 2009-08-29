@@ -450,7 +450,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    f2__write_pretty(cause, fiber, stream, f2primobject__type(exp, cause), recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    indent_space_num += 2; available_width -= 2;
 	  }
-	  if (f2primobject__is_cons(exp, cause)) {
+	  if (f2primobject__is__cons(exp, cause)) {
 	    if (show_slot_causes) {
 	      int subexp_size[2];
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -529,7 +529,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		}
 	      }
 	    }
-	  } else if (f2primobject__is_doublelink(exp, cause)) {
+	  } else if (f2primobject__is__doublelink(exp, cause)) {
 	    if (show_slot_causes) {
 	      int subexp_size[2];
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -1265,8 +1265,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	}
 	if (raw__primobject__is_type(cause, exp)) {
 	  if (show_slot_causes ||
-	      ((! f2primobject__is_cons(exp, cause)) &&
-	       (! f2primobject__is_doublelink(exp, cause)))) {
+	      ((! f2primobject__is__cons(exp, cause)) &&
+	       (! f2primobject__is__doublelink(exp, cause)))) {
 	    if (ptype == ptype_simple_array) {
 	      f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	    } else {

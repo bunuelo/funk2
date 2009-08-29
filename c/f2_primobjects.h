@@ -1373,10 +1373,10 @@ struct funk2_object_type__fiber__slot_s {
   f2ptr args__funk;
   f2ptr args__set__symbol;
   f2ptr args__set__funk;
-  f2ptr return__symbol;
-  f2ptr return__funk;
-  f2ptr return__set__symbol;
-  f2ptr return__set__funk;
+  f2ptr return_reg__symbol;
+  f2ptr return_reg__funk;
+  f2ptr return_reg__set__symbol;
+  f2ptr return_reg__set__funk;
   f2ptr value__symbol;
   f2ptr value__funk;
   f2ptr value__set__symbol;

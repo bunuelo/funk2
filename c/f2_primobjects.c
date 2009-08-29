@@ -589,7 +589,7 @@ boolean_t raw__metrocfunk__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_metrocfunk(x, cause));
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__metrocfunk(x, cause));
 }
 f2ptr f2__metrocfunk__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__metrocfunk__is_type(cause, this));}
 def_pcfunk1(metrocfunk__is_type, x, return f2__metrocfunk__is_type(this_cause, x));
@@ -696,7 +696,7 @@ boolean_t raw__funk__is_type(f2ptr cause, f2ptr x) {
 #ifdef F2__PRIMOBJECT__TYPE_CHECK
   if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
 #endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_funk(x, cause));
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__funk(x, cause));
 }
 f2ptr f2__funk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__funk__is_type(cause, x));}
 def_pcfunk1(funk__is_type, x, return f2__funk__is_type(this_cause, x));

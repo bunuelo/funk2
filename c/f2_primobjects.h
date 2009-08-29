@@ -617,10 +617,6 @@ declare_primobject_4_slot(event, node_id, event_id, event_type, data);
 declare_primobject_2_slot(bytecode_event, bytecode, context);
 
 
-
-
-
-
 // end of objects
 
 extern void f2__primobjects__reinitialize_globalvars();
@@ -633,28 +629,33 @@ extern void f2__primobjects__initialize();
 
 // primobject global slot definitions
 
+#define declare_object_type_common(name, body) \
+  struct funk2_object_type__##name##__slot_s { \
+    f2ptr is_type__symbol; \
+    f2ptr is_type__funk; \
+    f2ptr type__symbol; \
+    f2ptr type__funk; \
+    f2ptr new__symbol; \
+    f2ptr new__funk; \
+    body; \
+  };
+
+#define declare_object_type_slot(slot_name) \
+  f2ptr slot_name##__symbol; \
+  f2ptr slot_name##__funk; \
+  f2ptr slot_name##__set__symbol; \
+  f2ptr slot_name##__set__funk;
+
+#define declare_object_type_3_slot(name, slot_1, slot_2, slot_3, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    body)
+
 // compound_object
 
-struct funk2_object_type__compound_object__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr compound_object_type__symbol;
-  f2ptr compound_object_type__funk;
-  f2ptr compound_object_type__set__symbol;
-  f2ptr compound_object_type__set__funk;
-  f2ptr frame__symbol;
-  f2ptr frame__funk;
-  f2ptr frame__set__symbol;
-  f2ptr frame__set__funk;
-  f2ptr part_frame__symbol;
-  f2ptr part_frame__funk;
-  f2ptr part_frame__set__symbol;
-  f2ptr part_frame__set__funk;
-};
+declare_object_type_3_slot(compound_object, compound_object_type, frame, part_frame, );
 
 // place
 

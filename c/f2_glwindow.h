@@ -58,9 +58,9 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height);
 
 void      funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, boolean_t fullscreen);
 void      funk2_glwindow__destroy(funk2_glwindow_t* this);
-void      funk2_glwindow__hide(funk2_glwindow_t* this);
 
 #if defined(F2__GLWINDOW__SUPPORTED)
+void      funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
 int       funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);

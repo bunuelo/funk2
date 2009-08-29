@@ -83,11 +83,10 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
 }
 
 // function to release/destroy our resources and restoring the old desktop
-void funk2_glwindow__hide(funk2_glwindow_t* this) {
+void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
   if (this->window_created) {
     this->window_created = boolean__false;
     
-    f2ptr cause = nil;
     if (this->glx_context) {
       if (! raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
         status("WARNING: could not release drawing context.");
@@ -254,7 +253,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	  this->done = True;
 	}
 	if (raw__xlib__XLookupKeysym(cause, &event.xkey,0) == XK_F1) {
-	  funk2_glwindow__hide(this);
+	  funk2_glwindow__hide(this, cause);
 	  this->fullscreen = !this->fullscreen;
 	  status("creating new window: %dx%d", this->width, this->height);
 	  funk2_glwindow__show(this, cause);

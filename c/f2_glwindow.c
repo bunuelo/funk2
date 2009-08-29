@@ -28,7 +28,7 @@ int int__abs(int x) {
   return x;
 }
 
-#if defined(F2__GLWINDOW__H)
+#if defined(F2__GLWINDOW__SUPPORTED)
 
 // attributes for a single buffered visual in RGBA format with at least
 // 4 bits per color and a 16 bit depth buffer
@@ -78,7 +78,7 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
 }
 
 void funk2_glwindow__destroy(funk2_glwindow_t* this) {
-  funk2_glwindow__hide();
+  funk2_glwindow__hide(this);
   f2__free(to_ptr(this->title));
 }
 
@@ -87,7 +87,6 @@ void funk2_glwindow__hide(funk2_glwindow_t* this) {
   if (this->window_created) {
     this->window_created = boolean__false;
     
-#if defined(F2__GLWINDOW__SUPPORTED)
     f2ptr cause = nil;
     if (this->glx_context) {
       if (! raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
@@ -102,7 +101,6 @@ void funk2_glwindow__hide(funk2_glwindow_t* this) {
       raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
     }
     raw__xlib__XCloseDisplay(cause, this->display);
-#endif // F2__GLWINDOW__SUPPORTED
   }
 }
 

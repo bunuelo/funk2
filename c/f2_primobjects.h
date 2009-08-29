@@ -646,11 +646,270 @@ extern void f2__primobjects__initialize();
   f2ptr slot_name##__set__symbol; \
   f2ptr slot_name##__set__funk;
 
+#define declare_object_type_1_slot(name, slot_1, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    body)
+
+#define declare_object_type_2_slot(name, slot_1, slot_2, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    body)
+
 #define declare_object_type_3_slot(name, slot_1, slot_2, slot_3, body) \
   declare_object_type_common(name, \
     declare_object_type_slot(slot_1); \
     declare_object_type_slot(slot_2); \
     declare_object_type_slot(slot_3); \
+    body)
+
+#define declare_object_type_4_slot(name, slot_1, slot_2, slot_3, slot_4, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    body)
+
+#define declare_object_type_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    body)
+
+#define declare_object_type_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    body)
+
+#define declare_object_type_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    body)
+
+#define declare_object_type_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    body)
+
+#define declare_object_type_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    body)
+
+#define declare_object_type_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    body)
+
+#define declare_object_type_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    body)
+
+#define declare_object_type_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    body)
+
+#define declare_object_type_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    body)
+
+#define declare_object_type_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    declare_object_type_slot(slot_14); \
+    body)
+
+#define declare_object_type_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    declare_object_type_slot(slot_14); \
+    declare_object_type_slot(slot_15); \
+    body)
+
+#define declare_object_type_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    declare_object_type_slot(slot_14); \
+    declare_object_type_slot(slot_15); \
+    declare_object_type_slot(slot_16); \
+    body)
+
+#define declare_object_type_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    declare_object_type_slot(slot_14); \
+    declare_object_type_slot(slot_15); \
+    declare_object_type_slot(slot_16); \
+    declare_object_type_slot(slot_17); \
+    body)
+
+#define declare_object_type_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    declare_object_type_slot(slot_14); \
+    declare_object_type_slot(slot_15); \
+    declare_object_type_slot(slot_16); \
+    declare_object_type_slot(slot_17); \
+    declare_object_type_slot(slot_18); \
+    body)
+
+#define declare_object_type_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, body) \
+  declare_object_type_common(name, \
+    declare_object_type_slot(slot_1); \
+    declare_object_type_slot(slot_2); \
+    declare_object_type_slot(slot_3); \
+    declare_object_type_slot(slot_4); \
+    declare_object_type_slot(slot_5); \
+    declare_object_type_slot(slot_6); \
+    declare_object_type_slot(slot_7); \
+    declare_object_type_slot(slot_8); \
+    declare_object_type_slot(slot_9); \
+    declare_object_type_slot(slot_10); \
+    declare_object_type_slot(slot_11); \
+    declare_object_type_slot(slot_12); \
+    declare_object_type_slot(slot_13); \
+    declare_object_type_slot(slot_14); \
+    declare_object_type_slot(slot_15); \
+    declare_object_type_slot(slot_16); \
+    declare_object_type_slot(slot_17); \
+    declare_object_type_slot(slot_18); \
+    declare_object_type_slot(slot_19); \
     body)
 
 // compound_object
@@ -659,18 +918,7 @@ declare_object_type_3_slot(compound_object, compound_object_type, frame, part_fr
 
 // place
 
-struct funk2_object_type__place__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr thing__symbol;
-  f2ptr thing__funk;
-  f2ptr thing__set__symbol;
-  f2ptr thing__set__funk;
-};
+declare_object_type_1_slot(place, thing, );
 
 // cons
 

@@ -218,54 +218,6 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 
 def_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
 
-
-/*
-def_primobject_static_slot(compound_object, 0, compound_object_type);
-def_primobject_static_slot(compound_object, 1, frame);
-def_primobject_static_slot(compound_object, 2, part_frame);
-
-f2ptr __compound_object__symbol = -1;
-
-f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame, int trace_depth) {
-  release__assert(__compound_object__symbol != -1, nil, "f2compound_object__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new__trace_depth(cause, __compound_object__symbol, 3, nil, trace_depth);
-  f2compound_object__compound_object_type__set__trace_depth(this, cause, compound_object_type, trace_depth);
-  f2compound_object__frame__set__trace_depth(               this, cause, frame,                trace_depth);
-  f2compound_object__part_frame__set__trace_depth(          this, cause, part_frame,           trace_depth);
-  return this;
-}
-
-f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame) {
-  return f2compound_object__new__trace_depth(cause, compound_object_type, frame, part_frame, 1);
-}
-
-boolean_t raw__compound_object__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_compound_object(x, cause));
-}
-f2ptr f2__compound_object__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__compound_object__is_type(cause, x));}
-def_pcfunk1(compound_object__is_type, x, return f2__compound_object__is_type(this_cause, x));
-
-f2ptr f2__compound_object__type(f2ptr cause, f2ptr x) {return __compound_object__symbol;}
-def_pcfunk1(compound_object__type, x, return f2__compound_object__type(this_cause, x));
-
-f2ptr f2compound_object__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk);}
-  {char* slot_name = "type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk);}
-  {char* slot_name = "new";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk);}
-  {char* slot_name = "compound_object_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk);}
-  {char* slot_name = "compound_object_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__funk);}
-  {char* slot_name = "frame";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__funk);}
-  {char* slot_name = "frame";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__funk);}
-  {char* slot_name = "part_frame";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__funk);}
-  {char* slot_name = "part_frame";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__funk);}
-  return this;
-}
-*/
-
 f2ptr f2__compound_object__new(f2ptr cause, f2ptr compound_object_type) {
   return f2compound_object__new(cause, compound_object_type, f2__frame__new(cause), f2__frame__new(cause));
 }
@@ -335,6 +287,9 @@ f2ptr f2cons__primobject_type__new(f2ptr cause) {
 
 // doublelink
 
+def_primobject_3_slot(doublelink, prev, next, value);
+
+/*
 defprimobject__static_slot(doublelink__prev,  0);
 defprimobject__static_slot(doublelink__next,  1);
 defprimobject__static_slot(doublelink__value, 2);
@@ -365,9 +320,6 @@ def_pcfunk1(doublelink__is_type, x, return f2__doublelink__is_type(this_cause, x
 
 f2ptr f2__doublelink__type(f2ptr cause, f2ptr x) {return __doublelink__symbol;}
 def_pcfunk1(doublelink__type, x, return f2__doublelink__type(this_cause, x));
-
-f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
-def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));
 
 f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x) {return f2doublelink__prev(x, cause);}
 def_pcfunk1(doublelink__prev, x, return f2__doublelink__prev(this_cause, x));
@@ -400,6 +352,11 @@ f2ptr f2doublelink__primobject_type__new(f2ptr cause) {
   {char* slot_name = "value";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_doublelink.value__set__funk);}
   return this;
 }
+
+*/
+
+f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
+def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));
 
 
 // imagination_link

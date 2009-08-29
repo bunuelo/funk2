@@ -609,6 +609,9 @@ declare_primobject_2_slot(size_2d, x, y);
 
 // event
 
+declare_primobject_4_slot(event, node_id, event_id, type, data);
+
+/*
 extern f2ptr __event__symbol;
 boolean_t raw__event__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__event__is_type(f2ptr cause, f2ptr x);
@@ -648,7 +651,7 @@ defprimobject__static_slot__prototype(event__data);
 #define f2event__data__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__data, cause)
 #define f2event__data__trace(            this, cause)                     primobject__static_slot__trace(            this, event__data, cause)
 #define f2event__data__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__data, cause)
-
+*/
 
 
 // bytecode_event

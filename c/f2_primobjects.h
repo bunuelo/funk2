@@ -942,97 +942,11 @@ declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional,
 
 // funk
 
-struct funk2_object_type__funk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr body_bytecodes__symbol;
-  f2ptr body_bytecodes__funk;
-  f2ptr body_bytecodes__set__symbol;
-  f2ptr body_bytecodes__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr demetropolized_body__symbol;
-  f2ptr demetropolized_body__funk;
-  f2ptr demetropolized_body__set__symbol;
-  f2ptr demetropolized_body__set__funk;
-  f2ptr body__symbol;
-  f2ptr body__funk;
-  f2ptr body__set__symbol;
-  f2ptr body__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr machine_code__symbol;
-  f2ptr machine_code__funk;
-  f2ptr machine_code__set__symbol;
-  f2ptr machine_code__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation, );
 
 // metro
 
-struct funk2_object_type__metro__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr body_bytecodes__symbol;
-  f2ptr body_bytecodes__funk;
-  f2ptr body_bytecodes__set__symbol;
-  f2ptr body_bytecodes__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr demetropolized_body__symbol;
-  f2ptr demetropolized_body__funk;
-  f2ptr demetropolized_body__set__symbol;
-  f2ptr demetropolized_body__set__funk;
-  f2ptr body__symbol;
-  f2ptr body__funk;
-  f2ptr body__set__symbol;
-  f2ptr body__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr machine_code__symbol;
-  f2ptr machine_code__funk;
-  f2ptr machine_code__set__symbol;
-  f2ptr machine_code__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation, );
 
 // exception
 

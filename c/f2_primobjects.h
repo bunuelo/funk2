@@ -934,73 +934,11 @@ declare_object_type_5_slot(imagination_link, next, name, value, trace, imaginati
 
 // cfunk
 
-struct funk2_object_type__cfunk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr cfunkptr__symbol;
-  f2ptr cfunkptr__funk;
-  f2ptr cfunkptr__set__symbol;
-  f2ptr cfunkptr__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation, );
 
 // metrocfunk
 
-struct funk2_object_type__metrocfunk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr cfunkptr__symbol;
-  f2ptr cfunkptr__funk;
-  f2ptr cfunkptr__set__symbol;
-  f2ptr cfunkptr__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation, );
 
 // funk
 

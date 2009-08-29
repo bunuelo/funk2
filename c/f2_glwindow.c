@@ -88,6 +88,7 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
       raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
     }
     raw__xlib__XCloseDisplay(cause, this->display);
+    f2__free(to_ptr(this->title));
 #endif // F2__GLWINDOW__SUPPORTED
   }
 }
@@ -115,6 +116,9 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   
   this->rotate_angle = 0;
   this->done = boolean__false;
+  int title__length = strlen(title);
+  this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
+  strcpy((char*)(this->title), (char*)title);
   
   this->fullscreen = fullscreenflag;
   // set best mode to current
@@ -194,8 +198,8 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
     // only set window title and handle wm_delete_events if in windowed mode
     wmDelete = raw__xlib__XInternAtom(cause, this->display, "WM_DELETE_WINDOW", True);
     raw__xlib__XSetWMProtocols(cause, this->display, this->x_window, &wmDelete, 1);
-    raw__xlib__XSetStandardProperties(cause, this->display, this->x_window, (char*)title,
-				      (char*)title, None, NULL, 0, NULL);
+    raw__xlib__XSetStandardProperties(cause, this->display, this->x_window, (char*)(this->title),
+				      (char*)(this->title), None, NULL, 0, NULL);
     raw__xlib__XMapRaised(cause, this->display, this->x_window);
   }       
   // connect the glx-context to the window
@@ -249,7 +253,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	funk2_glwindow__init(this);
 	this->fullscreen = !this->fullscreen;
 	status("creating new window: %dx%d", this->width, this->height);
-	funk2_glwindow__create(this, cause, (u8*)"NeHe's OpenGL Framework", this->width, this->height, this->depth, this->fullscreen);
+	funk2_glwindow__create(this, cause, (u8*)(this->title), this->width, this->height, this->depth, this->fullscreen);
       }
       break;
     case ClientMessage:

@@ -42,7 +42,7 @@ typedef struct funk2_glwindow_s {
   XF86VidModeModeInfo  desk_mode;
   boolean_t            fullscreen;
   boolean_t            double_buffered;
-  char*                title;
+  u8*                  title;
   int                  x;
   int                  y;
   unsigned int         width;

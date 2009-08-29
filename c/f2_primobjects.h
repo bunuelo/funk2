@@ -123,7 +123,7 @@ f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_typ
 f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame);
 f2ptr f2compound_object__primobject_type__new(f2ptr cause);
 
-#define f2primobject__is_compound_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol)
+#define f2primobject__is__compound_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol)
 
 defprimobject__static_slot__prototype(compound_object__compound_object_type);
 #define f2compound_object__compound_object_type__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__compound_object_type, cause, trace_depth)
@@ -181,7 +181,7 @@ f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_dept
 f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr);
 f2ptr f2cons__primobject_type__new(f2ptr cause);
 
-#define f2primobject__is_cons(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cons__symbol)
+#define f2primobject__is__cons(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cons__symbol)
 
 defprimobject__static_slot__prototype(cons__car);
 #define f2cons__car__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__car, cause, trace_depth)
@@ -243,7 +243,7 @@ f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x);
 f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value, int trace_depth);
 f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
 f2ptr f2doublelink__primobject_type__new(f2ptr cause);
-#define f2primobject__is_doublelink(this, cause) raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol)
+#define f2primobject__is__doublelink(this, cause) raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol)
 
 defprimobject__static_slot__prototype(doublelink__prev);
 #define f2doublelink__prev(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__prev, cause)

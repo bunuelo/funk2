@@ -214,7 +214,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
       return f2##name##__new__trace_depth(cause, slot_1, slot_2, 1); \
     }, \
     def_primobject_add_slot(name, slot_1); \
-    def_primobject_add_slot(name, slot_2);
+    def_primobject_add_slot(name, slot_2));
 
 #define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   def_primobject_static_slot(name, 0, slot_1); \

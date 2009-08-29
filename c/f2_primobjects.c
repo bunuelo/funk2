@@ -1487,64 +1487,10 @@ def_pcfunk4(event__new, node_id, event_id, type, data, return f2__event__new(thi
 
 // bytecode_event
 
-defprimobject__static_slot(bytecode_event__bytecode, 0);
-defprimobject__static_slot(bytecode_event__context,  1);
-
-f2ptr __bytecode_event__symbol = -1;
-
-f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr context, int trace_depth) {
-  release__assert(__bytecode_event__symbol != -1, nil, "f2bytecode_event__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new__trace_depth(cause, __bytecode_event__symbol, 2, nil, trace_depth);
-  f2bytecode_event__bytecode__set__trace_depth(this, cause, bytecode, trace_depth);
-  f2bytecode_event__context__set__trace_depth( this, cause, context,  trace_depth);
-  return this;
-}
-
-f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {
-  return f2bytecode_event__new__trace_depth(cause, bytecode, context, 1);
-}
-
-f2ptr f2bytecode_event__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.is_type__funk);}
-  {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.type__funk);}
-  {char* slot_name = "new";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.new__funk);}
-  {char* slot_name = "bytecode"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__funk);}
-  {char* slot_name = "bytecode"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.bytecode__set__funk);}
-  {char* slot_name = "context";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__funk);}
-  {char* slot_name = "context";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bytecode_event.context__set__funk);}
-  return this;
-}
-
-boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__bytecode_event(x, cause));
-}
-f2ptr f2__bytecode_event__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bytecode_event__is_type(cause, x));}
-def_pcfunk1(bytecode_event__is_type, x, return f2__bytecode_event__is_type(this_cause, x));
-
-f2ptr f2__bytecode_event__type(f2ptr cause, f2ptr x) {return __bytecode_event__symbol;}
-def_pcfunk1(bytecode_event__type, x, return f2__bytecode_event__type(this_cause, x));
+def_primobject_2_slot(bytecode_event, bytecode, context);
 
 f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
 def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
-
-f2ptr f2__bytecode_event__bytecode(f2ptr cause, f2ptr this) {return f2bytecode_event__bytecode(this, cause);}
-def_pcfunk1(bytecode_event__bytecode, x, return f2__bytecode_event__bytecode(this_cause, x));
-
-f2ptr f2__bytecode_event__bytecode__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode_event__bytecode__set(this, cause, value);}
-def_pcfunk2(bytecode_event__bytecode__set, x, y, return f2__bytecode_event__bytecode__set(this_cause, x, y));
-
-f2ptr f2__bytecode_event__context(f2ptr cause, f2ptr this) {return f2bytecode_event__context(this, cause);}
-def_pcfunk1(bytecode_event__context, x, return f2__bytecode_event__context(this_cause, x));
-
-f2ptr f2__bytecode_event__context__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode_event__context__set(this, cause, value);}
-def_pcfunk2(bytecode_event__context__set, x, y, return f2__bytecode_event__context__set(this_cause, x, y));
-
-
-
 
 
 // **

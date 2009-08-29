@@ -1688,136 +1688,15 @@ void f2__primobjects__initialize() {
   
   // exception
   
-  //initialize_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
-  
-  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(exception__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.is_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_exception.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(exception__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.type__funk = never_gc(cfunk);}
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_exception.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(exception__new, tag, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "tag"; __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(exception__tag, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__funk = never_gc(cfunk);}
-  {char* symbol_str = "tag-set"; __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(exception__tag__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.tag__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "value"; __funk2.globalenv.object_type.primobject.primobject_type_exception.value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(exception__value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.value__funk = never_gc(cfunk);}
-  {char* symbol_str = "value-set"; __funk2.globalenv.object_type.primobject.primobject_type_exception.value__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(exception__value__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_exception.value__set__funk = never_gc(cfunk);}
+  initialize_primobject_2_slot(exception, tag, value);
   
   // bytecode
   
-  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.is_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.type__funk = never_gc(cfunk);}
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__4_arg(bytecode__new, command, arg0, arg1, arg2, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "command"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__command, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__funk = never_gc(cfunk);}
-  {char* symbol_str = "command-set"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__command__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.command__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "arg0"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__arg0, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__funk = never_gc(cfunk);}
-  {char* symbol_str = "arg0-set"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__arg0__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg0__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "arg1"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__arg1, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__funk = never_gc(cfunk);}
-  {char* symbol_str = "arg1-set"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__arg1__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg1__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "arg2"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(bytecode__arg2, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__funk = never_gc(cfunk);}
-  {char* symbol_str = "arg2-set"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__arg2__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.arg2__set__funk = never_gc(cfunk);}
+  initialize_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
   
   // fiber
   
-  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__funk = never_gc(cfunk);}
-  //{char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  //{f2__primcfunk__init__with_c_cfunk_var(fiber__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "program_counter"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__program_counter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__funk = never_gc(cfunk);}
-  {char* symbol_str = "program_counter-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__program_counter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "stack"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__stack, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__funk = never_gc(cfunk);}
-  {char* symbol_str = "stack-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__stack__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "iter"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__iter, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__funk = never_gc(cfunk);}
-  {char* symbol_str = "iter-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__iter__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__env, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__funk = never_gc(cfunk);}
-  {char* symbol_str = "env-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__env__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__funk = never_gc(cfunk);}
-  {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__args__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "return_reg"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__return_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__funk = never_gc(cfunk);}
-  {char* symbol_str = "return_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__return_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "value"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__funk = never_gc(cfunk);}
-  {char* symbol_str = "value-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__value__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "trace"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__trace, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__funk = never_gc(cfunk);}
-  {char* symbol_str = "trace-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__trace__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "critics"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__critics, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__funk = never_gc(cfunk);}
-  {char* symbol_str = "critics-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__critics__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "cause_reg"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__cause_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__funk = never_gc(cfunk);}
-  {char* symbol_str = "cause_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__cause_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "keep_undead"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__keep_undead, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__funk = never_gc(cfunk);}
-  {char* symbol_str = "keep_undead-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__keep_undead__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "is_zombie"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__is_zombie, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__funk = never_gc(cfunk);}
-  {char* symbol_str = "is_zombie-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__is_zombie__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "parent_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__parent_fiber, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__funk = never_gc(cfunk);}
-  {char* symbol_str = "parent_fiber-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__parent_fiber__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "parent_env"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__parent_env, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__funk = never_gc(cfunk);}
-  {char* symbol_str = "parent_env-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__parent_env__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "execute_mutex"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__execute_mutex, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__funk = never_gc(cfunk);}
-  {char* symbol_str = "execute_mutex-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__execute_mutex__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "paused"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__paused, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__funk = never_gc(cfunk);}
-  {char* symbol_str = "paused-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__paused__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "last_executed_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__last_executed_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__funk = never_gc(cfunk);}
-  {char* symbol_str = "last_executed_time-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__last_executed_time__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__funk = never_gc(cfunk);}
-  {char* symbol_str = "sleep_until_time-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__sleep_until_time__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__do_sleep_until_time, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk = never_gc(cfunk);}
-  {char* symbol_str = "sleep_for_nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__sleep_for_nanoseconds, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk = never_gc(cfunk);}
-  {char* symbol_str = "larva_args"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__larva_args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__funk = never_gc(cfunk);}
-  {char* symbol_str = "larva_args-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__larva_args__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__set__funk = never_gc(cfunk);}
+  initialize_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
   
   // processor
   

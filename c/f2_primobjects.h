@@ -976,101 +976,16 @@ declare_object_type_5_slot(scheduler, processors, event_subscribers_mutex, event
 
 // event_subscriber
 
-struct funk2_object_type__event_subscriber__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr event_types__symbol;
-  f2ptr event_types__funk;
-  f2ptr event_types__set__symbol;
-  f2ptr event_types__set__funk;
-  f2ptr fiber__symbol;
-  f2ptr fiber__funk;
-  f2ptr fiber__set__symbol;
-  f2ptr fiber__set__funk;
-  f2ptr funkable__symbol;
-  f2ptr funkable__funk;
-  f2ptr funkable__set__symbol;
-  f2ptr funkable__set__funk;
-  f2ptr event_buffer__symbol;
-  f2ptr event_buffer__funk;
-  f2ptr event_buffer__set__symbol;
-  f2ptr event_buffer__set__funk;
-  f2ptr event_buffer_mutex__symbol;
-  f2ptr event_buffer_mutex__funk;
-  f2ptr event_buffer_mutex__set__symbol;
-  f2ptr event_buffer_mutex__set__funk;
-};
+declare_object_type_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex, );
 
 // cause
 
-struct funk2_object_type__cause__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr fibers_mutex__symbol;
-  f2ptr fibers_mutex__funk;
-  f2ptr fibers_mutex__set__symbol;
-  f2ptr fibers_mutex__set__funk;
-  f2ptr fibers__symbol;
-  f2ptr fibers__funk;
-  f2ptr fibers__set__symbol;
-  f2ptr fibers__set__funk;
-  f2ptr frame__symbol;
-  f2ptr frame__funk;
-  f2ptr frame__set__symbol;
-  f2ptr frame__set__funk;
-  f2ptr allocate_traced_arrays__symbol;
-  f2ptr allocate_traced_arrays__funk;
-  f2ptr allocate_traced_arrays__set__symbol;
-  f2ptr allocate_traced_arrays__set__funk;
-  f2ptr bytecode_tracing_on__symbol;
-  f2ptr bytecode_tracing_on__funk;
-  f2ptr bytecode_tracing_on__set__symbol;
-  f2ptr bytecode_tracing_on__set__funk;
-  f2ptr memory_tracing_on__symbol;
-  f2ptr memory_tracing_on__funk;
-  f2ptr memory_tracing_on__set__symbol;
-  f2ptr memory_tracing_on__set__funk;
-  f2ptr subscribers_mutex__symbol;
-  f2ptr subscribers_mutex__funk;
-  f2ptr subscribers_mutex__set__symbol;
-  f2ptr subscribers_mutex__set__funk;
-  f2ptr subscribers__symbol;
-  f2ptr subscribers__funk;
-  f2ptr subscribers__set__symbol;
-  f2ptr subscribers__set__funk;
-  f2ptr imagination_stack__symbol;
-  f2ptr imagination_stack__funk;
-  f2ptr imagination_stack__set__symbol;
-  f2ptr imagination_stack__set__funk;
-  f2ptr event_buffer_first__symbol;
-  f2ptr event_buffer_first__funk;
-  f2ptr event_buffer_first__set__symbol;
-  f2ptr event_buffer_first__set__funk;
-  f2ptr event_buffer_last__symbol;
-  f2ptr event_buffer_last__funk;
-  f2ptr event_buffer_last__set__symbol;
-  f2ptr event_buffer_last__set__funk;
-  f2ptr current_events_mutex__symbol;
-  f2ptr current_events_mutex__funk;
-  f2ptr current_events_mutex__set__symbol;
-  f2ptr current_events_mutex__set__funk;
-  f2ptr current_events__symbol;
-  f2ptr current_events__funk;
-  f2ptr current_events__set__symbol;
-  f2ptr current_events__set__funk;
-  f2ptr define__symbol;
-  f2ptr define__funk;
-  f2ptr define__funk__symbol;
-  f2ptr define__funk__funk;
-};
+declare_object_type_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events,
+			    f2ptr define__symbol;
+			    f2ptr define__funk;
+			    f2ptr define__funk__symbol;
+			    f2ptr define__funk__funk;
+			    );
 
 // transframe
 

@@ -1527,7 +1527,7 @@ void f2__primobjects__reinitialize_globalvars() {
 
 
 #define initialize_primobject_funk(name, funk_name) \
-  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
 
 #define initialize_primobject_common(name) \
@@ -1536,7 +1536,8 @@ void f2__primobjects__reinitialize_globalvars() {
   initialize_primobject_funk(name, new);
 
 #define initialize_primobject_slot(name, slot_name) \
-  initialize_primobject_funk(name, slot_name);
+  initialize_primobject_funk(name, slot_name); \
+  initialize_primobject_funk(name, slot_name##__set);
 
 #define initialize_primobject_0_slot(name) \
   initialize_primobject_common(name);

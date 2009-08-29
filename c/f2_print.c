@@ -618,7 +618,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("documentation", 13, cause, fiber, stream, f2cfunk__documentation(exp, cause), f2cfunk__documentation__tracing_on(exp, cause), f2cfunk__documentation__trace(exp, cause), f2cfunk__documentation__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_metrocfunk(exp, cause)) {
+	  } else if (f2primobject__is__metrocfunk(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("name",          13, cause, fiber, stream, f2metrocfunk__name(exp, cause),           f2metrocfunk__name__tracing_on(exp, cause), f2metrocfunk__name__trace(exp, cause), f2metrocfunk__name__imagination_frame(exp, cause),
@@ -640,7 +640,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("documentation", 13, cause, fiber, stream, f2metrocfunk__documentation(exp, cause), f2metrocfunk__documentation__tracing_on(exp, cause), f2metrocfunk__documentation__trace(exp, cause), f2metrocfunk__documentation__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_funk(exp, cause)) {
+	  } else if (f2primobject__is__funk(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("name",                19, cause, fiber, stream, f2funk__name(exp, cause),       f2funk__name__tracing_on(exp, cause), f2funk__name__trace(exp, cause), f2funk__name__imagination_frame(exp, cause),

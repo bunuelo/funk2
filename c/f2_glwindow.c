@@ -144,7 +144,7 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   // look for mode with closest resolution
   int min_dist = -1;
   for (i = 0; i < modeNum; i++) {
-    int dist = int__abs(modes[i]->hdisplay - width) + int__abs(modes[i]->vdisplay - height);
+    int dist = int__abs(modes[i]->hdisplay - this->width) + int__abs(modes[i]->vdisplay - this->height);
     if ((min_dist == -1) || dist < min_dist) {
       min_dist = dist;
       bestMode = i;

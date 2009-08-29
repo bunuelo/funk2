@@ -198,6 +198,21 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_name),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_name##__funk); \
   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_name),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_name##__set__funk); \
 
+#define def_primobject_1_slot(name, slot_1) \
+  def_primobject_static_slot(name, 0, slot_1); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 1, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1) { \
+      return f2##name##__new__trace_depth(cause, slot_1, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1));
+
 #define def_primobject_2_slot(name, slot_1, slot_2) \
   def_primobject_static_slot(name, 0, slot_1); \
   def_primobject_static_slot(name, 1, slot_2); \

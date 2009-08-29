@@ -1714,7 +1714,7 @@ void f2__primobjects__initialize() {
   
   // event_subscriber
   
-  initialize_primobject_5_slot(event_subscriber, event_type, fiber, funkable, event_buffer, event_buffer_mutex);
+  initialize_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
   
   // cause
   

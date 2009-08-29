@@ -930,34 +930,7 @@ declare_object_type_3_slot(doublelink, prev, next, value, );
 
 // imagination_link
 
-struct funk2_object_type__imagination_link__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr next__symbol;
-  f2ptr next__funk;
-  f2ptr next__set__symbol;
-  f2ptr next__set__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-  f2ptr trace__symbol;
-  f2ptr trace__funk;
-  f2ptr trace__set__symbol;
-  f2ptr trace__set__funk;
-  f2ptr imagination_frame__symbol;
-  f2ptr imagination_frame__funk;
-  f2ptr imagination_frame__set__symbol;
-  f2ptr imagination_frame__set__funk;
-};
+declare_object_type_5_slot(imagination_link, next, name, value, trace, imagination_frame, );
 
 // cfunk
 

@@ -155,7 +155,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_openglu__init(&(this->openglu));
   funk2_xxf86vm__init(&(this->xxf86vm));
   funk2_xlib__init(&(this->xlib));
-  funk2_glwindow__init(&(this->glwindow));
+  funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
   
   f2ptr cause = initial_cause();
   

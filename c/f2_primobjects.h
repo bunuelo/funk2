@@ -318,7 +318,7 @@ declare_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, 
 
 // funk
 
-declare_primobject_9_slot(funk, name, body_bytecodes, args, demetropolize_body, body, env, machine_code, is_funktional, documentation);
+declare_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
 /*
 extern f2ptr __funk__symbol;

@@ -1685,7 +1685,7 @@ f2ptr f2cause__primobject_type__new(f2ptr cause) {
 }
 
 boolean_t raw__cause__is_type(f2ptr cause, f2ptr x) {
-  return (raw__primobject__is_type(cause, x) && f2primobject__is_cause(x, cause));
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__cause(x, cause));
 }
 f2ptr f2__cause__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cause__is_type(cause, x));}
 def_pcfunk1(cause__is_type, x, return f2__cause__is_type(this_cause, x));

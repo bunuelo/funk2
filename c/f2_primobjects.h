@@ -609,7 +609,7 @@ declare_primobject_2_slot(size_2d, x, y);
 
 // event
 
-declare_primobject_4_slot(event, node_id, event_id, type, data);
+declare_primobject_4_slot(event, node_id, event_id, event_type, data);
 
 /*
 extern f2ptr __event__symbol;

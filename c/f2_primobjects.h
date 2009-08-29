@@ -125,6 +125,11 @@ f2ptr   f2primobject__new(             f2ptr cause, f2ptr type, f2ptr static_slo
 
 f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
+#define declare_primobject_common(name) \
+  f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x); \
+  f2ptr f2##name##__primobject_type__new(f2ptr cause);
+
+
 #define declare_primobject_slot(name, slot_name) \
   defprimobject__static_slot__prototype(name##__##slot_name); \
   static inline f2ptr f2##name##__##slot_name##__trace_depth(      f2ptr this, f2ptr cause, int trace_depth)              {return primobject__static_slot__accessor__trace_depth(this, name##__##slot_name, cause, trace_depth);} \
@@ -139,7 +144,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1); \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  declare_primobject_common(name); \\
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -149,7 +154,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2); \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  declare_primobject_common(name); \\
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -160,7 +165,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3); \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  declare_primobject_common(name); \\
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -172,7 +177,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4); \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  declare_primobject_common(name); \\
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -185,7 +190,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5); \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  declare_primobject_common(name); \\
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -202,6 +207,24 @@ declare_primobject_3_slot(compound_object, compound_object_type, frame, part_fra
 // place
 
 declare_primobject_1_slot(place, thing);
+extern f2ptr __place__symbol;
+f2ptr f2place__new(f2ptr cause, f2ptr thing);
+f2ptr f2place__primobject_type__new(f2ptr cause);
+
+#define f2primobject__is_place(this, cause)      raw__eq(cause, f2primobject__type(this, cause), __place__symbol)
+
+defprimobject__static_slot__prototype(place__thing);
+#define f2place__thing(this, cause)              primobject__static_slot__accessor(  this, place__thing, cause)
+#define f2place__thing__set(this, cause, value)  primobject__static_slot__set(       this, place__thing, cause, value)
+#define f2place__thing__tracing_on(this, cause)  primobject__static_slot__tracing_on(this, place__thing, cause)
+#define f2place__thing__trace(this, cause)       primobject__static_slot__trace(     this, place__thing, cause)
+#define f2place__thing__imagination_frame(this, cause)       primobject__static_slot__imagination_frame(     this, place__thing, cause)
+
+boolean_t raw__place__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__place__is_type(f2ptr cause, f2ptr x);
+f2ptr f2__place(f2ptr cause, f2ptr x);
+f2ptr f2__place__thing(f2ptr cause, f2ptr x);
+f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y);
 
 
 // cons

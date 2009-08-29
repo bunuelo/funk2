@@ -1525,6 +1525,99 @@ void f2__primobjects__reinitialize_globalvars() {
   __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");
 }
 
+
+#define initialize_primobject_funk(name, funk_name) \
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+
+#define initialize_primobject_common(name) \
+  initialize_primobject_funk(name, is_type); \
+  initialize_primobject_funk(name, type); \
+  initialize_primobject_funk(name, new);
+
+#define initialize_primobject_slot(name, slot_name) \
+  initialize_primobject_funk(name, slot_name); \
+  initialize_primobject_funk(name, slot_name##__set);
+
+#define initialize_primobject_0_slot(name) \
+  initialize_primobject_common(name)
+
+#define initialize_primobject_1_slot(name, slot_1) \
+  initialize_primobject_0_slot(name) \
+  initialize_primobject_slot(name, slot_1);
+
+#define initialize_primobject_2_slot(name, slot_1, slot_2) \
+  initialize_primobject_1_slot(name, slot_1); \
+  initialize_primobject_slot(name, slot_2);
+
+#define initialize_primobject_3_slot(name, slot_1, slot_2, slot_3) \
+  initialize_primobject_2_slot(name, slot_1, slot_2); \
+  initialize_primobject_slot(name, slot_3);
+
+#define initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  initialize_primobject_3_slot(name, slot_1, slot_2, slot_3); \
+  initialize_primobject_slot(name, slot_4);
+
+#define initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  initialize_primobject_slot(name, slot_5);
+
+#define initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  initialize_primobject_slot(name, slot_6);
+
+#define initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  initialize_primobject_slot(name, slot_7);
+
+#define initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  initialize_primobject_slot(name, slot_8);
+
+#define initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  initialize_primobject_slot(name, slot_9);
+
+#define initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  initialize_primobject_slot(name, slot_10);
+
+#define initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  initialize_primobject_slot(name, slot_11);
+
+#define initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  initialize_primobject_slot(name, slot_12);
+
+#define initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  initialize_primobject_slot(name, slot_13);
+
+#define initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  initialize_primobject_slot(name, slot_14);
+
+#define initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  initialize_primobject_slot(name, slot_15);
+
+#define initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  initialize_primobject_slot(name, slot_16);
+
+#define initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  initialize_primobject_slot(name, slot_17);
+
+#define initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  initialize_primobject_slot(name, slot_18);
+
+#define initialize_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  initialize_primobject_slot(name, slot_19);
+
 void f2__primobjects__initialize() {
   f2__primobjects__reinitialize_globalvars();
   f2ptr cause = initial_cause();
@@ -1550,24 +1643,7 @@ void f2__primobjects__initialize() {
   
   // compound_object 
   
-  {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.is_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.type__funk = never_gc(cfunk);}
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__new, compound_object_type, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "compound_object_type"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__compound_object_type, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__funk = never_gc(cfunk);}
-  {char* symbol_str = "compound_object_type-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__compound_object_type__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.compound_object_type__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "frame"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__funk = never_gc(cfunk);}
-  {char* symbol_str = "frame-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__frame__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.frame__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "part_frame"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(compound_object__part_frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__funk = never_gc(cfunk);}
-  {char* symbol_str = "part_frame-set"; __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(compound_object__part_frame__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_compound_object.part_frame__set__funk = never_gc(cfunk);}
+  initialize_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
   
   // place
   

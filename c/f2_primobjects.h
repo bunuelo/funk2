@@ -140,6 +140,8 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   static inline f2ptr f2##name##__##slot_name##__tracing_on(       f2ptr this, f2ptr cause)                               {return primobject__static_slot__tracing_on(           this, name##__##slot_name, cause);} \
   static inline f2ptr f2##name##__##slot_name##__trace(            f2ptr this, f2ptr cause)                               {return primobject__static_slot__trace(                this, name##__##slot_name, cause);} \
   static inline f2ptr f2##name##__##slot_name##__imagination_frame(f2ptr this, f2ptr cause)                               {return primobject__static_slot__imagination_frame(    this, name##__##slot_name, cause);} \
+  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x); \
+  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y);
 
 #define declare_primobject_1_slot(name, slot_1) \
   extern f2ptr __##name##__symbol; \
@@ -242,47 +244,8 @@ declare_primobject_2_slot(cons, car, cdr);
 
 declare_primobject_3_slot(doublelink, prev, next, value);
 
-/*
-extern f2ptr __doublelink__symbol;
-boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x);
-f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value, int trace_depth);
-f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
-f2ptr f2doublelink__primobject_type__new(f2ptr cause);
-static inline boolean_t f2primobject__is__doublelink(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol);}
-
-defprimobject__static_slot__prototype(doublelink__prev);
-#define f2doublelink__prev(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__prev, cause)
-#define f2doublelink__prev__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, doublelink__prev, cause, value, trace_depth)
-#define f2doublelink__prev__set(             this, cause, value)              primobject__static_slot__set(             this, doublelink__prev, cause, value)
-#define f2doublelink__prev__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, doublelink__prev, cause)
-#define f2doublelink__prev__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__prev, cause)
-#define f2doublelink__prev__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__prev, cause)
-
-defprimobject__static_slot__prototype(doublelink__next);
-#define f2doublelink__next(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__next, cause)
-#define f2doublelink__next__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, doublelink__next, cause, value, trace_depth)
-#define f2doublelink__next__set(             this, cause, value)              primobject__static_slot__set(             this, doublelink__next, cause, value)
-#define f2doublelink__next__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, doublelink__next, cause)
-#define f2doublelink__next__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__next, cause)
-#define f2doublelink__next__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__next, cause)
-
-defprimobject__static_slot__prototype(doublelink__value);
-#define f2doublelink__value(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__value, cause)
-#define f2doublelink__value__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, doublelink__value, cause, value, trace_depth)
-#define f2doublelink__value__set(             this, cause, value)              primobject__static_slot__set(             this, doublelink__value, cause, value)
-#define f2doublelink__value__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, doublelink__value, cause)
-#define f2doublelink__value__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__value, cause)
-#define f2doublelink__value__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__value, cause)
-
 f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__prev__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__doublelink__next(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__doublelink__value(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y);
-*/
+
 
 
 // imagination_link

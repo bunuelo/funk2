@@ -1019,14 +1019,14 @@ defprimobject__static_slot(fiber__stack,               1);
 defprimobject__static_slot(fiber__iter,                2);
 defprimobject__static_slot(fiber__env,                 3);
 defprimobject__static_slot(fiber__args,                4);
-defprimobject__static_slot(fiber__return,              5);
+defprimobject__static_slot(fiber__return_reg,          5);
 defprimobject__static_slot(fiber__value,               6);
 defprimobject__static_slot(fiber__trace,               7);
 defprimobject__static_slot(fiber__critics,             8);
 defprimobject__static_slot(fiber__cause_reg,           9);
 defprimobject__static_slot(fiber__keep_undead,        10);
 defprimobject__static_slot(fiber__is_zombie,          11);
-defprimobject__static_slot(fiber__parent_fiber,      12);
+defprimobject__static_slot(fiber__parent_fiber,       12);
 defprimobject__static_slot(fiber__parent_env,         13);
 defprimobject__static_slot(fiber__execute_mutex,      14);
 defprimobject__static_slot(fiber__paused,             15);
@@ -1042,7 +1042,7 @@ f2ptr f2fiber__new(f2ptr cause,
 		    f2ptr iter,
 		    f2ptr env,
 		    f2ptr args,
-		    f2ptr retval,
+		    f2ptr return_reg,
 		    f2ptr value,
 		    f2ptr trace,
 		    f2ptr critics,
@@ -1063,7 +1063,7 @@ f2ptr f2fiber__new(f2ptr cause,
   f2fiber__iter__set(              this, cause, iter);
   f2fiber__env__set(               this, cause, env);
   f2fiber__args__set(              this, cause, args);
-  f2fiber__return__set(            this, cause, retval);
+  f2fiber__return_reg__set(        this, cause, return_reg);
   f2fiber__value__set(             this, cause, value);
   f2fiber__trace__set(             this, cause, trace);
   f2fiber__critics__set(           this, cause, critics);
@@ -1197,11 +1197,11 @@ def_pcfunk1(fiber__args, x, return f2__fiber__args(this_cause, x));
 f2ptr f2__fiber__args__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__args__set(this, cause, value);}
 def_pcfunk2(fiber__args__set, x, y, return f2__fiber__args__set(this_cause, x, y));
 
-f2ptr f2__fiber__return(f2ptr cause, f2ptr this) {return f2fiber__return(this, cause);}
-def_pcfunk1(fiber__return, x, return f2__fiber__return(this_cause, x));
+f2ptr f2__fiber__return_reg(f2ptr cause, f2ptr this) {return f2fiber__return_reg(this, cause);}
+def_pcfunk1(fiber__return_reg, x, return f2__fiber__return_reg(this_cause, x));
 
-f2ptr f2__fiber__return__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__return__set(this, cause, value);}
-def_pcfunk2(fiber__return__set, x, y, return f2__fiber__return__set(this_cause, x, y));
+f2ptr f2__fiber__return_reg__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__return_reg__set(this, cause, value);}
+def_pcfunk2(fiber__return_reg__set, x, y, return f2__fiber__return_reg__set(this_cause, x, y));
 
 f2ptr f2__fiber__value(f2ptr cause, f2ptr this) {return f2fiber__value(this, cause);}
 def_pcfunk1(fiber__value, x, return f2__fiber__value(this_cause, x));
@@ -2715,10 +2715,10 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__funk = never_gc(cfunk);}
   {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__args__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "return"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__return, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__funk = never_gc(cfunk);}
-  {char* symbol_str = "return-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__return__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.return__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "return_reg"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__return_reg, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__funk = never_gc(cfunk);}
+  {char* symbol_str = "return_reg-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber__return_reg__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__set__funk = never_gc(cfunk);}
   {char* symbol_str = "value"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__funk = never_gc(cfunk);}
   {char* symbol_str = "value-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

@@ -972,34 +972,7 @@ declare_object_type_11_slot(processor, scheduler, processor_thread, active_fiber
 
 // scheduler
 
-struct funk2_object_type__scheduler__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr processors__symbol;
-  f2ptr processors__funk;
-  f2ptr processors__set__symbol;
-  f2ptr processors__set__funk;
-  f2ptr event_subscribers_mutex__symbol;
-  f2ptr event_subscribers_mutex__funk;
-  f2ptr event_subscribers_mutex__set__symbol;
-  f2ptr event_subscribers_mutex__set__funk;
-  f2ptr event_subscribers__symbol;
-  f2ptr event_subscribers__funk;
-  f2ptr event_subscribers__set__symbol;
-  f2ptr event_subscribers__set__funk;
-  f2ptr event_buffer_mutex__symbol;
-  f2ptr event_buffer_mutex__funk;
-  f2ptr event_buffer_mutex__set__symbol;
-  f2ptr event_buffer_mutex__set__funk;
-  f2ptr event_buffer__symbol;
-  f2ptr event_buffer__funk;
-  f2ptr event_buffer__set__symbol;
-  f2ptr event_buffer__set__funk;
-};
+declare_object_type_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, );
 
 // event_subscriber
 

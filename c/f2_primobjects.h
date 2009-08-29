@@ -144,7 +144,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1); \
-  declare_primobject_common(name); \\
+  declare_primobject_common(name); \
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -154,7 +154,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2); \
-  declare_primobject_common(name); \\
+  declare_primobject_common(name); \
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -165,7 +165,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3); \
-  declare_primobject_common(name); \\
+  declare_primobject_common(name); \
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -177,7 +177,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4); \
-  declare_primobject_common(name); \\
+  declare_primobject_common(name); \
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \
@@ -190,7 +190,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   extern f2ptr __##name##__symbol; \
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5); \
-  declare_primobject_common(name); \\
+  declare_primobject_common(name); \
    \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
    \

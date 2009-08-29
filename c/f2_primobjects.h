@@ -922,45 +922,11 @@ declare_object_type_1_slot(place, thing, );
 
 // cons
 
-struct funk2_object_type__cons__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr car__symbol;
-  f2ptr car__funk;
-  f2ptr car__set__symbol;
-  f2ptr car__set__funk;
-  f2ptr cdr__symbol;
-  f2ptr cdr__funk;
-  f2ptr cdr__set__symbol;
-  f2ptr cdr__set__funk;
-};
+declare_object_type_2_slot(cons, car, cdr, );
 
 // doublelink
 
-struct funk2_object_type__doublelink__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr prev__symbol;
-  f2ptr prev__funk;
-  f2ptr prev__set__symbol;
-  f2ptr prev__set__funk;
-  f2ptr next__symbol;
-  f2ptr next__funk;
-  f2ptr next__set__symbol;
-  f2ptr next__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-};
+declare_object_type_3_slot(doublelink, prev, next, value, );
 
 // imagination_link
 

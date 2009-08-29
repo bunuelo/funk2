@@ -1208,10 +1208,7 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
   return new_fiber;
 }
 
-f2ptr f2__fiber__new(f2ptr cause) {
-  return f2fiber__new(cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil);
-}
-def_pcfunk0(fiber__new, return f2__fiber__new(this_cause));
+def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, return f2__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
 
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   if (! raw__time__is_type(cause, until_time)) {

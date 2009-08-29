@@ -116,7 +116,7 @@ boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title,
   
   this->rotate_angle = 0;
   this->done = boolean__false;
-  int title__length = strlen(title);
+  int title__length = strlen((char*)title);
   this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
   strcpy((char*)(this->title), (char*)title);
   

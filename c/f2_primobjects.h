@@ -596,38 +596,11 @@ declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
 
 declare_primobject_1_slot(bug, bug_type);
 
-/*
-extern f2ptr __bug__symbol;
-boolean_t raw__bug__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__bug__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bug__new(f2ptr cause, f2ptr bug_type);
-f2ptr f2bug__primobject_type__new(f2ptr cause);
-#define f2primobject__is_bug(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bug__symbol)
-
-defprimobject__static_slot__prototype(bug__type);
-#define f2bug__bug_type(                   this, cause)        primobject__static_slot__accessor(         this, bug__bug_type, cause)
-#define f2bug__bug_type__set(              this, cause, value) primobject__static_slot__set(              this, bug__bug_type, cause, value)
-#define f2bug__bug_type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bug__bug_type, cause)
-#define f2bug__bug_type__trace(            this, cause)        primobject__static_slot__trace(            this, bug__bug_type, cause)
-#define f2bug__bug_type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bug__bug_type, cause)
-*/
-
 
 // time
 
-extern f2ptr __time__symbol;
-boolean_t raw__time__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__time__is_type(f2ptr cause, f2ptr x);
-f2ptr f2time__new(f2ptr cause, f2ptr type);
-f2ptr f2time__primobject_type__new(f2ptr cause);
-#define f2primobject__is__time(this, cause) raw__eq(cause, f2primobject__type(this, cause), __time__symbol)
+declare_primobject_1_slot(time, nanoseconds_since_1970);
 
-defprimobject__static_slot__prototype(time__nanoseconds_since_1970);
-#define f2time__nanoseconds_since_1970(                   this, cause)        primobject__static_slot__accessor(         this, time__nanoseconds_since_1970, cause)
-#define f2time__nanoseconds_since_1970__set(              this, cause, value) primobject__static_slot__set(              this, time__nanoseconds_since_1970, cause, value)
-#define f2time__nanoseconds_since_1970__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, time__nanoseconds_since_1970, cause)
-#define f2time__nanoseconds_since_1970__trace(            this, cause)        primobject__static_slot__trace(            this, time__nanoseconds_since_1970, cause)
-#define f2time__nanoseconds_since_1970__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, time__nanoseconds_since_1970, cause)
 
 
 

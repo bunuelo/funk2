@@ -1228,7 +1228,6 @@ def_pcfunk5(event_subscriber__new, event_types, fiber, funkable, event_buffer, e
 
 def_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 
-
 f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
   return f2__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
 }
@@ -1359,160 +1358,26 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
 
 // transframe
 
-defprimobject__static_slot(transframe__nanoseconds_since_1970, 0);
-defprimobject__static_slot(transframe__symbol_old_news,         1);
-
-f2ptr __transframe__symbol = -1;
-
-f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news, int trace_depth) {
-  release__assert(__transframe__symbol != -1, nil, "f2transframe__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new__trace_depth(cause, __transframe__symbol, 2, nil, trace_depth);
-  f2transframe__nanoseconds_since_1970__set__trace_depth(this, cause, nanoseconds_since_1970, trace_depth);
-  f2transframe__symbol_old_news__set__trace_depth(        this, cause, symbol_old_news,         trace_depth);
-  return this;
-}
-
-f2ptr f2transframe__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_transframe.is_type__funk);}
-  {char* slot_name = "type";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_transframe.type__funk);}
-  {char* slot_name = "new";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_transframe.new__funk);}
-  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__funk);}
-  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__funk);}
-  {char* slot_name = "symbol_old_news";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__funk);}
-  {char* slot_name = "symbol_old_news";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_transframe.nanoseconds_since_1970__set__funk);}
-  return this;
-}
-
-
-
-f2ptr f2transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {
-  return f2transframe__new__trace_depth(cause, nanoseconds_since_1970, symbol_old_news, 1);
-}
-
-boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__transframe(x, cause));
-}
-f2ptr f2__transframe__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__transframe__is_type(cause, x));}
-def_pcfunk1(transframe__is_type, x, return f2__transframe__is_type(this_cause, x));
-
-f2ptr f2__transframe__type(f2ptr cause, f2ptr x) {return __transframe__symbol;}
-def_pcfunk1(transframe__type, x, return f2__transframe__type(this_cause, x));
+def_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
 
 f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, nanoseconds_since_1970, symbol_old_news);}
 def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
 
-f2ptr f2__transframe__nanoseconds_since_1970(f2ptr cause, f2ptr this) {return f2transframe__nanoseconds_since_1970(this, cause);}
-def_pcfunk1(transframe__nanoseconds_since_1970, x, return f2__transframe__nanoseconds_since_1970(this_cause, x));
-
-f2ptr f2__transframe__nanoseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2transframe__nanoseconds_since_1970__set(this, cause, value);}
-def_pcfunk2(transframe__nanoseconds_since_1970__set, x, y, return f2__transframe__nanoseconds_since_1970__set(this_cause, x, y));
-
-f2ptr f2__transframe__symbol_old_news(f2ptr cause, f2ptr this) {return f2transframe__symbol_old_news(this, cause);}
-def_pcfunk1(transframe__symbol_old_news, x, return f2__transframe__symbol_old_news(this_cause, x));
-
-f2ptr f2__transframe__symbol_old_news__set(f2ptr cause, f2ptr this, f2ptr value) {return f2transframe__symbol_old_news__set(this, cause, value);}
-def_pcfunk2(transframe__symbol_old_news__set, x, y, return f2__transframe__symbol_old_news__set(this_cause, x, y));
-
 
 // bug
 
-defprimobject__static_slot(bug__bug_type, 0);
-
-f2ptr __bug__symbol = -1;
-
-f2ptr f2bug__new(f2ptr cause, f2ptr bug_type) {
-  release__assert(__bug__symbol != -1, nil, "f2bug__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __bug__symbol, 1, nil);
-  f2bug__bug_type__set(this, cause, bug_type);
-  return this;
-}
-
-f2ptr f2bug__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bug.is_type__funk);}
-  {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bug.type__funk);}
-  {char* slot_name = "new";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bug.new__funk);}
-  {char* slot_name = "bug_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bug.bug_type__funk);}
-  {char* slot_name = "bug_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_bug.bug_type__set__funk);}
-  return this;
-}
-
-boolean_t raw__bug__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__bug(x, cause));
-}
-f2ptr f2__bug__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__bug__is_type(cause, x));}
-def_pcfunk1(bug__is_type, x, return f2__bug__is_type(this_cause, x));
-
-f2ptr f2__bug__type(f2ptr cause, f2ptr x) {return __bug__symbol;}
-def_pcfunk1(bug__type, x, return f2__bug__type(this_cause, x));
+def_primobject_1_slot(bug, bug_type);
 
 f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}
 def_pcfunk1(bug__new, type, return f2__bug__new(this_cause, type));
 
-f2ptr f2__bug__bug_type(f2ptr cause, f2ptr this) {return f2bug__bug_type(this, cause);}
-def_pcfunk1(bug__bug_type, x, return f2__bug__bug_type(this_cause, x));
-
-f2ptr f2__bug__bug_type__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bug__bug_type__set(this, cause, value);}
-def_pcfunk2(bug__bug_type__set, x, y, return f2__bug__bug_type__set(this_cause, x, y));
-
 
 // time
 
-defprimobject__static_slot(time__nanoseconds_since_1970, 0);
-
-f2ptr __time__symbol = -1;
-
-f2ptr f2time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {
-  release__assert(__time__symbol != -1, nil, "f2time__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __time__symbol, 1, nil);
-  f2time__nanoseconds_since_1970__set(this, cause, nanoseconds_since_1970);
-  return this;
-}
-
-f2ptr f2time__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_type__funk);}
-  {char* slot_name = "type";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.type__funk);}
-  {char* slot_name = "new";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.new__funk);}
-  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__funk);}
-  {char* slot_name = "nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds_since_1970__set__funk);}
-  {char* slot_name = "years";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk);}
-  {char* slot_name = "months";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk);}
-  {char* slot_name = "days";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk);}
-  {char* slot_name = "hours";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk);}
-  {char* slot_name = "minutes";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk);}
-  {char* slot_name = "seconds";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk);}
-  {char* slot_name = "nanoseconds";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk);}
-  return this;
-}
-
-boolean_t raw__time__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__time(x, cause));
-}
-f2ptr f2__time__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__time__is_type(cause, x));}
-def_pcfunk1(time__is_type, x, return f2__time__is_type(this_cause, x));
-
-f2ptr f2__time__type(f2ptr cause, f2ptr x) {return __time__symbol;}
-def_pcfunk1(time__type, x, return f2__time__type(this_cause, x));
+def_primobject_1_slot(time, nanoseconds_since_1970);
 
 f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2time__new(cause, nanoseconds_since_1970);}
 def_pcfunk1(time__new, nanoseconds_since_1970, return f2__time__new(this_cause, nanoseconds_since_1970));
-
-f2ptr f2__time__nanoseconds_since_1970(f2ptr cause, f2ptr this) {return f2time__nanoseconds_since_1970(this, cause);}
-def_pcfunk1(time__nanoseconds_since_1970, x, return f2__time__nanoseconds_since_1970(this_cause, x));
-
-f2ptr f2__time__nanoseconds_since_1970__set(f2ptr cause, f2ptr this, f2ptr value) {return f2time__nanoseconds_since_1970__set(this, cause, value);}
-def_pcfunk2(time__nanoseconds_since_1970__set, x, y, return f2__time__nanoseconds_since_1970__set(this_cause, x, y));
 
 u64 raw__time__years(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);

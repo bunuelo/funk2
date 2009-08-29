@@ -1016,68 +1016,15 @@ declare_object_type_1_slot(time, nanoseconds_since_1970,
 
 // size_2d
 
-struct funk2_object_type__size_2d__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr x__symbol;
-  f2ptr x__funk;
-  f2ptr x__set__symbol;
-  f2ptr x__set__funk;
-  f2ptr y__symbol;
-  f2ptr y__funk;
-  f2ptr y__set__symbol;
-  f2ptr y__set__funk;
-};
+declare_object_type_2_slot(size_2d, x, y, );
 
 // event
 
-struct funk2_object_type__event__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr node_id__symbol;
-  f2ptr node_id__funk;
-  f2ptr node_id__set__symbol;
-  f2ptr node_id__set__funk;
-  f2ptr event_id__symbol;
-  f2ptr event_id__funk;
-  f2ptr event_id__set__symbol;
-  f2ptr event_id__set__funk;
-  f2ptr event_type__symbol;
-  f2ptr event_type__funk;
-  f2ptr event_type__set__symbol;
-  f2ptr event_type__set__funk;
-  f2ptr data__symbol;
-  f2ptr data__funk;
-  f2ptr data__set__symbol;
-  f2ptr data__set__funk;
-};
+declare_object_type_4_slot(event, node_id, event_id, event_type, data, );
 
 // bytecode_event
 
-struct funk2_object_type__bytecode_event__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr bytecode__symbol;
-  f2ptr bytecode__funk;
-  f2ptr bytecode__set__symbol;
-  f2ptr bytecode__set__funk;
-  f2ptr context__symbol;
-  f2ptr context__funk;
-  f2ptr context__set__symbol;
-  f2ptr context__set__funk;
-};
+declare_object_type_2_slot(bytecode_event, bytecode, context, );
 
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS
 

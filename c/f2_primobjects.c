@@ -237,50 +237,6 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     def_primobject_add_slot(name, slot_2); \
     def_primobject_add_slot(name, slot_3));
 
-/*
-#define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
-  def_primobject_static_slot(name, 0, slot_1); \
-  def_primobject_static_slot(name, 1, slot_2); \
-  def_primobject_static_slot(name, 2, slot_3); \
-   \
-  f2ptr __##name##__symbol = -1; \
-   \
-  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth) { \
-    release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
-    f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 3, nil, trace_depth); \
-    f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
-    f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
-    f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
-    return this; \
-  } \
-   \
-  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3) { \
-    return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, 1); \
-  } \
-   \
-  boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x) { \
-    return (raw__primobject__is_type(cause, x) && f2primobject__is_##name(x, cause)); \
-  } \
-  f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__##name##__is_type(cause, x));} \
-  def_pcfunk1(name##__is_type, x, return f2__##name##__is_type(this_cause, x)); \
-   \
-  f2ptr f2__##name##__type(f2ptr cause, f2ptr x) {return __##name##__symbol;} \
-  def_pcfunk1(name##__type, x, return f2__##name##__type(this_cause, x)); \
-   \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause) { \
-    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil)); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), __funk2.globalenv.object_type.primobject.primobject_type_##name.is_type__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    __funk2.globalenv.object_type.primobject.primobject_type_##name.type__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     __funk2.globalenv.object_type.primobject.primobject_type_##name.new__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_1),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_1##__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_1),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_1##__set__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_2),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_2##__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_2),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_2##__set__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_3),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_3##__funk); \
-    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_3),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_3##__set__funk); \
-    return this; \
-  }
-*/
 
 // compound_object
 
@@ -927,6 +883,9 @@ def_pcfunk2(metro__documentation__set, x, y, return f2__metro__documentation__se
 
 // exception
 
+def_primobject_2_slot(exception, tag, value);
+
+/*
 defprimobject__static_slot(exception__tag,   0);
 defprimobject__static_slot(exception__value, 1);
 
@@ -964,9 +923,6 @@ def_pcfunk1(exception__is_type, x, return f2__exception__is_type(this_cause, x))
 f2ptr f2__exception__type(f2ptr cause, f2ptr x) {return __exception__symbol;}
 def_pcfunk1(exception__type, x, return f2__exception__type(this_cause, x));
 
-f2ptr f2__exception__new(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
-def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, tag, value));
-
 f2ptr f2__exception__tag(f2ptr cause, f2ptr this) {return f2exception__tag(this, cause);}
 def_pcfunk1(exception__tag, x, return f2__exception__tag(this_cause, x));
 
@@ -978,6 +934,11 @@ def_pcfunk1(exception__value, x, return f2__exception__value(this_cause, x));
 
 f2ptr f2__exception__value__set(f2ptr cause, f2ptr this, f2ptr value) {return f2exception__value__set(this, cause, value);}
 def_pcfunk2(exception__value__set, x, y, return f2__exception__value__set(this_cause, x, y));
+*/
+
+f2ptr f2__exception__new(f2ptr cause, f2ptr tag, f2ptr value) {return f2exception__new(cause, tag, value);}
+def_pcfunk2(exception__new, tag, value, return f2__exception__new(this_cause, tag, value));
+
 
 
 
@@ -1951,8 +1912,11 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
 
 // transframe
 
+def_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
+
+/*
 defprimobject__static_slot(transframe__nanoseconds_since_1970, 0);
-defprimobject__static_slot(transframe__symbol_old_news,         1);
+defprimobject__static_slot(transframe__symbol_old_news,        1);
 
 f2ptr __transframe__symbol = -1;
 
@@ -1994,9 +1958,6 @@ def_pcfunk1(transframe__is_type, x, return f2__transframe__is_type(this_cause, x
 f2ptr f2__transframe__type(f2ptr cause, f2ptr x) {return __transframe__symbol;}
 def_pcfunk1(transframe__type, x, return f2__transframe__type(this_cause, x));
 
-f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, nanoseconds_since_1970, symbol_old_news);}
-def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
-
 f2ptr f2__transframe__nanoseconds_since_1970(f2ptr cause, f2ptr this) {return f2transframe__nanoseconds_since_1970(this, cause);}
 def_pcfunk1(transframe__nanoseconds_since_1970, x, return f2__transframe__nanoseconds_since_1970(this_cause, x));
 
@@ -2008,6 +1969,11 @@ def_pcfunk1(transframe__symbol_old_news, x, return f2__transframe__symbol_old_ne
 
 f2ptr f2__transframe__symbol_old_news__set(f2ptr cause, f2ptr this, f2ptr value) {return f2transframe__symbol_old_news__set(this, cause, value);}
 def_pcfunk2(transframe__symbol_old_news__set, x, y, return f2__transframe__symbol_old_news__set(this_cause, x, y));
+
+*/
+
+f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, nanoseconds_since_1970, symbol_old_news);}
+def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
 
 
 // bug
@@ -2178,6 +2144,9 @@ def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, th
 
 // size_2d
 
+def_primobject_2_slot(size_2d, x, y);
+
+/*
 defprimobject__static_slot(size_2d__x, 0);
 defprimobject__static_slot(size_2d__y, 1);
 
@@ -2215,9 +2184,6 @@ def_pcfunk1(size_2d__is_type, x, return f2__size_2d__is_type(this_cause, x));
 f2ptr f2__size_2d__type(f2ptr cause, f2ptr x) {return __size_2d__symbol;}
 def_pcfunk1(size_2d__type, x, return f2__size_2d__type(this_cause, x));
 
-f2ptr f2__size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {return f2size_2d__new(cause, x, y);}
-def_pcfunk2(size_2d__new, x, y, return f2__size_2d__new(this_cause, x, y));
-
 f2ptr f2__size_2d__x(f2ptr cause, f2ptr this) {return f2size_2d__x(this, cause);}
 def_pcfunk1(size_2d__x, x, return f2__size_2d__x(this_cause, x));
 
@@ -2229,6 +2195,11 @@ def_pcfunk1(size_2d__y, x, return f2__size_2d__y(this_cause, x));
 
 f2ptr f2__size_2d__y__set(f2ptr cause, f2ptr this, f2ptr value) {return f2size_2d__y__set(this, cause, value);}
 def_pcfunk2(size_2d__y__set, x, y, return f2__size_2d__y__set(this_cause, x, y));
+
+*/
+
+f2ptr f2__size_2d__new(f2ptr cause, f2ptr x, f2ptr y) {return f2size_2d__new(cause, x, y);}
+def_pcfunk2(size_2d__new, x, y, return f2__size_2d__new(this_cause, x, y));
 
 
 // event
@@ -2317,6 +2288,9 @@ def_pcfunk2(event__data__set, x, y, return f2__event__data__set(this_cause, x, y
 
 // bytecode_event
 
+def_primobject_2_slot(bytecode_event, bytecode, context);
+
+/*
 defprimobject__static_slot(bytecode_event__bytecode, 0);
 defprimobject__static_slot(bytecode_event__context,  1);
 
@@ -2358,9 +2332,6 @@ def_pcfunk1(bytecode_event__is_type, x, return f2__bytecode_event__is_type(this_
 f2ptr f2__bytecode_event__type(f2ptr cause, f2ptr x) {return __bytecode_event__symbol;}
 def_pcfunk1(bytecode_event__type, x, return f2__bytecode_event__type(this_cause, x));
 
-f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
-def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
-
 f2ptr f2__bytecode_event__bytecode(f2ptr cause, f2ptr this) {return f2bytecode_event__bytecode(this, cause);}
 def_pcfunk1(bytecode_event__bytecode, x, return f2__bytecode_event__bytecode(this_cause, x));
 
@@ -2372,6 +2343,11 @@ def_pcfunk1(bytecode_event__context, x, return f2__bytecode_event__context(this_
 
 f2ptr f2__bytecode_event__context__set(f2ptr cause, f2ptr this, f2ptr value) {return f2bytecode_event__context__set(this, cause, value);}
 def_pcfunk2(bytecode_event__context__set, x, y, return f2__bytecode_event__context__set(this_cause, x, y));
+
+*/
+
+f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
+def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
 
 
 

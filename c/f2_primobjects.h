@@ -243,7 +243,7 @@ f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x);
 f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value, int trace_depth);
 f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
 f2ptr f2doublelink__primobject_type__new(f2ptr cause);
-#define f2primobject__is__doublelink(this, cause) raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol)
+static inline boolean_t f2primobject__is__doublelink(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol);}
 
 defprimobject__static_slot__prototype(doublelink__prev);
 #define f2doublelink__prev(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__prev, cause)

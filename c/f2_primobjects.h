@@ -566,7 +566,7 @@ declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_
 
 // event_subscriber
 
-declare_primobject_5_slot(event_subscriber, event_type, fiber, funkable, event_buffer, event_buffer_mutex);
+declare_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
 
 /*
 extern f2ptr __event_subscriber__symbol;

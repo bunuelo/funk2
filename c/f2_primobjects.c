@@ -426,6 +426,561 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
     def_primobject_add_slot(name, slot_8); \
     def_primobject_add_slot(name, slot_9));
 
+#define def_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 10, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10));
+
+#define def_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 11, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11));
+
+#define def_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 12, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12));
+
+#define def_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 13, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13));
+
+#define def_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 14, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13); \
+    def_primobject_add_slot(name, slot_14));
+
+#define def_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14); \
+  def_primobject_static_slot(name, 14, slot_15); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 15, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth); \
+      f2##name##__##slot_15##__set__trace_depth(this, cause, slot_15, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13); \
+    def_primobject_add_slot(name, slot_14); \
+    def_primobject_add_slot(name, slot_15));
+
+#define def_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14); \
+  def_primobject_static_slot(name, 14, slot_15); \
+  def_primobject_static_slot(name, 15, slot_16); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 16, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth); \
+      f2##name##__##slot_15##__set__trace_depth(this, cause, slot_15, trace_depth); \
+      f2##name##__##slot_16##__set__trace_depth(this, cause, slot_16, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13); \
+    def_primobject_add_slot(name, slot_14); \
+    def_primobject_add_slot(name, slot_15); \
+    def_primobject_add_slot(name, slot_16));
+
+#define def_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14); \
+  def_primobject_static_slot(name, 14, slot_15); \
+  def_primobject_static_slot(name, 15, slot_16); \
+  def_primobject_static_slot(name, 16, slot_17); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 17, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth); \
+      f2##name##__##slot_15##__set__trace_depth(this, cause, slot_15, trace_depth); \
+      f2##name##__##slot_16##__set__trace_depth(this, cause, slot_16, trace_depth); \
+      f2##name##__##slot_17##__set__trace_depth(this, cause, slot_17, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13); \
+    def_primobject_add_slot(name, slot_14); \
+    def_primobject_add_slot(name, slot_15); \
+    def_primobject_add_slot(name, slot_16); \
+    def_primobject_add_slot(name, slot_17));
+
+#define def_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14); \
+  def_primobject_static_slot(name, 14, slot_15); \
+  def_primobject_static_slot(name, 15, slot_16); \
+  def_primobject_static_slot(name, 16, slot_17); \
+  def_primobject_static_slot(name, 17, slot_18); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 18, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth); \
+      f2##name##__##slot_15##__set__trace_depth(this, cause, slot_15, trace_depth); \
+      f2##name##__##slot_16##__set__trace_depth(this, cause, slot_16, trace_depth); \
+      f2##name##__##slot_17##__set__trace_depth(this, cause, slot_17, trace_depth); \
+      f2##name##__##slot_18##__set__trace_depth(this, cause, slot_18, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13); \
+    def_primobject_add_slot(name, slot_14); \
+    def_primobject_add_slot(name, slot_15); \
+    def_primobject_add_slot(name, slot_16); \
+    def_primobject_add_slot(name, slot_17); \
+    def_primobject_add_slot(name, slot_18));
+
+#define def_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14); \
+  def_primobject_static_slot(name, 14, slot_15); \
+  def_primobject_static_slot(name, 15, slot_16); \
+  def_primobject_static_slot(name, 16, slot_17); \
+  def_primobject_static_slot(name, 17, slot_18); \
+  def_primobject_static_slot(name, 18, slot_19); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 19, nil, trace_depth); \
+      f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth); \
+      f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth); \
+      f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth); \
+      f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth); \
+      f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth); \
+      f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth); \
+      f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth); \
+      f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth); \
+      f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth); \
+      f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth); \
+      f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth); \
+      f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth); \
+      f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth); \
+      f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth); \
+      f2##name##__##slot_15##__set__trace_depth(this, cause, slot_15, trace_depth); \
+      f2##name##__##slot_16##__set__trace_depth(this, cause, slot_16, trace_depth); \
+      f2##name##__##slot_17##__set__trace_depth(this, cause, slot_17, trace_depth); \
+      f2##name##__##slot_18##__set__trace_depth(this, cause, slot_18, trace_depth); \
+      f2##name##__##slot_18##__set__trace_depth(this, cause, slot_19, trace_depth); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, 1); \
+    }, \
+    def_primobject_add_slot(name, slot_1); \
+    def_primobject_add_slot(name, slot_2); \
+    def_primobject_add_slot(name, slot_3); \
+    def_primobject_add_slot(name, slot_4); \
+    def_primobject_add_slot(name, slot_5); \
+    def_primobject_add_slot(name, slot_6); \
+    def_primobject_add_slot(name, slot_7); \
+    def_primobject_add_slot(name, slot_8); \
+    def_primobject_add_slot(name, slot_9); \
+    def_primobject_add_slot(name, slot_10); \
+    def_primobject_add_slot(name, slot_11); \
+    def_primobject_add_slot(name, slot_12); \
+    def_primobject_add_slot(name, slot_13); \
+    def_primobject_add_slot(name, slot_14); \
+    def_primobject_add_slot(name, slot_15); \
+    def_primobject_add_slot(name, slot_16); \
+    def_primobject_add_slot(name, slot_17); \
+    def_primobject_add_slot(name, slot_18); \
+    def_primobject_add_slot(name, slot_19));
+
 
 // compound_object
 
@@ -600,266 +1155,7 @@ def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(t
 
 // fiber
 
-defprimobject__static_slot(fiber__program_counter,     0);
-defprimobject__static_slot(fiber__stack,               1);
-defprimobject__static_slot(fiber__iter,                2);
-defprimobject__static_slot(fiber__env,                 3);
-defprimobject__static_slot(fiber__args,                4);
-defprimobject__static_slot(fiber__return_reg,          5);
-defprimobject__static_slot(fiber__value,               6);
-defprimobject__static_slot(fiber__trace,               7);
-defprimobject__static_slot(fiber__critics,             8);
-defprimobject__static_slot(fiber__cause_reg,           9);
-defprimobject__static_slot(fiber__keep_undead,        10);
-defprimobject__static_slot(fiber__is_zombie,          11);
-defprimobject__static_slot(fiber__parent_fiber,       12);
-defprimobject__static_slot(fiber__parent_env,         13);
-defprimobject__static_slot(fiber__execute_mutex,      14);
-defprimobject__static_slot(fiber__paused,             15);
-defprimobject__static_slot(fiber__last_executed_time, 16);
-defprimobject__static_slot(fiber__sleep_until_time,   17);
-defprimobject__static_slot(fiber__larva_args,         18);
-
-f2ptr __fiber__symbol = -1;
-
-f2ptr f2fiber__new(f2ptr cause,
-		    f2ptr program_counter,
-		    f2ptr stack,
-		    f2ptr iter,
-		    f2ptr env,
-		    f2ptr args,
-		    f2ptr return_reg,
-		    f2ptr value,
-		    f2ptr trace,
-		    f2ptr critics,
-		    f2ptr cause_reg,
-		    f2ptr keep_undead,
-		    f2ptr is_zombie,
-		    f2ptr parent_fiber,
-		    f2ptr parent_env,
-		    f2ptr execute_mutex,
-		    f2ptr paused,
-		    f2ptr last_executed_time,
-		    f2ptr sleep_until_time,
-		    f2ptr larva_args) {
-  release__assert(__fiber__symbol != -1, nil, "f2fiber__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __fiber__symbol, 19, nil);
-  f2fiber__program_counter__set(   this, cause, program_counter);
-  f2fiber__stack__set(             this, cause, stack);
-  f2fiber__iter__set(              this, cause, iter);
-  f2fiber__env__set(               this, cause, env);
-  f2fiber__args__set(              this, cause, args);
-  f2fiber__return_reg__set(        this, cause, return_reg);
-  f2fiber__value__set(             this, cause, value);
-  f2fiber__trace__set(             this, cause, trace);
-  f2fiber__critics__set(           this, cause, critics);
-  f2fiber__cause_reg__set(         this, cause, cause_reg);
-  f2fiber__keep_undead__set(       this, cause, keep_undead);
-  f2fiber__is_zombie__set(         this, cause, is_zombie);
-  f2fiber__parent_fiber__set(     this, cause, parent_fiber);
-  f2fiber__parent_env__set(        this, cause, parent_env);
-  f2fiber__execute_mutex__set(     this, cause, execute_mutex);
-  f2fiber__paused__set(            this, cause, paused);
-  f2fiber__last_executed_time__set(this, cause, last_executed_time);
-  f2fiber__sleep_until_time__set(  this, cause, sleep_until_time);
-  f2fiber__larva_args__set(        this, cause, larva_args);
-  return this;
-}
-
-f2ptr f2fiber__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_type__funk);}
-  {char* slot_name = "type";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.type__funk);}
-  //{char* slot_name = "new";                   f2__primobject_type__add_slot(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.new__funk);}
-  {char* slot_name = "program_counter";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__funk);}
-  {char* slot_name = "program_counter";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.program_counter__set__funk);}
-  {char* slot_name = "stack";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__funk);}
-  {char* slot_name = "stack";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.stack__set__funk);}
-  {char* slot_name = "iter";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__funk);}
-  {char* slot_name = "iter";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.iter__set__funk);}
-  {char* slot_name = "env";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__funk);}
-  {char* slot_name = "env";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.env__set__funk);}
-  {char* slot_name = "args";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__funk);}
-  {char* slot_name = "args";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.args__set__funk);}
-  {char* slot_name = "return_reg";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__funk);}
-  {char* slot_name = "return_reg";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.return_reg__set__funk);}
-  {char* slot_name = "value";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__funk);}
-  {char* slot_name = "value";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.value__set__funk);}
-  {char* slot_name = "trace";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__funk);}
-  {char* slot_name = "trace";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.trace__set__funk);}
-  {char* slot_name = "critics";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__funk);}
-  {char* slot_name = "critics";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.critics__set__funk);}
-  {char* slot_name = "cause_reg";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__funk);}
-  {char* slot_name = "cause_reg";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.cause_reg__set__funk);}
-  {char* slot_name = "keep_undead";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__funk);}
-  {char* slot_name = "keep_undead";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.keep_undead__set__funk);}
-  {char* slot_name = "is_zombie";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__funk);}
-  {char* slot_name = "is_zombie";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_zombie__set__funk);}
-  {char* slot_name = "parent_fiber";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__funk);}
-  {char* slot_name = "parent_fiber";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_fiber__set__funk);}
-  {char* slot_name = "parent_env";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__funk);}
-  {char* slot_name = "parent_env";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.parent_env__set__funk);}
-  {char* slot_name = "execute_mutex";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__funk);}
-  {char* slot_name = "execute_mutex";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.execute_mutex__set__funk);}
-  {char* slot_name = "paused";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__funk);}
-  {char* slot_name = "paused";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.paused__set__funk);}
-  {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__funk);}
-  {char* slot_name = "last_executed_time";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.last_executed_time__set__funk);}
-  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__funk);}
-  {char* slot_name = "sleep_until_time";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_until_time__set__funk);}
-  {char* slot_name = "do_sleep_until_time";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
-  {char* slot_name = "sleep_for_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
-  {char* slot_name = "larva_args";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__funk);}
-  {char* slot_name = "larva_args";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_fiber.larva_args__set__funk);}
-  return this;
-}
-
-f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
-  f2ptr program_counter    = nil;
-  f2ptr stack              = nil;
-  f2ptr iter               = nil;
-  f2ptr env                = parent_env;
-  f2ptr args               = nil;
-  f2ptr return_reg         = nil;
-  f2ptr value              = nil;
-  f2ptr trace              = nil;
-  f2ptr critics            = nil;
-  f2ptr cause_reg          = cause;
-  f2ptr keep_undead        = __funk2.globalenv.true__symbol;
-  f2ptr is_zombie          = nil;
-  f2ptr execute_mutex      = f2mutex__new(cause);
-  f2ptr paused             = nil;
-  f2ptr last_executed_time = nil;
-  f2ptr sleep_until_time   = nil;
-  f2ptr larva_args         = nil;
-  f2ptr new_fiber = f2fiber__new(cause, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
-  f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
-  f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
-  
-  //f2cause__fibers__set(cause, cause, f2cons__new(cause, new_fiber, f2cause__fibers(cause, cause)));
-  
-  return new_fiber;
-}
-
-boolean_t raw__fiber__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__fiber(x, cause));
-}
-f2ptr f2__fiber__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__fiber__is_type(cause, x));}
-def_pcfunk1(fiber__is_type, x, return f2__fiber__is_type(this_cause, x));
-
-f2ptr f2__fiber__type(f2ptr cause, f2ptr x) {return __fiber__symbol;}
-def_pcfunk1(fiber__type, x, return f2__fiber__type(this_cause, x));
-
-f2ptr f2__fiber__program_counter(f2ptr cause, f2ptr this) {return f2fiber__program_counter(this, cause);}
-def_pcfunk1(fiber__program_counter, x, return f2__fiber__program_counter(this_cause, x));
-
-f2ptr f2__fiber__program_counter__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__program_counter__set(this, cause, value);}
-def_pcfunk2(fiber__program_counter__set, x, y, return f2__fiber__program_counter__set(this_cause, x, y));
-
-f2ptr f2__fiber__stack(f2ptr cause, f2ptr this) {return f2fiber__stack(this, cause);}
-def_pcfunk1(fiber__stack, x, return f2__fiber__stack(this_cause, x));
-
-f2ptr f2__fiber__stack__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__stack__set(this, cause, value);}
-def_pcfunk2(fiber__stack__set, x, y, return f2__fiber__stack__set(this_cause, x, y));
-
-f2ptr f2__fiber__iter(f2ptr cause, f2ptr this) {return f2fiber__iter(this, cause);}
-def_pcfunk1(fiber__iter, x, return f2__fiber__iter(this_cause, x));
-
-f2ptr f2__fiber__iter__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__iter__set(this, cause, value);}
-def_pcfunk2(fiber__iter__set, x, y, return f2__fiber__iter__set(this_cause, x, y));
-
-f2ptr f2__fiber__env(f2ptr cause, f2ptr this) {return f2fiber__env(this, cause);}
-def_pcfunk1(fiber__env, x, return f2__fiber__env(this_cause, x));
-
-f2ptr f2__fiber__env__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__env__set(this, cause, value);}
-def_pcfunk2(fiber__env__set, x, y, return f2__fiber__env__set(this_cause, x, y));
-
-f2ptr f2__fiber__args(f2ptr cause, f2ptr this) {return f2fiber__args(this, cause);}
-def_pcfunk1(fiber__args, x, return f2__fiber__args(this_cause, x));
-
-f2ptr f2__fiber__args__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__args__set(this, cause, value);}
-def_pcfunk2(fiber__args__set, x, y, return f2__fiber__args__set(this_cause, x, y));
-
-f2ptr f2__fiber__return_reg(f2ptr cause, f2ptr this) {return f2fiber__return_reg(this, cause);}
-def_pcfunk1(fiber__return_reg, x, return f2__fiber__return_reg(this_cause, x));
-
-f2ptr f2__fiber__return_reg__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__return_reg__set(this, cause, value);}
-def_pcfunk2(fiber__return_reg__set, x, y, return f2__fiber__return_reg__set(this_cause, x, y));
-
-f2ptr f2__fiber__value(f2ptr cause, f2ptr this) {return f2fiber__value(this, cause);}
-def_pcfunk1(fiber__value, x, return f2__fiber__value(this_cause, x));
-
-f2ptr f2__fiber__value__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__value__set(this, cause, value);}
-def_pcfunk2(fiber__value__set, x, y, return f2__fiber__value__set(this_cause, x, y));
-
-f2ptr f2__fiber__trace(f2ptr cause, f2ptr this) {return f2fiber__trace(this, cause);}
-def_pcfunk1(fiber__trace, x, return f2__fiber__trace(this_cause, x));
-
-f2ptr f2__fiber__trace__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__trace__set(this, cause, value);}
-def_pcfunk2(fiber__trace__set, x, y, return f2__fiber__trace__set(this_cause, x, y));
-
-f2ptr f2__fiber__critics(f2ptr cause, f2ptr this) {return f2fiber__critics(this, cause);}
-def_pcfunk1(fiber__critics, x, return f2__fiber__critics(this_cause, x));
-
-f2ptr f2__fiber__critics__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__critics__set(this, cause, value);}
-def_pcfunk2(fiber__critics__set, x, y, return f2__fiber__critics__set(this_cause, x, y));
-
-f2ptr f2__fiber__cause_reg(f2ptr cause, f2ptr this) {return f2fiber__cause_reg(this, cause);}
-def_pcfunk1(fiber__cause_reg, x, return f2__fiber__cause_reg(this_cause, x));
-
-f2ptr f2__fiber__cause_reg__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__cause_reg__set(this, cause, value);}
-def_pcfunk2(fiber__cause_reg__set, x, y, return f2__fiber__cause_reg__set(this_cause, x, y));
-
-f2ptr f2__fiber__keep_undead(f2ptr cause, f2ptr this) {return f2fiber__keep_undead(this, cause);}
-def_pcfunk1(fiber__keep_undead, x, return f2__fiber__keep_undead(this_cause, x));
-
-f2ptr f2__fiber__keep_undead__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__keep_undead__set(this, cause, value);}
-def_pcfunk2(fiber__keep_undead__set, x, y, return f2__fiber__keep_undead__set(this_cause, x, y));
-
-f2ptr f2__fiber__is_zombie(f2ptr cause, f2ptr this) {return f2fiber__is_zombie(this, cause);}
-def_pcfunk1(fiber__is_zombie, x, return f2__fiber__is_zombie(this_cause, x));
-
-f2ptr f2__fiber__is_zombie__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__is_zombie__set(this, cause, value);}
-def_pcfunk2(fiber__is_zombie__set, x, y, return f2__fiber__is_zombie__set(this_cause, x, y));
-
-f2ptr f2__fiber__parent_fiber(f2ptr cause, f2ptr this) {return f2fiber__parent_fiber(this, cause);}
-def_pcfunk1(fiber__parent_fiber, x, return f2__fiber__parent_fiber(this_cause, x));
-
-f2ptr f2__fiber__parent_fiber__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__parent_fiber__set(this, cause, value);}
-def_pcfunk2(fiber__parent_fiber__set, x, y, return f2__fiber__parent_fiber__set(this_cause, x, y));
-
-f2ptr f2__fiber__parent_env(f2ptr cause, f2ptr this) {return f2fiber__parent_env(this, cause);}
-def_pcfunk1(fiber__parent_env, x, return f2__fiber__parent_env(this_cause, x));
-
-f2ptr f2__fiber__parent_env__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__parent_env__set(this, cause, value);}
-def_pcfunk2(fiber__parent_env__set, x, y, return f2__fiber__parent_env__set(this_cause, x, y));
-
-f2ptr f2__fiber__execute_mutex(f2ptr cause, f2ptr this) {return f2fiber__execute_mutex(this, cause);}
-def_pcfunk1(fiber__execute_mutex, x, return f2__fiber__execute_mutex(this_cause, x));
-
-f2ptr f2__fiber__execute_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__execute_mutex__set(this, cause, value);}
-def_pcfunk2(fiber__execute_mutex__set, x, y, return f2__fiber__execute_mutex__set(this_cause, x, y));
-
-f2ptr f2__fiber__paused(f2ptr cause, f2ptr this) {return f2fiber__paused(this, cause);}
-def_pcfunk1(fiber__paused, x, return f2__fiber__paused(this_cause, x));
-
-f2ptr f2__fiber__paused__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__paused__set(this, cause, value);}
-def_pcfunk2(fiber__paused__set, x, y, return f2__fiber__paused__set(this_cause, x, y));
-
-f2ptr f2__fiber__last_executed_time(f2ptr cause, f2ptr this) {return f2fiber__last_executed_time(this, cause);}
-def_pcfunk1(fiber__last_executed_time, x, return f2__fiber__last_executed_time(this_cause, x));
-
-f2ptr f2__fiber__last_executed_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__last_executed_time__set(this, cause, value);}
-def_pcfunk2(fiber__last_executed_time__set, x, y, return f2__fiber__last_executed_time__set(this_cause, x, y));
-
-f2ptr f2__fiber__sleep_until_time(f2ptr cause, f2ptr this) {return f2fiber__sleep_until_time(this, cause);}
-def_pcfunk1(fiber__sleep_until_time, x, return f2__fiber__sleep_until_time(this_cause, x));
-
-f2ptr f2__fiber__sleep_until_time__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__sleep_until_time__set(this, cause, value);}
-def_pcfunk2(fiber__sleep_until_time__set, x, y, return f2__fiber__sleep_until_time__set(this_cause, x, y));
+def_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
 
 
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {

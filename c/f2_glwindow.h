@@ -56,11 +56,11 @@ typedef struct funk2_glwindow_s {
 
 void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height);
 
-void      funk2_glwindow__init(funk2_glwindow_t* this);
+void      funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, boolean_t fullscreen);
 void      funk2_glwindow__destroy(funk2_glwindow_t* this);
 
 #if defined(F2__GLWINDOW__SUPPORTED)
-boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause, u8* title, int width, int height, int bits, boolean_t fullscreenflag);
+boolean_t funk2_glwindow__create(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
 int       funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);
 int       funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause);

@@ -126,7 +126,7 @@ f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_typ
 f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame);
 f2ptr f2compound_object__primobject_type__new(f2ptr cause);
 
-#define f2primobject__is__compound_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol)
+static inline boolean_t f2primobject__is__compound_object(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol);}
 
 defprimobject__static_slot__prototype(compound_object__compound_object_type);
 #define f2compound_object__compound_object_type__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__compound_object_type, cause, trace_depth)

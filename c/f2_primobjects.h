@@ -128,7 +128,8 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 #define declare_primobject_common(name) \
   boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x); \
   f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x); \
-  f2ptr f2##name##__primobject_type__new(f2ptr cause);
+  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);}
 
 
 #define declare_primobject_slot(name, slot_name) \
@@ -148,9 +149,6 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1); \
   declare_primobject_common(name); \
-   \
-  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
-   \
   declare_primobject_slot(name, slot_1);
 
 #define declare_primobject_2_slot(name, slot_1, slot_2) \
@@ -158,9 +156,6 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2); \
   declare_primobject_common(name); \
-   \
-  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
-   \
   declare_primobject_slot(name, slot_1); \
   declare_primobject_slot(name, slot_2);
 
@@ -169,9 +164,6 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3); \
   declare_primobject_common(name); \
-   \
-  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
-   \
   declare_primobject_slot(name, slot_1); \
   declare_primobject_slot(name, slot_2); \
   declare_primobject_slot(name, slot_3);
@@ -181,9 +173,6 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4); \
   declare_primobject_common(name); \
-   \
-  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
-   \
   declare_primobject_slot(name, slot_1); \
   declare_primobject_slot(name, slot_2); \
   declare_primobject_slot(name, slot_3); \
@@ -194,14 +183,36 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, int trace_depth); \
   f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5); \
   declare_primobject_common(name); \
-   \
-  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);} \
-   \
   declare_primobject_slot(name, slot_1); \
   declare_primobject_slot(name, slot_2); \
   declare_primobject_slot(name, slot_3); \
   declare_primobject_slot(name, slot_4); \
   declare_primobject_slot(name, slot_5);
+
+#define declare_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6); \
+  declare_primobject_common(name); \
+  declare_primobject_slot(name, slot_1); \
+  declare_primobject_slot(name, slot_2); \
+  declare_primobject_slot(name, slot_3); \
+  declare_primobject_slot(name, slot_4); \
+  declare_primobject_slot(name, slot_5); \
+  declare_primobject_slot(name, slot_6);
+
+#define declare_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7); \
+  declare_primobject_common(name); \
+  declare_primobject_slot(name, slot_1); \
+  declare_primobject_slot(name, slot_2); \
+  declare_primobject_slot(name, slot_3); \
+  declare_primobject_slot(name, slot_4); \
+  declare_primobject_slot(name, slot_5); \
+  declare_primobject_slot(name, slot_6); \
+  declare_primobject_slot(name, slot_7);
 
 // compound_object
 

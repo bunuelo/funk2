@@ -171,9 +171,9 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
 
 
 #define def_primobject_3_slot(name, slot_1, slot_2, slot_3)
-  def_primobject_static_slot(compound_object, 0, slot_1); \
-  def_primobject_static_slot(compound_object, 1, slot_2); \
-  def_primobject_static_slot(compound_object, 2, slot_3); \
+  def_primobject_static_slot(name, 0, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3); \
    \
   f2ptr __##name##__symbol = -1; \
    \

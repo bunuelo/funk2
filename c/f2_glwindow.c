@@ -63,13 +63,14 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
   raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
-void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, boolean_t fullscreen) {
+void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
   int title__length = strlen((char*)title);
   this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
   strcpy((char*)(this->title), (char*)title);
   
   this->width          = width;
   this->height         = height;
+  this->depth          = depth;
   this->fullscreen     = fullscreen;
   
   this->window_created = boolean__false;

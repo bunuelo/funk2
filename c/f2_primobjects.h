@@ -549,7 +549,7 @@ declare_primobject_19_slot(fiber, program_counter_reg, stack_reg, iter_reg, env_
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
 //extern int f2fiber__is_complete(f2ptr this);
 
-f2ptr f2__fiber__sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
+f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
 f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds);
 
 // processor

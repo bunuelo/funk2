@@ -1536,8 +1536,7 @@ void f2__primobjects__reinitialize_globalvars() {
   initialize_primobject_funk(name, new);
 
 #define initialize_primobject_slot(name, slot_name) \
-  initialize_primobject_funk(name, slot_name); \
-  initialize_primobject_funk(name, slot_name##__set);
+  initialize_primobject_funk(name, slot_name);
 
 #define initialize_primobject_0_slot(name) \
   initialize_primobject_common(name);

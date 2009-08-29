@@ -1176,12 +1176,6 @@ f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanosecond
 }
 def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__sleep_for_nanoseconds(this_cause, this, nanoseconds));
 
-f2ptr f2__fiber__larva_args(f2ptr cause, f2ptr this) {return f2fiber__larva_args(this, cause);}
-def_pcfunk1(fiber__larva_args, x, return f2__fiber__larva_args(this_cause, x));
-
-f2ptr f2__fiber__larva_args__set(f2ptr cause, f2ptr this, f2ptr value) {return f2fiber__larva_args__set(this, cause, value);}
-def_pcfunk2(fiber__larva_args__set, x, y, return f2__fiber__larva_args__set(this_cause, x, y));
-
 // processor
 
 defprimobject__static_slot(processor__scheduler,               0);

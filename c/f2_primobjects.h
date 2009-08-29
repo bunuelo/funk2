@@ -126,6 +126,7 @@ f2ptr   f2primobject__new(             f2ptr cause, f2ptr type, f2ptr static_slo
 f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
 #define declare_primobject_common(name) \
+  boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x); \
   f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x); \
   f2ptr f2##name##__primobject_type__new(f2ptr cause);
 
@@ -207,6 +208,7 @@ declare_primobject_3_slot(compound_object, compound_object_type, frame, part_fra
 // place
 
 declare_primobject_1_slot(place, thing);
+/*
 extern f2ptr __place__symbol;
 f2ptr f2place__new(f2ptr cause, f2ptr thing);
 f2ptr f2place__primobject_type__new(f2ptr cause);
@@ -225,7 +227,7 @@ f2ptr f2__place__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__place(f2ptr cause, f2ptr x);
 f2ptr f2__place__thing(f2ptr cause, f2ptr x);
 f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y);
-
+*/
 
 // cons
 

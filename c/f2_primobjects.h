@@ -602,31 +602,9 @@ declare_primobject_1_slot(bug, bug_type);
 declare_primobject_1_slot(time, nanoseconds_since_1970);
 
 
-
-
 // size_2d
 
-extern f2ptr __size_2d__symbol;
-boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__size_2d__is_type(f2ptr cause, f2ptr x);
-f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2size_2d__primobject_type__new(f2ptr cause);
-#define f2primobject__is__size_2d(this, cause)        raw__eq(cause, f2primobject__type(this, cause), __size_2d__symbol)
-
-defprimobject__static_slot__prototype(size_2d__x);
-#define f2size_2d__x(             this, cause)        primobject__static_slot__accessor(  this, size_2d__x, cause)
-#define f2size_2d__x__set(        this, cause, value) primobject__static_slot__set(       this, size_2d__x, cause, value)
-#define f2size_2d__x__tracing_on( this, cause)        primobject__static_slot__tracing_on(this, size_2d__x, cause)
-#define f2size_2d__x__trace(      this, cause)        primobject__static_slot__trace(     this, size_2d__x, cause)
-#define f2size_2d__x__imagination_frame(      this, cause)        primobject__static_slot__imagination_frame(     this, size_2d__x, cause)
-
-defprimobject__static_slot__prototype(size_2d__y);
-#define f2size_2d__y(             this, cause)        primobject__static_slot__accessor(  this, size_2d__y, cause)
-#define f2size_2d__y__set(        this, cause, value) primobject__static_slot__set(       this, size_2d__y, cause, value)
-#define f2size_2d__y__tracing_on( this, cause)        primobject__static_slot__tracing_on(this, size_2d__y, cause)
-#define f2size_2d__y__trace(      this, cause)        primobject__static_slot__trace(     this, size_2d__y, cause)
-#define f2size_2d__y__imagination_frame(      this, cause)        primobject__static_slot__imagination_frame(     this, size_2d__y, cause)
-
+declare_primobject_2_slot(size_2d, x, y);
 
 
 // event

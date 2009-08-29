@@ -212,40 +212,6 @@ declare_primobject_1_slot(place, thing);
 // cons
 
 declare_primobject_2_slot(cons, car, cdr);
-/*
-extern f2ptr __cons__symbol;
-f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth);
-f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr);
-f2ptr f2cons__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is__cons(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cons__symbol)
-
-defprimobject__static_slot__prototype(cons__car);
-#define f2cons__car__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__car, cause, trace_depth)
-#define f2cons__car(                   this, cause)                     primobject__static_slot__accessor(             this, cons__car, cause)
-#define f2cons__car__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, cons__car, cause, value, trace_depth)
-#define f2cons__car__set(              this, cause, value)              primobject__static_slot__set(                  this, cons__car, cause, value)
-#define f2cons__car__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, cons__car, cause)
-#define f2cons__car__trace(            this, cause)                     primobject__static_slot__trace(                this, cons__car, cause)
-#define f2cons__car__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, cons__car, cause)
-
-defprimobject__static_slot__prototype(cons__cdr);
-#define f2cons__cdr__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__cdr, cause, trace_depth)
-#define f2cons__cdr(                   this, cause)                     primobject__static_slot__accessor(             this, cons__cdr, cause)
-#define f2cons__cdr__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, cons__cdr, cause, value, trace_depth)
-#define f2cons__cdr__set(              this, cause, value)              primobject__static_slot__set(                  this, cons__cdr, cause, value)
-#define f2cons__cdr__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, cons__cdr, cause)
-#define f2cons__cdr__trace(            this, cause)                     primobject__static_slot__trace(                this, cons__cdr, cause)
-#define f2cons__cdr__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, cons__cdr, cause)
-
-boolean_t raw__cons__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cons__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__cons__car(f2ptr cause, f2ptr x);
-f2ptr f2__cons__car__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__cons__cdr(f2ptr cause, f2ptr x);
-f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
-*/
 
 // deprecated cons macros
 
@@ -274,6 +240,9 @@ f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
 
 // doublelink
 
+declare_primobject_3_slot(doublelink, prev, next, value);
+
+/*
 extern f2ptr __doublelink__symbol;
 boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x);
@@ -313,7 +282,7 @@ f2ptr f2__doublelink__next(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__doublelink__value(f2ptr cause, f2ptr x);
 f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y);
-
+*/
 
 
 // imagination_link

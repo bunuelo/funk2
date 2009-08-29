@@ -1427,8 +1427,8 @@ struct funk2_object_type__fiber__slot_s {
   f2ptr sleep_until_time__get__funk;
   f2ptr sleep_until_time__set__symbol; // set
   f2ptr sleep_until_time__set__funk;
-  f2ptr sleep_until_time__symbol;      // execute
-  f2ptr sleep_until_time__funk;
+  f2ptr do_sleep_until_time__symbol;   // execute
+  f2ptr do_sleep_until_time__funk;
   f2ptr sleep_for_nanoseconds__symbol; // execute
   f2ptr sleep_for_nanoseconds__funk;
   f2ptr larva_args__symbol;            // get

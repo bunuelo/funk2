@@ -298,14 +298,7 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   return True;
 }
 
-// Here goes our drawing code
-int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
-  raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  raw__opengl__glLoadIdentity(cause);
-  raw__opengl__glTranslatef(cause, 0, 0, -10);
-  raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
-  
-  raw__opengl__glColor4f(cause, 1,1,1,1);
+void draw_gl_cube(f2ptr cause) {
   raw__opengl__glBegin(cause, GL_QUADS);
   raw__opengl__glNormal3f(cause, 0,0,1);
   raw__opengl__glVertex3f(cause, -1,-1,1);
@@ -343,6 +336,17 @@ int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glVertex3f(cause, -1, 1, 1);
   raw__opengl__glVertex3f(cause, -1, 1,-1);
   raw__opengl__glEnd(cause);
+}
+
+// Here goes our drawing code
+int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
+  raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  raw__opengl__glLoadIdentity(cause);
+  raw__opengl__glTranslatef(cause, 0, 0, -10);
+  raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
+  
+  raw__opengl__glColor4f(cause, 1,1,1,1);
+  raw__draw_gl_cube(cause);
   
   if (this->double_buffered) {
     raw__opengl__glXSwapBuffers(cause, this->display, this->x_window);
@@ -435,6 +439,17 @@ f2ptr f2__glwindow__destroy(f2ptr cause) {
   return nil;
 }
 def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
+
+
+
+
+// physical_object
+
+def_primobject_2_slot(physical_object, position, orientation, size, );
+
+f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
+def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
+
 
 
 // **

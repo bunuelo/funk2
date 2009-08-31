@@ -445,10 +445,10 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 // physical_object
 
-def_primobject_2_slot(physical_object, position, orientation, size, );
+//def_primobject_2_slot(physical_object, position, orientation, size, );
 
-f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
-def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
+//f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
+//def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
 
 
 

@@ -339,7 +339,7 @@ void raw__draw_gl_cube(f2ptr cause, float red, float green, float blue, float al
   raw__opengl__glBegin(cause, GL_QUADS);
   
   float mcolor[] = { red, green, blue, alpha };
-  raw__opengl__glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
+  raw__opengl__glMaterialfv(cause, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
   
   raw__opengl__glNormal3f(cause, 0,0,1);
   raw__opengl__glVertex3f(cause, -1,-1,1);

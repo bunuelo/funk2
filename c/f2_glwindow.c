@@ -390,14 +390,15 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   
   f2ptr global_environment = funk2_memory__global_environment(&(__funk2.memory));
   f2ptr value = f2__environment__lookup_type_var_value(cause, global_environment, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "glwindow_value"));
-  printf("\nvalue="); f2__print(cause, nil, value);
   if (value) {
     raw__opengl__glTranslatef(cause, 0, 0, -10);
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__larva__is_type(cause, value)) {
+      printf("\nvalue="); f2__print(cause, nil, value); printf(" is larva.");
       raw__opengl__glColor4f(cause, 1,0,0,1);
       raw__draw_gl_cube(cause, 1,0,0,1);
     } else {
+      printf("\nvalue="); f2__print(cause, nil, value); printf(" is not larva.");
       raw__opengl__glColor4f(cause, 1,1,1,1);
       raw__draw_gl_cube(cause, 1,1,1,1);
     }

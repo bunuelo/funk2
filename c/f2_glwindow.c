@@ -392,11 +392,11 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__larva__is_type(cause, value)) {
       printf("\nvalue="); f2__print(cause, nil, value); printf(" is larva.");
-      raw__gl_set_material_color(f2ptr cause, 1,0,0,1);
+      raw__gl_set_material_color(cause, 1,0,0,1);
       raw__draw_gl_cube(cause);
     } else {
       printf("\nvalue="); f2__print(cause, nil, value); printf(" is not larva.");
-      raw__gl_set_material_color(f2ptr cause, 1,1,1,1);
+      raw__gl_set_material_color(cause, 1,1,1,1);
       raw__draw_gl_cube(cause);
     }
   }

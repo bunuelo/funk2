@@ -335,12 +335,8 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   return True;
 }
 
-void raw__draw_gl_cube(f2ptr cause, float red, float green, float blue, float alpha) {
+void raw__draw_gl_cube(f2ptr cause) {
   raw__opengl__glBegin(cause, GL_QUADS);
-  
-  float mcolor[] = { red, green, blue, alpha };
-  raw__opengl__glMaterialfv(cause, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
-  
   raw__opengl__glNormal3f(cause, 0,0,1);
   raw__opengl__glVertex3f(cause, -1,-1,1);
   raw__opengl__glVertex3f(cause,  1,-1,1);
@@ -379,6 +375,11 @@ void raw__draw_gl_cube(f2ptr cause, float red, float green, float blue, float al
   raw__opengl__glEnd(cause);
 }
 
+void raw__gl_set_material_color(f2ptr cause, float red, float green, float blue, float alpha) {
+  float mcolor[] = { red, green, blue, alpha };
+  raw__opengl__glMaterialfv(cause, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
+}
+
 // Here goes our drawing code
 void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -391,10 +392,12 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__larva__is_type(cause, value)) {
       printf("\nvalue="); f2__print(cause, nil, value); printf(" is larva.");
-      raw__draw_gl_cube(cause, 1,0,0,1);
+      raw__gl_set_material_color(f2ptr cause, 1,0,0,1);
+      raw__draw_gl_cube(cause);
     } else {
       printf("\nvalue="); f2__print(cause, nil, value); printf(" is not larva.");
-      raw__draw_gl_cube(cause, 1,1,1,1);
+      raw__gl_set_material_color(f2ptr cause, 1,1,1,1);
+      raw__draw_gl_cube(cause);
     }
   }
   

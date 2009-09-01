@@ -411,7 +411,7 @@ void funk2_glwindow__main(f2ptr cause) {
   funk2_glwindow__show(&(__funk2.glwindow), cause);
   
   // wait for events
-  while (!__funk2.glwindow.done) {
+  while (! __funk2.glwindow.done) {
     // handle the events in the queue
     funk2_glwindow__handle_events(&(__funk2.glwindow), cause);
     if (! __funk2.glwindow.done) {
@@ -495,10 +495,10 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 // physical_object
 
-//def_primobject_2_slot(physical_object, position, orientation, size, );
+def_primobject_2_slot(physical_object, position, rotation, size, );
 
-//f2ptr f2__bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context) {return f2bytecode_event__new(cause, bytecode, context);}
-//def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__new(this_cause, bytecode, context));
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr size) {return f2physical_object__new(cause, position, rotation, size);}
+def_pcfunk3(physical_object__new, position, rotation, size, return f2__bytecode_event__new(this_cause, position, rotation, size));
 
 
 
@@ -522,5 +522,7 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__5(glwindow__create, title, width, height, depth, fullscreen, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
+  
+  f2__primcfunk__init__3(physical_object__new, position, rotation, size, "glwindow cfunk declared in f2_glwindow.c");
 }
 

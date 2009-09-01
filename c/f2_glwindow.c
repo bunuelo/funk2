@@ -252,7 +252,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   if (this->window_created) {
     boolean_t draw_scene_constantly = boolean__true;
     if (draw_scene_constantly) {
-      if (raw__nanoseconds_since_1970() - this->last_redraw__nanoseconds_since_1970 >= ((1.0 / 10.0) * nanoseconds_per_second)) {
+      if ((raw__nanoseconds_since_1970() - this->last_redraw__nanoseconds_since_1970) >= ((1.0 / 10.0) * nanoseconds_per_second)) {
 	this->needs_redraw = boolean__true;
       }
     }
@@ -304,7 +304,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
     }
     if (this->needs_redraw) {
       funk2_glwindow__draw_scene(this, cause);
-      this->needs_redraw = boolean__true;
+      this->needs_redraw = boolean__false;
       this->last_redraw__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     }
   }

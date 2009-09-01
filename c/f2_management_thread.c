@@ -289,7 +289,7 @@ f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr 
     return f2larva__new(cause, 1);
   }
   u64 raw_uid = (u64)f2integer__i(uid, cause);
-  boolean_t result;
+  boolean_t result      = boolean__false;
   boolean_t is_finished = raw__management_thread__check_command_uid_finished(raw_uid, &result);
   if (user_result_place) {
     f2place__thing__set(user_result_place, cause, f2bool__new(result));

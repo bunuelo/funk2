@@ -23,7 +23,7 @@
 #define F2__GLWINDOW__TYPES__H
 
 #include "f2_primobjects.h"
-declare_object_type_3_slot(physical_object, position, rotation, size, );
+
 
 #endif // F2__GLWINDOW__TYPES__H
 

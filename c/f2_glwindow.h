@@ -22,6 +22,7 @@
 #ifndef F2__GLWINDOW__TYPES__H
 #define F2__GLWINDOW__TYPES__H
 
+#include "f2_primobjects.h"
 declare_object_type_3_slot(physical_object, position, rotation, size, );
 
 #endif // F2__GLWINDOW__TYPES__H
@@ -29,7 +30,6 @@ declare_object_type_3_slot(physical_object, position, rotation, size, );
 #ifndef F2__GLWINDOW__H
 #define F2__GLWINDOW__H
 #include "f2_system_headers.h"
-#include "f2_primobjects.h"
 
 #if defined(F2__GL__H) && defined(F2__GLX__H) && defined(F2__GLU__H) && defined(F2__XF86VMODE__H) && defined(F2__XLIB__H) && defined(F2__KEYSYM__H)
 #  define F2__GLWINDOW__SUPPORTED

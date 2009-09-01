@@ -274,6 +274,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       }
     }
     if (draw_scene_constantly && (! already_drew_scene)) {
+      printf("\ndrawing scene constantly."); fflush(stdout);
       funk2_glwindow__draw_scene(this, cause);
     }
   }

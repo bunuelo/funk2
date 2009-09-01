@@ -224,6 +224,8 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   if (this->window_created) {
+    boolean_t draw_scene_constantly = boolean__true;
+    boolean_t already_drew_scene    = boolean__false;
     XEvent event;
     while (raw__xlib__XPending(cause, this->display) > 0) {
       raw__xlib__XNextEvent(cause, this->display, &event);
@@ -232,6 +234,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	if (event.xexpose.count != 0)
 	  break;
 	funk2_glwindow__draw_scene(this, cause);
+	already_drew_scene = boolean__true;
 	break;
       case ConfigureNotify:
 	// call raw__resize_gl_scene only if our window-size changed
@@ -269,6 +272,9 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       default:
 	break;
       }
+    }
+    if (draw_scene_constantly && (! already_drew_scene)) {
+      funk2_glwindow__draw_scene(this, cause);
     }
   }
   return this->done;

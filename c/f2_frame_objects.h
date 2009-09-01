@@ -245,7 +245,7 @@
   init_frame_object__slot(name, slot_4);
 
 
-f2ptr f2physical_object__primobject_type__new(f2ptr cause);
+f2ptr f2physical_sim_object__primobject_type__new(f2ptr cause);
 
 // **
 

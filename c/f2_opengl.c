@@ -84,6 +84,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glNormal3f        = (void(*)(GLfloat nx, GLfloat ny, GLfloat nz))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glNormal3f"));        if (! (this->glNormal3f))        {status("funk2_opengl__load_library: failed symbol, glNormal3f.");        return boolean__false;}
   this->glVertex3f        = (void(*)(GLfloat x, GLfloat y, GLfloat z))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glVertex3f"));        if (! (this->glVertex3f))        {status("funk2_opengl__load_library: failed symbol, glVertex3f.");        return boolean__false;}
   this->glEnd             = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glEnd"));             if (! (this->glEnd))             {status("funk2_opengl__load_library: failed symbol, glEnd.");             return boolean__false;}
+  this->glMaterialfv      = (void(*)(GLenum face, GLenum pname, const GLfloat* params))                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMaterialfv"));      if (! (this->glMaterialfv))      {status("funk2_opengl__load_library: failed symbol, glMaterialfv.");      return boolean__false;}
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
   this->glXMakeCurrent    = (Bool(*)(Display* dpy, GLXDrawable drawable, GLXContext ctx))                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXMakeCurrent"));    if (! (this->glXMakeCurrent))    {status("funk2_opengl__load_library: failed symbol, glXMakeCurrent.");    return boolean__false;}
   this->glXDestroyContext = (void(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXDestroyContext")); if (! (this->glXDestroyContext)) {status("funk2_opengl__load_library: failed symbol, glXDestroyContext."); return boolean__false;}
@@ -91,6 +92,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glXQueryVersion   = (Bool(*)(Display* dpy, int* Major, int* Minor))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXQueryVersion"));   if (! (this->glXQueryVersion))   {status("funk2_opengl__load_library: failed symbol, glXQueryVersion.");   return boolean__false;}
   this->glXCreateContext  = (GLXContext(*)(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXCreateContext"));  if (! (this->glXCreateContext))  {status("funk2_opengl__load_library: failed symbol, glXCreateContext.");  return boolean__false;}
   this->glXIsDirect       = (Bool(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXIsDirect"));       if (! (this->glXIsDirect))       {status("funk2_opengl__load_library: failed symbol, glXIsDirect.");       return boolean__false;}
+
 #endif // F2__GL__H
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   this->initialized = boolean__true;
@@ -205,6 +207,11 @@ void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
 void raw__opengl__glEnd(f2ptr cause) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glEnd)();
+}
+
+void raw__opengl__glMaterialfv(f2ptr cause, GLenum face, GLenum pname, const GLfloat* params) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  (*__funk2.opengl.glMaterialfv)(face, pname, params);
 }
 
 void raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable) {

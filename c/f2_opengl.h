@@ -53,6 +53,7 @@ struct funk2_opengl_s {
   void(*         glNormal3f    )(GLfloat nx, GLfloat ny, GLfloat nz);
   void(*         glVertex3f    )(GLfloat x, GLfloat y, GLfloat z);
   void(*         glEnd         )();
+  void(*         glMaterialfv  )(GLenum face, GLenum pname, const GLfloat* params);
   // The following functions are included in libGL.so, but are
   // probably not on non-X environments, so we'll need to deal with
   // this in a port to those environments.
@@ -135,6 +136,7 @@ void raw__opengl__glBegin(f2ptr cause, GLenum mode);
 void raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz);
 void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
 void raw__opengl__glEnd(f2ptr cause);
+void raw__opengl__glMaterialfv(f2ptr cause, GLenum face, GLenum pname, const GLfloat* params);
 
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);

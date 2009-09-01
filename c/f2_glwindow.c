@@ -345,13 +345,13 @@ void raw__draw_gl_cube(f2ptr cause) {
 }
 
 // Here goes our drawing code
-int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
+void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   raw__opengl__glLoadIdentity(cause);
   
   f2ptr global_environment = funk2_memory__global_environment(&(__funk2.memory));
   f2ptr value = f2__environment__lookup_type_var_value(cause, global_environment, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "glwindow_value"));
-  
+  printf("\nvalue="); f2__print(cause, nil, value);
   if (value) {
     raw__opengl__glTranslatef(cause, 0, 0, -10);
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
@@ -366,7 +366,6 @@ int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   if (this->double_buffered) {
     raw__opengl__glXSwapBuffers(cause, this->display, this->x_window);
   }
-  return True;    
 }
 
 void funk2_glwindow__main(f2ptr cause) {

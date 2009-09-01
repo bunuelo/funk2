@@ -81,7 +81,7 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
 }
 
 void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
-  funk2_window__destroy(this);
+  funk2_glwindow__destroy(this);
   
   int title__length = strlen((char*)title);
   this->title = (u8*)from_ptr(f2__malloc(title__length + 1));

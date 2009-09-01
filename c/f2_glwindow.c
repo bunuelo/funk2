@@ -324,7 +324,7 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glLightfv(cause, GL_LIGHT1, GL_DIFFUSE,  funk2_glwindow__light1_diffuse);
   raw__opengl__glLightfv(cause, GL_LIGHT1, GL_POSITION, funk2_glwindow__light1_position);
   raw__opengl__glEnable(cause, GL_LIGHT1);
-  raw__opengl__glEnable(cause, GL_LIGHTING);
+  //raw__opengl__glEnable(cause, GL_LIGHTING);
   
   raw__opengl__glCullFace(cause, GL_BACK);
   raw__opengl__glEnable(cause, GL_CULL_FACE);

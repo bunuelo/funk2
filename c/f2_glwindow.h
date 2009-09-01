@@ -19,6 +19,13 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__GLWINDOW__TYPES__H
+#define F2__GLWINDOW__TYPES__H
+
+declare_object_type_3_slot(physical_object, position, rotation, size, );
+
+#endif // F2__GLWINDOW__TYPES__H
+
 #ifndef F2__GLWINDOW__H
 #define F2__GLWINDOW__H
 #include "f2_system_headers.h"
@@ -82,7 +89,6 @@ void      raw__glwindow__destroy(f2ptr cause);
 f2ptr      f2__glwindow__destroy(f2ptr cause);
 
 declare_primobject_3_slot(physical_object, position, rotation, size);
-declare_object_type_3_slot(physical_object, position, rotation, size, );
 
 // **
 

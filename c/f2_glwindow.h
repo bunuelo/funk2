@@ -51,6 +51,8 @@ typedef struct funk2_glwindow_s {
   unsigned int         depth;
   boolean_t            done;
   float                rotate_angle;
+  u64                  last_redraw__nanoseconds_since_1970;
+  boolean_t            needs_redraw;
 #endif // F2__GLWINDOW__SUPPORTED
 
 } funk2_glwindow_t;

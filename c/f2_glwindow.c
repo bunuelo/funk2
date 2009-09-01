@@ -91,10 +91,12 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
   this->height         = height;
   this->depth          = depth;
   this->fullscreen     = fullscreen;
-  
   this->window_created = boolean__false;
-  this->rotate_angle = 0;
-  this->done = boolean__false;
+  this->rotate_angle   = 0;
+  this->done           = boolean__false;
+  this->needs_redraw   = boolean__true;
+  
+  this->last_redraw__nanoseconds_since_1970 = 0;
   
   this->initialized = boolean__true;
 }
@@ -249,7 +251,11 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   if (this->window_created) {
     boolean_t draw_scene_constantly = boolean__true;
-    boolean_t already_drew_scene    = boolean__false;
+    if (draw_scene_constantly) {
+      if (raw__nanoseconds_since_1970() - this->last_redraw__nanoseconds_since_1970 >= ((1.0 / 10.0) * nanoseconds_per_second)) {
+	this->needs_redraw = boolean__true;
+      }
+    }
     XEvent event;
     while (raw__xlib__XPending(cause, this->display) > 0) {
       raw__xlib__XNextEvent(cause, this->display, &event);
@@ -257,8 +263,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       case Expose:
 	if (event.xexpose.count != 0)
 	  break;
-	funk2_glwindow__draw_scene(this, cause);
-	already_drew_scene = boolean__true;
+	this->needs_redraw = boolean__true;
 	break;
       case ConfigureNotify:
 	// call raw__resize_gl_scene only if our window-size changed
@@ -297,8 +302,10 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 	break;
       }
     }
-    if (draw_scene_constantly && (! already_drew_scene)) {
+    if (this->needs_redraw) {
       funk2_glwindow__draw_scene(this, cause);
+      this->needs_redraw = boolean__true;
+      this->last_redraw__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     }
   }
   return this->done;

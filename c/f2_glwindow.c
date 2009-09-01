@@ -324,7 +324,7 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glLightfv(cause, GL_LIGHT1, GL_DIFFUSE,  funk2_glwindow__light1_diffuse);
   raw__opengl__glLightfv(cause, GL_LIGHT1, GL_POSITION, funk2_glwindow__light1_position);
   raw__opengl__glEnable(cause, GL_LIGHT1);
-  //raw__opengl__glEnable(cause, GL_LIGHTING);
+  raw__opengl__glEnable(cause, GL_LIGHTING);
   
   raw__opengl__glCullFace(cause, GL_BACK);
   raw__opengl__glEnable(cause, GL_CULL_FACE);
@@ -338,44 +338,40 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
 void raw__draw_gl_cube(f2ptr cause, float red, float green, float blue, float alpha) {
   raw__opengl__glBegin(cause, GL_QUADS);
   
+  float mcolor[] = { red, green, blue, alpha };
+  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
   
   raw__opengl__glNormal3f(cause, 0,0,1);
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,1);
   raw__opengl__glVertex3f(cause,  1,-1,1);
   raw__opengl__glVertex3f(cause,  1, 1,1);
   raw__opengl__glVertex3f(cause, -1, 1,1);
   
   raw__opengl__glNormal3f(cause, 0,0,-1);
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,-1);
   raw__opengl__glVertex3f(cause, -1, 1,-1);
   raw__opengl__glVertex3f(cause,  1, 1,-1);
   raw__opengl__glVertex3f(cause,  1,-1,-1);
   
   raw__opengl__glNormal3f(cause, 0,1,0);
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,1,-1);
   raw__opengl__glVertex3f(cause, -1,1, 1);
   raw__opengl__glVertex3f(cause,  1,1, 1);
   raw__opengl__glVertex3f(cause,  1,1,-1);
  
   raw__opengl__glNormal3f(cause, 0,-1,0);
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,-1);
   raw__opengl__glVertex3f(cause,  1,-1,-1);
   raw__opengl__glVertex3f(cause,  1,-1, 1);
   raw__opengl__glVertex3f(cause, -1,-1, 1);
   
   raw__opengl__glNormal3f(cause, 1,0,0);
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, 1,-1,-1);
   raw__opengl__glVertex3f(cause, 1, 1,-1);
   raw__opengl__glVertex3f(cause, 1, 1, 1);
   raw__opengl__glVertex3f(cause, 1,-1, 1);
   
   raw__opengl__glNormal3f(cause, -1,0,0);
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,-1);
   raw__opengl__glVertex3f(cause, -1,-1, 1);
   raw__opengl__glVertex3f(cause, -1, 1, 1);
@@ -395,11 +391,9 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__larva__is_type(cause, value)) {
       printf("\nvalue="); f2__print(cause, nil, value); printf(" is larva.");
-      raw__opengl__glColor4f(cause, 1,0,0,1);
       raw__draw_gl_cube(cause, 1,0,0,1);
     } else {
       printf("\nvalue="); f2__print(cause, nil, value); printf(" is not larva.");
-      raw__opengl__glColor4f(cause, 1,1,1,1);
       raw__draw_gl_cube(cause, 1,1,1,1);
     }
   }

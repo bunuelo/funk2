@@ -76,18 +76,42 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
   this->window_created = boolean__false;
   this->rotate_angle = 0;
   this->done = boolean__false;
+  
+  this->initialized = boolean__true;
+}
+
+void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
+  funk2_window__destroy(this);
+  
+  int title__length = strlen((char*)title);
+  this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
+  strcpy((char*)(this->title), (char*)title);
+  
+  this->width          = width;
+  this->height         = height;
+  this->depth          = depth;
+  this->fullscreen     = fullscreen;
+  
+  this->window_created = boolean__false;
+  this->rotate_angle = 0;
+  this->done = boolean__false;
+  
+  this->initialized = boolean__true;
 }
 
 void funk2_glwindow__destroy(funk2_glwindow_t* this) {
-  funk2_glwindow__hide(this, nil);
-  f2__free(to_ptr(this->title));
+  if (this->initialized) {
+    this->initialized = boolean__false;
+    
+    funk2_glwindow__hide(this, nil);
+    f2__free(to_ptr(this->title));
+  }
 }
 
 // function to release/destroy our resources and restoring the old desktop
 void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
   if (this->window_created) {
     this->window_created = boolean__false;
-    
     if (this->glx_context) {
       if (! raw__opengl__glXMakeCurrent(cause, this->display, None, NULL)) {
         status("WARNING: could not release drawing context.");
@@ -371,7 +395,7 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
 void funk2_glwindow__main(f2ptr cause) {
   // default to fullscreen
   boolean_t fullscreen = False;
-  funk2_glwindow__init(&(__funk2.glwindow), (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
+  funk2_glwindow__reinit(&(__funk2.glwindow), (u8*)"NeHe's OpenGL Framework", 1024, 768, 24, fullscreen);
   funk2_glwindow__show(&(__funk2.glwindow), cause);
   
   // wait for events
@@ -406,7 +430,7 @@ def_pcfunk0(glwindow__supported, return f2__glwindow__supported(this_cause));
 
 void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
 #if defined(F2__GLWINDOW__H)
-  funk2_glwindow__init(&(__funk2.glwindow), title, width, height, depth, fullscreen);
+  funk2_glwindow__reinit(&(__funk2.glwindow), title, width, height, depth, fullscreen);
   funk2_glwindow__show(&(__funk2.glwindow), cause);
 #else
   status("glwindow not supported.");

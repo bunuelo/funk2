@@ -31,8 +31,9 @@ int int__abs(int x);
 
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
+  boolean_t            initialized;
   boolean_t            window_created;
-
+  
 #if defined(F2__GLWINDOW__SUPPORTED)
   Display*             display;
   int                  screen;

@@ -274,7 +274,6 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       }
     }
     if (draw_scene_constantly && (! already_drew_scene)) {
-      printf("\ndrawing scene constantly."); fflush(stdout);
       funk2_glwindow__draw_scene(this, cause);
     }
   }
@@ -356,7 +355,11 @@ int funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   if (value) {
     raw__opengl__glTranslatef(cause, 0, 0, -10);
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
-    raw__opengl__glColor4f(cause, 1,1,1,1);
+    if (raw__larva__is_type(cause, value)) {
+      raw__opengl__glColor4f(cause, 1,0,0,1);
+    } else {
+      raw__opengl__glColor4f(cause, 1,1,1,1);
+    }
     raw__draw_gl_cube(cause);
   }  
   

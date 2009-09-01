@@ -338,39 +338,44 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
 void raw__draw_gl_cube(f2ptr cause, float red, float green, float blue, float alpha) {
   raw__opengl__glBegin(cause, GL_QUADS);
   
-  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   
   raw__opengl__glNormal3f(cause, 0,0,1);
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,1);
   raw__opengl__glVertex3f(cause,  1,-1,1);
   raw__opengl__glVertex3f(cause,  1, 1,1);
   raw__opengl__glVertex3f(cause, -1, 1,1);
   
   raw__opengl__glNormal3f(cause, 0,0,-1);
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,-1);
   raw__opengl__glVertex3f(cause, -1, 1,-1);
   raw__opengl__glVertex3f(cause,  1, 1,-1);
   raw__opengl__glVertex3f(cause,  1,-1,-1);
   
   raw__opengl__glNormal3f(cause, 0,1,0);
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,1,-1);
   raw__opengl__glVertex3f(cause, -1,1, 1);
   raw__opengl__glVertex3f(cause,  1,1, 1);
   raw__opengl__glVertex3f(cause,  1,1,-1);
  
   raw__opengl__glNormal3f(cause, 0,-1,0);
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,-1);
   raw__opengl__glVertex3f(cause,  1,-1,-1);
   raw__opengl__glVertex3f(cause,  1,-1, 1);
   raw__opengl__glVertex3f(cause, -1,-1, 1);
   
   raw__opengl__glNormal3f(cause, 1,0,0);
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, 1,-1,-1);
   raw__opengl__glVertex3f(cause, 1, 1,-1);
   raw__opengl__glVertex3f(cause, 1, 1, 1);
   raw__opengl__glVertex3f(cause, 1,-1, 1);
   
   raw__opengl__glNormal3f(cause, -1,0,0);
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
   raw__opengl__glVertex3f(cause, -1,-1,-1);
   raw__opengl__glVertex3f(cause, -1,-1, 1);
   raw__opengl__glVertex3f(cause, -1, 1, 1);

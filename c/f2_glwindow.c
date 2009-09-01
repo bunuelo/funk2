@@ -328,8 +328,11 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   return True;
 }
 
-void raw__draw_gl_cube(f2ptr cause) {
+void raw__draw_gl_cube(f2ptr cause, float red, float green, float blue, float alpha) {
   raw__opengl__glBegin(cause, GL_QUADS);
+  
+  raw__opengl__glColor4f(cause, red, green, blue, alpha);
+  
   raw__opengl__glNormal3f(cause, 0,0,1);
   raw__opengl__glVertex3f(cause, -1,-1,1);
   raw__opengl__glVertex3f(cause,  1,-1,1);
@@ -381,11 +384,12 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__larva__is_type(cause, value)) {
       raw__opengl__glColor4f(cause, 1,0,0,1);
+      raw__draw_gl_cube(cause, 1,0,0,1);
     } else {
       raw__opengl__glColor4f(cause, 1,1,1,1);
+      raw__draw_gl_cube(cause, 1,1,1,1);
     }
-    raw__draw_gl_cube(cause);
-  }  
+  }
   
   if (this->double_buffered) {
     raw__opengl__glXSwapBuffers(cause, this->display, this->x_window);

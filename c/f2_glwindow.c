@@ -495,7 +495,7 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 // physical_object
 
-def_primobject_3_slot(physical_object, position, rotation, size, );
+def_primobject_3_slot(physical_object, position, rotation, size);
 
 f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr size) {return f2physical_object__new(cause, position, rotation, size);}
 def_pcfunk3(physical_object__new, position, rotation, size, return f2__bytecode_event__new(this_cause, position, rotation, size));

@@ -24,6 +24,9 @@
 
 #include "f2_primobjects.h"
 
+typedef struct funk2_object_type__physical_position__slot_s   funk2_object_type__physical_position__slot_t;
+declare_object_type_3_slot(physical_position, x, y, z, );
+
 typedef struct funk2_object_type__physical_object__slot_s   funk2_object_type__physical_object__slot_t;
 declare_object_type_3_slot(physical_object, position, rotation, size, );
 
@@ -95,6 +98,7 @@ f2ptr      f2__glwindow__handle_events(f2ptr cause);
 void      raw__glwindow__destroy(f2ptr cause);
 f2ptr      f2__glwindow__destroy(f2ptr cause);
 
+declare_primobject_3_slot(physical_position, x, y, z);
 declare_primobject_3_slot(physical_object, position, rotation, size);
 declare_primobject_1_slot(physical_scene, physical_objects);
 

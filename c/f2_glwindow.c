@@ -493,12 +493,21 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 
 
+// physical_position
+
+def_primobject_3_slot(physical_position, x, y, z);
+
+f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2physical_position__new(cause, x, y, z);}
+def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));
+
+
 // physical_object
 
 def_primobject_3_slot(physical_object, position, rotation, size);
 
 f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr size) {return f2physical_object__new(cause, position, rotation, size);}
 def_pcfunk3(physical_object__new, position, rotation, size, return f2__physical_object__new(this_cause, position, rotation, size));
+
 
 // physical_scene
 
@@ -514,8 +523,9 @@ def_pcfunk1(physical_scene__new, physical_objects, return f2__physical_scene__ne
 void f2__glwindow__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __physical_object__symbol = new__symbol(cause, "physical_object");
-  __physical_scene__symbol  = new__symbol(cause, "physical_scene");
+  __physical_position__symbol = new__symbol(cause, "physical_position");
+  __physical_object__symbol   = new__symbol(cause, "physical_object");
+  __physical_scene__symbol    = new__symbol(cause, "physical_scene");
 }
 
 void f2__glwindow__initialize() {
@@ -536,6 +546,7 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
   
+  initialize_primobject_3_slot(physical_position, x, y, z);
   initialize_primobject_3_slot(physical_object, position, rotation, size);
   initialize_primobject_1_slot(physical_scene, physical_objects);
 }

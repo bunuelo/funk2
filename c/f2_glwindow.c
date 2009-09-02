@@ -505,6 +505,7 @@ def_pcfunk3(physical_object__new, position, rotation, size, return f2__physical_
 // **
 
 void f2__glwindow__reinitialize_globalvars() {
+  __physical_object__symbol = new__symbol(cause, "physical_object");
 }
 
 void f2__glwindow__initialize() {

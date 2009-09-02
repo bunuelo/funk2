@@ -500,17 +500,55 @@ def_primobject_1_slot(physical_rotation, array);
 f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr array) {return f2physical_rotation__new(cause, array);}
 def_pcfunk1(physical_rotation__new, array, return f2__physical_rotation__new(this_cause, array));
 
-//f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
-//  f2ptr x_range = f2integer__new(cause, 
-//  f2ptr this = f2__physical_rotation__new(cause, 
-//}
+f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
+  f2ptr array = raw__array__new(cause, 9);
+  raw__array__elt__set(cause, array, 0, f2double__new(cause, 1));
+  raw__array__elt__set(cause, array, 1, f2double__new(cause, 0));
+  raw__array__elt__set(cause, array, 2, f2double__new(cause, 0));
+  raw__array__elt__set(cause, array, 3, f2double__new(cause, 0));
+  raw__array__elt__set(cause, array, 4, f2double__new(cause, 1));
+  raw__array__elt__set(cause, array, 5, f2double__new(cause, 0));
+  raw__array__elt__set(cause, array, 6, f2double__new(cause, 0));
+  raw__array__elt__set(cause, array, 7, f2double__new(cause, 0));
+  raw__array__elt__set(cause, array, 8, f2double__new(cause, 1));
+  return f2__physical_rotation__new(cause, array);
+}
+
 
 // physical_position
 
 def_primobject_3_slot(physical_position, x, y, z);
 
-f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2physical_position__new(cause, x, y, z);}
+f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
+  double x__d;
+  double y__d;
+  double z__d;
+  if (raw__double__is_type(cause, x)) {
+    x__d = (double)f2double__d(x, cause);
+  } else if (raw__integer__is_type(cause, x)) {
+    x__d = (double)f2integer__i(x, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+  if (raw__double__is_type(cause, y)) {
+    y__d = (double)f2double__d(y, cause);
+  } else if (raw__integer__is_type(cause, y)) {
+    y__d = (double)f2integer__i(y, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+  if (raw__double__is_type(cause, z)) {
+    z__d = (double)f2double__d(z, cause);
+  } else if (raw__integer__is_type(cause, z)) {
+    z__d = (double)f2integer__i(z, cause);
+  } else {
+    return f2larva__new(cause, 1);
+  }
+  return f2physical_position__new(cause, x, y, z);
+}
 def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));
+
+
 
 
 // physical_object

@@ -497,7 +497,7 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 def_primobject_1_slot(physical_rotation, array);
 
-f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr f2ptr array) {return f2physical_rotation__new(cause, array);}
+f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr array) {return f2physical_rotation__new(cause, array);}
 def_pcfunk1(physical_rotation__new, array, return f2__physical_rotation__new(this_cause, array));
 
 //f2ptr f2__physical_rotation__new_identity(f2ptr cause) {

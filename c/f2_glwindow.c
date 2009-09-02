@@ -504,7 +504,7 @@ def_pcfunk3(physical_object__new, position, rotation, size, return f2__physical_
 
 def_primobject_1_slot(physical_scene, physical_objects);
 
-f2ptr f2__physical_scene__new(f2ptr cause, f2ptr physical_objects) {return f2physical_object__new(cause, physical_objects);}
+f2ptr f2__physical_scene__new(f2ptr cause, f2ptr physical_objects) {return f2physical_scene__new(cause, physical_objects);}
 def_pcfunk3(physical_scene__new, physical_objects, return f2__physical_scene__new(this_cause, physical_objects));
 
 

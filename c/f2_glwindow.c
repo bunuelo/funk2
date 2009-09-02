@@ -515,6 +515,7 @@ void f2__glwindow__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   __physical_object__symbol = new__symbol(cause, "physical_object");
+  __physical_scene__symbol  = new__symbol(cause, "physical_scene");
 }
 
 void f2__glwindow__initialize() {

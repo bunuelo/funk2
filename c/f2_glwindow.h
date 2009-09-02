@@ -19,26 +19,6 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__GLWINDOW__TYPES__H
-#define F2__GLWINDOW__TYPES__H
-
-#include "f2_primobjects.h"
-
-typedef struct funk2_object_type__physical_rotation__slot_s funk2_object_type__physical_rotation__slot_t;
-declare_object_type_1_slot(physical_rotation, array, );
-
-typedef struct funk2_object_type__physical_position__slot_s funk2_object_type__physical_position__slot_t;
-declare_object_type_3_slot(physical_position, x, y, z, );
-
-typedef struct funk2_object_type__physical_object__slot_s funk2_object_type__physical_object__slot_t;
-declare_object_type_3_slot(physical_object, position, rotation, shape, );
-
-typedef struct funk2_object_type__physical_scene__slot_s funk2_object_type__physical_scene__slot_t;
-declare_object_type_1_slot(physical_scene, physical_objects, );
-
-
-#endif // F2__GLWINDOW__TYPES__H
-
 #ifndef F2__GLWINDOW__H
 #define F2__GLWINDOW__H
 #include "f2_system_headers.h"
@@ -100,11 +80,6 @@ boolean_t raw__glwindow__handle_events(f2ptr cause);
 f2ptr      f2__glwindow__handle_events(f2ptr cause);
 void      raw__glwindow__destroy(f2ptr cause);
 f2ptr      f2__glwindow__destroy(f2ptr cause);
-
-declare_primobject_1_slot(physical_rotation, array);
-declare_primobject_3_slot(physical_position, x, y, z);
-declare_primobject_3_slot(physical_object, position, rotation, shape);
-declare_primobject_1_slot(physical_scene, physical_objects);
 
 // **
 

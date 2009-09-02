@@ -505,6 +505,8 @@ def_pcfunk3(physical_object__new, position, rotation, size, return f2__physical_
 // **
 
 void f2__glwindow__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
   __physical_object__symbol = new__symbol(cause, "physical_object");
 }
 
@@ -513,7 +515,9 @@ void f2__glwindow__initialize() {
   
   f2__glwindow__reinitialize_globalvars();
   
-  if (raw__glwindow__supported(nil)) {
+  f2ptr cause = initial_cause();
+  
+  if (raw__glwindow__supported(cause)) {
     status("glwindow is supported in this funk2 build!");
   } else {
     status("glwindow is not supported in this funk2 build.");
@@ -524,7 +528,6 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
   
-  f2ptr cause = initial_cause();
   initialize_primobject_3_slot(physical_object, position, rotation, size);
 }
 

@@ -24,6 +24,9 @@
 
 #include "f2_primobjects.h"
 
+typedef struct funk2_object_type__physical_object__slot_s   funk2_object_type__physical_object__slot_t;
+declare_object_type_3_slot(physical_object, position, rotation, size, );
+
 
 #endif // F2__GLWINDOW__TYPES__H
 

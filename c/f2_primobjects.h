@@ -1486,7 +1486,5 @@ declare_object_type_4_slot(event, node_id, event_id, event_type, data, );
 
 declare_object_type_2_slot(bytecode_event, bytecode, context, );
 
-declare_object_type_3_slot(physical_object, position, rotation, size, );
-
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS
 

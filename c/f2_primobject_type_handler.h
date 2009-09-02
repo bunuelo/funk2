@@ -95,6 +95,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__list__slot_t             primobject_type_list;
   funk2_object_type__circular_buffer__slot_t  primobject_type_circular_buffer;
   funk2_object_type__physical_object__slot_t  primobject_type_physical_object;
+  funk2_object_type__physical_scene__slot_t   primobject_type_physical_scene;
 };
 
 // **

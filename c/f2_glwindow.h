@@ -27,6 +27,9 @@
 typedef struct funk2_object_type__physical_object__slot_s   funk2_object_type__physical_object__slot_t;
 declare_object_type_3_slot(physical_object, position, rotation, size, );
 
+typedef struct funk2_object_type__physical_scene__slot_s   funk2_object_type__physical_scene__slot_t;
+declare_object_type_1_slot(physical_scene, physical_objects, );
+
 
 #endif // F2__GLWINDOW__TYPES__H
 
@@ -93,6 +96,7 @@ void      raw__glwindow__destroy(f2ptr cause);
 f2ptr      f2__glwindow__destroy(f2ptr cause);
 
 declare_primobject_3_slot(physical_object, position, rotation, size);
+declare_primobject_1_slot(physical_scene, physical_objects);
 
 // **
 

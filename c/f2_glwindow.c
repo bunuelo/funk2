@@ -495,10 +495,10 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 // physical_rotation
 
-def_primobject_1_slot(physical_rotation, matrix);
+def_primobject_3_slot(physical_rotation, x_range, y_range, array);
 
-f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr matrix) {return f2physical_rotation__new(cause, matrix);}
-def_pcfunk1(physical_rotation__new, matrix, return f2__physical_rotation__new(this_cause, matrix));
+f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr x_range, f2ptr y_range, f2ptr array) {return f2physical_rotation__new(cause, x_range, y_range, array);}
+def_pcfunk3(physical_rotation__new, x_range, y_range, array, return f2__physical_rotation__new(this_cause, x_range, y_range, array));
 
 
 // physical_position
@@ -555,7 +555,7 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
   
-  initialize_primobject_1_slot(physical_rotation, matrix);
+  initialize_primobject_3_slot(physical_rotation, x_range, y_range, array);
   initialize_primobject_3_slot(physical_position, x, y, z);
   initialize_primobject_3_slot(physical_object, position, rotation, size);
   initialize_primobject_1_slot(physical_scene, physical_objects);

@@ -575,6 +575,8 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
   
   initialize_primobject_1_slot(physical_rotation, array);
+  f2__primcfunk__init__0(physical_rotation__new_identity, "glwindow cfunk declared in f2_glwindow.c");
+  
   initialize_primobject_3_slot(physical_position, x, y, z);
   initialize_primobject_3_slot(physical_object, position, rotation, shape);
   initialize_primobject_1_slot(physical_scene, physical_objects);

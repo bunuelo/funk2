@@ -500,6 +500,13 @@ def_primobject_3_slot(physical_object, position, rotation, size);
 f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr size) {return f2physical_object__new(cause, position, rotation, size);}
 def_pcfunk3(physical_object__new, position, rotation, size, return f2__physical_object__new(this_cause, position, rotation, size));
 
+// physical_scene
+
+def_primobject_1_slot(physical_scene, physical_objects);
+
+f2ptr f2__physical_scene__new(f2ptr cause, f2ptr physical_objects) {return f2physical_object__new(cause, physical_objects);}
+def_pcfunk3(physical_scene__new, physical_objects, return f2__physical_scene__new(this_cause, physical_objects));
+
 
 
 // **
@@ -529,5 +536,6 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
   
   initialize_primobject_3_slot(physical_object, position, rotation, size);
+  initialize_primobject_1_slot(physical_scene, physical_objects);
 }
 

@@ -25,7 +25,7 @@
 #include "f2_primobjects.h"
 
 typedef struct funk2_object_type__physical_rotation__slot_s funk2_object_type__physical_rotation__slot_t;
-declare_object_type_3_slot(physical_rotation, matrix, );
+declare_object_type_1_slot(physical_rotation, matrix, );
 
 typedef struct funk2_object_type__physical_position__slot_s funk2_object_type__physical_position__slot_t;
 declare_object_type_3_slot(physical_position, x, y, z, );

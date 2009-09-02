@@ -36,7 +36,6 @@ declare_object_type_3_slot(physical_object, position, rotation, shape, );
 typedef struct funk2_object_type__physical_scene__slot_s funk2_object_type__physical_scene__slot_t;
 declare_object_type_1_slot(physical_scene, physical_objects, );
 
-
 #endif // F2__PHYSICAL_OBJECTS__TYPES__H
 
 #ifndef F2__PHYSICAL_OBJECTS__H
@@ -49,6 +48,6 @@ declare_primobject_1_slot(physical_scene, physical_objects);
 
 // **
 
-void f2__physical_objects__initialize() {
+void f2__physical_objects__initialize();
 
 #endif // F2__PHYSICAL_OBJECTS__H

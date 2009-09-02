@@ -91,11 +91,17 @@ void f2__physical_objects__initialize() {
   
   f2ptr cause = initial_cause();
   
+  // physical_rotation
   initialize_primobject_1_slot(physical_rotation, array);
   f2__primcfunk__init__0(physical_rotation__new_identity, "glwindow cfunk declared in f2_glwindow.c");
   
+  // physical_position
   initialize_primobject_3_slot(physical_position, x, y, z);
+  
+  // physical_object
   initialize_primobject_3_slot(physical_object, position, rotation, shape);
+  
+  // physical_scene
   initialize_primobject_1_slot(physical_scene, physical_objects);
 }
 

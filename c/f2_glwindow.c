@@ -520,43 +520,20 @@ f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
 def_primobject_3_slot(physical_position, x, y, z);
 
 f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
-  double x__d;
-  double y__d;
-  double z__d;
-  if (raw__double__is_type(cause, x)) {
-    x__d = (double)f2double__d(x, cause);
-  } else if (raw__integer__is_type(cause, x)) {
-    x__d = (double)f2integer__i(x, cause);
-  } else {
-    return f2larva__new(cause, 1);
-  }
-  if (raw__double__is_type(cause, y)) {
-    y__d = (double)f2double__d(y, cause);
-  } else if (raw__integer__is_type(cause, y)) {
-    y__d = (double)f2integer__i(y, cause);
-  } else {
-    return f2larva__new(cause, 1);
-  }
-  if (raw__double__is_type(cause, z)) {
-    z__d = (double)f2double__d(z, cause);
-  } else if (raw__integer__is_type(cause, z)) {
-    z__d = (double)f2integer__i(z, cause);
-  } else {
-    return f2larva__new(cause, 1);
-  }
+  double x__d; if (raw__double__is_type(cause, x)) {x__d = (double)f2double__d(x, cause);} else if (raw__integer__is_type(cause, x)) {x__d = (double)f2integer__i(x, cause);} else {return f2larva__new(cause, 1);}
+  double y__d; if (raw__double__is_type(cause, y)) {y__d = (double)f2double__d(y, cause);} else if (raw__integer__is_type(cause, y)) {y__d = (double)f2integer__i(y, cause);} else {return f2larva__new(cause, 1);}
+  double z__d; if (raw__double__is_type(cause, z)) {z__d = (double)f2double__d(z, cause);} else if (raw__integer__is_type(cause, z)) {z__d = (double)f2integer__i(z, cause);} else {return f2larva__new(cause, 1);}
   return f2physical_position__new(cause, f2double__new(cause, x__d), f2double__new(cause, y__d), f2double__new(cause, z__d));
 }
 def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));
 
 
-
-
 // physical_object
 
-def_primobject_3_slot(physical_object, position, rotation, size);
+def_primobject_3_slot(physical_object, position, rotation, shape);
 
-f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr size) {return f2physical_object__new(cause, position, rotation, size);}
-def_pcfunk3(physical_object__new, position, rotation, size, return f2__physical_object__new(this_cause, position, rotation, size));
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr shape) {return f2physical_object__new(cause, position, rotation, shape);}
+def_pcfunk3(physical_object__new, position, rotation, shape, return f2__physical_object__new(this_cause, position, rotation, shape));
 
 
 // physical_scene
@@ -599,7 +576,7 @@ void f2__glwindow__initialize() {
   
   initialize_primobject_1_slot(physical_rotation, array);
   initialize_primobject_3_slot(physical_position, x, y, z);
-  initialize_primobject_3_slot(physical_object, position, rotation, size);
+  initialize_primobject_3_slot(physical_object, position, rotation, shape);
   initialize_primobject_1_slot(physical_scene, physical_objects);
 }
 

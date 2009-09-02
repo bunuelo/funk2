@@ -544,7 +544,7 @@ f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
   } else {
     return f2larva__new(cause, 1);
   }
-  return f2physical_position__new(cause, x, y, z);
+  return f2physical_position__new(cause, f2double__new(cause, x__d), f2double__new(cause, y__d), f2double__new(cause, z__d));
 }
 def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));
 

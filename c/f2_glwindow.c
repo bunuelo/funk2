@@ -513,6 +513,7 @@ f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
   raw__array__elt__set(cause, array, 8, f2double__new(cause, 1));
   return f2__physical_rotation__new(cause, array);
 }
+def_pcfunk0(physical_rotation__new_identity, return f2__position_rotation__new_identity(this_cause));
 
 
 // physical_position

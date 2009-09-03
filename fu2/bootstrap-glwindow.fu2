@@ -22,11 +22,16 @@
 [defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]
       [error `run-time `[glwindow not-supported]]]
+  [globalize glwindow_value [new physical_scene [conslist [new physical_object [new physical_position 0 0 -10] nil nil]]]]
   [glwindow-create title width height depth fullscreen]
   [while [not [glwindow-handle_events]]]
   [glwindow-destroy]]
 
 [defunk glwindow-display []
   [fiber &glwindow-display_in_serial_with_params [conslist 'funk2 glwindow-display' 640 480 24 nil]]
+  nil]
+
+[defunk glwindow-add_physical_object [physical_object]
+  [set glwindow_value physical_objects [cons physical_object [get glwindow_value physical_objects]]]
   nil]
 

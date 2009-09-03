@@ -395,8 +395,8 @@ void opengl__render_physical_object(f2ptr cause, f2ptr this) {
   f2ptr rotation = f2__physical_object__rotation(cause, this);
   raw__opengl__glPushMatrix(cause);
   opengl__render_physical_position(cause, position);
-  raw__opengl__glPopMatrix(cause);
   raw__draw_gl_cube(cause);
+  raw__opengl__glPopMatrix(cause);
 }
 
 void opengl__render_physical_scene(f2ptr cause, f2ptr this) {

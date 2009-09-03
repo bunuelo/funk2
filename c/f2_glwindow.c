@@ -380,7 +380,34 @@ void raw__gl_set_material_color(f2ptr cause, float red, float green, float blue,
   raw__opengl__glMaterialfv(cause, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
 }
 
-// Here goes our drawing code
+void opengl__render_physical_position(f2ptr cause, f2ptr this) {
+  f2ptr x = f2__physical_position__x(cause, this);
+  f2ptr y = f2__physical_position__y(cause, this);
+  f2ptr z = f2__physical_position__z(cause, this);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  double z__d = f2double__d(z, cause);
+  raw__opengl__glTranslatef(cause, x__d, y__d, z__d);
+}
+
+void opengl__render_physical_object(f2ptr cause, f2ptr this) {
+  f2ptr position = f2__physical_object__position(cause, this);
+  f2ptr rotation = f2__physical_object__rotation(cause, this);
+  opengl__render_physical_position(cause, position);
+  raw__draw_gl_cube(cause);
+}
+
+void opengl__render_physical_scene(f2ptr cause, f2ptr this) {
+  f2ptr physical_objects = f2__physical_scene__physical_objects(cause, this);
+  f2ptr physical_object_iter = physical_objects;
+  while (physical_object_iter) {
+    f2ptr physical_object = f2__cons__car(cause, value);
+    opengl__render_physical_object(this, cause, physical_object);
+    physical_object_iter = f2__cons__cdr(cause, value);
+  }
+}
+
+// here goes our main scene drawing code
 void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glClear(cause, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   raw__opengl__glLoadIdentity(cause);
@@ -390,11 +417,14 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   if (value) {
     raw__opengl__glTranslatef(cause, 0, 0, -10);
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
-    if (raw__larva__is_type(cause, value)) {
+    if (raw__physical_scene__is_type(cause, value)) {
+      f2ptr physical_scene = value;
+      opengl_glwindow__render_physical_scene(this, cause, physical_scene);
+    } else if (raw__larva__is_type(cause, value)) {
       raw__gl_set_material_color(cause, 1,0,0,1);
       raw__draw_gl_cube(cause);
     } else {
-      raw__gl_set_material_color(cause, 1,1,1,1);
+      raw__gl_set_material_color(cause, 1,0,1,1);
       raw__draw_gl_cube(cause);
     }
   }

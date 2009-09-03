@@ -403,7 +403,7 @@ void opengl__render_physical_scene(f2ptr cause, f2ptr this) {
   while (physical_object_iter) {
     {
       f2ptr physical_object = f2__cons__car(cause, this);
-      opengl__render_physical_object(this, cause, physical_object);
+      opengl__render_physical_object(cause, physical_object);
     }
     physical_object_iter = f2__cons__cdr(cause, physical_object_iter);
   }

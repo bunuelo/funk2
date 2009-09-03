@@ -19,11 +19,14 @@
  rights to redistribute these changes.
 '
 
-[defunk glwindow-test [title width height depth fullscreen]
+[defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]
       [error `run-time `[glwindow not-supported]]]
   [glwindow-create title width height depth fullscreen]
   [while [not [glwindow-handle_events]]]
   [glwindow-destroy]]
 
+[defunk glwindow-display []
+  [fiber &glwindow-display_in_serial_with_params [conslist 'funk2 glwindow-display' 640 480 24 nil]]
+  nil]
 

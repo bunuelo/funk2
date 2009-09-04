@@ -151,9 +151,9 @@ boolean_t load_gl_textures(f2ptr cause) {
   }
   if (image) {
     if (image->data) {
-      f2__free(image->data);
+      f2__free(to_ptr(image->data));
     }
-    f2__free(image);
+    f2__free(to_ptr(image));
   }
   return status;
 }

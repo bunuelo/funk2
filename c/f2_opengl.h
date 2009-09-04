@@ -58,6 +58,7 @@ struct funk2_opengl_s {
   void(*         glPopMatrix   )();
   void(*         glGenTextures )(GLsizei n, GLuint *textures);
   void(*         glBindTexture )(GLenum target, GLuint texture);
+  void(*         glTexImage2D  )(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
   // The following functions are included in libGL.so, but are
   // probably not on non-X environments, so we'll need to deal with
   // this in a port to those environments.
@@ -145,6 +146,7 @@ void raw__opengl__glPushMatrix(f2ptr cause);
 void raw__opengl__glPopMatrix(f2ptr cause);
 void raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures);
 void raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture);
+void raw__opengl__glTexImage2D(f2ptr cause, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
 
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);

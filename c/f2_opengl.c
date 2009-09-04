@@ -89,6 +89,15 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glPopMatrix       = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glPopMatrix"));       if (! (this->glPopMatrix))       {status("funk2_opengl__load_library: failed symbol, glPopMatrix.");       return boolean__false;}
   this->glGenTextures     = (void(*)(GLsizei n, GLuint *textures))                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glGenTextures"));     if (! (this->glGenTextures))     {status("funk2_opengl__load_library: failed symbol, glGenTextures.");     return boolean__false;}
   this->glBindTexture     = (void(*)(GLenum target, GLuint texture))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glBindTexture"));     if (! (this->glGenTextures))     {status("funk2_opengl__load_library: failed symbol, glBindTexture.");     return boolean__false;}
+  this->glTexImage2D      = (void(*)(GLenum target,
+				     GLint level,
+				     GLint internalFormat,
+				     GLsizei width,
+				     GLsizei height,
+				     GLint border,
+				     GLenum format,
+				     GLenum type,
+				     const GLvoid* data))                                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexImage2D"));      if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glTexImage2D.");      return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
@@ -238,6 +247,11 @@ void raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures) {
 void raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glPopMatrix)(target, texture);
+}
+
+void raw__opengl__glTexImage2D(f2ptr cause, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  (*__funk2.opengl.glTexImage2D)(target, level, internalFormat, width, height, border, format, type, data);
 }
 
 

@@ -119,7 +119,7 @@ boolean_t texture_image__load_bmp(texture_image_t* texture, char* filename) {
   // calculate the size of the image in bytes
   biSizeImage = texture->width * texture->height * 3;
   printf("Size of the image data: %ld\n", biSizeImage);
-  texture->data = f2__malloc(biSizeImage);
+  texture->data = from_ptr(f2__malloc(biSizeImage));
   // seek to the actual data
   fseek(file, bfOffBits, SEEK_SET);
   if (! fread(texture->data, biSizeImage, 1, file)) {
@@ -135,12 +135,12 @@ boolean_t texture_image__load_bmp(texture_image_t* texture, char* filename) {
   return boolean__true;
 }
 
-boolean_t load_gl_textures() {
+boolean_t load_gl_textures(f2ptr cause) {
   boolean_t        status;
   texture_image_t* image;
   
   status = boolean__false;
-  image = f2__malloc(sizeof(texture_image_t));
+  image = from_ptr(f2__malloc(sizeof(texture_image_t)));
   if (texture_image__load_bmp(image, "Data/NeHe.bmp")) {
     status = boolean__true;
     raw__opengl__glGenTextures(cause, 1, &texture[0]);

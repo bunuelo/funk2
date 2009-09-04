@@ -30,6 +30,14 @@ int int__abs(int x) {
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 
+typedef struct {
+  int            width;
+  int            height;
+  unsigned char* data;
+} texture_image_t;
+
+GLuint texture[1];  /* Storage For One Texture */
+
 // attributes for a single buffered visual in RGBA format with at least
 // 4 bits per color and a 16 bit depth buffer
 static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 
@@ -50,6 +58,105 @@ static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUB
 static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f}; 
 static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
 static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
+
+// simple loader for 24-bit bitmaps (data is in rgb-format)
+boolean_t texture_image__load_bmp(texture_image_t* texture, char* filename) {
+  FILE*              file;
+  unsigned short int bfType;
+  long int           bfOffBits;
+  short int          biPlanes;
+  short int          biBitCount;
+  long int           biSizeImage;
+  int                i;
+  unsigned char      temp;
+  // make sure the file is there and open it read-only (binary)
+  if ((file = fopen(filename, "rb")) == NULL) {
+    printf("File not found : %s\n", filename);
+    return boolean__false;
+  }
+  if(!fread(&bfType, sizeof(short int), 1, file)) {
+    printf("Error reading file!\n");
+    return boolean__false;
+  }
+  // check if file is a bitmap
+  if (bfType != 19778) {
+    printf("Not a Bitmap-File!\n");
+    return boolean__false;
+  }        
+  // get the file size
+  // skip file size and reserved fields of bitmap file header
+  fseek(file, 8, SEEK_CUR);
+  // get the position of the actual bitmap data
+  if (!fread(&bfOffBits, sizeof(long int), 1, file)) {
+    printf("Error reading file!\n");
+    return boolean__false;
+  }
+  printf("Data at Offset: %ld\n", bfOffBits);
+  // skip size of bitmap info header
+  fseek(file, 4, SEEK_CUR);
+  // get the width of the bitmap
+  fread(&texture->width, sizeof(int), 1, file);
+  printf("Width of Bitmap: %d\n", texture->width);
+  // get the height of the bitmap
+  fread(&texture->height, sizeof(int), 1, file);
+  printf("Height of Bitmap: %d\n", texture->height);
+  // get the number of planes (must be set to 1)
+  fread(&biPlanes, sizeof(short int), 1, file);
+  if (biPlanes != 1) {
+    printf("Error: number of Planes not 1!\n");
+    return boolean__false;
+  }
+  // get the number of bits per pixel
+  if (!fread(&biBitCount, sizeof(short int), 1, file)) {
+    printf("Error reading file!\n");
+    return boolean__false;
+  }
+  printf("Bits per Pixel: %d\n", biBitCount);
+  if (biBitCount != 24) {
+    printf("Bits per Pixel not 24\n");
+    return boolean__false;
+  }
+  // calculate the size of the image in bytes
+  biSizeImage = texture->width * texture->height * 3;
+  printf("Size of the image data: %ld\n", biSizeImage);
+  texture->data = f2__malloc(biSizeImage);
+  // seek to the actual data
+  fseek(file, bfOffBits, SEEK_SET);
+  if (! fread(texture->data, biSizeImage, 1, file)) {
+    printf("Error loading file!\n");
+    return boolean__false;
+  }
+  // swap red and blue (bgr -> rgb)
+  for (i = 0; i < biSizeImage; i += 3) {
+    temp = texture->data[i];
+    texture->data[i] = texture->data[i + 2];
+    texture->data[i + 2] = temp;
+  }
+  return boolean__true;
+}
+
+boolean_t load_gl_textures() {
+  boolean_t        status;
+  texture_image_t* image;
+  
+  status = boolean__false;
+  image = f2__malloc(sizeof(texture_image_t));
+  if (texture_image__load_bmp(image, "Data/NeHe.bmp")) {
+    status = boolean__true;
+    raw__opengl__glGenTextures(cause, 1, &texture[0]);
+    raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, texture[0]);
+    raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 3, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+    raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  }
+  if (image) {
+    if (image->data) {
+      f2__free(image->data);
+    }
+    f2__free(image);
+  }
+  return status;
+}
 
 // function called when our window is resized (should only happen in window mode)
 void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) {

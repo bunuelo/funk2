@@ -88,6 +88,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glPushMatrix      = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glPushMatrix"));      if (! (this->glPushMatrix))      {status("funk2_opengl__load_library: failed symbol, glPushMatrix.");      return boolean__false;}
   this->glPopMatrix       = (void(*)())                                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glPopMatrix"));       if (! (this->glPopMatrix))       {status("funk2_opengl__load_library: failed symbol, glPopMatrix.");       return boolean__false;}
   this->glGenTextures     = (void(*)(GLsizei n, GLuint *textures))                                             from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glGenTextures"));     if (! (this->glGenTextures))     {status("funk2_opengl__load_library: failed symbol, glGenTextures.");     return boolean__false;}
+  this->glBindTexture     = (void(*)(GLenum target, GLuint texture))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glBindTexture"));     if (! (this->glGenTextures))     {status("funk2_opengl__load_library: failed symbol, glBindTexture.");     return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
@@ -232,6 +233,11 @@ void raw__opengl__glMaterialfv(f2ptr cause, GLenum face, GLenum pname, const GLf
 void raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
   (*__funk2.opengl.glGenTextures)(n, textures);
+}
+
+void raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  (*__funk2.opengl.glPopMatrix)(target, texture);
 }
 
 

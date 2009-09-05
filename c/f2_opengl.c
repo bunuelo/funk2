@@ -98,7 +98,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
 				     GLenum format,
 				     GLenum type,
 				     const GLvoid* data))                                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexImage2D"));      if (! (this->glTexImage2D))      {status("funk2_opengl__load_library: failed symbol, glTexImage2D.");      return boolean__false;}
-  this->glTexParameteri   = (void(*)(GLenum target, GLenum pname, GLint param))                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexParameteri"));   if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glTexParameteri.");   return boolean__false;}
+  this->glTexParameteri   = (void(*)(GLenum target, GLenum pname, GLint param))                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexParameteri"));   if (! (this->glTexParameteri))   {status("funk2_opengl__load_library: failed symbol, glTexParameteri.");   return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}

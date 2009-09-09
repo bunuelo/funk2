@@ -119,7 +119,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   }
   // calculate the size of the image in bytes
   biSizeImage = texture->width * texture->height * 3;
-  printf("Size of the image data: %ld\n", biSizeImage);
+  printf("Size of the image data: " s32__fstr "\n", biSizeImage);
   texture->data = from_ptr(f2__malloc(biSizeImage));
   // seek to the actual data
   fseek(file, bfOffBits, SEEK_SET);

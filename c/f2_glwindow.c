@@ -30,11 +30,17 @@ int int__abs(int x) {
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 
-typedef struct {
+// Much of the OpenGL code in this document was adapted from
+// combinations of the NeHe GLX lessons.  NeHe is the best organized
+// and largest OpenGL codebase that I've found over the last 15 years
+// of programming OpenGL.  I start all of my OpenGL projects from
+// their lessons, highly recommended.  -- Bo
+
+typedef struct funk2_texture_image_s {
   int            width;
   int            height;
   unsigned char* data;
-} texture_image_t;
+} funk2_texture_image_t;
 
 GLuint texture[1];  /* Storage For One Texture */
 
@@ -60,7 +66,7 @@ static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
 static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 
 // simple loader for 24-bit bitmaps (data is in rgb-format)
-boolean_t texture_image__load_bmp(texture_image_t* texture, char* filename) {
+boolean_t texture_image__load_bmp(funk2_texture_image_t* texture, char* filename) {
   FILE*              file;
   unsigned short int bfType;
   long int           bfOffBits;
@@ -136,13 +142,12 @@ boolean_t texture_image__load_bmp(texture_image_t* texture, char* filename) {
 }
 
 boolean_t load_gl_textures(f2ptr cause) {
-  boolean_t        status;
-  texture_image_t* image;
+  boolean_t              successfully_loaded = boolean__false;
+  funk2_texture_image_t* image;
   
-  status = boolean__false;
-  image = from_ptr(f2__malloc(sizeof(texture_image_t)));
-  if (texture_image__load_bmp(image, "Data/NeHe.bmp")) {
-    status = boolean__true;
+  image = from_ptr(f2__malloc(sizeof(funk2_texture_image_t)));
+  successfully_loaded = texture_image__load_bmp(image, "Data/NeHe.bmp");
+  if (successfully_loaded) {
     raw__opengl__glGenTextures(cause, 1, &texture[0]);
     raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, texture[0]);
     raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 3, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
@@ -155,7 +160,7 @@ boolean_t load_gl_textures(f2ptr cause) {
     }
     f2__free(to_ptr(image));
   }
-  return status;
+  return successfully_loaded;
 }
 
 // function called when our window is resized (should only happen in window mode)

@@ -77,19 +77,22 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   long int           biSizeImage;
   int                i;
   unsigned char      temp;
+  
+  texture->data = NULL;
+  
   // make sure the file is there and open it read-only (binary)
   if ((file = fopen(filename, "rb")) == NULL) {
     printf("File not found : %s\n", filename);
-    return boolean__false;
+    return boolean__true;
   }
   if(!fread(&bfType, sizeof(short int), 1, file)) {
     printf("Error reading file!\n");
-    return boolean__false;
+    return boolean__true;
   }
   // check if file is a bitmap
   if (bfType != 19778) {
     printf("Not a Bitmap-File!\n");
-    return boolean__false;
+    return boolean__true;
   }        
   // get the file size
   // skip file size and reserved fields of bitmap file header
@@ -97,7 +100,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   // get the position of the actual bitmap data
   if (!fread(&bfOffBits, sizeof(long int), 1, file)) {
     printf("Error reading file!\n");
-    return boolean__false;
+    return boolean__true;
   }
   printf("Data at Offset: %ld\n", bfOffBits);
   // skip size of bitmap info header
@@ -112,17 +115,17 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   fread(&biPlanes, sizeof(short int), 1, file);
   if (biPlanes != 1) {
     printf("Error: number of Planes not 1!\n");
-    return boolean__false;
+    return boolean__true;
   }
   // get the number of bits per pixel
   if (!fread(&biBitCount, sizeof(short int), 1, file)) {
     printf("Error reading file!\n");
-    return boolean__false;
+    return boolean__true;
   }
   printf("Bits per Pixel: %d\n", biBitCount);
   if (biBitCount != 24) {
     printf("Bits per Pixel not 24\n");
-    return boolean__false;
+    return boolean__true;
   }
   // calculate the size of the image in bytes
   biSizeImage = texture->width * texture->height * 3;
@@ -132,7 +135,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   fseek(file, bfOffBits, SEEK_SET);
   if (! fread(texture->data, biSizeImage, 1, file)) {
     printf("Error loading file!\n");
-    return boolean__false;
+    return boolean__true;
   }
   // swap red and blue (bgr -> rgb)
   for (i = 0; i < biSizeImage; i += 3) {
@@ -140,16 +143,18 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
     texture->data[i] = texture->data[i + 2];
     texture->data[i + 2] = temp;
   }
-  return boolean__true;
+  return boolean__false;
 }
 
 boolean_t funk2_opengl_texture__load_gl_textures(funk2_opengl_texture_t* this, f2ptr cause) {
-  boolean_t              successfully_loaded = boolean__false;
+  boolean_t              failure_status = boolean__false;
   funk2_texture_image_t* image;
   
   image = from_ptr(f2__malloc(sizeof(funk2_texture_image_t)));
-  successfully_loaded = funk2_texture_image__load_bmp(image, "Data/NeHe.bmp");
-  if (successfully_loaded) {
+  if (funk2_texture_image__load_bmp(image, "data/texture.bmp")) {
+    failure_status = boolean__true;
+  }
+  if (! failure_status) {
     {
       GLuint texture_id = 0;
       raw__opengl__glGenTextures(cause, 1, &texture_id);
@@ -166,7 +171,7 @@ boolean_t funk2_opengl_texture__load_gl_textures(funk2_opengl_texture_t* this, f
     }
     f2__free(to_ptr(image));
   }
-  return successfully_loaded;
+  return failure_status;
 }
 
 // function called when our window is resized (should only happen in window mode)
@@ -192,10 +197,10 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
   this->fullscreen     = fullscreen;
   
   this->window_created = boolean__false;
-  this->rotate_angle = 0;
-  this->done = boolean__false;
+  this->rotate_angle   = 0;
+  this->done           = boolean__false;
   
-  this->initialized = boolean__true;
+  this->initialized    = boolean__true;
 }
 
 void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
@@ -249,9 +254,9 @@ void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
 }
 
 // this function creates our window and sets it up properly
-// FIXME: bits is currently unused
+//   FIXME: bits is currently unused
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
-  XVisualInfo *vi;
+  XVisualInfo* vi;
   Colormap cmap;
   int displayWidth, displayHeight;
   int i;
@@ -264,10 +269,10 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   Window winDummy;
   unsigned int borderDummy;
   
-  if (! raw__opengl__load_library(nil))  {return boolean__false;}
-  if (! raw__openglu__load_library(nil)) {return boolean__false;}
-  if (! raw__xxf86vm__load_library(nil)) {return boolean__false;}
-  if (! raw__xlib__load_library(nil))    {return boolean__false;}
+  if (! raw__opengl__load_library(nil))  {return boolean__true;}
+  if (! raw__openglu__load_library(nil)) {return boolean__true;}
+  if (! raw__xxf86vm__load_library(nil)) {return boolean__true;}
+  if (! raw__xlib__load_library(nil))    {return boolean__true;}
   
   // set best mode to current
   bestMode = 0;
@@ -275,7 +280,7 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   this->display = raw__xlib__XOpenDisplay(cause, 0);
   if (! this->display) {
     status("could not open default display.  check DISPLAY environment variable.");
-    return boolean__false;
+    return boolean__true;
   }
   this->screen = raw__xlib__XDefaultScreen(cause, this->display);
   raw__xxf86vm__XF86VidModeQueryVersion(cause, this->display, &vidModeMajorVersion,
@@ -360,10 +365,12 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   } else {
     status("we do not have direct rendering");
   }
-  funk2_glwindow__initialize_opengl(this, cause);
+  if (funk2_glwindow__initialize_opengl(this, cause)) {
+    return boolean__true;
+  }
   
   this->window_created = boolean__true;
-  return True;
+  return boolean__false;
 }
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
@@ -430,7 +437,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 }
 
 // general OpenGL initialization function
-int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
+boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glShadeModel(cause, GL_SMOOTH);
   raw__opengl__glClearColor(cause, 0.0f, 0.0f, 0.0f, 0.0f);
   raw__opengl__glClearDepth(cause, 1.0f);
@@ -450,10 +457,12 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   // we use raw__resize_gl_scene once to set up our initial perspective
   raw__resize_gl_scene(cause, this->width, this->height);
   
-  funk2_opengl_texture__load_gl_textures(&(this->texture), cause);
+  if (funk2_opengl_texture__load_gl_textures(&(this->texture), cause)) {
+    return boolean__true;
+  }
   
   raw__opengl__glFlush(cause);
-  return True;
+  return boolean__false;
 }
 
 void raw__draw_gl_cube(f2ptr cause) {

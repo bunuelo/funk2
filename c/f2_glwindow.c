@@ -36,16 +36,6 @@ int int__abs(int x) {
 // of programming OpenGL.  I start all of my OpenGL projects from
 // their lessons, highly recommended.  -- Bo
 
-typedef struct funk2_texture_image_s {
-  int            width;
-  int            height;
-  unsigned char* data;
-} funk2_texture_image_t;
-
-typedef struct funk2_opengl_texture_s {
-  GLuint texture_id;
-} funk2_opengl_texture_t;
-
 // attributes for a single buffered visual in RGBA format with at least
 // 4 bits per color and a 16 bit depth buffer
 static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_SIZE,  4, 

@@ -29,6 +29,18 @@
 
 int int__abs(int x);
 
+typedef struct funk2_texture_image_s {
+  int            width;
+  int            height;
+  unsigned char* data;
+} funk2_texture_image_t;
+
+#if defined(F2__GLWINDOW__SUPPORTED)
+typedef struct funk2_opengl_texture_s {
+  GLuint texture_id;
+} funk2_opengl_texture_t;
+#endif // F2__GLWINDOW__SUPPORTED
+
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
   boolean_t              initialized;

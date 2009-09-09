@@ -60,11 +60,11 @@ static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 // simple loader for 24-bit bitmaps (data is in rgb-format)
 boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* filename) {
   FILE*              file;
-  unsigned short int bfType;
-  long int           bfOffBits;
-  short int          biPlanes;
-  short int          biBitCount;
-  long int           biSizeImage;
+  u16                bfType;
+  s32                bfOffBits;
+  s16                biPlanes;
+  s16                biBitCount;
+  s32                biSizeImage;
   int                i;
   unsigned char      temp;
   
@@ -75,7 +75,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
     printf("File not found : %s\n", filename);
     return boolean__true;
   }
-  if(!fread(&bfType, sizeof(short int), 1, file)) {
+  if(!fread(&bfType, sizeof(s16), 1, file)) {
     printf("Error reading file!\n");
     return boolean__true;
   }
@@ -88,7 +88,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   // skip file size and reserved fields of bitmap file header
   fseek(file, 8, SEEK_CUR);
   // get the position of the actual bitmap data
-  if (!fread(&bfOffBits, sizeof(long int), 1, file)) {
+  if (!fread(&bfOffBits, sizeof(s32), 1, file)) {
     printf("Error reading file!\n");
     return boolean__true;
   }
@@ -96,19 +96,19 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   // skip size of bitmap info header
   fseek(file, 4, SEEK_CUR);
   // get the width of the bitmap
-  fread(&texture->width, sizeof(int), 1, file);
+  fread(&texture->width, sizeof(s32), 1, file);
   printf("Width of Bitmap: %d\n", texture->width);
   // get the height of the bitmap
-  fread(&texture->height, sizeof(int), 1, file);
+  fread(&texture->height, sizeof(s32), 1, file);
   printf("Height of Bitmap: %d\n", texture->height);
   // get the number of planes (must be set to 1)
-  fread(&biPlanes, sizeof(short int), 1, file);
+  fread(&biPlanes, sizeof(s16), 1, file);
   if (biPlanes != 1) {
     printf("Error: number of Planes not 1!\n");
     return boolean__true;
   }
   // get the number of bits per pixel
-  if (!fread(&biBitCount, sizeof(short int), 1, file)) {
+  if (!fread(&biBitCount, sizeof(s16), 1, file)) {
     printf("Error reading file!\n");
     return boolean__true;
   }

@@ -451,6 +451,8 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
     return boolean__true;
   }
   
+  raw__opengl__glEnable(cause, GL_TEXTURE_2D);
+  
   raw__opengl__glFlush(cause);
   return boolean__false;
 }

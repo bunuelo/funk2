@@ -72,16 +72,16 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   
   // make sure the file is there and open it read-only (binary)
   if ((file = fopen(filename, "rb")) == NULL) {
-    printf("File not found : %s\n", filename);
+    status("File not found : %s", filename);
     return boolean__true;
   }
   if(!fread(&bfType, sizeof(s16), 1, file)) {
-    printf("Error reading file!\n");
+    status("Error reading file!\n");
     return boolean__true;
   }
   // check if file is a bitmap
   if (bfType != 19778) {
-    printf("Not a Bitmap-File!\n");
+    status("Not a Bitmap-File!\n");
     return boolean__true;
   }        
   // get the file size
@@ -89,42 +89,42 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   fseek(file, 8, SEEK_CUR);
   // get the position of the actual bitmap data
   if (!fread(&bfOffBits, sizeof(s32), 1, file)) {
-    printf("Error reading file!\n");
+    status("Error reading file!");
     return boolean__true;
   }
-  printf("Data at Offset: " s32__fstr "\n", bfOffBits);
+  status("Data at Offset: " s32__fstr, bfOffBits);
   // skip size of bitmap info header
   fseek(file, 4, SEEK_CUR);
   // get the width of the bitmap
   fread(&texture->width, sizeof(s32), 1, file);
-  printf("Width of Bitmap: %d\n", texture->width);
+  status("Width of Bitmap: %d", texture->width);
   // get the height of the bitmap
   fread(&texture->height, sizeof(s32), 1, file);
-  printf("Height of Bitmap: %d\n", texture->height);
+  status("Height of Bitmap: %d", texture->height);
   // get the number of planes (must be set to 1)
   fread(&biPlanes, sizeof(s16), 1, file);
   if (biPlanes != 1) {
-    printf("Error: number of Planes not 1!\n");
+    status("Error: number of Planes not 1!");
     return boolean__true;
   }
   // get the number of bits per pixel
   if (!fread(&biBitCount, sizeof(s16), 1, file)) {
-    printf("Error reading file!\n");
+    status("Error reading file!");
     return boolean__true;
   }
-  printf("Bits per Pixel: %d\n", biBitCount);
+  status("Bits per Pixel: %d", biBitCount);
   if (biBitCount != 24) {
-    printf("Bits per Pixel not 24\n");
+    status("Bits per Pixel not 24");
     return boolean__true;
   }
   // calculate the size of the image in bytes
   biSizeImage = texture->width * texture->height * 3;
-  printf("Size of the image data: " s32__fstr "\n", biSizeImage);
+  status("Size of the image data: " s32__fstr, biSizeImage);
   texture->data = from_ptr(f2__malloc(biSizeImage));
   // seek to the actual data
   fseek(file, bfOffBits, SEEK_SET);
   if (! fread(texture->data, biSizeImage, 1, file)) {
-    printf("Error loading file!\n");
+    status("Error loading file!");
     return boolean__true;
   }
   // swap red and blue (bgr -> rgb)

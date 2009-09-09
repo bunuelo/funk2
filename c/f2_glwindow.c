@@ -42,7 +42,9 @@ typedef struct funk2_texture_image_s {
   unsigned char* data;
 } funk2_texture_image_t;
 
-GLuint texture[1];  /* Storage For One Texture */
+typedef struct funk2_opengl_texture_s {
+  GLuint texture_id;
+} funk2_opengl_texture_t;
 
 // attributes for a single buffered visual in RGBA format with at least
 // 4 bits per color and a 16 bit depth buffer
@@ -66,7 +68,7 @@ static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
 static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 
 // simple loader for 24-bit bitmaps (data is in rgb-format)
-boolean_t texture_image__load_bmp(funk2_texture_image_t* texture, char* filename) {
+boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* filename) {
   FILE*              file;
   unsigned short int bfType;
   long int           bfOffBits;
@@ -141,15 +143,19 @@ boolean_t texture_image__load_bmp(funk2_texture_image_t* texture, char* filename
   return boolean__true;
 }
 
-boolean_t load_gl_textures(f2ptr cause) {
+boolean_t funk2_opengl_texture__load_gl_textures(funk2_opengl_texture_t* this, f2ptr cause) {
   boolean_t              successfully_loaded = boolean__false;
   funk2_texture_image_t* image;
   
   image = from_ptr(f2__malloc(sizeof(funk2_texture_image_t)));
-  successfully_loaded = texture_image__load_bmp(image, "Data/NeHe.bmp");
+  successfully_loaded = funk2_texture_image__load_bmp(image, "Data/NeHe.bmp");
   if (successfully_loaded) {
-    raw__opengl__glGenTextures(cause, 1, &texture[0]);
-    raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, texture[0]);
+    {
+      GLuint texture_id = 0;
+      raw__opengl__glGenTextures(cause, 1, &texture_id);
+      this->texture_id = texture_id;
+    }
+    raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture);
     raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 3, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -443,6 +449,9 @@ int funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   
   // we use raw__resize_gl_scene once to set up our initial perspective
   raw__resize_gl_scene(cause, this->width, this->height);
+  
+  funk2_opengl_texture__load_gl_textures(&(this->texture), cause);
+  
   raw__opengl__glFlush(cause);
   return True;
 }

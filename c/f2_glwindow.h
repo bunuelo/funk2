@@ -31,28 +31,29 @@ int int__abs(int x);
 
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
-  boolean_t            initialized;
-  boolean_t            window_created;
+  boolean_t              initialized;
+  boolean_t              window_created;
   
 #if defined(F2__GLWINDOW__SUPPORTED)
-  Display*             display;
-  int                  screen;
-  Window               x_window;
-  GLXContext           glx_context;
-  XSetWindowAttributes set_window_attributes;
-  XF86VidModeModeInfo  desk_mode;
-  boolean_t            fullscreen;
-  boolean_t            double_buffered;
-  u8*                  title;
-  int                  x;
-  int                  y;
-  unsigned int         width;
-  unsigned int         height;
-  unsigned int         depth;
-  boolean_t            done;
-  float                rotate_angle;
-  u64                  last_redraw__nanoseconds_since_1970;
-  boolean_t            needs_redraw;
+  Display*               display;
+  int                    screen;
+  Window                 x_window;
+  GLXContext             glx_context;
+  XSetWindowAttributes   set_window_attributes;
+  XF86VidModeModeInfo    desk_mode;
+  boolean_t              fullscreen;
+  boolean_t              double_buffered;
+  u8*                    title;
+  int                    x;
+  int                    y;
+  unsigned int           width;
+  unsigned int           height;
+  unsigned int           depth;
+  boolean_t              done;
+  float                  rotate_angle;
+  u64                    last_redraw__nanoseconds_since_1970;
+  boolean_t              needs_redraw;
+  funk2_opengl_texture_t texture;
 #endif // F2__GLWINDOW__SUPPORTED
 
 } funk2_glwindow_t;

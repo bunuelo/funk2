@@ -150,7 +150,7 @@ boolean_t funk2_opengl_texture__load_gl_textures(funk2_opengl_texture_t* this, f
       raw__opengl__glGenTextures(cause, 1, &texture_id);
       this->texture_id = texture_id;
     }
-    raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture);
+    raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
     raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 3, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

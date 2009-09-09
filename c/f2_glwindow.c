@@ -92,7 +92,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
     printf("Error reading file!\n");
     return boolean__true;
   }
-  printf("Data at Offset: %ld\n", bfOffBits);
+  printf("Data at Offset: " s32__fstr "\n", bfOffBits);
   // skip size of bitmap info header
   fseek(file, 4, SEEK_CUR);
   // get the width of the bitmap

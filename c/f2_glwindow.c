@@ -112,26 +112,52 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
     status("Error reading file!");
     return boolean__true;
   }
-  status("Bits per Pixel: %d", biBitCount);
-  if (biBitCount != 24) {
-    status("Bits per Pixel not 24");
+  status("bits per Pixel: %d", biBitCount);
+  if ((biBitCount != 24) &&
+      (biBitCount != 32)) {
+    status("funk2_texture_image__load_bmp failure: we only support 24 or 32 bits per pixel!");
     return boolean__true;
   }
   // calculate the size of the image in bytes
-  biSizeImage = texture->width * texture->height * 3;
+  u64 image_pixel_num = texture->width * texture->height;
+  biSizeImage = image_pixel_num * 4;
   status("Size of the image data: " s32__fstr, biSizeImage);
   texture->data = from_ptr(f2__malloc(biSizeImage));
   // seek to the actual data
   fseek(file, bfOffBits, SEEK_SET);
-  if (! fread(texture->data, biSizeImage, 1, file)) {
-    status("Error loading file!");
-    return boolean__true;
-  }
-  // swap red and blue (bgr -> rgb)
-  for (i = 0; i < biSizeImage; i += 3) {
-    temp = texture->data[i];
-    texture->data[i] = texture->data[i + 2];
-    texture->data[i + 2] = temp;
+  if (biBitCount == 32) {
+    if (! fread(texture->data, biSizeImage, 1, file)) {
+      status("Error 32 bit argb data!");
+      return boolean__true;
+    }
+    // swap red and blue (abgr -> rgba)
+    u64 pixel_index = 0;
+    for (pixel_index = 0; pixel_index < image_pixel_num; pixel_index ++) {
+      {
+	u8 temp                               = texture->data[(pixel_index << 2) + 1];
+	texture->data[(pixel_index << 2) + 1] = texture->data[(pixel_index << 2) + 2];
+	texture->data[(pixel_index << 2) + 2] = temp;
+      }
+      {
+	u8 temp                               = texture->data[(pixel_index << 2) + 0];
+	texture->data[(pixel_index << 2) + 0] = texture->data[(pixel_index << 2) + 3];
+	texture->data[(pixel_index << 2) + 3] = temp;
+      }
+    }
+  } else if (biBitCount == 24) {
+    u64 pixel_index = 0;
+    while (pixel_index < image_pixel_num) {
+      u8 bgr_pixel[3];
+      if (! fread(bgr_pixel, 3, 1, file)) {
+	status("Error loading 24 bit bgr data!");
+	return boolean__true;
+      }
+      ((u8*)(texture->data))[(pixel_index << 2) + 0] = bgr_data[0];
+      ((u8*)(texture->data))[(pixel_index << 2) + 1] = bgr_data[1];
+      ((u8*)(texture->data))[(pixel_index << 2) + 2] = bgr_data[2];
+      ((u8*)(texture->data))[(pixel_index << 2) + 3] = 0xFF;
+      pixel_index ++;
+    }
   }
   return boolean__false;
 }
@@ -151,7 +177,7 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
       this->texture_id = texture_id;
     }
     raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
-    raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 3, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->data);
+    raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 4, image->width, image->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->data);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   }

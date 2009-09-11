@@ -463,7 +463,7 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   // we use raw__resize_gl_scene once to set up our initial perspective
   raw__resize_gl_scene(cause, this->width, this->height);
   
-  if (funk2_opengl_texture__load_gl_textures(&(this->texture), cause)) {
+  if (funk2_glwindow__load_gl_textures(this, cause)) {
     status("funk2_glwindow__initialize_opengl failure: loading gl textures.");
     return boolean__true;
   }

@@ -58,7 +58,7 @@ static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
 static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 
 // simple loader for 24-bit bitmaps (data is in rgb-format)
-boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* filename) {
+boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* filename) {
   FILE*              file;
   u16                bfType;
   s32                bfOffBits;
@@ -71,8 +71,8 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   texture->data = NULL;
   
   // make sure the file is there and open it read-only (binary)
-  if ((file = fopen(filename, "rb")) == NULL) {
-    status("File not found : %s", filename);
+  if ((file = fopen((char*)filename, "rb")) == NULL) {
+    status("File not found : %s", (char*)filename);
     return boolean__true;
   }
   if(!fread(&bfType, sizeof(s16), 1, file)) {

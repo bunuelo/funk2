@@ -100,6 +100,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
 				     const GLvoid* data))                                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexImage2D"));      if (! (this->glTexImage2D))      {status("funk2_opengl__load_library: failed symbol, glTexImage2D.");      return boolean__false;}
   this->glTexParameteri   = (void(*)(GLenum target, GLenum pname, GLint param))                                from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexParameteri"));   if (! (this->glTexParameteri))   {status("funk2_opengl__load_library: failed symbol, glTexParameteri.");   return boolean__false;}
   this->glTexCoord2f      = (void(*)(GLfloat s, GLfloat t))                                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexCoord2f"));      if (! (this->glTexCoord2f))      {status("funk2_opengl__load_library: failed symbol, glTexCoord2f.");      return boolean__false;}
+  this->glBlendFunc       = (void(*)(GLenum sfactor, GLenum dfactor))                                          from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glBlendFunc"));       if (! (this->glBlendFunc))       {status("funk2_opengl__load_library: failed symbol, glBlendFunc.");       return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
@@ -127,181 +128,184 @@ boolean_t raw__opengl__load_library(f2ptr cause) {
 
 #if defined(F2__GL__H)
 void raw__opengl__glViewport(f2ptr cause, GLint x, GLint y, GLsizei width, GLsizei height) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glViewport)(x, y, width, height);
 }
 
 void raw__opengl__glMatrixMode(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glMatrixMode)(mode);
 }
 
 void raw__opengl__glLoadIdentity(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glLoadIdentity)();
 }
 
 void raw__opengl__glShadeModel(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glShadeModel)(mode);
 }
 
 void raw__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glClearColor)(red, green, blue, alpha);
 }
 
 void raw__opengl__glClearDepth(f2ptr cause, GLclampd depth) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glClearDepth)(depth);
 }
 
 void raw__opengl__glEnable(f2ptr cause, GLenum cap) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glEnable)(cap);
 }
 
 void raw__opengl__glDepthFunc(f2ptr cause, GLenum func) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glDepthFunc)(func);
 }
 
 void raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glHint)(target, mode);
 }
 
 void raw__opengl__glFlush(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glFlush)();
 }
 
 void raw__opengl__glClear(f2ptr cause, GLbitfield mask) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glClear)(mask);
 }
 
 void raw__opengl__glLightfv(f2ptr cause, GLenum light, GLenum pname, const GLfloat* params) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glLightfv)(light, pname, params);
 }
 
 void raw__opengl__glCullFace(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glCullFace)(mode);
 }
 
 void raw__opengl__glTranslatef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glTranslatef)(x, y, z);
 }
 
 void raw__opengl__glRotatef(f2ptr cause, GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glRotatef)(angle, x, y, z);
 }
 
 void raw__opengl__glColor4f(f2ptr cause, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glColor4f)(red, green, blue, alpha);
 }
 
 void raw__opengl__glBegin(f2ptr cause, GLenum mode) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glBegin)(mode);
 }
 
 void raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glNormal3f)(nx, ny, nz);
 }
 
 void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glVertex3f)(x, y, z);
 }
 
 void raw__opengl__glEnd(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glEnd)();
 }
 
 void raw__opengl__glPushMatrix(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glPushMatrix)();
 }
 
 void raw__opengl__glPopMatrix(f2ptr cause) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glPopMatrix)();
 }
 
 void raw__opengl__glMaterialfv(f2ptr cause, GLenum face, GLenum pname, const GLfloat* params) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glMaterialfv)(face, pname, params);
 }
 
 void raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glGenTextures)(n, textures);
 }
 
 void raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glPopMatrix)(target, texture);
 }
 
 void raw__opengl__glTexImage2D(f2ptr cause, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glTexImage2D)(target, level, internalFormat, width, height, border, format, type, data);
 }
 
 void raw__opengl__glTexParameteri(f2ptr cause, GLenum target, GLenum pname, GLint param) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glTexParameteri)(target, pname, param);
 }
 
 void raw__opengl__glTexCoord2f(f2ptr cause, GLfloat s, GLfloat t) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glTexCoord2f)(s, t);
 }
 
-
+void raw__opengl__glBlendFunc(f2ptr cause, GLenum sfactor, GLenum dfactor) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
+  (*__funk2.opengl.glBlendFunc)(sfactor, dfactor);
+}
 
 // glx extension functions
 
 void raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return;}
   (*__funk2.opengl.glXSwapBuffers)(dpy, drawable);
 }
 
 Bool raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return False;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXMakeCurrent)(dpy, drawable, ctx);
 }
 
 void raw__opengl__glXDestroyContext(f2ptr cause, Display* dpy, GLXContext ctx) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return;}
   (*__funk2.opengl.glXDestroyContext)(dpy, ctx);
 }
 
 XVisualInfo* raw__opengl__glXChooseVisual(f2ptr cause, Display* dpy, int screen, int* attribList) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return NULL;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return NULL;}
   return (*__funk2.opengl.glXChooseVisual)(dpy, screen, attribList);
 }
 
 Bool raw__opengl__glXQueryVersion(f2ptr cause, Display* dpy, int* Major, int* Minor) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return False;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXQueryVersion)(dpy, Major, Minor);
 }
 
 GLXContext raw__opengl__glXCreateContext(f2ptr cause, Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return (GLXContext)NULL;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return (GLXContext)NULL;}
   return (*__funk2.opengl.glXCreateContext)(dpy, vis, shareList, direct);
 }
 
 Bool raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called xlib function without loading gl. ***"); return False;}
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXIsDirect)(dpy, ctx);
 }
 

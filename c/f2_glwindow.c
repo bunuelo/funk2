@@ -484,6 +484,9 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   raw__opengl__glCullFace(cause, GL_BACK);
   raw__opengl__glEnable(cause, GL_CULL_FACE);
   
+  raw__opengl__glBlendFunc(cause, GL_SRC_ALPHA, GL_ONE);
+  raw__opengl__glEnable(cause, GL_BLEND);
+  
   // we use raw__resize_gl_scene once to set up our initial perspective
   raw__resize_gl_scene(cause, this->width, this->height);
   

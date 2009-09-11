@@ -66,6 +66,16 @@ typedef struct funk2_glwindow_s {
   u64                    last_redraw__nanoseconds_since_1970;
   boolean_t              needs_redraw;
   funk2_opengl_texture_t texture;
+  funk2_opengl_texture_t bucket_object_texture;
+  funk2_opengl_texture_t female_child_agent_sitting_texture;
+  funk2_opengl_texture_t female_child_agent_standing_texture;
+  funk2_opengl_texture_t fork_object_texture;
+  funk2_opengl_texture_t male_child_agent_sitting_texture;
+  funk2_opengl_texture_t male_child_agent_standing_texture;
+  funk2_opengl_texture_t mud_object_texture;
+  funk2_opengl_texture_t mud_puddle_scene_texture;
+  funk2_opengl_texture_t shovel_object_texture;
+  funk2_opengl_texture_t spoon_object_texture;
 #endif // F2__GLWINDOW__SUPPORTED
 
 } funk2_glwindow_t;

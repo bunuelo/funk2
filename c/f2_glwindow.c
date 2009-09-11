@@ -136,12 +136,12 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, char* fi
   return boolean__false;
 }
 
-boolean_t funk2_opengl_texture__load_gl_textures(funk2_opengl_texture_t* this, f2ptr cause) {
+boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t* this, f2ptr cause, u8* bmp_filename) {
   boolean_t              failure_status = boolean__false;
   funk2_texture_image_t* image;
   
   image = from_ptr(f2__malloc(sizeof(funk2_texture_image_t)));
-  if (funk2_texture_image__load_bmp(image, "data/texture.bmp")) {
+  if (funk2_texture_image__load_bmp(image, bmp_filename)) {
     failure_status = boolean__true;
   }
   if (! failure_status) {
@@ -161,6 +161,22 @@ boolean_t funk2_opengl_texture__load_gl_textures(funk2_opengl_texture_t* this, f
     }
     f2__free(to_ptr(image));
   }
+  return failure_status;
+}
+
+boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) {
+  boolean_t failure_status = boolean__false;
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->texture),                             cause, (u8*)"data/texture.bmp");}  
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bucket_object_texture),               cause, (u8*)"data/bucket_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->female_child_agent_sitting_texture),  cause, (u8*)"data/female_child_agent_sitting.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->female_child_agent_standing_texture), cause, (u8*)"data/female_child_agent_standing.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->fork_object_texture),                 cause, (u8*)"data/fork_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->male_child_agent_sitting_texture),    cause, (u8*)"data/male_child_agent_sitting.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->male_child_agent_standing_texture),   cause, (u8*)"data/male_child_agent_standing.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->mud_object_texture),                  cause, (u8*)"data/mud_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->mud_puddle_scene_texture),            cause, (u8*)"data/mud_puddle_scene.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->shovel_object_texture),               cause, (u8*)"data/shovel_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->spoon_object_texture),                cause, (u8*)"data/spoon_object.bmp");}
   return failure_status;
 }
 
@@ -448,6 +464,7 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   raw__resize_gl_scene(cause, this->width, this->height);
   
   if (funk2_opengl_texture__load_gl_textures(&(this->texture), cause)) {
+    status("funk2_glwindow__initialize_opengl failure: loading gl textures.");
     return boolean__true;
   }
   

@@ -152,9 +152,9 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
 	status("Error loading 24 bit bgr data!");
 	return boolean__true;
       }
-      ((u8*)(texture->data))[(pixel_index << 2) + 0] = bgr_data[0];
-      ((u8*)(texture->data))[(pixel_index << 2) + 1] = bgr_data[1];
-      ((u8*)(texture->data))[(pixel_index << 2) + 2] = bgr_data[2];
+      ((u8*)(texture->data))[(pixel_index << 2) + 0] = bgr_pixel[0];
+      ((u8*)(texture->data))[(pixel_index << 2) + 1] = bgr_pixel[1];
+      ((u8*)(texture->data))[(pixel_index << 2) + 2] = bgr_pixel[2];
       ((u8*)(texture->data))[(pixel_index << 2) + 3] = 0xFF;
       pixel_index ++;
     }

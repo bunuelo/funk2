@@ -65,8 +65,6 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
   s16                biPlanes;
   s16                biBitCount;
   s32                biSizeImage;
-  int                i;
-  unsigned char      temp;
   
   texture->data = NULL;
   

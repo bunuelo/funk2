@@ -508,6 +508,7 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
 }
 
 funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
+  printf("\n  funk2_glwindow__lookup_texture, texture_name="); f2__write(cause, nil, texture_name); fflush(stdout);
   if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object")))               {return &(this->bucket_object_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting")))  {return &(this->female_child_agent_sitting_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing"))) {return &(this->female_child_agent_standing_texture);}
@@ -522,7 +523,9 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
 }
 
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
-  funk2_opengl_texture__bind(funk2_glwindow__lookup_texture(this, cause, texture_name), cause);
+  funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
+  printf("\n  funk2_glwindow__bind_texture , texture_id=%d", texture->texture_id); fflush(stdout);
+  funk2_opengl_texture__bind(texture, cause);
 }
 
 void raw__draw_gl_cube(f2ptr cause) {
@@ -609,9 +612,9 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   f2ptr rotation     = f2__physical_object__rotation(    cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
   
-  funk2_glwindow__bind_texture(this, cause, texture_name);
   raw__opengl__glPushMatrix(cause);
   opengl__render_physical_position(cause, position);
+  funk2_glwindow__bind_texture(this, cause, texture_name);
   raw__draw_gl_cube(cause);
   raw__opengl__glPopMatrix(cause);
 }

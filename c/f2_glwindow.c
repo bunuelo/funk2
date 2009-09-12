@@ -632,13 +632,20 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
   f2ptr rotation     = f2__physical_object__rotation(    cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
+  f2ptr size         = f2__physical_object__size(        cause, physical_object);
   
+  double size__d = 1.0;
+  if (raw__double__is_type(cause, size)) {
+    size__d = f2double__d(size, cause);
+  } else if (raw__integer__is_type(cause, size)) {
+    size__d = (double)f2integer__i(size, cause);
+  }
   raw__opengl__glPushMatrix(cause);
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
   double height_over_width = ((double)(texture->height) / (double)(texture->width));
   funk2_opengl_texture__bind(texture, cause);
   opengl__render_physical_position(cause, position);
-  raw__opengl__glScalef(cause, 1, 1 * height_over_width, 1);
+  raw__opengl__glScalef(cause, size__d, size__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }

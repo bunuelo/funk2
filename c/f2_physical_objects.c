@@ -99,7 +99,7 @@ void f2__physical_objects__initialize() {
   initialize_primobject_3_slot(physical_position, x, y, z);
   
   // physical_object
-  initialize_primobject_3_slot(physical_object, position, rotation, texture_name, size);
+  initialize_primobject_4_slot(physical_object, position, rotation, texture_name, size);
   
   // physical_scene
   initialize_primobject_2_slot(physical_scene, background_texture, physical_objects);

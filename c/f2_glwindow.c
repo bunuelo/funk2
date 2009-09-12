@@ -676,6 +676,7 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__physical_scene__is_type(cause, value)) {
       f2ptr physical_scene = value;
+      raw__gl_set_material_color(cause, 1,1,1,1);
       funk2_glwindow__render_physical_scene(this, cause, physical_scene);
     } else if (raw__larva__is_type(cause, value)) {
       raw__gl_set_material_color(cause, 1,0,0,1);

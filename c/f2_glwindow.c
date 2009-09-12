@@ -515,7 +515,7 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
 }
 
 funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
-  printf("\n  funk2_glwindow__lookup_texture, texture_name="); f2__write(cause, nil, texture_name); fflush(stdout);
+  //printf("\n  funk2_glwindow__lookup_texture, texture_name="); f2__write(cause, nil, texture_name); fflush(stdout);
   if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object")))               {return &(this->bucket_object_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting")))  {return &(this->female_child_agent_sitting_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing"))) {return &(this->female_child_agent_standing_texture);}
@@ -531,7 +531,7 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
 
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-  printf("\n  funk2_glwindow__bind_texture, texture_id=%d", texture->texture_id); fflush(stdout);
+  //printf("\n  funk2_glwindow__bind_texture, texture_id=%d", texture->texture_id); fflush(stdout);
   funk2_opengl_texture__bind(texture, cause);
 }
 

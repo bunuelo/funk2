@@ -31,7 +31,7 @@ typedef struct funk2_object_type__physical_position__slot_s funk2_object_type__p
 declare_object_type_3_slot(physical_position, x, y, z, );
 
 typedef struct funk2_object_type__physical_object__slot_s funk2_object_type__physical_object__slot_t;
-declare_object_type_3_slot(physical_object, position, rotation, texture_name, );
+declare_object_type_4_slot(physical_object, position, rotation, texture_name, size, );
 
 typedef struct funk2_object_type__physical_scene__slot_s funk2_object_type__physical_scene__slot_t;
 declare_object_type_2_slot(physical_scene, background_texture, physical_objects, );
@@ -43,7 +43,7 @@ declare_object_type_2_slot(physical_scene, background_texture, physical_objects,
 
 declare_primobject_1_slot(physical_rotation, array);
 declare_primobject_3_slot(physical_position, x, y, z);
-declare_primobject_3_slot(physical_object, position, rotation, texture_name);
+declare_primobject_4_slot(physical_object, position, rotation, texture_name, size);
 declare_primobject_2_slot(physical_scene, background_texture, physical_objects);
 
 // **

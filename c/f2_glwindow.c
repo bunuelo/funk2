@@ -190,7 +190,7 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
   return failure_status;
 }
 
-void funk2_opengl_texture__bind(funk2_opengl_texture_t* this) {
+void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause) {
   raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
 }
 
@@ -507,7 +507,7 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   return boolean__false;
 }
 
-void funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr texture_name) {
+void funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
   if      (raw__string__eq(cause, texture_name, new__string(cause, "texture")))                             {return &(this->texture);}
   else if (raw__string__eq(cause, texture_name, new__string(cause, "bucket_object_texture")))               {return &(this->bucket_object_texture);}
   else if (raw__string__eq(cause, texture_name, new__string(cause, "female_child_agent_sitting_texture")))  {return &(this->female_child_agent_sitting_texture);}
@@ -522,8 +522,8 @@ void funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr texture_name) 
   else                                                                                                      {return &(this->texture);}
 }
 
-void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr texture_name) {
-  funk2_opengl_texture__bind(funk2_glwindow__lookup_texture(this, texture_name));
+void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
+  funk2_opengl_texture__bind(funk2_glwindow__lookup_texture(this, cause, texture_name), cause);
 }
 
 void raw__draw_gl_cube(f2ptr cause) {

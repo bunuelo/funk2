@@ -79,7 +79,8 @@ struct funk2_openglu_s {
   boolean_t initialized;
   f2ptr     dlfcn_pointer;
 #if defined(F2__GLU__H)
-  void(*    gluPerspective)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+  void(*    gluPerspective   )(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+  GLint(*   gluBuild2DMipmaps)(GLenum target, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *data);
 #endif // F2__GLU__H
 };
 
@@ -169,7 +170,8 @@ void      funk2_openglu__destroy(funk2_openglu_t* this);
 boolean_t  raw__openglu__load_library(f2ptr cause);
 
 #if defined(F2__GLU__H)
-void raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+void  raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar);
+GLint raw__openglu__gluBuild2DMipmaps(f2ptr cause, GLenum target, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *data);
 #endif // F2__GLU__H
 
 

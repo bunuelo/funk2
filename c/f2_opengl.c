@@ -249,7 +249,7 @@ void raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures) {
 
 void raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
-  (*__funk2.opengl.glPopMatrix)(target, texture);
+  (*__funk2.opengl.glBindTexture)(target, texture);
 }
 
 void raw__opengl__glTexImage2D(f2ptr cause, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data) {
@@ -352,7 +352,8 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
   this->dlfcn_pointer = dlfcn_pointer;
   status("funk2_openglu__load_library: loaded openglu dynamic library successfully.");
 #if defined(F2__GLU__H)
-  this->gluPerspective = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective")); if (! (this->gluPerspective)) {status("funk2_openglu__load_library: failed symbol, gluPerspective."); return boolean__false;}
+  this->gluPerspective    = (void(*)(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar))                                                     from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluPerspective"));    if (! (this->gluPerspective)) {status("funk2_openglu__load_library: failed symbol, gluPerspective."); return boolean__false;}
+  this->gluBuild2DMipmaps = (GLint(*)(GLenum target, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *data)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"gluBuild2DMipmaps")); if (! (this->gluPerspective)) {status("funk2_openglu__load_library: failed symbol, gluBuild2DMipmaps."); return boolean__false;}
 #endif // F2__GLU__H
   status("funk2_openglu__load_library: loaded openglu function symbols successfully.");
   this->initialized = boolean__true;
@@ -364,6 +365,12 @@ void raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, G
   if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading glu. ***"); return;}
   (*__funk2.openglu.gluPerspective)(fovy, aspect, zNear, zFar);
 }
+
+GLint raw__openglu__gluBuild2DMipmaps(f2ptr cause, GLenum target, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *data) {
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading glu. ***"); return;}
+  return (*__funk2.openglu.gluBuild2DMipmaps)(target, internalFormat, width, height, format, type, data);
+}
+
 #endif // F2__GLU__H
 
 boolean_t raw__openglu__load_library(f2ptr cause) {

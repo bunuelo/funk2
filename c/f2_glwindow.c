@@ -133,8 +133,8 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
     for (pixel_index = 0; pixel_index < image_pixel_num; pixel_index ++) {
       // from argb
       u8 alpha = texture->data[(pixel_index << 2) + 0];
-      u8 red   = texture->data[(pixel_index << 2) + 1];
-      u8 green = texture->data[(pixel_index << 2) + 2];
+      u8 green = texture->data[(pixel_index << 2) + 1];
+      u8 red   = texture->data[(pixel_index << 2) + 2];
       u8 blue  = texture->data[(pixel_index << 2) + 3];
       // to rgba
       texture->data[(pixel_index << 2) + 0] = red;

@@ -646,7 +646,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
 void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {
   raw__opengl__glPushMatrix(cause);
   funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
-  double width_over_height = ((double)(background_texture->width) / (double)(texture->height));
+  double width_over_height = ((double)(background_texture->width) / (double)(background_texture->height));
   funk2_opengl_texture__bind(background_texture, cause);
   raw__opengl__glTranslatef(cause, 0, 0, -20);
   raw__opengl__glScalef(cause, 10 * width_over_height, 10, 1);

@@ -174,6 +174,8 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
       raw__opengl__glGenTextures(cause, 1, &texture_id);
       this->texture_id = texture_id;
     }
+    this->width  = image->width;
+    this->height = image->height;
     raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
     raw__opengl__glTexImage2D(cause, GL_TEXTURE_2D, 0, 4, image->width, image->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->data);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -186,6 +188,10 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
     f2__free(to_ptr(image));
   }
   return failure_status;
+}
+
+void funk2_opengl_texture__bind(funk2_opengl_texture_t* this) {
+  raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
 }
 
 boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) {
@@ -501,6 +507,25 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   return boolean__false;
 }
 
+void funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr texture_name) {
+  if      (raw__string__eq(cause, texture_name, new__string(cause, "texture")))                             {return &(this->texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "bucket_object_texture")))               {return &(this->bucket_object_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "female_child_agent_sitting_texture")))  {return &(this->female_child_agent_sitting_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "female_child_agent_standing_texture"))) {return &(this->female_child_agent_standing_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "fork_object_texture")))                 {return &(this->fork_object_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "male_child_agent_sitting_texture")))    {return &(this->male_child_agent_sitting_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "male_child_agent_standing_texture")))   {return &(this->male_child_agent_standing_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "mud_object_texture")))                  {return &(this->mud_object_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "mud_puddle_scene_texture")))            {return &(this->mud_puddle_scene_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "shovel_object_texture")))               {return &(this->shovel_object_texture);}
+  else if (raw__string__eq(cause, texture_name, new__string(cause, "spoon_object_texture")))                {return &(this->spoon_object_texture);}
+  else                                                                                                      {return &(this->texture);}
+}
+
+void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr texture_name) {
+  funk2_opengl_texture__bind(funk2_glwindow__lookup_texture(this, texture_name));
+}
+
 void raw__draw_gl_cube(f2ptr cause) {
   raw__opengl__glBegin(cause, GL_QUADS);
   raw__opengl__glNormal3f(cause, 0,0,1);
@@ -581,8 +606,9 @@ void opengl__render_physical_position(f2ptr cause, f2ptr this) {
 }
 
 void opengl__render_physical_object(f2ptr cause, f2ptr this) {
-  f2ptr position = f2__physical_object__position(cause, this);
-  f2ptr rotation = f2__physical_object__rotation(cause, this);
+  f2ptr position     = f2__physical_object__position(    cause, this);
+  f2ptr rotation     = f2__physical_object__rotation(    cause, this);
+  f2ptr texture_name = f2__physical_object__texture_name(cause, this);
   raw__opengl__glPushMatrix(cause);
   opengl__render_physical_position(cause, position);
   raw__draw_gl_cube(cause);

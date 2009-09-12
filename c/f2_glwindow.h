@@ -37,6 +37,8 @@ typedef struct funk2_texture_image_s {
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 typedef struct funk2_opengl_texture_s {
+  int    width;
+  int    height;
   GLuint texture_id;
 } funk2_opengl_texture_t;
 #endif // F2__GLWINDOW__SUPPORTED

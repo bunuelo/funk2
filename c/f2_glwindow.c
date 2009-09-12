@@ -177,7 +177,7 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
     this->width  = image->width;
     this->height = image->height;
     raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
-    boolean_t mipmapped = boolean__false;
+    boolean_t mipmapped = boolean__true;
     if (! mipmapped) {
       raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
       raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

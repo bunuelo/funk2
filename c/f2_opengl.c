@@ -374,7 +374,7 @@ void raw__openglu__gluPerspective(f2ptr cause, GLdouble fovy, GLdouble aspect, G
 }
 
 GLint raw__openglu__gluBuild2DMipmaps(f2ptr cause, GLenum target, GLint internalFormat, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *data) {
-  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading glu. ***"); return;}
+  if (!__funk2.openglu.initialized) {status("*** WARNING: called xlib function without loading glu. ***"); return -1;}
   return (*__funk2.openglu.gluBuild2DMipmaps)(target, internalFormat, width, height, format, type, data);
 }
 

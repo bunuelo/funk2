@@ -31,7 +31,6 @@
 					   [new physical_object [new physical_position -4 2 -10] nil `spoon_object]
 					   [new physical_object [new physical_position -2 2 -10] nil `fork_object]
 					   [new physical_object [new physical_position  0 2 -10] nil `mud_object]
-					   [new physical_object [new physical_position  2 2 -10] nil `mud_puddle_scene]
 					   [new physical_object [new physical_position  4 2 -10] nil `shovel_object]
 					   ]]]
   [glwindow-create title width height depth fullscreen]

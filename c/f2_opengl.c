@@ -102,6 +102,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glTexCoord2f      = (void(*)(GLfloat s, GLfloat t))                                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glTexCoord2f"));      if (! (this->glTexCoord2f))      {status("funk2_opengl__load_library: failed symbol, glTexCoord2f.");      return boolean__false;}
   this->glBlendFunc       = (void(*)(GLenum sfactor, GLenum dfactor))                                          from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glBlendFunc"));       if (! (this->glBlendFunc))       {status("funk2_opengl__load_library: failed symbol, glBlendFunc.");       return boolean__false;}
   this->glScalef          = (void(*)(GLfloat x, GLfloat y, GLfloat z))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glScalef"));          if (! (this->glScalef))          {status("funk2_opengl__load_library: failed symbol, glScalef.");          return boolean__false;}
+  this->glDisable         = (void(*)(GLenum cap))                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDisable"));         if (! (this->glDisable))         {status("funk2_opengl__load_library: failed symbol, glDisable.");         return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
@@ -276,6 +277,11 @@ void raw__opengl__glBlendFunc(f2ptr cause, GLenum sfactor, GLenum dfactor) {
 void raw__opengl__glScalef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glScalef)(x, y, z);
+}
+
+void raw__opengl__glDisable(f2ptr cause, GLenum cap) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
+  (*__funk2.opengl.glDisable)(cap);
 }
 
 

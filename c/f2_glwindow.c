@@ -508,17 +508,17 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
 }
 
 void funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
-  if      (raw__string__eq(cause, texture_name, new__string(cause, "texture")))                             {return &(this->texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "bucket_object_texture")))               {return &(this->bucket_object_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "female_child_agent_sitting_texture")))  {return &(this->female_child_agent_sitting_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "female_child_agent_standing_texture"))) {return &(this->female_child_agent_standing_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "fork_object_texture")))                 {return &(this->fork_object_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "male_child_agent_sitting_texture")))    {return &(this->male_child_agent_sitting_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "male_child_agent_standing_texture")))   {return &(this->male_child_agent_standing_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "mud_object_texture")))                  {return &(this->mud_object_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "mud_puddle_scene_texture")))            {return &(this->mud_puddle_scene_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "shovel_object_texture")))               {return &(this->shovel_object_texture);}
-  else if (raw__string__eq(cause, texture_name, new__string(cause, "spoon_object_texture")))                {return &(this->spoon_object_texture);}
+  if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "texture")))                             {return &(this->texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object_texture")))               {return &(this->bucket_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting_texture")))  {return &(this->female_child_agent_sitting_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing_texture"))) {return &(this->female_child_agent_standing_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "fork_object_texture")))                 {return &(this->fork_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_sitting_texture")))    {return &(this->male_child_agent_sitting_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_standing_texture")))   {return &(this->male_child_agent_standing_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_object_texture")))                  {return &(this->mud_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_puddle_scene_texture")))            {return &(this->mud_puddle_scene_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "shovel_object_texture")))               {return &(this->shovel_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "spoon_object_texture")))                {return &(this->spoon_object_texture);}
   else                                                                                                      {return &(this->texture);}
 }
 

@@ -635,10 +635,10 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   
   raw__opengl__glPushMatrix(cause);
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-  double width_over_height = ((double)(texture->width) / (double)(texture->height));
-  funk2_opengl_texture__bind(texture, cause);
+  double height_over_width = ((double)(texture->height) / (double)(texture->width));
+  funk2_opengl_texture__bind(background_texture, cause);
   opengl__render_physical_position(cause, position);
-  raw__opengl__glScalef(cause, 1 * width_over_height, 1, 1);
+  raw__opengl__glScalef(cause, 1, 1 * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }
@@ -646,10 +646,10 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
 void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {
   raw__opengl__glPushMatrix(cause);
   funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
-  double width_over_height = ((double)(background_texture->width) / (double)(background_texture->height));
+  double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
   funk2_opengl_texture__bind(background_texture, cause);
   raw__opengl__glTranslatef(cause, 0, 0, -20);
-  raw__opengl__glScalef(cause, 10 * width_over_height, 10, 1);
+  raw__opengl__glScalef(cause, 20, 20 * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }

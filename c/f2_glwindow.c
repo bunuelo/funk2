@@ -507,7 +507,7 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   return boolean__false;
 }
 
-void funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
+funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
   if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "texture")))                             {return &(this->texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object_texture")))               {return &(this->bucket_object_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting_texture")))  {return &(this->female_child_agent_sitting_texture);}

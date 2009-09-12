@@ -128,19 +128,19 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
       status("Error 32 bit argb data!");
       return boolean__true;
     }
-    // swap red and blue (abgr -> rgba)
+    // swap red and blue (argb -> rgba)
     u64 pixel_index = 0;
     for (pixel_index = 0; pixel_index < image_pixel_num; pixel_index ++) {
-      {
-	u8 temp                               = texture->data[(pixel_index << 2) + 1];
-	texture->data[(pixel_index << 2) + 1] = texture->data[(pixel_index << 2) + 2];
-	texture->data[(pixel_index << 2) + 2] = temp;
-      }
-      {
-	u8 temp                               = texture->data[(pixel_index << 2) + 0];
-	texture->data[(pixel_index << 2) + 0] = texture->data[(pixel_index << 2) + 3];
-	texture->data[(pixel_index << 2) + 3] = temp;
-      }
+      // from argb
+      u8 alpha = texture->data[(pixel_index << 2) + 0];
+      u8 red   = texture->data[(pixel_index << 2) + 1];
+      u8 green = texture->data[(pixel_index << 2) + 2];
+      u8 blue  = texture->data[(pixel_index << 2) + 3];
+      // to rgba
+      texture->data[(pixel_index << 2) + 0] = red;
+      texture->data[(pixel_index << 2) + 1] = green;
+      texture->data[(pixel_index << 2) + 2] = blue;
+      texture->data[(pixel_index << 2) + 3] = alpha;
     }
   } else if (biBitCount == 24) {
     u64 pixel_index = 0;

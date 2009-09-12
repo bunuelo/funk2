@@ -67,10 +67,10 @@ def_pcfunk3(physical_object__new, position, rotation, texture_name, return f2__p
 
 // physical_scene
 
-def_primobject_1_slot(physical_scene, physical_objects);
+def_primobject_2_slot(physical_scene, background_texture, physical_objects);
 
-f2ptr f2__physical_scene__new(f2ptr cause, f2ptr physical_objects) {return f2physical_scene__new(cause, physical_objects);}
-def_pcfunk1(physical_scene__new, physical_objects, return f2__physical_scene__new(this_cause, physical_objects));
+f2ptr f2__physical_scene__new(f2ptr cause, f2ptr background_texture, f2ptr physical_objects) {return f2physical_scene__new(cause, background_texture, physical_objects);}
+def_pcfunk2(physical_scene__new, background_texture, physical_objects, return f2__physical_scene__new(this_cause, background_texture, physical_objects));
 
 
 // **
@@ -102,6 +102,6 @@ void f2__physical_objects__initialize() {
   initialize_primobject_3_slot(physical_object, position, rotation, texture_name);
   
   // physical_scene
-  initialize_primobject_1_slot(physical_scene, physical_objects);
+  initialize_primobject_2_slot(physical_scene, background_texture, physical_objects);
 }
 

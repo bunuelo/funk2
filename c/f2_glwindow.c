@@ -599,6 +599,20 @@ void raw__draw_gl_cube(f2ptr cause) {
   raw__opengl__glEnd(cause);
 }
 
+void raw__draw_xy_square(f2ptr cause) {
+  raw__opengl__glBegin(cause, GL_QUADS);
+  raw__opengl__glNormal3f(cause, 0,0,1);
+  raw__opengl__glTexCoord2f(cause, 0, 0);
+  raw__opengl__glVertex3f(cause, -1,-1,1);
+  raw__opengl__glTexCoord2f(cause, 1, 0);
+  raw__opengl__glVertex3f(cause,  1,-1,1);
+  raw__opengl__glTexCoord2f(cause, 1, 1);
+  raw__opengl__glVertex3f(cause,  1, 1,1);
+  raw__opengl__glTexCoord2f(cause, 0, 1);
+  raw__opengl__glVertex3f(cause, -1, 1,1);
+  raw__opengl__glEnd(cause);
+}
+
 void raw__gl_set_material_color(f2ptr cause, float red, float green, float blue, float alpha) {
   float mcolor[] = { red, green, blue, alpha };
   raw__opengl__glMaterialfv(cause, GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mcolor);
@@ -622,12 +636,24 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   raw__opengl__glPushMatrix(cause);
   funk2_glwindow__bind_texture(this, cause, texture_name);
   opengl__render_physical_position(cause, position);
-  raw__draw_gl_cube(cause);
+  raw__draw_xy_square(cause);
+  raw__opengl__glPopMatrix(cause);
+}
+
+void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {
+  raw__opengl__glPushMatrix(cause);
+  funk2_glwindow__bind_texture(this, cause, background_texture_name);
+  raw__opengl__glTranslatef(cause, 0, 0, -20);
+  raw__opengl__glScalef(cause, 10, 10, 1);
+  raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }
 
 void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_scene) {
-  f2ptr physical_objects = f2__physical_scene__physical_objects(cause, physical_scene);
+  f2ptr background_texture = f2__physical_scene__background_texture(cause, physical_scene);
+  funk2_glwindow__render_background(this, cause, background_texture);
+  
+  f2ptr physical_objects   = f2__physical_scene__physical_objects(cause, physical_scene);
   f2ptr physical_object_iter = physical_objects;
   while (physical_object_iter) {
     {

@@ -661,6 +661,9 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
 }
 
 void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_scene) {
+  
+  raw__opengl__glDisable(cause, GL_DEPTH_TEST);
+  
   f2ptr background_texture = f2__physical_scene__background_texture(cause, physical_scene);
   funk2_glwindow__render_background(this, cause, background_texture);
   
@@ -673,6 +676,9 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
     }
     physical_object_iter = f2__cons__cdr(cause, physical_object_iter);
   }
+  
+  raw__opengl__glEnable(cause, GL_DEPTH_TEST);
+  
 }
 
 // here goes our main scene drawing code

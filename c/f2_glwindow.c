@@ -620,8 +620,8 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
   
   raw__opengl__glPushMatrix(cause);
-  opengl__render_physical_position(cause, position);
   funk2_glwindow__bind_texture(this, cause, texture_name);
+  opengl__render_physical_position(cause, position);
   raw__draw_gl_cube(cause);
   raw__opengl__glPopMatrix(cause);
 }

@@ -644,6 +644,7 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
   raw__opengl__glPushMatrix(cause);
   funk2_glwindow__bind_texture(this, cause, background_texture_name);
   raw__opengl__glTranslatef(cause, 0, 0, -20);
+  raw__opengl__glScalef(cause, 10, 10, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }

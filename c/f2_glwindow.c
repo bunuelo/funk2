@@ -482,7 +482,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
 // general OpenGL initialization function
 boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause) {
   raw__opengl__glShadeModel(cause, GL_SMOOTH);
-  raw__opengl__glClearColor(cause, 1.0f, 1.0f, 1.0f, 0.0f);
+  raw__opengl__glClearColor(cause, 0.0f, 0.0f, 0.0f, 0.0f);
   raw__opengl__glClearDepth(cause, 1.0f);
   raw__opengl__glEnable(cause, GL_DEPTH_TEST);
   raw__opengl__glDepthFunc(cause, GL_LEQUAL);

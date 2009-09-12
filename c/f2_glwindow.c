@@ -645,7 +645,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   double height_over_width = ((double)(texture->height) / (double)(texture->width));
   funk2_opengl_texture__bind(texture, cause);
   opengl__render_physical_position(cause, position);
-  raw__opengl__glScalef(cause, size__d, size__d * height_over_width, 1);
+  raw__opengl__glScalef(cause, 1.5 * size__d, 1.5 * size__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }

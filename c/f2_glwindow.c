@@ -508,18 +508,17 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
 }
 
 funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
-  if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "texture")))                             {return &(this->texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object_texture")))               {return &(this->bucket_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting_texture")))  {return &(this->female_child_agent_sitting_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing_texture"))) {return &(this->female_child_agent_standing_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "fork_object_texture")))                 {return &(this->fork_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_sitting_texture")))    {return &(this->male_child_agent_sitting_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_standing_texture")))   {return &(this->male_child_agent_standing_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_object_texture")))                  {return &(this->mud_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_puddle_scene_texture")))            {return &(this->mud_puddle_scene_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "shovel_object_texture")))               {return &(this->shovel_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "spoon_object_texture")))                {return &(this->spoon_object_texture);}
-  else                                                                                                      {return &(this->texture);}
+  if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object")))               {return &(this->bucket_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting")))  {return &(this->female_child_agent_sitting_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing"))) {return &(this->female_child_agent_standing_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "fork_object")))                 {return &(this->fork_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_sitting")))    {return &(this->male_child_agent_sitting_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_standing")))   {return &(this->male_child_agent_standing_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_object")))                  {return &(this->mud_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_puddle_scene")))            {return &(this->mud_puddle_scene_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "shovel_object")))               {return &(this->shovel_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "spoon_object")))                {return &(this->spoon_object_texture);}
+  else                                                                                              {return &(this->texture);}
 }
 
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
@@ -605,23 +604,25 @@ void opengl__render_physical_position(f2ptr cause, f2ptr this) {
   raw__opengl__glTranslatef(cause, x__d, y__d, z__d);
 }
 
-void opengl__render_physical_object(f2ptr cause, f2ptr this) {
-  f2ptr position     = f2__physical_object__position(    cause, this);
-  f2ptr rotation     = f2__physical_object__rotation(    cause, this);
-  f2ptr texture_name = f2__physical_object__texture_name(cause, this);
+void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
+  f2ptr position     = f2__physical_object__position(    cause, physical_object);
+  f2ptr rotation     = f2__physical_object__rotation(    cause, physical_object);
+  f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
+  
+  funk2_glwindow__bind_texture(this, cause, texture_name);
   raw__opengl__glPushMatrix(cause);
   opengl__render_physical_position(cause, position);
   raw__draw_gl_cube(cause);
   raw__opengl__glPopMatrix(cause);
 }
 
-void opengl__render_physical_scene(f2ptr cause, f2ptr this) {
-  f2ptr physical_objects = f2__physical_scene__physical_objects(cause, this);
+void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_scene) {
+  f2ptr physical_objects = f2__physical_scene__physical_objects(cause, physical_scene);
   f2ptr physical_object_iter = physical_objects;
   while (physical_object_iter) {
     {
       f2ptr physical_object = f2__cons__car(cause, physical_object_iter);
-      opengl__render_physical_object(cause, physical_object);
+      funk2_glwindow__render_physical_object(this, cause, physical_object);
     }
     physical_object_iter = f2__cons__cdr(cause, physical_object_iter);
   }
@@ -639,7 +640,7 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__physical_scene__is_type(cause, value)) {
       f2ptr physical_scene = value;
-      opengl__render_physical_scene(cause, physical_scene);
+      funk2_glwindow__render_physical_scene(this, cause, physical_scene);
     } else if (raw__larva__is_type(cause, value)) {
       raw__gl_set_material_color(cause, 1,0,0,1);
       raw__draw_gl_cube(cause);

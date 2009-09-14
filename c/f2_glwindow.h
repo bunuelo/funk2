@@ -43,6 +43,12 @@ typedef struct funk2_opengl_texture_s {
 } funk2_opengl_texture_t;
 #endif // F2__GLWINDOW__SUPPORTED
 
+#if defined(F2__GLWINDOW__SUPPORTED)
+typedef struct funk2_opengl_font_s {
+  GLuint base_display_list;
+} funk2_opengl_font_t;
+#endif // F2__GLWINDOW__SUPPORTED
+
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
   boolean_t              initialized;
@@ -78,6 +84,7 @@ typedef struct funk2_glwindow_s {
   funk2_opengl_texture_t mud_puddle_scene_texture;
   funk2_opengl_texture_t shovel_object_texture;
   funk2_opengl_texture_t spoon_object_texture;
+  funk2_opengl_font_t    fixed_font;
 #endif // F2__GLWINDOW__SUPPORTED
 
 } funk2_glwindow_t;

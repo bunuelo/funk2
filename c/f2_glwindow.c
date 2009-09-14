@@ -57,6 +57,38 @@ static GLfloat funk2_glwindow__light1_ambient[]  = {0.1f, 0.1f,  0.1f, 1.0f};
 static GLfloat funk2_glwindow__light1_diffuse[]  = {1.0f, 1.0f,  1.0f, 1.0f};
 static GLfloat funk2_glwindow__light1_position[] = {0.0f, 0.0f, 10.0f, 1.0f};
 
+boolean_t funk2_opengl_font__init(funk2_opengl_font_t* this, f2ptr cause, Display* display, char* font_name) {
+  XFontStruct* font = raw__xlib__XLoadQueryFont(cause, display, font_name);
+  if (font == NULL) {
+    status("funk2_opengl_font__init: could not find any '%s' fonts.", font_name);
+    return boolean__true;
+  }
+  this->base_display_list = raw__opengl__glGenLists(cause, 96);
+  raw__opengl__glXUseXFont(cause, font->fid, 32, 96, this->base_display_list);
+  raw__xlib__XFreeFont(cause, display, font);
+  return boolean__false;
+}
+
+void funk2_opengl_font__destroy(funk2_opengl_font_t* this, f2ptr cause) {
+  raw__opengl__glDeleteLists(cause, this->base_display_list, 96);
+}
+
+void funk2_opengl_font__printf(funk2_opengl_font_t* this, f2ptr cause, const char* fmt, ...) {
+  va_list ap;
+  char text[256];
+  if (fmt == NULL) {
+    return;
+  }
+  va_start(ap, fmt);
+  vsnprintf(text, 256, fmt, ap);
+  va_end(ap);
+  text[256 - 1] = (char)0;
+  raw__opengl__glPushAttrib(cause, GL_LIST_BIT);
+  raw__opengl__glListBase(cause, base - 32);
+  raw__opengl__glCallLists(cause, strlen(text), GL_UNSIGNED_BYTE, text);
+  raw__opengl__glPopAttrib(cause);
+}
+
 // simple loader for 24-bit bitmaps (data is in rgb-format)
 boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* filename) {
   FILE*              file;
@@ -270,6 +302,8 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
 void funk2_glwindow__destroy(funk2_glwindow_t* this) {
   if (this->initialized) {
     this->initialized = boolean__false;
+    
+    funk2_opengl_font__destroy(this->fixed_font);
     
     funk2_glwindow__hide(this, nil);
     f2__free(to_ptr(this->title));
@@ -507,8 +541,15 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
     status("funk2_glwindow__initialize_opengl failure: loading gl textures.");
     return boolean__true;
   }
-  
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
+  
+  if (funk2_opengl_font__init(this->fixed_font, cause, this->display, "-*-helvetica-bold-r-normal--24-*-*-*-p-*-iso8859-1")) {
+    if (funk2_opengl_font__init(this->fixed_font, cause, this->display, "fixed")) {
+      status("funk2_glwindow__initialize_opengl failure: could not find a font.");
+      return boolean__true;
+    }
+  }
+  
   
   raw__opengl__glFlush(cause);
   return boolean__false;

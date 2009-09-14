@@ -98,27 +98,28 @@ struct funk2_xxf86vm_s {
 };
 
 struct funk2_xlib_s {
-  boolean_t  initialized;
-  f2ptr      dlfcn_pointer;
+  boolean_t      initialized;
+  f2ptr          dlfcn_pointer;
 #if defined(F2__XLIB__H)
-  void(*     XCloseDisplay         )(Display* display);
-  Display*(* XOpenDisplay          )(char* display_name);
-  Colormap(* XCreateColormap       )(Display* display, Window w, Visual* visual, int alloc);
-  int(*      XFree                 )(void* data);   
-  Window(*   XCreateWindow         )(Display* display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, int depth, unsigned int class, Visual* visual, unsigned long valuemask, XSetWindowAttributes* attributes);
-  void(*     XWarpPointer          )(Display* display, Window src_w, Window dest_w, int src_x, int src_y, unsigned int src_width, unsigned int src_height, int dest_x, int dest_y);
-  void(*     XMapRaised            )(Display* display, Window w);
-  int(*      XGrabKeyboard         )(Display* display, Window grab_window, Bool owner_events, int pointer_mode, int keyboard_mode, Time time);
-  int(*      XGrabPointer          )(Display* display, Window grab_window, Bool owner_events, unsigned int event_mask, int pointer_mode, int keyboard_mode, Window confine_to, Cursor cursor, Time time);
-  Atom(*     XInternAtom           )(Display* display, char* atom_name, Bool only_if_exists);
-  Status(*   XSetWMProtocols       )(Display* display, Window w, Atom* protocols, int count);
-  void(*     XSetStandardProperties)(Display* display, Window w, char* window_name, char* icon_name, Pixmap icon_pixmap, char** argv, int argc, XSizeHints *hints);
-  Status(*   XGetGeometry          )(Display* display, Drawable d, Window *root_return, int* x_return, int* y_return, unsigned int* width_return, unsigned int* height_return, unsigned int* border_width_return, unsigned int* depth_return);
-  void(*     XNextEvent            )(Display* display, XEvent* event_return);
-  KeySym(*   XLookupKeysym         )(XKeyEvent* key_event, int index);
-  char*(*    XGetAtomName          )(Display* display, Atom atom);
-  int(*      XPending              )(Display *display);
-  int(*      XDefaultScreen        )(Display *display);
+  void(*         XCloseDisplay         )(Display* display);
+  Display*(*     XOpenDisplay          )(char* display_name);
+  Colormap(*     XCreateColormap       )(Display* display, Window w, Visual* visual, int alloc);
+  int(*          XFree                 )(void* data);   
+  Window(*       XCreateWindow         )(Display* display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, int depth, unsigned int class, Visual* visual, unsigned long valuemask, XSetWindowAttributes* attributes);
+  void(*         XWarpPointer          )(Display* display, Window src_w, Window dest_w, int src_x, int src_y, unsigned int src_width, unsigned int src_height, int dest_x, int dest_y);
+  void(*         XMapRaised            )(Display* display, Window w);
+  int(*          XGrabKeyboard         )(Display* display, Window grab_window, Bool owner_events, int pointer_mode, int keyboard_mode, Time time);
+  int(*          XGrabPointer          )(Display* display, Window grab_window, Bool owner_events, unsigned int event_mask, int pointer_mode, int keyboard_mode, Window confine_to, Cursor cursor, Time time);
+  Atom(*         XInternAtom           )(Display* display, char* atom_name, Bool only_if_exists);
+  Status(*       XSetWMProtocols       )(Display* display, Window w, Atom* protocols, int count);
+  void(*         XSetStandardProperties)(Display* display, Window w, char* window_name, char* icon_name, Pixmap icon_pixmap, char** argv, int argc, XSizeHints *hints);
+  Status(*       XGetGeometry          )(Display* display, Drawable d, Window *root_return, int* x_return, int* y_return, unsigned int* width_return, unsigned int* height_return, unsigned int* border_width_return, unsigned int* depth_return);
+  void(*         XNextEvent            )(Display* display, XEvent* event_return);
+  KeySym(*       XLookupKeysym         )(XKeyEvent* key_event, int index);
+  char*(*        XGetAtomName          )(Display* display, Atom atom);
+  int(*          XPending              )(Display *display);
+  int(*          XDefaultScreen        )(Display *display);
+  XFontStruct*(* XLoadQueryFont        )(Display *display, char *name);
 #endif // F2__XLIB__H
 };
 
@@ -196,64 +197,65 @@ void      funk2_xlib__destroy(funk2_xlib_t* this);
 boolean_t  raw__xlib__load_library(f2ptr cause);
 
 #if defined(F2__XLIB__H)
-void     raw__xlib__XCloseDisplay(f2ptr cause, Display* display);
-Display* raw__xlib__XOpenDisplay(f2ptr cause, char* display_name);
-Colormap raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc);
-int      raw__xlib__XFree(f2ptr cause, void* data);
-Window   raw__xlib__XCreateWindow(f2ptr cause, Display* display,
-				  Window parent,
-				  int x, int y,
-				  unsigned int width, unsigned int height,
-				  unsigned int border_width,
-				  int depth,
-				  unsigned int class,
-				  Visual* visual,
-				  unsigned long valuemask,
-				  XSetWindowAttributes* attributes);
-void     raw__xlib__XWarpPointer(f2ptr cause, Display* display,
-				 Window src_w, Window dest_w,
-				 int src_x, int src_y,
-				 unsigned int src_width, unsigned int src_height,
-				 int dest_x, int dest_y);
-void     raw__xlib__XMapRaised(f2ptr cause, Display* display, Window w);
-int      raw__xlib__XGrabKeyboard(f2ptr cause, Display* display,
-				  Window grab_window,
-				  Bool owner_events,
-				  int pointer_mode,
-				  int keyboard_mode,
-				  Time time);
-int      raw__xlib__XGrabPointer(f2ptr cause, Display* display,
-				 Window grab_window,
-				 Bool owner_events,
-				 unsigned int event_mask,
-				 int pointer_mode,
-				 int keyboard_mode,
-				 Window confine_to,
-				 Cursor cursor,
-				 Time time);
-Atom     raw__xlib__XInternAtom(f2ptr cause, Display* display, char* atom_name, Bool only_if_exists);
-Status   raw__xlib__XSetWMProtocols(f2ptr cause, Display* display, Window w, Atom* protocols, int count);
-void     raw__xlib__XSetStandardProperties(f2ptr cause, Display* display,
-					   Window w,
-					   char* window_name,
-					   char* icon_name,
-					   Pixmap icon_pixmap,
-					   char** argv, int argc,
-					   XSizeHints *hints);
-Status   raw__xlib__XGetGeometry(f2ptr cause, Display* display,
-				 Drawable d,
-				 Window* root_return,
-				 int* x_return,
-				 int* y_return,
-				 unsigned int* width_return,
-				 unsigned int* height_return,
-				 unsigned int* border_width_return,
-				 unsigned int* depth_return);
-void     raw__xlib__XNextEvent(f2ptr cause, Display* display, XEvent* event_return);
-KeySym   raw__xlib__XLookupKeysym(f2ptr cause, XKeyEvent* key_event, int index);
-char*    raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom);
-int      raw__xlib__XPending(f2ptr cause, Display* display);
-int      raw__xlib__XDefaultScreen(f2ptr cause, Display *display);
+void         raw__xlib__XCloseDisplay(f2ptr cause, Display* display);
+Display*     raw__xlib__XOpenDisplay(f2ptr cause, char* display_name);
+Colormap     raw__xlib__XCreateColormap(f2ptr cause, Display* display, Window w, Visual* visual, int alloc);
+int          raw__xlib__XFree(f2ptr cause, void* data);
+Window       raw__xlib__XCreateWindow(f2ptr cause, Display* display,
+				      Window parent,
+				      int x, int y,
+				      unsigned int width, unsigned int height,
+				      unsigned int border_width,
+				      int depth,
+				      unsigned int class,
+				      Visual* visual,
+				      unsigned long valuemask,
+				      XSetWindowAttributes* attributes);
+void         raw__xlib__XWarpPointer(f2ptr cause, Display* display,
+				     Window src_w, Window dest_w,
+				     int src_x, int src_y,
+				     unsigned int src_width, unsigned int src_height,
+				     int dest_x, int dest_y);
+void         raw__xlib__XMapRaised(f2ptr cause, Display* display, Window w);
+int          raw__xlib__XGrabKeyboard(f2ptr cause, Display* display,
+				      Window grab_window,
+				      Bool owner_events,
+				      int pointer_mode,
+				      int keyboard_mode,
+				      Time time);
+int          raw__xlib__XGrabPointer(f2ptr cause, Display* display,
+				     Window grab_window,
+				     Bool owner_events,
+				     unsigned int event_mask,
+				     int pointer_mode,
+				     int keyboard_mode,
+				     Window confine_to,
+				     Cursor cursor,
+				     Time time);
+Atom         raw__xlib__XInternAtom(f2ptr cause, Display* display, char* atom_name, Bool only_if_exists);
+Status       raw__xlib__XSetWMProtocols(f2ptr cause, Display* display, Window w, Atom* protocols, int count);
+void         raw__xlib__XSetStandardProperties(f2ptr cause, Display* display,
+					       Window w,
+					       char* window_name,
+					       char* icon_name,
+					       Pixmap icon_pixmap,
+					       char** argv, int argc,
+					       XSizeHints *hints);
+Status       raw__xlib__XGetGeometry(f2ptr cause, Display* display,
+				     Drawable d,
+				     Window* root_return,
+				     int* x_return,
+				     int* y_return,
+				     unsigned int* width_return,
+				     unsigned int* height_return,
+				     unsigned int* border_width_return,
+				     unsigned int* depth_return);
+void         raw__xlib__XNextEvent(f2ptr cause, Display* display, XEvent* event_return);
+KeySym       raw__xlib__XLookupKeysym(f2ptr cause, XKeyEvent* key_event, int index);
+char*        raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom);
+int          raw__xlib__XPending(f2ptr cause, Display* display);
+int          raw__xlib__XDefaultScreen(f2ptr cause, Display *display);
+XFontStruct* raw__xlib__XLoadQueryFont(f2ptr cause, Display* display, char* name);
 #endif // F2__XLIB__H
 
 

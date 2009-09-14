@@ -64,6 +64,7 @@ struct funk2_opengl_s {
   void(*         glBlendFunc    )(GLenum sfactor, GLenum dfactor);
   void(*         glScalef       )(GLfloat x, GLfloat y, GLfloat z);
   void(*         glDisable      )(GLenum cap);
+  GLuint(*       glGenLists     )(GLsizei range);
   // The following functions are included in libGL.so, but are
   // probably not on non-X environments, so we'll need to deal with
   // this in a port to those environments.
@@ -128,37 +129,38 @@ void      funk2_opengl__destroy(funk2_opengl_t* this);
 boolean_t  raw__opengl__load_library(f2ptr cause);
 
 #if defined(F2__GL__H)
-void raw__opengl__glViewport(f2ptr cause, GLint x, GLint y, GLsizei width, GLsizei height);
-void raw__opengl__glMatrixMode(f2ptr cause, GLenum mode);
-void raw__opengl__glLoadIdentity(f2ptr cause);
-void raw__opengl__glShadeModel(f2ptr cause, GLenum mode);
-void raw__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
-void raw__opengl__glClearDepth(f2ptr cause, GLclampd depth);
-void raw__opengl__glEnable(f2ptr cause, GLenum cap);
-void raw__opengl__glDepthFunc(f2ptr cause, GLenum func);
-void raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode);
-void raw__opengl__glFlush(f2ptr cause);
-void raw__opengl__glClear(f2ptr cause, GLbitfield mask);
-void raw__opengl__glLightfv(f2ptr cause, GLenum light, GLenum pname, const GLfloat* params);
-void raw__opengl__glCullFace(f2ptr cause, GLenum mode);
-void raw__opengl__glTranslatef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
-void raw__opengl__glRotatef(f2ptr cause, GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
-void raw__opengl__glColor4f(f2ptr cause, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-void raw__opengl__glBegin(f2ptr cause, GLenum mode);
-void raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz);
-void raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
-void raw__opengl__glEnd(f2ptr cause);
-void raw__opengl__glMaterialfv(f2ptr cause, GLenum face, GLenum pname, const GLfloat* params);
-void raw__opengl__glPushMatrix(f2ptr cause);
-void raw__opengl__glPopMatrix(f2ptr cause);
-void raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures);
-void raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture);
-void raw__opengl__glTexImage2D(f2ptr cause, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
-void raw__opengl__glTexParameteri(f2ptr cause, GLenum target, GLenum pname, GLint param);
-void raw__opengl__glTexCoord2f(f2ptr cause, GLfloat s, GLfloat t);
-void raw__opengl__glBlendFunc(f2ptr cause, GLenum sfactor, GLenum dfactor);
-void raw__opengl__glScalef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
-void raw__opengl__glDisable(f2ptr cause, GLenum cap);
+void   raw__opengl__glViewport(f2ptr cause, GLint x, GLint y, GLsizei width, GLsizei height);
+void   raw__opengl__glMatrixMode(f2ptr cause, GLenum mode);
+void   raw__opengl__glLoadIdentity(f2ptr cause);
+void   raw__opengl__glShadeModel(f2ptr cause, GLenum mode);
+void   raw__opengl__glClearColor(f2ptr cause, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+void   raw__opengl__glClearDepth(f2ptr cause, GLclampd depth);
+void   raw__opengl__glEnable(f2ptr cause, GLenum cap);
+void   raw__opengl__glDepthFunc(f2ptr cause, GLenum func);
+void   raw__opengl__glHint(f2ptr cause, GLenum target, GLenum mode);
+void   raw__opengl__glFlush(f2ptr cause);
+void   raw__opengl__glClear(f2ptr cause, GLbitfield mask);
+void   raw__opengl__glLightfv(f2ptr cause, GLenum light, GLenum pname, const GLfloat* params);
+void   raw__opengl__glCullFace(f2ptr cause, GLenum mode);
+void   raw__opengl__glTranslatef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
+void   raw__opengl__glRotatef(f2ptr cause, GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+void   raw__opengl__glColor4f(f2ptr cause, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+void   raw__opengl__glBegin(f2ptr cause, GLenum mode);
+void   raw__opengl__glNormal3f(f2ptr cause, GLfloat nx, GLfloat ny, GLfloat nz);
+void   raw__opengl__glVertex3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
+void   raw__opengl__glEnd(f2ptr cause);
+void   raw__opengl__glMaterialfv(f2ptr cause, GLenum face, GLenum pname, const GLfloat* params);
+void   raw__opengl__glPushMatrix(f2ptr cause);
+void   raw__opengl__glPopMatrix(f2ptr cause);
+void   raw__opengl__glGenTextures(f2ptr cause, GLsizei n, GLuint *textures);
+void   raw__opengl__glBindTexture(f2ptr cause, GLenum target, GLuint texture);
+void   raw__opengl__glTexImage2D(f2ptr cause, GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* data);
+void   raw__opengl__glTexParameteri(f2ptr cause, GLenum target, GLenum pname, GLint param);
+void   raw__opengl__glTexCoord2f(f2ptr cause, GLfloat s, GLfloat t);
+void   raw__opengl__glBlendFunc(f2ptr cause, GLenum sfactor, GLenum dfactor);
+void   raw__opengl__glScalef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
+void   raw__opengl__glDisable(f2ptr cause, GLenum cap);
+GLuint raw__opengl__glGenLists(f2ptr cause, GLsizei range);
 
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);

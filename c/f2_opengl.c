@@ -113,7 +113,8 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glXQueryVersion   = (Bool(*)(Display* dpy, int* Major, int* Minor))                                    from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXQueryVersion"));   if (! (this->glXQueryVersion))   {status("funk2_opengl__load_library: failed symbol, glXQueryVersion.");   return boolean__false;}
   this->glXCreateContext  = (GLXContext(*)(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXCreateContext"));  if (! (this->glXCreateContext))  {status("funk2_opengl__load_library: failed symbol, glXCreateContext.");  return boolean__false;}
   this->glXIsDirect       = (Bool(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXIsDirect"));       if (! (this->glXIsDirect))       {status("funk2_opengl__load_library: failed symbol, glXIsDirect.");       return boolean__false;}
-
+  this->glXUseXFont       = (void(*)(Font font, int First, int Count, int ListBase))                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXUseXFont"));       if (! (this->glXUseXFont))       {status("funk2_opengl__load_library: failed symbol, glXUseXFont.");       return boolean__false;}
+  
 #endif // F2__GL__H
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   this->initialized = boolean__true;
@@ -327,6 +328,12 @@ Bool raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return False;}
   return (*__funk2.opengl.glXIsDirect)(dpy, ctx);
 }
+
+void raw__opengl__glXUseXFont(f2ptr cause, Font font, int First, int Count, int ListBase) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called glx function without loading gl. ***"); return;}
+  (*__funk2.opengl.glXUseXFont)(font, First, Count, ListBase);
+}
+
 
 #endif // F2__GL__H
 

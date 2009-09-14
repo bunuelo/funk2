@@ -75,6 +75,7 @@ struct funk2_opengl_s {
   Bool(*         glXQueryVersion  )(Display* dpy, int* Major, int* Minor);
   GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
   Bool(*         glXIsDirect      )(Display* dpy, GLXContext ctx);
+  void(*         glXUseXFont      )(Font font, int First, int Count, int ListBase);
 #endif // F2__GL__H
 };
 
@@ -169,6 +170,7 @@ XVisualInfo* raw__opengl__glXChooseVisual(f2ptr cause, Display* dpy, int screen,
 Bool         raw__opengl__glXQueryVersion(f2ptr cause, Display* dpy, int* Major, int* Minor);
 GLXContext   raw__opengl__glXCreateContext(f2ptr cause, Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
 Bool         raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx);
+void         raw__opengl__glXUseXFont(f2ptr cause, Font font, int First, int Count, int ListBase);
 #endif // F2__GL__H
 
 

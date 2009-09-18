@@ -122,6 +122,7 @@ struct funk2_xlib_s {
   int(*          XPending              )(Display *display);
   int(*          XDefaultScreen        )(Display *display);
   XFontStruct*(* XLoadQueryFont        )(Display *display, char *name);
+  int(*          XFreeFont             )(Display *display, XFontStruct *font_struct); 
 #endif // F2__XLIB__H
 };
 
@@ -260,6 +261,7 @@ char*        raw__xlib__XGetAtomName(f2ptr cause, Display* display, Atom atom);
 int          raw__xlib__XPending(f2ptr cause, Display* display);
 int          raw__xlib__XDefaultScreen(f2ptr cause, Display *display);
 XFontStruct* raw__xlib__XLoadQueryFont(f2ptr cause, Display* display, char* name);
+int          raw__xlib__XFreeFont(f2ptr cause, Display* display, XFontStruct* font_struct);
 #endif // F2__XLIB__H
 
 

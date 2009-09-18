@@ -592,6 +592,7 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
   this->XPending               = (int(*)(Display *display))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XPending"));               if (! (this->XPending))               {status("funk2_xlib__load_library: failed symbol, XPending.");               return boolean__false;};
   this->XDefaultScreen         = (int(*)(Display *display))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XDefaultScreen"));         if (! (this->XDefaultScreen))         {status("funk2_xlib__load_library: failed symbol, XDefaultScreen.");         return boolean__false;};
   this->XLoadQueryFont         = (XFontStruct*(*)(Display *display, char *name))                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XLoadQueryFont"));         if (! (this->XLoadQueryFont))         {status("funk2_xlib__load_library: failed symbol, XLoadQueryFont.");         return boolean__false;};
+  this->XFreeFont              = (int(*)(Display *display, XFontStruct *font_struct))                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XFreeFont"));              if (! (this->XFreeFont))              {status("funk2_xlib__load_library: failed symbol, XFreeFont.");              return boolean__false;};
 #endif // F2__XLIB__H
   status("funk2_xlib__load_library: loaded xlib function symbols successfully.");
   this->initialized = boolean__true;
@@ -774,6 +775,12 @@ XFontStruct* raw__xlib__XLoadQueryFont(f2ptr cause, Display* display, char* name
   return (*__funk2.xlib.XLoadQueryFont)(display, name);
 }
 
+//  this->XFreeFont              = (int(*)(Display *display, XFontStruct *font_struct))                 from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"XFreeFont"));              if (! (this->XFreeFont))              {status("funk2_xlib__load_library: failed symbol, XFreeFont.");              return boolean__false;};
+
+int raw__xlib__XFreeFont(f2ptr cause, Display* display, XFontStruct* font_struct) {
+  if (!__funk2.xlib.initialized) {status("*** WARNING: called xlib function without loading xlib. ***"); return 0;}
+  return (*__funk2.xlib.XFreeFont)(display, font_struct);
+}
 
 #endif // F2__XLIB__H
 

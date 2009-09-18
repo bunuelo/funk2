@@ -688,6 +688,8 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   
+  raw__gl_set_material_color(cause, 1, 1, 1, 1);
+  
   raw__opengl__glPushMatrix(cause);
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
   double height_over_width = ((double)(texture->height) / (double)(texture->width));
@@ -705,7 +707,6 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
     
     raw__opengl__glDisable(cause, GL_TEXTURE_2D);
     
-    //raw__opengl__glColor4f(cause, 0, 0, 1, 1);
     raw__gl_set_material_color(cause, 0, 0, 1, 1);
     raw__opengl__glPushMatrix(cause);
     opengl__render_physical_position_as_raster(cause, position);

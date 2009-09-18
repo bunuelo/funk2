@@ -84,7 +84,7 @@ void funk2_opengl_font__printf(funk2_opengl_font_t* this, f2ptr cause, const cha
   va_end(ap);
   text[256 - 1] = (char)0;
   raw__opengl__glPushAttrib(cause, GL_LIST_BIT);
-  raw__opengl__glListBase(cause, base - 32);
+  raw__opengl__glListBase(cause, this->base_display_list - 32);
   raw__opengl__glCallLists(cause, strlen(text), GL_UNSIGNED_BYTE, text);
   raw__opengl__glPopAttrib(cause);
 }

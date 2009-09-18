@@ -65,6 +65,8 @@ struct funk2_opengl_s {
   void(*         glScalef       )(GLfloat x, GLfloat y, GLfloat z);
   void(*         glDisable      )(GLenum cap);
   GLuint(*       glGenLists     )(GLsizei range);
+  void(*         glDeleteLists  )(GLuint list, GLsizei range);
+  
   // The following functions are included in libGL.so, but are
   // probably not on non-X environments, so we'll need to deal with
   // this in a port to those environments.
@@ -163,6 +165,7 @@ void   raw__opengl__glBlendFunc(f2ptr cause, GLenum sfactor, GLenum dfactor);
 void   raw__opengl__glScalef(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
 void   raw__opengl__glDisable(f2ptr cause, GLenum cap);
 GLuint raw__opengl__glGenLists(f2ptr cause, GLsizei range);
+void   raw__opengl__glDeleteLists(f2ptr cause, GLuint list, GLsizei range);
 
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);

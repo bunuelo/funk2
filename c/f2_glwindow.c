@@ -292,7 +292,7 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
   this->initialized = boolean__true;
 }
 
-void funk2_glwindow__destroy(funk2_glwindow_t* this, f2ptr cause) {
+void funk2_glwindow__destroy(funk2_glwindow_t* this) {
   if (this->initialized) {
     this->initialized = boolean__false;
     

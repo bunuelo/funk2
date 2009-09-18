@@ -695,9 +695,9 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   raw__opengl__glPopMatrix(cause);
   
   if (raw__string__is_type(cause, text)) {
-    u64 text__length = raw__string__length(cause, text);
+    u64 text__length = f2string__length(text, cause);
     char* temp_str = alloca(text__length + 1);
-    raw__string__str_copy(cause, text, temp_str);
+    f2string__str_copy(text, cause, temp_str);
     temp_str[text__length] = (char)0;
     raw__opengl__glPushMatrix(cause);
     opengl__render_physical_position_as_raster(cause, position);

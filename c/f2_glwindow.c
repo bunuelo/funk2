@@ -663,6 +663,16 @@ void opengl__render_physical_position(f2ptr cause, f2ptr this) {
   raw__opengl__glTranslatef(cause, x__d, y__d, z__d);
 }
 
+void opengl__render_physical_position_as_raster(f2ptr cause, f2ptr this) {
+  f2ptr x = f2__physical_position__x(cause, this);
+  f2ptr y = f2__physical_position__y(cause, this);
+  f2ptr z = f2__physical_position__z(cause, this);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  double z__d = f2double__d(z, cause);
+  raw__opengl__glRasterPos3f(cause, x__d, y__d, z__d);
+}
+
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
@@ -683,6 +693,17 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   raw__opengl__glScalef(cause, 2 * size__d, 2 * size__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
+  
+  if (raw__string__is_type(cause, text)) {
+    u64 text__length = raw__string__length(cause, text);
+    char* temp_str = alloca(text__length + 1);
+    raw__string__str_copy(cause, text, temp_str);
+    temp_str[text__length] = (char)0;
+    raw__opengl__glPushMatrix(cause);
+    opengl__render_physical_position_as_raster(cause, position);
+    funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+    raw__opengl__glPopMatrix(cause);
+  }
 }
 
 void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {

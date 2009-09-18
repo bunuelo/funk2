@@ -665,7 +665,7 @@ void opengl__render_physical_position(f2ptr cause, f2ptr this) {
 
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
-  f2ptr rotation     = f2__physical_object__rotation(    cause, physical_object);
+  f2ptr text         = f2__physical_object__text(        cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
   f2ptr size         = f2__physical_object__size(        cause, physical_object);
   

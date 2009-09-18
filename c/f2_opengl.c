@@ -105,6 +105,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glDisable         = (void(*)(GLenum cap))                                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDisable"));         if (! (this->glDisable))         {status("funk2_opengl__load_library: failed symbol, glDisable.");         return boolean__false;}
   this->glGenLists        = (GLuint(*)(GLsizei range))                                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glGenLists"));        if (! (this->glGenLists))        {status("funk2_opengl__load_library: failed symbol, glGenLists.");        return boolean__false;}
   this->glDeleteLists     = (void(*)(GLuint list, GLsizei range))                                              from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glDeleteLists"));     if (! (this->glDeleteLists))     {status("funk2_opengl__load_library: failed symbol, glDeleteLists.");     return boolean__false;}
+  this->glPushAttrib      = (void(*)(GLbitfield mask))                                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glPushAttrib"));      if (! (this->glPushAttrib))      {status("funk2_opengl__load_library: failed symbol, glPushAttrib.");      return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
@@ -293,8 +294,13 @@ GLuint raw__opengl__glGenLists(f2ptr cause, GLsizei range) {
 }
 
 void raw__opengl__glDeleteLists(f2ptr cause, GLuint list, GLsizei range) {
-  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return -1;}
-  return (*__funk2.opengl.glDeleteLists)(list, range);
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
+  (*__funk2.opengl.glDeleteLists)(list, range);
+}
+
+void raw__opengl__glPushAttrib(f2ptr cause, GLbitfield mask) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
+  (*__funk2.opengl.glPushAttrib)(mask);
 }
 
 

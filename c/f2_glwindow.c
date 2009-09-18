@@ -66,6 +66,7 @@ boolean_t funk2_opengl_font__init(funk2_opengl_font_t* this, f2ptr cause, Displa
   this->base_display_list = raw__opengl__glGenLists(cause, 96);
   raw__opengl__glXUseXFont(cause, font->fid, 32, 96, this->base_display_list);
   raw__xlib__XFreeFont(cause, display, font);
+  status("funk2_opengl_font__init: successfully loaded a '%s' font.", font_name);
   return boolean__false;
 }
 

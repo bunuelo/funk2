@@ -68,7 +68,7 @@ struct funk2_opengl_s {
   void(*         glDeleteLists  )(GLuint list, GLsizei range);
   void(*         glPushAttrib   )(GLbitfield mask);
   void(*         glListBase     )(GLuint base);
-  
+  void(*         glCallLists    )(GLsizei n, GLenum type, const GLvoid* lists);
   // The following functions are included in libGL.so, but are
   // probably not on non-X environments, so we'll need to deal with
   // this in a port to those environments.
@@ -170,6 +170,7 @@ GLuint raw__opengl__glGenLists(f2ptr cause, GLsizei range);
 void   raw__opengl__glDeleteLists(f2ptr cause, GLuint list, GLsizei range);
 void   raw__opengl__glPushAttrib(f2ptr cause, GLbitfield mask);
 void   raw__opengl__glListBase(f2ptr cause, GLuint base);
+void   raw__opengl__glCallLists(f2ptr cause, GLsizei n, GLenum type, const GLvoid* lists);
 
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);

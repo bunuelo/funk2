@@ -292,11 +292,11 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
   this->initialized = boolean__true;
 }
 
-void funk2_glwindow__destroy(funk2_glwindow_t* this) {
+void funk2_glwindow__destroy(funk2_glwindow_t* this, f2ptr cause) {
   if (this->initialized) {
     this->initialized = boolean__false;
     
-    funk2_opengl_font__destroy(this->fixed_font);
+    funk2_opengl_font__destroy(&(this->fixed_font), nil);
     
     funk2_glwindow__hide(this, nil);
     f2__free(to_ptr(this->title));

@@ -705,8 +705,8 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
     
     raw__opengl__glDisable(cause, GL_TEXTURE_2D);
     
+    raw__opengl__glColor4f(cause, 0, 0, 1, 1);
     raw__opengl__glPushMatrix(cause);
-    raw__opengl__glColor4f(cause, 0, 0, 0, 1);
     opengl__render_physical_position_as_raster(cause, position);
     funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
     raw__opengl__glPopMatrix(cause);

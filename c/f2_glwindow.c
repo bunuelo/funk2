@@ -700,7 +700,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   if (raw__string__is_type(cause, text)) {
     u64 text__length = f2string__length(text, cause);
     char* temp_str = alloca(text__length + 1);
-    f2string__str_copy(text, cause, (char*)temp_str);
+    f2string__str_copy(text, cause, (u8*)temp_str);
     temp_str[text__length] = (char)0;
     
     raw__opengl__glDisable(cause, GL_TEXTURE_2D);
@@ -828,7 +828,7 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
   }
   u64 title__length = f2string__length(title, cause);
   u8* title__str = (u8*)from_ptr(f2__malloc(title__length + 1));
-  f2string__str_copy(title, cause, title__str);
+  f2string__str_copy(title, cause, (u8*)title__str);
   title__str[title__length] = (char)0;
   s64 width__i = f2integer__i(width, cause);
   s64 height__i = f2integer__i(height, cause);

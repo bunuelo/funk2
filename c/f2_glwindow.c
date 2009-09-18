@@ -251,7 +251,8 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
   raw__opengl__glViewport(cause, 0, 0, width, height);    // Reset The Current Viewport And Perspective Transformation
   raw__opengl__glMatrixMode(cause, GL_PROJECTION);
   raw__opengl__glLoadIdentity(cause);
-  raw__openglu__gluPerspective(cause, 45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+  raw__opengl__glScalef(cause, 1.0, (GLfloat)width / (GLfloat)height, 1.0);
+  //raw__openglu__gluPerspective(cause, 45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
   raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
@@ -695,7 +696,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   double height_over_width = ((double)(texture->height) / (double)(texture->width));
   funk2_opengl_texture__bind(texture, cause);
   opengl__render_physical_position(cause, position);
-  raw__opengl__glScalef(cause, 2 * size__d, 2 * size__d * height_over_width, 1);
+  raw__opengl__glScalef(cause, 0.2 * size__d, 0.2 * size__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   
@@ -722,7 +723,7 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
   funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
   double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
   funk2_opengl_texture__bind(background_texture, cause);
-  raw__opengl__glScalef(cause, 10, 10 * height_over_width, 1);
+  raw__opengl__glScalef(cause, 1, 1 * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }
@@ -756,7 +757,7 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   f2ptr global_environment = funk2_memory__global_environment(&(__funk2.memory));
   f2ptr value = f2__environment__lookup_type_var_value(cause, global_environment, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "glwindow_value"));
   if (value) {
-    raw__opengl__glTranslatef(cause, 0, 0, -20);
+    //raw__opengl__glTranslatef(cause, 0, 0, -20);
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__physical_scene__is_type(cause, value)) {
       f2ptr physical_scene = value;

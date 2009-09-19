@@ -37,7 +37,7 @@ typedef struct funk2_object_type__physical_person__slot_s funk2_object_type__phy
 declare_object_type_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object, );
 
 typedef struct funk2_object_type__physical_scene__slot_s funk2_object_type__physical_scene__slot_t;
-declare_object_type_2_slot(physical_scene, background_texture, physical_objects, );
+declare_object_type_2_slot(physical_scene, background_texture, physical_things, );
 
 #endif // F2__PHYSICAL_OBJECTS__TYPES__H
 
@@ -48,7 +48,7 @@ declare_primobject_1_slot(physical_rotation, array);
 declare_primobject_3_slot(physical_position, x, y, z);
 declare_primobject_4_slot(physical_object, position, text, texture_name, size);
 declare_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);
-declare_primobject_2_slot(physical_scene, background_texture, physical_objects);
+declare_primobject_2_slot(physical_scene, background_texture, physical_things);
 
 // **
 

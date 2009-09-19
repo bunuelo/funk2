@@ -801,14 +801,20 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
   f2ptr background_texture = f2__physical_scene__background_texture(cause, physical_scene);
   funk2_glwindow__render_background(this, cause, background_texture);
   
-  f2ptr physical_objects   = f2__physical_scene__physical_objects(cause, physical_scene);
-  f2ptr physical_object_iter = physical_objects;
-  while (physical_object_iter) {
+  f2ptr physical_things     = f2__physical_scene__physical_things(cause, physical_scene);
+  f2ptr physical_thing_iter = physical_things;
+  while (physical_thing_iter) {
     {
-      f2ptr physical_object = f2__cons__car(cause, physical_object_iter);
-      funk2_glwindow__render_physical_object(this, cause, physical_object);
+      f2ptr physical_thing = f2__cons__car(cause, physical_thing_iter);
+      if (raw__physical_object__is_type(cause, physical_thing)) {
+	f2ptr physical_object = physical_thing;
+	funk2_glwindow__render_physical_object(this, cause, physical_object);
+      } else if (raw__physical_person__is_type(cause, physical_thing)) {
+	f2ptr physical_person = physical_thing;
+	
+      }
     }
-    physical_object_iter = f2__cons__cdr(cause, physical_object_iter);
+    physical_thing_iter = f2__cons__cdr(cause, physical_thing_iter);
   }
   
   raw__opengl__glEnable(cause, GL_DEPTH_TEST);

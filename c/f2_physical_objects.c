@@ -75,10 +75,10 @@ def_pcfunk7(physical_person__new, body, torso_clothing, leg_clothing, left_foot_
 
 // physical_scene
 
-def_primobject_2_slot(physical_scene, background_texture, physical_objects);
+def_primobject_2_slot(physical_scene, background_texture, physical_things);
 
-f2ptr f2__physical_scene__new(f2ptr cause, f2ptr background_texture, f2ptr physical_objects) {return f2physical_scene__new(cause, background_texture, physical_objects);}
-def_pcfunk2(physical_scene__new, background_texture, physical_objects, return f2__physical_scene__new(this_cause, background_texture, physical_objects));
+f2ptr f2__physical_scene__new(f2ptr cause, f2ptr background_texture, f2ptr physical_things) {return f2physical_scene__new(cause, background_texture, physical_things);}
+def_pcfunk2(physical_scene__new, background_texture, physical_things, return f2__physical_scene__new(this_cause, background_texture, physical_things));
 
 
 // **
@@ -113,6 +113,6 @@ void f2__physical_objects__initialize() {
   initialize_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);
   
   // physical_scene
-  initialize_primobject_2_slot(physical_scene, background_texture, physical_objects);
+  initialize_primobject_2_slot(physical_scene, background_texture, physical_things);
 }
 

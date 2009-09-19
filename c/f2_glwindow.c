@@ -538,13 +538,14 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   }
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   
-  if (funk2_opengl_font__init(&(this->fixed_font), cause, this->display, "-*-helvetica-bold-r-normal--12-*-*-*-p-*-iso8859-1")) {
-    if (funk2_opengl_font__init(&(this->fixed_font), cause, this->display, "fixed")) {
-      status("funk2_glwindow__initialize_opengl failure: could not find a font.");
-      return boolean__true;
+  if (funk2_opengl_font__init(&(this->fixed_font), cause, this->display, "-*-times-medium-r-*-*-12-*-*-*-p-*-iso8859-1")) {
+    if (funk2_opengl_font__init(&(this->fixed_font), cause, this->display, "-*-helvetica-bold-r-normal--12-*-*-*-p-*-iso8859-1")) {
+      if (funk2_opengl_font__init(&(this->fixed_font), cause, this->display, "fixed")) {
+	status("funk2_glwindow__initialize_opengl failure: could not find a font.");
+	return boolean__true;
+      }
     }
   }
-  
   
   raw__opengl__glFlush(cause);
   return boolean__false;

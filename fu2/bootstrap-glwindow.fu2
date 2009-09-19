@@ -19,20 +19,32 @@
  rights to redistribute these changes.
 '
 
+[globalize all_objects_scene
+	   [new physical_scene `mud_puddle_scene
+		[conslist [new physical_object [new physical_position -0.4 0.0 0] 'Carol Sitting'  `female_child_agent_sitting  0.075]
+			  [new physical_object [new physical_position -0.2 0.0 0] 'Carol Standing' `female_child_agent_standing 0.075]
+			  [new physical_object [new physical_position  0.0 0.0 0] 'Jack Sitting'   `male_child_agent_sitting    0.075]
+			  [new physical_object [new physical_position  0.2 0.0 0] 'Jack Standing'  `male_child_agent_standing   0.075]
+			  [new physical_object [new physical_position  0.4 0.0 0] 'Bucket'         `bucket_object               0.025]
+			  [new physical_object [new physical_position -0.3 0.0 0] 'Spoon'          `spoon_object                0.025]
+			  [new physical_object [new physical_position -0.1 0.0 0] 'Fork'           `fork_object                 0.025]
+			  [new physical_object [new physical_position  0.1 0.0 0] 'Mud'            `mud_object                  0.010]
+			  [new physical_object [new physical_position  0.3 0.0 0] 'Shovel'         `shovel_object               0.025]
+			  ]]]
+
+[globalize carol_playing_in_mud_scene
+	   [new physical_scene `mud_puddle_scene
+		[conslist [new physical_object [new physical_position  0.0 0.0 0] 'Fork'   `fork_object                 0.025]
+			  [new physical_object [new physical_position  0.1 0.0 0] 'Mud'    `mud_object                  0.010]
+			  [new physical_object [new physical_position  0.2 0.0 0] 'Carol'  `female_child_agent_sitting  0.075]
+			  [new physical_object [new physical_position  0.3 0.0 0] 'Spoon'  `spoon_object                0.025]
+			  [new physical_object [new physical_position  0.4 0.0 0] 'Bucket' `bucket_object               0.025]
+			  ]]]
+
 [defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]
       [error `run-time `[glwindow not-supported]]]
-  [globalize glwindow_value [new physical_scene `mud_puddle_scene
-				 [conslist [new physical_object [new physical_position -0.4 0.0 0] 'Carol Sitting'  `female_child_agent_sitting  0.075]
-					   [new physical_object [new physical_position -0.2 0.0 0] 'Carol Standing' `female_child_agent_standing 0.075]
-					   [new physical_object [new physical_position  0.0 0.0 0] 'Jack Sitting'   `male_child_agent_sitting    0.075]
-					   [new physical_object [new physical_position  0.2 0.0 0] 'Jack Standing'  `male_child_agent_standing   0.075]
-					   [new physical_object [new physical_position  0.4 0.0 0] 'Bucket'         `bucket_object               0.025]
-					   [new physical_object [new physical_position -0.4 0.2 0] 'Spoon'          `spoon_object                0.025]
-					   [new physical_object [new physical_position -0.2 0.2 0] 'Fork'           `fork_object                 0.025]
-					   [new physical_object [new physical_position  0.0 0.2 0] 'Mud'            `mud_object                  0.010]
-					   [new physical_object [new physical_position  0.4 0.2 0] 'Shovel'         `shovel_object               0.025]
-					   ]]]
+  [globalize glwindow_value all_objects_scene]
   [glwindow-create title width height depth fullscreen]
   [while [not [glwindow-handle_events]]]
   [glwindow-destroy]]

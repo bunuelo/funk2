@@ -89,6 +89,7 @@ void f2__physical_objects__reinitialize_globalvars() {
   __physical_rotation__symbol = new__symbol(cause, "physical_rotation");
   __physical_position__symbol = new__symbol(cause, "physical_position");
   __physical_object__symbol   = new__symbol(cause, "physical_object");
+  __physical_person__symbol   = new__symbol(cause, "physical_person");
   __physical_scene__symbol    = new__symbol(cause, "physical_scene");
 }
 

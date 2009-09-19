@@ -811,7 +811,10 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
 	funk2_glwindow__render_physical_object(this, cause, physical_object);
       } else if (raw__physical_person__is_type(cause, physical_thing)) {
 	f2ptr physical_person = physical_thing;
-	
+	f2ptr body = raw__physical_person__body(cause, physical_person);
+	if (raw__physical_object__is_type(cause, body)) {
+	  funk2_glwindow__render_physical_object(this, cause, body);
+	}
       }
     }
     physical_thing_iter = f2__cons__cdr(cause, physical_thing_iter);

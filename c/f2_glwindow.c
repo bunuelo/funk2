@@ -674,6 +674,29 @@ void opengl__render_physical_position_as_raster(f2ptr cause, f2ptr this) {
   raw__opengl__glRasterPos3f(cause, x__d, y__d, z__d);
 }
 
+void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f2ptr text, double x, double y) {
+  u64 text__length = f2string__length(text, cause);
+  char* temp_str = alloca(text__length + 1);
+  f2string__str_copy(text, cause, (u8*)temp_str);
+  temp_str[text__length] = (char)0;
+  
+  raw__opengl__glDisable(cause, GL_TEXTURE_2D);
+  
+  raw__gl_set_material_color(cause, 0, 0, 1, 1);
+  raw__opengl__glPushMatrix(cause);
+  raw__opengl__glRasterPos3f(cause, x, y, 0);
+  funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  raw__opengl__glPopMatrix(cause);
+}
+
+void funk2_glwindow__render_outlined_font_at_physical_position(funk2_glwindow_t* this, f2ptr cause, f2ptr text, f2ptr physical_position) {
+  f2ptr x = f2__physical_position__x(cause, physical_position);
+  f2ptr y = f2__physical_position__y(cause, physical_position);
+  double x__d = f2double__d(x, cause);
+  double y__d = f2double__d(y, cause);
+  funk2_glwindow__render_outlined_font(this, cause, text, x__d, y__d);
+}
+
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
@@ -701,18 +724,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   raw__opengl__glPopMatrix(cause);
   
   if (raw__string__is_type(cause, text)) {
-    u64 text__length = f2string__length(text, cause);
-    char* temp_str = alloca(text__length + 1);
-    f2string__str_copy(text, cause, (u8*)temp_str);
-    temp_str[text__length] = (char)0;
-    
-    raw__opengl__glDisable(cause, GL_TEXTURE_2D);
-    
-    raw__gl_set_material_color(cause, 0, 0, 1, 1);
-    raw__opengl__glPushMatrix(cause);
-    opengl__render_physical_position_as_raster(cause, position);
-    funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
-    raw__opengl__glPopMatrix(cause);
+    funk2_glwindow__render_outlined_font_at_physical_position(this, cause, text, position);
   }
 }
 

@@ -682,7 +682,31 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
   
   raw__opengl__glDisable(cause, GL_TEXTURE_2D);
   
-  raw__gl_set_material_color(cause, 0, 0, 1, 1);
+  raw__gl_set_material_color(cause, 0, 0, 0, 1);
+  raw__opengl__glPushMatrix(cause);
+  raw__opengl__glRasterPos3f(cause, x - (1.0 / (GLfloat)(this->width)), y, 0);
+  funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  raw__opengl__glPopMatrix(cause);
+  
+  raw__gl_set_material_color(cause, 0, 0, 0, 1);
+  raw__opengl__glPushMatrix(cause);
+  raw__opengl__glRasterPos3f(cause, x + (1.0 / (GLfloat)(this->width)), y, 0);
+  funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  raw__opengl__glPopMatrix(cause);
+  
+  raw__gl_set_material_color(cause, 0, 0, 0, 1);
+  raw__opengl__glPushMatrix(cause);
+  raw__opengl__glRasterPos3f(cause, x, y - (1.0 / (GLfloat)(this->width)), 0);
+  funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  raw__opengl__glPopMatrix(cause);
+  
+  raw__gl_set_material_color(cause, 0, 0, 0, 1);
+  raw__opengl__glPushMatrix(cause);
+  raw__opengl__glRasterPos3f(cause, x, y + (1.0 / (GLfloat)(this->width)), 0);
+  funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  raw__opengl__glPopMatrix(cause);
+  
+  raw__gl_set_material_color(cause, 1, 1, 1, 1);
   raw__opengl__glPushMatrix(cause);
   raw__opengl__glRasterPos3f(cause, x, y, 0);
   funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);

@@ -754,8 +754,8 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   
   f2ptr position__x = f2__physical_position__x(cause, position);
   f2ptr position__y = f2__physical_position__y(cause, position);
-  double position__x__d = f2double__d(x, cause);
-  double position__y__d = f2double__d(y, cause);
+  double position__x__d = f2double__d(position__x, cause);
+  double position__y__d = f2double__d(position__y, cause);
   
   double size__d = 1.0;
   if (raw__double__is_type(cause, size)) {

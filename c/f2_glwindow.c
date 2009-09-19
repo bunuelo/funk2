@@ -742,10 +742,6 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 }
 
 
-
-//void funk2_glwindow__render_outlined_font_at_physical_position(funk2_glwindow_t* this, f2ptr cause, f2ptr text, f2ptr physical_position) {
-//}
-
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
@@ -772,14 +768,14 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
   double height_over_width = ((double)(texture->height) / (double)(texture->width));
   funk2_opengl_texture__bind(texture, cause);
-  opengl__render_physical_position(cause, position);
+  raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (size__d * height_over_width), 0);
   raw__opengl__glScalef(cause, 1.0 * size__d, 1.0 * size__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   
   if (raw__string__is_type(cause, text)) {
     GLfloat font_size = 12.0;
-    funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (size__d * height_over_width) - (2.0 * (font_size / (GLfloat)(this->width))));
+    funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
   }
 }
 

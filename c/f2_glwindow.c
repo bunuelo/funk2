@@ -674,7 +674,7 @@ void opengl__render_physical_position_as_raster(f2ptr cause, f2ptr this) {
   raw__opengl__glRasterPos3f(cause, x__d, y__d, z__d);
 }
 
-GLfloat opengl__get_render_font_width(f2ptr cause, f2ptr text) {
+GLfloat funk2_glwindow__get_render_font_width(funk2_glwindow_t* this, f2ptr cause, f2ptr text) {
   u64 text__length = f2string__length(text, cause);
   char* temp_str = alloca(text__length + 1);
   f2string__str_copy(text, cause, (u8*)temp_str);
@@ -694,7 +694,7 @@ GLfloat opengl__get_render_font_width(f2ptr cause, f2ptr text) {
 }
 
 void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f2ptr text, double x, double y) {
-  GLfloat raster_width = opengl__get_render_font_width(cause, text);
+  GLfloat raster_width = funk2_glwindow__get_render_font_width(this, cause, text);
   
   x -= (0.5 * raster_width);
   

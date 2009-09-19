@@ -779,7 +779,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   
   if (raw__string__is_type(cause, text)) {
     GLfloat font_size = 12.0;
-    funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d + (size_d * height_over_width) + (2.0 * (font_size / (GLfloat)(this->width))));
+    funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d + (size__d * height_over_width) + (2.0 * (font_size / (GLfloat)(this->width))));
   }
 }
 

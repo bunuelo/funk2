@@ -69,8 +69,8 @@ def_pcfunk4(physical_object__new, position, text, texture_name, size, return f2_
 
 def_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);
 
-f2ptr f2__physical_person__new(f2ptr cause, f2ptr body, f2ptr torso_clothing, f2ptr leg_clothing, f2ptr left_foot_clothing, f2ptr right_foot_clothing, f2ptr left_hand_object, f2ptr right_hand_object) {return f2physical_object__new(cause, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);}
-def_pcfunk7(physical_object__new, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object, return f2__physical_object__new(this_cause, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object));
+f2ptr f2__physical_person__new(f2ptr cause, f2ptr body, f2ptr torso_clothing, f2ptr leg_clothing, f2ptr left_foot_clothing, f2ptr right_foot_clothing, f2ptr left_hand_object, f2ptr right_hand_object) {return f2physical_person__new(cause, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);}
+def_pcfunk7(physical_person__new, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object, return f2__physical_person__new(this_cause, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object));
 
 
 // physical_scene

@@ -82,6 +82,7 @@ struct funk2_opengl_s {
   GLXContext(*   glXCreateContext )(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
   Bool(*         glXIsDirect      )(Display* dpy, GLXContext ctx);
   void(*         glXUseXFont      )(Font font, int First, int Count, int ListBase);
+  void(*         glGetFloatv      )(GLenum pname, GLfloat *params);
 #endif // F2__GL__H
 };
 
@@ -175,6 +176,7 @@ void   raw__opengl__glListBase(f2ptr cause, GLuint base);
 void   raw__opengl__glCallLists(f2ptr cause, GLsizei n, GLenum type, const GLvoid* lists);
 void   raw__opengl__glPopAttrib(f2ptr cause);
 void   raw__opengl__glRasterPos3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
+void   raw__opengl__glGetFloatv(f2ptr cause, GLenum pname, GLfloat *params);
 
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);

@@ -769,7 +769,11 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 }
 
 
-void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
+void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_object) {
+  f2ptr relative_position = nil;
+  if (relative_object) {
+    relative_position = f2__physical_object__position(cause, relative_object);
+  }
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
@@ -779,6 +783,15 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   f2ptr position__y = f2__physical_position__y(cause, position);
   double position__x__d = f2double__d(position__x, cause);
   double position__y__d = f2double__d(position__y, cause);
+  
+  if (relative_position) {
+    f2ptr relative_position__x = f2__physical_position__x(cause, relative_position);
+    f2ptr relative_position__y = f2__physical_position__y(cause, relative_position);
+    double relative_position__x__d = f2double__d(relative_position__x, cause);
+    double relative_position__y__d = f2double__d(relative_position__y, cause);
+    position__x__d += relative_position__x__d;
+    position__y__d += relative_position__y__d;
+  }
   
   double size__d = 1.0;
   if (raw__double__is_type(cause, size)) {
@@ -804,6 +817,10 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
     GLfloat font_size = 12.0;
     funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
   }
+}
+
+void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
+  funk2_glwindow__render_relative_physical_object(this, cause, nil, physical_object);
 }
 
 void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {
@@ -838,6 +855,18 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
 	f2ptr body = f2__physical_person__body(cause, physical_person);
 	if (raw__physical_object__is_type(cause, body)) {
 	  funk2_glwindow__render_physical_object(this, cause, body);
+	  f2ptr torso_clothing      = f2__physical_person__torso_clothing(     cause, physical_person);
+	  f2ptr leg_clothing        = f2__physical_person__leg_clothing(       cause, physical_person);
+	  f2ptr left_foot_clothing  = f2__physical_person__left_foot_clothing( cause, physical_person);
+	  f2ptr right_foot_clothing = f2__physical_person__right_foot_clothing(cause, physical_person);
+	  f2ptr left_hand_object    = f2__physical_person__left_hand_object(   cause, physical_person);
+	  f2ptr right_hand_object   = f2__physical_person__right_hand_object(  cause, physical_person);
+	  if (raw__physical_object__is_type(cause, torso_clothing))      {funk2_glwindow__render_relative_physical_object(this, cause, body, torso_clothing);}
+	  if (raw__physical_object__is_type(cause, leg_clothing))        {funk2_glwindow__render_relative_physical_object(this, cause, body, leg_clothing);}
+	  if (raw__physical_object__is_type(cause, left_foot_clothing))  {funk2_glwindow__render_relative_physical_object(this, cause, body, left_foot_clothing);}
+	  if (raw__physical_object__is_type(cause, right_foot_clothing)) {funk2_glwindow__render_relative_physical_object(this, cause, body, right_foot_clothing);}
+	  if (raw__physical_object__is_type(cause, left_hand_object))    {funk2_glwindow__render_relative_physical_object(this, cause, body, left_hand_object);}
+	  if (raw__physical_object__is_type(cause, right_hand_object))   {funk2_glwindow__render_relative_physical_object(this, cause, body, right_hand_object);}
 	}
       }
     }

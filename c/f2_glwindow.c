@@ -771,8 +771,10 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 
 void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_object) {
   f2ptr relative_position = nil;
+  f2ptr relative_size     = nil;
   if (relative_object) {
     relative_position = f2__physical_object__position(cause, relative_object);
+    relative_size     = f2__physical_object__size(    cause, relative_object);
   }
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
@@ -798,6 +800,16 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
     size__d = f2double__d(size, cause);
   } else if (raw__integer__is_type(cause, size)) {
     size__d = (double)f2integer__i(size, cause);
+  }
+  
+  if (relative_size) {
+    double relative_size__d = 1.0;
+    if (raw__double__is_type(cause, relative_size)) {
+      relative_size__d = f2double__d(relative_size, cause);
+    } else if (raw__integer__is_type(cause, relative_size)) {
+      relative_size__d = (double)f2integer__i(relative_size, cause);
+    }
+    size__d *= relative_size__d;
   }
   
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);

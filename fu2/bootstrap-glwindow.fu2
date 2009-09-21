@@ -30,6 +30,20 @@
 			  [                     new physical_object [new physical_position -0.1 0.0 0] 'Fork'           `fork_object                 0.025]
 			  [                     new physical_object [new physical_position  0.1 0.0 0] 'Mud'            `mud_object                  0.010]
 			  [                     new physical_object [new physical_position  0.3 0.0 0] 'Shovel'         `shovel_object               0.025]
+			  
+			  [                     new physical_object [new physical_position -0.5 -0.5 0] 'Blue Left Shoe'                `blue_left_shoe              0.025]
+			  [                     new physical_object [new physical_position -0.4 -0.5 0] 'Blue Right Shoe'               `blue_right_shoe             0.025]
+			  [                     new physical_object [new physical_position -0.3 -0.5 0] 'Blue Shirt'                    `blue_shirt                  0.025]
+			  [                     new physical_object [new physical_position -0.2 -0.5 0] 'Blue-green Blouse'             `bluegreen_blouse            0.025]
+			  [                     new physical_object [new physical_position -0.1 -0.5 0] 'Orange Shorts'                 `orange_shorts               0.025]
+			  [                     new physical_object [new physical_position  0.0 -0.5 0] 'Pink Left Shoe'                `pink_left_shoe              0.025]
+			  [                     new physical_object [new physical_position  0.1 -0.5 0] 'Pink Right Shoe'               `pink_right_shoe             0.025]
+			  [                     new physical_object [new physical_position  0.2 -0.5 0] 'Red Skirt'                     `red_skirt                   0.025]
+			  [                     new physical_object [new physical_position  0.3 -0.5 0] 'Sideview of Blue Shirt'        `sideview_blue_shirt         0.025]
+			  [                     new physical_object [new physical_position  0.4 -0.5 0] 'Sideview of Blue-green Blouse' `sideview_bluegreen_blouse   0.025]
+			  [                     new physical_object [new physical_position  0.5 -0.5 0] 'Sideview of Orange Shorts'     `sideview_orange_shorts      0.025]
+			  [                     new physical_object [new physical_position  0.6 -0.5 0] 'Sideview of Red Skirt'         `sideview_red_skirt          0.025]
+			  
 			  ]]]
 
 [globalize carol_playing_in_mud_scene

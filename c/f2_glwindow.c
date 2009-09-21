@@ -240,6 +240,18 @@ boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) 
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->mud_puddle_scene_texture),            cause, (u8*)"data/mud_puddle_scene.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->shovel_object_texture),               cause, (u8*)"data/shovel_object.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->spoon_object_texture),                cause, (u8*)"data/spoon_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_left_shoe_texture),              cause, (u8*)"data/blue_left_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_right_shoe_texture),             cause, (u8*)"data/blue_right_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_shirt_texture),                  cause, (u8*)"data/blue_shirt_texture.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bluegreen_blouse_texture),            cause, (u8*)"data/bluegreen_blouse.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->orange_shorts_texture),               cause, (u8*)"data/orange_shorts.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->pink_left_shoe_texture),              cause, (u8*)"data/pink_left_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->pink_right_shoe_texture),             cause, (u8*)"data/pink_right_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->red_skirt_texture),                   cause, (u8*)"data/red_skirt.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_blue_shirt_texture),         cause, (u8*)"data/sideview_blue_shirt.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_bluegreen_blouse_texture),   cause, (u8*)"data/sideview_bluegreen_blouse.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_orange_shorts_texture),      cause, (u8*)"data/sideview_orange_shorts.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_red_skirt_texture),          cause, (u8*)"data/sideview_red_skirt.bmp");}
   return failure_status;
 }
 
@@ -565,6 +577,18 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_puddle_scene")))            {return &(this->mud_puddle_scene_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "shovel_object")))               {return &(this->shovel_object_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "spoon_object")))                {return &(this->spoon_object_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "blue_left_shoe")))              {return &(this->blue_left_shoe_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "blue_right_shoe")))             {return &(this->blue_right_shoe_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "blue_shirt")))                  {return &(this->blue_shirt_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bluegreen_blouse")))            {return &(this->bluegreen_blouse_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "orange_shorts")))               {return &(this->orange_shorts_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "pink_left_shoe")))              {return &(this->pink_left_shoe_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "pink_right_shoe")))             {return &(this->pink_right_shoe_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "red_skirt")))                   {return &(this->red_skirt_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_blue_shirt")))         {return &(this->sideview_blue_shirt_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_bluegreen_blouse")))   {return &(this->sideview_bluegreen_blouse_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_orange_shorts")))      {return &(this->sideview_orange_shorts_texture);}
+  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_red_skirt")))          {return &(this->sideview_red_skirt_texture);}
   else                                                                                              {return &(this->texture);}
 }
 

@@ -85,6 +85,20 @@ typedef struct funk2_glwindow_s {
   funk2_opengl_texture_t mud_puddle_scene_texture;
   funk2_opengl_texture_t shovel_object_texture;
   funk2_opengl_texture_t spoon_object_texture;
+  
+  funk2_opengl_texture_t blue_left_shoe_texture;
+  funk2_opengl_texture_t blue_right_shoe_texture;
+  funk2_opengl_texture_t blue_shirt_texture;
+  funk2_opengl_texture_t bluegreen_blouse_texture;
+  funk2_opengl_texture_t orange_shorts_texture;
+  funk2_opengl_texture_t pink_left_shoe_texture;
+  funk2_opengl_texture_t pink_right_shoe_texture;
+  funk2_opengl_texture_t red_skirt_texture;
+  funk2_opengl_texture_t sideview_blue_shirt_texture;
+  funk2_opengl_texture_t sideview_bluegreen_blouse_texture;
+  funk2_opengl_texture_t sideview_orange_shorts_texture;
+  funk2_opengl_texture_t sideview_red_skirt_texture;
+  
   funk2_opengl_font_t    fixed_font;
 #endif // F2__GLWINDOW__SUPPORTED
 

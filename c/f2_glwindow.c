@@ -242,7 +242,7 @@ boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) 
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->spoon_object_texture),                cause, (u8*)"data/spoon_object.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_left_shoe_texture),              cause, (u8*)"data/blue_left_shoe.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_right_shoe_texture),             cause, (u8*)"data/blue_right_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_shirt_texture),                  cause, (u8*)"data/blue_shirt_texture.bmp");}
+  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_shirt_texture),                  cause, (u8*)"data/blue_shirt.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bluegreen_blouse_texture),            cause, (u8*)"data/bluegreen_blouse.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->orange_shorts_texture),               cause, (u8*)"data/orange_shorts.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->pink_left_shoe_texture),              cause, (u8*)"data/pink_left_shoe.bmp");}

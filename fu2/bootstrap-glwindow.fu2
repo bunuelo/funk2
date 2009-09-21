@@ -75,7 +75,7 @@
 			  [                     new physical_object [new physical_position  0.1 0.0 0] 'Mud'            `mud_object                  0.010]
 			  [                     new physical_object [new physical_position  0.3 0.0 0] 'Shovel'         `shovel_object               0.025]
 			  
-			  [new physical_person [new physical_object [new physical_position  0.2   0.0   0] 'Jack Standing'  `male_child_agent_standing   0.075]
+			  [new physical_person [new physical_object [new physical_position  0.2   0.0   0] 'Jack Standing'  `male_child_agent_standing   0.10]
 			       [                new physical_object [new physical_position  0.0   0.095 0] ''               `blue_shirt                  0.47]
 			       [                new physical_object [new physical_position  0.005 0.045 0] ''               `orange_shorts               0.40]
 			       [                new physical_object [new physical_position  0.032 0.0   0] ''               `blue_left_shoe              0.27]

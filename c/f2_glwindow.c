@@ -786,30 +786,11 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   double position__x__d = f2double__d(position__x, cause);
   double position__y__d = f2double__d(position__y, cause);
   
-  if (relative_position) {
-    f2ptr relative_position__x = f2__physical_position__x(cause, relative_position);
-    f2ptr relative_position__y = f2__physical_position__y(cause, relative_position);
-    double relative_position__x__d = f2double__d(relative_position__x, cause);
-    double relative_position__y__d = f2double__d(relative_position__y, cause);
-    position__x__d += relative_position__x__d;
-    position__y__d += relative_position__y__d;
-  }
-  
   double size__d = 1.0;
   if (raw__double__is_type(cause, size)) {
     size__d = f2double__d(size, cause);
   } else if (raw__integer__is_type(cause, size)) {
     size__d = (double)f2integer__i(size, cause);
-  }
-  
-  if (relative_size) {
-    double relative_size__d = 1.0;
-    if (raw__double__is_type(cause, relative_size)) {
-      relative_size__d = f2double__d(relative_size, cause);
-    } else if (raw__integer__is_type(cause, relative_size)) {
-      relative_size__d = (double)f2integer__i(relative_size, cause);
-    }
-    size__d *= relative_size__d;
   }
   
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
@@ -820,6 +801,25 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
   double height_over_width = ((double)(texture->height) / (double)(texture->width));
   funk2_opengl_texture__bind(texture, cause);
+  
+  if (relative_position) {
+    f2ptr relative_position__x = f2__physical_position__x(cause, relative_position);
+    f2ptr relative_position__y = f2__physical_position__y(cause, relative_position);
+    double relative_position__x__d = f2double__d(relative_position__x, cause);
+    double relative_position__y__d = f2double__d(relative_position__y, cause);
+    raw__opengl__glTranslatef(cause, relative_position__x__d, relative_position__y__d, 0);
+  }
+  
+  if (relative_size) {
+    double relative_size__d = 1.0;
+    if (raw__double__is_type(cause, relative_size)) {
+      relative_size__d = f2double__d(relative_size, cause);
+    } else if (raw__integer__is_type(cause, relative_size)) {
+      relative_size__d = (double)f2integer__i(relative_size, cause);
+    }
+    raw__opengl__glScalef(cause, 1.0 * relative_size__d, 1.0 * relative_size__d, 1);
+  }
+  
   raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (size__d * height_over_width), 0);
   raw__opengl__glScalef(cause, 1.0 * size__d, 1.0 * size__d * height_over_width, 1);
   raw__draw_xy_square(cause);

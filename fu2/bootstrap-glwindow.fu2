@@ -21,28 +21,31 @@
 
 [globalize all_objects_scene
 	   [new physical_scene `mud_puddle_scene
-		[conslist [new physical_person [new physical_object [new physical_position -0.4 0.0 0] 'Carol Sitting'  `female_child_agent_sitting  0.075] nil nil nil nil nil nil]
-			  [new physical_person [new physical_object [new physical_position -0.2 0.0 0] 'Carol Standing' `female_child_agent_standing 0.075] nil nil nil nil nil nil]
-			  [new physical_person [new physical_object [new physical_position  0.0 0.0 0] 'Jack Sitting'   `male_child_agent_sitting    0.075] nil nil nil nil nil nil]
-			  [new physical_person [new physical_object [new physical_position  0.2 0.0 0] 'Jack Standing'  `male_child_agent_standing   0.075] nil nil nil nil nil nil]
-			  [                     new physical_object [new physical_position  0.4 0.0 0] 'Bucket'         `bucket_object               0.025]
+		[conslist [                     new physical_object [new physical_position  0.4 0.0 0] 'Bucket'         `bucket_object               0.025]
 			  [                     new physical_object [new physical_position -0.3 0.0 0] 'Spoon'          `spoon_object                0.025]
 			  [                     new physical_object [new physical_position -0.1 0.0 0] 'Fork'           `fork_object                 0.025]
 			  [                     new physical_object [new physical_position  0.1 0.0 0] 'Mud'            `mud_object                  0.010]
 			  [                     new physical_object [new physical_position  0.3 0.0 0] 'Shovel'         `shovel_object               0.025]
 			  
-			  [                     new physical_object [new physical_position -0.5 -0.5 0] 'Blue Left Shoe'                `blue_left_shoe              0.025]
-			  [                     new physical_object [new physical_position -0.4 -0.5 0] 'Blue Right Shoe'               `blue_right_shoe             0.025]
-			  [                     new physical_object [new physical_position -0.3 -0.5 0] 'Blue Shirt'                    `blue_shirt                  0.025]
-			  [                     new physical_object [new physical_position -0.2 -0.5 0] 'Blue-green Blouse'             `bluegreen_blouse            0.025]
-			  [                     new physical_object [new physical_position -0.1 -0.5 0] 'Orange Shorts'                 `orange_shorts               0.025]
-			  [                     new physical_object [new physical_position  0.0 -0.5 0] 'Pink Left Shoe'                `pink_left_shoe              0.025]
-			  [                     new physical_object [new physical_position  0.1 -0.5 0] 'Pink Right Shoe'               `pink_right_shoe             0.025]
-			  [                     new physical_object [new physical_position  0.2 -0.5 0] 'Red Skirt'                     `red_skirt                   0.025]
-			  [                     new physical_object [new physical_position  0.3 -0.5 0] 'Sideview of Blue Shirt'        `sideview_blue_shirt         0.025]
-			  [                     new physical_object [new physical_position  0.4 -0.5 0] 'Sideview of Blue-green Blouse' `sideview_bluegreen_blouse   0.025]
-			  [                     new physical_object [new physical_position  0.5 -0.5 0] 'Sideview of Orange Shorts'     `sideview_orange_shorts      0.025]
-			  [                     new physical_object [new physical_position  0.6 -0.5 0] 'Sideview of Red Skirt'         `sideview_red_skirt          0.025]
+			  [new physical_person [new physical_object [new physical_position     0.2          0.0      0] 'Jack Standing'  `male_child_agent_standing   0.075] nil nil nil nil nil nil]
+			  [                     new physical_object [new physical_position     0.2       [+ 0.0 0.2] 0] ''               `blue_shirt                  0.025]
+			  [                     new physical_object [new physical_position     0.2       [+ 0.0 0.1] 0] ''               `orange_shorts               0.025]
+			  [                     new physical_object [new physical_position  [- 0.2 0.03]    0.0      0] ''               `blue_right_shoe             0.025]
+			  [                     new physical_object [new physical_position  [+ 0.2 0.03]    0.0      0] ''               `blue_left_shoe              0.025]
+			  
+			  [new physical_person [new physical_object [new physical_position    -0.2          0.0      0] 'Carol Standing' `female_child_agent_standing 0.075] nil nil nil nil nil nil]
+			  [                     new physical_object [new physical_position    -0.2       [+ 0.0 0.2] 0] ''               `bluegreen_blouse            0.025]
+			  [                     new physical_object [new physical_position    -0.2       [+ 0.0 0.1] 0] ''               `red_skirt                   0.025]
+			  [                     new physical_object [new physical_position [- -0.2 0.03]    0.0      0] ''               `pink_right_shoe             0.025]
+			  [                     new physical_object [new physical_position [+ -0.2 0.03]    0.0      0] ''               `pink_left_shoe              0.025]
+			  
+			  [new physical_person [new physical_object [new physical_position  0.0 0.0 0] 'Jack Sitting'   `male_child_agent_sitting    0.075] nil nil nil nil nil nil]
+			  [                     new physical_object [new physical_position  0.0 0.0 0] ''               `sideview_blue_shirt         0.025]
+			  [                     new physical_object [new physical_position  0.0 0.0 0] ''               `sideview_orange_shorts      0.025]
+			  
+			  [new physical_person [new physical_object [new physical_position -0.4 0.0 0] 'Carol Sitting'  `female_child_agent_sitting  0.075] nil nil nil nil nil nil]
+			  [                     new physical_object [new physical_position -0.4 0.0 0] ''               `sideview_bluegreen_blouse   0.025]
+			  [                     new physical_object [new physical_position -0.4 0.0 0] ''               `sideview_red_skirt          0.025]
 			  
 			  ]]]
 

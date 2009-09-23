@@ -53,6 +53,7 @@
 #  include <gmodule.h>
 #endif
 #include <locale.h>
+#include <math.h>
 #include <net/if.h>
 #include <netdb.h>
 #include <netinet/in.h>

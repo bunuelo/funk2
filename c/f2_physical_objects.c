@@ -159,18 +159,18 @@ def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(t
 
 // physical_transform
 
-def_primobject_2_slot(physical_transform, position, rotation);
+def_primobject_3_slot(physical_transform, position, rotation, scale);
 
-f2ptr f2__physical_transform__new(f2ptr cause, f2ptr position, f2ptr rotation) {return f2physical_transform__new(cause, position, rotation);}
-def_pcfunk2(physical_transform__new, position, rotation, return f2__physical_transform__new(this_cause, position, rotation));
+f2ptr f2__physical_transform__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr scale) {return f2physical_transform__new(cause, position, rotation, scale);}
+def_pcfunk3(physical_transform__new, position, rotation, scale, return f2__physical_transform__new(this_cause, position, rotation, scale));
 
 
 // physical_object
 
-def_primobject_4_slot(physical_object, transform, text, texture_name, size);
+def_primobject_3_slot(physical_object, transform, text, texture_name);
 
-f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name, f2ptr size) {return f2physical_object__new(cause, transform, text, texture_name, size);}
-def_pcfunk4(physical_object__new, transform, text, texture_name, size, return f2__physical_transform__new(this_cause, transform, text, texture_name, size));
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name) {return f2physical_object__new(cause, transform, text, texture_name);}
+def_pcfunk3(physical_object__new, transform, text, texture_name, return f2__physical_transform__new(this_cause, transform, text, texture_name));
 
 
 // physical_person
@@ -221,10 +221,10 @@ void f2__physical_objects__initialize() {
   initialize_primobject_3_slot(physical_position, x, y, z);
   
   // physical_transform
-  initialize_primobject_2_slot(physical_transform, position, rotation);
+  initialize_primobject_3_slot(physical_transform, position, rotation, scale);
   
   // physical_object
-  initialize_primobject_4_slot(physical_object, transform, text, texture_name, size);
+  initialize_primobject_3_slot(physical_object, transform, text, texture_name);
   
   // physical_person
   initialize_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);

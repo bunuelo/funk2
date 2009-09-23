@@ -797,25 +797,26 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_object) {
   f2ptr relative_transform = nil;
   f2ptr relative_position  = nil;
-  f2ptr relative_size      = nil;
+  f2ptr relative_scale     = nil;
   if (relative_object) {
     relative_transform = f2__physical_object__transform(cause, relative_object);
     if (raw__physical_transform__is_type(cause, relative_transform)) {
       relative_position = f2__physical_transform__position(cause, relative_transform);
-      relative_size     = f2__physical_transform__size(    cause, relative_transform);
+      relative_scale    = f2__physical_transform__scale(   cause, relative_transform);
     }
   }
   f2ptr transform    = f2__physical_object__transform(   cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
-  f2ptr size         = f2__physical_object__size(        cause, physical_object);
   
   f2ptr position = nil;
   f2ptr rotation = nil;
+  f2ptr scale    = nil;
   
   if (raw__physical_transform__is_type(cause, transform)) {
     position = f2__physical_transform__position(cause, transform);
     rotation = f2__physical_transform__rotation(cause, transform);
+    scale    = f2__physical_transform__scale(   cause, transform);
   }
   
   f2ptr position__x = nil;
@@ -833,9 +834,9 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
     position__y__d = raw__number__to_double(cause, position__y);
   }
   
-  double size__d = 1.0;
-  if (raw__number__is_type(cause, size)) {
-    size__d = raw__number__to_double(cause, size);
+  double scale__d = 1.0;
+  if (raw__number__is_type(cause, scale)) {
+    scale__d = raw__number__to_double(cause, scale);
   }
   
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
@@ -855,21 +856,19 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
     raw__opengl__glTranslatef(cause, relative_position__x__d, relative_position__y__d, 0);
   }
   
-  if (relative_size) {
-    double relative_size__d = 1.0;
-    if (raw__double__is_type(cause, relative_size)) {
-      relative_size__d = f2double__d(relative_size, cause);
-    } else if (raw__integer__is_type(cause, relative_size)) {
-      relative_size__d = (double)f2integer__i(relative_size, cause);
+  if (relative_scale) {
+    double relative_scale__d = 1.0;
+    if (raw__number__is_type(cause, relative_scale)) {
+      relative_scale__d = raw__number__to_double(cause, relative_scale);
     }
-    raw__opengl__glScalef(cause, 1.0 * relative_size__d, 1.0 * relative_size__d, 1);
+    raw__opengl__glScalef(cause, 1.0 * relative_scale__d, 1.0 * relative_scale__d, 1);
   }
   
-  raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (size__d * height_over_width), 0);
+  raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (scale__d * height_over_width), 0);
   if (raw__physical_rotation__is_type(cause, rotation)) {
     opengl__render_physical_rotation(cause, rotation);
   }
-  raw__opengl__glScalef(cause, 1.0 * size__d, 1.0 * size__d * height_over_width, 1);
+  raw__opengl__glScalef(cause, 1.0 * scale__d, 1.0 * scale__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   

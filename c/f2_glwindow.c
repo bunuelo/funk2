@@ -822,8 +822,8 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   f2ptr position__x = nil;
   f2ptr position__y = nil;
   if (raw__physical_position__is_type(cause, position)) {
-    f2ptr position__x = f2__physical_position__x(cause, position);
-    f2ptr position__y = f2__physical_position__y(cause, position);
+    position__x = f2__physical_position__x(cause, position);
+    position__y = f2__physical_position__y(cause, position);
   }
   double position__x__d = 0.0;
   if (raw__number__is_type(cause, position__x)) {

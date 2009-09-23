@@ -691,6 +691,25 @@ void opengl__render_physical_position(f2ptr cause, f2ptr this) {
   raw__opengl__glTranslatef(cause, x__d, y__d, z__d);
 }
 
+void opengl__render_physical_rotation(f2ptr cause, f2ptr this) {
+  f2ptr array = f2__physical_rotation__array(cause, this);
+  GLfloat rot_matrix[16];
+  int i;
+  for (i = 0; i < 16; i ++) {
+    f2ptr elt = raw__array__elt(cause, array, i);
+    double d = 0;
+    if (raw__double__is_type(cause, this)) {
+      d = f2double__d(this, cause);
+    } else if (raw__integer__is_type(cause, this)) {
+      d = f2integer__i(this, cause);
+    } else {
+      return;
+    }
+    rot_matrix[i] = (GLfloat)d;
+  }
+  raw__opengl__glMultMatrixf(cause, rot_matrix);
+}
+
 void opengl__render_physical_position_as_raster(f2ptr cause, f2ptr this) {
   f2ptr x = f2__physical_position__x(cause, this);
   f2ptr y = f2__physical_position__y(cause, this);
@@ -777,6 +796,7 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
     relative_size     = f2__physical_object__size(    cause, relative_object);
   }
   f2ptr position     = f2__physical_object__position(    cause, physical_object);
+  f2ptr rotation     = f2__physical_object__rotation(    cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
   f2ptr size         = f2__physical_object__size(        cause, physical_object);
@@ -822,6 +842,9 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   
   raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (size__d * height_over_width), 0);
   raw__opengl__glScalef(cause, 1.0 * size__d, 1.0 * size__d * height_over_width, 1);
+  if (raw__physical_rotation__is_type(cause, rotation)) {
+    opengl__render_physical_rotation(cause, rotation);
+  }
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   

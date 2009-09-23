@@ -164,6 +164,14 @@ def_primobject_3_slot(physical_transform, position, rotation, scale);
 f2ptr f2__physical_transform__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr scale) {return f2physical_transform__new(cause, position, rotation, scale);}
 def_pcfunk3(physical_transform__new, position, rotation, scale, return f2__physical_transform__new(this_cause, position, rotation, scale));
 
+f2ptr f2__physical_transform__new_identity(f2ptr cause) {
+  f2ptr position = f2__physical_position__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.0), f2double__new(cause, 0.0));
+  f2ptr rotation = f2__physical_rotation__new_identity(cause);
+  f2ptr scale    = f2double__new(cause, 1.0);
+  return raw__physical_transform__new(cause, position, rotation, scale);
+}
+def_pcfunk0(physical_transform__new_identity, return f2__physical_transform__new_identity(this_cause));
+
 
 // physical_object
 
@@ -231,6 +239,7 @@ void f2__physical_objects__initialize() {
   
   // physical_transform
   initialize_primobject_3_slot(physical_transform, position, rotation, scale);
+  f2__primcfunk__init__0(physical_transform__new_identity, "glwindow cfunk declared in f2_glwindow.c");
   
   // physical_object
   initialize_primobject_3_slot(physical_object, transform, text, texture_name);

@@ -878,10 +878,49 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   }
 }
 
+void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
+  {
+    f2ptr position = f2__physical_transform__position(cause, this);
+    f2ptr position__x = nil;
+    f2ptr position__y = nil;
+    if (raw__physical_position__is_type(cause, position)) {
+      position__x = f2__physical_position__x(cause, position);
+      position__y = f2__physical_position__y(cause, position);
+    }
+    double position__x__d = 0.0;
+    double position__y__d = 0.0;
+    double position__z__d = 0.0;
+    if (raw__number__is_type(cause, position__x)) {position__x__d = raw__number__to_double(cause, position__x);}
+    if (raw__number__is_type(cause, position__y)) {position__y__d = raw__number__to_double(cause, position__y);}
+    if (raw__number__is_type(cause, position__z)) {position__z__d = raw__number__to_double(cause, position__z);}
+    raw__opengl__glTranslatef(cause, position__x__d, position__y__d, position__z__d);
+  }
+  
+  {
+    f2ptr rotation = f2__physical_transform__rotation(cause, this);
+    if (raw__physical_rotation__is_type(cause, rotation)) {
+      opengl__render_physical_rotation(cause, rotation);
+    }
+  }
+  
+  {
+    f2ptr scale = f2__physical_transform__scale(   cause, this);
+    double scale__d = 1.0;
+    if (raw__number__is_type(cause, scale)) {
+      scale__d = raw__number__to_double(cause, scale);
+    }
+    raw__opengl__glScalef(cause, scale__d, scale__d, scale__d);
+  }
+}
+
 void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_place) {
-  f2ptr physical_object = f2__physical_place__thing(cause, physical_place);
-  if (raw__physical_object__is_type(cause, physical_object)) {
-    funk2_glwindow__render_relative_physical_object(this, cause, relative_object, physical_object);
+  f2ptr transform = f2__physical_place__transform(cause, physical_place);
+  f2ptr thing     = f2__physical_place__thing(cause, physical_place);
+  if (raw__physical_transform__is_type(cause, transform)) {
+    opengl__render_physical_transform(cause, transform);
+  }
+  if (raw__physical_object__is_type(cause, thing)) {
+    funk2_glwindow__render_relative_physical_object(this, cause, relative_object, thing);
   }
 }
 

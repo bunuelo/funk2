@@ -25,3 +25,5 @@
 [globalize-funk physical_rotation-new_rotation_around_x_axis &primfunk:physical_rotation__new_rotation_around_x_axis]
 [globalize-funk physical_rotation-multiply                   &primfunk:physical_rotation__multiply]
 
+[globalize-funk physical_transform-new_identity &primfunk:physical_transform__new_identity]
+

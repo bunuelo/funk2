@@ -40,7 +40,7 @@ typedef struct funk2_object_type__physical_place__slot_s funk2_object_type__phys
 declare_object_type_2_slot(physical_place, transform, thing, );
 
 typedef struct funk2_object_type__physical_person__slot_s funk2_object_type__physical_person__slot_t;
-declare_object_type_7_slot(physical_person, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place, );
+declare_object_type_8_slot(physical_person, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place, );
 
 typedef struct funk2_object_type__physical_scene__slot_s funk2_object_type__physical_scene__slot_t;
 declare_object_type_2_slot(physical_scene, background_texture, physical_things, );
@@ -55,7 +55,7 @@ declare_primobject_3_slot(physical_position, x, y, z);
 declare_primobject_3_slot(physical_transform, position, rotation, scale);
 declare_primobject_3_slot(physical_object, transform, text, texture_name);
 declare_primobject_2_slot(physical_place, transform, thing);
-declare_primobject_7_slot(physical_person, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);
+declare_primobject_8_slot(physical_person, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);
 declare_primobject_2_slot(physical_scene, background_texture, physical_things);
 
 f2ptr f2__physical_transform__new_identity(f2ptr cause);

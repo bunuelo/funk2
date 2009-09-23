@@ -562,6 +562,31 @@ def_pcfunk1(chunk, length, return f2__chunk(this_cause, length));
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x) {return f2chunk__new_compiled_from_funk(cause, x);}
 def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_from_funk(this_cause, x));
 
+
+
+// number interface (integer, double, float)
+
+boolean_t raw__number__is_type(f2ptr cause, f2ptr exp) {
+  return (raw__integer__is_type(cause, exp) ||
+	  raw__double__is_type( cause, exp) ||
+	  raw__float__is_type(  cause, exp));
+}
+
+double raw__number__to_double(f2ptr cause, f2ptr this) {
+  double d = 0.0;
+  if (raw__double__is_type(cause, elt)) {
+    d = f2double__d(elt, cause);
+  } else if (raw__float__is_type(cause, elt)) {
+    d = f2float__f(elt, cause);
+  } else if (raw__integer__is_type(cause, elt)) {
+    d = f2integer__i(elt, cause);
+  }
+  return d;
+}
+
+
+
+
 // primobject hashtable
 
 // primobject fiber

@@ -884,6 +884,11 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x);
 
+// number interface (integer, double, float)
+
+boolean_t raw__number__is_type(f2ptr cause, f2ptr exp);
+double    raw__number__to_double(f2ptr cause, f2ptr this);
+
 // cause
 
 f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);

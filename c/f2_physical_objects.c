@@ -28,20 +28,36 @@ def_primobject_1_slot(physical_rotation, array);
 f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr array) {return f2physical_rotation__new(cause, array);}
 def_pcfunk1(physical_rotation__new, array, return f2__physical_rotation__new(this_cause, array));
 
+f2ptr f2__physical_rotation__new_from_c_double_array(f2ptr cause, double* array) {
+  f2ptr this__array = raw__array__new(cause, 9);
+  int i;
+  for (i = 0; i < 9; i ++) {
+    raw__array__elt__set(cause, this__array, i, f2double__new(cause, array[i]));
+  }
+  return f2__physical_rotation__new(cause, this__array);
+}
+
+void raw__physical_rotation__to_c_double_array(f2ptr cause, f2ptr this, double* array) {
+  f2ptr this__array = f2__physical_rotation__array(cause, this);
+  int i;
+  for (i = 0; i < 9; i ++) {
+    f2ptr elt = raw__array__elt(cause, this__array, i);
+    array[i] = raw__number__to_double(cause, elt);
+  }
+}
+
 f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
-  f2ptr array = raw__array__new(cause, 9);
-  raw__array__elt__set(cause, array, 0, f2double__new(cause, 1));
-  raw__array__elt__set(cause, array, 1, f2double__new(cause, 0));
-  raw__array__elt__set(cause, array, 2, f2double__new(cause, 0));
-  raw__array__elt__set(cause, array, 3, f2double__new(cause, 0));
-  raw__array__elt__set(cause, array, 4, f2double__new(cause, 1));
-  raw__array__elt__set(cause, array, 5, f2double__new(cause, 0));
-  raw__array__elt__set(cause, array, 6, f2double__new(cause, 0));
-  raw__array__elt__set(cause, array, 7, f2double__new(cause, 0));
-  raw__array__elt__set(cause, array, 8, f2double__new(cause, 1));
-  return f2__physical_rotation__new(cause, array);
+  double* array = {1,0,0,
+		   0,1,0,
+		   0,0,1};
+  return f2__physical_rotation__new_from_c_double_array(cause, array);
 }
 def_pcfunk0(physical_rotation__new_identity, return f2__physical_rotation__new_identity(this_cause));
+
+//f2ptr raw__physical_rotation__rotated_around_x_axis(f2ptr cause, f2ptr this, double radians) {
+//  double c_array[9];
+//  raw__physical_rotation__to_c_double_array(cause, this, 
+//}
 
 
 // physical_position
@@ -49,9 +65,14 @@ def_pcfunk0(physical_rotation__new_identity, return f2__physical_rotation__new_i
 def_primobject_3_slot(physical_position, x, y, z);
 
 f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
-  double x__d; if (raw__double__is_type(cause, x)) {x__d = (double)f2double__d(x, cause);} else if (raw__integer__is_type(cause, x)) {x__d = (double)f2integer__i(x, cause);} else {return f2larva__new(cause, 1);}
-  double y__d; if (raw__double__is_type(cause, y)) {y__d = (double)f2double__d(y, cause);} else if (raw__integer__is_type(cause, y)) {y__d = (double)f2integer__i(y, cause);} else {return f2larva__new(cause, 1);}
-  double z__d; if (raw__double__is_type(cause, z)) {z__d = (double)f2double__d(z, cause);} else if (raw__integer__is_type(cause, z)) {z__d = (double)f2integer__i(z, cause);} else {return f2larva__new(cause, 1);}
+  if ((! raw__number__is_type(cause, x)) ||
+      (! raw__number__is_type(cause, y)) ||
+      (! raw__number__is_type(cause, z))) {
+    return f2larva__new(cause, 1);
+  }
+  double x__d = raw__number__to_double(cause, x);
+  double y__d = raw__number__to_double(cause, y);
+  double z__d = raw__number__to_double(cause, x);
   return f2physical_position__new(cause, f2double__new(cause, x__d), f2double__new(cause, y__d), f2double__new(cause, z__d));
 }
 def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));

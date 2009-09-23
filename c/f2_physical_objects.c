@@ -165,6 +165,14 @@ f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2pt
 def_pcfunk5(physical_object__new, position, rotation, text, texture_name, size, return f2__physical_object__new(this_cause, position, rotation, text, texture_name, size));
 
 
+// physical_transform
+
+def_primobject_2_slot(physical_transform, position, rotation);
+
+f2ptr f2__physical_transform__new(f2ptr cause, f2ptr position, f2ptr rotation) {return f2physical_transform__new(cause, position, rotation);}
+def_pcfunk2(physical_transform__new, position, rotation, return f2__physical_transform__new(this_cause, position, rotation));
+
+
 // physical_person
 
 def_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);
@@ -186,11 +194,12 @@ def_pcfunk2(physical_scene__new, background_texture, physical_things, return f2_
 void f2__physical_objects__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __physical_rotation__symbol = new__symbol(cause, "physical_rotation");
-  __physical_position__symbol = new__symbol(cause, "physical_position");
-  __physical_object__symbol   = new__symbol(cause, "physical_object");
-  __physical_person__symbol   = new__symbol(cause, "physical_person");
-  __physical_scene__symbol    = new__symbol(cause, "physical_scene");
+  __physical_rotation__symbol  = new__symbol(cause, "physical_rotation");
+  __physical_position__symbol  = new__symbol(cause, "physical_position");
+  __physical_transform__symbol = new__symbol(cause, "physical_transform");
+  __physical_object__symbol    = new__symbol(cause, "physical_object");
+  __physical_person__symbol    = new__symbol(cause, "physical_person");
+  __physical_scene__symbol     = new__symbol(cause, "physical_scene");
 }
 
 void f2__physical_objects__initialize() {
@@ -210,6 +219,9 @@ void f2__physical_objects__initialize() {
   
   // physical_position
   initialize_primobject_3_slot(physical_position, x, y, z);
+  
+  // physical_transform
+  initialize_primobject_2_slot(physical_transform, position, rotation);
   
   // physical_object
   initialize_primobject_5_slot(physical_object, position, rotation, text, texture_name, size);

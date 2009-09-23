@@ -21,13 +21,7 @@
 
 [globalize all_objects_scene
 	   [new physical_scene `mud_puddle_scene
-		[conslist [                     new physical_object [new physical_position  0.4 0.0 0] [physical_rotation-new_identity] 'Bucket'         `bucket_object               0.075]
-			  [                     new physical_object [new physical_position -0.3 0.0 0] [physical_rotation-new_identity] 'Spoon'          `spoon_object                0.075]
-			  [                     new physical_object [new physical_position -0.1 0.0 0] [physical_rotation-new_identity] 'Fork'           `fork_object                 0.075]
-			  [                     new physical_object [new physical_position  0.1 0.0 0] [physical_rotation-new_identity] 'Mud'            `mud_object                  0.03]
-			  [                     new physical_object [new physical_position  0.3 0.0 0] [physical_rotation-new_identity] 'Shovel'         `shovel_object               0.075]
-			  
-			  [new physical_person [new physical_object [new physical_position  0.4   -0.3   0] [physical_rotation-new_identity] 'Jack Standing'  `male_child_agent_standing   0.20]
+		[conslist [new physical_person [new physical_object [new physical_position  0.8   -0.3   0] [physical_rotation-new_identity] 'Jack Standing'  `male_child_agent_standing   0.20]
 			       [                new physical_object [new physical_position  0.0    1.27  0] [physical_rotation-new_identity] ''               `blue_shirt                  0.47]
 			       [                new physical_object [new physical_position  0.067  0.60  0] [physical_rotation-new_identity] ''               `orange_shorts               0.40]
 			       [                new physical_object [new physical_position  0.427  0.0   0] [physical_rotation-new_identity] ''               `blue_left_shoe              0.27]
@@ -35,7 +29,7 @@
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position -0.4   -0.3   0] [physical_rotation-new_identity] 'Carol Standing' `female_child_agent_standing 0.20]
+			  [new physical_person [new physical_object [new physical_position  0.0   -0.3   0] [physical_rotation-new_identity] 'Carol Standing' `female_child_agent_standing 0.20]
 			       [                new physical_object [new physical_position -0.067  1.200 0] [physical_rotation-new_identity] ''               `bluegreen_blouse            0.40]
 			       [                new physical_object [new physical_position -0.067  0.467 0] [physical_rotation-new_identity] ''               `red_skirt                   0.47]
 			       [                new physical_object [new physical_position -0.533  0.0   0] [physical_rotation-new_identity] ''               `pink_right_shoe             0.27]
@@ -43,21 +37,27 @@
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position 0.0   -0.3   0] [physical_rotation-new_identity]                            'Jack Sitting'   `male_child_agent_sitting    0.20]
-			       [                new physical_object [new physical_position 0.333  0.467 0] [physical_rotation-new_identity]                            ''               `sideview_blue_shirt         0.40]
-			       [                new physical_object [new physical_position 0.0    0.200 0] [physical_rotation-new_identity]                            ''               `sideview_orange_shorts      0.53]
-			       [                new physical_object [new physical_position -0.320 0.150 0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 4]] ''               `blue_right_shoe             0.27]
-			       [                new physical_object [new physical_position -0.320 0.800 0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 2]] ''               `blue_left_shoe              0.27]
+			  [new physical_person [new physical_object [new physical_position 0.4   -0.3   0] [physical_rotation-new_identity]                            'Jack Sitting'   `male_child_agent_sitting    0.20]
+			       [                new physical_object [new physical_position 0.333  0.400 0] [physical_rotation-new_rotation_around_z_axis [*  0.05 pi]] ''               `sideview_blue_shirt         0.40]
+			       [                new physical_object [new physical_position 0.0    0.200 0] [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] ''               `sideview_orange_shorts      0.53]
+			       [                new physical_object [new physical_position -0.240 0.100 0] [physical_rotation-new_rotation_around_z_axis [* -0.15 pi]] ''               `blue_right_shoe             0.27]
+			       [                new physical_object [new physical_position -0.200 0.600 0] [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] ''               `blue_left_shoe              0.27]
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position -0.8  -0.3   0] [physical_rotation-new_identity]                            'Carol Sitting'  `female_child_agent_sitting  0.20]
+			  [new physical_person [new physical_object [new physical_position -0.4  -0.3   0] [physical_rotation-new_identity]                            'Carol Sitting'  `female_child_agent_sitting  0.20]
 			       [                new physical_object [new physical_position  0.35  0.733 0] [physical_rotation-new_identity]                            ''               `sideview_bluegreen_blouse   0.27]
 			       [                new physical_object [new physical_position  0.0   0.333 0] [physical_rotation-new_identity]                            ''               `sideview_red_skirt          0.53]
-			       [                new physical_object [new physical_position -0.320 0.150 0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 4]] ''               `pink_right_shoe             0.27]
-			       [                new physical_object [new physical_position -0.320 0.800 0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 2]] ''               `pink_left_shoe              0.27]
+			       [                new physical_object [new physical_position -0.320 0.150 0] [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] ''               `pink_right_shoe             0.27]
+			       [                new physical_object [new physical_position -0.320 0.800 0] [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] ''               `pink_left_shoe              0.27]
 			       nil
 			       nil]
+			  
+			  [                     new physical_object [new physical_position  0.4 0.0 0] [physical_rotation-new_identity] 'Bucket'         `bucket_object               0.075]
+			  [                     new physical_object [new physical_position -0.3 0.0 0] [physical_rotation-new_identity] 'Spoon'          `spoon_object                0.075]
+			  [                     new physical_object [new physical_position -0.1 0.0 0] [physical_rotation-new_identity] 'Fork'           `fork_object                 0.075]
+			  [                     new physical_object [new physical_position  0.1 0.0 0] [physical_rotation-new_identity] 'Mud'            `mud_object                  0.03]
+			  [                     new physical_object [new physical_position  0.3 0.0 0] [physical_rotation-new_identity] 'Shovel'         `shovel_object               0.075]
 			  
 			  ]]]
 

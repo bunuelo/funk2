@@ -72,9 +72,9 @@
 
 [defunk binary-multiply [x y]
   [if [and [is-type `integer x] [is-type `integer y]] [integer-multiply x y]
-    [if [and [is-type `integer x] [is-type `double y]] [unsafe:double-multiply_by_integer y x]
-      [if [and [is-type `double x] [is-type `double y]] [unsafe:double-multiply_by_double x y]
-	[if [and [is-type `double x] [is-type `integer y]] [unsafe:double-multiply_by_integer x y]
+    [if [and [is-type `integer x] [is-type `double y]] [double-multiply_by_integer y x]
+      [if [and [is-type `double x] [is-type `double y]] [double-multiply_by_double x y]
+	[if [and [is-type `double x] [is-type `integer y]] [double-multiply_by_integer x y]
 	  [error `runtime-error `type-check-failure]]]]]]
 
 [defmetro * [x :rest rest]

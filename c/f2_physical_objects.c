@@ -108,7 +108,7 @@ void f2__physical_objects__initialize() {
   initialize_primobject_3_slot(physical_position, x, y, z);
   
   // physical_object
-  initialize_primobject_4_slot(physical_object, position, text, texture_name, size);
+  initialize_primobject_5_slot(physical_object, position, rotation, text, texture_name, size);
   
   // physical_person
   initialize_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);

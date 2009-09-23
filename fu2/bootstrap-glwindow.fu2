@@ -43,11 +43,11 @@
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position 0.0   -0.3   0] [physical_rotation-new_identity] 'Jack Sitting'   `male_child_agent_sitting    0.20]
-			       [                new physical_object [new physical_position 0.333  0.467 0] [physical_rotation-new_identity] ''               `sideview_blue_shirt         0.40]
-			       [                new physical_object [new physical_position 0.0    0.200 0] [physical_rotation-new_identity] ''               `sideview_orange_shorts      0.53]
-			       [                new physical_object [new physical_position  0.427 0.0   0] [physical_rotation-new_identity] ''               `blue_left_shoe              0.27]
-			       [                new physical_object [new physical_position -0.373 0.0   0] [physical_rotation-new_identity] ''               `blue_right_shoe             0.27]
+			  [new physical_person [new physical_object [new physical_position 0.0   -0.3   0] [physical_rotation-new_identity]                            'Jack Sitting'   `male_child_agent_sitting    0.20]
+			       [                new physical_object [new physical_position 0.333  0.467 0] [physical_rotation-new_identity]                            ''               `sideview_blue_shirt         0.40]
+			       [                new physical_object [new physical_position 0.0    0.200 0] [physical_rotation-new_identity]                            ''               `sideview_orange_shorts      0.53]
+			       [                new physical_object [new physical_position -0.320 0.150 0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 4]] ''               `blue_right_shoe             0.27]
+			       [                new physical_object [new physical_position -0.320 0.800 0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 2]] ''               `blue_left_shoe              0.27]
 			       nil
 			       nil]
 			  

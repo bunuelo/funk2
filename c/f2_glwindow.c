@@ -883,9 +883,11 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
     f2ptr position = f2__physical_transform__position(cause, this);
     f2ptr position__x = nil;
     f2ptr position__y = nil;
+    f2ptr position__z = nil;
     if (raw__physical_position__is_type(cause, position)) {
       position__x = f2__physical_position__x(cause, position);
       position__y = f2__physical_position__y(cause, position);
+      position__z = f2__physical_position__z(cause, position);
     }
     double position__x__d = 0.0;
     double position__y__d = 0.0;

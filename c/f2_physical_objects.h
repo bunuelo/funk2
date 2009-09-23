@@ -37,7 +37,7 @@ typedef struct funk2_object_type__physical_object__slot_s funk2_object_type__phy
 declare_object_type_3_slot(physical_object, transform, text, texture_name, );
 
 typedef struct funk2_object_type__physical_place__slot_s funk2_object_type__physical_place__slot_t;
-declare_object_type_2_slot(physical_object, transform, thing, );
+declare_object_type_2_slot(physical_place, transform, thing, );
 
 typedef struct funk2_object_type__physical_person__slot_s funk2_object_type__physical_person__slot_t;
 declare_object_type_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object, );

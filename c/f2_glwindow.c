@@ -961,7 +961,7 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
 	f2ptr physical_person = physical_thing;
 	
 	f2ptr transform = f2__physical_person__transform(cause, physical_person);
-	if (raw__physical_person__physical_transform(cause, transform)) {
+	if (f2__physical_person__physical_transform(cause, transform)) {
 	  opengl__render_physical_transform(cause, transform);
 	}
 	f2ptr body = f2__physical_person__body(cause, physical_person);

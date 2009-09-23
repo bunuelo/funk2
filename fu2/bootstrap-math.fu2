@@ -19,6 +19,9 @@
  rights to redistribute these changes.
 '
 
+[globalize math:pi 3.1415926535459]
+[globalize pi      math:pi]
+
 [defunk > [x y]
   [if [and [is-type `integer x] [is-type `integer y]] [integer-greater_than x y]
     [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-greater_than x y]

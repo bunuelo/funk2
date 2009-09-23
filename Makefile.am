@@ -74,7 +74,7 @@ config_compile_time_id.h:
 #  processor_num = $(shell cat /proc/cpuinfo | grep processor | grep -v type | wc -l)
 #endif
 
-libs = -lpthread
+libs = -lpthread -lm
 
 # processor_power_num description:
 #   0 power => 1 processor,

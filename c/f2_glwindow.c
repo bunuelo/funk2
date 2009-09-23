@@ -902,10 +902,10 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
 	  f2ptr right_foot_clothing = f2__physical_person__right_foot_clothing(cause, physical_person);
 	  f2ptr left_hand_object    = f2__physical_person__left_hand_object(   cause, physical_person);
 	  f2ptr right_hand_object   = f2__physical_person__right_hand_object(  cause, physical_person);
-	  if (raw__physical_object__is_type(cause, torso_clothing))      {funk2_glwindow__render_relative_physical_object(this, cause, body, torso_clothing);}
-	  if (raw__physical_object__is_type(cause, leg_clothing))        {funk2_glwindow__render_relative_physical_object(this, cause, body, leg_clothing);}
 	  if (raw__physical_object__is_type(cause, left_foot_clothing))  {funk2_glwindow__render_relative_physical_object(this, cause, body, left_foot_clothing);}
 	  if (raw__physical_object__is_type(cause, right_foot_clothing)) {funk2_glwindow__render_relative_physical_object(this, cause, body, right_foot_clothing);}
+	  if (raw__physical_object__is_type(cause, leg_clothing))        {funk2_glwindow__render_relative_physical_object(this, cause, body, leg_clothing);}
+	  if (raw__physical_object__is_type(cause, torso_clothing))      {funk2_glwindow__render_relative_physical_object(this, cause, body, torso_clothing);}
 	  if (raw__physical_object__is_type(cause, left_hand_object))    {funk2_glwindow__render_relative_physical_object(this, cause, body, left_hand_object);}
 	  if (raw__physical_object__is_type(cause, right_hand_object))   {funk2_glwindow__render_relative_physical_object(this, cause, body, right_hand_object);}
 	}

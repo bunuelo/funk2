@@ -698,10 +698,10 @@ void opengl__render_physical_rotation(f2ptr cause, f2ptr this) {
   for (i = 0; i < 16; i ++) {
     f2ptr elt = raw__array__elt(cause, array, i);
     double d = 0;
-    if (raw__double__is_type(cause, this)) {
-      d = f2double__d(this, cause);
-    } else if (raw__integer__is_type(cause, this)) {
-      d = f2integer__i(this, cause);
+    if (raw__double__is_type(cause, elt)) {
+      d = f2double__d(elt, cause);
+    } else if (raw__integer__is_type(cause, elt)) {
+      d = f2integer__i(elt, cause);
     } else {
       return;
     }

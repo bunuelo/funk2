@@ -21,39 +21,39 @@
 
 [globalize all_objects_scene
 	   [new physical_scene `mud_puddle_scene
-		[conslist [                     new physical_object [new physical_position  0.4 0.0 0] 'Bucket'         `bucket_object               0.075]
-			  [                     new physical_object [new physical_position -0.3 0.0 0] 'Spoon'          `spoon_object                0.075]
-			  [                     new physical_object [new physical_position -0.1 0.0 0] 'Fork'           `fork_object                 0.075]
-			  [                     new physical_object [new physical_position  0.1 0.0 0] 'Mud'            `mud_object                  0.03]
-			  [                     new physical_object [new physical_position  0.3 0.0 0] 'Shovel'         `shovel_object               0.075]
+		[conslist [                     new physical_object [new physical_position  0.4 0.0 0] [physical_rotation-new_identity] 'Bucket'         `bucket_object               0.075]
+			  [                     new physical_object [new physical_position -0.3 0.0 0] [physical_rotation-new_identity] 'Spoon'          `spoon_object                0.075]
+			  [                     new physical_object [new physical_position -0.1 0.0 0] [physical_rotation-new_identity] 'Fork'           `fork_object                 0.075]
+			  [                     new physical_object [new physical_position  0.1 0.0 0] [physical_rotation-new_identity] 'Mud'            `mud_object                  0.03]
+			  [                     new physical_object [new physical_position  0.3 0.0 0] [physical_rotation-new_identity] 'Shovel'         `shovel_object               0.075]
 			  
-			  [new physical_person [new physical_object [new physical_position  0.4   -0.3   0] 'Jack Standing'  `male_child_agent_standing   0.20]
-			       [                new physical_object [new physical_position  0.0    1.27  0] ''               `blue_shirt                  0.47]
-			       [                new physical_object [new physical_position  0.067  0.60  0] ''               `orange_shorts               0.40]
-			       [                new physical_object [new physical_position  0.427  0.0   0] ''               `blue_left_shoe              0.27]
-			       [                new physical_object [new physical_position -0.373  0.0   0] ''               `blue_right_shoe             0.27]
+			  [new physical_person [new physical_object [new physical_position  0.4   -0.3   0] [physical_rotation-new_identity] 'Jack Standing'  `male_child_agent_standing   0.20]
+			       [                new physical_object [new physical_position  0.0    1.27  0] [physical_rotation-new_identity] ''               `blue_shirt                  0.47]
+			       [                new physical_object [new physical_position  0.067  0.60  0] [physical_rotation-new_identity] ''               `orange_shorts               0.40]
+			       [                new physical_object [new physical_position  0.427  0.0   0] [physical_rotation-new_identity] ''               `blue_left_shoe              0.27]
+			       [                new physical_object [new physical_position -0.373  0.0   0] [physical_rotation-new_identity] ''               `blue_right_shoe             0.27]
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position -0.4   -0.3   0] 'Carol Standing' `female_child_agent_standing 0.20]
-			       [                new physical_object [new physical_position -0.067  1.200 0] ''               `bluegreen_blouse            0.40]
-			       [                new physical_object [new physical_position -0.067  0.467 0] ''               `red_skirt                   0.47]
-			       [                new physical_object [new physical_position -0.533  0.0   0] ''               `pink_right_shoe             0.27]
-			       [                new physical_object [new physical_position  0.360  0.0   0] ''               `pink_left_shoe              0.27]
+			  [new physical_person [new physical_object [new physical_position -0.4   -0.3   0] [physical_rotation-new_identity] 'Carol Standing' `female_child_agent_standing 0.20]
+			       [                new physical_object [new physical_position -0.067  1.200 0] [physical_rotation-new_identity] ''               `bluegreen_blouse            0.40]
+			       [                new physical_object [new physical_position -0.067  0.467 0] [physical_rotation-new_identity] ''               `red_skirt                   0.47]
+			       [                new physical_object [new physical_position -0.533  0.0   0] [physical_rotation-new_identity] ''               `pink_right_shoe             0.27]
+			       [                new physical_object [new physical_position  0.360  0.0   0] [physical_rotation-new_identity] ''               `pink_left_shoe              0.27]
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position 0.0   -0.3   0] 'Jack Sitting'   `male_child_agent_sitting    0.20]
-			       [                new physical_object [new physical_position 0.333  0.467 0] ''               `sideview_blue_shirt         0.40]
-			       [                new physical_object [new physical_position 0.0    0.200 0] ''               `sideview_orange_shorts      0.53]
+			  [new physical_person [new physical_object [new physical_position 0.0   -0.3   0] [physical_rotation-new_identity] 'Jack Sitting'   `male_child_agent_sitting    0.20]
+			       [                new physical_object [new physical_position 0.333  0.467 0] [physical_rotation-new_identity] ''               `sideview_blue_shirt         0.40]
+			       [                new physical_object [new physical_position 0.0    0.200 0] [physical_rotation-new_identity] ''               `sideview_orange_shorts      0.53]
 			       nil
 			       nil
 			       nil
 			       nil]
 			  
-			  [new physical_person [new physical_object [new physical_position -0.8  -0.3   0] 'Carol Sitting'  `female_child_agent_sitting  0.20]
-			       [                new physical_object [new physical_position  0.35  0.733 0] ''               `sideview_bluegreen_blouse   0.27]
-			       [                new physical_object [new physical_position  0.0   0.333 0] ''               `sideview_red_skirt          0.53]
+			  [new physical_person [new physical_object [new physical_position -0.8  -0.3   0] [physical_rotation-new_identity] 'Carol Sitting'  `female_child_agent_sitting  0.20]
+			       [                new physical_object [new physical_position  0.35  0.733 0] [physical_rotation-new_identity] ''               `sideview_bluegreen_blouse   0.27]
+			       [                new physical_object [new physical_position  0.0   0.333 0] [physical_rotation-new_identity] ''               `sideview_red_skirt          0.53]
 			       nil
 			       nil
 			       nil
@@ -63,16 +63,16 @@
 
 [globalize carol_playing_in_mud_scene
 	   [new physical_scene `mud_puddle_scene
-		[conslist [                     new physical_object [new physical_position  0.4 0.0 0] 'Bucket'         `bucket_object               0.075]
-			  [                     new physical_object [new physical_position -0.3 0.0 0] 'Spoon'          `spoon_object                0.075]
-			  [                     new physical_object [new physical_position -0.1 0.0 0] 'Fork'           `fork_object                 0.075]
-			  [                     new physical_object [new physical_position  0.1 0.0 0] 'Mud'            `mud_object                  0.03]
+		[conslist [                     new physical_object [new physical_position  0.4 0.0 0] [physical_rotation-new_identity] 'Bucket'         `bucket_object               0.075]
+			  [                     new physical_object [new physical_position -0.3 0.0 0] [physical_rotation-new_identity] 'Spoon'          `spoon_object                0.075]
+			  [                     new physical_object [new physical_position -0.1 0.0 0] [physical_rotation-new_identity] 'Fork'           `fork_object                 0.075]
+			  [                     new physical_object [new physical_position  0.1 0.0 0] [physical_rotation-new_identity] 'Mud'            `mud_object                  0.03]
 			  
-			  [new physical_person [new physical_object [new physical_position -0.4   -0.3   0] 'Carol Standing' `female_child_agent_standing 0.20]
-			       [                new physical_object [new physical_position -0.067  1.200 0] ''               `bluegreen_blouse            0.40]
-			       [                new physical_object [new physical_position -0.067  0.467 0] ''               `red_skirt                   0.47]
-			       [                new physical_object [new physical_position -0.533  0.0   0] ''               `pink_right_shoe             0.27]
-			       [                new physical_object [new physical_position  0.360  0.0   0] ''               `pink_left_shoe              0.27]
+			  [new physical_person [new physical_object [new physical_position -0.4   -0.3   0] [physical_rotation-new_identity] 'Carol Standing' `female_child_agent_standing 0.20]
+			       [                new physical_object [new physical_position -0.067  1.200 0] [physical_rotation-new_identity] ''               `bluegreen_blouse            0.40]
+			       [                new physical_object [new physical_position -0.067  0.467 0] [physical_rotation-new_identity] ''               `red_skirt                   0.47]
+			       [                new physical_object [new physical_position -0.533  0.0   0] [physical_rotation-new_identity] ''               `pink_right_shoe             0.27]
+			       [                new physical_object [new physical_position  0.360  0.0   0] [physical_rotation-new_identity] ''               `pink_left_shoe              0.27]
 			       nil
 			       nil]
 			  
@@ -81,7 +81,7 @@
 [defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]
       [error `run-time `[glwindow not-supported]]]
-  [globalize glwindow_value carol_playing_in_mud_scene]
+  [globalize glwindow_value all_objects_scene]
   [glwindow-create title width height depth fullscreen]
   [while [not [glwindow-handle_events]]]
   [glwindow-destroy]]

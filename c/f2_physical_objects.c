@@ -59,10 +59,10 @@ def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(t
 
 // physical_object
 
-def_primobject_4_slot(physical_object, position, text, texture_name, size);
+def_primobject_5_slot(physical_object, position, rotation, text, texture_name, size);
 
-f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr text, f2ptr texture_name, f2ptr size) {return f2physical_object__new(cause, position, text, texture_name, size);}
-def_pcfunk4(physical_object__new, position, text, texture_name, size, return f2__physical_object__new(this_cause, position, text, texture_name, size));
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr text, f2ptr texture_name, f2ptr size) {return f2physical_object__new(cause, position, rotation, text, texture_name, size);}
+def_pcfunk5(physical_object__new, position, rotation, text, texture_name, size, return f2__physical_object__new(this_cause, position, rotation, text, texture_name, size));
 
 
 // physical_person

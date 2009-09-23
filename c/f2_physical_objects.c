@@ -28,7 +28,7 @@ def_primobject_1_slot(physical_rotation, array);
 f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr array) {return f2physical_rotation__new(cause, array);}
 def_pcfunk1(physical_rotation__new, array, return f2__physical_rotation__new(this_cause, array));
 
-f2ptr f2__physical_rotation__new_from_c_double_array(f2ptr cause, double* array) {
+f2ptr raw__physical_rotation__new_from_c_double_array(f2ptr cause, double* array) {
   f2ptr this__array = raw__array__new(cause, 9);
   int i;
   for (i = 0; i < 9; i ++) {
@@ -54,10 +54,47 @@ f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
 }
 def_pcfunk0(physical_rotation__new_identity, return f2__physical_rotation__new_identity(this_cause));
 
-//f2ptr raw__physical_rotation__rotated_around_x_axis(f2ptr cause, f2ptr this, double radians) {
-//  double c_array[9];
-//  raw__physical_rotation__to_c_double_array(cause, this, 
-//}
+f2ptr raw__physical_rotation__new_rotation_around_z_axis(f2ptr cause, double radians) {
+  double c_array[9];
+  c_array[0] =  cos(radians);
+  c_array[1] = -sin(radians);
+  c_array[2] =  0;
+  c_array[3] =  sin(radians);
+  c_array[4] =  cos(radians);
+  c_array[5] =  0;
+  c_array[6] =  0;
+  c_array[7] =  0;
+  c_array[8] =  1;
+  return raw__physical_rotation__new_from_c_double_array(cause, c_array);
+}
+
+f2ptr raw__physical_rotation__new_rotation_around_y_axis(f2ptr cause, double radians) {
+  double c_array[9];
+  c_array[0] =  cos(radians);
+  c_array[1] =  0;
+  c_array[2] =  sin(radians);
+  c_array[3] =  0;
+  c_array[4] =  1;
+  c_array[5] =  0;
+  c_array[6] = -sin(radians);
+  c_array[7] =  0;
+  c_array[8] =  cos(radians);
+  return raw__physical_rotation__new_from_c_double_array(cause, c_array);
+}
+
+f2ptr raw__physical_rotation__new_rotation_around_x_axis(f2ptr cause, double radians) {
+  double c_array[9];
+  c_array[0] =  1;
+  c_array[1] =  0;
+  c_array[2] =  0;
+  c_array[3] =  0;
+  c_array[4] =  cos(radians);
+  c_array[5] = -sin(radians);
+  c_array[6] =  0;
+  c_array[7] =  sin(radians);
+  c_array[8] =  cos(radians);
+  return raw__physical_rotation__new_from_c_double_array(cause, c_array);
+}
 
 
 // physical_position

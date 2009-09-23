@@ -50,7 +50,7 @@ f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
   double array[9] = {1,0,0,
 		     0,1,0,
 		     0,0,1};
-  return f2__physical_rotation__new_from_c_double_array(cause, array);
+  return raw__physical_rotation__new_from_c_double_array(cause, array);
 }
 def_pcfunk0(physical_rotation__new_identity, return f2__physical_rotation__new_identity(this_cause));
 

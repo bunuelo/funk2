@@ -19,6 +19,6 @@
  rights to redistribute these changes.
 '
 
-[deftypefunk physical_rotation have multiply [this that]
+[deftypefunk physical_rotation execute multiply [this that]
   [physical_rotation-multiply this that]]
 

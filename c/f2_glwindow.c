@@ -878,6 +878,13 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   }
 }
 
+void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_place) {
+  f2ptr physical_object = f2__physical_place__thing(cause, physical_place);
+  if (raw__physical_object__is_type(cause, physical_object)) {
+    funk2_glwindow__render_relative_physical_object(this, cause, relative_object, physical_object);
+  }
+}
+
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   funk2_glwindow__render_relative_physical_object(this, cause, nil, physical_object);
 }
@@ -914,18 +921,19 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
 	f2ptr body = f2__physical_person__body(cause, physical_person);
 	if (raw__physical_object__is_type(cause, body)) {
 	  funk2_glwindow__render_physical_object(this, cause, body);
-	  f2ptr torso_clothing      = f2__physical_person__torso_clothing(     cause, physical_person);
-	  f2ptr leg_clothing        = f2__physical_person__leg_clothing(       cause, physical_person);
-	  f2ptr left_foot_clothing  = f2__physical_person__left_foot_clothing( cause, physical_person);
-	  f2ptr right_foot_clothing = f2__physical_person__right_foot_clothing(cause, physical_person);
-	  f2ptr left_hand_object    = f2__physical_person__left_hand_object(   cause, physical_person);
-	  f2ptr right_hand_object   = f2__physical_person__right_hand_object(  cause, physical_person);
-	  if (raw__physical_object__is_type(cause, left_foot_clothing))  {funk2_glwindow__render_relative_physical_object(this, cause, body, left_foot_clothing);}
-	  if (raw__physical_object__is_type(cause, right_foot_clothing)) {funk2_glwindow__render_relative_physical_object(this, cause, body, right_foot_clothing);}
-	  if (raw__physical_object__is_type(cause, leg_clothing))        {funk2_glwindow__render_relative_physical_object(this, cause, body, leg_clothing);}
-	  if (raw__physical_object__is_type(cause, torso_clothing))      {funk2_glwindow__render_relative_physical_object(this, cause, body, torso_clothing);}
-	  if (raw__physical_object__is_type(cause, left_hand_object))    {funk2_glwindow__render_relative_physical_object(this, cause, body, left_hand_object);}
-	  if (raw__physical_object__is_type(cause, right_hand_object))   {funk2_glwindow__render_relative_physical_object(this, cause, body, right_hand_object);}
+	  f2ptr torso_clothing_place      = f2__physical_person__torso_clothing_place(     cause, physical_person);
+	  f2ptr leg_clothing_place        = f2__physical_person__leg_clothing_place(       cause, physical_person);
+	  f2ptr left_foot_clothing_place  = f2__physical_person__left_foot_clothing_place( cause, physical_person);
+	  f2ptr right_foot_clothing_place = f2__physical_person__right_foot_clothing_place(cause, physical_person);
+	  f2ptr left_hand_object_place    = f2__physical_person__left_hand_object_place(   cause, physical_person);
+	  f2ptr right_hand_object_place   = f2__physical_person__right_hand_object_place(  cause, physical_person);
+	  
+	  if (raw__physical_place__is_type(cause, left_foot_clothing_place))  {funk2_glwindow__render_relative_physical_place(this, cause, body, left_foot_clothing_place);}
+	  if (raw__physical_place__is_type(cause, right_foot_clothing_place)) {funk2_glwindow__render_relative_physical_place(this, cause, body, right_foot_clothing_place);}
+	  if (raw__physical_place__is_type(cause, leg_clothing_place))        {funk2_glwindow__render_relative_physical_place(this, cause, body, leg_clothing_place);}
+	  if (raw__physical_place__is_type(cause, torso_clothing_place))      {funk2_glwindow__render_relative_physical_place(this, cause, body, torso_clothing_place);}
+	  if (raw__physical_place__is_type(cause, left_hand_object_place))    {funk2_glwindow__render_relative_physical_place(this, cause, body, left_hand_object_place);}
+	  if (raw__physical_place__is_type(cause, right_hand_object_place))   {funk2_glwindow__render_relative_physical_place(this, cause, body, right_hand_object_place);}
 	}
       }
     }

@@ -918,12 +918,14 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
 void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_place) {
   f2ptr transform = f2__physical_place__transform(cause, physical_place);
   f2ptr thing     = f2__physical_place__thing(cause, physical_place);
+  raw__opengl__glPushMatrix(cause);
   if (raw__physical_transform__is_type(cause, transform)) {
     opengl__render_physical_transform(cause, transform);
   }
   if (raw__physical_object__is_type(cause, thing)) {
     funk2_glwindow__render_relative_physical_object(this, cause, relative_object, thing);
   }
+  raw__opengl__glPopMatrix(cause);
 }
 
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {

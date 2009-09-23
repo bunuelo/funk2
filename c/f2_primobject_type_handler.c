@@ -110,8 +110,9 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "circular_buffer";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2circular_buffer__primobject_type__new(cause));}
   {char* type_name = "physical_rotation";  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),  f2physical_rotation__primobject_type__new(cause));}
   {char* type_name = "physical_position";  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),  f2physical_position__primobject_type__new(cause));}
-  {char* type_name = "physical_transform"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),  f2physical_transform__primobject_type__new(cause));}
+  {char* type_name = "physical_transform"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2physical_transform__primobject_type__new(cause));}
   {char* type_name = "physical_object";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2physical_object__primobject_type__new(cause));}
+  {char* type_name = "physical_place";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2physical_place__primobject_type__new(cause));}
   {char* type_name = "physical_person";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2physical_person__primobject_type__new(cause));}
   {char* type_name = "physical_scene";     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),     f2physical_scene__primobject_type__new(cause));}
 }

@@ -173,6 +173,14 @@ f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr t
 def_pcfunk3(physical_object__new, transform, text, texture_name, return f2__physical_object__new(this_cause, transform, text, texture_name));
 
 
+// physical_place
+
+def_primobject_2_slot(physical_place, transform, thing);
+
+f2ptr f2__physical_place__new(f2ptr cause, f2ptr transform, f2ptr thing) {return f2physical_place__new(cause, transform, thing);}
+def_pcfunk2(physical_place__new, transform, thing, return f2__physical_place__new(this_cause, transform, thing));
+
+
 // physical_person
 
 def_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);
@@ -198,6 +206,7 @@ void f2__physical_objects__reinitialize_globalvars() {
   __physical_position__symbol  = new__symbol(cause, "physical_position");
   __physical_transform__symbol = new__symbol(cause, "physical_transform");
   __physical_object__symbol    = new__symbol(cause, "physical_object");
+  __physical_place__symbol     = new__symbol(cause, "physical_place");
   __physical_person__symbol    = new__symbol(cause, "physical_person");
   __physical_scene__symbol     = new__symbol(cause, "physical_scene");
 }
@@ -225,6 +234,9 @@ void f2__physical_objects__initialize() {
   
   // physical_object
   initialize_primobject_3_slot(physical_object, transform, text, texture_name);
+  
+  // physical_place
+  initialize_primobject_2_slot(physical_place, transform, thing);
   
   // physical_person
   initialize_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);

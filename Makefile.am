@@ -74,7 +74,7 @@ config_compile_time_id.h:
 #  processor_num = $(shell cat /proc/cpuinfo | grep processor | grep -v type | wc -l)
 #endif
 
-libs = -lpthread -lm
+libs = -lpthread
 
 # processor_power_num description:
 #   0 power => 1 processor,
@@ -113,6 +113,8 @@ dlfcn_linker_flags   = -ldl
 #opengl_linker_flags = -lGL -lGLU -lXxf86vm
 #`pkg-config --cflags --libs GL GLU Xxf86vm`
 
+math_linker_flags = -lm
+
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 
@@ -127,8 +129,8 @@ debug_flags    = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(math_linker_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(math_linker_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)

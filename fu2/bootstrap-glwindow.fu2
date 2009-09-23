@@ -76,7 +76,9 @@
 			  [new physical_object [new physical_transform [new physical_position -0.1 0.0 0] [physical_rotation-new_identity] 0.075] 'Fork'           `fork_object]
 			  [new physical_object [new physical_transform [new physical_position  0.1 0.0 0] [physical_rotation-new_identity] 0.03]  'Mud'            `mud_object]
 			  
-			  [new physical_person                                       [new physical_object [new physical_transform [new physical_position -0.4   -0.3   0] [physical_rotation-new_identity] 0.20] 'Carol Standing' `female_child_agent_standing]
+			  [new physical_person
+			       [new physical_transform [new physical_position -0.4 -0.3 0] [physical_rotation-new_identity] 0.20]
+			       [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] 'Carol Standing' `female_child_agent_standing]
 			       [new physical_place [physical_transform-new_identity] [new physical_object [new physical_transform [new physical_position -0.067  1.200 0] [physical_rotation-new_identity] 0.40] ''               `bluegreen_blouse]]
 			       [new physical_place [physical_transform-new_identity] [new physical_object [new physical_transform [new physical_position -0.067  0.467 0] [physical_rotation-new_identity] 0.47] ''               `red_skirt]]
 			       [new physical_place [physical_transform-new_identity] [new physical_object [new physical_transform [new physical_position -0.533  0.0   0] [physical_rotation-new_identity] 0.27] ''               `pink_right_shoe]]

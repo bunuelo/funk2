@@ -693,19 +693,25 @@ void opengl__render_physical_position(f2ptr cause, f2ptr this) {
 
 void opengl__render_physical_rotation(f2ptr cause, f2ptr this) {
   f2ptr array = f2__physical_rotation__array(cause, this);
-  GLfloat rot_matrix[16];
-  int i;
-  for (i = 0; i < 16; i ++) {
-    f2ptr elt = raw__array__elt(cause, array, i);
-    double d = 0;
-    if (raw__double__is_type(cause, elt)) {
-      d = f2double__d(elt, cause);
-    } else if (raw__integer__is_type(cause, elt)) {
-      d = f2integer__i(elt, cause);
-    } else {
-      return;
+  GLfloat rot_matrix[16] =
+    {1,0,0,0,
+     0,1,0,0,
+     0,0,1,0,
+     0,0,0,1};
+  int yi, xi;
+  for (yi = 0; yi < 3; yi ++) {
+    for (xi = 0; xi < 3; xi ++) {
+      f2ptr elt = raw__array__elt(cause, array, ((yi << 1) + yi) + xi);
+      double d = 0;
+      if (raw__double__is_type(cause, elt)) {
+	d = f2double__d(elt, cause);
+      } else if (raw__integer__is_type(cause, elt)) {
+	d = f2integer__i(elt, cause);
+      } else {
+	return;
+      }
+      rot_matrix[(yi << 2) + xi] = (GLfloat)d;
     }
-    rot_matrix[i] = (GLfloat)d;
   }
   raw__opengl__glMultMatrixf(cause, rot_matrix);
 }

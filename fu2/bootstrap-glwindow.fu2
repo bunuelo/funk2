@@ -54,7 +54,7 @@
 			  [new physical_person [new physical_object [new physical_position -0.8  -0.3   0] [physical_rotation-new_identity]                            'Carol Sitting'  `female_child_agent_sitting  0.20]
 			       [                new physical_object [new physical_position  0.35  0.733 0] [physical_rotation-new_identity]                            ''               `sideview_bluegreen_blouse   0.27]
 			       [                new physical_object [new physical_position  0.0   0.333 0] [physical_rotation-new_identity]                            ''               `sideview_red_skirt          0.53]
-			       [                new physical_object [new physical_position -0.533 0.0   0] [physical_rotation-new_rotation_around_z_axis 0]            ''               `pink_right_shoe             0.27]
+			       [                new physical_object [new physical_position -0.533 0.0   0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 4]] ''               `pink_right_shoe             0.27]
 			       [                new physical_object [new physical_position  0.360 0.0   0] [physical_rotation-new_rotation_around_z_axis [/ [- pi] 2]] ''               `pink_left_shoe              0.27]
 			       nil
 			       nil]

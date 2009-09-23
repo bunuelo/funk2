@@ -58,6 +58,8 @@ declare_primobject_2_slot(physical_place, transform, thing);
 declare_primobject_7_slot(physical_person, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);
 declare_primobject_2_slot(physical_scene, background_texture, physical_things);
 
+f2ptr f2__physical_transform__new_identity(f2ptr cause);
+
 // **
 
 void f2__physical_objects__initialize();

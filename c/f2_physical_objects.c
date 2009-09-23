@@ -168,7 +168,7 @@ f2ptr f2__physical_transform__new_identity(f2ptr cause) {
   f2ptr position = f2__physical_position__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.0), f2double__new(cause, 0.0));
   f2ptr rotation = f2__physical_rotation__new_identity(cause);
   f2ptr scale    = f2double__new(cause, 1.0);
-  return raw__physical_transform__new(cause, position, rotation, scale);
+  return f2__physical_transform__new(cause, position, rotation, scale);
 }
 def_pcfunk0(physical_transform__new_identity, return f2__physical_transform__new_identity(this_cause));
 

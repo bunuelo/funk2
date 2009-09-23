@@ -19,9 +19,6 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk physical_rotation-new_identity               &primfunk:physical_rotation__new_identity]
-[globalize-funk physical_rotation-new_rotation_around_z_axis &primfunk:physical_rotation__new_rotation_around_z_axis]
-[globalize-funk physical_rotation-new_rotation_around_y_axis &primfunk:physical_rotation__new_rotation_around_y_axis]
-[globalize-funk physical_rotation-new_rotation_around_x_axis &primfunk:physical_rotation__new_rotation_around_x_axis]
-[globalize-funk physical_rotation-multiply                   &primfunk:physical_rotation__multiply]
+[deftypefunk physical_rotation have multiply [this that]
+  [physical_rotation-multiply this that]]
 

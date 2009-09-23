@@ -68,6 +68,12 @@ f2ptr raw__physical_rotation__new_rotation_around_z_axis(f2ptr cause, double rad
   return raw__physical_rotation__new_from_c_double_array(cause, c_array);
 }
 
+f2ptr f2__physical_rotation__new_rotation_around_z_axis(f2ptr cause, f2ptr radians) {
+  double c_radians = raw__number__to_double(cause, radians);
+  return raw__physical_rotation__new_rotation_around_z_axis(cause, c_radians);
+}
+def_pcfunk1(physical_rotation__new_rotation_around_z_axis, radians, return f2__physical_rotation__new_rotation_around_z_axis(this_cause, radians));
+
 f2ptr raw__physical_rotation__new_rotation_around_y_axis(f2ptr cause, double radians) {
   double c_array[9];
   c_array[0] =  cos(radians);
@@ -81,6 +87,12 @@ f2ptr raw__physical_rotation__new_rotation_around_y_axis(f2ptr cause, double rad
   c_array[8] =  cos(radians);
   return raw__physical_rotation__new_from_c_double_array(cause, c_array);
 }
+
+f2ptr f2__physical_rotation__new_rotation_around_y_axis(f2ptr cause, f2ptr radians) {
+  double c_radians = raw__number__to_double(cause, radians);
+  return raw__physical_rotation__new_rotation_around_y_axis(cause, c_radians);
+}
+def_pcfunk1(physical_rotation__new_rotation_around_y_axis, radians, return f2__physical_rotation__new_rotation_around_y_axis(this_cause, radians));
 
 f2ptr raw__physical_rotation__new_rotation_around_x_axis(f2ptr cause, double radians) {
   double c_array[9];
@@ -96,6 +108,36 @@ f2ptr raw__physical_rotation__new_rotation_around_x_axis(f2ptr cause, double rad
   return raw__physical_rotation__new_from_c_double_array(cause, c_array);
 }
 
+f2ptr f2__physical_rotation__new_rotation_around_x_axis(f2ptr cause, f2ptr radians) {
+  double c_radians = raw__number__to_double(cause, radians);
+  return raw__physical_rotation__new_rotation_around_x_axis(cause, c_radians);
+}
+def_pcfunk1(physical_rotation__new_rotation_around_x_axis, radians, return f2__physical_rotation__new_rotation_around_x_axis(this_cause, radians));
+
+f2ptr f2__physical_rotation__multiply(f2ptr cause, f2ptr this, f2ptr that) {
+  double this__c_array[9];
+  double that__c_array[9];
+  double  new__c_array[9];
+  raw__physical_rotation__to_c_double_array(cause, this, this__c_array);
+  raw__physical_rotation__to_c_double_array(cause, that, that__c_array);
+  {
+    int iy;
+    for (iy = 0; iy < 3; iy ++) {
+      int ix;
+      for (ix = 0; ix < 3; ix ++) {
+	new__c_array[((iy << 1) + iy) + ix] = 0;
+	{
+	  int j;
+	  for (j = 0; j < 3; j ++) {
+	    new__c_array[((iy << 1) + iy) + ix] += (this__c_array[((iy << 1) + iy) + j] * that__c_array[((j << 1) + j) + ix]);
+	  }
+	}
+      }
+    }
+  }
+  return raw__physical_rotation__new_from_c_double_array(cause, new__c_array);
+}
+def_pcfunk2(physical_rotation__multiply, this, that, return f2__physical_rotation__multiply(this_cause, this, that));
 
 // physical_position
 
@@ -161,6 +203,10 @@ void f2__physical_objects__initialize() {
   // physical_rotation
   initialize_primobject_1_slot(physical_rotation, array);
   f2__primcfunk__init__0(physical_rotation__new_identity, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__1(physical_rotation__new_rotation_around_z_axis, radians, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__1(physical_rotation__new_rotation_around_y_axis, radians, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__1(physical_rotation__new_rotation_around_x_axis, radians, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__2(physical_rotation__multiply, this, that, "glwindow cfunk declared in f2_glwindow.c");
   
   // physical_position
   initialize_primobject_3_slot(physical_position, x, y, z);

@@ -157,20 +157,20 @@ f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
 def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));
 
 
-// physical_object
-
-def_primobject_5_slot(physical_object, position, rotation, text, texture_name, size);
-
-f2ptr f2__physical_object__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr text, f2ptr texture_name, f2ptr size) {return f2physical_object__new(cause, position, rotation, text, texture_name, size);}
-def_pcfunk5(physical_object__new, position, rotation, text, texture_name, size, return f2__physical_object__new(this_cause, position, rotation, text, texture_name, size));
-
-
 // physical_transform
 
 def_primobject_2_slot(physical_transform, position, rotation);
 
 f2ptr f2__physical_transform__new(f2ptr cause, f2ptr position, f2ptr rotation) {return f2physical_transform__new(cause, position, rotation);}
 def_pcfunk2(physical_transform__new, position, rotation, return f2__physical_transform__new(this_cause, position, rotation));
+
+
+// physical_object
+
+def_primobject_4_slot(physical_object, transform, text, texture_name, size);
+
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name, f2ptr size) {return f2physical_object__new(cause, transform, text, texture_name, size);}
+def_pcfunk4(physical_object__new, transform, text, texture_name, size, return f2__physical_transform__new(this_cause, transform, text, texture_name, size));
 
 
 // physical_person
@@ -224,7 +224,7 @@ void f2__physical_objects__initialize() {
   initialize_primobject_2_slot(physical_transform, position, rotation);
   
   // physical_object
-  initialize_primobject_5_slot(physical_object, position, rotation, text, texture_name, size);
+  initialize_primobject_4_slot(physical_object, transform, text, texture_name, size);
   
   // physical_person
   initialize_primobject_7_slot(physical_person, body, torso_clothing, leg_clothing, left_foot_clothing, right_foot_clothing, left_hand_object, right_hand_object);

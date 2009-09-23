@@ -795,28 +795,47 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 
 
 void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_object) {
-  f2ptr relative_position = nil;
-  f2ptr relative_size     = nil;
+  f2ptr relative_transform = nil;
+  f2ptr relative_position  = nil;
+  f2ptr relative_size      = nil;
   if (relative_object) {
-    relative_position = f2__physical_object__position(cause, relative_object);
-    relative_size     = f2__physical_object__size(    cause, relative_object);
+    relative_transform = f2__physical_object__transform(cause, relative_object);
+    if (raw__physical_transform__is_type(cause, relative_transform)) {
+      relative_position = f2__physical_transform__position(cause, relative_transform);
+      relative_size     = f2__physical_transform__size(    cause, relative_transform);
+    }
   }
-  f2ptr position     = f2__physical_object__position(    cause, physical_object);
-  f2ptr rotation     = f2__physical_object__rotation(    cause, physical_object);
+  f2ptr transform    = f2__physical_object__transform(   cause, physical_object);
   f2ptr text         = f2__physical_object__text(        cause, physical_object);
   f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
   f2ptr size         = f2__physical_object__size(        cause, physical_object);
   
-  f2ptr position__x = f2__physical_position__x(cause, position);
-  f2ptr position__y = f2__physical_position__y(cause, position);
-  double position__x__d = f2double__d(position__x, cause);
-  double position__y__d = f2double__d(position__y, cause);
+  f2ptr position = nil;
+  f2ptr rotation = nil;
+  
+  if (raw__physical_transform__is_type(cause, transform)) {
+    position = f2__physical_transform__position(cause, transform);
+    rotation = f2__physical_transform__rotation(cause, transform);
+  }
+  
+  f2ptr position__x = nil;
+  f2ptr position__y = nil;
+  if (raw__physical_position__is_type(cause, position)) {
+    f2ptr position__x = f2__physical_position__x(cause, position);
+    f2ptr position__y = f2__physical_position__y(cause, position);
+  }
+  double position__x__d = 0.0;
+  if (raw__number__is_type(cause, position__x)) {
+    position__x__d = raw__number__to_double(cause, position__x);
+  }
+  double position__y__d = 0.0;
+  if (raw__number__is_type(cause, position__y)) {
+    position__y__d = raw__number__to_double(cause, position__y);
+  }
   
   double size__d = 1.0;
-  if (raw__double__is_type(cause, size)) {
-    size__d = f2double__d(size, cause);
-  } else if (raw__integer__is_type(cause, size)) {
-    size__d = (double)f2integer__i(size, cause);
+  if (raw__number__is_type(cause, size)) {
+    size__d = raw__number__to_double(cause, size);
   }
   
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);

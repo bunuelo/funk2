@@ -129,8 +129,8 @@ debug_flags    = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(math_linker_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(math_linker_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -277,7 +277,7 @@ bin_funk2_SOURCES = \
   config_bit_num.h
 
 
-bin_funk2_LDFLAGS = $(dynamic_library_linker_flags)
+bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h

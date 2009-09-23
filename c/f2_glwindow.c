@@ -847,10 +847,10 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   }
   
   raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (size__d * height_over_width), 0);
-  raw__opengl__glScalef(cause, 1.0 * size__d, 1.0 * size__d * height_over_width, 1);
   if (raw__physical_rotation__is_type(cause, rotation)) {
     opengl__render_physical_rotation(cause, rotation);
   }
+  raw__opengl__glScalef(cause, 1.0 * size__d, 1.0 * size__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   

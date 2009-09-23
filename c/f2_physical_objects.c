@@ -170,7 +170,7 @@ def_pcfunk3(physical_transform__new, position, rotation, scale, return f2__physi
 def_primobject_3_slot(physical_object, transform, text, texture_name);
 
 f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name) {return f2physical_object__new(cause, transform, text, texture_name);}
-def_pcfunk3(physical_object__new, transform, text, texture_name, return f2__physical_transform__new(this_cause, transform, text, texture_name));
+def_pcfunk3(physical_object__new, transform, text, texture_name, return f2__physical_object__new(this_cause, transform, text, texture_name));
 
 
 // physical_person

@@ -83,9 +83,9 @@
 
 [globalize all_objects_scene
 	   [new physical_scene `mud_puddle_scene
-		[conslist [new physical_place [new physical_transform [new physical_position -0.2 -0.3 0] [physical_rotation-new_identity] 1] jack_standing]
-			  [new physical_place [new physical_transform [new physical_position  0.2 -0.3 0] [physical_rotation-new_identity] 1] jack_sitting]
-			  [new physical_place [new physical_transform [new physical_position -0.6 -0.3 0] [physical_rotation-new_identity] 1] carol_sitting]
+		[conslist [new physical_place [new physical_transform [new physical_position -0.2 0 0] [physical_rotation-new_identity] 1] jack_standing]
+			  [new physical_place [new physical_transform [new physical_position  0.2 0 0] [physical_rotation-new_identity] 1] jack_sitting]
+			  [new physical_place [new physical_transform [new physical_position -0.6 0 0] [physical_rotation-new_identity] 1] carol_sitting]
 			  
 			  [new physical_place [new physical_transform [new physical_position  0.4  0.0 0] [physical_rotation-new_identity] 1] bucket_object]
 			  [new physical_place [new physical_transform [new physical_position -0.3  0.0 0] [physical_rotation-new_identity] 1] spoon_object]
@@ -106,8 +106,8 @@
 			  [new physical_place [new physical_transform [new physical_position  0.6 -0.3 0] [physical_rotation-new_identity] 1] carol_standing]
 			  ]]]
 
-`[globalize glwindow_value all_objects_scene]
-[globalize glwindow_value carol_playing_in_mud_scene]
+[globalize glwindow_value all_objects_scene]
+`[globalize glwindow_value carol_playing_in_mud_scene]
 
 [defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]

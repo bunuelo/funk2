@@ -955,11 +955,7 @@ void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2pt
   } else {
     status("warning: expected transform.");
   }
-  if (raw__physical_object__is_type(cause, thing)) {
-    funk2_glwindow__render_relative_physical_object(this, cause, relative_object, thing);
-  } else {
-    status("warning: expected object.");
-  }
+  funk2_glwindow__render_relative_physical_thing(this, cause, relative_object, thing);
   raw__opengl__glPopMatrix(cause);
 }
 

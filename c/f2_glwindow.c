@@ -1094,7 +1094,7 @@ void funk2_glwindow__main(f2ptr cause) {
   funk2_glwindow__destroy(&(__funk2.glwindow));
 }
 
-#endif // F2__GLWINDOW__H
+#endif // F2__GLWINDOW__SUPPORTED
 
 boolean_t raw__glwindow__supported(f2ptr cause) {
 #if defined(F2__GLWINDOW__H)

@@ -130,6 +130,88 @@ f2ptr      f2__glwindow__destroy(f2ptr cause);
 
 void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_thing);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if defined(F2__GLWINDOW__SUPPORTED)
+
+boolean_t funk2_opengl_font__init(funk2_opengl_font_t* this, f2ptr cause, Display* display, char* font_name);
+void funk2_opengl_font__destroy(funk2_opengl_font_t* this, f2ptr cause);
+void funk2_opengl_font__printf(funk2_opengl_font_t* this, f2ptr cause, const char* fmt, ...);
+boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* filename);
+boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t* this, f2ptr cause, u8* bmp_filename);
+void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause);
+boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause);
+void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height);
+void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen);
+void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen);
+void funk2_glwindow__destroy(funk2_glwindow_t* this);
+void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause);
+boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause);
+boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
+boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);
+funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name);
+void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name);
+void raw__draw_gl_cube(f2ptr cause);
+void raw__draw_xy_square(f2ptr cause);
+void raw__gl_set_material_color(f2ptr cause, float red, float green, float blue, float alpha);
+void opengl__render_physical_position(f2ptr cause, f2ptr this);
+void opengl__render_physical_rotation(f2ptr cause, f2ptr this);
+void opengl__render_physical_position_as_raster(f2ptr cause, f2ptr this);
+GLfloat funk2_glwindow__get_render_font_width(funk2_glwindow_t* this, f2ptr cause, f2ptr text);
+void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f2ptr text, double x, double y);
+void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_object);
+void opengl__render_physical_transform(f2ptr cause, f2ptr this);
+void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_place);
+void funk2_glwindow__render_relative_physical_person(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_person);
+void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_place);
+void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object);
+void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_thing);
+void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing);
+void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name);
+void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_scene);
+void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause);
+void funk2_glwindow__main(f2ptr cause);
+
+#endif // F2__GLWINDOW__SUPPORTED
+
+boolean_t raw__glwindow__supported(f2ptr cause);
+f2ptr f2__glwindow__supported(f2ptr cause);
+void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen);
+f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, f2ptr depth, f2ptr fullscreen);
+boolean_t raw__glwindow__handle_events(f2ptr cause);
+f2ptr f2__glwindow__handle_events(f2ptr cause);
+void raw__glwindow__destroy(f2ptr cause);
+f2ptr f2__glwindow__destroy(f2ptr cause);
+
+
 // **
 
 void f2__glwindow__reinitialize_globalvars();

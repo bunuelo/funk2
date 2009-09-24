@@ -918,12 +918,66 @@ void funk2_glwindow__render_physical_person(funk2_glwindow_t* this, f2ptr cause,
     if (raw__physical_object__is_type(cause, body)) {
       funk2_glwindow__render_physical_object(this, cause, body);
       
-      {f2ptr person_place = f2__physical_person__left_foot_clothing_place( cause, physical_person); if (person_place) {if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);} else {status("warning: expected place.");}}}
-      {f2ptr person_place = f2__physical_person__right_foot_clothing_place(cause, physical_person); if (person_place) {if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);} else {status("warning: expected place.");}}}
-      {f2ptr person_place = f2__physical_person__leg_clothing_place(       cause, physical_person); if (person_place) {if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);} else {status("warning: expected place.");}}}
-      {f2ptr person_place = f2__physical_person__torso_clothing_place(     cause, physical_person); if (person_place) {if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);} else {status("warning: expected place.");}}}
-      {f2ptr person_place = f2__physical_person__left_hand_object_place(   cause, physical_person); if (person_place) {if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);} else {status("warning: expected place.");}}}
-      {f2ptr person_place = f2__physical_person__right_hand_object_place(  cause, physical_person); if (person_place) {if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);} else {status("warning: expected place.");}}}
+      {
+	f2ptr person_place = f2__physical_person__left_foot_clothing_place( cause, physical_person);
+	if (person_place) {
+	  if (raw__physical_place__is_type(cause, person_place)) {
+	    funk2_glwindow__render_physical_place(this, cause, person_place);
+	  } else {
+	    status("warning: expected place.");
+	  }
+	}
+      }
+      {
+	f2ptr person_place = f2__physical_person__right_foot_clothing_place(cause, physical_person);
+	if (person_place) {
+	  if (raw__physical_place__is_type(cause, person_place)) {
+	    funk2_glwindow__render_physical_place(this, cause, person_place);
+	  } else {
+	    status("warning: expected place.");
+	  }
+	}
+      }
+      {
+	f2ptr person_place = f2__physical_person__leg_clothing_place(       cause, physical_person);
+	if (person_place) {
+	  if (raw__physical_place__is_type(cause, person_place)) {
+	    funk2_glwindow__render_physical_place(this, cause, person_place);
+	  } else {
+	    status("warning: expected place.");
+	  }
+	}
+      }
+      {
+	f2ptr person_place = f2__physical_person__torso_clothing_place(     cause, physical_person);
+	if (person_place) {
+	  if (raw__physical_place__is_type(cause, person_place)) {
+	    funk2_glwindow__render_physical_place(this, cause, person_place);
+	  } else {
+	    status("warning: expected place.");
+	  }
+	}
+      }
+      {
+	f2ptr person_place = f2__physical_person__left_hand_object_place(   cause, physical_person);
+	if (person_place) {
+	  if (raw__physical_place__is_type(cause, person_place)) {
+	    funk2_glwindow__render_physical_place(this, cause, person_place);
+	  } else {
+	    status("warning: expected place.");
+	  }
+	}
+      }
+      {
+	f2ptr person_place = f2__physical_person__right_hand_object_place(  cause, physical_person);
+	if (person_place) {
+	  if (raw__physical_place__is_type(cause, person_place)) {
+	    funk2_glwindow__render_physical_place(this, cause, person_place);
+	  } else {
+	    status("warning: expected place.");
+	  }
+	}
+      }
     } else {
       status("warning: expected object.");
     }

@@ -795,102 +795,25 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 }
 
 
-void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_object) {
-  f2ptr relative_transform = nil;
-  f2ptr relative_position  = nil;
-  f2ptr relative_scale     = nil;
-  if (relative_object) {
-    relative_transform = f2__physical_object__transform(cause, relative_object);
-    if (raw__physical_transform__is_type(cause, relative_transform)) {
-      relative_position = f2__physical_transform__position(cause, relative_transform);
-      relative_scale    = f2__physical_transform__scale(   cause, relative_transform);
-    } else {
-      status("warning: expected transform.");
-    }
-  }
-  f2ptr transform    = f2__physical_object__transform(   cause, physical_object);
-  f2ptr text         = f2__physical_object__text(        cause, physical_object);
-  f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
-  
-  f2ptr position = nil;
-  f2ptr rotation = nil;
-  f2ptr scale    = nil;
-  
-  if (raw__physical_transform__is_type(cause, transform)) {
-    position = f2__physical_transform__position(cause, transform);
-    rotation = f2__physical_transform__rotation(cause, transform);
-    scale    = f2__physical_transform__scale(   cause, transform);
-  } else {
-    status("warning: expected transform.");
-  }
-  
-  f2ptr position__x = nil;
-  f2ptr position__y = nil;
-  if (raw__physical_position__is_type(cause, position)) {
-    position__x = f2__physical_position__x(cause, position);
-    position__y = f2__physical_position__y(cause, position);
-  } else {
-    status("warning: expected position.");
-  }
-  double position__x__d = 0.0;
-  if (raw__number__is_type(cause, position__x)) {
-    position__x__d = raw__number__to_double(cause, position__x);
-  } else {
-    status("warning: expected number.");
-  }
-  double position__y__d = 0.0;
-  if (raw__number__is_type(cause, position__y)) {
-    position__y__d = raw__number__to_double(cause, position__y);
-  } else {
-    status("warning: expected number.");
-  }
-  
-  double scale__d = 1.0;
-  if (raw__number__is_type(cause, scale)) {
-    scale__d = raw__number__to_double(cause, scale);
-  } else {
-    status("warning: expected number.");
-  }
-  
+void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   
   raw__gl_set_material_color(cause, 1, 1, 1, 1);
   
   raw__opengl__glPushMatrix(cause);
-  funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-  double height_over_width = ((double)(texture->height) / (double)(texture->width));
-  funk2_opengl_texture__bind(texture, cause);
-  
-  if (relative_position) {
-    if (raw__physical_position__is_type(cause, relative_position)) {
-      f2ptr relative_position__x = f2__physical_position__x(cause, relative_position);
-      f2ptr relative_position__y = f2__physical_position__y(cause, relative_position);
-      double relative_position__x__d = f2double__d(relative_position__x, cause);
-      double relative_position__y__d = f2double__d(relative_position__y, cause);
-      raw__opengl__glTranslatef(cause, relative_position__x__d, relative_position__y__d, 0);
-    } else {
-      status("warning: expected position.");
+  {
+    f2ptr transform = f2__physical_object__transform(cause, physical_object);
+    if (raw__physical_transform__is_type(cause, transform)) {
+      opengl__render_physical_transform(cause, transform);
     }
+    
+    funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
+    double height_over_width = ((double)(texture->height) / (double)(texture->width));
+    funk2_opengl_texture__bind(texture, cause);
+    
+    raw__opengl__glScalef(cause, 1, height_over_width, 1);
+    raw__draw_xy_square(cause);
   }
-  
-  if (relative_scale) {
-    double relative_scale__d = 1.0;
-    if (raw__number__is_type(cause, relative_scale)) {
-      relative_scale__d = raw__number__to_double(cause, relative_scale);
-    } else {
-      status("warning: expected number.");
-    }
-    raw__opengl__glScalef(cause, 1.0 * relative_scale__d, 1.0 * relative_scale__d, 1);
-  }
-  
-  raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (scale__d * height_over_width), 0);
-  if (raw__physical_rotation__is_type(cause, rotation)) {
-    opengl__render_physical_rotation(cause, rotation);
-  } else {
-    status("warning: expected rotation.");
-  }
-  raw__opengl__glScalef(cause, 1.0 * scale__d, 1.0 * scale__d * height_over_width, 1);
-  raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   
   if (text) {
@@ -946,7 +869,7 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
   }
 }
 
-void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_place) {
+void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_place) {
   f2ptr transform = f2__physical_place__transform(cause, physical_place);
   f2ptr thing     = f2__physical_place__thing(cause, physical_place);
   raw__opengl__glPushMatrix(cause);
@@ -955,11 +878,13 @@ void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2pt
   } else {
     status("warning: expected transform.");
   }
-  funk2_glwindow__render_relative_physical_thing(this, cause, relative_object, thing);
+  if (thing) {
+    funk2_glwindow__render_physical_thing(this, cause, thing);
+  }
   raw__opengl__glPopMatrix(cause);
 }
 
-void funk2_glwindow__render_relative_physical_person(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_person) {
+void funk2_glwindow__render_physical_person(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_person) {
   raw__opengl__glPushMatrix(cause);
   {
     f2ptr transform = f2__physical_person__transform(cause, physical_person);
@@ -976,42 +901,24 @@ void funk2_glwindow__render_relative_physical_person(funk2_glwindow_t* this, f2p
       f2ptr left_hand_object_place    = f2__physical_person__left_hand_object_place(   cause, physical_person);
       f2ptr right_hand_object_place   = f2__physical_person__right_hand_object_place(  cause, physical_person);
       
-      if (raw__physical_place__is_type(cause, left_foot_clothing_place))  {funk2_glwindow__render_relative_physical_place(this, cause, body, left_foot_clothing_place);}
-      if (raw__physical_place__is_type(cause, right_foot_clothing_place)) {funk2_glwindow__render_relative_physical_place(this, cause, body, right_foot_clothing_place);}
-      if (raw__physical_place__is_type(cause, leg_clothing_place))        {funk2_glwindow__render_relative_physical_place(this, cause, body, leg_clothing_place);}
-      if (raw__physical_place__is_type(cause, torso_clothing_place))      {funk2_glwindow__render_relative_physical_place(this, cause, body, torso_clothing_place);}
-      if (raw__physical_place__is_type(cause, left_hand_object_place))    {funk2_glwindow__render_relative_physical_place(this, cause, body, left_hand_object_place);}
-      if (raw__physical_place__is_type(cause, right_hand_object_place))   {funk2_glwindow__render_relative_physical_place(this, cause, body, right_hand_object_place);}
+      if (raw__physical_place__is_type(cause, left_foot_clothing_place))  {funk2_glwindow__render_physical_place(this, cause, left_foot_clothing_place);}
+      if (raw__physical_place__is_type(cause, right_foot_clothing_place)) {funk2_glwindow__render_physical_place(this, cause, right_foot_clothing_place);}
+      if (raw__physical_place__is_type(cause, leg_clothing_place))        {funk2_glwindow__render_physical_place(this, cause, leg_clothing_place);}
+      if (raw__physical_place__is_type(cause, torso_clothing_place))      {funk2_glwindow__render_physical_place(this, cause, torso_clothing_place);}
+      if (raw__physical_place__is_type(cause, left_hand_object_place))    {funk2_glwindow__render_physical_place(this, cause, left_hand_object_place);}
+      if (raw__physical_place__is_type(cause, right_hand_object_place))   {funk2_glwindow__render_physical_place(this, cause, right_hand_object_place);}
     }
   }
   raw__opengl__glPopMatrix(cause);
 }
 
-void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_place) {
-  funk2_glwindow__render_relative_physical_place(this, cause, nil, physical_place);
-}
-
-void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
-  funk2_glwindow__render_relative_physical_object(this, cause, nil, physical_object);
-}
-
-void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_thing) {
-  if (raw__physical_object__is_type(cause, physical_thing)) {
-    f2ptr physical_object = physical_thing;
-    funk2_glwindow__render_relative_physical_object(this, cause, relative_object, physical_object);
-  } else if (raw__physical_place__is_type(cause, physical_thing)) {
-    f2ptr physical_place = physical_thing;
-    funk2_glwindow__render_relative_physical_place(this, cause, relative_object, physical_place);
-  } else if (raw__physical_person__is_type(cause, physical_thing)) {
-    f2ptr physical_person = physical_thing;
-    funk2_glwindow__render_relative_physical_person(this, cause, relative_object, physical_person);
-  } else {
+void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
+  if      (raw__physical_object__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_object(this, cause, physical_thing);}
+  else if (raw__physical_place__is_type( cause, physical_thing)) {funk2_glwindow__render_physical_place( this, cause, physical_thing);}
+  else if (raw__physical_person__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_person(this, cause, physical_thing);}
+  else {
     status("warning: expected object, place, or person.");
   }
-}
-
-void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
-  funk2_glwindow__render_relative_physical_thing(this, cause, nil, physical_thing);
 }
 
 void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {
@@ -1021,7 +928,7 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
   funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
   double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
   funk2_opengl_texture__bind(background_texture, cause);
-  raw__opengl__glScalef(cause, 1, 1 * height_over_width, 1);
+  raw__opengl__glScalef(cause, 1, height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
 }
@@ -1036,10 +943,8 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
   f2ptr physical_things     = f2__physical_scene__physical_things(cause, physical_scene);
   f2ptr physical_thing_iter = physical_things;
   while (physical_thing_iter) {
-    {
-      f2ptr physical_thing = f2__cons__car(cause, physical_thing_iter);
-      funk2_glwindow__render_physical_thing(this, cause, physical_thing);
-    }
+    f2ptr physical_thing = f2__cons__car(cause, physical_thing_iter);
+    funk2_glwindow__render_physical_thing(this, cause, physical_thing);
     physical_thing_iter = f2__cons__cdr(cause, physical_thing_iter);
   }
   

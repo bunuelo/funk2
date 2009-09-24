@@ -36,8 +36,10 @@
 [globalize sideview_red_skirt         [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.53] '' `sideview_red_skirt]]
 [globalize          blue_shirt        [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.47] '' `blue_shirt]]
 [globalize sideview_blue_shirt        [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.40] '' `sideview_blue_shirt]]
+
 [globalize          orange_shorts     [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.40] '' `orange_shorts]]
 [globalize sideview_orange_shorts     [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.53] '' `sideview_orange_shorts]]
+
 [globalize          pink_right_shoe   [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.27] '' `pink_right_shoe]]
 [globalize          pink_left_shoe    [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.27] '' `pink_left_shoe]]
 [globalize          blue_right_shoe   [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.27] '' `blue_right_shoe]]

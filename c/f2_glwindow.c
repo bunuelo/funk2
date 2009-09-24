@@ -959,6 +959,9 @@ void funk2_glwindow__render_physical_scene(funk2_glwindow_t* this, f2ptr cause, 
       if (raw__physical_object__is_type(cause, physical_thing)) {
 	f2ptr physical_object = physical_thing;
 	funk2_glwindow__render_physical_object(this, cause, physical_object);
+      } else if (raw__physical_place__is_type(cause, physical_thing)) {
+	f2ptr physical_place = physical_thing;
+	funk2_glwindow__render_physical_place(this, cause, physical_place);
       } else if (raw__physical_person__is_type(cause, physical_thing)) {
 	f2ptr physical_person = physical_thing;
 	

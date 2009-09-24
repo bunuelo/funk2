@@ -708,6 +708,7 @@ void opengl__render_physical_rotation(f2ptr cause, f2ptr this) {
       } else if (raw__integer__is_type(cause, elt)) {
 	d = f2integer__i(elt, cause);
       } else {
+	status("warning: expected number.");
 	return;
       }
       rot_matrix[(yi << 2) + xi] = (GLfloat)d;
@@ -803,6 +804,8 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
     if (raw__physical_transform__is_type(cause, relative_transform)) {
       relative_position = f2__physical_transform__position(cause, relative_transform);
       relative_scale    = f2__physical_transform__scale(   cause, relative_transform);
+    } else {
+      status("warning: expected transform.");
     }
   }
   f2ptr transform    = f2__physical_object__transform(   cause, physical_object);
@@ -817,6 +820,8 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
     position = f2__physical_transform__position(cause, transform);
     rotation = f2__physical_transform__rotation(cause, transform);
     scale    = f2__physical_transform__scale(   cause, transform);
+  } else {
+    status("warning: expected transform.");
   }
   
   f2ptr position__x = nil;
@@ -824,19 +829,27 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   if (raw__physical_position__is_type(cause, position)) {
     position__x = f2__physical_position__x(cause, position);
     position__y = f2__physical_position__y(cause, position);
+  } else {
+    status("warning: expected position.");
   }
   double position__x__d = 0.0;
   if (raw__number__is_type(cause, position__x)) {
     position__x__d = raw__number__to_double(cause, position__x);
+  } else {
+    status("warning: expected number.");
   }
   double position__y__d = 0.0;
   if (raw__number__is_type(cause, position__y)) {
     position__y__d = raw__number__to_double(cause, position__y);
+  } else {
+    status("warning: expected number.");
   }
   
   double scale__d = 1.0;
   if (raw__number__is_type(cause, scale)) {
     scale__d = raw__number__to_double(cause, scale);
+  } else {
+    status("warning: expected number.");
   }
   
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
@@ -849,17 +862,23 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   funk2_opengl_texture__bind(texture, cause);
   
   if (relative_position) {
-    f2ptr relative_position__x = f2__physical_position__x(cause, relative_position);
-    f2ptr relative_position__y = f2__physical_position__y(cause, relative_position);
-    double relative_position__x__d = f2double__d(relative_position__x, cause);
-    double relative_position__y__d = f2double__d(relative_position__y, cause);
-    raw__opengl__glTranslatef(cause, relative_position__x__d, relative_position__y__d, 0);
+    if (raw__physical_position__is_type(cause, relative_position)) {
+      f2ptr relative_position__x = f2__physical_position__x(cause, relative_position);
+      f2ptr relative_position__y = f2__physical_position__y(cause, relative_position);
+      double relative_position__x__d = f2double__d(relative_position__x, cause);
+      double relative_position__y__d = f2double__d(relative_position__y, cause);
+      raw__opengl__glTranslatef(cause, relative_position__x__d, relative_position__y__d, 0);
+    } else {
+      status("warning: expected position.");
+    }
   }
   
   if (relative_scale) {
     double relative_scale__d = 1.0;
     if (raw__number__is_type(cause, relative_scale)) {
       relative_scale__d = raw__number__to_double(cause, relative_scale);
+    } else {
+      status("warning: expected number.");
     }
     raw__opengl__glScalef(cause, 1.0 * relative_scale__d, 1.0 * relative_scale__d, 1);
   }
@@ -867,14 +886,20 @@ void funk2_glwindow__render_relative_physical_object(funk2_glwindow_t* this, f2p
   raw__opengl__glTranslatef(cause, position__x__d, position__y__d + (scale__d * height_over_width), 0);
   if (raw__physical_rotation__is_type(cause, rotation)) {
     opengl__render_physical_rotation(cause, rotation);
+  } else {
+    status("warning: expected rotation.");
   }
   raw__opengl__glScalef(cause, 1.0 * scale__d, 1.0 * scale__d * height_over_width, 1);
   raw__draw_xy_square(cause);
   raw__opengl__glPopMatrix(cause);
   
-  if (raw__string__is_type(cause, text)) {
-    GLfloat font_size = 12.0;
-    funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
+  if (text) {
+    if (raw__string__is_type(cause, text)) {
+      GLfloat font_size = 12.0;
+      funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
+    } else {
+      status("warning: expected string.");
+    }
   }
 }
 
@@ -888,13 +913,15 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
       position__x = f2__physical_position__x(cause, position);
       position__y = f2__physical_position__y(cause, position);
       position__z = f2__physical_position__z(cause, position);
+    } else {
+      status("warning: expected position.");
     }
     double position__x__d = 0.0;
     double position__y__d = 0.0;
     double position__z__d = 0.0;
-    if (raw__number__is_type(cause, position__x)) {position__x__d = raw__number__to_double(cause, position__x);}
-    if (raw__number__is_type(cause, position__y)) {position__y__d = raw__number__to_double(cause, position__y);}
-    if (raw__number__is_type(cause, position__z)) {position__z__d = raw__number__to_double(cause, position__z);}
+    if (raw__number__is_type(cause, position__x)) {position__x__d = raw__number__to_double(cause, position__x);} else {status("warning: expected number.");}
+    if (raw__number__is_type(cause, position__y)) {position__y__d = raw__number__to_double(cause, position__y);} else {status("warning: expected number.");}
+    if (raw__number__is_type(cause, position__z)) {position__z__d = raw__number__to_double(cause, position__z);} else {status("warning: expected number.");}
     raw__opengl__glTranslatef(cause, position__x__d, position__y__d, position__z__d);
   }
   
@@ -902,14 +929,18 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
     f2ptr rotation = f2__physical_transform__rotation(cause, this);
     if (raw__physical_rotation__is_type(cause, rotation)) {
       opengl__render_physical_rotation(cause, rotation);
+    } else {
+      status("warning: expected rotation.");
     }
   }
   
   {
-    f2ptr scale = f2__physical_transform__scale(   cause, this);
+    f2ptr scale = f2__physical_transform__scale(cause, this);
     double scale__d = 1.0;
     if (raw__number__is_type(cause, scale)) {
       scale__d = raw__number__to_double(cause, scale);
+    } else {
+      status("warning: expected number.");
     }
     raw__opengl__glScalef(cause, scale__d, scale__d, scale__d);
   }
@@ -921,9 +952,13 @@ void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2pt
   raw__opengl__glPushMatrix(cause);
   if (raw__physical_transform__is_type(cause, transform)) {
     opengl__render_physical_transform(cause, transform);
+  } else {
+    status("warning: expected transform.");
   }
   if (raw__physical_object__is_type(cause, thing)) {
     funk2_glwindow__render_relative_physical_object(this, cause, relative_object, thing);
+  } else {
+    status("warning: expected object.");
   }
   raw__opengl__glPopMatrix(cause);
 }

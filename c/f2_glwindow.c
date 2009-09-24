@@ -929,7 +929,7 @@ void funk2_glwindow__render_relative_physical_place(funk2_glwindow_t* this, f2pt
 }
 
 void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_place) {
-  funk2_glwindow__render_relative_physical_place(this, , nil, physical_place);
+  funk2_glwindow__render_relative_physical_place(this, cause, nil, physical_place);
 }
 
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {

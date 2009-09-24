@@ -825,8 +825,15 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
     f2ptr text = f2__physical_object__text(cause, physical_object);
     if (text) {
       if (raw__string__is_type(cause, text)) {
+	{
+	  f2ptr transform = f2__physical_object__transform(cause, physical_object);
+	  if (raw__physical_transform__is_type(cause, transform)) {
+	    opengl__render_physical_transform(cause, transform);
+	  }
+	}
+	
 	GLfloat font_size = 12.0;
-	funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
+	funk2_glwindow__render_outlined_font(this, cause, text, 0, -2.0 * (font_size / (GLfloat)(this->width)));
       } else {
 	status("warning: expected string.");
       }

@@ -815,6 +815,7 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
       double height_over_width = ((double)(texture->height) / (double)(texture->width));
       funk2_opengl_texture__bind(texture, cause);
       raw__opengl__glScalef(cause, 1, height_over_width, 1);
+      raw__opengl__glTranslatef(cause, 0, 0.5, 0);
     }
     
     raw__draw_xy_square(cause);

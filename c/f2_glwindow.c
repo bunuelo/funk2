@@ -828,7 +828,10 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
 	{
 	  f2ptr transform = f2__physical_object__transform(cause, physical_object);
 	  if (raw__physical_transform__is_type(cause, transform)) {
-	    opengl__render_physical_transform(cause, transform);
+	    f2ptr position = f2__physical_transform__position(cause, transform);
+	    if (raw__physical_position__is_type(cause, position)) {
+	      opengl__render_physical_position(cause, transform);
+	    }
 	  }
 	}
 	

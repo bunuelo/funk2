@@ -802,27 +802,34 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   
   raw__opengl__glPushMatrix(cause);
   {
-    f2ptr transform = f2__physical_object__transform(cause, physical_object);
-    if (raw__physical_transform__is_type(cause, transform)) {
-      opengl__render_physical_transform(cause, transform);
+    {
+      f2ptr transform = f2__physical_object__transform(cause, physical_object);
+      if (raw__physical_transform__is_type(cause, transform)) {
+	opengl__render_physical_transform(cause, transform);
+      }
     }
     
-    f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
-    funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-    double height_over_width = ((double)(texture->height) / (double)(texture->width));
-    funk2_opengl_texture__bind(texture, cause);
+    {
+      f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
+      funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
+      double height_over_width = ((double)(texture->height) / (double)(texture->width));
+      funk2_opengl_texture__bind(texture, cause);
+      raw__opengl__glScalef(cause, 1, height_over_width, 1);
+    }
     
-    raw__opengl__glScalef(cause, 1, height_over_width, 1);
     raw__draw_xy_square(cause);
   }
   raw__opengl__glPopMatrix(cause);
   
-  if (text) {
-    if (raw__string__is_type(cause, text)) {
-      GLfloat font_size = 12.0;
-      funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
-    } else {
-      status("warning: expected string.");
+  {
+    f2ptr text = f2__physical_object__text(cause, physical_object);
+    if (text) {
+      if (raw__string__is_type(cause, text)) {
+	GLfloat font_size = 12.0;
+	funk2_glwindow__render_outlined_font(this, cause, text, position__x__d, position__y__d - (2.0 * (font_size / (GLfloat)(this->width))));
+      } else {
+	status("warning: expected string.");
+      }
     }
   }
 }

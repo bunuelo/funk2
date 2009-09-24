@@ -128,6 +128,8 @@ f2ptr      f2__glwindow__handle_events(f2ptr cause);
 void      raw__glwindow__destroy(f2ptr cause);
 f2ptr      f2__glwindow__destroy(f2ptr cause);
 
+void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_thing);
+
 // **
 
 void f2__glwindow__reinitialize_globalvars();

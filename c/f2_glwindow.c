@@ -1005,6 +1005,8 @@ void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2pt
   } else if (raw__physical_person__is_type(cause, physical_thing)) {
     f2ptr physical_person = physical_thing;
     funk2_glwindow__render_relative_physical_person(this, cause, relative_object, physical_person);
+  } else {
+    status("warning: expected object, place, or person.");
   }
 }
 

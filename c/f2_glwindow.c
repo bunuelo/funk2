@@ -1012,6 +1012,10 @@ void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2pt
   }
 }
 
+void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
+  funk2_glwindow__render_relative_physical_thing(this, cause, nil, physical_thing);
+}
+
 void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2ptr background_texture_name) {
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   

@@ -890,15 +890,17 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
 
 void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_place) {
   f2ptr transform = f2__physical_place__transform(cause, physical_place);
-  f2ptr thing     = f2__physical_place__thing(cause, physical_place);
   raw__opengl__glPushMatrix(cause);
   if (raw__physical_transform__is_type(cause, transform)) {
     opengl__render_physical_transform(cause, transform);
   } else {
     status("warning: expected transform.");
   }
+  f2ptr thing = f2__physical_place__thing(cause, physical_place);
   if (thing) {
     funk2_glwindow__render_physical_thing(this, cause, thing);
+  } else {
+    status("warning: expected thing.");
   }
   raw__opengl__glPopMatrix(cause);
 }
@@ -913,19 +915,13 @@ void funk2_glwindow__render_physical_person(funk2_glwindow_t* this, f2ptr cause,
     f2ptr body = f2__physical_person__body(cause, physical_person);
     if (raw__physical_object__is_type(cause, body)) {
       funk2_glwindow__render_physical_object(this, cause, body);
-      f2ptr torso_clothing_place      = f2__physical_person__torso_clothing_place(     cause, physical_person);
-      f2ptr leg_clothing_place        = f2__physical_person__leg_clothing_place(       cause, physical_person);
-      f2ptr left_foot_clothing_place  = f2__physical_person__left_foot_clothing_place( cause, physical_person);
-      f2ptr right_foot_clothing_place = f2__physical_person__right_foot_clothing_place(cause, physical_person);
-      f2ptr left_hand_object_place    = f2__physical_person__left_hand_object_place(   cause, physical_person);
-      f2ptr right_hand_object_place   = f2__physical_person__right_hand_object_place(  cause, physical_person);
       
-      if (raw__physical_place__is_type(cause, left_foot_clothing_place))  {funk2_glwindow__render_physical_place(this, cause, left_foot_clothing_place);}
-      if (raw__physical_place__is_type(cause, right_foot_clothing_place)) {funk2_glwindow__render_physical_place(this, cause, right_foot_clothing_place);}
-      if (raw__physical_place__is_type(cause, leg_clothing_place))        {funk2_glwindow__render_physical_place(this, cause, leg_clothing_place);}
-      if (raw__physical_place__is_type(cause, torso_clothing_place))      {funk2_glwindow__render_physical_place(this, cause, torso_clothing_place);}
-      if (raw__physical_place__is_type(cause, left_hand_object_place))    {funk2_glwindow__render_physical_place(this, cause, left_hand_object_place);}
-      if (raw__physical_place__is_type(cause, right_hand_object_place))   {funk2_glwindow__render_physical_place(this, cause, right_hand_object_place);}
+      {f2ptr person_place = f2__physical_person__left_foot_clothing_place( cause, physical_person); if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);}}
+      {f2ptr person_place = f2__physical_person__right_foot_clothing_place(cause, physical_person); if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);}}
+      {f2ptr person_place = f2__physical_person__leg_clothing_place(       cause, physical_person); if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);}}
+      {f2ptr person_place = f2__physical_person__torso_clothing_place(     cause, physical_person); if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);}}
+      {f2ptr person_place = f2__physical_person__left_hand_object_place(   cause, physical_person); if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);}}
+      {f2ptr person_place = f2__physical_person__right_hand_object_place(  cause, physical_person); if (raw__physical_place__is_type(cause, person_place)) {funk2_glwindow__render_physical_place(this, cause, person_place);}}
     }
   }
   raw__opengl__glPopMatrix(cause);

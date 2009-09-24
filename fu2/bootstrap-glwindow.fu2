@@ -23,7 +23,7 @@
 [globalize spoon_object  [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.075] 'Spoon'  `spoon_object]]
 [globalize fork_object   [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.075] 'Fork'   `fork_object]]
 [globalize mud_object    [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.03]  'Mud'    `mud_object]]
-[globalize shovel_object [new physical_object [new physical_transform [new physical_position  0.3 0.0 0] [physical_rotation-new_identity] 0.075] 'Shovel' `shovel_object]]
+[globalize shovel_object [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.075] 'Shovel' `shovel_object]]
 
 [globalize female_child_agent_standing [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] 'Carol Standing' `female_child_agent_standing]]
 [globalize female_child_agent_sitting  [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] 'Carol Sitting'  `female_child_agent_sitting]]

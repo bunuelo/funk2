@@ -751,6 +751,21 @@ GLfloat funk2_glwindow__get_render_font_width(funk2_glwindow_t* this, f2ptr caus
   return 2.0 * ((GLfloat)(end_raster_position[0] - start_raster_position[0]) / (GLfloat)(this->width));
 }
 
+void opengl__load_identity_but_keep_position(f2ptr cause) {
+  GLfloat matrix[16];
+  raw__opengl__glGetFloatv(cause, GL_MODELVIEW_MATRIX, matrix);
+  matrix[0]  = 1;
+  matrix[1]  = 0;
+  matrix[2]  = 0;
+  matrix[4]  = 0;
+  matrix[5]  = 1;
+  matrix[6]  = 0;
+  matrix[8]  = 0;
+  matrix[9]  = 0;
+  matrix[10] = 1;
+  raw__opengl__glLoadMatrix(cause, matrix);
+}
+
 void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f2ptr text, double x, double y) {
   GLfloat raster_width = funk2_glwindow__get_render_font_width(this, cause, text);
   
@@ -765,7 +780,7 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
   
   raw__opengl__glPushMatrix(cause);
   {
-    raw__opengl__glLoadIdentity(cause);
+    opengl__load_identity_but_keep_position(cause);
     
     raw__gl_set_material_color(cause, 1, 1, 1, 1);
     raw__opengl__glRasterPos3f(cause, x - (2.0 / (GLfloat)(this->width)), y, 0);

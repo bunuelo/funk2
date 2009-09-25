@@ -112,6 +112,7 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glRasterPos3f     = (void(*)(GLfloat x, GLfloat y, GLfloat z))                                         from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glRasterPos3f"));     if (! (this->glRasterPos3f))     {status("funk2_opengl__load_library: failed symbol, glRasterPos3f.");     return boolean__false;}
   this->glGetFloatv       = (void(*)(GLenum pname, GLfloat *params))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glGetFloatv"));       if (! (this->glGetFloatv))       {status("funk2_opengl__load_library: failed symbol, glGetFloatv.");       return boolean__false;}
   this->glMultMatrixf     = (void(*)(const GLfloat* m))                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMultMatrixf"));     if (! (this->glMultMatrixf))     {status("funk2_opengl__load_library: failed symbol, glMultMatrixf.");     return boolean__false;}
+  this->glLoadMatrixf     = (void(*)(const GLfloat* m))                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadMatrixf"));     if (! (this->glLoadMatrixf))     {status("funk2_opengl__load_library: failed symbol, glLoadMatrixf.");     return boolean__false;}
   
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
@@ -338,6 +339,12 @@ void raw__opengl__glMultMatrixf(f2ptr cause, const GLfloat* m) {
   if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
   (*__funk2.opengl.glMultMatrixf)(m);
 }
+
+void raw__opengl__glLoadMatrixf(f2ptr cause, const GLfloat* m) {
+  if (!__funk2.opengl.initialized) {status("*** WARNING: called opengl function without loading gl. ***"); return;}
+  (*__funk2.opengl.glLoadMatrixf)(m);
+}
+
 
 
 // glx extension functions

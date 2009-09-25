@@ -83,16 +83,15 @@
 
 [globalize all_objects_scene
 	   [new physical_scene `mud_puddle_scene
-		[conslist [new physical_place [new physical_transform [new physical_position -0.2 -0.2 0] [physical_rotation-new_identity] 1] jack_standing]
-			  [new physical_place [new physical_transform [new physical_position  0.2 -0.2 0] [physical_rotation-new_identity] 1] jack_sitting]
-			  [new physical_place [new physical_transform [new physical_position -0.6 -0.2 0] [physical_rotation-new_identity] 1] carol_sitting]
-			  
-			  [new physical_place [new physical_transform [new physical_position  0.4  0.0 0] [physical_rotation-new_identity] 1] bucket_object]
+		[conslist [new physical_place [new physical_transform [new physical_position  0.4  0.0 0] [physical_rotation-new_identity] 1] bucket_object]
 			  [new physical_place [new physical_transform [new physical_position -0.3  0.0 0] [physical_rotation-new_identity] 1] spoon_object]
 			  [new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] fork_object]
 			  [new physical_place [new physical_transform [new physical_position  0.1  0.0 0] [physical_rotation-new_identity] 1] mud_object]
 			  [new physical_place [new physical_transform [new physical_position  0.3  0.0 0] [physical_rotation-new_identity] 1] shovel_object]
 			  
+			  [new physical_place [new physical_transform [new physical_position -0.2 -0.2 0] [physical_rotation-new_identity] 1] jack_standing]
+			  [new physical_place [new physical_transform [new physical_position  0.2 -0.2 0] [physical_rotation-new_identity] 1] jack_sitting]
+			  [new physical_place [new physical_transform [new physical_position -0.6 -0.2 0] [physical_rotation-new_identity] 1] carol_sitting]
 			  [new physical_place [new physical_transform [new physical_position  0.2 -0.2 0] [physical_rotation-new_identity] 1] carol_standing]
 			  ]]]
 

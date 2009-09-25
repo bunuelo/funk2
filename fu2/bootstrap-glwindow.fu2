@@ -46,7 +46,7 @@
 [globalize          blue_left_shoe    [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.27] '' `blue_left_shoe]]
 
 [globalize carol_standing [new physical_person
-			       [new                     physical_transform [new physical_position  0.6  -0.3   0] [physical_rotation-new_identity] 0.20] female_child_agent_standing
+			       [new                     physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.20] female_child_agent_standing
 			       [new physical_place [new physical_transform [new physical_position -0.067 1.200 0] [physical_rotation-new_identity] 1]    bluegreen_blouse]
 			       [new physical_place [new physical_transform [new physical_position -0.067 0.467 0] [physical_rotation-new_identity] 1]    red_skirt]
 			       [new physical_place [new physical_transform [new physical_position -0.533 0.0   0] [physical_rotation-new_identity] 1]    pink_right_shoe]

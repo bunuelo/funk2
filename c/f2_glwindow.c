@@ -763,7 +763,7 @@ void opengl__load_identity_but_keep_position(f2ptr cause) {
   matrix[8]  = 0;
   matrix[9]  = 0;
   matrix[10] = 1;
-  raw__opengl__glLoadMatrix(cause, matrix);
+  raw__opengl__glLoadMatrixf(cause, matrix);
 }
 
 void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f2ptr text, double x, double y) {

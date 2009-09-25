@@ -535,8 +535,8 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   raw__opengl__glEnable(cause, GL_LIGHT1);
   raw__opengl__glEnable(cause, GL_LIGHTING);
   
-  //raw__opengl__glCullFace(cause, GL_BACK);
-  //raw__opengl__glEnable(cause, GL_CULL_FACE);
+  raw__opengl__glCullFace(cause, GL_BACK);
+  raw__opengl__glEnable(cause, GL_CULL_FACE);
   
   raw__opengl__glBlendFunc(cause, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   raw__opengl__glEnable(cause, GL_BLEND);
@@ -673,6 +673,16 @@ void raw__draw_xy_square(f2ptr cause) {
   raw__opengl__glVertex3f(cause,  1, 1,1);
   raw__opengl__glTexCoord2f(cause, 0, 1);
   raw__opengl__glVertex3f(cause, -1, 1,1);
+  
+  raw__opengl__glNormal3f(cause, 0,0,-1);
+  raw__opengl__glTexCoord2f(cause, 0, 1);
+  raw__opengl__glVertex3f(cause, -1, 1,1);
+  raw__opengl__glTexCoord2f(cause, 1, 1);
+  raw__opengl__glVertex3f(cause,  1, 1,1);
+  raw__opengl__glTexCoord2f(cause, 1, 0);
+  raw__opengl__glVertex3f(cause,  1,-1,1);
+  raw__opengl__glTexCoord2f(cause, 0, 0);
+  raw__opengl__glVertex3f(cause, -1,-1,1);
   raw__opengl__glEnd(cause);
 }
 

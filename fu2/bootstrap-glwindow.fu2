@@ -19,11 +19,11 @@
  rights to redistribute these changes.
 '
 
-[defunk bucket_object-new [] [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.075] '' `bucket_object]]
-[defunk spoon_object-new  [] [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `spoon_object]]
-[defunk fork_object-new   [] [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `fork_object]]
-[defunk mud_object-new    [] [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.03]  '' `mud_object]]
-[defunk shovel_object-new [] [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `shovel_object]]
+[defunk bucket_object-new [] [new physical_object [new physical_transform [new physical_position  0      0     0] [physical_rotation-new_identity] 0.075] '' `bucket_object]]
+[defunk spoon_object-new  [] [new physical_object [new physical_transform [new physical_position -0.07  -0.025 0] [physical_rotation-new_identity] 0.075] '' `spoon_object]]
+[defunk fork_object-new   [] [new physical_object [new physical_transform [new physical_position -0.07  -0.025 0] [physical_rotation-new_identity] 0.075] '' `fork_object]]
+[defunk mud_object-new    [] [new physical_object [new physical_transform [new physical_position -0.015 -0.015 0] [physical_rotation-new_identity] 0.03]  '' `mud_object]]
+[defunk shovel_object-new [] [new physical_object [new physical_transform [new physical_position -0.07  -0.025 0] [physical_rotation-new_identity] 0.075] '' `shovel_object]]
 
 [defunk female_child_agent_standing-new      [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Carol Standing'      `female_child_agent_standing]]
 [defunk female_child_agent_sitting_right-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Carol Sitting Right' `female_child_agent_sitting]]
@@ -38,8 +38,8 @@
 [defunk sideview_red_skirt-new        [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `sideview_red_skirt]]
 [defunk blue_shirt-new                [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.094] '' `blue_shirt]]
 [defunk sideview_blue_shirt-new       [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.06]  '' `sideview_blue_shirt]]
-[defunk orange_shorts-new             [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08] '' `orange_shorts]]
-[defunk sideview_orange_shorts-new    [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08] '' `sideview_orange_shorts]]
+[defunk orange_shorts-new             [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `orange_shorts]]
+[defunk sideview_orange_shorts-new    [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `sideview_orange_shorts]]
 
 [defunk pink_right_shoe-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `pink_right_shoe]]
 [defunk pink_left_shoe-new  [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `pink_left_shoe]]
@@ -139,8 +139,8 @@
 																			      [fork_object-new]]]
 		 [new physical_place [new physical_transform [new physical_position  0.4 -0.4 0] [physical_rotation-new_identity] 1] [carol_sitting_left-new [sideview_bluegreen_blouse-new]
 																			     [sideview_red_skirt-new]
-																			     [pink_right_shoe-new]
 																			     [pink_left_shoe-new]
+																			     [pink_right_shoe-new]
 																			     [spoon_object-new]
 																			     [shovel_object-new]]]
 		 [new physical_place [new physical_transform [new physical_position  0.6 -0.4 0] [physical_rotation-new_identity] 1] [carol_standing-new [bluegreen_blouse-new]

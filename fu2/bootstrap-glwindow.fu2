@@ -46,34 +46,6 @@
 [defunk blue_right_shoe-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `blue_right_shoe]]
 [defunk blue_left_shoe-new  [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `blue_left_shoe]]
 
-[globalize bucket_object [bucket_object-new]]
-[globalize spoon_object  [spoon_object-new]]
-[globalize fork_object   [fork_object-new]]
-[globalize mud_object    [mud_object-new]]
-[globalize shovel_object [shovel_object-new]]
-
-[globalize female_child_agent_standing      [female_child_agent_standing-new]]
-[globalize female_child_agent_sitting_right [female_child_agent_sitting_right-new]]
-[globalize female_child_agent_sitting_left  [female_child_agent_sitting_left-new]]
-[globalize male_child_agent_standing        [male_child_agent_standing-new]]
-[globalize male_child_agent_sitting_right   [male_child_agent_sitting_right-new]]
-[globalize male_child_agent_sitting_left    [male_child_agent_sitting_left-new]]
-
-[globalize          bluegreen_blouse  [bluegreen_blouse-new]]
-[globalize sideview_bluegreen_blouse  [sideview_bluegreen_blouse-new]]
-[globalize          red_skirt         [red_skirt-new]]
-[globalize sideview_red_skirt         [sideview_red_skirt-new]]
-[globalize          blue_shirt        [blue_shirt-new]]
-[globalize sideview_blue_shirt        [sideview_blue_shirt-new]]
-
-[globalize          orange_shorts     [orange_shorts-new]]
-[globalize sideview_orange_shorts     [sideview_orange_shorts-new]]
-
-[globalize          pink_right_shoe   [pink_right_shoe-new]]
-[globalize          pink_left_shoe    [pink_left_shoe-new]]
-[globalize          blue_right_shoe   [blue_right_shoe-new]]
-[globalize          blue_left_shoe    [blue_left_shoe-new]]
-
 [defunk jack_standing-new [body_object torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
   [new physical_person
        [new                     physical_transform [new physical_position  0     0    0] [physical_rotation-new_identity]                        1] body_object
@@ -129,20 +101,6 @@
 				       [new physical_place [new physical_transform [new physical_position  0.07  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [shovel_object-new]]
 				       [new physical_place [new physical_transform [new physical_position  0.07  0.24  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [shovel_object-new]]]]
 
-[globalize jack_standing [jack_standing-new [male_child_agent_standing-new]
-					    [blue_shirt-new]
-					    [orange_shorts-new]
-					    [blue_right_shoe-new]
-					    [blue_left_shoe-new]
-					    [shovel_object-new]
-					    [shovel_object-new]]]
-
-[globalize jack_sitting_right  [jack_sitting_right-new]]
-[globalize jack_sitting_left   [jack_sitting_left-new]]
-[globalize carol_standing      [carol_standing-new]]
-[globalize carol_sitting_right [carol_sitting_right-new]]
-[globalize carol_sitting_left  [carol_sitting_left-new]]
-
 [defunk all_objects_scene-new [] [new physical_scene `mud_puddle_scene
 				      [conslist [new physical_place [new physical_transform [new physical_position  0.4  0.0 0] [physical_rotation-new_identity] 1] [bucket_object-new]]
 						[new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] [shovel_object-new]]
@@ -171,9 +129,6 @@
 							 
 							 [new physical_place [new physical_transform [new physical_position  0.5 -0.4 0] [physical_rotation-new_identity] 1] [carol_standing-new]]
 							 ]]]
-
-[globalize all_objects_scene          [all_objects_scene-new]]
-[globalize carol_playing_in_mud_scene [carol_playing_in_mud_scene-new]]
 
 [globalize glwindow_value [all_objects_scene-new]]
 `[globalize glwindow_value [carol_playing_in_mud_scene-new]]

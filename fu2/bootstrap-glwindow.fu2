@@ -52,7 +52,7 @@
 [globalize mud_object    [mud_object-new]]
 [globalize shovel_object [shovel_object-new]]
 
-[globalize female_child_agent_standing      [female_child_agent_stading-new]]
+[globalize female_child_agent_standing      [female_child_agent_standing-new]]
 [globalize female_child_agent_sitting_right [female_child_agent_sitting_right-new]]
 [globalize female_child_agent_sitting_left  [female_child_agent_sitting_left-new]]
 [globalize male_child_agent_standing        [male_child_agent_standing-new]]

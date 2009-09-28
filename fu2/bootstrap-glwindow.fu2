@@ -19,115 +19,164 @@
  rights to redistribute these changes.
 '
 
-[globalize bucket_object [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.075] '' `bucket_object]]
-[globalize spoon_object  [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `spoon_object]]
-[globalize fork_object   [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `fork_object]]
-[globalize mud_object    [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.03]  '' `mud_object]]
-[globalize shovel_object [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `shovel_object]]
+[defunk bucket_object-new [] [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.075] '' `bucket_object]]
+[defunk spoon_object-new  [] [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `spoon_object]]
+[defunk fork_object-new   [] [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `fork_object]]
+[defunk mud_object-new    [] [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.03]  '' `mud_object]]
+[defunk shovel_object-new [] [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `shovel_object]]
 
-[globalize female_child_agent_standing      [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Carol Standing'      `female_child_agent_standing]]
-[globalize female_child_agent_sitting_right [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Carol Sitting Right' `female_child_agent_sitting]]
-[globalize female_child_agent_sitting_left  [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Carol Sitting Left'  `female_child_agent_sitting]]
-[globalize male_child_agent_standing        [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Jack Standing'       `male_child_agent_standing]]
-[globalize male_child_agent_sitting_right   [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Jack Sitting Right'  `male_child_agent_sitting]]
-[globalize male_child_agent_sitting_left    [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Jack Sitting Left'   `male_child_agent_sitting]]
+[defunk female_child_agent_standing-new      [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Carol Standing'      `female_child_agent_standing]]
+[defunk female_child_agent_sitting_right-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Carol Sitting Right' `female_child_agent_sitting]]
+[defunk female_child_agent_sitting_left-new  [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Carol Sitting Left'  `female_child_agent_sitting]]
+[defunk male_child_agent_standing-new        [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Jack Standing'       `male_child_agent_standing]]
+[defunk male_child_agent_sitting_right-new   [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Jack Sitting Right'  `male_child_agent_sitting]]
+[defunk male_child_agent_sitting_left-new    [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Jack Sitting Left'   `male_child_agent_sitting]]
 
-[globalize          bluegreen_blouse  [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `bluegreen_blouse]]
-[globalize sideview_bluegreen_blouse  [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.04]  '' `sideview_bluegreen_blouse]]
-[globalize          red_skirt         [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.094] '' `red_skirt]]
-[globalize sideview_red_skirt         [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `sideview_red_skirt]]
-[globalize          blue_shirt        [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.094] '' `blue_shirt]]
-[globalize sideview_blue_shirt        [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.06]  '' `sideview_blue_shirt]]
+[defunk bluegreen_blouse-new          [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `bluegreen_blouse]]
+[defunk sideview_bluegreen_blouse-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.04]  '' `sideview_bluegreen_blouse]]
+[defunk red_skirt-new                 [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.094] '' `red_skirt]]
+[defunk sideview_red_skirt-new        [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `sideview_red_skirt]]
+[defunk blue_shirt-new                [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.094] '' `blue_shirt]]
+[defunk sideview_blue_shirt-new       [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.06]  '' `sideview_blue_shirt]]
+[defunk orange_shorts-new             [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08] '' `orange_shorts]]
+[defunk sideview_orange_shorts-new    [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08] '' `sideview_orange_shorts]]
 
-[globalize          orange_shorts     [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08] '' `orange_shorts]]
-[globalize sideview_orange_shorts     [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08] '' `sideview_orange_shorts]]
+[defunk pink_right_shoe-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `pink_right_shoe]]
+[defunk pink_left_shoe-new  [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `pink_left_shoe]]
+[defunk blue_right_shoe-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `blue_right_shoe]]
+[defunk blue_left_shoe-new  [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `blue_left_shoe]]
 
-[globalize          pink_right_shoe   [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `pink_right_shoe]]
-[globalize          pink_left_shoe    [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `pink_left_shoe]]
-[globalize          blue_right_shoe   [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `blue_right_shoe]]
-[globalize          blue_left_shoe    [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] '' `blue_left_shoe]]
+[globalize bucket_object [bucket_object-new]]
+[globalize spoon_object  [spoon_object-new]]
+[globalize fork_object   [fork_object-new]]
+[globalize mud_object    [mud_object-new]]
+[globalize shovel_object [shovel_object-new]]
 
-[globalize jack_standing [new physical_person
-			      [new                     physical_transform [new physical_position  0     0    0] [physical_rotation-new_identity]                        1] male_child_agent_standing
-			      [new physical_place [new physical_transform [new physical_position  0.0   0.25 0] [physical_rotation-new_identity]                        1] blue_shirt]
-			      [new physical_place [new physical_transform [new physical_position  0.013 0.12 0] [physical_rotation-new_identity]                        1] orange_shorts]
-			      [new physical_place [new physical_transform [new physical_position -0.075 0.0  0] [physical_rotation-new_identity]                        1] blue_right_shoe]
-			      [new physical_place [new physical_transform [new physical_position  0.085 0.0  0] [physical_rotation-new_identity]                        1] blue_left_shoe]
-			      [new physical_place [new physical_transform [new physical_position  0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] shovel_object]
-			      [new physical_place [new physical_transform [new physical_position -0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] shovel_object]]]
+[globalize female_child_agent_standing      [female_child_agent_stading-new]]
+[globalize female_child_agent_sitting_right [female_child_agent_sitting_right-new]]
+[globalize female_child_agent_sitting_left  [female_child_agent_sitting_left-new]]
+[globalize male_child_agent_standing        [male_child_agent_standing-new]]
+[globalize male_child_agent_sitting_right   [male_child_agent_sitting_right-new]]
+[globalize male_child_agent_sitting_left    [male_child_agent_sitting_left-new]]
 
-[globalize jack_sitting_right [new physical_person
-				   [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] male_child_agent_sitting_right
-				   [new physical_place [new physical_transform [new physical_position  0.038 0.06  0] [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] 1] sideview_blue_shirt]
-				   [new physical_place [new physical_transform [new physical_position  0     0.03  0] [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] 1] sideview_orange_shorts]
-				   [new physical_place [new physical_transform [new physical_position -0.036 0.008 0] [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] 1] blue_right_shoe]
-				   [new physical_place [new physical_transform [new physical_position  0.015 0.12  0] [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] 1] blue_left_shoe]
-				   [new physical_place [new physical_transform [new physical_position -0.06  0.16  0] [physical_rotation-new_identity]                            1] shovel_object]
-				   [new physical_place [new physical_transform [new physical_position -0.06  0.2   0] [physical_rotation-new_identity]                            1] shovel_object]]]
+[globalize          bluegreen_blouse  [bluegreen_blouse-new]]
+[globalize sideview_bluegreen_blouse  [sideview_bluegreen_blouse-new]]
+[globalize          red_skirt         [red_skirt-new]]
+[globalize sideview_red_skirt         [sideview_red_skirt-new]]
+[globalize          blue_shirt        [blue_shirt-new]]
+[globalize sideview_blue_shirt        [sideview_blue_shirt-new]]
 
-[globalize jack_sitting_left [new physical_person
-				  [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] male_child_agent_sitting_left
-				  [new physical_place [new physical_transform [new physical_position -0.038 0.06  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] sideview_blue_shirt]
-				  [new physical_place [new physical_transform [new physical_position  0     0.03  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] sideview_orange_shorts]
-				  [new physical_place [new physical_transform [new physical_position  0.036 0.008 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] blue_right_shoe]
-				  [new physical_place [new physical_transform [new physical_position -0.015 0.12  0] [have [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] blue_left_shoe]
-				  [new physical_place [new physical_transform [new physical_position  0.06  0.16  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] shovel_object]
-				  [new physical_place [new physical_transform [new physical_position  0.06  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] shovel_object]]]
+[globalize          orange_shorts     [orange_shorts-new]]
+[globalize sideview_orange_shorts     [sideview_orange_shorts-new]]
 
-[globalize carol_standing [new physical_person
-			       [new                     physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity]                        1] female_child_agent_standing
-			       [new physical_place [new physical_transform [new physical_position -0.013 0.24  0] [physical_rotation-new_identity]                        1] bluegreen_blouse]
-			       [new physical_place [new physical_transform [new physical_position -0.013 0.093 0] [physical_rotation-new_identity]                        1] red_skirt]
-			       [new physical_place [new physical_transform [new physical_position -0.107 0.0   0] [physical_rotation-new_identity]                        1] pink_right_shoe]
-			       [new physical_place [new physical_transform [new physical_position  0.072 0.0   0] [physical_rotation-new_identity]                        1] pink_left_shoe]
-			       [new physical_place [new physical_transform [new physical_position  0.10  0.35  0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] shovel_object]
-			       [new physical_place [new physical_transform [new physical_position -0.13  0.33  0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] shovel_object]]]
+[globalize          pink_right_shoe   [pink_right_shoe-new]]
+[globalize          pink_left_shoe    [pink_left_shoe-new]]
+[globalize          blue_right_shoe   [blue_right_shoe-new]]
+[globalize          blue_left_shoe    [blue_left_shoe-new]]
 
-[globalize carol_sitting_right [new physical_person
-				    [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] female_child_agent_sitting_right
-				    [new physical_place [new physical_transform [new physical_position  0.053 0.1   0] [physical_rotation-new_identity]                            1] sideview_bluegreen_blouse]
-				    [new physical_place [new physical_transform [new physical_position  0.0   0.05  0] [physical_rotation-new_identity]                            1] sideview_red_skirt]
-				    [new physical_place [new physical_transform [new physical_position -0.03  0.038 0] [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] 1] pink_right_shoe]
-				    [new physical_place [new physical_transform [new physical_position  0.0   0.135 0] [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] 1] pink_left_shoe]
-				    [new physical_place [new physical_transform [new physical_position -0.07  0.2   0] [physical_rotation-new_identity]                            1] shovel_object]
-				    [new physical_place [new physical_transform [new physical_position -0.07  0.24  0] [physical_rotation-new_identity]                            1] shovel_object]]]
+[defunk jack_standing-new [body_object torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
+  [new physical_person
+       [new                     physical_transform [new physical_position  0     0    0] [physical_rotation-new_identity]                        1] body_object
+       [new physical_place [new physical_transform [new physical_position  0.0   0.25 0] [physical_rotation-new_identity]                        1] torso_clothing]
+       [new physical_place [new physical_transform [new physical_position  0.013 0.12 0] [physical_rotation-new_identity]                        1] leg_clothing]
+       [new physical_place [new physical_transform [new physical_position -0.075 0.0  0] [physical_rotation-new_identity]                        1] left_foot_clothing]
+       [new physical_place [new physical_transform [new physical_position  0.085 0.0  0] [physical_rotation-new_identity]                        1] right_foot_clothing]
+       [new physical_place [new physical_transform [new physical_position  0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] left_hand_object]
+       [new physical_place [new physical_transform [new physical_position -0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] right_hand_object]]]
 
-[globalize carol_sitting_left [new physical_person
-				   [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] female_child_agent_sitting_left
-				   [new physical_place [new physical_transform [new physical_position -0.053 0.1   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] sideview_bluegreen_blouse]
-				   [new physical_place [new physical_transform [new physical_position -0.0   0.05  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] sideview_red_skirt]
-				   [new physical_place [new physical_transform [new physical_position  0.03  0.038 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] pink_right_shoe]
-				   [new physical_place [new physical_transform [new physical_position  0.0   0.135 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] pink_left_shoe]
-				   [new physical_place [new physical_transform [new physical_position  0.07  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] shovel_object]
-				   [new physical_place [new physical_transform [new physical_position  0.07  0.24  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] shovel_object]]]
+[defunk jack_sitting_right-new [] [new physical_person
+				       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [male_child_agent_sitting_right-new]
+				       [new physical_place [new physical_transform [new physical_position  0.038 0.06  0] [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] 1] [sideview_blue_shirt-new]]
+				       [new physical_place [new physical_transform [new physical_position  0     0.03  0] [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] 1] [sideview_orange_shorts-new]]
+				       [new physical_place [new physical_transform [new physical_position -0.036 0.008 0] [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] 1] [blue_right_shoe-new]]
+				       [new physical_place [new physical_transform [new physical_position  0.015 0.12  0] [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] 1] [blue_left_shoe-new]]
+				       [new physical_place [new physical_transform [new physical_position -0.06  0.16  0] [physical_rotation-new_identity]                            1] [shovel_object-new]]
+				       [new physical_place [new physical_transform [new physical_position -0.06  0.2   0] [physical_rotation-new_identity]                            1] [shovel_object-new]]]]
 
-[globalize all_objects_scene
-	   [new physical_scene `mud_puddle_scene
-		[conslist [new physical_place [new physical_transform [new physical_position  0.4  0.0 0] [physical_rotation-new_identity] 1] bucket_object]
-			  [new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] shovel_object]
-			  [new physical_place [new physical_transform [new physical_position  0.1  0.0 0] [physical_rotation-new_identity] 1] mud_object]
-			  [new physical_place [new physical_transform [new physical_position  0.3  0.0 0] [physical_rotation-new_identity] 1] shovel_object]
-			  
-			  [new physical_place [new physical_transform [new physical_position -0.6 -0.4 0] [physical_rotation-new_identity] 1] jack_standing]
-			  [new physical_place [new physical_transform [new physical_position -0.4 -0.4 0] [physical_rotation-new_identity] 1] jack_sitting_right]
-			  [new physical_place [new physical_transform [new physical_position -0.2 -0.4 0] [physical_rotation-new_identity] 1] jack_sitting_left]
-			  [new physical_place [new physical_transform [new physical_position  0.2 -0.4 0] [physical_rotation-new_identity] 1] carol_sitting_right]
-			  [new physical_place [new physical_transform [new physical_position  0.4 -0.4 0] [physical_rotation-new_identity] 1] carol_sitting_left]
-			  [new physical_place [new physical_transform [new physical_position  0.6 -0.4 0] [physical_rotation-new_identity] 1] carol_standing]
-			  ]]]
+[defunk jack_sitting_left-new [] [new physical_person
+				      [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [male_child_agent_sitting_left-new]
+				      [new physical_place [new physical_transform [new physical_position -0.038 0.06  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [sideview_blue_shirt-new]]
+				      [new physical_place [new physical_transform [new physical_position  0     0.03  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [sideview_orange_shorts-new]]
+				      [new physical_place [new physical_transform [new physical_position  0.036 0.008 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [blue_right_shoe-new]]
+				      [new physical_place [new physical_transform [new physical_position -0.015 0.12  0] [have [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [blue_left_shoe-new]]
+				      [new physical_place [new physical_transform [new physical_position  0.06  0.16  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [shovel_object-new]]
+				      [new physical_place [new physical_transform [new physical_position  0.06  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [shovel_object-new]]]]
 
-[globalize carol_playing_in_mud_scene
-	   [new physical_scene `mud_puddle_scene
-		[conslist [new physical_place [new physical_transform [new physical_position  0.3  0.0 0] [physical_rotation-new_identity] 1] bucket_object]
-			  [new physical_place [new physical_transform [new physical_position -0.3  0.0 0] [physical_rotation-new_identity] 1] spoon_object]
-			  [new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] fork_object]
-			  [new physical_place [new physical_transform [new physical_position  0.1  0.0 0] [physical_rotation-new_identity] 1] mud_object]
-			  
-			  [new physical_place [new physical_transform [new physical_position  0.5 -0.4 0] [physical_rotation-new_identity] 1] carol_standing]
-			  ]]]
+[defunk carol_standing-new [] [new physical_person
+				   [new                     physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity]                        1] [female_child_agent_standing-new]
+				   [new physical_place [new physical_transform [new physical_position -0.013 0.24  0] [physical_rotation-new_identity]                        1] [bluegreen_blouse-new]]
+				   [new physical_place [new physical_transform [new physical_position -0.013 0.093 0] [physical_rotation-new_identity]                        1] [red_skirt-new]]
+				   [new physical_place [new physical_transform [new physical_position -0.107 0.0   0] [physical_rotation-new_identity]                        1] [pink_right_shoe-new]]
+				   [new physical_place [new physical_transform [new physical_position  0.072 0.0   0] [physical_rotation-new_identity]                        1] [pink_left_shoe-new]]
+				   [new physical_place [new physical_transform [new physical_position  0.10  0.35  0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] [shovel_object-new]]
+				   [new physical_place [new physical_transform [new physical_position -0.13  0.33  0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] [shovel_object-new]]]]
 
-[globalize glwindow_value all_objects_scene]
-`[globalize glwindow_value carol_playing_in_mud_scene]
+[defunk carol_sitting_right-new [] [new physical_person
+					[new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [female_child_agent_sitting_right-new]
+					[new physical_place [new physical_transform [new physical_position  0.053 0.1   0] [physical_rotation-new_identity]                            1] [sideview_bluegreen_blouse-new]]
+					[new physical_place [new physical_transform [new physical_position  0.0   0.05  0] [physical_rotation-new_identity]                            1] [sideview_red_skirt-new]]
+					[new physical_place [new physical_transform [new physical_position -0.03  0.038 0] [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] 1] [pink_right_shoe-new]]
+					[new physical_place [new physical_transform [new physical_position  0.0   0.135 0] [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] 1] [pink_left_shoe-new]]
+					[new physical_place [new physical_transform [new physical_position -0.07  0.2   0] [physical_rotation-new_identity]                            1] [shovel_object-new]]
+					[new physical_place [new physical_transform [new physical_position -0.07  0.24  0] [physical_rotation-new_identity]                            1] [shovel_object-new]]]]
+
+[defunk carol_sitting_left-new [] [new physical_person
+				       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [female_child_agent_sitting_left-new]
+				       [new physical_place [new physical_transform [new physical_position -0.053 0.1   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [sideview_bluegreen_blouse-new]]
+				       [new physical_place [new physical_transform [new physical_position -0.0   0.05  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [sideview_red_skirt-new]]
+				       [new physical_place [new physical_transform [new physical_position  0.03  0.038 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [pink_right_shoe-new]]
+				       [new physical_place [new physical_transform [new physical_position  0.0   0.135 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [pink_left_shoe-new]]
+				       [new physical_place [new physical_transform [new physical_position  0.07  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [shovel_object-new]]
+				       [new physical_place [new physical_transform [new physical_position  0.07  0.24  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] [shovel_object-new]]]]
+
+[globalize jack_standing [jack_standing-new [male_child_agent_standing-new]
+					    [blue_shirt-new]
+					    [orange_shorts-new]
+					    [blue_right_shoe-new]
+					    [blue_left_shoe-new]
+					    [shovel_object-new]
+					    [shovel_object-new]]]
+
+[globalize jack_sitting_right  [jack_sitting_right-new]]
+[globalize jack_sitting_left   [jack_sitting_left-new]]
+[globalize carol_standing      [carol_standing-new]]
+[globalize carol_sitting_right [carol_sitting_right-new]]
+[globalize carol_sitting_left  [carol_sitting_left-new]]
+
+[defunk all_objects_scene-new [] [new physical_scene `mud_puddle_scene
+				      [conslist [new physical_place [new physical_transform [new physical_position  0.4  0.0 0] [physical_rotation-new_identity] 1] [bucket_object-new]]
+						[new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] [shovel_object-new]]
+						[new physical_place [new physical_transform [new physical_position  0.1  0.0 0] [physical_rotation-new_identity] 1] [mud_object-new]]
+						[new physical_place [new physical_transform [new physical_position  0.3  0.0 0] [physical_rotation-new_identity] 1] [shovel_object-new]]
+						
+						[new physical_place [new physical_transform [new physical_position -0.6 -0.4 0] [physical_rotation-new_identity] 1] [jack_standing-new [male_child_agent_standing-new]
+																						       [blue_shirt-new]
+																						       [orange_shorts-new]
+																						       [blue_right_shoe-new]
+																						       [blue_left_shoe-new]
+																						       [shovel_object-new]
+																						       [shovel_object-new]]]
+						[new physical_place [new physical_transform [new physical_position -0.4 -0.4 0] [physical_rotation-new_identity] 1] [jack_sitting_right-new]]
+						[new physical_place [new physical_transform [new physical_position -0.2 -0.4 0] [physical_rotation-new_identity] 1] [jack_sitting_left-new]]
+						[new physical_place [new physical_transform [new physical_position  0.2 -0.4 0] [physical_rotation-new_identity] 1] [carol_sitting_right-new]]
+						[new physical_place [new physical_transform [new physical_position  0.4 -0.4 0] [physical_rotation-new_identity] 1] [carol_sitting_left-new]]
+						[new physical_place [new physical_transform [new physical_position  0.6 -0.4 0] [physical_rotation-new_identity] 1] [carol_standing-new]]
+						]]]
+
+[defunk carol_playing_in_mud_scene-new [] [new physical_scene `mud_puddle_scene
+					       [conslist [new physical_place [new physical_transform [new physical_position  0.3  0.0 0] [physical_rotation-new_identity] 1] [bucket_object-new]]
+							 [new physical_place [new physical_transform [new physical_position -0.3  0.0 0] [physical_rotation-new_identity] 1] [spoon_object-new]]
+							 [new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] [fork_object-new]]
+							 [new physical_place [new physical_transform [new physical_position  0.1  0.0 0] [physical_rotation-new_identity] 1] [mud_object-new]]
+							 
+							 [new physical_place [new physical_transform [new physical_position  0.5 -0.4 0] [physical_rotation-new_identity] 1] [carol_standing-new]]
+							 ]]]
+
+[globalize all_objects_scene          [all_objects_scene-new]]
+[globalize carol_playing_in_mud_scene [carol_playing_in_mud_scene-new]]
+
+[globalize glwindow_value [all_objects_scene-new]]
+`[globalize glwindow_value [carol_playing_in_mud_scene-new]]
 
 [defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]

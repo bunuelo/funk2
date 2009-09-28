@@ -21,7 +21,7 @@
 
 [globalize bucket_object [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.075] '' `bucket_object]]
 [globalize spoon_object  [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `spoon_object]]
-[globalize fork_object   [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.075] '' `fork_object]]
+[globalize fork_object   [new physical_object [new physical_transform [new physical_position -0.07 -0.025 0] [physical_rotation-new_identity] 0.075] '' `fork_object]]
 [globalize mud_object    [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.03]  '' `mud_object]]
 [globalize shovel_object [new physical_object [new physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity] 0.075] '' `shovel_object]]
 
@@ -53,8 +53,8 @@
 			      [new physical_place [new physical_transform [new physical_position  0.013 0.12 0] [physical_rotation-new_identity]                        1] orange_shorts]
 			      [new physical_place [new physical_transform [new physical_position -0.075 0.0  0] [physical_rotation-new_identity]                        1] blue_right_shoe]
 			      [new physical_place [new physical_transform [new physical_position  0.085 0.0  0] [physical_rotation-new_identity]                        1] blue_left_shoe]
-			      [new physical_place [new physical_transform [new physical_position  0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] spoon_object]
-			      [new physical_place [new physical_transform [new physical_position -0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] spoon_object]]]
+			      [new physical_place [new physical_transform [new physical_position  0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] fork_object]
+			      [new physical_place [new physical_transform [new physical_position -0.13  0.38 0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] fork_object]]]
 
 [globalize jack_sitting_right [new physical_person
 				   [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] male_child_agent_sitting_right
@@ -62,8 +62,8 @@
 				   [new physical_place [new physical_transform [new physical_position  0     0.03  0] [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] 1] sideview_orange_shorts]
 				   [new physical_place [new physical_transform [new physical_position -0.036 0.008 0] [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] 1] blue_right_shoe]
 				   [new physical_place [new physical_transform [new physical_position  0.015 0.12  0] [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] 1] blue_left_shoe]
-				   [new physical_place [new physical_transform [new physical_position -0.06  0.16  0] [physical_rotation-new_identity]                            1] spoon_object]
-				   [new physical_place [new physical_transform [new physical_position -0.06  0.2   0] [physical_rotation-new_identity]                            1] spoon_object]]]
+				   [new physical_place [new physical_transform [new physical_position -0.06  0.16  0] [physical_rotation-new_identity]                            1] fork_object]
+				   [new physical_place [new physical_transform [new physical_position -0.06  0.2   0] [physical_rotation-new_identity]                            1] fork_object]]]
 
 [globalize jack_sitting_left [new physical_person
 				  [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] male_child_agent_sitting_left
@@ -71,8 +71,8 @@
 				  [new physical_place [new physical_transform [new physical_position  0     0.03  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] sideview_orange_shorts]
 				  [new physical_place [new physical_transform [new physical_position  0.036 0.008 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] blue_right_shoe]
 				  [new physical_place [new physical_transform [new physical_position -0.015 0.12  0] [have [physical_rotation-new_rotation_around_z_axis [* -0.60 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] blue_left_shoe]
-				  [new physical_place [new physical_transform [new physical_position  0.06  0.16  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] spoon_object]
-				  [new physical_place [new physical_transform [new physical_position  0.06  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] spoon_object]]]
+				  [new physical_place [new physical_transform [new physical_position  0.06  0.16  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] fork_object]
+				  [new physical_place [new physical_transform [new physical_position  0.06  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] fork_object]]]
 
 [globalize carol_standing [new physical_person
 			       [new                     physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity]                        1] female_child_agent_standing
@@ -80,8 +80,8 @@
 			       [new physical_place [new physical_transform [new physical_position -0.013 0.093 0] [physical_rotation-new_identity]                        1] red_skirt]
 			       [new physical_place [new physical_transform [new physical_position -0.107 0.0   0] [physical_rotation-new_identity]                        1] pink_right_shoe]
 			       [new physical_place [new physical_transform [new physical_position  0.072 0.0   0] [physical_rotation-new_identity]                        1] pink_left_shoe]
-			       [new physical_place [new physical_transform [new physical_position  0.10  0.35  0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] spoon_object]
-			       [new physical_place [new physical_transform [new physical_position -0.13  0.33  0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] spoon_object]]]
+			       [new physical_place [new physical_transform [new physical_position  0.10  0.35  0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 1] fork_object]
+			       [new physical_place [new physical_transform [new physical_position -0.13  0.33  0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] fork_object]]]
 
 [globalize carol_sitting_right [new physical_person
 				    [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] female_child_agent_sitting_right
@@ -89,8 +89,8 @@
 				    [new physical_place [new physical_transform [new physical_position  0.0   0.05  0] [physical_rotation-new_identity]                            1] sideview_red_skirt]
 				    [new physical_place [new physical_transform [new physical_position -0.03  0.038 0] [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] 1] pink_right_shoe]
 				    [new physical_place [new physical_transform [new physical_position  0.0   0.135 0] [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] 1] pink_left_shoe]
-				    [new physical_place [new physical_transform [new physical_position -0.07  0.2   0] [physical_rotation-new_identity]                            1] spoon_object]
-				    [new physical_place [new physical_transform [new physical_position -0.07  0.24  0] [physical_rotation-new_identity]                            1] spoon_object]]]
+				    [new physical_place [new physical_transform [new physical_position -0.07  0.2   0] [physical_rotation-new_identity]                            1] fork_object]
+				    [new physical_place [new physical_transform [new physical_position -0.07  0.24  0] [physical_rotation-new_identity]                            1] fork_object]]]
 
 [globalize carol_sitting_left [new physical_person
 				   [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] female_child_agent_sitting_left
@@ -98,8 +98,8 @@
 				   [new physical_place [new physical_transform [new physical_position -0.0   0.05  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] sideview_red_skirt]
 				   [new physical_place [new physical_transform [new physical_position  0.03  0.038 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] pink_right_shoe]
 				   [new physical_place [new physical_transform [new physical_position  0.0   0.135 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.50 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] pink_left_shoe]
-				   [new physical_place [new physical_transform [new physical_position  0.07  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] spoon_object]
-				   [new physical_place [new physical_transform [new physical_position  0.07  0.24  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] spoon_object]]]
+				   [new physical_place [new physical_transform [new physical_position  0.07  0.2   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] fork_object]
+				   [new physical_place [new physical_transform [new physical_position  0.07  0.24  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] fork_object]]]
 
 [globalize all_objects_scene
 	   [new physical_scene `mud_puddle_scene
@@ -119,7 +119,7 @@
 [globalize carol_playing_in_mud_scene
 	   [new physical_scene `mud_puddle_scene
 		[conslist [new physical_place [new physical_transform [new physical_position  0.3  0.0 0] [physical_rotation-new_identity] 1] bucket_object]
-			  [new physical_place [new physical_transform [new physical_position -0.3  0.0 0] [physical_rotation-new_identity] 1] spoon_object]
+			  [new physical_place [new physical_transform [new physical_position -0.3  0.0 0] [physical_rotation-new_identity] 1] fork_object]
 			  [new physical_place [new physical_transform [new physical_position -0.1  0.0 0] [physical_rotation-new_identity] 1] fork_object]
 			  [new physical_place [new physical_transform [new physical_position  0.1  0.0 0] [physical_rotation-new_identity] 1] mud_object]
 			  

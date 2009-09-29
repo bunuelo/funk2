@@ -941,92 +941,11 @@ void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, 
   raw__opengl__glPopMatrix(cause);
 }
 
-void funk2_glwindow__render_physical_person(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_person) {
-  raw__opengl__glPushMatrix(cause);
-  {
-    f2ptr transform = f2__physical_person__transform(cause, physical_person);
-    if (f2__physical_transform__is_type(cause, transform)) {
-      opengl__render_physical_transform(cause, transform);
-    } else {
-      status("warning: expected transform.");
-    }
-    f2ptr body = f2__physical_person__body(cause, physical_person);
-    if (raw__physical_object__is_type(cause, body)) {
-      funk2_glwindow__render_physical_object(this, cause, body);
-      
-      {
-	f2ptr person_place = f2__physical_person__left_foot_clothing_place( cause, physical_person);
-	if (person_place) {
-	  if (raw__physical_place__is_type(cause, person_place)) {
-	    funk2_glwindow__render_physical_place(this, cause, person_place);
-	  } else {
-	    status("warning: expected place.");
-	  }
-	}
-      }
-      {
-	f2ptr person_place = f2__physical_person__right_foot_clothing_place(cause, physical_person);
-	if (person_place) {
-	  if (raw__physical_place__is_type(cause, person_place)) {
-	    funk2_glwindow__render_physical_place(this, cause, person_place);
-	  } else {
-	    status("warning: expected place.");
-	  }
-	}
-      }
-      {
-	f2ptr person_place = f2__physical_person__leg_clothing_place(       cause, physical_person);
-	if (person_place) {
-	  if (raw__physical_place__is_type(cause, person_place)) {
-	    funk2_glwindow__render_physical_place(this, cause, person_place);
-	  } else {
-	    status("warning: expected place.");
-	  }
-	}
-      }
-      {
-	f2ptr person_place = f2__physical_person__torso_clothing_place(     cause, physical_person);
-	if (person_place) {
-	  if (raw__physical_place__is_type(cause, person_place)) {
-	    funk2_glwindow__render_physical_place(this, cause, person_place);
-	  } else {
-	    status("warning: expected place.");
-	  }
-	}
-      }
-      {
-	f2ptr person_place = f2__physical_person__left_hand_object_place(   cause, physical_person);
-	if (person_place) {
-	  if (raw__physical_place__is_type(cause, person_place)) {
-	    funk2_glwindow__render_physical_place(this, cause, person_place);
-	  } else {
-	    status("warning: expected place.");
-	  }
-	}
-      }
-      {
-	f2ptr person_place = f2__physical_person__right_hand_object_place(  cause, physical_person);
-	if (person_place) {
-	  if (raw__physical_place__is_type(cause, person_place)) {
-	    funk2_glwindow__render_physical_place(this, cause, person_place);
-	  } else {
-	    status("warning: expected place.");
-	  }
-	}
-      }
-    } else {
-      status("warning: expected object.");
-    }
-  }
-  raw__opengl__glPopMatrix(cause);
-}
-
 void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
   if      (raw__physical_object__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_object(this, cause, physical_thing);}
   else if (raw__physical_place__is_type( cause, physical_thing)) {funk2_glwindow__render_physical_place( this, cause, physical_thing);}
-  else if (raw__physical_person__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_person(this, cause, physical_thing);}
   else {
-    status("warning: expected object, place, or person.");
+    status("warning: expected object or place.");
   }
 }
 

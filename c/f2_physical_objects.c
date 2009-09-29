@@ -189,14 +189,6 @@ f2ptr f2__physical_place__new(f2ptr cause, f2ptr transform, f2ptr thing) {return
 def_pcfunk2(physical_place__new, transform, thing, return f2__physical_place__new(this_cause, transform, thing));
 
 
-// physical_person
-
-def_primobject_8_slot(physical_person, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);
-
-f2ptr f2__physical_person__new(f2ptr cause, f2ptr transform, f2ptr body, f2ptr torso_clothing_place, f2ptr leg_clothing_place, f2ptr left_foot_clothing_place, f2ptr right_foot_clothing_place, f2ptr left_hand_object_place, f2ptr right_hand_object_place) {return f2physical_person__new(cause, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);}
-def_pcfunk8(physical_person__new, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place, return f2__physical_person__new(this_cause, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place));
-
-
 // physical_scene
 
 def_primobject_2_slot(physical_scene, background_texture, physical_things);
@@ -215,7 +207,6 @@ void f2__physical_objects__reinitialize_globalvars() {
   __physical_transform__symbol = new__symbol(cause, "physical_transform");
   __physical_object__symbol    = new__symbol(cause, "physical_object");
   __physical_place__symbol     = new__symbol(cause, "physical_place");
-  __physical_person__symbol    = new__symbol(cause, "physical_person");
   __physical_scene__symbol     = new__symbol(cause, "physical_scene");
 }
 
@@ -246,9 +237,6 @@ void f2__physical_objects__initialize() {
   
   // physical_place
   initialize_primobject_2_slot(physical_place, transform, thing);
-  
-  // physical_person
-  initialize_primobject_8_slot(physical_person, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);
   
   // physical_scene
   initialize_primobject_2_slot(physical_scene, background_texture, physical_things);

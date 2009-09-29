@@ -99,7 +99,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__physical_transform__slot_t primobject_type_physical_transform;
   funk2_object_type__physical_object__slot_t    primobject_type_physical_object;
   funk2_object_type__physical_place__slot_t     primobject_type_physical_place;
-  funk2_object_type__physical_person__slot_t    primobject_type_physical_person;
   funk2_object_type__physical_scene__slot_t     primobject_type_physical_scene;
 };
 

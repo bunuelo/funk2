@@ -865,6 +865,20 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
       }
     }
   }
+  
+  {
+    f2ptr part_place_frame = f2__physical_object__part_place_frame(cause, physical_object);
+    if (part_place_frame) {
+      if (raw__frame__is_type(cause, part_place_frame)) {
+	f2ptr part_place_type_hashtable = f2frame__type_hashtable(this, cause);
+	hashtable__value__iteration(cause, part_place_type_hashtable, part_place_type_hashtable_physical_thing_hashtable,
+				    hashtable__value__iteration(cause, part_place_type_hashtable_physical_thing_hashtable, physical_thing,
+								funk2_glwindow__render_physical_thing(this, cause, physical_thing)));
+      } else {
+	status("warning: expected frame.");
+      }
+    }
+  }
 }
 
 void opengl__render_physical_transform(f2ptr cause, f2ptr this) {

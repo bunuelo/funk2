@@ -25,12 +25,12 @@
 [defunk mud_object-new    [] [new physical_object [new physical_transform [new physical_position -0.015 -0.015 0] [physical_rotation-new_identity] 0.03]  '' `mud_object    [new frame]]]
 [defunk shovel_object-new [] [new physical_object [new physical_transform [new physical_position -0.07  -0.025 0] [physical_rotation-new_identity] 0.075] '' `shovel_object [new frame]]]
 
-[defunk female_child_agent_standing-new      [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Carol Standing'      `female_child_agent_standing [new frame]]]
-[defunk female_child_agent_sitting_right-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Carol Sitting Right' `female_child_agent_sitting  [new frame]]]
-[defunk female_child_agent_sitting_left-new  [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Carol Sitting Left'  `female_child_agent_sitting  [new frame]]]
+[defunk female_child_agent_standing-new      [part_place_frame] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Carol Standing'      `female_child_agent_standing part_place_frame]]
+[defunk female_child_agent_sitting_right-new [part_place_frame] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Carol Sitting Right' `female_child_agent_sitting  part_place_frame]]
+[defunk female_child_agent_sitting_left-new  [part_place_frame] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Carol Sitting Left'  `female_child_agent_sitting  part_place_frame]]
 [defunk male_child_agent_standing-new        [part_place_frame] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.2]  'Jack Standing'       `male_child_agent_standing   part_place_frame]]
-[defunk male_child_agent_sitting_right-new   [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Jack Sitting Right'  `male_child_agent_sitting    [new frame]]]
-[defunk male_child_agent_sitting_left-new    [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Jack Sitting Left'   `male_child_agent_sitting    [new frame]]]
+[defunk male_child_agent_sitting_right-new   [part_place_frame] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity]                        0.15] 'Jack Sitting Right'  `male_child_agent_sitting    part_place_frame]]
+[defunk male_child_agent_sitting_left-new    [part_place_frame] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15] 'Jack Sitting Left'   `male_child_agent_sitting    part_place_frame]]
 
 [defunk bluegreen_blouse-new          [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  '' `bluegreen_blouse          [new frame]]]
 [defunk sideview_bluegreen_blouse-new [] [new physical_object [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.04]  '' `sideview_bluegreen_blouse [new frame]]]
@@ -59,7 +59,7 @@
 
 [defunk jack_sitting_right-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
   [new physical_person
-       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [male_child_agent_sitting_right-new]
+       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [male_child_agent_sitting_right-new [new frame]]
        [new physical_place [new physical_transform [new physical_position  0.038 0.06  0] [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] 1] torso_clothing]
        [new physical_place [new physical_transform [new physical_position  0     0.03  0] [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] 1] leg_clothing]
        [new physical_place [new physical_transform [new physical_position -0.036 0.008 0] [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] 1] left_foot_clothing]
@@ -69,7 +69,7 @@
 
 [defunk jack_sitting_left-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
   [new physical_person
-       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [male_child_agent_sitting_left-new]
+       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [male_child_agent_sitting_left-new [new frame]]
        [new physical_place [new physical_transform [new physical_position -0.038 0.06  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] torso_clothing]
        [new physical_place [new physical_transform [new physical_position  0     0.03  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] leg_clothing]
        [new physical_place [new physical_transform [new physical_position  0.036 0.008 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] left_foot_clothing]
@@ -79,7 +79,7 @@
 
 [defunk carol_standing-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
   [new physical_person
-       [new                     physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity]                        1] [female_child_agent_standing-new]
+       [new                     physical_transform [new physical_position  0     0     0] [physical_rotation-new_identity]                        1] [female_child_agent_standing-new [new frame]]
        [new physical_place [new physical_transform [new physical_position -0.013 0.24  0] [physical_rotation-new_identity]                        1] torso_clothing]
        [new physical_place [new physical_transform [new physical_position -0.013 0.093 0] [physical_rotation-new_identity]                        1] leg_clothing]
        [new physical_place [new physical_transform [new physical_position -0.107 0.0   0] [physical_rotation-new_identity]                        1] left_foot_clothing]
@@ -89,7 +89,7 @@
 
 [defunk carol_sitting_right-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
   [new physical_person
-       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [female_child_agent_sitting_right-new]
+       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [female_child_agent_sitting_right-new [new frame]]
        [new physical_place [new physical_transform [new physical_position  0.053 0.1   0] [physical_rotation-new_identity]                            1] torso_clothing]
        [new physical_place [new physical_transform [new physical_position  0.0   0.05  0] [physical_rotation-new_identity]                            1] leg_clothing]
        [new physical_place [new physical_transform [new physical_position -0.03  0.038 0] [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] 1] left_foot_clothing]
@@ -99,7 +99,7 @@
 
 [defunk carol_sitting_left-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object]
   [new physical_person
-       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [female_child_agent_sitting_left-new]
+       [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 1] [female_child_agent_sitting_left-new [new frame]]
        [new physical_place [new physical_transform [new physical_position -0.053 0.1   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] torso_clothing]
        [new physical_place [new physical_transform [new physical_position -0.0   0.05  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] leg_clothing]
        [new physical_place [new physical_transform [new physical_position  0.03  0.038 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] left_foot_clothing]

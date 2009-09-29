@@ -108,6 +108,24 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
 
 f2ptr f2hashtable__primobject_type__new(f2ptr cause);
 
+#define hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
+  f2ptr iteration__cause = (cause); \
+  f2ptr iteration__this  = (this); \
+  f2mutex__lock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
+  f2ptr iteration__bin_array          = f2hashtable__bin_array(iteration__this, iteration__cause); \
+  s64   iteration__bin_array__length  = raw__array__length(iteration__cause, iteration__bin_array); \
+  s64   iteration__index; \
+  for (iteration__index = 0; iteration__index < iteration__bin_array__length; iteration__index ++) { \
+    f2ptr iteration__keyvalue_pair_iter = raw__array__elt(iteration__cause, iteration__bin_array, iteration__index); \
+    while (iteration__keyvalue_pair_iter) { \
+      f2ptr keyvalue_pair = f2cons__car(iteration__keyvalue_pair_iter, iteration__cause); \
+      code; \
+      iteration__keyvalue_pair_iter = f2cons__cdr(iteration__keyvalue_pair_iter, iteration__cause); \
+    } \
+  } \
+  f2mutex__unlock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
+}
+
 #define hashtable__iteration(cause, this, key, value, code) {\
   hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \

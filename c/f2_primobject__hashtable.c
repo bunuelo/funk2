@@ -195,24 +195,6 @@ def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(thi
 
 
 
-#define hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
-  f2ptr iteration__cause = (cause); \
-  f2ptr iteration__this  = (this); \
-  f2mutex__lock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
-  f2ptr iteration__bin_array          = f2hashtable__bin_array(iteration__this, iteration__cause); \
-  s64   iteration__bin_array__length  = raw__array__length(iteration__cause, iteration__bin_array); \
-  s64   iteration__index; \
-  for (iteration__index = 0; iteration__index < iteration__bin_array__length; iteration__index ++) { \
-    f2ptr iteration__keyvalue_pair_iter = raw__array__elt(iteration__cause, iteration__bin_array, iteration__index); \
-    while (iteration__keyvalue_pair_iter) { \
-      f2ptr keyvalue_pair = f2cons__car(iteration__keyvalue_pair_iter, iteration__cause); \
-      code; \
-      iteration__keyvalue_pair_iter = f2cons__cdr(iteration__keyvalue_pair_iter, iteration__cause); \
-    } \
-  } \
-  f2mutex__unlock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
-}
-
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
   f2ptr new_list = nil;

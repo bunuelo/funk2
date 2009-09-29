@@ -22,3 +22,12 @@
 [deftypefunk physical_rotation execute multiply [rotation]
   [physical_rotation-multiply this rotation]]
 
+[defunk physical_transform-new_position [x y z]
+  [new physical_transform [new physical_position x y z] [physical_rotation-new_identity] 1]]
+
+[defunk physical_transform-new_rotation [rotation]
+  [new physical_transform [new physical_position 0 0 0] rotation 1]]
+
+[defunk physical_transform-new_scale [scale]
+  [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] scale]]
+

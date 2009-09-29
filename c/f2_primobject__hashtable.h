@@ -108,6 +108,25 @@ f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
 
 f2ptr f2hashtable__primobject_type__new(f2ptr cause);
 
+#define hashtable__iteration(cause, this, key, value, code) {\
+  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+                                      f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
+                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                      code); \
+}
+
+#define hashtable__key__iteration(cause, this, key, code) {\
+  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+                                      f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
+                                      code); \
+}
+
+#define hashtable__value__iteration(cause, this, value, code) {\
+  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                      code); \
+}
+
 // **
 
 void f2__primobject_hashtable__reinitialize_globalvars();

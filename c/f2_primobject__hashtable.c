@@ -213,25 +213,6 @@ def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(thi
   f2mutex__unlock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
 }
 
-#define hashtable__iteration(cause, this, key, value, code) {\
-  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
-                                      f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code); \
-}
-
-#define hashtable__key__iteration(cause, this, key, code) {\
-  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
-                                      f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      code); \
-}
-
-#define hashtable__value__iteration(cause, this, value, code) {\
-  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
-                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code); \
-}
-
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
   f2ptr new_list = nil;

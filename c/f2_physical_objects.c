@@ -175,10 +175,10 @@ def_pcfunk0(physical_transform__new_identity, return f2__physical_transform__new
 
 // physical_object
 
-def_primobject_4_slot(physical_object, transform, text, texture_name, part_frame);
+def_primobject_4_slot(physical_object, transform, text, texture_name, part_place_frame);
 
-f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name, f2ptr part_frame) {return f2physical_object__new(cause, transform, text, texture_name, part_frame);}
-def_pcfunk4(physical_object__new, transform, text, texture_name, part_frame, return f2__physical_object__new(this_cause, transform, text, texture_name, part_frame));
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name, f2ptr part_place_frame) {return f2physical_object__new(cause, transform, text, texture_name, part_place_frame);}
+def_pcfunk4(physical_object__new, transform, text, texture_name, part_place_frame, return f2__physical_object__new(this_cause, transform, text, texture_name, part_place_frame));
 
 
 // physical_place
@@ -242,7 +242,7 @@ void f2__physical_objects__initialize() {
   f2__primcfunk__init__0(physical_transform__new_identity, "glwindow cfunk declared in f2_glwindow.c");
   
   // physical_object
-  initialize_primobject_4_slot(physical_object, transform, text, texture_name, part_frame);
+  initialize_primobject_4_slot(physical_object, transform, text, texture_name, part_place_frame);
   
   // physical_place
   initialize_primobject_2_slot(physical_place, transform, thing);

@@ -183,6 +183,7 @@ ACLOCAL_AMFLAGS = -I m4
 bin_PROGRAMS = bin/funk2
 
 bin_funk2_SOURCES = \
+  c/f2_agent.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
   c/f2_blocks_world.c \

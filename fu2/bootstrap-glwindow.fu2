@@ -28,7 +28,7 @@
 [defunk male_child_agent_standing_texture-new        [part_place_frame] [new physical_object [new physical_transform [new physical_position  0      0     0] [physical_rotation-new_identity]                        0.2]   'Male Child Standing'        `male_child_agent_standing   part_place_frame]]
 [defunk male_child_agent_sitting_right_texture-new   [part_place_frame] [new physical_object [new physical_transform [new physical_position  0      0     0] [physical_rotation-new_identity]                        0.15]  'Male Child Sitting Right'   `male_child_agent_sitting    part_place_frame]]
 [defunk male_child_agent_sitting_left_texture-new    [part_place_frame] [new physical_object [new physical_transform [new physical_position  0      0     0] [physical_rotation-new_rotation_around_y_axis [* 1 pi]] 0.15]  'Male Child Sitting Left'    `male_child_agent_sitting    part_place_frame]]
-[defunk bucket_texture-new                           [part_place_frame] [new physical_object [new physical_transform [new physical_position  0      0     0] [physical_rotation-new_identity]                        0.075] ''                           `bucket_object               part_place_frame]]
+[defunk bucket_texture-new                           [part_place_frame] [new physical_object [new physical_transform [new physical_position -0.01   0     0] [physical_rotation-new_identity]                        0.075] ''                           `bucket_object               part_place_frame]]
 
 [defunk mud_object-new [] [new physical_object [new physical_transform [new physical_position -0.015 -0.015 0] [physical_rotation-new_identity] 0.03]  '' `mud_object    [new frame]]]
 
@@ -53,7 +53,7 @@
 [defunk bucket_object-new [in_object]
   [let* [[part_place_frame [new frame]]
 	 [this             [bucket_texture-new part_place_frame]]]
-    [have part_place_frame add `in_place [new physical_place [physical_transform-new_position 0 -0.05 0] in_object]]
+    [have part_place_frame add `in_place [new physical_place [physical_transform-new_position 0 0.02 0] in_object]]
     this]]
 
 

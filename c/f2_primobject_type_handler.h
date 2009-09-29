@@ -29,6 +29,7 @@
 #include "f2_primobject__list.h"
 #include "f2_primobject__circular_buffer.h"
 #include "f2_physical_objects.h"
+#include "f2_agent.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -100,6 +101,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__physical_object__slot_t    primobject_type_physical_object;
   funk2_object_type__physical_place__slot_t     primobject_type_physical_place;
   funk2_object_type__physical_scene__slot_t     primobject_type_physical_scene;
+  funk2_object_type__agent__slot_t              primobject_type_agent;
 };
 
 // **

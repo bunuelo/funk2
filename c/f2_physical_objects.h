@@ -53,7 +53,6 @@ declare_object_type_2_slot(physical_scene, background_texture, physical_things, 
 declare_primobject_1_slot(physical_rotation, array);
 declare_primobject_3_slot(physical_position, x, y, z);
 declare_primobject_3_slot(physical_transform, position, rotation, scale);
-declare_primobject_3_slot(physical_object, transform, text, texture_name);
 declare_primobject_4_slot(physical_object, transform, text, texture_name, part_frame);
 declare_primobject_2_slot(physical_place, transform, thing);
 declare_primobject_8_slot(physical_person, transform, body, torso_clothing_place, leg_clothing_place, left_foot_clothing_place, right_foot_clothing_place, left_hand_object_place, right_hand_object_place);

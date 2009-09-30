@@ -183,10 +183,10 @@ def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_
 
 // physical_object
 
-def_primobject_5_slot(physical_object, transform, text, texture_name, part_place_frame, agent);
+def_primobject_5_slot(physical_object, transform, text, texture, part_place_frame, agent);
 
-f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture_name, f2ptr part_place_frame, f2ptr agent) {return f2physical_object__new(cause, transform, text, texture_name, part_place_frame, agent);}
-def_pcfunk5(physical_object__new, transform, text, texture_name, part_place_frame, agent, return f2__physical_object__new(this_cause, transform, text, texture_name, part_place_frame, agent));
+f2ptr f2__physical_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture, f2ptr part_place_frame, f2ptr agent) {return f2physical_object__new(cause, transform, text, texture, part_place_frame, agent);}
+def_pcfunk5(physical_object__new, transform, text, texture, part_place_frame, agent, return f2__physical_object__new(this_cause, transform, text, texture, part_place_frame, agent));
 
 
 // physical_place
@@ -245,7 +245,7 @@ void f2__physical_objects__initialize() {
   initialize_primobject_2_slot(physical_texture, transform, texture_name);
   
   // physical_object
-  initialize_primobject_5_slot(physical_object, transform, text, texture_name, part_place_frame, agent);
+  initialize_primobject_5_slot(physical_object, transform, text, texture, part_place_frame, agent);
   
   // physical_place
   initialize_primobject_2_slot(physical_place, transform, thing);

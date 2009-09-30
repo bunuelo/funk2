@@ -817,6 +817,34 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
 }
 
 
+void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_texture) {
+  raw__opengl__glEnable(cause, GL_TEXTURE_2D);
+  
+  raw__gl_set_material_color(cause, 1, 1, 1, 1);
+  
+  raw__opengl__glPushMatrix(cause);
+  {
+    {
+      f2ptr transform = f2__physical_texture__transform(cause, physical_object);
+      if (raw__physical_transform__is_type(cause, transform)) {
+	opengl__render_physical_transform(cause, transform);
+      }
+    }
+    
+    {
+      f2ptr texture_name = f2__physical_texture__texture_name(cause, physical_object);
+      funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
+      double height_over_width = ((double)(texture->height) / (double)(texture->width));
+      funk2_opengl_texture__bind(texture, cause);
+      raw__opengl__glScalef(cause, 1, height_over_width, 1);
+      raw__opengl__glTranslatef(cause, 0, 1, 0);
+    }
+    
+    raw__draw_xy_square(cause);
+  }
+  raw__opengl__glPopMatrix(cause);
+}
+
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   
@@ -831,16 +859,14 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
       }
     }
     
-    {
-      f2ptr texture_name = f2__physical_object__texture_name(cause, physical_object);
-      funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-      double height_over_width = ((double)(texture->height) / (double)(texture->width));
-      funk2_opengl_texture__bind(texture, cause);
-      raw__opengl__glScalef(cause, 1, height_over_width, 1);
-      raw__opengl__glTranslatef(cause, 0, 1, 0);
+    f2ptr texture = f2__physical_object__texture(cause, physical_object);
+    if (texture) {
+      if (raw__physical_texture__is_type(cause, texture)) {
+	funk2_glwindow__render_physical_texture(this, cause, texture);
+      } else {
+	status("warning: expected texture.");
+      }
     }
-    
-    raw__draw_xy_square(cause);
   }
   raw__opengl__glPopMatrix(cause);
   
@@ -942,8 +968,9 @@ void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, 
 }
 
 void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
-  if      (raw__physical_object__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_object(this, cause, physical_thing);}
-  else if (raw__physical_place__is_type( cause, physical_thing)) {funk2_glwindow__render_physical_place( this, cause, physical_thing);}
+  if      (raw__physical_texture__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_texture(this, cause, physical_thing);}
+  else if (raw__physical_object__is_type( cause, physical_thing)) {funk2_glwindow__render_physical_object( this, cause, physical_thing);}
+  else if (raw__physical_place__is_type(  cause, physical_thing)) {funk2_glwindow__render_physical_place(  this, cause, physical_thing);}
   else {
     status("warning: expected object or place.");
   }

@@ -53,7 +53,7 @@
 
 [defunk bucket_object-new [in_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_object [physical_transform-new] [bucket_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] [bucket_texture-new] part_place_frame agent]]]
     [have part_place_frame add `in_place [new physical_place [physical_transform-new_position 0 0.02 0] in_object]]
     this]]
 

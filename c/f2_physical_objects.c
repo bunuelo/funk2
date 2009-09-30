@@ -173,6 +173,14 @@ f2ptr f2__physical_transform__new_identity(f2ptr cause) {
 def_pcfunk0(physical_transform__new_identity, return f2__physical_transform__new_identity(this_cause));
 
 
+// physical_texture
+
+def_primobject_2_slot(physical_texture, transform, texture_name);
+
+f2ptr f2__physical_texture__new(f2ptr cause, f2ptr transform, f2ptr texture_name) {return f2physical_texture__new(cause, transform, texture_name);}
+def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_texture__new(this_cause, transform, texture_name));
+
+
 // physical_object
 
 def_primobject_5_slot(physical_object, transform, text, texture_name, part_place_frame, agent);
@@ -205,6 +213,7 @@ void f2__physical_objects__reinitialize_globalvars() {
   __physical_rotation__symbol  = new__symbol(cause, "physical_rotation");
   __physical_position__symbol  = new__symbol(cause, "physical_position");
   __physical_transform__symbol = new__symbol(cause, "physical_transform");
+  __physical_texture__symbol   = new__symbol(cause, "physical_texture");
   __physical_object__symbol    = new__symbol(cause, "physical_object");
   __physical_place__symbol     = new__symbol(cause, "physical_place");
   __physical_scene__symbol     = new__symbol(cause, "physical_scene");
@@ -231,6 +240,9 @@ void f2__physical_objects__initialize() {
   // physical_transform
   initialize_primobject_3_slot(physical_transform, position, rotation, scale);
   f2__primcfunk__init__0(physical_transform__new_identity, "glwindow cfunk declared in f2_glwindow.c");
+  
+  // physical_texture
+  initialize_primobject_2_slot(physical_texture, transform, texture_name);
   
   // physical_object
   initialize_primobject_5_slot(physical_object, transform, text, texture_name, part_place_frame, agent);

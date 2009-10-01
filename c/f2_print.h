@@ -29,7 +29,7 @@
 #include "f2_primobject__environment.h"
 #include "f2_reader.h"
 
-#define default_print_recursion_depth 16
+#define default_print_recursion_depth 20
 
 void f2__fwrite__raw_char  (f2ptr cause, f2ptr fptr, char ch, int return_size[2], boolean_t use_html);
 void f2__fwrite__raw_string(f2ptr cause, f2ptr fptr, f2ptr str, f2ptr use_html);

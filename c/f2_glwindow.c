@@ -747,12 +747,14 @@ GLfloat funk2_glwindow__get_render_font_width(funk2_glwindow_t* this, f2ptr caus
   
   raw__gl_set_material_color(cause, 1, 0, 0, 0);
   raw__opengl__glPushMatrix(cause);
-  raw__opengl__glRasterPos3f(cause, 0, 0, 0);
-  
-  GLfloat start_raster_position[4];
-  raw__opengl__glGetFloatv(cause, GL_CURRENT_RASTER_POSITION, start_raster_position);
-  
-  funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  {
+    raw__opengl__glRasterPos3f(cause, 0, 0, 0);
+    
+    GLfloat start_raster_position[4];
+    raw__opengl__glGetFloatv(cause, GL_CURRENT_RASTER_POSITION, start_raster_position);
+    
+    funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
+  }
   raw__opengl__glPopMatrix(cause);
   
   GLfloat end_raster_position[4];
@@ -951,16 +953,18 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
 void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_place) {
   f2ptr transform = f2__physical_place__transform(cause, physical_place);
   raw__opengl__glPushMatrix(cause);
-  if (raw__physical_transform__is_type(cause, transform)) {
-    opengl__render_physical_transform(cause, transform);
-  } else {
-    status("warning: expected transform.");
-  }
-  f2ptr thing = f2__physical_place__thing(cause, physical_place);
-  if (thing) {
-    funk2_glwindow__render_physical_thing(this, cause, thing);
-  } else {
-    status("warning: expected thing.");
+  {
+    if (raw__physical_transform__is_type(cause, transform)) {
+      opengl__render_physical_transform(cause, transform);
+    } else {
+      status("warning: expected transform.");
+    }
+    f2ptr thing = f2__physical_place__thing(cause, physical_place);
+    if (thing) {
+      funk2_glwindow__render_physical_thing(this, cause, thing);
+    } else {
+      status("warning: expected thing.");
+    }
   }
   raw__opengl__glPopMatrix(cause);
 }
@@ -978,11 +982,13 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   
   raw__opengl__glPushMatrix(cause);
-  funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
-  double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
-  funk2_opengl_texture__bind(background_texture, cause);
-  raw__opengl__glScalef(cause, 1, height_over_width, 1);
-  raw__draw_xy_square(cause);
+  {
+    funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
+    double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
+    funk2_opengl_texture__bind(background_texture, cause);
+    raw__opengl__glScalef(cause, 1, height_over_width, 1);
+    raw__draw_xy_square(cause);
+  }
   raw__opengl__glPopMatrix(cause);
 }
 

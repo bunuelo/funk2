@@ -796,7 +796,7 @@ void funk2_glwindow__render_outlined_font(funk2_glwindow_t* this, f2ptr cause, f
   {
     opengl__load_identity_but_keep_position(cause);
     
-    raw__opengl__glNormal3f(cause, 0,0,-1);
+    raw__opengl__glNormal3f(cause, 0,0,1);
     raw__gl_set_material_color(cause, 1, 1, 1, 1);
     raw__opengl__glRasterPos3f(cause, x - (2.0 / (GLfloat)(this->width)), y, 0);
     funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);
@@ -840,7 +840,7 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
       funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
       double height_over_width = ((double)(texture->height) / (double)(texture->width));
       funk2_opengl_texture__bind(texture, cause);
-      raw__opengl__glScalef(cause, 1, height_over_width, 1);
+      raw__opengl__glScalef(cause, -1, height_over_width, 1);
       raw__opengl__glTranslatef(cause, 0, 1, 0);
     }
     

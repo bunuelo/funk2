@@ -852,59 +852,61 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   
   raw__opengl__glPushMatrix(cause);
   {
-    {
+    { // render physical_object transform
       f2ptr transform = f2__physical_object__transform(cause, physical_object);
       if (raw__physical_transform__is_type(cause, transform)) {
 	opengl__render_physical_transform(cause, transform);
       }
     }
     
-    f2ptr texture = f2__physical_object__texture(cause, physical_object);
-    if (texture) {
-      if (raw__physical_texture__is_type(cause, texture)) {
-	funk2_glwindow__render_physical_texture(this, cause, texture);
-      } else {
-	status("warning: expected texture.");
+    { // render physical_object texture
+      f2ptr texture = f2__physical_object__texture(cause, physical_object);
+      if (texture) {
+	if (raw__physical_texture__is_type(cause, texture)) {
+	  funk2_glwindow__render_physical_texture(this, cause, texture);
+	} else {
+	  status("warning: expected texture.");
+	}
+      }
+    }
+    
+    { // physical_object text
+      f2ptr text = f2__physical_object__text(cause, physical_object);
+      if (text) {
+	if (raw__string__is_type(cause, text)) {
+	  {
+	    f2ptr transform = f2__physical_object__transform(cause, physical_object);
+	    if (raw__physical_transform__is_type(cause, transform)) {
+	      f2ptr position = f2__physical_transform__position(cause, transform);
+	      if (raw__physical_position__is_type(cause, position)) {
+		opengl__render_physical_position(cause, transform);
+	      }
+	    }
+	  }
+	  
+	  GLfloat font_size = 12.0;
+	  funk2_glwindow__render_outlined_font(this, cause, text, 0, -2.0 * (font_size / (GLfloat)(this->width)));
+	} else {
+	  status("warning: expected string.");
+	}
+      }
+    }
+    
+    { // render physical_object part_place_frame
+      f2ptr part_place_frame = f2__physical_object__part_place_frame(cause, physical_object);
+      if (part_place_frame) {
+	if (raw__frame__is_type(cause, part_place_frame)) {
+	  f2ptr part_place_type_hashtable = f2frame__type_hashtable(part_place_frame, cause);
+	  hashtable__value__iteration(cause, part_place_type_hashtable, part_place_type_hashtable_physical_thing_hashtable,
+				      hashtable__value__iteration(cause, part_place_type_hashtable_physical_thing_hashtable, physical_thing,
+								  funk2_glwindow__render_physical_thing(this, cause, physical_thing)));
+	} else {
+	  status("warning: expected frame.");
+	}
       }
     }
   }
   raw__opengl__glPopMatrix(cause);
-  
-  {
-    f2ptr text = f2__physical_object__text(cause, physical_object);
-    if (text) {
-      if (raw__string__is_type(cause, text)) {
-	{
-	  f2ptr transform = f2__physical_object__transform(cause, physical_object);
-	  if (raw__physical_transform__is_type(cause, transform)) {
-	    f2ptr position = f2__physical_transform__position(cause, transform);
-	    if (raw__physical_position__is_type(cause, position)) {
-	      opengl__render_physical_position(cause, transform);
-	    }
-	  }
-	}
-	
-	GLfloat font_size = 12.0;
-	funk2_glwindow__render_outlined_font(this, cause, text, 0, -2.0 * (font_size / (GLfloat)(this->width)));
-      } else {
-	status("warning: expected string.");
-      }
-    }
-  }
-  
-  {
-    f2ptr part_place_frame = f2__physical_object__part_place_frame(cause, physical_object);
-    if (part_place_frame) {
-      if (raw__frame__is_type(cause, part_place_frame)) {
-	f2ptr part_place_type_hashtable = f2frame__type_hashtable(part_place_frame, cause);
-	hashtable__value__iteration(cause, part_place_type_hashtable, part_place_type_hashtable_physical_thing_hashtable,
-				    hashtable__value__iteration(cause, part_place_type_hashtable_physical_thing_hashtable, physical_thing,
-								funk2_glwindow__render_physical_thing(this, cause, physical_thing)));
-      } else {
-	status("warning: expected frame.");
-      }
-    }
-  }
 }
 
 void opengl__render_physical_transform(f2ptr cause, f2ptr this) {

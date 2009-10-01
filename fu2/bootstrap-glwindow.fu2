@@ -167,7 +167,7 @@
 															[fork_object-new [mud_object-new nil] nil]
 															nil]]
 		 
-		 [new physical_place [physical_transform-new_position -0.2 -0.4 0] [male_child_agent_sitting_right-new  [sideview_blue_shirt-new]
+		 [new physical_place [physical_transform-new_position -0.4 -0.4 0] [male_child_agent_sitting_right-new  [sideview_blue_shirt-new]
 															[sideview_orange_shorts-new]
 															[blue_left_shoe-new]
 															[blue_right_shoe-new]
@@ -175,7 +175,7 @@
 															[mud_object-new nil]
 															nil]]
 		 
-		 [new physical_place [physical_transform-new_position -0.4 -0.4 0] [male_child_agent_sitting_left-new   [sideview_blue_shirt-new]
+		 [new physical_place [physical_transform-new_position -0.2 -0.4 0] [male_child_agent_sitting_left-new   [sideview_blue_shirt-new]
 															[sideview_orange_shorts-new]
 															[blue_left_shoe-new]
 															[blue_right_shoe-new]

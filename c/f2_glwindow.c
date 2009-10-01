@@ -846,10 +846,6 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
 }
 
 void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
-  raw__opengl__glEnable(cause, GL_TEXTURE_2D);
-  
-  raw__gl_set_material_color(cause, 1, 1, 1, 1);
-  
   raw__opengl__glPushMatrix(cause);
   {
     { // render physical_object transform

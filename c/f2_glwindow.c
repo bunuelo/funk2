@@ -746,11 +746,11 @@ GLfloat funk2_glwindow__get_render_font_width(funk2_glwindow_t* this, f2ptr caus
   raw__opengl__glDisable(cause, GL_TEXTURE_2D);
   
   raw__gl_set_material_color(cause, 1, 0, 0, 0);
+  GLfloat start_raster_position[4];
   raw__opengl__glPushMatrix(cause);
   {
     raw__opengl__glRasterPos3f(cause, 0, 0, 0);
     
-    GLfloat start_raster_position[4];
     raw__opengl__glGetFloatv(cause, GL_CURRENT_RASTER_POSITION, start_raster_position);
     
     funk2_opengl_font__printf(&(this->fixed_font), cause, "%s", temp_str);

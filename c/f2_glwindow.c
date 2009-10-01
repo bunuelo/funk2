@@ -840,7 +840,7 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
       funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
       double height_over_width = ((double)(texture->height) / (double)(texture->width));
       funk2_opengl_texture__bind(texture, cause);
-      raw__opengl__glScalef(cause, -1, height_over_width, 1);
+      raw__opengl__glScalef(cause, 1, height_over_width, 1);
       raw__opengl__glTranslatef(cause, 0, 1, 0);
     }
     

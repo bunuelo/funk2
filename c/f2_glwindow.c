@@ -535,8 +535,8 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   raw__opengl__glEnable(cause, GL_LIGHT1);
   raw__opengl__glEnable(cause, GL_LIGHTING);
   
-  //raw__opengl__glCullFace(cause, GL_BACK);
-  //raw__opengl__glEnable(cause, GL_CULL_FACE);
+  raw__opengl__glCullFace(cause, GL_BACK);
+  raw__opengl__glEnable(cause, GL_CULL_FACE);
   
   raw__opengl__glBlendFunc(cause, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   raw__opengl__glEnable(cause, GL_BLEND);

@@ -830,8 +830,12 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
   {
     {
       f2ptr transform = f2__physical_texture__transform(cause, physical_texture);
-      if (raw__physical_transform__is_type(cause, transform)) {
-	opengl__render_physical_transform(cause, transform);
+      if (transform) {
+	if (raw__physical_transform__is_type(cause, transform)) {
+	  opengl__render_physical_transform(cause, transform);
+	} else {
+	  status("warning: expected transform.");
+	}
       }
     }
     
@@ -854,8 +858,12 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
   {
     { // render physical_object transform
       f2ptr transform = f2__physical_object__transform(cause, physical_object);
-      if (raw__physical_transform__is_type(cause, transform)) {
-    	opengl__render_physical_transform(cause, transform);
+      if (transform) {
+	if (raw__physical_transform__is_type(cause, transform)) {
+	  opengl__render_physical_transform(cause, transform);
+	} else {
+	  status("warning: expected transform.");
+	}
       }
     }
     
@@ -876,10 +884,18 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
 	if (raw__string__is_type(cause, text)) {
 	  {
 	    f2ptr transform = f2__physical_object__transform(cause, physical_object);
-	    if (raw__physical_transform__is_type(cause, transform)) {
-	      f2ptr position = f2__physical_transform__position(cause, transform);
-	      if (raw__physical_position__is_type(cause, position)) {
-		opengl__render_physical_position(cause, transform);
+	    if (transform) {
+	      if (raw__physical_transform__is_type(cause, transform)) {
+		f2ptr position = f2__physical_transform__position(cause, transform);
+		if (position) {
+		  if (raw__physical_position__is_type(cause, position)) {
+		    opengl__render_physical_position(cause, transform);
+		  } else {
+		    status("warning: expected position.");
+		  }
+		}
+	      } else {
+		status("warning: expected transform.");
 	      }
 	    }
 	  }

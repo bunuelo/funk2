@@ -89,7 +89,7 @@
 
 [defunk male_child_agent_standing-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_object [physical_transform-new_identity] 'Male Child Agent Standing' [male_child_agent_standing_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_rotation_around_y_axis [* 0 pi]] 'Male Child Agent Standing' [male_child_agent_standing_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position  0.0   0.25 0] [physical_rotation-new_identity]                        1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position  0.013 0.12 0] [physical_rotation-new_identity]                        1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position -0.075 0.0  0] [physical_rotation-new_identity]                        1] left_foot_clothing]]

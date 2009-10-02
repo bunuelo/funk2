@@ -992,7 +992,7 @@ void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, 
   else if (raw__physical_object__is_type( cause, physical_thing)) {funk2_glwindow__render_physical_object( this, cause, physical_thing);}
   else if (raw__physical_place__is_type(  cause, physical_thing)) {funk2_glwindow__render_physical_place(  this, cause, physical_thing);}
   else {
-    status("warning: expected object or place.");
+    status("warning: expected texture, object, or place.");
   }
 }
 

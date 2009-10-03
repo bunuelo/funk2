@@ -1037,7 +1037,7 @@ void funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause) {
   f2ptr global_environment = funk2_memory__global_environment(&(__funk2.memory));
   f2ptr value = f2__environment__lookup_type_var_value(cause, global_environment, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "glwindow_value"));
   if (value) {
-    raw__opengl__glTranslatef(cause, 0, 0, -10);
+    raw__opengl__glTranslatef(cause, 0, 0, 10);
     raw__opengl__glRotatef(cause, this->rotate_angle, 1,1,0.5);
     if (raw__physical_scene__is_type(cause, value)) {
       f2ptr physical_scene = value;

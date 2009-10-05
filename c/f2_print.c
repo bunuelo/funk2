@@ -896,8 +896,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    int   max_slot_name_length = 0;
 	    
 	    f2ptr type_hashtable                    = f2frame__type_hashtable(exp, cause);
-	    f2ptr type_hashtable__bin_array         = f2hashtable__bin_array(type_hashtable, cause);
-	    int   type_hashtable__bin_array__length = raw__array__length(cause, type_hashtable__bin_array);
 	    
 	    boolean_t need_to_print_type_besides_basic_variable = boolean__false; // if this is false, we can omit printing "variable" before each frame variable key.
 	    
@@ -909,6 +907,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				   int type_key__length = f2symbol__length(type_hashtable__key, cause);
 				   
 				   hashtable__iteration(cause, type_hashtable__value, slot_name, slot_value,
+							
+							slot_value; // avoid unused variable warning.
 							
 							if (raw__symbol__is_type(cause, slot_name)) {
 							  // here, we only update max length values if this type_name actually has a key that we are going to print.

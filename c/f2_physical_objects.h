@@ -52,7 +52,7 @@ declare_primobject_1_slot(  physical_rotation, array);
 declare_primobject_3_slot(  physical_position, x, y, z);
 declare_primobject_3_slot(  physical_transform, position, rotation, scale);
 declare_primobject_2_slot(  physical_texture, transform, texture_name);
-declare_frame_object_5_slot(physical_frame_object, transform, text, texture, part_place_frame, agent);
+declare_frame_object_5_slot(physical_object, transform, text, texture, part_place_frame, agent);
 declare_primobject_2_slot(  physical_place, transform, thing);
 declare_primobject_2_slot(  physical_scene, background_texture, physical_things);
 

@@ -161,7 +161,7 @@
 		 [new physical_place [physical_transform-new_position  0.3  0.0 0] [shovel_object-new [mud_object-new nil] nil]]
 		 
 		 [new physical_place [physical_transform-new_position -0.6 -0.4 0] [male_child_agent_standing-new       [blue_shirt-new]
-															[orange_shorts-new]
+															[red_skirt-new]
 															[blue_left_shoe-new]
 															[blue_right_shoe-new]
 															[mud_object-new nil]

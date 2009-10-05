@@ -918,7 +918,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							  if (type_key__length > max_type_name_length) {
 							    max_type_name_length = type_key__length;
 							  }
-							  int slot_name__length = f2symbol__length(keyvalue_pair__key, cause);
+							  int slot_name__length = f2symbol__length(slot_name, cause);
 							  if (slot_name__length > max_slot_name_length) {
 							    max_slot_name_length = slot_name__length;
 							  }

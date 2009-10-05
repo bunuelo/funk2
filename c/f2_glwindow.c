@@ -853,11 +853,11 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
   raw__opengl__glPopMatrix(cause);
 }
 
-void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_object) {
+void funk2_glwindow__render_physical_primtype_object(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_primtype_object) {
   raw__opengl__glPushMatrix(cause);
   {
-    { // render physical_object transform
-      f2ptr transform = f2__physical_object__transform(cause, physical_object);
+    { // render physical_primtype_object transform
+      f2ptr transform = f2__physical_primtype_object__transform(cause, physical_primtype_object);
       if (transform) {
 	if (raw__physical_transform__is_type(cause, transform)) {
 	  opengl__render_physical_transform(cause, transform);
@@ -867,8 +867,8 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
       }
     }
     
-    { // render physical_object texture
-      f2ptr texture = f2__physical_object__texture(cause, physical_object);
+    { // render physical_primtype_object texture
+      f2ptr texture = f2__physical_primtype_object__texture(cause, physical_primtype_object);
       if (texture) {
 	if (raw__physical_texture__is_type(cause, texture)) {
 	  funk2_glwindow__render_physical_texture(this, cause, texture);
@@ -878,12 +878,12 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
       }
     }
     
-    { // physical_object text
-      f2ptr text = f2__physical_object__text(cause, physical_object);
+    { // physical_primtype_object text
+      f2ptr text = f2__physical_primtype_object__text(cause, physical_primtype_object);
       if (text) {
 	if (raw__string__is_type(cause, text)) {
 	  {
-	    f2ptr transform = f2__physical_object__transform(cause, physical_object);
+	    f2ptr transform = f2__physical_primtype_object__transform(cause, physical_primtype_object);
 	    if (transform) {
 	      if (raw__physical_transform__is_type(cause, transform)) {
 		f2ptr position = f2__physical_transform__position(cause, transform);
@@ -908,8 +908,8 @@ void funk2_glwindow__render_physical_object(funk2_glwindow_t* this, f2ptr cause,
       }
     }
     
-    { // render physical_object part_place_frame
-      f2ptr part_place_frame = f2__physical_object__part_place_frame(cause, physical_object);
+    { // render physical_primtype_object part_place_frame
+      f2ptr part_place_frame = f2__physical_primtype_object__part_place_frame(cause, physical_primtype_object);
       if (part_place_frame) {
 	if (raw__frame__is_type(cause, part_place_frame)) {
 	  f2ptr part_place_type_hashtable = f2frame__type_hashtable(part_place_frame, cause);
@@ -1061,7 +1061,7 @@ void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, 
 
 void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
   if      (raw__physical_texture__is_type(     cause, physical_thing)) {funk2_glwindow__render_physical_texture(     this, cause, physical_thing);}
-  else if (raw__physical_object__is_type(      cause, physical_thing)) {funk2_glwindow__render_physical_object(      this, cause, physical_thing);}
+  else if (raw__physical_primtype_object__is_type(      cause, physical_thing)) {funk2_glwindow__render_physical_primtype_object(      this, cause, physical_thing);}
   else if (raw__physical_frame_object__is_type(cause, physical_thing)) {funk2_glwindow__render_physical_frame_object(this, cause, physical_thing);}
   else if (raw__physical_place__is_type(       cause, physical_thing)) {funk2_glwindow__render_physical_place(       this, cause, physical_thing);}
   else {

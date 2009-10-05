@@ -23,6 +23,7 @@
 #define F2__PHYSICAL_OBJECTS__TYPES__H
 
 #include "f2_primobjects.h"
+#include "f2_frame_objects.h"
 
 typedef struct funk2_object_type__physical_rotation__slot_s funk2_object_type__physical_rotation__slot_t;
 declare_object_type_1_slot(physical_rotation, array, );

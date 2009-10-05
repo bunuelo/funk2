@@ -181,6 +181,11 @@ f2ptr f2__physical_texture__new(f2ptr cause, f2ptr transform, f2ptr texture_name
 def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_texture__new(this_cause, transform, texture_name));
 
 
+// physical_frame_object
+
+def_frame_object__global__5_slot(physical_frame_object, transform, text, texture, part_place_frame, agent);
+
+
 // physical_object
 
 def_primobject_5_slot(physical_object, transform, text, texture, part_place_frame, agent);
@@ -243,6 +248,9 @@ void f2__physical_objects__initialize() {
   
   // physical_texture
   initialize_primobject_2_slot(physical_texture, transform, texture_name);
+  
+  // physical_frame_object
+  init_frame_object__5_slot(physical_frame_object, transform, text, texture, part_place_frame, agent);
   
   // physical_object
   initialize_primobject_5_slot(physical_object, transform, text, texture, part_place_frame, agent);

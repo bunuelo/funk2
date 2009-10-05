@@ -58,6 +58,8 @@ declare_primobject_5_slot(physical_object, transform, text, texture, part_place_
 declare_primobject_2_slot(physical_place, transform, thing);
 declare_primobject_2_slot(physical_scene, background_texture, physical_things);
 
+f2ptr f2physical_frame_object__primobject_type__new(f2ptr cause);
+
 f2ptr f2__physical_transform__new_identity(f2ptr cause);
 
 // **

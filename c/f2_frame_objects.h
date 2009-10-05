@@ -144,7 +144,7 @@
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause, f2ptr slot_1) { \
     f2ptr this = f2__frame__new(cause); \
     f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1)); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1); \
     return this; \
   } \
   def_pcfunk1(frame_object__funk__pcfunkvar(name, new), slot_1, return f2__frame_object__funk__funkvar(name, new)(this_cause, slot_1))
@@ -153,8 +153,8 @@
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause, f2ptr slot_1, f2ptr slot_2) { \
     f2ptr this = f2__frame__new(cause); \
     f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2)); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2); \
     return this; \
   } \
   def_pcfunk2(frame_object__funk__pcfunkvar(name, new), slot_1, slot_2, return f2__frame_object__funk__funkvar(name, new)(this_cause, slot_1, slot_2))
@@ -163,9 +163,9 @@
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3) { \
     f2ptr this = f2__frame__new(cause); \
     f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), slot_3)); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), slot_3); \
     return this; \
   } \
   def_pcfunk3(frame_object__funk__pcfunkvar(name, new), slot_1, slot_2, slot_3, return f2__frame_object__funk__funkvar(name, new)(this_cause, slot_1, slot_2, slot_3))
@@ -174,10 +174,10 @@
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4) { \
     f2ptr this = f2__frame__new(cause); \
     f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), slot_3)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), slot_4)); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), slot_3); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), slot_4); \
     return this; \
   } \
   def_pcfunk4(frame_object__funk__pcfunkvar(name, new), slot_1, slot_2, slot_3, slot_4, return f2__frame_object__funk__funkvar(name, new)(this_cause, slot_1, slot_2, slot_3, slot_4))
@@ -186,11 +186,11 @@
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5) { \
     f2ptr this = f2__frame__new(cause); \
     f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),  new__symbol(cause, #name)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), slot_3)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), slot_4)); \
-    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_5), slot_5)); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_1), slot_1); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_2), slot_2); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_3), slot_3); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_4), slot_4); \
+    f2__frame__add_var_value(cause, this, new__symbol(cause, #slot_5), slot_5); \
     return this; \
   } \
   def_pcfunk5(frame_object__funk__pcfunkvar(name, new), slot_1, slot_2, slot_3, slot_4, slot_5, return f2__frame_object__funk__funkvar(name, new)(this_cause, slot_1, slot_2, slot_3, slot_4, slot_5))

@@ -31,29 +31,29 @@
 [defunk bucket_texture-new                           [] [new physical_texture [new physical_transform [new physical_position -0.01   0     0] [physical_rotation-new_identity]                        0.075] `bucket_object]]
 [defunk mud_texture-new                              [] [new physical_texture [new physical_transform [new physical_position -0.015 -0.015 0] [physical_rotation-new_identity]                        0.03]  `mud_object]]
 
-[defunk mud_object-new [agent] [new physical_frame_object [physical_transform-new_identity] 'Mud' [mud_texture-new] [new frame] agent]]
+[defunk mud_object-new [agent] [new physical_object [physical_transform-new_identity] 'Mud' [mud_texture-new] [new frame] agent]]
 
 [defunk fork_object-new [scooper_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Fork' [fork_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Fork' [fork_texture-new] part_place_frame agent]]]
     [have part_place_frame add `scooper_object_place [new physical_place [physical_transform-new_position -0.1 0 0] scooper_object]]
     this]]
 
 [defunk shovel_object-new [scooper_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Shovel' [shovel_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Shovel' [shovel_texture-new] part_place_frame agent]]]
     [have part_place_frame add `scooper_object_place [new physical_place [physical_transform-new_position -0.1 0 0] scooper_object]]
     this]]
 
 [defunk spoon_object-new [scooper_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Spoon' [spoon_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Spoon' [spoon_texture-new] part_place_frame agent]]]
     [have part_place_frame add `scooper_object_place [new physical_place [physical_transform-new_position -0.1 0 0] scooper_object]]
     this]]
 
 [defunk bucket_object-new [in_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Bucket' [bucket_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Bucket' [bucket_texture-new] part_place_frame agent]]]
     [have part_place_frame add `in_place [new physical_place [physical_transform-new_position 0 0.02 0] in_object]]
     this]]
 
@@ -72,24 +72,24 @@
 [defunk blue_right_shoe_texture-new [] [new physical_texture [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] `blue_right_shoe]]
 [defunk blue_left_shoe_texture-new  [] [new physical_texture [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] `blue_left_shoe]]
 
-[defunk bluegreen_blouse-new          [] [new physical_frame_object [physical_transform-new_identity] 'Bluegreen Blouse'          [bluegreen_blouse_texture-new]          [new frame] nil]]
-[defunk sideview_bluegreen_blouse-new [] [new physical_frame_object [physical_transform-new_identity] 'Sideview Bluegreen Blouse' [sideview_bluegreen_blouse_texture-new] [new frame] nil]]
-[defunk red_skirt-new                 [] [new physical_frame_object [physical_transform-new_identity] 'Red Skirt'                 [red_skirt_texture-new]                 [new frame] nil]]
-[defunk sideview_red_skirt-new        [] [new physical_frame_object [physical_transform-new_identity] 'Sideview Red Skirt'        [sideview_red_skirt_texture-new]        [new frame] nil]]
-[defunk blue_shirt-new                [] [new physical_frame_object [physical_transform-new_identity] 'Blue Shirt'                [blue_shirt_texture-new]                [new frame] nil]]
-[defunk sideview_blue_shirt-new       [] [new physical_frame_object [physical_transform-new_identity] 'Sideview Blue Shirt'       [sideview_blue_shirt_texture-new]       [new frame] nil]]
-[defunk orange_shorts-new             [] [new physical_frame_object [physical_transform-new_identity] 'Orange Shorts'             [orange_shorts_texture-new]             [new frame] nil]]
-[defunk sideview_orange_shorts-new    [] [new physical_frame_object [physical_transform-new_identity] 'Sideview Orange Shorts'    [sideview_orange_shorts_texture-new]    [new frame] nil]]
+[defunk bluegreen_blouse-new          [] [new physical_object [physical_transform-new_identity] 'Bluegreen Blouse'          [bluegreen_blouse_texture-new]          [new frame] nil]]
+[defunk sideview_bluegreen_blouse-new [] [new physical_object [physical_transform-new_identity] 'Sideview Bluegreen Blouse' [sideview_bluegreen_blouse_texture-new] [new frame] nil]]
+[defunk red_skirt-new                 [] [new physical_object [physical_transform-new_identity] 'Red Skirt'                 [red_skirt_texture-new]                 [new frame] nil]]
+[defunk sideview_red_skirt-new        [] [new physical_object [physical_transform-new_identity] 'Sideview Red Skirt'        [sideview_red_skirt_texture-new]        [new frame] nil]]
+[defunk blue_shirt-new                [] [new physical_object [physical_transform-new_identity] 'Blue Shirt'                [blue_shirt_texture-new]                [new frame] nil]]
+[defunk sideview_blue_shirt-new       [] [new physical_object [physical_transform-new_identity] 'Sideview Blue Shirt'       [sideview_blue_shirt_texture-new]       [new frame] nil]]
+[defunk orange_shorts-new             [] [new physical_object [physical_transform-new_identity] 'Orange Shorts'             [orange_shorts_texture-new]             [new frame] nil]]
+[defunk sideview_orange_shorts-new    [] [new physical_object [physical_transform-new_identity] 'Sideview Orange Shorts'    [sideview_orange_shorts_texture-new]    [new frame] nil]]
 
-[defunk pink_right_shoe-new [] [new physical_frame_object [physical_transform-new_identity] 'Pink Right Shoe' [pink_right_shoe_texture-new] [new frame] nil]]
-[defunk pink_left_shoe-new  [] [new physical_frame_object [physical_transform-new_identity] 'Pink Left Shoe'  [pink_left_shoe_texture-new]  [new frame] nil]]
-[defunk blue_right_shoe-new [] [new physical_frame_object [physical_transform-new_identity] 'Blue Right Shoe' [blue_right_shoe_texture-new] [new frame] nil]]
-[defunk blue_left_shoe-new  [] [new physical_frame_object [physical_transform-new_identity] 'Blue Left Shoe'  [blue_left_shoe_texture-new]  [new frame] nil]]
+[defunk pink_right_shoe-new [] [new physical_object [physical_transform-new_identity] 'Pink Right Shoe' [pink_right_shoe_texture-new] [new frame] nil]]
+[defunk pink_left_shoe-new  [] [new physical_object [physical_transform-new_identity] 'Pink Left Shoe'  [pink_left_shoe_texture-new]  [new frame] nil]]
+[defunk blue_right_shoe-new [] [new physical_object [physical_transform-new_identity] 'Blue Right Shoe' [blue_right_shoe_texture-new] [new frame] nil]]
+[defunk blue_left_shoe-new  [] [new physical_object [physical_transform-new_identity] 'Blue Left Shoe'  [blue_left_shoe_texture-new]  [new frame] nil]]
 
 
 [defunk male_child_agent_standing-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Male Child Agent Standing' [male_child_agent_standing_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Male Child Agent Standing' [male_child_agent_standing_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position  0.0   0.25 0] [physical_rotation-new_identity]                        1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position  0.013 0.12 0] [physical_rotation-new_identity]                        1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position -0.075 0.0  0] [physical_rotation-new_identity]                        1] left_foot_clothing]]
@@ -100,7 +100,7 @@
 
 [defunk male_child_agent_sitting_right-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Male Child Agent Sitting Right' [male_child_agent_sitting_right_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Male Child Agent Sitting Right' [male_child_agent_sitting_right_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position  0.038 0.06  0] [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] 1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position  0     0.03  0] [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] 1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position -0.036 0.008 0] [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] 1] left_foot_clothing]]
@@ -111,7 +111,7 @@
 
 [defunk male_child_agent_sitting_left-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Male Child Agent Sitting Left' [male_child_agent_sitting_left_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Male Child Agent Sitting Left' [male_child_agent_sitting_left_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position -0.038 0.06  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.02 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position  0     0.03  0] [have [physical_rotation-new_rotation_around_z_axis [*  0.10 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position  0.036 0.008 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.05 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] left_foot_clothing]]
@@ -122,7 +122,7 @@
 
 [defunk female_child_agent_standing-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Female Child Agent Standing' [female_child_agent_standing_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Female Child Agent Standing' [female_child_agent_standing_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position -0.013 0.24  0] [physical_rotation-new_identity]                        1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position -0.013 0.093 0] [physical_rotation-new_identity]                        1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position -0.107 0.0   0] [physical_rotation-new_identity]                        1] left_foot_clothing]]
@@ -133,7 +133,7 @@
 
 [defunk female_child_agent_sitting_right-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Female Child Agent Sitting Right' [female_child_agent_sitting_right_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Female Child Agent Sitting Right' [female_child_agent_sitting_right_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position  0.053 0.1   0] [physical_rotation-new_identity]                            1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position  0.0   0.05  0] [physical_rotation-new_identity]                            1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position -0.03  0.038 0] [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] 1] left_foot_clothing]]
@@ -144,7 +144,7 @@
 
 [defunk female_child_agent_sitting_left-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_frame_object [physical_transform-new_identity] 'Female Child Agent Sitting Left' [female_child_agent_sitting_left_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] 'Female Child Agent Sitting Left' [female_child_agent_sitting_left_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position -0.053 0.1   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] torso_clothing]]
     [have part_place_frame add `leg_clothing_place        [new physical_place [new physical_transform [new physical_position -0.0   0.05  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] leg_clothing]]
     [have part_place_frame add `left_foot_clothing_place  [new physical_place [new physical_transform [new physical_position  0.03  0.038 0] [have [physical_rotation-new_rotation_around_z_axis [* -0.25 pi]] multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] left_foot_clothing]]
@@ -240,8 +240,8 @@
   [fiber &glwindow-display_in_serial_with_params [conslist 'funk2 glwindow-display' 640 480 24 nil]]
   nil]
 
-[defunk glwindow-add_physical_frame_object [physical_frame_object]
-  [set glwindow_value physical_frame_objects [cons physical_frame_object [get glwindow_value physical_frame_objects]]]
+[defunk glwindow-add_physical_object [physical_object]
+  [set glwindow_value physical_objects [cons physical_object [get glwindow_value physical_objects]]]
   nil]
 
 

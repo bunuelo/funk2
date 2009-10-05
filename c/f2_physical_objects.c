@@ -186,14 +186,6 @@ def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_
 def_frame_object__global__5_slot(physical_frame_object, transform, text, texture, part_place_frame, agent);
 
 
-// physical_primtype_object
-
-def_primobject_5_slot(physical_primtype_object, transform, text, texture, part_place_frame, agent);
-
-f2ptr f2__physical_primtype_object__new(f2ptr cause, f2ptr transform, f2ptr text, f2ptr texture, f2ptr part_place_frame, f2ptr agent) {return f2physical_primtype_object__new(cause, transform, text, texture, part_place_frame, agent);}
-def_pcfunk5(physical_primtype_object__new, transform, text, texture, part_place_frame, agent, return f2__physical_primtype_object__new(this_cause, transform, text, texture, part_place_frame, agent));
-
-
 // physical_place
 
 def_primobject_2_slot(physical_place, transform, thing);
@@ -219,7 +211,6 @@ void f2__physical_objects__reinitialize_globalvars() {
   __physical_position__symbol  = new__symbol(cause, "physical_position");
   __physical_transform__symbol = new__symbol(cause, "physical_transform");
   __physical_texture__symbol   = new__symbol(cause, "physical_texture");
-  __physical_primtype_object__symbol    = new__symbol(cause, "physical_primtype_object");
   __physical_place__symbol     = new__symbol(cause, "physical_place");
   __physical_scene__symbol     = new__symbol(cause, "physical_scene");
 }
@@ -251,9 +242,6 @@ void f2__physical_objects__initialize() {
   
   // physical_frame_object
   init_frame_object__5_slot(physical_frame_object, transform, text, texture, part_place_frame, agent);
-  
-  // physical_primtype_object
-  initialize_primobject_5_slot(physical_primtype_object, transform, text, texture, part_place_frame, agent);
   
   // physical_place
   initialize_primobject_2_slot(physical_place, transform, thing);

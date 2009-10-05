@@ -72,6 +72,34 @@
 
 #define f2frame_object__primobject_type__new__funkvar(name) f2##name##__primobject_type__new
 
+#define declare_frame_object_0_slot(name) \
+  f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause)
+
+#define declare_frame_object_1_slot(name, slot_1) \
+  declare_frame_object_0_slot(name); \
+  f2ptr f2__frame_object__funk__funkvar(name, slot_1)(f2ptr cause, f2ptr this)
+  
+#define declare_frame_object_2_slot(name, slot_1, slot_2) \
+  declare_frame_object_1_slot(name, slot_1); \
+  f2ptr f2__frame_object__funk__funkvar(name, slot_2)(f2ptr cause, f2ptr this)
+  
+#define declare_frame_object_3_slot(name, slot_1, slot_2, slot_3) \
+  declare_frame_object_2_slot(name, slot_1, slot_2); \
+  f2ptr f2__frame_object__funk__funkvar(name, slot_3)(f2ptr cause, f2ptr this)
+  
+#define declare_frame_object_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  declare_frame_object_3_slot(name, slot_1, slot_2, slot_3); \
+  f2ptr f2__frame_object__funk__funkvar(name, slot_4)(f2ptr cause, f2ptr this)
+  
+#define declare_frame_object_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  declare_frame_object_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  f2ptr f2__frame_object__funk__funkvar(name, slot_5)(f2ptr cause, f2ptr this)
+  
+#define declare_frame_object_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  declare_frame_object_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  f2ptr f2__frame_object__funk__funkvar(name, slot_6)(f2ptr cause, f2ptr this)
+  
+
 #define def_f2__frame__object__new__slot_body(name, slot_body) \
   f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause) { \
     f2ptr this = f2__frame__new(cause); \

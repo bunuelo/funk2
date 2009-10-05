@@ -91,6 +91,8 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->stderr_stream = f2__file_stream__new(cause, f2integer__new(cause, STDERR_FILENO));
   environment__add_var_value(cause, global_environment(), this->stderr_stream__symbol, this->stderr_stream);
   
+  this->type__symbol = new__symbol(cause, "type");
+  
   this->trace_all_compiles__symbol  = f2symbol__new(cause, strlen("-trace_all_compiles-"),  (u8*)"-trace_all_compiles-");
   
   this->create_event__symbol = f2symbol__new(cause, strlen("create_event"), (u8*)"create_event");
@@ -121,59 +123,8 @@ void funk2_globalenv__init(funk2_globalenv_t* this) {
 
   f2ptr cause = f2_globalenv_c__cause__new(initial_cause());
   
-  environment__add_var_value(cause, global_environment(), this->f2_bytecodes_c__cause__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), this->f2_ansi_c__cause__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), this->f2_compile_c__cause__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), this->f2_gmodule_c__cause__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), this->f2_load_c__cause__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), this->f2_memory_c__cause__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), this->f2_primfunks_c__cause__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), this->f2_primobject_environment_c__cause__symbol, nil);
-  environment__add_var_value(cause, global_environment(), this->f2_primobject_frame_c__cause__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), this->f2_primobject_hashtable_c__cause__symbol,   nil);
-  environment__add_var_value(cause, global_environment(), this->f2_primobjects_c__cause__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), this->f2_print_c__cause__symbol,                  nil);
-  environment__add_var_value(cause, global_environment(), this->f2_pthread_c__cause__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), this->f2_ptypes_c__cause__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), this->f2_reader_c__cause__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), this->f2_redblacktree_c__cause__symbol,           nil);
-  environment__add_var_value(cause, global_environment(), this->f2_repl_c__cause__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), this->f2_scheduler_c__cause__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), this->f2_signal_c__cause__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), this->f2_socket_c__cause__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), this->f2_swapmemory_c__cause__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), this->f2_fiber_c__cause__symbol,                  nil);
-  environment__add_var_value(cause, global_environment(), this->f2_time_c__cause__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), this->f2_trace_c__cause__symbol,                  nil);
-  environment__add_var_value(cause, global_environment(), this->f2_serialize_c__cause__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), this->funk2_c__cause__symbol,                     nil);
-  
-  environment__add_var_value(cause, global_environment(), this->true__symbol,                               this->true__symbol);
-  environment__add_var_value(cause, global_environment(), this->quote__symbol,                              nil);
-  environment__add_var_value(cause, global_environment(), this->backquote__list__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), this->backquote__list_append__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), this->comma__symbol,                              nil);
-  environment__add_var_value(cause, global_environment(), this->cdr_comma__symbol,                          nil);
-  environment__add_var_value(cause, global_environment(), this->funkvar__symbol,                            nil);
-  environment__add_var_value(cause, global_environment(), this->define_funk__symbol,                        nil);
-  environment__add_var_value(cause, global_environment(), this->mutatefunk__symbol,                         nil);
-  environment__add_var_value(cause, global_environment(), this->define__symbol,                             nil);
-  environment__add_var_value(cause, global_environment(), this->mutate__symbol,                             nil);
-  environment__add_var_value(cause, global_environment(), this->and_rest__symbol,                           nil);
-  environment__add_var_value(cause, global_environment(), this->apply__symbol,                              nil);
-  environment__add_var_value(cause, global_environment(), this->globalize__symbol,                          nil);
-  environment__add_var_value(cause, global_environment(), this->globalize_funk__symbol,                     nil);
-  environment__add_var_value(cause, global_environment(), this->yield__symbol,                              nil);
-  environment__add_var_value(cause, global_environment(), this->if__symbol,                                 nil);
-  environment__add_var_value(cause, global_environment(), this->bytecode__symbol,                           nil);
-  environment__add_var_value(cause, global_environment(), this->rawcode__symbol,                            nil);
-  environment__add_var_value(cause, global_environment(), this->while__symbol,                              nil);
-  
-  environment__add_var_value(cause, global_environment(), this->trace_all_compiles__symbol,                 nil);
-  
-  environment__add_var_value(cause, global_environment(), this->create_event__symbol,                       nil);
-  environment__add_var_value(cause, global_environment(), this->read_event__symbol,                         nil);
-  environment__add_var_value(cause, global_environment(), this->write_event__symbol,                        nil);
+  environment__add_var_value(cause, global_environment(), this->true__symbol,               this->true__symbol);
+  environment__add_var_value(cause, global_environment(), this->trace_all_compiles__symbol, nil);
 }
 
 void funk2_globalenv__destroy(funk2_globalenv_t* this) {

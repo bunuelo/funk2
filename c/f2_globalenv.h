@@ -72,6 +72,8 @@ typedef struct funk2_globalenv_s {
   f2ptr stderr_stream__symbol;
   f2ptr stderr_stream;
   
+  f2ptr type__symbol;
+  
   f2ptr define_funk__symbol;
   f2ptr define__symbol;
   f2ptr mutatefunk__symbol;

@@ -86,7 +86,7 @@
   f2ptr f2__frame_object__funk__funkvar(name, slot_2)(f2ptr cause, f2ptr this)
   
 #define declare_frame_object_3_slot__sans_new(name, slot_1, slot_2, slot_3) \
-  declare_frame_object_2_slot(name, slot_1, slot_2); \
+  declare_frame_object_2_slot__sans_new(name, slot_1, slot_2); \
   f2ptr f2__frame_object__funk__funkvar(name, slot_3)(f2ptr cause, f2ptr this)
   
 #define declare_frame_object_4_slot__sans_new(name, slot_1, slot_2, slot_3, slot_4) \

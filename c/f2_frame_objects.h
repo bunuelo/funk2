@@ -73,7 +73,10 @@
 #define f2frame_object__primobject_type__new__funkvar(name) f2##name##__primobject_type__new
 
 #define declare_frame_object_0_slot(name) \
-  f2ptr f2__frame_object__funk__funkvar(name, new)(f2ptr cause)
+  f2ptr      f2__frame_object__funk__funkvar(name, new)    (f2ptr cause); \
+  boolean_t raw__frame_object__funk__funkvar(name, is_type)(f2ptr cause, f2ptr thing); \
+  f2ptr      f2__frame_object__funk__funkvar(name, is_type)(f2ptr cause, f2ptr thing); \
+  f2ptr      f2__frame_object__funk__funkvar(name, type)   (f2ptr cause, f2ptr this)
 
 #define declare_frame_object_1_slot(name, slot_1) \
   declare_frame_object_0_slot(name); \

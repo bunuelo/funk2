@@ -906,24 +906,22 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				 if (raw__symbol__is_type(cause, type_hashtable__key)) {
 				   int type_key__length = f2symbol__length(type_hashtable__key, cause);
 				   
-				   hashtable__iteration(cause, type_hashtable__value, slot_name, slot_value,
-							
-							slot_value; // avoid unused variable warning.
-							
-							if (raw__symbol__is_type(cause, slot_name)) {
-							  // here, we only update max length values if this type_name actually has a key that we are going to print.
-							  if (type_hashtable__key != __funk2.primobject__frame.variable__symbol) {
-							    need_to_print_type_besides_basic_variable = boolean__true;
-							  }
-							  if (type_key__length > max_type_name_length) {
-							    max_type_name_length = type_key__length;
-							  }
-							  int slot_name__length = f2symbol__length(slot_name, cause);
-							  if (slot_name__length > max_slot_name_length) {
-							    max_slot_name_length = slot_name__length;
-							  }
-							}
-							);
+				   hashtable__key__iteration(cause, type_hashtable__value, slot_name,
+							     
+							     if (raw__symbol__is_type(cause, slot_name)) {
+							       // here, we only update max length values if this type_name actually has a key that we are going to print.
+							       if (type_hashtable__key != __funk2.primobject__frame.variable__symbol) {
+								 need_to_print_type_besides_basic_variable = boolean__true;
+							       }
+							       if (type_key__length > max_type_name_length) {
+								 max_type_name_length = type_key__length;
+							       }
+							       int slot_name__length = f2symbol__length(slot_name, cause);
+							       if (slot_name__length > max_slot_name_length) {
+								 max_slot_name_length = slot_name__length;
+							       }
+							     }
+							     );
 				 }
 				 );
 	    

@@ -49,6 +49,8 @@ struct funk2_object_type__frame__slot_s {
   f2ptr type_var_value__set__funk;
   f2ptr type_var__slot_names__symbol;
   f2ptr type_var__slot_names__funk;
+  f2ptr copy__symbol;
+  f2ptr copy__funk;
 };
 
 #endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
@@ -110,6 +112,11 @@ void funk2_primobject__frame__reinit( funk2_primobject__frame_t* this);
 void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this);
 
 f2ptr f2frame__primobject_type__new(f2ptr cause);
+
+#define frame__iteration(cause, this, type_slot_name, slot_name, slot_value, code) \
+  hashtable__iteration(cause, f2frame__type_hashtable(this, cause), type_slot_name, type_slot_hashtable, \
+                       hashtable__iteration(cause, type_slot_hashtable, slot_name, slot_value, \
+                       code;))
 
 // **
 

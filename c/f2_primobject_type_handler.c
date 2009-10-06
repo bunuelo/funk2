@@ -79,6 +79,7 @@ void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobje
 
 void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "primobject";         funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),         f2primobject__primobject_type__new(cause));}
+  {char* type_name = "primobject_type";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2primobject_type__primobject_type__new(cause));}
   {char* type_name = "compound_object";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2compound_object__primobject_type__new(cause));}
   {char* type_name = "place";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2place__primobject_type__new(cause));}
   {char* type_name = "cons";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2cons__primobject_type__new(cause));}
@@ -119,7 +120,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
-  {char* type_name = "physical_sim_object";   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2physical_sim_object__primobject_type__new(cause));}
+  {char* type_name = "physical_sim_object"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2physical_sim_object__primobject_type__new(cause));}
 }
 
 // **

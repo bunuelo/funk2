@@ -164,7 +164,13 @@
   this]
 
 [deftypefunk female_child_agent execute set_posture [posture]
-  [have this copy [have this lookup posture]]
+  [have this copy_slots [have this lookup posture]
+	`[torso_clothing_place
+	  leg_clothing_place
+	  left_foot_clothing_place
+	  right_foot_clothing_place
+	  left_hand_object_place
+	  right_hand_object_place]]
   [have this add `posture posture]
   nil]
 

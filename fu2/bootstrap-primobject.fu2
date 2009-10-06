@@ -61,6 +61,17 @@
     [add_type type_name primobject_type]]
   nil]
 
+[defunk add_type_construct [type_name funk]
+  [primobject_type-add_slot_type [lookup_type type_name] `execute `new funk]]
+
+[defmetro deftypeconstruct [type_name args :rest body]
+  [print `[deftypeconstruct ,type_name ,args]]
+  `[let [[previous_new_funk [primobject_type-lookup_slot_type_funk [lookup_type [quote ,type_name]] `execute `new]]]
+     [add_type_construct [quote ,type_name]
+			 [funk ,args
+			       [let [[this [apply previous_new_funk nil]]]
+				 @body]]]]]
+
 [defunk add_type_funk [type_name slot_type slot_name funk]
   [primobject_type-add_slot_type [lookup_type type_name] slot_type slot_name funk]]
 

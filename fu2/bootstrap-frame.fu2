@@ -25,3 +25,6 @@
 [deftypefunk frame execute lookup [slot_name]
   [get this type_var_value `variable slot_name nil]]
 
+[deftypefunk frame execute check_has [slot_name]
+  [have this check_has_type_slot `variable slot_name]]
+

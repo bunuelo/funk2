@@ -47,7 +47,11 @@
 							    this]]]]
     [primobject_type-add_slot_type primobject_type `execute `is_type
 				   [eval `[funk-unlabeled is_type [exp]
-							  [and exp [frame-is_type exp] [eq [quote ,type_name] [frame-lookup_var_value exp `type nil]]]]]]
+							  [let [[exp_frame_type [frame-lookup_var_value exp `type nil]]]
+							    [or [and exp [frame-is_type exp] [eq [quote ,type_name] exp_frame_type]]
+								@[mapcar [funk [parent_name]
+									       `[is-type [quote ,parent_name] exp]]
+									 parents]]]]]]
     [mapc [funk [slot_name_value_pair]
 		[let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
 		  [primobject_type-add_slot_type primobject_type `get slot_name

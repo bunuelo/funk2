@@ -164,7 +164,7 @@
   this]
 
 [deftypefunk female_child_agent execute set_posture [posture]
-  [have this copy_slots [have this lookup posture] `[part_place_frame]]
+  [have this copy_slots [have this lookup posture] `[transform text texture part_place_frame agent]]
   [have this add `posture posture]
   nil]
 

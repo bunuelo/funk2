@@ -217,7 +217,7 @@ f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_slo
 def_pcfunk3(frame__copy_slots, this, source, map_slot_names, return f2__frame__copy_slots(this_cause, this, source, map_slot_names));
 
 boolean_t raw__frame__contains_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name) {
-  f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined;
+  f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
   f2ptr result = f2__frame__lookup_type_var_value(cause, this, type_name, slot_name, not_defined_value);
   return (result != not_defined_value);
 }

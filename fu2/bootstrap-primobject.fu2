@@ -29,8 +29,8 @@
 	[[is-type `cons   this] [second this]]
 	[t                      [error `deframe `[compound-slotdef-value ,this]]]]]
 
-[defmetro deframe [type_name slot_name_value_pairs]
-  [print `[deframe ,type_name ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
+[defmetro deframe [type_name parents slot_name_value_pairs]
+  [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]
   [let [[primobject_type [primobject_type-new nil]]]
     [primobject_type-add_slot_type primobject_type `execute `new
 				   [eval `[funk-unlabeled new []
@@ -54,6 +54,7 @@
 						 [eval `[funk-unlabeled ,slot_name [this value]
 									 [frame-var_value-set this [quote ,slot_name] value `slot-does-not-exist]]]]]]
 	  slot_name_value_pairs]
+    [primobject_type-add_slot_type primobject_type `variable `parents parents]
     [add_type type_name primobject_type]]
   nil]
 

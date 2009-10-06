@@ -28,3 +28,6 @@
 [deftypefunk frame execute check_has [slot_name]
   [have this check_has_type_slot `variable slot_name]]
 
+[deftypefunk frame get slots []
+  [get this type_var-slot_names `variable]]
+

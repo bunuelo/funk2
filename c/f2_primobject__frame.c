@@ -199,7 +199,7 @@ def_pcfunk2(frame__copy, this, source, return f2__frame__copy(this_cause, this, 
 f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_slot_names) {
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__frame__is_type(cause, source)) ||
-      (! raw__cons__is_type( cause, slot_names))) {
+      (! raw__cons__is_type( cause, map_slot_names))) {
     return f2larva__new(cause, 1);
   }
   frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 

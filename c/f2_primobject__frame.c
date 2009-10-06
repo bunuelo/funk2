@@ -186,7 +186,11 @@ f2ptr f2__frame__funkvar__slot_names(f2ptr cause, f2ptr this) {
 def_pcfunk1(frame__funkvar__slot_names, this, return f2__frame__funkvar__slot_names(this_cause, this));
 
 f2ptr f2__frame__copy(f2ptr cause, f2ptr this, f2ptr source) {
-  frame__iteration(cause, this, type_slot_name, slot_name, slot_value, 
+  if ((! raw__frame__is_type(cause, this)) ||
+      (! raw__frame__is_type(cause, source)) ||) {
+    return f2larva__new(cause, 1);
+  }
+  frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 
 		   f2__frame__add_type_var_value(cause, this, type_slot_name, slot_name, slot_value));
   return nil;
 }

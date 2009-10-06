@@ -185,9 +185,22 @@ def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_
 
 def_frame_object__global__5_slot(physical_object, transform, text, texture, part_place_frame, agent);
 
-//boolean_t raw__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
-//  
-//}
+boolean_t raw__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
+  if (! raw__frame__is_type(cause, thing)) {
+    return boolean__false;
+  }
+  f2ptr frame = thing;
+  return (raw__frame__check_has_type_slot(cause, frame, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "transform"))        &&
+	  raw__frame__check_has_type_slot(cause, frame, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "text"))             &&
+	  raw__frame__check_has_type_slot(cause, frame, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "texture"))          &&
+	  raw__frame__check_has_type_slot(cause, frame, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "part_place_frame")) &&
+	  raw__frame__check_has_type_slot(cause, frame, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "agent")));
+}
+
+f2ptr f2__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
+  return f2bool__new(cause, raw__physical_object__interface_supported(cause, thing));
+}
+def_pcfunk1(physical_object__interface_supported, thing, return f2__physical_object__interface_supported(cause, thing));
 
 // physical_place
 
@@ -227,24 +240,25 @@ void f2__physical_objects__initialize() {
   
   // physical_rotation
   initialize_primobject_1_slot(physical_rotation, array);
-  f2__primcfunk__init__0(physical_rotation__new_identity, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__1(physical_rotation__new_rotation_around_z_axis, radians, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__1(physical_rotation__new_rotation_around_y_axis, radians, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__1(physical_rotation__new_rotation_around_x_axis, radians, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__2(physical_rotation__multiply, this, that, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__0(physical_rotation__new_identity, "physical_objects cfunk declared in f2_physical_objects.c");
+  f2__primcfunk__init__1(physical_rotation__new_rotation_around_z_axis, radians, "physical_objects cfunk declared in f2_physical_objects.c");
+  f2__primcfunk__init__1(physical_rotation__new_rotation_around_y_axis, radians, "physical_objects cfunk declared in f2_physical_objects.c");
+  f2__primcfunk__init__1(physical_rotation__new_rotation_around_x_axis, radians, "physical_objects cfunk declared in f2_physical_objects.c");
+  f2__primcfunk__init__2(physical_rotation__multiply, this, that, "physical_objects cfunk declared in f2_physical_objects.c");
   
   // physical_position
   initialize_primobject_3_slot(physical_position, x, y, z);
   
   // physical_transform
   initialize_primobject_3_slot(physical_transform, position, rotation, scale);
-  f2__primcfunk__init__0(physical_transform__new_identity, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__0(physical_transform__new_identity, "physical_objects cfunk declared in f2_physical_objects.c");
   
   // physical_texture
   initialize_primobject_2_slot(physical_texture, transform, texture_name);
   
   // physical_object
   init_frame_object__5_slot(physical_object, transform, text, texture, part_place_frame, agent);
+  f2__primcfunk__init__1(physical_object__interface_supported, thing, "physical_objects cfunk declared in f2_physical_objects.c");
   
   // physical_place
   initialize_primobject_2_slot(physical_place, transform, thing);

@@ -58,6 +58,9 @@ declare_primobject_2_slot(  physical_scene, background_texture, physical_things)
 
 f2ptr f2__physical_transform__new_identity(f2ptr cause);
 
+boolean_t raw__physical_object__interface_supported(f2ptr cause, f2ptr thing);
+f2ptr      f2__physical_object__interface_supported(f2ptr cause, f2ptr thing);
+
 // **
 
 void f2__physical_objects__initialize();

@@ -155,7 +155,7 @@
 
 [defunk female_child_agent-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let [[this [new frame]]]
-    [have this add `type          `female_child_agent]
+    `[have this add `type          `female_child_agent]
     [have this add `posture       nil]
     [have this add `standing      [female_child_agent_standing-new      torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
     [have this add `sitting_right [female_child_agent_sitting_right-new torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]

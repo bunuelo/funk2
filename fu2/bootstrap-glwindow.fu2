@@ -58,7 +58,7 @@
     this]]
 
 
-[deframe posturable_physical_object [frame] []]
+[deframe posturable_physical_object [physical_object] []]
 
 [deftypeconstruct posturable_physical_object [standing_form sitting_right_form sitting_left_form]
   [have this add `posture       nil]

@@ -1004,6 +1004,10 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
 declare_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
 
+// primobject_type
+
+declare_primobject_1_slot(primobject_type, parents);
+
 // place
 
 declare_primobject_1_slot(place, thing);

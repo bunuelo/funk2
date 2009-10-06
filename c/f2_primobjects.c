@@ -109,6 +109,58 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause) {
   return this;
 }
 
+
+// primobject_type
+
+defprimobject__static_slot(primobject_type__parents, 0);
+
+f2ptr __primobject_type__symbol = -1;
+
+f2ptr f2primobject_type__new(f2ptr cause, f2ptr p) {
+  release__assert(__primobject_type__symbol != -1, nil, "f2primobject_type__new error: used before primobjects initialized.");
+  f2ptr this = f2__primobject__new(cause, __primobject_type__symbol, 1, nil);
+  f2primobject_type__parents__set(this, cause, p);
+  return this;
+}
+
+#ifdef DEBUG
+#  define F2__PRIMOBJECT__TYPE_CHECK
+#endif // DEBUG
+
+boolean_t raw__primobject_type__is_type(f2ptr cause, f2ptr x) {
+#ifdef F2__PRIMOBJECT__TYPE_CHECK
+  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+#endif // F2__PRIMOBJECT__TYPE_CHECK
+  return (raw__primobject__is_type(cause, x) && f2primobject__is__primobject_type(x, cause));
+}
+
+
+f2ptr f2__primobject_type__new(f2ptr cause, f2ptr x) {return f2primobject_type__new(cause, x);}
+def_pcfunk1(primobject_type__new, x, return f2__primobject_type__new(this_cause, x));
+
+f2ptr f2__primobject_type__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__primobject_type__is_type(cause, x));}
+def_pcfunk1(primobject_type__is_type, x, return f2__primobject_type__is_type(this_cause, x));
+
+f2ptr f2__primobject_type__type(f2ptr cause, f2ptr x) {return __primobject_type__symbol;}
+def_pcfunk1(primobject_type__type, x, return f2__primobject_type__type(this_cause, x));
+
+f2ptr f2__primobject_type__parents(f2ptr cause, f2ptr x) {return f2primobject_type__parents(x, cause);}
+def_pcfunk1(primobject_type__parents, x, return f2__primobject_type__parents(this_cause, x));
+
+f2ptr f2__primobject_type__parents__set(f2ptr cause, f2ptr x, f2ptr y) {f2primobject_type__parents__set(x, cause, y); return nil;}
+def_pcfunk2(primobject_type__parents__set, x, y, return f2__primobject_type__parents__set(this_cause, x, y));
+
+f2ptr f2primobject_type__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "primobject"), nil));
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_primobject_type.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.type__funk);}
+  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_primobject_type.new__funk);}
+  {char* slot_name = "parents"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_primobject_type.parents__funk);}
+  {char* slot_name = "parents"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_primobject_type.parents__set__funk);}
+  return this;
+}
+
+
 // place
 
 defprimobject__static_slot(place__thing, 0);

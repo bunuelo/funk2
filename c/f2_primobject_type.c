@@ -82,6 +82,7 @@ def_pcfunk2(primobject_type__type_funk__slot_names, this, type_name, return f2__
 
 
 
+
 void f2__primobject_type__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
 }

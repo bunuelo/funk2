@@ -70,7 +70,7 @@
 
 [deftypefunk posturable_physical_object execute set_posture [posture]
   [have this copy_slots [have this lookup posture] `[transform text texture part_place_frame agent]]
-  [let [[part_place_frame [get this part_place_frame]]]
+  `[let [[part_place_frame [get this part_place_frame]]]
     [mapc [funk [slot]
 		[let [[part_place [get part_place_frame slot]]]
 		  [if part_place

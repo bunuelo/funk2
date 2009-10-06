@@ -200,7 +200,7 @@ boolean_t raw__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
 f2ptr f2__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
   return f2bool__new(raw__physical_object__interface_supported(cause, thing));
 }
-def_pcfunk1(physical_object__interface_supported, thing, return f2__physical_object__interface_supported(cause, thing));
+def_pcfunk1(physical_object__interface_supported, thing, return f2__physical_object__interface_supported(this_cause, thing));
 
 // physical_place
 

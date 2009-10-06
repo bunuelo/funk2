@@ -97,6 +97,7 @@ void f2__primobject_type__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type", "", &f2__primobject_type__reinitialize_globalvars);
   
   f2__string__reinitialize_globalvars();
+  f2ptr cause = initial_cause();
   
   // primobject_type
   init_frame_object__1_slot(primobject_type, parents);

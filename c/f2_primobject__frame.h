@@ -53,8 +53,8 @@ struct funk2_object_type__frame__slot_s {
   f2ptr copy__funk;
   f2ptr copy_slots__symbol;
   f2ptr copy_slots__funk;
-  f2ptr contains_type_slot__symbol;
-  f2ptr contains_type_slot__funk;
+  f2ptr check_has_type_slot__symbol;
+  f2ptr check_has_type_slot__funk;
 };
 
 #endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H

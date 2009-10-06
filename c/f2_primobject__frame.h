@@ -53,6 +53,8 @@ struct funk2_object_type__frame__slot_s {
   f2ptr copy__funk;
   f2ptr copy_slots__symbol;
   f2ptr copy_slots__funk;
+  f2ptr contains_type_slot__symbol;
+  f2ptr contains_type_slot__funk;
 };
 
 #endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
@@ -107,6 +109,7 @@ typedef struct funk2_primobject__frame_s {
   f2ptr variable__symbol;
   f2ptr funk_variable__symbol;
   f2ptr type_variable_not_defined__larva;
+  f2ptr type_variable_not_defined__symbol;
 } funk2_primobject__frame_t;
 
 void funk2_primobject__frame__init(   funk2_primobject__frame_t* this);

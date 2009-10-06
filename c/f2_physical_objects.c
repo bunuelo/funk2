@@ -185,6 +185,9 @@ def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_
 
 def_frame_object__global__5_slot(physical_object, transform, text, texture, part_place_frame, agent);
 
+boolean_t raw__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
+  
+}
 
 // physical_place
 

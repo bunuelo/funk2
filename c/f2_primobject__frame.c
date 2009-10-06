@@ -205,7 +205,7 @@ f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_slo
   frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 
 		   f2ptr map_slot_names_iter = map_slot_names;
 		   while (map_slot_names_iter) {
-		     map_slot_name = f2__cons__car(cause, map_slot_names_iter);
+		     f2ptr map_slot_name = f2__cons__car(cause, map_slot_names_iter);
 		     if (raw__symbol__eq(cause, map_slot_name, slot_name)) {
 		       f2__frame__add_type_var_value(cause, this, type_slot_name, slot_name, slot_value);
 		     }

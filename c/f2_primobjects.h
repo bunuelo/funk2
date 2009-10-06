@@ -23,7 +23,6 @@
 #define F2__PRIMOBJECTS__TYPE__H
 
 typedef struct funk2_object_type__compound_object__slot_s  funk2_object_type__compound_object__slot_t;
-typedef struct funk2_object_type__primobject_type__slot_s  funk2_object_type__primobject_type__slot_t;
 typedef struct funk2_object_type__place__slot_s            funk2_object_type__place__slot_t;
 typedef struct funk2_object_type__cons__slot_s             funk2_object_type__cons__slot_t;
 typedef struct funk2_object_type__doublelink__slot_s       funk2_object_type__doublelink__slot_t;
@@ -1380,10 +1379,6 @@ extern void f2__primobjects__initialize();
 // compound_object
 
 declare_object_type_3_slot(compound_object, compound_object_type, frame, part_frame, );
-
-// primobject_type
-
-declare_object_type_1_slot(primobject_type, parents, );
 
 // place
 

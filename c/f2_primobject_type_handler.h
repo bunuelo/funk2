@@ -67,7 +67,6 @@ struct funk2_primobject_object_types_s {
   f2ptr dynamic_slot_type_value__set__symbol;
   f2ptr dynamic_slot_type_value__set__funk;
   funk2_object_type__compound_object__slot_t    primobject_type_compound_object;
-  funk2_object_type__primobject_type__slot_t    primobject_type_primobject_type;
   funk2_object_type__place__slot_t              primobject_type_place;
   funk2_object_type__cons__slot_t               primobject_type_cons;
   funk2_object_type__doublelink__slot_t         primobject_type_doublelink;

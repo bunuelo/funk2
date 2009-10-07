@@ -201,6 +201,8 @@
 						      [fork_object-new [mud_object-new nil] nil]
 						      nil]]
 
+[deframe male_child_agent [posturable_physical_object] []]
+
 [deftypeconstruct male_child_agent [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [have this add `posture       nil]
   [have this add `standing      [male_child_agent_standing-new      torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]

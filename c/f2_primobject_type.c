@@ -87,7 +87,7 @@ boolean_t raw__primobject_type__is_type_or_child_type(f2ptr cause, f2ptr this, f
 	return boolean__true;
       }
       f2ptr parent_type = f2__lookup_type(cause, parent_name);
-      if (raw__primobject_type__is_type(cause, parent_type, type_name)) {
+      if (raw__primobject_type__is_type_or_child_type(cause, parent_type, type_name)) {
 	return boolean__true;
       }
       parents_iter = f2__cons__cdr(cause, parents_iter);

@@ -33,7 +33,7 @@
   `[execute ,this ,slot_name ,this @args]]
 
 [defunk type-has_parent [type_name parent_name]
-  [primobject_type-is_type [lookup_type type_name] parent_name]]
+  [primobject_type-is_type_or_child_type [lookup_type type_name] parent_name]]
 
 [defmetro deframe [type_name parents slot_name_value_pairs]
   [print `[deframe ,type_name ,parents ,[mapcar &frametype-slotdef-name slot_name_value_pairs]]]

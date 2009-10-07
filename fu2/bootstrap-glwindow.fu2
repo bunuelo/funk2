@@ -70,12 +70,12 @@
 
 [deftypefunk posturable_physical_object execute set_posture [posture]
   [have this copy_slots [have this lookup posture] `[transform text texture part_place_frame agent]]
-  `[let [[part_place_frame [get this part_place_frame]]]
+  [let [[part_place_frame [get this part_place_frame]]]
     [mapc [funk [slot]
-		[let [[part_place [get part_place_frame slot]]]
+		[let [[part_place [have part_place_frame lookup slot]]]
 		  [if part_place
 		      [let [[thing [get part_place thing]]]
-			[if [is_type `posturable_physical_object thing]
+			[if [is-type `posturable_physical_object thing]
 			    [have thing set_posture posture]]]]]]
 	  [get part_place_frame slots]]]
   [have this add `posture posture]
@@ -96,16 +96,20 @@
 [defunk blue_left_shoe_texture-new  [] [new physical_texture [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.054] `blue_left_shoe]]
 
 
-[defunk bluegreen_blouse-new          [] [new physical_object [physical_transform-new_identity] 'Bluegreen Blouse'          [bluegreen_blouse_texture-new]          [new frame] nil]]
-[defunk sideview_bluegreen_blouse-new [] [new physical_object [physical_transform-new_identity] 'Sideview Bluegreen Blouse' [sideview_bluegreen_blouse_texture-new] [new frame] nil]]
+`[defunk bluegreen_blouse-new          [] [new physical_object [physical_transform-new_identity] 'Bluegreen Blouse'          [bluegreen_blouse_texture-new]          [new frame] nil]]
+[defunk bluegreen_blouse-new []
+  [new posturable_physical_object [new physical_object [physical_transform-new_identity] 'Bluegreen Blouse'          [bluegreen_blouse_texture-new]          [new frame] nil]
+                                  [new physical_object [physical_transform-new_identity] 'Sideview Bluegreen Blouse' [sideview_bluegreen_blouse_texture-new] [new frame] nil]
+				  [new physical_object [physical_transform-new_identity] 'Sideview Bluegreen Blouse' [sideview_bluegreen_blouse_texture-new] [new frame] nil]]]
 
-`[defunk red_skirt-new [] [new physical_object [physical_transform-new_identity] 'Red Skirt'          [red_skirt_texture-new]          [new frame] nil]]
 [defunk red_skirt-new []
   [new posturable_physical_object [new physical_object [physical_transform-new_identity] 'Red Skirt'          [red_skirt_texture-new]          [new frame] nil]
                                   [new physical_object [physical_transform-new_identity] 'Sideview Red Skirt' [sideview_red_skirt_texture-new] [new frame] nil]
                                   [new physical_object [physical_transform-new_identity] 'Sideview Red Skirt' [sideview_red_skirt_texture-new] [new frame] nil]]]
 
+[defunk sideview_bluegreen_blouse-new [] [new physical_object [physical_transform-new_identity] 'Sideview Bluegreen Blouse' [sideview_bluegreen_blouse_texture-new] [new frame] nil]]
 [defunk sideview_red_skirt-new        [] [new physical_object [physical_transform-new_identity] 'Sideview Red Skirt'        [sideview_red_skirt_texture-new]        [new frame] nil]]
+
 
 [defunk blue_shirt-new                [] [new physical_object [physical_transform-new_identity] 'Blue Shirt'                [blue_shirt_texture-new]                [new frame] nil]]
 [defunk sideview_blue_shirt-new       [] [new physical_object [physical_transform-new_identity] 'Sideview Blue Shirt'       [sideview_blue_shirt_texture-new]       [new frame] nil]]

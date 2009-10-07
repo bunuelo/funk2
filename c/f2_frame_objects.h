@@ -255,10 +255,11 @@
    \
   boolean_t raw__frame_object__funk__funkvar(name, is_type)(f2ptr cause, f2ptr thing) { \
     f2ptr this_type_name_symbol = new__symbol(cause, #name); \
-    if (raw__frame__is_type(cause, thing) && (raw__eq(cause, this_type_name_symbol, thing_type)) { \
+    f2ptr thing_type_name = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil); \
+    if (raw__frame__is_type(cause, thing) && (raw__eq(cause, this_type_name_symbol, thing_type_name)) { \
       return boolean__true; \
     } \
-    f2ptr thing_type = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil); \
+    f2ptr thing_type = f2__lookup_type(cause, thing_type_name); \
     if (raw__primobject_type__is_type_or_has_parent_type(cause, thing_type, this_type_name_symbol)) { \
       return boolean__true; \
     } \

@@ -217,6 +217,7 @@ bin_funk2_SOURCES = \
   c/f2_module_registration.c \
   c/f2_never_delete_list.c \
   c/f2_object.c \
+  c/f2_object_lattice.c \
   c/f2_opengl.c \
   c/f2_packet.c \
   c/f2_peer_command_server.c \

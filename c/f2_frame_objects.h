@@ -253,7 +253,17 @@
 #define def_frame_object__global__sans_slots(name) \
   def_frame_object__shared_global_vars(name); \
    \
-  boolean_t raw__frame_object__funk__funkvar(name, is_type)(f2ptr cause, f2ptr thing) {return (raw__frame__is_type(cause, thing) && raw__eq(cause, new__symbol(cause, #name), f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil)));} \
+  boolean_t raw__frame_object__funk__funkvar(name, is_type)(f2ptr cause, f2ptr thing) { \
+    f2ptr this_type_name_symbol = new__symbol(cause, #name); \
+    if (raw__frame__is_type(cause, thing) && (raw__eq(cause, this_type_name_symbol, thing_type)) { \
+      return boolean__true; \
+    } \
+    f2ptr thing_type = f2__frame__lookup_var_value(cause, thing, new__symbol(cause, "type"), nil); \
+    if (raw__primobject_type__is_type_or_has_parent_type(cause, thing_type, this_type_name_symbol)) { \
+      return boolean__true; \
+    } \
+    return boolean__false; \
+  } \
    \
   f2ptr f2__frame_object__funk__funkvar(name, is_type)(f2ptr cause, f2ptr thing) {return f2bool__new(raw__frame_object__funk__funkvar(name, is_type)(cause, thing));} \
   def_pcfunk1(frame_object__funk__pcfunkvar(name, is_type), thing, return f2__frame_object__funk__funkvar(name, is_type)(this_cause, thing)); \

@@ -25,16 +25,6 @@
 
 def_frame_object__global__1_slot(primobject_type, parents);
 
-/*
-f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents) {
-  f2ptr this = f2__frame__new(cause);
-  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "type"),    new__symbol(cause, "primobject_type"));
-  f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, new__symbol(cause, "parents"), parents);
-  return this;
-}
-def_pcfunk1(primobject_type__new, parents, return f2__primobject_type__new(this_cause, parents));
-*/
-
 f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable) {
   if ((! raw__frame__is_type(   cause, this)) ||
       (! raw__symbol__is_type(  cause, slot_type)) ||
@@ -87,7 +77,25 @@ f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr 
 def_pcfunk2(primobject_type__type_funk__slot_names, this, type_name, return f2__primobject_type__type_funk__slot_names(this_cause, this, type_name));
 
 
-
+boolean_t raw__primobject_type__is_type(f2ptr cause, f2ptr this, f2ptr type_name) {
+  f2ptr parents = f2__primobject_type__parents(cause, this);
+  {
+    f2ptr parents_iter = parents;
+    while (parents_iter) {
+      f2ptr parent_name = f2__cons__car(cause, parents_iter);
+      if (raw__symbol__eq(cause, parent_name, type_name)) {
+	return boolean__true;
+      }
+      f2ptr parent_type = f2__lookup_type(cause, parent_name);
+      if (raw__primobject_type__is_type(cause, parent_type, type_name)) {
+	return boolean__true;
+      }
+      parents_iter = f2__cons__cdr(cause, parents_iter);
+    }
+  }
+  return boolean__false;
+}
+def_pcfunk2(primobject_type__is_type, this, type_name, return f2__primobject_type__is_type(this_cause, this, type_name));
 
 void f2__primobject_type__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
@@ -106,6 +114,7 @@ void f2__primobject_type__initialize() {
   f2__primcfunk__init__4(primobject_type__add_slot_type,         this, slot_type, slot_name, funkable, "adds new type of slot funktion for an object type.");
   f2__primcfunk__init__3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name,           "lookup a primobject_type slot type funk.");
   f2__primcfunk__init__2(primobject_type__type_funk__slot_names, this, slot_type,                      "get a list of type funk slot names.");
+  f2__primcfunk__init__2(primobject_type__is_type,               this, type_name,                      "check if this primobject is a child of the type_name specified.");
 }
 
 

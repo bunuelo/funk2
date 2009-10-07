@@ -225,7 +225,6 @@
 										     [fiber [funk []
 												  [while t
 												    [let [[posture [have object lookup `posture]]]
-												      [print posture]
 												      [cond [[eq posture `standing]      [have object set_posture `sitting_left]]
 													    [[eq posture `sitting_left]  [have object set_posture `sitting_right]]
 													    [[eq posture `sitting_right] [have object set_posture `standing]]]

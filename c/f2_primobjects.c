@@ -112,6 +112,16 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause) {
 
 // place
 
+def_primobject_1_slot(place, thing);
+
+f2ptr f2__place__new(f2ptr cause, f2ptr thing) {
+  return f2place__new(cause, thing);
+}
+def_pcfunk1(place__new, thing, return f2__place__new(this_cause, thing));
+
+
+
+/*
 defprimobject__static_slot(place__thing, 0);
 
 f2ptr __place__symbol = -1;
@@ -159,6 +169,7 @@ f2ptr f2place__primobject_type__new(f2ptr cause) {
   {char* slot_name = "thing";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk);}
   return this;
 }
+*/
 
 
 // compound_object

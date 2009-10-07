@@ -95,6 +95,10 @@ boolean_t raw__primobject_type__is_type_or_child_type(f2ptr cause, f2ptr this, f
   }
   return boolean__false;
 }
+
+f2ptr f2__primobject_type__is_type_or_child_type(f2ptr cause, f2ptr this, f2ptr type_name) {
+  return f2bool__new(raw__primobject_type__is_type_or_child_type(cause, this, type_name));
+}
 def_pcfunk2(primobject_type__is_type_or_child_type, this, type_name, return f2__primobject_type__is_type_or_child_type(this_cause, this, type_name));
 
 void f2__primobject_type__reinitialize_globalvars() {

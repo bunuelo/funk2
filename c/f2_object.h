@@ -32,6 +32,8 @@ typedef struct funk2_object_types_s {
   funk2_primobject_object_types_t primobject;
 } funk2_object_types_t;
 
+f2ptr f2__object__type(f2ptr cause, f2ptr this);
+
 // **
 
 void f2__object__reinitialize_globalvars();

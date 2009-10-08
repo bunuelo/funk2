@@ -41,10 +41,11 @@ f2ptr f2__object_lattice__new(f2ptr cause) {
 def_pcfunk0(object_lattice__new, return f2__object_lattice__new(this_cause));
 
 void object_lattice__scan_accessor_type_and_incorporate_leafs__helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
-  f2ptr accessor_type = raw__array__elt(cause, aux_data, 1);
-  f2ptr object        = raw__array__elt(cause, aux_data, 2);
-  f2ptr this          = raw__array__elt(cause, aux_data, 3);
+  f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
+  f2ptr accessor_type                = raw__array__elt(cause, aux_data, 1);
+  f2ptr object                       = raw__array__elt(cause, aux_data, 2);
+  f2ptr this                         = raw__array__elt(cause, aux_data, 3);
+  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 4);
   {
     f2__print(cause, fiber, slot_name);
     f2ptr slot_funk = f2__object__slot__type_funk(cause, object, accessor_type, slot_name);
@@ -54,7 +55,19 @@ void object_lattice__scan_accessor_type_and_incorporate_leafs__helper(f2ptr caus
   }
 }
 
-f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr accessor_type, f2ptr object) {
+f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr accessor_type, f2ptr object, f2ptr start_nanoseconds_since_1970) {
+  if (! object) {
+    return nil;
+  }
+  if (start_nanoseconds_since_1970) {start_nanoseconds_since_1970 = f2integer__new(cause, raw__nanoseconds_since_1970(cause));}
+  u64 start_nanoseconds_since_1970__i = f2integer__i(start_nanoseconds_since_1970, cause);
+  
+  u64 object_creation_nanoseconds_since_1970 = raw__ptype__creation_nanoseconds_since_1970(cause, object);
+  
+  if (object_creation_nanoseconds_since_1970 >= start_nanoseconds_since_1970__i) {
+    return nil;
+  }
+  
   f2ptr object_type_name = f2__object__type(cause, object);
   f2ptr object_type      = f2__lookup_type(cause, object_type_name);
   
@@ -67,11 +80,12 @@ f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, 
     f2__hashtable__add(cause, lattice_node_hash, object, lattice_node);
     
     {
-      f2ptr aux_data = raw__array__new(cause, 4);
+      f2ptr aux_data = raw__array__new(cause, 5);
       raw__array__elt__set(cause, aux_data, 0, fiber);
       raw__array__elt__set(cause, aux_data, 1, accessor_type);
       raw__array__elt__set(cause, aux_data, 2, object);
       raw__array__elt__set(cause, aux_data, 3, this);
+      raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
       result = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_type, &object_lattice__scan_accessor_type_and_incorporate_leafs__helper, aux_data);
     }
   }

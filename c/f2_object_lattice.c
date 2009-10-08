@@ -72,7 +72,7 @@ f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, 
       raw__array__elt__set(cause, aux_data, 1, accessor_type);
       raw__array__elt__set(cause, aux_data, 2, object);
       raw__array__elt__set(cause, aux_data, 3, this);
-      result = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_type, &scan_accessor_type_and_incorporate_leafs__helper, aux_data);
+      result = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_type, &object_lattice__scan_accessor_type_and_incorporate_leafs__helper, aux_data);
     }
   }
   return result;

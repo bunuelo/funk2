@@ -51,15 +51,13 @@ void object_lattice__scan_accessor_type_and_incorporate_leafs__helper(f2ptr caus
     f2ptr slot_funk = f2__object__slot__type_funk(cause, object, accessor_type, slot_name);
     f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
     f2__print(cause, fiber, slot_value);
-    f2__object_lattice__scan_accessor_type_and_incorporate_leafs(cause, fiber, this, accessor_type, slot_value);
+    f2__object_lattice__scan_accessor_type_and_incorporate_leafs(cause, fiber, this, accessor_type, slot_value, start_nanoseconds_since_1970);
   }
 }
 
 f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr accessor_type, f2ptr object, f2ptr start_nanoseconds_since_1970) {
-  if (! object) {
-    return nil;
-  }
-  if (start_nanoseconds_since_1970) {start_nanoseconds_since_1970 = f2integer__new(cause, raw__nanoseconds_since_1970(cause));}
+  if (! object) {return nil;}
+  if (! start_nanoseconds_since_1970) {start_nanoseconds_since_1970 = f2integer__new(cause, raw__nanoseconds_since_1970(cause));}
   u64 start_nanoseconds_since_1970__i = f2integer__i(start_nanoseconds_since_1970, cause);
   
   u64 object_creation_nanoseconds_since_1970 = raw__ptype__creation_nanoseconds_since_1970(cause, object);
@@ -91,7 +89,7 @@ f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, 
   }
   return result;
 }
-def_pcfunk3(object_lattice__scan_accessor_type_and_incorporate_leafs, this, accessor_type, object, return f2__object_lattice__scan_accessor_type_and_incorporate_leafs(this_cause, simple_fiber, this, accessor_type, object));
+def_pcfunk3(object_lattice__scan_accessor_type_and_incorporate_leafs, this, accessor_type, object, return f2__object_lattice__scan_accessor_type_and_incorporate_leafs(this_cause, simple_fiber, this, accessor_type, object, nil));
 
 
 // **

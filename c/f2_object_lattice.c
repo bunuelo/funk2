@@ -28,7 +28,7 @@ def_primobject_1_slot(object_lattice, lattice_node_hash);
 f2ptr f2__object_lattice__new(f2ptr cause) {
   return f2object_lattice__new(cause, f2__hashtable__new(cause));
 }
-def_pcfunk1(object_lattice__new, return f2__object_lattice__new(this_cause));
+def_pcfunk0(object_lattice__new, return f2__object_lattice__new(this_cause));
 
 
 // **

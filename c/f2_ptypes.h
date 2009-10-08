@@ -73,8 +73,9 @@ u64 pfunk2__memblock__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
-u64        raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
-f2ptr       f2__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
+u64     pfunk2__f2ptype__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
+u64          raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
+f2ptr         f2__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause);
 

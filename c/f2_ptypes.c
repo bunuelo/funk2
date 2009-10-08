@@ -153,8 +153,12 @@ f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value) {
 }
 def_pcfunk2(ptype__cause__set, x, value, return f2__ptype__cause__set(this_cause, x, value));
 
-u64 raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this) {
+u64 pfunk2__f2ptype__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause) {
   return __pure__f2ptype__creation_nanoseconds_since_1970(this);
+}
+
+u64 raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this) {
+  return pfunk2__f2ptype__creation_nanoseconds_since_1970(this, cause);
 }
 f2ptr f2__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this) {
   return f2integer__new(cause, raw__ptype__creation_nanoseconds_since_1970(cause, this));

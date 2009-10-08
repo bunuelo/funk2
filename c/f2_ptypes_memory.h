@@ -47,9 +47,10 @@ struct ptype_block_s {
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;
 
-#define __pure__f2ptype__raw(this)               (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ptype)
-#define __pure__f2ptype__cause(this)             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
-#define __pure__f2ptype__cause__set(this, value) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
+#define __pure__f2ptype__raw(this)                             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ptype)
+#define __pure__f2ptype__cause(this)                           (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
+#define __pure__f2ptype__cause__set(this, value)               (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
+#define __pure__f2ptype__creation_nanoseconds_since_1970(this) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.creation_nanoseconds_since_1970)
 
 // integer
 

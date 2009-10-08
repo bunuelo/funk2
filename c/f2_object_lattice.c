@@ -46,7 +46,7 @@ void scan_accessor_type_and_incorporate_leafs__helper(f2ptr cause, f2ptr slot_na
 f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, f2ptr this, f2ptr accessor_type, f2ptr object) {
   f2ptr object_type_name = f2__object__type(cause, object);
   f2ptr object_type      = f2__lookup_type(cause, object_type_name);
-  f2ptr result           = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_name, &scan_accessor_type_and_incorporate_leafs__helper, nil);
+  f2ptr result           = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_type, &scan_accessor_type_and_incorporate_leafs__helper, nil);
   return result;
 }
 def_pcfunk3(object_lattice__scan_accessor_type_and_incorporate_leafs, this, accessor_type, object, return f2__object_lattice__scan_accessor_type_and_incorporate_leafs(this_cause, this, accessor_type, object));

@@ -3,10 +3,11 @@
 // funk2_memblock
 
 void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used) {
-  funk2_memblock__byte_num(block)     = byte_num;
+  funk2_memblock__byte_num(block)        = byte_num;
   funk2_garbage_collector_block_header__init(&(block->gc));
   atomic_set(&(block->reference_count), 0);
-  block->used                         = used;
+  block->used                            = used;
+  block->creation_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 }
 
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory) {

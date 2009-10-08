@@ -70,7 +70,7 @@ f2ptr raw__primobject_type__type_funk__mapc_slot_names(f2ptr cause, f2ptr this, 
       (! raw__symbol__is_type(cause, type_name))) {
     return f2larva__new(cause, 1);
   }
-  return raw__frame__type_var__mapc_slot_names(cause, this, type_name, map_funk);
+  return raw__frame__type_var__mapc_slot_names(cause, this, type_name, map_funk, aux_data);
 }
 
 // list slot type

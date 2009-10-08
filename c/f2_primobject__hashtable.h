@@ -113,7 +113,6 @@ f2ptr f2hashtable__primobject_type__new(f2ptr cause);
 #define hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
   f2ptr iteration__cause = (cause); \
   f2ptr iteration__this  = (this); \
-  f2mutex__lock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
   f2ptr iteration__bin_array          = f2hashtable__bin_array(iteration__this, iteration__cause); \
   s64   iteration__bin_array__length  = raw__array__length(iteration__cause, iteration__bin_array); \
   s64   iteration__index; \
@@ -125,7 +124,6 @@ f2ptr f2hashtable__primobject_type__new(f2ptr cause);
       iteration__keyvalue_pair_iter = f2cons__cdr(iteration__keyvalue_pair_iter, iteration__cause); \
     } \
   } \
-  f2mutex__unlock(f2hashtable__write_mutex(iteration__this, iteration__cause), iteration__cause); \
 }
 
 #define hashtable__iteration(cause, this, key, value, code) {\

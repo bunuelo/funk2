@@ -19,14 +19,14 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__PRIMOBJECTS__TYPE__H
-#define F2__PRIMOBJECTS__TYPE__H
+#ifndef F2__OBJECT_LATTICE__TYPE__H
+#define F2__OBJECT_LATTICE__TYPE__H
 
 // object_lattice
 typedef struct funk2_object_type__object_lattice__slot_s  funk2_object_type__object_lattice__slot_t;
 declare_object_type_1_slot(object_lattice, thing, );
 
-#endif // F2__PRIMOBJECTS__TYPE__H
+#endif // F2__OBJECT_LATTICE__TYPE__H
 
 
 #ifndef F2__OBJECT_LATTICE__H

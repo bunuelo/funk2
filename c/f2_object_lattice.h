@@ -44,6 +44,8 @@ declare_primobject_2_slot(object_lattice_node, object_image_frame, object_refere
 // object_lattice
 declare_primobject_1_slot(object_lattice, lattice_node_hash);
 
+f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr accessor_type, f2ptr object);
+
 // **
 
 void f2__object_lattice__initialize();

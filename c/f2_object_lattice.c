@@ -41,18 +41,29 @@ f2ptr f2__object_lattice__new(f2ptr cause) {
 def_pcfunk0(object_lattice__new, return f2__object_lattice__new(this_cause));
 
 void scan_accessor_type_and_incorporate_leafs__helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr fiber = raw__array__elt(cause, aux_data, 0);
-  f2__print(cause, fiber, slot_name);
+  f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
+  f2ptr accessor_type = raw__array__elt(cause, aux_data, 1);
+  f2ptr object        = raw__array__elt(cause, aux_data, 2);
+  {
+    f2__print(cause, fiber, slot_name);
+    f2ptr slot_funk = f2__object__slot__type_funk(f2ptr cause, object, accessor_type, slot_name);
+    f2ptr result = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
+    f2__print(cause, fiber, result);
+  }
 }
 
 f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr accessor_type, f2ptr object) {
   f2ptr object_type_name = f2__object__type(cause, object);
   f2ptr object_type      = f2__lookup_type(cause, object_type_name);
   
-  f2ptr aux_data = raw__array__new(cause, 1);
-  raw__array__elt__set(cause, aux_data, 0, fiber);
-  
-  f2ptr result = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_type, &scan_accessor_type_and_incorporate_leafs__helper, aux_data);
+  f2ptr result = nil;
+  {
+    f2ptr aux_data = raw__array__new(cause, 3);
+    raw__array__elt__set(cause, aux_data, 0, fiber);
+    raw__array__elt__set(cause, aux_data, 1, accessor_type);
+    raw__array__elt__set(cause, aux_data, 2, object);
+    result = raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, accessor_type, &scan_accessor_type_and_incorporate_leafs__helper, aux_data);
+  }
   return result;
 }
 def_pcfunk3(object_lattice__scan_accessor_type_and_incorporate_leafs, this, accessor_type, object, return f2__object_lattice__scan_accessor_type_and_incorporate_leafs(this_cause, simple_fiber, this, accessor_type, object));

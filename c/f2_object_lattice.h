@@ -24,7 +24,7 @@
 
 // object_lattice
 typedef struct funk2_object_type__object_lattice__slot_s  funk2_object_type__object_lattice__slot_t;
-declare_object_type_1_slot(object_lattice, thing, );
+declare_object_type_1_slot(object_lattice, lattice_node_hash, );
 
 #endif // F2__OBJECT_LATTICE__TYPE__H
 
@@ -35,7 +35,7 @@ declare_object_type_1_slot(object_lattice, thing, );
 #include "f2_primobjects.h"
 
 // object_lattice
-declare_primobject_1_slot(object_lattice, thing);
+declare_primobject_1_slot(object_lattice, lattice_node_hash);
 
 // **
 

@@ -23,12 +23,12 @@
 
 // object_lattice
 
-def_primobject_1_slot(object_lattice, thing);
+def_primobject_1_slot(object_lattice, lattice_node_hash);
 
-f2ptr f2__object_lattice__new(f2ptr cause, f2ptr thing) {
-  return f2object_lattice__new(cause, thing);
+f2ptr f2__object_lattice__new(f2ptr cause, f2ptr lattice_node_hash) {
+  return f2object_lattice__new(cause, lattice_node_hash);
 }
-def_pcfunk1(object_lattice__new, thing, return f2__object_lattice__new(this_cause, thing));
+def_pcfunk1(object_lattice__new, lattice_node_hash, return f2__object_lattice__new(this_cause, lattice_node_hash));
 
 
 // **
@@ -47,7 +47,7 @@ void f2__object_lattice__initialize() {
   f2ptr cause = initial_cause();
   
   // object_lattice
-  initialize_primobject_1_slot(object_lattice, thing);
+  initialize_primobject_1_slot(object_lattice, lattice_node_hash);
   
 }
 

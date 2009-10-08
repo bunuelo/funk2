@@ -62,6 +62,17 @@ f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr 
 }
 def_pcfunk3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name, return f2__primobject_type__lookup_slot_type_funk(this_cause, this, slot_type, slot_name));
 
+f2ptr raw__primobject_type__type_funk__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type_name, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
+  if (! this) {
+    return nil;
+  }
+  if ((! raw__frame__is_type( cause, this)) ||
+      (! raw__symbol__is_type(cause, type_name))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__frame__type_var__mapc_slot_names(cause, this, type_name, map_funk);
+}
+
 // list slot type
 
 f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr type_name) {

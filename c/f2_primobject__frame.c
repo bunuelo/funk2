@@ -138,6 +138,16 @@ f2ptr f2__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
 }
 def_pcfunk5(frame__type_var_value__set, this, type, var, value, not_defined_value, return f2__frame__type_var_value__set(this_cause, this, type, var, value, not_defined_value));
 
+f2ptr raw__frame__type_var__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
+  f2ptr retval = nil;
+  f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);
+  if (type__keyvalue_pair) {
+    f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
+    retval = raw__hashtable__mapc_slot_names(cause, type__hashtable, map_funk);
+  }
+  return retval;
+}
+
 f2ptr f2__frame__type_var__slot_names(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr retval = nil;
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);

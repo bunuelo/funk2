@@ -104,6 +104,8 @@ f2ptr  f2__hashtable__add                 (f2ptr cause, f2ptr this, f2ptr key, f
 f2ptr  f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
 f2ptr  f2__hashtable__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 
+f2ptr raw__hashtable__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
+
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
 
 f2ptr f2hashtable__primobject_type__new(f2ptr cause);

@@ -194,9 +194,16 @@ f2ptr f2__hashtable__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 def_pcfunk2(hashtable__lookup, this, slot_name, return f2__hashtable__lookup(this_cause, this, slot_name));
 
 
+f2ptr raw__hashtable__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
+  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__mapc_slot_names assert failed: f2__hashtable__valid(this)");
+  hashtable__key__iteration(cause, this, key,
+                            (*map_funk)(cause, key, aux_data));
+  return nil;
+}
+
 
 f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this) {
-  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
+  debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__slot_names assert failed: f2__hashtable__valid(this)");
   f2ptr new_list = nil;
   hashtable__key__iteration(cause, this, key,
                             new_list = f2cons__new(cause, key, new_list));

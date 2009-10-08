@@ -27,6 +27,9 @@
 #define chunk__begin_char __funk2.reader.char__left_paren
 #define chunk__end_char   __funk2.reader.char__right_paren
 
+#define frame__begin_char __funk2.reader.char__left_paren
+#define frame__end_char   __funk2.reader.char__right_paren
+
 f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
 
 ansi_color_t print__ansi__default__foreground       = ansi_color__white;
@@ -930,7 +933,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    
 	    {
 	      int subexp_size[2];
-	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
+	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(frame__begin_char, cause));} width ++;
 	      f2__write_pretty(cause, fiber, stream, frame_type_name, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    }
 	    
@@ -986,7 +989,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				 
 				 );
 
-	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
+	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(frame__end_char, cause));} width ++;
 	    
 	  } else if (f2primobject__is_object(exp, cause)) {
 	    int subexp_size[2];

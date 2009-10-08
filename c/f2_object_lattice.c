@@ -31,6 +31,17 @@ f2ptr f2__object_lattice__new(f2ptr cause) {
 def_pcfunk0(object_lattice__new, return f2__object_lattice__new(this_cause));
 
 
+// object_lattice_node
+
+def_primobject_2_slot(object_lattice_node, object_image_frame, object_reference_leaf, );
+
+f2ptr f2__object_lattice_node__new(f2ptr cause, f2ptr object_image_frame, f2ptr object_reference_leaf) {
+  return f2object_lattice_node__new(cause, object_image_frame, object_reference_leaf);
+}
+def_pcfunk2(object_lattice_node__new, object_image_frame, object_reference_leaf, return f2__object_lattice_node__new(this_cause, object_image_frame, object_reference_leaf));
+
+
+
 // **
 
 void f2__object_lattice__reinitialize_globalvars() {
@@ -38,7 +49,8 @@ void f2__object_lattice__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
-  __object_lattice__symbol = new__symbol(cause, "object_lattice");
+  __object_lattice__symbol      = new__symbol(cause, "object_lattice");
+  __object_lattice_node__symbol = new__symbol(cause, "object_lattice_node");
 }
 
 
@@ -48,6 +60,9 @@ void f2__object_lattice__initialize() {
   
   // object_lattice
   initialize_primobject_1_slot(object_lattice, lattice_node_hash);
+  
+  // object_lattice_node
+  initialize_primobject_2_slot(object_lattice_node, object_image_frame, object_reference_leaf);
   
 }
 

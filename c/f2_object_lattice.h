@@ -26,6 +26,10 @@
 typedef struct funk2_object_type__object_lattice__slot_s  funk2_object_type__object_lattice__slot_t;
 declare_object_type_1_slot(object_lattice, lattice_node_hash, );
 
+// object_lattice_node
+typedef struct funk2_object_type__object_lattice_node__slot_s  funk2_object_type__object_lattice_node__slot_t;
+declare_object_type_2_slot(object_lattice_node, object_image_frame, object_reference_leaf, );
+
 #endif // F2__OBJECT_LATTICE__TYPE__H
 
 
@@ -36,6 +40,9 @@ declare_object_type_1_slot(object_lattice, lattice_node_hash, );
 
 // object_lattice
 declare_primobject_1_slot(object_lattice, lattice_node_hash);
+
+// object_lattice_node
+declare_primobject_2_slot(object_lattice_node, object_image_frame, object_reference_leaf);
 
 // **
 

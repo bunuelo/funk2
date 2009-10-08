@@ -46,7 +46,7 @@ void scan_accessor_type_and_incorporate_leafs__helper(f2ptr cause, f2ptr slot_na
   f2ptr object        = raw__array__elt(cause, aux_data, 2);
   {
     f2__print(cause, fiber, slot_name);
-    f2ptr slot_funk = f2__object__slot__type_funk(f2ptr cause, object, accessor_type, slot_name);
+    f2ptr slot_funk = f2__object__slot__type_funk(cause, object, accessor_type, slot_name);
     f2ptr result = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
     f2__print(cause, fiber, result);
   }

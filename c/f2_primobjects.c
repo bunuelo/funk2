@@ -121,57 +121,6 @@ def_pcfunk1(place__new, thing, return f2__place__new(this_cause, thing));
 
 
 
-/*
-defprimobject__static_slot(place__thing, 0);
-
-f2ptr __place__symbol = -1;
-
-f2ptr f2place__new(f2ptr cause, f2ptr p) {
-  release__assert(__place__symbol != -1, nil, "f2place__new error: used before primobjects initialized.");
-  f2ptr this = f2__primobject__new(cause, __place__symbol, 1, nil);
-  f2place__thing__set(this, cause, p);
-  return this;
-}
-
-#ifdef DEBUG
-#  define F2__PRIMOBJECT__TYPE_CHECK
-#endif // DEBUG
-
-boolean_t raw__place__is_type(f2ptr cause, f2ptr x) {
-#ifdef F2__PRIMOBJECT__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PRIMOBJECT__TYPE_CHECK
-  return (raw__primobject__is_type(cause, x) && f2primobject__is__place(x, cause));
-}
-
-
-f2ptr f2__place__new(f2ptr cause, f2ptr x) {return f2place__new(cause, x);}
-def_pcfunk1(place__new, x, return f2__place__new(this_cause, x));
-
-f2ptr f2__place__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__place__is_type(cause, x));}
-def_pcfunk1(place__is_type, x, return f2__place__is_type(this_cause, x));
-
-f2ptr f2__place__type(f2ptr cause, f2ptr x) {return __place__symbol;}
-def_pcfunk1(place__type, x, return f2__place__type(this_cause, x));
-
-f2ptr f2__place__thing(f2ptr cause, f2ptr x) {return f2place__thing(x, cause);}
-def_pcfunk1(place__thing, x, return f2__place__thing(this_cause, x));
-
-f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y) {f2place__thing__set(x, cause, y); return nil;}
-def_pcfunk2(place__thing__set, x, y, return f2__place__thing__set(this_cause, x, y));
-
-f2ptr f2place__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil));
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_place.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.type__funk);}
-  {char* slot_name = "new";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_place.new__funk);}
-  {char* slot_name = "thing";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__funk);}
-  {char* slot_name = "thing";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.primobject_type_place.thing__set__funk);}
-  return this;
-}
-*/
-
-
 // compound_object
 
 def_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);

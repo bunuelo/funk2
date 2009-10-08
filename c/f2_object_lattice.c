@@ -21,3 +21,33 @@
 
 #include "funk2.h"
 
+// object_lattice
+
+def_primobject_1_slot(object_lattice, thing);
+
+f2ptr f2__object_lattice__new(f2ptr cause, f2ptr thing) {
+  return f2object_lattice__new(cause, thing);
+}
+def_pcfunk1(object_lattice__new, thing, return f2__object_lattice__new(this_cause, thing));
+
+
+// **
+
+void f2__object_lattice__reinitialize_globalvars() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "object_lattice", "", &f2__object_lattice__reinitialize_globalvars);
+  
+  f2ptr cause = initial_cause();
+  
+  __object_lattice__symbol = new__symbol(cause, "object_lattice");
+}
+
+
+void f2__object_lattice__initialize() {
+  f2__object_lattice__reinitialize_globalvars();
+  f2ptr cause = initial_cause();
+  
+  // object_lattice
+  initialize_primobject_1_slot(object_lattice, thing);
+  
+}
+

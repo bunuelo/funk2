@@ -100,6 +100,8 @@ defarray_slot__prototype(primobject__dynamic_slots);
 
 #endif // F2__PRIMOBJECTS__TYPE__H
 
+
+
 #ifndef F2__PRIMOBJECTS__H
 #define F2__PRIMOBJECTS__H
 

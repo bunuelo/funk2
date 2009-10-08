@@ -143,7 +143,7 @@ f2ptr raw__frame__type_var__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type,
   f2ptr type__keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, f2frame__type_hashtable(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__hashtable = f2cons__cdr(type__keyvalue_pair, cause);
-    retval = raw__hashtable__mapc_slot_names(cause, type__hashtable, map_funk);
+    retval = raw__hashtable__mapc_slot_names(cause, type__hashtable, map_funk, aux_data);
   }
   return retval;
 }

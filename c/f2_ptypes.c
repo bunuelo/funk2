@@ -311,7 +311,7 @@ u64 raw__double__hash_value(f2ptr cause, f2ptr this) {
   } stack_memory;
   stack_memory.d    = f2double__d(this, cause);
   stack_memory.zero = 0;
-  u64 hash_value = *((u64*)(&d));
+  u64 hash_value = *((u64*)(&(stack_memory.d)));
   return hash_value;
 }
 

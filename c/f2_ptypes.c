@@ -400,7 +400,7 @@ u64 raw__float__hash_value(f2ptr cause, f2ptr this) {
     float f;
     u64   zero;
   } stack_memory;
-  stack_memory.d    = f2float__f(this, cause);
+  stack_memory.f    = f2float__f(this, cause);
   stack_memory.zero = 0;
   u64 hash_value = *((u64*)(&(stack_memory.f)));
   return hash_value;

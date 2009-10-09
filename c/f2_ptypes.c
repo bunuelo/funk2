@@ -755,7 +755,7 @@ u64 raw__mutex__hash_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__mutex__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__mutex__hash_value(cause, this));}
-pcfunk1(mutex__hash_value, this, return f2__mutex__hash_value(this_cause, this));
+def_pcfunk1(mutex__hash_value, this, return f2__mutex__hash_value(this_cause, this));
 
 f2ptr f2__mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

@@ -427,6 +427,8 @@ typedef struct funk2_object_type__char__slot_s {
   f2ptr new__funk;
   f2ptr ch__symbol;
   f2ptr ch__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
 } funk2_object_type__char__slot_t;
 
 // string

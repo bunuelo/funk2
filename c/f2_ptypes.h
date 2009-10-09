@@ -323,6 +323,8 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr new__funk;
   f2ptr i__symbol;
   f2ptr i__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
 } funk2_object_type__integer__slot_t;
 
 // double

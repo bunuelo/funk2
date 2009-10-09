@@ -412,6 +412,8 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr unlock__funk;
   f2ptr trylock__symbol;
   f2ptr trylock__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
 } funk2_object_type__mutex__slot_t;
 
 // char

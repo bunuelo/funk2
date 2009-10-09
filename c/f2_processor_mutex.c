@@ -124,4 +124,14 @@ void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char
   pthread_mutex_unlock(&(this->pthread_mutex));
 }
 
+u64 funk2_processor_mutex__hash_value(funk2_processor_mutex_t* this) {
+  struct {
+    pthread_mutex_t pthread_mutex;
+    u64             zero;
+  } stack_memory;
+  memcpy(&(stack_memory.pthread_mutex), this->pthread_mutex, sizeof(this->pthread_mutex));
+  stack_memory.zero = 0;
+  u64 hash_value = *((u64*)(&(stack_memory.pthread_mutex)));
+  return hash_value;
+}
 

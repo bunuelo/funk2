@@ -368,6 +368,8 @@ typedef struct funk2_object_type__pointer__slot_s {
   f2ptr new__funk;
   f2ptr p__symbol;
   f2ptr p__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
 } funk2_object_type__pointer__slot_t;
 
 // gfunkptr

@@ -607,6 +607,11 @@ def_pcfunk1(gfunkptr__computer_id, this, return f2integer__new(this_cause, f2gfu
 def_pcfunk1(gfunkptr__pool_index, this, return f2integer__new(this_cause, f2gfunkptr__pool_index(this, this_cause)));
 def_pcfunk1(gfunkptr__pool_address, this, return f2integer__new(this_cause, f2gfunkptr__pool_address(this, this_cause)));
 
+u64 raw__gfunkptr__hash_value(f2ptr cause, f2ptr this) {return (u64)f2gfunkptr__gfunkptr(this, cause);}
+
+f2ptr f2__gfunkptr__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__gfunkptr__hash_value(cause, this));}
+def_pcfunk1(gfunkptr__hash_value, this, return f2__gfunkptr__hash_value(this_cause, this));
+
 f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.gfunkptr__symbol)) {
@@ -639,6 +644,7 @@ f2ptr f2gfunkptr__primobject_type__new(f2ptr cause) {
   {char* slot_name = "computer_id";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk);}
   {char* slot_name = "pool_index";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk);}
   {char* slot_name = "pool_address";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk);}
+  {char* slot_name = "hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_gfunkptr.hash_value__funk);}
   return this;
 }
 
@@ -2289,7 +2295,9 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "computer_id"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__computer_id, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.computer_id__funk = never_gc(cfunk);}
   {char* str = "pool_index"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__pool_index, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__pool_index, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk = never_gc(cfunk);}
+  {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.hash_value__funk = never_gc(cfunk);}
   
   // mutex
   

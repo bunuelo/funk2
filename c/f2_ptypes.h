@@ -391,6 +391,8 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr pool_index__funk;
   f2ptr pool_address__symbol;
   f2ptr pool_address__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
 // mutex

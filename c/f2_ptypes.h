@@ -338,6 +338,8 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr new__funk;
   f2ptr d__symbol;
   f2ptr d__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
 } funk2_object_type__double__slot_t;
 
 // float

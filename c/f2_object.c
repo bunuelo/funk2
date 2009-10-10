@@ -222,7 +222,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
 f2ptr f2__object__hash_value(f2ptr cause, f2ptr fiber, f2ptr this) {
-  f2ptr hash_value_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.hash_value);
+  f2ptr hash_value_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.hash_value__symbol);
   return f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, this, nil));
 }
 def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, simple_fiber, this));

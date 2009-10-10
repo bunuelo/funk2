@@ -72,7 +72,7 @@ void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2hash__bin_array__set(    this, cause, f2hash__bin_array(    temp_hash, cause));
 }
 
-u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr this, f2ptr object) {
+u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object) {
   f2ptr hash_value_funk = f2hash__hash_value_funk(this, cause);
   u64   key__hash_value = 0;
   if (! hash_value_funk) {
@@ -96,13 +96,13 @@ boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr this, f2ptr object_a, f2ptr
   return equals;
 }
 
-f2ptr f2__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+f2ptr f2__hash__add(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__add assert failed: f2__hash__valid(this)");
   f2mutex__lock(f2hash__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hash__bin_array(this, cause);
-  u64   key__hash_value    = raw__hash__hash_value_apply(cause, this, key);
+  u64   key__hash_value    = raw__hash__hash_value_apply(cause, fiber, this, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -111,7 +111,7 @@ f2ptr f2__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   while(keyvalue_pair_iter) {
     f2ptr iter__keyvalue_pair = f2cons__car(keyvalue_pair_iter,  cause);
     f2ptr keyvalue_pair__key  = f2cons__car(iter__keyvalue_pair, cause);
-    if (raw__hash__equals_apply(cause, this, key, keyvalue_pair__key)) {
+    if (raw__hash__equals_apply(cause, fiber, this, key, keyvalue_pair__key)) {
       keyvalue_pair = iter__keyvalue_pair;
       break;
     }
@@ -134,15 +134,15 @@ f2ptr f2__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
   return nil;
 }
-def_pcfunk3(hash__add, this, slot_name, value, return f2__hash__add(this_cause, this, slot_name, value));
+def_pcfunk3(hash__add, this, slot_name, value, return f2__hash__add(this_cause, simple_fiber, this, slot_name, value));
 
-f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__lookup_keyvalue_pair assert failed: f2__hash__valid(this)");
   f2mutex__lock(f2hash__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hash__bin_array(this, cause);
-  u64   key__hash_value    = raw__hash__hash_value_apply(cause, this, key);
+  u64   key__hash_value    = raw__hash__hash_value_apply(cause, fiber, this, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -150,7 +150,7 @@ f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   while(keyvalue_pair_iter) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-    if (raw__hash__equals_apply(cause, this, key, keyvalue_pair__key)) {
+    if (raw__hash__equals_apply(cause, fiber, this, key, keyvalue_pair__key)) {
       f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
       return keyvalue_pair;
     }
@@ -160,16 +160,16 @@ f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   return nil;
 }
 
-f2ptr f2__hash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr f2__hash__lookup(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__lookup assert failed: f2__hash__valid(this)");
-  f2ptr keyvalue_pair = f2__hash__lookup_keyvalue_pair(cause, this, key);
+  f2ptr keyvalue_pair = f2__hash__lookup_keyvalue_pair(cause, fiber, this, key);
   if (keyvalue_pair) {
     f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
     return retval;
   }
   return nil;
 }
-def_pcfunk2(hash__lookup, this, slot_name, return f2__hash__lookup(this_cause, this, slot_name));
+def_pcfunk2(hash__lookup, this, slot_name, return f2__hash__lookup(this_cause, simple_fiber, this, slot_name));
 
 
 f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {

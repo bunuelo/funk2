@@ -29,9 +29,6 @@
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
-[globalize-funk array-length                                &primfunk:array__length]
-[globalize-funk array-as_conslist                           &primfunk:array__as_conslist]
-
 [globalize-funk cons-as_array                               &primfunk:cons__as_array]
 [globalize-funk conslist-first_n                            &primfunk:conslist__first_n]
 

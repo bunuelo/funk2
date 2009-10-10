@@ -116,6 +116,8 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->get__symbol     = new__symbol(cause, "get");
   this->set__symbol     = new__symbol(cause, "set");
   this->execute__symbol = new__symbol(cause, "execute");
+  
+  this->hash_value__symbol = new__symbol(cause, "hash_value");
 }
 
 void funk2_globalenv__init(funk2_globalenv_t* this) {

@@ -188,6 +188,9 @@ void f2__primobject_hashtable__initialize() {
   
   // hashtable
   
+  initialize_primobject_6_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+  
+  /*
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__is_type, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.is_type__funk = never_gc(cfunk);}
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
@@ -208,6 +211,7 @@ void f2__primobject_hashtable__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__bin_array, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__funk = never_gc(cfunk);}
   {char* symbol_str = "bin_array-set"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(hashtable__bin_array__set, this, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.bin_array__set__funk = never_gc(cfunk);}
+  */
   {char* symbol_str = "slot_names"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.slot_names__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(hashtable__slot_names, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hashtable.slot_names__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_hashtable.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

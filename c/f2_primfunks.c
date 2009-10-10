@@ -966,53 +966,6 @@ f2ptr f2__random(f2ptr cause, f2ptr max_value) {
 }
 def_pcfunk1(random, max_value, return f2__random(this_cause, max_value));
 
-f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
-  if ((! length) || (! raw__integer__is_type(cause, length))) {
-    printf("\n[array_1d length &opt init] error: length must be integer.");
-    return f2larva__new(cause, 1);
-    //return f2__argument_type_check_failure__exception__new(cause, nil);
-  }
-  int raw_length = f2integer__i(length, cause);
-  f2ptr init = nil;
-  //printf ("\nand_rest: "); fflush(stdout); f2__print(simple_fiber, and_rest); fflush(stdout);
-  if (and_rest) {
-    init = f2cons__car(and_rest, cause);
-    if (!init || !raw__array__is_type(cause, init)) {
-      printf("\n[array length :rest init] error: init must be array (or not included)."); fflush(stdout);
-      return f2larva__new(cause, 1);
-      //return f2__argument_type_check_failure__exception__new(cause, nil);
-    }
-    if (raw__array__length(init, cause) < raw_length) {
-      printf("\n[array length :rest init] error: init must be longer or equal in length to length."); fflush(stdout);
-      return f2larva__new(cause, 1);
-      //return f2__argument_type_check_failure__exception__new(cause, nil);
-    }
-  }
-  if (init) {return raw__array__new_copy(cause, raw_length, init);}
-  else      {return raw__array__new(cause, raw_length);}
-}
-def_pcfunk1_and_rest(array__new_1d, length, and_rest, return f2__array__new_1d(this_cause, length, and_rest));
-
-f2ptr f2__array(f2ptr cause, f2ptr and_rest) {
-  f2ptr iter = and_rest;
-  int rest_length = 0;
-  while (iter) {
-    rest_length ++;
-    iter = f2cons__cdr(iter, cause);
-  }
-  f2ptr this = raw__array__new(cause, rest_length);
-  int i = 0;
-  iter = and_rest;
-  while (iter) {
-    f2ptr car = f2cons__car(iter, cause);
-    raw__array__elt__set(cause, this, i, car);
-    i ++;
-    iter = f2cons__cdr(iter, cause);
-  }
-  return this;
-}
-def_pcfunk0_and_rest(array, and_rest, return f2__array(this_cause, and_rest));
-
 f2ptr f2__chunk_copy(f2ptr cause, f2ptr init) {
   if ((! init) || (! raw__chunk__is_type(cause, init))) {
     printf("\n[chunk-copy init] error: init must be chunk.");

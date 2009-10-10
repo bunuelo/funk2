@@ -102,6 +102,18 @@ f2ptr f2__array__length(f2ptr cause, f2ptr x) {
 }
 def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
 
+u64 raw__array__hash_value(f2ptr cause, f2ptr this) {
+  if      (raw__simple_array__is_type(cause, this)) {return raw__simple_array__hash_value(cause, this);}
+  else if (raw__traced_array__is_type(cause, this)) {return raw__traced_array__hash_value(cause, this);}
+  else {error(nil, "raw__array__length: invalid type"); return 0;}
+}
+f2ptr f2__array__hash_value(f2ptr cause, f2ptr this) {
+  if      (raw__simple_array__is_type(cause, this)) {return f2__simple_array__hash_value(cause, this);}
+  else if (raw__traced_array__is_type(cause, this)) {return f2__traced_array__hash_value(cause, this);}
+  else {return f2larva__new(cause, 1);}
+}
+def_pcfunk1(array__hash_value, this, return f2__array__hash_value(this_cause, this));
+
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
   if (raw__simple_array__is_type(cause, this)) {
     u64 length = f2simple_array__length(this, cause);
@@ -251,19 +263,20 @@ void f2__array__initialize() {
   
   // array
   
-  f2__funktional_primcfunk__init__1(array__is_type,                     exp, "");
-  f2__primcfunk__init__1(           array__new_1d,                      length, "");
-  f2__primcfunk__init__0_and_rest(  array,                              elts, "");
-  f2__funktional_primcfunk__init__1(array__length,                      this, "");
-  f2__primcfunk__init__2(           array__elt,                         this, index, "");
-  f2__primcfunk__init__3(           array__elt__set,                    this, index, value, "");
-  f2__primcfunk__init__2(           array__elt__tracing_on,             this, index, "");
-  f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value, "");
-  f2__primcfunk__init__2(           array__elt__trace,                  this, index, "");
-  f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
-  f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
-  f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
-  f2__primcfunk__init__1(           array__as_conslist,                 this, "returns an array represented as a new conslist.");
+  f2__funktional_primcfunk__init__1(array__is_type,                     exp, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__1(           array__new_1d,                      length, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__0_and_rest(  array,                              elts, "(cfunk defined in f2_array.c)");
+  f2__funktional_primcfunk__init__1(array__length,                      this, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__1(           array__hash_value,                  this, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__2(           array__elt,                         this, index, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__3(           array__elt__set,                    this, index, value, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__2(           array__elt__tracing_on,             this, index, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__2(           array__elt__trace,                  this, index, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "(cfunk defined in f2_array.c)");
+  f2__primcfunk__init__1(           array__as_conslist,                 this, "returns an array represented as a new conslist.  (cfunk defined in f2_array.c)");
   
 }
 

@@ -863,7 +863,8 @@ double    raw__number__to_double(f2ptr cause, f2ptr this);
 
 // cause
 
-f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this);
+f2ptr      f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 
 // time
 

@@ -213,6 +213,9 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause);
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
 
+u64   raw__chunk__hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__chunk__hash_value(f2ptr cause, f2ptr this);
+
 // simple_array
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr);

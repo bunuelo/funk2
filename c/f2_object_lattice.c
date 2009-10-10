@@ -72,10 +72,10 @@ f2ptr f2__object_lattice__scan_accessor_type_and_incorporate_leafs(f2ptr cause, 
   f2ptr lattice_node_hash = f2__object_lattice__lattice_node_hash(cause, this);
   
   f2ptr result = nil;
-  f2ptr lattice_node = f2__hashtable__lookup(cause, fiber, lattice_node_hash, object);
+  f2ptr lattice_node = f2__hashtable__lookup(cause, lattice_node_hash, object);
   if (! lattice_node) {
     lattice_node = f2__object_lattice_node__new(cause, nil, object);
-    f2__hashtable__add(cause, fiber, lattice_node_hash, object, lattice_node);
+    f2__hashtable__add(cause, lattice_node_hash, object, lattice_node);
     
     {
       f2ptr aux_data = raw__array__new(cause, 5);

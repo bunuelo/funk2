@@ -293,6 +293,8 @@ void f2__array__initialize() {
   
   f2__array__reinitialize_globalvars();
   
+  f2ptr cause = initial_cause();
+  
   // array
   
   //f2__funktional_primcfunk__init__1(array__is_type,                     exp, "(cfunk defined in f2_array.c)");

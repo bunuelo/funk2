@@ -21,16 +21,7 @@
 
 #include "funk2.h"
 
-// hashtable primobject definition
-
-/*
-defprimobject__static_slot(hashtable__write_mutex,   0);
-defprimobject__static_slot(hashtable__key_count,     1);
-defprimobject__static_slot(hashtable__bin_num_power, 2);
-defprimobject__static_slot(hashtable__bin_array,     3);
-
-f2ptr __hashtable__symbol = -1;
-*/
+// hashtable
 
 def_primobject_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array);
 
@@ -56,51 +47,6 @@ f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
 #define hashtable__default_start_bin_num_power 3
 f2ptr f2__hashtable__new(f2ptr cause) {return raw__hashtable__new(cause, hashtable__default_start_bin_num_power);}
 def_pcfunk0(hashtable__new, return f2__hashtable__new(this_cause));
-
-/*
-f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_power, f2ptr bin_array) {
-  release__assert(__hashtable__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
-  release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2hashtable__new error: bin_num_power or bin_array are of wrong type.");
-  f2ptr this = f2__primobject__new(cause, __hashtable__symbol, 4, nil);
-  f2hashtable__write_mutex__set(  this, cause, write_mutex);
-  f2hashtable__key_count__set(    this, cause, key_count);
-  f2hashtable__bin_num_power__set(this, cause, bin_num_power);
-  f2hashtable__bin_array__set(    this, cause, bin_array);
-  return this;
-}
-
-// hardcoded hashtable functions
-
-
-boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is__hashtable(this, cause);}
-f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
-def_pcfunk1(hashtable__is_type, this, return f2__hashtable__is_type(this_cause, this));
-
-f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__write_mutex(this, cause);}
-def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
-
-f2ptr f2__hashtable__write_mutex__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__write_mutex__set(this, cause, value);}
-def_pcfunk2(hashtable__write_mutex__set, this, value, return f2__hashtable__write_mutex__set(this_cause, this, value));
-
-f2ptr f2__hashtable__key_count(f2ptr cause, f2ptr this) {return f2hashtable__key_count(this, cause);}
-def_pcfunk1(hashtable__key_count, this, return f2__hashtable__key_count(this_cause, this));
-
-f2ptr f2__hashtable__key_count__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__key_count__set(this, cause, value);}
-def_pcfunk2(hashtable__key_count__set, this, value, return f2__hashtable__key_count__set(this_cause, this, value));
-
-f2ptr f2__hashtable__bin_num_power(f2ptr cause, f2ptr this) {return f2hashtable__bin_num_power(this, cause);}
-def_pcfunk1(hashtable__bin_num_power, this, return f2__hashtable__bin_num_power(this_cause, this));
-
-f2ptr f2__hashtable__bin_num_power__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__bin_num_power__set(this, cause, value);}
-def_pcfunk2(hashtable__bin_num_power__set, this, value, return f2__hashtable__bin_num_power__set(this_cause, this, value));
-
-f2ptr f2__hashtable__bin_array(f2ptr cause, f2ptr this) {return f2hashtable__bin_array(this, cause);}
-def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cause, this));
-
-f2ptr f2__hashtable__bin_array__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__bin_array__set(this, cause, value);}
-def_pcfunk2(hashtable__bin_array__set, this, value, return f2__hashtable__bin_array__set(this_cause, this, value));
-
-*/
 
 void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2hashtable__bin_num_power(this, cause);

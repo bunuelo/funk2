@@ -416,7 +416,7 @@ double raw__number__to_double(f2ptr cause, f2ptr this) {
 
 
 
-// primobject hashtable
+// primobject ptypehash
 
 // primobject fiber
 

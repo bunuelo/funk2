@@ -33,17 +33,17 @@ void f2__initialize() {
   // ** This requires:
   // **   1. global vars to be "reinitialized"
   // **   2. global environment is "initialized"
-  // **   3. all packages besides global environment are "initialized" (including global environment prerequisite components, such as hashtable, frame, and environment primobjects)
+  // **   3. all packages besides global environment are "initialized" (including global environment prerequisite components, such as ptypehash, frame, and environment primobjects)
   // ** 
   {
     {
       f2__primobjects__reinitialize_globalvars();
-      f2__primobject_hashtable__reinitialize_globalvars(); 
+      f2__primobject_ptypehash__reinitialize_globalvars(); 
       f2__primobject_frame__reinitialize_globalvars();
     }
     f2__primobject_environment__initialize();
     f2__globalenv__initialize();
-    f2__primobject_hashtable__initialize();
+    f2__primobject_ptypehash__initialize();
     f2__primobject_frame__initialize();
   }
   // ** 

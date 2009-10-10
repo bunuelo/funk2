@@ -32,7 +32,7 @@ void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* thi
 
 void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handler_t* this, f2ptr cause) {
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
-  f2ptr new_type_hash = raw__hashtable__new(cause, 5);
+  f2ptr new_type_hash = raw__ptypehash__new(cause, 5);
   this->type_hash = new_type_hash;
   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen("type_hash"), (u8*)"type_hash"), new_type_hash);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
@@ -41,7 +41,7 @@ void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handle
 void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
-  f2__hashtable__add(cause, this->type_hash, type_name, type);
+  f2__ptypehash__add(cause, this->type_hash, type_name, type);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 
@@ -51,7 +51,7 @@ def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
-  f2ptr result = f2__hashtable__lookup(cause, this->type_hash, type_name);
+  f2ptr result = f2__ptypehash__lookup(cause, this->type_hash, type_name);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
   return result;
 }
@@ -104,7 +104,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "event";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2event__primobject_type__new(cause));}
   {char* type_name = "bytecode_event";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2bytecode_event__primobject_type__new(cause));}
   {char* type_name = "stream";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2stream__primobject_type__new(cause));}
-  {char* type_name = "hashtable";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2hashtable__primobject_type__new_aux(cause));}
+  {char* type_name = "ptypehash";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2ptypehash__primobject_type__new_aux(cause));}
   {char* type_name = "frame";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2frame__primobject_type__new(cause));}
   {char* type_name = "environment";         funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),         f2environment__primobject_type__new(cause));}
   {char* type_name = "set";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2set__primobject_type__new(cause));}

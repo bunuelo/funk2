@@ -24,7 +24,7 @@
 
 #include "f2_ptypes.h"
 #include "f2_primobjects.h"
-#include "f2_primobject__hashtable.h"
+#include "f2_primobject__ptypehash.h"
 #include "f2_primobject__frame.h"
 #include "f2_primobject__environment.h"
 #include "f2_reader.h"

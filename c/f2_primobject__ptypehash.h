@@ -19,13 +19,13 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__PRIMOBJECT__HASHTABLE__TYPES__H
-#define F2__PRIMOBJECT__HASHTABLE__TYPES__H
+#ifndef F2__PRIMOBJECT__PTYPEHASH__TYPES__H
+#define F2__PRIMOBJECT__PTYPEHASH__TYPES__H
 
-// hashtable
+// ptypehash
 
-typedef struct funk2_object_type__hashtable__slot_s funk2_object_type__hashtable__slot_t;
-declare_object_type_6_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
+typedef struct funk2_object_type__ptypehash__slot_s funk2_object_type__ptypehash__slot_t;
+declare_object_type_6_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
 			   f2ptr slot_names__symbol;
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
@@ -34,34 +34,34 @@ declare_object_type_6_slot(hashtable, write_mutex, key_count, bin_num_power, bin
 			   f2ptr lookup__funk;
 			   );
 
-#endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
+#endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H
 
-#ifndef F2__PRIMOBJECT__HASHTABLE__H
-#define F2__PRIMOBJECT__HASHTABLE__H
+#ifndef F2__PRIMOBJECT__PTYPEHASH__H
+#define F2__PRIMOBJECT__PTYPEHASH__H
 
 #include "f2_primobjects.h"
 
-// hashtable
+// ptypehash
 
-declare_primobject_6_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+declare_primobject_6_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
 
-f2ptr raw__hashtable__new                 (f2ptr cause, s64 bin_num_power);
-f2ptr  f2__hashtable__new                 (f2ptr cause);
-f2ptr  f2__hashtable__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
-f2ptr  f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
-f2ptr  f2__hashtable__lookup              (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr raw__ptypehash__new                 (f2ptr cause, s64 bin_num_power);
+f2ptr  f2__ptypehash__new                 (f2ptr cause);
+f2ptr  f2__ptypehash__add                 (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+f2ptr  f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key);
+f2ptr  f2__ptypehash__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 
-f2ptr raw__hashtable__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
+f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 
-f2ptr f2__hashtable__slot_names(f2ptr cause, f2ptr this);
+f2ptr f2__ptypehash__slot_names(f2ptr cause, f2ptr this);
 
-f2ptr f2hashtable__primobject_type__new(f2ptr cause);
-f2ptr f2hashtable__primobject_type__new_aux(f2ptr cause);
+f2ptr f2ptypehash__primobject_type__new(f2ptr cause);
+f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause);
 
-#define hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
+#define ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
   f2ptr iteration__cause = (cause); \
   f2ptr iteration__this  = (this); \
-  f2ptr iteration__bin_array          = f2hashtable__bin_array(iteration__this, iteration__cause); \
+  f2ptr iteration__bin_array          = f2ptypehash__bin_array(iteration__this, iteration__cause); \
   s64   iteration__bin_array__length  = raw__array__length(iteration__cause, iteration__bin_array); \
   s64   iteration__index; \
   for (iteration__index = 0; iteration__index < iteration__bin_array__length; iteration__index ++) { \
@@ -74,29 +74,29 @@ f2ptr f2hashtable__primobject_type__new_aux(f2ptr cause);
   } \
 }
 
-#define hashtable__iteration(cause, this, key, value, code) {\
-  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+#define ptypehash__iteration(cause, this, key, value, code) {\
+  ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
-#define hashtable__key__iteration(cause, this, key, code) {\
-  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+#define ptypehash__key__iteration(cause, this, key, code) {\
+  ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
-#define hashtable__value__iteration(cause, this, value, code) {\
-  hashtable__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+#define ptypehash__value__iteration(cause, this, value, code) {\
+  ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
 // **
 
-void f2__primobject_hashtable__reinitialize_globalvars();
-void f2__primobject_hashtable__initialize();
+void f2__primobject_ptypehash__reinitialize_globalvars();
+void f2__primobject_ptypehash__initialize();
 
-#endif // F2__PRIMOBJECT__HASHTABLE__H
+#endif // F2__PRIMOBJECT__PTYPEHASH__H
 

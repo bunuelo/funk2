@@ -41,8 +41,8 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
   }
   
   f2ptr frame             = f2environment__frame(this, cause);
-  f2ptr funkvar_hashtable = f2__frame__funkvar_hashtable(cause, frame);
-  f2ptr bin_array         = f2hashtable__bin_array(funkvar_hashtable, cause);
+  f2ptr funkvar_ptypehash = f2__frame__funkvar_ptypehash(cause, frame);
+  f2ptr bin_array         = f2ptypehash__bin_array(funkvar_ptypehash, cause);
   s64   length            = raw__array__length(cause, bin_array);
   
   f2ptr match_frame = f2__frame__new(cause);

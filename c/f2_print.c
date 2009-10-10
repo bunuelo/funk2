@@ -885,35 +885,35 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("type", 4, cause, fiber, stream, f2bug__type(exp, cause), f2bug__type__tracing_on(exp, cause), f2bug__type__trace(exp, cause), f2bug__type__imagination_frame(exp, cause),
 	       ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_hashtable(exp, cause)) {
+	  } else if (f2primobject__is_ptypehash(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("bin_num_power", 13, cause, fiber, stream, f2hashtable__bin_num_power(exp, cause),   f2hashtable__bin_num_power__tracing_on(exp, cause), f2hashtable__bin_num_power__trace(exp, cause), f2hashtable__bin_num_power__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("bin_num_power", 13, cause, fiber, stream, f2ptypehash__bin_num_power(exp, cause),   f2ptypehash__bin_num_power__tracing_on(exp, cause), f2ptypehash__bin_num_power__trace(exp, cause), f2ptypehash__bin_num_power__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2hashtable__bin_array(exp, cause),       f2hashtable__bin_array__tracing_on(exp, cause), f2hashtable__bin_array__trace(exp, cause), f2hashtable__bin_array__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2ptypehash__bin_array(exp, cause),       f2ptypehash__bin_array__tracing_on(exp, cause), f2ptypehash__bin_array__trace(exp, cause), f2ptypehash__bin_array__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
 	  } else if (f2primobject__is_frame(exp, cause)) {
 	    int   max_type_name_length = 0;
 	    int   max_slot_name_length = 0;
 	    
-	    f2ptr type_hashtable                    = f2frame__type_hashtable(exp, cause);
+	    f2ptr type_ptypehash                    = f2frame__type_ptypehash(exp, cause);
 	    
 	    boolean_t need_to_print_type_besides_basic_variable = boolean__false; // if this is false, we can omit printing "variable" before each frame variable key.
 	    
 	    f2ptr frame_type_name = f2primobject__type(exp, cause); // defaults to "frame", but is set to :type slot name if one exists.
 	    
-	    hashtable__iteration(cause, type_hashtable, type_hashtable__key, type_hashtable__value,
+	    ptypehash__iteration(cause, type_ptypehash, type_ptypehash__key, type_ptypehash__value,
 				 
-				 if (raw__symbol__is_type(cause, type_hashtable__key)) {
-				   int type_key__length = f2symbol__length(type_hashtable__key, cause);
+				 if (raw__symbol__is_type(cause, type_ptypehash__key)) {
+				   int type_key__length = f2symbol__length(type_ptypehash__key, cause);
 				   
-				   hashtable__iteration(cause, type_hashtable__value, slot_name, slot_value,
+				   ptypehash__iteration(cause, type_ptypehash__value, slot_name, slot_value,
 							
 							if (raw__symbol__is_type(cause, slot_name)) {
 							  // here, we only update max length values if this type_name actually has a key that we are going to print.
-							  if (type_hashtable__key != __funk2.primobject__frame.variable__symbol) {
+							  if (type_ptypehash__key != __funk2.primobject__frame.variable__symbol) {
 							    need_to_print_type_besides_basic_variable = boolean__true;
 							  }
 							  if (slot_name == __funk2.globalenv.type__symbol && raw__symbol__is_type(cause, slot_value)) {
@@ -940,7 +940,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    // indent frame slots
 	    indent_space_num += 2; available_width -= 2;
 	    
-	    hashtable__iteration(cause, type_hashtable, type_keyvalue_pair__key, typevar_hashtable,
+	    ptypehash__iteration(cause, type_ptypehash, type_keyvalue_pair__key, typevar_ptypehash,
 				 
 				 if (raw__symbol__is_type(cause, type_keyvalue_pair__key)) {
 				   int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
@@ -948,7 +948,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 				     max_type_name_length = type_key__length;
 				   }
 				   
-				   hashtable__iteration(cause, typevar_hashtable, keyvalue_pair__key, slot_value,
+				   ptypehash__iteration(cause, typevar_ptypehash, keyvalue_pair__key, slot_value,
 							
 							if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
 							  int   key__length   = f2symbol__length(keyvalue_pair__key, cause);

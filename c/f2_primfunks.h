@@ -870,7 +870,7 @@ f2ptr      f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr
 
 f2ptr f2__time(f2ptr cause);
 
-// primobject hashtable
+// primobject ptypehash
 
 u64 raw__hash_value(f2ptr cause, f2ptr exp);
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);

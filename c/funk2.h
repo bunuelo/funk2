@@ -81,7 +81,7 @@
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__environment.h"
 #include "f2_primobject__frame.h"
-#include "f2_primobject__hashtable.h"
+#include "f2_primobject__ptypehash.h"
 #include "f2_primobject__object.h"
 #include "f2_primobject__object_type.h"
 #include "f2_primobject__set.h"

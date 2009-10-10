@@ -35,10 +35,10 @@ struct funk2_object_type__frame__slot_s {
   f2ptr new_type_mutex__funk;
   f2ptr new_type_mutex__set__symbol;
   f2ptr new_type_mutex__set__funk;
-  f2ptr type_hashtable__symbol;
-  f2ptr type_hashtable__funk;
-  f2ptr type_hashtable__set__symbol;
-  f2ptr type_hashtable__set__funk;
+  f2ptr type_ptypehash__symbol;
+  f2ptr type_ptypehash__funk;
+  f2ptr type_ptypehash__set__symbol;
+  f2ptr type_ptypehash__set__funk;
   f2ptr add_type_var_value__symbol;
   f2ptr add_type_var_value__funk;
   f2ptr lookup_type_var_assignment_cons__symbol;
@@ -57,13 +57,13 @@ struct funk2_object_type__frame__slot_s {
   f2ptr check_has_type_slot__funk;
 };
 
-#endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
+#endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H
 
 #ifndef F2__PRIMOBJECT__FRAME__H
 #define F2__PRIMOBJECT__FRAME__H
 
 #include "f2_primobjects.h"
-#include "f2_primobject__hashtable.h"
+#include "f2_primobject__ptypehash.h"
 #include "f2_primobject__environment.h"
 
 // frame
@@ -80,17 +80,17 @@ defprimobject__static_slot__prototype(frame__new_type_mutex);
 #define f2frame__new_type_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, frame__new_type_mutex, cause)
 #define f2frame__new_type_mutex__cause(     this, cause)        primobject__static_slot__cause(     this, frame__new_type_mutex, cause)
 
-defprimobject__static_slot__prototype(frame__type_hashtable);
-#define f2frame__type_hashtable(            this, cause)        primobject__static_slot__accessor(  this, frame__type_hashtable, cause)
-#define f2frame__type_hashtable__set(       this, cause, value) primobject__static_slot__set(       this, frame__type_hashtable, cause, value)
-#define f2frame__type_hashtable__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, frame__type_hashtable, cause)
-#define f2frame__type_hashtable__trace(     this, cause)        primobject__static_slot__trace(     this, frame__type_hashtable, cause)
-#define f2frame__type_hashtable__cause(     this, cause)        primobject__static_slot__cause(     this, frame__type_hashtable, cause)
+defprimobject__static_slot__prototype(frame__type_ptypehash);
+#define f2frame__type_ptypehash(            this, cause)        primobject__static_slot__accessor(  this, frame__type_ptypehash, cause)
+#define f2frame__type_ptypehash__set(       this, cause, value) primobject__static_slot__set(       this, frame__type_ptypehash, cause, value)
+#define f2frame__type_ptypehash__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, frame__type_ptypehash, cause)
+#define f2frame__type_ptypehash__trace(     this, cause)        primobject__static_slot__trace(     this, frame__type_ptypehash, cause)
+#define f2frame__type_ptypehash__cause(     this, cause)        primobject__static_slot__cause(     this, frame__type_ptypehash, cause)
 
 f2ptr  f2__frame__new                            (f2ptr cause);
 f2ptr  f2__frame__add_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
-f2ptr  f2__frame__var_hashtable                  (f2ptr cause, f2ptr this);
-f2ptr  f2__frame__funkvar_hashtable              (f2ptr cause, f2ptr this);
+f2ptr  f2__frame__var_ptypehash                  (f2ptr cause, f2ptr this);
+f2ptr  f2__frame__funkvar_ptypehash              (f2ptr cause, f2ptr this);
 f2ptr  f2__frame__add_var_value                  (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
 f2ptr  f2__frame__add_funkvar_value              (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
 f2ptr  f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
@@ -123,8 +123,8 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this);
 f2ptr f2frame__primobject_type__new(f2ptr cause);
 
 #define frame__iteration(cause, this, type_slot_name, slot_name, slot_value, code) \
-  hashtable__iteration(cause, f2frame__type_hashtable(this, cause), type_slot_name, type_slot_hashtable, \
-                       hashtable__iteration(cause, type_slot_hashtable, slot_name, slot_value, \
+  ptypehash__iteration(cause, f2frame__type_ptypehash(this, cause), type_slot_name, type_slot_ptypehash, \
+                       ptypehash__iteration(cause, type_slot_ptypehash, slot_name, slot_value, \
                        code;))
 
 // **

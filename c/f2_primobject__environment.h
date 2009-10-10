@@ -61,7 +61,7 @@ struct funk2_object_type__environment__slot_s {
 #include "f2_globalenv.h"
 #include "f2_print.h"
 #include "f2_primobjects.h"
-#include "f2_primobject__hashtable.h"
+#include "f2_primobject__ptypehash.h"
 #include "f2_primobject__frame.h"
 
 boolean_t raw__environment__is_type(f2ptr cause, f2ptr this);

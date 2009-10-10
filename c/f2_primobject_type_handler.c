@@ -38,10 +38,10 @@ void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handle
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 
-void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr fiber, f2ptr type_name, f2ptr type) {
+void funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type) {
   if (this->type_hash == nil) {funk2_primobject_type_handler__reset_type_hash(this, cause);}
   funk2_processor_mutex__user_lock(&(this->type_hash_mutex));
-  f2__hashtable__add(cause, fiber, this->type_hash, type_name, type);
+  f2__hashtable__add(cause, this->type_hash, type_name, type);
   funk2_processor_mutex__unlock(&(this->type_hash_mutex));
 }
 

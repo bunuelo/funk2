@@ -25,7 +25,7 @@
 // ptypehash
 
 typedef struct funk2_object_type__ptypehash__slot_s funk2_object_type__ptypehash__slot_t;
-declare_object_type_6_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
+declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array,
 			   f2ptr slot_names__symbol;
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
@@ -43,7 +43,7 @@ declare_object_type_6_slot(ptypehash, write_mutex, key_count, bin_num_power, bin
 
 // ptypehash
 
-declare_primobject_6_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+declare_primobject_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array);
 
 f2ptr raw__ptypehash__new                 (f2ptr cause, s64 bin_num_power);
 f2ptr  f2__ptypehash__new                 (f2ptr cause);

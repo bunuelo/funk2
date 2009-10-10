@@ -28,8 +28,9 @@
 #include "f2_primobject_type_handler.h"
 
 typedef struct funk2_object_types_s {
-  funk2_ptype_object_types_t      ptype;
-  funk2_primobject_object_types_t primobject;
+  funk2_ptype_object_types_t       ptype;
+  funk2_primobject_object_types_t  primobject;
+  funk2_object_type__array__slot_t array;
 } funk2_object_types_t;
 
 f2ptr f2__object__type(f2ptr cause, f2ptr this);

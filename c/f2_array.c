@@ -43,6 +43,9 @@ boolean_t raw__array__is_type(f2ptr cause, f2ptr x) {return (raw__simple_array__
 f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__is_type(cause, x));}
 def_pcfunk1(array__is_type, x, return f2__array__is_type(this_cause, x));
 
+f2ptr f2__array__type(f2ptr cause, f2ptr this) {return new__symbol(cause, "array");}
+def_pcfunk1(array__type, this, return f2__array__type(this_cause, this));
+
 f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
   if ((! length) || (! raw__integer__is_type(cause, length))) {
     printf("\n[array_1d length &opt init] error: length must be integer.");
@@ -69,6 +72,17 @@ f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
   else      {return raw__array__new(cause, raw_length);}
 }
 def_pcfunk1_and_rest(array__new_1d, length, and_rest, return f2__array__new_1d(this_cause, length, and_rest));
+
+f2ptr f2__array__new(f2ptr cause, f2ptr length) {
+  if ((! length) || (! raw__integer__is_type(cause, length))) {
+    printf("\n[array_1d length &opt init] error: length must be integer.");
+    return f2larva__new(cause, 1);
+    //return f2__argument_type_check_failure__exception__new(cause, nil);
+  }
+  int raw_length = f2integer__i(length, cause);
+  return raw__array__new(cause, raw_length);
+}
+def_pcfunk1(array__new, length, return f2__array__new(this_cause, length));
 
 f2ptr f2__array(f2ptr cause, f2ptr and_rest) {
   f2ptr iter = and_rest;
@@ -248,6 +262,24 @@ f2ptr f2__array__as_conslist(f2ptr cause, f2ptr this) {
 def_pcfunk1(array__as_conslist, this, return f2__array__as_conslist(this_cause, this));
 
 
+f2ptr f2array__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
+  {char* slot_name = "is_type";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.is_type__funk);}
+  {char* slot_name = "type";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.type__funk);}
+  {char* slot_name = "new";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.array.new__funk);}
+  {char* slot_name = "length";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.length__funk);}
+  {char* slot_name = "hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.hash_value__funk);}
+  {char* slot_name = "elt";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__funk);}
+  {char* slot_name = "elt";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__set__funk);}
+  {char* slot_name = "elt-tracing_on";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__tracing_on__funk);}
+  {char* slot_name = "elt-tracing_on";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__tracing_on__set__funk);}
+  {char* slot_name = "elt-trace";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__trace__funk);}
+  {char* slot_name = "elt-trace";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__trace__set__funk);}
+  {char* slot_name = "elt-imagination_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__imagination_frame__funk);}
+  {char* slot_name = "elt-imagination_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.array.elt__imagination_frame__set__funk);}
+  return this;
+}
+
 
 // **
 
@@ -263,20 +295,49 @@ void f2__array__initialize() {
   
   // array
   
-  f2__funktional_primcfunk__init__1(array__is_type,                     exp, "(cfunk defined in f2_array.c)");
+  //f2__funktional_primcfunk__init__1(array__is_type,                     exp, "(cfunk defined in f2_array.c)");
   f2__primcfunk__init__1(           array__new_1d,                      length, "(cfunk defined in f2_array.c)");
   f2__primcfunk__init__0_and_rest(  array,                              elts, "(cfunk defined in f2_array.c)");
-  f2__funktional_primcfunk__init__1(array__length,                      this, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__1(           array__hash_value,                  this, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__2(           array__elt,                         this, index, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__3(           array__elt__set,                    this, index, value, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__2(           array__elt__tracing_on,             this, index, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__2(           array__elt__trace,                  this, index, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "(cfunk defined in f2_array.c)");
+  //f2__funktional_primcfunk__init__1(array__length,                      this, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__1(           array__hash_value,                  this, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__2(           array__elt,                         this, index, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__3(           array__elt__set,                    this, index, value, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__2(           array__elt__tracing_on,             this, index, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__2(           array__elt__trace,                  this, index, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "(cfunk defined in f2_array.c)");
+  //f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "(cfunk defined in f2_array.c)");
   f2__primcfunk__init__1(           array__as_conslist,                 this, "returns an array represented as a new conslist.  (cfunk defined in f2_array.c)");
+  
+  // array
+  
+  {char* str = "is_type"; __funk2.globalenv.object_type.array.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.is_type__funk = never_gc(cfunk);}
+  {char* str = "type"; __funk2.globalenv.object_type.array.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.type__funk = never_gc(cfunk);}
+  {char* str = "new"; __funk2.globalenv.object_type.array.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.new__funk = never_gc(cfunk);}
+  {char* str = "length"; __funk2.globalenv.object_type.array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.length__funk = never_gc(cfunk);}
+  {char* str = "hash_value"; __funk2.globalenv.object_type.array.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.hash_value__funk = never_gc(cfunk);}
+  {char* str = "elt"; __funk2.globalenv.object_type.array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__funk = never_gc(cfunk);}
+  {char* str = "elt-set"; __funk2.globalenv.object_type.array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__set__funk = never_gc(cfunk);}
+  {char* str = "elt-tracing_on"; __funk2.globalenv.object_type.array.elt__tracing_on__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__tracing_on, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__tracing_on__funk = never_gc(cfunk);}
+  {char* str = "elt-tracing_on-set"; __funk2.globalenv.object_type.array.elt__tracing_on__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__tracing_on__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__tracing_on__set__funk = never_gc(cfunk);}
+  {char* str = "elt-trace"; __funk2.globalenv.object_type.array.elt__trace__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__trace, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__trace__funk = never_gc(cfunk);}
+  {char* str = "elt-trace-set"; __funk2.globalenv.object_type.array.elt__trace__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__trace__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__trace__set__funk = never_gc(cfunk);}
+  {char* str = "elt-imagination_frame"; __funk2.globalenv.object_type.array.elt__imagination_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__imagination_frame, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__imagination_frame__funk = never_gc(cfunk);}
+  {char* str = "elt-imagination_frame-set"; __funk2.globalenv.object_type.array.elt__imagination_frame__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__imagination_frame__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.array.elt__imagination_frame__set__funk = never_gc(cfunk);}
   
 }
 

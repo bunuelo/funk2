@@ -519,6 +519,8 @@ typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr new_copy__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr hash_value__symbol;
+  f2ptr hash_value__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
   f2ptr elt__set__symbol;

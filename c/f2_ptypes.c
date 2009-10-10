@@ -2026,6 +2026,19 @@ f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) 
 f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__imagination_frame(x, f2integer__i(y, cause), cause);}
 f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__imagination_frame__set(x, f2integer__i(y, cause), cause, z); return nil;}
 
+def_pcfunk1(traced_array__is_type, x, return f2__traced_array__is_type(this_cause, x));
+def_pcfunk1(traced_array__type, x, return f2__traced_array__type(this_cause, x));
+def_pcfunk1(traced_array__new, length, return f2__traced_array__new(this_cause, length));
+def_pcfunk1(traced_array__length, x, return f2__traced_array__length(this_cause, x));
+def_pcfunk2(traced_array__elt, x, y, return f2__traced_array__elt(this_cause, x, y));
+def_pcfunk3(traced_array__elt__set, x, y, z, return f2__traced_array__elt__set(this_cause, x, y, z));
+def_pcfunk2(traced_array__elt__tracing_on, x, y, return f2__traced_array__elt__tracing_on(this_cause, x, y));
+def_pcfunk3(traced_array__elt__tracing_on__set, x, y, z, return f2__traced_array__elt__tracing_on__set(this_cause, x, y, z));
+def_pcfunk2(traced_array__elt__trace, x, y, return f2__traced_array__elt__trace(this_cause, x, y));
+def_pcfunk3(traced_array__elt__trace__set, x, y, z, return f2__traced_array__elt__trace__set(this_cause, x, y, z));
+def_pcfunk2(traced_array__elt__imagination_frame, x, y, return f2__traced_array__elt__imagination_frame(this_cause, x, y));
+def_pcfunk3(traced_array__elt__imagination_frame__set, x, y, z, return f2__traced_array__elt__imagination_frame__set(this_cause, x, y, z));
+
 u64 raw__traced_array__hash_value(f2ptr cause, f2ptr this) {
   u64 length = raw__traced_array__length(cause, this);
   u64 hash_value = 0;
@@ -2055,19 +2068,6 @@ u64 raw__traced_array__hash_value(f2ptr cause, f2ptr this) {
   }
   return hash_value;
 }
-
-def_pcfunk1(traced_array__is_type, x, return f2__traced_array__is_type(this_cause, x));
-def_pcfunk1(traced_array__type, x, return f2__traced_array__type(this_cause, x));
-def_pcfunk1(traced_array__new, length, return f2__traced_array__new(this_cause, length));
-def_pcfunk1(traced_array__length, x, return f2__traced_array__length(this_cause, x));
-def_pcfunk2(traced_array__elt, x, y, return f2__traced_array__elt(this_cause, x, y));
-def_pcfunk3(traced_array__elt__set, x, y, z, return f2__traced_array__elt__set(this_cause, x, y, z));
-def_pcfunk2(traced_array__elt__tracing_on, x, y, return f2__traced_array__elt__tracing_on(this_cause, x, y));
-def_pcfunk3(traced_array__elt__tracing_on__set, x, y, z, return f2__traced_array__elt__tracing_on__set(this_cause, x, y, z));
-def_pcfunk2(traced_array__elt__trace, x, y, return f2__traced_array__elt__trace(this_cause, x, y));
-def_pcfunk3(traced_array__elt__trace__set, x, y, z, return f2__traced_array__elt__trace__set(this_cause, x, y, z));
-def_pcfunk2(traced_array__elt__imagination_frame, x, y, return f2__traced_array__elt__imagination_frame(this_cause, x, y));
-def_pcfunk3(traced_array__elt__imagination_frame__set, x, y, z, return f2__traced_array__elt__imagination_frame__set(this_cause, x, y, z));
 
 f2ptr f2__traced_array__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__hash_value(cause, this));}
 def_pcfunk1(traced_array__hash_value, this, return f2__traced_array__hash_value(this_cause, this));

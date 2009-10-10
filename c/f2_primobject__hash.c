@@ -37,16 +37,16 @@ boolean_t raw__hash__valid(f2ptr cause, f2ptr this) {
   return boolean__true;
 }
 
-f2ptr raw__hash__new(f2ptr cause, s64 bin_num_power) {
+f2ptr raw__hash__new(f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2ptr equals_funk) {
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
-  f2ptr this = f2hash__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array, nil, nil);
+  f2ptr this = f2hash__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array, hash_value_funk, equals_funk);
   debug__assert(raw__hash__valid(cause, this), nil, "raw__hash__new assert failed: f2__hash__valid(this)");
   return this;
 }
 
 #define hash__default_start_bin_num_power 3
-f2ptr f2__hash__new(f2ptr cause) {return raw__hash__new(cause, hash__default_start_bin_num_power);}
-def_pcfunk0(hash__new, return f2__hash__new(this_cause));
+f2ptr f2__hash__new(f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk) {return raw__hash__new(cause, hash__default_start_bin_num_power, hash_value_funk, equals_funk);}
+def_pcfunk2(hash__new, hash_value_funk, equals_funk, return f2__hash__new(this_cause, hash_value_funk, equals_funk));
 
 void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) {
   f2ptr bin_num_power    = f2hash__bin_num_power(this, cause);

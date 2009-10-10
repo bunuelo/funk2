@@ -118,6 +118,7 @@
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
+#include "f2_primobject__hash.h"
 
 void f2__destroy();
 

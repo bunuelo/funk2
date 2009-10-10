@@ -193,6 +193,7 @@ f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes);
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk);
 u64   pfunk2__f2chunk__length(f2ptr this, f2ptr cause);
+u64   pfunk2__f2chunk__hash_value(f2ptr this, f2ptr cause);
 
 u8    pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause);
 void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value);

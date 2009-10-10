@@ -1082,7 +1082,7 @@ f2ptr f2__symbol__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen
 f2ptr f2__symbol__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__length(x, cause));}
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
 
-u64   raw__symbol__hash_value(f2ptr cause, f2ptr this) {return f2symbol__hash_value(x, cause);}
+u64   raw__symbol__hash_value(f2ptr cause, f2ptr this) {return f2symbol__hash_value(this, cause);}
 f2ptr  f2__symbol__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__symbol__hash_value(cause, this));}
 
 f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {

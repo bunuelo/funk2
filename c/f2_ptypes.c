@@ -960,7 +960,9 @@ f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
   return f2char__new(cause, f2string__elt(this, raw_index, cause));
 }
 
-f2ptr f2__string__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, f2string__hash_value(this, cause));}
+u64 raw__string__hash_value(f2ptr cause, f2ptr this) {return f2string__hash_value(this, cause);}
+
+f2ptr f2__string__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__hash_value(cause, this));}
 
 f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {
@@ -1224,6 +1226,19 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
   return length;
 }
 
+int pfunk2__f2chunk__hash_value(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_chunk) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  u64 len   = __pure__f2chunk__length(this);
+  u8* bytes = __pure__f2chunk__bytes(this);
+  return (u64)chararray__hash_value(len, bytes);
+}
+
 u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
@@ -1376,10 +1391,14 @@ f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__i
 f2ptr f2__chunk__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("chunk"), (u8*)"chunk");}
 f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
 
+u64   raw__chunk__hash_value(f2ptr cause, f2ptr this) {return f2chunk__hash_value(this, cause);}
+f2ptr  f2__chunk__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(raw__chunk__hash_value(this, cause));}
+
 def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
 def_pcfunk1(chunk__type, x, return f2__chunk__type(this_cause, x));
 def_pcfunk1(chunk__new, length, return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL));
 def_pcfunk1(chunk__length, x, return f2__chunk__length(this_cause, x));
+def_pcfunk1(chunk__hash_table, x, return f2__chunk__hash_value(this_cause, x));
 def_pcfunk2(chunk__bit8__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit8__elt(this, this_cause, f2integer__i(index, this_cause))));
 def_pcfunk3(chunk__bit8__elt__set, this, index, value, f2chunk__bit8__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
 def_pcfunk2(chunk__bit16__elt, this, index, return f2pointer__new(this_cause, f2chunk__bit16__elt(this, this_cause, f2integer__i(index, this_cause))));
@@ -1390,6 +1409,10 @@ def_pcfunk2(chunk__bit64__elt, this, index, return f2pointer__new(this_cause, f2
 def_pcfunk3(chunk__bit64__elt__set, this, index, value, f2chunk__bit64__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
 def_pcfunk4(chunk__cfunk_jump, this, fiber, env, args, return f2chunk__cfunk_jump(this, this_cause, fiber, env, args));
 def_pcfunk2(chunk__bytecode_jump, this, fiber, return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, fiber)));
+
+//u64 raw__chunk__hash_value(f2ptr cause, f2ptr this) {
+//  return (u64)chararray__hash_value(len, str);
+//}
 
 f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -2364,6 +2387,8 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_string.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.hash_value__funk = never_gc(cfunk);}
   
+  // symbol
+  
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_symbol.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.is_type__funk = never_gc(cfunk);}
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_symbol.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -2377,6 +2402,8 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.hash_value__funk = never_gc(cfunk);}
   
+  // chunk
+  
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk = never_gc(cfunk);}
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_chunk.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -2385,6 +2412,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk = never_gc(cfunk);}
+  {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_chunk.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.hash_value__funk = never_gc(cfunk);}
   {char* str = "bit8-elt"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bit8__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk = never_gc(cfunk);}
   {char* str = "bit8-elt-set"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

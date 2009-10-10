@@ -43,7 +43,7 @@ f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bi
 
 // hardcoded hashtable functions
 
-boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is_hashtable(this, cause);}
+boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is__hashtable(this, cause);}
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
 def_pcfunk1(hashtable__is_type, this, return f2__hashtable__is_type(this_cause, this));
 

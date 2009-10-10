@@ -21,4 +21,5 @@
 
 [globalize-funk object-type           &primfunk:object__type]
 [globalize-funk object-slot-type_funk &primfunk:object__slot__type_funk]
+[globalize-funk object-hash_value     &primfunk:object__hash_value]
 

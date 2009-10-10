@@ -84,7 +84,7 @@ u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr obje
   return key__hash_value;
 }
 
-boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr this, f2ptr object_a, f2ptr object_b) {
+boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object_a, f2ptr object_b) {
   f2ptr equals_funk = f2hash__equals_funk(this, cause);
   boolean_t equals = boolean__false;
   if (! equals_funk) {

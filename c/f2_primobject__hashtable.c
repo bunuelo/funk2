@@ -30,6 +30,25 @@ defprimobject__static_slot(hashtable__bin_array,     3);
 
 f2ptr __hashtable__symbol = -1;
 
+def_primobject_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array);
+
+boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
+  if (! raw__hashtable__is_type(cause, this)) {return boolean__false;}
+  f2ptr bin_num_power = f2hashtable__bin_num_power(this, cause);
+  f2ptr bin_array     = f2hashtable__bin_array(this, cause);
+  if (! raw__integer__is_type(cause, bin_num_power)) {return boolean__false;}
+  if (! raw__array__is_type(cause, bin_array))       {return boolean__false;}
+  s64 bin_num_power__i = f2integer__i(bin_num_power, cause);
+  s64 length           = raw__array__length(cause, bin_array);
+  if (! (length == (1ll << bin_num_power__i))) {return boolean__false;}
+  return boolean__true;
+}
+
+#define hashtable__default_start_bin_num_power 3
+f2ptr f2__hashtable__new(f2ptr cause) {return raw__hashtable__new(cause, hashtable__default_start_bin_num_power);}
+def_pcfunk0(hashtable__new, return f2__hashtable__new(this_cause));
+
+/*
 f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bin_num_power, f2ptr bin_array) {
   release__assert(__hashtable__symbol != -1, nil, "f2hashtable__new error: used before primobjects initialized.");
   release__assert((raw__integer__is_type(cause, bin_num_power) && raw__array__is_type(cause, bin_array)), nil, "f2hashtable__new error: bin_num_power or bin_array are of wrong type.");
@@ -43,21 +62,10 @@ f2ptr f2hashtable__new(f2ptr cause, f2ptr write_mutex, f2ptr key_count, f2ptr bi
 
 // hardcoded hashtable functions
 
+
 boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this) {return raw__array__is_type(cause, this) && f2primobject__is__hashtable(this, cause);}
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__hashtable__is_type(cause, this));}
 def_pcfunk1(hashtable__is_type, this, return f2__hashtable__is_type(this_cause, this));
-
-boolean_t raw__hashtable__valid(f2ptr cause, f2ptr this) {
-  if (! raw__hashtable__is_type(cause, this)) {return 0;}
-  f2ptr bin_num_power = f2hashtable__bin_num_power(this, cause);
-  f2ptr bin_array     = f2hashtable__bin_array(this, cause);
-  if (! raw__integer__is_type(cause, bin_num_power)) {return 0;}
-  if (! raw__array__is_type(cause, bin_array))       {return 0;}
-  s64 bin_num_power__i = f2integer__i(bin_num_power, cause);
-  s64 length           = raw__array__length(cause, bin_array);
-  if (! (length == (1ll << bin_num_power__i))) {return 0;}
-  return 1;
-}
 
 f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
@@ -65,10 +73,6 @@ f2ptr raw__hashtable__new(f2ptr cause, s64 bin_num_power) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "raw__hashtable__new assert failed: f2__hashtable__valid(this)");
   return this;
 }
-
-#define hashtable__default_start_bin_num_power 3
-f2ptr f2__hashtable__new(f2ptr cause) {return raw__hashtable__new(cause, hashtable__default_start_bin_num_power);}
-def_pcfunk0(hashtable__new, return f2__hashtable__new(this_cause));
 
 f2ptr f2__hashtable__write_mutex(f2ptr cause, f2ptr this) {return f2hashtable__write_mutex(this, cause);}
 def_pcfunk1(hashtable__write_mutex, this, return f2__hashtable__write_mutex(this_cause, this));
@@ -93,6 +97,8 @@ def_pcfunk1(hashtable__bin_array, this, return f2__hashtable__bin_array(this_cau
 
 f2ptr f2__hashtable__bin_array__set(f2ptr cause, f2ptr this, f2ptr value) {return f2hashtable__bin_array__set(this, cause, value);}
 def_pcfunk2(hashtable__bin_array__set, this, value, return f2__hashtable__bin_array__set(this_cause, this, value));
+
+*/
 
 void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2hashtable__bin_num_power(this, cause);

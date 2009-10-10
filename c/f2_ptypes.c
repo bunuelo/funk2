@@ -223,12 +223,9 @@ def_pcfunk1(integer__type,    this, return f2__integer__type(this_cause, this));
 def_pcfunk1(integer__new,     this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
 def_pcfunk1(integer__i,       this, return this);
 
-u64 raw__integer__hash_value(f2ptr cause, f2ptr this) {
-  return f2integer__i(this, cause);
-}
-f2ptr f2__integer__hash_value(f2ptr cause, f2ptr this) {
-  return f2integer__new(cause, raw__integer__hash_value(cause, this));
-}
+u64 raw__integer__hash_value(f2ptr cause, f2ptr this) {return f2integer__i(this, cause);}
+
+f2ptr f2__integer__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__integer__hash_value(cause, this));}
 def_pcfunk1(integer__hash_value, this, return f2__integer__hash_value(this_cause, this));
 
 f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
@@ -836,9 +833,7 @@ def_pcfunk1(char__type, this, return f2__char__type(this_cause, this));
 def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
 def_pcfunk1(char__ch, this, return this);
 
-u64 raw__char__hash_value(f2ptr cause, f2ptr this) {
-  return (u64)f2char__ch(this, cause);
-}
+u64 raw__char__hash_value(f2ptr cause, f2ptr this) {return (u64)f2char__ch(this, cause);}
 
 f2ptr f2__char__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__char__hash_value(cause, this));}
 def_pcfunk1(char__hash_value, this, return f2__char__hash_value(this_cause, this));
@@ -2052,19 +2047,19 @@ u64 raw__traced_array__hash_value(f2ptr cause, f2ptr this) {
       ptype_t ptype = f2ptype__raw(element, cause);
       switch (ptype) {
       case ptype_free_memory: case ptype_newly_allocated: {error(nil, "shouldn't ever see this object ptype.");} break;
-      case ptype_integer:      {element_hash_value =  raw__integer__hash_value(element, cause);} break;
-      case ptype_double:       {element_hash_value =   raw__double__hash_value(element, cause);} break;
-      case ptype_float:        {element_hash_value =    raw__float__hash_value(element, cause);} break;
-      case ptype_pointer:      {element_hash_value =  raw__pointer__hash_value(element, cause);} break;
-      case ptype_gfunkptr:     {element_hash_value = raw__gfunkptr__hash_value(element, cause);} break;
-      case ptype_mutex:        {element_hash_value =    raw__mutex__hash_value(element, cause);} break;
-      case ptype_char:         {element_hash_value =     raw__char__hash_value(element, cause);} break;
-      case ptype_string:       {element_hash_value =   raw__string__hash_value(element, cause);} break;
-      case ptype_symbol:       {element_hash_value =   raw__symbol__hash_value(element, cause);} break;
-      case ptype_chunk:        {element_hash_value =    raw__chunk__hash_value(element, cause);} break;
+      case ptype_integer:      {element_hash_value =  raw__integer__hash_value(cause, element);} break;
+      case ptype_double:       {element_hash_value =   raw__double__hash_value(cause, element);} break;
+      case ptype_float:        {element_hash_value =    raw__float__hash_value(cause, element);} break;
+      case ptype_pointer:      {element_hash_value =  raw__pointer__hash_value(cause, element);} break;
+      case ptype_gfunkptr:     {element_hash_value = raw__gfunkptr__hash_value(cause, element);} break;
+      case ptype_mutex:        {element_hash_value =    raw__mutex__hash_value(cause, element);} break;
+      case ptype_char:         {element_hash_value =     raw__char__hash_value(cause, element);} break;
+      case ptype_string:       {element_hash_value =   raw__string__hash_value(cause, element);} break;
+      case ptype_symbol:       {element_hash_value =   raw__symbol__hash_value(cause, element);} break;
+      case ptype_chunk:        {element_hash_value =    raw__chunk__hash_value(cause, element);} break;
       case ptype_simple_array: {} break;
       case ptype_traced_array: {} break;
-      case ptype_larva:        {element_hash_value =    raw__larva__hash_value(element, cause);} break;
+      case ptype_larva:        {element_hash_value =    raw__larva__hash_value(cause, element);} break;
       }
     }
     hash_value += element_hash_value;

@@ -31,6 +31,7 @@
 #include "f2_physical_objects.h"
 #include "f2_agent.h"
 #include "f2_object_lattice.h"
+#include "f2_primobject__hash.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

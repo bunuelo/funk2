@@ -48,7 +48,7 @@ f2ptr raw__hash__new(f2ptr cause, s64 bin_num_power) {
 f2ptr f2__hash__new(f2ptr cause) {return raw__hash__new(cause, hash__default_start_bin_num_power);}
 def_pcfunk0(hash__new, return f2__hash__new(this_cause));
 
-void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
+void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) {
   f2ptr bin_num_power    = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2hash__bin_array(this, cause);
@@ -63,7 +63,7 @@ void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
 	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);
 	f2ptr keyvalue_pair__value = f2cons__cdr(iter__keyvalue_pair, cause);
-	f2__hash__add(cause, temp_hash, keyvalue_pair__key, keyvalue_pair__value);
+	f2__hash__add(cause, fiber, temp_hash, keyvalue_pair__key, keyvalue_pair__value);
 	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
       }
     }
@@ -129,7 +129,7 @@ f2ptr f2__hash__add(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key, f2ptr value
     f2hash__key_count__set(this, cause, f2integer__new(cause, key_count__i));
   }
   if (key_count__i >= (1ll << bin_num_power__i)) {
-    f2__hash__double_size__thread_unsafe(cause, this);
+    f2__hash__double_size__thread_unsafe(cause, fiber, this);
   }
   f2mutex__unlock(f2hash__write_mutex(this, cause), cause);
   return nil;

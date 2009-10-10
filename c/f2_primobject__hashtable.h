@@ -23,9 +23,11 @@
 #define F2__PRIMOBJECT__HASHTABLE__TYPES__H
 
 typedef struct funk2_object_type__hashtable__slot_s funk2_object_type__hashtable__slot_t;
+declare_object_type_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, );
 
 // hashtable
 
+/*
 struct funk2_object_type__hashtable__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
@@ -54,6 +56,7 @@ struct funk2_object_type__hashtable__slot_s {
   f2ptr lookup__symbol;
   f2ptr lookup__funk;
 };
+*/
 
 #endif // F2__PRIMOBJECT__HASHTABLE__TYPES__H
 
@@ -64,6 +67,9 @@ struct funk2_object_type__hashtable__slot_s {
 
 // hashtable
 
+declare_primobject_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array);
+
+/*
 extern f2ptr __hashtable__symbol;
 boolean_t raw__hashtable__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__hashtable__is_type(f2ptr cause, f2ptr this);
@@ -97,6 +103,7 @@ defprimobject__static_slot__prototype(hashtable__bin_array);
 #define f2hashtable__bin_array__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, hashtable__bin_array, cause)
 #define f2hashtable__bin_array__trace(            this, cause)        primobject__static_slot__trace(            this, hashtable__bin_array, cause)
 #define f2hashtable__bin_array__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, hashtable__bin_array, cause)
+*/
 
 f2ptr raw__hashtable__new                 (f2ptr cause, s64 bin_num_power);
 f2ptr  f2__hashtable__new                 (f2ptr cause);

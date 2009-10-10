@@ -105,6 +105,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__agent__slot_t               primobject_type_agent;
   funk2_object_type__object_lattice__slot_t      primobject_type_object_lattice;
   funk2_object_type__object_lattice_node__slot_t primobject_type_object_lattice_node;
+  funk2_object_type__hash__slot_t                primobject_type_hash;
 };
 
 // **

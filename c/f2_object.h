@@ -26,6 +26,7 @@
 #include "f2_ptypes.h"
 #include "f2_primobjects.h"
 #include "f2_primobject_type_handler.h"
+#include "f2_array.h"
 
 typedef struct funk2_object_types_s {
   funk2_ptype_object_types_t       ptype;

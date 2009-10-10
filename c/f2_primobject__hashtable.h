@@ -25,7 +25,7 @@
 // hashtable
 
 typedef struct funk2_object_type__hashtable__slot_s funk2_object_type__hashtable__slot_t;
-declare_object_type_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array,
+declare_object_type_6_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
 			   f2ptr slot_names__symbol;
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
@@ -43,7 +43,7 @@ declare_object_type_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin
 
 // hashtable
 
-declare_primobject_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array);
+declare_primobject_6_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
 
 f2ptr raw__hashtable__new                 (f2ptr cause, s64 bin_num_power);
 f2ptr  f2__hashtable__new                 (f2ptr cause);

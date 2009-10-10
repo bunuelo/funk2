@@ -1657,7 +1657,7 @@ def_pcfunk1(simple_array__is_type, x, return f2__simple_array__is_type(this_caus
 def_pcfunk1(simple_array__type, x, return f2__simple_array__type(this_cause, x));
 def_pcfunk1(simple_array__new, length, return f2__simple_array__new(this_cause, length));
 def_pcfunk1(simple_array__length, x, return f2__simple_array__length(this_cause, x));
-def_pcfunk1(simple_array__hash_value, this, return f2__simple_array__hash_value(cause, this));
+def_pcfunk1(simple_array__hash_value, this, return f2__simple_array__hash_value(this_cause, this));
 def_pcfunk2(simple_array__elt, x, y, return f2__simple_array__elt(this_cause, x, y));
 def_pcfunk3(simple_array__elt__set, x, y, z, return f2__simple_array__elt__set(this_cause, x, y, z));
 

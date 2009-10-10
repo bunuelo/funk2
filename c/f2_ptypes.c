@@ -1392,7 +1392,7 @@ f2ptr f2__chunk__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen(
 f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
 
 u64   raw__chunk__hash_value(f2ptr cause, f2ptr this) {return f2chunk__hash_value(this, cause);}
-f2ptr  f2__chunk__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(raw__chunk__hash_value(this, cause));}
+f2ptr  f2__chunk__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__chunk__hash_value(this, cause));}
 
 def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
 def_pcfunk1(chunk__type, x, return f2__chunk__type(this_cause, x));

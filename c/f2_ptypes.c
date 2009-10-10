@@ -1972,8 +1972,13 @@ boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_array__is_type(cause, x));}
 f2ptr f2__traced_array__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array");}
 f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {return f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));}
-f2ptr f2__traced_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2traced_array__length(x, cause));}
-f2ptr f2__traced_array__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt(x, f2integer__i(y, cause), cause);}
+
+u64   raw__traced_array__length(f2ptr cause, f2ptr this) {return f2traced_array__length(this, cause);}
+f2ptr  f2__traced_array__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__length(cause, this));}
+
+f2ptr raw__traced_array__elt(f2ptr cause, f2ptr this, u64   index) {return f2traced_array__elt(this, index, cause);}
+f2ptr  f2__traced_array__elt(f2ptr cause, f2ptr this, f2ptr index) {return raw__traced_array__elt(cause, this, f2integer__i(index, cause));}
+
 f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
 f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__tracing_on(x, f2integer__i(y, cause), cause);}
 f2ptr f2__traced_array__elt__tracing_on__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__tracing_on__set(x, f2integer__i(y, cause), cause, z); return nil;}
@@ -1981,6 +1986,36 @@ f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y) {return f2trac
 f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__trace__set(x, f2integer__i(y, cause), cause, z); return nil;}
 f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y) {return f2traced_array__elt__imagination_frame(x, f2integer__i(y, cause), cause);}
 f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2traced_array__elt__imagination_frame__set(x, f2integer__i(y, cause), cause, z); return nil;}
+
+u64 raw__traced_array__hash_value(f2ptr cause, f2ptr this) {
+  u64 length = raw__traced_array__length(cause, this);
+  u64 hash_value = 0;
+  u64 index;
+  for (index = 0; index < length; index ++) {
+    f2ptr element = raw__traced_array__elt(cause, this, index);
+    u64 element_hash_value = 0;
+    ptype_t ptype = f2ptype__raw(element, cause);
+    switch (ptype) {
+    case ptype_free_memory: case ptype_newly_allocated: {error(nil, "shouldn't ever see this object ptype.");} break;
+    case ptype_integer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_double:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_float:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_pointer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_gfunkptr:     {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_mutex:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_char:         {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_string:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_symbol:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_chunk:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    case ptype_simple_array: {} break;
+    case ptype_traced_array: {} break;
+    case ptype_larva:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    }
+    hash_value += element_hash_value;
+    hash_value *= PRIME_NUMBER__32_BIT;
+  }
+  return hash_value;
+}
 
 def_pcfunk1(traced_array__is_type, x, return f2__traced_array__is_type(this_cause, x));
 def_pcfunk1(traced_array__type, x, return f2__traced_array__type(this_cause, x));
@@ -1994,6 +2029,9 @@ def_pcfunk2(traced_array__elt__trace, x, y, return f2__traced_array__elt__trace(
 def_pcfunk3(traced_array__elt__trace__set, x, y, z, return f2__traced_array__elt__trace__set(this_cause, x, y, z));
 def_pcfunk2(traced_array__elt__imagination_frame, x, y, return f2__traced_array__elt__imagination_frame(this_cause, x, y));
 def_pcfunk3(traced_array__elt__imagination_frame__set, x, y, z, return f2__traced_array__elt__imagination_frame__set(this_cause, x, y, z));
+
+f2ptr f2__traced_array__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__hash_value(cause, this));}
+def_pcfunk1(traced_array__hash_value, this, return f2__traced_array__hash_value(this_cause, this));
 
 f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -2032,6 +2070,7 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
   {char* slot_name = "type";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.type__funk);}
   {char* slot_name = "new";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk);}
   {char* slot_name = "length";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk);}
+  {char* slot_name = "hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.hash_value__funk);}
   {char* slot_name = "elt";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk);}
   {char* slot_name = "elt";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk);}
   {char* slot_name = "elt-tracing_on";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__funk);}
@@ -2446,6 +2485,8 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(simple_array__elt__set, this, index, value, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk = never_gc(cfunk);}
   
+  // traced_array
+
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__is_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__funk = never_gc(cfunk);}
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_traced_array.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -2454,6 +2495,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk = never_gc(cfunk);}
+  {char* str = "hash_value"; __funk2.globalenv.object_type.ptype.ptype_traced_array.hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.hash_value__funk = never_gc(cfunk);}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk = never_gc(cfunk);}
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

@@ -72,7 +72,7 @@ void f2__hashtable__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2hashtable__bin_array__set(    this, cause, f2hashtable__bin_array(    temp_hashtable, cause));
 }
 
-u64 raw__hashtable__hash_value_apply(f2ptr cause, f2ptr this, f2ptr object) {
+u64 raw__hashtable__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object) {
   f2ptr hash_value_funk = f2hashtable__hash_value_funk(this, cause);
   u64   key__hash_value = 0;
   if (! hash_value_funk) {
@@ -84,7 +84,7 @@ u64 raw__hashtable__hash_value_apply(f2ptr cause, f2ptr this, f2ptr object) {
   return key__hash_value;
 }
 
-boolean_t raw__hashtable__equals_apply(f2ptr cause, f2ptr this, f2ptr object_a, f2ptr object_b) {
+boolean_t raw__hashtable__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object_a, f2ptr object_b) {
   f2ptr equals_funk = f2hashtable__equals_funk(this, cause);
   boolean_t equals = boolean__false;
   if (! equals_funk) {
@@ -102,7 +102,7 @@ f2ptr f2__hashtable__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
-  u64   key__hash_value    = raw__hashtable__hash_value_apply(cause, this, key);
+  u64   key__hash_value    = raw__hashtable__hash_value_apply(cause, fiber, this, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -111,7 +111,7 @@ f2ptr f2__hashtable__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   while(keyvalue_pair_iter) {
     f2ptr iter__keyvalue_pair = f2cons__car(keyvalue_pair_iter,  cause);
     f2ptr keyvalue_pair__key  = f2cons__car(iter__keyvalue_pair, cause);
-    if (raw__hashtable__equals_apply(cause, this, key, keyvalue_pair__key)) {
+    if (raw__hashtable__equals_apply(cause, fiber, this, key, keyvalue_pair__key)) {
       keyvalue_pair = iter__keyvalue_pair;
       break;
     }
@@ -136,13 +136,13 @@ f2ptr f2__hashtable__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 }
 def_pcfunk3(hashtable__add, this, slot_name, value, return f2__hashtable__add(this_cause, this, slot_name, value));
 
-f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup_keyvalue_pair assert failed: f2__hashtable__valid(this)");
   f2mutex__lock(f2hashtable__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2hashtable__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2hashtable__bin_array(this, cause);
-  u64   key__hash_value    = raw__hashtable__hash_value_apply(cause, this, key);
+  u64   key__hash_value    = raw__hashtable__hash_value_apply(cause, fiber, this, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -150,7 +150,7 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   while(keyvalue_pair_iter) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-    if (raw__hashtable__equals_apply(cause, this, key, keyvalue_pair__key)) {
+    if (raw__hashtable__equals_apply(cause, fiber, this, key, keyvalue_pair__key)) {
       f2mutex__unlock(f2hashtable__write_mutex(this, cause), cause);
       return keyvalue_pair;
     }
@@ -160,9 +160,9 @@ f2ptr f2__hashtable__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   return nil;
 }
 
-f2ptr f2__hashtable__lookup(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr f2__hashtable__lookup(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key) {
   debug__assert(raw__hashtable__valid(cause, this), nil, "f2__hashtable__lookup assert failed: f2__hashtable__valid(this)");
-  f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, this, key);
+  f2ptr keyvalue_pair = f2__hashtable__lookup_keyvalue_pair(cause, fiber, this, key);
   if (keyvalue_pair) {
     f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
     return retval;

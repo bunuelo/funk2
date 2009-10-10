@@ -23,7 +23,14 @@
 #define F2__PRIMOBJECT__HASHTABLE__TYPES__H
 
 typedef struct funk2_object_type__hashtable__slot_s funk2_object_type__hashtable__slot_t;
-declare_object_type_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array, );
+declare_object_type_4_slot(hashtable, write_mutex, key_count, bin_num_power, bin_array,
+			   f2ptr slot_names__symbol;
+			   f2ptr slot_names__funk;
+			   f2ptr add__symbol;
+			   f2ptr add__funk;
+			   f2ptr lookup__symbol;
+			   f2ptr lookup__funk;
+			   );
 
 // hashtable
 

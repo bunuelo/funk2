@@ -1612,7 +1612,10 @@ boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_array__is_type(cause, x));}
 f2ptr f2__simple_array__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array");}
 f2ptr f2__simple_array__new(f2ptr cause, f2ptr length) {return f2simple_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));}
-f2ptr f2__simple_array__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2simple_array__length(x, cause));}
+
+u64 raw__simple_array__length(f2ptr cause, f2ptr this) {return f2simple_array__length(this, cause);}
+f2ptr f2__simple_array__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__simple_array__length(cause, this));}
+
 f2ptr f2__simple_array__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2simple_array__elt(x, f2integer__i(y, cause), cause);}
 f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2simple_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
 

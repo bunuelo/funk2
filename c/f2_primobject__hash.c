@@ -80,7 +80,8 @@ u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr obje
   if (! hash_value_funk) {
     key__hash_value = raw__hash_value(cause, object);
   } else {
-    key__hash_value = f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, object, nil));
+    f2ptr hash_value_integer = f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, object, nil));
+    key__hash_value = f2integer__i(hash_value_integer, cause);
   }
   return key__hash_value;
 }
@@ -91,7 +92,7 @@ boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr ob
   if (! equals_funk) {
     equals = raw__equals(cause, object_a, object_b);
   } else {
-    equals = f2__force_funk_apply(cause, fiber, equals_funk, f2cons__new(cause, object_a, f2cons__new(cause, object_b, nil)));
+    equals = (f2__force_funk_apply(cause, fiber, equals_funk, f2cons__new(cause, object_a, f2cons__new(cause, object_b, nil))) != nil);
   }
   return equals;
 }

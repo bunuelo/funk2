@@ -1081,7 +1081,10 @@ f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbol_
 f2ptr f2__symbol__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("symbol"), (u8*)"symbol");}
 f2ptr f2__symbol__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__length(x, cause));}
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
-f2ptr f2__symbol__hash_value(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2symbol__hash_value(x, cause));}
+
+u64   raw__symbol__hash_value(f2ptr cause, f2ptr this) {return f2symbol__hash_value(x, cause);}
+f2ptr  f2__symbol__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__symbol__hash_value(cause, this));}
+
 f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {
     return f2larva__new(cause, 1);
@@ -2168,9 +2171,7 @@ def_pcfunk1(larva__type, x, return f2__larva__type(this_cause, x));
 def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
 def_pcfunk1(larva__larva_type, this, return f2integer__new(this_cause, f2larva__larva_type(this, this_cause)));
 
-u64 raw__larva__hash_value(f2ptr cause, f2ptr this) {
-  return (u64)f2larva__larva_type(this, cause);
-}
+u64 raw__larva__hash_value(f2ptr cause, f2ptr this) {return (u64)f2larva__larva_type(this, cause);}
 
 f2ptr f2__larva__hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__larva__hash_value(cause, this));}
 def_pcfunk1(larva__hash_value, this, return f2__larva__hash_value(this_cause, this));

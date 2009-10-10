@@ -1628,22 +1628,24 @@ u64 raw__simple_array__hash_value(f2ptr cause, f2ptr this) {
   for (index = 0; index < length; index ++) {
     f2ptr element = raw__simple_array__elt(cause, this, index);
     u64 element_hash_value = 0;
-    ptype_t ptype = f2ptype__raw(element, cause);
-    switch (ptype) {
-    case ptype_free_memory: case ptype_newly_allocated: {error(nil, "shouldn't ever see this object ptype.");} break;
-    case ptype_integer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_double:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_float:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_pointer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_gfunkptr:     {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_mutex:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_char:         {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_string:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_symbol:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_chunk:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_simple_array: {} break;
-    case ptype_traced_array: {} break;
-    case ptype_larva:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    if (element) {
+      ptype_t ptype = f2ptype__raw(element, cause);
+      switch (ptype) {
+      case ptype_free_memory: case ptype_newly_allocated: {error(nil, "shouldn't ever see this object ptype.");} break;
+      case ptype_integer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_double:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_float:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_pointer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_gfunkptr:     {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_mutex:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_char:         {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_string:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_symbol:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_chunk:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_simple_array: {} break;
+      case ptype_traced_array: {} break;
+      case ptype_larva:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      }
     }
     hash_value += element_hash_value;
     hash_value *= PRIME_NUMBER__32_BIT;
@@ -2046,22 +2048,24 @@ u64 raw__traced_array__hash_value(f2ptr cause, f2ptr this) {
   for (index = 0; index < length; index ++) {
     f2ptr element = raw__traced_array__elt(cause, this, index);
     u64 element_hash_value = 0;
-    ptype_t ptype = f2ptype__raw(element, cause);
-    switch (ptype) {
-    case ptype_free_memory: case ptype_newly_allocated: {error(nil, "shouldn't ever see this object ptype.");} break;
-    case ptype_integer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_double:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_float:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_pointer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_gfunkptr:     {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_mutex:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_char:         {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_string:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_symbol:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_chunk:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
-    case ptype_simple_array: {} break;
-    case ptype_traced_array: {} break;
-    case ptype_larva:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+    if (element) {
+      ptype_t ptype = f2ptype__raw(element, cause);
+      switch (ptype) {
+      case ptype_free_memory: case ptype_newly_allocated: {error(nil, "shouldn't ever see this object ptype.");} break;
+      case ptype_integer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_double:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_float:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_pointer:      {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_gfunkptr:     {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_mutex:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_char:         {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_string:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_symbol:       {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_chunk:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      case ptype_simple_array: {} break;
+      case ptype_traced_array: {} break;
+      case ptype_larva:        {element_hash_value = raw__integer__hash_value(element, cause);} break;
+      }
     }
     hash_value += element_hash_value;
     hash_value *= PRIME_NUMBER__32_BIT;

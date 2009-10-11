@@ -1451,6 +1451,8 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_simple_array: return raw__simple_array__eq_hash_value(cause, exp);
   case ptype_traced_array: return raw__traced_array__eq_hash_value(cause, exp);
   case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
+  case ptype_free_memory:
+  case ptype_newly_allocated: 
   }
   error(nil, "raw__eq_hash_value error: found invalid ptype.");
   return 0; // should never get here.

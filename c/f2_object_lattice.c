@@ -56,10 +56,15 @@ void object_lattice__scan_and_incorporate_leafs__helper(f2ptr cause, f2ptr slot_
 
 f2ptr f2__object_lattice__scan_and_incorporate_leafs__expand_node(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970) {
   f2ptr aux_data = raw__array__new(cause, 4);
-  raw__array__elt__set(cause, aux_data, 0, fiber);
-  raw__array__elt__set(cause, aux_data, 1, object);
-  raw__array__elt__set(cause, aux_data, 2, this);
-  raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
+  {
+    raw__array__elt__set(cause, aux_data, 0, fiber);
+    raw__array__elt__set(cause, aux_data, 1, object);
+    raw__array__elt__set(cause, aux_data, 2, this);
+    raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
+  }
+  f2ptr object_type_name = f2__object__type(cause, object);
+  f2ptr object_type      = f2__lookup_type(cause, object_type_name);
+  
   return raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__helper, aux_data);
 }
 
@@ -73,9 +78,6 @@ f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f
   if (object_creation_nanoseconds_since_1970 >= start_nanoseconds_since_1970__i) {
     return nil;
   }
-  
-  f2ptr object_type_name = f2__object__type(cause, object);
-  f2ptr object_type      = f2__lookup_type(cause, object_type_name);
   
   f2ptr lattice_node_hash = f2__object_lattice__lattice_node_hash(cause, this);
   

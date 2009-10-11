@@ -78,15 +78,7 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node(f2ptr cause, f2
     raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
     raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__object_slot_helper, aux_data);
   }
-  if (raw__array__is_type(cause, object)) {
-    f2ptr array  = object;
-    u64   length = raw__array__length(cause, array);
-    u64   index;
-    for (index = 0; index < length; index ++) {
-      f2ptr element = raw__array__elt(cause, array, index);
-      f2__object_lattice__scan_and_incorporate_leafs(cause, fiber, this, element, start_nanoseconds_since_1970);
-    }
-  } else if (raw__frame__is_type(cause, object)) {
+  if (raw__frame__is_type(cause, object)) {
     f2ptr frame = object;
     {
       f2ptr aux_data = raw__array__new(cause, 4);
@@ -95,6 +87,14 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node(f2ptr cause, f2
       raw__array__elt__set(cause, aux_data, 2, this);
       raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
       raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__frame_slot_helper, aux_data);
+    }
+  } else if (raw__array__is_type(cause, object)) {
+    f2ptr array  = object;
+    u64   length = raw__array__length(cause, array);
+    u64   index;
+    for (index = 0; index < length; index ++) {
+      f2ptr element = raw__array__elt(cause, array, index);
+      f2__object_lattice__scan_and_incorporate_leafs(cause, fiber, this, element, start_nanoseconds_since_1970);
     }
   }
 }

@@ -103,14 +103,14 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2string__elt                              ,
   funk2_packet_type__pcs_request__f2string__str_copy                         , //void             (f2ptr cause, f2ptr this, u8* str);
   funk2_packet_type__pcs_respond__f2string__str_copy                         ,
-  funk2_packet_type__pcs_request__f2string__hash_value                       , //int              (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2string__hash_value                       ,
+  funk2_packet_type__pcs_request__f2string__eq_hash_value                       , //int              (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2string__eq_hash_value                       ,
   funk2_packet_type__pcs_request__f2symbol__new                              , //f2ptr            (f2ptr cause, u64 length, u8* init);
   funk2_packet_type__pcs_respond__f2symbol__new                              ,
   funk2_packet_type__pcs_request__f2symbol__length                           , //u64              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2symbol__length                           ,
-  funk2_packet_type__pcs_request__f2symbol__hash_value                       , //u64              (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2symbol__hash_value                       ,
+  funk2_packet_type__pcs_request__f2symbol__eq_hash_value                       , //u64              (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2symbol__eq_hash_value                       ,
   funk2_packet_type__pcs_request__f2symbol__elt                              , //u8               (f2ptr cause, f2ptr this, int index);
   funk2_packet_type__pcs_respond__f2symbol__elt                              ,
   funk2_packet_type__pcs_request__f2symbol__str_copy                         , //void             (f2ptr cause, f2ptr this, u8* str);
@@ -121,8 +121,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2chunk__new_copy                          ,
   funk2_packet_type__pcs_request__f2chunk__length                            , //u64              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2chunk__length                            ,
-  funk2_packet_type__pcs_request__f2chunk__hash_value                        , //u64              (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2chunk__hash_value                        ,
+  funk2_packet_type__pcs_request__f2chunk__eq_hash_value                        , //u64              (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2chunk__eq_hash_value                        ,
   funk2_packet_type__pcs_request__f2chunk__bit8__elt                         , //u8               (f2ptr cause, f2ptr this, u64 index);
   funk2_packet_type__pcs_respond__f2chunk__bit8__elt                         ,
   funk2_packet_type__pcs_request__f2chunk__bit8__elt__set                    , //void             (f2ptr cause, f2ptr this, u64 index, u8 value);
@@ -1519,43 +1519,43 @@ void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, 
 void f2string__str_copy(f2ptr this, f2ptr cause, u8* str);
 
 
-//  funk2_packet_type__pcs_request__f2string__hash_value                       = 0x22, //int              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2string__eq_hash_value                       = 0x22, //int              (f2ptr cause, f2ptr this);
 
-// request f2string__hash_value
+// request f2string__eq_hash_value
 
-struct pcs_packet_payload_request__f2string__hash_value_s {
+struct pcs_packet_payload_request__f2string__eq_hash_value_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2string__hash_value_s pcs_packet_payload_request__f2string__hash_value_t;
+typedef struct pcs_packet_payload_request__f2string__eq_hash_value_s pcs_packet_payload_request__f2string__eq_hash_value_t;
 
-struct pcs_request__f2string__hash_value_s {
+struct pcs_request__f2string__eq_hash_value_s {
   funk2_packet_header_t                              header;
-  pcs_packet_payload_request__f2string__hash_value_t payload;
+  pcs_packet_payload_request__f2string__eq_hash_value_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2string__hash_value_s pcs_request__f2string__hash_value_t;
+typedef struct pcs_request__f2string__eq_hash_value_s pcs_request__f2string__eq_hash_value_t;
 
-// respond f2string__hash_value
+// respond f2string__eq_hash_value
 
-struct pcs_packet_payload_respond__f2string__hash_value_s {
+struct pcs_packet_payload_respond__f2string__eq_hash_value_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  int                                                hash_value;
+  int                                                eq_hash_value;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2string__hash_value_s pcs_packet_payload_respond__f2string__hash_value_t;
+typedef struct pcs_packet_payload_respond__f2string__eq_hash_value_s pcs_packet_payload_respond__f2string__eq_hash_value_t;
 
-struct pcs_respond__f2string__hash_value_s {
+struct pcs_respond__f2string__eq_hash_value_s {
   funk2_packet_header_t                              header;
-  pcs_packet_payload_respond__f2string__hash_value_t payload;
+  pcs_packet_payload_respond__f2string__eq_hash_value_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2string__hash_value_s pcs_respond__f2string__hash_value_t;
+typedef struct pcs_respond__f2string__eq_hash_value_s pcs_respond__f2string__eq_hash_value_t;
 
-void send_packet__request__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2string__hash_value(funk2_node_t* funk2_node, pcs_request__f2string__hash_value_t* packet);
-void send_packet__respond__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int hash_value);
-void recv_packet__respond__f2string__hash_value(funk2_node_t* funk2_node, pcs_respond__f2string__hash_value_t* packet);
+void send_packet__request__f2string__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2string__eq_hash_value(funk2_node_t* funk2_node, pcs_request__f2string__eq_hash_value_t* packet);
+void send_packet__respond__f2string__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int eq_hash_value);
+void recv_packet__respond__f2string__eq_hash_value(funk2_node_t* funk2_node, pcs_respond__f2string__eq_hash_value_t* packet);
 
-int funk2_node__f2string__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-int f2string__hash_value(f2ptr cause, f2ptr this);
+int funk2_node__f2string__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+int f2string__eq_hash_value(f2ptr cause, f2ptr this);
 
 
 //  funk2_packet_type__pcs_request__f2symbol__new                              = 0x23, //f2ptr            (f2ptr cause, u64 length, u8* init);
@@ -1637,43 +1637,43 @@ u64 funk2_node__f2symbol__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2p
 u64 f2symbol__length(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2symbol__hash_value                           = 0x24, //u64              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2symbol__eq_hash_value                           = 0x24, //u64              (f2ptr cause, f2ptr this);
 
-// request f2symbol__hash_value
+// request f2symbol__eq_hash_value
 
-struct pcs_packet_payload_request__f2symbol__hash_value_s {
+struct pcs_packet_payload_request__f2symbol__eq_hash_value_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2symbol__hash_value_s pcs_packet_payload_request__f2symbol__hash_value_t;
+typedef struct pcs_packet_payload_request__f2symbol__eq_hash_value_s pcs_packet_payload_request__f2symbol__eq_hash_value_t;
 
-struct pcs_request__f2symbol__hash_value_s {
+struct pcs_request__f2symbol__eq_hash_value_s {
   funk2_packet_header_t                              header;
-  pcs_packet_payload_request__f2symbol__hash_value_t payload;
+  pcs_packet_payload_request__f2symbol__eq_hash_value_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2symbol__hash_value_s pcs_request__f2symbol__hash_value_t;
+typedef struct pcs_request__f2symbol__eq_hash_value_s pcs_request__f2symbol__eq_hash_value_t;
 
-// respond f2symbol__hash_value
+// respond f2symbol__eq_hash_value
 
-struct pcs_packet_payload_respond__f2symbol__hash_value_s {
+struct pcs_packet_payload_respond__f2symbol__eq_hash_value_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u64                                                hash_value;
+  u64                                                eq_hash_value;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2symbol__hash_value_s pcs_packet_payload_respond__f2symbol__hash_value_t;
+typedef struct pcs_packet_payload_respond__f2symbol__eq_hash_value_s pcs_packet_payload_respond__f2symbol__eq_hash_value_t;
 
-struct pcs_respond__f2symbol__hash_value_s {
+struct pcs_respond__f2symbol__eq_hash_value_s {
   funk2_packet_header_t                              header;
-  pcs_packet_payload_respond__f2symbol__hash_value_t payload;
+  pcs_packet_payload_respond__f2symbol__eq_hash_value_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2symbol__hash_value_s pcs_respond__f2symbol__hash_value_t;
+typedef struct pcs_respond__f2symbol__eq_hash_value_s pcs_respond__f2symbol__eq_hash_value_t;
 
-void send_packet__request__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2symbol__hash_value(funk2_node_t* funk2_node, pcs_request__f2symbol__hash_value_t* packet);
-void send_packet__respond__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 hash_value);
-void recv_packet__respond__f2symbol__hash_value(funk2_node_t* funk2_node, pcs_respond__f2symbol__hash_value_t* packet);
+void send_packet__request__f2symbol__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2symbol__eq_hash_value(funk2_node_t* funk2_node, pcs_request__f2symbol__eq_hash_value_t* packet);
+void send_packet__respond__f2symbol__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 eq_hash_value);
+void recv_packet__respond__f2symbol__eq_hash_value(funk2_node_t* funk2_node, pcs_respond__f2symbol__eq_hash_value_t* packet);
 
-u64 funk2_node__f2symbol__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-u64 f2symbol__hash_value(f2ptr this, f2ptr cause);
+u64 funk2_node__f2symbol__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+u64 f2symbol__eq_hash_value(f2ptr this, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2symbol__elt                              = 0x25, //u8               (f2ptr this, int index, f2ptr cause);
@@ -1873,43 +1873,43 @@ u64 funk2_node__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2pt
 u64 f2chunk__length(f2ptr cause, f2ptr this);
 
 
-//  funk2_packet_type__pcs_request__f2chunk__hash_value                         , //u64              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2chunk__eq_hash_value                         , //u64              (f2ptr cause, f2ptr this);
 
-// request f2chunk__hash_value
+// request f2chunk__eq_hash_value
 
-struct pcs_packet_payload_request__f2chunk__hash_value_s {
+struct pcs_packet_payload_request__f2chunk__eq_hash_value_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2chunk__hash_value_s pcs_packet_payload_request__f2chunk__hash_value_t;
+typedef struct pcs_packet_payload_request__f2chunk__eq_hash_value_s pcs_packet_payload_request__f2chunk__eq_hash_value_t;
 
-struct pcs_request__f2chunk__hash_value_s {
+struct pcs_request__f2chunk__eq_hash_value_s {
   funk2_packet_header_t                             header;
-  pcs_packet_payload_request__f2chunk__hash_value_t payload;
+  pcs_packet_payload_request__f2chunk__eq_hash_value_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2chunk__hash_value_s pcs_request__f2chunk__hash_value_t;
+typedef struct pcs_request__f2chunk__eq_hash_value_s pcs_request__f2chunk__eq_hash_value_t;
 
-// respond f2chunk__hash_value
+// respond f2chunk__eq_hash_value
 
-struct pcs_packet_payload_respond__f2chunk__hash_value_s {
+struct pcs_packet_payload_respond__f2chunk__eq_hash_value_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u64                                                hash_value;
+  u64                                                eq_hash_value;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2chunk__hash_value_s pcs_packet_payload_respond__f2chunk__hash_value_t;
+typedef struct pcs_packet_payload_respond__f2chunk__eq_hash_value_s pcs_packet_payload_respond__f2chunk__eq_hash_value_t;
 
-struct pcs_respond__f2chunk__hash_value_s {
+struct pcs_respond__f2chunk__eq_hash_value_s {
   funk2_packet_header_t                             header;
-  pcs_packet_payload_respond__f2chunk__hash_value_t payload;
+  pcs_packet_payload_respond__f2chunk__eq_hash_value_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2chunk__hash_value_s pcs_respond__f2chunk__hash_value_t;
+typedef struct pcs_respond__f2chunk__eq_hash_value_s pcs_respond__f2chunk__eq_hash_value_t;
 
-void send_packet__request__f2chunk__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2chunk__hash_value(funk2_node_t* funk2_node, pcs_request__f2chunk__hash_value_t* packet);
-void send_packet__respond__f2chunk__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 hash_value);
-void recv_packet__respond__f2chunk__hash_value(funk2_node_t* funk2_node, pcs_respond__f2chunk__hash_value_t* packet);
+void send_packet__request__f2chunk__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2chunk__eq_hash_value(funk2_node_t* funk2_node, pcs_request__f2chunk__eq_hash_value_t* packet);
+void send_packet__respond__f2chunk__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 eq_hash_value);
+void recv_packet__respond__f2chunk__eq_hash_value(funk2_node_t* funk2_node, pcs_respond__f2chunk__eq_hash_value_t* packet);
 
-u64 funk2_node__f2chunk__hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-u64 f2chunk__hash_value(f2ptr cause, f2ptr this);
+u64 funk2_node__f2chunk__eq_hash_value(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+u64 f2chunk__eq_hash_value(f2ptr cause, f2ptr this);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit8__elt                         = 0x2C, //u8               (f2ptr cause, f2ptr this, u64 index);

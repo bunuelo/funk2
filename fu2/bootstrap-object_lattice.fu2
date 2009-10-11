@@ -19,6 +19,6 @@
  rights to redistribute these changes.
 '
 
-[deftypefunk object_lattice execute scan_accessor_type_and_incorporate_leafs [object]
-  [object_lattice-scan_accessor_type_and_incorporate_leafs this object]]
+[deftypefunk object_lattice execute scan_and_incorporate_leafs [object]
+  [object_lattice-scan_and_incorporate_leafs this object]]
 

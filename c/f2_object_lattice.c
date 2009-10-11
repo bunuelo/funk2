@@ -95,7 +95,7 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slo
 void f2__object_lattice__scan_and_incorporate_leafs__expand_node__frame_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr frame, f2ptr start_nanoseconds_since_1970) {
   f2ptr aux_data = raw__array__new(cause, 4);
   raw__array__elt__set(cause, aux_data, 0, fiber);
-  raw__array__elt__set(cause, aux_data, 1, object);
+  raw__array__elt__set(cause, aux_data, 1, frame);
   raw__array__elt__set(cause, aux_data, 2, this);
   raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
   raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_and_incorporate_leafs__frame_slot_helper, aux_data);

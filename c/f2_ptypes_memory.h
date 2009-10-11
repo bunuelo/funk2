@@ -167,7 +167,7 @@ ptype_string_block_t* ptype_string_block__new(int pool_index, f2ptr cause, uint 
 struct ptype_symbol_block_s {
   ptype_block_t ptype;
   u64           length;
-  u64           hash_value;
+  u64           eq_hash_value;
   u8            str[0];
 } __attribute__((__packed__));
 typedef struct ptype_symbol_block_s ptype_symbol_block_t;
@@ -176,7 +176,7 @@ ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint 
 
 #define __pure__f2symbol__new(pool_index, cause, len, init) ptype_symbol__new(pool_index, cause, len, init)
 #define __pure__f2symbol__length(this)          (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2symbol__hash_value(this)      (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->hash_value)
+#define __pure__f2symbol__eq_hash_value(this)   (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->eq_hash_value)
 #define __pure__f2symbol__str(this)             (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
 
 // chunk

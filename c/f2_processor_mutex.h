@@ -49,7 +49,8 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
 void                                   funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num);
-u64                                    funk2_processor_mutex__hash_value(funk2_processor_mutex_t* this);
+u64                                    funk2_processor_mutex__eq_hash_value(funk2_processor_mutex_t* this);
+u64                                    funk2_processor_mutex__equals_hash_value(funk2_processor_mutex_t* this);
 
 #define funk2_processor_mutex__trylock(  this) funk2_processor_mutex__raw_trylock(  this, __FILE__, __LINE__)
 #define funk2_processor_mutex__lock(     this) funk2_processor_mutex__raw_lock(     this, __FILE__, __LINE__)

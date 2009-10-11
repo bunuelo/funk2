@@ -124,7 +124,11 @@ void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char
   pthread_mutex_unlock(&(this->pthread_mutex));
 }
 
-u64 funk2_processor_mutex__hash_value(funk2_processor_mutex_t* this) {
+u64 funk2_processor_mutex__eq_hash_value(funk2_processor_mutex_t* this) {
+  return (u64)this;
+}
+
+u64 funk2_processor_mutex__equals_hash_value(funk2_processor_mutex_t* this) {
   struct {
     pthread_mutex_t pthread_mutex;
     u64             zero;

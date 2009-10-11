@@ -955,9 +955,8 @@ f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
   return f2char__new(cause, f2string__elt(this, raw_index, cause));
 }
 
-u64 raw__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2string__eq_hash_value(this, cause);}
-
-f2ptr f2__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__eq_hash_value(cause, this));}
+u64   raw__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2string__eq_hash_value(this, cause);}
+f2ptr  f2__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__eq_hash_value(cause, this));}
 
 f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {

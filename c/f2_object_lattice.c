@@ -101,6 +101,7 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node(f2ptr cause, f2
 
 f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970) {
   if (! object) {return nil;}
+  if (raw__larva__is_type(cause, object)) {return nil;}
   if (! start_nanoseconds_since_1970) {start_nanoseconds_since_1970 = f2integer__new(cause, raw__nanoseconds_since_1970(cause));}
   u64 start_nanoseconds_since_1970__i = f2integer__i(start_nanoseconds_since_1970, cause);
   

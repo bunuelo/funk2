@@ -129,7 +129,7 @@ f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr key_iter           = raw__array__elt(cause, bin_array, index);
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter,  cause);
-    if (raw__equals(cause, key, iter__key)) {
+    if (raw__eq(cause, key, iter__key)) {
       return f2bool__new(boolean__true);
     }
     key_iter = f2cons__cdr(key_iter, cause);
@@ -161,7 +161,7 @@ f2ptr f2__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr key_iter           = raw__array__elt(cause, bin_array, index);
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter, cause);
-    if (raw__equals(cause, key, iter__key)) {
+    if (raw__eq(cause, key, iter__key)) {
       f2mutex__unlock(f2set__write_mutex(this, cause), cause);
       return iter__key;
     }

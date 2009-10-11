@@ -247,35 +247,10 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   return f2symbol__new(cause, strlen(str), (u8*)(str));
 }
 
-//boolean_t  pfunk2__f2symbol__equals(f2ptr this, f2ptr cause, f2ptr that) {
-//  int pool_index = __f2ptr__pool_index(this);
-//  ptype_access_num__incr(pool_index);
-//  __pure__memblock__render_read_activated__set(this, 1);
-//  __pure__memblock__render_read_activated__set(that, 1);
-//  int this_length = __pure__f2symbol__length(this);
-//  if (this_length != __pure__f2symbol__length(that)) {
-//    ptype_access_num__decr(pool_index);
-//    return 0;
-//  }
-//  boolean_t retval = (! memcmp(__pure__f2symbol__str(this), __pure__f2symbol__str(that), this_length));
-//  ptype_access_num__decr(pool_index);
-//  return retval;
-//}
-
 // simple_array
-
-//boolean_t raw__simple_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}
-
-//f2ptr f2__simple_arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_arrayp(x, cause));}
-//def_pcfunk1(simple_arrayp, x, return f2__simple_arrayp(this_cause, x));
 
 
 // traced_array
-
-//boolean_t raw__traced_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
-
-//f2ptr f2__traced_arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_arrayp(x, cause));}
-//def_pcfunk1(traced_arrayp, x, return f2__traced_arrayp(this_cause, x));
 
 
 // cons
@@ -1457,89 +1432,34 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
-u64 raw__hash_value(f2ptr cause, f2ptr exp) {
+u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   if (! exp) {
     return 0;
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_integer:
-    return f2integer__i(exp, cause);
-  case ptype_double: {
-    union {
-      double d;
-      u64    i;
-    } u;
-    u.i = 0;
-    u.d = f2double__d(exp, cause);
-    return u.i;
+  case ptype_integer:      return raw__integer__eq_hash_value(     cause, exp);
+  case ptype_double:       return raw__double__eq_hash_value(      cause, exp);
+  case ptype_float:        return raw__float__eq_hash_value(       cause, exp);
+  case ptype_pointer:      return raw__pointer__eq_hash_value(     cause, exp);
+  case ptype_gfunkptr:     return raw__gfunkptr__eq_hash_value(    cause, exp);
+  case ptype_mutex:        return raw__mutex__eq_hash_value(       cause, exp);
+  case ptype_char:         return raw__char__eq_hash_value(        cause, exp);
+  case ptype_string:       return raw__string__eq_hash_value(      cause, exp);
+  case ptype_symbol:       return raw__symbol__eq_hash_value(      cause, exp);
+  case ptype_chunk:        return raw__chunk__eq_hash_value(       cause, exp);
+  case ptype_simple_array: return raw__simple_array__eq_hash_value(cause, exp);
+  case ptype_traced_array: return raw__traced_array__eq_hash_value(cause, exp);
+  case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
   }
-  case ptype_float: {
-    union {
-      float f;
-      u64   i;
-    } u;
-    u.i = 0;
-    u.f = f2float__f(exp, cause);
-    return u.i;
-  }
-  case ptype_pointer: {
-    union {
-      ptr p;
-      u64 i;
-    } u;
-    u.i = 0;
-    u.p = f2pointer__p(exp, cause);
-    return u.i;
-  }
-  case ptype_gfunkptr: {
-    union {
-      f2ptr g;
-      u64   i;
-    } u;
-    u.i = 0;
-    u.g = f2gfunkptr__gfunkptr(exp, cause);
-    return u.i;
-  }
-  case ptype_mutex:
-    return (u64)exp;
-  case ptype_char: {
-    union {
-      char ch;
-      u64  i;
-    } u;
-    u.i  = 0;
-    u.ch = f2char__ch(exp, cause);
-    return u.i;
-  }
-  case ptype_string:
-    return f2string__hash_value(exp, cause);
-  case ptype_symbol:
-    return f2symbol__hash_value(exp, cause);
-  case ptype_chunk:
-    return (u64)exp;
-  case ptype_simple_array:
-  case ptype_traced_array: {
-    u64 hash_value = 1;
-    s64 length = raw__array__length(cause, exp);
-    s64 index;
-    for (index = 0; index < length; index ++) {
-      f2ptr subexp = raw__array__elt(cause, exp, index);
-      hash_value *= raw__hash_value(cause, subexp);
-    }
-    return hash_value;
-  }
-  case ptype_larva:
-    return f2larva__larva_type(exp, cause);
-  default:
-    return 0;
-  }
+  error(nil, "raw__eq_hash_value error: found invalid ptype.");
+  return 0; // should never get here.
 }
 
-f2ptr f2__hash_value(f2ptr cause, f2ptr exp) {
-  return f2integer__new(cause, raw__hash_value(cause, exp));
+f2ptr f2__eq_hash_value(f2ptr cause, f2ptr exp) {
+  return f2integer__new(cause, raw__eq_hash_value(cause, exp));
 }
-def_pcfunk1(hash_value, exp, return f2__hash_value(this_cause, exp));
+def_pcfunk1(eq_hash_value, exp, return f2__eq_hash_value(this_cause, exp));
 
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {

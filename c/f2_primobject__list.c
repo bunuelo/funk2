@@ -102,7 +102,7 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2ptr iter = f2list__cons_cells(this, cause);
   while (iter) {
     f2ptr iter__element = f2cons__car(iter, cause);
-    if (raw__equals(cause, element, iter__element)) {
+    if (raw__eq(cause, element, iter__element)) {
       f2mutex__unlock(f2list__write_mutex(this, cause), cause);
       return iter__element;
     }

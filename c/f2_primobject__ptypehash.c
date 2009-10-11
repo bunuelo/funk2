@@ -78,7 +78,7 @@ f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2ptypehash__bin_array(this, cause);
-  u64   key__hash_value    = raw__hash_value(cause, key);
+  u64   key__hash_value    = raw__eq_hash_value(cause, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -87,7 +87,7 @@ f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   while(keyvalue_pair_iter) {
     f2ptr iter__keyvalue_pair = f2cons__car(keyvalue_pair_iter,  cause);
     f2ptr keyvalue_pair__key  = f2cons__car(iter__keyvalue_pair, cause);
-    if (raw__equals(cause, key, keyvalue_pair__key)) {
+    if (raw__eq(cause, key, keyvalue_pair__key)) {
       keyvalue_pair = iter__keyvalue_pair;
       break;
     }
@@ -118,7 +118,7 @@ f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2ptypehash__bin_array(this, cause);
-  u64   key__hash_value    = raw__hash_value(cause, key);
+  u64   key__hash_value    = raw__eq_hash_value(cause, key);
   u64   hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64   hash_value_mask    = (0xffffffffffffffffll >> (64 - bin_num_power__i));
   u64   index              = hash_value & hash_value_mask;
@@ -126,7 +126,7 @@ f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   while(keyvalue_pair_iter) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-    if (raw__equals(cause, key, keyvalue_pair__key)) {
+    if (raw__eq(cause, key, keyvalue_pair__key)) {
       f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
       return keyvalue_pair;
     }

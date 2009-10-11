@@ -19,5 +19,5 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk object_lattice-scan_accessor_type_and_incorporate_leafs &primfunk:object_lattice__scan_accessor_type_and_incorporate_leafs]
+[globalize-funk object_lattice-scan_and_incorporate_leafs &primfunk:object_lattice__scan_and_incorporate_leafs]
 

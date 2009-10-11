@@ -1472,9 +1472,6 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   if ((! x) || (! y)) {
     return boolean__false;
   }
-  if (raw__hash_value(cause, x) != raw__hash_value(cause, y)) {
-    return boolean__false;
-  }
   ptype_t x_ptype = f2ptype__raw(x, cause);
   ptype_t y_ptype = f2ptype__raw(y, cause);
   if (x_ptype != y_ptype) {

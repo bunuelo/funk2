@@ -113,7 +113,7 @@ void f2__object_lattice__initialize() {
   
   // object_lattice
   initialize_primobject_1_slot(object_lattice, lattice_node_hash);
-  f2__primcfunk__init__3(object_lattice__scan_accessor_type_and_incorporate_leafs, this, accessor_type, object, "(cfunk defined in f2_object_lattice.c)");
+  f2__primcfunk__init__3(object_lattice__scan_and_incorporate_leafs, this, accessor_type, object, "(cfunk defined in f2_object_lattice.c)");
   
 }
 

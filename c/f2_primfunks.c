@@ -1832,7 +1832,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(prev__set, "");
   
   f2__funktional_primcfunk__init__1(colonize, exp, "");
-  f2__funktional_primcfunk__init__1(hash_value, exp, "");
+  f2__funktional_primcfunk__init__1(eq_hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
   

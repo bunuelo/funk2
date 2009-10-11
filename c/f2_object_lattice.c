@@ -80,10 +80,10 @@ f2ptr f2__typedframe__type(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__object_lattice_primitive_data__is_type(f2ptr cause, f2ptr this) {
-  return (! (raw__typedframe__is_type(cause, object) ||
-	     raw__frame__is_type(     cause, object) ||
-	     raw__primobject__is_type(cause, object) ||
-	     raw__array__is_type(     cause, object)));
+  return (! (raw__typedframe__is_type(cause, this) ||
+	     raw__frame__is_type(     cause, this) ||
+	     raw__primobject__is_type(cause, this) ||
+	     raw__array__is_type(     cause, this)));
 }
 
 void f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970) {

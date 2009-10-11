@@ -872,7 +872,7 @@ f2ptr f2__time(f2ptr cause);
 
 // primobject ptypehash
 
-u64 raw__hash_value(f2ptr cause, f2ptr exp);
+u64 raw__eq_hash_value(f2ptr cause, f2ptr exp);
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 
 // primobject thought_process

@@ -57,13 +57,13 @@ void object_lattice__scan_and_incorporate_leafs__object_slot_helper(f2ptr cause,
 
 void object_lattice__scan_and_incorporate_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
-  f2ptr object                       = raw__array__elt(cause, aux_data, 1);
+  f2ptr frame                        = raw__array__elt(cause, aux_data, 1);
   f2ptr this                         = raw__array__elt(cause, aux_data, 2);
   f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 3);
   {
     //printf("\nframe_slot:");
     //f2__print(cause, fiber, slot_name);
-    f2ptr slot_value = f2__frame__lookup_var_value(cause, object, slot_name, nil);
+    f2ptr slot_value = f2__frame__lookup_var_value(cause, frame, slot_name, nil);
     //f2__print(cause, fiber, slot_value);
     f2__object_lattice__scan_and_incorporate_leafs(cause, fiber, this, slot_value, start_nanoseconds_since_1970);
   }
@@ -111,10 +111,10 @@ void f2__object_lattice__scan_and_incorporate_leafs__expand_node__array_indices(
 }
 
 void f2__object_lattice__scan_and_incorporate_leafs__expand_node(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970) {
-  if (raw__typedframe__is_type(cause, object))    {f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slots(cause, fiber, this, object, start_nanoseconds_since_1970);}
-  else if (raw__frame__is_type(cause, object))    {f2__object_lattice__scan_and_incorporate_leafs__expand_node__frame_slots(     cause, fiber, this, object, start_nanoseconds_since_1970);}
-  else if (raw__primobject__is_type(cause, this)) {f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slots(cause, fiber, this, object, start_nanoseconds_since_1970);}
-  else if (raw__array__is_type(cause, object))    {f2__object_lattice__scan_and_incorporate_leafs__expand_node__array_indices(   cause, fiber, this, object, start_nanoseconds_since_1970);}
+  if      (raw__typedframe__is_type(cause, object)) {f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slots(cause, fiber, this, object, start_nanoseconds_since_1970);}
+  else if (raw__frame__is_type(     cause, object)) {f2__object_lattice__scan_and_incorporate_leafs__expand_node__frame_slots(     cause, fiber, this, object, start_nanoseconds_since_1970);}
+  else if (raw__primobject__is_type(cause, object)) {f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slots(cause, fiber, this, object, start_nanoseconds_since_1970);}
+  else if (raw__array__is_type(     cause, object)) {f2__object_lattice__scan_and_incorporate_leafs__expand_node__array_indices(   cause, fiber, this, object, start_nanoseconds_since_1970);}
 }
 
 f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970) {

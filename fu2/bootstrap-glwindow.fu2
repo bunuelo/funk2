@@ -238,13 +238,13 @@
   [let [[move_to_goal [have this lookup `move_to_goal]]]
     `[format stdout '\nhandle_move_to_goal: move_to_goal=' move_to_goal]
     [if move_to_goal
-	[prog [format stdout '\nagent move_to_goal = ' move_to_goal]
+	[prog `[format stdout '\nagent move_to_goal = ' move_to_goal]
 	      [let [[goal_x [get move_to_goal x]]
 		    [goal_y [get move_to_goal y]]
 		    [goal_z [get move_to_goal z]]]
 		[let [[position [get this position]]]
 		  [if position
-		      [prog [format stdout '\nagent position = ' position]
+		      [prog `[format stdout '\nagent position = ' position]
 			    [let [[x [get position x]]
 				  [y [get position y]]
 				  [z [get position z]]]

@@ -30,7 +30,7 @@ boolean_t raw__number__is_type(f2ptr cause, f2ptr exp) {
 }
 
 f2ptr f2__number__is_type(f2ptr cause, f2ptr exp) {return f2bool__new(raw__number__is_type(cause, exp));}
-def_pcfunk1(number__is_type, exp, return f2__number__is_type(cause, exp));
+def_pcfunk1(number__is_type, exp, return f2__number__is_type(this_cause, exp));
 
 double raw__number__to_double(f2ptr cause, f2ptr this) {
   double d;
@@ -42,7 +42,7 @@ double raw__number__to_double(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__number__to_double(f2ptr cause, f2ptr this) {return f2bool__new(raw__number__to_double(cause, this));}
-def_pcfunk1(number__to_double, this, return f2__number__to_double(cause, this));
+def_pcfunk1(number__to_double, this, return f2__number__to_double(this_cause, this));
 
 
 

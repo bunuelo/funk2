@@ -19,7 +19,7 @@
  rights to redistribute these changes.
 '
 
-[globalize math:pi 3.1415926535459]
+[globalize math:pi 3.14159265358979323846264338327950288]
 [globalize pi      math:pi]
 
 [defunk > [x y]
@@ -35,70 +35,40 @@
 
 'addition'
 
-[defunk binary-add [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-add x y]
-    [if [and [is-type `pointer x] [is-type `integer y]] [pointer-add_integer x y]
-      [if [and [is-type `double x] [is-type `double y]] [double-add_double x y]
-	[if [and [is-type `double x] [is-type `integer y]] [double-add_integer x y]
-	  [if [and [is-type `integer x] [is-type `double y]] [integer-add_double x y]
-	    [error `runtime-error `type-check-failure]]]]]]]
-
 [defmetro + [x :rest rest]
   [if [null rest]
       x
-    `[binary-add ,x ,[apply &+ rest]]]]
+    `[number-add_number ,x ,[apply &+ rest]]]]
 
 
 'subtraction'
 
-[defunk binary-subtract [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-subtract x y]
-    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-subtract x y]
-      [if [and [is-type `double x] [is-type `double y]] [double-subtract_double x y]
-	[if [and [is-type `double x] [is-type `integer y]] [double-subtract_integer x y]
-	  [if [and [is-type `integer x] [is-type `double y]] [integer-subtract_double x y]
-	    [error `runtime-error `type-check-failure]]]]]]]
-
 [defunk negative [x]
-  [binary-subtract 0 x]]
+  [number-subtract_number 0 x]]
 
 [defmetro - [x :rest rest]
   [if [null rest]
       `[negative ,x]
-    `[binary-subtract ,x ,[apply &+ rest]]]]
+    `[number-subtract_number ,x ,[apply &+ rest]]]]
 
 
 'multiplication'
 
-[defunk binary-multiply [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-multiply x y]
-    [if [and [is-type `integer x] [is-type `double y]] [double-multiply_by_integer y x]
-      [if [and [is-type `double x] [is-type `double y]] [double-multiply_by_double x y]
-	[if [and [is-type `double x] [is-type `integer y]] [double-multiply_by_integer x y]
-	  [error `runtime-error `type-check-failure]]]]]]
-
 [defmetro * [x :rest rest]
   [if [null rest]
       x
-    `[binary-multiply ,x ,[apply &* rest]]]]
+    `[number-multiply_by_number ,x ,[apply &* rest]]]]
 
 
 'division'
 
-[defunk binary-divide [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-divide_by_integer x y]
-    [if [and [is-type `integer x] [is-type `double y]] [integer-divide_by_double x y]
-      [if [and [is-type `double x] [is-type `double y]] [double-divide_by_double x y]
-	[if [and [is-type `double x] [is-type `integer y]] [double-divide_by_integer x y]
-	  [error `runtime-error `type-check-failure]]]]]]
-
 [defunk inverse [x]
-  [binary-divide 1 x]]
+  [number-divide_by_number 1 x]]
 
 [defmetro / [x :rest rest]
   [if [null rest]
       `[inverse ,x]
-    `[binary-divide ,x ,[apply &* rest]]]]
+    `[number-divide_by_number ,x ,[apply &* rest]]]]
 
 
 [defunk == [x y]

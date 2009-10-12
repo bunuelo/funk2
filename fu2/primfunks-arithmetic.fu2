@@ -23,4 +23,6 @@
 [globalize-funk number-to_double          &primfunk:number__to_double]
 [globalize-funk number-multiply_by_number &primfunk:number__multiply_by_number]
 [globalize-funk number-divide_by_number   &primfunk:number__divide_by_number]
+[globalize-funk number-add_number         &primfunk:number__add_number]
+[globalize-funk number-subtract_number    &primfunk:number__subtract_number]
 

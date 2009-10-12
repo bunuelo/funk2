@@ -41,7 +41,7 @@ double raw__number__to_double(f2ptr cause, f2ptr this) {
   return d;
 }
 
-f2ptr f2__number__to_double(f2ptr cause, f2ptr this) {return f2bool__new(raw__number__to_double(cause, this));}
+f2ptr f2__number__to_double(f2ptr cause, f2ptr this) {return f2double__new(cause, raw__number__to_double(cause, this));}
 def_pcfunk1(number__to_double, this, return f2__number__to_double(this_cause, this));
 
 

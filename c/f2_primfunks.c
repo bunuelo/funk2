@@ -371,26 +371,6 @@ def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_fro
 
 
 
-// number interface (integer, double, float)
-
-boolean_t raw__number__is_type(f2ptr cause, f2ptr exp) {
-  return (raw__integer__is_type(cause, exp) ||
-	  raw__double__is_type( cause, exp) ||
-	  raw__float__is_type(  cause, exp));
-}
-
-double raw__number__to_double(f2ptr cause, f2ptr this) {
-  double d;
-  if      (raw__double__is_type( cause, this)) {d = f2double__d( this, cause);}
-  else if (raw__float__is_type(  cause, this)) {d = f2float__f(  this, cause);}
-  else if (raw__integer__is_type(cause, this)) {d = f2integer__i(this, cause);}
-  else                                         {d = 0.0;}
-  return d;
-}
-
-
-
-
 // primobject ptypehash
 
 // primobject fiber

@@ -104,6 +104,7 @@ void f2__initialize() {
   f2__agent__initialize();
   f2__object_lattice__initialize();
   f2__primobject_hash__initialize();
+  f2__arithmetic__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

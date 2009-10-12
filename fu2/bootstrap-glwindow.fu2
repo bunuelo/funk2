@@ -258,7 +258,7 @@
 				[cond [[< z [- goal_z speed]] [set position z [+ z speed]]]
 				      [[> z [+ goal_z speed]] [set position z [- z speed]]]
 				      [t                      [set position z goal_z]]]
-				]]]]]]]]
+				]]]]]]]]]
   nil]
 
 

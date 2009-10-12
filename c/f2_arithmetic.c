@@ -58,8 +58,6 @@ void f2__arithmetic__initialize() {
   
   f2__arithmetic__reinitialize_globalvars();
   
-  f2ptr cause = initial_cause();
-  
   f2__primcfunk__init__1(number__is_type,   exp,  "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__1(number__to_double, this, "(cfunk defined in f2_arithmetic.c)");
   

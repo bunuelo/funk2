@@ -60,7 +60,6 @@
 [globalize-funk integer-bit_not                             &primfunk:integer__bit_not]
 [globalize-funk pointer-greater_than                        &primfunk:pointer__greater_than]
 [globalize-funk pointer-less_than                           &primfunk:pointer__less_than]
-[globalize-funk pointer-add_integer                         &primfunk:pointer__add_integer]
 [globalize-funk pointer-subtract                            &primfunk:pointer__subtract]
 [globalize-funk pointer-equal_sign                          &primfunk:pointer__equal_sign]
 [globalize-funk pointer-not_equal_sign                      &primfunk:pointer__not_equal_sign]

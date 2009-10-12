@@ -214,7 +214,7 @@
     [have this add `sitting_right   sitting_right]
     [have this add `sitting_left    sitting_left]
     [have this set_posture `standing]
-    [have this add `move_to_goal    nil]
+    [have this add `move_to_goal    [new physical_position 0 0 0]]
     [have this add `paused          t]
     [have this add `fiber           [fiber [funk [] [while t
 						      `[print 'female_child_agent construct: fiber here.']
@@ -319,7 +319,7 @@
 		 [new physical_place [physical_transform-new_position -0.1  0.0 0] [fork_object-new   nil nil]]
 		 [new physical_place [physical_transform-new_position  0.1  0.0 0] [mud_object-new nil]]
 		 
-		 [new physical_place [physical_transform-new_position  0.5 -0.4 0] carol]
+		 carol
 		 ]]]
 
 `[globalize glwindow_value [all_objects_scene-new]]

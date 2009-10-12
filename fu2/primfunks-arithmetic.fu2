@@ -25,5 +25,5 @@
 [globalize-funk number-divide_by_number    &primfunk:number__divide_by_number]
 [globalize-funk number-add_number          &primfunk:number__add_number]
 [globalize-funk number-subtract_number     &primfunk:number__subtract_number]
-[globalize-funk number-greater_than_number &primfunk:number__subtract_number]
+[globalize-funk number-greater_than_number &primfunk:number__greater_than_number]
 

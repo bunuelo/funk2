@@ -23,14 +23,10 @@
 [globalize pi      math:pi]
 
 [defunk > [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-greater_than x y]
-    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-greater_than x y]
-      [error `runtime-error `type-check-failure]]]]
+  [number-greater_than_number x y]]
 
 [defunk < [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-less_than x y]
-    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-less_than x y]
-      [error `runtime-error `type-check-failure]]]]
+  [number-greater_than_number x y]]
 
 
 'addition'
@@ -70,16 +66,13 @@
       `[inverse ,x]
     `[number-divide_by_number ,x ,[apply &* rest]]]]
 
+'equals'
 
 [defunk == [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-equal_sign x y]
-    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-equal_sign x y]
-      [error `runtime-error `type-check-failure]]]]
+  [number-equals_number x y]]
 
 [defunk != [x y]
-  [if [and [is-type `integer x] [is-type `integer y]] [integer-not_equal_sign x y]
-    [if [and [is-type `pointer x] [is-type `pointer y]] [pointer-not_equal_sign x y]
-      [error `runtime-error `type-check-failure]]]]
+  [not [== x y]]]
 
 'bitshift-left'
 

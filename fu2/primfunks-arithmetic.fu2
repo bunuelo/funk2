@@ -19,6 +19,8 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk number-is_type   &primfunk:number__is_type]
-[globalize-funk number-to_double &primfunk:number__to_double]
+[globalize-funk number-is_type            &primfunk:number__is_type]
+[globalize-funk number-to_double          &primfunk:number__to_double]
+[globalize-funk number-multiply_by_number &primfunk:number__multiply_by_number]
+[globalize-funk number-divide_by_number   &primfunk:number__divide_by_number]
 

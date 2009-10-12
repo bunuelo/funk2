@@ -185,9 +185,6 @@ def_pcfunk2(pointer__equal_sign, x, y, return f2__pointer__equal_sign(this_cause
 f2ptr f2__pointer__not_equal_sign(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2pointer__p(x, cause) != f2pointer__p(y, cause));}
 def_pcfunk2(pointer__not_equal_sign, x, y, return f2__pointer__not_equal_sign(this_cause, x, y));
 
-f2ptr f2__pointer__add_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2pointer__new(cause, f2pointer__p(x, cause) +  f2integer__i(y, cause));}
-def_pcfunk2(pointer__add_integer, x, y, return f2__pointer__add_integer(this_cause, x, y));
-
 f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2pointer__p(x, cause) -  f2pointer__p(y, cause));}
 def_pcfunk2(pointer__subtract, x, y, return f2__pointer__subtract(this_cause, x, y));
 
@@ -1626,7 +1623,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(integer__bit_not,           x, "");
   f2__funktional_primcfunk__init__2(pointer__greater_than,      x, y, "");
   f2__funktional_primcfunk__init__2(pointer__less_than,         x, y, "");
-  f2__funktional_primcfunk__init__2(pointer__add_integer,       x, y, "");
   f2__funktional_primcfunk__init__2(pointer__subtract,          x, y, "");
   f2__funktional_primcfunk__init__2(pointer__equal_sign,        x, y, "");
   f2__funktional_primcfunk__init__2(pointer__not_equal_sign,    x, y, "");

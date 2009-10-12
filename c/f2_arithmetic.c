@@ -65,7 +65,7 @@ f2ptr f2__double__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  double value = f2double__i(this, cause);
+  double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
     return f2double__new(cause, value * f2integer__i(number, cause));
   } else if (raw__double__is_type(cause, number)) {
@@ -80,7 +80,7 @@ f2ptr f2__float__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  float value = f2float__i(this, cause);
+  float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
     return f2float__new(cause, value * f2integer__i(number, cause));
   } else if (raw__double__is_type(cause, number)) {

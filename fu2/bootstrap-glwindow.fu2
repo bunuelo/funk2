@@ -228,14 +228,29 @@
 						  nil]]]
   this]
 
-[deftypefunk female_child_agent execute set_paused [paused]
-  [have this add `paused paused]
-  nil]
-
 [deftypefunk female_child_agent get position []
   [let [[transform [get this transform]]]
     [if transform
 	[get transform position]]]]
+
+[deftypefunk female_child_agent get posture []
+  [have this lookup `posture]]
+
+[deftypefunk female_child_agent execute set_paused [paused]
+  [have this add `paused paused]
+  nil]
+
+[deftypefunk female_child_agent execute set_posture_goal [posture_goal]
+  [have this add `posture_goal posture_goal]
+  nil]
+
+[deftypefunk female_child_agent execute handle_posture_goal []
+  [let [[posture_goal [have this lookup `posture_goal]]]
+    [if posture_goal
+	[let [[posture [get this posture]]]
+	  [prog [have this set_posture posture_goal]
+		[have this set_posture_goal nil]]]]]
+  nil]
 
 [deftypefunk female_child_agent execute set_move_in_direction_goal [move_in_direction_goal]
   [have this add `move_in_direction_goal move_in_direction_goal]
@@ -244,17 +259,20 @@
 [deftypefunk female_child_agent execute handle_move_in_direction_goal []
   [let [[move_in_direction_goal [have this lookup `move_in_direction_goal]]]
     [if move_in_direction_goal
-	[let [[goal_direction_x [get move_in_direction_goal x]]
-	      [goal_direction_y [get move_in_direction_goal y]]
-	      [goal_direction_z [get move_in_direction_goal z]]]
-	  [let [[position [get this position]]]
-	    [let [[x [get position x]]
-		  [y [get position y]]
-		  [z [get position z]]]
-	      [set position x [+ x goal_direction_x]]
-	      [set position y [+ y goal_direction_y]]
-	      [set position z [+ z goal_direction_z]]
-	      [have this set_move_in_direction_goal nil]]]]]]
+	[let [[posture [get this posture]]]
+	  [if [not [eq posture `standing]]
+	      [have this set_posture_goal `standing]
+	    [let [[goal_direction_x [get move_in_direction_goal x]]
+		  [goal_direction_y [get move_in_direction_goal y]]
+		  [goal_direction_z [get move_in_direction_goal z]]]
+	      [let [[position [get this position]]]
+		[let [[x [get position x]]
+		      [y [get position y]]
+		      [z [get position z]]]
+		  [set position x [+ x goal_direction_x]]
+		  [set position y [+ y goal_direction_y]]
+		  [set position z [+ z goal_direction_z]]
+		  [have this set_move_in_direction_goal nil]]]]]]]]
   nil]
 
 [deftypefunk female_child_agent execute set_move_to_goal [move_to_goal]
@@ -300,6 +318,7 @@
     `[print 'perceive_think_act: debug 0.']
      [have this handle_move_to_goal]
      [have this handle_move_in_direction_goal]
+     [have this handle_posture_goal]
      ]
   nil]
 

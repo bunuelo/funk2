@@ -112,11 +112,11 @@ f2ptr f2__integer__divide_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    return f2integer__new(cause, value * f2integer__i(number, cause));
+    return f2integer__new(cause, value / f2integer__i(number, cause));
   } else if (raw__double__is_type(cause, number)) {
-    return f2double__new(cause, value * f2double__d(number, cause));
+    return f2double__new(cause, value / f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {
-    return f2float__new(cause, value * f2float__f(number, cause));
+    return f2float__new(cause, value / f2float__f(number, cause));
   }
   return f2larva__new(cause, 1);
 }
@@ -127,11 +127,11 @@ f2ptr f2__double__divide_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    return f2double__new(cause, value * f2integer__i(number, cause));
+    return f2double__new(cause, value / f2integer__i(number, cause));
   } else if (raw__double__is_type(cause, number)) {
-    return f2double__new(cause, value * f2double__d(number, cause));
+    return f2double__new(cause, value / f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {
-    return f2double__new(cause, value * f2float__f(number, cause));
+    return f2double__new(cause, value / f2float__f(number, cause));
   }
   return f2larva__new(cause, 1);
 }
@@ -142,11 +142,11 @@ f2ptr f2__float__divide_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    return f2float__new(cause, value * f2integer__i(number, cause));
+    return f2float__new(cause, value / f2integer__i(number, cause));
   } else if (raw__double__is_type(cause, number)) {
-    return f2double__new(cause, value * f2double__d(number, cause));
+    return f2double__new(cause, value / f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {
-    return f2float__new(cause, value * f2float__f(number, cause));
+    return f2float__new(cause, value / f2float__f(number, cause));
   }
   return f2larva__new(cause, 1);
 }

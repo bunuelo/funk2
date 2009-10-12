@@ -248,7 +248,7 @@
 			    [let [[x [get position x]]
 				  [y [get position y]]
 				  [z [get position z]]]
-			      [let [[speed 0.01]]
+			      [let [[speed 0.05]]
 				[cond [[< x [- goal_x speed]] [set position x [+ x speed]]]
 				      [[> x [+ goal_x speed]] [set position x [- x speed]]]
 				      [t                      [set position x goal_x]]]

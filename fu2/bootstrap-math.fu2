@@ -26,7 +26,7 @@
   [number-greater_than_number x y]]
 
 [defunk < [x y]
-  [number-greater_than_number x y]]
+  [number-less_than_number x y]]
 
 
 'addition'

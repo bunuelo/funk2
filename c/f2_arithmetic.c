@@ -305,6 +305,77 @@ f2ptr f2__number__subtract_number(f2ptr cause, f2ptr this, f2ptr number) {
 }
 def_pcfunk2(number__subtract_number, this, number, return f2__number__subtract_number(this_cause, this, number));
 
+// number greater_than
+
+f2ptr f2__integer__greater_than_number(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value > f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value > f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value > f2float__f(number, cause));
+  }
+  return f2larva__new(cause, 1);
+}
+
+f2ptr f2__double__greater_than_number(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value > f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value > f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value > f2float__f(number, cause));
+  }
+  return f2larva__new(cause, 1);
+}
+
+f2ptr f2__float__greater_than_number(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value > f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value > f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value > f2float__f(number, cause));
+  }
+  return f2larva__new(cause, 1);
+}
+
+f2ptr f2__pointer__greater_than_pointer(f2ptr cause, f2ptr this, f2ptr integer) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__pointer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(cause, f2pointer__p(this, cause) > f2pointer__p(integer, cause));
+}
+
+f2ptr f2__number__greater_than_number(f2ptr cause, f2ptr this, f2ptr number) {
+  if (raw__integer__is_type(cause, this)) {
+    return f2__integer__greater_than_number(cause, this, number);
+  } else if (raw__double__is_type(cause, this)) {
+    return f2__double__greater_than_number(cause, this, number);
+  } else if (raw__float__is_type(cause, this)) {
+    return f2__float__greater_than_number(cause, this, number);
+  } else if (raw__pointer__is_type(cause, this)) {
+    if (raw__pointer__is_type(cause, number)) {
+      return f2__pointer__greater_than_pointer(cause, this, number);
+    }
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(number__greater_than_number, this, number, return f2__number__greater_than_number(this_cause, this, number));
+
 
 // **
 
@@ -316,11 +387,12 @@ void f2__arithmetic__initialize() {
   
   f2__arithmetic__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(number__is_type,            exp,          "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__1(number__to_double,          this,         "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__multiply_by_number, this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__divide_by_number,   this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__add_number,         this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__subtract_number,    this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__1(number__is_type,             exp,          "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__1(number__to_double,           this,         "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__multiply_by_number,  this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__divide_by_number,    this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__add_number,          this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__subtract_number,     this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__greater_than_number, this, number, "(cfunk defined in f2_arithmetic.c)");
   
 }

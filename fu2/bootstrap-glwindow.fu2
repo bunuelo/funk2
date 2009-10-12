@@ -251,8 +251,8 @@
 													   nil]]
 		 ]]]
 
-[globalize glwindow_value [all_objects_scene-new]]
-`[globalize glwindow_value [carol_playing_in_mud_scene-new]]
+`[globalize glwindow_value [all_objects_scene-new]]
+[globalize glwindow_value [carol_playing_in_mud_scene-new]]
 
 [defunk glwindow-display_in_serial_with_params [title width height depth fullscreen]
   [if [not [glwindow-supported]]

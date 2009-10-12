@@ -209,11 +209,23 @@
   [have this add `sitting_left    [female_child_agent_sitting_left-new  torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
   [have this set_posture `standing]
   [have this add `move_to_goal    nil]
-  [have this add `fiber           [fiber [funk [] [while t [print 'female_child_agent construct: fiber here.'] [have this perceive_think_act]]] nil]]
+  [have this add `paused          t]
+  [have this add `fiber           [fiber [funk [] [while t
+						    [print 'female_child_agent construct: fiber here.']
+						    [let [[paused [have this lookup `paused]]]
+						      [if paused
+							  [sleep 1]
+							[have this perceive_think_act]]]
+						    ]]
+					 nil]]
   this]
 
 [deftypefunk female_child_agent execute set_move_to_goal [move_to_goal]
   [have this add `move_to_goal move_to_goal]
+  nil]
+
+[deftypefunk female_child_agent execute set_paused [paused]
+  [have this add `paused paused]
   nil]
 
 [deftypefunk female_child_agent get position []

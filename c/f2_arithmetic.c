@@ -357,7 +357,7 @@ f2ptr f2__pointer__greater_than_pointer(f2ptr cause, f2ptr this, f2ptr integer) 
       (! raw__pointer__is_type(cause, this))) {
     return f2larva__new(cause, 1);
   }
-  return f2bool__new(cause, f2pointer__p(this, cause) > f2pointer__p(integer, cause));
+  return f2bool__new(f2pointer__p(this, cause) > f2pointer__p(integer, cause));
 }
 
 f2ptr f2__number__greater_than_number(f2ptr cause, f2ptr this, f2ptr number) {

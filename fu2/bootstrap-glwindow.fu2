@@ -188,17 +188,6 @@
     [have part_place_frame add `right_hand_object_place   [new physical_place [new physical_transform [new physical_position  0.07  0.24  0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] right_hand_object]]
     this]]
 
-[deframe female_child_agent [posturable_physical_object] []]
-
-[deftypeconstruct female_child_agent [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
-  [have this add `posture       nil]
-  [have this add `standing      [female_child_agent_standing-new      torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
-  [have this add `sitting_right [female_child_agent_sitting_right-new torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
-  [have this add `sitting_left  [female_child_agent_sitting_left-new  torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
-  [have this set_posture `standing]
-  `[have this add `emotion_machine [new emotion_machine this]]
-  this]
-
 [deframe male_child_agent [posturable_physical_object] []]
 
 [deftypeconstruct male_child_agent [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
@@ -207,8 +196,59 @@
   [have this add `sitting_right [male_child_agent_sitting_right-new torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
   [have this add `sitting_left  [male_child_agent_sitting_left-new  torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
   [have this set_posture `standing]
+  [have this add `move_to_goal  nil]
   `[have this add `emotion_machine [new emotion_machine this]]
   this]
+
+[deframe female_child_agent [posturable_physical_object] []]
+
+[deftypeconstruct female_child_agent [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
+  [have this add `posture         nil]
+  [have this add `standing        [female_child_agent_standing-new      torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
+  [have this add `sitting_right   [female_child_agent_sitting_right-new torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
+  [have this add `sitting_left    [female_child_agent_sitting_left-new  torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
+  [have this set_posture `standing]
+  [have this add `move_to_goal    nil]
+  [have this add `fiber           [fiber [funk [] [while t [have this perceive_think_act]]] nil]]
+  this]
+
+[deftypefunk female_child_agent execute set_move_to_goal [move_to_goal]
+  [have this add `move_to_goal move_to_goal]
+  nil]
+
+[deftypefunk female_child_agent get position []
+  [let [[transform [get this transform]]]
+    [if transform
+	[get transform position]]]]
+
+[deftypefunk female_child_agent execute handle_move_to_goal []
+  [let [[move_to_goal [get this move_to_goal]]]
+    [if move_to_goal
+	[let [[goal_x [get move_to_goal x]]
+	      [goal_y [get move_to_goal y]]
+	      [goal_z [get move_to_goal z]]]
+	  [let [[position [get this position]]]
+	    [let [[x [get position x]]
+		  [y [get position y]]
+		  [z [get position z]]]
+	      [cond [[< x goal_x] [set position x [+ x 0.01]]]
+		    [[> x goal_x] [set position x [- x 0.01]]]]
+	      [cond [[< y goal_y] [set position x [+ x 0.01]]]
+		    [[> y goal_y] [set position x [- x 0.01]]]]
+	      [cond [[< z goal_z] [set position x [+ x 0.01]]]
+		    [[> z goal_z] [set position x [- x 0.01]]]]
+	      ]]]]]
+  nil]
+
+
+[deftypefunk female_child_agent execute perceive_think_act []
+  [let [[perception glwindow_value]]
+    [have this handle_move_to_goal]
+    ]
+  nil]
+
+
+
 
 [defunk all_objects_scene-new []
   [new physical_scene `mud_puddle_scene
@@ -235,6 +275,14 @@
 		 
 		 ]]]
 
+[globalize carol [new female_child_agent [bluegreen_blouse-new]
+          		                 [red_skirt-new]
+					 [pink_left_shoe-new]
+					 [pink_right_shoe-new]
+					 nil
+					 nil
+					 nil]]
+
 [defunk carol_playing_in_mud_scene-new []
   [new physical_scene `mud_puddle_scene
        [conslist [new physical_place [physical_transform-new_position  0.3  0.0 0] [bucket_object-new nil nil]]
@@ -242,13 +290,7 @@
 		 [new physical_place [physical_transform-new_position -0.1  0.0 0] [fork_object-new   nil nil]]
 		 [new physical_place [physical_transform-new_position  0.1  0.0 0] [mud_object-new nil]]
 		 
-		 [new physical_place [physical_transform-new_position  0.5 -0.4 0] [new female_child_agent [bluegreen_blouse-new]
-											                   [red_skirt-new]
-													   [pink_left_shoe-new]
-													   [pink_right_shoe-new]
-													   nil
-													   nil
-													   nil]]
+		 [new physical_place [physical_transform-new_position  0.5 -0.4 0] carol]
 		 ]]]
 
 `[globalize glwindow_value [all_objects_scene-new]]

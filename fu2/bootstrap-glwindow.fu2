@@ -209,7 +209,7 @@
   [have this add `sitting_left    [female_child_agent_sitting_left-new  torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
   [have this set_posture `standing]
   [have this add `move_to_goal    nil]
-  [have this add `fiber           [fiber [funk [] [while t [have this perceive_think_act]]] nil]]
+  [have this add `fiber           [fiber [funk [] [while t [print 'female_child_agent construct: fiber here.'] [have this perceive_think_act]]] nil]]
   this]
 
 [deftypefunk female_child_agent execute set_move_to_goal [move_to_goal]
@@ -222,7 +222,9 @@
 	[get transform position]]]]
 
 [deftypefunk female_child_agent execute handle_move_to_goal []
+  [print 'handle_move_to_goal: here.']
   [let [[move_to_goal [have this lookup `move_to_goal]]]
+    [format stdout '\nhandle_move_to_goal: move_to_goal=' move_to_goal]
     [if move_to_goal
 	[prog [print move_to_goal]
 	      `[let [[goal_x [get move_to_goal x]]
@@ -243,7 +245,9 @@
 
 
 [deftypefunk female_child_agent execute perceive_think_act []
+  [print 'perceive_think_act: here.']
   [let [[perception glwindow_value]]
+    [print 'perceive_think_act: debug 0.']
     [have this handle_move_to_goal]
     ]
   nil]

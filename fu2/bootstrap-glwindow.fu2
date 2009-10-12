@@ -307,7 +307,11 @@
 				  [cond [[< z [- goal_z speed]] [= move_z speed]]
 					[[> z [+ goal_z speed]] [= move_z [- speed]]]
 					[t                      [= move_z [- goal_z z]]]]
-				  [have this set_move_in_direction_goal [new physical_position move_x move_y move_z]]
+				  [if [and [== move_x 0]
+					   [== move_y 0]
+					   [== move_z 0]]
+				      [have this set_move_to_goal nil]
+				    [have this set_move_in_direction_goal [new physical_position move_x move_y move_z]]]
 				  ]]]]]]]]]]
   nil]
 

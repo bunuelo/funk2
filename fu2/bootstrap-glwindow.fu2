@@ -234,7 +234,7 @@
       [- x]
     x]]
 
-[deftypefunk position get distance [that]
+[deftypefunk physical_position get distance [that]
   [let [[x0 [get this x]]
 	[y0 [get this y]]
 	[z0 [get this z]]

@@ -513,6 +513,7 @@
   `[print 'perceive_think_act: here.']
   [let [[perception glwindow_value]]
     `[print 'perceive_think_act: debug 0.']
+     [have this handle_enable_random_move_goal]
      [have this handle_put_object_at_goal]
      [have this handle_pick_up_object_goal]
      [have this handle_move_near_object_goal]

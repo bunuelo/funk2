@@ -248,7 +248,7 @@
 [deftypefunk physical_scene get random_position []
   [new physical_position
        [* 0.50 [- [/ [random 201] 100.0] 1]]
-       [* 0.25 [- [/ [random 201] 100.0] 1]]
+       [- [* 0.25 [- [/ [random 201] 100.0] 1]] 0.2]
        0]]
 
 [deframe female_child_agent [posturable_physical_object] []]

@@ -229,6 +229,22 @@
 						  nil]]]
   this]
 
+[defunk abs [x]
+  [if [< x 0]
+      [- x]
+    x]]
+
+[deftypefunk position get distance [that]
+  [let [[x0 [get this x]]
+	[y0 [get this y]]
+	[z0 [get this z]]
+	[x1 [get that x]]
+	[y1 [get that y]]
+	[z1 [get that z]]]
+    [+ [abs [- x0 x1]]
+       [abs [- y0 y1]]
+       [abs [- z0 z1]]]]]
+
 [deftypefunk female_child_agent get position []
   [let [[transform [get this transform]]]
     [if transform
@@ -239,6 +255,24 @@
 
 [deftypefunk female_child_agent execute set_paused [paused]
   [have this add `paused paused]
+  nil]
+
+[deftypefunk female_child_agent execute set_move_near_object_goal [move_near_object_goal]
+  [have this add `move_near_object_goal move_near_object_goal]
+  nil]
+
+[deftypefunk female_child_agent execute handle_move_near_object_goal []
+  [let [[move_near_object_goal [have this lookup `move_near_object_goal]]]
+    [if move_near_object_goal
+	[let [[transform [get move_near_object_goal transform]]]
+	  [let [[goal_position [get transform position]]
+		[position      [get this      position]]]
+	    [let [[distance [get position distance goal_position]]]
+	      [let [[arms_length 0.2]]
+		[if [< distance arms_length]
+		    [prog [have this set_move_to_goal          nil]
+			  [have this set_move_near_object_goal nil]]
+		  [have this set_move_to_goal position]]]]]]]]
   nil]
 
 [deftypefunk female_child_agent execute set_posture_goal [posture_goal]
@@ -321,6 +355,7 @@
   `[print 'perceive_think_act: here.']
   [let [[perception glwindow_value]]
     `[print 'perceive_think_act: debug 0.']
+     [have this handle_move_near_object_goal]
      [have this handle_move_to_goal]
      [have this handle_move_in_direction_goal]
      [have this handle_posture_goal]

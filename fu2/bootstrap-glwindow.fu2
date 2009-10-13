@@ -344,7 +344,8 @@
 	  [if [not put_object_at_goal__object]
 	      [let [[random_object   [get carol_scene random_object]]
 		    [random_position [get carol_scene random_position]]]
-		[if [is-type `physical_object random_object]
+		[if [and [is-type `physical_object random_object]
+			 [not [eq random_object carol]]]
 		    [have this set_put_object_at_goal random_object random_position]]]]]]]
   nil]
 

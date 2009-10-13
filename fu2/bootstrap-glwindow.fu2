@@ -297,7 +297,7 @@
 	    [let [[distance [get position distance goal_position]]]
 	      [if [< distance arms_length]
 		  [let [[posture [get this posture]]]
-		    [if [not [eq posture `standing]]
+		    [if [eq posture `standing]
 			[let [[x      [get position      x]]
 			      [goal_x [get goal_position x]]]
 			  [if [< goal_x x]

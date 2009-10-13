@@ -362,7 +362,7 @@
 	  [if [not holding_object]
 	      [have this set_pick_up_object_goal goal_object]
 	    [let [[position [get this position]]]
-	      [if [< [get position distance goal_position] 0.0001]
+	      [if [> [get position distance goal_position] 0.0001]
 		  [have this set_move_to_goal goal_position]
 		[prog [have this set_drop_object_goal goal_object]
 		      [have this set_put_object_at_goal nil nil]]]]]]]]

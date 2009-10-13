@@ -226,8 +226,7 @@
   [let [[things [get this physical_things]]]
     [set this physical_things [mapcar [funk [x]
 					    [if [eq x object]
-						[prog [print 'found object']
-						      nil]
+						nil
 					      x]]
 				      things]]
     nil]]
@@ -319,6 +318,7 @@
 				  [have this set_posture_goal `sitting_right]
 				[have this set_posture_goal `sitting_left]]]
 			  [prog [have carol_scene remove_object pick_up_object_goal]
+				[set transform position [new physical_position 0 0 0]]
 				[have this set_left_hand_object pick_up_object_goal]
 				[have this set_pick_up_object_goal nil]]]]
 		    [have this set_move_near_object_goal pick_up_object_goal]]]]]

@@ -342,7 +342,10 @@
     [if enable_random_move_goal
 	[let [[put_object_at_goal__object [have this lookup `put_object_at_goal__object]]]
 	  [if [not put_object_at_goal__object]
-	      [have this set_put_object_at_goal [get carol_scene random_object] [get carol_scene random_position]]]]]]
+	      [let [[random_object   [get carol_scene random_object]]
+		    [random_position [get carol_scene random_position]]]
+		[if [is-type `physical_object random_object]
+		    [have this set_put_object_at_goal random_object random_position]]]]]]]
   nil]
 
 [deftypefunk female_child_agent execute set_put_object_at_goal [object position]

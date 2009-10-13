@@ -344,14 +344,14 @@
 	  [if [not put_object_at_goal__object]
 	      [let [[random_object   [get carol_scene random_object]]
 		    [random_position [get carol_scene random_position]]]
-		[format stdout
-			'\n'
-			'\nenable_random_move_goal:'
-			'\n  random_object = '   random_object
-			'\n  random_position = ' random_position]
 		[if [and [is-type `physical_object random_object]
 			 [not [eq random_object carol]]]
-		    [have this set_put_object_at_goal random_object random_position]]]]]]]
+		    [prog [format stdout
+				  '\n'
+				  '\nenable_random_move_goal:'
+				  '\n  random_object = '   random_object
+				  '\n  random_position = ' random_position]
+			  [have this set_put_object_at_goal random_object random_position]]]]]]]]
   nil]
 
 [deftypefunk female_child_agent execute set_put_object_at_goal [object position]

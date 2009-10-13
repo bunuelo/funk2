@@ -31,29 +31,29 @@
 [defunk bucket_texture-new                           [] [new physical_texture [new physical_transform [new physical_position -0.01   0     0] [physical_rotation-new_identity]                        0.075] `bucket_object]]
 [defunk mud_texture-new                              [] [new physical_texture [new physical_transform [new physical_position -0.015 -0.015 0] [physical_rotation-new_identity]                        0.03]  `mud_object]]
 
-[defunk mud_object-new [agent] [new physical_object [physical_transform-new_identity] 'Mud' [mud_texture-new] [new frame] agent]]
+[defunk mud_object-new [agent] [new physical_object [physical_transform-new_identity] '' [mud_texture-new] [new frame] agent]]
 
 [defunk fork_object-new [scooper_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_object [physical_transform-new_identity] 'Fork' [fork_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] '' [fork_texture-new] part_place_frame agent]]]
     [have part_place_frame add `scooper_object_place [new physical_place [physical_transform-new_position -0.1 0 0] scooper_object]]
     this]]
 
 [defunk shovel_object-new [scooper_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_object [physical_transform-new_identity] 'Shovel' [shovel_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] '' [shovel_texture-new] part_place_frame agent]]]
     [have part_place_frame add `scooper_object_place [new physical_place [physical_transform-new_position -0.1 0 0] scooper_object]]
     this]]
 
 [defunk spoon_object-new [scooper_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_object [physical_transform-new_identity] 'Spoon' [spoon_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] '' [spoon_texture-new] part_place_frame agent]]]
     [have part_place_frame add `scooper_object_place [new physical_place [physical_transform-new_position -0.1 0 0] scooper_object]]
     this]]
 
 [defunk bucket_object-new [in_object agent]
   [let* [[part_place_frame [new frame]]
-	 [this             [new physical_object [physical_transform-new_identity] 'Bucket' [bucket_texture-new] part_place_frame agent]]]
+	 [this             [new physical_object [physical_transform-new_identity] '' [bucket_texture-new] part_place_frame agent]]]
     [have part_place_frame add `in_place [new physical_place [physical_transform-new_position 0 0.02 0] in_object]]
     this]]
 

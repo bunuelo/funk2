@@ -319,7 +319,7 @@
   [have this add `drop_object_goal drop_object_goal]
   nil]
 
-[deftypefunk female_child_agent execute handle_drop_object_goal [drop_object_goal]
+[deftypefunk female_child_agent execute handle_drop_object_goal []
   [let [[drop_object_goal [have this lookup `drop_object_goal]]]
     [if drop_object_goal
 	[let [[left_hand_object  [get this left_hand_object]]

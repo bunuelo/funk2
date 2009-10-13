@@ -76,7 +76,7 @@
 		  [if part_place
 		      [let [[thing [get part_place thing]]]
 			[cond [[is-type `posturable_physical_object thing] [have thing set_posture posture]]
-			      [[is-type `physical_place             thing] [let [[thing [get part_place thing]]]
+			      [[is-type `physical_place             thing] [let [[thing [get thing thing]]]
 									     [if [is-type `posturable_physical_object thing]
 										 [have thing set_posture posture]]]]]]]]]
 	  [get part_place_frame slots]]]

@@ -241,6 +241,15 @@
     [set this physical_things [cons object things]]]
   nil]
 
+[deftypefunk physical_scene get random_object []
+  [let [[things [get this physical_things]]]
+    [elt things [random [length things]]]]]
+
+[deftypefunk physical_scene get random_position []
+  [new physical_position
+       [- [/ [random 101] 50] 1]
+       [- [/ [random 101] 50] 1]
+       [- [/ [random 101] 50] 1]]]
 
 [deframe female_child_agent [posturable_physical_object] []]
 
@@ -276,6 +285,7 @@
       [have this add `drop_object_goal             nil]
       [have this add `put_object_at_goal__object   nil]
       [have this add `put_object_at_goal__position nil]
+      [have this add `enable_random_move_goal      nil]
       [have this add `paused                       t]
       [have this add `fiber                     [fiber [funk [] [while t
 								  `[print 'female_child_agent construct: fiber here.']
@@ -322,6 +332,18 @@
 	[right_hand_object [get this right_hand_object]]]
     [or [eq left_hand_object  object]
 	[eq right_hand_object object]]]]
+
+[deftypefunk female_child_agent execute set_enable_random_move_goal [enable_random_move_goal]
+  [have this add `enable_random_move_goal enable_random_move_goal]
+  nil]
+
+[deftypefunk female_child_agent execute handle_enable_random_move_goal []
+  [let [[enable_random_move_goal [have this lookup `enable_random_move_goal]]]
+    [if enable_random_move_goal
+	[let [[put_object_at_goal__object [have this lookup `put_object_at_goal__object]]]
+	  [if [not put_object_at_goal__object]
+	      [have this set_put_object_at_goal [get carol_scene random_object] [get carol_scene random_position]]]]]]
+  nil]
 
 [deftypefunk female_child_agent execute set_put_object_at_goal [object position]
   [have this add `put_object_at_goal__object   object]

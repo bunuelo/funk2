@@ -362,6 +362,10 @@
 					 nil
 					 nil
 					 nil]]
+[let [[position [get [get carol transform] position]]]
+  [set position x  0.5]
+  [set position y -0.5]
+  [set position z  0.0]]
 
 [globalize bucket [bucket_object-new nil nil]]
 [let [[position [get [get bucket transform] position]]]

@@ -247,9 +247,9 @@
 
 [deftypefunk physical_scene get random_position []
   [new physical_position
-       [/ [- [/ [random 201] 100.0] 1] 2]
-       [/ [- [/ [random 201] 100.0] 1] 2]
-       [/ [- [/ [random 201] 100.0] 1] 2]]]
+       [* 0.50 [- [/ [random 201] 100.0] 1]]
+       [* 0.25 [- [/ [random 201] 100.0] 1]]
+       0]]
 
 [deframe female_child_agent [posturable_physical_object] []]
 
@@ -344,6 +344,11 @@
 	  [if [not put_object_at_goal__object]
 	      [let [[random_object   [get carol_scene random_object]]
 		    [random_position [get carol_scene random_position]]]
+		[format stdout
+			'\n'
+			'\nenable_random_move_goal:'
+			'\n  random_object = '   random_object
+			'\n  random_position = ' random_position]
 		[if [and [is-type `physical_object random_object]
 			 [not [eq random_object carol]]]
 		    [have this set_put_object_at_goal random_object random_position]]]]]]]

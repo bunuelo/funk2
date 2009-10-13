@@ -75,8 +75,10 @@
 		[let [[part_place [have part_place_frame lookup slot]]]
 		  [if part_place
 		      [let [[thing [get part_place thing]]]
-			[if [is-type `posturable_physical_object thing]
-			    [have thing set_posture posture]]]]]]
+			[cond [[is-type `posturable_physical_object thing] [have thing set_posture posture]]
+			      [[is-type `physical_place             thing] [let [[thing [get part_place thing]]]
+									     [if [is-type `posturable_physical_object thing]
+										 [have thing set_posture posture]]]]]]]]]
 	  [get part_place_frame slots]]]
   [have this add `posture posture]
   nil]

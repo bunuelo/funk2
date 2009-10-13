@@ -1388,7 +1388,10 @@ declare_object_type_1_slot(place, thing, );
 
 // cons
 
-declare_object_type_2_slot(cons, car, cdr, );
+declare_object_type_2_slot(cons, car, cdr,
+			   f2ptr length__symbol;
+			   f2ptr length__funk;
+			   );
 
 // doublelink
 

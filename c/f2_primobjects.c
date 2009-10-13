@@ -139,6 +139,21 @@ def_primobject_2_slot(cons, car, cdr);
 f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y) {return f2cons__new(cause, x, y);}
 def_pcfunk2(cons__new, x, y, return f2__cons__new(this_cause, x, y));
 
+u64 raw__cons__length(f2ptr cause, f2ptr this) {
+  if (! raw__cons__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__simple_length(cause, this);
+}
+
+f2ptr f2__cons__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__cons__length(cause, this));}
+def_pcfunk1(cons__length, this, return f2__cons__length(this_cause, this));
+
+f2ptr f2cons__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2cons__primobject_type__new(cause);
+  {char* slot_name = "length"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk);}
+  return this;
+}
 
 
 // doublelink
@@ -699,7 +714,10 @@ void f2__primobjects__initialize() {
   // cons 
   
   initialize_primobject_2_slot(cons, car, cdr);
-
+  
+  {char* symbol_str = "length"; __funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__length, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk = never_gc(cfunk);}
+  
   // doublelink
   
   initialize_primobject_3_slot(doublelink, prev, next, value);

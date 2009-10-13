@@ -269,11 +269,11 @@
 		[position      [get this      position]]]
 	    [let [[distance [get position distance goal_position]]]
 	      [format stdout '\ndistance = ' distance]
-	      [let [[arms_length 0.02]]
+	      [let [[arms_length 0.1]]
 		[if [< distance arms_length]
 		    [prog [have this set_move_to_goal          nil]
 			  [have this set_move_near_object_goal nil]]
-		  [have this set_move_to_goal position]]]]]]]]
+		  [have this set_move_to_goal goal_position]]]]]]]]
   nil]
 
 [deftypefunk female_child_agent execute set_posture_goal [posture_goal]

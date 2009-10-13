@@ -215,8 +215,9 @@
     [have this add `sitting_left           sitting_left]
     [have this set_posture `standing]
     [have this add `move_to_goal           [new physical_position 0 0 0]]
-    [have this add `move_in_direction_goal [new physical_position 0 0 0]]
+    [have this add `move_in_direction_goal nil]
     [have this add `posture_goal           `standing]
+    [have this add `move_near_object_goal  nil]
     [have this add `paused                 t]
     [have this add `fiber                  [fiber [funk [] [while t
 							     `[print 'female_child_agent construct: fiber here.']
@@ -362,12 +363,37 @@
 					 nil
 					 nil]]
 
+[globalize bucket [bucket_object-new nil nil]]
+[let [[position [get [get bucket transform] position]]]
+  [set position x 0.3]
+  [set position y 0.0]
+  [set position z 0.0]]
+
+[globalize spoon [spoon_object-new  nil nil]]
+[let [[position [get [get spoon transform] position]]]
+  [set position x -0.3]
+  [set position y  0.0]
+  [set position z  0.0]]
+
+[globalize fork [fork_object-new   nil nil]]
+[let [[position [get [get fork transform] position]]]
+  [set position x -0.1]
+  [set position y  0.0]
+  [set position z  0.0]]
+
+[globalize mud [mud_object-new nil]]
+[let [[position [get [get mud transform] position]]]
+  [set position x 0.1]
+  [set position y 0.0]
+  [set position z 0.0]]
+
+
 [defunk carol_playing_in_mud_scene-new []
   [new physical_scene `mud_puddle_scene
-       [conslist [new physical_place [physical_transform-new_position  0.3  0.0 0] [bucket_object-new nil nil]]
-		 [new physical_place [physical_transform-new_position -0.3  0.0 0] [spoon_object-new  nil nil]]
-		 [new physical_place [physical_transform-new_position -0.1  0.0 0] [fork_object-new   nil nil]]
-		 [new physical_place [physical_transform-new_position  0.1  0.0 0] [mud_object-new nil]]
+       [conslist bucket
+		 spoon
+		 fork
+		 mud
 		 
 		 carol
 		 ]]]

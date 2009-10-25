@@ -276,7 +276,6 @@
       [have this add `standing                     standing]
       [have this add `sitting_right                sitting_right]
       [have this add `sitting_left                 sitting_left]
-      [have this set_posture `standing]
       [have this add `move_to_goal                 [new physical_position 0 0 0]]
       [have this add `move_in_direction_goal       nil]
       [have this add `posture_goal                 `standing]
@@ -294,7 +293,9 @@
 									 [sleep 1]
 								       [have this perceive_think_act]]]
 								   ]]
-						       nil]]]]
+						       nil]]
+      [have this set_posture `standing]
+      ]]
   this]
 
 [deftypefunk female_child_agent get position []
@@ -613,6 +614,15 @@
 		 ]]]
 
 [globalize carol_scene [carol_playing_in_mud_scene-new]]
+
+`[new physical_scene `mud_puddle_scene
+      [conslist bucket
+		spoon
+		fork
+		mud
+		
+		carol
+		]]]
 
 
 `[globalize glwindow_value [all_objects_scene-new]]

@@ -988,6 +988,9 @@ void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, 
 }
 
 void funk2_glwindow__render_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr physical_thing) {
+  if (! physical_thing) {
+    return;
+  }
   if      (raw__physical_texture__is_type(           cause, physical_thing)) {funk2_glwindow__render_physical_texture(this, cause, physical_thing);}
   else if (raw__physical_place__is_type(             cause, physical_thing)) {funk2_glwindow__render_physical_place(  this, cause, physical_thing);}
   else if (raw__physical_object__interface_supported(cause, physical_thing)) {funk2_glwindow__render_physical_object( this, cause, physical_thing);}

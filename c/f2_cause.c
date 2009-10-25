@@ -40,7 +40,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (! raw__cause__is_type(cause, source)) {
     return f2larva__new(cause, 333);
   }
-  f2ptr allocate_traced_arrays = nil; // default values
+  f2ptr allocate_traced_arrays = cause__allocate_traced_arrays__default_value; // default values
   f2ptr bytecode_tracing_on    = nil;
   f2ptr memory_tracing_on      = nil;
   f2ptr subscribers            = nil;
@@ -95,16 +95,6 @@ f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
     printf("\nf2__cause__remove_fiber warning: could not find fiber to remove."); fflush(stdout);
   }
   return nil;
-}
-
-f2ptr f2__cause__new_with_default_properties(f2ptr cause) {
-  return f2__cause__new(cause, cause__allocate_traced_arrays__default_value, nil, nil, nil, nil, nil, nil, nil);
-}
-
-f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause) {
-  f2ptr new_cause = f2__cause__new_with_default_properties(cause);
-  f2cause__memory_tracing_on__set(new_cause, cause, __funk2.globalenv.true__symbol);
-  return new_cause;
 }
 
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {

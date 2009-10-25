@@ -157,6 +157,14 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
   return value;
 }
 
+f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2cause__primobject_type__new(cause);
+  {char* slot_name = "define";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
+  {char* slot_name = "define-funk"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.defunk__funk__funk);}
+  return this;
+}
+
+
 
 // **
 

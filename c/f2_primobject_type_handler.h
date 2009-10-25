@@ -84,7 +84,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__processor__slot_t           primobject_type_processor;
   funk2_object_type__scheduler__slot_t           primobject_type_scheduler;
   funk2_object_type__event_subscriber__slot_t    primobject_type_event_subscriber;
-  funk2_object_type__cause__slot_t               primobject_type_cause;
   funk2_object_type__transframe__slot_t          primobject_type_transframe;
   funk2_object_type__bug__slot_t                 primobject_type_bug;
   funk2_object_type__time__slot_t                primobject_type_time;
@@ -108,6 +107,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__object_lattice__slot_t      primobject_type_object_lattice;
   funk2_object_type__object_lattice_node__slot_t primobject_type_object_lattice_node;
   funk2_object_type__hash__slot_t                primobject_type_hash;
+  funk2_object_type__cause__slot_t               primobject_type_cause;
 };
 
 // **

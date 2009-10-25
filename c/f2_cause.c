@@ -45,7 +45,7 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr memory_tracing_on      = nil;
   f2ptr subscribers            = nil;
   f2ptr imagination_stack      = nil;
-  if (cause) {
+  if (source) {
     allocate_traced_arrays = f2__cause__allocate_traced_arrays(cause, source);
     bytecode_tracing_on    = f2__cause__bytecode_tracing_on(   cause, source);
     memory_tracing_on      = f2__cause__memory_tracing_on(     cause, source);

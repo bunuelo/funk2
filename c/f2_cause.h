@@ -49,7 +49,7 @@ declare_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_a
 
 f2ptr f2__cause__new_with_default_properties(f2ptr cause);
 f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
-f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
+f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);

@@ -58,6 +58,8 @@ f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
 void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 
+f2ptr f2cause__primobject_type__new_aux(f2ptr cause);
+
 // **
 
 void f2__cause__initialize();

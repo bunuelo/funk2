@@ -1018,6 +1018,8 @@ declare_primobject_1_slot(place, thing);
 
 declare_primobject_2_slot(cons, car, cdr);
 
+f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
+
 // deprecated cons macros
 
 #define f2list1__new(cause, elt0)                                                 f2cons__new(cause, elt0, nil)

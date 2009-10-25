@@ -22,6 +22,8 @@
 #ifndef F2__CAUSE__TYPES__H
 #define F2__CAUSE__TYPES__H
 
+#include "f2_primobjects.h"
+
 // cause
 
 declare_object_type_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events,
@@ -36,6 +38,8 @@ declare_object_type_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_
 
 #ifndef F2__CAUSE__H
 #define F2__CAUSE__H
+
+#include "f2_primobjects.h"
 
 // cause
 

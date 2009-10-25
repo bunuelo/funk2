@@ -199,8 +199,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     }
   }
   
-  cause = f2__cause__new_with_default_properties(cause);
-  //cause = f2__cause__new_default_with_memory_tracing_on(cause);
+  cause = f2__cause__new_with_inherited_properties(cause, nil);
   
   // try to find a boot function
   f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));

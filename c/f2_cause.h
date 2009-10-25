@@ -47,8 +47,6 @@ declare_object_type_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_
 
 declare_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 
-f2ptr f2__cause__new_with_default_properties(f2ptr cause);
-f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);

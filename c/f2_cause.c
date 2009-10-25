@@ -37,7 +37,7 @@ f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_t
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
-  if (! raw__cause__is_type(cause, source)) {
+  if (source && (! raw__cause__is_type(cause, source))) {
     return f2larva__new(cause, 333);
   }
   f2ptr allocate_traced_arrays = cause__allocate_traced_arrays__default_value; // default values

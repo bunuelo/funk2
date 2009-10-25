@@ -19,8 +19,40 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__CAUSE__TYPES__H
+#define F2__CAUSE__TYPES__H
+
+// cause
+
+declare_object_type_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events,
+			    f2ptr define__symbol;
+			    f2ptr define__funk;
+			    f2ptr define__funk__symbol;
+			    f2ptr define__funk__funk;
+			    );
+
+#endif // F2__CAUSE__TYPES__H
+
+
 #ifndef F2__CAUSE__H
 #define F2__CAUSE__H
+
+// cause
+
+#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
+
+declare_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+
+f2ptr f2__cause__new_with_default_properties(f2ptr cause);
+f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
+f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
+f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
+f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
+
+f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
+void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
+f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 
 // **
 

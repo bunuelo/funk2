@@ -1129,24 +1129,6 @@ declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_
 declare_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
 
 
-// cause
-
-#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
-
-declare_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
-
-f2ptr f2__cause__new_with_default_properties(f2ptr cause);
-f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
-f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
-f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
-f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-
-f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
-void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
-f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-
-
 // transframe
 
 declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
@@ -1448,15 +1430,6 @@ declare_object_type_5_slot(scheduler, processors, event_subscribers_mutex, event
 // event_subscriber
 
 declare_object_type_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex, );
-
-// cause
-
-declare_object_type_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events,
-			    f2ptr define__symbol;
-			    f2ptr define__funk;
-			    f2ptr define__funk__symbol;
-			    f2ptr define__funk__funk;
-			    );
 
 // transframe
 

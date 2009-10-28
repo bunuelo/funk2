@@ -248,7 +248,7 @@ f2ptr f2__object_lattice__scan_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr
   }
   return nil;
 }
-def_pcfunk2(object_lattice__scan_leafs, this, object, funk, return f2__object_lattice__scan_leafs(this_cause, simple_fiber, this, object, funk, nil));
+def_pcfunk3(object_lattice__scan_leafs, this, object, funk, return f2__object_lattice__scan_leafs(this_cause, simple_fiber, this, object, funk, nil));
 
 
 // **

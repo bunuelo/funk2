@@ -41,7 +41,9 @@
 [defunk print_type_relations [object]
   [mapc_type_relations object
 		       [funk [x y z]
-			     [format stdout '\nThe ' y ' of a ' x ' can be a ' z '.']]]
+			     [if z
+				 [format stdout '\nThe ' y ' of a ' x ' can be a ' z '.']
+			       [format stdout '\nThe ' y ' of a ' x ' can be nothing.']]]]
   nil]
 
 

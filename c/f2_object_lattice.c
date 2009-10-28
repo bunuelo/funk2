@@ -153,7 +153,10 @@ def_pcfunk2(object_lattice__scan_and_incorporate_leafs, this, object, return f2_
 // scan_leafs
 
 f2ptr object_lattice__scan_leafs__relation_scan(f2ptr cause, f2ptr fiber, f2ptr node_funk, f2ptr relation_funk, f2ptr object, f2ptr this, f2ptr start_nanoseconds_since_1970, f2ptr slot_name, f2ptr slot_value) {
-  return f2__force_funk_apply(cause, fiber, relation_funk, f2cons__new(cause, object, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil))));
+  if (relation_funk) {
+    return f2__force_funk_apply(cause, fiber, relation_funk, f2cons__new(cause, object, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil))));
+  }
+  return nil;
 }
 
 void object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {

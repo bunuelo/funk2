@@ -485,13 +485,7 @@ u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__cons__is_type(cause, seq)) {
-      u64 count = 0;
-      f2ptr iter = seq;
-      while(iter) {
-	count ++;
-	iter = f2cons__cdr(iter, cause);
-      }
-      return count;
+      return 1 + raw__simple_length(cause, f2cons__cdr(seq, cause));
     } else {
       return raw__array__length(cause, seq);
     }

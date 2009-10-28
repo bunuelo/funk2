@@ -25,3 +25,11 @@
 [deftypefunk object_lattice execute scan_leafs [object node_funk relation_funk]
   [object_lattice-scan_leafs this object node_funk relation_funk]]
 
+[defunk mapc_nodes [object node_funk]
+  [let [[object_lattice [new object_lattice]]]
+    [have object_lattice scan_leafs object node_funk nil]]]
+
+[defunk mapc_type_relations [object relation_funk]
+  [let [[object_lattice [new object_lattice]]]
+    [have object_lattice scan_leafs object nil relation_funk]]]
+

@@ -156,7 +156,7 @@ f2ptr object_lattice__scan_leafs__relation_scan(f2ptr cause, f2ptr fiber, f2ptr 
   return f2__force_funk_apply(cause, fiber, relation_funk, f2cons__new(cause, object, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil))));
 }
 
-f2ptr object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+void object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
   f2ptr node_funk                    = raw__array__elt(cause, aux_data, 1);
   f2ptr relation_funk                = raw__array__elt(cause, aux_data, 2);
@@ -165,7 +165,7 @@ f2ptr object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_nam
   f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 5);
   f2ptr found_larva                  = raw__array__elt(cause, aux_data, 6);
   if (found_larva) {
-    return found_larva;
+    return;
   }
   
   {
@@ -176,15 +176,22 @@ f2ptr object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_nam
     
     f2ptr relation_scan_result = object_lattice__scan_leafs__relation_scan(cause, fiber, node_funk, relation_funk, object, this, start_nanoseconds_since_1970, slot_name, slot_value);
     if (raw__larva__is_type(cause, relation_scan_result)) {
-      return relation_scan_result;
+      found_larva = relation_scan_result;
     }
     
-    //f2__print(cause, fiber, slot_value);
-    return f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, node_funk, relation_funk, start_nanoseconds_since_1970);
+    if (! found_larva) {
+      //f2__print(cause, fiber, slot_value);
+      f2ptr scan_leafs_result = f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, node_funk, relation_funk, start_nanoseconds_since_1970);
+      if (raw__larva__is_type(cause, scan_leafs_result)) {
+	found_larva = scan_leafs_result;
+      }
+    }
   }
+  
+  raw__array__elt__set(cause, aux_data, 6, found_larva);
 }
 
-f2ptr object_lattice__scan_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+void object_lattice__scan_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
   f2ptr node_funk                    = raw__array__elt(cause, aux_data, 1);
   f2ptr relation_funk                = raw__array__elt(cause, aux_data, 2);
@@ -193,7 +200,7 @@ f2ptr object_lattice__scan_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name
   f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 5);
   f2ptr found_larva                  = raw__array__elt(cause, aux_data, 6);
   if (found_larva) {
-    return found_larva;
+    return;
   }
   
   {
@@ -201,12 +208,19 @@ f2ptr object_lattice__scan_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name
     //f2__print(cause, fiber, slot_name);
     f2ptr slot_value = f2__frame__lookup_var_value(cause, frame, slot_name, nil);
     if (raw__larva__is_type(cause, slot_value)) {
-      return slot_value;
+      found_larva = slot_value;
     }
     
-    //f2__print(cause, fiber, slot_value);
-    return f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, node_funk, relation_funk, start_nanoseconds_since_1970);
+    if (! found_larva) {
+      //f2__print(cause, fiber, slot_value);
+      f2ptr scan_leafs_result = f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, node_funk, relation_funk, start_nanoseconds_since_1970);
+      if (raw__larva__is_type(cause, scan_leafs_result)) {
+	found_larva = scan_leafs_result;
+      }
+    }
   }
+  
+  raw__array__elt__set(cause, aux_data, 6, found_larva);
 }
 
 f2ptr f2__object_lattice__scan_leafs__expand_node__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr node_funk, f2ptr relation_funk, f2ptr start_nanoseconds_since_1970) {

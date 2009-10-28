@@ -305,6 +305,7 @@ f2ptr f2__object_lattice__scan_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr
     
     return f2__object_lattice__scan_leafs__expand_node(cause, fiber, this, object, node_funk, relation_funk, start_nanoseconds_since_1970);
   }
+  return nil;
 }
 def_pcfunk4(object_lattice__scan_leafs, this, object, node_funk, relation_funk, return f2__object_lattice__scan_leafs(this_cause, simple_fiber, this, object, node_funk, relation_funk, nil));
 

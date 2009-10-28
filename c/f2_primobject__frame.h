@@ -66,6 +66,13 @@ struct funk2_object_type__frame__slot_s {
 #include "f2_primobject__ptypehash.h"
 #include "f2_primobject__environment.h"
 
+// typedframe
+
+boolean_t raw__typedframe__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__typedframe__is_type(f2ptr cause, f2ptr this);
+f2ptr f2__typedframe__type(f2ptr cause, f2ptr this);
+
+
 // frame
 
 boolean_t raw__frame__is_type(f2ptr cause, f2ptr x);

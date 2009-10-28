@@ -266,6 +266,7 @@ f2ptr f2__object_lattice__scan_leafs__expand_node__array_indices(f2ptr cause, f2
     f2ptr element = raw__array__elt(cause, array, index);
     return f2__object_lattice__scan_leafs(cause, fiber, this, element, node_funk, relation_funk, start_nanoseconds_since_1970);
   }
+  return nil;
 }
 
 f2ptr f2__object_lattice__scan_leafs__expand_node(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr node_funk, f2ptr relation_funk, f2ptr start_nanoseconds_since_1970) {

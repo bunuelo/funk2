@@ -29,7 +29,7 @@
   [let [[object_lattice [new object_lattice]]]
     [have object_lattice scan_leafs object node_funk nil]]]
 
-[defunk mapc_type_relations [object relation_funk]
+[defunk mapc_relations [object relation_funk]
   [let [[object_lattice [new object_lattice]]]
     [have object_lattice scan_leafs object nil relation_funk]]]
 

@@ -152,7 +152,7 @@ def_pcfunk2(object_lattice__scan_and_incorporate_leafs, this, object, return f2_
 
 // scan_leafs
 
-void object_lattice__scan_leafs__relation_scan(f2ptr cause, f2ptr fiber, f2ptr funk, f2ptr object, f2ptr this, f2ptr start_nanoseconds_since_1970, f2ptr slot_name, f2ptr slot_value) {
+void object_lattice__scan_leafs__relation_scan(f2ptr cause, f2ptr fiber, f2ptr node_funk, relation_funk, f2ptr object, f2ptr this, f2ptr start_nanoseconds_since_1970, f2ptr slot_name, f2ptr slot_value) {
   
 }
 

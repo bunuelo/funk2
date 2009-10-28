@@ -229,6 +229,7 @@ def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, 
 
 
 
+/*
 // mapc_relations
 
 f2ptr object_lattice__mapc_relations__relation_scan(f2ptr cause, f2ptr fiber, f2ptr node_funk, f2ptr relation_funk, f2ptr object, f2ptr this, f2ptr start_nanoseconds_since_1970, f2ptr slot_name, f2ptr slot_value) {
@@ -390,7 +391,7 @@ f2ptr f2__object_lattice__mapc_relations(f2ptr cause, f2ptr fiber, f2ptr this, f
   return nil;
 }
 def_pcfunk4(object_lattice__mapc_relations, this, object, node_funk, relation_funk, return f2__object_lattice__mapc_relations(this_cause, simple_fiber, this, object, node_funk, relation_funk, nil));
-
+*/
 
 
 

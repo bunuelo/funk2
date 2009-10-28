@@ -69,22 +69,12 @@ void object_lattice__scan_and_incorporate_leafs__frame_slot_helper(f2ptr cause, 
   }
 }
 
-boolean_t raw__typedframe__is_type(f2ptr cause, f2ptr this) {
-  return (raw__frame__is_type(cause, this) && raw__frame__check_has_type_slot(cause, this, __funk2.primobject__frame.variable__symbol, __funk2.globalenv.type__symbol));
-}
-
-f2ptr f2__typedframe__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__typedframe__is_type(cause, this));}
-
-f2ptr f2__typedframe__type(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, __funk2.globalenv.type__symbol, nil);
-}
-
-boolean_t raw__object_lattice_primitive_data__is_type(f2ptr cause, f2ptr this) {
-  return (! (raw__typedframe__is_type(cause, this) ||
-	     raw__frame__is_type(     cause, this) ||
-	     raw__primobject__is_type(cause, this) ||
-	     raw__array__is_type(     cause, this)));
-}
+//boolean_t raw__object_lattice_primitive_data__is_type(f2ptr cause, f2ptr this) {
+//  return (! (raw__typedframe__is_type(cause, this) ||
+//	     raw__frame__is_type(     cause, this) ||
+//	     raw__primobject__is_type(cause, this) ||
+//	     raw__array__is_type(     cause, this)));
+//}
 
 void f2__object_lattice__scan_and_incorporate_leafs__expand_node__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970) {
   f2ptr object_type_name = f2__object__type(cause, object);

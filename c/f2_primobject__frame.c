@@ -21,6 +21,19 @@
 
 #include "funk2.h"
 
+// typedframe
+
+boolean_t raw__typedframe__is_type(f2ptr cause, f2ptr this) {
+  return (raw__frame__is_type(cause, this) && raw__frame__check_has_type_slot(cause, this, __funk2.primobject__frame.variable__symbol, __funk2.globalenv.type__symbol));
+}
+
+f2ptr f2__typedframe__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__typedframe__is_type(cause, this));}
+
+f2ptr f2__typedframe__type(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, __funk2.globalenv.type__symbol, nil);
+}
+
+
 void funk2_primobject__frame__init(funk2_primobject__frame_t* this) {
   f2ptr cause = initial_cause();
   

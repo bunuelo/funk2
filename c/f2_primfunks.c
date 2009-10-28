@@ -493,8 +493,7 @@ u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   case ptype_symbol: return f2symbol__length(seq, cause);
   case ptype_string: return f2string__length(seq, cause);
   default:
-    error(nil, "raw__simple_length error: invalid type");
-    break;
+    return 0;
   }
 }
 

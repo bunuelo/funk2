@@ -795,8 +795,6 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return (x == y);
   case ptype_chunk:
     return (x == y);
-  default:
-    error(nil, "shouldn't ever get here.");
   }
   error(nil, "eq error: argument type check failure."); fflush(stdout); 
   //return f2__argument_type_check_failure__exception__new(nil, x);

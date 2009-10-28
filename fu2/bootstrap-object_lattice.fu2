@@ -22,6 +22,6 @@
 [deftypefunk object_lattice execute scan_and_incorporate_leafs [object]
   [object_lattice-scan_and_incorporate_leafs this object]]
 
-[deftypefunk object_lattice execute scan_leafs [object funk]
-  [object_lattice-scan_leafs this object funk]]
+[deftypefunk object_lattice execute scan_leafs [object node_funk relation_funk]
+  [object_lattice-scan_leafs this object node_funk relation_funk]]
 

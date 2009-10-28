@@ -233,30 +233,32 @@ def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, 
 
 void object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
-  f2ptr object                       = raw__array__elt(cause, aux_data, 1);
-  f2ptr this                         = raw__array__elt(cause, aux_data, 2);
-  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 3);
+  f2ptr funk                         = raw__array__elt(cause, aux_data, 1);
+  f2ptr object                       = raw__array__elt(cause, aux_data, 2);
+  f2ptr this                         = raw__array__elt(cause, aux_data, 3);
+  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 4);
   {
     //printf("\nobject_slot:");
     //f2__print(cause, fiber, slot_name);
     f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
     f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
     //f2__print(cause, fiber, slot_value);
-    f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, start_nanoseconds_since_1970);
+    f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, funk, start_nanoseconds_since_1970);
   }
 }
 
 void object_lattice__scan_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
-  f2ptr frame                        = raw__array__elt(cause, aux_data, 1);
-  f2ptr this                         = raw__array__elt(cause, aux_data, 2);
-  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 3);
+  f2ptr funk                         = raw__array__elt(cause, aux_data, 1);
+  f2ptr frame                        = raw__array__elt(cause, aux_data, 2);
+  f2ptr this                         = raw__array__elt(cause, aux_data, 3);
+  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 4);
   {
     //printf("\nframe_slot:");
     //f2__print(cause, fiber, slot_name);
     f2ptr slot_value = f2__frame__lookup_var_value(cause, frame, slot_name, nil);
     //f2__print(cause, fiber, slot_value);
-    f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, start_nanoseconds_since_1970);
+    f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, funk, start_nanoseconds_since_1970);
   }
 }
 
@@ -281,21 +283,23 @@ void f2__object_lattice__scan_leafs__expand_node__primobject_slots(f2ptr cause, 
   f2ptr object_type_name = f2__object__type(cause, object);
   f2ptr object_type      = f2__lookup_type(cause, object_type_name);
   {
-    f2ptr aux_data = raw__array__new(cause, 4);
+    f2ptr aux_data = raw__array__new(cause, 5);
     raw__array__elt__set(cause, aux_data, 0, fiber);
-    raw__array__elt__set(cause, aux_data, 1, object);
-    raw__array__elt__set(cause, aux_data, 2, this);
-    raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
+    raw__array__elt__set(cause, aux_data, 1, funk);
+    raw__array__elt__set(cause, aux_data, 2, object);
+    raw__array__elt__set(cause, aux_data, 3, this);
+    raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
     raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__object_slot_helper, aux_data);
   }
 }
 
 void f2__object_lattice__scan_leafs__expand_node__frame_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr frame, f2ptr start_nanoseconds_since_1970) {
-  f2ptr aux_data = raw__array__new(cause, 4);
+  f2ptr aux_data = raw__array__new(cause, 5);
   raw__array__elt__set(cause, aux_data, 0, fiber);
-  raw__array__elt__set(cause, aux_data, 1, frame);
-  raw__array__elt__set(cause, aux_data, 2, this);
-  raw__array__elt__set(cause, aux_data, 3, start_nanoseconds_since_1970);
+  raw__array__elt__set(cause, aux_data, 1, funk);
+  raw__array__elt__set(cause, aux_data, 2, frame);
+  raw__array__elt__set(cause, aux_data, 3, this);
+  raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
   raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__frame_slot_helper, aux_data);
 }
 

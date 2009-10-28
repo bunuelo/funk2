@@ -44,7 +44,8 @@ declare_primobject_2_slot(object_lattice_node, object_image_frame, object_refere
 // object_lattice
 declare_primobject_1_slot(object_lattice, lattice_node_hash);
 
-f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr start_nanoseconds_since_1970);
+f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object,             f2ptr start_nanoseconds_since_1970);
+f2ptr f2__object_lattice__scan_leafs(                f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr funk, f2ptr start_nanoseconds_since_1970);
 
 // **
 

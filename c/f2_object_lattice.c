@@ -150,6 +150,107 @@ f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f
 def_pcfunk2(object_lattice__scan_and_incorporate_leafs, this, object, return f2__object_lattice__scan_and_incorporate_leafs(this_cause, simple_fiber, this, object, nil));
 
 
+// scan_leafs
+
+void object_lattice__scan_leafs__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
+  f2ptr funk                         = raw__array__elt(cause, aux_data, 1);
+  f2ptr object                       = raw__array__elt(cause, aux_data, 2);
+  f2ptr this                         = raw__array__elt(cause, aux_data, 3);
+  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 4);
+  {
+    //printf("\nobject_slot:");
+    //f2__print(cause, fiber, slot_name);
+    f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
+    f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
+    //f2__print(cause, fiber, slot_value);
+    f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, funk, start_nanoseconds_since_1970);
+  }
+}
+
+void object_lattice__scan_leafs__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
+  f2ptr funk                         = raw__array__elt(cause, aux_data, 1);
+  f2ptr frame                        = raw__array__elt(cause, aux_data, 2);
+  f2ptr this                         = raw__array__elt(cause, aux_data, 3);
+  f2ptr start_nanoseconds_since_1970 = raw__array__elt(cause, aux_data, 4);
+  {
+    //printf("\nframe_slot:");
+    //f2__print(cause, fiber, slot_name);
+    f2ptr slot_value = f2__frame__lookup_var_value(cause, frame, slot_name, nil);
+    //f2__print(cause, fiber, slot_value);
+    f2__object_lattice__scan_leafs(cause, fiber, this, slot_value, funk, start_nanoseconds_since_1970);
+  }
+}
+
+void f2__object_lattice__scan_leafs__expand_node__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr funk, f2ptr start_nanoseconds_since_1970) {
+  f2ptr object_type_name = f2__object__type(cause, object);
+  f2ptr object_type      = f2__lookup_type(cause, object_type_name);
+  {
+    f2ptr aux_data = raw__array__new(cause, 5);
+    raw__array__elt__set(cause, aux_data, 0, fiber);
+    raw__array__elt__set(cause, aux_data, 1, funk);
+    raw__array__elt__set(cause, aux_data, 2, object);
+    raw__array__elt__set(cause, aux_data, 3, this);
+    raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
+    raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__object_slot_helper, aux_data);
+  }
+}
+
+void f2__object_lattice__scan_leafs__expand_node__frame_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr frame, f2ptr funk, f2ptr start_nanoseconds_since_1970) {
+  f2ptr aux_data = raw__array__new(cause, 5);
+  raw__array__elt__set(cause, aux_data, 0, fiber);
+  raw__array__elt__set(cause, aux_data, 1, funk);
+  raw__array__elt__set(cause, aux_data, 2, frame);
+  raw__array__elt__set(cause, aux_data, 3, this);
+  raw__array__elt__set(cause, aux_data, 4, start_nanoseconds_since_1970);
+  raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object_lattice__scan_leafs__frame_slot_helper, aux_data);
+}
+
+void f2__object_lattice__scan_leafs__expand_node__array_indices(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr array, f2ptr funk, f2ptr start_nanoseconds_since_1970) {
+  u64 length = raw__array__length(cause, array);
+  u64 index;
+  for (index = 0; index < length; index ++) {
+    f2ptr element = raw__array__elt(cause, array, index);
+    f2__object_lattice__scan_leafs(cause, fiber, this, element, funk, start_nanoseconds_since_1970);
+  }
+}
+
+void f2__object_lattice__scan_leafs__expand_node(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr funk, f2ptr start_nanoseconds_since_1970) {
+  if      (raw__typedframe__is_type(cause, object)) {f2__object_lattice__scan_leafs__expand_node__primobject_slots(cause, fiber, this, object, funk, start_nanoseconds_since_1970);}
+  else if (raw__frame__is_type(     cause, object)) {f2__object_lattice__scan_leafs__expand_node__frame_slots(     cause, fiber, this, object, funk, start_nanoseconds_since_1970);}
+  else if (raw__primobject__is_type(cause, object)) {f2__object_lattice__scan_leafs__expand_node__primobject_slots(cause, fiber, this, object, funk, start_nanoseconds_since_1970);}
+  else if (raw__array__is_type(     cause, object)) {f2__object_lattice__scan_leafs__expand_node__array_indices(   cause, fiber, this, object, funk, start_nanoseconds_since_1970);}
+}
+
+f2ptr f2__object_lattice__scan_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr funk, f2ptr start_nanoseconds_since_1970) {
+  if (! object) {return nil;}
+  if (raw__larva__is_type(cause, object)) {return nil;}
+  if (! start_nanoseconds_since_1970) {start_nanoseconds_since_1970 = f2integer__new(cause, raw__nanoseconds_since_1970(cause));}
+  u64 start_nanoseconds_since_1970__i = f2integer__i(start_nanoseconds_since_1970, cause);
+  
+  u64 object_creation_nanoseconds_since_1970 = raw__ptype__creation_nanoseconds_since_1970(cause, object);
+  
+  if (object_creation_nanoseconds_since_1970 >= start_nanoseconds_since_1970__i) {
+    return nil;
+  }
+  
+  f2ptr lattice_node_hash = f2__object_lattice__lattice_node_hash(cause, this);
+  
+  f2ptr lattice_node = f2__hash__lookup(cause, fiber, lattice_node_hash, object);
+  if (! lattice_node) {
+    lattice_node = f2__object_lattice_node__new(cause, nil, object);
+    f2__hash__add(cause, fiber, lattice_node_hash, object, lattice_node);
+    
+    f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, object, nil));
+    
+    f2__object_lattice__scan_leafs__expand_node(cause, fiber, this, object, funk, start_nanoseconds_since_1970);
+  }
+  return nil;
+}
+def_pcfunk2(object_lattice__scan_leafs, this, object, funk, return f2__object_lattice__scan_leafs(this_cause, simple_fiber, this, object, funk, nil));
+
+
 // **
 
 void f2__object_lattice__reinitialize_globalvars() {
@@ -171,7 +272,8 @@ void f2__object_lattice__initialize() {
   
   // object_lattice
   initialize_primobject_1_slot(object_lattice, lattice_node_hash);
-  f2__primcfunk__init__2(object_lattice__scan_and_incorporate_leafs, this, object, "(cfunk defined in f2_object_lattice.c)");
+  f2__primcfunk__init__2(object_lattice__scan_and_incorporate_leafs, this, object,       "(cfunk defined in f2_object_lattice.c)");
+  f2__primcfunk__init__3(object_lattice__scan_leafs,                 this, object, funk, "executes funk for every lattice node in object.  (cfunk defined in f2_object_lattice.c)");
   
 }
 

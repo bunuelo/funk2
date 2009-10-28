@@ -795,6 +795,16 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return (x == y);
   case ptype_chunk:
     return (x == y);
+  case ptype_free_memory:
+    return boolean__false;
+  case ptype_newly_allocated:
+    return boolean__false;
+  case ptype_gfunkptr:
+    return (f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause));
+  case ptype_mutex:
+    return boolean__false;
+  case ptype_larva:
+    return (f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause));
   }
   error(nil, "eq error: argument type check failure."); fflush(stdout); 
   //return f2__argument_type_check_failure__exception__new(nil, x);

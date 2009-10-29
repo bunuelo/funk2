@@ -348,7 +348,6 @@ f2ptr f2__object__mapc_relations__array_indices(f2ptr cause, f2ptr fiber, f2ptr 
 }
 
 f2ptr f2__object__mapc_relations(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr node_funk, f2ptr relation_funk) {
-
   if      (raw__typedframe__is_type(cause, object)) {return f2__object__mapc_relations__primobject_slots(cause, fiber, this, object, node_funk, relation_funk);}
   else if (raw__frame__is_type(     cause, object)) {return f2__object__mapc_relations__frame_slots(     cause, fiber, this, object, node_funk, relation_funk);}
   else if (raw__primobject__is_type(cause, object)) {return f2__object__mapc_relations__primobject_slots(cause, fiber, this, object, node_funk, relation_funk);}

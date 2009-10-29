@@ -363,7 +363,7 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
   return nil;
 }
 
-def_pcfunk3(object__property_scan, objects, property_funk, return f2__object__property_scan(this_cause, simple_fiber, objects, property_funk));
+def_pcfunk2(object__property_scan, object, property_funk, return f2__object__property_scan(this_cause, simple_fiber, object, property_funk));
 
 // **
 

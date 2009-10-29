@@ -446,9 +446,10 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  array_is_not_known_primobject = 1; // array is not even primobject!
 	} else {
 	  if (show_slot_causes ||
-	      ((! f2primobject__is__cons(exp, cause)) &&
+	      ((! f2primobject__is__cons(      exp, cause)) &&
 	       (! f2primobject__is__doublelink(exp, cause)) &&
-	       (! f2primobject__is_frame(exp, cause)))) {
+	       (! f2primobject__is_list(       exp, cause)) &&
+	       (! f2primobject__is_frame(      exp, cause)))) {
 	    int subexp_size[2];
 	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
 	    f2__write_pretty(cause, fiber, stream, f2primobject__type(exp, cause), recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
@@ -894,6 +895,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2ptypehash__bin_array(exp, cause),       f2ptypehash__bin_array__tracing_on(exp, cause), f2ptypehash__bin_array__trace(exp, cause), f2ptypehash__bin_array__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
+	  } else if (f2primobject__is_list(exp, cause)) {
+	    return f2__write_pretty(cause, fiber, stream, f2__list__cons_cells(cause, exp), recursion_depth, indent_space_num, available_width, return_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode);
 	  } else if (f2primobject__is_frame(exp, cause)) {
 	    int   max_type_name_length = 0;
 	    int   max_slot_name_length = 0;
@@ -1235,9 +1238,10 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	}
 	if (raw__primobject__is_type(cause, exp)) {
 	  if (show_slot_causes ||
-	      ((! f2primobject__is__cons(exp, cause)) &&
+	      ((! f2primobject__is__cons(      exp, cause)) &&
 	       (! f2primobject__is__doublelink(exp, cause)) &&
-	       (! f2primobject__is_frame(exp, cause)))) {
+	       (! f2primobject__is_list(       exp, cause)) &&
+	       (! f2primobject__is_frame(      exp, cause)))) {
 	    if (ptype == ptype_simple_array) {
 	      f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	    } else {

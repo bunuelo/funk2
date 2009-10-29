@@ -240,8 +240,9 @@ f2ptr object__property_scan__property_scan(f2ptr cause, f2ptr fiber, f2ptr prope
 
 void object__property_scan__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr larva_found   = raw__array__elt(cause, aux_data, 0);
-  f2ptr object        = raw__array__elt(cause, aux_data, 1);
-  f2ptr property_funk = raw__array__elt(cause, aux_data, 2);
+  f2ptr fiber         = raw__array__elt(cause, aux_data, 1);
+  f2ptr object        = raw__array__elt(cause, aux_data, 2);
+  f2ptr property_funk = raw__array__elt(cause, aux_data, 3);
   
   f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
   if (raw__larva__is_type(cause, slot_funk)) {
@@ -270,10 +271,11 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
   }
   f2ptr larva_found = nil;
   {
-    f2ptr aux_data = raw__array__new(cause, 3);
+    f2ptr aux_data = raw__array__new(cause, 4);
     raw__array__elt__set(cause, aux_data, 0, larva_found);
-    raw__array__elt__set(cause, aux_data, 1, object);
-    raw__array__elt__set(cause, aux_data, 2, property_funk);
+    raw__array__elt__set(cause, aux_data, 1, fiber);
+    raw__array__elt__set(cause, aux_data, 2, object);
+    raw__array__elt__set(cause, aux_data, 3, property_funk);
     f2ptr result                = raw__primobject_type__type_funk__mapc_slot_names(cause, type, __funk2.globalenv.get__symbol, &object__property_scan__map_funk, aux_data);
     f2ptr larva_found_in_helper = raw__array__elt(cause, aux_data, 0);
     if (raw__larva__is_type(cause, larva_found_in_helper)) {

@@ -267,7 +267,7 @@ void object__property_scan__object_slot_helper(f2ptr cause, f2ptr slot_name, f2p
     }
   }
   
-  raw__array__elt__set(cause, aux_data, 6, found_larva);
+  raw__array__elt__set(cause, aux_data, 3, found_larva);
 }
 
 void object__property_scan__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
@@ -301,7 +301,7 @@ void object__property_scan__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2pt
     }
   }
   
-  raw__array__elt__set(cause, aux_data, 4, found_larva);
+  raw__array__elt__set(cause, aux_data, 3, found_larva);
 }
 
 f2ptr f2__object__property_scan__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
@@ -315,7 +315,7 @@ f2ptr f2__object__property_scan__primobject_slots(f2ptr cause, f2ptr fiber, f2pt
     raw__array__elt__set(cause, aux_data, 2, object);
     raw__array__elt__set(cause, aux_data, 3, found_larva);
     raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object__property_scan__object_slot_helper, aux_data);
-    found_larva = raw__array__elt(cause, aux_data, 4);
+    found_larva = raw__array__elt(cause, aux_data, 3);
   }
   return found_larva;
 }
@@ -329,7 +329,7 @@ f2ptr f2__object__property_scan__frame_slots(f2ptr cause, f2ptr fiber, f2ptr fra
     raw__array__elt__set(cause, aux_data, 2, frame);
     raw__array__elt__set(cause, aux_data, 3, found_larva);
     raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object__property_scan__frame_slot_helper, aux_data);
-    found_larva = raw__array__elt(cause, aux_data, 4);
+    found_larva = raw__array__elt(cause, aux_data, 3);
   }
   return found_larva;
 }

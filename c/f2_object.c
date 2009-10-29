@@ -379,6 +379,6 @@ void f2__object__initialize() {
   f2__primcfunk__init__1(object__type,            this,                       "returns the symbolic type name of the object.");
   f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
   f2__primcfunk__init__1(object__hash_value,      this,                       "returns the hash_value of the object.");
-  f2__primcfunk__init__3(object__property_scan,   this, property_funk,        "property scan funk of type, [funk [name value] ...].");
+  f2__primcfunk__init__2(object__property_scan,   this, property_funk,        "property scan funk of type, [funk [name value] ...].");
 }
 

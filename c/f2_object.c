@@ -238,145 +238,53 @@ f2ptr object__property_scan__property_scan(f2ptr cause, f2ptr fiber, f2ptr prope
   return nil;
 }
 
-void object__property_scan__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
-  f2ptr property_funk = raw__array__elt(cause, aux_data, 1);
-  f2ptr object        = raw__array__elt(cause, aux_data, 2);
-  f2ptr found_larva   = raw__array__elt(cause, aux_data, 3);
-  if (found_larva) {
-    return;
-  }
+void object__property_scan__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr found_larva   = raw__array__elt(cause, aux_data, 0);
+  f2ptr object        = raw__array__elt(cause, aux_data, 1);
+  f2ptr property_funk = raw__array__elt(cause, aux_data, 2);
   
-  {
-    //printf("\nobject_slot:");
-    //f2__print(cause, fiber, slot_name);
-    f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
+  f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
+  if (raw__larva__is_type(cause, slot_funk)) {
+    larva_found = slot_funk;
+  } else {
     f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
-    
-    if (! found_larva) {
-      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, object, slot_name, slot_value);
-      if (raw__larva__is_type(cause, property_scan_result)) {
-	found_larva = property_scan_result;
-      }
-      
-      ////f2__print(cause, fiber, slot_value);
-      //f2ptr property_scan_result = f2__object__property_scan(cause, fiber, this, slot_value, property_funk);
-      //if (raw__larva__is_type(cause, property_scan_result)) {
-      //found_larva = property_scan_result;
-      //}
-    }
-  }
-  
-  raw__array__elt__set(cause, aux_data, 3, found_larva);
-}
-
-void object__property_scan__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
-  f2ptr property_funk = raw__array__elt(cause, aux_data, 1);
-  f2ptr frame         = raw__array__elt(cause, aux_data, 2);
-  f2ptr found_larva   = raw__array__elt(cause, aux_data, 3);
-  if (found_larva) {
-    return;
-  }
-  
-  {
-    //printf("\nframe_slot:");
-    //f2__print(cause, fiber, slot_name);
-    f2ptr slot_value = f2__frame__lookup_var_value(cause, frame, slot_name, nil);
     if (raw__larva__is_type(cause, slot_value)) {
-      found_larva = slot_value;
-    }
-    
-    if (! found_larva) {
-      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, frame, slot_name, slot_value);
-      if (raw__larva__is_type(cause, property_scan_result)) {
-	found_larva = property_scan_result;
+      larva_found = slot_value;
+    } else {
+      f2ptr result = object__property_scan__property_scan(cause, fiber, property_funk, object, slot_name, slot_value);
+      if (raw__larva__is_type(cause, result)) {
+	found_larva = result;
+      } else {
+	// do more
       }
-      
-      ////f2__print(cause, fiber, slot_value);
-      //f2ptr property_scan_result = f2__object__property_scan(cause, fiber, slot_value, property_funk);
-      //if (raw__larva__is_type(cause, property_scan_result)) {
-      //	found_larva = property_scan_result;
-      //}
     }
   }
-  
-  raw__array__elt__set(cause, aux_data, 3, found_larva);
-}
-
-f2ptr f2__object__property_scan__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
-  f2ptr object_type_name = f2__object__type(cause, object);
-  f2ptr object_type      = f2__lookup_type(cause, object_type_name);
-  f2ptr found_larva      = nil;
-  {
-    f2ptr aux_data = raw__array__new(cause, 4);
-    raw__array__elt__set(cause, aux_data, 0, fiber);
-    raw__array__elt__set(cause, aux_data, 1, property_funk);
-    raw__array__elt__set(cause, aux_data, 2, object);
-    raw__array__elt__set(cause, aux_data, 3, found_larva);
-    raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object__property_scan__object_slot_helper, aux_data);
-    found_larva = raw__array__elt(cause, aux_data, 3);
-  }
-  return found_larva;
-}
-
-f2ptr f2__object__property_scan__frame_slots(f2ptr cause, f2ptr fiber, f2ptr frame, f2ptr property_funk) {
-  f2ptr found_larva = nil;
-  {
-    f2ptr aux_data = raw__array__new(cause, 4);
-    raw__array__elt__set(cause, aux_data, 0, fiber);
-    raw__array__elt__set(cause, aux_data, 1, property_funk);
-    raw__array__elt__set(cause, aux_data, 2, frame);
-    raw__array__elt__set(cause, aux_data, 3, found_larva);
-    raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object__property_scan__frame_slot_helper, aux_data);
-    found_larva = raw__array__elt(cause, aux_data, 3);
-  }
-  return found_larva;
-}
-
-f2ptr f2__object__property_scan__array_indices(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr property_funk) {
-  u64 length = raw__array__length(cause, array);
-  u64 index;
-  for (index = 0; index < length; index ++) {
-    f2ptr element = raw__array__elt(cause, array, index);
-    {
-      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, array, f2integer__new(cause, index), element);
-      if (raw__larva__is_type(cause, property_scan_result)) {
-	return property_scan_result;
-      }
-      
-      //f2__print(cause, fiber, slot_value);
-      //f2ptr property_scan_result = f2__object__property_scan(cause, fiber, element, property_funk);
-      //if (raw__larva__is_type(cause, property_scan_result)) {
-      //	return property_scan_result;
-      //}
-    }
-  }
-  return nil;
+  raw__array__elt__set(cause, aux_data, 0, found_larva);
 }
 
 f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
-  if (raw__typedframe__is_type(cause, object)) {
-    f2ptr result = f2__object__property_scan__primobject_slots(cause, fiber, object, property_funk);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  } else if (raw__primobject__is_type(cause, object)) {
-  } else if (raw__ptype__is_type(cause, object)) {
+  f2ptr type_name = f2__object__type(cause, object);
+  f2ptr type      = f2__lookup_type( cause, type_name);
+  if (! raw__primobject_type__is_type(cause, type)) {
+    return f2larva__new(cause, 246);
   }
-  //if (raw__frame__is_type(cause, object)) {
-  //  f2ptr result = f2__object__property_scan__frame_slots(  cause, fiber, object, property_funk);
-  //  if (raw__larva__is_type(cause, result)) {
-  //    return result;
-  //  }
-  //}
-  //if (raw__array__is_type(cause, object)) {
-  //  f2ptr result = f2__object__property_scan__array_indices(cause, fiber, object, property_funk);
-  //  if (raw__larva__is_type(cause, result)) {
-  //    return result;
-  //  }
-  //}
-  return nil;
+  f2ptr larva_found = nil;
+  {
+    f2ptr aux_data = raw__array__new(cause, 3);
+    raw__array__elt__set(cause, aux_data, 0, larva_found);
+    raw__array__elt__set(cause, aux_data, 1, object);
+    raw__array__elt__set(cause, aux_data, 2, property_funk);
+    f2ptr result                = raw__primobject_type__type_funk__mapc_slot_names(cause, type, __funk2.globalenv.get__symbol, &object__property_scan__map_funk, aux_data);
+    f2ptr larva_found_in_helper = raw__array__elt(cause, aux_data, 0);
+    if (raw__larva__is_type(cause, larva_found_in_helper)) {
+      larva_found = larva_found_in_helper;
+    } else if (raw__larva__is_type(cause, result)) {
+      larva_found = result;
+    } else {
+      // do more
+    }
+  }
+  return larva_found;
 }
 
 def_pcfunk2(object__property_scan, object, property_funk, return f2__object__property_scan(this_cause, simple_fiber, object, property_funk));

@@ -896,11 +896,11 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
 	  } else if (f2primobject__is_list(exp, cause)) {
-	    f2ptr cons_cells = f2__list__cons_cells(cause, exp);
+	    f2ptr cons_cells = f2list__cons_cells(exp, cause);
 	    {
 	      int subexp_size[2];
 	      f2__write_pretty(cause, fiber, stream, cons_cells,
-			       ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+			       ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    }
 	  } else if (f2primobject__is_frame(exp, cause)) {
 	    int   max_type_name_length = 0;

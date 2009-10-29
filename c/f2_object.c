@@ -273,12 +273,12 @@ void object__mapc_relations__object_slot_helper(f2ptr cause, f2ptr slot_name, f2
 }
 
 void object__mapc_relations__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
-  f2ptr node_funk                    = raw__array__elt(cause, aux_data, 1);
-  f2ptr relation_funk                = raw__array__elt(cause, aux_data, 2);
-  f2ptr frame                        = raw__array__elt(cause, aux_data, 3);
-  f2ptr this                         = raw__array__elt(cause, aux_data, 4);
-  f2ptr found_larva                  = raw__array__elt(cause, aux_data, 5);
+  f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
+  f2ptr node_funk     = raw__array__elt(cause, aux_data, 1);
+  f2ptr relation_funk = raw__array__elt(cause, aux_data, 2);
+  f2ptr frame         = raw__array__elt(cause, aux_data, 3);
+  f2ptr this          = raw__array__elt(cause, aux_data, 4);
+  f2ptr found_larva   = raw__array__elt(cause, aux_data, 5);
   if (found_larva) {
     return;
   }
@@ -291,13 +291,13 @@ void object__mapc_relations__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2p
       found_larva = slot_value;
     }
     
-    //if (! found_larva) {
-    //  //f2__print(cause, fiber, slot_value);
-    //  f2ptr mapc_relations_result = f2__object__mapc_relations(cause, fiber, this, slot_value, node_funk, relation_funk);
-    //  if (raw__larva__is_type(cause, mapc_relations_result)) {
-    //	found_larva = mapc_relations_result;
-    //  }
-    //}
+    if (! found_larva) {
+      //f2__print(cause, fiber, slot_value);
+      f2ptr mapc_relations_result = f2__object__mapc_relations(cause, fiber, this, slot_value, node_funk, relation_funk);
+      if (raw__larva__is_type(cause, mapc_relations_result)) {
+    	found_larva = mapc_relations_result;
+      }
+    }
   }
   
   raw__array__elt__set(cause, aux_data, 6, found_larva);

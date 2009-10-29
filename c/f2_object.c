@@ -231,7 +231,7 @@ def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, 
 
 // property_scan
 
-f2ptr object__mapc_relations__property_scan(f2ptr cause, f2ptr fiber, f2ptr property_funk, f2ptr object, f2ptr slot_name, f2ptr slot_value) {
+f2ptr object__property_scan__property_scan(f2ptr cause, f2ptr fiber, f2ptr property_funk, f2ptr object, f2ptr slot_name, f2ptr slot_value) {
   if (property_funk) {
     return f2__force_funk_apply(cause, fiber, property_funk, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil)));
   }

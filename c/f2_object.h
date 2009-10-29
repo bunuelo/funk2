@@ -38,7 +38,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this);
 f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__object__hash_value(f2ptr cause, f2ptr fiber, f2ptr this);
 
-f2ptr f2__object__mapc_relations(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr node_funk, f2ptr relation_funk);
+f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk);
 
 // **
 

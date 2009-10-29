@@ -39,7 +39,6 @@ typedef struct funk2_object_type__scheduler__slot_s        funk2_object_type__sc
 typedef struct funk2_object_type__event_subscriber__slot_s funk2_object_type__event_subscriber__slot_t;
 typedef struct funk2_object_type__cause__slot_s            funk2_object_type__cause__slot_t;
 typedef struct funk2_object_type__transframe__slot_s       funk2_object_type__transframe__slot_t;
-typedef struct funk2_object_type__bug__slot_s              funk2_object_type__bug__slot_t;
 typedef struct funk2_object_type__time__slot_s             funk2_object_type__time__slot_t;
 typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__size_2d__slot_t;
 typedef struct funk2_object_type__event__slot_s            funk2_object_type__event__slot_t;
@@ -1134,11 +1133,6 @@ declare_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_
 declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
 
 
-// bug
-
-declare_primobject_1_slot(bug, bug_type);
-
-
 // time
 
 declare_primobject_1_slot(time, nanoseconds_since_1970);
@@ -1434,10 +1428,6 @@ declare_object_type_5_slot(event_subscriber, event_types, fiber, funkable, event
 // transframe
 
 declare_object_type_2_slot(transframe, nanoseconds_since_1970, symbol_old_news, );
-
-// bug
-
-declare_object_type_1_slot(bug, bug_type, );
 
 // time
 

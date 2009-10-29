@@ -66,6 +66,7 @@ void f2__initialize() {
   f2__compile__initialize();
   f2__fiber__initialize();
   f2__bytecodes__initialize();
+  f2__bug__initialize();
   f2__signal__initialize();
   f2__load__initialize();
   f2__socket__initialize();

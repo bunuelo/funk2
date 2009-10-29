@@ -401,14 +401,6 @@ f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbo
 def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
 
 
-// bug
-
-def_primobject_1_slot(bug, bug_type);
-
-f2ptr f2__bug__new(f2ptr cause, f2ptr type) {return f2bug__new(cause, type);}
-def_pcfunk1(bug__new, type, return f2__bug__new(this_cause, type));
-
-
 // time
 
 def_primobject_1_slot(time, nanoseconds_since_1970);
@@ -518,8 +510,6 @@ def_pcfunk2(bytecode_event__new, bytecode, context, return f2__bytecode_event__n
 // **
 
 void f2__primobjects__reinitialize_globalvars() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
-  
   f2ptr cause = initial_cause();
   
   __compound_object__symbol  = new__symbol(cause, "compound_object");
@@ -549,6 +539,8 @@ void f2__primobjects__reinitialize_globalvars() {
 
 
 void f2__primobjects__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
+  
   f2__primobjects__reinitialize_globalvars();
   f2ptr cause = initial_cause();
   

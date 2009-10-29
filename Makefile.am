@@ -191,6 +191,7 @@ bin_funk2_SOURCES = \
   c/f2_blocks_world.c \
   c/f2_buffered_file.c \
   c/f2_buffered_socket.c \
+  c/f2_bug.c \
   c/f2_bytecodes.c \
   c/f2_cause.c \
   c/f2_child.c \

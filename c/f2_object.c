@@ -304,7 +304,7 @@ void object__property_scan__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2pt
   raw__array__elt__set(cause, aux_data, 4, found_larva);
 }
 
-f2ptr f2__object__property_scan__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr f2ptr object, f2ptr property_funk) {
+f2ptr f2__object__property_scan__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
   f2ptr object_type_name = f2__object__type(cause, object);
   f2ptr object_type      = f2__lookup_type(cause, object_type_name);
   f2ptr found_larva      = nil;

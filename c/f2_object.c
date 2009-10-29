@@ -361,19 +361,21 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
+  } else if (raw__primobject__is_type(cause, object)) {
+  } else if (raw__ptype__is_type(cause, object)) {
   }
-  if (raw__frame__is_type(cause, object)) {
-    f2ptr result = f2__object__property_scan__frame_slots(  cause, fiber, object, property_funk);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  if (raw__array__is_type(cause, object)) {
-    f2ptr result = f2__object__property_scan__array_indices(cause, fiber, object, property_funk);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  //if (raw__frame__is_type(cause, object)) {
+  //  f2ptr result = f2__object__property_scan__frame_slots(  cause, fiber, object, property_funk);
+  //  if (raw__larva__is_type(cause, result)) {
+  //    return result;
+  //  }
+  //}
+  //if (raw__array__is_type(cause, object)) {
+  //  f2ptr result = f2__object__property_scan__array_indices(cause, fiber, object, property_funk);
+  //  if (raw__larva__is_type(cause, result)) {
+  //    return result;
+  //  }
+  //}
   return nil;
 }
 

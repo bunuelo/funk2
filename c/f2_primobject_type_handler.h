@@ -28,6 +28,7 @@
 #include "f2_primobject__set.h"
 #include "f2_primobject__list.h"
 #include "f2_primobject__circular_buffer.h"
+#include "f2_bug.h"
 #include "f2_physical_objects.h"
 #include "f2_agent.h"
 #include "f2_object_lattice.h"

@@ -229,22 +229,20 @@ def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, 
 
 
 
-// mapc_relations
+// property_scan
 
-f2ptr object__mapc_relations__relation_scan(f2ptr cause, f2ptr fiber, f2ptr node_funk, f2ptr relation_funk, f2ptr object, f2ptr this, f2ptr slot_name, f2ptr slot_value) {
-  if (relation_funk) {
-    return f2__force_funk_apply(cause, fiber, relation_funk, f2cons__new(cause, object, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil))));
+f2ptr object__mapc_relations__property_scan(f2ptr cause, f2ptr fiber, f2ptr property_funk, f2ptr object, f2ptr slot_name, f2ptr slot_value) {
+  if (property_funk) {
+    return f2__force_funk_apply(cause, fiber, property_funk, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil)));
   }
   return nil;
 }
 
-void object__mapc_relations__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr fiber                        = raw__array__elt(cause, aux_data, 0);
-  f2ptr node_funk                    = raw__array__elt(cause, aux_data, 1);
-  f2ptr relation_funk                = raw__array__elt(cause, aux_data, 2);
-  f2ptr object                       = raw__array__elt(cause, aux_data, 3);
-  f2ptr this                         = raw__array__elt(cause, aux_data, 4);
-  f2ptr found_larva                  = raw__array__elt(cause, aux_data, 5);
+void object__property_scan__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
+  f2ptr property_funk = raw__array__elt(cause, aux_data, 1);
+  f2ptr object        = raw__array__elt(cause, aux_data, 2);
+  f2ptr found_larva   = raw__array__elt(cause, aux_data, 3);
   if (found_larva) {
     return;
   }
@@ -255,30 +253,28 @@ void object__mapc_relations__object_slot_helper(f2ptr cause, f2ptr slot_name, f2
     f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
     f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
     
-    f2ptr relation_scan_result = object__mapc_relations__relation_scan(cause, fiber, node_funk, relation_funk, object, this, slot_name, slot_value);
-    if (raw__larva__is_type(cause, relation_scan_result)) {
-      found_larva = relation_scan_result;
+    if (! found_larva) {
+      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, object, slot_name, slot_value);
+      if (raw__larva__is_type(cause, property_scan_result)) {
+	found_larva = property_scan_result;
+      }
+      
+      ////f2__print(cause, fiber, slot_value);
+      //f2ptr property_scan_result = f2__object__property_scan(cause, fiber, this, slot_value, property_funk);
+      //if (raw__larva__is_type(cause, property_scan_result)) {
+      //found_larva = property_scan_result;
+      //}
     }
-    
-    //if (! found_larva) {
-    ////f2__print(cause, fiber, slot_value);
-    //f2ptr mapc_relations_result = f2__object__mapc_relations(cause, fiber, this, slot_value, node_funk, relation_funk);
-    //if (raw__larva__is_type(cause, mapc_relations_result)) {
-    //found_larva = mapc_relations_result;
-    //}
-    //}
   }
   
   raw__array__elt__set(cause, aux_data, 6, found_larva);
 }
 
-void object__mapc_relations__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+void object__property_scan__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr fiber         = raw__array__elt(cause, aux_data, 0);
-  f2ptr node_funk     = raw__array__elt(cause, aux_data, 1);
-  f2ptr relation_funk = raw__array__elt(cause, aux_data, 2);
-  f2ptr frame         = raw__array__elt(cause, aux_data, 3);
-  f2ptr this          = raw__array__elt(cause, aux_data, 4);
-  f2ptr found_larva   = raw__array__elt(cause, aux_data, 5);
+  f2ptr property_funk = raw__array__elt(cause, aux_data, 1);
+  f2ptr frame         = raw__array__elt(cause, aux_data, 2);
+  f2ptr found_larva   = raw__array__elt(cause, aux_data, 3);
   if (found_larva) {
     return;
   }
@@ -292,69 +288,82 @@ void object__mapc_relations__frame_slot_helper(f2ptr cause, f2ptr slot_name, f2p
     }
     
     if (! found_larva) {
-      //f2__print(cause, fiber, slot_value);
-      f2ptr mapc_relations_result = f2__object__mapc_relations(cause, fiber, this, slot_value, node_funk, relation_funk);
-      if (raw__larva__is_type(cause, mapc_relations_result)) {
-    	found_larva = mapc_relations_result;
+      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, frame, slot_name, slot_value);
+      if (raw__larva__is_type(cause, property_scan_result)) {
+	found_larva = property_scan_result;
       }
+      
+      ////f2__print(cause, fiber, slot_value);
+      //f2ptr property_scan_result = f2__object__property_scan(cause, fiber, slot_value, property_funk);
+      //if (raw__larva__is_type(cause, property_scan_result)) {
+      //	found_larva = property_scan_result;
+      //}
     }
   }
   
-  raw__array__elt__set(cause, aux_data, 6, found_larva);
+  raw__array__elt__set(cause, aux_data, 4, found_larva);
 }
 
-f2ptr f2__object__mapc_relations__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr node_funk, f2ptr relation_funk) {
+f2ptr f2__object__property_scan__primobject_slots(f2ptr cause, f2ptr fiber, f2ptr f2ptr object, f2ptr property_funk) {
   f2ptr object_type_name = f2__object__type(cause, object);
   f2ptr object_type      = f2__lookup_type(cause, object_type_name);
   f2ptr found_larva      = nil;
   {
-    f2ptr aux_data = raw__array__new(cause, 6);
+    f2ptr aux_data = raw__array__new(cause, 4);
     raw__array__elt__set(cause, aux_data, 0, fiber);
-    raw__array__elt__set(cause, aux_data, 1, node_funk);
-    raw__array__elt__set(cause, aux_data, 2, relation_funk);
-    raw__array__elt__set(cause, aux_data, 3, object);
-    raw__array__elt__set(cause, aux_data, 4, this);
-    raw__array__elt__set(cause, aux_data, 5, found_larva);
-    raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object__mapc_relations__object_slot_helper, aux_data);
-    found_larva = raw__array__elt(cause, aux_data, 6);
+    raw__array__elt__set(cause, aux_data, 1, property_funk);
+    raw__array__elt__set(cause, aux_data, 2, object);
+    raw__array__elt__set(cause, aux_data, 3, found_larva);
+    raw__primobject_type__type_funk__mapc_slot_names(cause, object_type, __funk2.globalenv.get__symbol, &object__property_scan__object_slot_helper, aux_data);
+    found_larva = raw__array__elt(cause, aux_data, 4);
   }
   return found_larva;
 }
 
-f2ptr f2__object__mapc_relations__frame_slots(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr frame, f2ptr node_funk, f2ptr relation_funk) {
+f2ptr f2__object__property_scan__frame_slots(f2ptr cause, f2ptr fiber, f2ptr frame, f2ptr property_funk) {
   f2ptr found_larva = nil;
   {
-    f2ptr aux_data = raw__array__new(cause, 6);
+    f2ptr aux_data = raw__array__new(cause, 4);
     raw__array__elt__set(cause, aux_data, 0, fiber);
-    raw__array__elt__set(cause, aux_data, 1, node_funk);
-    raw__array__elt__set(cause, aux_data, 2, relation_funk);
-    raw__array__elt__set(cause, aux_data, 3, frame);
-    raw__array__elt__set(cause, aux_data, 4, this);
-    raw__array__elt__set(cause, aux_data, 5, found_larva);
-    raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object__mapc_relations__frame_slot_helper, aux_data);
-    found_larva = raw__array__elt(cause, aux_data, 6);
+    raw__array__elt__set(cause, aux_data, 1, property_funk);
+    raw__array__elt__set(cause, aux_data, 2, frame);
+    raw__array__elt__set(cause, aux_data, 3, found_larva);
+    raw__frame__type_var__mapc_slot_names(cause, frame, __funk2.globalenv.get__symbol, &object__property_scan__frame_slot_helper, aux_data);
+    found_larva = raw__array__elt(cause, aux_data, 4);
   }
   return found_larva;
 }
 
-f2ptr f2__object__mapc_relations__array_indices(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr array, f2ptr node_funk, f2ptr relation_funk) {
+f2ptr f2__object__property_scan__array_indices(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr property_funk) {
   u64 length = raw__array__length(cause, array);
   u64 index;
   for (index = 0; index < length; index ++) {
     f2ptr element = raw__array__elt(cause, array, index);
-    return f2__object__mapc_relations(cause, fiber, this, element, node_funk, relation_funk);
+    {
+      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, object, array, f2integer__new(cause, index), element);
+      if (raw__larva__is_type(cause, property_scan_result)) {
+	return property_scan_result;
+      }
+      
+      //f2__print(cause, fiber, slot_value);
+      //f2ptr property_scan_result = f2__object__property_scan(cause, fiber, element, property_funk);
+      //if (raw__larva__is_type(cause, property_scan_result)) {
+      //	return property_scan_result;
+      //}
+    }
   }
   return nil;
 }
 
-f2ptr f2__object__mapc_relations(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object, f2ptr node_funk, f2ptr relation_funk) {
-  if      (raw__typedframe__is_type(cause, object)) {return f2__object__mapc_relations__primobject_slots(cause, fiber, this, object, node_funk, relation_funk);}
-  else if (raw__frame__is_type(     cause, object)) {return f2__object__mapc_relations__frame_slots(     cause, fiber, this, object, node_funk, relation_funk);}
-  else if (raw__primobject__is_type(cause, object)) {return f2__object__mapc_relations__primobject_slots(cause, fiber, this, object, node_funk, relation_funk);}
-  else if (raw__array__is_type(     cause, object)) {return f2__object__mapc_relations__array_indices(   cause, fiber, this, object, node_funk, relation_funk);}
+f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
+  if      (raw__typedframe__is_type(cause, objects)) {return f2__object__property_scan__primobject_slots(cause, fiber, objects, property_funk);}
+  else if (raw__frame__is_type(     cause, objects)) {return f2__object__property_scan__frame_slots(     cause, fiber, objects, property_funk);}
+  else if (raw__primobject__is_type(cause, objects)) {return f2__object__property_scan__primobject_slots(cause, fiber, objects, property_funk);}
+  else if (raw__array__is_type(     cause, objects)) {return f2__object__property_scan__array_indices(   cause, fiber, objects, property_funk);}
   return nil;
 }
 
+def_pcfunk3(object__property_scan, objects, property_funk, return f2__object__property_scan(this_cause, simple_fiber, objects, property_funk));
 
 // **
 
@@ -370,5 +379,6 @@ void f2__object__initialize() {
   f2__primcfunk__init__1(object__type,            this,                       "returns the symbolic type name of the object.");
   f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
   f2__primcfunk__init__1(object__hash_value,      this,                       "returns the hash_value of the object.");
+  f2__primcfunk__init__3(object__property_scan,   this, property_funk,        "property scan funk of type, [funk [name value] ...].");
 }
 

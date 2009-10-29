@@ -340,7 +340,7 @@ f2ptr f2__object__property_scan__array_indices(f2ptr cause, f2ptr fiber, f2ptr a
   for (index = 0; index < length; index ++) {
     f2ptr element = raw__array__elt(cause, array, index);
     {
-      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, object, array, f2integer__new(cause, index), element);
+      f2ptr property_scan_result = object__property_scan__property_scan(cause, fiber, property_funk, array, f2integer__new(cause, index), element);
       if (raw__larva__is_type(cause, property_scan_result)) {
 	return property_scan_result;
       }

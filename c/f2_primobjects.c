@@ -630,10 +630,6 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
   
-  // bug
-  
-  initialize_primobject_1_slot(bug, bug_type);
-  
   // time
   
   initialize_primobject_1_slot(time, nanoseconds_since_1970);

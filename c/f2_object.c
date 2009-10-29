@@ -356,10 +356,10 @@ f2ptr f2__object__property_scan__array_indices(f2ptr cause, f2ptr fiber, f2ptr a
 }
 
 f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
-  if      (raw__typedframe__is_type(cause, objects)) {return f2__object__property_scan__primobject_slots(cause, fiber, objects, property_funk);}
-  else if (raw__frame__is_type(     cause, objects)) {return f2__object__property_scan__frame_slots(     cause, fiber, objects, property_funk);}
-  else if (raw__primobject__is_type(cause, objects)) {return f2__object__property_scan__primobject_slots(cause, fiber, objects, property_funk);}
-  else if (raw__array__is_type(     cause, objects)) {return f2__object__property_scan__array_indices(   cause, fiber, objects, property_funk);}
+  if      (raw__typedframe__is_type(cause, object)) {return f2__object__property_scan__primobject_slots(cause, fiber, object, property_funk);}
+  else if (raw__frame__is_type(     cause, object)) {return f2__object__property_scan__frame_slots(     cause, fiber, object, property_funk);}
+  else if (raw__primobject__is_type(cause, object)) {return f2__object__property_scan__primobject_slots(cause, fiber, object, property_funk);}
+  else if (raw__array__is_type(     cause, object)) {return f2__object__property_scan__array_indices(   cause, fiber, object, property_funk);}
   return nil;
 }
 

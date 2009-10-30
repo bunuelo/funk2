@@ -1113,6 +1113,8 @@ f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cf
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
 f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds);
 
+f2ptr f2fiber__primobject_type__new_aux(f2ptr cause);
+
 // processor
 
 declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
@@ -1410,6 +1412,8 @@ declare_object_type_19_slot(fiber, program_counter, stack, iter, env, args, retu
 			    f2ptr do_sleep_until_time__funk;
 			    f2ptr sleep_for_nanoseconds__symbol; // execute
 			    f2ptr sleep_for_nanoseconds__funk;
+			    f2ptr is_complete__symbol; // get
+			    f2ptr is_complete__funk;
 			    );
 
 

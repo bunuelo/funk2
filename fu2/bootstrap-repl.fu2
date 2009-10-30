@@ -409,7 +409,7 @@
 				      [fiber proc [cons exp nil]]]
 				seq]]]
     [apply &join parcar-fibers]
-    [mapcar [funk [x] [fiber-value x]] parcar-fibers]]]
+    [mapcar [funk [x] [get x value]] parcar-fibers]]]
 
 [defmetro cond [:rest clauses]
   [if [null clauses]

@@ -215,6 +215,8 @@ void f2__primobject_hash__initialize() {
   
   initialize_primobject_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
   
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_hash.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hash__new, this, hash_value_funk, equals_funk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk = never_gc(cfunk);}
   {char* symbol_str = "slot_names"; __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(hash__slot_names, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_hash.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

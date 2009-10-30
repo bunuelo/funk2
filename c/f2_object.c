@@ -251,13 +251,12 @@ void object__property_scan__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_dat
     f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
     if (raw__larva__is_type(cause, slot_value)) {
       slot_value = f2__bug__new_from_larva(cause, slot_value);
+    }
+    f2ptr result = object__property_scan__property_scan(cause, fiber, property_funk, object, slot_name, slot_value);
+    if (raw__larva__is_type(cause, result)) {
+      larva_found = result;
     } else {
-      f2ptr result = object__property_scan__property_scan(cause, fiber, property_funk, object, slot_name, slot_value);
-      if (raw__larva__is_type(cause, result)) {
-	larva_found = result;
-      } else {
-	// do more
-      }
+      // do more
     }
   }
   raw__array__elt__set(cause, aux_data, 0, larva_found);

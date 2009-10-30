@@ -251,7 +251,7 @@ f2ptr f2__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f
 def_pcfunk3(frame__check_has_type_slot, this, type_name, slot_name, return f2__frame__check_has_type_slot(this_cause, this, type_name, slot_name));
 
 f2ptr f2frame__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, nil);
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "primobject"), nil));
   {char* slot_name = "is_type";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__funk);}
   {char* slot_name = "new";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.new__funk);}
   {char* slot_name = "new_type_mutex";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.new_type_mutex__funk);}

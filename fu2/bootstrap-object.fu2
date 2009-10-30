@@ -28,7 +28,8 @@
 [defunk describe [object]
   [format stdout '\n[' [type object]]
   [object-property_scan object [funk [type_name name value]
-				     [let [[type [lookup_type type_name]]]
-				       [format stdout '\n  ' [list type_name name [type value] ]]]]]
+				     [let* [[type [lookup_type type_name]]
+					    [funk [object_type-get-funk type_name name]]]
+				       [format stdout '\n  ' [list type_name name [type value] [get funk documentation]]]]]]
   [format stdout ']']]
 

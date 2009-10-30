@@ -264,6 +264,11 @@
 	      [cons result [filter cond_proc [cdr seq]]]
 	    [filter cond_proc [cdr seq]]]]]]
 
+[defmetro object_type-type-funk    [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name ,slot_name]]
+[defmetro object_type-get-funk     [name slot_name]                `[object_type-type-funk                              ,name  `get            ,slot_name]]
+[defmetro object_type-set-funk     [name slot_name]                `[object_type-type-funk                              ,name  `set            ,slot_name]]
+[defmetro object_type-execute-funk [name slot_name]                `[object_type-type-funk                              ,name  `execute        ,slot_name]]
+
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get slot_name]]
 

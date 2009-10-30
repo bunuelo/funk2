@@ -271,6 +271,33 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
   }
   f2ptr larva_found = nil;
   {
+    f2ptr parents = f2__primobject_type__parents(cause, type);
+    f2ptr parent_iter = parents;
+    while (parent_iter) {
+      f2ptr parent_name = f2__cons__car(cause, parent_iter);
+      f2ptr parent_type = f2__lookup_type(cause, parent_name);
+      if (raw__primobject_type__is_type(cause, type)) {
+	{
+	  f2ptr aux_data = raw__array__new(cause, 4);
+	  raw__array__elt__set(cause, aux_data, 0, larva_found);
+	  raw__array__elt__set(cause, aux_data, 1, fiber);
+	  raw__array__elt__set(cause, aux_data, 2, object);
+	  raw__array__elt__set(cause, aux_data, 3, property_funk);
+	  f2ptr result                = raw__primobject_type__type_funk__mapc_slot_names(cause, parent_type, __funk2.globalenv.get__symbol, &object__property_scan__map_funk, aux_data);
+	  f2ptr larva_found_in_helper = raw__array__elt(cause, aux_data, 0);
+	  if (raw__larva__is_type(cause, larva_found_in_helper)) {
+	    larva_found = larva_found_in_helper;
+	  } else if (raw__larva__is_type(cause, result)) {
+	    larva_found = result;
+	  } else {
+	    // do more
+	  }
+	}
+      }
+      parent_iter = f2__cons__cdr(cause, parent_iter);
+    }
+  }
+  {
     f2ptr aux_data = raw__array__new(cause, 4);
     raw__array__elt__set(cause, aux_data, 0, larva_found);
     raw__array__elt__set(cause, aux_data, 1, fiber);

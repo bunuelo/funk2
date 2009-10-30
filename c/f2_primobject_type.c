@@ -62,6 +62,8 @@ f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr 
 }
 def_pcfunk3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name, return f2__primobject_type__lookup_slot_type_funk(this_cause, this, slot_type, slot_name));
 
+// scan slot names
+
 f2ptr raw__primobject_type__type_funk__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type_name, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
   if (! this) {
     return nil;
@@ -72,8 +74,6 @@ f2ptr raw__primobject_type__type_funk__mapc_slot_names(f2ptr cause, f2ptr this, 
   }
   return raw__frame__type_var__mapc_slot_names(cause, this, type_name, map_funk, aux_data);
 }
-
-// list slot type
 
 f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr type_name) {
   if (! this) {
@@ -86,7 +86,6 @@ f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr 
   return f2__frame__type_var__slot_names(cause, this, type_name);
 }
 def_pcfunk2(primobject_type__type_funk__slot_names, this, type_name, return f2__primobject_type__type_funk__slot_names(this_cause, this, type_name));
-
 
 boolean_t raw__primobject_type__is_type_or_has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name) {
   f2ptr parents = f2__primobject_type__parents(cause, this);

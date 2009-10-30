@@ -282,14 +282,14 @@
 [defunk object-execute [this slot_name :rest args]
   [apply [object-execute-funk this slot_name] args]]
 
-[defmetro object-new-funk [this]
-  `[object-execute-funk ,this `new]]
+[defmetro object_type-new-funk [name]
+  [primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
 
-[defunk object-new [type_name :rest args]
-  [apply [object-new-funk [lookup_type type_name]] args]]
+[defunk object_type-new [name :rest args]
+  [apply [object_type-new-funk name] args]]
 
 [defmetro new [type_name :rest args]
-  `[object-new [quote ,type_name] @args]]
+  `[object_type-new [quote ,type_name] @args]]
 
 [defmetro get [exp slot_name :rest args]
   `[object-get ,exp [quote ,slot_name] @args]]

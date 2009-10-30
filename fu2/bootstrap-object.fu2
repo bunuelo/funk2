@@ -21,13 +21,13 @@
 
 [defunk show [object]
   [format stdout '\n[' [type object]]
-  [object-property_scan object [funk [name value]        
-				     [format stdout '\n  ' [colonize name] ' ' value]]]
+  [object-property_scan object [funk [type name value]
+				     [format stdout '\n  ' type [colonize name] ' ' value]]]
   [format stdout ']']]
 
 [defunk describe [object]
   [format stdout '\n[' [type object]]
-  [object-property_scan object [funk [name value]        
-				     [format stdout '\n  ' [colonize name] ' ' [type value]]]]
+  [object-property_scan object [funk [type name value]
+				     [format stdout '\n  ' type [colonize name] ' ' [type value]]]]
   [format stdout ']']]
 

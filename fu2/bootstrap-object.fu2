@@ -22,12 +22,12 @@
 [defunk show [object]
   [format stdout '\n[' [type object]]
   [object-property_scan object [funk [type name value]
-				     [format stdout '\n  ' type [colonize name] ' ' value]]]
+				     [format stdout '\n  ' [conslist type name value]]]]
   [format stdout ']']]
 
 [defunk describe [object]
   [format stdout '\n[' [type object]]
   [object-property_scan object [funk [type name value]
-				     [format stdout '\n  ' type [colonize name] ' ' [type value]]]]
+				     [format stdout '\n  ' [conslist type name [type value]]]]]
   [format stdout ']']]
 

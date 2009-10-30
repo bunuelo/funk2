@@ -70,7 +70,7 @@
   [have this add `standing      standing_form]
   [have this add `sitting_right sitting_right_form]
   [have this add `sitting_left  sitting_left_form]
-  [have this set_posture `standing]
+  [set  this posture `standing]
   this]
 
 [deftypefunk posturable_physical_object get posture []
@@ -209,7 +209,7 @@
   [have this add `standing      [male_child_agent_standing-new      torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
   [have this add `sitting_right [male_child_agent_sitting_right-new torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
   [have this add `sitting_left  [male_child_agent_sitting_left-new  torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]]
-  [have this set_posture `standing]
+  [set  this posture `standing]
   [have this add `move_to_goal  nil]
   `[have this add `emotion_machine [new emotion_machine this]]
   this]
@@ -301,7 +301,7 @@
 								       [have this perceive_think_act]]]
 								   ]]
 						       nil]]
-      [have this set_posture `standing]
+      [set this posture `standing]
       ]]
   this]
 
@@ -463,7 +463,7 @@
   [let [[posture_goal [have this lookup `posture_goal]]]
     [if posture_goal
 	[let [[posture [get this posture]]]
-	  [prog [have this set_posture posture_goal]
+	  [prog [set this posture posture_goal]
 		[have this set_posture_goal nil]]]]]
   nil]
 

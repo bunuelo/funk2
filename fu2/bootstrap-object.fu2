@@ -38,6 +38,7 @@
 					    [funk          [object_type-get-funk type_name name]]
 					    [args          [get funk args]]
 					    [documentation [get funk documentation]]]
+				       [format stdout '\n']
 				       [format stdout '\n  ' [list type_name name args]]
 				       [if documentation
 					   [prog [ansi-stream-foreground stdout 8]
@@ -55,7 +56,6 @@
 					       [ansi-stream-foreground stdout 8]
 					       [format stdout '.']
 					       [ansi-stream-foreground stdout 15]]]
-				       [format stdout '\n']
 				       ]]]
   [format stdout ']']]
 

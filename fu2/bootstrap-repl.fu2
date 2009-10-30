@@ -364,7 +364,7 @@
 		  [if [null fiber_iter]
 		      t
 		    [let [[fiber [car fiber_iter]]]
-		      [if [null [fiber-complete? fiber]]
+		      [if [null [get fiber is_complete]]
 			  nil
 			[fibers-scan-loop [cdr fiber_iter]]]]]]]
 	  [if [fibers-scan-loop fibers]

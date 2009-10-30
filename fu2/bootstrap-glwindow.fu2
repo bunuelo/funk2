@@ -620,7 +620,7 @@
 		 carol
 		 ]]]
 
-[globalize carol_scene [carol_playing_in_mud_scene-new]]
+`[globalize carol_scene [carol_playing_in_mud_scene-new]]
 
 `[new physical_scene `mud_puddle_scene
       [conslist bucket

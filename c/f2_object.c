@@ -278,7 +278,7 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
       f2ptr parent_type = f2__lookup_type(cause, parent_name);
       if (raw__primobject_type__is_type(cause, type)) {
 	{
-	  f2ptr aux_data = raw__array__new(cause, 4);
+	  f2ptr aux_data = raw__array__new(cause, 5);
 	  raw__array__elt__set(cause, aux_data, 0, larva_found);
 	  raw__array__elt__set(cause, aux_data, 1, fiber);
 	  raw__array__elt__set(cause, aux_data, 2, object);
@@ -299,7 +299,7 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
     }
   }
   {
-    f2ptr aux_data = raw__array__new(cause, 4);
+    f2ptr aux_data = raw__array__new(cause, 5);
     raw__array__elt__set(cause, aux_data, 0, larva_found);
     raw__array__elt__set(cause, aux_data, 1, fiber);
     raw__array__elt__set(cause, aux_data, 2, object);

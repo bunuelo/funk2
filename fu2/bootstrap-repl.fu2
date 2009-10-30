@@ -264,17 +264,29 @@
 	      [cons result [filter cond_proc [cdr seq]]]
 	    [filter cond_proc [cdr seq]]]]]]
 
-[defunk object-new [type_name :rest args]
-  [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `new] args]]
+[defmetro object-get-funk [this slot_name]
+  `[object-slot-type_funk ,this `get slot_name]]
 
 [defunk object-get [this slot_name :rest args]
-  [apply [object-slot-type_funk this `get slot_name] [cons this args]]]
+  [apply [object-get-funk this slot_name] [cons this args]]]
+
+[defmetro object-set-funk [this slot_name]
+  `[object-slot-type_funk ,this `set slot_name]]
 
 [defunk object-set [this slot_name :rest args]
-  [apply [object-slot-type_funk this `set slot_name] [cons this args]]]
+  [apply [object-set-funk this slot_name] [cons this args]]]
+
+[defmetro object-execute-funk [this slot_name]
+  `[object-slot-type_funk ,this `execute ,slot_name]]
 
 [defunk object-execute [this slot_name :rest args]
-  [apply [object-slot-type_funk this `execute slot_name] args]]
+  [apply [object-execute-funk this slot_name] args]]
+
+[defmetro object-new-funk [this]
+  `[object-execute-funk ,this `new]]
+
+[defunk object-new [type_name :rest args]
+  [apply [object-new-funk [lookup_type type_name]] args]]
 
 [defmetro new [type_name :rest args]
   `[object-new [quote ,type_name] @args]]

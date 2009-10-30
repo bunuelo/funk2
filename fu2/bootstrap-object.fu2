@@ -38,6 +38,8 @@
 					    [funk          [object_type-get-funk type_name name]]
 					    [args          [get funk args]]
 					    [documentation [get funk documentation]]]
+				       [if [eq `this [car args]]
+					   [= args [cdr args]]]
 				       [format stdout '\n']
 				       [format stdout '\n  ' [list type_name name args]]
 				       [if documentation

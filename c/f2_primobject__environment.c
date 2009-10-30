@@ -144,7 +144,7 @@ f2ptr f2__environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, 
 def_pcfunk4(environment__type_var_value__set, this, type, var, value, return f2__environment__type_var_value__set(this_cause, this, type, var, value));
 
 f2ptr f2environment__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, nil);
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "primobject"), nil));
   {char* slot_name = "is_type";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_environment.is_type__funk);}
   {char* slot_name = "new";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk);}
   {char* slot_name = "frame";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_environment.frame__funk);}

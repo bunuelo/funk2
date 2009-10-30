@@ -283,7 +283,7 @@
   [apply [object-execute-funk this slot_name] args]]
 
 [defmetro object_type-new-funk [name]
-  [primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
+  `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
 
 [defunk object_type-new [name :rest args]
   [apply [object_type-new-funk name] args]]

@@ -73,7 +73,10 @@
   [have this set_posture `standing]
   this]
 
-[deftypefunk posturable_physical_object execute set_posture [posture]
+[deftypefunk posturable_physical_object get posture []
+  [have this lookup `posture]]
+
+[deftypefunk posturable_physical_object set posture [posture]
   [have this copy_slots [have this lookup posture] `[transform text texture part_place_frame agent]]
   [let [[part_place_frame [get this part_place_frame]]]
     [mapc [funk [slot]
@@ -87,6 +90,10 @@
 	  [get part_place_frame slots]]]
   [have this add `posture posture]
   nil]
+
+[deftypefunk posturable_physical_object get standing      [] [have this lookup `standing]]
+[deftypefunk posturable_physical_object get sitting_right [] [have this lookup `sitting_right]]
+[deftypefunk posturable_physical_object get sitting_left  [] [have this lookup `sitting_left]]
 
 [defunk bluegreen_blouse_texture-new          [] [new physical_texture [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.08]  `bluegreen_blouse]]
 [defunk sideview_bluegreen_blouse_texture-new [] [new physical_texture [new physical_transform [new physical_position 0 0 0] [physical_rotation-new_identity] 0.04]  `sideview_bluegreen_blouse]]

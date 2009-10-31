@@ -36,10 +36,8 @@
   [object-property_scan object [funk [type_name name value]
 				     [let* [[type              [lookup_type type_name]]
 					    [get_funk          [object_type-get-funk type_name name]]
-					    [set_funk          [if t nil [object_type-set-funk type_name name]]]
 					    [get_args          [get get_funk args]]
-					    [get_documentation [get get_funk documentation]]
-					    [set_documentation [if t nil [get set_funk documentation]]]]
+					    [get_documentation [get get_funk documentation]]]
 				       [if [eq `this [car get_args]]
 					   [= get_args [cdr get_args]]]
 				       [format stdout '\n']
@@ -48,9 +46,6 @@
 				       [format stdout '\n    - ']
 				       [if get_documentation
 					   [prog [format stdout 'get: ' get_documentation]
-						 [format stdout '\n      ']]]
-				       [if set_documentation
-					   [prog [format stdout 'set: ' set_documentation]
 						 [format stdout '\n      ']]]
 				       [format stdout 'returns ']
 				       [let [[type_name [type value]]]

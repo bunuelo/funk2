@@ -40,44 +40,30 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
     return f2larva__new(cause, 1);
   }
   
-  f2ptr frame             = f2environment__frame(this, cause);
-  f2ptr funkvar_ptypehash = f2__frame__funkvar_ptypehash(cause, frame);
-  f2ptr bin_array         = f2ptypehash__bin_array(funkvar_ptypehash, cause);
-  s64   length            = raw__array__length(cause, bin_array);
-  
   f2ptr match_frame = f2__frame__new(cause);
+  f2ptr frame       = f2environment__frame(this, cause);
   
-  s64 index;
-  for (index = 0; index < length; index ++) {
-    f2ptr bin  = raw__array__elt(cause, bin_array, index);
-    
-    f2ptr iter = bin;
-    while (iter) {
-      f2ptr keyvalue_pair = f2cons__car(iter, cause);
-      
-      f2ptr     key           = f2cons__car(keyvalue_pair, cause);
-      f2ptr     value         = f2cons__cdr(keyvalue_pair, cause);
-      f2ptr     documentation = f2__exp__documentation(cause, value);
-      boolean_t matches       = boolean__false;
-      
-      f2ptr key_string = f2__exp__to_new_string(cause, key);
-      if (f2__string__contains(cause, key_string, find_string) != nil) {
-	matches = boolean__true;
-      }
-      if (! matches) {
-	if (raw__string__is_type(cause, documentation)) {
-	  if (f2__string__contains(cause, documentation, find_string) != nil) {
-	    matches = boolean__true;
-	  }
-	}
-      }
-      
-      if (matches) {
-	f2__frame__add_funkvar_value(cause, match_frame, key, value);
-      }
-      iter = f2cons__cdr(iter, cause);
-    }
-  }
+  frame__iteration(cause, frame, type_slot_name, slot_name, slot_value,
+		   boolean_t matches = boolean__false;
+		   
+		   f2ptr slot_name_string = f2__exp__to_new_string(cause, slot_name);
+		   if (f2__string__contains(cause, slot_name_string, find_string) != nil) {
+		     matches = boolean__true;
+		   }
+		   if (! matches) {
+		     f2ptr documentation = f2__exp__documentation(cause, slot_value);
+		     if (raw__string__is_type(cause, documentation)) {
+		       if (f2__string__contains(cause, documentation, find_string) != nil) {
+			 matches = boolean__true;
+		       }
+		     }
+		   }
+		   
+		   if (matches) {
+		     f2__frame__add_type_var_value(cause, match_frame, type_slot_name, slot_name, slot_value);
+		   }
+		   );
+  
   return match_frame;
 }
 

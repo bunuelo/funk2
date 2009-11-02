@@ -109,7 +109,7 @@ f2ptr  f2__frame__var_value__set                 (f2ptr cause, f2ptr this, f2ptr
 f2ptr  f2__frame__lookup_funkvar_assignment_cons (f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value);
 f2ptr  f2__frame__lookup_funkvar_value           (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr not_defined_value);                      // *
 f2ptr  f2__frame__funkvar_value__set             (f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value, f2ptr not_defined_value);         // *
-f2ptr raw__frame__type_var__mapc_slot_names(f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
+f2ptr raw__frame__type_var__mapc_slot_names      (f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 f2ptr  f2__frame__type_var__slot_names           (f2ptr cause, f2ptr this, f2ptr type);
 
 boolean_t raw__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name);

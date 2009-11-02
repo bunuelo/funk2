@@ -802,7 +802,7 @@ f2ptr f2__stream__try_read_number_list_after_first_digit(f2ptr cause, f2ptr stre
       f2__stream__ungetc(cause, stream, read_ch);
     }
   } else if (raw__char__is_decimal_digit(cause, read_ch)) {
-    f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
+    f2ptr number_list = f2__stream__try_read_number_list_after_first_digit(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
       return f2cons__new(cause, read_ch, number_list);
     } else {

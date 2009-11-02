@@ -125,8 +125,11 @@ def_pcfunk1(ptype__raw, x, return f2__ptype__raw(this_cause, x));
 f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
-  f2ptr retval = __pure__f2ptype__cause(this);
-  return retval;
+  f2ptr value = __pure__f2ptype__cause(this);
+  if (! raw__cause__is_type(cause, value)) {
+    return f2larva__new(cause, 4);
+  }
+  return value;
 }
 
 f2ptr f2__ptype__cause(f2ptr cause, f2ptr x) {
@@ -140,6 +143,9 @@ def_pcfunk1(ptype__cause, x, return f2__ptype__cause(this_cause, x));
 f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
+  if (! raw__cause__is_type(cause, value)) {
+    return f2larva__new(cause, 3);
+  }
   __pure__f2ptype__cause(this) = value;
   return nil;
 }
@@ -2282,7 +2288,7 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "cause"; __funk2.globalenv.object_type.ptype.cause__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__cause, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.cause__funk = never_gc(cfunk);}
   {char* str = "cause-set"; __funk2.globalenv.object_type.ptype.cause__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__cause__set, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.cause__set__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptype__cause__set, this, value, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.cause__set__funk = never_gc(cfunk);}
   {char* str = "creation_nanoseconds_since_1970"; __funk2.globalenv.object_type.ptype.creation_nanoseconds_since_1970__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__creation_nanoseconds_since_1970, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.creation_nanoseconds_since_1970__funk = never_gc(cfunk);}
   

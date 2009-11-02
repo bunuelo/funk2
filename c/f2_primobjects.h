@@ -132,16 +132,17 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__primobject_type__new(f2ptr cause); \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);}
 
+#define debug_type_check(cause, this, name) assert_debug(raw__##name##__is_type(cause, this), nil, "debug error: this is not a " #name ".")
 
 #define declare_primobject_slot(name, slot_name) \
   defprimobject__static_slot__prototype(name##__##slot_name); \
-  static inline f2ptr f2##name##__##slot_name##__trace_depth(      f2ptr this, f2ptr cause, int trace_depth)              {return primobject__static_slot__accessor__trace_depth(this, name##__##slot_name, cause, trace_depth);} \
-  static inline f2ptr f2##name##__##slot_name(                     f2ptr this, f2ptr cause)                               {return primobject__static_slot__accessor(             this, name##__##slot_name, cause);} \
-  static inline f2ptr f2##name##__##slot_name##__set__trace_depth( f2ptr this, f2ptr cause, f2ptr value, int trace_depth) {return primobject__static_slot__set__trace_depth(     this, name##__##slot_name, cause, value, trace_depth);} \
-  static inline f2ptr f2##name##__##slot_name##__set(              f2ptr this, f2ptr cause, f2ptr value)                  {return primobject__static_slot__set(                  this, name##__##slot_name, cause, value);} \
-  static inline f2ptr f2##name##__##slot_name##__tracing_on(       f2ptr this, f2ptr cause)                               {return primobject__static_slot__tracing_on(           this, name##__##slot_name, cause);} \
-  static inline f2ptr f2##name##__##slot_name##__trace(            f2ptr this, f2ptr cause)                               {return primobject__static_slot__trace(                this, name##__##slot_name, cause);} \
-  static inline f2ptr f2##name##__##slot_name##__imagination_frame(f2ptr this, f2ptr cause)                               {return primobject__static_slot__imagination_frame(    this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__trace_depth(      f2ptr this, f2ptr cause, int trace_depth)              {debug_type_check(cause, this, name); return primobject__static_slot__accessor__trace_depth(this, name##__##slot_name, cause, trace_depth);} \
+  static inline f2ptr f2##name##__##slot_name(                     f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__accessor(             this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__set__trace_depth( f2ptr this, f2ptr cause, f2ptr value, int trace_depth) {debug_type_check(cause, this, name); return primobject__static_slot__set__trace_depth(     this, name##__##slot_name, cause, value, trace_depth);} \
+  static inline f2ptr f2##name##__##slot_name##__set(              f2ptr this, f2ptr cause, f2ptr value)                  {debug_type_check(cause, this, name); return primobject__static_slot__set(                  this, name##__##slot_name, cause, value);} \
+  static inline f2ptr f2##name##__##slot_name##__tracing_on(       f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__tracing_on(           this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__trace(            f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__trace(                this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__imagination_frame(f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__imagination_frame(    this, name##__##slot_name, cause);} \
   f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x); \
   f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y);
 

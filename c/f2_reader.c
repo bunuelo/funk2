@@ -828,7 +828,8 @@ f2ptr f2__stream__try_read_number_list(f2ptr cause, f2ptr stream) {
   }
   if (raw__eq(cause, read_ch, __funk2.reader.char__minus_sign)) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
-    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+    // cannot except nil here, because '-' should be a symbol if not followed by a number.
+    if (raw__cons__is_type(cause, number_list)) {
       return f2cons__new(cause, read_ch, number_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);

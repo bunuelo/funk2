@@ -793,7 +793,7 @@ void funk2_node__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_fiber,
   f2__free(to_ptr(packet));
 }
 
-void f2ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value) {
+void f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2ptype__cause__set(this, cause, value);

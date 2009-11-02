@@ -133,8 +133,8 @@ debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_f
 release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
-cc_flags = $(debug__cc_flags)
-#cc_flags = $(release__cc_flags)
+#cc_flags = $(debug__cc_flags)
+cc_flags = $(release__cc_flags)
 #cc_flags = $(athena__cc_flags)
 
 bin/configurator: c/configurator.c

@@ -126,9 +126,7 @@ f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   f2ptr value = __pure__f2ptype__cause(this);
-  if (! raw__cause__is_type(cause, value)) {
-    return f2larva__new(cause, 4);
-  }
+  release__assert(raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
   return value;
 }
 
@@ -143,9 +141,7 @@ def_pcfunk1(ptype__cause, x, return f2__ptype__cause(this_cause, x));
 f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
-  if (! raw__cause__is_type(cause, value)) {
-    return f2larva__new(cause, 3);
-  }
+  release__assert(raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
   __pure__f2ptype__cause(this) = value;
   return nil;
 }

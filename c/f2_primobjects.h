@@ -132,7 +132,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   f2ptr f2##name##__primobject_type__new(f2ptr cause); \
   static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);}
 
-#define debug_type_check(cause, this, name) assert_debug(raw__##name##__is_type(cause, this), nil, "debug error: this is not a " #name ".")
+#define debug_type_check(cause, this, name) debug__assert(raw__##name##__is_type(cause, this), nil, "debug error: this is not a " #name ".")
 
 #define declare_primobject_slot(name, slot_name) \
   defprimobject__static_slot__prototype(name##__##slot_name); \

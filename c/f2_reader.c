@@ -789,7 +789,7 @@ f2ptr f2__stream__try_read_number_list_without_sign_or_decimal(f2ptr cause, f2pt
   return __funk2.reader.could_not_read_type_exception;
 }
 
-f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
+f2ptr f2__stream__try_read_number_list_after_first_digit(f2ptr cause, f2ptr stream) {
   f2ptr read_ch = f2__stream__try_getc(cause, stream);
   if (raw__exception__is_type(cause, read_ch)) {
     return read_ch;
@@ -813,6 +813,32 @@ f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
     if (! raw__char__is_symbolizable(cause, read_ch)) {
       return nil;
     }
+  }
+  return __funk2.reader.could_not_read_type_exception;
+}
+
+f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
+  f2ptr read_ch = f2__stream__try_getc(cause, stream);
+  if (raw__exception__is_type(cause, read_ch)) {
+    return read_ch;
+  }
+  if (raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) {
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign_or_decimal(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return f2cons__new(cause, read_ch, number_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else if (raw__char__is_decimal_digit(cause, read_ch)) {
+    f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
+    if ((! number_list) || raw__cons__is_type(cause, number_list)) {
+      return f2cons__new(cause, read_ch, number_list);
+    } else {
+      f2__stream__ungetc(cause, stream, read_ch);
+    }
+  } else {
+    // we didn't read first digit. (avoids reading '-' as number 0 instead of symbol.)
+    f2__stream__ungetc(cause, stream, read_ch);
   }
   return __funk2.reader.could_not_read_type_exception;
 }

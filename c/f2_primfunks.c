@@ -1528,7 +1528,7 @@ void f2__primcfunks__initialize() {
   // system
   
   f2__funktional_primcfunk__init__0(system__node_id, "");
-  f2__funktional_primcfunk__init__0(system__environment, "");
+  f2__funktional_primcfunk__init__1(system__environment, node_id, "");
   
   // funk2 pointer (f2ptr)
   

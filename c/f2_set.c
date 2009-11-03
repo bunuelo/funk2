@@ -125,9 +125,12 @@ void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t e
   void*              return_value = NULL;
   u64 i;
   for (i = 0; i < bin_num; i ++) {
-    while (bin[i]) {
+    funk2_set_node_t* iter = bin[i];
+    while (iter) {
+      funk2_set_node_t* next = iter->next;
       funk2_set_element_t element = bin[i]->element;
       (*mapc_funk)(element, user_data, &stop, &return_value);
+      iter = next;
       if (stop) {
 	return return_value;
       }

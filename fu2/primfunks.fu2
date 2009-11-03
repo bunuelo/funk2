@@ -25,6 +25,11 @@
 [globalize-funk system-node_id                              &primfunk:system__node_id]
 [globalize-funk system-environment                          &primfunk:system__environment]
 
+[primfunk:exp__format stdout '\nprimfunks.fu2 debug -1 cause: ']
+[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
+[primfunk:exp__format stdout '\n']
+
+
 [globalize-funk pointer                                     &primfunk:pointer]
 [globalize-funk deref-pointer                               &primfunk:deref_pointer]
 
@@ -44,6 +49,11 @@
 [globalize-funk make-metro                                  &primfunk:make_metro]
 [globalize-funk fiber                                       &primfunk:fiber]
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
+
+
+[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0 cause: ']
+[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
+[primfunk:exp__format stdout '\n']
 
 [globalize-funk simple_length                               &primfunk:simple_length]
 [globalize-funk integer-greater_than                        &primfunk:integer__greater_than]
@@ -70,6 +80,11 @@
 [globalize-funk pointer-not_equal_sign                      &primfunk:pointer__not_equal_sign]
 [globalize-funk null                                        &primfunk:null]
 [globalize-funk not                                         &primfunk:not]
+
+
+[primfunk:exp__format stdout '\nprimfunks.fu2 debug 1 cause: ']
+[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
+[primfunk:exp__format stdout '\n']
 
 [globalize-funk eq                                          &primfunk:eq]
 

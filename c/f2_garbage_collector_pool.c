@@ -518,7 +518,7 @@ void funk2_garbage_collector_pool__free_white_exps__helper(funk2_set_element_t e
   f2ptr                           exp              =   (f2ptr)                          element;
   funk2_garbage_collector_pool_t* this             =   (funk2_garbage_collector_pool_t*)(user_data[0]);
   int                             pool_index       = *((int*)                           (user_data[1]));
-  u64                             freed_byte_count =   (u64*)                           (user_data[2]);
+  u64*                            freed_byte_count =   (u64*)                           (user_data[2]);
   {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
     (*freed_byte_count) += funk2_memblock__byte_num(block);

@@ -69,7 +69,7 @@ void funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, funk2_
   case funk2_tricolor__grey:  to_set = &(this->grey_set);  break;
   case funk2_tricolor__white: to_set = &(this->white_set); break;
   }
-  funk2_set__remove_exp_and_add_to(from_set, exp, to_set);
+  funk2_set__remove_and_add_to(from_set, exp, to_set);
 }
 
 void* funk2_tricolor_set__black_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->black_set), mapc_funk, user_data);}

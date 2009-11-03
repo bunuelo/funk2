@@ -276,6 +276,7 @@ bin_funk2_SOURCES = \
   c/f2_dynamic_memory.c \
   c/f2_termios.c \
   c/f2_thought_process.c \
+  c/f2_tricolor_set.c \
   c/f2_fiber.c \
   c/f2_time.c \
   c/f2_trace.c \

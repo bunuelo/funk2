@@ -31,37 +31,6 @@ void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block
 }
 
 
-// garbage_collector_set
-
-void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this) {
-  funk2_set__init(&(this->set));
-}
-
-void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this) {
-  funk2_set__destroy(&(this->set));
-}
-
-void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr exp) {
-  debug__assert(exp, nil, "funk2_garbage_collector_set__add_exp error: added a nil expression.");
-  funk2_set__add(&(this->set), (funk2_set_element_t)exp);
-}
-
-void funk2_garbage_collector_set__remove_exp(funk2_garbage_collector_set_t* this, f2ptr exp) {
-  funk2_set__remove(&(this->set), (funk2_set_element_t)exp);
-}
-
-void funk2_garbage_collector_set__remove_exp_and_add_to(funk2_garbage_collector_set_t* this, f2ptr exp, funk2_garbage_collector_set_t* to_set) {
-  funk2_set__remove_and_add_to(&(this->set), (funk2_set_element_t)exp, &(to_set->set));
-}
-
-void funk2_garbage_collector_set__save_to_stream(funk2_garbage_collector_set_t* this, int fd) {
-  funk2_set__save_to_stream(&(this->set), fd);
-}
-
-void funk2_garbage_collector_set__load_from_stream(funk2_garbage_collector_set_t* this, int fd) {
-  funk2_set__load_from_stream(&(this->set), fd);
-}
-
 // garbage_collector_mutation_buffer
 
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this) {
@@ -306,9 +275,7 @@ void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_c
 void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this) {
   status("initializing garbage collector pool.");
   
-  funk2_garbage_collector_set__init(&(this->black_set));
-  funk2_garbage_collector_set__init(&(this->grey_set));
-  funk2_garbage_collector_set__init(&(this->white_set));
+  funk2_tricolor_set__init(&(this->tricolor_set));
   funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));
   funk2_garbage_collector_protected_f2ptr_buffer__init(&(this->other_protected_f2ptr));
@@ -325,9 +292,7 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this) {
 void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this) {
   status("destroying garbage collector pool.");
   
-  funk2_garbage_collector_set__destroy(&(this->black_set));
-  funk2_garbage_collector_set__destroy(&(this->grey_set));
-  funk2_garbage_collector_set__destroy(&(this->white_set));
+  funk2_tricolor_set__destroy(&(this->tricolor_set));
   funk2_garbage_collector_mutation_buffer__destroy(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__destroy(&(this->other_no_more_references));
   funk2_garbage_collector_protected_f2ptr_buffer__destroy(&(this->other_protected_f2ptr));
@@ -343,41 +308,21 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   debug__assert(block->used, nil, "funk2_garbage_collector_pool__add_memblock error: block is not used.");
-  switch(block->gc.tricolor) {
-  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__add_exp(&(this->black_set), exp); break;
-  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__add_exp(&(this->grey_set),  exp); break;
-  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__add_exp(&(this->white_set), exp); break;
-  }
+  funk2_tricolor_set__add_element(&(this->tricolor_set), exp, block->gc.tricolor);
 }
 
 void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   debug__assert(! block->used, nil, "funk2_garbage_collector_pool__remove_memblock error: block is used.");
-  switch(block->gc.tricolor) {
-  case funk2_garbage_collector_tricolor__black: funk2_garbage_collector_set__remove_exp(&(this->black_set), exp); break;
-  case funk2_garbage_collector_tricolor__grey:  funk2_garbage_collector_set__remove_exp(&(this->grey_set),  exp); break;
-  case funk2_garbage_collector_tricolor__white: funk2_garbage_collector_set__remove_exp(&(this->white_set), exp); break;
-  }
+  funk2_tricolor_set__remove_element(&(this->tricolor_set), exp, block->gc.tricolor);
 }
 
-void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t new_tricolor) {
+void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t to_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  funk2_garbage_collector_set_t* from_set = NULL;
-  funk2_garbage_collector_set_t* to_set   = NULL;
-  switch(block->gc.tricolor) {
-  case funk2_garbage_collector_tricolor__black: from_set = &(this->black_set); break;
-  case funk2_garbage_collector_tricolor__grey:  from_set = &(this->grey_set);  break;
-  case funk2_garbage_collector_tricolor__white: from_set = &(this->white_set); break;
-  }
-  switch(new_tricolor) {
-  case funk2_garbage_collector_tricolor__black: to_set = &(this->black_set); break;
-  case funk2_garbage_collector_tricolor__grey:  to_set = &(this->grey_set);  break;
-  case funk2_garbage_collector_tricolor__white: to_set = &(this->white_set); break;
-  }
-  { // not processor thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.
-    block->gc.tricolor = new_tricolor;
-    funk2_garbage_collector_set__remove_exp_and_add_to(from_set, exp, to_set);
-  }
+  funk2_garbage_collector_tricolor_t from_tricolor = block->gc.tricolor;
+  // not processor_thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.
+  funk2_tricolor_set__change_element_color(&(this->tricolor_set), exp, from_tricolor, to_tricolor);
+  block->gc.tricolor = to_tricolor;
 }
 
 void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index) {
@@ -393,7 +338,7 @@ void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_colle
 }
 
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this) {
-  return ((this->grey_set.set.element_count) != 0);
+  return (funk2_tricolor_set__grey_set__element_count(&(this->tricolor_set)) != 0);
 }
 
 void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
@@ -569,28 +514,37 @@ void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector
   }
 }
 
-void funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this) {
-  int                pool_index       = this_processor_thread__pool_index();
-  u64                freed_byte_count = 0;
-  u64                bin_num          = 1ull << this->white_set.set.bin_power;
-  funk2_set_node_t** bin              = this->white_set.set.bin;
-  u64 i;
-  for (i = 0; i < bin_num; i ++) {
-    while (bin[i]) {
-      f2ptr exp = (f2ptr)(bin[i]->element);
-      funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-      freed_byte_count += funk2_memblock__byte_num(block);
-      funk2_garbage_collector_set__remove_exp(&(this->white_set), exp);
-      funk2_memorypool__free_used_block(&(__funk2.memory.pool[pool_index]), block);
-    }
+void funk2_garbage_collector_pool__free_white_exps__helper(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value) {
+  f2ptr                           exp              =   (f2ptr)                          element;
+  funk2_garbage_collector_pool_t* this             =   (funk2_garbage_collector_pool_t*)(user_data[0]);
+  int                             pool_index       = *((int*)                           (user_data[1]));
+  u64                             freed_byte_count =   (u64*)                           (user_data[2]);
+  {
+    funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+    (*freed_byte_count) += funk2_memblock__byte_num(block);
+    funk2_tricolor_set__remove_element(&(this->tricolor_set), exp, funk2_garbage_collector_tricolor__white);
+    funk2_memorypool__free_used_block(&(__funk2.memory.pool[pool_index]), block);
   }
+}
+
+void funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_pool_t* this) {
+  int pool_index       = this_processor_thread__pool_index();
+  u64 freed_byte_count = 0;
+  
+  {
+    void** user_data = (void**)alloca(sizeof(void*) * 3);
+    user_data[0]     = (void*)this;
+    user_data[1]     = (void*)(&pool_index);
+    user_data[2]     = (void*)(&freed_byte_count);
+    
+    funk2_tricolor_set__white_set__mapc(&(this->tricolor_set), &funk2_garbage_collector_pool__free_white_exps__helper, user_data);
+  }
+  
   status("funk2_garbage_collector_pool: free_whiteness pool_index=" u64__fstr " freed_byte_count=" u64__fstr ".", (u64)this_processor_thread__pool_index(), freed_byte_count);
 }
 
 void funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd) {
-  funk2_garbage_collector_set__save_to_stream(&(this->black_set), fd);
-  funk2_garbage_collector_set__save_to_stream(&(this->grey_set),  fd);
-  funk2_garbage_collector_set__save_to_stream(&(this->white_set), fd);
+  funk2_tricolor_set__save_to_stream(&(this->tricolor_set), fd);
   funk2_garbage_collector_mutation_buffer__save_to_stream(&(this->other_mutations), fd);
   funk2_garbage_collector_no_more_references_buffer__save_to_stream(&(this->other_no_more_references), fd);
   funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(&(this->other_protected_f2ptr), fd);
@@ -602,9 +556,7 @@ void funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t
 }
 
 void funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool_t* this, int fd) {
-  funk2_garbage_collector_set__load_from_stream(&(this->black_set), fd);
-  funk2_garbage_collector_set__load_from_stream(&(this->grey_set),  fd);
-  funk2_garbage_collector_set__load_from_stream(&(this->white_set), fd);
+  funk2_tricolor_set__load_from_stream(&(this->tricolor_set), fd);
   funk2_garbage_collector_mutation_buffer__load_from_stream(&(this->other_mutations), fd);
   funk2_garbage_collector_no_more_references_buffer__load_from_stream(&(this->other_no_more_references), fd);
   funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(&(this->other_protected_f2ptr), fd);

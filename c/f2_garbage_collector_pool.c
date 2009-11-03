@@ -475,28 +475,30 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   }
 }
 
+void funk2_garbage_collector_pool__blacken_grey_nodes__helper(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value) {
+  funk2_garbage_collector_pool_t* this       = (funk2_garbage_collector_pool_t*)(user_data[0]);
+  f2ptr*                          grey_array = (f2ptr*)(user_data[1]);
+  u64*                            grey_index = (u64*)(user_data[2]);
+  f2ptr                           exp        = (f2ptr)element;
+  grey_array[*grey_index] = exp;
+  (*grey_index) ++;
+}
+
 void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this) {
   //status("funk2_garbage_collector_pool: blacken_grey_nodes.");
   while (funk2_garbage_collector_pool__still_have_grey_nodes(this)) {
     int pool_index = this_processor_thread__pool_index();
-    u64    grey_count = this->grey_set.set.element_count;
+    u64    grey_count = funk2_tricolor_set__grey_set__element_count(&(this->tricolor_set));
     f2ptr* grey_array = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * grey_count));
     u64    grey_index = 0;
     {
-      u64                bin_num = 1ull << this->grey_set.set.bin_power;
-      funk2_set_node_t** bin     = this->grey_set.set.bin;
-      u64 i;
-      for (i = 0; i < bin_num; i ++) {
-	funk2_set_node_t* iter = bin[i];
-	while (iter) {
-	  f2ptr exp = (f2ptr)(iter->element);
-	  grey_array[grey_index] = exp;
-	  grey_index ++;
-	  iter = iter->next;
-	}
-      }
+      void** user_data = (void**)alloca(sizeof(void*) * 3);
+      user_data[0] = (void*)this;
+      user_data[1] = (void*)grey_array;
+      user_data[2] = (void*)(&grey_index);
+      funk2_tricolor_set__grey_set__mapc(&(this->tricolor_set), &funk2_garbage_collector_pool__blacken_grey_nodes__helper, user_data);
+      debug__assert(grey_index == grey_count, nil, "error grey_index should equal grey_count.");
     }
-    debug__assert(grey_index == grey_count, nil, "error grey_index should equal grey_count.");
     for (grey_index = 0; grey_index < grey_count; grey_index ++) {
       f2ptr exp = grey_array[grey_index];
       funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__black);

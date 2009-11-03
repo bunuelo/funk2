@@ -115,9 +115,7 @@ void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_c
 // garbage_collector_pool
 
 struct funk2_garbage_collector_pool_s {
-  funk2_garbage_collector_set_t                       black_set;
-  funk2_garbage_collector_set_t                       grey_set;
-  funk2_garbage_collector_set_t                       white_set;
+  funk2_tricolor_set_t                                tricolor_set;
   funk2_garbage_collector_mutation_buffer_t           other_mutations;
   funk2_garbage_collector_no_more_references_buffer_t other_no_more_references;
   funk2_garbage_collector_protected_f2ptr_buffer_t    other_protected_f2ptr;

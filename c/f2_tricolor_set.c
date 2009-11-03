@@ -72,9 +72,9 @@ void funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, funk2_
   funk2_garbage_collector_set__remove_exp_and_add_to(from_set, exp, to_set);
 }
 
-void* funk2_tricolor_set__black_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->black_set), mapc_funk, user_data);}
-void* funk2_tricolor_set__white_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->white_set), mapc_funk, user_data);}
-void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->grey_set),  mapc_funk, user_data);}
+void* funk2_tricolor_set__black_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->black_set), mapc_funk, user_data);}
+void* funk2_tricolor_set__white_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->white_set), mapc_funk, user_data);}
+void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->grey_set),  mapc_funk, user_data);}
 
 void funk2_tricolor_set__save_to_stream(funk2_tricolor_set_t* this, int fd) {
   funk2_set__save_to_stream(&(this->black_set), fd);
@@ -87,3 +87,4 @@ void funk2_tricolor_set__load_from_stream(funk2_tricolor_set_t* this, int fd) {
   funk2_set__load_from_stream(&(this->grey_set),  fd);
   funk2_set__load_from_stream(&(this->white_set), fd);
 }
+

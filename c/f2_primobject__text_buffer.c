@@ -31,8 +31,8 @@ f2ptr __text_buffer_character__symbol = -1;
 
 f2ptr f2text_buffer_character__new(f2ptr cause, f2ptr character, f2ptr foreground_color, f2ptr background_color) {
   if (__text_buffer_character__symbol == -1) {__text_buffer_character__symbol = f2symbol__new(cause, strlen("text_buffer_character"), (u8*)"text_buffer_character");}
-  f2ptr this = f2__primobject__new(cause, __text_buffer_character__symbol, 5, nil);
-  f2text_buffer_character__character__set( this, cause, character);
+  f2ptr this = f2__primobject__new(cause, __text_buffer_character__symbol, 3, nil);
+  f2text_buffer_character__character__set(       this, cause, character);
   f2text_buffer_character__foreground_color__set(this, cause, foreground_color);
   f2text_buffer_character__background_color__set(this, cause, background_color);
   return this;
@@ -52,7 +52,7 @@ f2ptr __text_buffer__symbol = -1;
 
 f2ptr f2text_buffer__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr characters) {
   if (__text_buffer__symbol == -1) {__text_buffer__symbol = f2symbol__new(cause, strlen("text_buffer"), (u8*)"text_buffer");}
-  f2ptr this = f2__primobject__new(cause, __text_buffer__symbol, 5, nil);
+  f2ptr this = f2__primobject__new(cause, __text_buffer__symbol, 3, nil);
   f2text_buffer__width__set(     this, cause, width);
   f2text_buffer__height__set(    this, cause, height);
   f2text_buffer__characters__set(this, cause, characters);
@@ -166,7 +166,7 @@ f2ptr __text_cursor__symbol = -1;
 
 f2ptr f2text_cursor__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr foreground_color, f2ptr background_color) {
   if (__text_cursor__symbol == -1) {__text_cursor__symbol = f2symbol__new(cause, strlen("text_cursor"), (u8*)"text_cursor");}
-  f2ptr this = f2__primobject__new(cause, __text_cursor__symbol, 5, nil);
+  f2ptr this = f2__primobject__new(cause, __text_cursor__symbol, 4, nil);
   f2text_cursor__x__set(               this, cause, x);
   f2text_cursor__y__set(               this, cause, y);
   f2text_cursor__foreground_color__set(this, cause, foreground_color);
@@ -187,7 +187,7 @@ f2ptr __text_window__symbol = -1;
 
 f2ptr f2text_window__new(f2ptr cause, f2ptr double_buffer, f2ptr cursor) {
   if (__text_window__symbol == -1) {__text_window__symbol = f2symbol__new(cause, strlen("text_window"), (u8*)"text_window");}
-  f2ptr this = f2__primobject__new(cause, __text_window__symbol, 5, nil);
+  f2ptr this = f2__primobject__new(cause, __text_window__symbol, 2, nil);
   f2text_window__double_buffer__set(this, cause, double_buffer);
   f2text_window__cursor__set(       this, cause, cursor);
   return this;

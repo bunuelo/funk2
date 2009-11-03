@@ -739,7 +739,7 @@ f2ptr f2ptype__cause(f2ptr this, f2ptr cause) {
   if (computer_id == 0) {
     return pfunk2__f2ptype__cause(this, cause);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    f2ptr         fiber      = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2ptype__cause(funk2_node, fiber, cause, this);
   }

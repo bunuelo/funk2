@@ -24,6 +24,8 @@
 
 typedef struct funk2_tricolor_set_s funk2_tricolor_set_t;
 
+#include "f2_set.h"
+
 // tricolor_set
 
 struct funk2_tricolor_set_s {

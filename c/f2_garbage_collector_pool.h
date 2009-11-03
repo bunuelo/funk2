@@ -36,22 +36,14 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 #ifndef F2__GARBAGE_COLLECTOR_POOL__H
 #define F2__GARBAGE_COLLECTOR_POOL__H
 
-#include "f2_set.h"
+#include "f2_tricolor_set.h"
 #include "f2_memorypool.h"
 #include "f2_protected_alloc_array.h"
-
-// garbage_collector_tricolor
-
-enum funk2_garbage_collector_tricolor_e {
-  funk2_garbage_collector_tricolor__black = 1,
-  funk2_garbage_collector_tricolor__grey,
-  funk2_garbage_collector_tricolor__white
-};
 
 // garbage_collector_block_header
 
 struct funk2_garbage_collector_block_header_s {
-  funk2_garbage_collector_tricolor_t tricolor;
+  funk2_tricolor_t tricolor;
 } __attribute__((__packed__));
 
 void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this);
@@ -138,7 +130,7 @@ void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* thi
 void      funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
-void      funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t new_tricolor);
+void      funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t new_tricolor);
 void      funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp);

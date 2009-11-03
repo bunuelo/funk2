@@ -24,7 +24,7 @@
 // garbage_collector_block_header
 
 void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this) {
-  this->tricolor = funk2_garbage_collector_tricolor__grey;
+  this->tricolor = funk2_tricolor__grey;
 }
 
 void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this) {
@@ -317,9 +317,9 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
   funk2_tricolor_set__remove_element(&(this->tricolor_set), exp, block->gc.tricolor);
 }
 
-void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t to_tricolor) {
+void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t to_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  funk2_garbage_collector_tricolor_t from_tricolor = block->gc.tricolor;
+  funk2_tricolor_t from_tricolor = block->gc.tricolor;
   // not processor_thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.
   funk2_tricolor_set__change_element_color(&(this->tricolor_set), exp, from_tricolor, to_tricolor);
   block->gc.tricolor = to_tricolor;
@@ -361,8 +361,8 @@ boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collec
 
 void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor == funk2_garbage_collector_tricolor__white) {
-    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__grey);
+  if (block->gc.tricolor == funk2_tricolor__white) {
+    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__grey);
   }
 }
 
@@ -376,8 +376,8 @@ void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbag
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor == funk2_garbage_collector_tricolor__black) {
-    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__grey);
+  if (block->gc.tricolor == funk2_tricolor__black) {
+    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__grey);
   }
 }
 
@@ -387,8 +387,8 @@ void funk2_garbage_collector_pool__know_of_used_exp_other_mutation(funk2_garbage
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor == funk2_garbage_collector_tricolor__black) {
-    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__grey);
+  if (block->gc.tricolor == funk2_tricolor__black) {
+    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__grey);
   }
 }
 
@@ -412,8 +412,8 @@ void funk2_garbage_collector_pool__flush_other_knowledge(funk2_garbage_collector
 
 void funk2_garbage_collector_pool__grey_element(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor == funk2_garbage_collector_tricolor__white) {
-    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__grey);
+  if (block->gc.tricolor == funk2_tricolor__white) {
+    funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__grey);
   }
 }
 
@@ -499,7 +499,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
     debug__assert(grey_index == grey_count, nil, "error grey_index should equal grey_count.");
     for (grey_index = 0; grey_index < grey_count; grey_index ++) {
       f2ptr exp = grey_array[grey_index];
-      funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_garbage_collector_tricolor__black);
+      funk2_garbage_collector_pool__change_used_exp_color(this, exp, funk2_tricolor__black);
       funk2_garbage_collector_pool__grey_referenced_elements(this, pool_index, exp);
     }
     free(grey_array);
@@ -522,7 +522,7 @@ void funk2_garbage_collector_pool__free_white_exps__helper(funk2_set_element_t e
   {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
     (*freed_byte_count) += funk2_memblock__byte_num(block);
-    funk2_tricolor_set__remove_element(&(this->tricolor_set), exp, funk2_garbage_collector_tricolor__white);
+    funk2_tricolor_set__remove_element(&(this->tricolor_set), exp, funk2_tricolor__white);
     funk2_memorypool__free_used_block(&(__funk2.memory.pool[pool_index]), block);
   }
 }

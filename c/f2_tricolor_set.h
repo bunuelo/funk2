@@ -22,12 +22,20 @@
 #ifndef F2__TRICOLOR_SET__H
 #define F2__TRICOLOR_SET__H
 
-typedef struct funk2_tricolor_set_s funk2_tricolor_set_t;
-
 #include "f2_set.h"
+
+// tricolor
+
+typedef enum funk2_tricolor_e funk2_tricolor_t;
+enum funk2_tricolor_e {
+  funk2_tricolor__black = 1,
+  funk2_tricolor__grey,
+  funk2_tricolor__white
+};
 
 // tricolor_set
 
+typedef struct funk2_tricolor_set_s funk2_tricolor_set_t;
 struct funk2_tricolor_set_s {
   funk2_set_t black_set;
   funk2_set_t white_set;
@@ -39,9 +47,9 @@ void  funk2_tricolor_set__destroy(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__black_set__element_count(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__white_set__element_count(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__grey_set__element_count(funk2_tricolor_set_t* this);
-void  funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_garbage_collector_tricolor_t color);
-void  funk2_tricolor_set__remove_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_garbage_collector_tricolor_t current_color);
-void  funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_garbage_collector_tricolor_t from_color, funk2_garbage_collector_tricolor_t to_color);
+void  funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t color);
+void  funk2_tricolor_set__remove_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t current_color);
+void  funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t from_color, funk2_tricolor_t to_color);
 void* funk2_tricolor_set__black_set__mapc(funk2_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
 void* funk2_tricolor_set__white_set__mapc(funk2_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
 void* funk2_tricolor_set__grey_set__mapc( funk2_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);

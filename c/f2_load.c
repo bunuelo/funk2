@@ -41,7 +41,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   
   f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil);
   f2ptr load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
-  f2ptr load_fiber   = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
+  f2ptr load_fiber    = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
   f2ptr read_exp      = nil;
   
   while (read_exp != __funk2.reader.end_of_file_exception) {

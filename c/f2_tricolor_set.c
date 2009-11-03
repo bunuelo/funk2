@@ -41,17 +41,17 @@ u64 funk2_tricolor_set__grey_set__element_count( funk2_tricolor_set_t* this) {re
 
 void funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t color) {
   switch(color) {
-  case funk2_tricolor__black: funk2_set__add_exp(&(this->black_set), element); break;
-  case funk2_tricolor__grey:  funk2_set__add_exp(&(this->grey_set),  element); break;
-  case funk2_tricolor__white: funk2_set__add_exp(&(this->white_set), element); break;
+  case funk2_tricolor__black: funk2_set__add(&(this->black_set), element); break;
+  case funk2_tricolor__grey:  funk2_set__add(&(this->grey_set),  element); break;
+  case funk2_tricolor__white: funk2_set__add(&(this->white_set), element); break;
   }
 }
 
 void funk2_tricolor_set__remove_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t current_color) {
   switch(current_color) {
-  case funk2_tricolor__black: funk2_set__remove_exp(&(this->black_set), element); break;
-  case funk2_tricolor__grey:  funk2_set__remove_exp(&(this->grey_set),  element); break;
-  case funk2_tricolor__white: funk2_set__remove_exp(&(this->white_set), element); break;
+  case funk2_tricolor__black: funk2_set__remove(&(this->black_set), element); break;
+  case funk2_tricolor__grey:  funk2_set__remove(&(this->grey_set),  element); break;
+  case funk2_tricolor__white: funk2_set__remove(&(this->white_set), element); break;
   }
 }
 

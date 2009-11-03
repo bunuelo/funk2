@@ -51,172 +51,43 @@
 
 [primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
 
-[primfunk:exp__format stdout '\ncause: ']
+[primfunk:exp__format stdout '\nbefore primfunks.fu2 cause: ']
 [primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
 [primfunk:exp__format stdout '\n']
 
 
 [primfunk:load 'fu2/primfunks.fu2']
 
-[primfunk:exp__format stdout '\ncause: ']
+[primfunk:exp__format stdout '\nafter primfunks.fu2 cause: ']
 [primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
 [primfunk:exp__format stdout '\n']
 
 [primfunk:load 'fu2/primfunks-array.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-apropos.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-child_handler.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-errno.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-fcntl.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-frame.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-ioctl.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-locale.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-object.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-primobject_type.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-primobject_type_handler.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-primobjects.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-search.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-serialize.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-socket.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-sort.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-string.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-text_buffer.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-trace.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-reader.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-garbage_collector.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-glwindow.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-physical_objects.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-object_lattice.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 [primfunk:load 'fu2/primfunks-arithmetic.fu2']
-
-[primfunk:exp__format stdout '\ncause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
 
 
 [globalize stdin-stream  [file_stream-new 0]]

@@ -17,18 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[primfunk:exp__format stdout '\nbeginning primfunks.fu2 cause: ']
+[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0 cause: ']
 [primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
 [primfunk:exp__format stdout '\n']
+[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
 
 
 [globalize-funk system-node_id                              &primfunk:system__node_id]
 [globalize-funk system-environment                          &primfunk:system__environment]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug -1 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-
 
 [globalize-funk pointer                                     &primfunk:pointer]
 [globalize-funk deref-pointer                               &primfunk:deref_pointer]
@@ -51,185 +47,31 @@
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
 
 
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk simple_length                               &primfunk:simple_length]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.1 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-greater_than                        &primfunk:integer__greater_than]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.2 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-less_than                           &primfunk:integer__less_than]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.3 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-add                                 &primfunk:integer__add]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.4 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-subtract                            &primfunk:integer__subtract]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.5 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-multiply                            &primfunk:integer__multiply]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.6 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-add_double                          &primfunk:integer__add_double]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.7 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-subtract_double                     &primfunk:integer__subtract_double]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.8 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-divide_by_integer                   &primfunk:integer__divide_by_integer]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.9 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-divide_by_double                    &primfunk:integer__divide_by_double]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.10 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-equal_sign                          &primfunk:integer__equal_sign]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.11 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-not_equal_sign                      &primfunk:integer__not_equal_sign]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.12 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-bitshift_left                       &primfunk:integer__bitshift_left]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.13 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-bitshift_right                      &primfunk:integer__bitshift_right]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.14 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-bit_and                             &primfunk:integer__bit_and]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.15 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-bit_or                              &primfunk:integer__bit_or]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.16 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-bit_xor                             &primfunk:integer__bit_xor]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.17 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk integer-bit_not                             &primfunk:integer__bit_not]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.18 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk pointer-greater_than                        &primfunk:pointer__greater_than]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.19 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk pointer-less_than                           &primfunk:pointer__less_than]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.20 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk pointer-subtract                            &primfunk:pointer__subtract]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.21 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk pointer-equal_sign                          &primfunk:pointer__equal_sign]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.22 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk pointer-not_equal_sign                      &primfunk:pointer__not_equal_sign]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.23 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk null                                        &primfunk:null]
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 0.24 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-[primfunk:exp__format stdout [primfunk:ptype__cause [primfunk:ptype__cause scheduler:global_scheduler]]]
-
 [globalize-funk not                                         &primfunk:not]
-
-
-[primfunk:exp__format stdout '\nprimfunks.fu2 debug 1 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
 
 [globalize-funk eq                                          &primfunk:eq]
 

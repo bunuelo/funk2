@@ -299,7 +299,7 @@
 [defmetro get [exp slot_name :rest args]
   `[object-get ,exp [quote ,slot_name] @args]]
 
-[print [primfunk:ptype__cause scheduler:global_scheduler]]
+[exp-print [primfunk:ptype__cause scheduler:global_scheduler]]
 
 [defmetro set [exp slot_name :rest value_args]
   `[object-set ,exp [quote ,slot_name] @value_args]]

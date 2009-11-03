@@ -51,6 +51,11 @@
 
 [primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
 
+[primfunk:exp__format stdout '\n']
+[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
+[primfunk:exp__format stdout '\n']
+
+
 [primfunk:load 'fu2/primfunks.fu2']
 [primfunk:load 'fu2/primfunks-array.fu2']
 [primfunk:load 'fu2/primfunks-apropos.fu2']

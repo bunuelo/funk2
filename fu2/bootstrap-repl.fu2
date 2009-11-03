@@ -19,6 +19,10 @@
  rights to redistribute these changes.
 ']
 
+[primfunk:exp__format stdout '\n']
+[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
+[primfunk:exp__format stdout '\n']
+
 [primfunk:ansi__stream__foreground stdout 15]
 [primfunk:exp__format stdout '
 

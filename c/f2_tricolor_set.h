@@ -50,9 +50,9 @@ u64   funk2_tricolor_set__grey_set__element_count(funk2_tricolor_set_t* this);
 void  funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t color);
 void  funk2_tricolor_set__remove_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t current_color);
 void  funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t from_color, funk2_tricolor_t to_color);
-void* funk2_tricolor_set__black_set__mapc(funk2_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
-void* funk2_tricolor_set__white_set__mapc(funk2_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
-void* funk2_tricolor_set__grey_set__mapc( funk2_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void* funk2_tricolor_set__black_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void* funk2_tricolor_set__white_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* mapc_funk)(void** user_data, boolean_t* stop, void** return_value), void** user_data);
 
 #endif // F2__TRICOLOR_SET__H
 

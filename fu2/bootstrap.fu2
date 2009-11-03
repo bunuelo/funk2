@@ -19,8 +19,6 @@
  rights to redistribute these changes.
 '
 
-] `[extra end paren stops loading]
-
 [load 'fu2/bootstrap-primobject.fu2']
 [load 'fu2/bootstrap-reader.fu2']
 [load 'fu2/bootstrap-cons.fu2']

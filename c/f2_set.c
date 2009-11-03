@@ -119,7 +119,6 @@ void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element
 }
 
 void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {
-  int                pool_index   = this_processor_thread__pool_index();
   u64                bin_num      = 1ull << this->bin_power;
   funk2_set_node_t** bin          = this->bin;
   boolean_t          stop         = boolean__false;

@@ -963,7 +963,7 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
 
 f2ptr f2__stream__read(f2ptr cause, f2ptr stream) {
   release__assert(((! cause) || raw__cause__is_type(cause, cause)), nil, "assert error: cause is not cause.");
-  release__assert((! raw__stream__is_type(cause, stream)), nil, "assert error: stream is not stream.");
+  release__assert(raw__stream__is_type(cause, stream), nil, "assert error: stream is not stream.");
   
   f2ptr begin_rewind_length = f2stream__rewind_length(stream, cause);
   if (! raw__integer__is_type(cause, begin_rewind_length)) {

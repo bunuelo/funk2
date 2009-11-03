@@ -980,8 +980,6 @@ void funk2_glwindow__render_physical_place(funk2_glwindow_t* this, f2ptr cause, 
     f2ptr thing = f2__physical_place__thing(cause, physical_place);
     if (thing) {
       funk2_glwindow__render_physical_thing(this, cause, thing);
-    } else {
-      status("warning: expected thing.");
     }
   }
   raw__opengl__glPopMatrix(cause);

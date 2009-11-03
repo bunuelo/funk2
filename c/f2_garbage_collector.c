@@ -60,7 +60,7 @@ void funk2_garbage_collector__init_sets_from_memory(funk2_garbage_collector_t* t
 
 void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor == funk2_garbage_collector_tricolor__black) {
+  if (block->gc.tricolor == funk2_tricolor__black) {
     int pool_index = this_processor_thread__pool_index();
     int exp__pool_index = __f2ptr__pool_index(exp);
     if (pool_index == exp__pool_index) {
@@ -73,7 +73,7 @@ void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_
 
 void funk2_garbage_collector__know_of_no_more_references(funk2_garbage_collector_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  if (block->gc.tricolor != funk2_garbage_collector_tricolor__white) {
+  if (block->gc.tricolor != funk2_tricolor__white) {
     int pool_index = this_processor_thread__pool_index();
     int exp__pool_index = __f2ptr__pool_index(exp);
     if (pool_index == exp__pool_index) {

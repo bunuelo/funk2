@@ -437,6 +437,12 @@ void funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(funk2_garb
 
 void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {
   ptype_block_t* block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
+  {
+    f2ptr cause = block->cause;
+    if (cause) {
+      funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, cause);
+    }
+  }
   switch(block->ptype) {
   case ptype_free_memory:  error(nil, "block of type free_memory in garbage collector.");
   case ptype_integer:      return;

@@ -282,9 +282,3 @@
 [globalize-funk stream-nonblocking__set                     &primfunk:stream__nonblocking__set]
 [globalize-funk stream-try_read_character                   &primfunk:stream__try_read_character]
 
-[exp-format stdout '\nfinished loading primfunks.fu2\n']
-
-[primfunk:exp__format stdout '\nending primfunks.fu2 cause: ']
-[primfunk:exp__format stdout [primfunk:ptype__cause scheduler:global_scheduler]]
-[primfunk:exp__format stdout '\n']
-

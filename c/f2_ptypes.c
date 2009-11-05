@@ -32,6 +32,29 @@ void print_mutex_error(int retval) {
   }
 }
 
+// notify garbage collector of changed references and mutated memory.
+void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector_t* this, f2ptr exp, f2ptr old_value, f2ptr value) {
+  if (old_value) {
+    { // decrement old value reference count
+      funk2_memblock_t* old_value_block    = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(old_value));
+      boolean_t         no_more_references = atomic_dec_and_test(&(old_value_block->reference_count));
+      if (no_more_references) {
+	// notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
+	funk2_garbage_collector__know_of_no_more_references(this, exp);
+      }
+    }
+  }
+  if (value) {
+    { // increment new value reference count
+      funk2_memblock_t* value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(value));
+      atomic_inc(&(value_block->reference_count));
+    }
+  }
+  
+  // notify garbage collector to grey this memory if it is black because it has been mutated.
+  funk2_garbage_collector__know_of_used_exp_mutation(this, exp);
+} 
+
 // used by global initialization for creation (and other) causes
 
 f2ptr initial_cause() {
@@ -1550,29 +1573,6 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
   f2ptr rv = __pure__f2simple_array__elt(this, index);
   return rv;
 }
-
-// notify garbage collector of changed references and mutated memory.
-void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector_t* this, f2ptr exp, f2ptr old_value, f2ptr value) {
-  if (old_value) {
-    { // decrement old value reference count
-      funk2_memblock_t* old_value_block    = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(old_value));
-      boolean_t         no_more_references = atomic_dec_and_test(&(old_value_block->reference_count));
-      if (no_more_references) {
-	// notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
-	funk2_garbage_collector__know_of_no_more_references(this, exp);
-      }
-    }
-  }
-  if (value) {
-    { // increment new value reference count
-      funk2_memblock_t* value_block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(value));
-      atomic_inc(&(value_block->reference_count));
-    }
-  }
-  
-  // notify garbage collector to grey this memory if it is black because it has been mutated.
-  funk2_garbage_collector__know_of_used_exp_mutation(this, exp);
-} 
 
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
   check_wait_politely();

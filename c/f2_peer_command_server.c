@@ -120,6 +120,8 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2ptype__cause:
   case funk2_packet_type__pcs_request__f2ptype__cause__set:
   case funk2_packet_type__pcs_respond__f2ptype__cause__set:
+  case funk2_packet_type__pcs_request__f2ptype__creation_nanoseconds_since_1970:
+  case funk2_packet_type__pcs_respond__f2ptype__creation_nanoseconds_since_1970:
   case funk2_packet_type__pcs_request__f2integer__new:
   case funk2_packet_type__pcs_respond__f2integer__new:
   case funk2_packet_type__pcs_request__f2integer__i:
@@ -170,14 +172,14 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2string__elt:
   case funk2_packet_type__pcs_request__f2string__str_copy:
   case funk2_packet_type__pcs_respond__f2string__str_copy:
-  case funk2_packet_type__pcs_request__f2string__hash_value:
-  case funk2_packet_type__pcs_respond__f2string__hash_value:
+  case funk2_packet_type__pcs_request__f2string__eq_hash_value:
+  case funk2_packet_type__pcs_respond__f2string__eq_hash_value:
   case funk2_packet_type__pcs_request__f2symbol__new:
   case funk2_packet_type__pcs_respond__f2symbol__new:
   case funk2_packet_type__pcs_request__f2symbol__length:
   case funk2_packet_type__pcs_respond__f2symbol__length:
-  case funk2_packet_type__pcs_request__f2symbol__hash_value:
-  case funk2_packet_type__pcs_respond__f2symbol__hash_value:
+  case funk2_packet_type__pcs_request__f2symbol__eq_hash_value:
+  case funk2_packet_type__pcs_respond__f2symbol__eq_hash_value:
   case funk2_packet_type__pcs_request__f2symbol__elt:
   case funk2_packet_type__pcs_respond__f2symbol__elt:
   case funk2_packet_type__pcs_request__f2symbol__str_copy:
@@ -188,6 +190,8 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2chunk__new_copy:
   case funk2_packet_type__pcs_request__f2chunk__length:
   case funk2_packet_type__pcs_respond__f2chunk__length:
+  case funk2_packet_type__pcs_request__f2chunk__eq_hash_value:
+  case funk2_packet_type__pcs_respond__f2chunk__eq_hash_value:
   case funk2_packet_type__pcs_request__f2chunk__bit8__elt:
   case funk2_packet_type__pcs_respond__f2chunk__bit8__elt:
   case funk2_packet_type__pcs_request__f2chunk__bit8__elt__set:

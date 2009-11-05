@@ -1,0 +1,80 @@
+' 
+ Copyright (c) 2007-2009 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.
+'
+
+[defunk show [object]
+  [format stdout '\n[' [type object]]
+  [object-property_scan object [funk [type name value]
+				     [format stdout '\n  ' [list type name value]]]]
+  [format stdout ']']]
+
+[defunk describe [object]
+  [format stdout '\n[' [type object]]
+  [object-property_scan object [funk [type_name name value]
+				     [format stdout '\n  ' [list type_name name [type value]]]]]
+  [format stdout ']']]
+
+[defunk doc [object]
+  [format stdout '\n[' [type object]]
+  [object-property_scan object [funk [type_name name value]
+				     [let* [[type              [lookup_type type_name]]
+					    [get_funk          [object_type-get-funk type_name name]]
+					    [get_args          [get get_funk args]]
+					    [get_documentation [get get_funk documentation]]]
+				       [if [eq `this [car get_args]]
+					   [= get_args [cdr get_args]]]
+				       [format stdout '\n']
+				       [format stdout '\n  ' [list type_name name get_args]]
+				       [ansi-stream-foreground stdout 8]
+				       [format stdout '\n    - ']
+				       [if get_documentation
+					   [prog [format stdout 'get: ' get_documentation]
+						 [format stdout '\n      ']]]
+				       [format stdout 'returns ']
+				       [let [[type_name [type value]]]
+					 [if [null type_name]
+					     [format stdout 'nothing']
+					   [prog [format stdout 'a ']
+						 [ansi-stream-foreground stdout 15]
+						 [format stdout [type value]]
+						 ]]]
+				       [ansi-stream-foreground stdout 8]
+				       [let* [[okay_to_print   nil]
+					      [okay_types      `[symbol integer double float string funk cfunk metro metrocfunk bug]]
+					      [okay_types_iter okay_types]]
+					 [while okay_types_iter
+					   [let [[okay_type [car okay_types_iter]]]
+					     [if [is-type okay_type value]
+						 [prog [= okay_to_print t]
+						       [= okay_types_iter nil]]
+					       [= okay_types_iter [cdr okay_types_iter]]]]]
+					 [if okay_to_print
+					     [prog [ansi-stream-foreground stdout 8]
+						   [format stdout ' (']
+						   [ansi-stream-foreground stdout 15]
+						   [format stdout value]
+						   [ansi-stream-foreground stdout 8]
+						   [format stdout ')']
+						   ]]]
+				       [format stdout '.']
+				       [ansi-stream-foreground stdout 15]
+				       ]]]
+  [format stdout ']']]
+

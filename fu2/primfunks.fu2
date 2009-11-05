@@ -29,9 +29,6 @@
 [globalize-funk ptype-cause                                 &primfunk:ptype__cause]
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
-[globalize-funk array-length                                &primfunk:array__length]
-[globalize-funk array-as_conslist                           &primfunk:array__as_conslist]
-
 [globalize-funk cons-as_array                               &primfunk:cons__as_array]
 [globalize-funk conslist-first_n                            &primfunk:conslist__first_n]
 
@@ -42,6 +39,7 @@
 [globalize-funk make-metro                                  &primfunk:make_metro]
 [globalize-funk fiber                                       &primfunk:fiber]
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
+
 
 [globalize-funk simple_length                               &primfunk:simple_length]
 [globalize-funk integer-greater_than                        &primfunk:integer__greater_than]
@@ -63,7 +61,6 @@
 [globalize-funk integer-bit_not                             &primfunk:integer__bit_not]
 [globalize-funk pointer-greater_than                        &primfunk:pointer__greater_than]
 [globalize-funk pointer-less_than                           &primfunk:pointer__less_than]
-[globalize-funk pointer-add_integer                         &primfunk:pointer__add_integer]
 [globalize-funk pointer-subtract                            &primfunk:pointer__subtract]
 [globalize-funk pointer-equal_sign                          &primfunk:pointer__equal_sign]
 [globalize-funk pointer-not_equal_sign                      &primfunk:pointer__not_equal_sign]
@@ -252,7 +249,7 @@
 [globalize-funk prev-set                                    &primfunk:prev__set]
 
 [globalize-funk colonize                                    &primfunk:colonize]
-[globalize-funk hash_value                                  &primfunk:hash_value]
+[globalize-funk eq_hash_value                               &primfunk:eq_hash_value]
 [globalize-funk equals                                      &primfunk:equals]
 `[globalize-funk funktional?                                 &primfunk:funktionalp]
 

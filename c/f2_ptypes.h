@@ -70,9 +70,16 @@ u64 pfunk2__memblock__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
 
 // ptype
 
+boolean_t    raw__ptype__is_type(f2ptr cause, f2ptr thing);
+f2ptr         f2__ptype__is_type(f2ptr cause, f2ptr thing);
+f2ptr         f2__ptype__type(   f2ptr cause, f2ptr this);
+
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
+u64     pfunk2__f2ptype__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
+u64          raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
+f2ptr         f2__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause);
 
@@ -84,7 +91,10 @@ s64   pfunk2__f2integer__i(f2ptr this, f2ptr cause);
 f2ptr f2integer__primobject_type__new(f2ptr cause);
 
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__integer__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__integer__is_type(f2ptr cause, f2ptr exp);
+
+u64   raw__integer__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__integer__eq_hash_value(f2ptr cause, f2ptr this);
 
 // double
 
@@ -94,7 +104,10 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause);
 f2ptr f2double__primobject_type__new(f2ptr cause);
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__double__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__double__is_type(f2ptr cause, f2ptr exp);
+
+u64   raw__double__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__double__eq_hash_value(f2ptr cause, f2ptr this);
 
 // float
 
@@ -104,7 +117,10 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause);
 f2ptr f2float__primobject_type__new(f2ptr cause);
 
 boolean_t raw__float__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__float__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__float__is_type(f2ptr cause, f2ptr exp);
+
+u64   raw__float__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__float__eq_hash_value(f2ptr cause, f2ptr this);
 
 // pointer
 
@@ -115,6 +131,9 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause);
 
 boolean_t raw__pointer__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__pointer__is_type(f2ptr cause, f2ptr exp);
+
+u64   raw__pointer__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__pointer__eq_hash_value(f2ptr cause, f2ptr this);
 
 // gfunkptr
 
@@ -128,7 +147,10 @@ pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause);
 f2ptr f2gfunkptr__primobject_type__new(f2ptr cause);
 
 boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__gfunkptr__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__gfunkptr__is_type(f2ptr cause, f2ptr exp);
+
+u64   raw__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
 
 // mutex
 
@@ -141,7 +163,10 @@ int              pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause);
 f2ptr f2mutex__primobject_type__new(f2ptr cause);
 
 boolean_t raw__mutex__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__mutex__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__mutex__is_type(f2ptr cause, f2ptr exp);
+
+u64   raw__mutex__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__mutex__eq_hash_value(f2ptr cause, f2ptr this);
 
 // char
 
@@ -153,43 +178,51 @@ f2ptr f2char__primobject_type__new(f2ptr cause);
 boolean_t raw__char__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__char__is_type(f2ptr cause, f2ptr exp);
 
+u64   raw__char__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__char__eq_hash_value(f2ptr cause, f2ptr this);
+
 // string
 
 f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, u8* init);
 u64   pfunk2__f2string__length(f2ptr this, f2ptr cause);
 u8    pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause);
 void  pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str);
-int   pfunk2__f2string__hash_value(f2ptr this, f2ptr cause);
+int   pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
 
 f2ptr f2string__primobject_type__new(f2ptr cause);
 
 boolean_t raw__string__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__string__is_type(f2ptr cause, f2ptr exp);
 
+u64   raw__string__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__string__eq_hash_value(f2ptr cause, f2ptr this);
+
 // symbol
 
 f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init);
 u64   pfunk2__f2symbol__length(f2ptr this, f2ptr cause);
 u8    pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause);
-u64   pfunk2__f2symbol__hash_value(f2ptr this, f2ptr cause);
+u64   pfunk2__f2symbol__eq_hash_value(f2ptr this, f2ptr cause);
 void  pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str);
 
 f2ptr f2symbol__primobject_type__new(f2ptr cause);
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__symbol__length(f2ptr cause, f2ptr x);
-f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__symbol__hash_value(f2ptr cause, f2ptr x);
-f2ptr f2__symbol__new(f2ptr cause, f2ptr str);
+f2ptr      f2__symbol__is_type(f2ptr cause, f2ptr x);
+f2ptr      f2__symbol__length(f2ptr cause, f2ptr x);
+f2ptr      f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
+u64       raw__symbol__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__symbol__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__symbol__new(f2ptr cause, f2ptr str);
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);
 
 // chunk
 
 f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes);
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk);
 u64   pfunk2__f2chunk__length(f2ptr this, f2ptr cause);
+u64   pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause);
 
 u8    pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause);
 void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value);
@@ -209,6 +242,9 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause);
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
 
+u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this);
+
 // simple_array
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr);
@@ -222,11 +258,16 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 f2ptr f2simple_array__primobject_type__new(f2ptr cause);
 
 boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__simple_array__new(f2ptr cause, f2ptr length);
-f2ptr f2__simple_array__length(f2ptr cause, f2ptr x);
-f2ptr f2__simple_array__elt(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__simple_array__is_type(f2ptr cause, f2ptr x);
+f2ptr      f2__simple_array__new(f2ptr cause, f2ptr length);
+f2ptr      f2__simple_array__length(f2ptr cause, f2ptr x);
+u64       raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr      f2__simple_array__elt(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+
+u64   raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this);
 
 // traced_array
 
@@ -254,6 +295,8 @@ boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__traced_array__new(f2ptr cause, f2ptr length);
 f2ptr f2__traced_array__length(f2ptr cause, f2ptr x);
+u64  raw__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr f2__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr f2__traced_array__elt(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y);
@@ -262,6 +305,9 @@ f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+
+u64   raw__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
 
 // larva
 
@@ -276,8 +322,10 @@ u32   pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause);
 f2ptr f2larva__primobject_type__new(f2ptr cause);
 
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__larva__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__larva__is_type(f2ptr cause, f2ptr exp);
 
+u64   raw__larva__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__larva__eq_hash_value(f2ptr cause, f2ptr this);
 
 
 
@@ -320,6 +368,8 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr new__funk;
   f2ptr i__symbol;
   f2ptr i__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__integer__slot_t;
 
 // double
@@ -333,6 +383,8 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr new__funk;
   f2ptr d__symbol;
   f2ptr d__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__double__slot_t;
 
 // float
@@ -346,6 +398,8 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr new__funk;
   f2ptr f__symbol;
   f2ptr f__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__float__slot_t;
 
 // pointer
@@ -359,6 +413,8 @@ typedef struct funk2_object_type__pointer__slot_s {
   f2ptr new__funk;
   f2ptr p__symbol;
   f2ptr p__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__pointer__slot_t;
 
 // gfunkptr
@@ -380,6 +436,8 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr pool_index__funk;
   f2ptr pool_address__symbol;
   f2ptr pool_address__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
 // mutex
@@ -399,6 +457,8 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr unlock__funk;
   f2ptr trylock__symbol;
   f2ptr trylock__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__mutex__slot_t;
 
 // char
@@ -412,6 +472,8 @@ typedef struct funk2_object_type__char__slot_s {
   f2ptr new__funk;
   f2ptr ch__symbol;
   f2ptr ch__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__char__slot_t;
 
 // string
@@ -427,8 +489,8 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr length__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
-  f2ptr hash_value__symbol;
-  f2ptr hash_value__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol
@@ -444,8 +506,8 @@ typedef struct funk2_object_type__symbol__slot_s {
   f2ptr length__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
-  f2ptr hash_value__symbol;
-  f2ptr hash_value__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__symbol__slot_t;
 
 // chunk
@@ -461,6 +523,8 @@ typedef struct funk2_object_type__chunk__slot_s {
   f2ptr new_copy__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
   f2ptr bit8__elt__symbol;
   f2ptr bit8__elt__funk;
   f2ptr bit8__elt__set__symbol;
@@ -496,6 +560,8 @@ typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr new_copy__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
   f2ptr elt__set__symbol;
@@ -513,6 +579,8 @@ typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr new__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
   f2ptr elt__set__symbol;
@@ -542,6 +610,8 @@ typedef struct funk2_object_type__larva__slot_s {
   f2ptr new__funk;
   f2ptr larva_type__symbol;
   f2ptr larva_type__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
 } funk2_object_type__larva__slot_t;
 
 
@@ -557,6 +627,8 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr cause__funk;
   f2ptr cause__set__symbol;
   f2ptr cause__set__funk;
+  f2ptr creation_nanoseconds_since_1970__symbol;
+  f2ptr creation_nanoseconds_since_1970__funk;
   funk2_object_type__integer__slot_t      ptype_integer;
   funk2_object_type__double__slot_t       ptype_double;
   funk2_object_type__float__slot_t        ptype_float;
@@ -589,7 +661,7 @@ struct funk2_symbol_hash_node_s {
 struct funk2_symbol_hash_s {
   funk2_processor_mutex_t    mutex;
   funk2_symbol_hash_node_t** array;
-  u64                        hash_value_bit_mask;
+  u64                        eq_hash_value_bit_mask;
   int                        total_symbol_num;
   int                        array_length;
 };

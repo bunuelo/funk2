@@ -36,39 +36,18 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 #ifndef F2__GARBAGE_COLLECTOR_POOL__H
 #define F2__GARBAGE_COLLECTOR_POOL__H
 
-#include "f2_set.h"
+#include "f2_tricolor_set.h"
 #include "f2_memorypool.h"
 #include "f2_protected_alloc_array.h"
-
-// garbage_collector_tricolor
-
-enum funk2_garbage_collector_tricolor_e {
-  funk2_garbage_collector_tricolor__black = 1,
-  funk2_garbage_collector_tricolor__grey,
-  funk2_garbage_collector_tricolor__white
-};
 
 // garbage_collector_block_header
 
 struct funk2_garbage_collector_block_header_s {
-  funk2_garbage_collector_tricolor_t tricolor;
+  funk2_tricolor_t tricolor;
 } __attribute__((__packed__));
 
 void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this);
 void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this);
-
-// garbage_collector_set
-
-struct funk2_garbage_collector_set_s {
-  funk2_set_t set;
-};
-
-void funk2_garbage_collector_set__init(funk2_garbage_collector_set_t* this);
-void funk2_garbage_collector_set__destroy(funk2_garbage_collector_set_t* this);
-void funk2_garbage_collector_set__add_exp(funk2_garbage_collector_set_t* this, f2ptr block);
-void funk2_garbage_collector_set__remove_exp(funk2_garbage_collector_set_t* this, f2ptr block);
-void funk2_garbage_collector_set__save_to_stream(funk2_garbage_collector_set_t* this, int fd);
-void funk2_garbage_collector_set__load_from_stream(funk2_garbage_collector_set_t* this, int fd);
 
 // garbage_collector_mutation_buffer
 
@@ -136,9 +115,7 @@ void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_c
 // garbage_collector_pool
 
 struct funk2_garbage_collector_pool_s {
-  funk2_garbage_collector_set_t                       black_set;
-  funk2_garbage_collector_set_t                       grey_set;
-  funk2_garbage_collector_set_t                       white_set;
+  funk2_tricolor_set_t                                tricolor_set;
   funk2_garbage_collector_mutation_buffer_t           other_mutations;
   funk2_garbage_collector_no_more_references_buffer_t other_no_more_references;
   funk2_garbage_collector_protected_f2ptr_buffer_t    other_protected_f2ptr;
@@ -151,7 +128,7 @@ void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* thi
 void      funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
-void      funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_garbage_collector_tricolor_t new_tricolor);
+void      funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t new_tricolor);
 void      funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp);
@@ -173,7 +150,7 @@ void      funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(funk2
 void      funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp);
 void      funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this);
-void      funk2_garbage_collector_pool__free_whiteness(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd);
 void      funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool_t* this, int fd);
 

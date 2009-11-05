@@ -1,0 +1,114 @@
+// 
+// Copyright (c) 2007-2009 Bo Morgan.
+// All rights reserved.
+// 
+// Author: Bo Morgan
+// 
+// Permission to use, copy, modify and distribute this software and its
+// documentation is hereby granted, provided that both the copyright
+// notice and this permission notice appear in all copies of the
+// software, derivative works or modified versions, and any portions
+// thereof, and that both notices appear in supporting documentation.
+// 
+// BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+// BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+// WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+// 
+// Bo Morgan requests users of this software to return to bo@mit.edu any
+// improvements or extensions that they make and grant Bo Morgan the
+// rights to redistribute these changes.
+// 
+
+#ifndef F2__SYSTEM_HEADERS__H
+#define F2__SYSTEM_HEADERS__H
+
+#define _GNU_SOURCE
+
+//#define F2__GMODULE__SUPPORTED
+//#define F2__DLFCN__SUPPORTED
+
+#ifdef __APPLE__
+#define MAP_ANONYMOUS MAP_ANON
+// see: http://www.osxfaq.com/man/4/tty.ws
+#define SIOCOUTQ TIOCOUTQ
+#define SIOCINQ TIOCSTI
+
+//#define O_NOFOLLOW 0
+//#define O_DIRECT 0
+//#define O_NOATIME 0
+//#define O_LARGEFILE 1
+
+#include <sys/sockio.h>
+#else
+#include <linux/sockios.h>
+#endif
+
+#include <arpa/inet.h>
+#ifdef F2__DLFCN__SUPPORTED
+#  include <dlfcn.h>
+#endif
+#include <errno.h>
+#include <fcntl.h>
+#ifdef F2__GMODULE__SUPPORTED
+#  include <gmodule.h>
+#endif
+#include <locale.h>
+#include <math.h>
+#include <net/if.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
+#include <pthread.h>
+#include <sched.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <termios.h>
+#include <time.h>
+#include <unistd.h>
+
+#if defined(HAVE_GL_GL_H)
+#  define  F2__GL__H
+#  include <GL/gl.h>
+#elif defined(HAVE_OPENGL_GL_H)
+#  define  F2__GL__H
+#  include <OpenGL/gl.h>
+#endif
+
+#if defined(HAVE_GL_GLX_H)
+#  define  F2__GLX__H
+#  include <GL/glx.h>
+#endif
+
+#if defined(HAVE_GL_GLU_H)
+#  define  F2__GLU__H
+#  include <GL/glu.h>
+#elif defined(HAVE_OPENGL_GLU_H)
+#  define  F2__GLU__H
+#  include <OpenGL/glu.h>
+#endif
+
+#ifdef HAVE_X11_EXTENSIONS_XF86VMODE_H
+#  define  F2__XF86VMODE__H
+#  include <X11/extensions/xf86vmode.h>
+#endif
+
+#ifdef HAVE_X11_XLIB_H
+#  define  F2__XLIB__H
+#  include <X11/Xlib.h>
+#endif
+
+#ifdef HAVE_X11_KEYSYM_H
+#  define  F2__KEYSYM__H
+#  include <X11/keysym.h>
+#endif
+
+#endif // F2__SYSTEM_HEADERS__H
+

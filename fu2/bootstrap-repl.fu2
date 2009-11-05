@@ -48,6 +48,7 @@
 [primfunk:wrong_argument_number_error__set `wrong_argument_number_error]
 
 [primfunk:load 'fu2/primfunks.fu2']
+[primfunk:load 'fu2/primfunks-array.fu2']
 [primfunk:load 'fu2/primfunks-apropos.fu2']
 [primfunk:load 'fu2/primfunks-child_handler.fu2']
 [primfunk:load 'fu2/primfunks-errno.fu2']
@@ -69,6 +70,11 @@
 [primfunk:load 'fu2/primfunks-trace.fu2']
 [primfunk:load 'fu2/primfunks-reader.fu2']
 [primfunk:load 'fu2/primfunks-garbage_collector.fu2']
+[primfunk:load 'fu2/primfunks-glwindow.fu2']
+[primfunk:load 'fu2/primfunks-physical_objects.fu2']
+[primfunk:load 'fu2/primfunks-object_lattice.fu2']
+[primfunk:load 'fu2/primfunks-arithmetic.fu2']
+
 
 [globalize stdin-stream  [file_stream-new 0]]
 [globalize stdout-stream [file_stream-new 1]]
@@ -259,20 +265,37 @@
 	      [cons result [filter cond_proc [cdr seq]]]
 	    [filter cond_proc [cdr seq]]]]]]
 
-[defunk object-new [type_name :rest args]
-  [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `new] args]]
+[defmetro object_type-type-funk    [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name ,slot_name]]
+[defmetro object_type-get-funk     [name slot_name]                `[object_type-type-funk                              ,name  `get            ,slot_name]]
+[defmetro object_type-set-funk     [name slot_name]                `[object_type-type-funk                              ,name  `set            ,slot_name]]
+[defmetro object_type-execute-funk [name slot_name]                `[object_type-type-funk                              ,name  `execute        ,slot_name]]
+
+[defmetro object-get-funk [this slot_name]
+  `[object-slot-type_funk ,this `get slot_name]]
 
 [defunk object-get [this slot_name :rest args]
-  [apply [object-slot-type_funk this `get slot_name] [cons this args]]]
+  [apply [object-get-funk this slot_name] [cons this args]]]
+
+[defmetro object-set-funk [this slot_name]
+  `[object-slot-type_funk ,this `set slot_name]]
 
 [defunk object-set [this slot_name :rest args]
-  [apply [object-slot-type_funk this `set slot_name] [cons this args]]]
+  [apply [object-set-funk this slot_name] [cons this args]]]
+
+[defmetro object-execute-funk [this slot_name]
+  `[object-slot-type_funk ,this `execute ,slot_name]]
 
 [defunk object-execute [this slot_name :rest args]
-  [apply [object-slot-type_funk this `execute slot_name] args]]
+  [apply [object-execute-funk this slot_name] args]]
+
+[defmetro object_type-new-funk [name]
+  `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
+
+[defunk object_type-new [name :rest args]
+  [apply [object_type-new-funk name] args]]
 
 [defmetro new [type_name :rest args]
-  `[object-new [quote ,type_name] @args]]
+  `[object_type-new [quote ,type_name] @args]]
 
 [defmetro get [exp slot_name :rest args]
   `[object-get ,exp [quote ,slot_name] @args]]
@@ -359,7 +382,7 @@
 		  [if [null fiber_iter]
 		      t
 		    [let [[fiber [car fiber_iter]]]
-		      [if [null [fiber-complete? fiber]]
+		      [if [null [get fiber is_complete]]
 			  nil
 			[fibers-scan-loop [cdr fiber_iter]]]]]]]
 	  [if [fibers-scan-loop fibers]
@@ -404,7 +427,7 @@
 				      [fiber proc [cons exp nil]]]
 				seq]]]
     [apply &join parcar-fibers]
-    [mapcar [funk [x] [fiber-value x]] parcar-fibers]]]
+    [mapcar [funk [x] [get x value]] parcar-fibers]]]
 
 [defmetro cond [:rest clauses]
   [if [null clauses]

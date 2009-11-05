@@ -185,9 +185,6 @@ def_pcfunk2(pointer__equal_sign, x, y, return f2__pointer__equal_sign(this_cause
 f2ptr f2__pointer__not_equal_sign(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2pointer__p(x, cause) != f2pointer__p(y, cause));}
 def_pcfunk2(pointer__not_equal_sign, x, y, return f2__pointer__not_equal_sign(this_cause, x, y));
 
-f2ptr f2__pointer__add_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2pointer__new(cause, f2pointer__p(x, cause) +  f2integer__i(y, cause));}
-def_pcfunk2(pointer__add_integer, x, y, return f2__pointer__add_integer(this_cause, x, y));
-
 f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2pointer__p(x, cause) -  f2pointer__p(y, cause));}
 def_pcfunk2(pointer__subtract, x, y, return f2__pointer__subtract(this_cause, x, y));
 
@@ -247,35 +244,10 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   return f2symbol__new(cause, strlen(str), (u8*)(str));
 }
 
-//boolean_t  pfunk2__f2symbol__equals(f2ptr this, f2ptr cause, f2ptr that) {
-//  int pool_index = __f2ptr__pool_index(this);
-//  ptype_access_num__incr(pool_index);
-//  __pure__memblock__render_read_activated__set(this, 1);
-//  __pure__memblock__render_read_activated__set(that, 1);
-//  int this_length = __pure__f2symbol__length(this);
-//  if (this_length != __pure__f2symbol__length(that)) {
-//    ptype_access_num__decr(pool_index);
-//    return 0;
-//  }
-//  boolean_t retval = (! memcmp(__pure__f2symbol__str(this), __pure__f2symbol__str(that), this_length));
-//  ptype_access_num__decr(pool_index);
-//  return retval;
-//}
-
 // simple_array
-
-//boolean_t raw__simple_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_simple_array);}
-
-//f2ptr f2__simple_arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_arrayp(x, cause));}
-//def_pcfunk1(simple_arrayp, x, return f2__simple_arrayp(this_cause, x));
 
 
 // traced_array
-
-//boolean_t raw__traced_arrayp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_traced_array);}
-
-//f2ptr f2__traced_arrayp(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_arrayp(x, cause));}
-//def_pcfunk1(traced_arrayp, x, return f2__traced_arrayp(this_cause, x));
 
 
 // cons
@@ -366,174 +338,6 @@ f2ptr f2__sleep_for_nanoseconds_without_yield(f2ptr fiber, f2ptr cause, f2ptr na
 }
 def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds, return f2__sleep_for_nanoseconds_without_yield(simple_fiber, this_cause, nanoseconds));
 
-// array interface
-
-f2ptr raw__array__new(f2ptr cause, u64 length) {
-  if (raw__cause__allocate_traced_arrays(cause, cause)) {
-    return f2traced_array__new(cause, length, to_ptr(NULL));
-  } else {
-    return f2simple_array__new(cause, length, to_ptr(NULL));
-  }
-}
-
-f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init) {
-  if (raw__cause__allocate_traced_arrays(cause, cause)) {
-    return f2traced_array__new_copy(cause, length, init);
-  } else {
-    return f2simple_array__new_copy(cause, length, init);
-  }
-}
-
-boolean_t raw__array__is_type(f2ptr cause, f2ptr x) {return (raw__simple_array__is_type(cause, x) || raw__traced_array__is_type(cause, x));}
-f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__is_type(cause, x));}
-def_pcfunk1(array__is_type, x, return f2__array__is_type(this_cause, x));
-
-u64 raw__array__length(f2ptr cause, f2ptr x) {
-  if      (raw__simple_array__is_type(cause, x)) {return f2simple_array__length(x, cause);}
-  else if (raw__traced_array__is_type(cause, x)) {return f2traced_array__length(x, cause);}
-  else {error(nil, "raw__array__length: invalid type"); return 0;}
-}
-f2ptr f2__array__length(f2ptr cause, f2ptr x) {
-  if      (raw__simple_array__is_type(cause, x)) {return f2__simple_array__length(cause, x);}
-  else if (raw__traced_array__is_type(cause, x)) {return f2__traced_array__length(cause, x);}
-  else {return f2larva__new(cause, 1);}
-}
-def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
-
-f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
-  if (raw__simple_array__is_type(cause, this)) {
-    u64 length = f2simple_array__length(this, cause);
-    if (index >= length) {
-      return f2larva__new(cause, 2);
-    }
-    return f2simple_array__elt(this, index, cause);
-  } else if (raw__traced_array__is_type(cause, this)) {
-    u64 length = f2traced_array__length(this, cause);
-    if (index >= length) {
-      return f2larva__new(cause, 2);
-    }
-    return f2traced_array__elt(this, index, cause);
-  } else {
-    return f2larva__new(cause, 1);
-  }
-}
-f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt(cause, this, f2integer__i(index, cause));
-}
-def_pcfunk2(array__elt, x, y, return f2__array__elt(this_cause, x, y));
-
-f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth) {
-  if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt(             this, index, cause             ); return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__trace_depth(this, index, cause, trace_depth); return nil;}
-  else {
-    error(nil, "raw__array__elt__trace_depth: should be a type of array.");
-    return nil;
-  }
-}
-
-f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt__set(this, index, cause, value); return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__set(cause, this, f2integer__i(index, cause), value);
-}
-def_pcfunk3(array__elt__set, x, y, z, return f2__array__elt__set(this_cause, x, y, z));
-
-f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth) {
-  if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt__set(             this, index, cause, value             ); return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__set__trace_depth(this, index, cause, value, trace_depth); return nil;}
-  else {
-    error(nil, "raw__array__elt__set__trace_depth: should be a type of array.");
-    return nil;
-  }
-}
-
-f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__tracing_on(this, index, cause);}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__tracing_on(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__tracing_on(cause, this, f2integer__i(index, cause));
-}
-def_pcfunk2(array__elt__tracing_on, x, y, return f2__array__elt__tracing_on(this_cause, x, y));
-
-f2ptr raw__array__elt__tracing_on__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1);}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__tracing_on__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__tracing_on__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__tracing_on__set(cause, this, f2integer__i(index, cause), value);
-}
-def_pcfunk3(array__elt__tracing_on__set, x, y, z, return f2__array__elt__tracing_on__set(this_cause, x, y, z));
-
-f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__trace(this, index, cause);}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__trace(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__trace(cause, this, f2integer__i(index, cause));
-}
-def_pcfunk2(array__elt__trace, x, y, return f2__array__elt__trace(this_cause, x, y));
-
-f2ptr raw__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1);}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__trace__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__trace__set(cause, this, f2integer__i(index, cause), value);
-}
-def_pcfunk3(array__elt__trace__set, x, y, z, return f2__array__elt__trace__set(this_cause, x, y, z));
-
-f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__imagination_frame(this, index, cause);}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__imagination_frame(f2ptr cause, f2ptr this, f2ptr index) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__imagination_frame(cause, this, f2integer__i(index, cause));
-}
-def_pcfunk2(array__elt__imagination_frame, x, y, return f2__array__elt__imagination_frame(this_cause, x, y));
-
-f2ptr raw__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return f2larva__new(cause, 1);}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__imagination_frame__set(this, index, cause, value); return nil;}
-  else {return f2larva__new(cause, 1);}
-}
-f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if (!raw__integer__is_type(cause, index)) {return f2larva__new(cause, 1);}
-  return raw__array__elt__imagination_frame__set(cause, this, f2integer__i(index, cause), value);
-}
-def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
-
-
-f2ptr f2__array__as_conslist(f2ptr cause, f2ptr this) {
-  if (! raw__array__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
-  }
-  u64 length = raw__array__length(cause, this);
-  f2ptr new_seq = nil;
-  s64 index;
-  for (index = length - 1; index >= 0; index --) {
-    new_seq = f2cons__new(cause, raw__array__elt(cause, this, index), new_seq);
-  }
-  return new_seq;
-}
-def_pcfunk1(array__as_conslist, this, return f2__array__as_conslist(this_cause, this));
-
-
 // larva
 
 //boolean_t raw__larvap(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
@@ -562,7 +366,9 @@ def_pcfunk1(chunk, length, return f2__chunk(this_cause, length));
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x) {return f2chunk__new_compiled_from_funk(cause, x);}
 def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_from_funk(this_cause, x));
 
-// primobject hashtable
+
+
+// primobject ptypehash
 
 // primobject fiber
 
@@ -679,13 +485,7 @@ u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__cons__is_type(cause, seq)) {
-      u64 count = 0;
-      f2ptr iter = seq;
-      while(iter) {
-	count ++;
-	iter = f2cons__cdr(iter, cause);
-      }
-      return count;
+      return 1 + raw__simple_length(cause, f2cons__cdr(seq, cause));
     } else {
       return raw__array__length(cause, seq);
     }
@@ -693,8 +493,7 @@ u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   case ptype_symbol: return f2symbol__length(seq, cause);
   case ptype_string: return f2string__length(seq, cause);
   default:
-    error(nil, "raw__simple_length error: invalid type");
-    break;
+    return 0;
   }
 }
 
@@ -989,8 +788,16 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return (x == y);
   case ptype_chunk:
     return (x == y);
-  default:
-    error(nil, "shouldn't ever get here.");
+  case ptype_free_memory:
+    return boolean__false;
+  case ptype_newly_allocated:
+    return boolean__false;
+  case ptype_gfunkptr:
+    return (f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause));
+  case ptype_mutex:
+    return boolean__false;
+  case ptype_larva:
+    return (f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause));
   }
   error(nil, "eq error: argument type check failure."); fflush(stdout); 
   //return f2__argument_type_check_failure__exception__new(nil, x);
@@ -1111,53 +918,6 @@ f2ptr f2__random(f2ptr cause, f2ptr max_value) {
   return f2integer__new(cause, random_value % max_value);
 }
 def_pcfunk1(random, max_value, return f2__random(this_cause, max_value));
-
-f2ptr f2__array__new_1d(f2ptr cause, f2ptr length, f2ptr and_rest) {
-  if ((! length) || (! raw__integer__is_type(cause, length))) {
-    printf("\n[array_1d length &opt init] error: length must be integer.");
-    return f2larva__new(cause, 1);
-    //return f2__argument_type_check_failure__exception__new(cause, nil);
-  }
-  int raw_length = f2integer__i(length, cause);
-  f2ptr init = nil;
-  //printf ("\nand_rest: "); fflush(stdout); f2__print(simple_fiber, and_rest); fflush(stdout);
-  if (and_rest) {
-    init = f2cons__car(and_rest, cause);
-    if (!init || !raw__array__is_type(cause, init)) {
-      printf("\n[array length :rest init] error: init must be array (or not included)."); fflush(stdout);
-      return f2larva__new(cause, 1);
-      //return f2__argument_type_check_failure__exception__new(cause, nil);
-    }
-    if (raw__array__length(init, cause) < raw_length) {
-      printf("\n[array length :rest init] error: init must be longer or equal in length to length."); fflush(stdout);
-      return f2larva__new(cause, 1);
-      //return f2__argument_type_check_failure__exception__new(cause, nil);
-    }
-  }
-  if (init) {return raw__array__new_copy(cause, raw_length, init);}
-  else      {return raw__array__new(cause, raw_length);}
-}
-def_pcfunk1_and_rest(array__new_1d, length, and_rest, return f2__array__new_1d(this_cause, length, and_rest));
-
-f2ptr f2__array(f2ptr cause, f2ptr and_rest) {
-  f2ptr iter = and_rest;
-  int rest_length = 0;
-  while (iter) {
-    rest_length ++;
-    iter = f2cons__cdr(iter, cause);
-  }
-  f2ptr this = raw__array__new(cause, rest_length);
-  int i = 0;
-  iter = and_rest;
-  while (iter) {
-    f2ptr car = f2cons__car(iter, cause);
-    raw__array__elt__set(cause, this, i, car);
-    i ++;
-    iter = f2cons__cdr(iter, cause);
-  }
-  return this;
-}
-def_pcfunk0_and_rest(array, and_rest, return f2__array(this_cause, and_rest));
 
 f2ptr f2__chunk_copy(f2ptr cause, f2ptr init) {
   if ((! init) || (! raw__chunk__is_type(cause, init))) {
@@ -1650,98 +1410,44 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
 
-u64 raw__hash_value(f2ptr cause, f2ptr exp) {
+u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   if (! exp) {
     return 0;
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_integer:
-    return f2integer__i(exp, cause);
-  case ptype_double: {
-    union {
-      double d;
-      u64    i;
-    } u;
-    u.i = 0;
-    u.d = f2double__d(exp, cause);
-    return u.i;
-  }
-  case ptype_float: {
-    union {
-      float f;
-      u64   i;
-    } u;
-    u.i = 0;
-    u.f = f2float__f(exp, cause);
-    return u.i;
-  }
-  case ptype_pointer: {
-    union {
-      ptr p;
-      u64 i;
-    } u;
-    u.i = 0;
-    u.p = f2pointer__p(exp, cause);
-    return u.i;
-  }
-  case ptype_gfunkptr: {
-    union {
-      f2ptr g;
-      u64   i;
-    } u;
-    u.i = 0;
-    u.g = f2gfunkptr__gfunkptr(exp, cause);
-    return u.i;
-  }
-  case ptype_mutex:
-    return (u64)exp;
-  case ptype_char: {
-    union {
-      char ch;
-      u64  i;
-    } u;
-    u.i  = 0;
-    u.ch = f2char__ch(exp, cause);
-    return u.i;
-  }
-  case ptype_string:
-    return f2string__hash_value(exp, cause);
-  case ptype_symbol:
-    return f2symbol__hash_value(exp, cause);
-  case ptype_chunk:
-    return (u64)exp;
-  case ptype_simple_array:
-  case ptype_traced_array: {
-    u64 hash_value = 1;
-    s64 length = raw__array__length(cause, exp);
-    s64 index;
-    for (index = 0; index < length; index ++) {
-      f2ptr subexp = raw__array__elt(cause, exp, index);
-      hash_value *= raw__hash_value(cause, subexp);
-    }
-    return hash_value;
-  }
-  case ptype_larva:
-    return f2larva__larva_type(exp, cause);
+  case ptype_integer:      return raw__integer__eq_hash_value(     cause, exp);
+  case ptype_double:       return raw__double__eq_hash_value(      cause, exp);
+  case ptype_float:        return raw__float__eq_hash_value(       cause, exp);
+  case ptype_pointer:      return raw__pointer__eq_hash_value(     cause, exp);
+  case ptype_gfunkptr:     return raw__gfunkptr__eq_hash_value(    cause, exp);
+  case ptype_mutex:        return raw__mutex__eq_hash_value(       cause, exp);
+  case ptype_char:         return raw__char__eq_hash_value(        cause, exp);
+  case ptype_string:       return raw__string__eq_hash_value(      cause, exp);
+  case ptype_symbol:       return raw__symbol__eq_hash_value(      cause, exp);
+  case ptype_chunk:        return raw__chunk__eq_hash_value(       cause, exp);
+  case ptype_simple_array: return raw__simple_array__eq_hash_value(cause, exp);
+  case ptype_traced_array: return raw__traced_array__eq_hash_value(cause, exp);
+  case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
+  case ptype_free_memory:
+  case ptype_newly_allocated: 
   default:
-    return 0;
+    error(nil, "raw__eq_hash_value error: found invalid ptype.");
+    break;
   }
+  return 0; // should never get here.
 }
 
-f2ptr f2__hash_value(f2ptr cause, f2ptr exp) {
-  return f2integer__new(cause, raw__hash_value(cause, exp));
+f2ptr f2__eq_hash_value(f2ptr cause, f2ptr exp) {
+  return f2integer__new(cause, raw__eq_hash_value(cause, exp));
 }
-def_pcfunk1(hash_value, exp, return f2__hash_value(this_cause, exp));
+def_pcfunk1(eq_hash_value, exp, return f2__eq_hash_value(this_cause, exp));
 
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {
     return boolean__true;
   }
   if ((! x) || (! y)) {
-    return boolean__false;
-  }
-  if (raw__hash_value(cause, x) != raw__hash_value(cause, y)) {
     return boolean__false;
   }
   ptype_t x_ptype = f2ptype__raw(x, cause);
@@ -1822,7 +1528,7 @@ void f2__primcfunks__initialize() {
   // system
   
   f2__funktional_primcfunk__init__0(system__node_id, "");
-  f2__funktional_primcfunk__init__0(system__environment, "");
+  f2__funktional_primcfunk__init__1(system__environment, node_id, "");
   
   // funk2 pointer (f2ptr)
   
@@ -1875,22 +1581,6 @@ void f2__primcfunks__initialize() {
   // traced_array
   
   
-  // array
-  
-  f2__funktional_primcfunk__init__1(array__is_type,                     exp, "");
-  f2__primcfunk__init__1(           array__new_1d,                      length, "");
-  f2__primcfunk__init__0_and_rest(  array,                              elts, "");
-  f2__funktional_primcfunk__init__1(array__length,                      this, "");
-  f2__primcfunk__init__2(           array__elt,                         this, index, "");
-  f2__primcfunk__init__3(           array__elt__set,                    this, index, value, "");
-  f2__primcfunk__init__2(           array__elt__tracing_on,             this, index, "");
-  f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value, "");
-  f2__primcfunk__init__2(           array__elt__trace,                  this, index, "");
-  f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "");
-  f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "");
-  f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "");
-  f2__primcfunk__init__1(           array__as_conslist,                 this, "returns an array represented as a new conslist.");
-  
   // cons
   
   f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
@@ -1934,7 +1624,6 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(integer__bit_not,           x, "");
   f2__funktional_primcfunk__init__2(pointer__greater_than,      x, y, "");
   f2__funktional_primcfunk__init__2(pointer__less_than,         x, y, "");
-  f2__funktional_primcfunk__init__2(pointer__add_integer,       x, y, "");
   f2__funktional_primcfunk__init__2(pointer__subtract,          x, y, "");
   f2__funktional_primcfunk__init__2(pointer__equal_sign,        x, y, "");
   f2__funktional_primcfunk__init__2(pointer__not_equal_sign,    x, y, "");
@@ -2120,7 +1809,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init(prev__set, "");
   
   f2__funktional_primcfunk__init__1(colonize, exp, "");
-  f2__funktional_primcfunk__init__1(hash_value, exp, "");
+  f2__funktional_primcfunk__init__1(eq_hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
   

@@ -385,7 +385,7 @@ f2ptr raw__stream__rewind_to_length(f2ptr cause, f2ptr this, s64 length) {
   s64 i;
   for (i = (rewind_length__i - length); i > 0; i --) {
     rewind_result = f2__stream__rewind(cause, this);
-    if (raw__larva__is_type(rewind_result, cause)) {
+    if (raw__larva__is_type(cause, rewind_result)) {
       return rewind_result;
     }
   }

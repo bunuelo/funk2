@@ -86,8 +86,8 @@ void f2__fiber__stack__push_args(f2ptr cause, f2ptr fiber) {
   f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__args(fiber, cause), f2fiber__stack(fiber, cause)));
 }
 
-void f2__fiber__stack__push_return(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__return(fiber, cause), f2fiber__stack(fiber, cause)));
+void f2__fiber__stack__push_return_reg(f2ptr cause, f2ptr fiber) {
+  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__return_reg(fiber, cause), f2fiber__stack(fiber, cause)));
 }
 
 void f2__fiber__stack__push_env(f2ptr cause, f2ptr fiber) {
@@ -104,7 +104,7 @@ void f2__fiber__stack__pop_value(f2ptr fiber, f2ptr cause)           {f2fiber__v
 void f2__fiber__stack__pop_iter(f2ptr fiber, f2ptr cause)            {f2fiber__iter__set(           fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
 void f2__fiber__stack__pop_program_counter(f2ptr fiber, f2ptr cause) {f2fiber__program_counter__set(fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
 void f2__fiber__stack__pop_args(f2ptr fiber, f2ptr cause)            {f2fiber__args__set(           fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_return(f2ptr fiber, f2ptr cause)          {f2fiber__return__set(         fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
+void f2__fiber__stack__pop_return_reg(f2ptr fiber, f2ptr cause)      {f2fiber__return_reg__set(     fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
 void f2__fiber__stack__pop_env(f2ptr fiber, f2ptr cause)             {f2fiber__env__set(            fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
 void f2__fiber__stack__pop_trace(f2ptr fiber, f2ptr cause)           {f2fiber__trace__set(          fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
 void f2__fiber__stack__pop_nil(f2ptr fiber, f2ptr cause)             {f2fiber__stack__set(          fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
@@ -204,7 +204,7 @@ int f2__fiber__bytecode__jump_funk(f2ptr fiber, f2ptr bytecode) {
 //   note: this is where we set the return register (f2_compile.c assumes that this happens atomically with this bytecode).
 //
 int f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause) {
-  f2fiber__return__set(fiber, cause, f2fiber__program_counter(fiber, cause)); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause)); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
   return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause);
 }
 
@@ -366,7 +366,7 @@ int f2__fiber__bytecode__set__return_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__return__set(fiber, cause, exp);
+  f2fiber__return_reg__set(fiber, cause, exp);
   return 0;
 }
 
@@ -415,8 +415,8 @@ int f2__fiber__bytecode__swap__return_reg__value_reg(f2ptr fiber, f2ptr bytecode
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                         f2fiber__return(fiber, cause);
-  f2fiber__return__set(fiber, cause, f2fiber__value( fiber, cause));
+  f2ptr temp =                         f2fiber__return_reg(fiber, cause);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__value( fiber, cause));
   f2fiber__value__set( fiber, cause, temp);
   return 0;
 }
@@ -426,8 +426,8 @@ int f2__fiber__bytecode__swap__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                         f2fiber__return(fiber, cause);
-  f2fiber__return__set(fiber, cause, f2fiber__iter(  fiber, cause));
+  f2ptr temp =                         f2fiber__return_reg(fiber, cause);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__iter(  fiber, cause));
   f2fiber__iter__set(  fiber, cause, temp);
   return 0;
 }
@@ -437,8 +437,8 @@ int f2__fiber__bytecode__swap__return_reg__program_counter_reg(f2ptr fiber, f2pt
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                  f2fiber__return(         fiber, cause);
-  f2fiber__return__set(         fiber, cause, f2fiber__program_counter(fiber, cause));
+  f2ptr temp =                                  f2fiber__return_reg(         fiber, cause);
+  f2fiber__return_reg__set(         fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
 }
@@ -448,8 +448,8 @@ int f2__fiber__bytecode__swap__return_reg__env_reg(f2ptr fiber, f2ptr bytecode) 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                         f2fiber__return(fiber, cause);
-  f2fiber__return__set(fiber, cause, f2fiber__env(   fiber, cause));
+  f2ptr temp =                         f2fiber__return_reg(fiber, cause);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__env(   fiber, cause));
   f2fiber__env__set(   fiber, cause, temp);
   return 0;
 }
@@ -459,8 +459,8 @@ int f2__fiber__bytecode__swap__return_reg__args_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                         f2fiber__return(fiber, cause);
-  f2fiber__return__set(fiber, cause, f2fiber__args(  fiber, cause));
+  f2ptr temp =                         f2fiber__return_reg(fiber, cause);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__args(  fiber, cause));
   f2fiber__args__set(  fiber, cause, temp);
   return 0;
 }
@@ -644,7 +644,7 @@ int f2__fiber__bytecode__push__return_reg(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__push_return(cause, fiber);  
+  f2__fiber__stack__push_return_reg(cause, fiber);  
   return 0;
 }
 
@@ -719,7 +719,7 @@ int f2__fiber__bytecode__pop__return_reg(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__pop_return(fiber, cause);
+  f2__fiber__stack__pop_return_reg(fiber, cause);
   return 0;
 }
 
@@ -809,7 +809,7 @@ int f2__fiber__bytecode__copy__return_reg__value_reg(f2ptr fiber, f2ptr bytecode
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__value__set(fiber, cause, f2fiber__return(fiber, cause));
+  f2fiber__value__set(fiber, cause, f2fiber__return_reg(fiber, cause));
   return 0;
 }
 
@@ -818,7 +818,7 @@ int f2__fiber__bytecode__copy__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__iter__set(fiber, cause, f2fiber__return(fiber, cause));
+  f2fiber__iter__set(fiber, cause, f2fiber__return_reg(fiber, cause));
   return 0;
 }
 
@@ -827,7 +827,7 @@ int f2__fiber__bytecode__copy__return_reg__program_counter_reg(f2ptr fiber, f2pt
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__program_counter__set(fiber, cause, f2fiber__return(fiber, cause));
+  f2fiber__program_counter__set(fiber, cause, f2fiber__return_reg(fiber, cause));
   return 1;
 }
 
@@ -836,7 +836,7 @@ int f2__fiber__bytecode__copy__return_reg__env_reg(f2ptr fiber, f2ptr bytecode) 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__env__set(fiber, cause, f2fiber__return(fiber, cause));
+  f2fiber__env__set(fiber, cause, f2fiber__return_reg(fiber, cause));
   return 0;
 }
 
@@ -845,7 +845,7 @@ int f2__fiber__bytecode__copy__return_reg__args_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__args__set(fiber, cause, f2fiber__return(fiber, cause));
+  f2fiber__args__set(fiber, cause, f2fiber__return_reg(fiber, cause));
   return 0;
 }
 
@@ -855,7 +855,7 @@ int f2__fiber__bytecode__copy__value_reg__return_reg(f2ptr fiber, f2ptr bytecode
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__return__set(fiber, cause, f2fiber__value(fiber, cause));
+  f2fiber__return_reg__set(fiber, cause, f2fiber__value(fiber, cause));
   return 0;
 }
 
@@ -910,7 +910,7 @@ int f2__fiber__bytecode__copy__iter_reg__return_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__return__set(fiber, cause, f2fiber__iter(fiber, cause));
+  f2fiber__return_reg__set(fiber, cause, f2fiber__iter(fiber, cause));
   return 0;
 }
 
@@ -947,7 +947,7 @@ int f2__fiber__bytecode__copy__program_counter_reg__return_reg(f2ptr fiber, f2pt
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__return__set(fiber, cause, f2fiber__program_counter(fiber, cause));
+  f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause));
   return 0;
 }
 
@@ -993,7 +993,7 @@ int f2__fiber__bytecode__copy__env_reg__return_reg(f2ptr fiber, f2ptr bytecode) 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__return__set(fiber, cause, f2fiber__env(fiber, cause));
+  f2fiber__return_reg__set(fiber, cause, f2fiber__env(fiber, cause));
   return 0;
 }
 
@@ -1039,7 +1039,7 @@ int f2__fiber__bytecode__copy__args_reg__return_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2fiber__return__set(fiber, cause, f2fiber__args(fiber, cause));
+  f2fiber__return_reg__set(fiber, cause, f2fiber__args(fiber, cause));
   return 0;
 }
 
@@ -1389,7 +1389,7 @@ int f2__fiber__bytecode__reg_array__elt__return_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr reg_value = f2fiber__return(fiber, cause);
+  f2ptr reg_value = f2fiber__return_reg(fiber, cause);
   
   raw__fiber__bytecode_helper__reg_array__elt(cause, bytecode, fiber, reg_value);
   return 0;
@@ -1503,7 +1503,7 @@ int f2__fiber__bytecode__reg_array__elt__set__return_reg(f2ptr fiber, f2ptr byte
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr reg_value = f2fiber__return(fiber, cause);
+  f2ptr reg_value = f2fiber__return_reg(fiber, cause);
   
   raw__fiber__bytecode_helper__reg_array__elt__set(cause, bytecode, fiber, reg_value);
   return 0;

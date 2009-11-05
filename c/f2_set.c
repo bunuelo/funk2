@@ -48,6 +48,10 @@ u64 funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element)
   return (element * funk2_set_prime_number__32_bit) & ((1ull << (this->bin_power)) - 1);
 }
 
+u64 funk2_set__element_count(funk2_set_t* this) {
+  return this->element_count;
+}
+
 void funk2_set__double_size(funk2_set_t* this) {
   u64                old_bin_power = this->bin_power;
   funk2_set_node_t** old_bin       = this->bin;
@@ -112,6 +116,27 @@ void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element) {
 
 void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element, funk2_set_t* to_set) {
   funk2_set__add_node(to_set, funk2_set__remove_node(this, element));
+}
+
+void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {
+  u64                bin_num      = 1ull << this->bin_power;
+  funk2_set_node_t** bin          = this->bin;
+  boolean_t          stop         = boolean__false;
+  void*              return_value = NULL;
+  u64 i;
+  for (i = 0; i < bin_num; i ++) {
+    funk2_set_node_t* iter = bin[i];
+    while (iter) {
+      funk2_set_node_t* next = iter->next;
+      funk2_set_element_t element = bin[i]->element;
+      (*mapc_funk)(element, user_data, &stop, &return_value);
+      iter = next;
+      if (stop) {
+	return return_value;
+      }
+    }
+  }
+  return return_value;
 }
 
 void funk2_set__save_to_stream(funk2_set_t* this, int fd) {

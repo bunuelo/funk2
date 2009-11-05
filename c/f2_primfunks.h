@@ -839,43 +839,16 @@ f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x);
 
 // string
 
-f2ptr new__string(f2ptr cause, char* str);
-f2ptr f2__string__length(f2ptr cause, f2ptr x);
-f2ptr f2__string__elt(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__string__eq(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
+f2ptr     new__string(f2ptr cause, char* str);
+f2ptr      f2__string__length(f2ptr cause, f2ptr x);
+f2ptr      f2__string__elt(f2ptr cause, f2ptr x, f2ptr y);
+boolean_t raw__string__eq(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__string__eq(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__string__new_raw_c_string(f2ptr cause, f2ptr x);
 
 // symbol
 
 f2ptr new__symbol(f2ptr cause, char* str);
-
-// array
-
-boolean_t  raw__cause_is_traced(f2ptr cause);
-f2ptr raw__array__new(f2ptr cause, u64 length);
-f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init);
-boolean_t raw__array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__array__is_type(f2ptr cause, f2ptr x);
-u64   raw__array__length(f2ptr cause, f2ptr x);
-f2ptr f2__array__length(f2ptr cause, f2ptr x);
-f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth);
-f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index);
-f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value);
-f2ptr f2__array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);
-f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index);
-f2ptr f2__array__elt__tracing_on(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__array__elt__tracing_on__set(f2ptr cause, f2ptr this, u64 index, f2ptr value);
-f2ptr f2__array__elt__tracing_on__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index);
-f2ptr f2__array__elt__trace(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr f2__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);
-f2ptr f2__array__elt__imagination_frame(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr raw__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
-f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
 
 // larva
 
@@ -883,17 +856,23 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
 
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x);
 
+// number interface (integer, double, float)
+
+boolean_t raw__number__is_type(f2ptr cause, f2ptr exp);
+double    raw__number__to_double(f2ptr cause, f2ptr this);
+
 // cause
 
-f2ptr f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this);
+f2ptr      f2__cause__define_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 
 // time
 
 f2ptr f2__time(f2ptr cause);
 
-// primobject hashtable
+// primobject ptypehash
 
-u64 raw__hash_value(f2ptr cause, f2ptr exp);
+u64 raw__eq_hash_value(f2ptr cause, f2ptr exp);
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y);
 
 // primobject thought_process

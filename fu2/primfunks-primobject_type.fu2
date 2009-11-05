@@ -19,9 +19,10 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk primobject_type-new                      &primfunk:primobject_type__new]
-[globalize-funk primobject_type-add_slot_type            &primfunk:primobject_type__add_slot_type]
-[globalize-funk primobject_type-lookup_slot_type_funk    &primfunk:primobject_type__lookup_slot_type_funk]
-[globalize-funk primobject_type-type_funk-slot_names     &primfunk:primobject_type__type_funk__slot_names]
+[globalize-funk primobject_type-new                        &primfunk:primobject_type__new]
+[globalize-funk primobject_type-add_slot_type              &primfunk:primobject_type__add_slot_type]
+[globalize-funk primobject_type-lookup_slot_type_funk      &primfunk:primobject_type__lookup_slot_type_funk]
+[globalize-funk primobject_type-type_funk-slot_names       &primfunk:primobject_type__type_funk__slot_names]
+[globalize-funk primobject_type-is_type_or_has_parent_type &primfunk:primobject_type__is_type_or_has_parent_type]
 
 

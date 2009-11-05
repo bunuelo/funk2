@@ -22,95 +22,21 @@
 #ifndef FUNK2__H
 #define FUNK2__H
 
-#define _GNU_SOURCE
+#include "../config.h"
 
-//#define F2__GMODULE__SUPPORTED
-//#define F2__DLFCN__SUPPORTED
-
-#ifdef __APPLE__
-#define MAP_ANONYMOUS MAP_ANON
-// see: http://www.osxfaq.com/man/4/tty.ws
-#define SIOCOUTQ TIOCOUTQ
-#define SIOCINQ TIOCSTI
-
-//#define O_NOFOLLOW 0
-//#define O_DIRECT 0
-//#define O_NOATIME 0
-//#define O_LARGEFILE 1
-
-#include <sys/sockio.h>
-#else
-#include <linux/sockios.h>
-#endif
-
-#include <arpa/inet.h>
-#ifdef F2__DLFCN__SUPPORTED
-#  include <dlfcn.h>
-#endif
-#include <errno.h>
-#include <fcntl.h>
-#ifdef F2__GMODULE__SUPPORTED
-#  include <gmodule.h>
-#endif
-#include <locale.h>
-#include <net/if.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <pthread.h>
-#include <sched.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/mman.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <termios.h>
-#include <time.h>
-#include <unistd.h>
-
-#if defined(HAVE_GL_GL_H)
-#  define  F2__GL__H
-#  include <GL/gl.h>
-#elif defined(HAVE_OPENGL_GL_H)
-#  define  F2__GL__H
-#  include <OpenGL/gl.h>
-#endif
-
-#if defined(HAVE_GL_GLU_H)
-#  define  F2__GLU__H
-#  include <GL/glu.h>
-#elif defined(HAVE_OPENGL_GLU_H)
-#  define  F2__GLU__H
-#  include <OpenGL/glu.h>
-#endif
-
-#ifdef HAVE_GL_GLX_H
-#  define  F2__GLX__H
-#  include <GL/glx.h>
-#endif
-
-#ifdef HAVE_X11_EXTENSIONS_XF86VMODE_H
-#  define  F2__XF86VMODE__H
-#  include <X11/extensions/xf86vmode.h>
-#endif
-
-#ifdef HAVE_X11_KEYSYM_H
-#  define  F2__KEYSYM__H
-#  include <X11/keysym.h>
-#endif
+#include "f2_system_headers.h"
 
 #include "f2_ansi.h"
 #include "f2_apropos.h"
+#include "f2_arithmetic.h"
+#include "f2_array.h"
 #include "f2_atomic.h"
 #include "f2_blocks_world.h"
 #include "f2_buffered_file.h"
 #include "f2_buffered_socket.h"
+#include "f2_bug.h"
 #include "f2_bytecodes.h"
+#include "f2_cause.h"
 #include "f2_child.h"
 #include "f2_child_handler.h"
 #include "f2_circular_buffer.h"
@@ -127,6 +53,7 @@
 #include "f2_garbage_collector.h"
 #include "f2_garbage_collector_pool.h"
 #include "f2_globalenv.h"
+#include "f2_glwindow.h"
 #include "f2_html.h"
 #include "f2_load.h"
 #include "f2_malloc.h"
@@ -136,9 +63,11 @@
 #include "f2_memorypool.h"
 #include "f2_module_registration.h"
 #include "f2_object.h"
+#include "f2_object_lattice.h"
 #include "f2_opengl.h"
 #include "f2_packet.h"
 #include "f2_peer_command_server.h"
+#include "f2_physical_objects.h"
 #include "f2_ptype.h"
 #include "f2_ptypes.h"
 #include "f2_ptypes_memory.h"
@@ -155,7 +84,7 @@
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__environment.h"
 #include "f2_primobject__frame.h"
-#include "f2_primobject__hashtable.h"
+#include "f2_primobject__ptypehash.h"
 #include "f2_primobject__object.h"
 #include "f2_primobject__object_type.h"
 #include "f2_primobject__set.h"
@@ -192,6 +121,7 @@
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
+#include "f2_primobject__hash.h"
 
 void f2__destroy();
 
@@ -227,6 +157,10 @@ typedef struct funk2_s {
   funk2_opengl_t                      opengl;
   funk2_openglu_t                     openglu;
   funk2_xxf86vm_t                     xxf86vm;
+  funk2_xlib_t                        xlib;
+#if defined(F2__GLWINDOW__H)
+  funk2_glwindow_t glwindow;
+#endif
 } funk2_t;
 
 void      funk2__init(funk2_t* this, int argc, char** argv);

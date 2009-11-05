@@ -21,14 +21,15 @@ AM_INIT_AUTOMAKE([subdir-objects])
 # Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([arpa/inet.h fcntl.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/ioctl.h sys/socket.h sys/time.h termios.h unistd.h])
+AC_CHECK_HEADERS([arpa/inet.h fcntl.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/ioctl.h sys/socket.h sys/time.h termios.h unistd.h math.h])
 AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 [[
 #ifdef HAVE_GL_GLX_H
 #  include <GL/glx.h>
 #endif
 ]])
-AC_CHECK_HEADERS([X11/keysym.h])
+
+AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

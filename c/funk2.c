@@ -33,17 +33,17 @@ void f2__initialize() {
   // ** This requires:
   // **   1. global vars to be "reinitialized"
   // **   2. global environment is "initialized"
-  // **   3. all packages besides global environment are "initialized" (including global environment prerequisite components, such as hashtable, frame, and environment primobjects)
+  // **   3. all packages besides global environment are "initialized" (including global environment prerequisite components, such as ptypehash, frame, and environment primobjects)
   // ** 
   {
     {
       f2__primobjects__reinitialize_globalvars();
-      f2__primobject_hashtable__reinitialize_globalvars(); 
+      f2__primobject_ptypehash__reinitialize_globalvars(); 
       f2__primobject_frame__reinitialize_globalvars();
     }
     f2__primobject_environment__initialize();
     f2__globalenv__initialize();
-    f2__primobject_hashtable__initialize();
+    f2__primobject_ptypehash__initialize();
     f2__primobject_frame__initialize();
   }
   // ** 
@@ -61,10 +61,12 @@ void f2__initialize() {
   f2__primobject__stream__initialize();
   f2__primobject__text_buffer__initialize();
   f2__primcfunks__initialize();
+  f2__array__initialize();
   f2__reader__initialize();
   f2__compile__initialize();
   f2__fiber__initialize();
   f2__bytecodes__initialize();
+  f2__bug__initialize();
   f2__signal__initialize();
   f2__load__initialize();
   f2__socket__initialize();
@@ -98,6 +100,13 @@ void f2__initialize() {
   f2__simple_repl__initialize();
   f2__garbage_collector__initialize();
   f2__frame_objects__initialize();
+  f2__glwindow__initialize();
+  f2__physical_objects__initialize();
+  f2__agent__initialize();
+  f2__object_lattice__initialize();
+  f2__primobject_hash__initialize();
+  f2__arithmetic__initialize();
+  f2__cause__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)
@@ -153,6 +162,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_opengl__init(&(this->opengl));
   funk2_openglu__init(&(this->openglu));
   funk2_xxf86vm__init(&(this->xxf86vm));
+  funk2_xlib__init(&(this->xlib));
+  funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
   
   f2ptr cause = initial_cause();
   
@@ -189,8 +200,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     }
   }
   
-  cause = f2__cause__new_with_default_properties(cause);
-  //cause = f2__cause__new_default_with_memory_tracing_on(cause);
+  cause = f2__cause__new_with_inherited_properties(cause, nil);
   
   // try to find a boot function
   f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));
@@ -306,7 +316,8 @@ void funk2__destroy(funk2_t* this) {
   funk2_opengl__destroy(&(this->opengl));
   funk2_openglu__destroy(&(this->openglu));
   funk2_xxf86vm__destroy(&(this->xxf86vm));
-  
+  funk2_xlib__destroy(&(this->xlib));
+  funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
 }
 
@@ -337,10 +348,6 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   funk2_test();
 #endif // TEST
   funk2__init(this, argc, argv);
-  
-  //raw__opengl__load_library(nil);
-  //raw__openglu__load_library(nil);
-  //raw__xxf86vm__load_library(nil);
   
   while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);

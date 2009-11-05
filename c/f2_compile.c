@@ -621,13 +621,14 @@ f2ptr f2__compile__while(f2ptr simple_cause, f2ptr cond_bcs, f2ptr loop_bcs) {
   f2ptr end_nop_bcs             = f2__compile__nop(cause);
   f2ptr loop_done_jump_cond_bcs = f2__compile__jump(cause, cond_bcs);
   f2ptr false_jump_end_bcs      = f2__compile__jump(cause, end_nop_bcs);
+  
   f2ptr full_bcs = cond_bcs;
   f2ptr iter     = cond_bcs;
   iter = f2__list_cdr__set(cause, iter, f2__compile__else_jump(cause, false_jump_end_bcs));
   iter = f2__list_cdr__set(cause, iter, loop_bcs);
   iter = f2__list_cdr__set(cause, iter, loop_done_jump_cond_bcs);
   iter = f2__list_cdr__set(cause, iter, end_nop_bcs);
-  //printf("\nfull_bcs: "); f2__print(nil, full_bcs); fflush(stdout);
+  //printf("\nfull_bcs: "); f2__print(nil, nil, full_bcs); fflush(stdout);
   return bcs_valid(full_bcs);
 }
 
@@ -636,25 +637,25 @@ f2ptr f2__compile__while_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   release__assert(__f2__compile__while_exp__symbol != -1, nil, "__f2__compile__while_exp__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __f2__compile__while_exp__symbol, exps);
   
-  if (! raw__cons__is_type(cause, exps)) {return __compile__exception;}
+  if (! raw__cons__is_type(cause, exps)) {printf("\nf2__compile__while_exp error: exps="); f2__print(nil, nil, exps); fflush(stdout); return __compile__exception;}
   exps = f2cons__cdr(exps, cause); // skip |while|
-  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (!raw__cons__is_type(cause, exps)) {return __compile__exception;}
+  f2ptr cond_exp   = f2cons__car(exps, cause); exps = f2cons__cdr(exps, cause); if (exps && (! raw__cons__is_type(cause, exps))) {printf("\ncompile error: exps="); f2__print(nil, nil, exps); fflush(stdout); return __compile__exception;}
   
   f2ptr loop_exps = exps;
-  if (loop_exps && (! raw__cons__is_type(cause, loop_exps))) {return loop_exps;}
+  if (loop_exps && (! raw__cons__is_type(cause, loop_exps))) {printf("\nf2__compile__while_exp error: loop_exps="); f2__print(nil, nil, loop_exps); fflush(stdout); return loop_exps;}
   
   f2ptr cond_bcs   = raw__compile(cause, fiber, cond_exp, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
   if (raw__larva__is_type(cause, cond_bcs)) {
     return cond_bcs;
   }
-  if (cond_bcs && (! raw__cons__is_type(cause, cond_bcs))) {return cond_bcs;}
+  if (cond_bcs && (! raw__cons__is_type(cause, cond_bcs))) {printf("\nf2__compile__while_exp error: cond_bcs="); f2__print(nil, nil, cond_bcs); fflush(stdout); return cond_bcs;}
   
   boolean_t loop__popped_env_and_return    = boolean__false;
   boolean_t optimize_unused_beginning      = boolean__true;
   boolean_t protect_subexp_environment     = boolean__true || protect_environment;
   boolean_t optimize_subexp_tail_recursion = boolean__false && optimize_tail_recursion;
   f2ptr loop_bcs = f2__compile__rawcode(cause, fiber, loop_exps, protect_subexp_environment, optimize_subexp_tail_recursion, &loop__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
-  if (loop_bcs && (! raw__cons__is_type(cause, loop_bcs))) {return loop_bcs;}
+  if (loop_bcs && (! raw__cons__is_type(cause, loop_bcs))) {printf("\nf2__compile__while_exp error: loop_bcs="); f2__print(nil, nil, loop_bcs); fflush(stdout); return loop_bcs;}
   
   return bcs_valid(f2__compile__while(cause, cond_bcs, loop_bcs));
 }

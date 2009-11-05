@@ -113,6 +113,8 @@ dlfcn_linker_flags   = -ldl
 #opengl_linker_flags = -lGL -lGLU -lXxf86vm
 #`pkg-config --cflags --libs GL GLU Xxf86vm`
 
+math_linker_flags = -lm
+
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 
@@ -181,12 +183,17 @@ ACLOCAL_AMFLAGS = -I m4
 bin_PROGRAMS = bin/funk2
 
 bin_funk2_SOURCES = \
+  c/f2_agent.c \
+  c/f2_arithmetic.c \
+  c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
   c/f2_blocks_world.c \
   c/f2_buffered_file.c \
   c/f2_buffered_socket.c \
+  c/f2_bug.c \
   c/f2_bytecodes.c \
+  c/f2_cause.c \
   c/f2_child.c \
   c/f2_child_handler.c \
   c/f2_circular_buffer.c \
@@ -199,6 +206,7 @@ bin_funk2_SOURCES = \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
+  c/f2_glwindow.c \
   c/f2_gmodule.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
@@ -213,9 +221,11 @@ bin_funk2_SOURCES = \
   c/f2_module_registration.c \
   c/f2_never_delete_list.c \
   c/f2_object.c \
+  c/f2_object_lattice.c \
   c/f2_opengl.c \
   c/f2_packet.c \
   c/f2_peer_command_server.c \
+  c/f2_physical_objects.c \
   c/f2_primobjects.c \
   c/f2_primobject__action.c \
   c/f2_primobject__boolean.c \
@@ -223,10 +233,11 @@ bin_funk2_SOURCES = \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \
   c/f2_primobject__frame.c \
-  c/f2_primobject__hashtable.c \
+  c/f2_primobject__hash.c \
   c/f2_primobject__list.c \
   c/f2_primobject__object.c \
   c/f2_primobject__object_type.c \
+  c/f2_primobject__ptypehash.c \
   c/f2_primobject__circular_buffer.c \
   c/f2_primobject__semantic_graph.c \
   c/f2_primobject__set.c \
@@ -265,6 +276,7 @@ bin_funk2_SOURCES = \
   c/f2_dynamic_memory.c \
   c/f2_termios.c \
   c/f2_thought_process.c \
+  c/f2_tricolor_set.c \
   c/f2_fiber.c \
   c/f2_time.c \
   c/f2_trace.c \
@@ -273,7 +285,7 @@ bin_funk2_SOURCES = \
   config_bit_num.h
 
 
-bin_funk2_LDFLAGS = $(dynamic_library_linker_flags)
+bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h

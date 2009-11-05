@@ -217,41 +217,41 @@ f2ptr f2__semantic_graph__load_conceptnet_r3_format(f2ptr cause, f2ptr filename)
 }
 def_pcfunk1(semantic_graph__load_conceptnet_r3_format, filename, return f2__semantic_graph__load_conceptnet_r3_format(this_cause, filename));
 
-f2ptr f2__semantic_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr fiber, f2ptr this) {
   if (! raw__semantic_graphp(this, cause)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr concept_relations_hash = raw__hashtable__new(cause, 20);
+  f2ptr concept_relations_hash = raw__ptypehash__new(cause, 20);
   f2ptr relation_iter = f2semantic_graph__relations(this, cause);
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
     f2ptr left_concept   = f2semantic_relation__left_concept(relation, cause);
-    f2ptr old_hash_value = f2__hashtable__lookup(cause, concept_relations_hash, left_concept);
+    f2ptr old_hash_value = f2__ptypehash__lookup(cause, concept_relations_hash, left_concept);
     f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
-    f2__hashtable__add(cause, concept_relations_hash, left_concept, new_hash_value);
+    f2__ptypehash__add(cause, concept_relations_hash, left_concept, new_hash_value);
     relation_iter = f2cons__cdr(relation_iter, cause);
   }
   return concept_relations_hash;
 }
-def_pcfunk1(semantic_graph__new_left_concept_relations_hash, this, return f2__semantic_graph__new_left_concept_relations_hash(this_cause, this));
+def_pcfunk1(semantic_graph__new_left_concept_relations_hash, this, return f2__semantic_graph__new_left_concept_relations_hash(this_cause, simple_fiber, this));
 
-f2ptr f2__semantic_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr fiber, f2ptr this) {
   if (! raw__semantic_graphp(this, cause)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr concept_relations_hash = raw__hashtable__new(cause, 20);
+  f2ptr concept_relations_hash = raw__ptypehash__new(cause, 20);
   f2ptr relation_iter = f2semantic_graph__relations(this, cause);
   while (relation_iter) {
     f2ptr relation       = f2cons__car(relation_iter, cause);
     f2ptr right_concept  = f2semantic_relation__right_concept(relation, cause);
-    f2ptr old_hash_value = f2__hashtable__lookup(cause, concept_relations_hash, right_concept);
+    f2ptr old_hash_value = f2__ptypehash__lookup(cause, concept_relations_hash, right_concept);
     f2ptr new_hash_value = f2cons__new(cause, relation, old_hash_value);
-    f2__hashtable__add(cause, concept_relations_hash, right_concept, new_hash_value);
+    f2__ptypehash__add(cause, concept_relations_hash, right_concept, new_hash_value);
     relation_iter = f2cons__cdr(relation_iter, cause);
   }
   return concept_relations_hash;
 }
-def_pcfunk1(semantic_graph__new_right_concept_relations_hash, this, return f2__semantic_graph__new_right_concept_relations_hash(this_cause, this));
+def_pcfunk1(semantic_graph__new_right_concept_relations_hash, this, return f2__semantic_graph__new_right_concept_relations_hash(this_cause, simple_fiber, this));
 
 // **
 

@@ -40,7 +40,7 @@ typedef struct funk2_globalenv_s {
   f2ptr              f2_primfunks_c__cause__symbol;
   f2ptr f2_primobject_environment_c__cause__symbol;
   f2ptr       f2_primobject_frame_c__cause__symbol;
-  f2ptr   f2_primobject_hashtable_c__cause__symbol;
+  f2ptr   f2_primobject_ptypehash_c__cause__symbol;
   f2ptr            f2_primobjects_c__cause__symbol;
   f2ptr                  f2_print_c__cause__symbol;
   f2ptr                f2_pthread_c__cause__symbol;
@@ -71,6 +71,8 @@ typedef struct funk2_globalenv_s {
   f2ptr stdout_stream;
   f2ptr stderr_stream__symbol;
   f2ptr stderr_stream;
+  
+  f2ptr type__symbol;
   
   f2ptr define_funk__symbol;
   f2ptr define__symbol;
@@ -111,6 +113,8 @@ typedef struct funk2_globalenv_s {
   f2ptr set__symbol;
   f2ptr execute__symbol;
   
+  f2ptr hash_value__symbol;
+  
   funk2_object_types_t            object_type;
   funk2_blocks_world_t            blocks_world;
   
@@ -129,7 +133,7 @@ f2ptr                 f2_memory_c__cause__new(f2ptr cause);
 f2ptr              f2_primfunks_c__cause__new(f2ptr cause);
 f2ptr f2_primobject_environment_c__cause__new(f2ptr cause);
 f2ptr       f2_primobject_frame_c__cause__new(f2ptr cause);
-f2ptr   f2_primobject_hashtable_c__cause__new(f2ptr cause);
+f2ptr   f2_primobject_ptypehash_c__cause__new(f2ptr cause);
 f2ptr            f2_primobjects_c__cause__new(f2ptr cause);
 f2ptr                  f2_print_c__cause__new(f2ptr cause);
 f2ptr                f2_pthread_c__cause__new(f2ptr cause);

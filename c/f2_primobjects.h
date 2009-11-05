@@ -39,7 +39,6 @@ typedef struct funk2_object_type__scheduler__slot_s        funk2_object_type__sc
 typedef struct funk2_object_type__event_subscriber__slot_s funk2_object_type__event_subscriber__slot_t;
 typedef struct funk2_object_type__cause__slot_s            funk2_object_type__cause__slot_t;
 typedef struct funk2_object_type__transframe__slot_s       funk2_object_type__transframe__slot_t;
-typedef struct funk2_object_type__bug__slot_s              funk2_object_type__bug__slot_t;
 typedef struct funk2_object_type__time__slot_s             funk2_object_type__time__slot_t;
 typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__size_2d__slot_t;
 typedef struct funk2_object_type__event__slot_s            funk2_object_type__event__slot_t;
@@ -100,11 +99,23 @@ defarray_slot__prototype(primobject__dynamic_slots);
 
 #endif // F2__PRIMOBJECTS__TYPE__H
 
+
+
 #ifndef F2__PRIMOBJECTS__H
 #define F2__PRIMOBJECTS__H
 
 #include "f2_memory.h"
 #include "f2_ptypes.h"
+#include "f2_malloc.h"
+
+boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y);                                                          // from f2_primfunks.h
+f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth);                   // from f2_primfunks.h
+f2ptr     raw__array__elt(f2ptr cause, f2ptr this, u64 index);                                             // from f2_primfunks.h
+f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value);                               // from f2_primfunks.h
+f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth); // from f2_primfunks.h
+f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index);                                     // from f2_primfunks.h
+f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index);                                          // from f2_primfunks.h
+f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);                              // from f2_primfunks.h
 
 // primobject
 
@@ -116,99 +127,899 @@ f2ptr   f2primobject__new(             f2ptr cause, f2ptr type, f2ptr static_slo
 
 f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
+#define declare_primobject_common(name) \
+  boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x); \
+  f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x); \
+  f2ptr f2##name##__primobject_type__new(f2ptr cause); \
+  static inline boolean_t f2primobject__is__##name(f2ptr this, f2ptr cause) {return raw__eq(cause, f2primobject__type(this, cause), __##name##__symbol);}
+
+#define debug_type_check(cause, this, name) debug__assert(raw__##name##__is_type(cause, this), nil, "debug error: this is not a " #name ".")
+
+#define declare_primobject_slot(name, slot_name) \
+  defprimobject__static_slot__prototype(name##__##slot_name); \
+  static inline f2ptr f2##name##__##slot_name##__trace_depth(      f2ptr this, f2ptr cause, int trace_depth)              {debug_type_check(cause, this, name); return primobject__static_slot__accessor__trace_depth(this, name##__##slot_name, cause, trace_depth);} \
+  static inline f2ptr f2##name##__##slot_name(                     f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__accessor(             this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__set__trace_depth( f2ptr this, f2ptr cause, f2ptr value, int trace_depth) {debug_type_check(cause, this, name); return primobject__static_slot__set__trace_depth(     this, name##__##slot_name, cause, value, trace_depth);} \
+  static inline f2ptr f2##name##__##slot_name##__set(              f2ptr this, f2ptr cause, f2ptr value)                  {debug_type_check(cause, this, name); return primobject__static_slot__set(                  this, name##__##slot_name, cause, value);} \
+  static inline f2ptr f2##name##__##slot_name##__tracing_on(       f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__tracing_on(           this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__trace(            f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__trace(                this, name##__##slot_name, cause);} \
+  static inline f2ptr f2##name##__##slot_name##__imagination_frame(f2ptr this, f2ptr cause)                               {debug_type_check(cause, this, name); return primobject__static_slot__imagination_frame(    this, name##__##slot_name, cause);} \
+  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x); \
+  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y);
+
+#define declare_primobject_inline_0_slot(name) \
+  declare_primobject_common(name);
+
+#define declare_primobject_inline_1_slot(name, slot_1) \
+  declare_primobject_inline_0_slot(name); \
+  declare_primobject_slot(name, slot_1);
+
+#define declare_primobject_inline_2_slot(name, slot_1, slot_2) \
+  declare_primobject_inline_1_slot(name, slot_1); \
+  declare_primobject_slot(name, slot_2);
+
+#define declare_primobject_inline_3_slot(name, slot_1, slot_2, slot_3) \
+  declare_primobject_inline_2_slot(name, slot_1, slot_2); \
+  declare_primobject_slot(name, slot_3);
+
+#define declare_primobject_inline_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  declare_primobject_inline_3_slot(name, slot_1, slot_2, slot_3); \
+  declare_primobject_slot(name, slot_4);
+
+#define declare_primobject_inline_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  declare_primobject_inline_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  declare_primobject_slot(name, slot_5);
+
+#define declare_primobject_inline_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  declare_primobject_inline_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  declare_primobject_slot(name, slot_6);
+
+#define declare_primobject_inline_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  declare_primobject_inline_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  declare_primobject_slot(name, slot_7);
+
+#define declare_primobject_inline_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  declare_primobject_inline_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  declare_primobject_slot(name, slot_8);
+
+#define declare_primobject_inline_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  declare_primobject_inline_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  declare_primobject_slot(name, slot_9);
+
+#define declare_primobject_inline_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  declare_primobject_inline_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  declare_primobject_slot(name, slot_10);
+
+#define declare_primobject_inline_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  declare_primobject_inline_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  declare_primobject_slot(name, slot_11);
+
+#define declare_primobject_inline_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  declare_primobject_inline_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  declare_primobject_slot(name, slot_12);
+
+#define declare_primobject_inline_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  declare_primobject_inline_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  declare_primobject_slot(name, slot_13);
+
+#define declare_primobject_inline_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  declare_primobject_inline_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  declare_primobject_slot(name, slot_14);
+
+#define declare_primobject_inline_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  declare_primobject_inline_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  declare_primobject_slot(name, slot_15);
+
+#define declare_primobject_inline_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  declare_primobject_inline_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  declare_primobject_slot(name, slot_16);
+
+#define declare_primobject_inline_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  declare_primobject_inline_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  declare_primobject_slot(name, slot_17);
+
+#define declare_primobject_inline_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  declare_primobject_inline_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  declare_primobject_slot(name, slot_18);
+
+#define declare_primobject_inline_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  declare_primobject_inline_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  declare_primobject_slot(name, slot_19);
+
+
+#define declare_primobject_1_slot(name, slot_1) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1); \
+  declare_primobject_inline_1_slot(name, slot_1);
+
+#define declare_primobject_2_slot(name, slot_1, slot_2) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2); \
+  declare_primobject_inline_2_slot(name, slot_1, slot_2);
+
+#define declare_primobject_3_slot(name, slot_1, slot_2, slot_3) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3); \
+  declare_primobject_inline_3_slot(name, slot_1, slot_2, slot_3);
+
+#define declare_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4); \
+  declare_primobject_inline_4_slot(name, slot_1, slot_2, slot_3, slot_4);
+
+#define declare_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5); \
+  declare_primobject_inline_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5);
+
+#define declare_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6); \
+  declare_primobject_inline_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6);
+
+#define declare_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7); \
+  declare_primobject_inline_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7);
+
+#define declare_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8); \
+  declare_primobject_inline_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8);
+
+#define declare_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9); \
+  declare_primobject_inline_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9);
+
+#define declare_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10); \
+  declare_primobject_inline_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10);
+
+#define declare_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11); \
+  declare_primobject_inline_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11);
+
+#define declare_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12); \
+  declare_primobject_inline_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12);
+
+#define declare_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13); \
+  declare_primobject_inline_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13);
+
+#define declare_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14); \
+  declare_primobject_inline_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14);
+
+#define declare_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15); \
+  declare_primobject_inline_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15);
+
+#define declare_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16); \
+  declare_primobject_inline_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16);
+
+#define declare_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17); \
+  declare_primobject_inline_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17);
+
+#define declare_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18); \
+  declare_primobject_inline_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18);
+
+#define declare_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  extern f2ptr __##name##__symbol; \
+  f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19, int trace_depth); \
+  f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19); \
+  declare_primobject_inline_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19);
+
+
+
+
+
+#define def_primobject_static_slot(name, slot_number, slot_name) \
+  defprimobject__static_slot(name##__##slot_name, slot_number); \
+   \
+  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {return f2##name##__##slot_name(x, cause);} \
+  def_pcfunk1(name##__##slot_name, x, return f2__##name##__##slot_name(this_cause, x)); \
+   \
+  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y) {f2##name##__##slot_name##__set(x, cause, y); return nil;} \
+  def_pcfunk2(name##__##slot_name##__set, x, y, return f2__##name##__##slot_name##__set(this_cause, x, y));
+
+
+#define def_primobject_common(name, new_trace_depth_code, new_f2type_code, add_slots_code) \
+  f2ptr __##name##__symbol = -1; \
+   \
+  new_trace_depth_code; \
+   \
+  new_f2type_code; \
+   \
+  boolean_t raw__##name##__is_type(f2ptr cause, f2ptr x) { \
+    return (raw__primobject__is_type(cause, x) && f2primobject__is__##name(x, cause)); \
+  } \
+  f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__##name##__is_type(cause, x));} \
+  def_pcfunk1(name##__is_type, x, return f2__##name##__is_type(this_cause, x)); \
+   \
+  f2ptr f2__##name##__type(f2ptr cause, f2ptr x) {return __##name##__symbol;} \
+  def_pcfunk1(name##__type, x, return f2__##name##__type(this_cause, x)); \
+   \
+  f2ptr f2##name##__primobject_type__new(f2ptr cause) { \
+    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil)); \
+    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), __funk2.globalenv.object_type.primobject.primobject_type_##name.is_type__funk); \
+    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    __funk2.globalenv.object_type.primobject.primobject_type_##name.type__funk); \
+    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     __funk2.globalenv.object_type.primobject.primobject_type_##name.new__funk); \
+    add_slots_code; \
+    return this; \
+  }
+
+#define def_primobject_add_slot(name, slot_name) \
+  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_name),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_name##__funk); \
+  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_name),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_name##__set__funk); \
+
+#define def_primobject_static_0_slot(name)
+
+#define def_primobject_static_1_slot(name, slot_1) \
+  def_primobject_static_0_slot(name) \
+  def_primobject_static_slot(name, 0, slot_1);
+
+#define def_primobject_static_2_slot(name, slot_1, slot_2) \
+  def_primobject_static_1_slot(name, slot_1); \
+  def_primobject_static_slot(name, 1, slot_2);
+
+#define def_primobject_static_3_slot(name, slot_1, slot_2, slot_3) \
+  def_primobject_static_2_slot(name, slot_1, slot_2); \
+  def_primobject_static_slot(name, 2, slot_3);
+
+#define def_primobject_static_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_primobject_static_3_slot(name, slot_1, slot_2, slot_3); \
+  def_primobject_static_slot(name, 3, slot_4);
+
+#define def_primobject_static_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_primobject_static_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  def_primobject_static_slot(name, 4, slot_5);
+
+#define def_primobject_static_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_primobject_static_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  def_primobject_static_slot(name, 5, slot_6);
+
+#define def_primobject_static_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_primobject_static_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  def_primobject_static_slot(name, 6, slot_7);
+
+#define def_primobject_static_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_primobject_static_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  def_primobject_static_slot(name, 7, slot_8);
+
+#define def_primobject_static_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_primobject_static_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  def_primobject_static_slot(name, 8, slot_9);
+
+#define def_primobject_static_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_primobject_static_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  def_primobject_static_slot(name, 9, slot_10);
+
+#define def_primobject_static_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_primobject_static_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  def_primobject_static_slot(name, 10, slot_11);
+
+#define def_primobject_static_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_primobject_static_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  def_primobject_static_slot(name, 11, slot_12);
+
+#define def_primobject_static_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_primobject_static_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  def_primobject_static_slot(name, 12, slot_13);
+
+#define def_primobject_static_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_primobject_static_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  def_primobject_static_slot(name, 13, slot_14);
+
+#define def_primobject_static_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_primobject_static_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  def_primobject_static_slot(name, 14, slot_15);
+
+#define def_primobject_static_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_primobject_static_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  def_primobject_static_slot(name, 15, slot_16);
+
+#define def_primobject_static_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_primobject_static_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  def_primobject_static_slot(name, 16, slot_17);
+
+#define def_primobject_static_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_primobject_static_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  def_primobject_static_slot(name, 17, slot_18);
+
+#define def_primobject_static_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  def_primobject_static_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  def_primobject_static_slot(name, 18, slot_19);
+
+
+#define def_primobject__0_slot__set__trace_depth(name)
+
+#define def_primobject__1_slot__set__trace_depth(name, slot_1) \
+  def_primobject__0_slot__set__trace_depth(name) \
+  f2##name##__##slot_1##__set__trace_depth(this, cause, slot_1, trace_depth);
+
+#define def_primobject__2_slot__set__trace_depth(name, slot_1, slot_2) \
+  def_primobject__1_slot__set__trace_depth(name, slot_1) \
+  f2##name##__##slot_2##__set__trace_depth(this, cause, slot_2, trace_depth);
+
+#define def_primobject__3_slot__set__trace_depth(name, slot_1, slot_2, slot_3) \
+  def_primobject__2_slot__set__trace_depth(name, slot_1, slot_2) \
+  f2##name##__##slot_3##__set__trace_depth(this, cause, slot_3, trace_depth);
+
+#define def_primobject__4_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4) \
+  def_primobject__3_slot__set__trace_depth(name, slot_1, slot_2, slot_3) \
+  f2##name##__##slot_4##__set__trace_depth(this, cause, slot_4, trace_depth);
+
+#define def_primobject__5_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_primobject__4_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4) \
+  f2##name##__##slot_5##__set__trace_depth(this, cause, slot_5, trace_depth);
+
+#define def_primobject__6_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_primobject__5_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  f2##name##__##slot_6##__set__trace_depth(this, cause, slot_6, trace_depth);
+
+#define def_primobject__7_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_primobject__6_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  f2##name##__##slot_7##__set__trace_depth(this, cause, slot_7, trace_depth);
+
+#define def_primobject__8_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_primobject__7_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  f2##name##__##slot_8##__set__trace_depth(this, cause, slot_8, trace_depth);
+
+#define def_primobject__9_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_primobject__8_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  f2##name##__##slot_9##__set__trace_depth(this, cause, slot_9, trace_depth);
+
+#define def_primobject__10_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_primobject__9_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  f2##name##__##slot_10##__set__trace_depth(this, cause, slot_10, trace_depth);
+
+#define def_primobject__11_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_primobject__10_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  f2##name##__##slot_11##__set__trace_depth(this, cause, slot_11, trace_depth);
+
+#define def_primobject__12_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_primobject__11_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  f2##name##__##slot_12##__set__trace_depth(this, cause, slot_12, trace_depth);
+
+#define def_primobject__13_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_primobject__12_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  f2##name##__##slot_13##__set__trace_depth(this, cause, slot_13, trace_depth);
+
+#define def_primobject__14_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_primobject__13_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  f2##name##__##slot_14##__set__trace_depth(this, cause, slot_14, trace_depth);
+
+#define def_primobject__15_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_primobject__14_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  f2##name##__##slot_15##__set__trace_depth(this, cause, slot_15, trace_depth);
+
+#define def_primobject__16_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_primobject__15_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  f2##name##__##slot_16##__set__trace_depth(this, cause, slot_16, trace_depth);
+
+#define def_primobject__17_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_primobject__16_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  f2##name##__##slot_17##__set__trace_depth(this, cause, slot_17, trace_depth);
+
+#define def_primobject__18_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_primobject__17_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  f2##name##__##slot_18##__set__trace_depth(this, cause, slot_18, trace_depth);
+
+#define def_primobject__19_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  def_primobject__18_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  f2##name##__##slot_19##__set__trace_depth(this, cause, slot_19, trace_depth);
+
+
+#define def_primobject_add_0_slot(name)
+
+#define def_primobject_add_1_slot(name, slot_1) \
+  def_primobject_add_0_slot(name); \
+  def_primobject_add_slot(name, slot_1);
+
+#define def_primobject_add_2_slot(name, slot_1, slot_2) \
+  def_primobject_add_1_slot(name, slot_1); \
+  def_primobject_add_slot(name, slot_2);
+
+#define def_primobject_add_3_slot(name, slot_1, slot_2, slot_3) \
+  def_primobject_add_2_slot(name, slot_1, slot_2); \
+  def_primobject_add_slot(name, slot_3);
+
+#define def_primobject_add_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_primobject_add_3_slot(name, slot_1, slot_2, slot_3); \
+  def_primobject_add_slot(name, slot_4);
+
+#define def_primobject_add_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_primobject_add_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  def_primobject_add_slot(name, slot_5);
+
+#define def_primobject_add_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_primobject_add_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  def_primobject_add_slot(name, slot_6);
+
+#define def_primobject_add_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_primobject_add_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  def_primobject_add_slot(name, slot_7);
+
+#define def_primobject_add_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_primobject_add_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  def_primobject_add_slot(name, slot_8);
+
+#define def_primobject_add_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_primobject_add_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  def_primobject_add_slot(name, slot_9);
+
+#define def_primobject_add_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_primobject_add_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  def_primobject_add_slot(name, slot_10);
+
+#define def_primobject_add_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_primobject_add_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  def_primobject_add_slot(name, slot_11);
+
+#define def_primobject_add_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_primobject_add_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  def_primobject_add_slot(name, slot_12);
+
+#define def_primobject_add_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_primobject_add_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  def_primobject_add_slot(name, slot_13);
+
+#define def_primobject_add_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_primobject_add_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  def_primobject_add_slot(name, slot_14);
+
+#define def_primobject_add_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_primobject_add_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  def_primobject_add_slot(name, slot_15);
+
+#define def_primobject_add_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_primobject_add_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  def_primobject_add_slot(name, slot_16);
+
+#define def_primobject_add_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_primobject_add_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  def_primobject_add_slot(name, slot_17);
+
+#define def_primobject_add_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_primobject_add_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  def_primobject_add_slot(name, slot_18);
+
+#define def_primobject_add_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  def_primobject_add_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  def_primobject_add_slot(name, slot_19);
+
+
+#define def_primobject_1_slot(name, slot_1) \
+  def_primobject_static_1_slot(name, slot_1); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 1, nil, trace_depth); \
+      def_primobject__1_slot__set__trace_depth(name, slot_1); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1) { \
+      return f2##name##__new__trace_depth(cause, slot_1, 1); \
+    }, \
+    def_primobject_add_1_slot(name, slot_1));
+
+#define def_primobject_2_slot(name, slot_1, slot_2) \
+  def_primobject_static_2_slot(name, slot_1, slot_2); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 2, nil, trace_depth); \
+      def_primobject__2_slot__set__trace_depth(name, slot_1, slot_2); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, 1); \
+    }, \
+    def_primobject_add_2_slot(name, slot_1, slot_2));
+
+#define def_primobject_3_slot(name, slot_1, slot_2, slot_3) \
+  def_primobject_static_3_slot(name, slot_1, slot_2, slot_3); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 3, nil, trace_depth); \
+      def_primobject__3_slot__set__trace_depth(name, slot_1, slot_2, slot_3); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, 1); \
+    }, \
+    def_primobject_add_3_slot(name, slot_1, slot_2, slot_3));
+
+#define def_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  def_primobject_static_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 4, nil, trace_depth); \
+      def_primobject__4_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, 1); \
+    }, \
+    def_primobject_add_4_slot(name, slot_1, slot_2, slot_3, slot_4));
+
+#define def_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  def_primobject_static_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 5, nil, trace_depth); \
+      def_primobject__5_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, 1); \
+    }, \
+    def_primobject_add_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5));
+
+#define def_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  def_primobject_static_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 6, nil, trace_depth); \
+      def_primobject__6_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, 1); \
+    }, \
+    def_primobject_add_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6));
+
+#define def_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  def_primobject_static_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 7, nil, trace_depth); \
+      def_primobject__7_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, 1); \
+    }, \
+    def_primobject_add_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7));
+
+#define def_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  def_primobject_static_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 8, nil, trace_depth); \
+      def_primobject__8_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, 1); \
+    }, \
+    def_primobject_add_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8));
+
+#define def_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  def_primobject_static_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 9, nil, trace_depth); \
+      def_primobject__9_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, 1); \
+    }, \
+    def_primobject_add_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9));
+
+#define def_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  def_primobject_static_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 10, nil, trace_depth); \
+      def_primobject__10_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, 1); \
+    }, \
+    def_primobject_add_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10));
+
+#define def_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  def_primobject_static_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 11, nil, trace_depth); \
+      def_primobject__11_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, 1); \
+    }, \
+    def_primobject_add_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11));
+
+#define def_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  def_primobject_static_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 12, nil, trace_depth); \
+      def_primobject__12_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, 1); \
+    }, \
+    def_primobject_add_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12));
+
+#define def_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  def_primobject_static_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 13, nil, trace_depth); \
+      def_primobject__13_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, 1); \
+    }, \
+    def_primobject_add_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13));
+
+#define def_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  def_primobject_static_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 14, nil, trace_depth); \
+      def_primobject__14_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, 1); \
+    }, \
+    def_primobject_add_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14));
+
+#define def_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  def_primobject_static_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 15, nil, trace_depth); \
+      def_primobject__15_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, 1); \
+    }, \
+    def_primobject_add_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15));
+
+#define def_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  def_primobject_static_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 16, nil, trace_depth); \
+      def_primobject__16_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, 1); \
+    }, \
+    def_primobject_add_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16));
+
+#define def_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  def_primobject_static_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 17, nil, trace_depth); \
+      def_primobject__17_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, 1); \
+    }, \
+    def_primobject_add_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17));
+
+#define def_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  def_primobject_static_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 18, nil, trace_depth); \
+      def_primobject__18_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, 1); \
+    }, \
+    def_primobject_add_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18));
+
+#define def_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  def_primobject_static_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
+   \
+  def_primobject_common(name, \
+    f2ptr f2##name##__new__trace_depth(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19, int trace_depth) { \
+      release__assert(__##name##__symbol != -1, nil, "f2" #name "__new error: used before primobjects initialized."); \
+      f2ptr this = f2__primobject__new__trace_depth(cause, __##name##__symbol, 19, nil, trace_depth); \
+      def_primobject__19_slot__set__trace_depth(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
+      return this; \
+    }, \
+    f2ptr f2##name##__new(f2ptr cause, f2ptr slot_1, f2ptr slot_2, f2ptr slot_3, f2ptr slot_4, f2ptr slot_5, f2ptr slot_6, f2ptr slot_7, f2ptr slot_8, f2ptr slot_9, f2ptr slot_10, f2ptr slot_11, f2ptr slot_12, f2ptr slot_13, f2ptr slot_14, f2ptr slot_15, f2ptr slot_16, f2ptr slot_17, f2ptr slot_18, f2ptr slot_19) { \
+      return f2##name##__new__trace_depth(cause, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, 1); \
+    }, \
+    def_primobject_add_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19));
+
+
+
+
+#define initialize_primobject_funk(name, funk_name) \
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, thing, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+
+#define initialize_primobject_common(name) \
+  initialize_primobject_funk(name, is_type); \
+  initialize_primobject_funk(name, type); \
+  initialize_primobject_funk(name, new);
+
+#define initialize_primobject_slot(name, slot_name) \
+  initialize_primobject_funk(name, slot_name); \
+  initialize_primobject_funk(name, slot_name##__set);
+
+#define initialize_primobject_0_slot(name) \
+  initialize_primobject_common(name);
+
+#define initialize_primobject_1_slot(name, slot_1) \
+  initialize_primobject_0_slot(name); \
+  initialize_primobject_slot(name, slot_1);
+
+#define initialize_primobject_2_slot(name, slot_1, slot_2) \
+  initialize_primobject_1_slot(name, slot_1); \
+  initialize_primobject_slot(name, slot_2);
+
+#define initialize_primobject_3_slot(name, slot_1, slot_2, slot_3) \
+  initialize_primobject_2_slot(name, slot_1, slot_2); \
+  initialize_primobject_slot(name, slot_3);
+
+#define initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  initialize_primobject_3_slot(name, slot_1, slot_2, slot_3); \
+  initialize_primobject_slot(name, slot_4);
+
+#define initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
+  initialize_primobject_slot(name, slot_5);
+
+#define initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  initialize_primobject_slot(name, slot_6);
+
+#define initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  initialize_primobject_slot(name, slot_7);
+
+#define initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  initialize_primobject_slot(name, slot_8);
+
+#define initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  initialize_primobject_slot(name, slot_9);
+
+#define initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  initialize_primobject_slot(name, slot_10);
+
+#define initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  initialize_primobject_slot(name, slot_11);
+
+#define initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  initialize_primobject_slot(name, slot_12);
+
+#define initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  initialize_primobject_slot(name, slot_13);
+
+#define initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  initialize_primobject_slot(name, slot_14);
+
+#define initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  initialize_primobject_slot(name, slot_15);
+
+#define initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  initialize_primobject_slot(name, slot_16);
+
+#define initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  initialize_primobject_slot(name, slot_17);
+
+#define initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  initialize_primobject_slot(name, slot_18);
+
+#define initialize_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  initialize_primobject_slot(name, slot_19);
+
+
+
 // compound_object
 
-extern f2ptr __compound_object__symbol;
-f2ptr f2compound_object__new__trace_depth(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame, int trace_depth);
-f2ptr f2compound_object__new(f2ptr cause, f2ptr compound_object_type, f2ptr frame, f2ptr part_frame);
-f2ptr f2compound_object__primobject_type__new(f2ptr cause);
+declare_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
 
-#define f2primobject__is_compound_object(this, cause) raw__eq(cause, f2primobject__type(this, cause), __compound_object__symbol)
+// primobject_type
 
-defprimobject__static_slot__prototype(compound_object__compound_object_type);
-#define f2compound_object__compound_object_type__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__compound_object_type, cause, trace_depth)
-#define f2compound_object__compound_object_type(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__compound_object_type, cause)
-#define f2compound_object__compound_object_type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__compound_object_type, cause, value, trace_depth)
-#define f2compound_object__compound_object_type__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__compound_object_type, cause, value)
-#define f2compound_object__compound_object_type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__compound_object_type, cause)
-#define f2compound_object__compound_object_type__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__compound_object_type, cause)
-#define f2compound_object__compound_object_type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__compound_object_type, cause)
-
-defprimobject__static_slot__prototype(compound_object__frame);
-#define f2compound_object__frame__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__frame, cause, trace_depth)
-#define f2compound_object__frame(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__frame, cause)
-#define f2compound_object__frame__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__frame, cause, value, trace_depth)
-#define f2compound_object__frame__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__frame, cause, value)
-#define f2compound_object__frame__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__frame, cause)
-#define f2compound_object__frame__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__frame, cause)
-#define f2compound_object__frame__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__frame, cause)
-
-defprimobject__static_slot__prototype(compound_object__part_frame);
-#define f2compound_object__part_frame__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, compound_object__part_frame, cause, trace_depth)
-#define f2compound_object__part_frame(                   this, cause)                     primobject__static_slot__accessor(             this, compound_object__part_frame, cause)
-#define f2compound_object__part_frame__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, compound_object__part_frame, cause, value, trace_depth)
-#define f2compound_object__part_frame__set(              this, cause, value)              primobject__static_slot__set(                  this, compound_object__part_frame, cause, value)
-#define f2compound_object__part_frame__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, compound_object__part_frame, cause)
-#define f2compound_object__part_frame__trace(            this, cause)                     primobject__static_slot__trace(                this, compound_object__part_frame, cause)
-#define f2compound_object__part_frame__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, compound_object__part_frame, cause)
+declare_primobject_1_slot(primobject_type, parents);
 
 // place
 
-extern f2ptr __place__symbol;
-f2ptr f2place__new(f2ptr cause, f2ptr thing);
-f2ptr f2place__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_place(this, cause)      raw__eq(cause, f2primobject__type(this, cause), __place__symbol)
-
-defprimobject__static_slot__prototype(place__thing);
-#define f2place__thing(this, cause)              primobject__static_slot__accessor(  this, place__thing, cause)
-#define f2place__thing__set(this, cause, value)  primobject__static_slot__set(       this, place__thing, cause, value)
-#define f2place__thing__tracing_on(this, cause)  primobject__static_slot__tracing_on(this, place__thing, cause)
-#define f2place__thing__trace(this, cause)       primobject__static_slot__trace(     this, place__thing, cause)
-#define f2place__thing__imagination_frame(this, cause)       primobject__static_slot__imagination_frame(     this, place__thing, cause)
-
-boolean_t raw__place__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__place__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__place(f2ptr cause, f2ptr x);
-f2ptr f2__place__thing(f2ptr cause, f2ptr x);
-f2ptr f2__place__thing__set(f2ptr cause, f2ptr x, f2ptr y);
-
+declare_primobject_1_slot(place, thing);
 
 // cons
 
-extern f2ptr __cons__symbol;
-f2ptr f2cons__new__trace_depth(f2ptr cause, f2ptr car, f2ptr cdr, int trace_depth);
-f2ptr f2cons__new(f2ptr cause, f2ptr car, f2ptr cdr);
-f2ptr f2cons__primobject_type__new(f2ptr cause);
+declare_primobject_2_slot(cons, car, cdr);
 
-#define f2primobject__is_cons(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cons__symbol)
-
-defprimobject__static_slot__prototype(cons__car);
-#define f2cons__car__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__car, cause, trace_depth)
-#define f2cons__car(                   this, cause)                     primobject__static_slot__accessor(             this, cons__car, cause)
-#define f2cons__car__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, cons__car, cause, value, trace_depth)
-#define f2cons__car__set(              this, cause, value)              primobject__static_slot__set(                  this, cons__car, cause, value)
-#define f2cons__car__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, cons__car, cause)
-#define f2cons__car__trace(            this, cause)                     primobject__static_slot__trace(                this, cons__car, cause)
-#define f2cons__car__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, cons__car, cause)
-
-defprimobject__static_slot__prototype(cons__cdr);
-#define f2cons__cdr__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, cons__cdr, cause, trace_depth)
-#define f2cons__cdr(                   this, cause)                     primobject__static_slot__accessor(             this, cons__cdr, cause)
-#define f2cons__cdr__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, cons__cdr, cause, value, trace_depth)
-#define f2cons__cdr__set(              this, cause, value)              primobject__static_slot__set(                  this, cons__cdr, cause, value)
-#define f2cons__cdr__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, cons__cdr, cause)
-#define f2cons__cdr__trace(            this, cause)                     primobject__static_slot__trace(                this, cons__cdr, cause)
-#define f2cons__cdr__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, cons__cdr, cause)
-
-boolean_t raw__cons__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cons__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cons(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__cons__car(f2ptr cause, f2ptr x);
-f2ptr f2__cons__car__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__cons__cdr(f2ptr cause, f2ptr x);
-f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
-
+f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
 
 // deprecated cons macros
 
@@ -237,102 +1048,14 @@ f2ptr f2__cons__cdr__set(f2ptr cause, f2ptr x, f2ptr y);
 
 // doublelink
 
-extern f2ptr __doublelink__symbol;
-boolean_t raw__doublelink__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__is_type(f2ptr cause, f2ptr x);
-f2ptr f2doublelink__new__trace_depth(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value, int trace_depth);
-f2ptr f2doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
-f2ptr f2doublelink__primobject_type__new(f2ptr cause);
-#define f2primobject__is_doublelink(this, cause) raw__eq(cause, f2primobject__type(this, cause), __doublelink__symbol)
-
-defprimobject__static_slot__prototype(doublelink__prev);
-#define f2doublelink__prev(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__prev, cause)
-#define f2doublelink__prev__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, doublelink__prev, cause, value, trace_depth)
-#define f2doublelink__prev__set(             this, cause, value)              primobject__static_slot__set(             this, doublelink__prev, cause, value)
-#define f2doublelink__prev__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, doublelink__prev, cause)
-#define f2doublelink__prev__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__prev, cause)
-#define f2doublelink__prev__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__prev, cause)
-
-defprimobject__static_slot__prototype(doublelink__next);
-#define f2doublelink__next(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__next, cause)
-#define f2doublelink__next__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, doublelink__next, cause, value, trace_depth)
-#define f2doublelink__next__set(             this, cause, value)              primobject__static_slot__set(             this, doublelink__next, cause, value)
-#define f2doublelink__next__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, doublelink__next, cause)
-#define f2doublelink__next__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__next, cause)
-#define f2doublelink__next__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__next, cause)
-
-defprimobject__static_slot__prototype(doublelink__value);
-#define f2doublelink__value(                  this, cause)                     primobject__static_slot__accessor(        this, doublelink__value, cause)
-#define f2doublelink__value__set__trace_depth(this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(this, doublelink__value, cause, value, trace_depth)
-#define f2doublelink__value__set(             this, cause, value)              primobject__static_slot__set(             this, doublelink__value, cause, value)
-#define f2doublelink__value__tracing_on(      this, cause)                     primobject__static_slot__tracing_on(      this, doublelink__value, cause)
-#define f2doublelink__value__trace(           this, cause)                     primobject__static_slot__trace(           this, doublelink__value, cause)
-#define f2doublelink__value__imagination_frame(           this, cause)                     primobject__static_slot__imagination_frame(           this, doublelink__value, cause)
+declare_primobject_3_slot(doublelink, prev, next, value);
 
 f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__doublelink__prev(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__prev__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__doublelink__next(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__next__set(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__doublelink__value(f2ptr cause, f2ptr x);
-f2ptr f2__doublelink__value__set(f2ptr cause, f2ptr x, f2ptr y);
-
 
 
 // imagination_link
 
-extern f2ptr __imagination_link__symbol;
-boolean_t raw__imagination_link__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__imagination_link__is_type(f2ptr cause, f2ptr this);
-f2ptr f2imagination_link__new__trace_depth(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame, int trace_depth);
-f2ptr f2imagination_link__new(f2ptr cause, f2ptr next, f2ptr name, f2ptr value, f2ptr trace, f2ptr imagination_frame);
-f2ptr f2imagination_link__primobject_type__new(f2ptr cause);
-#define f2primobject__is_imagination_link(this, cause) raw__eq(cause, f2primobject__type(this, cause), __imagination_link__symbol)
-
-defprimobject__static_slot__prototype(imagination_link__next);
-#define f2imagination_link__next__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__next, cause, trace_depth)
-#define f2imagination_link__next(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__next, cause)
-#define f2imagination_link__next__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__next, cause, value, trace_depth)
-#define f2imagination_link__next__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__next, cause, value)
-#define f2imagination_link__next__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__next, cause)
-#define f2imagination_link__next__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__next, cause)
-#define f2imagination_link__next__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__next, cause)
-
-defprimobject__static_slot__prototype(imagination_link__name);
-#define f2imagination_link__name__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__name, cause, trace_depth)
-#define f2imagination_link__name(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__name, cause)
-#define f2imagination_link__name__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__name, cause, value, trace_depth)
-#define f2imagination_link__name__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__name, cause, value)
-#define f2imagination_link__name__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__name, cause)
-#define f2imagination_link__name__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__name, cause)
-#define f2imagination_link__name__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__name, cause)
-
-defprimobject__static_slot__prototype(imagination_link__value);
-#define f2imagination_link__value__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__value, cause, trace_depth)
-#define f2imagination_link__value(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__value, cause)
-#define f2imagination_link__value__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__value, cause, value, trace_depth)
-#define f2imagination_link__value__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__value, cause, value)
-#define f2imagination_link__value__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__value, cause)
-#define f2imagination_link__value__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__value, cause)
-#define f2imagination_link__value__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__value, cause)
-
-defprimobject__static_slot__prototype(imagination_link__trace);
-#define f2imagination_link__trace__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__trace, cause, trace_depth)
-#define f2imagination_link__trace(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__trace, cause)
-#define f2imagination_link__trace__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__trace, cause, value, trace_depth)
-#define f2imagination_link__trace__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__trace, cause, value)
-#define f2imagination_link__trace__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__trace, cause)
-#define f2imagination_link__trace__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__trace, cause)
-#define f2imagination_link__trace__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__trace, cause)
-
-defprimobject__static_slot__prototype(imagination_link__imagination_frame);
-#define f2imagination_link__imagination_frame__trace_depth(      this, cause, trace_depth)        primobject__static_slot__accessor__trace_depth(this, imagination_link__imagination_frame, cause, trace_depth)
-#define f2imagination_link__imagination_frame(                   this, cause)                     primobject__static_slot__accessor(             this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth(     this, imagination_link__imagination_frame, cause, value, trace_depth)
-#define f2imagination_link__imagination_frame__set(              this, cause, value)              primobject__static_slot__set(                  this, imagination_link__imagination_frame, cause, value)
-#define f2imagination_link__imagination_frame__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(           this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__trace(            this, cause)                     primobject__static_slot__trace(                this, imagination_link__imagination_frame, cause)
-#define f2imagination_link__imagination_frame__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(    this, imagination_link__imagination_frame, cause)
+declare_primobject_5_slot(imagination_link, next, name, value, trace, imagination_frame);
 
 f2ptr raw__imagination_frame__lookup_imagination_link__trace_depth(f2ptr cause, f2ptr this, f2ptr real_value, f2ptr imagination_name_stack, int trace_depth);
 f2ptr raw__imagination_frame__new_with_added_slot__trace_depth(f2ptr cause, f2ptr this, f2ptr name, f2ptr value, int trace_depth);
@@ -351,955 +1074,87 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 
 // cfunk
 
-extern f2ptr __cfunk__symbol;
-boolean_t raw__cfunk__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cfunk__is_type(f2ptr cause, f2ptr this);
-f2ptr f2cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
-f2ptr f2cfunk__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_cfunk(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cfunk__symbol)
-
-defprimobject__static_slot__prototype(cfunk__name);
-#define f2cfunk__name(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__name, cause)
-#define f2cfunk__name__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__name, cause, value)
-#define f2cfunk__name__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__name, cause)
-#define f2cfunk__name__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__name, cause)
-#define f2cfunk__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__name, cause)
-
-defprimobject__static_slot__prototype(cfunk__args);
-#define f2cfunk__args(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__args, cause)
-#define f2cfunk__args__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__args, cause, value)
-#define f2cfunk__args__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__args, cause)
-#define f2cfunk__args__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__args, cause)
-#define f2cfunk__args__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__args, cause)
-
-defprimobject__static_slot__prototype(cfunk__cfunkptr);
-#define f2cfunk__cfunkptr(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__cfunkptr, cause)
-#define f2cfunk__cfunkptr__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__cfunkptr, cause, value)
-#define f2cfunk__cfunkptr__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__cfunkptr, cause)
-#define f2cfunk__cfunkptr__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__cfunkptr, cause)
-#define f2cfunk__cfunkptr__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__cfunkptr, cause)
-
-defprimobject__static_slot__prototype(cfunk__env);
-#define f2cfunk__env(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__env, cause)
-#define f2cfunk__env__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__env, cause, value)
-#define f2cfunk__env__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__env, cause)
-#define f2cfunk__env__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__env, cause)
-#define f2cfunk__env__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__env, cause)
-
-defprimobject__static_slot__prototype(cfunk__is_funktional);
-#define f2cfunk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__is_funktional, cause)
-#define f2cfunk__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__is_funktional, cause, value)
-#define f2cfunk__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__is_funktional, cause)
-#define f2cfunk__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__is_funktional, cause)
-#define f2cfunk__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__is_funktional, cause)
-
-defprimobject__static_slot__prototype(cfunk__documentation);
-#define f2cfunk__documentation(                   this, cause)        primobject__static_slot__accessor(         this, cfunk__documentation, cause)
-#define f2cfunk__documentation__set(              this, cause, value) primobject__static_slot__set(              this, cfunk__documentation, cause, value)
-#define f2cfunk__documentation__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cfunk__documentation, cause)
-#define f2cfunk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, cfunk__documentation, cause)
-#define f2cfunk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cfunk__documentation, cause)
-
+declare_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
 
 
 // metrocfunk
 
-extern f2ptr __metrocfunk__symbol;
-boolean_t raw__metrocfunk__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__metrocfunk__is_type(f2ptr cause, f2ptr this);
-f2ptr f2metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
-f2ptr f2metrocfunk__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_metrocfunk(       this, cause)        raw__eq(cause, f2primobject__type(this, cause), __metrocfunk__symbol)
-
-defprimobject__static_slot__prototype(metrocfunk__name);
-#define f2metrocfunk__name(                   this, cause)        primobject__static_slot__accessor(         this, metrocfunk__name, cause)
-#define f2metrocfunk__name__set(              this, cause, value) primobject__static_slot__set(              this, metrocfunk__name, cause, value)
-#define f2metrocfunk__name__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metrocfunk__name, cause)
-#define f2metrocfunk__name__trace(            this, cause)        primobject__static_slot__trace(            this, metrocfunk__name, cause)
-#define f2metrocfunk__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metrocfunk__name, cause)
-
-defprimobject__static_slot__prototype(metrocfunk__args);
-#define f2metrocfunk__args(                this, cause)        primobject__static_slot__accessor(  this, metrocfunk__args, cause)
-#define f2metrocfunk__args__set(           this, cause, value) primobject__static_slot__set(       this, metrocfunk__args, cause, value)
-#define f2metrocfunk__args__tracing_on(    this, cause)        primobject__static_slot__tracing_on(this, metrocfunk__args, cause)
-#define f2metrocfunk__args__trace(         this, cause)        primobject__static_slot__trace(     this, metrocfunk__args, cause)
-#define f2metrocfunk__args__imagination_frame(         this, cause)        primobject__static_slot__imagination_frame(     this, metrocfunk__args, cause)
-
-defprimobject__static_slot__prototype(metrocfunk__cfunkptr);
-#define f2metrocfunk__cfunkptr(            this, cause)        primobject__static_slot__accessor(  this, metrocfunk__cfunkptr, cause)
-#define f2metrocfunk__cfunkptr__set(       this, cause, value) primobject__static_slot__set(       this, metrocfunk__cfunkptr, cause, value)
-#define f2metrocfunk__cfunkptr__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, metrocfunk__cfunkptr, cause)
-#define f2metrocfunk__cfunkptr__trace(     this, cause)        primobject__static_slot__trace(     this, metrocfunk__cfunkptr, cause)
-#define f2metrocfunk__cfunkptr__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, metrocfunk__cfunkptr, cause)
-
-defprimobject__static_slot__prototype(metrocfunk__env);
-#define f2metrocfunk__env(                 this, cause)        primobject__static_slot__accessor(  this, metrocfunk__env, cause)
-#define f2metrocfunk__env__set(            this, cause, value) primobject__static_slot__set(       this, metrocfunk__env, cause, value)
-#define f2metrocfunk__env__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, metrocfunk__env, cause)
-#define f2metrocfunk__env__trace(          this, cause)        primobject__static_slot__trace(     this, metrocfunk__env, cause)
-#define f2metrocfunk__env__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, metrocfunk__env, cause)
-
-defprimobject__static_slot__prototype(metrocfunk__is_funktional);
-#define f2metrocfunk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, metrocfunk__is_funktional, cause)
-#define f2metrocfunk__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, metrocfunk__is_funktional, cause, value)
-#define f2metrocfunk__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metrocfunk__is_funktional, cause)
-#define f2metrocfunk__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, metrocfunk__is_funktional, cause)
-#define f2metrocfunk__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metrocfunk__is_funktional, cause)
-
-defprimobject__static_slot__prototype(metrocfunk__documentation);
-#define f2metrocfunk__documentation(                   this, cause)        primobject__static_slot__accessor(         this, metrocfunk__documentation, cause)
-#define f2metrocfunk__documentation__set(              this, cause, value) primobject__static_slot__set(              this, metrocfunk__documentation, cause, value)
-#define f2metrocfunk__documentation__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metrocfunk__documentation, cause)
-#define f2metrocfunk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, metrocfunk__documentation, cause)
-#define f2metrocfunk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metrocfunk__documentation, cause)
-
+declare_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
 
 
 // funk
 
-extern f2ptr __funk__symbol;
-boolean_t raw__funk__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__funk__is_type(f2ptr cause, f2ptr x);
-f2ptr f2funk__new(f2ptr cause, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation);
-f2ptr f2funk__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_funk(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __funk__symbol)
-
-defprimobject__static_slot__prototype(funk__name);
-#define f2funk__name(                   this, cause)        primobject__static_slot__accessor(         this, funk__name, cause)
-#define f2funk__name__set(              this, cause, value) primobject__static_slot__set(              this, funk__name, cause, value)
-#define f2funk__name__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, funk__name, cause)
-#define f2funk__name__trace(            this, cause)        primobject__static_slot__trace(            this, funk__name, cause)
-#define f2funk__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, funk__name, cause)
-
-defprimobject__static_slot__prototype(funk__body_bytecodes);
-#define f2funk__body_bytecodes(            this, cause)        primobject__static_slot__accessor(  this, funk__body_bytecodes, cause)
-#define f2funk__body_bytecodes__set(       this, cause, value) primobject__static_slot__set(       this, funk__body_bytecodes, cause, value)
-#define f2funk__body_bytecodes__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, funk__body_bytecodes, cause)
-#define f2funk__body_bytecodes__trace(     this, cause)        primobject__static_slot__trace(     this, funk__body_bytecodes, cause)
-#define f2funk__body_bytecodes__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, funk__body_bytecodes, cause)
-
-defprimobject__static_slot__prototype(funk__args);
-#define f2funk__args(                      this, cause)        primobject__static_slot__accessor(  this, funk__args, cause)
-#define f2funk__args__set(                 this, cause, value) primobject__static_slot__set(       this, funk__args, cause, value)
-#define f2funk__args__tracing_on(          this, cause)        primobject__static_slot__tracing_on(this, funk__args, cause)
-#define f2funk__args__trace(               this, cause)        primobject__static_slot__trace(     this, funk__args, cause)
-#define f2funk__args__imagination_frame(               this, cause)        primobject__static_slot__imagination_frame(     this, funk__args, cause)
-
-defprimobject__static_slot__prototype(funk__demetropolized_body);
-#define f2funk__demetropolized_body(            this, cause)        primobject__static_slot__accessor(  this, funk__demetropolized_body, cause)
-#define f2funk__demetropolized_body__set(       this, cause, value) primobject__static_slot__set(       this, funk__demetropolized_body, cause, value)
-#define f2funk__demetropolized_body__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, funk__demetropolized_body, cause)
-#define f2funk__demetropolized_body__trace(     this, cause)        primobject__static_slot__trace(     this, funk__demetropolized_body, cause)
-#define f2funk__demetropolized_body__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, funk__demetropolized_body, cause)
-
-defprimobject__static_slot__prototype(funk__body);
-#define f2funk__body(            this, cause)        primobject__static_slot__accessor(  this, funk__body, cause)
-#define f2funk__body__set(       this, cause, value) primobject__static_slot__set(       this, funk__body, cause, value)
-#define f2funk__body__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, funk__body, cause)
-#define f2funk__body__trace(     this, cause)        primobject__static_slot__trace(     this, funk__body, cause)
-#define f2funk__body__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, funk__body, cause)
-
-defprimobject__static_slot__prototype(funk__env);
-#define f2funk__env(                       this, cause)        primobject__static_slot__accessor(  this, funk__env, cause)
-#define f2funk__env__set(                  this, cause, value) primobject__static_slot__set(       this, funk__env, cause, value)
-#define f2funk__env__tracing_on(           this, cause)        primobject__static_slot__tracing_on(this, funk__env, cause)
-#define f2funk__env__trace(                this, cause)        primobject__static_slot__trace(     this, funk__env, cause)
-#define f2funk__env__imagination_frame(                this, cause)        primobject__static_slot__imagination_frame(     this, funk__env, cause)
-
-defprimobject__static_slot__prototype(funk__machine_code);
-#define f2funk__machine_code(              this, cause)        primobject__static_slot__accessor(  this, funk__machine_code, cause)
-#define f2funk__machine_code__set(         this, cause, value) primobject__static_slot__set(       this, funk__machine_code, cause, value)
-#define f2funk__machine_code__tracing_on(  this, cause)        primobject__static_slot__tracing_on(this, funk__machine_code, cause)
-#define f2funk__machine_code__trace(       this, cause)        primobject__static_slot__trace(     this, funk__machine_code, cause)
-#define f2funk__machine_code__imagination_frame(       this, cause)        primobject__static_slot__imagination_frame(     this, funk__machine_code, cause)
-
-defprimobject__static_slot__prototype(funk__is_funktional);
-#define f2funk__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, funk__is_funktional, cause)
-#define f2funk__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, funk__is_funktional, cause, value)
-#define f2funk__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, funk__is_funktional, cause)
-#define f2funk__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, funk__is_funktional, cause)
-#define f2funk__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, funk__is_funktional, cause)
-
-defprimobject__static_slot__prototype(funk__documentation);
-#define f2funk__documentation(                   this, cause)        primobject__static_slot__accessor(         this, funk__documentation, cause)
-#define f2funk__documentation__set(              this, cause, value) primobject__static_slot__set(              this, funk__documentation, cause, value)
-#define f2funk__documentation__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, funk__documentation, cause)
-#define f2funk__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, funk__documentation, cause)
-#define f2funk__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, funk__documentation, cause)
-
+declare_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
 
 // metro
 
-extern f2ptr __metro__symbol;
-boolean_t raw__metro__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__metro__is_type(f2ptr cause, f2ptr x);
-f2ptr f2metro__new(f2ptr context, f2ptr name, f2ptr body_bytecodes, f2ptr args, f2ptr demetropolize_body, f2ptr body, f2ptr env, f2ptr machine_code, f2ptr is_funktional, f2ptr documentation);
-f2ptr f2metro__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_metro(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __metro__symbol)
-
-defprimobject__static_slot__prototype(metro__name);
-#define f2metro__name(                   this, cause)        primobject__static_slot__accessor(         this, metro__name, cause)
-#define f2metro__name__set(              this, cause, value) primobject__static_slot__set(              this, metro__name, cause, value)
-#define f2metro__name__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metro__name, cause)
-#define f2metro__name__trace(            this, cause)        primobject__static_slot__trace(            this, metro__name, cause)
-#define f2metro__name__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metro__name, cause)
-
-defprimobject__static_slot__prototype(metro__body_bytecodes);
-#define f2metro__body_bytecodes(            this, cause)        primobject__static_slot__accessor(  this, metro__body_bytecodes, cause)
-#define f2metro__body_bytecodes__set(       this, cause, value) primobject__static_slot__set(       this, metro__body_bytecodes, cause, value)
-#define f2metro__body_bytecodes__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, metro__body_bytecodes, cause)
-#define f2metro__body_bytecodes__trace(     this, cause)        primobject__static_slot__trace(     this, metro__body_bytecodes, cause)
-#define f2metro__body_bytecodes__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, metro__body_bytecodes, cause)
-
-defprimobject__static_slot__prototype(metro__args);
-#define f2metro__args(                      this, cause)        primobject__static_slot__accessor(  this, metro__args, cause)
-#define f2metro__args__set(                 this, cause, value) primobject__static_slot__set(       this, metro__args, cause, value)
-#define f2metro__args__tracing_on(          this, cause)        primobject__static_slot__tracing_on(this, metro__args, cause)
-#define f2metro__args__trace(               this, cause)        primobject__static_slot__trace(     this, metro__args, cause)
-#define f2metro__args__imagination_frame(               this, cause)        primobject__static_slot__imagination_frame(     this, metro__args, cause)
-
-defprimobject__static_slot__prototype(metro__demetropolized_body);
-#define f2metro__demetropolized_body(                      this, cause)        primobject__static_slot__accessor(  this, metro__demetropolized_body, cause)
-#define f2metro__demetropolized_body__set(                 this, cause, value) primobject__static_slot__set(       this, metro__demetropolized_body, cause, value)
-#define f2metro__demetropolized_body__tracing_on(          this, cause)        primobject__static_slot__tracing_on(this, metro__demetropolized_body, cause)
-#define f2metro__demetropolized_body__trace(               this, cause)        primobject__static_slot__trace(     this, metro__demetropolized_body, cause)
-#define f2metro__demetropolized_body__imagination_frame(               this, cause)        primobject__static_slot__imagination_frame(     this, metro__demetropolized_body, cause)
-
-defprimobject__static_slot__prototype(metro__body);
-#define f2metro__body(            this, cause)        primobject__static_slot__accessor(  this, metro__body, cause)
-#define f2metro__body__set(       this, cause, value) primobject__static_slot__set(       this, metro__body, cause, value)
-#define f2metro__body__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, metro__body, cause)
-#define f2metro__body__trace(     this, cause)        primobject__static_slot__trace(     this, metro__body, cause)
-#define f2metro__body__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, metro__body, cause)
-
-defprimobject__static_slot__prototype(metro__env);
-#define f2metro__env(                       this, cause)        primobject__static_slot__accessor(  this, metro__env, cause)
-#define f2metro__env__set(                  this, cause, value) primobject__static_slot__set(       this, metro__env, cause, value)
-#define f2metro__env__tracing_on(           this, cause)        primobject__static_slot__tracing_on(this, metro__env, cause)
-#define f2metro__env__trace(                this, cause)        primobject__static_slot__trace(     this, metro__env, cause)
-#define f2metro__env__imagination_frame(                this, cause)        primobject__static_slot__imagination_frame(     this, metro__env, cause)
-
-defprimobject__static_slot__prototype(metro__machine_code);
-#define f2metro__machine_code(              this, cause)        primobject__static_slot__accessor(  this, metro__machine_code, cause)
-#define f2metro__machine_code__set(         this, cause, value) primobject__static_slot__set(       this, metro__machine_code, cause, value)
-#define f2metro__machine_code__tracing_on(  this, cause)        primobject__static_slot__tracing_on(this, metro__machine_code, cause)
-#define f2metro__machine_code__trace(       this, cause)        primobject__static_slot__trace(     this, metro__machine_code, cause)
-#define f2metro__machine_code__imagination_frame(       this, cause)        primobject__static_slot__imagination_frame(     this, metro__machine_code, cause)
-
-defprimobject__static_slot__prototype(metro__is_funktional);
-#define f2metro__is_funktional(                   this, cause)        primobject__static_slot__accessor(         this, metro__is_funktional, cause)
-#define f2metro__is_funktional__set(              this, cause, value) primobject__static_slot__set(              this, metro__is_funktional, cause, value)
-#define f2metro__is_funktional__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metro__is_funktional, cause)
-#define f2metro__is_funktional__trace(            this, cause)        primobject__static_slot__trace(            this, metro__is_funktional, cause)
-#define f2metro__is_funktional__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metro__is_funktional, cause)
-
-defprimobject__static_slot__prototype(metro__documentation);
-#define f2metro__documentation(                   this, cause)        primobject__static_slot__accessor(         this, metro__documentation, cause)
-#define f2metro__documentation__set(              this, cause, value) primobject__static_slot__set(              this, metro__documentation, cause, value)
-#define f2metro__documentation__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, metro__documentation, cause)
-#define f2metro__documentation__trace(            this, cause)        primobject__static_slot__trace(            this, metro__documentation, cause)
-#define f2metro__documentation__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, metro__documentation, cause)
-
+declare_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
 
 // exception
 
-extern f2ptr __exception__symbol;
-boolean_t raw__exception__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__exception__is_type(f2ptr cause, f2ptr x);
-f2ptr f2exception__new(f2ptr cause, f2ptr tag, f2ptr value);
-f2ptr f2exception__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_exception(    this, cause)        raw__eq(cause, f2primobject__type(this, cause), __exception__symbol)
-
-defprimobject__static_slot__prototype(exception__tag);
-#define f2exception__tag(              this, cause)        primobject__static_slot__accessor(  this, exception__tag, cause)
-#define f2exception__tag__set(         this, cause, value) primobject__static_slot__set(       this, exception__tag, cause, value)
-#define f2exception__tag__tracing_on(  this, cause)        primobject__static_slot__tracing_on(this, exception__tag, cause)
-#define f2exception__tag__trace(       this, cause)        primobject__static_slot__trace(     this, exception__tag, cause)
-#define f2exception__tag__imagination_frame(       this, cause)        primobject__static_slot__imagination_frame(     this, exception__tag, cause)
-
-defprimobject__static_slot__prototype(exception__value);
-#define f2exception__value(            this, cause)        primobject__static_slot__accessor(  this, exception__value, cause)
-#define f2exception__value__set(       this, cause, value) primobject__static_slot__set(       this, exception__value, cause, value)
-#define f2exception__value__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, exception__value, cause)
-#define f2exception__value__trace(     this, cause)        primobject__static_slot__trace(     this, exception__value, cause)
-#define f2exception__value__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, exception__value, cause)
-
+declare_primobject_2_slot(exception, tag, value);
 
 
 // bytecode
 
-extern f2ptr __bytecode__symbol;
-boolean_t raw__bytecode__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__bytecode__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2ptr arg2);
-f2ptr f2bytecode__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_bytecode(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode__symbol)
-
-defprimobject__static_slot__prototype(bytecode__command);
-#define f2bytecode__command(            this, cause)        primobject__static_slot__accessor(  this, bytecode__command, cause)
-#define f2bytecode__command__set(       this, cause, value) primobject__static_slot__set(       this, bytecode__command, cause, value)
-#define f2bytecode__command__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, bytecode__command, cause)
-#define f2bytecode__command__trace(     this, cause)        primobject__static_slot__trace(     this, bytecode__command, cause)
-#define f2bytecode__command__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__command, cause)
-
-defprimobject__static_slot__prototype(bytecode__arg0);
-#define f2bytecode__arg0(               this, cause)        primobject__static_slot__accessor(  this, bytecode__arg0, cause)
-#define f2bytecode__arg0__set(          this, cause, value) primobject__static_slot__set(       this, bytecode__arg0, cause, value)
-#define f2bytecode__arg0__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg0, cause)
-#define f2bytecode__arg0__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg0, cause)
-#define f2bytecode__arg0__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg0, cause)
-
-defprimobject__static_slot__prototype(bytecode__arg1);
-#define f2bytecode__arg1(               this, cause)        primobject__static_slot__accessor(  this, bytecode__arg1, cause)
-#define f2bytecode__arg1__set(          this, cause, value) primobject__static_slot__set(       this, bytecode__arg1, cause, value)
-#define f2bytecode__arg1__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg1, cause)
-#define f2bytecode__arg1__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg1, cause)
-#define f2bytecode__arg1__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg1, cause)
-
-defprimobject__static_slot__prototype(bytecode__arg2);
-#define f2bytecode__arg2(               this, cause)        primobject__static_slot__accessor(  this, bytecode__arg2, cause)
-#define f2bytecode__arg2__set(          this, cause, value) primobject__static_slot__set(       this, bytecode__arg2, cause, value)
-#define f2bytecode__arg2__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, bytecode__arg2, cause)
-#define f2bytecode__arg2__trace(        this, cause)        primobject__static_slot__trace(     this, bytecode__arg2, cause)
-#define f2bytecode__arg2__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, bytecode__arg2, cause)
-
+declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 
 
 // fiber
 
-extern f2ptr __fiber__symbol;
-boolean_t raw__fiber__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__fiber__is_type(f2ptr cause, f2ptr x);
-f2ptr f2fiber__new(f2ptr cause,
-		    f2ptr program_counter_reg,
-		    f2ptr stack_reg,
-		    f2ptr iter_reg,
-		    f2ptr env_reg,
-		    f2ptr args_reg,
-		    f2ptr return_reg,
-		    f2ptr value_reg,
-		    f2ptr trace_reg,
-		    f2ptr critics,
-		    f2ptr cause_reg,
-		    f2ptr keep_undead,
-		    f2ptr is_zombie,
-		    f2ptr parent_fiber,
-		    f2ptr parent_env,
-		    f2ptr execute_mutex,
-		    f2ptr paused,
-		    f2ptr last_executed_time,
-		    f2ptr sleep_until_time,
-		    f2ptr larva_args);
-f2ptr f2fiber__primobject_type__new(f2ptr cause);
-f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
+declare_primobject_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args);
 
-#define f2primobject__is_fiber(                 this, cause)        raw__eq(cause, f2primobject__type(this, cause), __fiber__symbol)
-
-defprimobject__static_slot__prototype(fiber__program_counter);
-#define f2fiber__program_counter(               this, cause)        primobject__static_slot__accessor(  this, fiber__program_counter, cause)
-#define f2fiber__program_counter__set(          this, cause, value) primobject__static_slot__set(       this, fiber__program_counter, cause, value)
-#define f2fiber__program_counter__tracing_on(   this, cause)        primobject__static_slot__tracing_on(this, fiber__program_counter, cause)
-#define f2fiber__program_counter__trace(        this, cause)        primobject__static_slot__trace(     this, fiber__program_counter, cause)
-#define f2fiber__program_counter__imagination_frame(        this, cause)        primobject__static_slot__imagination_frame(     this, fiber__program_counter, cause)
-
-defprimobject__static_slot__prototype(fiber__stack);
-#define f2fiber__stack(                         this, cause)        primobject__static_slot__accessor(  this, fiber__stack, cause)
-#define f2fiber__stack__set(                    this, cause, value) primobject__static_slot__set(       this, fiber__stack, cause, value)
-#define f2fiber__stack__tracing_on(             this, cause)        primobject__static_slot__tracing_on(this, fiber__stack, cause)
-#define f2fiber__stack__trace(                  this, cause)        primobject__static_slot__trace(     this, fiber__stack, cause)
-#define f2fiber__stack__imagination_frame(                  this, cause)        primobject__static_slot__imagination_frame(     this, fiber__stack, cause)
-
-defprimobject__static_slot__prototype(fiber__iter);
-#define f2fiber__iter(                          this, cause)        primobject__static_slot__accessor(  this, fiber__iter, cause)
-#define f2fiber__iter__set(                     this, cause, value) primobject__static_slot__set(       this, fiber__iter, cause, value)
-#define f2fiber__iter__tracing_on(              this, cause)        primobject__static_slot__tracing_on(this, fiber__iter, cause)
-#define f2fiber__iter__trace(                   this, cause)        primobject__static_slot__trace(     this, fiber__iter, cause)
-#define f2fiber__iter__imagination_frame(                   this, cause)        primobject__static_slot__imagination_frame(     this, fiber__iter, cause)
-
-defprimobject__static_slot__prototype(fiber__env);
-#define f2fiber__env(                           this, cause)        primobject__static_slot__accessor(  this, fiber__env, cause)
-#define f2fiber__env__set(                      this, cause, value) primobject__static_slot__set(       this, fiber__env, cause, value)
-#define f2fiber__env__tracing_on(               this, cause)        primobject__static_slot__tracing_on(this, fiber__env, cause)
-#define f2fiber__env__trace(                    this, cause)        primobject__static_slot__trace(     this, fiber__env, cause)
-#define f2fiber__env__imagination_frame(                    this, cause)        primobject__static_slot__imagination_frame(     this, fiber__env, cause)
-
-defprimobject__static_slot__prototype(fiber__args);
-#define f2fiber__args(                          this, cause)        primobject__static_slot__accessor(  this, fiber__args, cause)
-#define f2fiber__args__set(                     this, cause, value) primobject__static_slot__set(       this, fiber__args, cause, value)
-#define f2fiber__args__tracing_on(              this, cause)        primobject__static_slot__tracing_on(this, fiber__args, cause)
-#define f2fiber__args__trace(                   this, cause)        primobject__static_slot__trace(     this, fiber__args, cause)
-#define f2fiber__args__imagination_frame(                   this, cause)        primobject__static_slot__imagination_frame(     this, fiber__args, cause)
-
-defprimobject__static_slot__prototype(fiber__return);
-#define f2fiber__return(                        this, cause)        primobject__static_slot__accessor(  this, fiber__return, cause)
-#define f2fiber__return__set(                   this, cause, value) primobject__static_slot__set(       this, fiber__return, cause, value)
-#define f2fiber__return__tracing_on(            this, cause)        primobject__static_slot__tracing_on(this, fiber__return, cause)
-#define f2fiber__return__trace(                 this, cause)        primobject__static_slot__trace(     this, fiber__return, cause)
-#define f2fiber__return__imagination_frame(                 this, cause)        primobject__static_slot__imagination_frame(     this, fiber__return, cause)
-
-defprimobject__static_slot__prototype(fiber__value);
-#define f2fiber__value(                         this, cause)        primobject__static_slot__accessor(  this, fiber__value, cause)
-#define f2fiber__value__set(                    this, cause, value) primobject__static_slot__set(       this, fiber__value, cause, value)
-#define f2fiber__value__tracing_on(             this, cause)        primobject__static_slot__tracing_on(this, fiber__value, cause)
-#define f2fiber__value__trace(                  this, cause)        primobject__static_slot__trace(     this, fiber__value, cause)
-#define f2fiber__value__imagination_frame(                  this, cause)        primobject__static_slot__imagination_frame(     this, fiber__value, cause)
-
-defprimobject__static_slot__prototype(fiber__trace);
-#define f2fiber__trace(                         this, cause)        primobject__static_slot__accessor(  this, fiber__trace, cause)
-#define f2fiber__trace__set(                    this, cause, value) primobject__static_slot__set(       this, fiber__trace, cause, value)
-#define f2fiber__trace__tracing_on(             this, cause)        primobject__static_slot__tracing_on(this, fiber__trace, cause)
-#define f2fiber__trace__trace(                  this, cause)        primobject__static_slot__trace(     this, fiber__trace, cause)
-#define f2fiber__trace__imagination_frame(                  this, cause)        primobject__static_slot__imagination_frame(     this, fiber__trace, cause)
-
-defprimobject__static_slot__prototype(fiber__critics);
-#define f2fiber__critics(                   this, cause)        primobject__static_slot__accessor(         this, fiber__critics, cause)
-#define f2fiber__critics__set(              this, cause, value) primobject__static_slot__set(              this, fiber__critics, cause, value)
-#define f2fiber__critics__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, fiber__critics, cause)
-#define f2fiber__critics__trace(            this, cause)        primobject__static_slot__trace(            this, fiber__critics, cause)
-#define f2fiber__critics__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, fiber__critics, cause)
-
-defprimobject__static_slot__prototype(fiber__cause_reg);
-#define f2fiber__cause_reg(                   this, cause)        primobject__static_slot__accessor(         this, fiber__cause_reg, cause)
-#define f2fiber__cause_reg__set(              this, cause, value) primobject__static_slot__set(              this, fiber__cause_reg, cause, value)
-#define f2fiber__cause_reg__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, fiber__cause_reg, cause)
-#define f2fiber__cause_reg__trace(            this, cause)        primobject__static_slot__trace(            this, fiber__cause_reg, cause)
-#define f2fiber__cause_reg__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, fiber__cause_reg, cause)
-
-defprimobject__static_slot__prototype(fiber__keep_undead);
-#define f2fiber__keep_undead(                   this, cause)        primobject__static_slot__accessor(  this, fiber__keep_undead, cause)
-#define f2fiber__keep_undead__set(              this, cause, value) primobject__static_slot__set(       this, fiber__keep_undead, cause, value)
-#define f2fiber__keep_undead__tracing_on(       this, cause)        primobject__static_slot__tracing_on(this, fiber__keep_undead, cause)
-#define f2fiber__keep_undead__trace(            this, cause)        primobject__static_slot__trace(     this, fiber__keep_undead, cause)
-#define f2fiber__keep_undead__imagination_frame(            this, cause)        primobject__static_slot__imagination_frame(     this, fiber__keep_undead, cause)
-
-defprimobject__static_slot__prototype(fiber__is_zombie);
-#define f2fiber__is_zombie(                     this, cause)        primobject__static_slot__accessor(  this, fiber__is_zombie, cause)
-#define f2fiber__is_zombie__set(                this, cause, value) primobject__static_slot__set(       this, fiber__is_zombie, cause, value)
-#define f2fiber__is_zombie__tracing_on(         this, cause)        primobject__static_slot__tracing_on(this, fiber__is_zombie, cause)
-#define f2fiber__is_zombie__trace(              this, cause)        primobject__static_slot__trace(     this, fiber__is_zombie, cause)
-#define f2fiber__is_zombie__imagination_frame(              this, cause)        primobject__static_slot__imagination_frame(     this, fiber__is_zombie, cause)
-
-defprimobject__static_slot__prototype(fiber__parent_fiber);
-#define f2fiber__parent_fiber(                 this, cause)        primobject__static_slot__accessor(  this, fiber__parent_fiber, cause)
-#define f2fiber__parent_fiber__set(            this, cause, value) primobject__static_slot__set(       this, fiber__parent_fiber, cause, value)
-#define f2fiber__parent_fiber__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, fiber__parent_fiber, cause)
-#define f2fiber__parent_fiber__trace(          this, cause)        primobject__static_slot__trace(     this, fiber__parent_fiber, cause)
-#define f2fiber__parent_fiber__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, fiber__parent_fiber, cause)
-
-defprimobject__static_slot__prototype(fiber__parent_env);
-#define f2fiber__parent_env(                    this, cause)        primobject__static_slot__accessor(  this, fiber__parent_env, cause)
-#define f2fiber__parent_env__set(               this, cause, value) primobject__static_slot__set(       this, fiber__parent_env, cause, value)
-#define f2fiber__parent_env__tracing_on(        this, cause)        primobject__static_slot__tracing_on(this, fiber__parent_env, cause)
-#define f2fiber__parent_env__trace(             this, cause)        primobject__static_slot__trace(     this, fiber__parent_env, cause)
-#define f2fiber__parent_env__imagination_frame(             this, cause)        primobject__static_slot__imagination_frame(     this, fiber__parent_env, cause)
-
-defprimobject__static_slot__prototype(fiber__execute_mutex);
-#define f2fiber__execute_mutex(                 this, cause)        primobject__static_slot__accessor(  this, fiber__execute_mutex, cause)
-#define f2fiber__execute_mutex__set(            this, cause, value) primobject__static_slot__set(       this, fiber__execute_mutex, cause, value)
-#define f2fiber__execute_mutex__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, fiber__execute_mutex, cause)
-#define f2fiber__execute_mutex__trace(          this, cause)        primobject__static_slot__trace(     this, fiber__execute_mutex, cause)
-#define f2fiber__execute_mutex__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, fiber__execute_mutex, cause)
-
-defprimobject__static_slot__prototype(fiber__paused);
-#define f2fiber__paused(                   this, cause)        primobject__static_slot__accessor(         this, fiber__paused, cause)
-#define f2fiber__paused__set(              this, cause, value) primobject__static_slot__set(              this, fiber__paused, cause, value)
-#define f2fiber__paused__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, fiber__paused, cause)
-#define f2fiber__paused__trace(            this, cause)        primobject__static_slot__trace(            this, fiber__paused, cause)
-#define f2fiber__paused__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, fiber__paused, cause)
-
-defprimobject__static_slot__prototype(fiber__last_executed_time);
-#define f2fiber__last_executed_time(            this, cause)        primobject__static_slot__accessor(  this, fiber__last_executed_time, cause)
-#define f2fiber__last_executed_time__set(       this, cause, value) primobject__static_slot__set(       this, fiber__last_executed_time, cause, value)
-#define f2fiber__last_executed_time__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, fiber__last_executed_time, cause)
-#define f2fiber__last_executed_time__trace(     this, cause)        primobject__static_slot__trace(     this, fiber__last_executed_time, cause)
-#define f2fiber__last_executed_time__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, fiber__last_executed_time, cause)
-
-defprimobject__static_slot__prototype(fiber__sleep_until_time);
-#define f2fiber__sleep_until_time(            this, cause)        primobject__static_slot__accessor(  this, fiber__sleep_until_time, cause)
-#define f2fiber__sleep_until_time__set(       this, cause, value) primobject__static_slot__set(       this, fiber__sleep_until_time, cause, value)
-#define f2fiber__sleep_until_time__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, fiber__sleep_until_time, cause)
-#define f2fiber__sleep_until_time__trace(     this, cause)        primobject__static_slot__trace(     this, fiber__sleep_until_time, cause)
-#define f2fiber__sleep_until_time__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(this, fiber__sleep_until_time, cause)
-
-defprimobject__static_slot__prototype(fiber__larva_args);
-#define f2fiber__larva_args(            this, cause)        primobject__static_slot__accessor(  this, fiber__larva_args, cause)
-#define f2fiber__larva_args__set(       this, cause, value) primobject__static_slot__set(       this, fiber__larva_args, cause, value)
-#define f2fiber__larva_args__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, fiber__larva_args, cause)
-#define f2fiber__larva_args__trace(     this, cause)        primobject__static_slot__trace(     this, fiber__larva_args, cause)
-#define f2fiber__larva_args__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(this, fiber__larva_args, cause)
+f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
 #define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
 //extern int f2fiber__is_complete(f2ptr this);
 
-f2ptr f2__fiber__sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
+f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time);
 f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds);
+
+f2ptr f2fiber__primobject_type__new_aux(f2ptr cause);
 
 // processor
 
-extern f2ptr __processor__symbol;
-boolean_t raw__processor__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__processor__is_type(f2ptr cause, f2ptr x);
-f2ptr f2processor__new(f2ptr cause, f2ptr scheduler, f2ptr processor_fiber, f2ptr active_fibers_mutex, f2ptr active_fibers, f2ptr active_fibers_iter, f2ptr active_fibers_prev, f2ptr active_fibers_next, f2ptr sleeping_fibers_mutex, f2ptr sleeping_fibers, f2ptr pool_index, f2ptr desc);
-f2ptr f2processor__primobject_type__new(f2ptr cause);
-
-#define f2primobject__is_processor(             this, cause)        raw__eq(cause, f2primobject__type(this, cause), __processor__symbol)
-
-defprimobject__static_slot__prototype(processor__scheduler);
-#define f2processor__scheduler(                 this, cause)        primobject__static_slot__accessor(  this, processor__scheduler, cause)
-#define f2processor__scheduler__set(            this, cause, value) primobject__static_slot__set(       this, processor__scheduler, cause, value)
-#define f2processor__scheduler__tracing_on(     this, cause)        primobject__static_slot__tracing_on(this, processor__scheduler, cause)
-#define f2processor__scheduler__trace(          this, cause)        primobject__static_slot__trace(     this, processor__scheduler, cause)
-#define f2processor__scheduler__imagination_frame(          this, cause)        primobject__static_slot__imagination_frame(     this, processor__scheduler, cause)
-
-defprimobject__static_slot__prototype(processor__processor_thread);
-#define f2processor__processor_thread(                   this, cause)        primobject__static_slot__accessor(         this, processor__processor_thread, cause)
-#define f2processor__processor_thread__set(              this, cause, value) primobject__static_slot__set(              this, processor__processor_thread, cause, value)
-#define f2processor__processor_thread__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__processor_thread, cause)
-#define f2processor__processor_thread__trace(            this, cause)        primobject__static_slot__trace(            this, processor__processor_thread, cause)
-#define f2processor__processor_thread__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__processor_thread, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_mutex);
-#define f2processor__active_fibers_mutex(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_mutex, cause)
-#define f2processor__active_fibers_mutex__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_mutex, cause, value)
-#define f2processor__active_fibers_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_mutex, cause)
-#define f2processor__active_fibers_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_mutex, cause)
-#define f2processor__active_fibers_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_mutex, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers);
-#define f2processor__active_fibers(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers, cause)
-#define f2processor__active_fibers__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers, cause, value)
-#define f2processor__active_fibers__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers, cause)
-#define f2processor__active_fibers__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers, cause)
-#define f2processor__active_fibers__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_iter);
-#define f2processor__active_fibers_iter(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_iter, cause)
-#define f2processor__active_fibers_iter__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_iter, cause, value)
-#define f2processor__active_fibers_iter__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_iter, cause)
-#define f2processor__active_fibers_iter__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_iter, cause)
-#define f2processor__active_fibers_iter__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_iter, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_prev);
-#define f2processor__active_fibers_prev(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_prev, cause)
-#define f2processor__active_fibers_prev__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_prev, cause, value)
-#define f2processor__active_fibers_prev__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_prev, cause)
-#define f2processor__active_fibers_prev__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_prev, cause)
-#define f2processor__active_fibers_prev__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_prev, cause)
-
-defprimobject__static_slot__prototype(processor__active_fibers_next);
-#define f2processor__active_fibers_next(                   this, cause)        primobject__static_slot__accessor(         this, processor__active_fibers_next, cause)
-#define f2processor__active_fibers_next__set(              this, cause, value) primobject__static_slot__set(              this, processor__active_fibers_next, cause, value)
-#define f2processor__active_fibers_next__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, processor__active_fibers_next, cause)
-#define f2processor__active_fibers_next__trace(            this, cause)        primobject__static_slot__trace(            this, processor__active_fibers_next, cause)
-#define f2processor__active_fibers_next__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, processor__active_fibers_next, cause)
-
-defprimobject__static_slot__prototype(processor__sleeping_fibers_mutex);
-#define f2processor__sleeping_fibers_mutex(            this, cause)        primobject__static_slot__accessor(  this, processor__sleeping_fibers_mutex, cause)
-#define f2processor__sleeping_fibers_mutex__set(       this, cause, value) primobject__static_slot__set(       this, processor__sleeping_fibers_mutex, cause, value)
-#define f2processor__sleeping_fibers_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, processor__sleeping_fibers_mutex, cause)
-#define f2processor__sleeping_fibers_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, processor__sleeping_fibers_mutex, cause)
-#define f2processor__sleeping_fibers_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, processor__sleeping_fibers_mutex, cause)
-
-defprimobject__static_slot__prototype(processor__sleeping_fibers);
-#define f2processor__sleeping_fibers(                   this, cause)        primobject__static_slot__accessor(  this, processor__sleeping_fibers, cause)
-#define f2processor__sleeping_fibers__set(              this, cause, value) primobject__static_slot__set(       this, processor__sleeping_fibers, cause, value)
-#define f2processor__sleeping_fibers__tracing_on(       this, cause)        primobject__static_slot__tracing_on(this, processor__sleeping_fibers, cause)
-#define f2processor__sleeping_fibers__trace(            this, cause)        primobject__static_slot__trace(     this, processor__sleeping_fibers, cause)
-#define f2processor__sleeping_fibers__imagination_frame(            this, cause)        primobject__static_slot__imagination_frame(     this, processor__sleeping_fibers, cause)
-
-defprimobject__static_slot__prototype(processor__pool_index);
-#define f2processor__pool_index(                this, cause)        primobject__static_slot__accessor(  this, processor__pool_index, cause)
-#define f2processor__pool_index__set(           this, cause, value) primobject__static_slot__set(       this, processor__pool_index, cause, value)
-#define f2processor__pool_index__tracing_on(    this, cause)        primobject__static_slot__tracing_on(this, processor__pool_index, cause)
-#define f2processor__pool_index__trace(         this, cause)        primobject__static_slot__trace(     this, processor__pool_index, cause)
-#define f2processor__pool_index__imagination_frame(         this, cause)        primobject__static_slot__imagination_frame(     this, processor__pool_index, cause)
-
-defprimobject__static_slot__prototype(processor__desc);
-#define f2processor__desc(                      this, cause)        primobject__static_slot__accessor(  this, processor__desc, cause)
-#define f2processor__desc__set(                 this, cause, value) primobject__static_slot__set(       this, processor__desc, cause, value)
-#define f2processor__desc__tracing_on(          this, cause)        primobject__static_slot__tracing_on(this, processor__desc, cause)
-#define f2processor__desc__trace(               this, cause)        primobject__static_slot__trace(     this, processor__desc, cause)
-#define f2processor__desc__imagination_frame(               this, cause)        primobject__static_slot__imagination_frame(     this, processor__desc, cause)
+declare_primobject_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc);
 
 
 // scheduler
 
-extern f2ptr __scheduler__symbol;
-boolean_t raw__scheduler__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__scheduler__is_type(f2ptr cause, f2ptr x);
-f2ptr f2scheduler__new(f2ptr cause, f2ptr processors, f2ptr event_subscribers_mutex, f2ptr event_subscribers, f2ptr event_buffer_mutex, f2ptr event_buffer);
-f2ptr f2scheduler__primobject_type__new(f2ptr cause);
-#define f2primobject__is_scheduler(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __scheduler__symbol)
-
-defprimobject__static_slot__prototype(scheduler__processors);
-#define f2scheduler__processors(            this, cause)        primobject__static_slot__accessor(  this, scheduler__processors, cause)
-#define f2scheduler__processors__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__processors, cause, value)
-#define f2scheduler__processors__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__processors, cause)
-#define f2scheduler__processors__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__processors, cause)
-#define f2scheduler__processors__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__processors, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_subscribers_mutex);
-#define f2scheduler__event_subscribers_mutex(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_subscribers_mutex, cause)
-#define f2scheduler__event_subscribers_mutex__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_subscribers_mutex, cause, value)
-#define f2scheduler__event_subscribers_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_subscribers_mutex, cause)
-#define f2scheduler__event_subscribers_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_subscribers_mutex, cause)
-#define f2scheduler__event_subscribers_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_subscribers_mutex, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_subscribers);
-#define f2scheduler__event_subscribers(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_subscribers, cause)
-#define f2scheduler__event_subscribers__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_subscribers, cause, value)
-#define f2scheduler__event_subscribers__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_subscribers, cause)
-#define f2scheduler__event_subscribers__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_subscribers, cause)
-#define f2scheduler__event_subscribers__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_subscribers, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_buffer_mutex);
-#define f2scheduler__event_buffer_mutex(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_buffer_mutex, cause)
-#define f2scheduler__event_buffer_mutex__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_buffer_mutex, cause, value)
-#define f2scheduler__event_buffer_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_buffer_mutex, cause)
-#define f2scheduler__event_buffer_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_buffer_mutex, cause)
-#define f2scheduler__event_buffer_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_buffer_mutex, cause)
-
-defprimobject__static_slot__prototype(scheduler__event_buffer);
-#define f2scheduler__event_buffer(            this, cause)        primobject__static_slot__accessor(  this, scheduler__event_buffer, cause)
-#define f2scheduler__event_buffer__set(       this, cause, value) primobject__static_slot__set(       this, scheduler__event_buffer, cause, value)
-#define f2scheduler__event_buffer__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, scheduler__event_buffer, cause)
-#define f2scheduler__event_buffer__trace(     this, cause)        primobject__static_slot__trace(     this, scheduler__event_buffer, cause)
-#define f2scheduler__event_buffer__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, scheduler__event_buffer, cause)
+declare_primobject_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer);
 
 
 // event_subscriber
 
-extern f2ptr __event_subscriber__symbol;
-boolean_t raw__event_subscriber__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__event_subscriber__is_type(f2ptr cause, f2ptr x);
-f2ptr f2event_subscriber__new(f2ptr cause, f2ptr event_type, f2ptr fiber, f2ptr funkable, f2ptr event_buffer, f2ptr event_buffer_mutex);
-f2ptr f2event_subscriber__primobject_type__new(f2ptr cause);
-#define f2primobject__is__event_subscriber(this, cause)                 raw__eq(cause, f2primobject__type(this, cause), __event_subscriber__symbol)
-
-defprimobject__static_slot__prototype(event_subscriber__event_types);
-#define f2event_subscriber__event_types(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__event_types, cause)
-#define f2event_subscriber__event_types__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__event_types, cause, value)
-#define f2event_subscriber__event_types__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_types, cause)
-#define f2event_subscriber__event_types__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_types, cause)
-#define f2event_subscriber__event_types__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_types, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__fiber);
-#define f2event_subscriber__fiber(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__fiber, cause)
-#define f2event_subscriber__fiber__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__fiber, cause, value)
-#define f2event_subscriber__fiber__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__fiber, cause)
-#define f2event_subscriber__fiber__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__fiber, cause)
-#define f2event_subscriber__fiber__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__fiber, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__funkable);
-#define f2event_subscriber__funkable(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__funkable, cause)
-#define f2event_subscriber__funkable__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__funkable, cause, value)
-#define f2event_subscriber__funkable__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__funkable, cause)
-#define f2event_subscriber__funkable__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__funkable, cause)
-#define f2event_subscriber__funkable__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__funkable, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__event_buffer);
-#define f2event_subscriber__event_buffer(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__event_buffer, cause)
-#define f2event_subscriber__event_buffer__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__event_buffer, cause, value)
-#define f2event_subscriber__event_buffer__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_buffer, cause)
-#define f2event_subscriber__event_buffer__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_buffer, cause)
-#define f2event_subscriber__event_buffer__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_buffer, cause)
-
-defprimobject__static_slot__prototype(event_subscriber__event_buffer_mutex);
-#define f2event_subscriber__event_buffer_mutex(            this, cause)        primobject__static_slot__accessor(  this, event_subscriber__event_buffer_mutex, cause)
-#define f2event_subscriber__event_buffer_mutex__set(       this, cause, value) primobject__static_slot__set(       this, event_subscriber__event_buffer_mutex, cause, value)
-#define f2event_subscriber__event_buffer_mutex__tracing_on(this, cause)        primobject__static_slot__tracing_on(this, event_subscriber__event_buffer_mutex, cause)
-#define f2event_subscriber__event_buffer_mutex__trace(     this, cause)        primobject__static_slot__trace(     this, event_subscriber__event_buffer_mutex, cause)
-#define f2event_subscriber__event_buffer_mutex__imagination_frame(     this, cause)        primobject__static_slot__imagination_frame(     this, event_subscriber__event_buffer_mutex, cause)
-
-
-
-// cause
-
-#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
-
-f2ptr __cause__symbol;
-boolean_t raw__cause__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cause__is_type(f2ptr cause, f2ptr x);
-f2ptr f2cause__new(f2ptr cause, f2ptr fibers_mutex, f2ptr fibers, f2ptr frame, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers_mutex, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events_mutex, f2ptr current_events);
-f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_stack, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events);
-f2ptr f2cause__primobject_type__new(f2ptr cause);
-f2ptr f2__cause__new_with_default_properties(f2ptr cause);
-f2ptr f2__cause__new_default_with_memory_tracing_on(f2ptr cause);
-f2ptr f2__cause__new_with_inherited_properties(f2ptr cause);
-f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
-f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-
-#define f2primobject__is_cause(this, cause) raw__eq(cause, f2primobject__type(this, cause), __cause__symbol)
-
-defprimobject__static_slot__prototype(cause__fibers_mutex);
-#define f2cause__fibers_mutex(                   this, cause)        primobject__static_slot__accessor(         this, cause__fibers_mutex, cause)
-#define f2cause__fibers_mutex__set(              this, cause, value) primobject__static_slot__set(              this, cause__fibers_mutex, cause, value)
-#define f2cause__fibers_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__fibers_mutex, cause)
-#define f2cause__fibers_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, cause__fibers_mutex, cause)
-#define f2cause__fibers_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__fibers_mutex, cause)
-
-defprimobject__static_slot__prototype(cause__fibers);
-#define f2cause__fibers(                   this, cause)        primobject__static_slot__accessor(         this, cause__fibers, cause)
-#define f2cause__fibers__set(              this, cause, value) primobject__static_slot__set(              this, cause__fibers, cause, value)
-#define f2cause__fibers__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__fibers, cause)
-#define f2cause__fibers__trace(            this, cause)        primobject__static_slot__trace(            this, cause__fibers, cause)
-#define f2cause__fibers__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__fibers, cause)
-
-defprimobject__static_slot__prototype(cause__frame);
-#define f2cause__frame(                   this, cause)        primobject__static_slot__accessor(         this, cause__frame, cause)
-#define f2cause__frame__set(              this, cause, value) primobject__static_slot__set(              this, cause__frame, cause, value)
-#define f2cause__frame__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__frame, cause)
-#define f2cause__frame__trace(            this, cause)        primobject__static_slot__trace(            this, cause__frame, cause)
-#define f2cause__frame__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__frame, cause)
-
-defprimobject__static_slot__prototype(cause__allocate_traced_arrays);
-#define f2cause__allocate_traced_arrays(                   this, cause)        primobject__static_slot__accessor(         this, cause__allocate_traced_arrays, cause)
-#define f2cause__allocate_traced_arrays__set(              this, cause, value) primobject__static_slot__set(              this, cause__allocate_traced_arrays, cause, value)
-#define f2cause__allocate_traced_arrays__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__allocate_traced_arrays, cause)
-#define f2cause__allocate_traced_arrays__trace(            this, cause)        primobject__static_slot__trace(            this, cause__allocate_traced_arrays, cause)
-#define f2cause__allocate_traced_arrays__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__allocate_traced_arrays, cause)
-
-defprimobject__static_slot__prototype(cause__bytecode_tracing_on);
-#define f2cause__bytecode_tracing_on(                   this, cause)        primobject__static_slot__accessor(         this, cause__bytecode_tracing_on, cause)
-#define f2cause__bytecode_tracing_on__set(              this, cause, value) primobject__static_slot__set(              this, cause__bytecode_tracing_on, cause, value)
-#define f2cause__bytecode_tracing_on__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__bytecode_tracing_on, cause)
-#define f2cause__bytecode_tracing_on__trace(            this, cause)        primobject__static_slot__trace(            this, cause__bytecode_tracing_on, cause)
-#define f2cause__bytecode_tracing_on__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__bytecode_tracing_on, cause)
-
-defprimobject__static_slot__prototype(cause__memory_tracing_on);
-#define f2cause__memory_tracing_on__trace_depth(      this, cause, trace_depth) primobject__static_slot__accessor__trace_depth(this, cause__memory_tracing_on, cause, trace_depth)
-#define f2cause__memory_tracing_on(                   this, cause)              primobject__static_slot__accessor(             this, cause__memory_tracing_on, cause)
-#define f2cause__memory_tracing_on__set(              this, cause, value)       primobject__static_slot__set(                  this, cause__memory_tracing_on, cause, value)
-#define f2cause__memory_tracing_on__tracing_on(       this, cause)              primobject__static_slot__tracing_on(           this, cause__memory_tracing_on, cause)
-#define f2cause__memory_tracing_on__trace(            this, cause)              primobject__static_slot__trace(                this, cause__memory_tracing_on, cause)
-#define f2cause__memory_tracing_on__imagination_frame(this, cause)              primobject__static_slot__imagination_frame(    this, cause__memory_tracing_on, cause)
-
-defprimobject__static_slot__prototype(cause__subscribers_mutex);
-#define f2cause__subscribers_mutex(                   this, cause)        primobject__static_slot__accessor(         this, cause__subscribers_mutex, cause)
-#define f2cause__subscribers_mutex__set(              this, cause, value) primobject__static_slot__set(              this, cause__subscribers_mutex, cause, value)
-#define f2cause__subscribers_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__subscribers_mutex, cause)
-#define f2cause__subscribers_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, cause__subscribers_mutex, cause)
-#define f2cause__subscribers_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__subscribers_mutex, cause)
-
-defprimobject__static_slot__prototype(cause__subscribers);
-#define f2cause__subscribers(                   this, cause)        primobject__static_slot__accessor(         this, cause__subscribers, cause)
-#define f2cause__subscribers__set(              this, cause, value) primobject__static_slot__set(              this, cause__subscribers, cause, value)
-#define f2cause__subscribers__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__subscribers, cause)
-#define f2cause__subscribers__trace(            this, cause)        primobject__static_slot__trace(            this, cause__subscribers, cause)
-#define f2cause__subscribers__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__subscribers, cause)
-
-defprimobject__static_slot__prototype(cause__imagination_stack);
-#define f2cause__imagination_stack(                   this, cause)        primobject__static_slot__accessor(         this, cause__imagination_stack, cause)
-#define f2cause__imagination_stack__set(              this, cause, value) primobject__static_slot__set(              this, cause__imagination_stack, cause, value)
-#define f2cause__imagination_stack__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__imagination_stack, cause)
-#define f2cause__imagination_stack__trace(            this, cause)        primobject__static_slot__trace(            this, cause__imagination_stack, cause)
-#define f2cause__imagination_stack__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__imagination_stack, cause)
-
-defprimobject__static_slot__prototype(cause__event_buffer_first);
-#define f2cause__event_buffer_first(                   this, cause)        primobject__static_slot__accessor(         this, cause__event_buffer_first, cause)
-#define f2cause__event_buffer_first__set(              this, cause, value) primobject__static_slot__set(              this, cause__event_buffer_first, cause, value)
-#define f2cause__event_buffer_first__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__event_buffer_first, cause)
-#define f2cause__event_buffer_first__trace(            this, cause)        primobject__static_slot__trace(            this, cause__event_buffer_first, cause)
-#define f2cause__event_buffer_first__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__event_buffer_first, cause)
-
-defprimobject__static_slot__prototype(cause__event_buffer_last);
-#define f2cause__event_buffer_last(                   this, cause)        primobject__static_slot__accessor(         this, cause__event_buffer_last, cause)
-#define f2cause__event_buffer_last__set(              this, cause, value) primobject__static_slot__set(              this, cause__event_buffer_last, cause, value)
-#define f2cause__event_buffer_last__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__event_buffer_last, cause)
-#define f2cause__event_buffer_last__trace(            this, cause)        primobject__static_slot__trace(            this, cause__event_buffer_last, cause)
-#define f2cause__event_buffer_last__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__event_buffer_last, cause)
-
-defprimobject__static_slot__prototype(cause__current_events_mutex);
-#define f2cause__current_events_mutex(                   this, cause)        primobject__static_slot__accessor(         this, cause__current_events_mutex, cause)
-#define f2cause__current_events_mutex__set(              this, cause, value) primobject__static_slot__set(              this, cause__current_events_mutex, cause, value)
-#define f2cause__current_events_mutex__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__current_events_mutex, cause)
-#define f2cause__current_events_mutex__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events_mutex, cause)
-#define f2cause__current_events_mutex__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events_mutex, cause)
-
-defprimobject__static_slot__prototype(cause__current_events);
-#define f2cause__current_events(                   this, cause)        primobject__static_slot__accessor(         this, cause__current_events, cause)
-#define f2cause__current_events__set(              this, cause, value) primobject__static_slot__set(              this, cause__current_events, cause, value)
-#define f2cause__current_events__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, cause__current_events, cause)
-#define f2cause__current_events__trace(            this, cause)        primobject__static_slot__trace(            this, cause__current_events, cause)
-#define f2cause__current_events__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, cause__current_events, cause)
-
-f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
-void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
-f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+declare_primobject_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex);
 
 
 // transframe
 
-extern f2ptr __transframe__symbol;
-boolean_t raw__transframe__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__transframe__is_type(f2ptr cause, f2ptr x);
-f2ptr f2transframe__new__trace_depth(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news, int trace_depth);
-f2ptr f2transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news);
-f2ptr f2transframe__primobject_type__new(f2ptr cause);
-#define f2primobject__is_transframe(this, cause) raw__eq(cause, f2primobject__type(this, cause), __transframe__symbol)
-
-defprimobject__static_slot__prototype(transframe__nanoseconds_since_1970);
-#define f2transframe__nanoseconds_since_1970(                   this, cause)                     primobject__static_slot__accessor(         this, transframe__nanoseconds_since_1970, cause)
-#define f2transframe__nanoseconds_since_1970__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, transframe__nanoseconds_since_1970, cause, value, trace_depth)
-#define f2transframe__nanoseconds_since_1970__set(              this, cause, value)              primobject__static_slot__set(              this, transframe__nanoseconds_since_1970, cause, value)
-#define f2transframe__nanoseconds_since_1970__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, transframe__nanoseconds_since_1970, cause)
-#define f2transframe__nanoseconds_since_1970__trace(            this, cause)                     primobject__static_slot__trace(            this, transframe__nanoseconds_since_1970, cause)
-#define f2transframe__nanoseconds_since_1970__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__nanoseconds_since_1970, cause)
-
-// symbol_old_news is a list of 3-element arrays, e.g. [(symbol-1 old-1 new-1) (symbol-2 old-2 new-2) . . .]
-defprimobject__static_slot__prototype(transframe__symbol_old_news);
-#define f2transframe__symbol_old_news(                   this, cause)                     primobject__static_slot__accessor(         this, transframe__symbol_old_news, cause)
-#define f2transframe__symbol_old_news__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, transframe__symbol_old_news, cause, value, trace_depth)
-#define f2transframe__symbol_old_news__set(              this, cause, value)              primobject__static_slot__set(              this, transframe__symbol_old_news, cause, value)
-#define f2transframe__symbol_old_news__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, transframe__symbol_old_news, cause)
-#define f2transframe__symbol_old_news__trace(            this, cause)                     primobject__static_slot__trace(            this, transframe__symbol_old_news, cause)
-#define f2transframe__symbol_old_news__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, transframe__symbol_old_news, cause)
-
-
-
-// bug
-
-extern f2ptr __bug__symbol;
-boolean_t raw__bug__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__bug__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bug__new(f2ptr cause, f2ptr bug_type);
-f2ptr f2bug__primobject_type__new(f2ptr cause);
-#define f2primobject__is_bug(   this, cause)        raw__eq(cause, f2primobject__type(this, cause), __bug__symbol)
-
-defprimobject__static_slot__prototype(bug__type);
-#define f2bug__bug_type(                   this, cause)        primobject__static_slot__accessor(         this, bug__bug_type, cause)
-#define f2bug__bug_type__set(              this, cause, value) primobject__static_slot__set(              this, bug__bug_type, cause, value)
-#define f2bug__bug_type__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, bug__bug_type, cause)
-#define f2bug__bug_type__trace(            this, cause)        primobject__static_slot__trace(            this, bug__bug_type, cause)
-#define f2bug__bug_type__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, bug__bug_type, cause)
-
+declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
 
 
 // time
 
-extern f2ptr __time__symbol;
-boolean_t raw__time__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__time__is_type(f2ptr cause, f2ptr x);
-f2ptr f2time__new(f2ptr cause, f2ptr type);
-f2ptr f2time__primobject_type__new(f2ptr cause);
-#define f2primobject__is__time(this, cause) raw__eq(cause, f2primobject__type(this, cause), __time__symbol)
-
-defprimobject__static_slot__prototype(time__nanoseconds_since_1970);
-#define f2time__nanoseconds_since_1970(                   this, cause)        primobject__static_slot__accessor(         this, time__nanoseconds_since_1970, cause)
-#define f2time__nanoseconds_since_1970__set(              this, cause, value) primobject__static_slot__set(              this, time__nanoseconds_since_1970, cause, value)
-#define f2time__nanoseconds_since_1970__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, time__nanoseconds_since_1970, cause)
-#define f2time__nanoseconds_since_1970__trace(            this, cause)        primobject__static_slot__trace(            this, time__nanoseconds_since_1970, cause)
-#define f2time__nanoseconds_since_1970__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, time__nanoseconds_since_1970, cause)
-
+declare_primobject_1_slot(time, nanoseconds_since_1970);
 
 
 // size_2d
 
-extern f2ptr __size_2d__symbol;
-boolean_t raw__size_2d__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__size_2d__is_type(f2ptr cause, f2ptr x);
-f2ptr f2size_2d__new(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2size_2d__primobject_type__new(f2ptr cause);
-#define f2primobject__is__size_2d(this, cause)        raw__eq(cause, f2primobject__type(this, cause), __size_2d__symbol)
-
-defprimobject__static_slot__prototype(size_2d__x);
-#define f2size_2d__x(             this, cause)        primobject__static_slot__accessor(  this, size_2d__x, cause)
-#define f2size_2d__x__set(        this, cause, value) primobject__static_slot__set(       this, size_2d__x, cause, value)
-#define f2size_2d__x__tracing_on( this, cause)        primobject__static_slot__tracing_on(this, size_2d__x, cause)
-#define f2size_2d__x__trace(      this, cause)        primobject__static_slot__trace(     this, size_2d__x, cause)
-#define f2size_2d__x__imagination_frame(      this, cause)        primobject__static_slot__imagination_frame(     this, size_2d__x, cause)
-
-defprimobject__static_slot__prototype(size_2d__y);
-#define f2size_2d__y(             this, cause)        primobject__static_slot__accessor(  this, size_2d__y, cause)
-#define f2size_2d__y__set(        this, cause, value) primobject__static_slot__set(       this, size_2d__y, cause, value)
-#define f2size_2d__y__tracing_on( this, cause)        primobject__static_slot__tracing_on(this, size_2d__y, cause)
-#define f2size_2d__y__trace(      this, cause)        primobject__static_slot__trace(     this, size_2d__y, cause)
-#define f2size_2d__y__imagination_frame(      this, cause)        primobject__static_slot__imagination_frame(     this, size_2d__y, cause)
-
+declare_primobject_2_slot(size_2d, x, y);
 
 
 // event
 
-extern f2ptr __event__symbol;
-boolean_t raw__event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2event__new__trace_depth(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data, int trace_depth);
-f2ptr f2event__new(f2ptr cause, f2ptr node_id, f2ptr event_id, f2ptr type, f2ptr data);
-f2ptr f2event__primobject_type__new(f2ptr cause);
-#define f2primobject__is__event(this, cause) raw__eq(cause, f2primobject__type(this, cause), __event__symbol)
-
-defprimobject__static_slot__prototype(event__node_id);
-#define f2event__node_id(                   this, cause)                     primobject__static_slot__accessor(         this, event__node_id, cause)
-#define f2event__node_id__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__node_id, cause, value, trace_depth)
-#define f2event__node_id__set(              this, cause, value)              primobject__static_slot__set(              this, event__node_id, cause, value)
-#define f2event__node_id__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__node_id, cause)
-#define f2event__node_id__trace(            this, cause)                     primobject__static_slot__trace(            this, event__node_id, cause)
-#define f2event__node_id__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__node_id, cause)
-
-defprimobject__static_slot__prototype(event__event_id);
-#define f2event__event_id(                   this, cause)                     primobject__static_slot__accessor(         this, event__event_id, cause)
-#define f2event__event_id__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__event_id, cause, value, trace_depth)
-#define f2event__event_id__set(              this, cause, value)              primobject__static_slot__set(              this, event__event_id, cause, value)
-#define f2event__event_id__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__event_id, cause)
-#define f2event__event_id__trace(            this, cause)                     primobject__static_slot__trace(            this, event__event_id, cause)
-#define f2event__event_id__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__event_id, cause)
-
-defprimobject__static_slot__prototype(event__event_type);
-#define f2event__event_type(                   this, cause)                     primobject__static_slot__accessor(         this, event__event_type, cause)
-#define f2event__event_type__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__event_type, cause, value, trace_depth)
-#define f2event__event_type__set(              this, cause, value)              primobject__static_slot__set(              this, event__event_type, cause, value)
-#define f2event__event_type__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__event_type, cause)
-#define f2event__event_type__trace(            this, cause)                     primobject__static_slot__trace(            this, event__event_type, cause)
-#define f2event__event_type__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__event_type, cause)
-
-defprimobject__static_slot__prototype(event__data);
-#define f2event__data(                   this, cause)                     primobject__static_slot__accessor(         this, event__data, cause)
-#define f2event__data__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, event__data, cause, value, trace_depth)
-#define f2event__data__set(              this, cause, value)              primobject__static_slot__set(              this, event__data, cause, value)
-#define f2event__data__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, event__data, cause)
-#define f2event__data__trace(            this, cause)                     primobject__static_slot__trace(            this, event__data, cause)
-#define f2event__data__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, event__data, cause)
-
+declare_primobject_4_slot(event, node_id, event_id, event_type, data);
 
 
 // bytecode_event
 
-extern f2ptr __bytecode_event__symbol;
-boolean_t raw__bytecode_event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__bytecode_event__is_type(f2ptr cause, f2ptr x);
-f2ptr f2bytecode_event__new__trace_depth(f2ptr cause, f2ptr bytecode, f2ptr context, int trace_depth);
-f2ptr f2bytecode_event__new(f2ptr cause, f2ptr bytecode, f2ptr context);
-f2ptr f2bytecode_event__primobject_type__new(f2ptr cause);
-#define f2primobject__is__bytecode_event(this, cause) raw__eq(cause, f2primobject__type(this, cause), __bytecode_event__symbol)
-
-defprimobject__static_slot__prototype(bytecode_event__bytecode);
-#define f2bytecode_event__bytecode(                   this, cause)                     primobject__static_slot__accessor(         this, bytecode_event__bytecode, cause)
-#define f2bytecode_event__bytecode__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, bytecode_event__bytecode, cause, value, trace_depth)
-#define f2bytecode_event__bytecode__set(              this, cause, value)              primobject__static_slot__set(              this, bytecode_event__bytecode, cause, value)
-#define f2bytecode_event__bytecode__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, bytecode_event__bytecode, cause)
-#define f2bytecode_event__bytecode__trace(            this, cause)                     primobject__static_slot__trace(            this, bytecode_event__bytecode, cause)
-#define f2bytecode_event__bytecode__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, bytecode_event__bytecode, cause)
-
-defprimobject__static_slot__prototype(bytecode_event__context);
-#define f2bytecode_event__context(                   this, cause)                     primobject__static_slot__accessor(         this, bytecode_event__context, cause)
-#define f2bytecode_event__context__set__trace_depth( this, cause, value, trace_depth) primobject__static_slot__set__trace_depth( this, bytecode_event__context, cause, value, trace_depth)
-#define f2bytecode_event__context__set(              this, cause, value)              primobject__static_slot__set(              this, bytecode_event__context, cause, value)
-#define f2bytecode_event__context__tracing_on(       this, cause)                     primobject__static_slot__tracing_on(       this, bytecode_event__context, cause)
-#define f2bytecode_event__context__trace(            this, cause)                     primobject__static_slot__trace(            this, bytecode_event__context, cause)
-#define f2bytecode_event__context__imagination_frame(this, cause)                     primobject__static_slot__imagination_frame(this, bytecode_event__context, cause)
-
-
-
+declare_primobject_2_slot(bytecode_event, bytecode, context);
 
 
 // end of objects
@@ -1314,729 +1169,302 @@ extern void f2__primobjects__initialize();
 
 // primobject global slot definitions
 
+#define declare_object_type_common(name, body) \
+  struct funk2_object_type__##name##__slot_s { \
+    f2ptr is_type__symbol; \
+    f2ptr is_type__funk; \
+    f2ptr type__symbol; \
+    f2ptr type__funk; \
+    f2ptr new__symbol; \
+    f2ptr new__funk; \
+    body; \
+  };
+
+#define declare_object_type_slot(slot_name) \
+  f2ptr slot_name##__symbol; \
+  f2ptr slot_name##__funk; \
+  f2ptr slot_name##__set__symbol; \
+  f2ptr slot_name##__set__funk;
+
+#define declare_object_type_vars_0_slot()
+
+#define declare_object_type_vars_1_slot(slot_1) \
+  declare_object_type_vars_0_slot() \
+  declare_object_type_slot(slot_1);
+
+#define declare_object_type_vars_2_slot(slot_1, slot_2) \
+  declare_object_type_vars_1_slot(slot_1) \
+  declare_object_type_slot(slot_2);
+
+#define declare_object_type_vars_3_slot(slot_1, slot_2, slot_3) \
+  declare_object_type_vars_2_slot(slot_1, slot_2) \
+  declare_object_type_slot(slot_3);
+
+#define declare_object_type_vars_4_slot(slot_1, slot_2, slot_3, slot_4) \
+  declare_object_type_vars_3_slot(slot_1, slot_2, slot_3) \
+  declare_object_type_slot(slot_4);
+
+#define declare_object_type_vars_5_slot(slot_1, slot_2, slot_3, slot_4, slot_5) \
+  declare_object_type_vars_4_slot(slot_1, slot_2, slot_3, slot_4) \
+  declare_object_type_slot(slot_5);
+
+#define declare_object_type_vars_6_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  declare_object_type_vars_5_slot(slot_1, slot_2, slot_3, slot_4, slot_5) \
+  declare_object_type_slot(slot_6);
+
+#define declare_object_type_vars_7_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  declare_object_type_vars_6_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  declare_object_type_slot(slot_7);
+
+#define declare_object_type_vars_8_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  declare_object_type_vars_7_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  declare_object_type_slot(slot_8);
+
+#define declare_object_type_vars_9_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  declare_object_type_vars_8_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  declare_object_type_slot(slot_9);
+
+#define declare_object_type_vars_10_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  declare_object_type_vars_9_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  declare_object_type_slot(slot_10);
+
+#define declare_object_type_vars_11_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  declare_object_type_vars_10_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  declare_object_type_slot(slot_11);
+
+#define declare_object_type_vars_12_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  declare_object_type_vars_11_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  declare_object_type_slot(slot_12);
+
+#define declare_object_type_vars_13_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  declare_object_type_vars_12_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  declare_object_type_slot(slot_13);
+
+#define declare_object_type_vars_14_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  declare_object_type_vars_13_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  declare_object_type_slot(slot_14);
+
+#define declare_object_type_vars_15_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  declare_object_type_vars_14_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  declare_object_type_slot(slot_15);
+
+#define declare_object_type_vars_16_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  declare_object_type_vars_15_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  declare_object_type_slot(slot_16);
+
+#define declare_object_type_vars_17_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  declare_object_type_vars_16_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  declare_object_type_slot(slot_17);
+
+#define declare_object_type_vars_18_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  declare_object_type_vars_17_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  declare_object_type_slot(slot_18);
+
+#define declare_object_type_vars_19_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  declare_object_type_vars_18_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  declare_object_type_slot(slot_19);
+
+
+#define declare_object_type_1_slot(name, slot_1, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_1_slot(slot_1); \
+    body)
+
+#define declare_object_type_2_slot(name, slot_1, slot_2, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_2_slot(slot_1, slot_2); \
+    body)
+
+#define declare_object_type_3_slot(name, slot_1, slot_2, slot_3, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_3_slot(slot_1, slot_2, slot_3); \
+    body)
+
+#define declare_object_type_4_slot(name, slot_1, slot_2, slot_3, slot_4, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_4_slot(slot_1, slot_2, slot_3, slot_4); \
+    body)
+
+#define declare_object_type_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_5_slot(slot_1, slot_2, slot_3, slot_4, slot_5); \
+    body)
+
+#define declare_object_type_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_6_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+    body)
+
+#define declare_object_type_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_7_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+    body)
+
+#define declare_object_type_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_8_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+    body)
+
+#define declare_object_type_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_9_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+    body)
+
+#define declare_object_type_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_10_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+    body)
+
+#define declare_object_type_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_11_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+    body)
+
+#define declare_object_type_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_12_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+    body)
+
+#define declare_object_type_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_13_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+    body)
+
+#define declare_object_type_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_14_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+    body)
+
+#define declare_object_type_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_15_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+    body)
+
+#define declare_object_type_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_16_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+    body)
+
+#define declare_object_type_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_17_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+    body)
+
+#define declare_object_type_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_18_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+    body)
+
+#define declare_object_type_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, body) \
+  declare_object_type_common(name, \
+    declare_object_type_vars_19_slot(slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
+    body)
+
 // compound_object
 
-struct funk2_object_type__compound_object__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr compound_object_type__symbol;
-  f2ptr compound_object_type__funk;
-  f2ptr compound_object_type__set__symbol;
-  f2ptr compound_object_type__set__funk;
-  f2ptr frame__symbol;
-  f2ptr frame__funk;
-  f2ptr frame__set__symbol;
-  f2ptr frame__set__funk;
-  f2ptr part_frame__symbol;
-  f2ptr part_frame__funk;
-  f2ptr part_frame__set__symbol;
-  f2ptr part_frame__set__funk;
-};
+declare_object_type_3_slot(compound_object, compound_object_type, frame, part_frame, );
 
 // place
 
-struct funk2_object_type__place__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr thing__symbol;
-  f2ptr thing__funk;
-  f2ptr thing__set__symbol;
-  f2ptr thing__set__funk;
-};
+declare_object_type_1_slot(place, thing, );
 
 // cons
 
-struct funk2_object_type__cons__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr car__symbol;
-  f2ptr car__funk;
-  f2ptr car__set__symbol;
-  f2ptr car__set__funk;
-  f2ptr cdr__symbol;
-  f2ptr cdr__funk;
-  f2ptr cdr__set__symbol;
-  f2ptr cdr__set__funk;
-};
+declare_object_type_2_slot(cons, car, cdr,
+			   f2ptr length__symbol;
+			   f2ptr length__funk;
+			   );
 
 // doublelink
 
-struct funk2_object_type__doublelink__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr prev__symbol;
-  f2ptr prev__funk;
-  f2ptr prev__set__symbol;
-  f2ptr prev__set__funk;
-  f2ptr next__symbol;
-  f2ptr next__funk;
-  f2ptr next__set__symbol;
-  f2ptr next__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-};
+declare_object_type_3_slot(doublelink, prev, next, value, );
 
 // imagination_link
 
-struct funk2_object_type__imagination_link__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr next__symbol;
-  f2ptr next__funk;
-  f2ptr next__set__symbol;
-  f2ptr next__set__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-  f2ptr trace__symbol;
-  f2ptr trace__funk;
-  f2ptr trace__set__symbol;
-  f2ptr trace__set__funk;
-  f2ptr imagination_frame__symbol;
-  f2ptr imagination_frame__funk;
-  f2ptr imagination_frame__set__symbol;
-  f2ptr imagination_frame__set__funk;
-};
+declare_object_type_5_slot(imagination_link, next, name, value, trace, imagination_frame, );
 
 // cfunk
 
-struct funk2_object_type__cfunk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr cfunkptr__symbol;
-  f2ptr cfunkptr__funk;
-  f2ptr cfunkptr__set__symbol;
-  f2ptr cfunkptr__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation, );
 
 // metrocfunk
 
-struct funk2_object_type__metrocfunk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr cfunkptr__symbol;
-  f2ptr cfunkptr__funk;
-  f2ptr cfunkptr__set__symbol;
-  f2ptr cfunkptr__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation, );
 
 // funk
 
-struct funk2_object_type__funk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr body_bytecodes__symbol;
-  f2ptr body_bytecodes__funk;
-  f2ptr body_bytecodes__set__symbol;
-  f2ptr body_bytecodes__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr demetropolized_body__symbol;
-  f2ptr demetropolized_body__funk;
-  f2ptr demetropolized_body__set__symbol;
-  f2ptr demetropolized_body__set__funk;
-  f2ptr body__symbol;
-  f2ptr body__funk;
-  f2ptr body__set__symbol;
-  f2ptr body__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr machine_code__symbol;
-  f2ptr machine_code__funk;
-  f2ptr machine_code__set__symbol;
-  f2ptr machine_code__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation, );
 
 // metro
 
-struct funk2_object_type__metro__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
-  f2ptr name__symbol;
-  f2ptr name__funk;
-  f2ptr name__set__symbol;
-  f2ptr name__set__funk;
-  f2ptr body_bytecodes__symbol;
-  f2ptr body_bytecodes__funk;
-  f2ptr body_bytecodes__set__symbol;
-  f2ptr body_bytecodes__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr demetropolized_body__symbol;
-  f2ptr demetropolized_body__funk;
-  f2ptr demetropolized_body__set__symbol;
-  f2ptr demetropolized_body__set__funk;
-  f2ptr body__symbol;
-  f2ptr body__funk;
-  f2ptr body__set__symbol;
-  f2ptr body__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr machine_code__symbol;
-  f2ptr machine_code__funk;
-  f2ptr machine_code__set__symbol;
-  f2ptr machine_code__set__funk;
-  f2ptr is_funktional__symbol;
-  f2ptr is_funktional__funk;
-  f2ptr is_funktional__set__symbol;
-  f2ptr is_funktional__set__funk;
-  f2ptr documentation__symbol;
-  f2ptr documentation__funk;
-  f2ptr documentation__set__symbol;
-  f2ptr documentation__set__funk;
-};
+declare_object_type_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation, );
 
 // exception
 
-struct funk2_object_type__exception__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr tag__symbol;
-  f2ptr tag__funk;
-  f2ptr tag__set__symbol;
-  f2ptr tag__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-};
+declare_object_type_2_slot(exception, tag, value, );
 
 // bytecode
 
-struct funk2_object_type__bytecode__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr command__symbol;
-  f2ptr command__funk;
-  f2ptr command__set__symbol;
-  f2ptr command__set__funk;
-  f2ptr arg0__symbol;
-  f2ptr arg0__funk;
-  f2ptr arg0__set__symbol;
-  f2ptr arg0__set__funk;
-  f2ptr arg1__symbol;
-  f2ptr arg1__funk;
-  f2ptr arg1__set__symbol;
-  f2ptr arg1__set__funk;
-  f2ptr arg2__symbol;
-  f2ptr arg2__funk;
-  f2ptr arg2__set__symbol;
-  f2ptr arg2__set__funk;
-};
+declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2, );
 
 // fiber
 
-struct funk2_object_type__fiber__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
-  f2ptr program_counter__symbol;
-  f2ptr program_counter__funk;
-  f2ptr program_counter__set__symbol;
-  f2ptr program_counter__set__funk;
-  f2ptr stack__symbol;
-  f2ptr stack__funk;
-  f2ptr stack__set__symbol;
-  f2ptr stack__set__funk;
-  f2ptr iter__symbol;
-  f2ptr iter__funk;
-  f2ptr iter__set__symbol;
-  f2ptr iter__set__funk;
-  f2ptr env__symbol;
-  f2ptr env__funk;
-  f2ptr env__set__symbol;
-  f2ptr env__set__funk;
-  f2ptr args__symbol;
-  f2ptr args__funk;
-  f2ptr args__set__symbol;
-  f2ptr args__set__funk;
-  f2ptr return__symbol;
-  f2ptr return__funk;
-  f2ptr return__set__symbol;
-  f2ptr return__set__funk;
-  f2ptr value__symbol;
-  f2ptr value__funk;
-  f2ptr value__set__symbol;
-  f2ptr value__set__funk;
-  f2ptr trace__symbol;
-  f2ptr trace__funk;
-  f2ptr trace__set__symbol;
-  f2ptr trace__set__funk;
-  f2ptr critics__symbol;
-  f2ptr critics__funk;
-  f2ptr critics__set__symbol;
-  f2ptr critics__set__funk;
-  f2ptr cause_reg__symbol;
-  f2ptr cause_reg__funk;
-  f2ptr cause_reg__set__symbol;
-  f2ptr cause_reg__set__funk;
-  f2ptr keep_undead__symbol;
-  f2ptr keep_undead__funk;
-  f2ptr keep_undead__set__symbol;
-  f2ptr keep_undead__set__funk;
-  f2ptr is_zombie__symbol;
-  f2ptr is_zombie__funk;
-  f2ptr is_zombie__set__symbol;
-  f2ptr is_zombie__set__funk;
-  f2ptr parent_fiber__symbol;
-  f2ptr parent_fiber__funk;
-  f2ptr parent_fiber__set__symbol;
-  f2ptr parent_fiber__set__funk;
-  f2ptr parent_env__symbol;
-  f2ptr parent_env__funk;
-  f2ptr parent_env__set__symbol;
-  f2ptr parent_env__set__funk;
-  f2ptr execute_mutex__symbol;
-  f2ptr execute_mutex__funk;
-  f2ptr execute_mutex__set__symbol;
-  f2ptr execute_mutex__set__funk;
-  f2ptr paused__symbol;
-  f2ptr paused__funk;
-  f2ptr paused__set__symbol;
-  f2ptr paused__set__funk;
-  f2ptr last_executed_time__symbol;
-  f2ptr last_executed_time__funk;
-  f2ptr last_executed_time__set__symbol;
-  f2ptr last_executed_time__set__funk;
-  f2ptr sleep_until_time__get__symbol; // get
-  f2ptr sleep_until_time__get__funk;
-  f2ptr sleep_until_time__set__symbol; // set
-  f2ptr sleep_until_time__set__funk;
-  f2ptr sleep_until_time__symbol;      // execute
-  f2ptr sleep_until_time__funk;
-  f2ptr sleep_for_nanoseconds__symbol; // execute
-  f2ptr sleep_for_nanoseconds__funk;
-  f2ptr larva_args__symbol;            // get
-  f2ptr larva_args__funk;
-  f2ptr larva_args__set__symbol;       // set
-  f2ptr larva_args__set__funk;
-};
+declare_object_type_19_slot(fiber, program_counter, stack, iter, env, args, return_reg, value, trace, critics, cause_reg, keep_undead, is_zombie, parent_fiber, parent_env, execute_mutex, paused, last_executed_time, sleep_until_time, larva_args,
+			    f2ptr do_sleep_until_time__symbol;   // execute
+			    f2ptr do_sleep_until_time__funk;
+			    f2ptr sleep_for_nanoseconds__symbol; // execute
+			    f2ptr sleep_for_nanoseconds__funk;
+			    f2ptr is_complete__symbol; // get
+			    f2ptr is_complete__funk;
+			    );
+
 
 // processor
 
-struct funk2_object_type__processor__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  //f2ptr new__symbol;
-  //f2ptr new__funk;
-  f2ptr scheduler__symbol;
-  f2ptr scheduler__funk;
-  f2ptr scheduler__set__symbol;
-  f2ptr scheduler__set__funk;
-  f2ptr processor_thread__symbol;
-  f2ptr processor_thread__funk;
-  f2ptr processor_thread__set__symbol;
-  f2ptr processor_thread__set__funk;
-  f2ptr active_fibers_mutex__symbol;
-  f2ptr active_fibers_mutex__funk;
-  f2ptr active_fibers_mutex__set__symbol;
-  f2ptr active_fibers_mutex__set__funk;
-  f2ptr active_fibers__symbol;
-  f2ptr active_fibers__funk;
-  f2ptr active_fibers__set__symbol;
-  f2ptr active_fibers__set__funk;
-  f2ptr active_fibers_iter__symbol;
-  f2ptr active_fibers_iter__funk;
-  f2ptr active_fibers_iter__set__symbol;
-  f2ptr active_fibers_iter__set__funk;
-  f2ptr active_fibers_prev__symbol;
-  f2ptr active_fibers_prev__funk;
-  f2ptr active_fibers_prev__set__symbol;
-  f2ptr active_fibers_prev__set__funk;
-  f2ptr active_fibers_next__symbol;
-  f2ptr active_fibers_next__funk;
-  f2ptr active_fibers_next__set__symbol;
-  f2ptr active_fibers_next__set__funk;
-  f2ptr sleeping_fibers_mutex__symbol;
-  f2ptr sleeping_fibers_mutex__funk;
-  f2ptr sleeping_fibers_mutex__set__symbol;
-  f2ptr sleeping_fibers_mutex__set__funk;
-  f2ptr sleeping_fibers__symbol;
-  f2ptr sleeping_fibers__funk;
-  f2ptr sleeping_fibers__set__symbol;
-  f2ptr sleeping_fibers__set__funk;
-  f2ptr pool_index__symbol;
-  f2ptr pool_index__funk;
-  f2ptr pool_index__set__symbol;
-  f2ptr pool_index__set__funk;
-  f2ptr desc__symbol;
-  f2ptr desc__funk;
-  f2ptr desc__set__symbol;
-  f2ptr desc__set__funk;
-};
+declare_object_type_11_slot(processor, scheduler, processor_thread, active_fibers_mutex, active_fibers, active_fibers_iter, active_fibers_prev, active_fibers_next, sleeping_fibers_mutex, sleeping_fibers, pool_index, desc, );
 
 // scheduler
 
-struct funk2_object_type__scheduler__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr processors__symbol;
-  f2ptr processors__funk;
-  f2ptr processors__set__symbol;
-  f2ptr processors__set__funk;
-  f2ptr event_subscribers_mutex__symbol;
-  f2ptr event_subscribers_mutex__funk;
-  f2ptr event_subscribers_mutex__set__symbol;
-  f2ptr event_subscribers_mutex__set__funk;
-  f2ptr event_subscribers__symbol;
-  f2ptr event_subscribers__funk;
-  f2ptr event_subscribers__set__symbol;
-  f2ptr event_subscribers__set__funk;
-  f2ptr event_buffer_mutex__symbol;
-  f2ptr event_buffer_mutex__funk;
-  f2ptr event_buffer_mutex__set__symbol;
-  f2ptr event_buffer_mutex__set__funk;
-  f2ptr event_buffer__symbol;
-  f2ptr event_buffer__funk;
-  f2ptr event_buffer__set__symbol;
-  f2ptr event_buffer__set__funk;
-};
+declare_object_type_5_slot(scheduler, processors, event_subscribers_mutex, event_subscribers, event_buffer_mutex, event_buffer, );
 
 // event_subscriber
 
-struct funk2_object_type__event_subscriber__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr event_types__symbol;
-  f2ptr event_types__funk;
-  f2ptr event_types__set__symbol;
-  f2ptr event_types__set__funk;
-  f2ptr fiber__symbol;
-  f2ptr fiber__funk;
-  f2ptr fiber__set__symbol;
-  f2ptr fiber__set__funk;
-  f2ptr funkable__symbol;
-  f2ptr funkable__funk;
-  f2ptr funkable__set__symbol;
-  f2ptr funkable__set__funk;
-  f2ptr event_buffer__symbol;
-  f2ptr event_buffer__funk;
-  f2ptr event_buffer__set__symbol;
-  f2ptr event_buffer__set__funk;
-  f2ptr event_buffer_mutex__symbol;
-  f2ptr event_buffer_mutex__funk;
-  f2ptr event_buffer_mutex__set__symbol;
-  f2ptr event_buffer_mutex__set__funk;
-};
-
-// cause
-
-struct funk2_object_type__cause__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr fibers_mutex__symbol;
-  f2ptr fibers_mutex__funk;
-  f2ptr fibers_mutex__set__symbol;
-  f2ptr fibers_mutex__set__funk;
-  f2ptr fibers__symbol;
-  f2ptr fibers__funk;
-  f2ptr fibers__set__symbol;
-  f2ptr fibers__set__funk;
-  f2ptr frame__symbol;
-  f2ptr frame__funk;
-  f2ptr frame__set__symbol;
-  f2ptr frame__set__funk;
-  f2ptr allocate_traced_arrays__symbol;
-  f2ptr allocate_traced_arrays__funk;
-  f2ptr allocate_traced_arrays__set__symbol;
-  f2ptr allocate_traced_arrays__set__funk;
-  f2ptr bytecode_tracing_on__symbol;
-  f2ptr bytecode_tracing_on__funk;
-  f2ptr bytecode_tracing_on__set__symbol;
-  f2ptr bytecode_tracing_on__set__funk;
-  f2ptr memory_tracing_on__symbol;
-  f2ptr memory_tracing_on__funk;
-  f2ptr memory_tracing_on__set__symbol;
-  f2ptr memory_tracing_on__set__funk;
-  f2ptr subscribers_mutex__symbol;
-  f2ptr subscribers_mutex__funk;
-  f2ptr subscribers_mutex__set__symbol;
-  f2ptr subscribers_mutex__set__funk;
-  f2ptr subscribers__symbol;
-  f2ptr subscribers__funk;
-  f2ptr subscribers__set__symbol;
-  f2ptr subscribers__set__funk;
-  f2ptr imagination_stack__symbol;
-  f2ptr imagination_stack__funk;
-  f2ptr imagination_stack__set__symbol;
-  f2ptr imagination_stack__set__funk;
-  f2ptr event_buffer_first__symbol;
-  f2ptr event_buffer_first__funk;
-  f2ptr event_buffer_first__set__symbol;
-  f2ptr event_buffer_first__set__funk;
-  f2ptr event_buffer_last__symbol;
-  f2ptr event_buffer_last__funk;
-  f2ptr event_buffer_last__set__symbol;
-  f2ptr event_buffer_last__set__funk;
-  f2ptr current_events_mutex__symbol;
-  f2ptr current_events_mutex__funk;
-  f2ptr current_events_mutex__set__symbol;
-  f2ptr current_events_mutex__set__funk;
-  f2ptr current_events__symbol;
-  f2ptr current_events__funk;
-  f2ptr current_events__set__symbol;
-  f2ptr current_events__set__funk;
-  f2ptr define__symbol;
-  f2ptr define__funk;
-  f2ptr define__funk__symbol;
-  f2ptr define__funk__funk;
-};
+declare_object_type_5_slot(event_subscriber, event_types, fiber, funkable, event_buffer, event_buffer_mutex, );
 
 // transframe
 
-struct funk2_object_type__transframe__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr nanoseconds_since_1970__symbol;
-  f2ptr nanoseconds_since_1970__funk;
-  f2ptr nanoseconds_since_1970__set__symbol;
-  f2ptr nanoseconds_since_1970__set__funk;
-  f2ptr symbol_old_news__symbol;
-  f2ptr symbol_old_news__funk;
-  f2ptr symbol_old_news__set__symbol;
-  f2ptr symbol_old_news__set__funk;
-};
-
-// bug
-
-struct funk2_object_type__bug__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr bug_type__symbol;
-  f2ptr bug_type__funk;
-  f2ptr bug_type__set__symbol;
-  f2ptr bug_type__set__funk;
-};
+declare_object_type_2_slot(transframe, nanoseconds_since_1970, symbol_old_news, );
 
 // time
 
-struct funk2_object_type__time__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr nanoseconds_since_1970__symbol;
-  f2ptr nanoseconds_since_1970__funk;
-  f2ptr nanoseconds_since_1970__set__symbol;
-  f2ptr nanoseconds_since_1970__set__funk;
-  f2ptr years__symbol;
-  f2ptr years__funk;
-  f2ptr months__symbol;
-  f2ptr months__funk;
-  f2ptr days__symbol;
-  f2ptr days__funk;
-  f2ptr hours__symbol;
-  f2ptr hours__funk;
-  f2ptr minutes__symbol;
-  f2ptr minutes__funk;
-  f2ptr seconds__symbol;
-  f2ptr seconds__funk;
-  f2ptr nanoseconds__symbol;
-  f2ptr nanoseconds__funk;
-};
+declare_object_type_1_slot(time, nanoseconds_since_1970,
+			   f2ptr years__symbol;
+			   f2ptr years__funk;
+			   f2ptr months__symbol;
+			   f2ptr months__funk;
+			   f2ptr days__symbol;
+			   f2ptr days__funk;
+			   f2ptr hours__symbol;
+			   f2ptr hours__funk;
+			   f2ptr minutes__symbol;
+			   f2ptr minutes__funk;
+			   f2ptr seconds__symbol;
+			   f2ptr seconds__funk;
+			   f2ptr nanoseconds__symbol;
+			   f2ptr nanoseconds__funk;
+			   );
 
 // size_2d
 
-struct funk2_object_type__size_2d__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr x__symbol;
-  f2ptr x__funk;
-  f2ptr x__set__symbol;
-  f2ptr x__set__funk;
-  f2ptr y__symbol;
-  f2ptr y__funk;
-  f2ptr y__set__symbol;
-  f2ptr y__set__funk;
-};
+declare_object_type_2_slot(size_2d, x, y, );
 
 // event
 
-struct funk2_object_type__event__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr node_id__symbol;
-  f2ptr node_id__funk;
-  f2ptr node_id__set__symbol;
-  f2ptr node_id__set__funk;
-  f2ptr event_id__symbol;
-  f2ptr event_id__funk;
-  f2ptr event_id__set__symbol;
-  f2ptr event_id__set__funk;
-  f2ptr event_type__symbol;
-  f2ptr event_type__funk;
-  f2ptr event_type__set__symbol;
-  f2ptr event_type__set__funk;
-  f2ptr data__symbol;
-  f2ptr data__funk;
-  f2ptr data__set__symbol;
-  f2ptr data__set__funk;
-};
+declare_object_type_4_slot(event, node_id, event_id, event_type, data, );
 
 // bytecode_event
 
-struct funk2_object_type__bytecode_event__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr bytecode__symbol;
-  f2ptr bytecode__funk;
-  f2ptr bytecode__set__symbol;
-  f2ptr bytecode__set__funk;
-  f2ptr context__symbol;
-  f2ptr context__funk;
-  f2ptr context__set__symbol;
-  f2ptr context__set__funk;
-};
+declare_object_type_2_slot(bytecode_event, bytecode, context, );
 
 #endif // F2__PRIMOBJECT__GLOBALENV_STRUCTS
 

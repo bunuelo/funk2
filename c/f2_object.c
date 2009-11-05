@@ -57,7 +57,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
-	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);
 	if (test_get_type) {
 	  primobject_type_name = test_get_type;
 	}
@@ -174,7 +174,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       f2ptr primobject_type_name = f2primobject__type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
-	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, f2symbol__new(cause, strlen("type"), (u8*)"type"), nil);
+	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);
 	if (test_get_type) {
 	  primobject_type_name = test_get_type;
 	}
@@ -221,7 +221,94 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
+f2ptr f2__object__hash_value(f2ptr cause, f2ptr fiber, f2ptr this) {
+  f2ptr hash_value_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.hash_value__symbol);
+  return f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, this, nil));
+}
+def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, simple_fiber, this));
 
+
+
+// property_scan
+
+f2ptr object__property_scan__property_scan(f2ptr cause, f2ptr fiber, f2ptr property_funk, f2ptr object, f2ptr type_name, f2ptr slot_name, f2ptr slot_value) {
+  if (property_funk) {
+    return f2__force_funk_apply(cause, fiber, property_funk, f2cons__new(cause, type_name, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil))));
+  }
+  return nil;
+}
+
+void object__property_scan__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr larva_found   = raw__array__elt(cause, aux_data, 0);
+  f2ptr fiber         = raw__array__elt(cause, aux_data, 1);
+  f2ptr object        = raw__array__elt(cause, aux_data, 2);
+  f2ptr type_name     = raw__array__elt(cause, aux_data, 3);
+  f2ptr property_funk = raw__array__elt(cause, aux_data, 4);
+  
+  f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
+  if (raw__larva__is_type(cause, slot_funk)) {
+    larva_found = slot_funk;
+  } else {
+    f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
+    if (raw__larva__is_type(cause, slot_value)) {
+      slot_value = f2__bug__new_from_larva(cause, slot_value);
+    }
+    f2ptr result = object__property_scan__property_scan(cause, fiber, property_funk, object, type_name, slot_name, slot_value);
+    if (raw__larva__is_type(cause, result)) {
+      larva_found = result;
+    } else {
+      // do more
+    }
+  }
+  raw__array__elt__set(cause, aux_data, 0, larva_found);
+}
+
+f2ptr object__property_scan__property_scan__by_type(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr type_name, f2ptr property_funk) {
+  f2ptr larva_found = nil;
+  {
+    f2ptr type = f2__lookup_type(cause, type_name);
+    if (raw__primobject_type__is_type(cause, type)) {
+      {
+	{
+	  f2ptr parents = f2__primobject_type__parents(cause, type);
+	  f2ptr parent_iter = parents;
+	  while (parent_iter) {
+	    f2ptr parent_name = f2__cons__car(cause, parent_iter);
+	    f2ptr result = object__property_scan__property_scan__by_type(cause, fiber, object, parent_name, property_funk);
+	    if (raw__larva__is_type(cause, result)) {
+	      return result;
+	    }
+	    parent_iter = f2__cons__cdr(cause, parent_iter);
+	  }
+	}
+	
+	f2ptr aux_data = raw__array__new(cause, 5);
+	raw__array__elt__set(cause, aux_data, 0, larva_found);
+	raw__array__elt__set(cause, aux_data, 1, fiber);
+	raw__array__elt__set(cause, aux_data, 2, object);
+	raw__array__elt__set(cause, aux_data, 3, type_name);
+	raw__array__elt__set(cause, aux_data, 4, property_funk);
+	f2ptr result                = raw__primobject_type__type_funk__mapc_slot_names(cause, type, __funk2.globalenv.get__symbol, &object__property_scan__map_funk, aux_data);
+	f2ptr larva_found_in_helper = raw__array__elt(cause, aux_data, 0);
+	if (raw__larva__is_type(cause, larva_found_in_helper)) {
+	  larva_found = larva_found_in_helper;
+	} else if (raw__larva__is_type(cause, result)) {
+	  larva_found = result;
+	} else {
+	  // do more
+	}
+      }
+    }
+  }
+  return larva_found;
+}
+
+f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr property_funk) {
+  f2ptr type_name = f2__object__type(cause, object);
+  return object__property_scan__property_scan__by_type(cause, fiber, object, type_name, property_funk);
+}
+
+def_pcfunk2(object__property_scan, object, property_funk, return f2__object__property_scan(this_cause, simple_fiber, object, property_funk));
 
 // **
 
@@ -236,5 +323,7 @@ void f2__object__initialize() {
   
   f2__primcfunk__init__1(object__type,            this,                       "returns the symbolic type name of the object.");
   f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
+  f2__primcfunk__init__1(object__hash_value,      this,                       "returns the hash_value of the object.");
+  f2__primcfunk__init__2(object__property_scan,   this, property_funk,        "property scan funk of type, [funk [name value] ...].");
 }
 

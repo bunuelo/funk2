@@ -27,6 +27,9 @@
 #define chunk__begin_char __funk2.reader.char__left_paren
 #define chunk__end_char   __funk2.reader.char__right_paren
 
+#define frame__begin_char __funk2.reader.char__left_paren
+#define frame__end_char   __funk2.reader.char__right_paren
+
 f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
 
 ansi_color_t print__ansi__default__foreground       = ansi_color__white;
@@ -443,14 +446,16 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  array_is_not_known_primobject = 1; // array is not even primobject!
 	} else {
 	  if (show_slot_causes ||
-	      ((! f2primobject__is_cons(exp, cause)) &&
-	       (! f2primobject__is_doublelink(exp, cause)))) {
+	      ((! f2primobject__is__cons(      exp, cause)) &&
+	       (! f2primobject__is__doublelink(exp, cause)) &&
+	       (! f2primobject__is_list(       exp, cause)) &&
+	       (! f2primobject__is_frame(      exp, cause)))) {
 	    int subexp_size[2];
 	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
 	    f2__write_pretty(cause, fiber, stream, f2primobject__type(exp, cause), recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    indent_space_num += 2; available_width -= 2;
 	  }
-	  if (f2primobject__is_cons(exp, cause)) {
+	  if (f2primobject__is__cons(exp, cause)) {
 	    if (show_slot_causes) {
 	      int subexp_size[2];
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -529,7 +534,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		}
 	      }
 	    }
-	  } else if (f2primobject__is_doublelink(exp, cause)) {
+	  } else if (f2primobject__is__doublelink(exp, cause)) {
 	    if (show_slot_causes) {
 	      int subexp_size[2];
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -596,7 +601,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		}
 	      }
 	    }
-	  } else if (f2primobject__is_cfunk(exp, cause)) {
+	  } else if (f2primobject__is__cfunk(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("name",          13, cause, fiber, stream, f2cfunk__name(exp, cause),                f2cfunk__name__tracing_on(exp, cause), f2cfunk__name__trace(exp, cause), f2cfunk__name__imagination_frame(exp, cause),
@@ -618,7 +623,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("documentation", 13, cause, fiber, stream, f2cfunk__documentation(exp, cause), f2cfunk__documentation__tracing_on(exp, cause), f2cfunk__documentation__trace(exp, cause), f2cfunk__documentation__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_metrocfunk(exp, cause)) {
+	  } else if (f2primobject__is__metrocfunk(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("name",          13, cause, fiber, stream, f2metrocfunk__name(exp, cause),           f2metrocfunk__name__tracing_on(exp, cause), f2metrocfunk__name__trace(exp, cause), f2metrocfunk__name__imagination_frame(exp, cause),
@@ -640,7 +645,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("documentation", 13, cause, fiber, stream, f2metrocfunk__documentation(exp, cause), f2metrocfunk__documentation__tracing_on(exp, cause), f2metrocfunk__documentation__trace(exp, cause), f2metrocfunk__documentation__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_funk(exp, cause)) {
+	  } else if (f2primobject__is__funk(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("name",                19, cause, fiber, stream, f2funk__name(exp, cause),       f2funk__name__tracing_on(exp, cause), f2funk__name__trace(exp, cause), f2funk__name__imagination_frame(exp, cause),
@@ -673,7 +678,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("documentation",       19, cause, fiber, stream, f2funk__documentation(exp, cause),      f2funk__documentation__tracing_on(exp, cause), f2funk__documentation__trace(exp, cause), f2funk__documentation__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_metro(exp, cause)) {
+	  } else if (f2primobject__is__metro(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("name",                19, cause, fiber, stream, f2metro__name(exp, cause),      f2metro__name__tracing_on(exp, cause), f2metro__name__trace(exp, cause), f2metro__name__imagination_frame(exp, cause),
@@ -703,7 +708,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("documentation",       19, cause, fiber, stream, f2metro__documentation(exp, cause),       f2metro__documentation__tracing_on(exp, cause), f2metro__documentation__trace(exp, cause), f2metro__documentation__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_exception(exp, cause)) {
+	  } else if (f2primobject__is__exception(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("tag",   5, cause, fiber, stream, f2exception__tag(exp, cause),             f2exception__tag__tracing_on(exp, cause), f2exception__tag__trace(exp, cause), f2exception__tag__imagination_frame(exp, cause),
@@ -711,7 +716,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("value", 5, cause, fiber, stream, f2exception__value(exp, cause),           f2exception__value__tracing_on(exp, cause), f2exception__value__trace(exp, cause), f2exception__value__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_bytecode(exp, cause)) {
+	  } else if (f2primobject__is__bytecode(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("command",    10, cause, fiber, stream, f2bytecode__command(exp, cause), f2bytecode__command__tracing_on(exp, cause), f2bytecode__command__trace(exp, cause), f2bytecode__command__tracing_on(exp, cause),
@@ -725,7 +730,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("arg2",       10, cause, fiber, stream, f2bytecode__arg2(exp, cause),    f2bytecode__arg2__tracing_on(exp, cause), f2bytecode__arg2__trace(exp, cause), f2bytecode__arg2__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_fiber(exp, cause)) {
+	  } else if (f2primobject__is__fiber(exp, cause)) {
 	    int  subexp_size[2];
 	    if (! brief_mode) {
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -746,7 +751,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (! brief_mode) {
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__slot_key_and_value("return",             18, cause, fiber, stream, f2fiber__return(exp, cause),             f2fiber__return__tracing_on(exp, cause), f2fiber__return__trace(exp, cause), f2fiber__return__imagination_frame(exp, cause),
+	      {f2__write_pretty__slot_key_and_value("return_reg",             18, cause, fiber, stream, f2fiber__return_reg(exp, cause),             f2fiber__return_reg__tracing_on(exp, cause), f2fiber__return_reg__trace(exp, cause), f2fiber__return_reg__imagination_frame(exp, cause),
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -783,7 +788,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("sleep_until_time", 18, cause, fiber, stream, f2fiber__sleep_until_time(exp, cause), f2fiber__sleep_until_time__tracing_on(exp, cause), f2fiber__sleep_until_time__trace(exp, cause), f2fiber__sleep_until_time__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_processor(exp, cause)) {
+	  } else if (f2primobject__is__processor(exp, cause)) {
 	    int subexp_size[2];
 	    //if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    //{f2__write_pretty__slot_key_and_value("scheduler",              22, cause, stream, f2processor__scheduler(exp, cause),        f2processor__scheduler__tracing_on(exp, cause), f2processor__scheduler__trace(exp, cause), f2processor__scheduler__imagination_frame(exp, cause),
@@ -809,7 +814,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("desc",                   22, cause, fiber, stream, f2processor__desc(exp, cause),            f2processor__desc__tracing_on(exp, cause), f2processor__desc__trace(exp, cause), f2processor__desc__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_scheduler(exp, cause)) {
+	  } else if (f2primobject__is__scheduler(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("processors",              23, cause, fiber, stream, f2scheduler__processors(exp, cause),      f2scheduler__processors__tracing_on(exp, cause), f2scheduler__processors__trace(exp, cause), f2scheduler__processors__imagination_frame(exp, cause),
@@ -826,7 +831,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("event_buffer",            23, cause, fiber, stream, f2scheduler__event_buffer(exp, cause),      f2scheduler__event_buffer__tracing_on(exp, cause), f2scheduler__event_buffer__trace(exp, cause), f2scheduler__event_buffer__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_cause(exp, cause)) {
+	  } else if (f2primobject__is__cause(exp, cause)) {
 	    // cause
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -867,7 +872,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("data",       10, cause, fiber, stream, f2tensor__data(exp, cause), f2tensor__data__tracing_on(exp, cause), f2tensor__data__trace(exp, cause), f2tensor__data__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_transframe(exp, cause)) {
+	  } else if (f2primobject__is__transframe(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("nanoseconds_since_1970", 23, cause, fiber, stream, f2transframe__nanoseconds_since_1970(exp, cause), f2transframe__nanoseconds_since_1970__tracing_on(exp, cause), f2transframe__nanoseconds_since_1970__trace(exp, cause), f2transframe__nanoseconds_since_1970__imagination_frame(exp, cause),
@@ -876,151 +881,124 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {f2__write_pretty__slot_key_and_value("symbol_old_news",         23, cause, fiber, stream, f2transframe__symbol_old_news(exp, cause), f2transframe__symbol_old_news__tracing_on(exp, cause), f2transframe__symbol_old_news__trace(exp, cause), f2transframe__symbol_old_news__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    /*
-	  } else if (f2primobject__is_bug(exp, cause)) {
+	  } else if (f2primobject__is__bug(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("type", 4, cause, fiber, stream, f2bug__type(exp, cause), f2bug__type__tracing_on(exp, cause), f2bug__type__trace(exp, cause), f2bug__type__imagination_frame(exp, cause),
 	       ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	  } else if (f2primobject__is_hashtable(exp, cause)) {
+	  } else if (f2primobject__is_ptypehash(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("bin_num_power", 13, cause, fiber, stream, f2hashtable__bin_num_power(exp, cause),   f2hashtable__bin_num_power__tracing_on(exp, cause), f2hashtable__bin_num_power__trace(exp, cause), f2hashtable__bin_num_power__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("bin_num_power", 13, cause, fiber, stream, f2ptypehash__bin_num_power(exp, cause),   f2ptypehash__bin_num_power__tracing_on(exp, cause), f2ptypehash__bin_num_power__trace(exp, cause), f2ptypehash__bin_num_power__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2hashtable__bin_array(exp, cause),       f2hashtable__bin_array__tracing_on(exp, cause), f2hashtable__bin_array__trace(exp, cause), f2hashtable__bin_array__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2ptypehash__bin_array(exp, cause),       f2ptypehash__bin_array__tracing_on(exp, cause), f2ptypehash__bin_array__trace(exp, cause), f2ptypehash__bin_array__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
+	  } else if (f2primobject__is_list(exp, cause)) {
+	    f2ptr cons_cells = f2list__cons_cells(exp, cause);
+	    {
+	      int subexp_size[2];
+	      f2__write_pretty(cause, fiber, stream, cons_cells,
+			       ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+	    }
 	  } else if (f2primobject__is_frame(exp, cause)) {
 	    int   max_type_name_length = 0;
 	    int   max_slot_name_length = 0;
 	    
-	    f2ptr type_hashtable                    = f2frame__type_hashtable(exp, cause);
-	    f2ptr type_hashtable__bin_array         = f2hashtable__bin_array(type_hashtable, cause);
-	    int   type_hashtable__bin_array__length = raw__array__length(cause, type_hashtable__bin_array);
+	    f2ptr type_ptypehash = f2frame__type_ptypehash(exp, cause);
 	    
 	    boolean_t need_to_print_type_besides_basic_variable = boolean__false; // if this is false, we can omit printing "variable" before each frame variable key.
 	    
-	    {
-	      int type__bin_array__index;
-	      for (type__bin_array__index = 0; type__bin_array__index < type_hashtable__bin_array__length; type__bin_array__index ++) {
-		f2ptr type_keyvalue_pair_iter = raw__array__elt(cause, type_hashtable__bin_array, type__bin_array__index);
-		while(type_keyvalue_pair_iter) {
-		  f2ptr type_keyvalue_pair      = f2cons__car(type_keyvalue_pair_iter, cause);
-		  f2ptr type_keyvalue_pair__key = f2cons__car(type_keyvalue_pair, cause);
-		  if (raw__symbol__is_type(cause, type_keyvalue_pair__key)) {
-		    int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
-		    
-		    {
-		      f2ptr typevar_hashtable                    = f2cons__cdr(type_keyvalue_pair, cause);
-		      f2ptr typevar_hashtable__bin_array         = f2hashtable__bin_array(typevar_hashtable, cause);
-		      int   typevar_hashtable__bin_array__length = raw__array__length(cause, typevar_hashtable__bin_array);
-		      
-		      //
-		      {
-			int bin_array__index;
-			for (bin_array__index = 0; bin_array__index < typevar_hashtable__bin_array__length; bin_array__index ++) {
-			  f2ptr keyvalue_pair_iter = raw__array__elt(cause, typevar_hashtable__bin_array, bin_array__index);
-			  while(keyvalue_pair_iter) {
-			    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
-			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
-			    if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
-			      if (type_keyvalue_pair__key != __funk2.primobject__frame.variable__symbol) {
-				need_to_print_type_besides_basic_variable = boolean__true;
-			      }
-			      // here, we only update max_type_name_length if this type_name actually has a key that we are going to print.
-			      if (type_key__length > max_type_name_length) {
-				max_type_name_length = type_key__length;
-			      }
-			      int key__length = f2symbol__length(keyvalue_pair__key, cause);
-			      if (key__length > max_slot_name_length) {
-				max_slot_name_length = key__length;
-			      }
-			    }
-			    keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
-			  }
-			}
-		      }
-		      //
-		      
-		    }
-		    
-		  }
-		  type_keyvalue_pair_iter = f2cons__cdr(type_keyvalue_pair_iter, cause);
-		}
-	      }
-	    }
+	    f2ptr frame_type_name = f2primobject__type(exp, cause); // defaults to "frame", but is set to :type slot name if one exists.
 	    
+	    ptypehash__iteration(cause, type_ptypehash, type_ptypehash__key, type_ptypehash__value,
+				 
+				 if (raw__symbol__is_type(cause, type_ptypehash__key)) {
+				   int type_key__length = f2symbol__length(type_ptypehash__key, cause);
+				   
+				   ptypehash__iteration(cause, type_ptypehash__value, slot_name, slot_value,
+							
+							if (raw__symbol__is_type(cause, slot_name)) {
+							  // here, we only update max length values if this type_name actually has a key that we are going to print.
+							  if (type_ptypehash__key != __funk2.primobject__frame.variable__symbol) {
+							    need_to_print_type_besides_basic_variable = boolean__true;
+							  }
+							  if (slot_name == __funk2.globalenv.type__symbol && raw__symbol__is_type(cause, slot_value)) {
+							    frame_type_name = slot_value;
+							  }
+							  if (type_key__length > max_type_name_length) {
+							    max_type_name_length = type_key__length;
+							  }
+							  int slot_name__length = f2symbol__length(slot_name, cause);
+							  if (slot_name__length > max_slot_name_length) {
+							    max_slot_name_length = slot_name__length;
+							  }
+							}
+							);
+				 }
+				 );
 	    
 	    {
-	      int type__bin_array__index;
-	      for (type__bin_array__index = 0; type__bin_array__index < type_hashtable__bin_array__length; type__bin_array__index ++) {
-		f2ptr type_keyvalue_pair_iter = raw__array__elt(cause, type_hashtable__bin_array, type__bin_array__index);
-		while(type_keyvalue_pair_iter) {
-		  f2ptr type_keyvalue_pair      = f2cons__car(type_keyvalue_pair_iter, cause);
-		  f2ptr type_keyvalue_pair__key = f2cons__car(type_keyvalue_pair, cause);
-		  if (raw__symbol__is_type(cause, type_keyvalue_pair__key)) {
-		    int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
-		    if (type_key__length > max_type_name_length) {
-		      max_type_name_length = type_key__length;
-		    }
-		    
-		    {
-		      f2ptr typevar_hashtable                    = f2cons__cdr(type_keyvalue_pair, cause);
-		      f2ptr typevar_hashtable__bin_array         = f2hashtable__bin_array(typevar_hashtable, cause);
-		      int   typevar_hashtable__bin_array__length = raw__array__length(cause, typevar_hashtable__bin_array);
-		      
-		      //
-		      {
-			int bin_array__index;
-			for (bin_array__index = 0; bin_array__index < typevar_hashtable__bin_array__length; bin_array__index ++) {
-			  f2ptr keyvalue_pair_iter = raw__array__elt(cause, typevar_hashtable__bin_array, bin_array__index);
-			  while(keyvalue_pair_iter) {
-			    f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
-			    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair,      cause);
-			    if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
-			      int   key__length   = f2symbol__length(keyvalue_pair__key, cause);
-			      char* framekey__str = NULL;
-			      int   framekey__length = 0;
-			      
-			      if (need_to_print_type_besides_basic_variable) {
-				framekey__str = (char*)alloca(type_key__length + 1 + key__length + 1);
-				f2symbol__str_copy(type_keyvalue_pair__key, cause, (u8*)framekey__str);
-				{
-				  int i;
-				  for (i = type_key__length; i <= max_type_name_length; i ++) {
-				    framekey__str[i] = ' ';
-				  }
-				}
-				f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str + max_type_name_length + 1);
-				framekey__str[max_type_name_length + 1 + key__length] = 0;
-				framekey__length = max_type_name_length + 1 + max_slot_name_length;
-			      } else {
-				framekey__str = (char*)alloca(key__length + 1);
-				f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str);
-				framekey__str[key__length] = 0;
-				framekey__length = max_slot_name_length;
-			      }
-			      int subexp_size[2];
-			      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-			      f2ptr slot_value             = f2cons__cdr(keyvalue_pair, cause);
-			      f2ptr slot_value__tracing_on = f2cons__cdr__tracing_on(keyvalue_pair, cause);
-			      f2ptr slot_value__trace      = f2cons__cdr__trace(keyvalue_pair, cause);
-			      f2ptr slot_value__cause      = f2cons__cdr__imagination_frame(keyvalue_pair, cause);
-			      {f2__write_pretty__slot_key_and_value(framekey__str, framekey__length, cause, fiber, stream, slot_value, slot_value__tracing_on, slot_value__trace, slot_value__cause,
-								    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-			    }
-			    keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
-			  }
-			}
-		      }
-		      //
-		    }
-		    
-		  }
-		  type_keyvalue_pair_iter = f2cons__cdr(type_keyvalue_pair_iter, cause);
-		}
-	      }
+	      int subexp_size[2];
+	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(frame__begin_char, cause));} width ++;
+	      f2__write_pretty(cause, fiber, stream, frame_type_name, recursion_depth, indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    }
+	    
+	    // indent frame slots
+	    indent_space_num += 2; available_width -= 2;
+	    
+	    ptypehash__iteration(cause, type_ptypehash, type_keyvalue_pair__key, typevar_ptypehash,
+				 
+				 if (raw__symbol__is_type(cause, type_keyvalue_pair__key)) {
+				   int type_key__length = f2symbol__length(type_keyvalue_pair__key, cause);
+				   if (type_key__length > max_type_name_length) {
+				     max_type_name_length = type_key__length;
+				   }
+				   
+				   ptypehash__iteration(cause, typevar_ptypehash, keyvalue_pair__key, slot_value,
+							
+							if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
+							  int   key__length   = f2symbol__length(keyvalue_pair__key, cause);
+							  char* framekey__str = NULL;
+							  int   framekey__length = 0;
+							  
+							  if (need_to_print_type_besides_basic_variable) {
+							    framekey__str = (char*)alloca(type_key__length + 1 + key__length + 1);
+							    f2symbol__str_copy(type_keyvalue_pair__key, cause, (u8*)framekey__str);
+							    {
+							      int i;
+							      for (i = type_key__length; i <= max_type_name_length; i ++) {
+								framekey__str[i] = ' ';
+							      }
+							    }
+							    f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str + max_type_name_length + 1);
+							    framekey__str[max_type_name_length + 1 + key__length] = 0;
+							    framekey__length = max_type_name_length + 1 + max_slot_name_length;
+							  } else {
+							    framekey__str = (char*)alloca(key__length + 1);
+							    f2symbol__str_copy(keyvalue_pair__key, cause, (u8*)framekey__str);
+							    framekey__str[key__length] = 0;
+							    framekey__length = max_slot_name_length;
+							  }
+							  int subexp_size[2];
+							  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+							  f2ptr slot_value__tracing_on = f2cons__cdr__tracing_on(keyvalue_pair, cause);
+							  f2ptr slot_value__trace      = f2cons__cdr__trace(keyvalue_pair, cause);
+							  f2ptr slot_value__cause      = f2cons__cdr__imagination_frame(keyvalue_pair, cause);
+							  {f2__write_pretty__slot_key_and_value(framekey__str, framekey__length, cause, fiber, stream, slot_value, slot_value__tracing_on, slot_value__trace, slot_value__cause,
+												((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+							}
+							
+							);
+				   
+				   
+				 }
+				 
+				 );
+
+	    if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(frame__end_char, cause));} width ++;
+	    
 	  } else if (f2primobject__is_object(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
@@ -1265,8 +1243,10 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	}
 	if (raw__primobject__is_type(cause, exp)) {
 	  if (show_slot_causes ||
-	      ((! f2primobject__is_cons(exp, cause)) &&
-	       (! f2primobject__is_doublelink(exp, cause)))) {
+	      ((! f2primobject__is__cons(      exp, cause)) &&
+	       (! f2primobject__is__doublelink(exp, cause)) &&
+	       (! f2primobject__is_list(       exp, cause)) &&
+	       (! f2primobject__is_frame(      exp, cause)))) {
 	    if (ptype == ptype_simple_array) {
 	      f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	    } else {

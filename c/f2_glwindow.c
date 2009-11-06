@@ -1124,7 +1124,14 @@ def_pcfunk5(glwindow__create, title, width, height, depth, fullscreen, return f2
 
 
 boolean_t raw__glwindow__handle_events(f2ptr cause) {
-  return funk2_glwindow__handle_events(&(__funk2.glwindow), cause);
+  boolean_t value;
+#if defined(F2__GLWINDOW__H)
+  value = funk2_glwindow__handle_events(&(__funk2.glwindow), cause);
+#else
+  value = boolean__false;
+  status("glwindow not supported.");
+#endif
+  return value;
 }
 
 f2ptr f2__glwindow__handle_events(f2ptr cause) {
@@ -1134,7 +1141,11 @@ def_pcfunk0(glwindow__handle_events, return f2__glwindow__handle_events(this_cau
 
 
 void raw__glwindow__destroy(f2ptr cause) {
+#if defined(F2__GLWINDOW__H)
   funk2_glwindow__destroy(&(__funk2.glwindow));
+#else
+  status("glwindow not supported.");
+#endif
 }
 
 f2ptr f2__glwindow__destroy(f2ptr cause) {

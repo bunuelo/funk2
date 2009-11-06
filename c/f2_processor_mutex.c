@@ -125,7 +125,7 @@ void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char
 }
 
 u64 funk2_processor_mutex__eq_hash_value(funk2_processor_mutex_t* this) {
-  return (u64)this;
+  return (u64)to_ptr(this);
 }
 
 u64 funk2_processor_mutex__equals_hash_value(funk2_processor_mutex_t* this) {

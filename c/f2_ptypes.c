@@ -347,7 +347,7 @@ u64 raw__double__eq_hash_value(f2ptr cause, f2ptr this) {
   } stack_memory;
   stack_memory.d    = f2double__d(this, cause);
   stack_memory.zero = 0;
-  u64 eq_hash_value = *((u64*)(&(stack_memory.d)));
+  u64 eq_hash_value = *((u64*)((void*)(&(stack_memory.d))));
   return eq_hash_value;
 }
 

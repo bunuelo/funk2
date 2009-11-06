@@ -61,6 +61,7 @@ typedef struct funk2_glwindow_s {
   unsigned int           depth;
   boolean_t              done;
   float                  rotate_angle;
+  boolean_t              fullscreen;
 
 #if defined(F2__GLWINDOW__SUPPORTED)
   Display*               display;
@@ -69,7 +70,6 @@ typedef struct funk2_glwindow_s {
   GLXContext             glx_context;
   XSetWindowAttributes   set_window_attributes;
   XF86VidModeModeInfo    desk_mode;
-  boolean_t              fullscreen;
   boolean_t              double_buffered;
   unsigned int           resolution;
   u64                    last_redraw__nanoseconds_since_1970;

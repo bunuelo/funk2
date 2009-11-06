@@ -79,13 +79,16 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_bin_funk2_OBJECTS = c/bin_funk2-f2_ansi.$(OBJEXT) \
+am_bin_funk2_OBJECTS = c/bin_funk2-f2_agent.$(OBJEXT) \
+	c/bin_funk2-f2_arithmetic.$(OBJEXT) \
+	c/bin_funk2-f2_array.$(OBJEXT) c/bin_funk2-f2_ansi.$(OBJEXT) \
 	c/bin_funk2-f2_apropos.$(OBJEXT) \
 	c/bin_funk2-f2_blocks_world.$(OBJEXT) \
 	c/bin_funk2-f2_buffered_file.$(OBJEXT) \
 	c/bin_funk2-f2_buffered_socket.$(OBJEXT) \
+	c/bin_funk2-f2_bug.$(OBJEXT) \
 	c/bin_funk2-f2_bytecodes.$(OBJEXT) \
-	c/bin_funk2-f2_child.$(OBJEXT) \
+	c/bin_funk2-f2_cause.$(OBJEXT) c/bin_funk2-f2_child.$(OBJEXT) \
 	c/bin_funk2-f2_child_handler.$(OBJEXT) \
 	c/bin_funk2-f2_circular_buffer.$(OBJEXT) \
 	c/bin_funk2-f2_command_line.$(OBJEXT) \
@@ -110,9 +113,11 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_ansi.$(OBJEXT) \
 	c/bin_funk2-f2_module_registration.$(OBJEXT) \
 	c/bin_funk2-f2_never_delete_list.$(OBJEXT) \
 	c/bin_funk2-f2_object.$(OBJEXT) \
+	c/bin_funk2-f2_object_lattice.$(OBJEXT) \
 	c/bin_funk2-f2_opengl.$(OBJEXT) \
 	c/bin_funk2-f2_packet.$(OBJEXT) \
 	c/bin_funk2-f2_peer_command_server.$(OBJEXT) \
+	c/bin_funk2-f2_physical_objects.$(OBJEXT) \
 	c/bin_funk2-f2_primobjects.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__action.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__boolean.$(OBJEXT) \
@@ -120,10 +125,11 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_ansi.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__dynamic_library.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__environment.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__frame.$(OBJEXT) \
-	c/bin_funk2-f2_primobject__hashtable.$(OBJEXT) \
+	c/bin_funk2-f2_primobject__hash.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__list.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__object.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__object_type.$(OBJEXT) \
+	c/bin_funk2-f2_primobject__ptypehash.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__circular_buffer.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__semantic_graph.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__set.$(OBJEXT) \
@@ -159,6 +165,7 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_ansi.$(OBJEXT) \
 	c/bin_funk2-f2_dynamic_memory.$(OBJEXT) \
 	c/bin_funk2-f2_termios.$(OBJEXT) \
 	c/bin_funk2-f2_thought_process.$(OBJEXT) \
+	c/bin_funk2-f2_tricolor_set.$(OBJEXT) \
 	c/bin_funk2-f2_fiber.$(OBJEXT) c/bin_funk2-f2_time.$(OBJEXT) \
 	c/bin_funk2-f2_trace.$(OBJEXT) \
 	c/bin_funk2-f2_user_thread_controller.$(OBJEXT) \
@@ -232,6 +239,7 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PTHREAD_CC = @PTHREAD_CC@
@@ -368,6 +376,7 @@ dlfcn_linker_flags = -ldl
 
 #opengl_linker_flags = -lGL -lGLU -lXxf86vm
 #`pkg-config --cflags --libs GL GLU Xxf86vm`
+math_linker_flags = -lm
 dynamic_library_flags = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 
@@ -388,12 +397,17 @@ cc_flags = $(release__cc_flags)
 ###### Makefile.am specifics below here ######
 ACLOCAL_AMFLAGS = -I m4
 bin_funk2_SOURCES = \
+  c/f2_agent.c \
+  c/f2_arithmetic.c \
+  c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
   c/f2_blocks_world.c \
   c/f2_buffered_file.c \
   c/f2_buffered_socket.c \
+  c/f2_bug.c \
   c/f2_bytecodes.c \
+  c/f2_cause.c \
   c/f2_child.c \
   c/f2_child_handler.c \
   c/f2_circular_buffer.c \
@@ -421,9 +435,11 @@ bin_funk2_SOURCES = \
   c/f2_module_registration.c \
   c/f2_never_delete_list.c \
   c/f2_object.c \
+  c/f2_object_lattice.c \
   c/f2_opengl.c \
   c/f2_packet.c \
   c/f2_peer_command_server.c \
+  c/f2_physical_objects.c \
   c/f2_primobjects.c \
   c/f2_primobject__action.c \
   c/f2_primobject__boolean.c \
@@ -431,10 +447,11 @@ bin_funk2_SOURCES = \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \
   c/f2_primobject__frame.c \
-  c/f2_primobject__hashtable.c \
+  c/f2_primobject__hash.c \
   c/f2_primobject__list.c \
   c/f2_primobject__object.c \
   c/f2_primobject__object_type.c \
+  c/f2_primobject__ptypehash.c \
   c/f2_primobject__circular_buffer.c \
   c/f2_primobject__semantic_graph.c \
   c/f2_primobject__set.c \
@@ -473,6 +490,7 @@ bin_funk2_SOURCES = \
   c/f2_dynamic_memory.c \
   c/f2_termios.c \
   c/f2_thought_process.c \
+  c/f2_tricolor_set.c \
   c/f2_fiber.c \
   c/f2_time.c \
   c/f2_trace.c \
@@ -480,7 +498,7 @@ bin_funk2_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-bin_funk2_LDFLAGS = $(dynamic_library_linker_flags)
+bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
@@ -569,6 +587,12 @@ c/$(am__dirstamp):
 c/$(DEPDIR)/$(am__dirstamp):
 	@$(mkdir_p) c/$(DEPDIR)
 	@: > c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_agent.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_arithmetic.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_array.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_ansi.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_apropos.$(OBJEXT): c/$(am__dirstamp) \
@@ -579,7 +603,11 @@ c/bin_funk2-f2_buffered_file.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_buffered_socket.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_bug.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_bytecodes.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_cause.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_child.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -635,11 +663,15 @@ c/bin_funk2-f2_never_delete_list.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_object.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_object_lattice.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_opengl.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_packet.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_peer_command_server.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_physical_objects.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobjects.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -655,13 +687,15 @@ c/bin_funk2-f2_primobject__environment.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__frame.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
-c/bin_funk2-f2_primobject__hashtable.$(OBJEXT): c/$(am__dirstamp) \
+c/bin_funk2-f2_primobject__hash.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__list.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__object.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__object_type.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_primobject__ptypehash.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__circular_buffer.$(OBJEXT):  \
 	c/$(am__dirstamp) c/$(DEPDIR)/$(am__dirstamp)
@@ -739,6 +773,8 @@ c/bin_funk2-f2_termios.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_thought_process.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_tricolor_set.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_fiber.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_time.$(OBJEXT): c/$(am__dirstamp) \
@@ -758,12 +794,17 @@ bin/funk2$(EXEEXT): $(bin_funk2_OBJECTS) $(bin_funk2_DEPENDENCIES) bin/$(am__dir
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_agent.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_ansi.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_apropos.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_arithmetic.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_array.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_blocks_world.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_buffered_file.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_buffered_socket.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_bug.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_bytecodes.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_cause.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_child.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_child_handler.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_circular_buffer.$(OBJEXT)
@@ -793,9 +834,11 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_module_registration.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_never_delete_list.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_object.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_object_lattice.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_opengl.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_packet.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_peer_command_server.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_physical_objects.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primfunks.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primfunks__errno.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primfunks__fcntl.$(OBJEXT)
@@ -808,10 +851,11 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_primobject__dynamic_library.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__environment.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__frame.$(OBJEXT)
-	-rm -f c/bin_funk2-f2_primobject__hashtable.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_primobject__hash.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__list.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__object.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__object_type.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_primobject__ptypehash.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__semantic_graph.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__set.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__stream.$(OBJEXT)
@@ -846,18 +890,24 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_thought_process.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_time.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_trace.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_tricolor_set.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_user_thread_controller.$(OBJEXT)
 	-rm -f c/bin_funk2-funk2.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_agent.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_ansi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_apropos.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_arithmetic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_array.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_blocks_world.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_buffered_file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_buffered_socket.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_bug.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_bytecodes.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_cause.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_child.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_child_handler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_circular_buffer.Po@am__quote@
@@ -887,9 +937,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_module_registration.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_never_delete_list.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_object.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_object_lattice.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_opengl.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_packet.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_peer_command_server.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_physical_objects.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primfunks.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primfunks__errno.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primfunks__fcntl.Po@am__quote@
@@ -902,10 +954,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__dynamic_library.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__environment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__frame.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__list.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__object.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__object_type.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__semantic_graph.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__set.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__stream.Po@am__quote@
@@ -940,6 +993,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_thought_process.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_trace.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_user_thread_controller.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-funk2.Po@am__quote@
 
@@ -958,6 +1012,48 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+c/bin_funk2-f2_agent.o: c/f2_agent.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_agent.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_agent.Tpo" -c -o c/bin_funk2-f2_agent.o `test -f 'c/f2_agent.c' || echo '$(srcdir)/'`c/f2_agent.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_agent.Tpo" "c/$(DEPDIR)/bin_funk2-f2_agent.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_agent.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_agent.c' object='c/bin_funk2-f2_agent.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_agent.o `test -f 'c/f2_agent.c' || echo '$(srcdir)/'`c/f2_agent.c
+
+c/bin_funk2-f2_agent.obj: c/f2_agent.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_agent.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_agent.Tpo" -c -o c/bin_funk2-f2_agent.obj `if test -f 'c/f2_agent.c'; then $(CYGPATH_W) 'c/f2_agent.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_agent.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_agent.Tpo" "c/$(DEPDIR)/bin_funk2-f2_agent.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_agent.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_agent.c' object='c/bin_funk2-f2_agent.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_agent.obj `if test -f 'c/f2_agent.c'; then $(CYGPATH_W) 'c/f2_agent.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_agent.c'; fi`
+
+c/bin_funk2-f2_arithmetic.o: c/f2_arithmetic.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_arithmetic.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Tpo" -c -o c/bin_funk2-f2_arithmetic.o `test -f 'c/f2_arithmetic.c' || echo '$(srcdir)/'`c/f2_arithmetic.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Tpo" "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_arithmetic.c' object='c/bin_funk2-f2_arithmetic.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_arithmetic.o `test -f 'c/f2_arithmetic.c' || echo '$(srcdir)/'`c/f2_arithmetic.c
+
+c/bin_funk2-f2_arithmetic.obj: c/f2_arithmetic.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_arithmetic.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Tpo" -c -o c/bin_funk2-f2_arithmetic.obj `if test -f 'c/f2_arithmetic.c'; then $(CYGPATH_W) 'c/f2_arithmetic.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_arithmetic.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Tpo" "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_arithmetic.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_arithmetic.c' object='c/bin_funk2-f2_arithmetic.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_arithmetic.obj `if test -f 'c/f2_arithmetic.c'; then $(CYGPATH_W) 'c/f2_arithmetic.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_arithmetic.c'; fi`
+
+c/bin_funk2-f2_array.o: c/f2_array.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_array.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_array.Tpo" -c -o c/bin_funk2-f2_array.o `test -f 'c/f2_array.c' || echo '$(srcdir)/'`c/f2_array.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_array.Tpo" "c/$(DEPDIR)/bin_funk2-f2_array.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_array.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_array.c' object='c/bin_funk2-f2_array.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_array.o `test -f 'c/f2_array.c' || echo '$(srcdir)/'`c/f2_array.c
+
+c/bin_funk2-f2_array.obj: c/f2_array.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_array.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_array.Tpo" -c -o c/bin_funk2-f2_array.obj `if test -f 'c/f2_array.c'; then $(CYGPATH_W) 'c/f2_array.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_array.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_array.Tpo" "c/$(DEPDIR)/bin_funk2-f2_array.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_array.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_array.c' object='c/bin_funk2-f2_array.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_array.obj `if test -f 'c/f2_array.c'; then $(CYGPATH_W) 'c/f2_array.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_array.c'; fi`
 
 c/bin_funk2-f2_ansi.o: c/f2_ansi.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_ansi.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_ansi.Tpo" -c -o c/bin_funk2-f2_ansi.o `test -f 'c/f2_ansi.c' || echo '$(srcdir)/'`c/f2_ansi.c; \
@@ -1029,6 +1125,20 @@ c/bin_funk2-f2_buffered_socket.obj: c/f2_buffered_socket.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_buffered_socket.obj `if test -f 'c/f2_buffered_socket.c'; then $(CYGPATH_W) 'c/f2_buffered_socket.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_buffered_socket.c'; fi`
 
+c/bin_funk2-f2_bug.o: c/f2_bug.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_bug.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_bug.Tpo" -c -o c/bin_funk2-f2_bug.o `test -f 'c/f2_bug.c' || echo '$(srcdir)/'`c/f2_bug.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_bug.Tpo" "c/$(DEPDIR)/bin_funk2-f2_bug.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_bug.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_bug.c' object='c/bin_funk2-f2_bug.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_bug.o `test -f 'c/f2_bug.c' || echo '$(srcdir)/'`c/f2_bug.c
+
+c/bin_funk2-f2_bug.obj: c/f2_bug.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_bug.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_bug.Tpo" -c -o c/bin_funk2-f2_bug.obj `if test -f 'c/f2_bug.c'; then $(CYGPATH_W) 'c/f2_bug.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_bug.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_bug.Tpo" "c/$(DEPDIR)/bin_funk2-f2_bug.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_bug.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_bug.c' object='c/bin_funk2-f2_bug.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_bug.obj `if test -f 'c/f2_bug.c'; then $(CYGPATH_W) 'c/f2_bug.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_bug.c'; fi`
+
 c/bin_funk2-f2_bytecodes.o: c/f2_bytecodes.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_bytecodes.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_bytecodes.Tpo" -c -o c/bin_funk2-f2_bytecodes.o `test -f 'c/f2_bytecodes.c' || echo '$(srcdir)/'`c/f2_bytecodes.c; \
 @am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_bytecodes.Tpo" "c/$(DEPDIR)/bin_funk2-f2_bytecodes.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_bytecodes.Tpo"; exit 1; fi
@@ -1042,6 +1152,20 @@ c/bin_funk2-f2_bytecodes.obj: c/f2_bytecodes.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_bytecodes.c' object='c/bin_funk2-f2_bytecodes.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_bytecodes.obj `if test -f 'c/f2_bytecodes.c'; then $(CYGPATH_W) 'c/f2_bytecodes.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_bytecodes.c'; fi`
+
+c/bin_funk2-f2_cause.o: c/f2_cause.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_cause.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_cause.Tpo" -c -o c/bin_funk2-f2_cause.o `test -f 'c/f2_cause.c' || echo '$(srcdir)/'`c/f2_cause.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_cause.Tpo" "c/$(DEPDIR)/bin_funk2-f2_cause.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_cause.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_cause.c' object='c/bin_funk2-f2_cause.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_cause.o `test -f 'c/f2_cause.c' || echo '$(srcdir)/'`c/f2_cause.c
+
+c/bin_funk2-f2_cause.obj: c/f2_cause.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_cause.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_cause.Tpo" -c -o c/bin_funk2-f2_cause.obj `if test -f 'c/f2_cause.c'; then $(CYGPATH_W) 'c/f2_cause.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_cause.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_cause.Tpo" "c/$(DEPDIR)/bin_funk2-f2_cause.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_cause.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_cause.c' object='c/bin_funk2-f2_cause.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_cause.obj `if test -f 'c/f2_cause.c'; then $(CYGPATH_W) 'c/f2_cause.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_cause.c'; fi`
 
 c/bin_funk2-f2_child.o: c/f2_child.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_child.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_child.Tpo" -c -o c/bin_funk2-f2_child.o `test -f 'c/f2_child.c' || echo '$(srcdir)/'`c/f2_child.c; \
@@ -1421,6 +1545,20 @@ c/bin_funk2-f2_object.obj: c/f2_object.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_object.obj `if test -f 'c/f2_object.c'; then $(CYGPATH_W) 'c/f2_object.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_object.c'; fi`
 
+c/bin_funk2-f2_object_lattice.o: c/f2_object_lattice.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_object_lattice.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Tpo" -c -o c/bin_funk2-f2_object_lattice.o `test -f 'c/f2_object_lattice.c' || echo '$(srcdir)/'`c/f2_object_lattice.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Tpo" "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_object_lattice.c' object='c/bin_funk2-f2_object_lattice.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_object_lattice.o `test -f 'c/f2_object_lattice.c' || echo '$(srcdir)/'`c/f2_object_lattice.c
+
+c/bin_funk2-f2_object_lattice.obj: c/f2_object_lattice.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_object_lattice.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Tpo" -c -o c/bin_funk2-f2_object_lattice.obj `if test -f 'c/f2_object_lattice.c'; then $(CYGPATH_W) 'c/f2_object_lattice.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_object_lattice.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Tpo" "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_object_lattice.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_object_lattice.c' object='c/bin_funk2-f2_object_lattice.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_object_lattice.obj `if test -f 'c/f2_object_lattice.c'; then $(CYGPATH_W) 'c/f2_object_lattice.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_object_lattice.c'; fi`
+
 c/bin_funk2-f2_opengl.o: c/f2_opengl.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_opengl.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_opengl.Tpo" -c -o c/bin_funk2-f2_opengl.o `test -f 'c/f2_opengl.c' || echo '$(srcdir)/'`c/f2_opengl.c; \
 @am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_opengl.Tpo" "c/$(DEPDIR)/bin_funk2-f2_opengl.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_opengl.Tpo"; exit 1; fi
@@ -1462,6 +1600,20 @@ c/bin_funk2-f2_peer_command_server.obj: c/f2_peer_command_server.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_peer_command_server.c' object='c/bin_funk2-f2_peer_command_server.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_peer_command_server.obj `if test -f 'c/f2_peer_command_server.c'; then $(CYGPATH_W) 'c/f2_peer_command_server.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_peer_command_server.c'; fi`
+
+c/bin_funk2-f2_physical_objects.o: c/f2_physical_objects.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_physical_objects.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Tpo" -c -o c/bin_funk2-f2_physical_objects.o `test -f 'c/f2_physical_objects.c' || echo '$(srcdir)/'`c/f2_physical_objects.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Tpo" "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_physical_objects.c' object='c/bin_funk2-f2_physical_objects.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_physical_objects.o `test -f 'c/f2_physical_objects.c' || echo '$(srcdir)/'`c/f2_physical_objects.c
+
+c/bin_funk2-f2_physical_objects.obj: c/f2_physical_objects.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_physical_objects.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Tpo" -c -o c/bin_funk2-f2_physical_objects.obj `if test -f 'c/f2_physical_objects.c'; then $(CYGPATH_W) 'c/f2_physical_objects.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_physical_objects.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Tpo" "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_physical_objects.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_physical_objects.c' object='c/bin_funk2-f2_physical_objects.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_physical_objects.obj `if test -f 'c/f2_physical_objects.c'; then $(CYGPATH_W) 'c/f2_physical_objects.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_physical_objects.c'; fi`
 
 c/bin_funk2-f2_primobjects.o: c/f2_primobjects.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobjects.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobjects.Tpo" -c -o c/bin_funk2-f2_primobjects.o `test -f 'c/f2_primobjects.c' || echo '$(srcdir)/'`c/f2_primobjects.c; \
@@ -1561,19 +1713,19 @@ c/bin_funk2-f2_primobject__frame.obj: c/f2_primobject__frame.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__frame.obj `if test -f 'c/f2_primobject__frame.c'; then $(CYGPATH_W) 'c/f2_primobject__frame.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__frame.c'; fi`
 
-c/bin_funk2-f2_primobject__hashtable.o: c/f2_primobject__hashtable.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__hashtable.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Tpo" -c -o c/bin_funk2-f2_primobject__hashtable.o `test -f 'c/f2_primobject__hashtable.c' || echo '$(srcdir)/'`c/f2_primobject__hashtable.c; \
-@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__hashtable.c' object='c/bin_funk2-f2_primobject__hashtable.o' libtool=no @AMDEPBACKSLASH@
+c/bin_funk2-f2_primobject__hash.o: c/f2_primobject__hash.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__hash.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Tpo" -c -o c/bin_funk2-f2_primobject__hash.o `test -f 'c/f2_primobject__hash.c' || echo '$(srcdir)/'`c/f2_primobject__hash.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__hash.c' object='c/bin_funk2-f2_primobject__hash.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__hashtable.o `test -f 'c/f2_primobject__hashtable.c' || echo '$(srcdir)/'`c/f2_primobject__hashtable.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__hash.o `test -f 'c/f2_primobject__hash.c' || echo '$(srcdir)/'`c/f2_primobject__hash.c
 
-c/bin_funk2-f2_primobject__hashtable.obj: c/f2_primobject__hashtable.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__hashtable.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Tpo" -c -o c/bin_funk2-f2_primobject__hashtable.obj `if test -f 'c/f2_primobject__hashtable.c'; then $(CYGPATH_W) 'c/f2_primobject__hashtable.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__hashtable.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hashtable.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__hashtable.c' object='c/bin_funk2-f2_primobject__hashtable.obj' libtool=no @AMDEPBACKSLASH@
+c/bin_funk2-f2_primobject__hash.obj: c/f2_primobject__hash.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__hash.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Tpo" -c -o c/bin_funk2-f2_primobject__hash.obj `if test -f 'c/f2_primobject__hash.c'; then $(CYGPATH_W) 'c/f2_primobject__hash.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__hash.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__hash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__hash.c' object='c/bin_funk2-f2_primobject__hash.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__hashtable.obj `if test -f 'c/f2_primobject__hashtable.c'; then $(CYGPATH_W) 'c/f2_primobject__hashtable.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__hashtable.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__hash.obj `if test -f 'c/f2_primobject__hash.c'; then $(CYGPATH_W) 'c/f2_primobject__hash.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__hash.c'; fi`
 
 c/bin_funk2-f2_primobject__list.o: c/f2_primobject__list.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__list.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__list.Tpo" -c -o c/bin_funk2-f2_primobject__list.o `test -f 'c/f2_primobject__list.c' || echo '$(srcdir)/'`c/f2_primobject__list.c; \
@@ -1616,6 +1768,20 @@ c/bin_funk2-f2_primobject__object_type.obj: c/f2_primobject__object_type.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__object_type.c' object='c/bin_funk2-f2_primobject__object_type.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__object_type.obj `if test -f 'c/f2_primobject__object_type.c'; then $(CYGPATH_W) 'c/f2_primobject__object_type.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__object_type.c'; fi`
+
+c/bin_funk2-f2_primobject__ptypehash.o: c/f2_primobject__ptypehash.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__ptypehash.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Tpo" -c -o c/bin_funk2-f2_primobject__ptypehash.o `test -f 'c/f2_primobject__ptypehash.c' || echo '$(srcdir)/'`c/f2_primobject__ptypehash.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__ptypehash.c' object='c/bin_funk2-f2_primobject__ptypehash.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__ptypehash.o `test -f 'c/f2_primobject__ptypehash.c' || echo '$(srcdir)/'`c/f2_primobject__ptypehash.c
+
+c/bin_funk2-f2_primobject__ptypehash.obj: c/f2_primobject__ptypehash.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__ptypehash.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Tpo" -c -o c/bin_funk2-f2_primobject__ptypehash.obj `if test -f 'c/f2_primobject__ptypehash.c'; then $(CYGPATH_W) 'c/f2_primobject__ptypehash.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__ptypehash.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__ptypehash.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__ptypehash.c' object='c/bin_funk2-f2_primobject__ptypehash.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__ptypehash.obj `if test -f 'c/f2_primobject__ptypehash.c'; then $(CYGPATH_W) 'c/f2_primobject__ptypehash.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__ptypehash.c'; fi`
 
 c/bin_funk2-f2_primobject__circular_buffer.o: c/f2_primobject__circular_buffer.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__circular_buffer.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__circular_buffer.Tpo" -c -o c/bin_funk2-f2_primobject__circular_buffer.o `test -f 'c/f2_primobject__circular_buffer.c' || echo '$(srcdir)/'`c/f2_primobject__circular_buffer.c; \
@@ -2148,6 +2314,20 @@ c/bin_funk2-f2_thought_process.obj: c/f2_thought_process.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_thought_process.c' object='c/bin_funk2-f2_thought_process.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_thought_process.obj `if test -f 'c/f2_thought_process.c'; then $(CYGPATH_W) 'c/f2_thought_process.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_thought_process.c'; fi`
+
+c/bin_funk2-f2_tricolor_set.o: c/f2_tricolor_set.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_tricolor_set.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Tpo" -c -o c/bin_funk2-f2_tricolor_set.o `test -f 'c/f2_tricolor_set.c' || echo '$(srcdir)/'`c/f2_tricolor_set.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Tpo" "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_tricolor_set.c' object='c/bin_funk2-f2_tricolor_set.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_tricolor_set.o `test -f 'c/f2_tricolor_set.c' || echo '$(srcdir)/'`c/f2_tricolor_set.c
+
+c/bin_funk2-f2_tricolor_set.obj: c/f2_tricolor_set.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_tricolor_set.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Tpo" -c -o c/bin_funk2-f2_tricolor_set.obj `if test -f 'c/f2_tricolor_set.c'; then $(CYGPATH_W) 'c/f2_tricolor_set.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_tricolor_set.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Tpo" "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_tricolor_set.c' object='c/bin_funk2-f2_tricolor_set.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_tricolor_set.obj `if test -f 'c/f2_tricolor_set.c'; then $(CYGPATH_W) 'c/f2_tricolor_set.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_tricolor_set.c'; fi`
 
 c/bin_funk2-f2_fiber.o: c/f2_fiber.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_fiber.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_fiber.Tpo" -c -o c/bin_funk2-f2_fiber.o `test -f 'c/f2_fiber.c' || echo '$(srcdir)/'`c/f2_fiber.c; \

@@ -268,6 +268,8 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
   raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
+#endif // defined(F2__GLWINDOW__SUPPORTED)
+
 void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
   int title__length = strlen((char*)title);
   this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
@@ -284,6 +286,19 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
   
   this->initialized    = boolean__true;
 }
+
+void funk2_glwindow__destroy(funk2_glwindow_t* this) {
+  if (this->initialized) {
+    this->initialized = boolean__false;
+    
+    funk2_opengl_font__destroy(&(this->fixed_font), nil);
+    
+    funk2_glwindow__hide(this, nil);
+    f2__free(to_ptr(this->title));
+  }
+}
+
+#if defined(F2__GLWINDOW__SUPPORTED)
 
 void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
   funk2_glwindow__destroy(this);
@@ -304,17 +319,6 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
   this->last_redraw__nanoseconds_since_1970 = 0;
   
   this->initialized = boolean__true;
-}
-
-void funk2_glwindow__destroy(funk2_glwindow_t* this) {
-  if (this->initialized) {
-    this->initialized = boolean__false;
-    
-    funk2_opengl_font__destroy(&(this->fixed_font), nil);
-    
-    funk2_glwindow__hide(this, nil);
-    f2__free(to_ptr(this->title));
-  }
 }
 
 // function to release/destroy our resources and restoring the old desktop
@@ -1079,6 +1083,7 @@ void funk2_glwindow__main(f2ptr cause) {
 }
 
 #endif // F2__GLWINDOW__SUPPORTED
+
 
 boolean_t raw__glwindow__supported(f2ptr cause) {
 #if defined(F2__GLWINDOW__SUPPORTED)

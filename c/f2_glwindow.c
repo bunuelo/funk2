@@ -291,7 +291,9 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
   if (this->initialized) {
     this->initialized = boolean__false;
     
+#if defined(F2__GLWINDOW__SUPPORTED)
     funk2_opengl_font__destroy(&(this->fixed_font), nil);
+#endif // defined(F2__GLWINDOW__SUPPORTED)
     
     funk2_glwindow__hide(this, nil);
     f2__free(to_ptr(this->title));

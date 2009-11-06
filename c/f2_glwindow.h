@@ -53,7 +53,15 @@ typedef struct funk2_opengl_font_s {
 typedef struct funk2_glwindow_s {
   boolean_t              initialized;
   boolean_t              window_created;
-  
+  u8*                    title;
+  int                    x;
+  int                    y;
+  unsigned int           width;
+  unsigned int           height;
+  unsigned int           depth;
+  boolean_t              done;
+  float                  rotate_angle;
+
 #if defined(F2__GLWINDOW__SUPPORTED)
   Display*               display;
   int                    screen;
@@ -63,15 +71,7 @@ typedef struct funk2_glwindow_s {
   XF86VidModeModeInfo    desk_mode;
   boolean_t              fullscreen;
   boolean_t              double_buffered;
-  u8*                    title;
-  int                    x;
-  int                    y;
-  unsigned int           width;
-  unsigned int           height;
   unsigned int           resolution;
-  unsigned int           depth;
-  boolean_t              done;
-  float                  rotate_angle;
   u64                    last_redraw__nanoseconds_since_1970;
   boolean_t              needs_redraw;
   funk2_opengl_texture_t texture;
@@ -100,7 +100,7 @@ typedef struct funk2_glwindow_s {
   funk2_opengl_texture_t sideview_red_skirt_texture;
   
   funk2_opengl_font_t    fixed_font;
-#endif // F2__GLWINDOW__SUPPORTED
+#endif // defined(F2__GLWINDOW__SUPPORTED)
 
 } funk2_glwindow_t;
 

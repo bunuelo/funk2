@@ -1353,19 +1353,42 @@ int f2__fiber__bytecode__debug(f2ptr fiber, f2ptr bytecode, f2ptr value) {
 }
 
 
-// bytecode trace [f2ptr]
+f2ptr f2__bytecode_tracer_funk__call_with_event(f2ptr cause, f2ptr bytecode_tracer_funk, f2ptr fiber, f2ptr bytecode, f2ptr value) {
+  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, nil)));
+  f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_tracer_funk, args);
+  return reflective_value;
+}
 
-int f2__fiber__bytecode__trace(f2ptr fiber, f2ptr bytecode, f2ptr value) {
+// bytecode tracer [f2ptr f2ptr]
+
+int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args) {
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr fiber_trace   = f2fiber__trace(fiber, cause);
-  f2ptr new_doublelink = f2doublelink__new(cause, fiber_trace, nil, value);
-  if (fiber_trace) {
-    f2doublelink__next__set(fiber_trace, cause, new_doublelink);
+  if (cause) {
+    f2ptr bytecode_tracer_funks = f2cause__bytecode_tracer_funks(cause, cause);
+    if (bytecode_tracer_funks) {
+      f2ptr value = f2fiber__value(fiber, cause);
+      {
+	f2ptr bytecode_tracer_funks_iter = bytecode_tracer_funks;
+	f2ptr bytecode_tracer_funks_prev = nil;
+	while (bytecode_tracer_funks_iter) {
+	  f2ptr bytecode_tracer_funks_next = f2cons__cdr(bytecode_tracer_funks_iter, cause);
+	  f2ptr bytecode_tracer_funk       = f2cons__car(bytecode_tracer_funks_iter, cause);
+	  {
+	    f2ptr reflective_value = f2__bytecode_tracer_funk__call_with_event(nil, bytecode_tracer_funk, fiber, bytecode, value);
+	    if (raw__larva__is_type(cause, reflective_value)) {
+	      f2fiber__value__set(fiber, cause, reflective_value);
+	      return 1;
+	    }
+	  }
+	  bytecode_tracer_funks_iter = bytecode_tracer_funks_next;
+	}
+      }
+    }
   }
-  f2fiber__trace__set(fiber, cause, new_doublelink);
+  
   return 0;
 }
 

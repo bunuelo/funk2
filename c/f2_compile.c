@@ -98,7 +98,7 @@ f2ptr f2__compile__else_jump(f2ptr cause, f2ptr new_pc)                         
 f2ptr f2__compile__nop(f2ptr cause)                                                   {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__nop__symbol, nil, nil, nil), nil));}
 f2ptr f2__compile__return_bytecode(f2ptr cause)                                       {return bcs_valid(f2__compile__copy( cause, __fiber__return_reg__symbol, __fiber__program_counter_reg__symbol));}
 f2ptr f2__compile__debug(f2ptr cause, f2ptr value)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__debug__symbol, value, nil, nil), nil));}
-f2ptr f2__compile__trace(f2ptr cause, f2ptr value)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__trace__symbol, value, nil, nil), nil));}
+f2ptr f2__compile__tracer(f2ptr cause, f2ptr name, f2ptr args)                        {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__tracer__symbol, name, args, nil), nil));}
 f2ptr f2__compile__compile(f2ptr cause, f2ptr protect_environment)                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__compile__symbol, protect_environment, nil, nil), nil));}
 f2ptr f2__compile__yield(f2ptr cause)                                                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__yield__symbol, nil, nil, nil), nil));}
 f2ptr f2__compile__newenv(f2ptr cause)                                                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__newenv__symbol, nil, nil, nil), nil));}
@@ -1348,7 +1348,7 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
     }
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__nop__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__debug__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__trace__symbol)) {
+  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__tracer__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__compile__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__yield__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__newenv__symbol)) {

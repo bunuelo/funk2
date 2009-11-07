@@ -61,7 +61,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__jump__symbol)                {f2__fiber__bytecode__jump(               fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__nop__symbol)                 {f2__fiber__bytecode__nop(                fiber, bytecode);}
   else if (command == __funk2.bytecode.bytecode__debug__symbol)               {f2__fiber__bytecode__debug(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__trace__symbol)               {f2__fiber__bytecode__trace(              fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__tracer__symbol)              {f2__fiber__bytecode__tracer(             fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__compile__symbol)             {f2__fiber__bytecode__compile(            fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__yield__symbol)               {f2__fiber__bytecode__yield(              fiber, bytecode); return boolean__true;}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)              {f2__fiber__bytecode__newenv(             fiber, bytecode);}

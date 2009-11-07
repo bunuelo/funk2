@@ -52,7 +52,7 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__else_jump__symbol;
   f2ptr bytecode__nop__symbol;
   f2ptr bytecode__debug__symbol;
-  f2ptr bytecode__trace__symbol;
+  f2ptr bytecode__tracer__symbol;
   f2ptr bytecode__compile__symbol;
   f2ptr bytecode__yield__symbol;
   f2ptr bytecode__newenv__symbol;
@@ -132,7 +132,7 @@ int                    f2__fiber__bytecode__jump(                            f2p
 int                    f2__fiber__bytecode__if_jump(                         f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__fiber__bytecode__else_jump(                       f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__fiber__bytecode__debug(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
-int                    f2__fiber__bytecode__trace(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
+int                    f2__fiber__bytecode__tracer(                          f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args);
 int                    f2__fiber__bytecode__compile(                         f2ptr fiber, f2ptr bytecode, f2ptr protect_environment);
 int                    f2__fiber__bytecode__yield(                           f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__newenv(                          f2ptr fiber, f2ptr bytecode);

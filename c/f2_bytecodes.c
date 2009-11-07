@@ -1305,6 +1305,7 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
       f2ptr program_counter = f2fiber__program_counter(fiber, cause);
       {
 	f2ptr bytecode_branch_funks_iter = bytecode_branch_funks;
+	f2ptr bytecode_branch_funks_prev = nil;
 	while (bytecode_branch_funks_iter) {
 	  f2ptr bytecode_branch_funks_next = f2cons__cdr(bytecode_branch_funks_iter, cause);
 	  f2ptr bytecode_branch_funk       = f2cons__car(bytecode_branch_funks_iter, cause);
@@ -1314,6 +1315,14 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;
 	    }
+	    //if (reflective_value) {
+	    //  // remove this funk from list (return nil for default repetitive tracing behavior).
+	    //  if (bytecode_branch_funks_prev) {
+	    //	f2cons__cdr__set(bytecode_branch_funks_prev, cause, bytecode_branch_funks_next);
+	    //  } else {
+	    //	f2cons__cdr__set(bytecode_branch_funks_prev, cause, bytecode_branch_funks_next);
+	    //  }
+	    //}
 	  }
 	  bytecode_branch_funks_iter = bytecode_branch_funks_next;
 	}

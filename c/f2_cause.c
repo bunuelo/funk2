@@ -26,15 +26,15 @@
 
 def_primobject_13_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events) {
+f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events, f2ptr bytecode_branch_funk) {
   f2ptr fibers_mutex         = f2mutex__new(cause);
   f2ptr fibers               = nil;
   f2ptr frame                = f2__frame__new(cause);
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
-  return f2cause__new(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events);
+  return f2cause__new(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk);
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
@@ -45,12 +45,14 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr memory_tracing_on      = nil;
   f2ptr subscribers            = nil;
   f2ptr imagination_stack      = nil;
+  f2ptr bytecode_branch_funk   = nil;
   if (source) {
     allocate_traced_arrays = f2__cause__allocate_traced_arrays(cause, source);
     bytecode_tracing_on    = f2__cause__bytecode_tracing_on(   cause, source);
     memory_tracing_on      = f2__cause__memory_tracing_on(     cause, source);
     subscribers            = f2__cause__subscribers(           cause, source);
     imagination_stack      = f2__cause__imagination_stack(     cause, source);
+    bytecode_branch_funk   = f2__cause__bytecode_branch_funk(  cause, source);
   }
   return f2__cause__new(cause,
 			allocate_traced_arrays,
@@ -60,7 +62,8 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			imagination_stack,
 			nil,  // event_buffer_first
 			nil,  // event_buffer_last
-			nil); // current_events
+			nil,  // current_events
+			bytecode_branch_funk);
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {

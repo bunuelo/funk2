@@ -1224,7 +1224,10 @@ int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_
   
   f2__fiber__increment_pc(fiber, cause);
   
-  if(f2fiber__value(fiber, cause)) {
+  f2ptr value           = f2fiber__value(fiber, cause);
+  f2ptr program_counter = f2fiber__program_counter(fiber, cause);
+  // going to add causal_branch_bytecode_trace_funk here.
+  if(value) {
     if (raw__exception__is_type(cause, new_program_counter)) {
       f2fiber__value__set(fiber, cause, new_program_counter);
     } else {
@@ -1241,8 +1244,8 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
-  
-  if(! f2fiber__value(fiber, cause)) {
+  f2ptr value = f2fiber__value(fiber, cause);
+  if(! value) {
     if (raw__exception__is_type(cause, new_program_counter)) {
       f2fiber__value__set(fiber, cause, new_program_counter);
     } else {

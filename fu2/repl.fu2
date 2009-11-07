@@ -42,7 +42,7 @@
 
 [defunk repl-io [input-stream output-stream html tutorial]
   [define-funk afwrite-maybe_html      [if html &afwrite_html &afwrite]]
-  [define-funk aformat-maybe_html      [if html &aformat-html &aformat]]
+  [define-funk aformat-maybe_html      [if html &aformat_html &aformat]]
   [define-funk stream-print-maybe_html [funk [stream exp] [aformat-maybe_html stream '\n'] [afwrite-maybe_html exp]]]
   [define-funk print-maybe_html        [funk [exp]        [stream-print-maybe_html stdout exp]]]
   [if output-stream [aformat-maybe_html output-stream '\nin--> ']]

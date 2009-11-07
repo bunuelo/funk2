@@ -19,17 +19,29 @@
  rights to redistribute these changes.
 '
 
-[defmetro funktrace [:rest body] 
+[defmetro funktracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_funk_funks]]]
      [set [this-cause] bytecode_funk_funks [cons [funk [fiber bytecode funk args]
 						       @body]
 						 funks]]
      nil]]
 
-[defmetro branchtrace [:rest body] 
+[defmetro branchtracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_branch_funks]]]
      [set [this-cause] bytecode_branch_funks [cons [funk [fiber bytecode program_counter branch_program_counter value]
 							 @body]
 						   funks]]
      nil]]
+
+[defmetro valuetracer [:rest body] 
+  `[let [[funks [get [this-cause] bytecode_tracer_funks]]]
+     [set [this-cause] bytecode_tracer_funks [cons [funk [fiber bytecode value]
+							 @body]
+						   funks]]
+     nil]]
+
+[defunk test-tracers []
+  [funktracer   [print [list [get bytecode command] [get funk name] [mapcar &type args]]]]
+  [branchtracer [print [list [get bytecode command] [not [not value]]]]]
+  [valuetracer  [print [list [get bytecode command] [get bytecode arg0] [get bytecode arg1] [type value]]]]]
 

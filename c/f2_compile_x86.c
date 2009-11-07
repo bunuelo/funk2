@@ -1068,7 +1068,7 @@ void f2__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint*
   else if (command == __funk2.bytecode.bytecode__jump__symbol)               {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__jump, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__nop__symbol)                {}
   else if (command == __funk2.bytecode.bytecode__debug__symbol)              {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__debug, f2bytecode__arg0(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__trace__symbol)              {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__trace, f2bytecode__arg0(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__tracer__symbol)             {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__tracer, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__compile__symbol)            {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__compile(f2bytecode__arg0(bytecode, cause)));}
   else if (command == __funk2.bytecode.bytecode__yield__symbol)              {}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__newenv);}

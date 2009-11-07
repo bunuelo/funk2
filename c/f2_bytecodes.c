@@ -1393,6 +1393,46 @@ int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr a
 }
 
 
+f2ptr f2__bytecode_endfunk__call_with_event(f2ptr cause, f2ptr bytecode_endfunk_funk, f2ptr fiber, f2ptr bytecode, f2ptr value) {
+  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, nil)));
+  f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_endfunk_funk, args);
+  return reflective_value;
+}
+
+// bytecode endfunk [f2ptr f2ptr]
+
+int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args) {
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  if (cause) {
+    f2ptr bytecode_endfunk_funks = f2cause__bytecode_endfunk_funks(cause, cause);
+    if (bytecode_endfunk_funks) {
+      f2ptr value = f2fiber__value(fiber, cause);
+      {
+	f2ptr bytecode_endfunk_funks_iter = bytecode_endfunk_funks;
+	//f2ptr bytecode_endfunk_funks_prev = nil;
+	while (bytecode_endfunk_funks_iter) {
+	  f2ptr bytecode_endfunk_funks_next = f2cons__cdr(bytecode_endfunk_funks_iter, cause);
+	  f2ptr bytecode_endfunk_funk       = f2cons__car(bytecode_endfunk_funks_iter, cause);
+	  {
+	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(nil, bytecode_endfunk_funk, fiber, bytecode, value);
+	    if (raw__larva__is_type(cause, reflective_value)) {
+	      f2fiber__value__set(fiber, cause, reflective_value);
+	      return 1;
+	    }
+	  }
+	  bytecode_endfunk_funks_iter = bytecode_endfunk_funks_next;
+	}
+      }
+    }
+  }
+  
+  return 0;
+}
+
+
 // bytecode compile [boolean_t]
 
 int f2__fiber__bytecode__compile__protect_environment(f2ptr fiber, f2ptr bytecode) {
@@ -1700,39 +1740,40 @@ int f2__fiber__bytecode__reg_array__elt__set(f2ptr fiber, f2ptr bytecode, f2ptr 
 void f2__bytecodes__reinitialize_globalvars() {
   f2ptr cause = f2_bytecodes_c__cause__new(initial_cause());
   
-  __funk2.bytecode.bytecode__jump_funk__symbol           = f2symbol__new(cause, strlen("jump-funk"),          (u8*)"jump-funk");
-  __funk2.bytecode.bytecode__funk__symbol                = f2symbol__new(cause, strlen("funk"),               (u8*)"funk");
-  __funk2.bytecode.bytecode__array__symbol               = f2symbol__new(cause, strlen("array"),              (u8*)"array");
-  __funk2.bytecode.bytecode__cons__symbol                = f2symbol__new(cause, strlen("cons"),               (u8*)"cons");
-  __funk2.bytecode.bytecode__consp__symbol               = f2symbol__new(cause, strlen("consp"),              (u8*)"consp");
-  __funk2.bytecode.bytecode__car__symbol                 = f2symbol__new(cause, strlen("car"),                (u8*)"car");
-  __funk2.bytecode.bytecode__cdr__symbol                 = f2symbol__new(cause, strlen("cdr"),                (u8*)"cdr");
-  __funk2.bytecode.bytecode__car__set__symbol            = f2symbol__new(cause, strlen("car-set"),            (u8*)"car-set");
-  __funk2.bytecode.bytecode__cdr__set__symbol            = f2symbol__new(cause, strlen("cdr-set"),            (u8*)"cdr-set");
-  __funk2.bytecode.bytecode__array_elt__symbol           = f2symbol__new(cause, strlen("array_elt"),          (u8*)"array_elt");
-  __funk2.bytecode.bytecode__set__symbol                 = f2symbol__new(cause, strlen("set"),                (u8*)"set");
-  __funk2.bytecode.bytecode__swap__symbol                = f2symbol__new(cause, strlen("swap"),               (u8*)"swap");
-  __funk2.bytecode.bytecode__push__symbol                = f2symbol__new(cause, strlen("push"),               (u8*)"push");
-  __funk2.bytecode.bytecode__pop__symbol                 = f2symbol__new(cause, strlen("pop"),                (u8*)"pop");
-  __funk2.bytecode.bytecode__copy__symbol                = f2symbol__new(cause, strlen("copy"),               (u8*)"copy");
-  __funk2.bytecode.bytecode__lookup_type_var__symbol     = f2symbol__new(cause, strlen("lookup"),             (u8*)"lookup");
-  __funk2.bytecode.bytecode__define_type_var__symbol     = f2symbol__new(cause, strlen("define"),             (u8*)"define");
-  __funk2.bytecode.bytecode__type_var__mutate__symbol    = f2symbol__new(cause, strlen("mutate-type_var"),    (u8*)"mutate-type_var");
-  __funk2.bytecode.bytecode__globalize_type_var__symbol  = f2symbol__new(cause, strlen("globalize-type_var"), (u8*)"globalize-type_var");
-  __funk2.bytecode.bytecode__jump__symbol                = f2symbol__new(cause, strlen("jump"),               (u8*)"jump");
-  __funk2.bytecode.bytecode__if_jump__symbol             = f2symbol__new(cause, strlen("if-jump"),            (u8*)"if-jump");
-  __funk2.bytecode.bytecode__else_jump__symbol           = f2symbol__new(cause, strlen("else-jump"),          (u8*)"else-jump");
-  __funk2.bytecode.bytecode__nop__symbol                 = f2symbol__new(cause, strlen("nop"),                (u8*)"nop");
-  __funk2.bytecode.bytecode__debug__symbol               = f2symbol__new(cause, strlen("debug"),              (u8*)"debug");
-  __funk2.bytecode.bytecode__tracer__symbol              = f2symbol__new(cause, strlen("tracer"),             (u8*)"tracer");
-  __funk2.bytecode.bytecode__compile__symbol             = f2symbol__new(cause, strlen("compile"),            (u8*)"compile");
-  __funk2.bytecode.bytecode__yield__symbol               = f2symbol__new(cause, strlen("yield"),              (u8*)"yield");
-  __funk2.bytecode.bytecode__newenv__symbol              = f2symbol__new(cause, strlen("newenv"),             (u8*)"newenv");
-  __funk2.bytecode.bytecode__machine_code__symbol        = f2symbol__new(cause, strlen("machine_code"),       (u8*)"machine_code");
-  __funk2.bytecode.bytecode__reg_array__elt__symbol      = f2symbol__new(cause, strlen("reg_array-elt"),      (u8*)"reg_array-elt");
-  __funk2.bytecode.bytecode__reg_array__elt__set__symbol = f2symbol__new(cause, strlen("reg_array-elt-set"),  (u8*)"reg_array-elt-set");
+  __funk2.bytecode.bytecode__jump_funk__symbol           = new__symbol(cause, "jump-funk");
+  __funk2.bytecode.bytecode__funk__symbol                = new__symbol(cause, "funk");
+  __funk2.bytecode.bytecode__array__symbol               = new__symbol(cause, "array");
+  __funk2.bytecode.bytecode__cons__symbol                = new__symbol(cause, "cons");
+  __funk2.bytecode.bytecode__consp__symbol               = new__symbol(cause, "consp");
+  __funk2.bytecode.bytecode__car__symbol                 = new__symbol(cause, "car");
+  __funk2.bytecode.bytecode__cdr__symbol                 = new__symbol(cause, "cdr");
+  __funk2.bytecode.bytecode__car__set__symbol            = new__symbol(cause, "car-set");
+  __funk2.bytecode.bytecode__cdr__set__symbol            = new__symbol(cause, "cdr-set");
+  __funk2.bytecode.bytecode__array_elt__symbol           = new__symbol(cause, "array_elt");
+  __funk2.bytecode.bytecode__set__symbol                 = new__symbol(cause, "set");
+  __funk2.bytecode.bytecode__swap__symbol                = new__symbol(cause, "swap");
+  __funk2.bytecode.bytecode__push__symbol                = new__symbol(cause, "push");
+  __funk2.bytecode.bytecode__pop__symbol                 = new__symbol(cause, "pop");
+  __funk2.bytecode.bytecode__copy__symbol                = new__symbol(cause, "copy");
+  __funk2.bytecode.bytecode__lookup_type_var__symbol     = new__symbol(cause, "lookup");
+  __funk2.bytecode.bytecode__define_type_var__symbol     = new__symbol(cause, "define");
+  __funk2.bytecode.bytecode__type_var__mutate__symbol    = new__symbol(cause, "mutate-type_var");
+  __funk2.bytecode.bytecode__globalize_type_var__symbol  = new__symbol(cause, "globalize-type_var");
+  __funk2.bytecode.bytecode__jump__symbol                = new__symbol(cause, "jump");
+  __funk2.bytecode.bytecode__if_jump__symbol             = new__symbol(cause, "if-jump");
+  __funk2.bytecode.bytecode__else_jump__symbol           = new__symbol(cause, "else-jump");
+  __funk2.bytecode.bytecode__nop__symbol                 = new__symbol(cause, "nop");
+  __funk2.bytecode.bytecode__debug__symbol               = new__symbol(cause, "debug");
+  __funk2.bytecode.bytecode__tracer__symbol              = new__symbol(cause, "tracer");
+  __funk2.bytecode.bytecode__endfunk__symbol             = new__symbol(cause, "endfunk");
+  __funk2.bytecode.bytecode__compile__symbol             = new__symbol(cause, "compile");
+  __funk2.bytecode.bytecode__yield__symbol               = new__symbol(cause, "yield");
+  __funk2.bytecode.bytecode__newenv__symbol              = new__symbol(cause, "newenv");
+  __funk2.bytecode.bytecode__machine_code__symbol        = new__symbol(cause, "machine_code");
+  __funk2.bytecode.bytecode__reg_array__elt__symbol      = new__symbol(cause, "reg_array-elt");
+  __funk2.bytecode.bytecode__reg_array__elt__set__symbol = new__symbol(cause, "reg_array-elt-set");
   
-  __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("expression-not-funkable"), (u8*)"expression-not-funkable");
+  __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
 }
 
@@ -1745,7 +1786,7 @@ void f2__bytecodes__initialize() {
   
   // exceptions
   
-  __funk2.bytecode.expression_not_funkable__exception__tag = f2symbol__new(cause, strlen("expression-not-funkable"), (u8*)"expression-not-funkable");
+  __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
   environment__add_var_value(cause, global_environment(), __funk2.bytecode.expression_not_funkable__exception__tag, __funk2.bytecode.expression_not_funkable__exception);
 }

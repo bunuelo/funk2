@@ -41,7 +41,7 @@
      nil]]
 
 [defunk test-tracers []
-  [funktracer   [print [list [get bytecode command] [get funk name] [mapcar &type args]]]]
-  [branchtracer [print [list [get bytecode command] [not [not value]]]]]
-  [valuetracer  [print [list [get bytecode command] [get bytecode arg0] [get bytecode arg1] [type value]]]]]
+  [funktracer   [print [list `funktracer--: [get funk name] [mapcar &type args] [get bytecode command]]]]
+  [branchtracer [print [list `branchtracer: [not [not value]] [get bytecode command]]]]
+  [valuetracer  [print [list `valuetracer-: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]]
 

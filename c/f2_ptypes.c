@@ -1815,6 +1815,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
       f2ptr real_value              = __pure__f2traced_array__elt(this, index);
       return_value = f2__imagination_frame__get_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, imagination_name_stack, real_value, trace_depth - 1);
     } else {
+      return_value = __pure__f2traced_array__elt(this, index);
     }
   } else {
     return_value = __pure__f2traced_array__elt(this, index);

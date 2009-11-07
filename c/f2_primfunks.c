@@ -397,7 +397,7 @@ void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) 
   f2fiber__value__set(fiber, cause, cfunkable);
   //f2fiber__program_counter__set(fiber, cause, f2__compile__funk_bc(cause, nil));
   
-  f2__fiber__bytecode_helper__funk__no_increment_pc_reg(fiber, cause);
+  f2__fiber__bytecode_helper__funk__no_increment_pc_reg(fiber, cause, nil);
   //f2__global_scheduler__add_fiber(cause, fiber);
 }
 

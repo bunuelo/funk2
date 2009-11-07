@@ -46,6 +46,7 @@
 [load 'fu2/bootstrap-physical_objects.fu2']
 [load 'fu2/bootstrap-object_lattice.fu2']
 [load 'fu2/bootstrap-glwindow.fu2']
+[load 'fu2/bootstrap-cause.fu2']
 
 `[load 'fu2/action.fu2']
 [load 'fu2/time.fu2']

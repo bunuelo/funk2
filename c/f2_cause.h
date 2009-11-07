@@ -26,7 +26,7 @@
 
 // cause
 
-declare_object_type_14_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk,
+declare_object_type_15_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk, bytecode_funk_funk,
 			    f2ptr define__symbol;
 			    f2ptr define__funk;
 			    f2ptr define__funk__symbol;
@@ -45,7 +45,7 @@ declare_object_type_14_slot(cause, fibers_mutex, fibers, frame, allocate_traced_
 
 #define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_14_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk);
+declare_primobject_15_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk, bytecode_funk_funk);
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);

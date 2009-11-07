@@ -24,7 +24,7 @@
 
 // cause
 
-def_primobject_16_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funks, bytecode_funk_funks, bytecode_tracer_funk);
+def_primobject_16_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funks, bytecode_funk_funks, bytecode_tracer_funks);
 
 f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events, f2ptr bytecode_branch_funks, f2ptr bytecode_funk_funks) {
   f2ptr fibers_mutex         = f2mutex__new(cause);

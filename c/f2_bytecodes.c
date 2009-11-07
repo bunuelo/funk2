@@ -1305,7 +1305,7 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
       f2ptr program_counter = f2fiber__program_counter(fiber, cause);
       {
 	f2ptr bytecode_branch_funks_iter = bytecode_branch_funks;
-	f2ptr bytecode_branch_funks_prev = nil;
+	//f2ptr bytecode_branch_funks_prev = nil;
 	while (bytecode_branch_funks_iter) {
 	  f2ptr bytecode_branch_funks_next = f2cons__cdr(bytecode_branch_funks_iter, cause);
 	  f2ptr bytecode_branch_funk       = f2cons__car(bytecode_branch_funks_iter, cause);
@@ -1372,7 +1372,7 @@ int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr a
       f2ptr value = f2fiber__value(fiber, cause);
       {
 	f2ptr bytecode_tracer_funks_iter = bytecode_tracer_funks;
-	f2ptr bytecode_tracer_funks_prev = nil;
+	//f2ptr bytecode_tracer_funks_prev = nil;
 	while (bytecode_tracer_funks_iter) {
 	  f2ptr bytecode_tracer_funks_next = f2cons__cdr(bytecode_tracer_funks_iter, cause);
 	  f2ptr bytecode_tracer_funk       = f2cons__car(bytecode_tracer_funks_iter, cause);

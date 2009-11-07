@@ -45,7 +45,7 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__else_jump__symbol          = -1;
   this->bytecode__nop__symbol                = -1; // null operation (should be stripped out before executing [ideally])
   this->bytecode__debug__symbol              = -1;
-  this->bytecode__trace__symbol              = -1;
+  this->bytecode__tracer__symbol             = -1;
   this->bytecode__compile__symbol            = -1;
   this->bytecode__yield__symbol              = -1;
   this->bytecode__newenv__symbol             = -1;
@@ -1724,7 +1724,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__else_jump__symbol           = f2symbol__new(cause, strlen("else-jump"),          (u8*)"else-jump");
   __funk2.bytecode.bytecode__nop__symbol                 = f2symbol__new(cause, strlen("nop"),                (u8*)"nop");
   __funk2.bytecode.bytecode__debug__symbol               = f2symbol__new(cause, strlen("debug"),              (u8*)"debug");
-  __funk2.bytecode.bytecode__trace__symbol               = f2symbol__new(cause, strlen("trace"),              (u8*)"trace");
+  __funk2.bytecode.bytecode__tracer__symbol              = f2symbol__new(cause, strlen("tracer"),             (u8*)"tracer");
   __funk2.bytecode.bytecode__compile__symbol             = f2symbol__new(cause, strlen("compile"),            (u8*)"compile");
   __funk2.bytecode.bytecode__yield__symbol               = f2symbol__new(cause, strlen("yield"),              (u8*)"yield");
   __funk2.bytecode.bytecode__newenv__symbol              = f2symbol__new(cause, strlen("newenv"),             (u8*)"newenv");

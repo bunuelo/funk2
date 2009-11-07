@@ -220,9 +220,9 @@ int f2__fiber__bytecode__jump_funk(f2ptr fiber, f2ptr bytecode) {
 //
 //   note: this is where we set the return register (f2_compile.c assumes that this happens atomically with this bytecode).
 //
-int f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause) {
+int f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
   f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause)); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
-  return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause);
+  return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause, bytecode);
 }
 
 int f2__fiber__bytecode__funk(f2ptr fiber, f2ptr bytecode) {

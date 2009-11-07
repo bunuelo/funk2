@@ -24,15 +24,15 @@
 
 // cause
 
-def_primobject_15_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk, bytecode_funk_funk);
+def_primobject_15_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funks, bytecode_funk_funks);
 
-f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events, f2ptr bytecode_branch_funk, f2ptr bytecode_funk_funk) {
+f2ptr f2__cause__new(f2ptr cause, f2ptr allocate_traced_arrays, f2ptr bytecode_tracing_on, f2ptr memory_tracing_on, f2ptr subscribers, f2ptr imagination_name, f2ptr event_buffer_first, f2ptr event_buffer_last, f2ptr current_events, f2ptr bytecode_branch_funks, f2ptr bytecode_funk_funks) {
   f2ptr fibers_mutex         = f2mutex__new(cause);
   f2ptr fibers               = nil;
   f2ptr frame                = f2__frame__new(cause);
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
-  return f2cause__new(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk, bytecode_funk_funk);
+  return f2cause__new(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_name, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funks, bytecode_funk_funks);
 }
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
@@ -45,16 +45,16 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   f2ptr memory_tracing_on      = nil;
   f2ptr subscribers            = nil;
   f2ptr imagination_stack      = nil;
-  f2ptr bytecode_branch_funk   = nil;
-  f2ptr bytecode_funk_funk     = nil;
+  f2ptr bytecode_branch_funks  = nil;
+  f2ptr bytecode_funk_funks    = nil;
   if (source) {
     allocate_traced_arrays = f2__cause__allocate_traced_arrays(cause, source);
     bytecode_tracing_on    = f2__cause__bytecode_tracing_on(   cause, source);
     memory_tracing_on      = f2__cause__memory_tracing_on(     cause, source);
     subscribers            = f2__cause__subscribers(           cause, source);
     imagination_stack      = f2__cause__imagination_stack(     cause, source);
-    bytecode_branch_funk   = f2__cause__bytecode_branch_funk(  cause, source);
-    bytecode_funk_funk     = f2__cause__bytecode_funk_funk(    cause, source);
+    bytecode_branch_funks  = f2__cause__bytecode_branch_funks( cause, source);
+    bytecode_funk_funks    = f2__cause__bytecode_funk_funks(   cause, source);
   }
   return f2__cause__new(cause,
 			allocate_traced_arrays,
@@ -65,8 +65,8 @@ f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
 			nil,  // event_buffer_first
 			nil,  // event_buffer_last
 			nil,  // current_events
-			bytecode_branch_funk,
-			bytecode_funk_funk);
+			bytecode_branch_funks,
+			bytecode_funk_funks);
 }
 
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -178,7 +178,7 @@ void f2__cause__initialize() {
   
   // cause
   
-  initialize_primobject_15_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funk, bytecode_funk_funk);
+  initialize_primobject_15_slot(cause, fibers_mutex, fibers, frame, allocate_traced_arrays, bytecode_tracing_on, memory_tracing_on, subscribers_mutex, subscribers, imagination_stack, event_buffer_first, event_buffer_last, current_events_mutex, current_events, bytecode_branch_funks, bytecode_funk_funks);
   
   {char* symbol_str = "define"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}

@@ -145,7 +145,7 @@ f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_f
 
 // bytecode jump_funk []
 
-int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause) {
+int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
   f2ptr funktion = f2fiber__value(fiber, cause);
   //assert(funktion != nil, fiber, "f2__fiber__bytecode__funk assertion failed: funktion is null.");
   
@@ -212,7 +212,7 @@ int f2__fiber__bytecode__jump_funk(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause);
+  return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause, bytecode);
 }
 
 
@@ -229,7 +229,7 @@ int f2__fiber__bytecode__funk(f2ptr fiber, f2ptr bytecode) {
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
-  return f2__fiber__bytecode_helper__funk__no_increment_pc_reg(fiber, cause);
+  return f2__fiber__bytecode_helper__funk__no_increment_pc_reg(fiber, cause, bytecode);
 }
 
 

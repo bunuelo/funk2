@@ -1216,6 +1216,11 @@ int f2__fiber__bytecode__jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_cou
   return 1;
 }
 
+f2ptr f2__bytecode_branch_funk__call_with_event(f2ptr cause, f2ptr bytecode_branch_funk, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
+  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, program_counter, f2cons__new(cause, branch_program_counter, f2cons__new(cause, value, nil)))));
+  f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_branch_funk, args);
+  return reflective_value;
+}
 
 // bytecode if_jump [f2ptr]
 
@@ -1224,10 +1229,21 @@ int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr value           = f2fiber__value(fiber, cause);
-  f2ptr program_counter = f2fiber__program_counter(fiber, cause);
-  // going to add causal_branch_bytecode_trace_funk here.
-  if(value) {
+  f2ptr value = f2fiber__value(fiber, cause);
+  
+  {
+    f2ptr bytecode_branch_funk = f2cause__bytecode_branch_funk(cause, cause);
+    if (bytecode_branch_funk) {
+      f2ptr program_counter  = f2fiber__program_counter(fiber, cause);
+      f2ptr reflective_value = f2__bytecode_branch_funk__call_with_event(cause, bytecode_branch_funk, fiber, bytecode, program_counter, new_program_counter, value);
+      if (raw__larva__is_type(cause, reflective_value)) {
+	f2fiber__value__set(fiber, cause, reflective_value);
+	return 1;
+      }
+    }
+  }
+  
+  if (value) {
     if (raw__exception__is_type(cause, new_program_counter)) {
       f2fiber__value__set(fiber, cause, new_program_counter);
     } else {
@@ -1245,7 +1261,20 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
   
   f2__fiber__increment_pc(fiber, cause);
   f2ptr value = f2fiber__value(fiber, cause);
-  if(! value) {
+  
+  {
+    f2ptr bytecode_branch_funk = f2cause__bytecode_branch_funk(cause, cause);
+    if (bytecode_branch_funk) {
+      f2ptr program_counter  = f2fiber__program_counter(fiber, cause);
+      f2ptr reflective_value = f2__bytecode_branch_funk__call_with_event(cause, bytecode_branch_funk, fiber, bytecode, program_counter, new_program_counter, value);
+      if (raw__larva__is_type(cause, reflective_value)) {
+	f2fiber__value__set(fiber, cause, reflective_value);
+	return 1;
+      }
+    }
+  }
+  
+  if (! value) {
     if (raw__exception__is_type(cause, new_program_counter)) {
       f2fiber__value__set(fiber, cause, new_program_counter);
     } else {

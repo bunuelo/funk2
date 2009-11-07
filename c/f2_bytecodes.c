@@ -137,12 +137,29 @@ void f2__fiber__increment_pc(f2ptr fiber, f2ptr cause) {
 #  define bytecode_status(msg, rest...)
 #endif
 
+f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_funk, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr funk_args) {
+  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, funk, f2cons__new(cause, funk_args, nil))));
+  f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_funk_funk, args);
+  return reflective_value;
+}
+
 // bytecode jump_funk []
 
 int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause) {
   f2ptr funktion = f2fiber__value(fiber, cause);
   //assert(funktion != nil, fiber, "f2__fiber__bytecode__funk assertion failed: funktion is null.");
   
+  if (cause) {
+    f2ptr bytecode_funk_funk = f2cause__bytecode_funk_funk(cause, cause);
+    if (bytecode_funk_funk) {
+      f2ptr funk_args = f2fiber__args(fiber, cause);
+      f2ptr reflective_value = f2__bytecode_funk_funk__call_with_event(nil, bytecode_funk_funk, fiber, bytecode, funktion, funk_args);
+      if (raw__larva__is_type(cause, reflective_value)) {
+	f2fiber__value__set(fiber, cause, reflective_value);
+	return 1;
+      }
+    }
+  }
   if (raw__funk__is_type(cause, funktion)) {
     //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
     f2fiber__env__set(fiber, cause, f2funk__env(funktion, cause));

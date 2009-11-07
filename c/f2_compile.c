@@ -297,7 +297,7 @@ f2ptr   f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   
   iter = f2__list_cdr__set(cause, iter, body_bcs);
   
-  iter = f2__list_cdr__set(cause, iter, raw__compile__tracer(cause, new__symbol(cause, "endfunk"), f2cons__new(cause, f2funk__name(funk, cause), f2funk__args(funk, cause))));
+  iter = f2__list_cdr__set(cause, iter, f2__compile__tracer(cause, new__symbol(cause, "endfunk"), f2cons__new(cause, f2funk__name(funk, cause), f2funk__args(funk, cause))));
   
   if (!popped_env_and_return) {
     iter = f2__list_cdr__set(cause, iter, f2__compile__pop_debug_funk_call(cause));

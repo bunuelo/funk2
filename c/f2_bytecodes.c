@@ -1424,6 +1424,7 @@ int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr by
       }
     }
   }
+  return 0;
 }
 
 // bytecode endfunk [f2ptr f2ptr]
@@ -1433,9 +1434,7 @@ int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, value);
-  
-  return 0;
+  return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, value);
 }
 
 

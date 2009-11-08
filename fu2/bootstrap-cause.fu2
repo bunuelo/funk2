@@ -28,7 +28,7 @@
 
 [defmetro endfunktracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_endfunk_funks]]]
-     [set [this-cause] bytecode_endfunk_funks [cons [funk [fiber bytecode value]
+     [set [this-cause] bytecode_endfunk_funks [cons [funk [fiber bytecode value funk]
 							  @body]
 						    funks]]
      nil]]
@@ -82,7 +82,7 @@
 				   [= what-to-prints [cdr what-to-prints]]]
 				 slots]
 			       [get bytecode command]]]]
-  [endfunktracer [print [list `endfunktracer-: [type value] [get bytecode arg0] [get bytecode arg1]]]]
+  [endfunktracer [print [list `endfunktracer-: [type value] [get funk name] [get funk args]]]]
   [branchtracer  [print [list `branchtracer--: [not [not value]] [get bytecode command]]]]
   [valuetracer   [print [list `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]
   nil]

@@ -134,7 +134,7 @@ int                    f2__fiber__bytecode__if_jump(                         f2p
 int                    f2__fiber__bytecode__else_jump(                       f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
 int                    f2__fiber__bytecode__debug(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
 int                    f2__fiber__bytecode__tracer(                          f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args);
-int                    f2__fiber__bytecode__endfunk(                         f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args);
+int                    f2__fiber__bytecode__endfunk(                         f2ptr fiber, f2ptr bytecode, f2ptr funk);
 int                    f2__fiber__bytecode__compile(                         f2ptr fiber, f2ptr bytecode, f2ptr protect_environment);
 int                    f2__fiber__bytecode__yield(                           f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__newenv(                          f2ptr fiber, f2ptr bytecode);

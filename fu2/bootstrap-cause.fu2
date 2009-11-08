@@ -19,31 +19,43 @@
  rights to redistribute these changes.
 '
 
+[defmetro funktracer_funk [:rest body] 
+  `[funk [fiber bytecode funk args]
+	 @body]]
+
 [defmetro funktracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_funk_funks]]]
-     [set [this-cause] bytecode_funk_funks [cons [funk [fiber bytecode funk args]
-						       @body]
+     [set [this-cause] bytecode_funk_funks [cons [funktracer_funk @body]
 						 funks]]
      nil]]
 
+[defmetro endfunktracer_funk [:rest body] 
+  `[funk [fiber bytecode value funk]
+	 @body]]
+
 [defmetro endfunktracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_endfunk_funks]]]
-     [set [this-cause] bytecode_endfunk_funks [cons [funk [fiber bytecode value funk]
-							  @body]
+     [set [this-cause] bytecode_endfunk_funks [cons [endfunktracer_funk @body]
 						    funks]]
      nil]]
 
+[defmetro branchtracer_funk [:rest body] 
+  `[funk [fiber bytecode program_counter branch_program_counter value]
+	 @body]]
+
 [defmetro branchtracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_branch_funks]]]
-     [set [this-cause] bytecode_branch_funks [cons [funk [fiber bytecode program_counter branch_program_counter value]
-							 @body]
+     [set [this-cause] bytecode_branch_funks [cons [branchtracer_funk @body]
 						   funks]]
      nil]]
 
+[defmetro valuetracer_funk [:rest body] 
+  `[funk [fiber bytecode value]
+	 @body]]
+
 [defmetro valuetracer [:rest body] 
   `[let [[funks [get [this-cause] bytecode_tracer_funks]]]
-     [set [this-cause] bytecode_tracer_funks [cons [funk [fiber bytecode value]
-							 @body]
+     [set [this-cause] bytecode_tracer_funks [cons [valuetracer_funk @body]
 						   funks]]
      nil]]
 
@@ -65,17 +77,14 @@
 [defunk print-safe [x]
   [print [what-to-print-safe x]]]
 
-[deframe critic [frame] [cause funk_funk endfunk_funk branch_funk value_funk]]
+[deframe critic [frame] [causes funk_funk endfunk_funk branch_funk value_funk]]
 
 [defmetro push-slot [x object slot]
   `[let [[object ,object]]
      [let [[push-seq [get object ,slot]]]
        [set object ,slot [cons ,x push-seq]]]]]
 
-[deftypefunk critic execute activate [cause]
-  [if [get this cause]
-      [have this suppress]]
-  [set this cause cause]
+[deftypefunk critic execute activate []
   [let [[funk [get this funk_funk]]]    [if funk [push-slot funk cause bytecode_funk_funks]]]
   [let [[funk [get this endfunk_funk]]] [if funk [push-slot funk cause bytecode_endfunk_funks]]]
   [let [[funk [get this branch_funk]]]  [if funk [push-slot funk cause bytecode_branch_funks]]]
@@ -92,9 +101,19 @@
     [let [[funk [get this endfunk_funk]]] [if funk [remove-from-slot funk cause bytecode_endfunk_funks]]]
     [let [[funk [get this branch_funk]]]  [if funk [remove-from-slot funk cause bytecode_branch_funks]]]
     [let [[funk [get this tracer_funk]]]  [if funk [remove-from-slot funk cause bytecode_tracer_funks]]]
-    ]
-  [set this cause nil]
-  ]
+    ]]
+
+[deframe print_critic [critic] [stream]]
+
+[deftypeconstruct print_critic [stream]
+  [set this stream stream]
+  [set this cause [this-cause]]
+  [set this funk_funk    [funktracer_funk    [print [list [get [time] nanoseconds_since_1970] `funktracer----: [get funk name] [get funk args] [mapcar &what-to-print-safe args]]]]]
+  [set this endfunk_funk [endfunktracer_funk [print [list [get [time] nanoseconds_since_1970] `endfunktracer-: [get funk name] [get funk args]         [what-to-print-safe value]]]]]
+  [set this branch_funk  [branchtracer_funk  [print [list [get [time] nanoseconds_since_1970] `branchtracer--: [what-to-print-safe value] [get bytecode command]]]]]
+  [set this tracer_funk  [valuetracer_funk   [print [list [get [time] nanoseconds_since_1970] `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]]
+  [have this activate [this-cause]]
+  this]
 
 [defunk test-tracers []
   [funktracer    [print [list [get [time] nanoseconds_since_1970] `funktracer----: [get funk name] [get funk args] [mapcar &what-to-print-safe args]]]]

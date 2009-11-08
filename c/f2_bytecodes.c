@@ -143,6 +143,8 @@ f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_f
   return reflective_value;
 }
 
+int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value);
+
 // bytecode jump_funk []
 
 int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
@@ -191,7 +193,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     release__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");
     f2ptr value = f2__cfunk__apply(cause, funktion, fiber, args);
     f2fiber__value__set(fiber, cause, value);
-    return 1;
+    return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, value);
   } else if (raw__metro__is_type(cause, funktion)) {
     //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
     f2fiber__env__set(fiber, cause, f2metro__env(funktion, cause));
@@ -1399,15 +1401,9 @@ f2ptr f2__bytecode_endfunk_funk__call_with_event(f2ptr cause, f2ptr bytecode_end
   return reflective_value;
 }
 
-// bytecode endfunk [f2ptr f2ptr]
-
-int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args) {
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  
-  f2__fiber__increment_pc(fiber, cause);
-  
+int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr value) {
   if (cause) {
-    f2ptr bytecode_endfunk_funks = f2cause__bytecode_endfunk_funks(cause, cause);
+    f2ptr bytecode_endfunk_funks = f2cause__bytecode_endfunk_funks(this, cause);
     if (bytecode_endfunk_funks) {
       f2ptr value = f2fiber__value(fiber, cause);
       {
@@ -1417,7 +1413,7 @@ int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr 
 	  f2ptr bytecode_endfunk_funks_next = f2cons__cdr(bytecode_endfunk_funks_iter, cause);
 	  f2ptr bytecode_endfunk_funk       = f2cons__car(bytecode_endfunk_funks_iter, cause);
 	  {
-	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(nil, bytecode_endfunk_funk, fiber, bytecode, value);
+	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(cause, bytecode_endfunk_funk, fiber, bytecode, value);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;
@@ -1428,6 +1424,16 @@ int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr 
       }
     }
   }
+}
+
+// bytecode endfunk [f2ptr f2ptr]
+
+int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args) {
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, value);
   
   return 0;
 }

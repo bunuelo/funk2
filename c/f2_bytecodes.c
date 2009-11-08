@@ -1402,7 +1402,7 @@ f2ptr f2__bytecode_endfunk_funk__call_with_event(f2ptr cause, f2ptr bytecode_end
 }
 
 int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode) {
-  if (cause) {
+  if (this) {
     f2ptr bytecode_endfunk_funks = f2cause__bytecode_endfunk_funks(this, cause);
     if (bytecode_endfunk_funks) {
       f2ptr value = f2fiber__value(fiber, cause);

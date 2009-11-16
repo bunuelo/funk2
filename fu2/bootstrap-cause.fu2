@@ -105,7 +105,7 @@
 
 [deframe print_critic [critic] [stream]]
 
-[deftypeconstruct print_critic [stream]
+`[deftypeconstruct print_critic [stream]
   [set this stream stream]
   [set this cause [this-cause]]
   [set this funk_funk    [funktracer_funk    [print [list [get [time] nanoseconds_since_1970] `funktracer----: [get funk name] [get funk args] [mapcar &what-to-print-safe args]]]]]

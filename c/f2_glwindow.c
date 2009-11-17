@@ -273,9 +273,9 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
 // funk2_opengl_texture
 
 void funk2_opengl_texture__init(funk2_opengl_texture_t* this, u8* name, int width, int height, GLuint texture_id) {
-  int name__length = strlen(name);
+  int name__length = strlen((char*)name);
   this->name = (u8*)f2__malloc(name__length + 1);
-  strcpy(this->name, name, name__length + 1);
+  strcpy((char*)(this->name), (char*)name, name__length + 1);
   this->width      = width;
   this->height     = height;
   this->texture_id = texture_id;

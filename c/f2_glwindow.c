@@ -298,7 +298,7 @@ void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this)
     funk2_opengl_texture_t* next    = texture_iter->next;
     funk2_opengl_texture_t* texture = texture_iter;
     funk2_opengl_texture__destroy(texture);
-    f2__free(texture);
+    f2__free(to_ptr(texture));
     texture_iter = next;
   }
 }

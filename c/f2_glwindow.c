@@ -282,7 +282,7 @@ void funk2_opengl_texture__init(funk2_opengl_texture_t* this, u8* name, int widt
 }
 
 void funk2_opengl_texture__destroy(funk2_opengl_texture_t* this) {
-  f2__free(this->name);
+  f2__free(to_ptr(this->name));
 }
 
 

@@ -37,11 +37,26 @@ typedef struct funk2_texture_image_s {
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 typedef struct funk2_opengl_texture_s {
-  int    width;
-  int    height;
-  GLuint texture_id;
+  u8*                            name;
+  int                            width;
+  int                            height;
+  GLuint                         texture_id;
+  struct funk2_opengl_texture_s* next;
 } funk2_opengl_texture_t;
 #endif // F2__GLWINDOW__SUPPORTED
+
+void funk2_opengl_texture__init(funk2_opengl_texture_t* this, u8* name, int width, int height, GLuint texture_id);
+void funk2_opengl_texture__destroy(funk2_opengl_texture_t* this);
+
+#if defined(F2__GLWINDOW__SUPPORTED)
+typedef struct funk2_opengl_texture_handler_s {
+  funk2_opengl_texture_t* textures;
+} funk2_opengl_texture_handler_t;
+#endif // F2__GLWINDOW__SUPPORTED
+
+void funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this);
+void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this);
+void funk2_opengl_texture_handler__load_new_texture(funk2_opengl_texture_handler_t* this, u8* name, u8* filename);
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 typedef struct funk2_opengl_font_s {
@@ -51,55 +66,57 @@ typedef struct funk2_opengl_font_s {
 
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
-  boolean_t              initialized;
-  boolean_t              window_created;
-  u8*                    title;
-  int                    x;
-  int                    y;
-  unsigned int           width;
-  unsigned int           height;
-  unsigned int           depth;
-  boolean_t              done;
-  float                  rotate_angle;
-  boolean_t              fullscreen;
-
+  boolean_t                      initialized;
+  boolean_t                      window_created;
+  u8*                            title;
+  int                            x;
+  int                            y;
+  unsigned int                   width;
+  unsigned int                   height;
+  unsigned int                   depth;
+  boolean_t                      done;
+  float                          rotate_angle;
+  boolean_t                      fullscreen;
+  
 #if defined(F2__GLWINDOW__SUPPORTED)
-  Display*               display;
-  int                    screen;
-  Window                 x_window;
-  GLXContext             glx_context;
-  XSetWindowAttributes   set_window_attributes;
-  XF86VidModeModeInfo    desk_mode;
-  boolean_t              double_buffered;
-  unsigned int           resolution;
-  u64                    last_redraw__nanoseconds_since_1970;
-  boolean_t              needs_redraw;
-  funk2_opengl_texture_t texture;
-  funk2_opengl_texture_t bucket_object_texture;
-  funk2_opengl_texture_t female_child_agent_sitting_texture;
-  funk2_opengl_texture_t female_child_agent_standing_texture;
-  funk2_opengl_texture_t fork_object_texture;
-  funk2_opengl_texture_t male_child_agent_sitting_texture;
-  funk2_opengl_texture_t male_child_agent_standing_texture;
-  funk2_opengl_texture_t mud_object_texture;
-  funk2_opengl_texture_t mud_puddle_scene_texture;
-  funk2_opengl_texture_t shovel_object_texture;
-  funk2_opengl_texture_t spoon_object_texture;
+  Display*                       display;
+  int                            screen;
+  Window                         x_window;
+  GLXContext                     glx_context;
+  XSetWindowAttributes           set_window_attributes;
+  XF86VidModeModeInfo            desk_mode;
+  boolean_t                      double_buffered;
+  unsigned int                   resolution;
+  u64                            last_redraw__nanoseconds_since_1970;
+  boolean_t                      needs_redraw;
+  funk2_opengl_texture_handler_t texture_handler;
   
-  funk2_opengl_texture_t blue_left_shoe_texture;
-  funk2_opengl_texture_t blue_right_shoe_texture;
-  funk2_opengl_texture_t blue_shirt_texture;
-  funk2_opengl_texture_t bluegreen_blouse_texture;
-  funk2_opengl_texture_t orange_shorts_texture;
-  funk2_opengl_texture_t pink_left_shoe_texture;
-  funk2_opengl_texture_t pink_right_shoe_texture;
-  funk2_opengl_texture_t red_skirt_texture;
-  funk2_opengl_texture_t sideview_blue_shirt_texture;
-  funk2_opengl_texture_t sideview_bluegreen_blouse_texture;
-  funk2_opengl_texture_t sideview_orange_shorts_texture;
-  funk2_opengl_texture_t sideview_red_skirt_texture;
+  funk2_opengl_texture_t         texture;
+  funk2_opengl_texture_t         bucket_object_texture;
+  funk2_opengl_texture_t         female_child_agent_sitting_texture;
+  funk2_opengl_texture_t         female_child_agent_standing_texture;
+  funk2_opengl_texture_t         fork_object_texture;
+  funk2_opengl_texture_t         male_child_agent_sitting_texture;
+  funk2_opengl_texture_t         male_child_agent_standing_texture;
+  funk2_opengl_texture_t         mud_object_texture;
+  funk2_opengl_texture_t         mud_puddle_scene_texture;
+  funk2_opengl_texture_t         shovel_object_texture;
+  funk2_opengl_texture_t         spoon_object_texture;
   
-  funk2_opengl_font_t    fixed_font;
+  funk2_opengl_texture_t         blue_left_shoe_texture;
+  funk2_opengl_texture_t         blue_right_shoe_texture;
+  funk2_opengl_texture_t         blue_shirt_texture;
+  funk2_opengl_texture_t         bluegreen_blouse_texture;
+  funk2_opengl_texture_t         orange_shorts_texture;
+  funk2_opengl_texture_t         pink_left_shoe_texture;
+  funk2_opengl_texture_t         pink_right_shoe_texture;
+  funk2_opengl_texture_t         red_skirt_texture;
+  funk2_opengl_texture_t         sideview_blue_shirt_texture;
+  funk2_opengl_texture_t         sideview_bluegreen_blouse_texture;
+  funk2_opengl_texture_t         sideview_orange_shorts_texture;
+  funk2_opengl_texture_t         sideview_red_skirt_texture;
+  
+  funk2_opengl_font_t            fixed_font;
 #endif // defined(F2__GLWINDOW__SUPPORTED)
 
 } funk2_glwindow_t;

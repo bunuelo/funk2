@@ -270,6 +270,45 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
 
 #endif // defined(F2__GLWINDOW__SUPPORTED)
 
+// funk2_opengl_texture
+
+void funk2_opengl_texture__init(funk2_opengl_texture_t* this, u8* name, int width, int height, GLuint texture_id) {
+  int name__length = strlen(name);
+  this->name = (u8*)f2__malloc(name__length + 1);
+  strcpy(this->name, name, name__length + 1);
+  this->width      = width;
+  this->height     = height;
+  this->texture_id = texture_id;
+}
+
+void funk2_opengl_texture__destroy(funk2_opengl_texture_t* this) {
+  f2__free(this->name);
+}
+
+
+// funk2_opengl_texture_handler
+
+void funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this) {
+  this->textures = NULL;
+}
+
+void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this) {
+  funk2_opengl_texture_t* texture_iter = this->textures;
+  while (texture_iter) {
+    funk2_opengl_texture_t* next    = texture_iter->next;
+    funk2_opengl_texture_t* texture = texture_iter;
+    funk2_opengl_texture__destroy(texture);
+    f2__free(texture);
+    texture_iter = next;
+  }
+}
+
+void funk2_opengl_texture_handler__load_new_texture(funk2_opengl_texture_handler_t* this, u8* name, u8* filename) {
+}
+
+
+// funk2_glwindow
+
 void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
   int title__length = strlen((char*)title);
   this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
@@ -284,6 +323,10 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
   this->rotate_angle   = 0;
   this->done           = boolean__false;
   
+#if defined(F2__GLWINDOW__SUPPORTED)
+  funk2_opengl_texture_handler__init(&(this->texture_handler));
+#endif // defined(F2__GLWINDOW__SUPPORTED)
+  
   this->initialized    = boolean__true;
 }
 
@@ -292,6 +335,8 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
     this->initialized = boolean__false;
     
 #if defined(F2__GLWINDOW__SUPPORTED)
+    funk2_opengl_texture_handler__destroy(&(this->texture_handler));
+    
     funk2_opengl_font__destroy(&(this->fixed_font), nil);
     funk2_glwindow__hide(this, nil);
 #endif // defined(F2__GLWINDOW__SUPPORTED)

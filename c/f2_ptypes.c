@@ -1114,6 +1114,10 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
   memcpy(str, __pure__f2symbol__str(this), __pure__f2symbol__length(this));
 }
 
+void raw__symbol__str_copy(f2ptr cause, f2ptr this, u8* str) {
+  f2symbol__str_copy(this, cause, str);
+}
+
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
   check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK

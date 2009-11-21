@@ -46,10 +46,10 @@ static int funk2_glwindow__attribute_list__single_buffer[] = {GLX_RGBA, GLX_RED_
 
 // attributes for a double buffered visual in RGBA format with at least
 // 4 bits per color and a 16 bit depth buffer
-static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER, 
-							      GLX_RED_SIZE,    4, 
-							      GLX_GREEN_SIZE,  4, 
-							      GLX_BLUE_SIZE,   4, 
+static int funk2_glwindow__attribute_list__double_buffer[] = {GLX_RGBA, GLX_DOUBLEBUFFER,
+							      GLX_RED_SIZE,    4,
+							      GLX_GREEN_SIZE,  4,
+							      GLX_BLUE_SIZE,   4,
 							      GLX_DEPTH_SIZE, 16,
 							      None};
 
@@ -322,6 +322,9 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
   this->window_created = boolean__false;
   this->rotate_angle   = 0;
   this->done           = boolean__false;
+  this->needs_redraw   = boolean__true;
+  
+  this->last_redraw__nanoseconds_since_1970 = 0;
   
 #if defined(F2__GLWINDOW__SUPPORTED)
   funk2_opengl_texture_handler__init(&(this->texture_handler));
@@ -345,28 +348,12 @@ void funk2_glwindow__destroy(funk2_glwindow_t* this) {
   }
 }
 
-#if defined(F2__GLWINDOW__SUPPORTED)
-
 void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
   funk2_glwindow__destroy(this);
-  
-  int title__length = strlen((char*)title);
-  this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
-  strcpy((char*)(this->title), (char*)title);
-  
-  this->width          = width;
-  this->height         = height;
-  this->depth          = depth;
-  this->fullscreen     = fullscreen;
-  this->window_created = boolean__false;
-  this->rotate_angle   = 0;
-  this->done           = boolean__false;
-  this->needs_redraw   = boolean__true;
-  
-  this->last_redraw__nanoseconds_since_1970 = 0;
-  
-  this->initialized = boolean__true;
+  funk2_glwindow__init(this, title, width, height, depth, fullscreen);
 }
+
+#if defined(F2__GLWINDOW__SUPPORTED)
 
 // function to release/destroy our resources and restoring the old desktop
 void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {

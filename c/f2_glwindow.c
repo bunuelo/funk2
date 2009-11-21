@@ -229,6 +229,32 @@ void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause) {
 
 boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) {
   boolean_t failure_status = boolean__false;
+  //funk2_glwindow__load_texture(this, cause, name, filename);
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"texture",                     (u8*)"data/texture.bmp");}  
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"bucket_object",               (u8*)"data/bucket_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"female_child_agent_sitting",  (u8*)"data/female_child_agent_sitting.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"female_child_agent_standing", (u8*)"data/female_child_agent_standing.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"fork_object",                 (u8*)"data/fork_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"male_child_agent_sitting",    (u8*)"data/male_child_agent_sitting.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"male_child_agent_standing",   (u8*)"data/male_child_agent_standing.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"mud_object",                  (u8*)"data/mud_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"mud_puddle_scene",            (u8*)"data/mud_puddle_scene.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"shovel_object",               (u8*)"data/shovel_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"spoon_object",                (u8*)"data/spoon_object.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"blue_left_shoe",              (u8*)"data/blue_left_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"blue_right_shoe",             (u8*)"data/blue_right_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"blue_shirt",                  (u8*)"data/blue_shirt.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"bluegreen_blouse",            (u8*)"data/bluegreen_blouse.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"orange_shorts",               (u8*)"data/orange_shorts.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"pink_left_shoe",              (u8*)"data/pink_left_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"pink_right_shoe",             (u8*)"data/pink_right_shoe.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"red_skirt",                   (u8*)"data/red_skirt.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_blue_shirt",         (u8*)"data/sideview_blue_shirt.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_bluegreen_blouse",   (u8*)"data/sideview_bluegreen_blouse.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_orange_shorts",      (u8*)"data/sideview_orange_shorts.bmp");}
+  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_red_skirt",          (u8*)"data/sideview_red_skirt.bmp");}
+
+  /*
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->texture),                             cause, (u8*)"data/texture.bmp");}  
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bucket_object_texture),               cause, (u8*)"data/bucket_object.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->female_child_agent_sitting_texture),  cause, (u8*)"data/female_child_agent_sitting.bmp");}
@@ -252,6 +278,7 @@ boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) 
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_bluegreen_blouse_texture),   cause, (u8*)"data/sideview_bluegreen_blouse.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_orange_shorts_texture),      cause, (u8*)"data/sideview_orange_shorts.bmp");}
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_red_skirt_texture),          cause, (u8*)"data/sideview_red_skirt.bmp");}
+  */
   return failure_status;
 }
 
@@ -633,6 +660,7 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
     }
     texture_iter = next;
   }
+  /*
   if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object")))               {return &(this->bucket_object_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting")))  {return &(this->female_child_agent_sitting_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing"))) {return &(this->female_child_agent_standing_texture);}
@@ -656,6 +684,7 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_orange_shorts")))      {return &(this->sideview_orange_shorts_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_red_skirt")))          {return &(this->sideview_red_skirt_texture);}
   else                                                                                              {return &(this->texture);}
+  */
 }
 
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {

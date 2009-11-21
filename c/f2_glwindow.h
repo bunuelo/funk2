@@ -132,6 +132,7 @@ void      funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);
+boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename);
 void      funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause);
 void      funk2_glwindow__main(f2ptr cause);
 #endif // F2__GLWINDOW__SUPPORTED

@@ -334,7 +334,7 @@ boolean_t funk2_opengl_texture_handler__unload_texture(funk2_opengl_texture_hand
 
 boolean_t funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name, u8* filename) {
   // unload texture in case we've already used this name
-  funk2_glwindow__unload_texture(this, cause, name);
+  funk2_opengl_texture_handler__unload_texture(this, cause, name);
   // load texture
   funk2_processor_mutex__lock(&(this->mutex));
   funk2_opengl_texture_t* texture = (funk2_opengl_texture_t*)from_ptr(f2__malloc(sizeof(funk2_opengl_texture_t)));

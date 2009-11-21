@@ -623,7 +623,8 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
   char* texture_name__str = alloca(texture_name__length + 1);
   raw__symbol__str_copy(cause, texture_name, texture_name__str);
   texture_name__str[texture_name__length] = 0;
-  funk2_opengl_texture_t* texture_iter = this->textures;
+  
+  funk2_opengl_texture_t* texture_iter = this->texture_handler.textures;
   while (texture_iter) {
     funk2_opengl_texture_t* next = texture_iter->next;
     funk2_opengl_texture_t* texture = texture_iter;

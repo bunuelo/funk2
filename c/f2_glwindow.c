@@ -571,32 +571,36 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
 
 
 
-funk2_opengl_texture_t* funk2_glwindow__lookup_texture_raw(funk2_glwindow_t* this, f2ptr cause, u8* texture_name) {
-  funk2_opengl_texture_t* texture_iter = this->texture_handler.textures;
+funk2_opengl_texture_t* funk2_opengl_texture_handler__lookup_texture_raw(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* texture_name) {
+  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_opengl_texture_t* texture_iter = this->textures;
   while (texture_iter) {
     funk2_opengl_texture_t* next = texture_iter->next;
     funk2_opengl_texture_t* texture = texture_iter;
     if (strcmp((char*)(texture->name), (char*)texture_name) == 0) {
+      funk2_processor_mutex__unlock(&(this->mutex));
       return texture;
     }
     texture_iter = next;
   }
+  funk2_processor_mutex__unlock(&(this->mutex));
   return NULL;
 }
 
-funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
+funk2_opengl_texture_t* funk2_opengl_texture_handler__lookup_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, f2ptr texture_name) {
   //printf("\n  funk2_glwindow__lookup_texture, texture_name="); f2__write(cause, nil, texture_name); fflush(stdout);
   u64 texture_name__length = raw__symbol__length(cause, texture_name);
   u8* texture_name__str = alloca(texture_name__length + 1);
   raw__symbol__str_copy(cause, texture_name, texture_name__str);
   texture_name__str[texture_name__length] = 0;
   
-  return funk2_glwindow__lookup_texture_raw(this, cause, texture_name__str);
+  return funk2_opengl_texture_handler__lookup_texture_raw(this, cause, texture_name__str);
 }
 
-boolean_t funk2_glwindow__unload_texture(funk2_glwindow_t* this, f2ptr cause, u8* name) {
+boolean_t funk2_opengl_texture_handler__unload_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name) {
+  funk2_processor_mutex__lock(&(this->mutex));
   funk2_opengl_texture_t* prev         = NULL;
-  funk2_opengl_texture_t* texture_iter = this->texture_handler.textures;
+  funk2_opengl_texture_t* texture_iter = this->textures;
   while (texture_iter) {
     funk2_opengl_texture_t* next = texture_iter->next;
     funk2_opengl_texture_t* texture = texture_iter;
@@ -612,32 +616,37 @@ boolean_t funk2_glwindow__unload_texture(funk2_glwindow_t* this, f2ptr cause, u8
       // free memory resources
       funk2_opengl_texture__destroy(texture);
       f2__free(to_ptr(texture));
+      funk2_processor_mutex__unlock(&(this->mutex));
       return boolean__false;
     }
     texture_iter = next;
   }
+  funk2_processor_mutex__unlock(&(this->mutex));
   return boolean__true;
 }
 
-boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename) {
+boolean_t funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name, u8* filename) {
   // unload texture in case we've already used this name
   funk2_glwindow__unload_texture(this, cause, name);
   // load texture
+  funk2_processor_mutex__lock(&(this->mutex));
   funk2_opengl_texture_t* texture = (funk2_opengl_texture_t*)from_ptr(f2__malloc(sizeof(funk2_opengl_texture_t)));
   funk2_opengl_texture__init(texture, name, 0, 0, 0);
   boolean_t failure = funk2_opengl_texture__load_gl_texture_from_bmp(texture, cause, filename);
   if (failure) {
     funk2_opengl_texture__destroy(texture);
     f2__free(to_ptr(texture));
+    funk2_processor_mutex__unlock(&(this->mutex));
     return boolean__true;
   }
-  texture->next = this->texture_handler.textures;
-  this->texture_handler.textures = texture;
+  texture->next = this->textures;
+  this->textures = texture;
+  funk2_processor_mutex__unlock(&(this->mutex));
   return boolean__false;
 }
 
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
-  funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
+  funk2_opengl_texture_t* texture = funk2_opengl_texture_handler__lookup_texture(&(this->texture_handler), cause, texture_name);
   if (texture) {
     //printf("\n  funk2_glwindow__bind_texture, texture_id=%d", texture->texture_id); fflush(stdout);
     funk2_opengl_texture__bind(texture, cause);
@@ -1205,7 +1214,7 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 boolean_t raw__glwindow__load_texture(f2ptr cause, u8* name, u8* filename) {
 #if defined(F2__GLWINDOW__SUPPORTED)
-  return funk2_glwindow__load_texture(&(__funk2.glwindow), cause, name, filename);
+  return funk2_opengl_texture_handler__load_texture(&(__funk2.glwindow.texture_handler), cause, name, filename);
 #else
   status("glwindow not supported.");
   return boolean__true; // failure

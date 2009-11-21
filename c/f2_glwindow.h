@@ -53,11 +53,11 @@ typedef struct funk2_opengl_texture_handler_s {
   funk2_processor_mutex_t mutex;
   funk2_opengl_texture_t* textures;
 } funk2_opengl_texture_handler_t;
-#endif // F2__GLWINDOW__SUPPORTED
 
-void funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this);
-void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this);
-void funk2_opengl_texture_handler__load_new_texture(funk2_opengl_texture_handler_t* this, u8* name, u8* filename);
+void      funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this);
+void      funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this);
+boolean_t funk2_opengl_texture_handler__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename);
+#endif // F2__GLWINDOW__SUPPORTED
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 typedef struct funk2_opengl_font_s {
@@ -107,7 +107,6 @@ void      funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);
-boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename);
 void      funk2_glwindow__draw_scene(funk2_glwindow_t* this, f2ptr cause);
 void      funk2_glwindow__main(f2ptr cause);
 #endif // F2__GLWINDOW__SUPPORTED

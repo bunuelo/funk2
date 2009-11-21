@@ -1229,7 +1229,7 @@ f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
   
   return f2bool__new(raw__glwindow__load_texture(cause, name__str, filename__str));
 }
-def_pcfunk2(glwindow__load_texture, name, filename, return f2__glwindow__load_texture(this_cause, name, texture));
+def_pcfunk2(glwindow__load_texture, name, filename, return f2__glwindow__load_texture(this_cause, name, filename));
 
 // **
 

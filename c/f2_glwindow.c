@@ -898,7 +898,7 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
     
     {
       f2ptr texture_name = f2__physical_texture__texture_name(cause, physical_texture);
-      funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
+      funk2_opengl_texture_t* texture = funk2_opengl_texture_handler__lookup_texture(&(this->texture_handler), cause, texture_name);
       if (texture) {
 	double height_over_width = ((double)(texture->height) / (double)(texture->width));
 	funk2_opengl_texture__bind(texture, cause);
@@ -1061,7 +1061,7 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
   
   raw__opengl__glPushMatrix(cause);
   {
-    funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
+    funk2_opengl_texture_t* background_texture = funk2_opengl_texture_handler__lookup_texture(&(this->texture_handler), cause, background_texture_name);
     if (background_texture) {
       double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
       funk2_opengl_texture__bind(background_texture, cause);

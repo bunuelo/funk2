@@ -628,7 +628,7 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
   while (texture_iter) {
     funk2_opengl_texture_t* next = texture_iter->next;
     funk2_opengl_texture_t* texture = texture_iter;
-    if (strcmp(texture->name, texture_name__str) == 0) {
+    if (strcmp((char*)(texture->name), (char*)texture_name__str) == 0) {
       return texture;
     }
     texture_iter = next;

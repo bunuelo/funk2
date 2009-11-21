@@ -612,8 +612,8 @@ boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* 
     f2__free(to_ptr(texture));
     return boolean__true;
   }
-  texture->next = this->textures;
-  this->textures = texture;
+  texture->next = this->texture_handler.textures;
+  this->texture_handler.textures = texture;
   return boolean__false;
 }
 

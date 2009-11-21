@@ -1106,8 +1106,8 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
     if (background_texture) {
       double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
       funk2_opengl_texture__bind(background_texture, cause);
+      raw__opengl__glScalef(cause, 1, height_over_width, 1);
     }
-    raw__opengl__glScalef(cause, 1, height_over_width, 1);
     raw__draw_xy_square(cause);
   }
   raw__opengl__glPopMatrix(cause);

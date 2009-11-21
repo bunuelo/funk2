@@ -655,7 +655,8 @@
       [error `run-time `[glwindow not-supported]]]
   [glwindow-create title width height depth fullscreen]
   [if [glwindow-load_textures]
-      [error `run-time `[glwindow failed-to-load-textures]]]
+      [prog [glwindow-destroy]
+	    [error `run-time `[glwindow failed-to-load-textures]]]]
   [while [not [glwindow-handle_events]]]
   [glwindow-destroy]]
 

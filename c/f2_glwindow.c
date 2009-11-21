@@ -229,7 +229,6 @@ void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause) {
 
 boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) {
   boolean_t failure_status = boolean__false;
-  //funk2_glwindow__load_texture(this, cause, name, filename);
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"texture",                     (u8*)"data/texture.bmp");}  
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"bucket_object",               (u8*)"data/bucket_object.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"female_child_agent_sitting",  (u8*)"data/female_child_agent_sitting.bmp");}
@@ -253,32 +252,6 @@ boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) 
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_bluegreen_blouse",   (u8*)"data/sideview_bluegreen_blouse.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_orange_shorts",      (u8*)"data/sideview_orange_shorts.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_red_skirt",          (u8*)"data/sideview_red_skirt.bmp");}
-  
-  /*
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->texture),                             cause, (u8*)"data/texture.bmp");}  
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bucket_object_texture),               cause, (u8*)"data/bucket_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->female_child_agent_sitting_texture),  cause, (u8*)"data/female_child_agent_sitting.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->female_child_agent_standing_texture), cause, (u8*)"data/female_child_agent_standing.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->fork_object_texture),                 cause, (u8*)"data/fork_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->male_child_agent_sitting_texture),    cause, (u8*)"data/male_child_agent_sitting.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->male_child_agent_standing_texture),   cause, (u8*)"data/male_child_agent_standing.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->mud_object_texture),                  cause, (u8*)"data/mud_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->mud_puddle_scene_texture),            cause, (u8*)"data/mud_puddle_scene.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->shovel_object_texture),               cause, (u8*)"data/shovel_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->spoon_object_texture),                cause, (u8*)"data/spoon_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_left_shoe_texture),              cause, (u8*)"data/blue_left_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_right_shoe_texture),             cause, (u8*)"data/blue_right_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->blue_shirt_texture),                  cause, (u8*)"data/blue_shirt.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bluegreen_blouse_texture),            cause, (u8*)"data/bluegreen_blouse.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->orange_shorts_texture),               cause, (u8*)"data/orange_shorts.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->pink_left_shoe_texture),              cause, (u8*)"data/pink_left_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->pink_right_shoe_texture),             cause, (u8*)"data/pink_right_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->red_skirt_texture),                   cause, (u8*)"data/red_skirt.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_blue_shirt_texture),         cause, (u8*)"data/sideview_blue_shirt.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_bluegreen_blouse_texture),   cause, (u8*)"data/sideview_bluegreen_blouse.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_orange_shorts_texture),      cause, (u8*)"data/sideview_orange_shorts.bmp");}
-  if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->sideview_red_skirt_texture),          cause, (u8*)"data/sideview_red_skirt.bmp");}
-  */
   return failure_status;
 }
 
@@ -660,31 +633,6 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
     }
     texture_iter = next;
   }
-  /*
-  if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object")))               {return &(this->bucket_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting")))  {return &(this->female_child_agent_sitting_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing"))) {return &(this->female_child_agent_standing_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "fork_object")))                 {return &(this->fork_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_sitting")))    {return &(this->male_child_agent_sitting_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "male_child_agent_standing")))   {return &(this->male_child_agent_standing_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_object")))                  {return &(this->mud_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "mud_puddle_scene")))            {return &(this->mud_puddle_scene_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "shovel_object")))               {return &(this->shovel_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "spoon_object")))                {return &(this->spoon_object_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "blue_left_shoe")))              {return &(this->blue_left_shoe_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "blue_right_shoe")))             {return &(this->blue_right_shoe_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "blue_shirt")))                  {return &(this->blue_shirt_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bluegreen_blouse")))            {return &(this->bluegreen_blouse_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "orange_shorts")))               {return &(this->orange_shorts_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "pink_left_shoe")))              {return &(this->pink_left_shoe_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "pink_right_shoe")))             {return &(this->pink_right_shoe_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "red_skirt")))                   {return &(this->red_skirt_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_blue_shirt")))         {return &(this->sideview_blue_shirt_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_bluegreen_blouse")))   {return &(this->sideview_bluegreen_blouse_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_orange_shorts")))      {return &(this->sideview_orange_shorts_texture);}
-  else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_red_skirt")))          {return &(this->sideview_red_skirt_texture);}
-  else                                                                                              {return &(this->texture);}
-  */
   return NULL;
 }
 
@@ -1255,9 +1203,32 @@ f2ptr f2__glwindow__destroy(f2ptr cause) {
 }
 def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
+boolean_t raw__glwindow__load_texture(f2ptr cause, u8* name, u8* filename) {
+#if defined(F2__GLWINDOW__SUPPORTED)
+  funk2_glwindow__load_texture(&(__funk2.glwindow), name, filename);
+#else
+  status("glwindow not supported.");
+#endif
+}
 
-
-
+f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
+  if ((! raw__symbol__is_type(cause, name)) ||
+      (! raw__string__is_type(cause, filename))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 name__length = raw__symbol__length(cause, name);
+  u8* name__str = alloca(name__length + 1);
+  raw__symbol__str_copy(cause, name, name__str);
+  name__str[name__length] = 0;
+  
+  u64 filename__length = raw__symbol__length(cause, filename);
+  u8* filename__str = alloca(filename__length + 1);
+  raw__symbol__str_copy(cause, filename, filename__str);
+  filename__str[filename__length] = 0;
+  
+  return f2bool__new(raw__glwindow__load_texture(cause, name__str, filename__str));
+}
+def_pcfunk2(glwindow__load_texture, name, filename, return f2__glwindow__load_texture(this_cause, name, texture));
 
 // **
 
@@ -1283,5 +1254,6 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__5(glwindow__create, title, width, height, depth, fullscreen, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__2(glwindow__load_texture, name, filename, "glwindow cfunk declared in f2_glwindow.c");
 }
 

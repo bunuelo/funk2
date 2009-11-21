@@ -23,5 +23,6 @@
 [globalize-funk glwindow-create        &primfunk:glwindow__create]
 [globalize-funk glwindow-destroy       &primfunk:glwindow__destroy]
 [globalize-funk glwindow-handle_events &primfunk:glwindow__handle_events]
+[globalize-funk glwindow-load_texture  &primfunk:glwindow__load_texture]
 
 [globalize-funk physical_rotation-new_identity &primfunk:physical_rotation__new_identity]

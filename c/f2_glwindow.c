@@ -229,6 +229,7 @@ void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause) {
 
 boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) {
   boolean_t failure_status = boolean__false;
+/*
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"texture",                     (u8*)"data/texture.bmp");}  
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"bucket_object",               (u8*)"data/bucket_object.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"female_child_agent_sitting",  (u8*)"data/female_child_agent_sitting.bmp");}
@@ -252,6 +253,7 @@ boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) 
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_bluegreen_blouse",   (u8*)"data/sideview_bluegreen_blouse.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_orange_shorts",      (u8*)"data/sideview_orange_shorts.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_red_skirt",          (u8*)"data/sideview_red_skirt.bmp");}
+*/
   return failure_status;
 }
 

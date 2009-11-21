@@ -1205,7 +1205,7 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 boolean_t raw__glwindow__load_texture(f2ptr cause, u8* name, u8* filename) {
 #if defined(F2__GLWINDOW__SUPPORTED)
-  funk2_glwindow__load_texture(&(__funk2.glwindow), name, filename);
+  funk2_glwindow__load_texture(&(__funk2.glwindow), cause, name, filename);
 #else
   status("glwindow not supported.");
 #endif

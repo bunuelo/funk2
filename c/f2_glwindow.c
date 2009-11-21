@@ -358,6 +358,8 @@ boolean_t funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handle
 // funk2_glwindow
 
 void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen) {
+  funk2_processor_mutex__init(&(this->mutex));
+  
   int title__length = strlen((char*)title);
   this->title = (u8*)from_ptr(f2__malloc(title__length + 1));
   strcpy((char*)(this->title), (char*)title);
@@ -383,6 +385,8 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
 
 void funk2_glwindow__destroy(funk2_glwindow_t* this) {
   if (this->initialized) {
+    funk2_processor_mutex__destroy(&(this->mutex));
+    
     this->initialized = boolean__false;
     
 #if defined(F2__GLWINDOW__SUPPORTED)
@@ -405,6 +409,7 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
 
 // function to release/destroy our resources and restoring the old desktop
 void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
+  funk2_processor_mutex__lock(&(this->mutex));
   if (this->window_created) {
     this->window_created = boolean__false;
     if (this->glx_context) {
@@ -421,11 +426,14 @@ void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
     }
     raw__xlib__XCloseDisplay(cause, this->display);
   }
+  funk2_processor_mutex__unlock(&(this->mutex));
 }
 
 // this function creates our window and sets it up properly
 //   FIXME: bits is currently unused
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
+  funk2_processor_mutex__lock(&(this->mutex));
+  
   XVisualInfo* vi;
   Colormap cmap;
   int displayWidth, displayHeight;
@@ -450,6 +458,7 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   this->display = raw__xlib__XOpenDisplay(cause, 0);
   if (! this->display) {
     status("could not open default display.  check DISPLAY environment variable.");
+    funk2_processor_mutex__unlock(&(this->mutex));
     return boolean__true;
   }
   this->screen = raw__xlib__XDefaultScreen(cause, this->display);
@@ -536,14 +545,24 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
     status("we do not have direct rendering");
   }
   if (funk2_glwindow__initialize_opengl(this, cause)) {
+    funk2_processor_mutex__unlock(&(this->mutex));
     return boolean__true;
   }
   
   this->window_created = boolean__true;
+  funk2_processor_mutex__unlock(&(this->mutex));
   return boolean__false;
 }
 
+boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename) {
+  funk2_processor_mutex__lock(&(this->mutex));
+  boolean_t failure = funk2_opengl_texture_handler__load_texture(&(this->texture_handler), cause, name, filename);
+  funk2_processor_mutex__unlock(&(this->mutex));
+  return failure;
+}
+
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
+  funk2_processor_mutex__lock(&(this->mutex));
   if (this->window_created) {
     boolean_t draw_scene_constantly = boolean__true;
     if (draw_scene_constantly) {
@@ -603,6 +622,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       this->last_redraw__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     }
   }
+  funk2_processor_mutex__unlock(&(this->mutex));
   return this->done;
 }
 
@@ -1216,7 +1236,7 @@ def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
 
 boolean_t raw__glwindow__load_texture(f2ptr cause, u8* name, u8* filename) {
 #if defined(F2__GLWINDOW__SUPPORTED)
-  return funk2_opengl_texture_handler__load_texture(&(__funk2.glwindow.texture_handler), cause, name, filename);
+  return funk2_glwindow__load_texture(&(__funk2.glwindow), cause, name, filename);
 #else
   status("glwindow not supported.");
   return boolean__true; // failure

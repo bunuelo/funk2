@@ -68,6 +68,7 @@ typedef struct funk2_opengl_font_s {
 
 // stuff about our window grouped together
 typedef struct funk2_glwindow_s {
+  funk2_processor_mutex_t        mutex;
   boolean_t                      initialized;
   boolean_t                      window_created;
   u8*                            title;

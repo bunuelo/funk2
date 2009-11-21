@@ -609,7 +609,7 @@ boolean_t funk2_glwindow__unload_texture(funk2_glwindow_t* this, f2ptr cause, u8
 	this->texture_handler.textures = next;
       }
       // remove from opengl
-      raw__opengl__glDeleteTextures(1, &(texture->texture_id));
+      raw__opengl__glDeleteTextures(cause, 1, &(texture->texture_id));
       // free memory resources
       funk2_opengl_texture__destroy(texture);
       f2__free(to_ptr(texture));

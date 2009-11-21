@@ -260,10 +260,12 @@ void funk2_opengl_texture__destroy(funk2_opengl_texture_t* this) {
 // funk2_opengl_texture_handler
 
 void funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this) {
+  funk2_processor_mutex__init(&(this->mutex));
   this->textures = NULL;
 }
 
 void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this) {
+  funk2_processor_mutex__destroy(&(this->mutex));
   funk2_opengl_texture_t* texture_iter = this->textures;
   while (texture_iter) {
     funk2_opengl_texture_t* next    = texture_iter->next;
@@ -272,9 +274,6 @@ void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this)
     f2__free(to_ptr(texture));
     texture_iter = next;
   }
-}
-
-void funk2_opengl_texture_handler__load_new_texture(funk2_opengl_texture_handler_t* this, u8* name, u8* filename) {
 }
 
 

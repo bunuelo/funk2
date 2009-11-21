@@ -50,6 +50,7 @@ void funk2_opengl_texture__destroy(funk2_opengl_texture_t* this);
 
 #if defined(F2__GLWINDOW__SUPPORTED)
 typedef struct funk2_opengl_texture_handler_s {
+  funk2_processor_mutex_t mutex;
   funk2_opengl_texture_t* textures;
 } funk2_opengl_texture_handler_t;
 #endif // F2__GLWINDOW__SUPPORTED

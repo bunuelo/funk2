@@ -253,7 +253,7 @@ boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) 
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_bluegreen_blouse",   (u8*)"data/sideview_bluegreen_blouse.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_orange_shorts",      (u8*)"data/sideview_orange_shorts.bmp");}
   if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_red_skirt",          (u8*)"data/sideview_red_skirt.bmp");}
-
+  
   /*
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->texture),                             cause, (u8*)"data/texture.bmp");}  
   if (! failure_status) {failure_status |= funk2_opengl_texture__load_gl_texture_from_bmp(&(this->bucket_object_texture),               cause, (u8*)"data/bucket_object.bmp");}

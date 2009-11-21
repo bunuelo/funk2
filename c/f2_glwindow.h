@@ -56,7 +56,7 @@ typedef struct funk2_opengl_texture_handler_s {
 
 void      funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this);
 void      funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this);
-boolean_t funk2_opengl_texture_handler__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename);
+boolean_t funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name, u8* filename);
 #endif // F2__GLWINDOW__SUPPORTED
 
 #if defined(F2__GLWINDOW__SUPPORTED)

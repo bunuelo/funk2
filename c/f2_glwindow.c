@@ -685,12 +685,15 @@ funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "sideview_red_skirt")))          {return &(this->sideview_red_skirt_texture);}
   else                                                                                              {return &(this->texture);}
   */
+  return NULL;
 }
 
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
   funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-  //printf("\n  funk2_glwindow__bind_texture, texture_id=%d", texture->texture_id); fflush(stdout);
-  funk2_opengl_texture__bind(texture, cause);
+  if (texture) {
+    //printf("\n  funk2_glwindow__bind_texture, texture_id=%d", texture->texture_id); fflush(stdout);
+    funk2_opengl_texture__bind(texture, cause);
+  }
 }
 
 void raw__draw_gl_cube(f2ptr cause) {
@@ -937,10 +940,12 @@ void funk2_glwindow__render_physical_texture(funk2_glwindow_t* this, f2ptr cause
     {
       f2ptr texture_name = f2__physical_texture__texture_name(cause, physical_texture);
       funk2_opengl_texture_t* texture = funk2_glwindow__lookup_texture(this, cause, texture_name);
-      double height_over_width = ((double)(texture->height) / (double)(texture->width));
-      funk2_opengl_texture__bind(texture, cause);
-      raw__opengl__glScalef(cause, 1, height_over_width, 1);
-      raw__opengl__glTranslatef(cause, 0, 1, 0);
+      if (texture) {
+	double height_over_width = ((double)(texture->height) / (double)(texture->width));
+	funk2_opengl_texture__bind(texture, cause);
+	raw__opengl__glScalef(cause, 1, height_over_width, 1);
+	raw__opengl__glTranslatef(cause, 0, 1, 0);
+      }
     }
     
     raw__draw_xy_square(cause);
@@ -1098,8 +1103,10 @@ void funk2_glwindow__render_background(funk2_glwindow_t* this, f2ptr cause, f2pt
   raw__opengl__glPushMatrix(cause);
   {
     funk2_opengl_texture_t* background_texture = funk2_glwindow__lookup_texture(this, cause, background_texture_name);
-    double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
-    funk2_opengl_texture__bind(background_texture, cause);
+    if (background_texture) {
+      double height_over_width = ((double)(background_texture->height) / (double)(background_texture->width));
+      funk2_opengl_texture__bind(background_texture, cause);
+    }
     raw__opengl__glScalef(cause, 1, height_over_width, 1);
     raw__draw_xy_square(cause);
   }

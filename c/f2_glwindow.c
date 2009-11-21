@@ -409,7 +409,6 @@ void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int he
 
 // function to release/destroy our resources and restoring the old desktop
 void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
-  funk2_processor_mutex__lock(&(this->mutex));
   if (this->window_created) {
     this->window_created = boolean__false;
     if (this->glx_context) {
@@ -426,14 +425,11 @@ void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
     }
     raw__xlib__XCloseDisplay(cause, this->display);
   }
-  funk2_processor_mutex__unlock(&(this->mutex));
 }
 
 // this function creates our window and sets it up properly
 //   FIXME: bits is currently unused
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
-  funk2_processor_mutex__lock(&(this->mutex));
-  
   XVisualInfo* vi;
   Colormap cmap;
   int displayWidth, displayHeight;
@@ -458,7 +454,6 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
   this->display = raw__xlib__XOpenDisplay(cause, 0);
   if (! this->display) {
     status("could not open default display.  check DISPLAY environment variable.");
-    funk2_processor_mutex__unlock(&(this->mutex));
     return boolean__true;
   }
   this->screen = raw__xlib__XDefaultScreen(cause, this->display);
@@ -545,12 +540,10 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
     status("we do not have direct rendering");
   }
   if (funk2_glwindow__initialize_opengl(this, cause)) {
-    funk2_processor_mutex__unlock(&(this->mutex));
     return boolean__true;
   }
   
   this->window_created = boolean__true;
-  funk2_processor_mutex__unlock(&(this->mutex));
   return boolean__false;
 }
 

@@ -609,7 +609,7 @@ boolean_t funk2_opengl_texture_handler__unload_texture(funk2_opengl_texture_hand
       if (prev) {
 	prev->next = next;
       } else {
-	this->texture_handler.textures = next;
+	this->textures = next;
       }
       // remove from opengl
       raw__opengl__glDeleteTextures(cause, 1, &(texture->texture_id));

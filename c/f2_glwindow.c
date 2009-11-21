@@ -603,8 +603,35 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   return boolean__false;
 }
 
+boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename) {
+  funk2_opengl_texture_t* texture = (funk2_opengl_texture_t*)from_ptr(f2__malloc(sizeof(funk2_opengl_texture_t)));
+  funk2_opengl_texture__init(texture, name, 0, 0, 0);
+  boolean_t failure = funk2_opengl_texture__load_gl_texture_from_bmp(texture, cause, filename);
+  if (failure) {
+    funk2_opengl_texture__destroy(texture);
+    f2__free(to_ptr(texture));
+    return boolean__true;
+  }
+  texture->next = this->textures;
+  this->textures = texture;
+  return boolean__false;
+}
+
 funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
   //printf("\n  funk2_glwindow__lookup_texture, texture_name="); f2__write(cause, nil, texture_name); fflush(stdout);
+  u64 texture_name__length = raw__symbol__length(cause, texture_name);
+  char* texture_name__str = alloca(texture_name__length + 1);
+  raw__symbol__str_copy(cause, texture_name, texture_name__str);
+  texture_name__str[texture_name__length] = 0;
+  funk2_opengl_texture_t* texture_iter = this->textures;
+  while (texture_iter) {
+    funk2_opengl_texture_t* next = texture_iter->next;
+    funk2_opengl_texture_t* texture = texture_iter;
+    if (strcmp(texture->name, texture_name__str) == 0) {
+      return texture;
+    }
+    texture_iter = next;
+  }
   if      (raw__symbol__eq(cause, texture_name, new__symbol(cause, "bucket_object")))               {return &(this->bucket_object_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_sitting")))  {return &(this->female_child_agent_sitting_texture);}
   else if (raw__symbol__eq(cause, texture_name, new__symbol(cause, "female_child_agent_standing"))) {return &(this->female_child_agent_standing_texture);}

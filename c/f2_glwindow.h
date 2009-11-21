@@ -54,9 +54,10 @@ typedef struct funk2_opengl_texture_handler_s {
   funk2_opengl_texture_t* textures;
 } funk2_opengl_texture_handler_t;
 
-void      funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this);
-void      funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this);
-boolean_t funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name, u8* filename);
+void                    funk2_opengl_texture_handler__init(funk2_opengl_texture_handler_t* this);
+void                    funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this);
+boolean_t               funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name, u8* filename);
+funk2_opengl_texture_t* funk2_opengl_texture_handler__lookup_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, f2ptr texture_name);
 #endif // F2__GLWINDOW__SUPPORTED
 
 #if defined(F2__GLWINDOW__SUPPORTED)
@@ -139,7 +140,6 @@ void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause);
 boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause);
-funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name);
 void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name);
 void raw__draw_gl_cube(f2ptr cause);
 void raw__draw_xy_square(f2ptr cause);

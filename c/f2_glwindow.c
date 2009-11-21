@@ -183,8 +183,7 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
 	status("Error loading 24 bit bgr data!");
 	return boolean__true;
       }
-      ((u8*)(texture->data))[(pixel_index << 2) + 0] = bgr_pixel[2];
-      ((u8*)(texture->data))[(pixel_index << 2) + 1] = bgr_pixel[1];
+      ((u8*)(texture->data))[(pixel_index << 2) + 0] = bgr_pixel[2];      ((u8*)(texture->data))[(pixel_index << 2) + 1] = bgr_pixel[1];
       ((u8*)(texture->data))[(pixel_index << 2) + 2] = bgr_pixel[0];
       ((u8*)(texture->data))[(pixel_index << 2) + 3] = 0xFF;
       pixel_index ++;
@@ -225,36 +224,6 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
 
 void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause) {
   raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
-}
-
-boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause) {
-  boolean_t failure_status = boolean__false;
-/*
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"texture",                     (u8*)"data/texture.bmp");}  
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"bucket_object",               (u8*)"data/bucket_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"female_child_agent_sitting",  (u8*)"data/female_child_agent_sitting.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"female_child_agent_standing", (u8*)"data/female_child_agent_standing.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"fork_object",                 (u8*)"data/fork_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"male_child_agent_sitting",    (u8*)"data/male_child_agent_sitting.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"male_child_agent_standing",   (u8*)"data/male_child_agent_standing.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"mud_object",                  (u8*)"data/mud_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"mud_puddle_scene",            (u8*)"data/mud_puddle_scene.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"shovel_object",               (u8*)"data/shovel_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"spoon_object",                (u8*)"data/spoon_object.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"blue_left_shoe",              (u8*)"data/blue_left_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"blue_right_shoe",             (u8*)"data/blue_right_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"blue_shirt",                  (u8*)"data/blue_shirt.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"bluegreen_blouse",            (u8*)"data/bluegreen_blouse.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"orange_shorts",               (u8*)"data/orange_shorts.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"pink_left_shoe",              (u8*)"data/pink_left_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"pink_right_shoe",             (u8*)"data/pink_right_shoe.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"red_skirt",                   (u8*)"data/red_skirt.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_blue_shirt",         (u8*)"data/sideview_blue_shirt.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_bluegreen_blouse",   (u8*)"data/sideview_bluegreen_blouse.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_orange_shorts",      (u8*)"data/sideview_orange_shorts.bmp");}
-  if (! failure_status) {failure_status |= funk2_glwindow__load_texture(this, cause, (u8*)"sideview_red_skirt",          (u8*)"data/sideview_red_skirt.bmp");}
-*/
-  return failure_status;
 }
 
 // function called when our window is resized (should only happen in window mode)
@@ -584,10 +553,6 @@ boolean_t funk2_glwindow__initialize_opengl(funk2_glwindow_t* this, f2ptr cause)
   // we use raw__resize_gl_scene once to set up our initial perspective
   raw__resize_gl_scene(cause, this->width, this->height);
   
-  if (funk2_glwindow__load_gl_textures(this, cause)) {
-    status("funk2_glwindow__initialize_opengl failure: loading gl textures.");
-    return boolean__true;
-  }
   raw__opengl__glEnable(cause, GL_TEXTURE_2D);
   
   if (funk2_opengl_font__init(&(this->fixed_font), cause, this->display, "-*-times-bold-r-*-*-14-*-*-*-p-*-iso8859-1")) {

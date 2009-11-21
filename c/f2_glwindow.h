@@ -90,34 +90,6 @@ typedef struct funk2_glwindow_s {
   u64                            last_redraw__nanoseconds_since_1970;
   boolean_t                      needs_redraw;
   funk2_opengl_texture_handler_t texture_handler;
-
-  /*
-  funk2_opengl_texture_t         texture;
-  funk2_opengl_texture_t         bucket_object_texture;
-  funk2_opengl_texture_t         female_child_agent_sitting_texture;
-  funk2_opengl_texture_t         female_child_agent_standing_texture;
-  funk2_opengl_texture_t         fork_object_texture;
-  funk2_opengl_texture_t         male_child_agent_sitting_texture;
-  funk2_opengl_texture_t         male_child_agent_standing_texture;
-  funk2_opengl_texture_t         mud_object_texture;
-  funk2_opengl_texture_t         mud_puddle_scene_texture;
-  funk2_opengl_texture_t         shovel_object_texture;
-  funk2_opengl_texture_t         spoon_object_texture;
-  
-  funk2_opengl_texture_t         blue_left_shoe_texture;
-  funk2_opengl_texture_t         blue_right_shoe_texture;
-  funk2_opengl_texture_t         blue_shirt_texture;
-  funk2_opengl_texture_t         bluegreen_blouse_texture;
-  funk2_opengl_texture_t         orange_shorts_texture;
-  funk2_opengl_texture_t         pink_left_shoe_texture;
-  funk2_opengl_texture_t         pink_right_shoe_texture;
-  funk2_opengl_texture_t         red_skirt_texture;
-  funk2_opengl_texture_t         sideview_blue_shirt_texture;
-  funk2_opengl_texture_t         sideview_bluegreen_blouse_texture;
-  funk2_opengl_texture_t         sideview_orange_shorts_texture;
-  funk2_opengl_texture_t         sideview_red_skirt_texture;
-  */
-  
   funk2_opengl_font_t            fixed_font;
 #endif // defined(F2__GLWINDOW__SUPPORTED)
 
@@ -151,35 +123,6 @@ f2ptr      f2__glwindow__destroy(f2ptr cause);
 void funk2_glwindow__render_relative_physical_thing(funk2_glwindow_t* this, f2ptr cause, f2ptr relative_object, f2ptr physical_thing);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if defined(F2__GLWINDOW__SUPPORTED)
 
 boolean_t funk2_opengl_font__init(funk2_opengl_font_t* this, f2ptr cause, Display* display, char* font_name);
@@ -188,7 +131,6 @@ void funk2_opengl_font__printf(funk2_opengl_font_t* this, f2ptr cause, const cha
 boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* filename);
 boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t* this, f2ptr cause, u8* bmp_filename);
 void funk2_opengl_texture__bind(funk2_opengl_texture_t* this, f2ptr cause);
-boolean_t funk2_glwindow__load_gl_textures(funk2_glwindow_t* this, f2ptr cause);
 void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height);
 void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen);
 void funk2_glwindow__reinit(funk2_glwindow_t* this, u8* title, int width, int height, int depth, boolean_t fullscreen);

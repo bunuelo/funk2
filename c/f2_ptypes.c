@@ -965,6 +965,10 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
   memcpy(str, __pure__f2string__str(this), __pure__f2string__length(this));
 }
 
+void raw__string__str_copy(f2ptr cause, f2ptr this, u8* str) {
+  f2string__str_copy(this, cause, str);
+}
+
 int pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
@@ -989,7 +993,8 @@ boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__string__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__string__is_type(cause, x));}
 f2ptr f2__string__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("string"), (u8*)"string");}
 
-f2ptr f2__string__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2string__length(x, cause));}
+u64   raw__string__length(f2ptr cause, f2ptr this) {return f2string__length(this, cause);}
+f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__length(cause, this));}
 
 f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
   if ((! raw__string__is_type(cause, this)) ||

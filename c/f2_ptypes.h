@@ -192,7 +192,12 @@ int   pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
 f2ptr f2string__primobject_type__new(f2ptr cause);
 
 boolean_t raw__string__is_type(f2ptr cause, f2ptr exp);
-f2ptr f2__string__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__string__is_type(f2ptr cause, f2ptr exp);
+
+void raw__string__str_copy(f2ptr cause, f2ptr this, u8* str);
+
+u64   raw__string__length(f2ptr cause, f2ptr this);
+f2ptr  f2__string__length(f2ptr cause, f2ptr this);
 
 u64   raw__string__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__string__eq_hash_value(f2ptr cause, f2ptr this);

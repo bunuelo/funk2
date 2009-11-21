@@ -1224,9 +1224,9 @@ f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
   raw__symbol__str_copy(cause, name, name__str);
   name__str[name__length] = 0;
   
-  u64 filename__length = raw__symbol__length(cause, filename);
+  u64 filename__length = raw__string__length(cause, filename);
   u8* filename__str = alloca(filename__length + 1);
-  raw__symbol__str_copy(cause, filename, filename__str);
+  raw__string__str_copy(cause, filename, filename__str);
   filename__str[filename__length] = 0;
   
   return f2bool__new(raw__glwindow__load_texture(cause, name__str, filename__str));

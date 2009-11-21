@@ -620,7 +620,7 @@ boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* 
 funk2_opengl_texture_t* funk2_glwindow__lookup_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr texture_name) {
   //printf("\n  funk2_glwindow__lookup_texture, texture_name="); f2__write(cause, nil, texture_name); fflush(stdout);
   u64 texture_name__length = raw__symbol__length(cause, texture_name);
-  char* texture_name__str = alloca(texture_name__length + 1);
+  u8* texture_name__str = alloca(texture_name__length + 1);
   raw__symbol__str_copy(cause, texture_name, texture_name__str);
   texture_name__str[texture_name__length] = 0;
   

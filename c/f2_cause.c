@@ -219,7 +219,7 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
 
 
 f2ptr f2__bytecode_funk_callback__create_and_hash_event(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr args) {
-  f2ptr start_time       = f2__time__new(cause, f2__nanoseconds_since_1970(cause));
+  f2ptr start_time       = f2__time(cause);
   f2ptr end_time         = nil;
   f2ptr funk_bytecode    = bytecode;
   f2ptr endfunk_bytecode = nil;

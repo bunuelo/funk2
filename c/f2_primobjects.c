@@ -548,7 +548,6 @@ void f2__primobjects__reinitialize_globalvars() {
   __processor__symbol        = new__symbol(cause, "processor");
   __scheduler__symbol        = new__symbol(cause, "scheduler");
   __event_subscriber__symbol = new__symbol(cause, "event_subscriber");
-  __cause__symbol            = new__symbol(cause, "cause");
   __transframe__symbol       = new__symbol(cause, "transframe");
   __bug__symbol              = new__symbol(cause, "bug");
   __time__symbol             = new__symbol(cause, "time");

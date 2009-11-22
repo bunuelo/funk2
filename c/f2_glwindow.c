@@ -386,18 +386,18 @@ void funk2_glwindow__init(funk2_glwindow_t* this, u8* title, int width, int heig
 
 void funk2_glwindow__destroy(funk2_glwindow_t* this) {
   if (this->initialized) {
-    funk2_processor_mutex__destroy(&(this->mutex));
-    
     this->initialized = boolean__false;
     
 #if defined(F2__GLWINDOW__SUPPORTED)
-    funk2_opengl_texture_handler__destroy(&(this->texture_handler));
-    
-    funk2_opengl_font__destroy(&(this->fixed_font), nil);
     funk2_glwindow__hide(this, nil);
+    
+    funk2_opengl_texture_handler__destroy(&(this->texture_handler));
+    funk2_opengl_font__destroy(&(this->fixed_font), nil);
 #endif // defined(F2__GLWINDOW__SUPPORTED)
     
     f2__free(to_ptr(this->title));
+    
+    funk2_processor_mutex__destroy(&(this->mutex));
   }
 }
 

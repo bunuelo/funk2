@@ -425,6 +425,8 @@ void funk2_glwindow__hide(funk2_glwindow_t* this, f2ptr cause) {
       raw__xxf86vm__XF86VidModeSetViewPort(cause, this->display, this->screen, 0, 0);
     }
     raw__xlib__XCloseDisplay(cause, this->display);
+    funk2_opengl_texture_handler__destroy(&(this->texture_handler));
+    funk2_opengl_texture_handler__init(&(this->texture_handler));
   }
 }
 

@@ -249,22 +249,8 @@ def_primobject_7_slot(funk_event,
 		      endfunk_bytecode,
 		      value);
 
-f2ptr f2__funk_event__new(f2ptr cause,
-			  f2ptr start_time,
-			  f2ptr end_time,
-			  f2ptr fiber,
-			  f2ptr funk_bytecode,
-			  f2ptr args,
-			  f2ptr endfunk_bytecode,
-			  f2ptr value) {
-  return f2funk_event__new(cause,
-			   start_time,
-			   end_time,
-			   fiber,
-			   funk_bytecode,
-			   args,
-			   endfunk_bytecode,
-			   value);
+f2ptr f2__funk_event__new(f2ptr cause, f2ptr start_time, f2ptr end_time, f2ptr fiber, f2ptr funk_bytecode, f2ptr args, f2ptr endfunk_bytecode, f2ptr value) {
+ return f2funk_event__new(cause, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
 }
 def_pcfunk0(funk_event__new, return f2__funk_event__new(this_cause, nil, nil, nil, nil, nil, nil, nil));
 

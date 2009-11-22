@@ -228,7 +228,7 @@ f2ptr f2__bytecode_endfunk_callback__finish_and_unhash_event(f2ptr cause, f2ptr 
   printf("\nbytecode_funk_callback__finish_and_unhash_event here.");
   return nil;
 }
-def_pcfunk4(bytecode_funk_callback__finish_and_unhash_event, fiber, bytecode, value, funk, return f2__bytecode_funk_callback__finish_and_unhash_event(this_cause, fiber, bytecode, value, funk));
+def_pcfunk4(bytecode_endfunk_callback__finish_and_unhash_event, fiber, bytecode, value, funk, return f2__bytecode_endfunk_callback__finish_and_unhash_event(this_cause, fiber, bytecode, value, funk));
 
 
 
@@ -272,7 +272,7 @@ void f2__cause__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define__funk, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__4(bytecode_funk_callback__create_and_hash_event, fiber, bytecode, funk, args, "(cfunk defined in f2_cause.c)");
-  f2__primcfunk__init__4(bytecode_funk_callback__finish_and_unhash_event, fiber, bytecode, value, funk, "(cfunk defined in f2_cause.c)");
+  f2__primcfunk__init__4(bytecode_endfunk_callback__finish_and_unhash_event, fiber, bytecode, value, funk, "(cfunk defined in f2_cause.c)");
   
 }
 

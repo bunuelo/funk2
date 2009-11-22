@@ -137,8 +137,8 @@ void f2__fiber__increment_pc(f2ptr fiber, f2ptr cause) {
 #  define bytecode_status(msg, rest...)
 #endif
 
-f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_funk, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr funk_args) {
-  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, funk, f2cons__new(cause, funk_args, nil))));
+f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr funk_args) {
+  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, funk, f2cons__new(cause, funk_args, nil)))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_funk_funk, args);
   return reflective_value;
 }
@@ -161,7 +161,8 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 	  f2ptr bytecode_funk_funks_next = f2cons__cdr(bytecode_funk_funks_iter, cause);
 	  f2ptr bytecode_funk_funk       = f2cons__car(bytecode_funk_funks_iter, cause);
 	  {
-	    f2ptr reflective_value = f2__bytecode_funk_funk__call_with_event(nil, bytecode_funk_funk, fiber, bytecode, funktion, funk_args);
+	    f2ptr reflective_cause = nil;
+	    f2ptr reflective_value = f2__bytecode_funk_funk__call_with_event(reflective_cause, bytecode_funk_funk, cause, fiber, bytecode, funktion, funk_args);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;
@@ -1245,8 +1246,8 @@ int f2__fiber__bytecode__jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_cou
   return 1;
 }
 
-f2ptr f2__bytecode_branch_funk__call_with_event(f2ptr cause, f2ptr bytecode_branch_funk, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
-  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, program_counter, f2cons__new(cause, branch_program_counter, f2cons__new(cause, value, nil)))));
+f2ptr f2__bytecode_branch_funk__call_with_event(f2ptr cause, f2ptr bytecode_branch_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
+  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, program_counter, f2cons__new(cause, branch_program_counter, f2cons__new(cause, value, nil))))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_branch_funk, args);
   return reflective_value;
 }
@@ -1270,7 +1271,8 @@ int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_
 	  f2ptr bytecode_branch_funks_next = f2cons__cdr(bytecode_branch_funks_iter, cause);
 	  f2ptr bytecode_branch_funk       = f2cons__car(bytecode_branch_funks_iter, cause);
 	  {
-	    f2ptr reflective_value = f2__bytecode_branch_funk__call_with_event(nil, bytecode_branch_funk, fiber, bytecode, program_counter, new_program_counter, value);
+	    f2ptr reflective_cause = nil;
+	    f2ptr reflective_value = f2__bytecode_branch_funk__call_with_event(reflective_cause, bytecode_branch_funk, cause, fiber, bytecode, program_counter, new_program_counter, value);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;
@@ -1312,7 +1314,8 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
 	  f2ptr bytecode_branch_funks_next = f2cons__cdr(bytecode_branch_funks_iter, cause);
 	  f2ptr bytecode_branch_funk       = f2cons__car(bytecode_branch_funks_iter, cause);
 	  {
-	    f2ptr reflective_value = f2__bytecode_branch_funk__call_with_event(nil, bytecode_branch_funk, fiber, bytecode, program_counter, new_program_counter, value);
+	    f2ptr reflective_cause = nil;
+	    f2ptr reflective_value = f2__bytecode_branch_funk__call_with_event(reflective_cause, bytecode_branch_funk, cause, fiber, bytecode, program_counter, new_program_counter, value);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;
@@ -1355,8 +1358,8 @@ int f2__fiber__bytecode__debug(f2ptr fiber, f2ptr bytecode, f2ptr value) {
 }
 
 
-f2ptr f2__bytecode_tracer_funk__call_with_event(f2ptr cause, f2ptr bytecode_tracer_funk, f2ptr fiber, f2ptr bytecode, f2ptr value) {
-  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, nil)));
+f2ptr f2__bytecode_tracer_funk__call_with_event(f2ptr cause, f2ptr bytecode_tracer_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr value) {
+  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, nil))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_tracer_funk, args);
   return reflective_value;
 }
@@ -1379,7 +1382,8 @@ int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr a
 	  f2ptr bytecode_tracer_funks_next = f2cons__cdr(bytecode_tracer_funks_iter, cause);
 	  f2ptr bytecode_tracer_funk       = f2cons__car(bytecode_tracer_funks_iter, cause);
 	  {
-	    f2ptr reflective_value = f2__bytecode_tracer_funk__call_with_event(nil, bytecode_tracer_funk, fiber, bytecode, value);
+	    f2ptr reflective_cause = nil;
+	    f2ptr reflective_value = f2__bytecode_tracer_funk__call_with_event(reflective_cause, bytecode_tracer_funk, cause, fiber, bytecode, value);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;
@@ -1395,8 +1399,8 @@ int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr a
 }
 
 
-f2ptr f2__bytecode_endfunk_funk__call_with_event(f2ptr cause, f2ptr bytecode_endfunk_funk, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
-  f2ptr args             = f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, f2cons__new(cause, funk, nil))));
+f2ptr f2__bytecode_endfunk_funk__call_with_event(f2ptr cause, f2ptr bytecode_endfunk_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
+  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, f2cons__new(cause, funk, nil)))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_endfunk_funk, args);
   return reflective_value;
 }
@@ -1413,7 +1417,8 @@ int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr by
 	  f2ptr bytecode_endfunk_funks_next = f2cons__cdr(bytecode_endfunk_funks_iter, cause);
 	  f2ptr bytecode_endfunk_funk       = f2cons__car(bytecode_endfunk_funks_iter, cause);
 	  {
-	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(cause, bytecode_endfunk_funk, fiber, bytecode, value, funk);
+	    f2ptr reflective_cause = nil;
+	    f2ptr reflective_value = f2__bytecode_endfunk_funk__call_with_event(reflective_cause, bytecode_endfunk_funk, cause, fiber, bytecode, value, funk);
 	    if (raw__larva__is_type(cause, reflective_value)) {
 	      f2fiber__value__set(fiber, cause, reflective_value);
 	      return 1;

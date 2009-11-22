@@ -20,7 +20,7 @@
 '
 
 [defmetro funktracer_funk [:rest body] 
-  `[funk [fiber bytecode funk args]
+  `[funk [object_cause fiber bytecode funk args]
 	 @body]]
 
 [defmetro funktracer [:rest body] 
@@ -30,7 +30,7 @@
      nil]]
 
 [defmetro endfunktracer_funk [:rest body] 
-  `[funk [fiber bytecode value funk]
+  `[funk [object_cause fiber bytecode value funk]
 	 @body]]
 
 [defmetro endfunktracer [:rest body] 
@@ -40,7 +40,7 @@
      nil]]
 
 [defmetro branchtracer_funk [:rest body] 
-  `[funk [fiber bytecode program_counter branch_program_counter value]
+  `[funk [object_cause fiber bytecode program_counter branch_program_counter value]
 	 @body]]
 
 [defmetro branchtracer [:rest body] 
@@ -50,7 +50,7 @@
      nil]]
 
 [defmetro valuetracer_funk [:rest body] 
-  `[funk [fiber bytecode value]
+  `[funk [object_cause fiber bytecode value]
 	 @body]]
 
 [defmetro valuetracer [:rest body] 

@@ -26,6 +26,7 @@
 
 // cause
 
+typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
 declare_object_type_18_slot(cause,
 			    fibers_mutex,
 			    fibers,
@@ -54,6 +55,7 @@ declare_object_type_18_slot(cause,
 
 // funk_event
 
+typedef struct funk2_object_type__funk_event__slot_s funk2_object_type__funk_event__slot_t;
 declare_object_type_7_slot(funk_event,
 			   start_time,
 			   end_time,

@@ -37,7 +37,6 @@ typedef struct funk2_object_type__fiber__slot_s            funk2_object_type__fi
 typedef struct funk2_object_type__processor__slot_s        funk2_object_type__processor__slot_t;
 typedef struct funk2_object_type__scheduler__slot_s        funk2_object_type__scheduler__slot_t;
 typedef struct funk2_object_type__event_subscriber__slot_s funk2_object_type__event_subscriber__slot_t;
-typedef struct funk2_object_type__cause__slot_s            funk2_object_type__cause__slot_t;
 typedef struct funk2_object_type__transframe__slot_s       funk2_object_type__transframe__slot_t;
 typedef struct funk2_object_type__time__slot_s             funk2_object_type__time__slot_t;
 typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__size_2d__slot_t;

@@ -265,6 +265,7 @@ def_pcfunk0(funk_event__new, return f2__funk_event__new(this_cause, nil, nil, ni
 // **
 
 void f2__cause__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
   __cause__symbol      = new__symbol(cause, "cause");
   __funk_event__symbol = new__symbol(cause, "funk_event");
 }

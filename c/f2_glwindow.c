@@ -1276,8 +1276,7 @@ boolean_t raw__glwindow__texture_loaded_raw(f2ptr cause, u8* texture_name) {
 }
 
 f2ptr f2__glwindow__texture_loaded(f2ptr cause, f2ptr name) {
-  if ((! raw__symbol__is_type(cause, name)) ||
-      (! raw__string__is_type(cause, filename))) {
+  if (! raw__symbol__is_type(cause, name)) {
     return f2larva__new(cause, 1);
   }
   u64 name__length = raw__symbol__length(cause, name);

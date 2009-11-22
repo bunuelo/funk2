@@ -19,6 +19,6 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk bytecode_funk_callback-create_and_hash_event   &primfunk:bytecode_funk_callback__create_and_hash_event]
-[globalize-funk bytecode_funk_callback-finish_and_unhash_event &primfunk:bytecode_funk_callback__finish_and_unhash_event]
+[globalize-funk bytecode_funk_callback-create_and_hash_event      &primfunk:bytecode_funk_callback__create_and_hash_event]
+[globalize-funk bytecode_endfunk_callback-finish_and_unhash_event &primfunk:bytecode_endfunk_callback__finish_and_unhash_event]
 

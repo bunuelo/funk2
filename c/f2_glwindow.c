@@ -549,18 +549,21 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
 }
 
 boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
-  raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
-  boolean_t failure = funk2_opengl_texture_handler__load_texture(&(this->texture_handler), cause, name, filename);
-  raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
-  funk2_processor_mutex__unlock(&(this->mutex));
+  boolean_t failure = boolean__true;
+  if (this->initialized) {
+    funk2_processor_mutex__user_lock(&(this->mutex));
+    raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
+    failure = funk2_opengl_texture_handler__load_texture(&(this->texture_handler), cause, name, filename);
+    raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
+    funk2_processor_mutex__unlock(&(this->mutex));
+  }
   return failure;
 }
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
-  raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   if (this->window_created) {
+    funk2_processor_mutex__user_lock(&(this->mutex));
+    raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
     boolean_t draw_scene_constantly = boolean__true;
     if (draw_scene_constantly) {
       if ((raw__nanoseconds_since_1970() - this->last_redraw__nanoseconds_since_1970) >= ((1.0 / 10.0) * nanoseconds_per_second)) {
@@ -618,9 +621,9 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       this->needs_redraw = boolean__false;
       this->last_redraw__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     }
+    raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
+    funk2_processor_mutex__unlock(&(this->mutex));
   }
-  raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
-  funk2_processor_mutex__unlock(&(this->mutex));
   return this->done;
 }
 

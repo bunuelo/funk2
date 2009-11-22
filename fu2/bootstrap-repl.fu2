@@ -74,6 +74,7 @@
 [primfunk:load 'fu2/primfunks-physical_objects.fu2']
 [primfunk:load 'fu2/primfunks-object_lattice.fu2']
 [primfunk:load 'fu2/primfunks-arithmetic.fu2']
+[primfunk:load 'fu2/primfunks-cause.fu2']
 
 
 [globalize stdin-stream  [file_stream-new 0]]

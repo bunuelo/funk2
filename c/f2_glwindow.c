@@ -280,7 +280,7 @@ void funk2_opengl_texture_handler__destroy(funk2_opengl_texture_handler_t* this)
 }
 
 funk2_opengl_texture_t* funk2_opengl_texture_handler__lookup_texture_raw(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* texture_name) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->mutex));
   funk2_opengl_texture_t* texture_iter = this->textures;
   while (texture_iter) {
     funk2_opengl_texture_t* next = texture_iter->next;
@@ -306,7 +306,7 @@ funk2_opengl_texture_t* funk2_opengl_texture_handler__lookup_texture(funk2_openg
 }
 
 boolean_t funk2_opengl_texture_handler__unload_texture(funk2_opengl_texture_handler_t* this, f2ptr cause, u8* name) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->mutex));
   funk2_opengl_texture_t* prev         = NULL;
   funk2_opengl_texture_t* texture_iter = this->textures;
   while (texture_iter) {
@@ -337,7 +337,7 @@ boolean_t funk2_opengl_texture_handler__load_texture(funk2_opengl_texture_handle
   // unload texture in case we've already used this name
   funk2_opengl_texture_handler__unload_texture(this, cause, name);
   // load texture
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->mutex));
   funk2_opengl_texture_t* texture = (funk2_opengl_texture_t*)from_ptr(f2__malloc(sizeof(funk2_opengl_texture_t)));
   funk2_opengl_texture__init(texture, name, 0, 0, 0);
   boolean_t failure = funk2_opengl_texture__load_gl_texture_from_bmp(texture, cause, filename);
@@ -549,7 +549,7 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
 }
 
 boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->mutex));
   raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   boolean_t failure = funk2_opengl_texture_handler__load_texture(&(this->texture_handler), cause, name, filename);
   raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
@@ -558,7 +558,7 @@ boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* 
 }
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
-  funk2_processor_mutex__lock(&(this->mutex));
+  funk2_processor_mutex__user_lock(&(this->mutex));
   raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   if (this->window_created) {
     boolean_t draw_scene_constantly = boolean__true;

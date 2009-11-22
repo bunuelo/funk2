@@ -52,6 +52,18 @@ declare_object_type_18_slot(cause,
 			    f2ptr define__funk__funk;
 			    );
 
+// funk_event
+
+declare_object_type_7_slot(funk_event,
+			   start_time,
+			   end_time,
+			   fiber,
+			   funk_bytecode,
+			   args,
+			   endfunk_bytecode,
+			   value,
+			   );
+
 #endif // F2__CAUSE__TYPES__H
 
 
@@ -95,6 +107,17 @@ void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause);
+
+declare_primobject_7_slot(funk_event,
+			  start_time,
+			  end_time,
+			  fiber,
+			  funk_bytecode,
+			  args,
+			  endfunk_bytecode,
+			  value
+			  );
+
 
 // **
 

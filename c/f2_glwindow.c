@@ -549,6 +549,7 @@ boolean_t funk2_glwindow__show(funk2_glwindow_t* this, f2ptr cause) {
 
 boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* name, u8* filename) {
   funk2_processor_mutex__lock(&(this->mutex));
+  raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   boolean_t failure = funk2_opengl_texture_handler__load_texture(&(this->texture_handler), cause, name, filename);
   funk2_processor_mutex__unlock(&(this->mutex));
   return failure;
@@ -556,6 +557,7 @@ boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* 
 
 boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
   funk2_processor_mutex__lock(&(this->mutex));
+  raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   if (this->window_created) {
     boolean_t draw_scene_constantly = boolean__true;
     if (draw_scene_constantly) {

@@ -50,6 +50,7 @@ void f2__initialize() {
   // **********************************************************************************************************************************************************************************
   
   f2__primobjects__initialize();
+  f2__cause__initialize();
   f2__primobject__action__initialize();
   f2__primobject_tensor__initialize();
   f2__primobject_object__initialize();
@@ -106,7 +107,6 @@ void f2__initialize() {
   f2__object_lattice__initialize();
   f2__primobject_hash__initialize();
   f2__arithmetic__initialize();
-  f2__cause__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

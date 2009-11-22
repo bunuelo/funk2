@@ -552,6 +552,7 @@ boolean_t funk2_glwindow__load_texture(funk2_glwindow_t* this, f2ptr cause, u8* 
   funk2_processor_mutex__lock(&(this->mutex));
   raw__opengl__glXMakeCurrent(cause, this->display, this->x_window, this->glx_context);
   boolean_t failure = funk2_opengl_texture_handler__load_texture(&(this->texture_handler), cause, name, filename);
+  raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
   funk2_processor_mutex__unlock(&(this->mutex));
   return failure;
 }
@@ -618,6 +619,7 @@ boolean_t funk2_glwindow__handle_events(funk2_glwindow_t* this, f2ptr cause) {
       this->last_redraw__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     }
   }
+  raw__opengl__glXMakeCurrent(cause, this->display, None, NULL);
   funk2_processor_mutex__unlock(&(this->mutex));
   return this->done;
 }

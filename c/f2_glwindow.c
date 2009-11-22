@@ -208,7 +208,7 @@ boolean_t funk2_opengl_texture__load_gl_texture_from_bmp(funk2_opengl_texture_t*
     }
     this->width  = image->width;
     this->height = image->height;
-    printf("\ntexture_id=%d", this->texture_id); fflush(stdout);
+    status("initializing new texture_id=%d", this->texture_id);
     raw__opengl__glBindTexture(cause, GL_TEXTURE_2D, this->texture_id);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     raw__opengl__glTexParameteri(cause, GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);

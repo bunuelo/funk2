@@ -98,7 +98,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "event_subscriber";    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),    f2event_subscriber__primobject_type__new(cause));}
   {char* type_name = "transframe";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2transframe__primobject_type__new(cause));}
   {char* type_name = "bug";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2bug__primobject_type__new(cause));}
-  {char* type_name = "time";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2time__primobject_type__new(cause));}
+  {char* type_name = "time";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2time__primobject_type__new_aux(cause));}
   {char* type_name = "size_2d";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2size_2d__primobject_type__new(cause));}
   {char* type_name = "event";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2event__primobject_type__new(cause));}
   {char* type_name = "bytecode_event";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2bytecode_event__primobject_type__new(cause));}

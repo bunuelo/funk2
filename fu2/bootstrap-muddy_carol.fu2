@@ -664,7 +664,9 @@
   [if [muddy_carol-load_textures]
       [prog [glwindow-destroy]
 	    [error `run-time `[glwindow failed-to-load-textures]]]]
-  [while [not [glwindow-handle_events]]]
+  [while [not [glwindow-handle_events]]
+    [if [not [glwindow-texture_loaded `bucket_object]]
+	[muddy_carol-load_textures]]]
   [glwindow-destroy]]
 
 [defunk muddy_carol-display []

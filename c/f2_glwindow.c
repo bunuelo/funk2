@@ -676,6 +676,14 @@ void funk2_glwindow__bind_texture(funk2_glwindow_t* this, f2ptr cause, f2ptr tex
   }
 }
 
+boolean_t funk2_glwindow__texture_loaded_raw(funk2_glwindow_t* this, f2ptr cause, u8* texture_name) {
+  funk2_opengl_texture_t* texture = funk2_opengl_texture_handler__lookup_texture_raw(&(this->texture_handler), cause, texture_name);
+  if (texture) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
 void raw__draw_gl_cube(f2ptr cause) {
   raw__opengl__glBegin(cause, GL_QUADS);
   raw__opengl__glNormal3f(cause, 0,0,1);
@@ -1263,6 +1271,24 @@ f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
 }
 def_pcfunk2(glwindow__load_texture, name, filename, return f2__glwindow__load_texture(this_cause, name, filename));
 
+boolean_t raw__glwindow__texture_loaded_raw(f2ptr cause, u8* texture_name) {
+  return funk2_glwindow__texture_loaded_raw(&(__funk2.glwindow), cause, texture_name);
+}
+
+f2ptr f2__glwindow__texture_loaded(f2ptr cause, f2ptr name) {
+  if ((! raw__symbol__is_type(cause, name)) ||
+      (! raw__string__is_type(cause, filename))) {
+    return f2larva__new(cause, 1);
+  }
+  u64 name__length = raw__symbol__length(cause, name);
+  u8* name__str = alloca(name__length + 1);
+  raw__symbol__str_copy(cause, name, name__str);
+  name__str[name__length] = 0;
+  
+  return f2bool__new(raw__glwindow__texture_loaded_raw(cause, name__str));
+}
+def_pcfunk1(glwindow__texture_loaded, name, return f2__glwindow__texture_loaded(this_cause, name));
+
 // **
 
 void f2__glwindow__reinitialize_globalvars() {
@@ -1288,5 +1314,6 @@ void f2__glwindow__initialize() {
   f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
   f2__primcfunk__init__2(glwindow__load_texture, name, filename, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__1(glwindow__texture_loaded, name, "glwindow cfunk declared in f2_glwindow.c");
 }
 

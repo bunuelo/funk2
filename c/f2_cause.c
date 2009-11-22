@@ -225,8 +225,10 @@ f2ptr f2__bytecode_funk_callback__create_and_hash_event(f2ptr cause, f2ptr fiber
   f2ptr endfunk_bytecode = nil;
   f2ptr value            = nil;
   f2ptr funk_event = f2__funk_event__new(cause, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, nil);
-  f2ptr bytecode_funk_event_hash = f2__cause__bytecode_funk_event_hash(cause, cause);
-  f2__ptypehash__add(cause, bytecode_funk_event_hash, funk, funk_event);
+  if (cause) {
+    f2ptr bytecode_funk_event_hash = f2__cause__bytecode_funk_event_hash(cause, cause);
+    f2__ptypehash__add(cause, bytecode_funk_event_hash, funk, funk_event);
+  }
   return nil;
 }
 def_pcfunk4(bytecode_funk_callback__create_and_hash_event, fiber, bytecode, funk, args, return f2__bytecode_funk_callback__create_and_hash_event(this_cause, fiber, bytecode, funk, args));

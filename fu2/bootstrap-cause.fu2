@@ -122,4 +122,21 @@
   [valuetracer   [print [list [get [time] nanoseconds_since_1970] `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]
   nil]
 
+[deftypefunk cause execute trace []
+  [print 'hi']
+  [let [[funks [get this bytecode_funk_funks]]]
+    [print 'hi']
+    [set this bytecode_funk_funks
+	 [cons &bytecode_funk_callback-create_and_hash_event
+	       funks]]]
+  [print 'hi']
+  [let [[funks [get this bytecode_endfunk_funks]]]
+    [print 'hi']
+    [set this bytecode_endfunk_funks
+	 [cons &bytecode_endfunk_callback-finish_and_unhash_event
+	       funks]]]
+  [print 'hi']
+  nil]
+
+
 

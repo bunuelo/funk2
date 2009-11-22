@@ -123,6 +123,7 @@ declare_primobject_7_slot(funk_event,
 
 // **
 
+void f2__cause__reinitialize_globalvars();
 void f2__cause__initialize();
 
 #endif // F2__CAUSE__H

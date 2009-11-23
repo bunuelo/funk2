@@ -160,8 +160,8 @@ f2ptr f2cons__primobject_type__new_aux(f2ptr cause) {
 
 def_primobject_3_slot(doublelink, prev, next, value);
 
-f2ptr f2__doublelink__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {return f2doublelink__new(cause, x, y, z);}
-def_pcfunk3(doublelink__new, x, y, z, return f2__doublelink__new(this_cause, x, y, z));
+f2ptr f2__doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {return f2doublelink__new(cause, prev, next, value);}
+def_pcfunk3(doublelink__new, prev, next, value, return f2__doublelink__new(this_cause, prev, next, value));
 
 
 // imagination_link

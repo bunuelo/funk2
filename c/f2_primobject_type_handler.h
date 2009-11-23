@@ -27,6 +27,7 @@
 #include "f2_primobject__ptypehash.h"
 #include "f2_primobject__set.h"
 #include "f2_primobject__list.h"
+#include "f2_primobject__doublelinklist.h"
 #include "f2_primobject__circular_buffer.h"
 #include "f2_bug.h"
 #include "f2_physical_objects.h"
@@ -97,6 +98,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__environment__slot_t         primobject_type_environment;
   funk2_object_type__set__slot_t                 primobject_type_set;
   funk2_object_type__list__slot_t                primobject_type_list;
+  funk2_object_type__doublelinklist__slot_t      primobject_type_doublelinklist;
   funk2_object_type__circular_buffer__slot_t     primobject_type_circular_buffer;
   funk2_object_type__physical_rotation__slot_t   primobject_type_physical_rotation;
   funk2_object_type__physical_position__slot_t   primobject_type_physical_position;

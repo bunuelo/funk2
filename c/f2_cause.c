@@ -224,7 +224,7 @@ f2ptr f2__bytecode_funk_callback__create_and_trace_event(f2ptr cause, f2ptr obje
   f2ptr funk_bytecode    = bytecode;
   f2ptr endfunk_bytecode = nil;
   f2ptr value            = nil;
-  f2ptr funk_event = f2__funk_event__new(cause, object_cause, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
+  f2ptr funk_event = f2__funk_event__new(cause, object_cause, funk, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
   if (object_cause) {
     f2ptr event_trace = f2__cause__event_trace(cause, object_cause);
     f2ptr doublelink = f2__doublelink__new(cause, event_trace, nil, funk_event);

@@ -22,9 +22,24 @@
 #ifndef F2__PRIMOBJECT__DOUBLELINKLIST__TYPES__H
 #define F2__PRIMOBJECT__DOUBLELINKLIST__TYPES__H
 
-typedef struct funk2_object_type__doublelinklist__slot_s funk2_object_type__doublelinklist__slot_t;
-
 // doublelinklist
+
+typedef struct funk2_object_type__doublelinklist__slot_s funk2_object_type__doublelinklist__slot_t;
+declare_object_type_3_slot(doublelinklist, write_mutex, length, cons_cells,
+			   f2ptr add__symbol;
+			   f2ptr add__funk;
+			   f2ptr lookup__symbol;
+			   f2ptr lookup__funk;
+			   f2ptr car__symbol;
+			   f2ptr car__funk;
+			   f2ptr cdr__symbol;
+			   f2ptr cdr__funk;
+			   );
+
+/*
+// doublelinklist
+
+typedef struct funk2_object_type__doublelinklist__slot_s funk2_object_type__doublelinklist__slot_t;
 
 struct funk2_object_type__doublelinklist__slot_s {
   f2ptr is_type__symbol;
@@ -52,6 +67,7 @@ struct funk2_object_type__doublelinklist__slot_s {
   f2ptr cdr__symbol;
   f2ptr cdr__funk;
 };
+*/
 
 #endif // F2__PRIMOBJECT__DOUBLELINKLIST__TYPES__H
 

@@ -228,6 +228,7 @@ f2ptr f2__bytecode_funk_callback__create_and_trace_event(f2ptr cause, f2ptr obje
   if (object_cause) {
     f2ptr event_trace = f2__cause__event_trace(cause, object_cause);
     f2ptr doublelink = f2__doublelink__new(cause, event_trace, nil, funk_event);
+    f2__doublelink__next__set(cause, event_trace, doublelink);
     f2__cause__event_trace__set(cause, object_cause, doublelink);
   }
   return nil;

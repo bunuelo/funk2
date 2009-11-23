@@ -1049,7 +1049,8 @@ f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
 
 declare_primobject_3_slot(doublelink, prev, next, value);
 
-f2ptr f2__doublelink(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr f2__doublelink(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value);
+f2ptr f2__doublelink__new(f2ptr cause, f2ptr prev, f2ptr next, f2ptr value) {return f2doublelink__new(cause, prev, next, value);}
 
 
 // imagination_link

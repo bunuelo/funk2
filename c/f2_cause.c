@@ -259,8 +259,9 @@ def_pcfunk5(bytecode_endfunk_callback__finish_and_abstract_event, object_cause, 
 
 // funk2_event
 
-def_primobject_8_slot(funk_event,
+def_primobject_9_slot(funk_event,
 		      object_cause,
+		      funk,
 		      start_time,
 		      end_time,
 		      fiber,
@@ -269,10 +270,10 @@ def_primobject_8_slot(funk_event,
 		      endfunk_bytecode,
 		      value);
 
-f2ptr f2__funk_event__new(f2ptr cause, f2ptr object_cause, f2ptr start_time, f2ptr end_time, f2ptr fiber, f2ptr funk_bytecode, f2ptr args, f2ptr endfunk_bytecode, f2ptr value) {
-  return f2funk_event__new(cause, object_cause, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
+f2ptr f2__funk_event__new(f2ptr cause, f2ptr object_cause, f2ptr funk, f2ptr start_time, f2ptr end_time, f2ptr fiber, f2ptr funk_bytecode, f2ptr args, f2ptr endfunk_bytecode, f2ptr value) {
+  return f2funk_event__new(cause, object_cause, funk, start_time, end_time, fiber, funk_bytecode, args, endfunk_bytecode, value);
 }
-def_pcfunk0(funk_event__new, return f2__funk_event__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(funk_event__new, return f2__funk_event__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 
 // **
@@ -322,8 +323,9 @@ void f2__cause__initialize() {
   
   // funk_event
   
-  initialize_primobject_8_slot(funk_event,
+  initialize_primobject_9_slot(funk_event,
 			       object_cause,
+			       funk,
 			       start_time,
 			       end_time,
 			       fiber,

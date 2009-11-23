@@ -127,13 +127,13 @@
   [let [[funks [get this bytecode_funk_funks]]]
     [print 'hi']
     [set this bytecode_funk_funks
-	 [cons &bytecode_funk_callback-create_and_hash_event
+	 [cons &bytecode_funk_callback-create_and_trace_event
 	       funks]]]
   [print 'hi']
   [let [[funks [get this bytecode_endfunk_funks]]]
     [print 'hi']
     [set this bytecode_endfunk_funks
-	 [cons &bytecode_endfunk_callback-finish_and_unhash_event
+	 [cons &bytecode_endfunk_callback-finish_and_abstract_event
 	       funks]]]
   [print 'hi']
   nil]

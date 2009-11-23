@@ -235,7 +235,23 @@ f2ptr f2__bytecode_funk_callback__create_and_trace_event(f2ptr cause, f2ptr obje
 def_pcfunk5(bytecode_funk_callback__create_and_trace_event, object_cause, fiber, bytecode, funk, args, return f2__bytecode_funk_callback__create_and_trace_event(this_cause, object_cause, fiber, bytecode, funk, args));
 
 f2ptr f2__bytecode_endfunk_callback__finish_and_abstract_event(f2ptr cause, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
-  printf("\nbytecode_funk_callback__finish_and_abstract_event here.");
+  if (object_cause) {
+    f2ptr event_trace = f2__cause__event_trace(cause, object_cause);
+    f2ptr iter = event_trace;
+    while (iter) {
+      f2ptr prev = f2__doublelink__prev(cause, iter);
+      f2ptr funk_event = f2__doublelink__value(cause, iter);
+      f2ptr funk_event__funk = f2__funk_event__funk(cause, funk_event);
+      if (raw__eq(cause, funk, funk_event__funk)) {
+	f2ptr end_time         = f2__time(cause);
+	f2ptr endfunk_bytecode = bytecode;
+	f2__funk_event__end_time__set(        cause, funk_event, end_time);
+	f2__funk_event__endfunk_bytecode__set(cause, funk_event, endfunk_bytecode);
+	f2__funk_event__value__set(           cause, funk_event, value);
+      }
+      iter = prev;
+    }
+  }
   return nil;
 }
 def_pcfunk5(bytecode_endfunk_callback__finish_and_abstract_event, object_cause, fiber, bytecode, value, funk, return f2__bytecode_endfunk_callback__finish_and_abstract_event(this_cause, object_cause, fiber, bytecode, value, funk));

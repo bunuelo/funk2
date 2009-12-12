@@ -589,21 +589,23 @@
 		 [new physical_place [physical_transform-new_position  0.1  0.0 0] [mud_object-new nil]]
 		 [new physical_place [physical_transform-new_position  0.3  0.0 0] [shovel_object-new [mud_object-new nil] nil]]
 		 
-		 [new physical_place [physical_transform-new_position -0.6 -0.4 0] [new male_child_agent [blue_shirt-new]
-											                 [orange_shorts-new]
-													 [blue_left_shoe-new]
-													 [blue_right_shoe-new]
-													 [mud_object-new nil]
-													 [fork_object-new [mud_object-new nil] nil]
-													 nil]]
+		 [new physical_place [physical_transform-new_position -0.6 -0.4 0] [new male_child_agent
+											[blue_shirt-new]
+											[orange_shorts-new]
+											[blue_left_shoe-new]
+											[blue_right_shoe-new]
+											[mud_object-new nil]
+											[fork_object-new [mud_object-new nil] nil]
+											nil]]
 		 
-		 [new physical_place [physical_transform-new_position  0.6 -0.4 0] [new female_child_agent [bluegreen_blouse-new]
-											                   [red_skirt-new]
-													   [pink_left_shoe-new]
-													   [pink_right_shoe-new]
-													   [shovel_object-new [mud_object-new nil] nil]
-													   [fork_object-new [mud_object-new nil] nil]
-													   nil]]
+		 [new physical_place [physical_transform-new_position  0.6 -0.4 0] [new female_child_agent
+											[bluegreen_blouse-new]
+											[red_skirt-new]
+											[pink_left_shoe-new]
+											[pink_right_shoe-new]
+											[shovel_object-new [mud_object-new nil] nil]
+											[fork_object-new [mud_object-new nil] nil]
+											nil]]
 		 
 		 ]]]
 

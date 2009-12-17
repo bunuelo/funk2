@@ -43,6 +43,7 @@
 #include <linux/sockios.h>
 #endif
 
+#include <assert.h>
 #include <arpa/inet.h>
 #ifdef F2__DLFCN__SUPPORTED
 #  include <dlfcn.h>
@@ -73,6 +74,9 @@
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
+#include "zlib.h"
+
+
 
 #if defined(HAVE_GL_GL_H)
 #  define  F2__GL__H

@@ -22,7 +22,14 @@
 #ifndef F2__ZLIB__H
 #define F2__ZLIB__H
 
+#include "f2_primfunks.h"
 
+typedef struct zlib_memory_chunk_s zlib_memory_chunk_t;
+
+struct zlib_memory_chunk_s {
+  u64   length;
+  void* data;
+};
 
 #endif // F2__ZLIB__H
 

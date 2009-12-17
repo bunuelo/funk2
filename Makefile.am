@@ -115,6 +115,8 @@ dlfcn_linker_flags   = -ldl
 
 math_linker_flags = -lm
 
+zlib_linker_flags = -lz
+
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 
@@ -287,7 +289,7 @@ bin_funk2_SOURCES = \
   config_bit_num.h
 
 
-bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags)
+bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h

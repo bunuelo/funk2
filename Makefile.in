@@ -127,6 +127,7 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_agent.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__frame.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__hash.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__list.$(OBJEXT) \
+	c/bin_funk2-f2_primobject__doublelinklist.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__object.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__object_type.$(OBJEXT) \
 	c/bin_funk2-f2_primobject__ptypehash.$(OBJEXT) \
@@ -239,7 +240,6 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
-PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PTHREAD_CC = @PTHREAD_CC@
@@ -449,6 +449,7 @@ bin_funk2_SOURCES = \
   c/f2_primobject__frame.c \
   c/f2_primobject__hash.c \
   c/f2_primobject__list.c \
+  c/f2_primobject__doublelinklist.c \
   c/f2_primobject__object.c \
   c/f2_primobject__object_type.c \
   c/f2_primobject__ptypehash.c \
@@ -691,6 +692,8 @@ c/bin_funk2-f2_primobject__hash.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__list.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_primobject__doublelinklist.$(OBJEXT):  \
+	c/$(am__dirstamp) c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__object.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_primobject__object_type.$(OBJEXT): c/$(am__dirstamp) \
@@ -848,6 +851,7 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_primobject__boolean.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__char_pointer.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__circular_buffer.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_primobject__doublelinklist.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__dynamic_library.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__environment.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_primobject__frame.$(OBJEXT)
@@ -951,6 +955,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__boolean.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__char_pointer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__circular_buffer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__dynamic_library.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__environment.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_primobject__frame.Po@am__quote@
@@ -1740,6 +1745,20 @@ c/bin_funk2-f2_primobject__list.obj: c/f2_primobject__list.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__list.c' object='c/bin_funk2-f2_primobject__list.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__list.obj `if test -f 'c/f2_primobject__list.c'; then $(CYGPATH_W) 'c/f2_primobject__list.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__list.c'; fi`
+
+c/bin_funk2-f2_primobject__doublelinklist.o: c/f2_primobject__doublelinklist.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__doublelinklist.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Tpo" -c -o c/bin_funk2-f2_primobject__doublelinklist.o `test -f 'c/f2_primobject__doublelinklist.c' || echo '$(srcdir)/'`c/f2_primobject__doublelinklist.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__doublelinklist.c' object='c/bin_funk2-f2_primobject__doublelinklist.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__doublelinklist.o `test -f 'c/f2_primobject__doublelinklist.c' || echo '$(srcdir)/'`c/f2_primobject__doublelinklist.c
+
+c/bin_funk2-f2_primobject__doublelinklist.obj: c/f2_primobject__doublelinklist.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__doublelinklist.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Tpo" -c -o c/bin_funk2-f2_primobject__doublelinklist.obj `if test -f 'c/f2_primobject__doublelinklist.c'; then $(CYGPATH_W) 'c/f2_primobject__doublelinklist.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__doublelinklist.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Tpo" "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_primobject__doublelinklist.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__doublelinklist.c' object='c/bin_funk2-f2_primobject__doublelinklist.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_primobject__doublelinklist.obj `if test -f 'c/f2_primobject__doublelinklist.c'; then $(CYGPATH_W) 'c/f2_primobject__doublelinklist.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_primobject__doublelinklist.c'; fi`
 
 c/bin_funk2-f2_primobject__object.o: c/f2_primobject__object.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_primobject__object.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_primobject__object.Tpo" -c -o c/bin_funk2-f2_primobject__object.o `test -f 'c/f2_primobject__object.c' || echo '$(srcdir)/'`c/f2_primobject__object.c; \

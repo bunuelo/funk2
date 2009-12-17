@@ -282,6 +282,7 @@ bin_funk2_SOURCES = \
   c/f2_time.c \
   c/f2_trace.c \
   c/f2_user_thread_controller.c \
+  c/f2_zlib.c \
   c/funk2.c \
   config_bit_num.h
 

@@ -22,8 +22,10 @@
 #ifndef F2__FILEIO__H
 #define F2__FILEIO__H
 
-void safe_write(int fd, ptr p, f2size_t object_size);
-void safe_read(int fd, ptr p, f2size_t object_size);
+f2size_t raw_write(int fd, ptr p, f2size_t object_size);
+f2size_t raw_read(int fd, ptr p, f2size_t object_size);
+void     safe_write(int fd, ptr p, f2size_t object_size);
+void     safe_read(int fd, ptr p, f2size_t object_size);
 
 #endif // F2__FILEIO__H
 

@@ -37,9 +37,9 @@
 // level is supplied, Z_VERSION_ERROR if the version of zlib.h and the
 // version of the library linked do not match, or Z_ERRNO if there is
 // an error reading or writing the files.
-int zlib__deflate__stream_to_stream(FILE *source, FILE *dest, int level) {
+int zlib__deflate__stream_to_stream(int source_fd, int dest_fd, int level) {
   int ret, flush;
-  unsigned have;
+  f2size_t have;
   z_stream strm;
   unsigned char in[CHUNK];
   unsigned char out[CHUNK];
@@ -55,12 +55,16 @@ int zlib__deflate__stream_to_stream(FILE *source, FILE *dest, int level) {
   
   // compress until end of file
   do {
-    strm.avail_in = fread(in, 1, CHUNK, source);
-    if (ferror(source)) {
+    strm.avail_in = raw_read(source_fd, in, CHUNK);
+    if (strm.avail_in == -1) {
       (void)deflateEnd(&strm);
       return Z_ERRNO;
     }
-    flush = feof(source) ? Z_FINISH : Z_NO_FLUSH;
+    if (strm.avail_in == 0) {
+      flush = Z_FINISH;
+    } else {
+      flush = Z_NO_FLUSH;
+    }
     strm.next_in = in;
     
     // run deflate() on input until output buffer not full, finish
@@ -71,7 +75,7 @@ int zlib__deflate__stream_to_stream(FILE *source, FILE *dest, int level) {
       ret = deflate(&strm, flush);    // no bad return value
       assert(ret != Z_STREAM_ERROR);  // state not clobbered
       have = CHUNK - strm.avail_out;
-      if (fwrite(out, 1, have, dest) != have || ferror(dest)) {
+      if (raw_write(dest_fd, out, have) != have) {
 	(void)deflateEnd(&strm);
 	return Z_ERRNO;
       }

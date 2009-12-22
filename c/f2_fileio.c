@@ -21,15 +21,23 @@
 
 #include "funk2.h"
 
+f2size_t raw_write(int fd, ptr p, f2size_t object_size) {
+  return (f2size_t)write(fd, from_ptr(p), (size_t)object_size);
+}
+
+f2size_t raw_read(int fd, ptr p, f2size_t object_size) {
+  return (f2size_t)read(fd, from_ptr(p), (size_t)object_size);
+}
+
 void safe_write(int fd, ptr p, f2size_t object_size) {
-  size_t result = write(fd, from_ptr(p), (size_t)object_size);
+  f2size_t result = raw_write(fd, p, object_size);
   if (result != object_size) {
     error(nil, "safe_write error.");
   }
 }
 
 void safe_read(int fd, ptr p, f2size_t object_size) {
-  size_t result = read(fd, from_ptr(p), (size_t)object_size);
+  f2size_t result = raw_read(fd, p, object_size);
   if (result != object_size) {
     error(nil, "safe_read error.");
   }

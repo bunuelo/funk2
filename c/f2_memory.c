@@ -21,21 +21,6 @@
 
 #include "funk2.h"
 
-void safe_write(int fd, ptr p, f2size_t object_size) {
-  size_t result = write(fd, from_ptr(p), (size_t)object_size);
-  if (result != object_size) {
-    error(nil, "safe_write error.");
-  }
-}
-
-void safe_read(int fd, ptr p, f2size_t object_size) {
-  size_t result = read(fd, from_ptr(p), (size_t)object_size);
-  if (result != object_size) {
-    error(nil, "safe_read error.");
-  }
-}
-
-
 // funk2_memory
 
 void funk2_memory__init(funk2_memory_t* this) {

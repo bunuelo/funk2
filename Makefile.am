@@ -210,6 +210,7 @@ bin_funk2_SOURCES = \
   c/f2_globalenv.c \
   c/f2_glwindow.c \
   c/f2_gmodule.c \
+  c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \

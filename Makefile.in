@@ -170,7 +170,7 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_agent.$(OBJEXT) \
 	c/bin_funk2-f2_fiber.$(OBJEXT) c/bin_funk2-f2_time.$(OBJEXT) \
 	c/bin_funk2-f2_trace.$(OBJEXT) \
 	c/bin_funk2-f2_user_thread_controller.$(OBJEXT) \
-	c/bin_funk2-funk2.$(OBJEXT)
+	c/bin_funk2-f2_zlib.$(OBJEXT) c/bin_funk2-funk2.$(OBJEXT)
 bin_funk2_OBJECTS = $(am_bin_funk2_OBJECTS)
 bin_funk2_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
@@ -377,6 +377,7 @@ dlfcn_linker_flags = -ldl
 #opengl_linker_flags = -lGL -lGLU -lXxf86vm
 #`pkg-config --cflags --libs GL GLU Xxf86vm`
 math_linker_flags = -lm
+zlib_linker_flags = -lz
 dynamic_library_flags = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
 
@@ -496,10 +497,11 @@ bin_funk2_SOURCES = \
   c/f2_time.c \
   c/f2_trace.c \
   c/f2_user_thread_controller.c \
+  c/f2_zlib.c \
   c/funk2.c \
   config_bit_num.h
 
-bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags)
+bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 bin_funk2_CFLAGS = $(cc_flags)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
@@ -786,6 +788,8 @@ c/bin_funk2-f2_trace.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_user_thread_controller.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_zlib.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-funk2.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 bin/$(am__dirstamp):
@@ -896,6 +900,7 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_trace.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_tricolor_set.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_user_thread_controller.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_zlib.$(OBJEXT)
 	-rm -f c/bin_funk2-funk2.$(OBJEXT)
 
 distclean-compile:
@@ -1000,6 +1005,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_trace.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_tricolor_set.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_user_thread_controller.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_zlib.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-funk2.Po@am__quote@
 
 .c.o:
@@ -2403,6 +2409,20 @@ c/bin_funk2-f2_user_thread_controller.obj: c/f2_user_thread_controller.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_user_thread_controller.c' object='c/bin_funk2-f2_user_thread_controller.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_user_thread_controller.obj `if test -f 'c/f2_user_thread_controller.c'; then $(CYGPATH_W) 'c/f2_user_thread_controller.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_user_thread_controller.c'; fi`
+
+c/bin_funk2-f2_zlib.o: c/f2_zlib.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_zlib.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_zlib.Tpo" -c -o c/bin_funk2-f2_zlib.o `test -f 'c/f2_zlib.c' || echo '$(srcdir)/'`c/f2_zlib.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_zlib.Tpo" "c/$(DEPDIR)/bin_funk2-f2_zlib.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_zlib.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_zlib.c' object='c/bin_funk2-f2_zlib.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_zlib.o `test -f 'c/f2_zlib.c' || echo '$(srcdir)/'`c/f2_zlib.c
+
+c/bin_funk2-f2_zlib.obj: c/f2_zlib.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_zlib.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_zlib.Tpo" -c -o c/bin_funk2-f2_zlib.obj `if test -f 'c/f2_zlib.c'; then $(CYGPATH_W) 'c/f2_zlib.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_zlib.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_zlib.Tpo" "c/$(DEPDIR)/bin_funk2-f2_zlib.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_zlib.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_zlib.c' object='c/bin_funk2-f2_zlib.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_zlib.obj `if test -f 'c/f2_zlib.c'; then $(CYGPATH_W) 'c/f2_zlib.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_zlib.c'; fi`
 
 c/bin_funk2-funk2.o: c/funk2.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-funk2.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-funk2.Tpo" -c -o c/bin_funk2-funk2.o `test -f 'c/funk2.c' || echo '$(srcdir)/'`c/funk2.c; \

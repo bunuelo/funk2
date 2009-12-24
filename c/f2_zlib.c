@@ -55,7 +55,7 @@ int zlib__deflate__stream_to_stream(int source_fd, int dest_fd, int level) {
   
   // compress until end of file
   do {
-    strm.avail_in = raw_read(source_fd, in, CHUNK);
+    strm.avail_in = raw_read(source_fd, to_ptr(in), CHUNK);
     if (strm.avail_in == -1) {
       (void)deflateEnd(&strm);
       return Z_ERRNO;
@@ -75,7 +75,7 @@ int zlib__deflate__stream_to_stream(int source_fd, int dest_fd, int level) {
       ret = deflate(&strm, flush);    // no bad return value
       assert(ret != Z_STREAM_ERROR);  // state not clobbered
       have = CHUNK - strm.avail_out;
-      if (raw_write(dest_fd, out, have) != have) {
+      if (raw_write(dest_fd, to_ptr(out), have) != have) {
 	(void)deflateEnd(&strm);
 	return Z_ERRNO;
       }
@@ -117,7 +117,7 @@ int zlib__inflate__stream_to_stream(int source_fd, int dest_fd) {
   
   // decompress until deflate stream ends or end of file
   do {
-    strm.avail_in = raw_read(source_fd, in, CHUNK);
+    strm.avail_in = raw_read(source_fd, to_ptr(in), CHUNK);
     if (strm.avail_in == -1) {
       (void)inflateEnd(&strm);
       return Z_ERRNO;
@@ -142,7 +142,7 @@ int zlib__inflate__stream_to_stream(int source_fd, int dest_fd) {
 	return ret;
       }
       have = CHUNK - strm.avail_out;
-      if (raw_write(dest_fd, out, have) != have) {
+      if (raw_write(dest_fd, to_ptr(out), have) != have) {
 	(void)inflateEnd(&strm);
 	return Z_ERRNO;
       }

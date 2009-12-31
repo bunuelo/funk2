@@ -101,6 +101,7 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_agent.$(OBJEXT) \
 	c/bin_funk2-f2_globalenv.$(OBJEXT) \
 	c/bin_funk2-f2_glwindow.$(OBJEXT) \
 	c/bin_funk2-f2_gmodule.$(OBJEXT) \
+	c/bin_funk2-f2_fileio.$(OBJEXT) \
 	c/bin_funk2-f2_frame_objects.$(OBJEXT) \
 	c/bin_funk2-f2_funk2_node.$(OBJEXT) \
 	c/bin_funk2-f2_funktional.$(OBJEXT) \
@@ -423,6 +424,7 @@ bin_funk2_SOURCES = \
   c/f2_globalenv.c \
   c/f2_glwindow.c \
   c/f2_gmodule.c \
+  c/f2_fileio.c \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
@@ -640,6 +642,8 @@ c/bin_funk2-f2_glwindow.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_gmodule.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_fileio.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_frame_objects.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_funk2_node.$(OBJEXT): c/$(am__dirstamp) \
@@ -823,6 +827,7 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_dynamic_memory.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_event_router.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_fiber.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_fileio.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_frame_objects.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_funk2_node.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_funktional.$(OBJEXT)
@@ -928,6 +933,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_dynamic_memory.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_event_router.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_fiber.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_fileio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_frame_objects.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_funk2_node.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_funktional.Po@am__quote@
@@ -1373,6 +1379,20 @@ c/bin_funk2-f2_gmodule.obj: c/f2_gmodule.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_gmodule.c' object='c/bin_funk2-f2_gmodule.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_gmodule.obj `if test -f 'c/f2_gmodule.c'; then $(CYGPATH_W) 'c/f2_gmodule.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_gmodule.c'; fi`
+
+c/bin_funk2-f2_fileio.o: c/f2_fileio.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_fileio.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_fileio.Tpo" -c -o c/bin_funk2-f2_fileio.o `test -f 'c/f2_fileio.c' || echo '$(srcdir)/'`c/f2_fileio.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_fileio.Tpo" "c/$(DEPDIR)/bin_funk2-f2_fileio.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_fileio.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_fileio.c' object='c/bin_funk2-f2_fileio.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_fileio.o `test -f 'c/f2_fileio.c' || echo '$(srcdir)/'`c/f2_fileio.c
+
+c/bin_funk2-f2_fileio.obj: c/f2_fileio.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_fileio.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_fileio.Tpo" -c -o c/bin_funk2-f2_fileio.obj `if test -f 'c/f2_fileio.c'; then $(CYGPATH_W) 'c/f2_fileio.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_fileio.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_fileio.Tpo" "c/$(DEPDIR)/bin_funk2-f2_fileio.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_fileio.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_fileio.c' object='c/bin_funk2-f2_fileio.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_fileio.obj `if test -f 'c/f2_fileio.c'; then $(CYGPATH_W) 'c/f2_fileio.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_fileio.c'; fi`
 
 c/bin_funk2-f2_frame_objects.o: c/f2_frame_objects.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_frame_objects.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_frame_objects.Tpo" -c -o c/bin_funk2-f2_frame_objects.o `test -f 'c/f2_frame_objects.c' || echo '$(srcdir)/'`c/f2_frame_objects.c; \

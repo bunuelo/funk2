@@ -21,165 +21,184 @@
 
 #include "funk2.h"
 
-#if defined(MSDOS) || defined(OS2) || defined(WIN32) || defined(__CYGWIN__)
-#  include <fcntl.h>
-#  include <io.h>
-#  define SET_BINARY_MODE(file) setmode(fileno(file), O_BINARY)
-#else
-#  define SET_BINARY_MODE(file)
-#endif
+#define ZLIB_CHUNK             ((int)(32 * 1024))
+#define ZLIB_COMPRESSION_LEVEL 2
 
-#define CHUNK 16384
-
-// Compress from file source to file dest until EOF on source.
-// def() returns Z_OK on success, Z_MEM_ERROR if memory could not be
-// allocated for processing, Z_STREAM_ERROR if an invalid compression
-// level is supplied, Z_VERSION_ERROR if the version of zlib.h and the
-// version of the library linked do not match, or Z_ERRNO if there is
-// an error reading or writing the files.
-int zlib__deflate__stream_to_stream(int source_fd, int dest_fd, int level) {
-  int ret, flush;
-  f2size_t have;
-  z_stream strm;
-  unsigned char in[CHUNK];
-  unsigned char out[CHUNK];
+// *dest_length returns length of src_data after compression.
+// dest_data can be NULL.
+boolean_t raw__zlib__deflate(u8* dest_data, int* dest_length, u8* src_data, int src_length) {
+  int      zlib_result;
+  int      byte_num;
+  z_stream zlib_stream;
+  u8       out_buffer[ZLIB_CHUNK];
+  u64      dest_index = 0;
   
   // allocate deflate state
-  strm.zalloc = Z_NULL;
-  strm.zfree = Z_NULL;
-  strm.opaque = Z_NULL;
-  ret = deflateInit(&strm, level);
-  if (ret != Z_OK) {
-    return ret;
+  zlib_stream.zalloc = Z_NULL;
+  zlib_stream.zfree  = Z_NULL;
+  zlib_stream.opaque = Z_NULL;
+  zlib_result = deflateInit(&zlib_stream, ZLIB_COMPRESSION_LEVEL);
+  if (zlib_result != Z_OK) {
+    return boolean__true;
   }
   
-  // compress until end of file
+  zlib_stream.avail_in = src_length;
+  zlib_stream.next_in  = src_data;
+  
+  // run deflate() on input until output buffer not full
   do {
-    strm.avail_in = raw_read(source_fd, to_ptr(in), CHUNK);
-    if (strm.avail_in == -1) {
-      (void)deflateEnd(&strm);
-      return Z_ERRNO;
+    zlib_stream.avail_out = ZLIB_CHUNK;
+    zlib_stream.next_out = out_buffer;
+    zlib_result = deflate(&zlib_stream, Z_FINISH);    // no bad return value
+    assert(zlib_result != Z_STREAM_ERROR);  // state not clobbered
+    byte_num = ZLIB_CHUNK - zlib_stream.avail_out;
+    if (dest_data) {
+      memcpy(dest_data + dest_index, out_buffer, byte_num);
     }
-    if (strm.avail_in == 0) {
-      flush = Z_FINISH;
-    } else {
-      flush = Z_NO_FLUSH;
-    }
-    strm.next_in = in;
-    
-    // run deflate() on input until output buffer not full, finish
-    // compression if all of source has been read in
-    do {
-      strm.avail_out = CHUNK;
-      strm.next_out = out;
-      ret = deflate(&strm, flush);    // no bad return value
-      assert(ret != Z_STREAM_ERROR);  // state not clobbered
-      have = CHUNK - strm.avail_out;
-      if (raw_write(dest_fd, to_ptr(out), have) != have) {
-	(void)deflateEnd(&strm);
-	return Z_ERRNO;
-      }
-    } while (strm.avail_out == 0);
-    assert(strm.avail_in == 0);     // all input will be used
-    
-    // done when last data in file processed
-  } while (flush != Z_FINISH);
-  assert(ret == Z_STREAM_END);        // stream will be complete
+    dest_index += byte_num;
+  } while (zlib_stream.avail_out == 0);
+  assert(zlib_stream.avail_in == 0);     // all input will be used
+  
+  assert(zlib_result == Z_STREAM_END);        // stream will be complete
   
   // clean up and return
-  (void)deflateEnd(&strm);
-  return Z_OK;
+  (void)deflateEnd(&zlib_stream);
+  
+  *dest_length = dest_index;
+  return boolean__false;
 }
 
-// Decompress from file source to file dest until stream ends or EOF.
-// inf() returns Z_OK on success, Z_MEM_ERROR if memory could not be
-// allocated for processing, Z_DATA_ERROR if the deflate data is
-// invalid or incomplete, Z_VERSION_ERROR if the version of zlib.h and
-// the version of the library linked do not match, or Z_ERRNO if there
-// is an error reading or writing the files.
-int zlib__inflate__stream_to_stream(int source_fd, int dest_fd) {
-  int ret;
-  unsigned have;
-  z_stream strm;
-  unsigned char in[CHUNK];
-  unsigned char out[CHUNK];
-  
-  // allocate inflate state
-  strm.zalloc = Z_NULL;
-  strm.zfree = Z_NULL;
-  strm.opaque = Z_NULL;
-  strm.avail_in = 0;
-  strm.next_in = Z_NULL;
-  ret = inflateInit(&strm);
-  if (ret != Z_OK) {
-    return ret;
+boolean_t raw__zlib__deflate_length(u8* src_data, int src_length, int* dest_length) {
+  return raw__zlib__deflate(NULL, dest_length, src_data, src_length);
+}
+
+f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
   }
   
-  // decompress until deflate stream ends or end of file
-  do {
-    strm.avail_in = raw_read(source_fd, to_ptr(in), CHUNK);
-    if (strm.avail_in == -1) {
-      (void)inflateEnd(&strm);
-      return Z_ERRNO;
-    }
-    if (strm.avail_in == 0) {
-      break;
-    }
-    strm.next_in = in;
+  int src_length = raw__string__length(cause, this);
+  u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
+  raw__string__str_copy(cause, this, src_data);
+  
+  int dest_length = 0;
+  if (raw__zlib__deflate_length(src_data, src_length, &dest_length)) {
+    f2__free(to_ptr(src_data));
+    return nil;
+  }
+  
+  u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
+  if (raw__zlib__deflate(temp_data, &dest_length, src_data, src_length)) {
+    f2__free(to_ptr(src_data));
+    f2__free(to_ptr(temp_data));
+    return nil;
+  }
+  f2__free(to_ptr(src_data));
+  
+  f2ptr new_string = f2string__new(cause, dest_length, temp_data);
+  f2__free(to_ptr(temp_data));
+  return new_string;
+}
+def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this));
+
+boolean_t raw__zlib__inflate(u8* dest_data, int* dest_length, u8* src_data, int src_length) {
+  int           zlib_result;
+  unsigned int  byte_num;
+  z_stream      zlib_stream;
+  unsigned char out_buffer[ZLIB_CHUNK];
+  u64           dest_index = 0;
+  
+  // allocate inflate state
+  zlib_stream.zalloc   = Z_NULL;
+  zlib_stream.zfree    = Z_NULL;
+  zlib_stream.opaque   = Z_NULL;
+  zlib_stream.avail_in = 0;
+  zlib_stream.next_in  = Z_NULL;
+  zlib_result = inflateInit(&zlib_stream);
+  if (zlib_result != Z_OK) {
+    return boolean__true;
+  }
+  
+  //zlib_stream.avail_in = fread(in_buffer, 1, ZLIB_CHUNK, source);
+  zlib_stream.avail_in = src_length;
+  if (zlib_stream.avail_in != 0) {
+    zlib_stream.next_in = src_data;
     
     // run inflate() on input until output buffer not full
     do {
-      strm.avail_out = CHUNK;
-      strm.next_out = out;
-      ret = inflate(&strm, Z_NO_FLUSH);
-      assert(ret != Z_STREAM_ERROR);  // state not clobbered
-      switch (ret) {
+      zlib_stream.avail_out = ZLIB_CHUNK;
+      zlib_stream.next_out = out_buffer;
+      zlib_result = inflate(&zlib_stream, Z_NO_FLUSH);
+      assert(zlib_result != Z_STREAM_ERROR);  // state not clobbered
+      switch (zlib_result) {
       case Z_NEED_DICT:
-	ret = Z_DATA_ERROR;     // and fall through
       case Z_DATA_ERROR:
       case Z_MEM_ERROR:
-	(void)inflateEnd(&strm);
-	return ret;
+	(void)inflateEnd(&zlib_stream);
+	return boolean__true;
       }
-      have = CHUNK - strm.avail_out;
-      if (raw_write(dest_fd, to_ptr(out), have) != have) {
-	(void)inflateEnd(&strm);
-	return Z_ERRNO;
+      byte_num = ZLIB_CHUNK - zlib_stream.avail_out;
+      if (dest_data) {
+	memcpy(dest_data + dest_index, out_buffer, byte_num);
       }
-    } while (strm.avail_out == 0);
-    
-    // done when inflate() says it's done
-  } while (ret != Z_STREAM_END);
+      dest_index += byte_num;
+    } while (zlib_stream.avail_out == 0);
+  }
   
   // clean up and return
-  (void)inflateEnd(&strm);
-  return (ret == Z_STREAM_END ? Z_OK : Z_DATA_ERROR);
+  (void)inflateEnd(&zlib_stream);
+  *dest_length = dest_index;
+  if (zlib_result == Z_STREAM_END) {
+    return boolean__false; // success
+  } else {
+    return boolean__true; // failure
+  }
 }
 
-// report a zlib or i/o error
-void zlib__report_error(int ret) {
-  fputs("zpipe: ", stderr);
-  switch (ret) {
-  case Z_ERRNO:
-    if (ferror(stdin)) {
-      fputs("error reading stdin\n", stderr);
-    }
-    if (ferror(stdout)) {
-      fputs("error writing stdout\n", stderr);
-    }
-    break;
-  case Z_STREAM_ERROR:
-    fputs("invalid compression level\n", stderr);
-    break;
-  case Z_DATA_ERROR:
-    fputs("invalid or incomplete deflate data\n", stderr);
-    break;
-  case Z_MEM_ERROR:
-    fputs("out of memory\n", stderr);
-    break;
-  case Z_VERSION_ERROR:
-    fputs("zlib version mismatch!\n", stderr);
-    break;
+boolean_t raw__zlib__inflate_length(u8* src_data, int src_length, int* dest_length) {
+  return raw__zlib__inflate(NULL, dest_length, src_data, src_length);
+}
+
+f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
   }
+  
+  int src_length = raw__string__length(cause, this);
+  u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
+  raw__string__str_copy(cause, this, src_data);
+  
+  int dest_length = 0;
+  if (raw__zlib__inflate_length(src_data, src_length, &dest_length)) {
+    f2__free(to_ptr(src_data));
+    return nil;
+  }
+  
+  u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
+  if (raw__zlib__inflate(temp_data, &dest_length, src_data, src_length)) {
+    f2__free(to_ptr(src_data));
+    f2__free(to_ptr(temp_data));
+    return nil;
+  }
+  f2__free(to_ptr(src_data));
+  
+  f2ptr new_string = f2string__new(cause, dest_length, temp_data);
+  f2__free(to_ptr(temp_data));
+  return new_string;
+}
+def_pcfunk1(string__inflate, this, return f2__string__inflate(this_cause, this));
+
+// **
+
+void f2__zlib__reinitialize_globalvars() {
+}
+
+void f2__zlib__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "zlib", "", &f2__zlib__reinitialize_globalvars);
+  
+  f2__zlib__reinitialize_globalvars();
+  
+  f2__primcfunk__init__1(string__deflate, this, "cfunk defined in f2_zlib.c");
+  f2__primcfunk__init__1(string__inflate, this, "cfunk defined in f2_zlib.c");
 }
 

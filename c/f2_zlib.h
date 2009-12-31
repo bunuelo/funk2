@@ -24,12 +24,9 @@
 
 #include "f2_primfunks.h"
 
-typedef struct zlib_memory_chunk_s zlib_memory_chunk_t;
+// **
 
-struct zlib_memory_chunk_s {
-  u64   length;
-  void* data;
-};
+void f2__zlib__initialize();
 
 #endif // F2__ZLIB__H
 

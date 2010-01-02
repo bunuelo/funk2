@@ -240,8 +240,6 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
   raw__opengl__glMatrixMode(cause, GL_MODELVIEW);
 }
 
-#endif // defined(F2__GLWINDOW__SUPPORTED)
-
 // funk2_opengl_texture
 
 void funk2_opengl_texture__init(funk2_opengl_texture_t* this, u8* name, int width, int height, GLuint texture_id) {
@@ -257,8 +255,6 @@ void funk2_opengl_texture__destroy(funk2_opengl_texture_t* this) {
   f2__free(to_ptr(this->name));
 }
 
-
-#if defined(F2__GLWINDOW__SUPPORTED)
 
 // funk2_opengl_texture_handler
 

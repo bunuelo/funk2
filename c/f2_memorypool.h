@@ -35,6 +35,7 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 #include "f2_dynamic_memory.h"
 #include "f2_memblock.h"
 #include "f2_ptype.h"
+#include "f2_zlib.h"
 
 struct funk2_memorypool_s {
   funk2_processor_mutex_t        global_memory_allocate_mutex;

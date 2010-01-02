@@ -26,7 +26,7 @@
 
 // *dest_length returns length of src_data after compression.
 // dest_data can be NULL.
-boolean_t raw__zlib__deflate(u8* dest_data, int* dest_length, u8* src_data, int src_length) {
+boolean_t zlib__deflate(u8* dest_data, int* dest_length, u8* src_data, int src_length) {
   int      zlib_result;
   int      byte_num;
   z_stream zlib_stream;
@@ -68,8 +68,8 @@ boolean_t raw__zlib__deflate(u8* dest_data, int* dest_length, u8* src_data, int 
   return boolean__false;
 }
 
-boolean_t raw__zlib__deflate_length(u8* src_data, int src_length, int* dest_length) {
-  return raw__zlib__deflate(NULL, dest_length, src_data, src_length);
+boolean_t zlib__deflate_length(u8* src_data, int src_length, int* dest_length) {
+  return zlib__deflate(NULL, dest_length, src_data, src_length);
 }
 
 f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
@@ -82,13 +82,13 @@ f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
   raw__string__str_copy(cause, this, src_data);
   
   int dest_length = 0;
-  if (raw__zlib__deflate_length(src_data, src_length, &dest_length)) {
+  if (zlib__deflate_length(src_data, src_length, &dest_length)) {
     f2__free(to_ptr(src_data));
     return nil;
   }
   
   u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
-  if (raw__zlib__deflate(temp_data, &dest_length, src_data, src_length)) {
+  if (zlib__deflate(temp_data, &dest_length, src_data, src_length)) {
     f2__free(to_ptr(src_data));
     f2__free(to_ptr(temp_data));
     return nil;
@@ -101,7 +101,7 @@ f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this));
 
-boolean_t raw__zlib__inflate(u8* dest_data, int* dest_length, u8* src_data, int src_length) {
+boolean_t zlib__inflate(u8* dest_data, int* dest_length, u8* src_data, int src_length) {
   int           zlib_result;
   unsigned int  byte_num;
   z_stream      zlib_stream;
@@ -155,8 +155,8 @@ boolean_t raw__zlib__inflate(u8* dest_data, int* dest_length, u8* src_data, int 
   }
 }
 
-boolean_t raw__zlib__inflate_length(u8* src_data, int src_length, int* dest_length) {
-  return raw__zlib__inflate(NULL, dest_length, src_data, src_length);
+boolean_t zlib__inflate_length(u8* src_data, int src_length, int* dest_length) {
+  return zlib__inflate(NULL, dest_length, src_data, src_length);
 }
 
 f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
@@ -169,13 +169,13 @@ f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
   raw__string__str_copy(cause, this, src_data);
   
   int dest_length = 0;
-  if (raw__zlib__inflate_length(src_data, src_length, &dest_length)) {
+  if (zlib__inflate_length(src_data, src_length, &dest_length)) {
     f2__free(to_ptr(src_data));
     return nil;
   }
   
   u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
-  if (raw__zlib__inflate(temp_data, &dest_length, src_data, src_length)) {
+  if (zlib__inflate(temp_data, &dest_length, src_data, src_length)) {
     f2__free(to_ptr(src_data));
     f2__free(to_ptr(temp_data));
     return nil;

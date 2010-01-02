@@ -318,17 +318,44 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
 }
 
 void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
+  int compressed_length = 0;
+  u8* compressed_data;
+  {
+    u8*       uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);
+    int       uncompressed_length = this->total_global_memory;
+    compressed_length             = 0;
+    boolean_t failure             = zlib__deflate_length(uncompressed_data, uncompressed_length, &compressed_length);
+    if (failure) {
+      error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
+    }
+    compressed_data               = (u8*)from_ptr(f2__malloc(compressed_length));
+    failure                       = zlib__deflate(compressed_data, &compressed_length, uncompressed_data, uncompressed_length);
+    if (failure) {
+      error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
+    }
+  }
   f2size_t size_i;
+  size_i = compressed_length;          safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
   size_i = this->total_global_memory;  safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
   size_i = this->next_unique_block_id; safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-  status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr,
+
+  status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr " compressed_length=" u64__fstr,
 	 this->dynamic_memory.ptr, this->dynamic_memory.ptr,
-	 this->total_global_memory);
-  safe_write(fd, this->dynamic_memory.ptr, this->total_global_memory);
+	 this->total_global_memory,
+	 (u64)compressed_length);
+  
+  safe_write(fd, to_ptr(compressed_data), compressed_length);
+  
+  //safe_write(fd, this->dynamic_memory.ptr, this->total_global_memory);
+  
+  f2__free(to_ptr(compressed_data));
 }
 
 void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   f2size_t size_i;
+  
+  safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
+  int compressed_length = size_i;
   
   safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
   this->total_global_memory = size_i;
@@ -338,6 +365,21 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   
   f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
   f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, this->total_global_memory);
-  safe_read(fd, this->dynamic_memory.ptr, this->total_global_memory);
+  
+  u8* compressed_data = (u8*)from_ptr(f2__malloc(compressed_length));
+  
+  safe_read(fd, to_ptr(compressed_data), compressed_length);
+  
+  {
+    int dest_length = 0;
+    boolean_t failure = zlib__inflate(from_ptr(this->dynamic_memory.ptr), &dest_length, compressed_data, compressed_length);
+    if (failure) {
+      error(nil, "funk2_memorypool__load_from_stream error: failed to inflate image using zlib.");
+    }
+  }
+  
+  //safe_read(fd, this->dynamic_memory.ptr, this->total_global_memory);
+  
+  f2__free(to_ptr(compressed_data));
 }
 

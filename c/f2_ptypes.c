@@ -433,13 +433,16 @@ def_pcfunk1(float__new,     this, return f2float__new(this_cause, f2float__f(thi
 def_pcfunk1(float__f,       this, return this);
 
 u64 raw__float__eq_hash_value(f2ptr cause, f2ptr this) {
-  struct {
-    float f;
-    u64   zero;
+  union {
+    u64 u;
+    struct {
+      float f;
+      u64   zero;
+    } s;
   } stack_memory;
-  stack_memory.f    = f2float__f(this, cause);
-  stack_memory.zero = 0;
-  u64 eq_hash_value = *((u64*)(&(stack_memory.f)));
+  stack_memory.s.f    = f2float__f(this, cause);
+  stack_memory.s.zero = 0;
+  u64 eq_hash_value   = stack_memory.u;
   return eq_hash_value;
 }
 

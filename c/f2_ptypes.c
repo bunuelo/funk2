@@ -341,13 +341,16 @@ def_pcfunk1(double__new,     this, return f2double__new(this_cause, f2double__d(
 def_pcfunk1(double__d,       this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 
 u64 raw__double__eq_hash_value(f2ptr cause, f2ptr this) {
-  struct {
-    double d;
-    u64    zero;
+  union {
+    struct {
+      double d;
+      u64    zero;
+    } s;
+    u64 u;
   } stack_memory;
-  stack_memory.d    = f2double__d(this, cause);
-  stack_memory.zero = 0;
-  u64 eq_hash_value = *((u64*)((void*)(&(stack_memory.d))));
+  stack_memory.s.d    = f2double__d(this, cause);
+  stack_memory.s.zero = 0;
+  u64 eq_hash_value = stack_memory.u;
   return eq_hash_value;
 }
 

@@ -79,6 +79,7 @@ typedef struct funk2_glwindow_s {
   float                          rotate_angle;
   boolean_t                      fullscreen;
   boolean_t                      needs_redraw;
+  u64                            last_redraw__nanoseconds_since_1970;
   
 #if defined(F2__GLWINDOW__SUPPORTED)
   Display*                       display;
@@ -89,7 +90,6 @@ typedef struct funk2_glwindow_s {
   XF86VidModeModeInfo            desk_mode;
   boolean_t                      double_buffered;
   unsigned int                   resolution;
-  u64                            last_redraw__nanoseconds_since_1970;
   funk2_opengl_texture_handler_t texture_handler;
   funk2_opengl_font_t            fixed_font;
 #endif // defined(F2__GLWINDOW__SUPPORTED)

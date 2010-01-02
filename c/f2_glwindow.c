@@ -1270,7 +1270,12 @@ f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
 def_pcfunk2(glwindow__load_texture, name, filename, return f2__glwindow__load_texture(this_cause, name, filename));
 
 boolean_t raw__glwindow__texture_loaded_raw(f2ptr cause, u8* texture_name) {
+#if defined(F2__GLWINDOW__SUPPORTED)
   return funk2_glwindow__texture_loaded_raw(&(__funk2.glwindow), cause, texture_name);
+#else
+  status("glwindow not supported.");
+  return boolean__true; // failure
+#endif
 }
 
 f2ptr f2__glwindow__texture_loaded(f2ptr cause, f2ptr name) {

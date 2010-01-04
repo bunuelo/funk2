@@ -43,6 +43,7 @@
 #include "f2_command_line.h"
 #include "f2_compile.h"
 #include "f2_compile_x86.h"
+#include "f2_cpu.h"
 #include "f2_dlfcn.h"
 #include "f2_dptr.h"
 #include "f2_event_router.h"
@@ -163,6 +164,7 @@ typedef struct funk2_s {
 #if defined(F2__GLWINDOW__H)
   funk2_glwindow_t glwindow;
 #endif
+  funk2_cpu_t                         cpu;
 } funk2_t;
 
 void      funk2__init(funk2_t* this, int argc, char** argv);

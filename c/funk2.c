@@ -110,6 +110,7 @@ void f2__initialize() {
   f2__arithmetic__initialize();
   f2__cause__initialize();
   f2__zlib__initialize();
+  f2__cpu__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)
@@ -167,6 +168,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_xxf86vm__init(&(this->xxf86vm));
   funk2_xlib__init(&(this->xlib));
   funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
+  funk2_cpu__init(&(this->cpu));
   
   f2ptr cause = initial_cause();
   
@@ -322,6 +324,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_xlib__destroy(&(this->xlib));
   funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
+  funk2_cpu__destroy(&(this->cpu));
 }
 
 boolean_t funk2__handle(funk2_t* this) {
@@ -332,6 +335,7 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_memory__handle(&(this->memory));
   funk2_garbage_collector__handle(&(this->garbage_collector));
   funk2_management_thread__handle_user_threads(&(this->management_thread));
+  funk2_cpu__handle(&(this->cpu));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)

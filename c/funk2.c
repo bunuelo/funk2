@@ -340,7 +340,7 @@ boolean_t funk2__handle(funk2_t* this) {
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
-  f2__sleep(1);
+  f2__sleep(10000);
   return boolean__true;
 }
 

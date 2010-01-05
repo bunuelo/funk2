@@ -406,7 +406,7 @@ funk2_packet_t* funk2_node_handler__wait_for_new_fiber_packet(funk2_node_handler
       response_packet = NULL;
     }
     if (! response_packet) {
-      f2__sleep(1);
+      raw__spin_sleep_yield();
     }
   }
   return response_packet;

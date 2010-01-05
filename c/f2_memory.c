@@ -305,8 +305,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, in
     if (funk2_memblock_f2ptr) {
       return funk2_memblock_f2ptr;
     }
-    sched_yield();
-    f2__sleep(1);
+    raw__spin_sleep_yield();
   }
 }
 
@@ -319,8 +318,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
 	return funk2_memblock_f2ptr;
       }
     }
-    sched_yield();
-    f2__sleep(1);
+    raw__spin_sleep_yield();
   }
 }
 

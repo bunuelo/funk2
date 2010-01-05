@@ -334,7 +334,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
     read_ch = f2__stream__try_read_character(cause, stream);
     if (read_ch == nil) {
       f2__scheduler__yield(cause);
-      f2__sleep(10000);
+      raw__spin_sleep_yield();
     }
   }
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {

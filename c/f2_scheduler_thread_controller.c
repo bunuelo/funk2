@@ -34,8 +34,7 @@ void funk2_scheduler_thread_controller__destroy(funk2_scheduler_thread_controlle
 void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2_scheduler_thread_controller_t* this) {
   this->please_wait = boolean__true;
   while (this->waiting_count < memory_pool_num) {
-    f2__sleep(1);
-    sched_yield();
+    raw__spin_sleep_yield();
   }
 }
 
@@ -48,8 +47,7 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   this->waiting_count ++;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));
   while (this->please_wait) {
-    f2__sleep(1);
-    sched_yield();
+    raw__spin_sleep_yield();
   }
   funk2_processor_mutex__lock(&(this->waiting_count_mutex));
   this->waiting_count --;

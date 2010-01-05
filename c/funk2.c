@@ -377,7 +377,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   return 0;
 }
 
-// this is the only global variable in funk2.
+// this should be the only global variable in funk2.
 funk2_t __funk2;
 
 int main(int argc, char** argv) {

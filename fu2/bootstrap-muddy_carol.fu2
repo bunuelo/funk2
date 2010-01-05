@@ -667,6 +667,7 @@
       [prog [glwindow-destroy]
 	    [error `run-time `[glwindow failed-to-load-textures]]]]
   [while [not [glwindow-handle_events]]
+    [microsleep 100000]
     [if [not [glwindow-texture_loaded `bucket_object]]
 	[muddy_carol-load_textures]]]
   [glwindow-destroy]]

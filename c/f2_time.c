@@ -30,6 +30,11 @@ void raw__spin_sleep_yield() {
   f2__sleep(10000);
 }
 
+void raw__fast_spin_sleep_yield() {
+  sched_yield();
+  f2__sleep(1);
+}
+
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
   clock_gettime(CLOCK_REALTIME, &ts);

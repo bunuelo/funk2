@@ -51,6 +51,7 @@
 [primfunk:load 'fu2/primfunks-array.fu2']
 [primfunk:load 'fu2/primfunks-apropos.fu2']
 [primfunk:load 'fu2/primfunks-child_handler.fu2']
+[primfunk:load 'fu2/primfunks-cpu.fu2']
 [primfunk:load 'fu2/primfunks-errno.fu2']
 [primfunk:load 'fu2/primfunks-fcntl.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
@@ -67,6 +68,7 @@
 [primfunk:load 'fu2/primfunks-sort.fu2']
 [primfunk:load 'fu2/primfunks-string.fu2']
 [primfunk:load 'fu2/primfunks-text_buffer.fu2']
+[primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-trace.fu2']
 [primfunk:load 'fu2/primfunks-reader.fu2']
 [primfunk:load 'fu2/primfunks-garbage_collector.fu2']
@@ -76,7 +78,6 @@
 [primfunk:load 'fu2/primfunks-arithmetic.fu2']
 [primfunk:load 'fu2/primfunks-cause.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
-[primfunk:load 'fu2/primfunks-cpu.fu2']
 
 
 [globalize stdin-stream  [file_stream-new 0]]

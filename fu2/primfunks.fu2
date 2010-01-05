@@ -91,8 +91,6 @@
 
 [globalize-funk random                                      &primfunk:random]
 
-[globalize-funk nanoseconds_since_1970                      &primfunk:nanoseconds_since_1970]
-
 [globalize-funk identity                                    &primfunk:identity]
 
 [globalize-funk demetropolize_once                          &primfunk:demetropolize_once]

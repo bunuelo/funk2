@@ -690,8 +690,6 @@ f2ptr f2__conslist(f2ptr cause, f2ptr seq) {
 }
 def_pcfunk0_and_rest(conslist, seq, return f2__conslist(this_cause, seq));
 
-def_pcfunk0(nanoseconds_since_1970, return f2__nanoseconds_since_1970(this_cause));
-
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
   if (!this || !index || ! raw__integer__is_type(cause, index)) {
     printf("\nseq_elt-set error: argument type check failure."); fflush(stdout);
@@ -1652,8 +1650,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__0(this__args, "");
   
   f2__primcfunk__init__1(random, sup_integer, "generate a random integer between 0 and sup_integer - 1.");
-  
-  f2__primcfunk__init(nanoseconds_since_1970, "");
   
   f2__funktional_primcfunk__init(identity, "");
   

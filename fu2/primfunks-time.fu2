@@ -17,5 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk nanoseconds_since_1970 &primfunk:nanoseconds_since_1970]
+[globalize-funk nanoseconds_since_1970                 &primfunk:nanoseconds_since_1970]
+[globalize-funk processor_thread-execution_nanoseconds &primfunk:processor_thread__execution_nanoseconds]
+[globalize-funk funk2-execution_nanoseconds            &primfunk:funk2__execution_nanoseconds]
+
 

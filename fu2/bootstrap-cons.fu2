@@ -20,5 +20,5 @@
 [deftypefunk cons execute as-array    [] [conslist-as_array this]]
 [deftypefunk cons execute as-conslist [] this]
 
-[deftypefunk cons execute sort [comparison_funk] [as-conslist [array-sort [as-array this] comparison_funk]]]
+[deftypefunk cons execute sort [comparison_funk] [have [array-sort [have this as-array] comparison_funk] as-conslist]]
 

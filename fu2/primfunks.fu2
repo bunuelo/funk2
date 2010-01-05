@@ -30,6 +30,7 @@
 [globalize-funk ptype-cause-set                             &primfunk:ptype__cause__set]
 
 [globalize-funk cons-as_array                               &primfunk:cons__as_array]
+[globalize-funk conslist-as_array                           &primfunk:cons__as_array]
 [globalize-funk conslist-first_n                            &primfunk:conslist__first_n]
 
 [globalize-funk time                                        &primfunk:time]

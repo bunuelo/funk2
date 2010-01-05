@@ -240,9 +240,17 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      
 	      did_something = __funk2.globalenv.true__symbol;
 	      
+	      u64 begin_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+	      
 	      scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, fiber);
 	      
+	      u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+	      
+	      f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
+	      u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
+	      
 	      pause_gc();
+	      f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
 	      f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
 	      resume_gc();
 	      
@@ -377,7 +385,7 @@ void* processor__start_routine(void *ptr) {
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);
       funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
-      f2__sleep(1);
+      f2__sleep(10000);
       sched_yield();
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
@@ -401,6 +409,27 @@ void f2__scheduler__yield(f2ptr cause) {
     }
   }
 }
+
+f2ptr f2__scheduler__active_fibers(f2ptr cause) {
+  f2ptr processors         = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+  u64   processors__length = raw__array__length(cause, processors);
+  f2ptr seq                = nil;
+  u64   processors_index;
+  for (processors_index = 0; processors_index < processors__length; processors_index ++) {
+    f2ptr processor = raw__array__elt(cause, processors, processors_index);
+    f2ptr active_fibers = f2processor__active_fibers(processor, cause);
+    {
+      f2ptr iter = active_fibers;
+      while (iter) {
+	f2ptr fiber = f2__cons__car(cause, iter);
+	seq = f2cons__new(cause, fiber, seq);
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return seq;
+}
+def_pcfunk0(scheduler__active_fibers, return f2__scheduler__active_fibers(this_cause));
 
 void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = 0;
@@ -491,6 +520,8 @@ void f2__scheduler__initialize() {
   __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
   
   f2__scheduler__reinitialize_globalvars();
+  
+  f2__primcfunk__init__0(scheduler__active_fibers, "returns a new list of all currently active fibers.");
 }
 
 void f2__scheduler__destroy() {

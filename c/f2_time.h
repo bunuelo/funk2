@@ -44,5 +44,9 @@ u64   raw__nanoseconds_since_1970();
 f2ptr  f2__nanoseconds_since_1970(f2ptr cause);
 void       nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date);
 
+// **
+
+void f2__time__reinitialize_globalvars();
+void f2__time__initialize();
 
 #endif // F2__TIME__H

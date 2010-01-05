@@ -34,6 +34,29 @@ u64 raw__nanoseconds_since_1970() {
 f2ptr f2__nanoseconds_since_1970(f2ptr cause) {
   return f2integer__new(cause, raw__nanoseconds_since_1970());
 }
+def_pcfunk0(nanoseconds_since_1970, return f2__nanoseconds_since_1970(this_cause));
+
+u64 raw__processor_thread__execution_nanoseconds(f2ptr cause) {
+  struct timespec ts;
+  clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
+  return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
+}
+
+f2ptr f2__processor_thread__execution_nanoseconds(f2ptr cause) {
+  return f2integer__new(cause, raw__processor_thread__execution_nanoseconds(cause));
+}
+def_pcfunk0(processor_thread__execution_nanoseconds, return f2__processor_thread__execution_nanoseconds(this_cause));
+
+u64 raw__funk2__execution_nanoseconds(f2ptr cause) {
+  struct timespec ts;
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);
+  return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
+}
+
+f2ptr f2__funk2__execution_nanoseconds(f2ptr cause) {
+  return f2integer__new(cause, raw__funk2__execution_nanoseconds(cause));
+}
+def_pcfunk0(funk2__execution_nanoseconds, return f2__funk2__execution_nanoseconds(this_cause));
 
 time_t nanoseconds_since_1970__to_time(u64 nanoseconds_since_1970) {
   return (nanoseconds_since_1970 / nanoseconds_per_second);
@@ -52,5 +75,20 @@ void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_dat
   funk2_date->minutes     = unix_tm.tm_min;
   funk2_date->seconds     = unix_tm.tm_sec;
   funk2_date->nanoseconds = nanoseconds;
+}
+
+// **
+
+void f2__time__reinitialize_globalvars() {
+}
+
+void f2__time__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars);
+  
+  f2__time__reinitialize_globalvars();
+  
+  f2__primcfunk__init__0(nanoseconds_since_1970, "");
+  f2__primcfunk__init__0(processor_thread__execution_nanoseconds, "");
+  f2__primcfunk__init__0(funk2__execution_nanoseconds, "");
 }
 

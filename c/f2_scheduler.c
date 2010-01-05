@@ -385,7 +385,7 @@ void* processor__start_routine(void *ptr) {
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);
       funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
-      f2__sleep(10000);
+      f2__sleep(1);
       sched_yield();
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);

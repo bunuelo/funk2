@@ -121,21 +121,21 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
 
 void funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num = this->used_num;
-  write(fd, &used_num, sizeof(used_num));
+  safe_write(fd, to_ptr(&used_num), sizeof(used_num));
   u64 index;
   for (index = 0; index < used_num; index ++) {
     f2ptr exp = this->data[index];
-    write(fd, &exp, sizeof(exp));
+    safe_write(fd, to_ptr(&exp), sizeof(exp));
   }
 }
 
 void funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num;
-  read(fd, &used_num, sizeof(used_num));
+  safe_read(fd, to_ptr(&used_num), sizeof(used_num));
   u64 index;
   for (index = 0; index < used_num; index ++) {
     f2ptr exp;
-    read(fd, &exp, sizeof(exp));
+    safe_read(fd, to_ptr(&exp), sizeof(exp));
     funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
   }
 }

@@ -142,13 +142,13 @@ void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t e
 void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
   u64 bin_num = 1ull << this->bin_power;
   u64 element_count = this->element_count;
-  write(fd, &element_count, sizeof(element_count));
+  safe_write(fd, to_ptr(&element_count), sizeof(element_count));
   u64 i;
   for (i = 0; i < bin_num; i ++) {
     funk2_set_node_t* iter = this->bin[i];
     while (iter) {
       funk2_set_element_t element = iter->element;
-      write(fd, &element, sizeof(element));
+      safe_write(fd, to_ptr(&element), sizeof(element));
       iter = iter->next;
     }
   }
@@ -156,11 +156,11 @@ void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
 
 void funk2_set__load_from_stream(funk2_set_t* this, int fd) {
   u64 element_count;
-  read(fd, &element_count, sizeof(element_count));
+  safe_read(fd, to_ptr(&element_count), sizeof(element_count));
   u64 index;
   for (index = 0; index < element_count; index ++) {
     funk2_set_element_t element;
-    read(fd, &element, sizeof(element));
+    safe_read(fd, to_ptr(&element), sizeof(element));
     funk2_set__add(this, element);
   }
 }

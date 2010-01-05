@@ -291,8 +291,8 @@ bin_funk2_SOURCES = \
   config_bit_num.h
 
 
-bin_funk2_LDFLAGS = $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
-bin_funk2_CFLAGS = $(cc_flags)
+bin_funk2_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
+bin_funk2_CFLAGS = -pg $(cc_flags)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

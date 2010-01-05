@@ -127,13 +127,22 @@ boolean_t funk2_texture_image__load_bmp(funk2_texture_image_t* texture, u8* file
   // skip size of bitmap info header
   fseek(file, 4, SEEK_CUR);
   // get the width of the bitmap
-  fread(&texture->width, sizeof(s32), 1, file);
+  if (!fread(&texture->width, sizeof(s32), 1, file)) {
+    status("Error reading file!");
+    return boolean__true;
+  }
   status("Width of Bitmap: %d", texture->width);
   // get the height of the bitmap
-  fread(&texture->height, sizeof(s32), 1, file);
+  if (!fread(&texture->height, sizeof(s32), 1, file)) {
+    status("Error reading file!");
+    return boolean__true;
+  }
   status("Height of Bitmap: %d", texture->height);
   // get the number of planes (must be set to 1)
-  fread(&biPlanes, sizeof(s16), 1, file);
+  if (!fread(&biPlanes, sizeof(s16), 1, file)) {
+    status("Error reading file!");
+    return boolean__true;
+  }
   if (biPlanes != 1) {
     status("Error: number of Planes not 1!");
     return boolean__true;
@@ -244,7 +253,7 @@ void raw__resize_gl_scene(f2ptr cause, unsigned int width, unsigned int height) 
 
 void funk2_opengl_texture__init(funk2_opengl_texture_t* this, u8* name, int width, int height, GLuint texture_id) {
   int name__length = strlen((char*)name);
-  this->name = (u8*)f2__malloc(name__length + 1);
+  this->name = (u8*)from_ptr(f2__malloc(name__length + 1));
   memcpy(this->name, name, name__length + 1);
   this->width      = width;
   this->height     = height;

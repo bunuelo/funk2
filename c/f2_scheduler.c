@@ -284,7 +284,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      	  lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
 		      	  //f2__global_scheduler__execute_mutex__unlock(cause);
 		      	  if (lock_failed) {
-			    raw__spin_sleep_yield();
+			    raw__fast_spin_sleep_yield();
 		      	  }
 		      	} while (lock_failed);
 		      	if (f2processor__active_fibers_prev(processor, cause)) {
@@ -326,7 +326,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    processor__active_fibers_mutex = f2processor__active_fibers_mutex(processor, cause);
 	    lock_failed = f2mutex__trylock(processor__active_fibers_mutex, cause);
 	    if (lock_failed) {
-	      raw__spin_sleep_yield();
+	      raw__fast_spin_sleep_yield();
 	    }
 	  } while (lock_failed);
 	  pause_gc();
@@ -369,7 +369,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 
 void* processor__start_routine(void *ptr) {
   while (__funk2.memory.bootstrapping_mode) {
-    raw__spin_sleep_yield();
+    raw__fast_spin_sleep_yield();
   }
   f2ptr cause     = nil;
   f2ptr processor = f2__global_scheduler__this_processor(cause);
@@ -384,11 +384,11 @@ void* processor__start_routine(void *ptr) {
     do {
       did_something = f2processor__execute_next_bytecodes(processor, cause);
       funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
-      raw__spin_sleep_yield();
+      raw__fast_spin_sleep_yield();
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
     //printf("\nprocessor__start_routine: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
-    f2__sleep(100000);
+    f2__spin_sleep_yield();
   }
   return nil;
 }
@@ -399,7 +399,7 @@ void f2__scheduler__yield(f2ptr cause) {
     //f2ptr processor = f2__global_scheduler__this_processor();
     //printf("\nscheduler__yield: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
     //f2__sleep(1000); // maybe this should be the average time to execute f2scheduler__execute_next_bytecodes (when it returns True)?
-    raw__spin_sleep_yield();
+    raw__fast_spin_sleep_yield();
     if (__funk2.user_thread_controller.please_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
     }

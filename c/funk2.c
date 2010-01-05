@@ -340,8 +340,8 @@ boolean_t funk2__handle(funk2_t* this) {
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
-  raw__spin_sleep_yield();
-  return boolean__true;
+  raw__fast_spin_sleep_yield();
+  return boolean__false; // should return true if we did something.
 }
 
 //#define TEST
@@ -360,7 +360,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);
     if (! did_something) {
-      f2__sleep(100000);
+      raw__spin_sleep_yield();
     }
   }
   status("funk2__main: exited main loop.");

@@ -318,7 +318,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
 	return funk2_memblock_f2ptr;
       }
     }
-    raw__spin_sleep_yield();
+    raw__fast_spin_sleep_yield();
   }
 }
 

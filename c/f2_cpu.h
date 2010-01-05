@@ -37,6 +37,11 @@ void funk2_cpu__init(funk2_cpu_t* this);
 void funk2_cpu__destroy(funk2_cpu_t* this);
 void funk2_cpu__handle(funk2_cpu_t* this);
 
+// **
+
+void f2__cpu__reinitialize_globalvars();
+void f2__cpu__initialize();
+
 #endif // F2__CPU__H
 
 

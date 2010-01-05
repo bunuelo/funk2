@@ -388,7 +388,7 @@ void* processor__start_routine(void *ptr) {
     } while (did_something);
     //printf("\nprocessor %d sleeping", this_processor_thread__pool_index()); fflush(stdout);
     //printf("\nprocessor__start_routine: processor %d (%d) sleeping (fiber_num: %d)", this_processor_thread__pool_index(), processor, raw__simple_length(f2processor__fibers(processor))); fflush(stdout);
-    f2__spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   return nil;
 }

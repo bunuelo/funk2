@@ -1744,7 +1744,7 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
     f2ptr*  f2ptr_iter = f2ptr_ptr;
     funk2_dptr_t* dptr_iter  = traced_array_block->dptr_data;
     for (i = length; i > 0; i --) {
-      funk2_dptr__init(dptr_iter, *f2ptr_iter, tracing_on, nil, nil);
+      funk2_dptr__init(dptr_iter, *f2ptr_iter, tracing_on, nil, nil, nil, nil);
       f2ptr_iter ++;
       dptr_iter  ++;
     }
@@ -1752,7 +1752,7 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
     int i;
     funk2_dptr_t* dptr_iter  = traced_array_block->dptr_data;
     for (i = length; i > 0; i --) {
-      funk2_dptr__init(dptr_iter, nil, tracing_on, nil, nil);
+      funk2_dptr__init(dptr_iter, nil, tracing_on, nil, nil, nil, nil);
       dptr_iter  ++;
     }
   }

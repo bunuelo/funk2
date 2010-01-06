@@ -29,7 +29,7 @@ int f2__simple_repl(f2ptr cause, f2ptr fiber) {
   while (1) {
 
     printf ("\nF-In-> "); fflush(stdout);
-    f2ptr read_exp = raw__try_read(cause, __funk2.globalenv.stdin_stream);
+    f2ptr read_exp = f2__stream__try_read(cause, __funk2.globalenv.stdin_stream);
     
     if (raw__exception__is_type(cause, read_exp)) {
       printf("\nrepl exception: "); f2__write(cause, fiber, read_exp); fflush(stdout);

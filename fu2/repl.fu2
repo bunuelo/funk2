@@ -41,7 +41,7 @@
   [let [[read_successful nil]
 	[read_exp        nil]]
     [while [not read_successful]
-      [= read_exp [try_read input_stream]]
+      [= read_exp [stream-try_read input_stream]]
       [if [is-type `exception read_exp]
 	  [let [[tag [object-get read_exp `tag]]]
 	    [if [eq tag `reader:no_character_waiting-exception]

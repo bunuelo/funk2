@@ -150,8 +150,8 @@ struct funk2_reader_s {
 void funk2_reader__init(funk2_reader_t* this);
 void funk2_reader__destroy(funk2_reader_t* this);
 
-f2ptr f2__stream__read(f2ptr cause, f2ptr stream);
-f2ptr raw__read(f2ptr cause, f2ptr stream);
+f2ptr f2__stream__try_read(f2ptr cause, f2ptr stream);
+f2ptr raw__try_read(f2ptr cause, f2ptr stream);
 
 void f2__reader__initialize();
 

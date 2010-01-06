@@ -46,7 +46,7 @@
   [let [[read_successful   nil]
 	[read-exp          nil]]
     [while [not read_successful]
-      [= read-exp [read input-stream]]
+      [= read-exp [try_read input-stream]]
       [if [is-type `exception read-exp]
 	  [let [[tag [object-get read-exp `tag]]]
 	    [cond [[eq tag `reader:end_of_file-exception]           [prog [if output-stream [afwrite-maybe_html 'repl-io: got end_of_file exception.' output-stream]]

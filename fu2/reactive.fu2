@@ -15,8 +15,11 @@
 	[while [not done]
 	  [format stdout '\nreactive-test: ']
 	  [let [[read_exp [read]]]
-	    [cond [[eq read_exp `exit] [= done `t]]
-		  [t                   [format stdout '\nreactive-test out: ' [eval read_exp]]]]]]
+	    [cond [[eq read_exp `exit]  [= done `t]]
+		  [[eq read_exp `debug] [prog [format stdout '\ndebug out: ']
+					      [mapc [funk [x] [format stdout '\n  ' x]]
+						    [conslist-first_n debug 10]]]]
+		  [t                    [format stdout '\nreactive-test out: ' [eval read_exp]]]]]]
 	[format stdout '\nreactive-test done.\n']
 	nil]]]]
 

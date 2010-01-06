@@ -32,11 +32,13 @@
 #include "f2_ptypes.h"
 #include "f2_memory.h"
 
+
 // memblock
 
 #ifdef MEMORY_OPTION__FUNK2_MEMBLOCK__MICROSECOND_TIMESTAMP
 #  define __pure__funk2_memblock__creation_nanoseconds_since_1970(this) (((funk2_memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_nanoseconds_since_1970)
 #endif // MEMORY_OPTION__FUNK2_MEMBLOCK__MICROSECOND_TIMESTAMP
+
 
 // ptype
 
@@ -52,6 +54,7 @@ typedef struct ptype_block_s ptype_block_t;
 #define __pure__f2ptype__cause__set(this, value)               (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
 #define __pure__f2ptype__creation_nanoseconds_since_1970(this) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.creation_nanoseconds_since_1970)
 
+
 // integer
 
 struct ptype_integer_block_s {
@@ -64,6 +67,7 @@ ptype_integer_block_t* ptype_integer_block__new(int pool_index, f2ptr cause, s64
 
 #define __pure__f2integer__new(pool_index, cause, i) ptype_integer__new(pool_index, cause, i)
 #define __pure__f2integer__i(this)                   (((ptype_integer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->i)
+
 
 // double
 
@@ -78,6 +82,7 @@ ptype_double_block_t* ptype_double_block__new(int pool_index, f2ptr cause, doubl
 #define __pure__f2double__new(pool_index, cause, d) ptype_double__new(pool_index, cause, d)
 #define __pure__f2double__d(this)                   (((ptype_double_block_t*)(from_ptr(f2ptr_to_ptr(this))))->d)
 
+
 // float
 
 struct ptype_float_block_s {
@@ -91,6 +96,7 @@ ptype_float_block_t* ptype_float_block__new(int pool_index, f2ptr cause, float f
 #define __pure__f2float__new(pool_index, cause, f) ptype_float__new(pool_index, cause, f)
 #define __pure__f2float__f(this)                   (((ptype_float_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f)
 
+
 // pointer
 
 struct ptype_pointer_block_s {
@@ -103,6 +109,7 @@ ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr
 
 #define __pure__f2pointer__new(pool_index, cause, p) ptype_pointer__new(pool_index, cause, p)
 #define __pure__f2pointer__p(this)                   (((ptype_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->p)
+
 
 // gfunkptr
 
@@ -120,6 +127,7 @@ ptype_gfunkptr_block_t* ptype_gfunkptr_block__new(int pool_index, f2ptr cause, c
 #define __pure__f2gfunkptr__pool_index(this)                                                          __f2ptr__pool_index(__pure__f2gfunkptr__gfunkptr(this))
 #define __pure__f2gfunkptr__pool_address(this)                                                        __f2ptr__pool_address(__pure__f2gfunkptr__gfunkptr(this))
 
+
 // mutex
 
 struct ptype_mutex_block_s {
@@ -134,6 +142,7 @@ funk2_processor_mutex_t* ptype_mutex__m(f2ptr this, f2ptr cause);
 #define __pure__f2mutex__new(pool_index, cause) ptype_mutex__new(pool_index, cause)
 #define __pure__f2mutex__m(this)    (((ptype_mutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
+
 // character
 
 struct ptype_char_block_s {
@@ -146,6 +155,7 @@ ptype_char_block_t* ptype_char_block__new(int pool_index, f2ptr cause, u64 ch);
 
 #define __pure__f2char__new(pool_index, cause, ch) ptype_char__new(pool_index, cause, ch)
 #define __pure__f2char__ch(this)       (((ptype_char_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ch)
+
 
 // string
 
@@ -161,6 +171,7 @@ ptype_string_block_t* ptype_string_block__new(int pool_index, f2ptr cause, uint 
 #define __pure__f2string__new(pool_index, cause, len, init) ptype_string__new(pool_index, cause, len, init)
 #define __pure__f2string__length(this)          (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2string__str(this)             (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
+
 
 // symbol
 
@@ -178,6 +189,7 @@ ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint 
 #define __pure__f2symbol__length(this)          (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2symbol__eq_hash_value(this)   (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->eq_hash_value)
 #define __pure__f2symbol__str(this)             (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->str)
+
 
 // chunk
 
@@ -205,6 +217,7 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 #define __pure__f2chunk__bit64__elt(this, index)              (*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
 #define __pure__f2chunk__bit64__elt__set(this, index, value) ((*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u64)(value))
 
+
 // simple_array
 
 struct ptype_simple_array_block_s {
@@ -223,6 +236,7 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 #define __pure__f2simple_array__length(this)                           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2simple_array__elt(this, index)                       (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f2ptr_data[index])
 #define __pure__f2simple_array__elt__set(this, index, value)           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->f2ptr_data[index] = (value))
+
 
 // traced_array
 
@@ -250,6 +264,7 @@ ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr 
 #define __pure__f2traced_array__elt__trace__set(this, index, value)                funk2_dptr__trace__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
 #define __pure__f2traced_array__elt__imagination_frame(this, index)                funk2_dptr__imagination_frame(&(__pure__f2traced_array__elt_dptr(this, index)))
 #define __pure__f2traced_array__elt__imagination_frame__set(this, index, value)    funk2_dptr__imagination_frame__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+
 
 // larva
 

@@ -46,7 +46,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   
   while (read_exp != __funk2.reader.end_of_file_exception) {
     
-    read_exp = raw__try_read(cause, stream);
+    read_exp = f2__stream__try_read(cause, stream);
     if (read_exp != __funk2.reader.end_of_file_exception) {
 #ifdef DEBUG_LOAD
       f2__print_prompt(cause, fiber, "Load-F-In-> ", read_exp); fflush(stdout);

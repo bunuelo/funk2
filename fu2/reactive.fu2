@@ -16,7 +16,7 @@
 	  [format stdout '\nreactive-test: ']
 	  [let [[read_exp [read]]]
 	    [cond [[eq read_exp `exit] [= done `t]]
-		  [t                   [format stdout '\nreactive-test out: '] [print [eval read_exp]]]]]]
+		  [t                   [format stdout '\nreactive-test out: ' [eval read_exp]]]]]]
 	[format stdout '\nreactive-test done.\n']
 	nil]]]]
 

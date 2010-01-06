@@ -1,0 +1,24 @@
+
+[defunk reactive-test []
+  [let [[debug nil]]
+    [let [[physical_fiber [fiber [funk []
+				       [while t
+					 [sleep 1]
+					 [= debug [cons 'physical fiber here.' debug]]]]
+				 []]]
+	  [reactive_fiber [fiber [funk []
+				       [while t
+					 [sleep 1]
+					 [= debug [cons 'reactive fiber here.' debug]]]]
+				 []]]]
+      [let [[done nil]]
+	[while [not done]
+	  [format stdout '\nreactive-test: ']
+	  [let [[read_exp [read]]]
+	    [cond [[eq read_exp `exit] [= done `t]]
+		  [t                   [format stdout '\nreactive-test out: '] [print [eval read_exp]]]]]]
+	[format stdout '\nreactive-test done.\n']
+	nil]]]]
+
+
+	      

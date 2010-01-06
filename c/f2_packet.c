@@ -4130,7 +4130,9 @@ void recv_packet__request__f2traced_array__new(funk2_node_t* funk2_node, pcs_req
       f2ptr dptr__tracing_on        = rf2_to_lf2(remote_dptr_array[i].tracing_on);
       f2ptr dptr__trace             = rf2_to_lf2(remote_dptr_array[i].trace);
       f2ptr dptr__imagination_frame = rf2_to_lf2(remote_dptr_array[i].imagination_frame);
-      funk2_dptr__init(&(dptr_array[i]), dptr__p, dptr__tracing_on, dptr__trace, dptr__imagination_frame);
+      f2ptr dptr__mutate_funks      = rf2_to_lf2(remote_dptr_array[i].mutate_funks);
+      f2ptr dptr__read_funks        = rf2_to_lf2(remote_dptr_array[i].read_funks);
+      funk2_dptr__init(&(dptr_array[i]), dptr__p, dptr__tracing_on, dptr__trace, dptr__imagination_frame, dptr__mutate_funks, dptr__read_funks);
     }
   }
   funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);

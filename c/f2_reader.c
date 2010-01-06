@@ -597,7 +597,7 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
 }
 
 f2ptr f2__stream__read_array_sequence_of_elements(f2ptr cause, f2ptr stream) {
-  f2ptr subexp = f2__stream__read(cause, stream);
+  f2ptr subexp = f2__stream__try_read(cause, stream);
   if (raw__exception__is_type(cause, subexp) && raw__eq(cause, f2exception__tag(subexp, cause), __funk2.reader.array_end_parens_exception__symbol)) {
     return nil;
   }

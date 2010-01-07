@@ -52,7 +52,7 @@ void funk2_dptr__decrement_reference_counts(funk2_dptr_t* this, funk2_garbage_co
   funk2_memblock__decrement_reference_count((funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this->read_funks)),        this->read_funks,        garbage_collector);
 }
 
-void funk2_dptr__grey_referenced_elements_from_dptr(funk2_dptr_t* dptr, funk2_garbage_collector_pool_t* this, int pool_index) {
+void funk2_dptr__grey_referenced_elements(funk2_dptr_t* dptr, funk2_garbage_collector_pool_t* this, int pool_index) {
   funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->p);
   funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->tracing_on);
   funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, dptr->trace);

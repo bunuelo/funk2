@@ -1894,6 +1894,24 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     }
     
     __pure__f2traced_array__elt__set(this, index, value);
+    
+    // after setting value, execute mutate_funks
+    {
+      f2ptr mutate_funks = __pure__f2traced_array__elt__mutate_funks(this, index);
+      if (funkable_iter) {
+	f2ptr funkable_iter = mutate_funks;
+	f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+	f2ptr args          = f2cons__new__trace_depth(cause, value, f2cons__new__trace_depth(cause, old_value, trace_depth - 1), trace_depth - 1);
+	while (funkable_iter) {
+	  f2ptr funkable = f2cons__car__trace_depth(funkable_iter, cause, trace_depth - 1);
+	  f2ptr mutate_funk_value = f2__force_funk_apply(cause, fiber, funkable, args);
+	  if (raw__larva__is_type(cause, mutate_funk_value)) {
+	    return mutate_funk_value;
+	  }
+	}
+      }
+    }
+    
   } else {
     // cause has imaginary effects
     // we first find imagination_link with the correct name if it exists or we allocate a new imagination_link with the cause's imagination's name.
@@ -1956,6 +1974,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
   return nil;
 }
 
+
 f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
@@ -1987,6 +2006,7 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
   __pure__f2traced_array__elt__trace__set(this, index, value);
   return nil;
 }
+
 
 f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause) {
   check_wait_politely();

@@ -5033,7 +5033,7 @@ void f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr ca
   if (computer_id == 0) {
     pfunk2__f2traced_array__elt__imagination_frame__set(this, index, cause, value);
   } else {
-    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    f2ptr         fiber      = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     funk2_node__f2traced_array__elt__imagination_frame__set(funk2_node, fiber, cause, this, index, value);
   }
@@ -5049,7 +5049,7 @@ void send_packet__request__f2traced_array__elt__mutate_funks(funk2_node_t* funk2
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
   packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2traced_array__elt__mutate_funks;
   packet.payload.action_payload_header.cause               = cause;
-  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.action_payload_header.fiber               = this_fiber;
   packet.payload.this                                      = this;
   packet.payload.index                                     = index;
   funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);

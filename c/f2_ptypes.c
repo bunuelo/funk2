@@ -1901,7 +1901,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       if (mutate_funks) {
 	f2ptr funkable_iter = mutate_funks;
 	f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
-	pause_gc();
 	f2ptr args          = f2cons__new__trace_depth(cause, value, f2cons__new__trace_depth(cause, old_value, nil, trace_depth - 1), trace_depth - 1);
 	while (funkable_iter) {
 	  f2ptr funkable = f2cons__car(funkable_iter, cause);
@@ -1912,7 +1911,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
 	  }
 	  funkable_iter = f2cons__cdr(funkable_iter, cause);
 	}
-	resume_gc();
       }
     }
     

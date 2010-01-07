@@ -295,6 +295,10 @@ f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+f2ptr pfunk2__f2traced_array__elt__mutate_funks(f2ptr this, u64 index, f2ptr cause);
+f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+f2ptr pfunk2__f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause);
+f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 f2ptr f2traced_array__primobject_type__new(f2ptr cause);
 
@@ -312,6 +316,10 @@ f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr f2__traced_array__elt__mutate_funks(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__traced_array__elt__mutate_funks__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr f2__traced_array__elt__read_funks(f2ptr cause, f2ptr x, f2ptr y);
+f2ptr f2__traced_array__elt__read_funks__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 
 u64   raw__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
@@ -604,6 +612,14 @@ typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr elt__imagination_frame__funk;
   f2ptr elt__imagination_frame__set__symbol;
   f2ptr elt__imagination_frame__set__funk;
+  f2ptr elt__mutate_funks__symbol;
+  f2ptr elt__mutate_funks__funk;
+  f2ptr elt__mutate_funks__set__symbol;
+  f2ptr elt__mutate_funks__set__funk;
+  f2ptr elt__read_funks__symbol;
+  f2ptr elt__read_funks__funk;
+  f2ptr elt__read_funks__set__symbol;
+  f2ptr elt__read_funks__set__funk;
 } funk2_object_type__traced_array__slot_t;
 
 // larva

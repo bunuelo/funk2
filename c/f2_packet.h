@@ -191,6 +191,14 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2traced_array__elt__imagination_frame     ,
   funk2_packet_type__pcs_request__f2traced_array__elt__imagination_frame__set, //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
   funk2_packet_type__pcs_respond__f2traced_array__elt__imagination_frame__set,
+  funk2_packet_type__pcs_request__f2traced_array__elt__mutate_funks          , //f2ptr            (f2ptr cause, f2ptr this, u64 index);
+  funk2_packet_type__pcs_respond__f2traced_array__elt__mutate_funks          ,
+  funk2_packet_type__pcs_request__f2traced_array__elt__mutate_funks__set     , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
+  funk2_packet_type__pcs_respond__f2traced_array__elt__mutate_funks__set     ,
+  funk2_packet_type__pcs_request__f2traced_array__elt__read_funks            , //f2ptr            (f2ptr cause, f2ptr this, u64 index);
+  funk2_packet_type__pcs_respond__f2traced_array__elt__read_funks            ,
+  funk2_packet_type__pcs_request__f2traced_array__elt__read_funks__set       , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
+  funk2_packet_type__pcs_respond__f2traced_array__elt__read_funks__set       ,
   funk2_packet_type__pcs_request__f2larva__new                               , //f2ptr            (f2ptr cause, u32 type);
   funk2_packet_type__pcs_respond__f2larva__new                               ,
   funk2_packet_type__pcs_request__f2larva__larva_type                        , //u32              (f2ptr cause, f2ptr this);
@@ -3282,6 +3290,166 @@ void recv_packet__respond__f2traced_array__elt__imagination_frame__set(funk2_nod
 
 void funk2_node__f2traced_array__elt__imagination_frame__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__elt__mutate_funks                        = 0x42, //f2ptr            (f2ptr cause, f2ptr this, u64 index);
+
+// request f2traced_array__elt__mutate_funks
+
+struct pcs_packet_payload_request__f2traced_array__elt__mutate_funks_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__elt__mutate_funks_s pcs_packet_payload_request__f2traced_array__elt__mutate_funks_t;
+
+struct pcs_request__f2traced_array__elt__mutate_funks_s {
+  funk2_packet_header_t                                                header;
+  pcs_packet_payload_request__f2traced_array__elt__mutate_funks_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__elt__mutate_funks_s pcs_request__f2traced_array__elt__mutate_funks_t;
+
+// respond f2traced_array__elt__mutate_funks
+
+struct pcs_packet_payload_respond__f2traced_array__elt__mutate_funks_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              mutate_funks;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__elt__mutate_funks_s pcs_packet_payload_respond__f2traced_array__elt__mutate_funks_t;
+
+struct pcs_respond__f2traced_array__elt__mutate_funks_s {
+  funk2_packet_header_t                                                header;
+  pcs_packet_payload_respond__f2traced_array__elt__mutate_funks_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__elt__mutate_funks_s pcs_respond__f2traced_array__elt__mutate_funks_t;
+
+void send_packet__request__f2traced_array__elt__mutate_funks(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
+void recv_packet__request__f2traced_array__elt__mutate_funks(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__mutate_funks_t* packet);
+void send_packet__respond__f2traced_array__elt__mutate_funks(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr mutate_funks);
+void recv_packet__respond__f2traced_array__elt__mutate_funks(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__mutate_funks_t* packet);
+
+f2ptr funk2_node__f2traced_array__elt__mutate_funks(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
+f2ptr f2traced_array__elt__mutate_funks(f2ptr this, u64 index, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__elt__mutate_funks__set                   = 0x43, //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
+
+// request f2traced_array__elt__mutate_funks__set
+
+struct pcs_packet_payload_request__f2traced_array__elt__mutate_funks__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+  f2ptr                                              value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__elt__mutate_funks__set_s pcs_packet_payload_request__f2traced_array__elt__mutate_funks__set_t;
+
+struct pcs_request__f2traced_array__elt__mutate_funks__set_s {
+  funk2_packet_header_t                                                     header;
+  pcs_packet_payload_request__f2traced_array__elt__mutate_funks__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__elt__mutate_funks__set_s pcs_request__f2traced_array__elt__mutate_funks__set_t;
+
+// respond f2traced_array__elt__mutate_funks__set
+
+struct pcs_packet_payload_respond__f2traced_array__elt__mutate_funks__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__elt__mutate_funks__set_s pcs_packet_payload_respond__f2traced_array__elt__mutate_funks__set_t;
+
+struct pcs_respond__f2traced_array__elt__mutate_funks__set_s {
+  funk2_packet_header_t                                                     header;
+  pcs_packet_payload_respond__f2traced_array__elt__mutate_funks__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__elt__mutate_funks__set_s pcs_respond__f2traced_array__elt__mutate_funks__set_t;
+
+void send_packet__request__f2traced_array__elt__mutate_funks__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void recv_packet__request__f2traced_array__elt__mutate_funks__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__mutate_funks__set_t* packet);
+void send_packet__respond__f2traced_array__elt__mutate_funks__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2traced_array__elt__mutate_funks__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__mutate_funks__set_t* packet);
+
+void funk2_node__f2traced_array__elt__mutate_funks__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__elt__read_funks                        = 0x42, //f2ptr            (f2ptr cause, f2ptr this, u64 index);
+
+// request f2traced_array__elt__read_funks
+
+struct pcs_packet_payload_request__f2traced_array__elt__read_funks_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__elt__read_funks_s pcs_packet_payload_request__f2traced_array__elt__read_funks_t;
+
+struct pcs_request__f2traced_array__elt__read_funks_s {
+  funk2_packet_header_t                                                header;
+  pcs_packet_payload_request__f2traced_array__elt__read_funks_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__elt__read_funks_s pcs_request__f2traced_array__elt__read_funks_t;
+
+// respond f2traced_array__elt__read_funks
+
+struct pcs_packet_payload_respond__f2traced_array__elt__read_funks_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              read_funks;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__elt__read_funks_s pcs_packet_payload_respond__f2traced_array__elt__read_funks_t;
+
+struct pcs_respond__f2traced_array__elt__read_funks_s {
+  funk2_packet_header_t                                                header;
+  pcs_packet_payload_respond__f2traced_array__elt__read_funks_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__elt__read_funks_s pcs_respond__f2traced_array__elt__read_funks_t;
+
+void send_packet__request__f2traced_array__elt__read_funks(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
+void recv_packet__request__f2traced_array__elt__read_funks(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__read_funks_t* packet);
+void send_packet__respond__f2traced_array__elt__read_funks(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr read_funks);
+void recv_packet__respond__f2traced_array__elt__read_funks(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__read_funks_t* packet);
+
+f2ptr funk2_node__f2traced_array__elt__read_funks(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
+f2ptr f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2traced_array__elt__read_funks__set                   = 0x43, //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
+
+// request f2traced_array__elt__read_funks__set
+
+struct pcs_packet_payload_request__f2traced_array__elt__read_funks__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+  f2ptr                                              value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2traced_array__elt__read_funks__set_s pcs_packet_payload_request__f2traced_array__elt__read_funks__set_t;
+
+struct pcs_request__f2traced_array__elt__read_funks__set_s {
+  funk2_packet_header_t                                                     header;
+  pcs_packet_payload_request__f2traced_array__elt__read_funks__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2traced_array__elt__read_funks__set_s pcs_request__f2traced_array__elt__read_funks__set_t;
+
+// respond f2traced_array__elt__read_funks__set
+
+struct pcs_packet_payload_respond__f2traced_array__elt__read_funks__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2traced_array__elt__read_funks__set_s pcs_packet_payload_respond__f2traced_array__elt__read_funks__set_t;
+
+struct pcs_respond__f2traced_array__elt__read_funks__set_s {
+  funk2_packet_header_t                                                     header;
+  pcs_packet_payload_respond__f2traced_array__elt__read_funks__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2traced_array__elt__read_funks__set_s pcs_respond__f2traced_array__elt__read_funks__set_t;
+
+void send_packet__request__f2traced_array__elt__read_funks__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void recv_packet__request__f2traced_array__elt__read_funks__set(funk2_node_t* funk2_node, pcs_request__f2traced_array__elt__read_funks__set_t* packet);
+void send_packet__respond__f2traced_array__elt__read_funks__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2traced_array__elt__read_funks__set(funk2_node_t* funk2_node, pcs_respond__f2traced_array__elt__read_funks__set_t* packet);
+
+void funk2_node__f2traced_array__elt__read_funks__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+void f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
 //  funk2_packet_type__pcs_request__f2larva__new                               = 0x44, //f2ptr            (f2ptr cause, u32 type);

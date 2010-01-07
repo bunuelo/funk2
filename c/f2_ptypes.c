@@ -1898,7 +1898,7 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     // after setting value, execute mutate_funks
     {
       f2ptr mutate_funks = __pure__f2traced_array__elt__mutate_funks(this, index);
-      if (funkable_iter) {
+      if (mutate_funks) {
 	f2ptr funkable_iter = mutate_funks;
 	f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 	f2ptr args          = f2cons__new__trace_depth(cause, value, f2cons__new__trace_depth(cause, old_value, trace_depth - 1), trace_depth - 1);

@@ -429,7 +429,7 @@ void funk2_garbage_collector_pool__grey_maybe_other_element(funk2_garbage_collec
 }
 
 void funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(funk2_garbage_collector_pool_t* this, int pool_index, funk2_dptr_t* dptr) {
-  funk2_dptr__grey_referenced_elements_from_dptr(dptr, this, pool_index);
+  funk2_dptr__grey_referenced_elements(dptr, this, pool_index);
 }
 
 void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {

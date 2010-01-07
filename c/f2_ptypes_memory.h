@@ -264,6 +264,10 @@ ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr 
 #define __pure__f2traced_array__elt__trace__set(this, index, value)                funk2_dptr__trace__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
 #define __pure__f2traced_array__elt__imagination_frame(this, index)                funk2_dptr__imagination_frame(&(__pure__f2traced_array__elt_dptr(this, index)))
 #define __pure__f2traced_array__elt__imagination_frame__set(this, index, value)    funk2_dptr__imagination_frame__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+#define __pure__f2traced_array__elt__mutate_funks(this, index)                     funk2_dptr__mutate_funks(&(__pure__f2traced_array__elt_dptr(this, index)))
+#define __pure__f2traced_array__elt__mutate_funks__set(this, index, value)         funk2_dptr__mutate_funks__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
+#define __pure__f2traced_array__elt__read_funks(this, index)                       funk2_dptr__read_funks(&(__pure__f2traced_array__elt_dptr(this, index)))
+#define __pure__f2traced_array__elt__read_funks__set(this, index, value)           funk2_dptr__read_funks__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
 
 
 // larva

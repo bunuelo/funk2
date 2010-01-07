@@ -65,6 +65,7 @@ struct funk2_dptr_s {
 void      funk2_dptr__init(funk2_dptr_t* dptr, f2ptr p, f2ptr tracing_on, f2ptr prev, f2ptr imagination_frame, f2ptr mutate_funks, f2ptr read_funks);
 boolean_t funk2_dptr__check_all_memory_pointers_valid_in_memory(funk2_dptr_t* this, funk2_memory_t* memory);
 void      funk2_dptr__decrement_reference_counts(funk2_dptr_t* this, funk2_garbage_collector_t* garbage_collector);
+void      funk2_dptr__grey_referenced_elements_from_dptr(funk2_dptr_t* dptr, funk2_garbage_collector_pool_t* this, int pool_index);
 
 #endif // F2__DPTR__H
 

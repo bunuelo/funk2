@@ -63,6 +63,11 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
   
   // notify garbage collector to grey this memory if it is black because it has been mutated.
   funk2_garbage_collector__know_of_used_exp_mutation(this, exp);
+  
+  if (old_value) {
+    // protect the old value
+    funk2_garbage_collector__know_of_protected_f2ptr(this, old_value);
+  }
 } 
 
 // used by global initialization for creation (and other) causes
@@ -1633,11 +1638,6 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   f2ptr old_value = __pure__f2simple_array__elt(this, index);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
-  if (old_value) {
-    // protect the old value
-    funk2_garbage_collector__know_of_protected_f2ptr(&(__funk2.garbage_collector), old_value);
-  }
-  
   __pure__f2simple_array__elt__set(this, index, value);
   return nil;
 }
@@ -1888,11 +1888,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     
     funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
     
-    if (old_value) {
-      // protect the old value
-      funk2_garbage_collector__know_of_protected_f2ptr(&(__funk2.garbage_collector), old_value);
-    }
-    
     __pure__f2traced_array__elt__set(this, index, value);
     
     // after setting value, execute mutate_funks
@@ -1973,6 +1968,10 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
+  f2ptr old_value = __pure__f2traced_array__elt__tracing_on(this, index);
+  
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
   __pure__f2traced_array__elt__tracing_on__set(this, index, value);
   return nil;
 }
@@ -2006,6 +2005,10 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
+  f2ptr old_value = __pure__f2traced_array__elt__trace(this, index);
+  
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
   __pure__f2traced_array__elt__trace__set(this, index, value);
   return nil;
 }
@@ -2039,6 +2042,10 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
+  f2ptr old_value = __pure__f2traced_array__elt__imagination_frame(this, index);
+  
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
   __pure__f2traced_array__elt__imagination_frame__set(this, index, value);
   return nil;
 }
@@ -2072,6 +2079,10 @@ f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2pt
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
+  f2ptr old_value = __pure__f2traced_array__elt__mutate_funks(this, index);
+  
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
   __pure__f2traced_array__elt__mutate_funks__set(this, index, value);
   return nil;
 }
@@ -2105,6 +2116,10 @@ f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr 
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
   }
+  f2ptr old_value = __pure__f2traced_array__elt__read_funks(this, index);
+  
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
   __pure__f2traced_array__elt__read_funks__set(this, index, value);
   return nil;
 }
@@ -2215,7 +2230,7 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
   {char* slot_name = "elt-imagination_frame";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__funk);}
   {char* slot_name = "elt-imagination_frame";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__funk);}
   {char* slot_name = "elt-mutate_funks";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__funk);}
-  {char* slot_name = "elt-mutate_funks_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__set__funk);}
+  {char* slot_name = "elt-mutate_funks";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__set__funk);}
   {char* slot_name = "elt-read_funks";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__read_funks__funk);}
   {char* slot_name = "elt-read_funks";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__read_funks__set__funk);}
   return this;

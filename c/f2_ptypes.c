@@ -1838,6 +1838,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
   } else {
     return_value = __pure__f2traced_array__elt(this, index);
   }
+  
   return return_value;
 }
 
@@ -1890,26 +1891,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     
     __pure__f2traced_array__elt__set(this, index, value);
     
-    // after setting value, execute mutate_funks
-    {
-      f2ptr mutate_funks = __pure__f2traced_array__elt__mutate_funks(this, index);
-      if (mutate_funks) {
-	f2ptr funkable_iter = mutate_funks;
-	f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
-	//f2ptr args          = f2cons__new__trace_depth(cause, value, f2cons__new__trace_depth(cause, old_value, nil, trace_depth - 1), trace_depth - 1);
-	f2ptr args          = nil;
-	while (funkable_iter) {
-	  f2ptr funkable = f2cons__car(funkable_iter, cause);
-	  //f2ptr mutate_funk_value = 
-	  f2__force_funk_apply(cause, fiber, funkable, args);
-	  //if (raw__larva__is_type(cause, mutate_funk_value)) {
-	  //  return mutate_funk_value;
-	  //}
-	  funkable_iter = f2cons__cdr(funkable_iter, cause);
-	}
-      }
-    }
-    
   } else {
     // cause has imaginary effects
     // we first find imagination_link with the correct name if it exists or we allocate a new imagination_link with the cause's imagination's name.
@@ -1933,6 +1914,26 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
       f2__imagination_link__set_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, slot, next, value, trace_depth - 1);
     }
   }
+  
+  // after setting value, execute mutate_funks
+  {
+    f2ptr mutate_funks = __pure__f2traced_array__elt__mutate_funks(this, index);
+    if (mutate_funks) {
+      f2ptr funkable_iter = mutate_funks;
+      f2ptr fiber         = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+      //f2ptr args          = f2cons__new__trace_depth(cause, value, f2cons__new__trace_depth(cause, old_value, nil, trace_depth - 1), trace_depth - 1);
+      f2ptr args          = nil;
+      while (funkable_iter) {
+	f2ptr funkable = f2cons__car(funkable_iter, cause);
+	f2ptr mutate_funk_value = f2__force_funk_apply(cause, fiber, funkable, args);
+	if (raw__larva__is_type(cause, mutate_funk_value)) {
+	  return mutate_funk_value;
+	}
+	funkable_iter = f2cons__cdr(funkable_iter, cause);
+      }
+    }
+  }
+  
   return nil;
 }
 

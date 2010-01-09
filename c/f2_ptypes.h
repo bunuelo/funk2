@@ -187,7 +187,7 @@ f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, u8* init);
 u64   pfunk2__f2string__length(f2ptr this, f2ptr cause);
 u8    pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause);
 void  pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str);
-int   pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
+u64   pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
 
 f2ptr f2string__primobject_type__new(f2ptr cause);
 
@@ -230,6 +230,7 @@ f2ptr pfunk2__f2chunk__new(f2ptr cause, u64 length, byte* bytes);
 f2ptr pfunk2__f2chunk__new_copy(f2ptr cause, f2ptr init_chunk);
 u64   pfunk2__f2chunk__length(f2ptr this, f2ptr cause);
 u64   pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause);
+u64   pfunk2__f2chunk__equals_hash_value(f2ptr this, f2ptr cause);
 
 u8    pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause);
 void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value);
@@ -251,6 +252,9 @@ f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
 
 u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this);
+
+u64   raw__chunk__equals_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this);
 
 // simple_array
 
@@ -540,6 +544,8 @@ typedef struct funk2_object_type__chunk__slot_s {
   f2ptr length__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
   f2ptr bit8__elt__symbol;
   f2ptr bit8__elt__funk;
   f2ptr bit8__elt__set__symbol;

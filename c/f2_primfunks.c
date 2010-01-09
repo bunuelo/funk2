@@ -205,6 +205,11 @@ f2ptr new__string(f2ptr cause, char* str) {
 }
 
 boolean_t raw__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
+  u64 x_eq_hash_value = f2string__eq_hash_value(x, cause);
+  u64 y_eq_hash_value = f2string__eq_hash_value(y, cause);
+  if (x_eq_hash_value != y_eq_hash_value) {
+    return nil;
+  }
   u64 x_len = f2string__length(x, cause);
   u64 y_len = f2string__length(y, cause);
   if (x_len != y_len) {

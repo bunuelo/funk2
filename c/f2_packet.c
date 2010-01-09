@@ -3036,7 +3036,7 @@ u8 funk2_node__f2chunk__bit8__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2
   return elt;
 }
 
-u8 f2chunk__bit8__elt(f2ptr cause, f2ptr this, u64 index) {
+u8 f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit8__elt(this, index, cause);
@@ -3096,7 +3096,7 @@ void funk2_node__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_fi
   f2__free(to_ptr(packet));
 }
 
-void f2chunk__bit8__elt__set(f2ptr cause, f2ptr this, u64 index, u8 value) {
+void f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     pfunk2__f2chunk__bit8__elt__set(this, index, cause, value);
@@ -3158,7 +3158,7 @@ u16 funk2_node__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_fiber, 
   return elt;
 }
 
-u16 f2chunk__bit16__elt(f2ptr cause, f2ptr this, u64 index) {
+u16 f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit16__elt(this, index, cause);
@@ -3218,7 +3218,7 @@ void funk2_node__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_f
   f2__free(to_ptr(packet));
 }
 
-void f2chunk__bit16__elt__set(f2ptr cause, f2ptr this, u64 index, u16 value) {
+void f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit16__elt__set(this, index, cause, value);
@@ -3280,7 +3280,7 @@ u32 funk2_node__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_fiber, 
   return elt;
 }
 
-u32 f2chunk__bit32__elt(f2ptr cause, f2ptr this, u64 index) {
+u32 f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit32__elt(this, index, cause);
@@ -3340,7 +3340,7 @@ void funk2_node__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_f
   f2__free(to_ptr(packet));
 }
 
-void f2chunk__bit32__elt__set(f2ptr cause, f2ptr this, u64 index, u32 value) {
+void f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit32__elt__set(this, index, cause, value);
@@ -3402,7 +3402,7 @@ u64 funk2_node__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_fiber, 
   return elt;
 }
 
-u64 f2chunk__bit64__elt(f2ptr cause, f2ptr this, u64 index) {
+u64 f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit64__elt(this, index, cause);
@@ -3462,7 +3462,7 @@ void funk2_node__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_f
   f2__free(to_ptr(packet));
 }
 
-void f2chunk__bit64__elt__set(f2ptr cause, f2ptr this, u64 index, u64 value) {
+void f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 value) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bit64__elt__set(this, index, cause, value);
@@ -3529,7 +3529,7 @@ f2ptr funk2_node__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_fiber
   return cfunk_jump_return;
 }
 
-f2ptr f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args) {
+f2ptr f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr env, f2ptr args) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__cfunk_jump(this, cause, fiber, env, args);
@@ -3592,7 +3592,7 @@ int funk2_node__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_fibe
   return bytecode_jump_return;
 }
 
-int f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr user_fiber) {
+int f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr user_fiber) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__bytecode_jump(this, cause, user_fiber);
@@ -3657,7 +3657,7 @@ f2ptr funk2_node__f2chunk__send(funk2_node_t* funk2_node, f2ptr this_fiber, f2pt
   return send_return;
 }
 
-f2ptr f2chunk__send(f2ptr cause, f2ptr this, int start, int length, int fd, int flags) {
+f2ptr f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__send(this, cause, start, length, fd, flags);
@@ -3722,7 +3722,7 @@ f2ptr funk2_node__f2chunk__recv(funk2_node_t* funk2_node, f2ptr this_fiber, f2pt
   return recv_return;
 }
 
-f2ptr f2chunk__recv(f2ptr cause, f2ptr this, int start, int length, int fd, int flags) {
+f2ptr f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__recv(this, cause, start, length, fd, flags);

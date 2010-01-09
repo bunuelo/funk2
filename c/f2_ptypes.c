@@ -995,7 +995,7 @@ void raw__string__str_copy(f2ptr cause, f2ptr this, u8* str) {
   f2string__str_copy(this, cause, str);
 }
 
-int pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
+u64 pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK

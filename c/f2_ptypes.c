@@ -1494,7 +1494,7 @@ f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this) {return f2integer__
 
 def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
 def_pcfunk1(chunk__type, x, return f2__chunk__type(this_cause, x));
-def_pcfunk1(chunk__new, length, return f2chunk__new(this_cause, length, NULL));
+def_pcfunk1(chunk__new, length, return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL));
 def_pcfunk1(chunk__length, x, return f2__chunk__length(this_cause, x));
 def_pcfunk1(chunk__eq_hash_value, x, return f2__chunk__eq_hash_value(this_cause, x));
 def_pcfunk1(chunk__equals_hash_value, x, return f2__chunk__equals_hash_value(this_cause, x));
@@ -2662,7 +2662,7 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_chunk.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_chunk.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new, length, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

@@ -1479,7 +1479,7 @@ f2ptr f2__chunk__new(f2ptr cause, f2ptr length) {
   if (! raw__integer__is_type(cause, length)) {
     return f2larva__new(cause, 1);
   }
-  return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL);
+  return f2chunk__new(this_cause, f2integer__i(length, cause), NULL);
 }
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {

@@ -478,6 +478,8 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr trylock__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__mutex__slot_t;
 
 // char

@@ -1475,6 +1475,13 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
   return rv;
 }
 
+f2ptr f2__chunk__new(f2ptr cause, f2ptr length) {
+  if (! raw__integer__is_type(cause, length)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL);
+}
+
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
   check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -1494,7 +1501,7 @@ f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this) {return f2integer__
 
 def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
 def_pcfunk1(chunk__type, x, return f2__chunk__type(this_cause, x));
-def_pcfunk1(chunk__new, length, return f2chunk__new(this_cause, f2integer__i(length, this_cause), NULL));
+def_pcfunk1(chunk__new, length, return f2__chunk__new(this_cause, length));
 def_pcfunk1(chunk__length, x, return f2__chunk__length(this_cause, x));
 def_pcfunk1(chunk__eq_hash_value, x, return f2__chunk__eq_hash_value(this_cause, x));
 def_pcfunk1(chunk__equals_hash_value, x, return f2__chunk__equals_hash_value(this_cause, x));

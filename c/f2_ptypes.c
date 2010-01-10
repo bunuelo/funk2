@@ -1475,11 +1475,15 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
   return rv;
 }
 
+f2ptr raw__chunk__new(f2ptr cause, u64 length) {
+  return f2chunk__new(cause, length, NULL);
+}
+
 f2ptr f2__chunk__new(f2ptr cause, f2ptr length) {
   if (! raw__integer__is_type(cause, length)) {
     return f2larva__new(cause, 1);
   }
-  return f2chunk__new(cause, f2integer__i(length, cause), NULL);
+  return raw__chunk__new(cause, f2integer__i(length, cause));
 }
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
@@ -2669,7 +2673,7 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_chunk.type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_chunk.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new, length, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__new, length, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

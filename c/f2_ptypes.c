@@ -1039,6 +1039,9 @@ f2ptr f2__string__new(f2ptr cause, f2ptr str) {
     return f2larva__new(cause, 1);
   }
   int str__length = f2string__length(str, cause);
+  if (str__length < 0) {
+    return f2larva__new(cause, 1);
+  }
   u8* str__bytes = (u8*)alloca(str__length);
   f2string__str_copy(str, cause, str__bytes);
   return f2string__new(cause, str__length, str__bytes);
@@ -1173,6 +1176,9 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
     return f2larva__new(cause, 1);
   }
   int str__length = f2string__length(str, cause);
+  if (str__length < 0) {
+    return f2larva__new(cause, 1);
+  }
   u8* str__bytes = (u8*)alloca(str__length);
   f2string__str_copy(str, cause, str__bytes);
   return f2symbol__new(cause, str__length, str__bytes);
@@ -1483,7 +1489,11 @@ f2ptr f2__chunk__new(f2ptr cause, f2ptr length) {
   if (! raw__integer__is_type(cause, length)) {
     return f2larva__new(cause, 1);
   }
-  return raw__chunk__new(cause, f2integer__i(length, cause));
+  s64 length__i = f2integer__i(length, cause);
+  if (length__i < 0) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__chunk__new(cause, length__i);
 }
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
@@ -1700,7 +1710,17 @@ boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_array__is_type(cause, x));}
 f2ptr f2__simple_array__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("simple_array"), (u8*)"simple_array");}
-f2ptr f2__simple_array__new(f2ptr cause, f2ptr length) {return f2simple_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));}
+
+f2ptr f2__simple_array__new(f2ptr cause, f2ptr length) {
+  if (! raw__integer__is_type(cause, length)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 length__i = f2integer__i(length, cause);
+  if (length__i < 0) {
+    return f2larva__new(cause, 1);
+  }
+  return f2simple_array__new(cause, length__i, to_ptr(NULL));
+}
 
 u64 raw__simple_array__length(f2ptr cause, f2ptr this) {return f2simple_array__length(this, cause);}
 f2ptr f2__simple_array__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__simple_array__length(cause, this));}
@@ -2201,7 +2221,17 @@ boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {
 }
 f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_array__is_type(cause, x));}
 f2ptr f2__traced_array__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("traced_array"), (u8*)"traced_array");}
-f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {return f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));}
+
+f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {
+  if (! raw__integer__is_type(cause, length)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 length__i = f2integer__i(length, cause);
+  if (length__i < 0) {
+    return f2larva__new(cause, 1);
+  }
+  return f2traced_array__new(cause, length__i, to_ptr(NULL));
+}
 
 u64   raw__traced_array__length(f2ptr cause, f2ptr this) {return f2traced_array__length(this, cause);}
 f2ptr  f2__traced_array__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__length(cause, this));}

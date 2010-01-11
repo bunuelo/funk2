@@ -2849,7 +2849,7 @@ u64 funk2_node__f2chunk__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2pt
   return length;
 }
 
-u64 f2chunk__length(f2ptr cause, f2ptr this) {
+u64 f2chunk__length(f2ptr this, f2ptr cause) {
   computer_id_t computer_id = __f2ptr__computer_id(this);
   if (computer_id == 0) {
     return pfunk2__f2chunk__length(this, cause);

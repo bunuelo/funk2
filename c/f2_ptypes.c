@@ -944,7 +944,7 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
   string_block->ptype.cause = cause;
   string_block->length      = length;
   if (str) {memcpy(string_block->str, str, length);}
-  else     {bzero(string_block->str, length);}
+  else     {memset(string_block->str, 0,   length);}
   string_block->str[length] = 0x00;
   return string_f2ptr;
 }
@@ -1254,7 +1254,7 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   chunk_block->ptype.cause = cause;
   chunk_block->length      = length;
   if (bytes) {memcpy(chunk_block->bytes, bytes, data_byte_num);}
-  else       {bzero(chunk_block->bytes, data_byte_num);}
+  else       {memset(chunk_block->bytes, 0,     data_byte_num);}
   return chunk_f2ptr;
 }
 
@@ -2388,7 +2388,7 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
   funk2_processor_mutex__init(&(this->mutex));
   this->array               = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
-  bzero(this->array, sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
+  memset(this->array, 0, sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
   this->total_symbol_num    = 0;
   this->eq_hash_value_bit_mask = SYMBOL_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes SYMBOL_HASH__INITIAL_ARRAY_LENGTH is power of 2
   this->array_length        = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
@@ -2466,7 +2466,7 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   symbol_block->ptype.cause = cause;
   symbol_block->length      = length;
   if (str) {memcpy(symbol_block->str, str, length);}
-  else     {bzero(symbol_block->str, length);}
+  else     {memset(symbol_block->str, 0,   length);}
   symbol_block->str[length] = 0x00;
   symbol_block->eq_hash_value  = (u64)((u64)chararray__hash_value(length, str));
   

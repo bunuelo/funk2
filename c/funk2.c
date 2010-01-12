@@ -112,6 +112,7 @@ void f2__initialize() {
   f2__zlib__initialize();
   f2__cpu__initialize();
   f2__time__initialize();
+  f2__perception_lattice__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

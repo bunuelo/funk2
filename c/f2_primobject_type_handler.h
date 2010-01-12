@@ -35,6 +35,7 @@
 #include "f2_object_lattice.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
+#include "f2_perception_lattice.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;

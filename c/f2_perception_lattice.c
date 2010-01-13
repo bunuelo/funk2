@@ -64,12 +64,12 @@ f2ptr f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr no
 }
 
 f2ptr f2__perception_graph__node__ins(f2ptr cause, f2ptr this, f2ptr node) {
-  f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr node);
+  f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
   return f2__cons__car(cause, ins_and_outs);
 }
 
 f2ptr f2__perception_graph__node__outs(f2ptr cause, f2ptr this, f2ptr node) {
-  f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr node);
+  f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
   return f2__cons__cdr(cause, ins_and_outs);
 }
 

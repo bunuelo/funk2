@@ -89,7 +89,7 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
       return f2larva__new(cause, 1);
     }
     u8 ch = f2char__ch(left_node, cause);
-    string = f2__string__append_char(cause, string, ch);
+    string = raw__string__append_char(cause, string, ch);
   }
   {
     f2ptr iter = leftmost_edge;

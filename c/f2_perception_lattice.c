@@ -60,7 +60,7 @@ f2ptr f2__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr
 
 f2ptr f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr edges_node_hash = f2__perception_graph__edges_node_hash(cause, this);
-  return f2__ptypehash__lookup(cause, edges_node_hash, left_node);
+  return f2__ptypehash__lookup(cause, edges_node_hash, node);
 }
 
 f2ptr f2__perception_graph__node__ins(f2ptr cause, f2ptr this, f2ptr node) {

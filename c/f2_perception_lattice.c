@@ -85,7 +85,7 @@ f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
   for (index = 1; index < string__length; index ++) {
     ch = raw__string__elt(cause, string, index);
     f2ptr character = f2char__new(cause, ch);
-    f2perception_graph__add_edge(cause, this, new__symbol(cause, "->"), prev_character, character);
+    f2__perception_graph__add_edge(cause, this, new__symbol(cause, "->"), prev_character, character);
     prev_character = character;
   }
   return this;

@@ -33,14 +33,14 @@ def_pcfunk3(perception_graph_edge__new, label, left_node, right_node, return f2_
 
 // perception_graph
 
-def_primobject_1_slot(perception_graph, edges);
+def_primobject_1_slot(perception_graph, edges_node_hash);
 
 f2ptr f2__perception_graph__new(f2ptr cause) {
-  return f2perception_graph__new(cause, nil);
+  return f2perception_graph__new(cause, f2__ptypehash__new(cause));
 }
 def_pcfunk0(perception_graph__new, return f2__perception_graph__new(this_cause));
 
-
+/*
 f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
   if (! raw__string__is_type(cause, string)) {
     return f2larva__new(cause, 1);
@@ -62,6 +62,9 @@ f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
 def_pcfunk1(perception_graph__new_from_string, string, return f2__perception_graph__new_from_string(this_cause, string));
 
 f2ptr raw__string__append_char(f2ptr cause, f2ptr this, u8 ch) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
   u64 string__length = f2string__length(this, cause);
   u8* string_copy = (u8*)from_ptr(f2__malloc(string__length + 1));
   f2string__str_copy(this, cause, string_copy);
@@ -105,6 +108,7 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
   return string;
 }
 def_pcfunk1(perception_graph__to_string, this, return f2__perception_graph__to_string(this_cause, this));
+*/
 
 // **
 
@@ -127,7 +131,7 @@ void f2__perception_lattice__initialize() {
   // perception_graph
   initialize_primobject_1_slot(perception_graph, edges);
   
-  f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
-  f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
+  //f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
+  //f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
 }
 

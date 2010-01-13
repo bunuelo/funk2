@@ -28,7 +28,7 @@ declare_object_type_3_slot(perception_graph_edge, label, left_node, right_node, 
 
 // perception_graph
 typedef struct funk2_object_type__perception_graph__slot_s funk2_object_type__perception_graph__slot_t;
-declare_object_type_1_slot(perception_graph, edges, );
+declare_object_type_1_slot(perception_graph, edges_node_hash, );
 
 #endif // F2__PERCEPTION_LATTICE__TYPE__H
 
@@ -41,7 +41,7 @@ declare_object_type_1_slot(perception_graph, edges, );
 declare_primobject_3_slot(perception_graph_edge, label, left_node, right_node);
 
 // perception_graph
-declare_primobject_1_slot(perception_graph, edges);
+declare_primobject_1_slot(perception_graph, edges_node_hash);
 
 
 // **

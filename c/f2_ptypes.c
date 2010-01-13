@@ -1022,13 +1022,24 @@ f2ptr f2__string__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen
 u64   raw__string__length(f2ptr cause, f2ptr this) {return f2string__length(this, cause);}
 f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__length(cause, this));}
 
-f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
+u8 raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
   if ((! raw__string__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, index))) {
+      index < 0) {
+    return f2larva__new(cause, 1);
+  }
+  u64 length = f2string__length(this, cause);
+  if (index >= length) {
+    return f2larva__new(cause, 2);
+  }
+  return f2string__elt(this, index, cause);
+}
+
+f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  if (! raw__integer__is_type(cause, index)) {
     return f2larva__new(cause, 1);
   }
   u64 raw_index = f2integer__i(index, cause);
-  return f2char__new(cause, f2string__elt(this, raw_index, cause));
+  return f2char__new(cause, raw__string__elt(cause, this, raw_index));
 }
 
 u64   raw__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2string__eq_hash_value(this, cause);}

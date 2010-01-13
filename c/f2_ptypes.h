@@ -199,6 +199,9 @@ void raw__string__str_copy(f2ptr cause, f2ptr this, u8* str);
 u64   raw__string__length(f2ptr cause, f2ptr this);
 f2ptr  f2__string__length(f2ptr cause, f2ptr this);
 
+u8    raw__string__elt(f2ptr cause, f2ptr this, s64   index);
+f2ptr  f2__string__elt(f2ptr cause, f2ptr this, f2ptr index);
+
 u64   raw__string__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__string__eq_hash_value(f2ptr cause, f2ptr this);
 

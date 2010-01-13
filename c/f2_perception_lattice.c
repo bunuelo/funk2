@@ -41,6 +41,26 @@ f2ptr f2__perception_graph__new(f2ptr cause) {
 def_pcfunk0(perception_graph__new, return f2__perception_graph__new(this_cause));
 
 
+f2ptr perception_graph__new_from_string(f2ptr cause, f2ptr string) {
+  if (! raw__string__is_type(cause, string)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr this = f2__perception_graph__new(cause);
+  u64 string__length = raw__string__length(cause, string);
+  s64 index = 0;
+  u8 ch = raw__string__elt(cause, string, index);
+  f2ptr prev_character = f2char__new(cause, ch);
+  for (index = 1; index < string__length; index ++) {
+    ch = raw__string__elt(cause, string, index);
+    f2ptr character = f2char__new(cause, ch);
+    f2ptr edge = f2perception_graph_edge__new(cause, new__symbol(cause, "->"), prev_character, character);
+    f2__perception_graph__edges__set(cause, this, f2cons__new(cause, edge, f2__perception_graph__edges(cause, this)));
+    prev_character = character;
+  }
+  return this;
+}
+def_pcfunk1(perception_graph__new_from_string, string, return f2__perception_graph__new_from_string(this_cause, string));
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -48,7 +68,7 @@ void f2__perception_lattice__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
-  __perception_graph_edge__symbol = new__symbol(cause, "perception_graph_node");
+  __perception_graph_edge__symbol = new__symbol(cause, "perception_graph_edge");
   __perception_graph__symbol      = new__symbol(cause, "perception_graph");
 }
 
@@ -63,5 +83,6 @@ void f2__perception_lattice__initialize() {
   // perception_graph
   initialize_primobject_1_slot(perception_graph, edges);
   
+  f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.");
 }
 

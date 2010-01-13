@@ -62,9 +62,9 @@ f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
 def_pcfunk1(perception_graph__new_from_string, string, return f2__perception_graph__new_from_string(this_cause, string));
 
 f2ptr raw__string__append_char(f2ptr cause, f2ptr this, u8 ch) {
-  u64 string__length = f2string__length(string, cause);
+  u64 string__length = f2string__length(this, cause);
   u8* string_copy = (u8*)from_ptr(f2__malloc(string__length + 1));
-  f2string__str_copy(string, cause, string_copy);
+  f2string__str_copy(this, cause, string_copy);
   string_copy[string__length] = ch;
   return f2string__new(cause, string__length + 1, string_copy);
 }

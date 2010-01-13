@@ -41,7 +41,7 @@ f2ptr f2__perception_graph__new(f2ptr cause) {
 def_pcfunk0(perception_graph__new, return f2__perception_graph__new(this_cause));
 
 
-f2ptr perception_graph__new_from_string(f2ptr cause, f2ptr string) {
+f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
   if (! raw__string__is_type(cause, string)) {
     return f2larva__new(cause, 1);
   }

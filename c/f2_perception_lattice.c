@@ -55,7 +55,7 @@ f2ptr f2__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr
   f2ptr right_node_ins = f2__cons__car(cause, right_node_ins_and_outs);
   f2__cons__cdr__set(cause, left_node_ins_and_outs,  f2cons__new(cause, edge, left_node_outs));
   f2__cons__car__set(cause, right_node_ins_and_outs, f2cons__new(cause, edge, right_node_ins));
-  return nil;
+  return edge;
 }
 
 f2ptr f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr node) {
@@ -85,7 +85,7 @@ f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
   for (index = 1; index < string__length; index ++) {
     ch = raw__string__elt(cause, string, index);
     f2ptr character = f2char__new(cause, ch);
-    f2ptr edge = f2perception_graph__add_edge(cause, this, new__symbol(cause, "->"), prev_character, character);
+    f2perception_graph__add_edge(cause, this, new__symbol(cause, "->"), prev_character, character);
     prev_character = character;
   }
   return this;

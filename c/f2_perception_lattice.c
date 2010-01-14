@@ -55,8 +55,10 @@ f2ptr f2__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr
   }
   f2ptr left_node_outs = f2__cons__cdr(cause, left_node_ins_and_outs);
   f2ptr right_node_ins = f2__cons__car(cause, right_node_ins_and_outs);
-  f2__cons__cdr__set(cause, left_node_ins_and_outs,  f2cons__new(cause, edge, left_node_outs));
-  f2__cons__car__set(cause, right_node_ins_and_outs, f2cons__new(cause, edge, right_node_ins));
+  left_node_outs = f2cons__new(cause, edge, left_node_outs);
+  right_node_ins = f2cons__new(cause, edge, right_node_ins);
+  f2__cons__cdr__set(cause, left_node_ins_and_outs,  left_node_outs);
+  f2__cons__car__set(cause, right_node_ins_and_outs, right_node_ins);
   {
     f2ptr edge_structure_hash_value    = f2__perception_graph__edge_structure_hash_value(cause, this);
     u64   edge_structure_hash_value__i = f2integer__i(edge_structure_hash_value, cause);

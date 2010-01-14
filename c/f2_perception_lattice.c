@@ -105,6 +105,7 @@ f2ptr raw__string__append_char(f2ptr cause, f2ptr this, u8 ch) {
   return f2string__new(cause, string__length + 1, string_copy);
 }
 
+/*
 f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
   if (! raw__perception_graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
@@ -141,6 +142,7 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
   return string;
 }
 def_pcfunk1(perception_graph__to_string, this, return f2__perception_graph__to_string(this_cause, this));
+*/
 
 // **
 

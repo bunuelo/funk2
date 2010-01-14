@@ -105,44 +105,47 @@ f2ptr raw__string__append_char(f2ptr cause, f2ptr this, u8 ch) {
   return f2string__new(cause, string__length + 1, string_copy);
 }
 
-/*
 f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
   if (! raw__perception_graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   f2ptr edges_node_hash = f2__perception_graph__edges_node_hash(cause, this);
-  f2ptr leftmost_edge = nil;
+  f2ptr leftmost_node = nil;
   {
-    f2ptr iter = edges;
-    while (iter) {
-      leftmost_edge = iter;
-      iter = f2__perception_graph_edge__left_node(cause, iter);
+    f2ptr node = f2__ptypehash__an_arbitrary_key(cause, edges_node_hash);
+    while (node) {
+      leftmost_node = node;
+      f2ptr ins  = f2__perception_graph__node__ins(cause, this, node);
+      if (ins) {
+	f2ptr edge = f2__cons__car(cause, ins);
+	node = f2__perception_graph_edge__left_node(cause, edge);
+      } else {
+	node = nil;
+      }
     }
   }
   f2ptr string = new__string(cause, "");
-  if (leftmost_edge) {
-    f2ptr left_node = f2__perception_graph_edge__left_node(cause, leftmost_edge);
-    if (! raw__char__is_type(cause, left_node)) {
-      return f2larva__new(cause, 1);
-    }
-    u8 ch = f2char__ch(left_node, cause);
-    string = raw__string__append_char(cause, string, ch);
-  }
   {
-    f2ptr iter = leftmost_edge;
-    while (iter) {
-      f2ptr right_node = f2__perception_graph_edge__right_node(cause, iter);
-      if (! raw__char__is_type(cause, right_node)) {
+    f2ptr node = leftmost_node;
+    while (node) {
+      if (! raw__char__is_type(cause, node)) {
 	return f2larva__new(cause, 1);
       }
-      u8 ch = f2char__ch(right_node, cause);
+      u8 ch = f2char__ch(node, cause);
       string = raw__string__append_char(cause, string, ch);
+      
+      f2ptr outs  = f2__perception_graph__node__outs(cause, this, node);
+      if (outs) {
+	f2ptr edge = f2__cons__car(cause, outs);
+	node = f2__perception_graph_edge__right_node(cause, edge);
+      } else {
+	node = nil;
+      }
     }
   }
   return string;
 }
 def_pcfunk1(perception_graph__to_string, this, return f2__perception_graph__to_string(this_cause, this));
-*/
 
 // **
 

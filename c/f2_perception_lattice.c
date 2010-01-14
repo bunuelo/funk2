@@ -169,6 +169,6 @@ void f2__perception_lattice__initialize() {
   initialize_primobject_1_slot(perception_graph, edges_node_hash);
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
-  //f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
+  f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
 }
 

@@ -46,10 +46,12 @@ f2ptr f2__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr
   f2ptr left_node_ins_and_outs = f2__ptypehash__lookup(cause, edges_node_hash, left_node);
   if (! left_node_ins_and_outs) {
     left_node_ins_and_outs = f2cons__new(cause, nil, nil);
+    f2__ptypehash__add(cause, this, left_node, left_node_ins_and_outs);
   }
   f2ptr right_node_ins_and_outs = f2__ptypehash__lookup(cause, edges_node_hash, right_node);
   if (! right_node_ins_and_outs) {
     right_node_ins_and_outs = f2cons__new(cause, nil, nil);
+    f2__ptypehash__add(cause, this, right_node, right_node_ins_and_outs);
   }
   f2ptr left_node_outs = f2__cons__cdr(cause, left_node_ins_and_outs);
   f2ptr right_node_ins = f2__cons__car(cause, right_node_ins_and_outs);

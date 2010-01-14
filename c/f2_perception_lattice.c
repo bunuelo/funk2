@@ -33,10 +33,10 @@ def_pcfunk3(perception_graph_edge__new, label, left_node, right_node, return f2_
 
 // perception_graph
 
-def_primobject_1_slot(perception_graph, edges_node_hash);
+def_primobject_2_slot(perception_graph, edges_node_hash, edge_structure_hash_value);
 
 f2ptr f2__perception_graph__new(f2ptr cause) {
-  return f2perception_graph__new(cause, f2__ptypehash__new(cause));
+  return f2perception_graph__new(cause, f2__ptypehash__new(cause), f2integer__new(cause, 1));
 }
 def_pcfunk0(perception_graph__new, return f2__perception_graph__new(this_cause));
 
@@ -57,6 +57,18 @@ f2ptr f2__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr
   f2ptr right_node_ins = f2__cons__car(cause, right_node_ins_and_outs);
   f2__cons__cdr__set(cause, left_node_ins_and_outs,  f2cons__new(cause, edge, left_node_outs));
   f2__cons__car__set(cause, right_node_ins_and_outs, f2cons__new(cause, edge, right_node_ins));
+  {
+    f2ptr edge_structure_hash_value    = f2__perception_graph__edge_structure_hash_value(cause, this);
+    u64   edge_structure_hash_value__i = f2integer__i(edge_structure_hash_value, cause);
+    u64   left_node_outs__length       = raw__simple_length(cause, left_node_outs);
+    u64   right_node_ins__length       = raw__simple_length(cause, right_node_ins);
+    edge_structure_hash_value__i /=  left_node_outs__length;
+    edge_structure_hash_value__i /=  right_node_ins__length;
+    edge_structure_hash_value__i *= (left_node_outs__length + 1);
+    edge_structure_hash_value__i *= (right_node_ins__length + 1);
+    edge_structure_hash_value__i *= raw__eq_hash_value(cause, label);
+    f2__perception_graph__edge_structure_hash_value__set(cause, this, f2integer__new(cause, edge_structure_hash_value__i));
+  }
   return edge;
 }
 
@@ -137,7 +149,6 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
       }
       u8 ch = f2char__ch(character, cause);
       string = raw__string__append_char(cause, string, ch);
-      
       f2ptr outs  = f2__perception_graph__node__outs(cause, this, node);
       if (outs) {
 	f2ptr edge = f2__cons__car(cause, outs);

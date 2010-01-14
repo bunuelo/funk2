@@ -83,12 +83,12 @@ f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
   u64 string__length = raw__string__length(cause, string);
   s64 index = 0;
   u8 ch = raw__string__elt(cause, string, index);
-  f2ptr prev_character = f2char__new(cause, ch);
+  f2ptr prev_node = f2cons__new(cause, f2char__new(cause, ch), nil);
   for (index = 1; index < string__length; index ++) {
     ch = raw__string__elt(cause, string, index);
-    f2ptr character = f2char__new(cause, ch);
-    f2__perception_graph__add_edge(cause, this, new__symbol(cause, "->"), prev_character, character);
-    prev_character = character;
+    f2ptr node = f2cons__new(cause, f2char__new(cause, ch), nil);
+    f2__perception_graph__add_edge(cause, this, new__symbol(cause, "->"), prev_node, node);
+    prev_node = node;
   }
   return this;
 }
@@ -128,10 +128,14 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
   {
     f2ptr node = leftmost_node;
     while (node) {
-      if (! raw__char__is_type(cause, node)) {
+      if (! raw__cons__is_type(cause, node)) {
 	return f2larva__new(cause, 1);
       }
-      u8 ch = f2char__ch(node, cause);
+      f2ptr character = f2__cons__car(cause, node);
+      if (! raw__char__is_type(cause, character)) {
+	return f2larva__new(cause, 1);
+      }
+      u8 ch = f2char__ch(character, cause);
       string = raw__string__append_char(cause, string, ch);
       
       f2ptr outs  = f2__perception_graph__node__outs(cause, this, node);

@@ -147,6 +147,42 @@ f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(ptypehash__lookup, this, slot_name, return f2__ptypehash__lookup(this_cause, this, slot_name));
 
+f2ptr f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
+  f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
+  {
+    f2ptr bin_array         = f2__ptypehash__bin_array(cause, this);
+    u64   bin_array__length = raw__array__length(cause, bin_array);
+    u64   index;
+    for (index = 0; index < bin_array__length; index ++) {
+      f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
+      if (keyvalue_pair_iter) {
+	f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
+	f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+	return keyvalue_pair;
+      }
+    }
+  }
+  f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+  return nil;
+}
+
+f2ptr f2__ptypehash__an_arbitrary_key(f2ptr cause, f2ptr this) {
+  f2ptr keyvalue_pair = f2__ptypehash__an_arbitrary_keyvalue_pair(cause, this);
+  if (! keyvalue_pair) {
+    return nil;
+  }
+  f2ptr key = f2__cons__car(cause, keyvalue_pair);
+  return key;
+}
+
+f2ptr f2__ptypehash__an_arbitrary_value(f2ptr cause, f2ptr this) {
+  f2ptr keyvalue_pair = f2__ptypehash__an_arbitrary_keyvalue_pair(cause, this);
+  if (! keyvalue_pair) {
+    return nil;
+  }
+  f2ptr value = f2__cons__cdr(cause, keyvalue_pair);
+  return value;
+}
 
 f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__mapc_slot_names assert failed: f2__ptypehash__valid(this)");
@@ -164,6 +200,7 @@ f2ptr f2__ptypehash__slot_names(f2ptr cause, f2ptr this) {
   return new_list;
 }
 def_pcfunk1(ptypehash__slot_names, this, return f2__ptypehash__slot_names(this_cause, this));
+
 
 f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2ptypehash__primobject_type__new(cause);

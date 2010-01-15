@@ -25,10 +25,25 @@
 
 def_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
 
-f2ptr f2__largeinteger__new(f2ptr cause) {
-  return f2largeinteger__new(cause, f2mutex__new(cause), nil, raw__array__new(cause, 0));
+f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
+  if (raw__integer__is_type(cause, value)) {
+    f2ptr integer_array = raw__array__new(cause, 1);
+    s64 value__i = f2integer__i(value, cause);
+    f2ptr negative;
+    if (value__i < 0) {
+      negative = f2bool__new(boolean__true);
+      u64 unsigned_value__i = (u64)((s64)(-value__i));
+      raw__array__elt__set(cause, integer_array, 0, f2integer__new(cause, unsigned_value__i));
+    } else {
+      negative = f2bool__new(boolean__false);
+      raw__array__elt__set(cause, integer_array, 0, value);
+    }
+    return f2largeinteger__new(cause, f2mutex__new(cause), negative, integer_array);
+  } else {
+    return f2larva__new(cause, 1);
+  }
 }
-def_pcfunk0(largeinteger__new, return f2__largeinteger__new(this_cause));
+def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
 
 // **
 

@@ -46,7 +46,56 @@ f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
 def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
 
 f2ptr f2__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  u64 this__length = raw__array__length(cause, this);
+  u64 that__length = raw__array__length(cause, that);
+  f2ptr small;
+  f2ptr large;
+  u64   small__length;
+  u64   large__length;
+  if (this__length < that__length) {
+    small = this;
+    large = that;
+    small__length = this__length;
+    large__length = that__length;
+  } else {
+    small = that;
+    large = this;
+    small__length = that__length;
+    large__length = this__length;
+  }
+  u64 temp__length = small__length + large__length;
+  u64* temp_array = (u64*)alloca(sizeof(u64) * temp__length);
+  memset(temp_array, 0, sizeof(u64) * temp__length);
+  u64 last_nonzero_index = -1;
+  u64 result__carry      = 0;
+  u64 index;
+  for (index = 0; index < large__length; index ++) {
+    u64 small__value;
+    if (index < small__length) {
+      f2ptr small__elt = raw__array__elt(cause, small, index);
+      small__value = (u64)f2integer__i(small__elt, cause);
+    } else {
+      small__value = 0;
+    }
+    f2ptr large__elt = raw__array__elt(cause, large, index);
+    u64   large__value = (u64)f2integer__i(large__elt, cause);
+    u64   result__value = small__value + large__value + result__carry;
+    if (result__value < small__value) {
+      result__carry = 1;
+    } else {
+      result__carry = 0;
+    }
+    temp_array[index] = result__value;
+    if (result__value != 0) {
+      last_nonzero_index = index;
+    }
+  }
+  u64   new_array__length = last_nonzero_index + 1;
+  f2ptr new_array = raw__array__new(cause, new_array__length);
+  for (index = 0; index < new_array__length; index ++) {
+    raw__array__elt__set(cause, new_array, index, f2integer__new(cause, temp_array[index]));
+  }
+  return new_array;
 }
 
 f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {

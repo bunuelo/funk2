@@ -38,7 +38,7 @@ declare_object_type_3_slot(largeinteger, access_mutex, negative, integer_array, 
 
 declare_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
 
-f2ptr f2__largeinteger__new(f2ptr cause);
+f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value);
 
 // **
 

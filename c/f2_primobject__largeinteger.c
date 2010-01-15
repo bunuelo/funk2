@@ -45,6 +45,36 @@ f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
 }
 def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
 
+f2ptr f2__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
+}
+
+f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__mutex    = f2__largeinteger__access_mutex( cause, this);
+  f2ptr that__mutex    = f2__largeinteger__access_mutex( cause, that);
+  raw__mutex__lock_both(cause, this__mutex, that__mutex);
+  f2ptr this__negative = f2__largeinteger__negative(     cause, this);
+  f2ptr that__negative = f2__largeinteger__negative(     cause, that);
+  f2ptr this__array    = f2__largeinteger__integer_array(cause, this);
+  f2ptr that__array    = f2__largeinteger__integer_array(cause, that);
+  f2ptr result__array;
+  f2ptr result__negative;
+  if ((! this__negative) && (! that__negative)) {
+    result__negative = f2bool__new(boolean__false);
+    result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
+  } else if (this__negative && that__negative) {
+    result__negative = f2bool__new(boolean__true);
+    result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
+  } else {
+    f2mutex__unlock(this__mutex, cause);
+    f2mutex__unlock(that__mutex, cause);
+    return f2larva__new(cause, 3);
+  }
+  f2mutex__unlock(this__mutex, cause);
+  f2mutex__unlock(that__mutex, cause);
+  return f2largeinteger__new(cause, f2mutex__new(cause), result__negative, result__array);
+}
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {

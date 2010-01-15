@@ -195,6 +195,33 @@ def_pcfunk1(gfunkptr__new_from_pointer, x, return f2__gfunkptr__new_from_pointer
 
 // mutex
 
+// avoids race conditions
+void raw__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
+  boolean_t both_locked = boolean__false;
+  while (! both_locked) {
+    if (f2mutex__trylock(this, cause) == 0) {
+      if (f2mutex__trylock(that, cause) == 0) {
+	both_locked = boolean__true;
+      } else {
+	f2mutex__unlock(this, cause);
+      }
+    }
+    if (! both_locked) {
+      raw__fast_spin_sleep_yield();
+    }
+  }
+}
+
+// avoids race conditions
+f2ptr f2__mutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__mutex__is_type(cause, this)) ||
+      (! raw__mutex__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  raw__mutex__lock_both(cause, this, that);
+  return nil;
+}
+
 // char
 
 

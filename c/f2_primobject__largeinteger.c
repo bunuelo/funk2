@@ -25,6 +25,10 @@
 
 def_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
 
+f2ptr f2__largeinteger__new(f2ptr cause) {
+  return f2largeinteger__new(cause, f2mutex__new(cause), nil, raw__array__new(cause, 0));
+}
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {

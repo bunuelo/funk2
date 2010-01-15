@@ -40,7 +40,7 @@ void f2__primobject_largeinteger__initialize() {
   
   // largeinteger
   
-  initialize_primobject_3_slot(largeinteger, write_mutex, key_count, bin_num_power, bin_array);
+  initialize_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
   
 }
 

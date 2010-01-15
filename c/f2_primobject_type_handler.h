@@ -36,6 +36,7 @@
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
 #include "f2_perception_lattice.h"
+#include "f2_primobject__largeinteger.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -115,6 +116,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__funk_event__slot_t            primobject_type_funk_event;
   funk2_object_type__perception_graph_edge__slot_t primobject_type_perception_graph_edge;
   funk2_object_type__perception_graph__slot_t      primobject_type_perception_graph;
+  funk2_object_type__largeinteger__slot_t          primobject_type_largeinteger;
 };
 
 // **

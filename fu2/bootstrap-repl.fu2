@@ -56,6 +56,7 @@
 [primfunk:load 'fu2/primfunks-fcntl.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
 [primfunk:load 'fu2/primfunks-ioctl.fu2']
+[primfunk:load 'fu2/primfunks-largeinteger.fu2']
 [primfunk:load 'fu2/primfunks-locale.fu2']
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
 [primfunk:load 'fu2/primfunks-object.fu2']

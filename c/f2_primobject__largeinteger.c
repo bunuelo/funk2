@@ -74,6 +74,7 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   f2mutex__unlock(that__mutex, cause);
   return f2largeinteger__new(cause, f2mutex__new(cause), result__negative, result__array);
 }
+def_pcfunk2(largeinteger__add, this, that, return f2__largeinteger__add(this_cause, this, that));
 
 // **
 
@@ -91,6 +92,8 @@ void f2__primobject_largeinteger__initialize() {
   // largeinteger
   
   initialize_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
+  
+  f2__primcfunk__init__2(largeinteger__add, this, that, "add two largeintegers and return a new largeinteger as the result.");
   
 }
 

@@ -28,6 +28,7 @@ def_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
 f2ptr f2__largeinteger__new(f2ptr cause) {
   return f2largeinteger__new(cause, f2mutex__new(cause), nil, raw__array__new(cause, 0));
 }
+def_pcfunk0(largeinteger__new, return f2__largeinteger__new(this_cause));
 
 // **
 

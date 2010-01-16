@@ -283,7 +283,7 @@ f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return raw__largeinteger__multiply(cause, this, that);
 }
-def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(cause, this, that));
+def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(this_cause, this, that));
 
 f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   return nil;
@@ -296,7 +296,7 @@ f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return raw__largeinteger__divide(cause, this, that);
 }
-def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(cause, this, that));
+def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(this_cause, this, that));
 
 // **
 

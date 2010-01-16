@@ -191,7 +191,7 @@ f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this
   return new_array;
 }
 
-f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__negative = f2__largeinteger__negative(     cause, this);
   f2ptr that__negative = f2__largeinteger__negative(     cause, that);
   f2ptr this__array    = f2__largeinteger__integer_array(cause, this);
@@ -237,7 +237,40 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return f2largeinteger__new(cause, result__negative, result__array);
 }
+
+f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__largeinteger__add(cause, this, that);
+}
 def_pcfunk2(largeinteger__add, this, that, return f2__largeinteger__add(this_cause, this, that));
+
+f2ptr raw__largeinteger__negative(f2ptr cause, f2ptr this) {
+  return f2largeinteger__new(cause, f2bool__new(f2largeinteger__negative(this, cause) == nil), f2largeinteger__integer_array(this, cause));
+}
+
+f2ptr f2__largeinteger__negative(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__largeinteger__negative(cause, this);
+}
+def_pcfunk1(largeinteger__negative, this, return f2__largeinteger__negative(this_cause, this));
+
+f2ptr raw__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__largeinteger__add(cause, this, raw__largeinteger__negative(cause, that));
+}
+
+f2ptr f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__largeinteger__subtract(cause, this, that);
+}
+def_pcfunk2(largeinteger__subtract, this, that, return f2__largeinteger__subtract(this_cause, this, that));
 
 // **
 
@@ -258,6 +291,8 @@ void f2__primobject_largeinteger__initialize() {
   
   f2__primcfunk__init__2(largeinteger__greater_than, this, that, "compare two largeintegers for which is greater and return a boolean value as the result.");
   f2__primcfunk__init__2(largeinteger__add, this, that, "add two largeintegers and return a new largeinteger as the result.");
+  f2__primcfunk__init__1(largeinteger__negative, this, "returns the negative of a largeinteger.");
+  f2__primcfunk__init__1(largeinteger__subtract, this, "returns the result of subtracting two largeintegers.");
   
 }
 

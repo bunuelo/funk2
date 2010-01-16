@@ -185,7 +185,7 @@ f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this
       borrow__value = 0;
     }
     if (result__value != 0) {
-      last_nonzero_value = index;
+      last_nonzero_index = index;
     }
     result_array[index] = result__value;
   }

@@ -45,7 +45,7 @@ f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
 }
 def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
 
-boolean_t raw__largeinteger__array__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+boolean_t raw__largeinteger__unsigned_array__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__array__length(cause, this);
   u64 that__length = raw__array__length(cause, that);
   if (this__length > that__length) {
@@ -78,7 +78,7 @@ boolean_t raw__largeinteger__greater_than__thread_unsafe(f2ptr cause, f2ptr this
     if (that__negative) {
       f2ptr this__array = f2__largeinteger__integer_array(cause, this);
       f2ptr that__array = f2__largeinteger__integer_array(cause, that);
-      return (! raw__largeinteger__array__greater_than(cause, this__array, that__array));
+      return (! raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array));
     } else {
       return boolean__false;
     }
@@ -88,7 +88,7 @@ boolean_t raw__largeinteger__greater_than__thread_unsafe(f2ptr cause, f2ptr this
     } else {
       f2ptr this__array = f2__largeinteger__integer_array(cause, this);
       f2ptr that__array = f2__largeinteger__integer_array(cause, that);
-      return raw__largeinteger__array__greater_than(cause, this__array, that__array);
+      return raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array);
     }
   }
 }
@@ -154,9 +154,45 @@ f2ptr f2__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that)
     }
   }
   u64   new_array__length = last_nonzero_index + 1;
-  f2ptr new_array = raw__array__new(cause, new_array__length);
+  f2ptr new_array         = raw__array__new(cause, new_array__length);
   for (index = 0; index < new_array__length; index ++) {
     raw__array__elt__set(cause, new_array, index, f2integer__new(cause, temp_array[index]));
+  }
+  return new_array;
+}
+
+f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this, f2ptr smaller) {
+  f2ptr large              = this;
+  f2ptr small              = smaller;
+  u64   large__length      = raw__array__length(cause, large);
+  u64   small__length      = raw__array__length(cause, small);
+  u64   borrow__value      = 0;
+  u64   last_nonzero_index = -1;
+  u64*  result_array       = alloca(sizeof(f2ptr) * large__length);
+  u64   index;
+  for (index = 0; index < large__length; index ++) {
+    u64 small__value = 0;
+    if (index < small__length) {
+      f2ptr small__elt = raw__array__elt(cause, small, index);
+      small__value = (u64)f2integer__i(small__elt, cause);
+    }
+    f2ptr large__elt    = raw__array__elt(cause, large, index);
+    u64   large__value  = f2integer__i(large__elt, cause);
+    u64   result__value = large__value - small__value - borrow__value;
+    if (result__value > large__value) {
+      borrow__value = 1;
+    } else {
+      borrow__value = 0;
+    }
+    if (result__value != 0) {
+      last_nonzero_value = index;
+    }
+    result_array[index] = result__value;
+  }
+  u64   new_array__length = last_nonzero_index + 1;
+  f2ptr new_array         = raw__array__new(cause, new_array__length);
+  for (index = 0; index < new_array__length; index ++) {
+    raw__array__elt__set(cause, new_array, index, f2ingeger__new(cause, result_array[index]));
   }
   return new_array;
 }
@@ -171,16 +207,42 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr that__array    = f2__largeinteger__integer_array(cause, that);
   f2ptr result__array;
   f2ptr result__negative;
-  if ((! this__negative) && (! that__negative)) {
-    result__negative = f2bool__new(boolean__false);
-    result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
-  } else if (this__negative && that__negative) {
-    result__negative = f2bool__new(boolean__true);
-    result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
+  if (this__negative) {
+    if (that__negative) {
+      result__negative = f2bool__new(boolean__true);
+      result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
+    } else {
+      f2ptr small__array;
+      f2ptr large__array;
+      if (raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array)) {
+	result__negative = f2bool__new(boolean__true);
+	small__array     = that__array;
+	large__array     = this__array;
+      } else {
+	result__negative = f2bool__new(boolean__false);
+	small__array     = this__array;
+	large__array     = that__array;
+      }
+      result__array = f2__largeinteger__unsigned_array__subtract_smaller(cause, large__array, small__array);
+    }
   } else {
-    f2mutex__unlock(this__mutex, cause);
-    f2mutex__unlock(that__mutex, cause);
-    return f2larva__new(cause, 3);
+    if (that__negative) {
+      f2ptr small__array;
+      f2ptr large__array;
+      if (raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array)) {
+	result__negative = f2bool__new(boolean__false);
+	small__array     = that__array;
+	large__array     = this__array;
+      } else {
+	result__negative = f2bool__new(boolean__true);
+	small__array     = this__array;
+	large__array     = that__array;
+      }
+      result__array = f2__largeinteger__unsigned_array__subtract_smaller(cause, large__array, small__array);
+    } else {
+      result__negative = f2bool__new(boolean__false);
+      result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
+    }
   }
   f2mutex__unlock(this__mutex, cause);
   f2mutex__unlock(that__mutex, cause);

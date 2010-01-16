@@ -192,7 +192,7 @@ f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this
   u64   new_array__length = last_nonzero_index + 1;
   f2ptr new_array         = raw__array__new(cause, new_array__length);
   for (index = 0; index < new_array__length; index ++) {
-    raw__array__elt__set(cause, new_array, index, f2ingeger__new(cause, result_array[index]));
+    raw__array__elt__set(cause, new_array, index, f2integer__new(cause, result_array[index]));
   }
   return new_array;
 }

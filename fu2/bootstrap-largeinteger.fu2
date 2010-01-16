@@ -21,4 +21,6 @@
 
 [deftypefunk largeinteger execute greater_than [that] [largeinteger-greater_than this that]]
 [deftypefunk largeinteger execute add          [that] [largeinteger-add          this that]]
+[deftypefunk largeinteger execute negative     []     [largeinteger-negative     this]]
+[deftypefunk largeinteger execute subtract     [that] [largeinteger-subtract     this that]]
 

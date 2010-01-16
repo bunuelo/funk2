@@ -23,4 +23,6 @@
 [deftypefunk largeinteger execute add          [that] [largeinteger-add          this that]]
 [deftypefunk largeinteger execute negative     []     [largeinteger-negative     this]]
 [deftypefunk largeinteger execute subtract     [that] [largeinteger-subtract     this that]]
+[deftypefunk largeinteger execute multiply     [that] [largeinteger-multiply     this that]]
+[deftypefunk largeinteger execute divide       [that] [largeinteger-divide       this that]]
 

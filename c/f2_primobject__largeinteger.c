@@ -272,6 +272,32 @@ f2ptr f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(largeinteger__subtract, this, that, return f2__largeinteger__subtract(this_cause, this, that));
 
+f2ptr raw__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
+}
+
+f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__largeinteger__multiply(cause, this, that);
+}
+def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(cause, this, that));
+
+f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
+}
+
+f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__largeinteger__divide(cause, this, that);
+}
+def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(cause, this, that));
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
@@ -292,7 +318,9 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__greater_than, this, that, "compare two largeintegers for which is greater and return a boolean value as the result.");
   f2__primcfunk__init__2(largeinteger__add, this, that, "add two largeintegers and return a new largeinteger as the result.");
   f2__primcfunk__init__1(largeinteger__negative, this, "returns the negative of a largeinteger.");
-  f2__primcfunk__init__1(largeinteger__subtract, this, "returns the result of subtracting two largeintegers.");
+  f2__primcfunk__init__2(largeinteger__subtract, this, that, "returns the result of subtracting two largeintegers.");
+  f2__primcfunk__init__2(largeinteger__multiply, this, that, "returns the result of multiplying two largeintegers.");
+  f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
   
 }
 

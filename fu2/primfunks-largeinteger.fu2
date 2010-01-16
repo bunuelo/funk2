@@ -23,4 +23,6 @@
 [globalize-funk largeinteger-add          &primfunk:largeinteger__add]
 [globalize-funk largeinteger-negative     &primfunk:largeinteger__negative]
 [globalize-funk largeinteger-subtract     &primfunk:largeinteger__subtract]
+[globalize-funk largeinteger-multiply     &primfunk:largeinteger__multiply]
+[globalize-funk largeinteger-divide       &primfunk:largeinteger__divide]
 

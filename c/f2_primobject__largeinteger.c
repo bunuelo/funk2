@@ -23,7 +23,7 @@
 
 // largeinteger
 
-def_primobject_2_slot(largeinteger, negative, integer_array);
+def_primobject_2_slot(largeinteger, is_negative, integer_array);
 
 f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
   if (raw__integer__is_type(cause, value)) {
@@ -32,16 +32,16 @@ f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
       return f2largeinteger__new(cause, f2bool__new(boolean__false), raw__array__new(cause, 0));
     } else {
       f2ptr integer_array = raw__array__new(cause, 1);
-      f2ptr negative;
+      f2ptr is_negative;
       if (value__i < 0) {
-	negative = f2bool__new(boolean__true);
+	is_negative = f2bool__new(boolean__true);
 	u64 unsigned_value__i = (u64)((s64)(-value__i));
 	raw__array__elt__set(cause, integer_array, 0, f2integer__new(cause, unsigned_value__i));
       } else {
-	negative = f2bool__new(boolean__false);
+	is_negative = f2bool__new(boolean__false);
 	raw__array__elt__set(cause, integer_array, 0, value);
       }
-      return f2largeinteger__new(cause, negative, integer_array);
+      return f2largeinteger__new(cause, is_negative, integer_array);
     }
   } else {
     return f2larva__new(cause, 1);
@@ -76,10 +76,10 @@ boolean_t raw__largeinteger__unsigned_array__greater_than(f2ptr cause, f2ptr thi
 }
 
 boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__negative = f2__largeinteger__negative(cause, this);
-  f2ptr that__negative = f2__largeinteger__negative(cause, that);
-  if (this__negative) {
-    if (that__negative) {
+  f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
+  f2ptr that__is_negative = f2__largeinteger__is_negative(cause, that);
+  if (this__is_negative) {
+    if (that__is_negative) {
       f2ptr this__array = f2__largeinteger__integer_array(cause, this);
       f2ptr that__array = f2__largeinteger__integer_array(cause, that);
       return (! raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array));
@@ -87,7 +87,7 @@ boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
       return boolean__false;
     }
   } else {
-    if (that__negative) {
+    if (that__is_negative) {
       return boolean__true;
     } else {
       f2ptr this__array = f2__largeinteger__integer_array(cause, this);
@@ -192,50 +192,50 @@ f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this
 }
 
 f2ptr raw__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__negative = f2__largeinteger__negative(     cause, this);
-  f2ptr that__negative = f2__largeinteger__negative(     cause, that);
+  f2ptr this__is_negative = f2__largeinteger__is_negative(     cause, this);
+  f2ptr that__is_negative = f2__largeinteger__is_negative(     cause, that);
   f2ptr this__array    = f2__largeinteger__integer_array(cause, this);
   f2ptr that__array    = f2__largeinteger__integer_array(cause, that);
   f2ptr result__array;
-  f2ptr result__negative;
-  if (this__negative) {
-    if (that__negative) {
-      result__negative = f2bool__new(boolean__true);
+  f2ptr result__is_negative;
+  if (this__is_negative) {
+    if (that__is_negative) {
+      result__is_negative = f2bool__new(boolean__true);
       result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
     } else {
       f2ptr small__array;
       f2ptr large__array;
       if (raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array)) {
-	result__negative = f2bool__new(boolean__true);
+	result__is_negative = f2bool__new(boolean__true);
 	small__array     = that__array;
 	large__array     = this__array;
       } else {
-	result__negative = f2bool__new(boolean__false);
+	result__is_negative = f2bool__new(boolean__false);
 	small__array     = this__array;
 	large__array     = that__array;
       }
       result__array = f2__largeinteger__unsigned_array__subtract_smaller(cause, large__array, small__array);
     }
   } else {
-    if (that__negative) {
+    if (that__is_negative) {
       f2ptr small__array;
       f2ptr large__array;
       if (raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array)) {
-	result__negative = f2bool__new(boolean__false);
+	result__is_negative = f2bool__new(boolean__false);
 	small__array     = that__array;
 	large__array     = this__array;
       } else {
-	result__negative = f2bool__new(boolean__true);
+	result__is_negative = f2bool__new(boolean__true);
 	small__array     = this__array;
 	large__array     = that__array;
       }
       result__array = f2__largeinteger__unsigned_array__subtract_smaller(cause, large__array, small__array);
     } else {
-      result__negative = f2bool__new(boolean__false);
+      result__is_negative = f2bool__new(boolean__false);
       result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
     }
   }
-  return f2largeinteger__new(cause, result__negative, result__array);
+  return f2largeinteger__new(cause, result__is_negative, result__array);
 }
 
 f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -248,7 +248,7 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(largeinteger__add, this, that, return f2__largeinteger__add(this_cause, this, that));
 
 f2ptr raw__largeinteger__negative(f2ptr cause, f2ptr this) {
-  return f2largeinteger__new(cause, f2bool__new(f2largeinteger__negative(this, cause) == nil), f2largeinteger__integer_array(this, cause));
+  return f2largeinteger__new(cause, f2bool__new(f2largeinteger__is_negative(this, cause) == nil), f2largeinteger__integer_array(this, cause));
 }
 
 f2ptr f2__largeinteger__negative(f2ptr cause, f2ptr this) {
@@ -287,7 +287,7 @@ void f2__primobject_largeinteger__initialize() {
   
   // largeinteger
   
-  initialize_primobject_2_slot(largeinteger, negative, integer_array);
+  initialize_primobject_2_slot(largeinteger, is_negative, integer_array);
   
   f2__primcfunk__init__2(largeinteger__greater_than, this, that, "compare two largeintegers for which is greater and return a boolean value as the result.");
   f2__primcfunk__init__2(largeinteger__add, this, that, "add two largeintegers and return a new largeinteger as the result.");

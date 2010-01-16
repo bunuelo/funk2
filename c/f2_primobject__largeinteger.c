@@ -23,13 +23,13 @@
 
 // largeinteger
 
-def_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
+def_primobject_2_slot(largeinteger, negative, integer_array);
 
 f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
   if (raw__integer__is_type(cause, value)) {
     s64 value__i = f2integer__i(value, cause);
     if (value__i == 0) {
-      return f2largeinteger__new(cause, f2mutex__new(cause), f2bool__new(boolean__false), raw__array__new(cause, 0));
+      return f2largeinteger__new(cause, f2bool__new(boolean__false), raw__array__new(cause, 0));
     } else {
       f2ptr integer_array = raw__array__new(cause, 1);
       f2ptr negative;
@@ -41,7 +41,7 @@ f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
 	negative = f2bool__new(boolean__false);
 	raw__array__elt__set(cause, integer_array, 0, value);
       }
-      return f2largeinteger__new(cause, f2mutex__new(cause), negative, integer_array);
+      return f2largeinteger__new(cause, negative, integer_array);
     }
   } else {
     return f2larva__new(cause, 1);
@@ -75,7 +75,7 @@ boolean_t raw__largeinteger__unsigned_array__greater_than(f2ptr cause, f2ptr thi
   return boolean__false;
 }
 
-boolean_t raw__largeinteger__greater_than__thread_unsafe(f2ptr cause, f2ptr this, f2ptr that) {
+boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__negative = f2__largeinteger__negative(cause, this);
   f2ptr that__negative = f2__largeinteger__negative(cause, that);
   if (this__negative) {
@@ -95,16 +95,6 @@ boolean_t raw__largeinteger__greater_than__thread_unsafe(f2ptr cause, f2ptr this
       return raw__largeinteger__unsigned_array__greater_than(cause, this__array, that__array);
     }
   }
-}
-
-boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__mutex    = f2__largeinteger__access_mutex( cause, this);
-  f2ptr that__mutex    = f2__largeinteger__access_mutex( cause, that);
-  raw__mutex__lock_both(cause, this__mutex, that__mutex);
-  boolean_t result = raw__largeinteger__greater_than__thread_unsafe(cause, this, that);
-  f2mutex__unlock(this__mutex, cause);
-  f2mutex__unlock(that__mutex, cause);
-  return result;
 }
 
 f2ptr f2__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -202,9 +192,6 @@ f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__mutex    = f2__largeinteger__access_mutex( cause, this);
-  f2ptr that__mutex    = f2__largeinteger__access_mutex( cause, that);
-  raw__mutex__lock_both(cause, this__mutex, that__mutex);
   f2ptr this__negative = f2__largeinteger__negative(     cause, this);
   f2ptr that__negative = f2__largeinteger__negative(     cause, that);
   f2ptr this__array    = f2__largeinteger__integer_array(cause, this);
@@ -248,9 +235,7 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
       result__array    = f2__largeinteger__unsigned_array__add(cause, this__array, that__array);
     }
   }
-  f2mutex__unlock(this__mutex, cause);
-  f2mutex__unlock(that__mutex, cause);
-  return f2largeinteger__new(cause, f2mutex__new(cause), result__negative, result__array);
+  return f2largeinteger__new(cause, result__negative, result__array);
 }
 def_pcfunk2(largeinteger__add, this, that, return f2__largeinteger__add(this_cause, this, that));
 
@@ -269,7 +254,7 @@ void f2__primobject_largeinteger__initialize() {
   
   // largeinteger
   
-  initialize_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
+  initialize_primobject_2_slot(largeinteger, negative, integer_array);
   
   f2__primcfunk__init__2(largeinteger__greater_than, this, that, "compare two largeintegers for which is greater and return a boolean value as the result.");
   f2__primcfunk__init__2(largeinteger__add, this, that, "add two largeintegers and return a new largeinteger as the result.");

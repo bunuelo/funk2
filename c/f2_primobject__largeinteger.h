@@ -25,7 +25,7 @@
 // largeinteger
 
 typedef struct funk2_object_type__largeinteger__slot_s funk2_object_type__largeinteger__slot_t;
-declare_object_type_3_slot(largeinteger, access_mutex, negative, integer_array, );
+declare_object_type_2_slot(largeinteger, negative, integer_array, );
 
 #endif // F2__PRIMOBJECT__LARGEINTEGER__TYPES__H
 
@@ -36,7 +36,7 @@ declare_object_type_3_slot(largeinteger, access_mutex, negative, integer_array, 
 
 // largeinteger
 
-declare_primobject_3_slot(largeinteger, access_mutex, negative, integer_array);
+declare_primobject_2_slot(largeinteger, negative, integer_array);
 
 f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value);
 

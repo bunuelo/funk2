@@ -162,7 +162,7 @@ f2ptr f2__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this
   u64   small__length      = raw__array__length(cause, small);
   u64   borrow__value      = 0;
   u64   last_nonzero_index = -1;
-  u64*  result_array       = alloca(sizeof(f2ptr) * large__length);
+  u64*  result_array       = alloca(sizeof(u64) * large__length);
   u64   index;
   for (index = 0; index < large__length; index ++) {
     u64 small__value = 0;
@@ -272,8 +272,63 @@ f2ptr f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(largeinteger__subtract, this, that, return f2__largeinteger__subtract(this_cause, this, that));
 
+u64 u64__multiply(u64 this, u64 that, u64* overflow) {
+  u64 result;
+  u32* this__u32   = (u32*)&this;
+  u32* that__u32   = (u32*)&that;
+  u32* result__u32 = (u32*)&result;
+  u64 temp__00 = (u64)(this__u32[0]) * (u64)(that__u32[0]);
+  u64 temp__01 = (u64)(this__u32[0]) * (u64)(that__u32[1]);
+  u64 temp__10 = (u64)(this__u32[1]) * (u64)(that__u32[0]);
+  u64 temp__11 = (u64)(this__u32[1]) * (u64)(that__u32[1]);
+  result    = temp__00 + ((temp__01 + temp__10) << 32);
+  *overflow = ((temp__01 + temp__10) >> 32) + temp__11;
+  return result;
+}
+
+f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that) {
+  u64 this__length = raw__array__length(cause, this);
+  u64 that__length = raw__array__length(cause, that);
+  u64  result_array__length = this__length + that__length;
+  u64* result_array = (u64*)alloca(sizeof(u64) * result_array__length);
+  memset(result_array, 0, sizeof(u64) * result_array__length);
+  {
+    u64 this_index;
+    u64 that_index;
+    for (that_index = 0; that_index < that__length; that_index ++) {
+      f2ptr that__elt     = raw__array__elt(cause, that, index);
+      u64   that__value   = f2integer__i(that__elt, cause);
+      for (this_index = 0; this_index < this__length; this_index ++) {
+	f2ptr this__elt   = raw__array__elt(cause, this, index);
+	u64   this__value = f2integer__i(this__elt, cause);
+	u64   overflow_value;
+	u64   result_value = u64__multiply(this__value, that__value, &overflow_value);
+	result_array[this_index + that_index]     += result_value;
+	result_array[this_index + that_index + 1] += overflow_value;
+      }
+    }
+  }
+  s64 last_nonzero_index;
+  for (last_nonzero_index = this__length + that__length - 1; last_nonzero_index >= 0 && result_array[last_nonzero_index] == 0; last_nonzero_index --);
+  u64   result__length = last_nonzero_index + 1;
+  f2ptr result         = raw__array__new(cause, result__length);
+  {
+    u64 index;
+    for (index = 0; index < result__length; index ++) {
+      raw__array__elt__set(cause, result, index, f2integer__new(cause, result_array[index]));
+    }
+  }
+  return result;
+}
+
 f2ptr raw__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  f2ptr this__is_negative   = f2__largeinteger__is_negative(  cause, this);
+  f2ptr that__is_negative   = f2__largeinteger__is_negative(  cause, that);
+  f2ptr this__array         = f2__largeinteger__integer_array(cause, this);
+  f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
+  f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
+  f2ptr result__array       = raw__largeinteger__unsigned_array__multiply(cause, this__array, that__array);
+  return f2largeinteger__new(cause, result__is_negative, result__array);
 }
 
 f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
@@ -285,8 +340,18 @@ f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(this_cause, this, that));
 
-f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that) {
   return nil;
+}
+
+f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__is_negative   = f2__largeinteger__is_negative(  cause, this);
+  f2ptr that__is_negative   = f2__largeinteger__is_negative(  cause, that);
+  f2ptr this__array         = f2__largeinteger__integer_array(cause, this);
+  f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
+  f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
+  f2ptr result__array       = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array);
+  return f2largeinteger__new(cause, result__is_negative, result__array);
 }
 
 f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {

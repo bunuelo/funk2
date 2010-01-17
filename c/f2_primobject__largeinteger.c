@@ -358,7 +358,7 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
   if (that__length == 0) {
     return f2larva__new(cause, 53); // divide by zero
   }
-  u64 this__length = raw__array__length(cause, this);
+  //u64 this__length = raw__array__length(cause, this);
   
   return nil; // not implemented yet...
 }
@@ -392,7 +392,7 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr t
   {
     u64 index;
     for (index = 0; index < this__length; index ++) {
-      f2ptr elt         = raw__array__elt(cause, this);
+      f2ptr elt         = raw__array__elt(cause, this, index);
       u64   value       = f2integer__i(elt, cause);
       u64   value_left  = (value >> (64 - array__bit_distance));
       u64   value_right = (value << array__bit_distance);
@@ -423,7 +423,7 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_right_only(f2ptr cause, f2ptr 
   {
     u64 index;
     for (index = array__distance; index < this__length; index ++) {
-      f2ptr elt         = raw__array__elt(cause, this);
+      f2ptr elt         = raw__array__elt(cause, this, index);
       u64   value       = f2integer__i(elt, cause);
       u64   value_right = (value << (64 - array__bit_distance));
       u64   value_left  = (value >> array__bit_distance);

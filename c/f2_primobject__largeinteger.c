@@ -477,7 +477,7 @@ f2ptr f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distanc
   f2ptr this__array       = f2__largeinteger__integer_array(cause, this);
   s64   bit_distance__i   = f2integer__i(bit_distance, cause);
   f2ptr result_array      = raw__largeinteger__unsigned_array__bitshift_left(cause, this__array, bit_distance__i);
-  return f2largeinteger__new(cause, is_negative, result_array);
+  return f2largeinteger__new(cause, this__is_negative, result_array);
 }
 def_pcfunk2(largeinteger__bitshift_left, this, bit_distance, return f2__largeinteger__bitshift_left(this_cause, this, bit_distance));
 
@@ -490,7 +490,7 @@ f2ptr f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distan
   f2ptr this__array       = f2__largeinteger__integer_array(cause, this);
   s64   bit_distance__i   = f2integer__i(bit_distance, cause);
   f2ptr result_array      = raw__largeinteger__unsigned_array__bitshift_right(cause, this__array, bit_distance__i);
-  return f2largeinteger__new(cause, is_negative, result_array);
+  return f2largeinteger__new(cause, this__is_negative, result_array);
 }
 def_pcfunk2(largeinteger__bitshift_right, this, bit_distance, return f2__largeinteger__bitshift_right(this_cause, this, bit_distance));
 

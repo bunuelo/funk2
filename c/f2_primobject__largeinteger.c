@@ -273,15 +273,11 @@ f2ptr f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(largeinteger__subtract, this, that, return f2__largeinteger__subtract(this_cause, this, that));
 
 u64 u64__multiply(u64 this, u64 that, u64* overflow) {
-  u64 result;
-  u32* this__u32   = (u32*)&this;
-  u32* that__u32   = (u32*)&that;
-  u32* result__u32 = (u32*)&result;
-  u64 temp__00 = (u64)(this__u32[0]) * (u64)(that__u32[0]);
-  u64 temp__01 = (u64)(this__u32[0]) * (u64)(that__u32[1]);
-  u64 temp__10 = (u64)(this__u32[1]) * (u64)(that__u32[0]);
-  u64 temp__11 = (u64)(this__u32[1]) * (u64)(that__u32[1]);
-  result    = temp__00 + ((temp__01 + temp__10) << 32);
+  u64 temp__00 = ((u64)(this__u32 & 0xffffffff)) * ((u64)(that__u32 & 0xffffffff));
+  u64 temp__01 = ((u64)(this__u32 & 0xffffffff)) * ((u64)(that__u32 >> 32));
+  u64 temp__10 = ((u64)(this__u32 >> 32))        * ((u64)(that__u32 & 0xffffffff));
+  u64 temp__11 = ((u64)(this__u32 >> 32))        * ((u64)(that__u32 >> 32));
+  u64 result = temp__00 + ((temp__01 + temp__10) << 32);
   *overflow = ((temp__01 + temp__10) >> 32) + temp__11;
   return result;
 }
@@ -292,24 +288,38 @@ f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr
   u64  result_array__length = this__length + that__length;
   u64* result_array = (u64*)alloca(sizeof(u64) * result_array__length);
   memset(result_array, 0, sizeof(u64) * result_array__length);
+  u64* this_array = (u64*)alloca(sizeof(u64) * this__length);
+  {
+    u64 index;
+    for (index = 0; index < this__length; index ++) {
+      f2ptr elt = raw__array__elt(cause, this, index);
+      this_array[index] = f2integer__i(elt, cause);
+    }
+  }
+  u64* that_array = (u64*)alloca(sizeof(u64) * that__length);
+  {
+    u64 index;
+    for (index = 0; index < that__length; index ++) {
+      f2ptr elt = raw__array__elt(cause, that, index);
+      that_array[index] = f2integer__i(elt, cause);
+    }
+  }
   {
     u64 this_index;
     u64 that_index;
     for (that_index = 0; that_index < that__length; that_index ++) {
-      f2ptr that__elt     = raw__array__elt(cause, that, index);
-      u64   that__value   = f2integer__i(that__elt, cause);
+      u64 that__value = that_array[that_index];
       for (this_index = 0; this_index < this__length; this_index ++) {
-	f2ptr this__elt   = raw__array__elt(cause, this, index);
-	u64   this__value = f2integer__i(this__elt, cause);
-	u64   overflow_value;
-	u64   result_value = u64__multiply(this__value, that__value, &overflow_value);
+	u64 this__value = this_array[this_index];
+	u64 overflow_value;
+	u64 result_value = u64__multiply(this__value, that__value, &overflow_value);
 	result_array[this_index + that_index]     += result_value;
 	result_array[this_index + that_index + 1] += overflow_value;
       }
     }
   }
   s64 last_nonzero_index;
-  for (last_nonzero_index = this__length + that__length - 1; last_nonzero_index >= 0 && result_array[last_nonzero_index] == 0; last_nonzero_index --);
+  for (last_nonzero_index = result_array__length - 1; last_nonzero_index >= 0 && result_array[last_nonzero_index] == 0; last_nonzero_index --);
   u64   result__length = last_nonzero_index + 1;
   f2ptr result         = raw__array__new(cause, result__length);
   {

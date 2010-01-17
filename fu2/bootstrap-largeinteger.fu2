@@ -19,10 +19,12 @@
  rights to redistribute these changes.
 '
 
-[deftypefunk largeinteger execute greater_than [that] [largeinteger-greater_than this that]]
-[deftypefunk largeinteger execute add          [that] [largeinteger-add          this that]]
-[deftypefunk largeinteger execute negative     []     [largeinteger-negative     this]]
-[deftypefunk largeinteger execute subtract     [that] [largeinteger-subtract     this that]]
-[deftypefunk largeinteger execute multiply     [that] [largeinteger-multiply     this that]]
-[deftypefunk largeinteger execute divide       [that] [largeinteger-divide       this that]]
+[deftypefunk largeinteger execute greater_than   [that] [largeinteger-greater_than   this that]]
+[deftypefunk largeinteger execute add            [that] [largeinteger-add            this that]]
+[deftypefunk largeinteger execute negative       []     [largeinteger-negative       this]]
+[deftypefunk largeinteger execute subtract       [that] [largeinteger-subtract       this that]]
+[deftypefunk largeinteger execute multiply       [that] [largeinteger-multiply       this that]]
+[deftypefunk largeinteger execute divide         [that] [largeinteger-divide         this that]]
+[deftypefunk largeinteger execute bitshift_left  [that] [largeinteger-bitshift_left  this that]]
+[deftypefunk largeinteger execute bitshift_right [that] [largeinteger-bitshift_right this that]]
 

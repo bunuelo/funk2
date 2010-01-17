@@ -351,7 +351,16 @@ f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(this_cause, this, that));
 
 f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  if (raw__largeinteger__unsigned_array__greater_than(cause, that, this)) {
+    return raw__array__new(cause, 0);
+  }
+  u64 that__length = raw__array__length(cause, that);
+  if (that__length == 0) {
+    return f2larva__new(cause, 53); // divide by zero
+  }
+  u64 this__length = raw__array__length(cause, this);
+  
+  return nil; // not implemented yet...
 }
 
 f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
@@ -372,6 +381,118 @@ f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__divide(cause, this, that);
 }
 def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(this_cause, this, that));
+
+f2ptr raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr this, u64 bit_distance) {
+  u64  this__length         = raw__array__length(cause, this);
+  u64  array__distance      = (bit_distance >> 6);
+  u64  array__bit_distance  = bit_distance - (array__distance << 6);
+  u64  result_array__length = this__length + array__distance + 1;
+  u64* result_array         = (u64*)alloca(sizeof(u64) * result_array__length);
+  memset(result_array, 0, sizeof(u64) * result_array__length);
+  {
+    u64 index;
+    for (index = 0; index < this__length; index ++) {
+      f2ptr elt         = raw__array__elt(cause, this);
+      u64   value       = f2integer__i(elt, cause);
+      u64   value_left  = (value >> (64 - array__bit_distance));
+      u64   value_right = (value << array__bit_distance);
+      result_array[array__distance + index]     += value_right;
+      result_array[array__distance + index + 1] += value_left;
+    }
+  }
+  u64 max_nonzero_index;
+  for (max_nonzero_index = result_array__length - 1; max_nonzero_index >= 0 && result_array[max_nonzero_index] == 0; max_nonzero_index --);
+  u64   result__length = max_nonzero_index + 1;
+  f2ptr result         = raw__array__new(cause, result__length);
+  {
+    u64 index;
+    for (index = 0; index < result__length; index ++) {
+      raw__array__elt__set(cause, result, index, f2integer__new(cause, result_array[index]));
+    }
+  }
+  return result;
+}
+
+f2ptr raw__largeinteger__unsigned_array__bitshift_right_only(f2ptr cause, f2ptr this, u64 bit_distance) {
+  u64  this__length         = raw__array__length(cause, this);
+  u64  array__distance      = (bit_distance >> 6);
+  u64  array__bit_distance  = bit_distance - (array__distance << 6);
+  u64  result_array__length = this__length - array__distance;
+  u64* result_array         = (u64*)alloca(sizeof(u64) * result_array__length);
+  memset(result_array, 0, sizeof(u64) * result_array__length);
+  {
+    u64 index;
+    for (index = array__distance; index < this__length; index ++) {
+      f2ptr elt         = raw__array__elt(cause, this);
+      u64   value       = f2integer__i(elt, cause);
+      u64   value_right = (value << (64 - array__bit_distance));
+      u64   value_left  = (value >> array__bit_distance);
+      if (index - array__distance - 1 >= 0) {
+	result_array[index - array__distance - 1] += value_right;
+      }
+      result_array[index - array__distance]     += value_left;
+    }
+  }
+  u64 max_nonzero_index;
+  for (max_nonzero_index = result_array__length - 1; max_nonzero_index >= 0 && result_array[max_nonzero_index] == 0; max_nonzero_index --);
+  u64   result__length = max_nonzero_index + 1;
+  f2ptr result         = raw__array__new(cause, result__length);
+  {
+    u64 index;
+    for (index = 0; index < result__length; index ++) {
+      raw__array__elt__set(cause, result, index, f2integer__new(cause, result_array[index]));
+    }
+  }
+  return result;
+}
+
+f2ptr raw__largeinteger__unsigned_array__bitshift_left(f2ptr cause, f2ptr this, s64 bit_distance) {
+  if (bit_distance == 0) {
+    return this;
+  }
+  if (bit_distance > 0) {
+    return raw__largeinteger__unsigned_array__bitshift_left_only(cause, this, bit_distance);
+  } else {
+    return raw__largeinteger__unsigned_array__bitshift_right_only(cause, this, -bit_distance);
+  }
+}
+
+f2ptr raw__largeinteger__unsigned_array__bitshift_right(f2ptr cause, f2ptr this, s64 bit_distance) {
+  if (bit_distance == 0) {
+    return this;
+  }
+  if (bit_distance > 0) {
+    return raw__largeinteger__unsigned_array__bitshift_right_only(cause, this, bit_distance);
+  } else {
+    return raw__largeinteger__unsigned_array__bitshift_left_only(cause, this, -bit_distance);
+  }
+}
+
+f2ptr f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distance) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
+  f2ptr this__array       = f2__largeinteger__integer_array(cause, this);
+  s64   bit_distance__i   = f2integer__i(bit_distance, cause);
+  f2ptr result_array      = raw__largeinteger__unsigned_array__bitshift_left(cause, this__array, bit_distance__i);
+  return f2largeinteger__new(cause, is_negative, result_array);
+}
+def_pcfunk2(largeinteger__bitshift_left, this, bit_distance, return f2__largeinteger__bitshift_left(this_cause, this, bit_distance));
+
+f2ptr f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
+  f2ptr this__array       = f2__largeinteger__integer_array(cause, this);
+  s64   bit_distance__i   = f2integer__i(bit_distance, cause);
+  f2ptr result_array      = raw__largeinteger__unsigned_array__bitshift_right(cause, this__array, bit_distance__i);
+  return f2largeinteger__new(cause, is_negative, result_array);
+}
+def_pcfunk2(largeinteger__bitshift_right, this, bit_distance, return f2__largeinteger__bitshift_right(this_cause, this, bit_distance));
 
 // **
 
@@ -396,6 +517,8 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__subtract, this, that, "returns the result of subtracting two largeintegers.");
   f2__primcfunk__init__2(largeinteger__multiply, this, that, "returns the result of multiplying two largeintegers.");
   f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
+  f2__primcfunk__init__2(largeinteger__bitshift_left, this, bit_distance, "returns the result of bitshifting one largeinteger to the left by an integer bit distance.");
+  f2__primcfunk__init__2(largeinteger__bitshift_right, this, bit_distance, "returns the result of bitshifting one largeinteger to the right by an integer bit distance.");
   
 }
 

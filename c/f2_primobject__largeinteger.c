@@ -382,6 +382,22 @@ f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(this_cause, this, that));
 
+u64 u64__bitshift_left(u64 this, s64 bit_distance) {
+  if ((bit_distance >= 64) ||
+      (bit_distance <= -64)) {
+    return 0;
+  }
+  return (this << bit_distance);
+}
+
+u64 u64__bitshift_right(u64 this, s64 bit_distance) {
+  if ((bit_distance >= 64) ||
+      (bit_distance <= -64)) {
+    return 0;
+  }
+  return (this >> bit_distance);
+}
+
 f2ptr raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr this, u64 bit_distance) {
   u64  this__length         = raw__array__length(cause, this);
   u64  array__distance      = (bit_distance >> 6);
@@ -394,8 +410,8 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr t
     for (index = 0; index < this__length; index ++) {
       f2ptr elt         = raw__array__elt(cause, this, index);
       u64   value       = f2integer__i(elt, cause);
-      u64   value_left  = (value >> (64 - array__bit_distance));
-      u64   value_right = (value << array__bit_distance);
+      u64   value_left  = u64__bitshift_right(value, 64 - array__bit_distance);
+      u64   value_right = u64__bitshift_left( value, array__bit_distance);
       result_array[array__distance + index]     += value_right;
       result_array[array__distance + index + 1] += value_left;
     }
@@ -425,12 +441,12 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_right_only(f2ptr cause, f2ptr 
     for (index = array__distance; index < this__length; index ++) {
       f2ptr elt         = raw__array__elt(cause, this, index);
       u64   value       = f2integer__i(elt, cause);
-      u64   value_right = (value << (64 - array__bit_distance));
-      u64   value_left  = (value >> array__bit_distance);
+      u64   value_right = u64__bitshift_left( value, 64 - array__bit_distance);
+      u64   value_left  = u64__bitshift_right(value, array__bit_distance);
       if (index - array__distance - 1 >= 0) {
 	result_array[index - array__distance - 1] += value_right;
       }
-      result_array[index - array__distance]     += value_left;
+      result_array[index - array__distance] += value_left;
     }
   }
   u64 max_nonzero_index;

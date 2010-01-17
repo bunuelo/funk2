@@ -470,7 +470,7 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_right(f2ptr cause, f2ptr this,
 
 f2ptr f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distance) {
   if ((! raw__largeinteger__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, that))) {
+      (! raw__integer__is_type(cause, bit_distance))) {
     return f2larva__new(cause, 1);
   }
   f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
@@ -483,7 +483,7 @@ def_pcfunk2(largeinteger__bitshift_left, this, bit_distance, return f2__largeint
 
 f2ptr f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance) {
   if ((! raw__largeinteger__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, that))) {
+      (! raw__integer__is_type(cause, bit_distance))) {
     return f2larva__new(cause, 1);
   }
   f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);

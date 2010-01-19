@@ -34,11 +34,54 @@ declare_object_type_2_slot(largeinteger, is_negative, integer_array, );
 
 #include "f2_primobjects.h"
 
+// u64
+
+u64 u64__bitshift_left(u64 this, s64 bit_distance);
+u64 u64__bitshift_right(u64 this, s64 bit_distance);
+u64 u64__multiply(u64 this, u64 that, u64* overflow);
+
+
+// largeinteger__unsigned_array  (not a real type, just an array filled with integers)
+
+f2ptr     raw__largeinteger__unsigned_array__new(f2ptr cause, u64 value);
+boolean_t raw__largeinteger__unsigned_array__less_than(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__largeinteger__unsigned_array__greater_than(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr this, f2ptr smaller);
+f2ptr     raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr this, u64 bit_distance);
+f2ptr     raw__largeinteger__unsigned_array__bitshift_right_only(f2ptr cause, f2ptr this, u64 bit_distance);
+f2ptr     raw__largeinteger__unsigned_array__bitshift_left(f2ptr cause, f2ptr this, s64 bit_distance);
+f2ptr     raw__largeinteger__unsigned_array__bitshift_right(f2ptr cause, f2ptr this, s64 bit_distance);
+f2ptr     raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder);
+f2ptr     raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that);
+
+
 // largeinteger
 
 declare_primobject_2_slot(largeinteger, is_negative, integer_array);
 
-f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value);
+f2ptr     raw__largeinteger__new(f2ptr cause, s64 value);
+f2ptr      f2__largeinteger__new(f2ptr cause, f2ptr value);
+boolean_t raw__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__negative(f2ptr cause, f2ptr this);
+f2ptr      f2__largeinteger__negative(f2ptr cause, f2ptr this);
+f2ptr     raw__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__bitshift_left(f2ptr cause, f2ptr this, s64 bit_distance);
+f2ptr      f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distance);
+f2ptr     raw__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance);
+f2ptr      f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance);
+f2ptr     raw__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that);
+
 
 // **
 

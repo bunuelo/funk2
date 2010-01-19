@@ -35,7 +35,7 @@ f2ptr raw__largeinteger__unsigned_array__new(f2ptr cause, u64 value) {
 }
 
 f2ptr raw__largeinteger__new(f2ptr cause, s64 value) {
-  f2ptr is_positive;
+  f2ptr is_negative;
   f2ptr integer_array;
   if (value >= 0) {
     is_negative = f2bool__new(boolean__false);
@@ -44,7 +44,7 @@ f2ptr raw__largeinteger__new(f2ptr cause, s64 value) {
     is_negative = f2bool__new(boolean__true);
     integer_array = raw__largeinteger__unsigned_array__new(cause, -value);
   }
-  return f2largeinteger__new(cause, is_positive, integer_array);
+  return f2largeinteger__new(cause, is_negative, integer_array);
 }
 
 f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {

@@ -546,7 +546,7 @@ f2ptr f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distanc
     return f2larva__new(cause, 1);
   }
   s64 bit_distance__i = f2integer__i(bit_distance, cause);
-  return raw__largeinetger__bitshift_left(cause, this, bit_distance__i);
+  return raw__largeinteger__bitshift_left(cause, this, bit_distance__i);
 }
 def_pcfunk2(largeinteger__bitshift_left, this, bit_distance, return f2__largeinteger__bitshift_left(this_cause, this, bit_distance));
 

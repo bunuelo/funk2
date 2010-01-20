@@ -19,6 +19,7 @@
  rights to redistribute these changes.
 '
 
+[deftypefunk largeinteger execute less_than      [that] [largeinteger-less_than      this that]]
 [deftypefunk largeinteger execute greater_than   [that] [largeinteger-greater_than   this that]]
 [deftypefunk largeinteger execute add            [that] [largeinteger-add            this that]]
 [deftypefunk largeinteger execute negative       []     [largeinteger-negative       this]]

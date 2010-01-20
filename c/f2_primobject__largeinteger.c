@@ -64,10 +64,10 @@ f2ptr raw__largeinteger__unsigned_array__new(f2ptr cause, u64 value) {
 boolean_t raw__largeinteger__unsigned_array__less_than(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__array__length(cause, this);
   u64 that__length = raw__array__length(cause, that);
-  if (this__length > that__length) {
+  if (this__length < that__length) {
     return boolean__true;
   }
-  if (this__length < that__length) {
+  if (this__length > that__length) {
     return boolean__false;
   }
   // assert(this__length == that__length)
@@ -547,7 +547,7 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this) {
   if (raw__largeinteger__unsigned_array__less_than(cause, this, max_decimals_at_once)) {
     u64 this__length = raw__array__length(cause, this);
     if (this__length != 1) {
-      error(nil, "array should have length on one.");
+      error(nil, "array should have length of one.");
     }
     f2ptr this__elt = raw__array__elt(cause, this, 0);
     u64   this__elt__value = f2integer__i(this__elt, cause);

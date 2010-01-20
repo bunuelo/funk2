@@ -498,6 +498,49 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   return raw__largeinteger__unsigned_array__add(cause, this_right_shifted__quotient__left_shifted, recursive__quotient);
 }
 
+f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder) {
+  u64 that__most_significant = raw__largeinteger__unsigned_array__top_most_significant_u32_digits(cause, that);
+  u64 need_left_shift;
+  if      (that__most_significant & 0x80000000) {need_left_shift = 0;}
+  else if (that__most_significant & 0x40000000) {need_left_shift = 1;}
+  else if (that__most_significant & 0x20000000) {need_left_shift = 2;}
+  else if (that__most_significant & 0x10000000) {need_left_shift = 3;}
+  else if (that__most_significant & 0x08000000) {need_left_shift = 4;}
+  else if (that__most_significant & 0x04000000) {need_left_shift = 5;}
+  else if (that__most_significant & 0x02000000) {need_left_shift = 6;}
+  else if (that__most_significant & 0x01000000) {need_left_shift = 7;}
+  else if (that__most_significant & 0x00800000) {need_left_shift = 8;}
+  else if (that__most_significant & 0x00400000) {need_left_shift = 9;}
+  else if (that__most_significant & 0x00200000) {need_left_shift = 10;}
+  else if (that__most_significant & 0x00100000) {need_left_shift = 11;}
+  else if (that__most_significant & 0x00080000) {need_left_shift = 12;}
+  else if (that__most_significant & 0x00040000) {need_left_shift = 13;}
+  else if (that__most_significant & 0x00020000) {need_left_shift = 14;}
+  else if (that__most_significant & 0x00010000) {need_left_shift = 15;}
+  else if (that__most_significant & 0x00008000) {need_left_shift = 16;}
+  else if (that__most_significant & 0x00004000) {need_left_shift = 17;}
+  else if (that__most_significant & 0x00002000) {need_left_shift = 18;}
+  else if (that__most_significant & 0x00001000) {need_left_shift = 19;}
+  else if (that__most_significant & 0x00000800) {need_left_shift = 20;}
+  else if (that__most_significant & 0x00000400) {need_left_shift = 21;}
+  else if (that__most_significant & 0x00000200) {need_left_shift = 22;}
+  else if (that__most_significant & 0x00000100) {need_left_shift = 23;}
+  else if (that__most_significant & 0x00000080) {need_left_shift = 24;}
+  else if (that__most_significant & 0x00000040) {need_left_shift = 25;}
+  else if (that__most_significant & 0x00000020) {need_left_shift = 26;}
+  else if (that__most_significant & 0x00000010) {need_left_shift = 27;}
+  else if (that__most_significant & 0x00000008) {need_left_shift = 28;}
+  else if (that__most_significant & 0x00000004) {need_left_shift = 29;}
+  else if (that__most_significant & 0x00000002) {need_left_shift = 30;}
+  else if (that__most_significant & 0x00000001) {need_left_shift = 31;}
+  else {error(nil, "expected most significant digit to contain at least one nonzero bit.");}
+  f2ptr this__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this, need_left_shift);
+  f2ptr that__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, that, need_left_shift);
+  f2ptr remainder__left_shifted;
+  f2ptr quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cause, this__left_shifted, that__left_shifted, &remainder__left_shifted);
+  *remainder = raw__largeinteger__unsigned_array__bitshift_right(cause, remainder__left_shifted, need_left_shift);
+  return quotient;
+}
 
 // largeinteger
 

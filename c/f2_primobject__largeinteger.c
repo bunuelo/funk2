@@ -314,7 +314,7 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
       } else {
 	value = this__elt__value;
       }
-      raw__array__elt__set(cause, index, f2integer__new(cause, value));
+      raw__array__elt__set(cause, result, index, f2integer__new(cause, value));
     }
   }
 }

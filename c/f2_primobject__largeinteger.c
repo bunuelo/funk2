@@ -57,7 +57,7 @@ f2ptr raw__largeinteger__unsigned_array__new(f2ptr cause, u64 value) {
     return raw__array__new(cause, 0);
   }
   f2ptr integer_array = raw__array__new(cause, 1);
-  raw__array__elt__set(cause, integer_array, 0, value);
+  raw__array__elt__set(cause, integer_array, 0, f2integer__new(cause, value));
   return integer_array;
 }
 
@@ -453,12 +453,11 @@ f2ptr raw__largeinteger__new(f2ptr cause, s64 value) {
 }
 
 f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
-  if (raw__integer__is_type(cause, value)) {
-    s64 value__i = f2integer__i(value, cause);
-    return raw__largeinteger__new(cause, value__i);
-  } else {
+  if (! raw__integer__is_type(cause, value)) {
     return f2larva__new(cause, 1);
   }
+  s64 value__i = f2integer__i(value, cause);
+  return raw__largeinteger__new(cause, value__i);
 }
 def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
 

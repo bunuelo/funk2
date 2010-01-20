@@ -61,7 +61,7 @@ f2ptr     raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2p
 
 declare_primobject_2_slot(largeinteger, is_negative, integer_array);
 
-f2ptr     raw__largeinteger__new(f2ptr cause, s64 value);
+f2ptr     raw__largeinteger__new_from_s64(f2ptr cause, s64 value);
 f2ptr      f2__largeinteger__new(f2ptr cause, f2ptr value);
 boolean_t raw__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that);

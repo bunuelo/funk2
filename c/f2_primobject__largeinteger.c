@@ -556,7 +556,7 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this) {
     write(1, temp_str, strlen(temp_str));
   } else {
     f2ptr remaining_decimals_to_print;
-    f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_at_once);
+    f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);
     raw__largeinteger__unsigned_array__print(cause, first_decimals_to_print);
     raw__largeinteger__unsigned_array__print(cause, remaining_decimals_to_print);
   }

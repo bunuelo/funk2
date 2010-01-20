@@ -317,6 +317,7 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
       raw__array__elt__set(cause, result, index, f2integer__new(cause, value));
     }
   }
+  return result;
 }
 
 f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that) {

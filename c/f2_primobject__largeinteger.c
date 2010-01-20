@@ -561,8 +561,8 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this, boolean_t
   } else {
     f2ptr remaining_decimals_to_print;
     f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);
-    raw__largeinteger__unsigned_array__print(cause, first_decimals_to_print);
-    raw__largeinteger__unsigned_array__print(cause, remaining_decimals_to_print);
+    raw__largeinteger__unsigned_array__print(cause, first_decimals_to_print,     boolean__false);
+    raw__largeinteger__unsigned_array__print(cause, remaining_decimals_to_print, boolean__true);
   }
 }
 
@@ -840,7 +840,7 @@ f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
     char* negative_sign = "-";
     write(1, negative_sign, 1);
   }
-  raw__largeinteger__unsigned_array__print(cause, integer_array);
+  raw__largeinteger__unsigned_array__print(cause, integer_array, boolean__false);
   return nil;
 }
 def_pcfunk1(largeinteger__print, this, return f2__largeinteger__print(this_cause, this));

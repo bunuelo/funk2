@@ -446,6 +446,10 @@ f2ptr raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_a
       if (raw__largeinteger__unsigned_array__greater_than(cause, test_result, this)) {
 	quotient    = raw__largeinteger__unsigned_array__subtract_smaller(cause, quotient, one);
 	test_result = raw__largeinteger__unsigned_array__subtract_smaller(cause, test_result, that);
+	if (raw__largeinteger__unsigned_array__greater_than(cause, test_result, this)) {
+	  quotient    = raw__largeinteger__unsigned_array__subtract_smaller(cause, quotient, one);
+	  test_result = raw__largeinteger__unsigned_array__subtract_smaller(cause, test_result, that);
+	}
       }
     }
     *remainder = raw__largeinteger__unsigned_array__subtract_smaller(cause, this, test_result);
@@ -479,8 +483,8 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   if (this__u32_length == that__u32_length + 1) {
     return raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this, that, remainder);
   }
-  f2ptr this_right_shifted           = raw__largeinteger__unsigned_array__bitshift_right(cause, this, (this__u32_length - that__u32_length - 1) * 32);
-  s64   high_bit_num                 = ((this__u32_length - that__u32_length - 1) * 32) - 1;
+  f2ptr this_right_shifted = raw__largeinteger__unsigned_array__bitshift_right(cause, this, (this__u32_length - that__u32_length - 1) * 32);
+  s64   high_bit_num       = ((this__u32_length - that__u32_length - 1) * 32) - 1;
   f2ptr this_right_shifted_leftover;
   if (high_bit_num >= 0) {
     this_right_shifted_leftover = raw__largeinteger__unsigned_array__mask_bitrange(cause, this, 0, high_bit_num);
@@ -570,7 +574,7 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this, boolean_t
 
 def_primobject_2_slot(largeinteger, is_negative, integer_array);
 
-f2ptr raw__largeinteger__new(f2ptr cause, s64 value) {
+f2ptr raw__largeinteger__new_from_s64(f2ptr cause, s64 value) {
   f2ptr is_negative;
   f2ptr integer_array;
   if (value >= 0) {
@@ -584,11 +588,14 @@ f2ptr raw__largeinteger__new(f2ptr cause, s64 value) {
 }
 
 f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
+  if (raw__largeinteger__is_type(cause, value)) {
+    return value;
+  }
   if (! raw__integer__is_type(cause, value)) {
     return f2larva__new(cause, 1);
   }
   s64 value__i = f2integer__i(value, cause);
-  return raw__largeinteger__new(cause, value__i);
+  return raw__largeinteger__new_from_s64(cause, value__i);
 }
 def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
 

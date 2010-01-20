@@ -537,7 +537,7 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
   f2ptr this__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this, need_left_shift);
   f2ptr that__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, that, need_left_shift);
   f2ptr remainder__left_shifted;
-  f2ptr quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cause, this__left_shifted, that__left_shifted, &remainder__left_shifted);
+  f2ptr quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, this__left_shifted, that__left_shifted, &remainder__left_shifted);
   *remainder = raw__largeinteger__unsigned_array__bitshift_right(cause, remainder__left_shifted, need_left_shift);
   return quotient;
 }

@@ -337,22 +337,88 @@ f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr
   return result;
 }
 
+u64 raw__largeinteger__unsigned_array__u32_digit_length(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__array__length(cause, this);
+  if (this__length == 0) {
+    return 0;
+  }
+  f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
+  u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
+  if (high_u64_value__i & 0xffffffff00000000) {
+    return (this__length << 1);
+  } else {
+    return (this__length << 1) - 1;
+  }
+}
+
+u64 raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__array__length(cause, this);
+  if (this__length == 0) {
+    error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: no digits available.");
+  }
+  f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
+  u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
+  if (high_u64_value__i & 0xffffffff00000000) {
+    return high_u64_value__i;
+  } else {
+    if (this__length == 1) {
+      error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: not enough digits available.");
+    }
+    f2ptr second_high_u64_value    = raw__array__elt(cause, this, this__length - 2);
+    u64   second_high_u64_value__i = f2integer__i(high_u64_value, cause);
+    return (high_u64_value__i << 32) + (second_high_u64_value__i >> 32);
+  }
+}
+
+u64 raw__largeinteger__unsigned_array__top_most_significant_u32_digits(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__array__length(cause, this);
+  if (this__length == 0) {
+    error(nil, "raw__largeinteger__unsigned_array__top_most_significant_u32_digits fatal error: no digits available.");
+  }
+  f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
+  u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
+  if (high_u64_value__i & 0xffffffff00000000) {
+    return (high_u64_value__i >> 32);
+  } else {
+    return (high_u64_value__i & 0x00000000ffffffff);
+  }
+}
+
 // assumes: B^n/2 <= that < B^n
 f2ptr raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder) {
   // A    = this
   // B    = that
   // beta = 2^32  (we need to do 2 by 1 division (2*32=64 [our max possible division])
-  f2ptr temp = raw__largeinteger__unsigned_array__bitshift_left(cause, that, 32);
-  if (! raw__largeinteger__unsigned_array__less_than(cause, this, temp)) {
-    f2ptr recurse__this      = raw__largeinteger__unsigned_array__subtract_smaller(cause, this, temp);
+  f2ptr quotient = nil;
+  f2ptr that_times_beta = raw__largeinteger__unsigned_array__bitshift_left(cause, that, 32);
+  if (! raw__largeinteger__unsigned_array__less_than(cause, this, that_times_beta)) {
+    f2ptr recurse__this      = raw__largeinteger__unsigned_array__subtract_smaller(cause, this, that_times_beta);
     f2ptr beta               = raw__largeinteger__unsigned_array__bitshift_left(cause, raw__largeinteger__unsigned_array__new(cause, 1), 32);
     f2ptr recurse__remainder = nil;
     f2ptr recurse__quotient  = raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, recurse__this, that, &recurse__remainder);
-    f2ptr quotient           = raw__largeinteger__unsigned_array__add(cause, recurse__quotient, beta);
+    quotient                 = raw__largeinteger__unsigned_array__add(cause, recurse__quotient, beta);
     *remainder               = recurse__remainder;
   } else {
+    u64   two_digit_numerator   = raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(cause, this);
+    u64   one_digit_denomenator = raw__largeinteger__unsigned_array__top_most_significant_u32_digits(cause, that);
+    u64   test_quotient         = two_digit_numerator / one_digit_denomenator;
+    if (test_quotient > 0x00000000ffffffff) {
+      test_quotient = 0x00000000ffffffff;
+    }
+    quotient = raw__largeinteger__unsigned_array__new(cause, test_quotient);
+    f2ptr test_result = raw__largeinteger__unsigned_array__multiply(cause, that, quotient);
+    if (raw__largeinteger__unsigned_array__greater_than(cause, test_result, this)) {
+      f2ptr one   = raw__largeinteger__unsigned_array__new(cause, 1);
+      quotient    = raw__largeinteger__unsigned_array__subtract(cause, quotient, one);
+      test_result = raw__largeinteger__unsigned_array__subtract(cause, test_result, that);
+      if (raw__largeinteger__unsigned_array__greater_than(cause, test_result, this)) {
+	quotient = raw__largeinteger__unsigned_array__subtract(cause, quotient, one);
+	test_result = raw__largeinteger__unsigned_array__subtract(cause, test_result, that);
+      }
+    }
+    *remainder = raw__largeinteger__unsigned_array__subtract_smaller(cause, this, test_result);
   }
-  return nil;
+  return quotient;
 }
 
 f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that) {
@@ -595,6 +661,9 @@ f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
   f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
   f2ptr result__array       = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array);
+  if (raw__larva__is_type(result__array)) {
+    return result__array; // catch and propagate divide by zero
+  }
   return f2largeinteger__new(cause, result__is_negative, result__array);
 }
 

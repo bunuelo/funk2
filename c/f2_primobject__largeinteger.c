@@ -542,6 +542,26 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
   return quotient;
 }
 
+void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this) {
+  f2ptr max_decimals_at_once = new__largeinteger__unsigned_array__new(cause, 1000000000000000000ull);
+  if (raw__largeinteger__unsigned_array__less_than(cause, this, max_decimals_at_once)) {
+    u64 this__length = raw__array__length(cause, this);
+    if (this__length != 1) {
+      error(nil, "array should have length on one.");
+    }
+    f2ptr this__elt = raw__array__elt(cause, this, 0);
+    u64   this__elt__value = f2integer__i(this__elt, cause);
+    char temp_str[32];
+    snprintf(temp_str, 32, u64__fstr, this__elt__value);
+    write(1, temp_str, strlen(temp_str));
+  } else {
+    f2ptr remaining_decimals_to_print;
+    f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_at_once);
+    raw__largeinteger__unsigned_array__print(cause, first_decimals_to_print);
+    raw__largeinteger__unsigned_array__print(cause, remaining_decimals_to_print);
+  }
+}
+
 // largeinteger
 
 def_primobject_2_slot(largeinteger, is_negative, integer_array);
@@ -806,6 +826,21 @@ f2ptr f2__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(largeinteger__modulo, this, that, return f2__largeinteger__modulo(this_cause, this, that));
 
+f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr is_negative   = f2__largeinteger__is_negative(cause, this);
+  f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
+  if (is_negative) {
+    char* negative_sign = "-";
+    write(1, negative_sign, 1);
+  }
+  raw__largeinteger__unsigned_array__print(cause, integer_array);
+  return nil;
+}
+def_pcfunk1(largeinteger__print, this, return f2__largeinteger__print(this_cause, this));
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
@@ -833,6 +868,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__multiply, this, that, "returns the result of multiplying two largeintegers.");
   f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
   f2__primcfunk__init__2(largeinteger__modulo, this, that, "returns the result of the modulo of two largeintegers.");
+  f2__primcfunk__init__1(largeinteger__print, this, "prints a large integer in decimal format to the standard output.");
   
 }
 

@@ -28,4 +28,6 @@
 [globalize-funk largeinteger-multiply       &primfunk:largeinteger__multiply]
 [globalize-funk largeinteger-divide         &primfunk:largeinteger__divide]
 [globalize-funk largeinteger-modulo         &primfunk:largeinteger__modulo]
+[globalize-funk largeinteger-print          &primfunk:largeinteger__print]
+
 

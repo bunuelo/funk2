@@ -28,4 +28,5 @@
 [deftypefunk largeinteger execute multiply       [that] [largeinteger-multiply       this that]]
 [deftypefunk largeinteger execute divide         [that] [largeinteger-divide         this that]]
 [deftypefunk largeinteger execute modulo         [that] [largeinteger-modulo         this that]]
+[deftypefunk largeinteger execute print          []     [largeinteger-print          this]]
 

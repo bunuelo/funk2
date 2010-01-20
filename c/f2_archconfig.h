@@ -65,7 +65,7 @@ typedef u64 f2size_t;
 #elif long__bit_num == 64
 #  define s64__fstr                   "%ld"
 #  define u64__fstr_without_percent    "lu"
-#  define u64__fstr                   "%" u64__fstr_without_percept
+#  define u64__fstr                   "%" u64__fstr_without_percent
 #  define x64__fstr                   "%lx"
 #  define X64__fstr                   "%lX"
 #  define nano_decimal_fraction__fstr "%09ld"

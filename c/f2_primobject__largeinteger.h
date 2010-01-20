@@ -54,7 +54,7 @@ f2ptr     raw__largeinteger__unsigned_array__bitshift_left(f2ptr cause, f2ptr th
 f2ptr     raw__largeinteger__unsigned_array__bitshift_right(f2ptr cause, f2ptr this, s64 bit_distance);
 f2ptr     raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder);
-f2ptr     raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder);
 
 
 // largeinteger

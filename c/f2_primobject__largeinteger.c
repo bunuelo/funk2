@@ -766,7 +766,8 @@ f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__array         = f2__largeinteger__integer_array(cause, this);
   f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
   f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
-  f2ptr result__array       = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array);
+  f2ptr result__remainder;
+  f2ptr result__array       = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array, &result__remainder);
   if (raw__larva__is_type(cause, result__array)) {
     return result__array; // catch and propagate divide by zero
   }
@@ -781,6 +782,29 @@ f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__divide(cause, this, that);
 }
 def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(this_cause, this, that));
+
+f2ptr raw__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__is_negative   = f2__largeinteger__is_negative(  cause, this);
+  f2ptr that__is_negative   = f2__largeinteger__is_negative(  cause, that);
+  f2ptr this__array         = f2__largeinteger__integer_array(cause, this);
+  f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
+  f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
+  f2ptr result__modulo;
+  f2ptr result__quotient    = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array, &result__modulo);
+  if (raw__larva__is_type(cause, result__quotient)) {
+    return result__quotient; // catch and propagate divide by zero
+  }
+  return f2largeinteger__new(cause, result__is_negative, result__modulo);
+}
+
+f2ptr f2__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__largeinteger__modulo(cause, this, that);
+}
+def_pcfunk2(largeinteger__modulo, this, that, return f2__largeinteger__modulo(this_cause, this, that));
 
 // **
 
@@ -808,6 +832,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__bitshift_right, this, bit_distance, "returns the result of bitshifting one largeinteger to the right by an integer bit distance.");
   f2__primcfunk__init__2(largeinteger__multiply, this, that, "returns the result of multiplying two largeintegers.");
   f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
+  f2__primcfunk__init__2(largeinteger__modulo, this, that, "returns the result of the modulo of two largeintegers.");
   
 }
 

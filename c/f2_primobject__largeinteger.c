@@ -495,7 +495,7 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   f2ptr recursive__remainder;
   f2ptr recursive__quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, recursive__numerator, that, &recursive__remainder);
   f2ptr this_right_shifted__quotient__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__quotient, (this__u32_length - that__u32_length - 1) * 32);
-  *remainder = recursive_remainder;
+  *remainder = recursive__remainder;
   return raw__largeinteger__unsigned_array__add(cause, this_right_shifted__quotient__left_shifted, recursive__quotient);
 }
 

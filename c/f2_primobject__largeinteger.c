@@ -486,7 +486,7 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   if (high_bit_num >= 0) {
     this_right_shifted_leftover = raw__largeinteger__unsigned_array__mask_bitrange(cause, this, 0, high_bit_num);
   } else {
-    this_right_shifted_leftover = raw__largeinteger__unsigned_array__new(cause, this, 0);
+    this_right_shifted_leftover = raw__largeinteger__unsigned_array__new(cause, 0);
   }
   f2ptr this_right_shifted__remainder;
   f2ptr this_right_shifted__quotient = raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this_right_shifted, that, &this_right_shifted__remainder);

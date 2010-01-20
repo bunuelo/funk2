@@ -461,7 +461,6 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   if (that__length == 0) {
     return f2larva__new(cause, 53); // divide by zero
   }
-  u64 this__length = raw__array__length(cause, this);
   u64 this__u32_length = raw__largeinteger__unsigned_array__u32_digit_length(cause, this);
   u64 that__u32_length = raw__largeinteger__unsigned_array__u32_digit_length(cause, that);
   if (this__u32_length < that__u32_length) {

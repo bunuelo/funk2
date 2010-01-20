@@ -409,11 +409,11 @@ f2ptr raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_a
     f2ptr test_result = raw__largeinteger__unsigned_array__multiply(cause, that, quotient);
     if (raw__largeinteger__unsigned_array__greater_than(cause, test_result, this)) {
       f2ptr one   = raw__largeinteger__unsigned_array__new(cause, 1);
-      quotient    = raw__largeinteger__unsigned_array__subtract(cause, quotient, one);
-      test_result = raw__largeinteger__unsigned_array__subtract(cause, test_result, that);
+      quotient    = raw__largeinteger__unsigned_array__subtract_smaller(cause, quotient, one);
+      test_result = raw__largeinteger__unsigned_array__subtract_smaller(cause, test_result, that);
       if (raw__largeinteger__unsigned_array__greater_than(cause, test_result, this)) {
-	quotient = raw__largeinteger__unsigned_array__subtract(cause, quotient, one);
-	test_result = raw__largeinteger__unsigned_array__subtract(cause, test_result, that);
+	quotient    = raw__largeinteger__unsigned_array__subtract_smaller(cause, quotient, one);
+	test_result = raw__largeinteger__unsigned_array__subtract_smaller(cause, test_result, that);
       }
     }
     *remainder = raw__largeinteger__unsigned_array__subtract_smaller(cause, this, test_result);

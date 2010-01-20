@@ -543,7 +543,7 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
 }
 
 void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this) {
-  f2ptr max_decimals_at_once = new__largeinteger__unsigned_array__new(cause, 1000000000000000000ull);
+  f2ptr max_decimals_at_once = raw__largeinteger__unsigned_array__new(cause, 1000000000000000000ull);
   if (raw__largeinteger__unsigned_array__less_than(cause, this, max_decimals_at_once)) {
     u64 this__length = raw__array__length(cause, this);
     if (this__length != 1) {

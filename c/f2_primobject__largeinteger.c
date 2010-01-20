@@ -288,6 +288,37 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_right(f2ptr cause, f2ptr this,
   }
 }
 
+f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, u64 low_bit_num, u64 high_bit_num) {
+  u64   mask__length = ((high_bit_num - 1) >> 6) + 1;
+  u64   this__length = raw__array__length(cause, this);
+  u64   result__length;
+  if (this__length < mask__length) {
+    result__length = this__length;
+  } else {
+    result__length = mask__length;
+  }
+  f2ptr result     = raw__array__new(cause, result__length);
+  u64   zero_count = low_bit_num >> 6;
+  {
+    u64 index;
+    for (index = 0; index < result__length; index ++) {
+      f2ptr this__elt        = raw__array__elt(cause, this, index);
+      u64   this__elt__value = f2integer__i(this__elt, cause);
+      u64   value;
+      if (index < zero_count) {
+	value = 0;
+      } else if (index == zero_count) {
+	value = this__elt__value & u64__bitshift_left(0xffffffffffffffff, (low_bit_num - (zero_count << 6)));
+      } else if (index == mask__length - 1) {
+	value = this__elt__value & u64__bitshift_right(0xffffffffffffffff, 64 - (high_bit_num - ((mask__length - 1) << 6)));
+      } else {
+	value = this__elt__value;
+      }
+      raw__array__elt__set(cause, index, f2integer__new(cause, value));
+    }
+  }
+}
+
 f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__array__length(cause, this);
   u64 that__length = raw__array__length(cause, that);
@@ -421,7 +452,7 @@ f2ptr raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_a
   return quotient;
 }
 
-f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder) {
   if (raw__largeinteger__unsigned_array__greater_than(cause, that, this)) {
     return raw__array__new(cause, 0);
   }
@@ -429,9 +460,42 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
   if (that__length == 0) {
     return f2larva__new(cause, 53); // divide by zero
   }
-  //u64 this__length = raw__array__length(cause, this);
-  
-  return nil; // not implemented yet...
+  u64 this__length = raw__array__length(cause, this);
+  u64 this__u32_length = raw__largeinteger__unsigned_array__u32_digit_length(cause, this);
+  u64 that__u32_length = raw__largeinteger__unsigned_array__u32_digit_length(cause, that);
+  if (this__u32_length < that__u32_length) {
+    *remainder = that;
+    return raw__largeinteger__unsigned_array__new(cause, 0);
+  }
+  if (this__u32_length == that__u32_length) {
+    if (raw__largeinteger__unsigned_array__less_than(cause, this, that)) {
+      *remainder = that;
+      return raw__largeinteger__unsigned_array__new(cause, 0);
+    } else {
+      *remainder = raw__largeinteger__unsigned_array__subtract_smaller(cause, this, that);
+      return raw__largeinteger__unsigned_array__new(cause, 1);
+    }
+  }
+  if (this__u32_length == that__u32_length + 1) {
+    return raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this, that, remainder);
+  }
+  f2ptr this_right_shifted           = raw__largeinteger__unsigned_array__bitshift_right(cause, this, (this__u32_length - that__u32_length - 1) * 32);
+  s64   high_bit_num                 = ((this__u32_length - that__u32_length - 1) * 32) - 1;
+  f2ptr this_right_shifted_leftover;
+  if (high_bit_num >= 0) {
+    this_right_shifted_leftover = raw__largeinteger__unsigned_array__mask_bitrange(cause, this, 0, high_bit_num);
+  } else {
+    this_right_shifted_leftover = raw__largeinteger__unsigned_array__new(cause, this, 0);
+  }
+  f2ptr this_right_shifted__remainder;
+  f2ptr this_right_shifted__quotient = raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this_right_shifted, that, &this_right_shifted__remainder);
+  f2ptr recrusive__left_shifted_remainder = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__remainder, (this__u32_length - that__u32_length - 1) * 32);
+  f2ptr recursive__numerator = raw__largeinteger__unsigned_array__add(cause, recrusive__left_shifted_remainder, this_right_shifted_leftover);
+  f2ptr recursive__remainder;
+  f2ptr recursive__quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, recursive_numerator, that);
+  f2ptr this_right_shifted__quotient__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__quotient);
+  *remainder = recursive_remainder;
+  return raw__largeinteger__unsigned_array__add(cause, this_right_shifted__quotient__left_shifted, recursive__quotient);
 }
 
 

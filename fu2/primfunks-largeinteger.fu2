@@ -19,16 +19,17 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk largeinteger-less_than      &primfunk:largeinteger__less_than]
-[globalize-funk largeinteger-greater_than   &primfunk:largeinteger__greater_than]
-[globalize-funk largeinteger-add            &primfunk:largeinteger__add]
-[globalize-funk largeinteger-negative       &primfunk:largeinteger__negative]
-[globalize-funk largeinteger-bitshift_left  &primfunk:largeinteger__bitshift_left]
-[globalize-funk largeinteger-bitshift_right &primfunk:largeinteger__bitshift_right]
-[globalize-funk largeinteger-subtract       &primfunk:largeinteger__subtract]
-[globalize-funk largeinteger-multiply       &primfunk:largeinteger__multiply]
-[globalize-funk largeinteger-divide         &primfunk:largeinteger__divide]
-[globalize-funk largeinteger-modulo         &primfunk:largeinteger__modulo]
-[globalize-funk largeinteger-print          &primfunk:largeinteger__print]
+[globalize-funk largeinteger-less_than              &primfunk:largeinteger__less_than]
+[globalize-funk largeinteger-greater_than           &primfunk:largeinteger__greater_than]
+[globalize-funk largeinteger-add                    &primfunk:largeinteger__add]
+[globalize-funk largeinteger-negative               &primfunk:largeinteger__negative]
+[globalize-funk largeinteger-bitshift_left          &primfunk:largeinteger__bitshift_left]
+[globalize-funk largeinteger-bitshift_right         &primfunk:largeinteger__bitshift_right]
+[globalize-funk largeinteger-subtract               &primfunk:largeinteger__subtract]
+[globalize-funk largeinteger-multiply               &primfunk:largeinteger__multiply]
+[globalize-funk largeinteger-quotient_and_remainder &primfunk:largeinteger__quotient_and_remainder]
+[globalize-funk largeinteger-divide                 &primfunk:largeinteger__divide]
+[globalize-funk largeinteger-modulo                 &primfunk:largeinteger__modulo]
+[globalize-funk largeinteger-print                  &primfunk:largeinteger__print]
 
 

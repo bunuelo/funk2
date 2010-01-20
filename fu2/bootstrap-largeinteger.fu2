@@ -19,15 +19,16 @@
  rights to redistribute these changes.
 '
 
-[deftypefunk largeinteger execute less_than      [that] [largeinteger-less_than      this that]]
-[deftypefunk largeinteger execute greater_than   [that] [largeinteger-greater_than   this that]]
-[deftypefunk largeinteger execute add            [that] [largeinteger-add            this that]]
-[deftypefunk largeinteger execute negative       []     [largeinteger-negative       this]]
-[deftypefunk largeinteger execute bitshift_left  [that] [largeinteger-bitshift_left  this that]]
-[deftypefunk largeinteger execute bitshift_right [that] [largeinteger-bitshift_right this that]]
-[deftypefunk largeinteger execute subtract       [that] [largeinteger-subtract       this that]]
-[deftypefunk largeinteger execute multiply       [that] [largeinteger-multiply       this that]]
-[deftypefunk largeinteger execute divide         [that] [largeinteger-divide         this that]]
-[deftypefunk largeinteger execute modulo         [that] [largeinteger-modulo         this that]]
-[deftypefunk largeinteger execute print          []     [largeinteger-print          this]]
+[deftypefunk largeinteger execute less_than              [that] [largeinteger-less_than              this that]]
+[deftypefunk largeinteger execute greater_than           [that] [largeinteger-greater_than           this that]]
+[deftypefunk largeinteger execute add                    [that] [largeinteger-add                    this that]]
+[deftypefunk largeinteger execute negative               []     [largeinteger-negative               this]]
+[deftypefunk largeinteger execute bitshift_left          [that] [largeinteger-bitshift_left          this that]]
+[deftypefunk largeinteger execute bitshift_right         [that] [largeinteger-bitshift_right         this that]]
+[deftypefunk largeinteger execute subtract               [that] [largeinteger-subtract               this that]]
+[deftypefunk largeinteger execute multiply               [that] [largeinteger-multiply               this that]]
+[deftypefunk largeinteger execute quotient_and_remainder [that] [largeinteger-quotient_and_remainder this that]]
+[deftypefunk largeinteger execute divide                 [that] [largeinteger-divide                 this that]]
+[deftypefunk largeinteger execute modulo                 [that] [largeinteger-modulo                 this that]]
+[deftypefunk largeinteger execute print                  []     [largeinteger-print                  this]]
 

@@ -921,8 +921,8 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       double d = ((is_negative ? -1.0 : 1.0) * (((double)whole_decimal_value) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
       return f2double__new(cause, d);
     } else {
-      f2ptr sup_integer_value__largeinteger = raw__largeinteger__bitshift_left(cause, raw__largeinteger__new(cause, 1), 63);
-      f2ptr min_integer_value__largeinteger = raw__largeinteger__bitshift_left(cause, raw__largeinteger__new(cause, 1), 63);
+      f2ptr sup_integer_value__largeinteger =                                    raw__largeinteger__bitshift_left(cause, raw__largeinteger__new(cause, 1), 63);
+      f2ptr min_integer_value__largeinteger = raw__largeinteger__negative(cause, raw__largeinteger__bitshift_left(cause, raw__largeinteger__new(cause, 1), 63));
       if ((  raw__largeinteger__less_than(cause, whole_decimal_value__largeinteger, sup_integer_value__largeinteger)) &&
 	  (! raw__largeinteger__less_than(cause, whole_decimal_value__largeinteger, min_integer_value__largeinteger))) {
 	s64 i = ((is_negative ? ((s64)-1) : ((s64)1)) * ((s64)whole_decimal_value));

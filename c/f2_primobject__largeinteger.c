@@ -661,7 +661,7 @@ f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
   f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
   f2ptr result__array       = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array);
-  if (raw__larva__is_type(result__array)) {
+  if (raw__larva__is_type(cause, result__array)) {
     return result__array; // catch and propagate divide by zero
   }
   return f2largeinteger__new(cause, result__is_negative, result__array);

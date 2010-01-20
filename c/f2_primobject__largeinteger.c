@@ -365,7 +365,7 @@ u64 raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(f2ptr
       error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: not enough digits available.");
     }
     f2ptr second_high_u64_value    = raw__array__elt(cause, this, this__length - 2);
-    u64   second_high_u64_value__i = f2integer__i(high_u64_value, cause);
+    u64   second_high_u64_value__i = f2integer__i(second_high_u64_value, cause);
     return (high_u64_value__i << 32) + (second_high_u64_value__i >> 32);
   }
 }

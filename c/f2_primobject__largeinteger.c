@@ -203,7 +203,10 @@ f2ptr raw__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr thi
 }
 
 f2ptr raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr this, u64 bit_distance) {
-  u64  this__length         = raw__array__length(cause, this);
+  u64 this__length = raw__array__length(cause, this);
+  if (this__length == 0) {
+    return this;
+  }
   u64  array__distance      = (bit_distance >> 6);
   u64  array__bit_distance  = bit_distance - (array__distance << 6);
   u64  result_array__length = this__length + array__distance + 1;
@@ -234,7 +237,10 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_left_only(f2ptr cause, f2ptr t
 }
 
 f2ptr raw__largeinteger__unsigned_array__bitshift_right_only(f2ptr cause, f2ptr this, u64 bit_distance) {
-  u64  this__length         = raw__array__length(cause, this);
+  u64 this__length = raw__array__length(cause, this);
+  if (this__length == 0) {
+    return this;
+  }
   u64  array__distance      = (bit_distance >> 6);
   u64  array__bit_distance  = bit_distance - (array__distance << 6);
   u64  result_array__length = this__length - array__distance;

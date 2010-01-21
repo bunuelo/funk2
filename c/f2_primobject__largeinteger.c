@@ -396,7 +396,8 @@ u64 raw__largeinteger__unsigned_array__u32_digit_length(f2ptr cause, f2ptr this)
 u64 raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(f2ptr cause, f2ptr this) {
   u64 this__length = raw__array__length(cause, this);
   if (this__length == 0) {
-    error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: no digits available.");
+    return 0;
+    //error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: no digits available.");
   }
   f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
   u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
@@ -404,7 +405,8 @@ u64 raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(f2ptr
     return high_u64_value__i;
   } else {
     if (this__length == 1) {
-      error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: not enough digits available.");
+      return high_u64_value__i;
+      //error(nil, "raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits_as_u64 fatal error: not enough digits available.");
     }
     f2ptr second_high_u64_value    = raw__array__elt(cause, this, this__length - 2);
     u64   second_high_u64_value__i = f2integer__i(second_high_u64_value, cause);
@@ -415,7 +417,8 @@ u64 raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(f2ptr
 u64 raw__largeinteger__unsigned_array__top_most_significant_u32_digits(f2ptr cause, f2ptr this) {
   u64 this__length = raw__array__length(cause, this);
   if (this__length == 0) {
-    error(nil, "raw__largeinteger__unsigned_array__top_most_significant_u32_digits fatal error: no digits available.");
+    return 0;
+    //error(nil, "raw__largeinteger__unsigned_array__top_most_significant_u32_digits fatal error: no digits available.");
   }
   f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
   u64   high_u64_value__i = f2integer__i(high_u64_value, cause);

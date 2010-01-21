@@ -291,17 +291,17 @@ f2ptr raw__largeinteger__unsigned_array__bitshift_right(f2ptr cause, f2ptr this,
 f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, u64 low_bit_num, u64 high_bit_num) {
   u64   mask__length = ((high_bit_num - 1) >> 6) + 1;
   u64   this__length = raw__array__length(cause, this);
-  u64   result__length;
+  u64   result_array__length;
   if (this__length < mask__length) {
-    result__length = this__length;
+    result_array__length = this__length;
   } else {
-    result__length = mask__length;
+    result_array__length = mask__length;
   }
-  f2ptr result     = raw__array__new(cause, result__length);
-  u64   zero_count = low_bit_num >> 6;
+  u64* result_array = (u64*)alloca(sizeof(u64) * result_array__length);
+  u64  zero_count   = low_bit_num >> 6;
   {
     u64 index;
-    for (index = 0; index < result__length; index ++) {
+    for (index = 0; index < result_array__length; index ++) {
       f2ptr this__elt        = raw__array__elt(cause, this, index);
       u64   this__elt__value = f2integer__i(this__elt, cause);
       u64   value;
@@ -314,7 +314,17 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
       } else {
 	value = this__elt__value;
       }
-      raw__array__elt__set(cause, result, index, f2integer__new(cause, value));
+      result_array[index] = value;
+    }
+  }
+  s64 last_nonzero_index;
+  for (last_nonzero_index = result_array__length - 1; (last_nonzero_index >= 0) && (result_array[last_nonzero_index] == 0); last_nonzero_index --);
+  u64   result__length = last_nonzero_index + 1;
+  f2ptr result         = raw__array__new(cause, result__length);
+  {
+    u64 index;
+    for (index = 0; index < result__length; index ++) {
+      raw__array__elt__set(cause, result, index, f2integer__new(cause, result_array[index]));
     }
   }
   return result;

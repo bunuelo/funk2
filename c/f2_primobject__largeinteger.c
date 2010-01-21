@@ -474,6 +474,7 @@ f2ptr raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_a
 
 f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder) {
   if (raw__largeinteger__unsigned_array__greater_than(cause, that, this)) {
+    *remainder = this;
     return raw__array__new(cause, 0);
   }
   u64 that__length = raw__array__length(cause, that);

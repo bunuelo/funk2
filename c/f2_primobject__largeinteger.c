@@ -565,7 +565,7 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
 }
 
 void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this, boolean_t pad_front_with_zeros) {
-  f2ptr max_decimals_at_once = raw__largeinteger__unsigned_array__new(cause, 1000000000000000000ull);
+  f2ptr max_decimals_at_once = raw__largeinteger__unsigned_array__new(cause, 1000000000ull);
   if (raw__largeinteger__unsigned_array__less_than(cause, this, max_decimals_at_once)) {
     u64 this__length = raw__array__length(cause, this);
     u64 this__elt__value;
@@ -578,7 +578,7 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this, boolean_t
       this__elt__value = f2integer__i(this__elt, cause);
     }
     char temp_str[32];
-    snprintf(temp_str, 32, pad_front_with_zeros ? ("%018" u64__fstr_without_percent) : u64__fstr, this__elt__value);
+    snprintf(temp_str, 32, pad_front_with_zeros ? ("%09" u64__fstr_without_percent) : u64__fstr, this__elt__value);
     write(1, temp_str, strlen(temp_str));
   } else {
     f2ptr remaining_decimals_to_print;

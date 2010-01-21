@@ -304,7 +304,7 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
     result_array__length = mask__length;
   }
   u64* result_array = (u64*)alloca(sizeof(u64) * result_array__length);
-  u64  zero_count   = low_bit_num >> 6;
+  u64  zero_count   = (low_bit_num >> 6);
   {
     u64 index;
     for (index = 0; index < result_array__length; index ++) {
@@ -313,12 +313,14 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
       u64   value;
       if (index < zero_count) {
 	value = 0;
-      } else if (index == zero_count) {
-	value = this__elt__value & u64__bitshift_left(0xffffffffffffffff, (low_bit_num - (zero_count << 6)));
-      } else if (index == mask__length - 1) {
-	value = this__elt__value & u64__bitshift_right(0xffffffffffffffff, 64 - (high_bit_num - ((mask__length - 1) << 6)));
       } else {
 	value = this__elt__value;
+	if (index == zero_count) {
+	  value = value & u64__bitshift_left(0xffffffffffffffff, (low_bit_num - (zero_count << 6)));
+	}
+	if (index == mask__length - 1) {
+	  value = value & u64__bitshift_right(0xffffffffffffffff, 64 - (high_bit_num - ((mask__length - 1) << 6)));
+	}
       }
       result_array[index] = value;
     }
@@ -498,7 +500,7 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   }
   if (this__u32_length == that__u32_length + 1) {
     return raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this, that, remainder);
-  }
+  }slsl
   f2ptr this_right_shifted = raw__largeinteger__unsigned_array__bitshift_right(cause, this, (this__u32_length - that__u32_length - 1) * 32);
   s64   high_bit_num       = ((this__u32_length - that__u32_length - 1) * 32) - 1;
   f2ptr this_right_shifted_leftover;

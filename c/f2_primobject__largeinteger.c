@@ -506,12 +506,12 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   } else {
     this_right_shifted_leftover = raw__largeinteger__unsigned_array__new(cause, 0);
   }
-  f2ptr this_right_shifted__remainder;
-  f2ptr this_right_shifted__quotient = raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this_right_shifted, that, &this_right_shifted__remainder);
+  f2ptr this_right_shifted__remainder = nil;
+  f2ptr this_right_shifted__quotient  = raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this_right_shifted, that, &this_right_shifted__remainder);
   f2ptr recrusive__left_shifted_remainder = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__remainder, (this__u32_length - that__u32_length - 1) * 32);
   f2ptr recursive__numerator = raw__largeinteger__unsigned_array__add(cause, recrusive__left_shifted_remainder, this_right_shifted_leftover);
-  f2ptr recursive__remainder;
-  f2ptr recursive__quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, recursive__numerator, that, &recursive__remainder);
+  f2ptr recursive__remainder = nil;
+  f2ptr recursive__quotient  = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, recursive__numerator, that, &recursive__remainder);
   f2ptr this_right_shifted__quotient__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__quotient, (this__u32_length - that__u32_length - 1) * 32);
   *remainder = recursive__remainder;
   return raw__largeinteger__unsigned_array__add(cause, this_right_shifted__quotient__left_shifted, recursive__quotient);
@@ -555,7 +555,7 @@ f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr t
   else {error(nil, "expected most significant digit to contain at least one nonzero bit.");}
   f2ptr this__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this, need_left_shift);
   f2ptr that__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, that, need_left_shift);
-  f2ptr remainder__left_shifted;
+  f2ptr remainder__left_shifted = nil;
   f2ptr quotient = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, this__left_shifted, that__left_shifted, &remainder__left_shifted);
   *remainder = raw__largeinteger__unsigned_array__bitshift_right(cause, remainder__left_shifted, need_left_shift);
   return quotient;
@@ -807,13 +807,13 @@ f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(this_cause, this, that));
 
 f2ptr raw__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__is_negative   = f2__largeinteger__is_negative(  cause, this);
-  f2ptr that__is_negative   = f2__largeinteger__is_negative(  cause, that);
-  f2ptr this__array         = f2__largeinteger__integer_array(cause, this);
-  f2ptr that__array         = f2__largeinteger__integer_array(cause, that);
-  f2ptr result__is_negative = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
-  f2ptr result__remainder_array;
-  f2ptr result__quotient_array = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array, &result__remainder_array);
+  f2ptr this__is_negative       = f2__largeinteger__is_negative(  cause, this);
+  f2ptr that__is_negative       = f2__largeinteger__is_negative(  cause, that);
+  f2ptr this__array             = f2__largeinteger__integer_array(cause, this);
+  f2ptr that__array             = f2__largeinteger__integer_array(cause, that);
+  f2ptr result__is_negative     = f2bool__new((this__is_negative != nil) != (that__is_negative != nil));
+  f2ptr result__remainder_array = nil;
+  f2ptr result__quotient_array  = raw__largeinteger__unsigned_array__divide(cause, this__array, that__array, &result__remainder_array);
   if (raw__larva__is_type(cause, result__quotient_array)) {
     return result__quotient_array; // catch and propagate divide by zero
   }

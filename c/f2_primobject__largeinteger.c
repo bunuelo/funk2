@@ -319,7 +319,7 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
 	  value = value & u64__bitshift_left(0xffffffffffffffff, (low_bit_num - (zero_count << 6)));
 	}
 	if (index == mask__length - 1) {
-	  value = value & u64__bitshift_right(0xffffffffffffffff, 64 - (high_bit_num - ((mask__length - 1) << 6)));
+	  value = value & u64__bitshift_right(0xffffffffffffffff, 63 - (high_bit_num - ((mask__length - 1) << 6)));
 	}
       }
       result_array[index] = value;
@@ -511,8 +511,8 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
   }
   f2ptr this_right_shifted__remainder = nil;
   f2ptr this_right_shifted__quotient  = raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_assumed(cause, this_right_shifted, that, &this_right_shifted__remainder);
-  f2ptr recrusive__left_shifted_remainder = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__remainder, (this__u32_length - that__u32_length - 1) * 32);
-  f2ptr recursive__numerator = raw__largeinteger__unsigned_array__add(cause, recrusive__left_shifted_remainder, this_right_shifted_leftover);
+  f2ptr recursive__left_shifted_remainder = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__remainder, (this__u32_length - that__u32_length - 1) * 32);
+  f2ptr recursive__numerator = raw__largeinteger__unsigned_array__add(cause, recursive__left_shifted_remainder, this_right_shifted_leftover);
   f2ptr recursive__remainder = nil;
   f2ptr recursive__quotient  = raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(cause, recursive__numerator, that, &recursive__remainder);
   f2ptr this_right_shifted__quotient__left_shifted = raw__largeinteger__unsigned_array__bitshift_left(cause, this_right_shifted__quotient, (this__u32_length - that__u32_length - 1) * 32);
@@ -523,16 +523,16 @@ f2ptr raw__largeinteger__unsigned_array__divide__that_high_bit_assumed(f2ptr cau
 f2ptr raw__largeinteger__unsigned_array__divide(f2ptr cause, f2ptr this, f2ptr that, f2ptr* remainder) {
   u64 that__most_significant = raw__largeinteger__unsigned_array__top_most_significant_u32_digits(cause, that);
   u64 need_left_shift;
-  if      (that__most_significant & 0x80000000) {need_left_shift = 0;}
-  else if (that__most_significant & 0x40000000) {need_left_shift = 1;}
-  else if (that__most_significant & 0x20000000) {need_left_shift = 2;}
-  else if (that__most_significant & 0x10000000) {need_left_shift = 3;}
-  else if (that__most_significant & 0x08000000) {need_left_shift = 4;}
-  else if (that__most_significant & 0x04000000) {need_left_shift = 5;}
-  else if (that__most_significant & 0x02000000) {need_left_shift = 6;}
-  else if (that__most_significant & 0x01000000) {need_left_shift = 7;}
-  else if (that__most_significant & 0x00800000) {need_left_shift = 8;}
-  else if (that__most_significant & 0x00400000) {need_left_shift = 9;}
+  if      (that__most_significant & 0x80000000) {need_left_shift =  0;}
+  else if (that__most_significant & 0x40000000) {need_left_shift =  1;}
+  else if (that__most_significant & 0x20000000) {need_left_shift =  2;}
+  else if (that__most_significant & 0x10000000) {need_left_shift =  3;}
+  else if (that__most_significant & 0x08000000) {need_left_shift =  4;}
+  else if (that__most_significant & 0x04000000) {need_left_shift =  5;}
+  else if (that__most_significant & 0x02000000) {need_left_shift =  6;}
+  else if (that__most_significant & 0x01000000) {need_left_shift =  7;}
+  else if (that__most_significant & 0x00800000) {need_left_shift =  8;}
+  else if (that__most_significant & 0x00400000) {need_left_shift =  9;}
   else if (that__most_significant & 0x00200000) {need_left_shift = 10;}
   else if (that__most_significant & 0x00100000) {need_left_shift = 11;}
   else if (that__most_significant & 0x00080000) {need_left_shift = 12;}

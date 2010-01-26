@@ -344,7 +344,7 @@ f2ptr f2__integer__subtract_number(f2ptr cause, f2ptr this, f2ptr number) {
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
     s64 number_value = f2integer__i(number, cause);
-    if (! s64__add_overflows(value, -number_value) && ((number_value != 0) || (-number_value != number_value))) {
+    if (! s64__add_overflows(value, -number_value) && ((number_value == 0) || (-number_value != number_value))) {
       return f2integer__new(cause, value - f2integer__i(number, cause));
     } else {
       return f2__largeinteger__subtract(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));

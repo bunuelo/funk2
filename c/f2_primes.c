@@ -21,14 +21,14 @@
 
 #include "funk2.h"
 
-u64 u64__sqrt (u64 n) {
+u64 u64__sqrt(u64 this) {
   register u64 root;
   register u64 remainder;
   register u64 place;
   
   root = 0;
-  remainder = n;
-  place = 0x4000000000000000; // OR place = 0x4000; OR place = 0x40; - respectively
+  remainder = this;
+  place = 0x4000000000000000;
   
   while (place > remainder) {
     place = place >> 2;

@@ -1018,53 +1018,6 @@ def_pcfunk1(exps_demetropolize_full, exp,
 def_pcfunk2(compile__special_symbol_exp, exp, protect_environment,
 	    return f2__compile__special_symbol_exp(this_cause, simple_fiber, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
 
-f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
-  u64* prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * prime_count));
-  prime_array[0] = 2;
-  {
-    u64 index;
-    for (index = 1; index < prime_count; index ++) {
-      u64 prime_guess = prime_array[index - 1];
-      boolean_t is_prime = boolean__false;
-      while (! is_prime) {
-	prime_guess ++;
-	is_prime = boolean__true;
-	{
-	  u64 try_divisor_index;
-	  for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
-	    if (prime_guess % prime_array[try_divisor_index] == 0) {
-	      is_prime = boolean__false;
-	      break;
-	    }
-	  }
-	}
-      }
-      prime_array[index] = prime_guess;
-    }
-  }
-  f2ptr result = raw__array__new(cause, prime_count);
-  {
-    u64 index;
-    for (index = 0; index < prime_count; index ++) {
-      raw__array__elt__set(cause, result, index, f2integer__new(cause, prime_array[index]));
-    }
-  }
-  f2__free(to_ptr(prime_array));
-  return result;
-}
-
-f2ptr f2__generate_primes(f2ptr cause, f2ptr prime_count) {
-  if (! raw__integer__is_type(cause, prime_count)) {
-    return f2larva__new(cause, 1);
-  }
-  s64 prime_count__i = f2integer__i(prime_count, cause);
-  if (prime_count__i < 0) {
-    return f2larva__new(cause, 2);
-  }
-  return raw__generate_primes(cause, prime_count__i);
-}
-def_pcfunk1(generate_primes, prime_count, return f2__generate_primes(this_cause, prime_count));
-
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value) {
   f2ptr value = environment__lookup_funkvar_value(cause, env, funkvar);
   if (raw__larva__is_type(cause, value)) {return undefined_value;}
@@ -1741,7 +1694,6 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(demetropolize_full, "");
   f2__primcfunk__init(exps_demetropolize_full, "");
   f2__primcfunk__init(compile__special_symbol_exp, "");
-  f2__primcfunk__init__1(generate_primes, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
   f2__primcfunk__init(lookup_funkvar, "");
   f2__primcfunk__init(jump_to_chunk, "");
   f2__funktional_primcfunk__init(coerce_to_int, "");

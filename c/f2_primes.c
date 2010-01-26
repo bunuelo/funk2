@@ -21,6 +21,54 @@
 
 #include "funk2.h"
 
+f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
+  u64* prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * prime_count));
+  prime_array[0] = 2;
+  {
+    u64 index;
+    for (index = 1; index < prime_count; index ++) {
+      u64 prime_guess = prime_array[index - 1];
+      boolean_t is_prime = boolean__false;
+      while (! is_prime) {
+	prime_guess ++;
+	is_prime = boolean__true;
+	{
+	  u64 try_divisor_index;
+	  for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
+	    if (prime_guess % prime_array[try_divisor_index] == 0) {
+	      is_prime = boolean__false;
+	      break;
+	    }
+	  }
+	}
+      }
+      prime_array[index] = prime_guess;
+    }
+  }
+  f2ptr result = raw__array__new(cause, prime_count);
+  {
+    u64 index;
+    for (index = 0; index < prime_count; index ++) {
+      raw__array__elt__set(cause, result, index, f2integer__new(cause, prime_array[index]));
+    }
+  }
+  f2__free(to_ptr(prime_array));
+  return result;
+}
+
+f2ptr f2__generate_primes(f2ptr cause, f2ptr prime_count) {
+  if (! raw__integer__is_type(cause, prime_count)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 prime_count__i = f2integer__i(prime_count, cause);
+  if (prime_count__i < 0) {
+    return f2larva__new(cause, 2);
+  }
+  return raw__generate_primes(cause, prime_count__i);
+}
+def_pcfunk1(generate_primes, prime_count, return f2__generate_primes(this_cause, prime_count));
+
+
 // **
 
 void f2__primes__reinitialize_globalvars() {
@@ -31,5 +79,6 @@ void f2__primes__initialize() {
   
   f2__primes__reinitialize_globalvars();
   
+  f2__primcfunk__init__1(generate_primes, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
 }
 

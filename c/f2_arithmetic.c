@@ -58,7 +58,7 @@ f2ptr f2__integer__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
     if (! s64__multiply_overflows(value, number_value)) {
       return f2integer__new(cause, value * number_value);
     } else {
-      return f2__largeinteger__multiply(cause, raw__largeinteger__new(cause, value), raw__largeinteger__new(cause, number_value));
+      return f2__largeinteger__multiply(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
     }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value * f2double__d(number, cause));
@@ -247,7 +247,7 @@ f2ptr f2__integer__add_number(f2ptr cause, f2ptr this, f2ptr number) {
     if (! s64__add_overflows(value, number_value)) {
       return f2integer__new(cause, value + number_value);
     } else {
-      return f2__largeinteger__add(cause, raw__largeinteger__new(cause, value), raw__largeinteger__new(cause, number_value));
+      return f2__largeinteger__add(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
     }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value + f2double__d(number, cause));
@@ -347,7 +347,7 @@ f2ptr f2__integer__subtract_number(f2ptr cause, f2ptr this, f2ptr number) {
     if (! s64__add_overflows(value, -number_value) && ((number_value != 0) || (-number_value != number_value))) {
       return f2integer__new(cause, value - f2integer__i(number, cause));
     } else {
-      return f2__largeinteger__subtract(cause, raw__largeinteger__new(cause, value), raw__largeinteger__new(cause, number_value));
+      return f2__largeinteger__subtract(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
     }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value - f2double__d(number, cause));

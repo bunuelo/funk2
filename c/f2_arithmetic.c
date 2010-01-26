@@ -54,7 +54,12 @@ f2ptr f2__integer__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    return f2integer__new(cause, value * f2integer__i(number, cause));
+    s64 number_value = f2integer__i(number, cause);
+    if (! s64__multiply_overflows(value, number_value)) {
+      return f2integer__new(cause, value * number_value);
+    } else {
+      return f2__largeinteger__multiply(cause, raw__largeinteger__new(cause, value), raw__largeinteger__new(cause, number_value));
+    }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value * f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {
@@ -215,13 +220,35 @@ def_pcfunk2(number__divide_by_number, this, number, return f2__number__divide_by
 
 // number add
 
+boolean_t s64__add_overflows(s64 this, s64 that) {
+  s64 result = this + that;
+  if (this >= 0) {
+    if (that >= 0) {
+      return (result < this);
+    } else {
+      return (result < -that);
+    }
+  } else {
+    if (that >= 0) {
+      return (result < -this);
+    } else {
+      return (result > that);
+    }
+  }
+}
+
 f2ptr f2__integer__add_number(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    return f2integer__new(cause, value + f2integer__i(number, cause));
+    s64 number_value = f2integer__i(number, cause);
+    if (! s64__add_overflows(value, number_value)) {
+      return f2integer__new(cause, value + number_value);
+    } else {
+      return f2__largeinteger__add(cause, raw__largeinteger__new(cause, value), raw__largeinteger__new(cause, number_value));
+    }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value + f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {
@@ -316,7 +343,12 @@ f2ptr f2__integer__subtract_number(f2ptr cause, f2ptr this, f2ptr number) {
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    return f2integer__new(cause, value - f2integer__i(number, cause));
+    s64 number_value = f2integer__i(number, cause);
+    if (! s64__add_overflows(value, -number_value) && ((number_value != 0) || (-number_value != number_value))) {
+      return f2integer__new(cause, value - f2integer__i(number, cause));
+    } else {
+      return f2__largeinteger__subtract(cause, raw__largeinteger__new(cause, value), raw__largeinteger__new(cause, number_value));
+    }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value - f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {

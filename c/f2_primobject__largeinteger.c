@@ -49,6 +49,11 @@ u64 u64__multiply(u64 this, u64 that, u64* overflow) {
   return result;
 }
 
+boolean_t s64__multiply_overflows(s64 this, s64 that) {
+  u64 overflow;
+  u64__multiply((u64)this, ((u64)that) << 1, &overflow);
+  return overflow;
+}
 
 // largeinteger__unsigned_array  (not a real type, just an array filled with integers)
 

@@ -40,6 +40,10 @@ u64 u64__bitshift_left(u64 this, s64 bit_distance);
 u64 u64__bitshift_right(u64 this, s64 bit_distance);
 u64 u64__multiply(u64 this, u64 that, u64* overflow);
 
+// s64
+
+boolean_t s64__multiply_overflows(s64 this, s64 that);
+
 
 // largeinteger__unsigned_array  (not a real type, just an array filled with integers)
 

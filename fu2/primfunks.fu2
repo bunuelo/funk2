@@ -97,7 +97,7 @@
 [globalize-funk demetropolize_full                          &primfunk:demetropolize_full]
 [globalize-funk exps-demetropolize_full                     &primfunk:exps_demetropolize_full]
 [globalize-funk compile-special_symbol_exp                  &primfunk:compile__special_symbol_exp]
-[globalize-funk generate_primes                             &primfunk:genarate_primes]
+[globalize-funk generate_primes                             &primfunk:generate_primes]
 [globalize-funk lookup-funkvar                              &primfunk:lookup_funkvar]
 [globalize-funk jump-to-chunk                               &primfunk:jump_to_chunk]
 [globalize-funk coerce-to-int                               &primfunk:coerce_to_int]

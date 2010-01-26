@@ -145,13 +145,18 @@ f2ptr raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that
     } else {
       small__value = 0;
     }
-    f2ptr large__elt = raw__array__elt(cause, large, index);
-    u64   large__value = (u64)f2integer__i(large__elt, cause);
-    u64   result__value = small__value + large__value + result__carry;
-    if (result__value < small__value) {
+    f2ptr large__elt                  = raw__array__elt(cause, large, index);
+    u64   large__value                = (u64)f2integer__i(large__elt, cause);
+    u64   result__value_without_carry = small__value                + large__value;
+    u64   result__value               = result__value_without_carry + result__carry;
+    if (result__value_without_carry < small__value) {
       result__carry = 1;
     } else {
-      result__carry = 0;
+      if (result__value < result__value_without_carry) {
+	result__carry = 1;
+      } else {
+	result__carry = 0;
+      }
     }
     temp_array[index] = result__value;
     if (result__value != 0) {
@@ -183,11 +188,16 @@ f2ptr raw__largeinteger__unsigned_array__subtract_smaller(f2ptr cause, f2ptr thi
     }
     f2ptr large__elt    = raw__array__elt(cause, large, index);
     u64   large__value  = f2integer__i(large__elt, cause);
-    u64   result__value = large__value - small__value - borrow__value;
-    if (result__value > large__value) {
+    u64   result__value_without_borrow = large__value - small__value;
+    u64   result__value                = result__value_without_borrow - borrow__value;
+    if (result__value_without_borrow > large__value) {
       borrow__value = 1;
     } else {
-      borrow__value = 0;
+      if (result__value > result__value_without_borrow) {
+	borrow__value = 1;
+      } else {
+	borrow__value = 0;
+      }
     }
     if (result__value != 0) {
       last_nonzero_index = index;

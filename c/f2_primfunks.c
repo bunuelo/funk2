@@ -813,8 +813,13 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_string:
     return f2__string__eq(cause, x, y);
   case ptype_simple_array:
-    return (x == y);
   case ptype_traced_array:
+    if (raw__primobject__is_type(cause, x) &&
+	raw__primobject__is_type(cause, y) &&
+	f2primobject__is__largeinteger(x, cause) &&
+	f2primobject__is__largeinteger(y, cause)) {
+      return raw__largeinteger__equals(cause, x, y);
+    }
     return (x == y);
   case ptype_chunk:
     return (x == y);

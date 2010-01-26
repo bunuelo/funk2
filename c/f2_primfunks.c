@@ -1019,7 +1019,7 @@ def_pcfunk2(compile__special_symbol_exp, exp, protect_environment,
 	    return f2__compile__special_symbol_exp(this_cause, simple_fiber, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
 
 f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
-  u64* prime_array = (u64*)from_ptr(f2__alloc(sizeof(u64) * prime_count));
+  u64* prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * prime_count));
   prime_array[0] = 2;
   {
     u64 index;
@@ -1049,6 +1049,7 @@ f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
       raw__array__elt__set(cause, result, index, f2integer__new(cause, prime_array[index]));
     }
   }
+  f2__free(to_ptr(prime_array));
   return result;
 }
 

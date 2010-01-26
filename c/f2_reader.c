@@ -889,17 +889,25 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
     }
     f2ptr whole_decimal_value__largeinteger = raw__largeinteger__new_from_s64(cause, 0);
     {
-      f2ptr ten__largeinteger = raw__largeinteger__new_from_s64(cause, 10);
+      f2ptr  ten__largeinteger                           = raw__largeinteger__new_from_s64(cause, 10);
+      f2ptr* ten_power__largeintegers                    = (f2ptr*)alloca(sizeof(f2ptr) * whole_decimal_length);
+      ten_power__largeintegers[whole_decimal_length - 1] = raw__largeinteger__new_from_s64(cause, 1);
+      {
+	s64 index;
+	for (index = whole_decimal_length - 2; index >= 0; index --) {
+	  ten_power__largeintegers[index] = raw__largeinteger__multiply(cause, ten_power__largeintegers[index + 1], ten__largeinteger);
+	}
+      }
       s64 whole_decimal_digit = whole_decimal_length - 1;
       iter = whole_decimal_start;
       while (whole_decimal_digit >= 0) {
-	f2ptr power_i__largeinteger = raw__largeinteger__new_from_s64(cause, 1);
-	printf("\n"); f2__largeinteger__print(cause, power_i__largeinteger);
-	{s64 k; for (k = 0; k < whole_decimal_digit; k ++) {power_i__largeinteger = raw__largeinteger__multiply(cause, power_i__largeinteger, ten__largeinteger);}}
+	//f2ptr power_i__largeinteger = raw__largeinteger__new_from_s64(cause, 1);
+	//printf("\n"); f2__largeinteger__print(cause, power_i__largeinteger);
+	printf("\n"); f2__largeinteger__print(cause, ten_power__largeintegers[whole_decimal_digit]);
 	f2ptr read_ch = f2cons__car(iter, cause);
 	f2ptr char_value__largeinteger = raw__largeinteger__new_from_s64(cause, (s64)raw__char__decimal_digit_value(cause, read_ch));
 	printf("\n"); f2__largeinteger__print(cause, char_value__largeinteger);
-	whole_decimal_value__largeinteger = raw__largeinteger__add(cause, whole_decimal_value__largeinteger, (raw__largeinteger__multiply(cause, char_value__largeinteger, power_i__largeinteger)));
+	whole_decimal_value__largeinteger = raw__largeinteger__add(cause, whole_decimal_value__largeinteger, (raw__largeinteger__multiply(cause, char_value__largeinteger, ten_power__largeintegers[whole_decimal_digit])));
 	printf("\n"); f2__largeinteger__print(cause, whole_decimal_value__largeinteger);
 	iter = f2cons__cdr(iter, cause);
 	whole_decimal_digit --;

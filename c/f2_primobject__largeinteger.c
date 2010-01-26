@@ -363,7 +363,7 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
 f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__array__length(cause, this);
   u64 that__length = raw__array__length(cause, that);
-  u64  result_array__length = this__length + that__length + 1;
+  u64  result_array__length = this__length + that__length;
   u64* result_array = (u64*)alloca(sizeof(u64) * result_array__length);
   memset(result_array, 0, sizeof(u64) * result_array__length);
   u64* this_array = (u64*)alloca(sizeof(u64) * this__length);
@@ -391,8 +391,34 @@ f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr
 	u64 this__value = this_array[this_index];
 	u64 overflow_value;
 	u64 result_value = u64__multiply(this__value, that__value, &overflow_value);
-	result_array[this_index + that_index]     += result_value;
-	result_array[this_index + that_index + 1] += overflow_value;
+	{
+	  u64 add_value = result_value;
+	  u64 add_index;
+	  for (add_index = this_index + that_index; add_value != 0; add_index ++) {
+	    u64 old_value = result_array[add_index];
+	    u64 new_value = old_value + add_value;
+	    result_array[add_index] = new_value;
+	    if (new_value < old_value) {
+	      add_value = 1;
+	    } else {
+	      add_value = 0;
+	    }
+	  }
+	}
+	{
+	  u64 add_value = overflow_value;
+	  u64 add_index;
+	  for (add_index = this_index + that_index + 1; add_value != 0; add_index ++) {
+	    u64 old_value = result_array[add_index];
+	    u64 new_value = old_value + add_value;
+	    result_array[add_index] = new_value;
+	    if (new_value < old_value) {
+	      add_value = 1;
+	    } else {
+	      add_value = 0;
+	    }
+	  }
+	}
       }
     }
   }

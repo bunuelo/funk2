@@ -40,13 +40,15 @@ u64 u64__bitshift_right(u64 this, s64 bit_distance) {
 }
 
 u64 u64__multiply(u64 this, u64 that, u64* overflow) {
-  u64 temp__00 = ((u64)(this & 0xffffffff)) * ((u64)(that & 0xffffffff));
-  u64 temp__01 = ((u64)(this & 0xffffffff)) * ((u64)(that >> 32));
-  u64 temp__10 = ((u64)(this >> 32))        * ((u64)(that & 0xffffffff));
-  u64 temp__11 = ((u64)(this >> 32))        * ((u64)(that >> 32));
-  u64 temp__01_10 = temp__01 + temp__10;
-  u64 result = temp__00 + (temp__01_10 << 32);
-  *overflow  =            (temp__01_10 >> 32) + temp__11 + ((result < temp__00) ? 1 : 0);
+  u64 temp__00              = ((u64)(this & 0xffffffff)) * ((u64)(that & 0xffffffff));
+  u64 temp__01              = ((u64)(this & 0xffffffff)) * ((u64)(that >> 32));
+  u64 temp__10              = ((u64)(this >> 32))        * ((u64)(that & 0xffffffff));
+  u64 temp__11              = ((u64)(this >> 32))        * ((u64)(that >> 32));
+  u64 temp__01_10           = temp__01 + temp__10;
+  u64 temp__01_10__overflow = (temp__01_10 < temp__01) ? 1 : 0;
+  u64 result                = temp__00 + (temp__01_10 << 32);
+  u64 result__overflow      = (result < temp__00) ? 1 : 0;
+  *overflow                 = (temp__01_10 >> 32) + (temp__01_10__overflow << 32) + temp__11 + result__overflow;
   return result;
 }
 

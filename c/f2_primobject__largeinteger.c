@@ -131,13 +131,13 @@ f2ptr raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that
     small__length = that__length;
     large__length = this__length;
   }
-  u64 temp__length = small__length + large__length;
-  u64* temp_array = (u64*)alloca(sizeof(u64) * temp__length);
-  memset(temp_array, 0, sizeof(u64) * temp__length);
+  u64  result_array__length = large__length + 1;
+  u64* result_array         = (u64*)alloca(sizeof(u64) * result_array__length);
+  memset(result_array, 0, sizeof(u64) * result_array__length);
   u64 last_nonzero_index = -1;
   u64 result__carry      = 0;
   u64 index;
-  for (index = 0; index < large__length; index ++) {
+  for (index = 0; index < result_array__length; index ++) {
     u64 small__value;
     if (index < small__length) {
       f2ptr small__elt = raw__array__elt(cause, small, index);
@@ -145,8 +145,13 @@ f2ptr raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that
     } else {
       small__value = 0;
     }
-    f2ptr large__elt                  = raw__array__elt(cause, large, index);
-    u64   large__value                = (u64)f2integer__i(large__elt, cause);
+    u64 large__value;
+    if (index < large__length) {
+      f2ptr large__elt = raw__array__elt(cause, large, index);
+      large__value = (u64)f2integer__i(large__elt, cause);
+    } else {
+      large__value = 0;
+    }
     u64   result__value_without_carry = small__value                + large__value;
     u64   result__value               = result__value_without_carry + result__carry;
     if ((result__value_without_carry < small__value) ||

@@ -901,19 +901,13 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       s64 whole_decimal_digit = whole_decimal_length - 1;
       iter = whole_decimal_start;
       while (whole_decimal_digit >= 0) {
-	//f2ptr power_i__largeinteger = raw__largeinteger__new_from_s64(cause, 1);
-	//printf("\n"); f2__largeinteger__print(cause, power_i__largeinteger);
-	printf("\n"); f2__largeinteger__print(cause, ten_power__largeintegers[whole_decimal_digit]);
 	f2ptr read_ch = f2cons__car(iter, cause);
 	f2ptr char_value__largeinteger = raw__largeinteger__new_from_s64(cause, (s64)raw__char__decimal_digit_value(cause, read_ch));
-	printf("\n"); f2__largeinteger__print(cause, char_value__largeinteger);
 	whole_decimal_value__largeinteger = raw__largeinteger__add(cause, whole_decimal_value__largeinteger, (raw__largeinteger__multiply(cause, char_value__largeinteger, ten_power__largeintegers[whole_decimal_digit])));
-	printf("\n"); f2__largeinteger__print(cause, whole_decimal_value__largeinteger);
 	iter = f2cons__cdr(iter, cause);
 	whole_decimal_digit --;
       }
     }
-    printf("\n"); f2__largeinteger__print(cause, whole_decimal_value__largeinteger);
     s64 part_decimal_denomenator = 1;
     {s64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}
     s64 part_decimal_value = 0;

@@ -363,7 +363,7 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
 f2ptr raw__largeinteger__unsigned_array__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__array__length(cause, this);
   u64 that__length = raw__array__length(cause, that);
-  u64  result_array__length = this__length + that__length;
+  u64  result_array__length = this__length + that__length + 1;
   u64* result_array = (u64*)alloca(sizeof(u64) * result_array__length);
   memset(result_array, 0, sizeof(u64) * result_array__length);
   u64* this_array = (u64*)alloca(sizeof(u64) * this__length);

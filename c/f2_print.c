@@ -460,7 +460,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  }
 	  if (f2primobject__is__largeinteger(exp, cause)) {
 	    f2__write__ansi_color(cause, stream, print__ansi__integer__foreground, use_ansi_colors, use_html);
-	    f2__largeinteger__print(cause, exp);
+	    if (stream) {f2__largeinteger__print(cause, exp);}
 	    f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
 	  } else if (f2primobject__is__cons(exp, cause)) {
 	    if (show_slot_causes) {

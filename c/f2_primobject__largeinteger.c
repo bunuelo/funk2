@@ -149,10 +149,12 @@ f2ptr raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that
     u64   large__value                = (u64)f2integer__i(large__elt, cause);
     u64   result__value_without_carry = small__value                + large__value;
     u64   result__value               = result__value_without_carry + result__carry;
-    if (result__value_without_carry < small__value) {
+    if ((result__value_without_carry < small__value) ||
+	(result__value_without_carry < large__value)) {
       result__carry = 1;
     } else {
-      if (result__value < result__value_without_carry) {
+      if ((result__value < result__value_without_carry) ||
+	  (result__value < result__carry)) {
 	result__carry = 1;
       } else {
 	result__carry = 0;

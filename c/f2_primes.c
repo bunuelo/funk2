@@ -21,6 +21,30 @@
 
 #include "funk2.h"
 
+u64 u64__sqrt (u64 n) {
+  register u64 root;
+  register u64 remainder;
+  register u64 place;
+  
+  root = 0;
+  remainder = n;
+  place = 0x4000000000000000; // OR place = 0x4000; OR place = 0x40; - respectively
+  
+  while (place > remainder) {
+    place = place >> 2;
+  }
+  
+  while (place) {
+    if (remainder >= root + place) {
+      remainder = remainder - root - place;
+      root = root + (place << 1);
+    }
+    root = root >> 1;
+    place = place >> 2;
+  }
+  return root;
+}
+
 f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
   u64* prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * prime_count));
   prime_array[0] = 2;
@@ -33,9 +57,14 @@ f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
 	prime_guess ++;
 	is_prime = boolean__true;
 	{
+	  u64 prime_guess__sqrt = u64__sqrt(prime_guess);
 	  u64 try_divisor_index;
 	  for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
-	    if (prime_guess % prime_array[try_divisor_index] == 0) {
+	    u64 try_divisor = prime_array[try_divisor_index];
+	    if (try_divisor > prime_guess__sqrt) {
+	      break;
+	    }
+	    if (prime_guess % try_divisor == 0) {
 	      is_prime = boolean__false;
 	      break;
 	    }

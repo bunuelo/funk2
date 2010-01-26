@@ -165,7 +165,7 @@ f2ptr raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that
 	result__carry = 0;
       }
     }
-    temp_array[index] = result__value;
+    result_array[index] = result__value;
     if (result__value != 0) {
       last_nonzero_index = index;
     }
@@ -173,7 +173,7 @@ f2ptr raw__largeinteger__unsigned_array__add(f2ptr cause, f2ptr this, f2ptr that
   u64   new_array__length = last_nonzero_index + 1;
   f2ptr new_array         = raw__array__new(cause, new_array__length);
   for (index = 0; index < new_array__length; index ++) {
-    raw__array__elt__set(cause, new_array, index, f2integer__new(cause, temp_array[index]));
+    raw__array__elt__set(cause, new_array, index, f2integer__new(cause, result_array[index]));
   }
   return new_array;
 }

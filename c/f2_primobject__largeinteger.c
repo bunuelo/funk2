@@ -895,6 +895,73 @@ f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(largeinteger__print, this, return f2__largeinteger__print(this_cause, this));
 
+boolean_t raw__largeinteger__unsigned_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  u64 this__length = raw__array__length(cause, this);
+  u64 that__length = raw__array__length(cause, that);
+  if (this__length != that__length) {
+    return boolean__false;
+  }
+  u64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__elt   = raw__array__elt(cause, this, index);
+    f2ptr that__elt   = raw__array__elt(cause, that, index);
+    u64   this__value = f2integer__i(this__elt, cause);
+    u64   that__value = f2integer__i(that__elt, cause);
+    if (this__value != that__value) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
+boolean_t raw__largeinteger__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
+  f2ptr that__is_negative = f2__largeinteger__is_negative(cause, that);
+  if ((! this__is_negative) != (! that__is_negative)) {
+    return boolean__false;
+  }
+  f2ptr this__integer_array = f2__largeinteger__integer_array(cause, this);
+  f2ptr that__integer_array = f2__largeinteger__integer_array(cause, that);
+  return raw__largeinteger__unsigned_array__equals(cause, this__integer_array, that__integer_array);
+}
+
+f2ptr f2__largeinteger__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__largeinteger__equals(cause, this, that));
+}
+
+double raw__largeinteger__unsigned_array__to_double(f2ptr cause, f2ptr this) {
+  u64 this__length = raw__array__length(cause, this);
+  double result      = 0.0;
+  double digit_power = 1.0;
+  u64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr  elt        = raw__array__elt(cause, this, index);
+    u64    elt__value = (u64)f2integer__i(elt, cause);
+    double d          = (double)elt__value;
+    double addend     = d * digit_power;
+    result += addend;
+    digit_power *= 18446744073709551616.0;
+  }
+  return result;
+}
+
+double raw__largeinteger__to_double(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr is_negative   = f2__largeinteger__is_negative(cause, this);
+  f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
+  double value = raw__largeinteger__unsigned_array__to_double(cause, integer_array);
+  if (is_negative) {
+    value = -value;
+  }
+  return value;
+}
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {

@@ -902,6 +902,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
 	whole_decimal_digit --;
       }
     }
+    f2__print(0, 0, whole_decimal_value__largeinteger);
     s64 part_decimal_denomenator = 1;
     {s64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}
     s64 part_decimal_value = 0;

@@ -48,7 +48,7 @@ u64 u64__sqrt(u64 this) {
 // returned data must be f2__free'd to release memory resources allocated in this function
 void raw__u64_prime_array__extend(u64 valid_length, u64 this__length, u64* this) {
   u64 index;
-  for (index = this__length; index < this__length; index ++) {
+  for (index = valid_length; index < this__length; index ++) {
     u64 prime_guess = this[index - 1];
     boolean_t is_prime = boolean__false;
     while (! is_prime) {

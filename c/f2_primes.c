@@ -154,7 +154,7 @@ f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_cou
   }
   return prime_array;
 }
-def_pcfunk1(prime_array__new_by_extension, this, prime_count, return f2__prime_array__new_by_extension(cause, this, prime_count));
+def_pcfunk2(prime_array__new_by_extension, this, prime_count, return f2__prime_array__new_by_extension(cause, this, prime_count));
 
 // **
 

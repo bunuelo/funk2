@@ -93,20 +93,18 @@ f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
 }
 def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_cause, prime_count));
 
-f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count) {
-  if ((! raw__array__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, prime_count))) {
+f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_count) {
+  if (! raw__array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   u64 this__length = raw__array__length(cause, this);
   if (this__length == 0) {
     return f2larva__new(cause, 2);
   }
-  f2ptr prime_count__i      = f2integer__i(prime_count, cause);
-  u64   prime_array__length = prime_count__i;
+  u64   prime_array__length = prime_count;
   f2ptr prime_array         = raw__array__new(cause, prime_array__length);
   {
-    u64   u64_prime_array__length = prime_count__i;
+    u64   u64_prime_array__length = prime_count;
     u64*  u64_prime_array         = (u64*)f2__malloc(sizeof(u64) * u64_prime_array__length);
     {
       u64 index;
@@ -129,6 +127,14 @@ f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_cou
     }
   }
   return prime_array;
+}
+
+f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count) {
+  if (! raw__integer__is_type(cause, prime_count)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 prime_count__i = f2integer__i(prime_count, cause);
+  return raw__prime_array__new_by_extension(cause, this, prime_count__i);
 }
 def_pcfunk2(prime_array__new_by_extension, this, prime_count, return f2__prime_array__new_by_extension(this_cause, this, prime_count));
 

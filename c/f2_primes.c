@@ -149,7 +149,7 @@ void funk2_primes__destroy(funk2_primes_t* this) {
 f2ptr funk2_primes__prime(funk2_primes_t* this, f2ptr cause, u64 prime_index) {
   f2ptr prime_array = this->prime_array;
   if (prime_array == nil) {
-    prime_array = raw__primes_array__new(cause, prime_index + 1);
+    prime_array = raw__prime_array__new(cause, prime_index + 1);
   }
   u64 prime_array__length = raw__array__length(cause, prime_array);
   if (prime_index >= prime_array__length) {

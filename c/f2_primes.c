@@ -45,13 +45,16 @@ u64 u64__sqrt(u64 this) {
   return root;
 }
 
-f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
-  u64* prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * prime_count));
-  prime_array[0] = 2;
+// returned data must be f2__free'd to release memory resources allocated in this function
+u64* raw__u64_prime_array__new_by_extension(u64 this__length, u64* this, u64 new_prime_array__length) {
+  u64* new_prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * new_prime_array__length));
   {
     u64 index;
-    for (index = 1; index < prime_count; index ++) {
-      u64 prime_guess = prime_array[index - 1];
+    for (index = 0; index < this__length; index ++) {
+      new_prime_array[index] = this[index];
+    }
+    for (; index < new_prime_array__length; index ++) {
+      u64 prime_guess = new_prime_array[index - 1];
       boolean_t is_prime = boolean__false;
       while (! is_prime) {
 	prime_guess ++;
@@ -60,7 +63,7 @@ f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
 	  u64 prime_guess__sqrt = u64__sqrt(prime_guess);
 	  u64 try_divisor_index;
 	  for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
-	    u64 try_divisor = prime_array[try_divisor_index];
+	    u64 try_divisor = new_prime_array[try_divisor_index];
 	    if (try_divisor > prime_guess__sqrt) {
 	      break;
 	    }
@@ -71,9 +74,20 @@ f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
 	  }
 	}
       }
-      prime_array[index] = prime_guess;
+      new_prime_array[index] = prime_guess;
     }
   }
+  return new_prime_array;
+}
+
+// returned data must be f2__free'd to release memory resources allocated in this function
+u64* raw__u64_prime_array__new(u64 prime_array__length) {
+  u64 first_prime = 2;
+  return raw__u64_prime_array__new_by_extension(1, &first_prime, prime_array__length);
+}
+
+f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
+  u64* prime_array = raw__u64_prime_array__new(cause, prime_count);
   f2ptr result = raw__array__new(cause, prime_count);
   {
     u64 index;
@@ -97,6 +111,14 @@ f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
 }
 def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_cause, prime_count));
 
+f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count) {
+  u64 this__length = raw__array__length(cause, this);
+  if (this__length == 0) {
+    return f2larva__new(cause, 2);
+  }
+  u64* prime_array = (u64*)f2__malloc(sizeof(u64) * this__length);
+  
+}
 
 // **
 

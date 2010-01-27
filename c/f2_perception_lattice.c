@@ -45,7 +45,7 @@ f2ptr f2__perception_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node_ins_and_outs = f2__ptypehash__lookup(cause, edges_node_hash, node);
   if (! node_ins_and_outs) {
     node_ins_and_outs = f2cons__new(cause, nil, nil);
-    f2__ptypehash__add(cause, edges_node_hash, left_node, node_ins_and_outs);
+    f2__ptypehash__add(cause, edges_node_hash, node, node_ins_and_outs);
     f2ptr nodes = f2__perception_graph__nodes(cause, this);
     nodes = f2cons__new(cause, node, nodes);
     f2__perception_graph__nodes__set(cause, this, nodes);

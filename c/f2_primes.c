@@ -134,13 +134,13 @@ def_pcfunk2(prime_array__new_by_extension, this, prime_count, return f2__prime_a
 
 // funk2_primes_t
 
-void funk2_primes__reinit(funk2_primes_t* this) {
+void funk2_primes__reinit(funk2_primes_t* this, f2ptr cause) {
   this->prime_array__symbol = new__symbol(cause, "prime_array");
   this->prime_array         = nil;
 }
 
-void funk2_primes__init(funk2_primes_t* this) {
-  funk2_primes__reinit(this);
+void funk2_primes__init(funk2_primes_t* this, f2ptr cause) {
+  funk2_primes__reinit(this, cause);
 }
 
 void funk2_primes__destroy(funk2_primes_t* this) {
@@ -177,11 +177,13 @@ def_pcfunk1(prime, prime_index, return f2__prime(this_cause, prime_index));
 // **
 
 void f2__primes__reinitialize_globalvars() {
-  funk2_primes__reinit(&(__funk2.primes));
+  f2ptr cause = initial_cause();
+  funk2_primes__reinit(&(__funk2.primes), cause);
 }
 
 void f2__primes__initialize() {
-  funk2_primes__init(&(__funk2.primes));
+  f2ptr cause = initial_cause();
+  funk2_primes__init(&(__funk2.primes), cause);
   
   funk2_module_registration__add_module(&(__funk2.module_registration), "primes", "", &f2__primes__reinitialize_globalvars);
   

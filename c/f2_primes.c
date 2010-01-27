@@ -167,6 +167,6 @@ void f2__primes__initialize() {
   f2__primes__reinitialize_globalvars();
   
   f2__primcfunk__init__1(prime_array__new, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
-  f2__primcfunk__init__1(prime_array__new_by_extension, this, prime_count, "generate the first <prime_count> prime numbers by extending a shorted array of prime numbers.");
+  f2__primcfunk__init__2(prime_array__new_by_extension, this, prime_count, "generate the first <prime_count> prime numbers by extending a shorted array of prime numbers.");
 }
 

@@ -93,7 +93,7 @@ u64* raw__u64_prime_array__new(u64 prime_array__length) {
 }
 
 f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
-  u64* prime_array = raw__u64_prime_array__new(cause, prime_count);
+  u64* prime_array = raw__u64_prime_array__new(prime_count);
   f2ptr result = raw__array__new(cause, prime_count);
   {
     u64 index;

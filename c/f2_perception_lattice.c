@@ -33,10 +33,10 @@ def_pcfunk3(perception_graph_edge__new, label, left_node, right_node, return f2_
 
 // perception_graph
 
-def_primobject_2_slot(perception_graph, edges_node_hash, edge_structure_hash_value);
+def_primobject_3_slot(perception_graph, nodes, edges_node_hash, edge_structure_hash_value);
 
 f2ptr f2__perception_graph__new(f2ptr cause) {
-  return f2perception_graph__new(cause, f2__ptypehash__new(cause), f2integer__new(cause, 1));
+  return f2perception_graph__new(cause, nil, f2__ptypehash__new(cause), f2integer__new(cause, 1));
 }
 def_pcfunk0(perception_graph__new, return f2__perception_graph__new(this_cause));
 
@@ -183,7 +183,7 @@ void f2__perception_lattice__initialize() {
   initialize_primobject_3_slot(perception_graph_edge, label, left_node, right_node);
   
   // perception_graph
-  initialize_primobject_2_slot(perception_graph, edges_node_hash, edge_structure_hash_value);
+  initialize_primobject_3_slot(perception_graph, nodes, edges_node_hash, edge_structure_hash_value);
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");

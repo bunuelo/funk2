@@ -774,10 +774,17 @@ f2ptr f2__pointer__equal_sign(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__pointer__not_equal_sign(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__pointer__add_integer(f2ptr cause, f2ptr x, f2ptr y);
 f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y);
+
+// nil
+
 boolean_t raw__null(f2ptr x);
-f2ptr f2__null(f2ptr cause, f2ptr x);
+f2ptr      f2__null(f2ptr cause, f2ptr x);
 boolean_t raw__not(f2ptr x);
-f2ptr f2__not(f2ptr cause, f2ptr x);
+f2ptr     f2__not(f2ptr cause, f2ptr x);
+
+// u64
+
+u64 u64__sqrt(u64 this);
 
 // funk2 pointer (f2ptr)
 

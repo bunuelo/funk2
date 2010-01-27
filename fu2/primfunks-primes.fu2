@@ -19,4 +19,5 @@
 
 [globalize-funk prime_array-new              &primfunk:prime_array__new]
 [globalize-funk prime_array-new_by_extension &primfunk:prime_array__new_by_extension]
+[globalize-funk prime                        &primfunk:prime]
 

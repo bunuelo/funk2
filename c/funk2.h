@@ -168,6 +168,7 @@ typedef struct funk2_s {
   funk2_glwindow_t glwindow;
 #endif
   funk2_cpu_t                         cpu;
+  funk2_primes_t                      primes;
 } funk2_t;
 
 void      funk2__init(funk2_t* this, int argc, char** argv);

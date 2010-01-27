@@ -22,6 +22,12 @@
 #ifndef F2__PRIMES__H
 #define F2__PRIMES__H
 
+typedef struct funk2_primes_s funk2_primes_t;
+
+struct funk2_primes_s {
+  f2ptr prime_array__symbol;
+  f2ptr prime_array;
+};
 
 // **
 

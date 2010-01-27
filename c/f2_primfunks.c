@@ -31,6 +31,32 @@ boolean_t raw__null(f2ptr x) {return !x;}
 f2ptr f2__null(f2ptr cause, f2ptr x) {return f2bool__new(raw__null(x));}
 def_pcfunk1(null, x, return f2__null(this_cause, x));
 
+// u64
+
+u64 u64__sqrt(u64 this) {
+  register u64 root;
+  register u64 remainder;
+  register u64 place;
+  
+  root = 0;
+  remainder = this;
+  place = 0x4000000000000000;
+  
+  while (place > remainder) {
+    place = place >> 2;
+  }
+  
+  while (place) {
+    if (remainder >= root + place) {
+      remainder = remainder - root - place;
+      root = root + (place << 1);
+    }
+    root = root >> 1;
+    place = place >> 2;
+  }
+  return root;
+}
+
 // logic
 
 boolean_t raw__not(f2ptr x) {return !x;}

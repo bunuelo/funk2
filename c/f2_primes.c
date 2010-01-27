@@ -21,30 +21,6 @@
 
 #include "funk2.h"
 
-u64 u64__sqrt(u64 this) {
-  register u64 root;
-  register u64 remainder;
-  register u64 place;
-  
-  root = 0;
-  remainder = this;
-  place = 0x4000000000000000;
-  
-  while (place > remainder) {
-    place = place >> 2;
-  }
-  
-  while (place) {
-    if (remainder >= root + place) {
-      remainder = remainder - root - place;
-      root = root + (place << 1);
-    }
-    root = root >> 1;
-    place = place >> 2;
-  }
-  return root;
-}
-
 // returned data must be f2__free'd to release memory resources allocated in this function
 void raw__u64_prime_array__extend(u64 valid_length, u64 this__length, u64* this) {
   u64 index;
@@ -156,17 +132,63 @@ f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_cou
 }
 def_pcfunk2(prime_array__new_by_extension, this, prime_count, return f2__prime_array__new_by_extension(this_cause, this, prime_count));
 
+// funk2_primes_t
+
+void funk2_primes__reinit(funk2_primes_t* this) {
+  this->prime_array__symbol = new__symbol(cause, "prime_array");
+  this->prime_array         = nil;
+}
+
+void funk2_primes__init(funk2_primes_t* this) {
+  funk2_primes__reinit(this);
+}
+
+void funk2_primes__destroy(funk2_primes_t* this) {
+}
+
+f2ptr funk2_primes__prime(funk2_primes_t* this, f2ptr cause, u64 prime_index) {
+  f2ptr prime_array = this->prime_array;
+  if (prime_array == nil) {
+    prime_array = raw__primes_array__new(cause, prime_index + 1);
+  }
+  u64 prime_array__length = raw__array__length(cause, prime_array);
+  if (prime_index >= prime_array__length) {
+    prime_array = f2__prime_array__new_by_extension(cause, prime_array, prime_index + 1);
+  }
+  this->prime_array = prime_array;
+  environment__add_var_value(cause, global_environment(), this->prime_array__symbol, this->prime_array);
+  return raw__array__elt(cause, prime_array, prime_index);
+}
+
+f2ptr raw__prime(f2ptr cause, u64 prime_index) {
+  return funk2_primes__prime(&(__funk2.primes), cause, prime_index);
+}
+
+f2ptr f2__prime(f2ptr cause, f2ptr prime_index) {
+  if (! raw__integer__is_type(cause, prime_index)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 prime_index__i = f2integer__i(prime_index, cause);
+  return raw__prime(cause, prime_index__i);
+}
+def_pcfunk1(prime, prime_index, return f2__prime(this_cause, prime_index));
+
+
 // **
 
 void f2__primes__reinitialize_globalvars() {
+  funk2_primes__reinit(&(__funk2.primes));
 }
 
 void f2__primes__initialize() {
+  funk2_primes__init(&(__funk2.primes));
+  
   funk2_module_registration__add_module(&(__funk2.module_registration), "primes", "", &f2__primes__reinitialize_globalvars);
   
   f2__primes__reinitialize_globalvars();
   
   f2__primcfunk__init__1(prime_array__new, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
   f2__primcfunk__init__2(prime_array__new_by_extension, this, prime_count, "generate the first <prime_count> prime numbers by extending a shorted array of prime numbers.");
+  f2__primcfunk__init__1(prime, prime_index, "return the <prime_index>'th prime (index 0 => 2, index 1 => 3, index 2 => 5, etc.)");
 }
 

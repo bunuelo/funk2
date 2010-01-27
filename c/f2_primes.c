@@ -119,7 +119,7 @@ def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_caus
 
 f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count) {
   if ((! raw__array__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, this))) {
+      (! raw__integer__is_type(cause, prime_count))) {
     return f2larva__new(cause, 1);
   }
   u64 this__length = raw__array__length(cause, this);

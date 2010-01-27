@@ -45,7 +45,7 @@ u64 u64__sqrt(u64 this) {
   return root;
 }
 
-f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
+f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
   u64* prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * prime_count));
   prime_array[0] = 2;
   {
@@ -85,7 +85,7 @@ f2ptr raw__generate_primes(f2ptr cause, u64 prime_count) {
   return result;
 }
 
-f2ptr f2__generate_primes(f2ptr cause, f2ptr prime_count) {
+f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
   if (! raw__integer__is_type(cause, prime_count)) {
     return f2larva__new(cause, 1);
   }
@@ -95,7 +95,7 @@ f2ptr f2__generate_primes(f2ptr cause, f2ptr prime_count) {
   }
   return raw__generate_primes(cause, prime_count__i);
 }
-def_pcfunk1(generate_primes, prime_count, return f2__generate_primes(this_cause, prime_count));
+def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_cause, prime_count));
 
 
 // **
@@ -108,6 +108,6 @@ void f2__primes__initialize() {
   
   f2__primes__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(generate_primes, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
+  f2__primcfunk__init__1(prime_array__new, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
 }
 

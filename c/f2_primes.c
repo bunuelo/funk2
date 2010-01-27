@@ -93,7 +93,7 @@ f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
   if (prime_count__i < 0) {
     return f2larva__new(cause, 2);
   }
-  return raw__generate_primes(cause, prime_count__i);
+  return raw__prime_array__new(cause, prime_count__i);
 }
 def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_cause, prime_count));
 

@@ -48,8 +48,8 @@ u64 u64__sqrt(u64 this) {
 // returned data must be f2__free'd to release memory resources allocated in this function
 void raw__u64_prime_array__extend(u64 valid_length, u64 this__length, u64* this) {
   u64 index;
-  for (index = this__length; index < new_prime_array__length; index ++) {
-    u64 prime_guess = new_prime_array[index - 1];
+  for (index = this__length; index < this__length; index ++) {
+    u64 prime_guess = this[index - 1];
     boolean_t is_prime = boolean__false;
     while (! is_prime) {
       prime_guess ++;
@@ -58,7 +58,7 @@ void raw__u64_prime_array__extend(u64 valid_length, u64 this__length, u64* this)
 	u64 prime_guess__sqrt = u64__sqrt(prime_guess);
 	u64 try_divisor_index;
 	for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
-	  u64 try_divisor = new_prime_array[try_divisor_index];
+	  u64 try_divisor = this[try_divisor_index];
 	  if (try_divisor > prime_guess__sqrt) {
 	    break;
 	  }
@@ -69,7 +69,7 @@ void raw__u64_prime_array__extend(u64 valid_length, u64 this__length, u64* this)
 	}
       }
     }
-    new_prime_array[index] = prime_guess;
+    this[index] = prime_guess;
   }
 }
 

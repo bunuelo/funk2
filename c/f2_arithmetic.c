@@ -221,19 +221,14 @@ def_pcfunk2(number__divide_by_number, this, number, return f2__number__divide_by
 // number add
 
 boolean_t s64__add_overflows(s64 this, s64 that) {
+  if (that == 0) {
+    return boolean__false;
+  }
   s64 result = this + that;
-  if (this >= 0) {
-    if (that >= 0) {
-      return (result < this);
-    } else {
-      return (result < -that);
-    }
+  if (that > 0) {
+    return (result < this);
   } else {
-    if (that >= 0) {
-      return (result < -this);
-    } else {
-      return (result > that);
-    }
+    return (result > this);
   }
 }
 

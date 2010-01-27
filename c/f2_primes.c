@@ -153,7 +153,7 @@ f2ptr funk2_primes__prime(funk2_primes_t* this, f2ptr cause, u64 prime_index) {
   }
   u64 prime_array__length = raw__array__length(cause, prime_array);
   if (prime_index >= prime_array__length) {
-    prime_array = f2__prime_array__new_by_extension(cause, prime_array, prime_index + 1);
+    prime_array = raw__prime_array__new_by_extension(cause, prime_array, prime_index + 1);
   }
   this->prime_array = prime_array;
   environment__add_var_value(cause, global_environment(), this->prime_array__symbol, this->prime_array);

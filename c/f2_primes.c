@@ -46,6 +46,34 @@ u64 u64__sqrt(u64 this) {
 }
 
 // returned data must be f2__free'd to release memory resources allocated in this function
+void raw__u64_prime_array__extend(u64 valid_length, u64 this__length, u64* this) {
+  u64 index;
+  for (index = this__length; index < new_prime_array__length; index ++) {
+    u64 prime_guess = new_prime_array[index - 1];
+    boolean_t is_prime = boolean__false;
+    while (! is_prime) {
+      prime_guess ++;
+      is_prime = boolean__true;
+      {
+	u64 prime_guess__sqrt = u64__sqrt(prime_guess);
+	u64 try_divisor_index;
+	for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
+	  u64 try_divisor = new_prime_array[try_divisor_index];
+	  if (try_divisor > prime_guess__sqrt) {
+	    break;
+	  }
+	  if (prime_guess % try_divisor == 0) {
+	    is_prime = boolean__false;
+	    break;
+	  }
+	}
+      }
+    }
+    new_prime_array[index] = prime_guess;
+  }
+}
+
+// returned data must be f2__free'd to release memory resources allocated in this function
 u64* raw__u64_prime_array__new_by_extension(u64 this__length, u64* this, u64 new_prime_array__length) {
   u64* new_prime_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * new_prime_array__length));
   {
@@ -53,29 +81,7 @@ u64* raw__u64_prime_array__new_by_extension(u64 this__length, u64* this, u64 new
     for (index = 0; index < this__length; index ++) {
       new_prime_array[index] = this[index];
     }
-    for (; index < new_prime_array__length; index ++) {
-      u64 prime_guess = new_prime_array[index - 1];
-      boolean_t is_prime = boolean__false;
-      while (! is_prime) {
-	prime_guess ++;
-	is_prime = boolean__true;
-	{
-	  u64 prime_guess__sqrt = u64__sqrt(prime_guess);
-	  u64 try_divisor_index;
-	  for (try_divisor_index = 0; try_divisor_index < index; try_divisor_index ++) {
-	    u64 try_divisor = new_prime_array[try_divisor_index];
-	    if (try_divisor > prime_guess__sqrt) {
-	      break;
-	    }
-	    if (prime_guess % try_divisor == 0) {
-	      is_prime = boolean__false;
-	      break;
-	    }
-	  }
-	}
-      }
-      new_prime_array[index] = prime_guess;
-    }
+    raw__u64_prime_array__extend(this__length, new_prime_array__length, new_prime_array);
   }
   return new_prime_array;
 }
@@ -112,13 +118,43 @@ f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
 def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_cause, prime_count));
 
 f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count) {
+  if ((! raw__array__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
   u64 this__length = raw__array__length(cause, this);
   if (this__length == 0) {
     return f2larva__new(cause, 2);
   }
-  u64* prime_array = (u64*)f2__malloc(sizeof(u64) * this__length);
-  
+  f2ptr prime_count__i      = f2integer__i(prime_count, cause);
+  u64   prime_array__length = prime_count__i;
+  f2ptr prime_array         = raw__array__new(cause, prime_array__length);
+  {
+    u64   u64_prime_array__length = prime_count__i;
+    u64*  u64_prime_array         = (u64*)f2__malloc(sizeof(u64) * u64_prime_array__length);
+    {
+      u64 index;
+      for (index = 0; index < this__length; index ++) {
+	f2ptr elt = raw__array__elt(cause, this, index);
+	if (! raw__integer__is_type(cause, elt)) {
+	  f2__free(to_ptr(prime_array));
+	  return f2larva__new(cause, 1);
+	}
+	u64 elt__i = f2integer__i(elt, cause);
+	u64_prime_array[index] = elt__i;
+      }
+    }
+    raw__u64_prime_array__extend(this__length, u64_prime_array__length, u64_prime_array);
+    {
+      u64 index;
+      for (index = 0; index < prime_array__length; index ++) {
+	raw__array__elt__set(cause, prime_array, index, f2integer__new(cause, u64_prime_array[index]));
+      }
+    }
+  }
+  return prime_array;
 }
+def_pcfunk1(prime_array__new_by_extension, this, prime_count, return f2__prime_array__new_by_extension(cause, this, prime_count));
 
 // **
 
@@ -131,5 +167,6 @@ void f2__primes__initialize() {
   f2__primes__reinitialize_globalvars();
   
   f2__primcfunk__init__1(prime_array__new, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
+  f2__primcfunk__init__1(prime_array__new_by_extension, this, prime_count, "generate the first <prime_count> prime numbers by extending a shorted array of prime numbers.");
 }
 

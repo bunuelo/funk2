@@ -113,10 +113,11 @@ typedef struct funk2_globalenv_s {
   f2ptr set__symbol;
   f2ptr execute__symbol;
   
-  f2ptr hash_value__symbol;
+  f2ptr eq_hash_value__symbol;
+  f2ptr equals_hash_value__symbol;
   
-  funk2_object_types_t            object_type;
-  funk2_blocks_world_t            blocks_world;
+  funk2_object_types_t object_type;
+  funk2_blocks_world_t blocks_world;
   
 } funk2_globalenv_t;
 

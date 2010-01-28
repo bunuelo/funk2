@@ -169,6 +169,15 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(perception_graph__to_string, this, return f2__perception_graph__to_string(this_cause, this));
 
+boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__edge_structure_hash_value = f2__perception_graph__edge_structure_hash_value(cause, this);
+  f2ptr that__edge_structure_hash_value = f2__perception_graph__edge_structure_hash_value(cause, that);
+  if (! raw__eq(cause, this__edge_structure_hash_value, that__edge_structure_hash_value)) {
+    return boolean__false;
+  }
+  
+}
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {

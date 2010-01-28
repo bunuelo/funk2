@@ -1505,7 +1505,7 @@ f2ptr f2__eq_hash_value(f2ptr cause, f2ptr exp) {
 def_pcfunk1(eq_hash_value, exp, return f2__eq_hash_value(this_cause, exp));
 
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
-  if (x == y) {
+  if (x == y) {b
     return boolean__true;
   }
   if ((! x) || (! y)) {

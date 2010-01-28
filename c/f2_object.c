@@ -221,14 +221,23 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
-f2ptr f2__object__hash_value(f2ptr cause, f2ptr fiber, f2ptr this) {
-  f2ptr hash_value_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.hash_value__symbol);
-  if (! raw__funkable__is_type(cause, hash_value_funk)) {
+f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr fiber, f2ptr this) {
+  f2ptr eq_hash_value_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.eq_hash_value__symbol);
+  if (! raw__funkable__is_type(cause, eq_hash_value_funk)) {
     return f2larva__new(cause, 1);
   }
-  return f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, this, nil));
+  return f2__force_funk_apply(cause, fiber, eq_hash_value_funk, f2cons__new(cause, this, nil));
 }
-def_pcfunk1(object__hash_value, this, return f2__object__hash_value(this_cause, simple_fiber, this));
+def_pcfunk1(object__eq_hash_value, this, return f2__object__eq_hash_value(this_cause, simple_fiber, this));
+
+f2ptr f2__object__equals_hash_value(f2ptr cause, f2ptr fiber, f2ptr this) {
+  f2ptr equals_hash_value_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.equals_hash_value__symbol);
+  if (! raw__funkable__is_type(cause, equals_hash_value_funk)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2__force_funk_apply(cause, fiber, equals_hash_value_funk, f2cons__new(cause, this, nil));
+}
+def_pcfunk1(object__equals_hash_value, this, return f2__object__equals_hash_value(this_cause, simple_fiber, this));
 
 
 
@@ -324,9 +333,10 @@ void f2__object__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(object__type,            this,                       "returns the symbolic type name of the object.");
-  f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
-  f2__primcfunk__init__1(object__hash_value,      this,                       "returns the hash_value of the object.");
-  f2__primcfunk__init__2(object__property_scan,   this, property_funk,        "property scan funk of type, [funk [name value] ...].");
+  f2__primcfunk__init__1(object__type,              this,                       "returns the symbolic type name of the object.");
+  f2__primcfunk__init__3(object__slot__type_funk,   this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
+  f2__primcfunk__init__1(object__eq_hash_value,     this,                       "returns the eq_hash_value of the object.");
+  f2__primcfunk__init__1(object__equals_hash_value, this,                       "returns the equals_hash_value of the object.");
+  f2__primcfunk__init__2(object__property_scan,     this, property_funk,        "property scan funk of type, [funk [name value] ...].");
 }
 

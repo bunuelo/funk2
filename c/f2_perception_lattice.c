@@ -54,12 +54,11 @@ f2ptr f2__perception_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr f2__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
-  f2ptr edge            = f2perception_graph_edge__new(cause, label, left_node, right_node);
-  f2ptr edges_node_hash = f2__perception_graph__edges_node_hash(cause, this);
+  f2ptr edge                    = f2perception_graph_edge__new(cause, label, left_node, right_node);
   f2ptr left_node_ins_and_outs  = f2__perception_graph__add_node(cause, this, left_node);
   f2ptr right_node_ins_and_outs = f2__perception_graph__add_node(cause, this, right_node);
-  f2ptr left_node_outs = f2__cons__cdr(cause, left_node_ins_and_outs);
-  f2ptr right_node_ins = f2__cons__car(cause, right_node_ins_and_outs);
+  f2ptr left_node_outs          = f2__cons__cdr(cause, left_node_ins_and_outs);
+  f2ptr right_node_ins          = f2__cons__car(cause, right_node_ins_and_outs);
   left_node_outs = f2cons__new(cause, edge, left_node_outs);
   right_node_ins = f2cons__new(cause, edge, right_node_ins);
   f2__cons__cdr__set(cause, left_node_ins_and_outs,  left_node_outs);
@@ -175,6 +174,7 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__eq(cause, this__edge_structure_hash_value, that__edge_structure_hash_value)) {
     return boolean__false;
   }
+  f2ptr hash = f2__hash__new(cause);
   
 }
 

@@ -1504,6 +1504,35 @@ f2ptr f2__eq_hash_value(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(eq_hash_value, exp, return f2__eq_hash_value(this_cause, exp));
 
+boolean_t raw__integer__equals( f2ptr cause, f2ptr this, f2ptr that) {return raw__integer__eq( cause, this, that);}
+boolean_t raw__double__equals(  f2ptr cause, f2ptr this, f2ptr that) {return raw__double__eq(  cause, this, that);}
+boolean_t raw__float__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__float__eq(   cause, this, that);}
+boolean_t raw__pointer__equals( f2ptr cause, f2ptr this, f2ptr that) {return raw__pointer__eq( cause, this, that);}
+boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__gfunkptr__eq(cause, this, that);}
+boolean_t raw__mutex__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__mutex__eq(   cause, this, that);}
+boolean_t raw__char__equals(    f2ptr cause, f2ptr this, f2ptr that) {return raw__char__eq(    cause, this, that);}
+boolean_t raw__string__equals(  f2ptr cause, f2ptr this, f2ptr that) {return raw__string__eq(  cause, this, that);}
+boolean_t raw__symbol__equals(  f2ptr cause, f2ptr this, f2ptr that) {return raw__symbol__eq(  cause, this, that);}
+boolean_t raw__chunk__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__chunk__eq(   cause, this, that);}
+boolean_t raw__larva__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__larva__eq(   cause, this, that);}
+
+boolean_t raw__array__equals(   f2ptr cause, f2ptr this, f2ptr that) {
+  s64 x_length = raw__array__length(cause, x);
+  s64 y_length = raw__array__length(cause, y);
+  if (x_length != y_length) {
+    return boolean__false;
+  }
+  s64 index;
+  for (index = 0; index < x_length; index ++) {
+    f2ptr x_subexp = raw__array__elt(cause, x, index);
+    f2ptr y_subexp = raw__array__elt(cause, y, index);
+    if (! raw__equals(cause, x_subexp, y_subexp)) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {
     return boolean__true;
@@ -1517,47 +1546,20 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   }
   switch(x_ptype) {
-  case ptype_integer:
-    return f2integer__i(x, cause) == f2integer__i(y, cause);
-  case ptype_double:
-    return f2double__d(x, cause) == f2double__d(y, cause);
-  case ptype_float:
-    return f2float__f(x, cause) == f2float__f(y, cause);
-  case ptype_pointer:
-    return f2pointer__p(x, cause) == f2pointer__p(y, cause);
-  case ptype_gfunkptr:
-    return f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause);
-  case ptype_mutex:
-    return x == y;
-  case ptype_char:
-    return f2char__ch(x, cause) == f2char__ch(y, cause);
-  case ptype_string:
-    return raw__string__eq(cause, x, y);
-  case ptype_symbol:
-    return raw__symbol__eq(cause, x, y);
-  case ptype_chunk:
-    return x == y;
+  case ptype_integer:      return raw__integer__equals( cause, x, y);
+  case ptype_double:       return raw__double__equals(  cause, x, y);
+  case ptype_float:        return raw__float__equals(   cause, x, y);
+  case ptype_pointer:      return raw__pointer__equals( cause, x, y);
+  case ptype_gfunkptr:     return raw__gfunkptr__equals(cause, x, y);
+  case ptype_mutex:        return raw__mutex__equals(   cause, x, y);
+  case ptype_char:         return raw__char__equals(    cause, x, y);
+  case ptype_string:       return raw__string__equals(  cause, x, y);
+  case ptype_symbol:       return raw__symbol__equals(  cause, x, y);
+  case ptype_chunk:        return raw__chunk__equals(   cause, x, y);
   case ptype_simple_array:
-  case ptype_traced_array: {
-    s64 x_length = raw__array__length(cause, x);
-    s64 y_length = raw__array__length(cause, y);
-    if (x_length != y_length) {
-      return boolean__false;
-    }
-    s64 index;
-    for (index = 0; index < x_length; index ++) {
-      f2ptr x_subexp = raw__array__elt(cause, x, index);
-      f2ptr y_subexp = raw__array__elt(cause, y, index);
-      if (! raw__equals(cause, x_subexp, y_subexp)) {
-	return boolean__false;
-      }
-    }
-    return boolean__true;
-  }
-  case ptype_larva:
-    return f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause);
-  default:
-    return x == y;
+  case ptype_traced_array: return raw__array__equals(   cause, x, y);
+  case ptype_larva:        return raw__larva__equals(   cause, x, y);
+  default:                 return boolean__false;
   }
 }
 

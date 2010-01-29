@@ -239,6 +239,14 @@ f2ptr f2__object__equals_hash_value(f2ptr cause, f2ptr fiber, f2ptr this) {
 }
 def_pcfunk1(object__equals_hash_value, this, return f2__object__equals_hash_value(this_cause, simple_fiber, this));
 
+f2ptr f2__object__equals(f2ptr cause, f2ptr fiber, f2ptr this) {
+  f2ptr equals_funk = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.equals__symbol);
+  if (! raw__funkable__is_type(cause, equals_funk)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2__force_funk_apply(cause, fiber, equals_funk, f2cons__new(cause, this, nil));
+}
+def_pcfunk1(object__equals, this, return f2__object__equals(this_cause, simple_fiber, this));
 
 
 // property_scan
@@ -337,6 +345,7 @@ void f2__object__initialize() {
   f2__primcfunk__init__3(object__slot__type_funk,   this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");
   f2__primcfunk__init__1(object__eq_hash_value,     this,                       "returns the eq_hash_value of the object.");
   f2__primcfunk__init__1(object__equals_hash_value, this,                       "returns the equals_hash_value of the object.");
+  f2__primcfunk__init__1(object__equals,            this,                       "returns whether two objects are equal according to the source object equals function.");
   f2__primcfunk__init__2(object__property_scan,     this, property_funk,        "property scan funk of type, [funk [name value] ...].");
 }
 

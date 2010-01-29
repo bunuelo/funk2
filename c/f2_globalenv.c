@@ -119,6 +119,8 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   
   this->eq_hash_value__symbol     = new__symbol(cause, "eq_hash_value");
   this->equals_hash_value__symbol = new__symbol(cause, "equals_hash_value");
+  
+  this->equals__symbol = new__symbol(cause, "equals");
 }
 
 void funk2_globalenv__init(funk2_globalenv_t* this) {

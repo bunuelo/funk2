@@ -266,6 +266,8 @@ def_pcfunk1(integer__type,    this, return f2__integer__type(this_cause, this));
 def_pcfunk1(integer__new,     this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
 def_pcfunk1(integer__i,       this, return this);
 
+boolean_t raw__integer__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2integer__i(this, cause) == f2integer__i(that, cause);}
+
 u64 raw__integer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__i(this, cause);}
 
 f2ptr f2__integer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__integer__eq_hash_value(cause, this));}
@@ -345,6 +347,8 @@ def_pcfunk1(double__type,    this, return f2__double__type(this_cause, this));
 
 def_pcfunk1(double__new,     this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 def_pcfunk1(double__d,       this, return f2double__new(this_cause, f2double__d(this, this_cause)));
+
+boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2double__d(this, cause) == f2double__d(that, cause);}
 
 u64 raw__double__eq_hash_value(f2ptr cause, f2ptr this) {
   union {
@@ -442,6 +446,8 @@ def_pcfunk1(float__type,    this, return f2__float__type(this_cause, this));
 def_pcfunk1(float__new,     this, return f2float__new(this_cause, f2float__f(this_cause, this)));
 def_pcfunk1(float__f,       this, return this);
 
+boolean_t raw__float__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2float__f(this, cause) == f2float__f(that, cause);}
+
 u64 raw__float__eq_hash_value(f2ptr cause, f2ptr this) {
   union {
     u64 u;
@@ -533,6 +539,8 @@ def_pcfunk1(pointer__type,    this, return f2__pointer__type(this_cause, this));
 
 def_pcfunk1(pointer__new,     this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
 def_pcfunk1(pointer__p,       this, return this);
+
+boolean_t raw__pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2pointer__p(this, cause) == f2pointer__p(that, cause);}
 
 u64 raw__pointer__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2pointer__p(this, cause);}
 
@@ -660,6 +668,8 @@ def_pcfunk1(gfunkptr__gfunkptr, this, return f2gfunkptr__gfunkptr(this, this_cau
 def_pcfunk1(gfunkptr__computer_id, this, return f2integer__new(this_cause, f2gfunkptr__computer_id(this, this_cause)));
 def_pcfunk1(gfunkptr__pool_index, this, return f2integer__new(this_cause, f2gfunkptr__pool_index(this, this_cause)));
 def_pcfunk1(gfunkptr__pool_address, this, return f2integer__new(this_cause, f2gfunkptr__pool_address(this, this_cause)));
+
+boolean_t raw__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2gfunkptr__gfunkptr(this, cause) == f2gfunkptr__gfunkptr(that, cause);}
 
 u64 raw__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2gfunkptr__gfunkptr(this, cause);}
 
@@ -805,6 +815,8 @@ def_pcfunk1(mutex__unlock, this, return f2__mutex__unlock(this_cause, this));
 f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__trylock(x, cause));}
 def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
 
+boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {return this == that;}
+
 u64 raw__mutex__eq_hash_value(f2ptr cause, f2ptr this) {
   funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
   return funk2_processor_mutex__eq_hash_value(m);
@@ -901,6 +913,8 @@ def_pcfunk1(char__type, this, return f2__char__type(this_cause, this));
 
 def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
 def_pcfunk1(char__ch, this, return this);
+
+boolean_t raw__char__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2char__ch(this, cause) == f2char__ch(that, cause);}
 
 u64 raw__char__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2char__ch(this, cause);}
 
@@ -1517,6 +1531,8 @@ boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__is_type(cause, x));}
 f2ptr f2__chunk__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("chunk"), (u8*)"chunk");}
 f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
+
+boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that) {return this == that;}
 
 u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this) {return f2chunk__eq_hash_value(this, cause);}
 f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__chunk__eq_hash_value(this, cause));}
@@ -2392,6 +2408,8 @@ def_pcfunk1(larva__type, x, return f2__larva__type(this_cause, x));
 
 def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
 def_pcfunk1(larva__larva_type, this, return f2integer__new(this_cause, f2larva__larva_type(this, this_cause)));
+
+boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2larva__larva_type(this, cause) == f2larva__larva_type(that, cause);}
 
 u64 raw__larva__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2larva__larva_type(this, cause);}
 

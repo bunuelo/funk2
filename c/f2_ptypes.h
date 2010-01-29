@@ -33,8 +33,8 @@
 #define PRIME_NUMBER__16_BIT 65521
 #define PRIME_NUMBER__32_BIT 3267000013u
 
-#define chararray__hash_value(length, str)                 \
-  (((u64)(*((u8*)(((u8*)(str))+(0)))))                   * \
+#define chararray__hash_value(length, str)                \
+  (((u64)(*((u8*)(((u8*)(str))+(0)))))                  * \
    ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>4))))) * \
    ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>3))))) * \
    ((u64)(*((u8*)(((u8*)(str))+(((u64)(length))>>2))))) * \
@@ -93,6 +93,8 @@ f2ptr f2integer__primobject_type__new(f2ptr cause);
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__integer__is_type(f2ptr cause, f2ptr exp);
 
+boolean_t raw__integer__eq(f2ptr cause, f2ptr this, f2ptr that);
+
 u64   raw__integer__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__integer__eq_hash_value(f2ptr cause, f2ptr this);
 
@@ -105,6 +107,8 @@ f2ptr f2double__primobject_type__new(f2ptr cause);
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__double__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that);
 
 u64   raw__double__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__double__eq_hash_value(f2ptr cause, f2ptr this);
@@ -119,6 +123,8 @@ f2ptr f2float__primobject_type__new(f2ptr cause);
 boolean_t raw__float__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__float__is_type(f2ptr cause, f2ptr exp);
 
+boolean_t raw__float__eq(f2ptr cause, f2ptr this, f2ptr that);
+
 u64   raw__float__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__float__eq_hash_value(f2ptr cause, f2ptr this);
 
@@ -131,6 +137,8 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause);
 
 boolean_t raw__pointer__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__pointer__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__pointer__eq(f2ptr cause, f2ptr this, f2ptr that);
 
 u64   raw__pointer__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__pointer__eq_hash_value(f2ptr cause, f2ptr this);
@@ -148,6 +156,8 @@ f2ptr f2gfunkptr__primobject_type__new(f2ptr cause);
 
 boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__gfunkptr__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that);
 
 u64   raw__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
@@ -170,6 +180,8 @@ f2ptr  f2__mutex__trylock(f2ptr cause, f2ptr x);
 boolean_t raw__mutex__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__mutex__is_type(f2ptr cause, f2ptr exp);
 
+boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+
 u64   raw__mutex__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__mutex__eq_hash_value(f2ptr cause, f2ptr this);
 
@@ -182,6 +194,8 @@ f2ptr f2char__primobject_type__new(f2ptr cause);
 
 boolean_t raw__char__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__char__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__char__eq(f2ptr cause, f2ptr this, f2ptr that);
 
 u64   raw__char__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__char__eq_hash_value(f2ptr cause, f2ptr this);
@@ -257,6 +271,8 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause);
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that);
 
 u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this);
@@ -350,6 +366,8 @@ f2ptr f2larva__primobject_type__new(f2ptr cause);
 
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__larva__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that);
 
 u64   raw__larva__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr  f2__larva__eq_hash_value(f2ptr cause, f2ptr this);

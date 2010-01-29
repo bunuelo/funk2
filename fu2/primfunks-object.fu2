@@ -23,5 +23,6 @@
 [globalize-funk object-slot-type_funk    &primfunk:object__slot__type_funk]
 [globalize-funk object-eq_hash_value     &primfunk:object__eq_hash_value]
 [globalize-funk object-equals_hash_value &primfunk:object__equals_hash_value]
+[globalize-funk object-equals            &primfunk:object__equals]
 [globalize-funk object-property_scan     &primfunk:object__property_scan]
 

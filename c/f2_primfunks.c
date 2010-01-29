@@ -1517,16 +1517,16 @@ boolean_t raw__chunk__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw
 boolean_t raw__larva__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__larva__eq(   cause, this, that);}
 
 boolean_t raw__array__equals(   f2ptr cause, f2ptr this, f2ptr that) {
-  s64 x_length = raw__array__length(cause, x);
-  s64 y_length = raw__array__length(cause, y);
-  if (x_length != y_length) {
+  s64 this__length = raw__array__length(cause, this);
+  s64 that__length = raw__array__length(cause, that);
+  if (this__length != that__length) {
     return boolean__false;
   }
   s64 index;
-  for (index = 0; index < x_length; index ++) {
-    f2ptr x_subexp = raw__array__elt(cause, x, index);
-    f2ptr y_subexp = raw__array__elt(cause, y, index);
-    if (! raw__equals(cause, x_subexp, y_subexp)) {
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__array__elt(cause, this, index);
+    f2ptr that__subexp = raw__array__elt(cause, that, index);
+    if (! raw__equals(cause, this__subexp, that__subexp)) {
       return boolean__false;
     }
   }

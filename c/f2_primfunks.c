@@ -257,27 +257,6 @@ f2ptr new__string(f2ptr cause, char* str) {
   return f2string__new(cause, strlen(str), (u8*)(str));
 }
 
-boolean_t raw__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
-  u64 x_eq_hash_value = f2string__eq_hash_value(x, cause);
-  u64 y_eq_hash_value = f2string__eq_hash_value(y, cause);
-  if (x_eq_hash_value != y_eq_hash_value) {
-    return nil;
-  }
-  u64 x_len = f2string__length(x, cause);
-  u64 y_len = f2string__length(y, cause);
-  if (x_len != y_len) {
-    return nil;
-  }
-  char* x_str = alloca(x_len);
-  char* y_str = alloca(x_len);
-  f2string__str_copy(x, cause, (u8*)x_str);
-  f2string__str_copy(y, cause, (u8*)y_str);
-  return (memcmp(x_str, y_str, x_len) == 0);
-}
-
-f2ptr f2__string__eq(f2ptr cause, f2ptr x, f2ptr y) {
-  return f2bool__new(raw__string__eq(cause, x, y));
-}
 def_pcfunk2(string__equals, x, y, return f2__string__eq(this_cause, x, y));
 
 f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
@@ -1503,35 +1482,6 @@ f2ptr f2__eq_hash_value(f2ptr cause, f2ptr exp) {
   return f2integer__new(cause, raw__eq_hash_value(cause, exp));
 }
 def_pcfunk1(eq_hash_value, exp, return f2__eq_hash_value(this_cause, exp));
-
-boolean_t raw__integer__equals( f2ptr cause, f2ptr this, f2ptr that) {return raw__integer__eq( cause, this, that);}
-boolean_t raw__double__equals(  f2ptr cause, f2ptr this, f2ptr that) {return raw__double__eq(  cause, this, that);}
-boolean_t raw__float__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__float__eq(   cause, this, that);}
-boolean_t raw__pointer__equals( f2ptr cause, f2ptr this, f2ptr that) {return raw__pointer__eq( cause, this, that);}
-boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__gfunkptr__eq(cause, this, that);}
-boolean_t raw__mutex__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__mutex__eq(   cause, this, that);}
-boolean_t raw__char__equals(    f2ptr cause, f2ptr this, f2ptr that) {return raw__char__eq(    cause, this, that);}
-boolean_t raw__string__equals(  f2ptr cause, f2ptr this, f2ptr that) {return raw__string__eq(  cause, this, that);}
-boolean_t raw__symbol__equals(  f2ptr cause, f2ptr this, f2ptr that) {return raw__symbol__eq(  cause, this, that);}
-boolean_t raw__chunk__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__chunk__eq(   cause, this, that);}
-boolean_t raw__larva__equals(   f2ptr cause, f2ptr this, f2ptr that) {return raw__larva__eq(   cause, this, that);}
-
-boolean_t raw__array__equals(   f2ptr cause, f2ptr this, f2ptr that) {
-  s64 this__length = raw__array__length(cause, this);
-  s64 that__length = raw__array__length(cause, that);
-  if (this__length != that__length) {
-    return boolean__false;
-  }
-  s64 index;
-  for (index = 0; index < this__length; index ++) {
-    f2ptr this__subexp = raw__array__elt(cause, this, index);
-    f2ptr that__subexp = raw__array__elt(cause, that, index);
-    if (! raw__equals(cause, this__subexp, that__subexp)) {
-      return boolean__false;
-    }
-  }
-  return boolean__true;
-}
 
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {

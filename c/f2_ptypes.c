@@ -266,12 +266,30 @@ def_pcfunk1(integer__type,    this, return f2__integer__type(this_cause, this));
 def_pcfunk1(integer__new,     this, return f2integer__new(this_cause, f2integer__i(this, this_cause)));
 def_pcfunk1(integer__i,       this, return this);
 
-boolean_t raw__integer__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2integer__i(this, cause) == f2integer__i(that, cause);}
+boolean_t raw__integer__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__integer__is_type(cause, that)) {
+    return boolean__false;
+  }
+  return f2integer__i(this, cause) == f2integer__i(that, cause);
+}
+
+f2ptr f2__integer__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__integer__eq(cause, this, that));
+}
 
 u64 raw__integer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__i(this, cause);}
 
 f2ptr f2__integer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__integer__eq_hash_value(cause, this));}
 def_pcfunk1(integer__eq_hash_value, this, return f2__integer__eq_hash_value(this_cause, this));
+
+boolean_t raw__integer__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__integer__eq(cause, this, that);}
+
+f2ptr f2__integer__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__integer__equals(cause, this, that));
+}
 
 f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -348,7 +366,16 @@ def_pcfunk1(double__type,    this, return f2__double__type(this_cause, this));
 def_pcfunk1(double__new,     this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 def_pcfunk1(double__d,       this, return f2double__new(this_cause, f2double__d(this, this_cause)));
 
-boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2double__d(this, cause) == f2double__d(that, cause);}
+boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__double__is_type(cause, that)) {
+    return boolean__false;
+  }
+  return f2double__d(this, cause) == f2double__d(that, cause);
+}
+
+f2ptr f2__double__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__double__eq(cause, this, that));
+}
 
 u64 raw__double__eq_hash_value(f2ptr cause, f2ptr this) {
   union {
@@ -366,6 +393,15 @@ u64 raw__double__eq_hash_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__double__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__double__eq_hash_value(cause, this));}
 def_pcfunk1(double__eq_hash_value, this, return f2__double__eq_hash_value(this_cause, this));
+
+boolean_t raw__double__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__double__eq(cause, this, that);}
+
+f2ptr f2__double__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__double__equals(cause, this, that));
+}
 
 f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -446,7 +482,13 @@ def_pcfunk1(float__type,    this, return f2__float__type(this_cause, this));
 def_pcfunk1(float__new,     this, return f2float__new(this_cause, f2float__f(this_cause, this)));
 def_pcfunk1(float__f,       this, return this);
 
-boolean_t raw__float__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2float__f(this, cause) == f2float__f(that, cause);}
+boolean_t raw__float__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2float__f(this, cause) == f2float__f(that, cause);
+}
+
+f2ptr f2__float__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__float__eq(cause, this, that));
+}
 
 u64 raw__float__eq_hash_value(f2ptr cause, f2ptr this) {
   union {
@@ -464,6 +506,20 @@ u64 raw__float__eq_hash_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__float__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__float__eq_hash_value(cause, this));}
 def_pcfunk1(float__eq_hash_value, this, return f2__float__eq_hash_value(this_cause, this));
+
+boolean_t raw__float__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__float__is_type(cause, that)) {
+    return boolean__false;
+  }
+  return raw__float__eq(cause, this, that);
+}
+
+f2ptr f2__float__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__float__equals(cause, this, that));
+}
 
 f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -540,12 +596,27 @@ def_pcfunk1(pointer__type,    this, return f2__pointer__type(this_cause, this));
 def_pcfunk1(pointer__new,     this, return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
 def_pcfunk1(pointer__p,       this, return this);
 
-boolean_t raw__pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2pointer__p(this, cause) == f2pointer__p(that, cause);}
+boolean_t raw__pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2pointer__p(this, cause) == f2pointer__p(that, cause);
+}
+
+f2ptr f2__pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__pointer__eq(cause, this, that));
+}
 
 u64 raw__pointer__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2pointer__p(this, cause);}
 
 f2ptr f2__pointer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__pointer__eq_hash_value(cause, this));}
 def_pcfunk1(pointer__eq_hash_value, this, return f2__pointer__eq_hash_value(this_cause, this));
+
+boolean_t raw__pointer__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__pointer__eq( cause, this, that);}
+
+f2ptr f2__pointer__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__pointer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__pointer__equals(cause, this, that));
+}
 
 f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -669,12 +740,27 @@ def_pcfunk1(gfunkptr__computer_id, this, return f2integer__new(this_cause, f2gfu
 def_pcfunk1(gfunkptr__pool_index, this, return f2integer__new(this_cause, f2gfunkptr__pool_index(this, this_cause)));
 def_pcfunk1(gfunkptr__pool_address, this, return f2integer__new(this_cause, f2gfunkptr__pool_address(this, this_cause)));
 
-boolean_t raw__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2gfunkptr__gfunkptr(this, cause) == f2gfunkptr__gfunkptr(that, cause);}
+boolean_t raw__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2gfunkptr__gfunkptr(this, cause) == f2gfunkptr__gfunkptr(that, cause);
+}
+
+f2ptr f2__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__gfunkptr__eq(cause, this, that));
+}
 
 u64 raw__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2gfunkptr__gfunkptr(this, cause);}
 
 f2ptr f2__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__gfunkptr__eq_hash_value(cause, this));}
 def_pcfunk1(gfunkptr__eq_hash_value, this, return f2__gfunkptr__eq_hash_value(this_cause, this));
+
+boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__gfunkptr__eq(cause, this, that);}
+
+f2ptr f2__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__gfunkptr__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__gfunkptr__equals(cause, this, that));
+}
 
 f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -815,7 +901,13 @@ def_pcfunk1(mutex__unlock, this, return f2__mutex__unlock(this_cause, this));
 f2ptr f2__mutex__trylock(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2mutex__trylock(x, cause));}
 def_pcfunk1(mutex__trylock, this, return f2__mutex__trylock(this_cause, this));
 
-boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {return this == that;}
+boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return this == that;
+}
+
+f2ptr f2__mutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__mutex__eq(cause, this, that));
+}
 
 u64 raw__mutex__eq_hash_value(f2ptr cause, f2ptr this) {
   funk2_processor_mutex_t* m = __pure__f2mutex__m(this);
@@ -832,6 +924,15 @@ u64 raw__mutex__equals_hash_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__mutex__equals_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__mutex__equals_hash_value(cause, this));}
 def_pcfunk1(mutex__equals_hash_value, this, return f2__mutex__equals_hash_value(this_cause, this));
+
+boolean_t raw__mutex__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__mutex__eq(cause, this, that);}
+
+f2ptr f2__mutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__mutex__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__mutex__equals(cause, this, that));
+}
 
 f2ptr f2__mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -914,12 +1015,27 @@ def_pcfunk1(char__type, this, return f2__char__type(this_cause, this));
 def_pcfunk1(char__new, ch, return f2char__new(this_cause, f2char__ch(ch, this_cause)));
 def_pcfunk1(char__ch, this, return this);
 
-boolean_t raw__char__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2char__ch(this, cause) == f2char__ch(that, cause);}
+boolean_t raw__char__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2char__ch(this, cause) == f2char__ch(that, cause);
+}
+
+f2ptr f2__char__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__char__eq(cause, this, that));
+}
 
 u64 raw__char__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2char__ch(this, cause);}
 
 f2ptr f2__char__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__char__eq_hash_value(cause, this));}
 def_pcfunk1(char__eq_hash_value, this, return f2__char__eq_hash_value(this_cause, this));
+
+boolean_t raw__char__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__char__eq(cause, this, that);}
+
+f2ptr f2__char__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__char__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__char__equals(cause, this, that));
+}
 
 f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -1056,6 +1172,28 @@ f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
   return f2char__new(cause, raw__string__elt(cause, this, raw_index));
 }
 
+boolean_t raw__string__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  u64 this_eq_hash_value = f2string__eq_hash_value(this, cause);
+  u64 that_eq_hash_value = f2string__eq_hash_value(that, cause);
+  if (this_eq_hash_value != that_eq_hash_value) {
+    return nil;
+  }
+  u64 this_len = f2string__length(this, cause);
+  u64 that_len = f2string__length(that, cause);
+  if (this_len != that_len) {
+    return nil;
+  }
+  char* this_str = alloca(this_len);
+  char* that_str = alloca(this_len);
+  f2string__str_copy(this, cause, (u8*)this_str);
+  f2string__str_copy(that, cause, (u8*)that_str);
+  return (memcmp(this_str, that_str, this_len) == 0);
+}
+
+f2ptr f2__string__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__string__eq(cause, this, that));
+}
+
 u64   raw__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2string__eq_hash_value(this, cause);}
 f2ptr  f2__string__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__eq_hash_value(cause, this));}
 
@@ -1078,6 +1216,15 @@ def_pcfunk1(string__new, str, return f2__string__new(this_cause, str));
 def_pcfunk1(string__length, this, return f2__string__length(this_cause, this));
 def_pcfunk2(string__elt, this, index, return f2__string__elt(this_cause, this, index));
 def_pcfunk1(string__eq_hash_value, this, return f2__string__eq_hash_value(this_cause, this));
+
+boolean_t raw__string__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__string__eq(cause, this, that);}
+
+f2ptr f2__string__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__string__equals(cause, this, that));
+}
 
 f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -1208,6 +1355,7 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   f2string__str_copy(str, cause, str__bytes);
   return f2symbol__new(cause, str__length, str__bytes);
 }
+
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (raw__symbol__is_type(cause, this)) {
     if (this == that) {
@@ -1231,7 +1379,10 @@ boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return boolean__true;
 }
-f2ptr f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__symbol__eq(cause, x, y));}
+
+f2ptr f2__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__symbol__eq(cause, this, that));
+}
 
 def_pcfunk1(symbol__is_type, x, return f2__symbol__is_type(this_cause, x));
 def_pcfunk1(symbol__type, x, return f2__symbol__type(this_cause, x));
@@ -1240,6 +1391,15 @@ def_pcfunk1(symbol__length, this, return f2__symbol__length(this_cause, this));
 def_pcfunk2(symbol__elt, this, index, return f2__symbol__elt(this_cause, this, index));
 def_pcfunk1(symbol__eq_hash_value, this, return f2__symbol__eq_hash_value(this_cause, this));
 def_pcfunk2(symbol__eq, x, y, return f2__symbol__eq(this_cause, x, y));
+
+boolean_t raw__symbol__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__symbol__eq(cause, this, that);}
+
+f2ptr f2__symbol__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__symbol__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__symbol__equals(cause, this, that));
+}
 
 f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -1532,13 +1692,28 @@ f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__i
 f2ptr f2__chunk__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("chunk"), (u8*)"chunk");}
 f2ptr f2__chunk__length(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2chunk__length(x, cause));}
 
-boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that) {return this == that;}
+boolean_t raw__chunk__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return this == that;
+}
+
+f2ptr f2__chunk__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__chunk__eq(cause, this, that));
+}
 
 u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this) {return f2chunk__eq_hash_value(this, cause);}
 f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__chunk__eq_hash_value(this, cause));}
 
 u64   raw__chunk__equals_hash_value(f2ptr cause, f2ptr this) {return f2chunk__equals_hash_value(this, cause);}
 f2ptr  f2__chunk__equals_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__chunk__equals_hash_value(this, cause));}
+
+boolean_t raw__chunk__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__chunk__eq(cause, this, that);}
+
+f2ptr f2__chunk__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__chunk__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__chunk__equals(cause, this, that));
+}
 
 def_pcfunk1(chunk__is_type, x, return f2__chunk__is_type(this_cause, x));
 def_pcfunk1(chunk__type, x, return f2__chunk__type(this_cause, x));
@@ -1757,8 +1932,40 @@ f2ptr f2__simple_array__elt(f2ptr cause, f2ptr this, f2ptr index) {return raw__s
 
 f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2simple_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
 
+boolean_t raw__simple_array__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return this == that;
+}
+
+f2ptr f2__simple_array__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__simple_array__eq(cause, this, that));
+}
+
 u64   raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)this;}
 f2ptr  f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__simple_array__eq_hash_value(cause, this));}
+
+boolean_t raw__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  s64 this__length = raw__simple_array__length(cause, this);
+  s64 that__length = raw__simple_array__length(cause, that);
+  if (this__length != that__length) {
+    return boolean__false;
+  }
+  s64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__simple_array__elt(cause, this, index);
+    f2ptr that__subexp = raw__simple_array__elt(cause, that, index);
+    if (! raw__equals(cause, this__subexp, that__subexp)) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
+f2ptr f2__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__simple_array__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__simple_array__equals(cause, this, that));
+}
 
 def_pcfunk1(simple_array__is_type, x, return f2__simple_array__is_type(this_cause, x));
 def_pcfunk1(simple_array__type, x, return f2__simple_array__type(this_cause, x));
@@ -2295,9 +2502,41 @@ def_pcfunk3(traced_array__elt__mutate_funks__set, x, y, z, return f2__traced_arr
 def_pcfunk2(traced_array__elt__read_funks, x, y, return f2__traced_array__elt__read_funks(this_cause, x, y));
 def_pcfunk3(traced_array__elt__read_funks__set, x, y, z, return f2__traced_array__elt__read_funks__set(this_cause, x, y, z));
 
+boolean_t raw__traced_array__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return this == that;
+}
+
+f2ptr f2__traced_array__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__traced_array__eq(cause, this, that));
+}
+
 u64   raw__traced_array__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)this;}
 f2ptr  f2__traced_array__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__eq_hash_value(cause, this));}
 def_pcfunk1(traced_array__eq_hash_value, this, return f2__traced_array__eq_hash_value(this_cause, this));
+
+boolean_t raw__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  s64 this__length = raw__traced_array__length(cause, this);
+  s64 that__length = raw__traced_array__length(cause, that);
+  if (this__length != that__length) {
+    return boolean__false;
+  }
+  s64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__traced_array__elt(cause, this, index);
+    f2ptr that__subexp = raw__traced_array__elt(cause, that, index);
+    if (! raw__equals(cause, this__subexp, that__subexp)) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
+f2ptr f2__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__traced_array__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__traced_array__equals(cause, this, that));
+}
 
 f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
@@ -2409,12 +2648,27 @@ def_pcfunk1(larva__type, x, return f2__larva__type(this_cause, x));
 def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
 def_pcfunk1(larva__larva_type, this, return f2integer__new(this_cause, f2larva__larva_type(this, this_cause)));
 
-boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {return f2larva__larva_type(this, cause) == f2larva__larva_type(that, cause);}
+boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2larva__larva_type(this, cause) == f2larva__larva_type(that, cause);
+}
+
+f2ptr f2__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__larva__eq(cause, this, that));
+}
 
 u64 raw__larva__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)f2larva__larva_type(this, cause);}
 
 f2ptr f2__larva__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__larva__eq_hash_value(cause, this));}
 def_pcfunk1(larva__eq_hash_value, this, return f2__larva__eq_hash_value(this_cause, this));
+
+boolean_t raw__larva__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__larva__eq(cause, this, that);}
+
+f2ptr f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__larva__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__larva__equals(cause, this, that));
+}
 
 f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

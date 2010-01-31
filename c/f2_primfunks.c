@@ -257,7 +257,7 @@ f2ptr new__string(f2ptr cause, char* str) {
   return f2string__new(cause, strlen(str), (u8*)(str));
 }
 
-def_pcfunk2(string__equals, x, y, return f2__string__eq(this_cause, x, y));
+//def_pcfunk2(string__equals, x, y, return f2__string__eq(this_cause, x, y));
 
 f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
   int length = f2string__length(x, cause);
@@ -1566,7 +1566,7 @@ void f2__primcfunks__initialize() {
   
   // string
   
-  f2__funktional_primcfunk__init__2(string__equals,                this, that, "");
+  //f2__funktional_primcfunk__init__2(string__equals,                this, that, "");
   f2__primcfunk__init__1(           string__new_raw_c_string,      this, "");
   f2__primcfunk__init__1(           string__new_from_raw_c_string, c_string, "");
   

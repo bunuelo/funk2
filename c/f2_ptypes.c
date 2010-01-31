@@ -306,6 +306,14 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_integer.i__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -431,6 +439,14 @@ f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.d__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_double.d__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -562,6 +578,14 @@ f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.f__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_float.f__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -672,6 +696,14 @@ f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -835,6 +867,14 @@ f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2
       return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_address__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -1003,6 +1043,15 @@ def_pcfunk1(mutex__equals_hash_value, this, return f2__mutex__equals_hash_value(
 
 f2ptr f2__mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutex.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutex.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutex.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutex.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutex.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutex.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutex.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutex.equals_hash_value__funk;
+    }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutex.new__symbol)) {
@@ -1121,6 +1170,14 @@ f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr 
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_char.ch__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_char.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_char.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_char.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_char.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -1320,8 +1377,14 @@ f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       return __funk2.globalenv.object_type.ptype.ptype_string.length__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_string.elt__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_string.elt__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_string.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_string.eq__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_string.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_string.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -1507,8 +1570,14 @@ f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       return __funk2.globalenv.object_type.ptype.ptype_symbol.length__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_symbol.elt__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_symbol.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_symbol.eq__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_symbol.eq_hash_value__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_symbol.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_symbol.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_symbol.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -1840,8 +1909,12 @@ f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_chunk.eq__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_chunk.equals__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol)) {
@@ -2081,6 +2154,14 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
       return __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol)) {
@@ -2635,6 +2716,14 @@ f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_traced_array.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_traced_array.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_traced_array.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__symbol)) {
@@ -2787,6 +2876,14 @@ f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_larva.type__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_larva.type__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_larva.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_larva.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_larva.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_larva.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {

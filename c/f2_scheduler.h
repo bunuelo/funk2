@@ -57,6 +57,7 @@ void  f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber);
 void  f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber);
 
 f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index);
+f2ptr f2__this__fiber(f2ptr cause); // returns current fiber.
 
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
 

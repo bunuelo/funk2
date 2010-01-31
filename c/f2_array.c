@@ -155,6 +155,52 @@ f2ptr f2__array__eq_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(array__eq_hash_value, this, return f2__array__eq_hash_value(this_cause, this));
 
+boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__array__is_type(cause, that)) {
+    return boolean__false;
+  }
+  s64 this__length = raw__array__length(cause, this);
+  s64 that__length = raw__array__length(cause, that);
+  if (this__length != that__length) {
+    return boolean__false;
+  }
+  s64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__array__elt(cause, this, index);
+    f2ptr that__subexp = raw__array__elt(cause, that, index);
+    if (! raw__object__equals(cause, this__subexp, that__subexp)) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
+f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__array__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__array__equals(cause, this, that));
+}
+
+f2ptr f2__array__equals_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__array__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 this__length = raw__array__length(cause, this);
+  u64 hash_value   = 1 + this__length;
+  s64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__array__elt(cause, this, index);
+    f2ptr subexp__hash_value = f2__object__equals_hash_value(cause, this__subexp);
+    if (! raw__integer__is_type(cause, subexp__hash_value)) {
+      return f2larva__new(cause, 4);
+    }
+    u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+    hash_value *= subexp__hash_value__i;
+  }
+  return f2integer__new(cause, hash_value);
+}
+
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
   if (raw__simple_array__is_type(cause, this)) {
     u64 length = f2simple_array__length(this, cause);

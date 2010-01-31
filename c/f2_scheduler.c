@@ -152,6 +152,9 @@ f2ptr f2__scheduler__processor_thread_current_fiber(int pool_index) {
   return fiber;
 }
 
+f2ptr f2__this__fiber(f2ptr cause) {
+  return f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+}
 
 void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fiber) {
   f2ptr larva = f2fiber__value(fiber, cause);

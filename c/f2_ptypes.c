@@ -2774,6 +2774,15 @@ f2ptr f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(larva__equals, this, that, return f2__larva__equals(this_cause, this, that));
 
+u64 raw__larva__equals_hash_value(f2ptr cause, f2ptr this) {
+  return raw__larva__eq_hash_value(cause, this);
+}
+
+f2ptr f2__larva__equals_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__larva__equals_hash_value(cause, this));
+}
+def_pcfunk1(larva__equals_hash_value, this, return f2__larva__equals_hash_value(this_cause, this));
+
 f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_larva.type__symbol)) {

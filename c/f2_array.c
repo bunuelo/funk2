@@ -169,7 +169,7 @@ f2ptr f2__array__equals_hash_value(f2ptr cause, f2ptr this) {
       return f2larva__new(cause, 4);
     }
     u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
-    hash_value *= subexp__hash_value__i;
+    hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
   }
   return f2integer__new(cause, hash_value);
 }

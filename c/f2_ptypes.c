@@ -2062,7 +2062,7 @@ u64 raw__simple_array__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__simple_array__equals_hash_value(f2ptr cause, f2ptr this) {
-  return f2integer__new(cause, raw__simple_array__equals_hash_value(cause, this));
+  return f2__array__equals_hash_value(cause, this);
 }
 def_pcfunk1(simple_array__equals_hash_value, this, return f2__simple_array__equals_hash_value(this_cause, this));
 
@@ -2625,7 +2625,7 @@ f2ptr f2__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(traced_array__equals, this, that, return f2__traced_array__equals(this_cause, this, that));
 
 f2ptr f2__traced_array__equals_hash_value(f2ptr cause, f2ptr this) {
-  return f2__array__equals_hash_value(cause, this));
+  return f2__array__equals_hash_value(cause, this);
 }
 def_pcfunk1(traced_array__equals_hash_value, this, return f2__traced_array__equals_hash_value(this_cause, this));
 

@@ -469,8 +469,14 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr new__funk;
   f2ptr i__symbol;
   f2ptr i__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__integer__slot_t;
 
 // double
@@ -484,8 +490,14 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr new__funk;
   f2ptr d__symbol;
   f2ptr d__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__double__slot_t;
 
 // float
@@ -499,8 +511,14 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr new__funk;
   f2ptr f__symbol;
   f2ptr f__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__float__slot_t;
 
 // pointer
@@ -514,8 +532,14 @@ typedef struct funk2_object_type__pointer__slot_s {
   f2ptr new__funk;
   f2ptr p__symbol;
   f2ptr p__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__pointer__slot_t;
 
 // gfunkptr
@@ -537,8 +561,14 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr pool_index__funk;
   f2ptr pool_address__symbol;
   f2ptr pool_address__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
 // mutex
@@ -558,8 +588,12 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr unlock__funk;
   f2ptr trylock__symbol;
   f2ptr trylock__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
 } funk2_object_type__mutex__slot_t;
@@ -575,8 +609,14 @@ typedef struct funk2_object_type__char__slot_s {
   f2ptr new__funk;
   f2ptr ch__symbol;
   f2ptr ch__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__char__slot_t;
 
 // string
@@ -592,8 +632,14 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr length__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol
@@ -609,8 +655,14 @@ typedef struct funk2_object_type__symbol__slot_s {
   f2ptr length__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__symbol__slot_t;
 
 // chunk
@@ -626,8 +678,12 @@ typedef struct funk2_object_type__chunk__slot_s {
   f2ptr new_copy__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
   f2ptr bit8__elt__symbol;
@@ -665,8 +721,14 @@ typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr new_copy__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
   f2ptr elt__set__symbol;
@@ -684,8 +746,14 @@ typedef struct funk2_object_type__traced_array__slot_s {
   f2ptr new__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
   f2ptr elt__set__symbol;
@@ -723,8 +791,14 @@ typedef struct funk2_object_type__larva__slot_s {
   f2ptr new__funk;
   f2ptr larva_type__symbol;
   f2ptr larva_type__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;
   f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 } funk2_object_type__larva__slot_t;
 
 

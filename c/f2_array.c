@@ -129,7 +129,7 @@ boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   for (index = 0; index < this__length; index ++) {
     f2ptr this__subexp = raw__array__elt(cause, this, index);
     f2ptr that__subexp = raw__array__elt(cause, that, index);
-    if (! raw__object__equals(cause, this__subexp, that__subexp)) {
+    if (! raw__equals(cause, this__subexp, that__subexp)) {
       return boolean__false;
     }
   }

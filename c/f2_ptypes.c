@@ -389,6 +389,7 @@ boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__double__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__double__eq(cause, this, that));
 }
+def_pcfunk2(double__eq, this, that, return f2__double__eq(this_cause, this, that));
 
 u64 raw__double__eq_hash_value(f2ptr cause, f2ptr this) {
   union {

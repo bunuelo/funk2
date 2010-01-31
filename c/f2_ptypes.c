@@ -2772,6 +2772,7 @@ f2ptr f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return f2bool__new(raw__larva__equals(cause, this, that));
 }
+def_pcfunk2(larva__equals, this, that, return f2__larva__equals(this_cause, this, that));
 
 f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

@@ -1943,28 +1943,11 @@ f2ptr f2__simple_array__eq(f2ptr cause, f2ptr this, f2ptr that) {
 u64   raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)this;}
 f2ptr  f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__simple_array__eq_hash_value(cause, this));}
 
-boolean_t raw__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  s64 this__length = raw__simple_array__length(cause, this);
-  s64 that__length = raw__simple_array__length(cause, that);
-  if (this__length != that__length) {
-    return boolean__false;
-  }
-  s64 index;
-  for (index = 0; index < this__length; index ++) {
-    f2ptr this__subexp = raw__simple_array__elt(cause, this, index);
-    f2ptr that__subexp = raw__simple_array__elt(cause, that, index);
-    if (! raw__equals(cause, this__subexp, that__subexp)) {
-      return boolean__false;
-    }
-  }
-  return boolean__true;
-}
-
 f2ptr f2__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__simple_array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2bool__new(raw__simple_array__equals(cause, this, that));
+  return f2bool__new(raw__array__equals(cause, this, that));
 }
 
 def_pcfunk1(simple_array__is_type, x, return f2__simple_array__is_type(this_cause, x));
@@ -2514,28 +2497,11 @@ u64   raw__traced_array__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)thi
 f2ptr  f2__traced_array__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__traced_array__eq_hash_value(cause, this));}
 def_pcfunk1(traced_array__eq_hash_value, this, return f2__traced_array__eq_hash_value(this_cause, this));
 
-boolean_t raw__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  s64 this__length = raw__traced_array__length(cause, this);
-  s64 that__length = raw__traced_array__length(cause, that);
-  if (this__length != that__length) {
-    return boolean__false;
-  }
-  s64 index;
-  for (index = 0; index < this__length; index ++) {
-    f2ptr this__subexp = raw__traced_array__elt(cause, this, index);
-    f2ptr that__subexp = raw__traced_array__elt(cause, that, index);
-    if (! raw__equals(cause, this__subexp, that__subexp)) {
-      return boolean__false;
-    }
-  }
-  return boolean__true;
-}
-
 f2ptr f2__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__traced_array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2bool__new(raw__traced_array__equals(cause, this, that));
+  return f2bool__new(raw__array__equals(cause, this, that));
 }
 
 f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {

@@ -116,6 +116,33 @@ f2ptr f2__array__length(f2ptr cause, f2ptr x) {
 }
 def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
 
+boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__array__is_type(cause, that)) {
+    return boolean__false;
+  }
+  s64 this__length = raw__array__length(cause, this);
+  s64 that__length = raw__array__length(cause, that);
+  if (this__length != that__length) {
+    return boolean__false;
+  }
+  s64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__array__elt(cause, this, index);
+    f2ptr that__subexp = raw__array__elt(cause, that, index);
+    if (! raw__object__equals(cause, this__subexp, that__subexp)) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
+f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__array__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__array__equals(cause, this, that));
+}
+
 u64 raw__array__eq_hash_value(f2ptr cause, f2ptr this) {
   if      (raw__simple_array__is_type(cause, this)) {return raw__simple_array__eq_hash_value(cause, this);}
   else if (raw__traced_array__is_type(cause, this)) {return raw__traced_array__eq_hash_value(cause, this);}

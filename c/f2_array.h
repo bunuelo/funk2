@@ -58,6 +58,9 @@ f2ptr      f2__array__elt__read_funks(f2ptr cause, f2ptr this, f2ptr index);
 f2ptr     raw__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
 f2ptr      f2__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value);
 
+boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__array__equals(f2ptr cause, f2ptr this, f2ptr that);
+
 f2ptr f2array__primobject_type__new(f2ptr cause);
 
 // array

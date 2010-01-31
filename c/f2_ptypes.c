@@ -547,6 +547,7 @@ f2ptr f2__float__equals(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return f2bool__new(raw__float__equals(cause, this, that));
 }
+def_pcfunk2(float__equals, this, that, return f2__float__equals(this_cause, this, that));
 
 u64 raw__float__equals_hash_value(f2ptr cause, f2ptr this) {
   return raw__float__eq_hash_value(cause, this);

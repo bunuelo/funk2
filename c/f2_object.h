@@ -22,6 +22,8 @@
 #ifndef F2__OBJECT__TYPES__H
 #define F2__OBJECT__TYPES__H
 
+#include "f2_global.h"
+
 typedef funk2_object_s {
   f2ptr object__eq_hash_value;
   f2ptr object__eq;

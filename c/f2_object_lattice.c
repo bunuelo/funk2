@@ -36,7 +36,7 @@ def_pcfunk2(object_lattice_node__new, object_image_frame, object_reference_leaf,
 def_primobject_1_slot(object_lattice, lattice_node_hash);
 
 f2ptr f2__object_lattice__new(f2ptr cause) {
-  return f2object_lattice__new(cause, f2__hash__new(cause, nil, nil));
+  return f2object_lattice__new(cause, f2__funkhash__new(cause, nil, nil));
 }
 def_pcfunk0(object_lattice__new, return f2__object_lattice__new(this_cause));
 
@@ -121,10 +121,10 @@ f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr fiber, f
   
   f2ptr lattice_node_hash = f2__object_lattice__lattice_node_hash(cause, this);
   
-  f2ptr lattice_node = f2__hash__lookup(cause, fiber, lattice_node_hash, object);
+  f2ptr lattice_node = f2__funkhash__lookup(cause, fiber, lattice_node_hash, object);
   if (! lattice_node) {
     lattice_node = f2__object_lattice_node__new(cause, nil, object);
-    f2__hash__add(cause, fiber, lattice_node_hash, object, lattice_node);
+    f2__funkhash__add(cause, fiber, lattice_node_hash, object, lattice_node);
     
     f2__object_lattice__scan_and_incorporate_leafs__expand_node(cause, fiber, this, object, start_nanoseconds_since_1970);
   }

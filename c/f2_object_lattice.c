@@ -277,10 +277,10 @@ f2ptr f2__object_lattice__scan_leafs(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr
   
   f2ptr lattice_node_hash = f2__object_lattice__lattice_node_hash(cause, this);
   
-  f2ptr lattice_node = f2__hash__lookup(cause, fiber, lattice_node_hash, object);
+  f2ptr lattice_node = f2__funkhash__lookup(cause, fiber, lattice_node_hash, object);
   if (! lattice_node) {
     lattice_node = f2__object_lattice_node__new(cause, nil, object);
-    f2__hash__add(cause, fiber, lattice_node_hash, object, lattice_node);
+    f2__funkhash__add(cause, fiber, lattice_node_hash, object, lattice_node);
     
     if (node_funk) {
       f2ptr node_funk_result = f2__force_funk_apply(cause, fiber, node_funk, f2cons__new(cause, object, nil));

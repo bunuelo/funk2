@@ -25,10 +25,10 @@
 #include "f2_global.h"
 
 typedef struct funk2_object_s {
-  f2ptr object__eq_hash_value;
-  f2ptr object__eq;
-  f2ptr object__equals_hash_value;
-  f2ptr object__equals;
+  f2ptr object__eq_hash_value__funk;
+  f2ptr object__eq__funk;
+  f2ptr object__equals_hash_value__funk;
+  f2ptr object__equals__funk;
 } funk2_object_t;
 
 #endif // F2__OBJECT__TYPES__H

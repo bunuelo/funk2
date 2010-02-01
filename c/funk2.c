@@ -106,7 +106,7 @@ void f2__initialize() {
   f2__physical_objects__initialize();
   f2__agent__initialize();
   f2__object_lattice__initialize();
-  f2__primobject_hash__initialize();
+  f2__primobject_funkhash__initialize();
   f2__arithmetic__initialize();
   f2__cause__initialize();
   f2__zlib__initialize();

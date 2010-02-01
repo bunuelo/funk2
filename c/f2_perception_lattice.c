@@ -174,8 +174,29 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__eq(cause, this__edge_structure_hash_value, that__edge_structure_hash_value)) {
     return boolean__false;
   }
-  //f2ptr hash = f2__hash__new(cause);
+  f2ptr hash = f2__hash__new(cause);
   return boolean__true;
+}
+
+f2ptr f2__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2bool__new(raw__perception_graph__equals(cause, this, that));
+}
+def_pcfunk2(perception_graph__equals, this, that, return f2__perception_graph__equals(this_cause, this, that));
+
+u64 raw__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
+  return 0;
+}
+
+f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__perception_graph__equals_hash_value(cause, this));
+}
+def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_graph__equals_hash_value(this_cause, this));
+
+f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2perception_graph__primobject_type__new(cause);
+  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals__funk);}
+  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__funk);}
+  return this;
 }
 
 // **
@@ -199,7 +220,13 @@ void f2__perception_lattice__initialize() {
   // perception_graph
   initialize_primobject_3_slot(perception_graph, nodes, edges_node_hash, edge_structure_hash_value);
   
+  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(perception_graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(perception_graph__equals_hash_value, this, cfunk, 0, "calculates the equals_hash_value for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__funk = never_gc(cfunk);}
+  
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
+  
 }
 

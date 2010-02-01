@@ -174,7 +174,7 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__eq(cause, this__edge_structure_hash_value, that__edge_structure_hash_value)) {
     return boolean__false;
   }
-  f2ptr hash = f2__hash__new(cause);
+  f2ptr hash = f2__hash(cause);
   return boolean__true;
 }
 

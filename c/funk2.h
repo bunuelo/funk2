@@ -126,7 +126,7 @@
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
-#include "f2_primobject__funkhash.h"
+#include "f2_primobject__hash.h"
 #include "f2_zlib.h"
 
 void f2__destroy();

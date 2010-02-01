@@ -165,15 +165,16 @@ typedef struct funk2_s {
   funk2_xxf86vm_t                     xxf86vm;
   funk2_xlib_t                        xlib;
 #if defined(F2__GLWINDOW__H)
-  funk2_glwindow_t glwindow;
+  funk2_glwindow_t                    glwindow;
 #endif
   funk2_cpu_t                         cpu;
   funk2_primes_t                      primes;
+  funk2_object_t                      object;
 } funk2_t;
 
-void      funk2__init(funk2_t* this, int argc, char** argv);
+void      funk2__init(   funk2_t* this, int argc, char** argv);
 void      funk2__destroy(funk2_t* this);
-boolean_t funk2__handle(funk2_t* this);
+boolean_t funk2__handle( funk2_t* this);
 
 extern funk2_t __funk2;
 

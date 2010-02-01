@@ -48,6 +48,11 @@ f2ptr raw__hash__new(f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2pt
 f2ptr f2__hash__new(f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk) {return raw__hash__new(cause, hash__default_start_bin_num_power, hash_value_funk, equals_funk);}
 def_pcfunk2(hash__new, hash_value_funk, equals_funk, return f2__hash__new(this_cause, hash_value_funk, equals_funk));
 
+f2ptr f2__hash(f2ptr cause) {
+  return f2__hash__new(cause, __funk2.object.object__equals_hash_value__funk, __funk2.object.object__equals__funk);
+}
+def_pcfunk0(hash, return f2__hash(this_cause));
+
 void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) {
   f2ptr hash_value_funk  = f2hash__hash_value_funk(this, cause);
   f2ptr equals_funk      = f2hash__equals_funk(this, cause);

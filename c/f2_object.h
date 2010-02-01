@@ -19,6 +19,19 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__OBJECT__TYPES__H
+#define F2__OBJECT__TYPES__H
+
+typedef funk2_object_s {
+  f2ptr object__eq_hash_value;
+  f2ptr object__eq;
+  f2ptr object__equals_hash_value;
+  f2ptr object__equals;
+} funk2_object_t;
+
+#endif // F2__OBJECT__TYPES__H
+
+
 #ifndef F2__OBJECT__H
 #define F2__OBJECT__H
 

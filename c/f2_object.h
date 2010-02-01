@@ -24,7 +24,7 @@
 
 #include "f2_global.h"
 
-typedef funk2_object_s {
+typedef struct funk2_object_s {
   f2ptr object__eq_hash_value;
   f2ptr object__eq;
   f2ptr object__equals_hash_value;

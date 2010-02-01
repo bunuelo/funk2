@@ -17,13 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk stringlist-concat      &primfunk:stringlist__concat]
-[globalize-funk stringlist-intersperse &primfunk:stringlist__intersperse]
-[globalize-funk exp-to_string          &primfunk:exp__to_string]
-[globalize-funk string-to_symbol       &primfunk:string__to_symbol]
-[globalize-funk string-save            &primfunk:string__save]
-[globalize-funk string-load            &primfunk:string__load]
-[globalize-funk string-split           &primfunk:string__split]
-[globalize-funk string-contains        &primfunk:string__contains]
-
+[defunk hash []
+  [new hash &object-equals_hash_value &object-equals]]
 

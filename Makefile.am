@@ -239,7 +239,7 @@ bin_funk2_SOURCES = \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \
   c/f2_primobject__frame.c \
-  c/f2_primobject__hash.c \
+  c/f2_primobject__funkhash.c \
   c/f2_primobject__list.c \
   c/f2_primobject__doublelinklist.c \
   c/f2_primobject__largeinteger.c \

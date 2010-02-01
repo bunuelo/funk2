@@ -33,7 +33,7 @@
 #include "f2_physical_objects.h"
 #include "f2_agent.h"
 #include "f2_object_lattice.h"
-#include "f2_primobject__hash.h"
+#include "f2_primobject__funkhash.h"
 #include "f2_cause.h"
 #include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
@@ -111,7 +111,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__agent__slot_t                 primobject_type_agent;
   funk2_object_type__object_lattice__slot_t        primobject_type_object_lattice;
   funk2_object_type__object_lattice_node__slot_t   primobject_type_object_lattice_node;
-  funk2_object_type__hash__slot_t                  primobject_type_hash;
+  funk2_object_type__funkhash__slot_t              primobject_type_funkhash;
   funk2_object_type__cause__slot_t                 primobject_type_cause;
   funk2_object_type__funk_event__slot_t            primobject_type_funk_event;
   funk2_object_type__perception_graph_edge__slot_t primobject_type_perception_graph_edge;

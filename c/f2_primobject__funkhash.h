@@ -19,13 +19,13 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__PRIMOBJECT__HASH__TYPES__H
-#define F2__PRIMOBJECT__HASH__TYPES__H
+#ifndef F2__PRIMOBJECT__FUNKHASH__TYPES__H
+#define F2__PRIMOBJECT__FUNKHASH__TYPES__H
 
-// hash
+// funkhash
 
-typedef struct funk2_object_type__hash__slot_s funk2_object_type__hash__slot_t;
-declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
+typedef struct funk2_object_type__funkhash__slot_s funk2_object_type__funkhash__slot_t;
+declare_object_type_6_slot(funkhash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
 			   f2ptr slot_names__symbol;
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
@@ -34,34 +34,34 @@ declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_arra
 			   f2ptr lookup__funk;
 			   );
 
-#endif // F2__PRIMOBJECT__HASH__TYPES__H
+#endif // F2__PRIMOBJECT__FUNKHASH__TYPES__H
 
-#ifndef F2__PRIMOBJECT__HASH__H
-#define F2__PRIMOBJECT__HASH__H
+#ifndef F2__PRIMOBJECT__FUNKHASH__H
+#define F2__PRIMOBJECT__FUNKHASH__H
 
 #include "f2_primobjects.h"
 
-// hash
+// funkhash
 
-declare_primobject_6_slot(hash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+declare_primobject_6_slot(funkhash, write_mutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
 
-f2ptr raw__hash__new                 (f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2ptr equals_funk);
-f2ptr  f2__hash__new                 (f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk);
-f2ptr  f2__hash__add                 (f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key, f2ptr value);
-f2ptr  f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key);
-f2ptr  f2__hash__lookup              (f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key);
+f2ptr raw__funkhash__new                 (f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2ptr equals_funk);
+f2ptr  f2__funkhash__new                 (f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk);
+f2ptr  f2__funkhash__add                 (f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key, f2ptr value);
+f2ptr  f2__funkhash__lookup_keyvalue_pair(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key);
+f2ptr  f2__funkhash__lookup              (f2ptr cause, f2ptr fiber, f2ptr this, f2ptr key);
 
-f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
+f2ptr raw__funkhash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 
-f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this);
+f2ptr f2__funkhash__slot_names(f2ptr cause, f2ptr this);
 
-f2ptr f2hash__primobject_type__new(f2ptr cause);
-f2ptr f2hash__primobject_type__new_aux(f2ptr cause);
+f2ptr f2funkhash__primobject_type__new(f2ptr cause);
+f2ptr f2funkhash__primobject_type__new_aux(f2ptr cause);
 
-#define hash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
+#define funkhash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
   f2ptr iteration__cause = (cause); \
   f2ptr iteration__this  = (this); \
-  f2ptr iteration__bin_array          = f2hash__bin_array(iteration__this, iteration__cause); \
+  f2ptr iteration__bin_array          = f2funkhash__bin_array(iteration__this, iteration__cause); \
   s64   iteration__bin_array__length  = raw__array__length(iteration__cause, iteration__bin_array); \
   s64   iteration__index; \
   for (iteration__index = 0; iteration__index < iteration__bin_array__length; iteration__index ++) { \
@@ -74,29 +74,29 @@ f2ptr f2hash__primobject_type__new_aux(f2ptr cause);
   } \
 }
 
-#define hash__iteration(cause, this, key, value, code) {\
-  hash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+#define funkhash__iteration(cause, this, key, value, code) {\
+  funkhash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
-#define hash__key__iteration(cause, this, key, code) {\
-  hash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+#define funkhash__key__iteration(cause, this, key, code) {\
+  funkhash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
-#define hash__value__iteration(cause, this, value, code) {\
-  hash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
+#define funkhash__value__iteration(cause, this, value, code) {\
+  funkhash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
                                       f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
                                       code); \
 }
 
 // **
 
-void f2__primobject_hash__reinitialize_globalvars();
-void f2__primobject_hash__initialize();
+void f2__primobject_funkhash__reinitialize_globalvars();
+void f2__primobject_funkhash__initialize();
 
-#endif // F2__PRIMOBJECT__HASH__H
+#endif // F2__PRIMOBJECT__FUNKHASH__H
 

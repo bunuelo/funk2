@@ -195,11 +195,61 @@ f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(hash__slot_names, this, return f2__hash__slot_names(this_cause, this));
 
+boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__hash__is_type(cause, that)) {
+    return boolean__false;
+  }
+  f2ptr fiber              = f2__this__fiber(cause);
+  f2ptr this__key_count    = f2__hash__key_count(cause, this);
+  f2ptr that__key_count    = f2__hash__key_count(cause, that);
+  u64   this__key_count__i = f2integer__i(this__key_count, cause);
+  u64   that__key_count__i = f2integer__i(that__key_count, cause);
+  if (this__key_count__i != that__key_count__i) {
+    return boolean__false;
+  }
+  hash__iteration(cause, this, this__key, this__value,
+		  f2ptr that__value = f2__hash__lookup(cause, that, this__key);
+		  if (! raw__object__equals(cause, this__value, that__value)) {
+		    return boolean__false;
+		  }
+		  );
+  return boolean__true;
+}
+
+f2ptr f2__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__hash__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__hash__equals(cause, this, that));
+}
+def_pcfunk2(hash__equals, this, that, return f2__hash__equals(this_cause, this, that));
+
+u64 raw__hash__equals_hash_value(f2ptr cause, f2ptr this) {
+  u64 hash_value = 1;
+  hash__iteration(cause, this, key, value,
+		  u64 key__equals_hash_value   = raw__object__equals_hash_value(cause, key);
+		  u64 value__equals_hash_value = raw__object__equals_hash_value(cause, value);
+		  hash_value *= ((key__equals_hash_value   == 0) ? 1 : key__equals_hash_value);
+		  hash_value *= ((value__equals_hash_value == 0) ? 1 : value__equals_hash_value);
+		  );
+  return hash_value;
+}
+
+f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__hash__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2integer__new(cause, raw__hash__equals_hash_value(cause, this));
+}
+def_pcfunk1(hash__equals_hash_value, this, return f2__hash__equals_hash_value(this_cause, this));
+
 f2ptr f2hash__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2hash__primobject_type__new(cause);
-  {char* slot_name = "slot_names";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk);}
-  {char* slot_name = "add";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.add__funk);}
-  {char* slot_name = "lookup";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__funk);}
+  {char* slot_name = "slot_names";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk);}
+  {char* slot_name = "add";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.add__funk);}
+  {char* slot_name = "lookup";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__funk);}
+  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.equals__funk);}
+  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.equals_hash_value__funk);}
   return this;
 }
 
@@ -228,6 +278,10 @@ void f2__primobject_hash__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(hash__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.add__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(hash__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_hash.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hash__equals, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.equals__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_hash.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(hash__equals_hash_value, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_hash.equals_hash_value__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__0(hash, "Returns a new hash table based on object-equals_hash_value and object-equals.");
 }

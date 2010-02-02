@@ -32,6 +32,10 @@ declare_object_type_6_slot(hash, write_mutex, key_count, bin_num_power, bin_arra
 			   f2ptr add__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
+			   f2ptr equals__symbol;
+			   f2ptr equals__funk;
+			   f2ptr equals_hash_value__symbol;
+			   f2ptr equals_hash_value__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__HASH__TYPES__H
@@ -77,15 +81,15 @@ f2ptr f2hash__primobject_type__new_aux(f2ptr cause);
 
 #define hash__iteration(cause, this, key, value, code) {\
   hash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
-                                      f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
-                                      code); \
+                                 f2ptr key   = f2cons__car(keyvalue_pair, iteration__cause); \
+                                 f2ptr value = f2cons__cdr(keyvalue_pair, iteration__cause); \
+                                 code); \
 }
 
 #define hash__key__iteration(cause, this, key, code) {\
   hash__keyvalue_pair__iteration(cause, this, keyvalue_pair, \
-                                      f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
-                                      code); \
+                                 f2ptr key = f2cons__car(keyvalue_pair, iteration__cause); \
+                                 code); \
 }
 
 #define hash__value__iteration(cause, this, value, code) {\

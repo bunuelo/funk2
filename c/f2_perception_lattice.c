@@ -175,6 +175,7 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
     return boolean__false;
   }
   f2ptr hash = f2__hash(cause);
+  
   return boolean__true;
 }
 

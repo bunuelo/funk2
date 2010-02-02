@@ -1339,10 +1339,11 @@ f2ptr f2__print_depth(f2ptr cause, f2ptr fiber, f2ptr exp, int recursion_depth) 
 }
 
 
-f2ptr f2__fwrite(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {return f2__fwrite_depth(    cause, fiber, stream, exp, default_print_recursion_depth);}
-f2ptr f2__write(f2ptr cause, f2ptr fiber, f2ptr exp)                {return f2__write_depth(     cause, fiber,         exp, default_print_recursion_depth); fflush(stdout);}
-f2ptr f2__exp__print(f2ptr cause, f2ptr fiber, f2ptr exp)           {return f2__exp__print_depth(cause, fiber,         exp, default_print_recursion_depth);}
-f2ptr f2__print(f2ptr cause, f2ptr fiber, f2ptr exp)                {return f2__print_depth(     cause, fiber,         exp, default_print_recursion_depth);}
+f2ptr f2__fwrite(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {return f2__fwrite_depth(    cause, fiber, stream,          exp, default_print_recursion_depth);}
+f2ptr f2__write(f2ptr cause, f2ptr fiber, f2ptr exp)                {return f2__write_depth(     cause, fiber,                  exp, default_print_recursion_depth); fflush(stdout);}
+f2ptr f2__exp__print(f2ptr cause, f2ptr fiber, f2ptr exp)           {return f2__exp__print_depth(cause, fiber,                  exp, default_print_recursion_depth);}
+f2ptr f2__fiber__print(f2ptr cause, f2ptr fiber, f2ptr exp)         {return f2__print_depth(     cause, fiber,                  exp, default_print_recursion_depth);}
+f2ptr f2__print(f2ptr cause, f2ptr exp)                             {return f2__fiber__print(    cause, f2__this__fiber(cause), exp);}
 
 f2ptr f2__fprint_prompt_debug(f2ptr cause, f2ptr fiber, f2ptr stream, char* prompt, f2ptr exp) {
   int       recursion_depth = default_print_recursion_depth;

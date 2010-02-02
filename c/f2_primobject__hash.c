@@ -230,8 +230,8 @@ f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
   }
   u64 hash_value = 1;
   hash__iteration(cause, this, key, value,
-		  f2ptr key__equals_hash_value      = f2__object__equals_hash_value(cause, key);
-		  f2ptr value__equals_hash_value    = f2__object__equals_hash_value(cause, value);
+		  f2ptr key__equals_hash_value   = f2__object__equals_hash_value(cause, key);
+		  f2ptr value__equals_hash_value = f2__object__equals_hash_value(cause, value);
 		  if ((! raw__integer__is_type(cause, key__equals_hash_value)) ||
 		      (! raw__integer__is_type(cause, value__equals_hash_value))) {
 		    return f2larva__new(cause, 4);

@@ -224,22 +224,24 @@ f2ptr f2__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(hash__equals, this, that, return f2__hash__equals(this_cause, this, that));
 
-u64 raw__hash__equals_hash_value(f2ptr cause, f2ptr this) {
-  u64 hash_value = 1;
-  hash__iteration(cause, this, key, value,
-		  u64 key__equals_hash_value   = raw__object__equals_hash_value(cause, key);
-		  u64 value__equals_hash_value = raw__object__equals_hash_value(cause, value);
-		  hash_value *= ((key__equals_hash_value   == 0) ? 1 : key__equals_hash_value);
-		  hash_value *= ((value__equals_hash_value == 0) ? 1 : value__equals_hash_value);
-		  );
-  return hash_value;
-}
-
 f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
   if (! raw__hash__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2integer__new(cause, raw__hash__equals_hash_value(cause, this));
+  u64 hash_value = 1;
+  hash__iteration(cause, this, key, value,
+		  f2ptr key__equals_hash_value      = f2__object__equals_hash_value(cause, key);
+		  f2ptr value__equals_hash_value    = f2__object__equals_hash_value(cause, value);
+		  if ((! raw__integer__is_type(cause, key__equals_hash_value)) ||
+		      (! raw__integer__is_type(cause, value__equals_hash_value))) {
+		    return f2larva__new(cause, 4);
+		  }
+		  u64 key__equals_hash_value__i   = f2integer__i(key__equals_hash_value,   cause);
+		  u64 value__equals_hash_value__i = f2integer__i(value__equals_hash_value, cause);
+		  hash_value *= ((key__equals_hash_value   == 0) ? 1 : key__equals_hash_value);
+		  hash_value *= ((value__equals_hash_value == 0) ? 1 : value__equals_hash_value);
+		  );
+  return f2integer__new(cause, hash_value);
 }
 def_pcfunk1(hash__equals_hash_value, this, return f2__hash__equals_hash_value(this_cause, this));
 

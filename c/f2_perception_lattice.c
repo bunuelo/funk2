@@ -169,13 +169,26 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
 def_pcfunk1(perception_graph__to_string, this, return f2__perception_graph__to_string(this_cause, this));
 
 boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__edge_structure_hash_value = f2__perception_graph__edge_structure_hash_value(cause, this);
-  f2ptr that__edge_structure_hash_value = f2__perception_graph__edge_structure_hash_value(cause, that);
-  if (! raw__eq(cause, this__edge_structure_hash_value, that__edge_structure_hash_value)) {
+  f2ptr this__edges_node_hash               = f2__perception_graph__edges_node_hash(cause, this);
+  f2ptr that__edges_node_hash               = f2__perception_graph__edges_node_hash(cause, that);
+  f2ptr this__edges_node_hash__key_count    = f2__ptypehash__key_count(cause, this__edges_node_hash);
+  f2ptr that__edges_node_hash__key_count    = f2__ptypehash__key_count(cause, that__edges_node_hash);
+  u64   this__edges_node_hash__key_count__i = f2integer__i(this__edges_node_hash__key_count, cause);
+  u64   that__edges_node_hash__key_count__i = f2integer__i(that__edges_node_hash__key_count, cause);
+  if (this__edges_node_hash__key_count__i != that__edges_node_hash__key_count__i) {
     return boolean__false;
   }
-  f2ptr hash = f2__hash(cause);
-  
+  f2ptr this__nodes = f2__perception_graph__nodes(cause, this);
+  f2ptr that__nodes = f2__perception_graph__nodes(cause, that);
+  f2ptr that__equals_edgess_node_hash = f2__hash(cause);
+  f2ptr that__nodes__iter = that__nodes;
+  while (that__nodes__iter) {
+    f2ptr that__node = f2__cons__car(cause, that__nodes__iter);
+    f2ptr that__node__edges  = f2__ptypehash__lookup(cause, that__edges_node_hash, that__node);
+    f2ptr that__node__edgess = f2__hash__lookup(cause, that__equals_edgess_node_hash, that__node);
+    f2__hash__add(cause, that__equals_edgess_node_hash, that__node, f2cons__new(cause, that__node__edges, that__node__edgess));
+    that__nodes__iter = f2__cons__cdr(cause, that__nodes__iter);
+  }
   return boolean__true;
 }
 
@@ -199,6 +212,11 @@ f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__funk);}
   return this;
 }
+
+f2ptr f2__perception_graphs__largest_duplicated_subgraph(f2ptr cause, f2ptr these) {
+  return nil;
+}
+def_pcfunk1(perception_graphs__largest_duplicated_subgraph, these, return f2__perceptions_graphs__largest_duplicated_subgraph(this_cause, these));
 
 // **
 
@@ -228,6 +246,8 @@ void f2__perception_lattice__initialize() {
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
+  
+  f2__primcfunk__init__1(perception_graphs__largest_duplicated_subgraph, these, "returns the largest subgraph in the set of these graphs that is repeated at least twice.");
   
 }
 

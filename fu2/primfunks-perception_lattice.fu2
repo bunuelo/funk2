@@ -23,3 +23,5 @@
 [globalize-funk perception_graph-new_from_string &primfunk:perception_graph__new_from_string]
 [globalize-funk perception_graph-to_string       &primfunk:perception_graph__to_string]
 
+[globalize-funk perception_graphs-largest_duplicated_subgraph &primfunk:perception_graphs__largest_duplicated_subgraph]
+

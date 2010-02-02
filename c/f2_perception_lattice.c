@@ -196,7 +196,7 @@ f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
 f2ptr f2__perception_graphs__largest_duplicated_subgraph(f2ptr cause, f2ptr these) {
   return nil;
 }
-def_pcfunk1(perception_graphs__largest_duplicated_subgraph, these, return f2__perceptions_graphs__largest_duplicated_subgraph(this_cause, these));
+def_pcfunk1(perception_graphs__largest_duplicated_subgraph, these, return f2__perception_graphs__largest_duplicated_subgraph(this_cause, these));
 
 // **
 

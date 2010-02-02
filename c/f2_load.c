@@ -34,9 +34,9 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
 f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   if (!raw__string__is_type(cause, filename)) {printf("\nload error: filename must be a string."); return nil;}
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
-  if (! stream) {f2__print(cause, fiber, filename); printf("\nload error: couldn't open file for reading."); return nil;}
+  if (! stream) {f2__fiber__print(cause, fiber, filename); printf("\nload error: couldn't open file for reading."); return nil;}
 #ifdef DEBUG_LOAD
-  f2__print(cause, fiber, filename); printf("\nload note: opening file for reading.");
+  f2__fiber__print(cause, fiber, filename); printf("\nload note: opening file for reading.");
 #endif // DEBUG_LOAD
   
   f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil);

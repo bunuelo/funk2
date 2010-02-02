@@ -1073,7 +1073,7 @@ void f2__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint*
   else if (command == __funk2.bytecode.bytecode__yield__symbol)              {}
   else if (command == __funk2.bytecode.bytecode__newenv__symbol)             {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__newenv);}
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)       {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__machine_code, f2bytecode__arg0(bytecode, cause));}
-  else {f2__print(nil, nil, command); fflush(stdout); error(nil, "f2__chunk__compile_x86__bytecode error: unrecognized bytecode command.");}
+  else {f2__print(nil, command); fflush(stdout); error(nil, "f2__chunk__compile_x86__bytecode error: unrecognized bytecode command.");}
 }
 
 //  b5:	85 c0                	test   %eax,%eax

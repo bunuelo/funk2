@@ -209,7 +209,7 @@ boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
   }
   hash__iteration(cause, this, this__key, this__value,
 		  f2ptr that__value = f2__hash__lookup(cause, fiber, that, this__key);
-		  if (! raw__object__equals(cause, this__value, that__value)) {
+		  if (! f2__object__equals(cause, this__value, that__value)) {
 		    return boolean__false;
 		  }
 		  );

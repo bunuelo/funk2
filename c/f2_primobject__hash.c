@@ -238,8 +238,8 @@ f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
 		  }
 		  u64 key__equals_hash_value__i   = f2integer__i(key__equals_hash_value,   cause);
 		  u64 value__equals_hash_value__i = f2integer__i(value__equals_hash_value, cause);
-		  hash_value *= ((key__equals_hash_value   == 0) ? 1 : key__equals_hash_value);
-		  hash_value *= ((value__equals_hash_value == 0) ? 1 : value__equals_hash_value);
+		  hash_value *= ((key__equals_hash_value__i   == 0) ? 1 : key__equals_hash_value__i);
+		  hash_value *= ((value__equals_hash_value__i == 0) ? 1 : value__equals_hash_value__i);
 		  );
   return f2integer__new(cause, hash_value);
 }

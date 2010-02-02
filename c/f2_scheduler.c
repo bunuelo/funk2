@@ -318,7 +318,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       if (critics) {
 	f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
 	printf("\nlarva found in fiber and fiber has a critic, so launching critic fiber in serial."); fflush(stdout);
-	printf("\n  critic="); f2__print(cause, nil, critics); fflush(stdout);
+	printf("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	pause_gc();
 	f2ptr new_fiber = f2__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	resume_gc();
@@ -339,7 +339,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}	
 	//printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
       } else {
-	f2__print(cause, nil, fiber);
+	f2__fiber__print(cause, nil, fiber);
 	printf("\nlarva found in fiber and fiber has no critics, so doing nothing."); fflush(stdout);
 	f2ptr larva = f2fiber__value(fiber, cause);
 	if (! raw__larva__is_type(cause, larva)) {
@@ -350,7 +350,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  if (raw_type == 23) {
 	    printf("\n  larva is symbol-undefined type"); fflush(stdout);
 	    printf(", and last symbol was: "); fflush(stdout);
-	    f2__print(nil, nil, __funk2.primobject__environment.environment__last_23_larva_symbol); fflush(stdout);
+	    f2__fiber__print(nil, nil, __funk2.primobject__environment.environment__last_23_larva_symbol); fflush(stdout);
 	  }
 	}
       }

@@ -1048,6 +1048,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
       last_prime_index ++;
       last_prime_factor               = raw__prime(cause, last_prime_index);
       last_prime_factor__largeinteger = f2__largeinteger__new(cause, last_prime_factor);
+      printf("\nprime_factor: "); f2__print(cause, last_prime_factor__largeinteger);
     }
     small__is_divisible = boolean__false;
     large__is_divisible = boolean__false;
@@ -1069,6 +1070,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
       small_reduced = small_reduced__quotient;
       large_reduced = large_reduced__quotient;
       common_factor = f2__largeinteger__multiply(cause, common_factor, last_prime_factor__largeinteger);
+      printf("\ncommon_factor: "); f2__print(cause, common_factor);
     }
   }
   return common_factor;

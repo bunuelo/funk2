@@ -1088,17 +1088,20 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   }
   f2ptr small;
   f2ptr large;
-  if (raw__largeinteger__less_than(cause, this, that)) {
-    small = this;
-    large = that;
-  } else {
-    small = that;
-    large = this;
-  }
+  //if (raw__largeinteger__less_than(cause, this, that)) {
+  small = this;
+  large = that;
+  //} else {
+  //small = that;
+  //large = this;
+  //}
   printf("\nsmall: "); f2__print(cause, small);
   printf("\nlarge: "); f2__print(cause, large);
   if (raw__largeinteger__is_zero(cause, small)) {
     return large;
+  }
+  if (raw__largeinteger__is_zero(cause, large)) {
+    return small;
   }
   f2ptr division  = f2__largeinteger__quotient_and_remainder(cause, large, small);
   printf("\ndivision: "); f2__print(cause, division);

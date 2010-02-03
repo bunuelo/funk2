@@ -1066,8 +1066,8 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
     if (small__is_divisible && large__is_divisible) {
       f2ptr small_reduced__quotient = f2__cons__car(cause, small_reduced__quotient_and_remainder);
       f2ptr large_reduced__quotient = f2__cons__car(cause, large_reduced__quotient_and_remainder);
-      small_reduced = small__reduced_quotient;
-      large_reduced = large__reduced_quotient;
+      small_reduced = small_reduced__quotient;
+      large_reduced = large_reduced__quotient;
       common_factor = f2__largeinteger__multiply(cause, common_factor, last_prime_factor__largeinteger);
     }
   }

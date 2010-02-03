@@ -1095,18 +1095,23 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
     small = that;
     large = this;
   }
+  printf("\nsmall: "); f2__print(cause, small);
+  printf("\nlarge: "); f2__print(cause, large);
   if (raw__largeinteger__is_zero(cause, small)) {
     return large;
   }
-  f2ptr division       = f2__largeinteger__quotient_and_remainder(  cause, large, small);
-  f2ptr quotient       = f2__cons__car(cause, division);
-  f2ptr remainder      = f2__cons__cdr(cause, division);
+  f2ptr division  = f2__largeinteger__quotient_and_remainder(cause, large, small);
+  printf("\ndivision: "); f2__print(cause, division);
+  f2ptr quotient  = f2__cons__car(cause, division);
+  f2ptr remainder = f2__cons__cdr(cause, division);
   if (raw__largeinteger__is_zero(cause, remainder)) {
     return small;
   }
   f2ptr multiplication = f2__largeinteger__multiply(cause, small, quotient);
+  printf("\nmultiplication: "); f2__print(cause, multiplication);
   f2ptr subtraction    = f2__largeinteger__subtract(cause, large, multiplication);
-  return f2__largeinteger__greatest_common_factor(cause, large, subtraction);
+  printf("\nsubtraction: "); f2__print(cause, subtraction);
+  return f2__largeinteger__greatest_common_factor(  cause, large, subtraction);
 }
 def_pcfunk2(largeinteger__greatest_common_factor, this, that, return f2__largeinteger__greatest_common_factor(this_cause, this, that));
 

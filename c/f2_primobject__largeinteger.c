@@ -1045,6 +1045,8 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   boolean_t large__is_divisible = boolean__false;
   while ((! raw__largeinteger__is_one(cause, small_reduced)) &&
 	 (! raw__largeinteger__is_one(cause, large_reduced))) {
+    printf("\nsmall_reduced: "); f2__print(cause, small_reduced);
+    printf("\nlarge_reduced: "); f2__print(cause, large_reduced);
     if (! (small__is_divisible && large__is_divisible)) {
       last_prime_index ++;
       last_prime_factor               = raw__prime(cause, last_prime_index);

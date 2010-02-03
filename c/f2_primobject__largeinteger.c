@@ -1045,25 +1045,25 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   boolean_t large__is_divisible = boolean__false;
   while ((! last_prime_factor__largeinteger) ||
 	 (! raw__largeinteger__less_than(cause, small_reduced, last_prime_factor__largeinteger))) {
-    printf("\nsmall_reduced: "); f2__print(cause, small_reduced);
-    printf("\nlarge_reduced: "); f2__print(cause, large_reduced);
+    //printf("\nsmall_reduced: "); f2__print(cause, small_reduced);
+    //printf("\nlarge_reduced: "); f2__print(cause, large_reduced);
     if (! (small__is_divisible && large__is_divisible)) {
       last_prime_index ++;
       last_prime_factor               = raw__prime(cause, last_prime_index);
       last_prime_factor__largeinteger = f2__largeinteger__new(cause, last_prime_factor);
-      printf("\nprime_factor: "); f2__print(cause, last_prime_factor__largeinteger);
+      //printf("\nprime_factor: "); f2__print(cause, last_prime_factor__largeinteger);
     }
     small__is_divisible = boolean__false;
     large__is_divisible = boolean__false;
     f2ptr small_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, small_reduced, last_prime_factor__largeinteger);
-    printf("\nsmall_reduced__quotient_and_remainder: "); f2__print(cause, small_reduced__quotient_and_remainder);
+    //printf("\nsmall_reduced__quotient_and_remainder: "); f2__print(cause, small_reduced__quotient_and_remainder);
     f2ptr small_reduced__remainder              = f2__cons__cdr(cause, small_reduced__quotient_and_remainder);
     f2ptr large_reduced__quotient_and_remainder = nil;
     f2ptr large_reduced__remainder              = nil;
     if (raw__largeinteger__is_zero(cause, small_reduced__remainder)) {
       small__is_divisible = boolean__true;
       large_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, large_reduced, last_prime_factor__largeinteger);
-      printf("\nlarge_reduced__quotient_and_remainder: "); f2__print(cause, large_reduced__quotient_and_remainder);
+      //printf("\nlarge_reduced__quotient_and_remainder: "); f2__print(cause, large_reduced__quotient_and_remainder);
       large_reduced__remainder              = f2__cons__cdr(cause, large_reduced__quotient_and_remainder);
       if (raw__largeinteger__is_zero(cause, large_reduced__remainder)) {
 	large__is_divisible = boolean__true;
@@ -1075,7 +1075,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
       small_reduced = small_reduced__quotient;
       large_reduced = large_reduced__quotient;
       common_factor = f2__largeinteger__multiply(cause, common_factor, last_prime_factor__largeinteger);
-      printf("\ncommon_factor: "); f2__print(cause, common_factor);
+      //printf("\ncommon_factor: "); f2__print(cause, common_factor);
     }
   }
   return common_factor;

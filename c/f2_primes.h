@@ -29,6 +29,13 @@ struct funk2_primes_s {
   f2ptr prime_array;
 };
 
+f2ptr  f2__prime_array__new(f2ptr cause, f2ptr prime_count);
+f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_count);
+f2ptr  f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count);
+
+f2ptr raw__prime(f2ptr cause, u64 prime_index);
+f2ptr  f2__prime(f2ptr cause, f2ptr prime_index);
+
 // **
 
 void f2__primes__initialize();

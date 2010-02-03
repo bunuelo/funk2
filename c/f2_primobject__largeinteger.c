@@ -1021,7 +1021,7 @@ boolean_t raw__largeinteger__is_one(f2ptr cause, f2ptr this) {
   return boolean__false;
 }
 
-f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__largeinteger__greatest_common_factor__by_common_prime_method(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__largeinteger__is_type(cause, this)) ||
       (! raw__largeinteger__is_type(cause, that))) {
     return f2larva__new(cause, 1);
@@ -1079,6 +1079,34 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
     }
   }
   return common_factor;
+}
+
+f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr small;
+  f2ptr large;
+  if (raw__largeinteger__less_than(cause, this, that)) {
+    small = this;
+    large = that;
+  } else {
+    small = that;
+    large = this;
+  }
+  if (raw__largeinteger__is_zero(cause, small)) {
+    return large;
+  }
+  f2ptr division       = f2__largeinteger__quotient_and_remainder(  cause, large, small);
+  f2ptr quotient       = f2__cons__car(cause, division);
+  f2ptr remainder      = f2__cons__cdr(cause, division);
+  if (raw__largeinteger__is_zero(cause, remainder)) {
+    return small;
+  }
+  f2ptr multiplication = f2__largeinteger__multiply(cause, small, quotient);
+  f2ptr subtraction    = f2__largeinteger__subtract(cause, large, multiplication);
+  return f2__largeinteger__greatest_common_factor(cause, large, subtraction);
 }
 def_pcfunk2(largeinteger__greatest_common_factor, this, that, return f2__largeinteger__greatest_common_factor(this_cause, this, that));
 

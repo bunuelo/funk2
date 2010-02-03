@@ -1035,7 +1035,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
     small = that;
     large = this;
   }
-  f2ptr common_factor = raw__largeinteger__new(cause, 1);
+  f2ptr common_factor = raw__largeinteger__new_from_s64(cause, 1);
   f2ptr small_reduced = small;
   f2ptr large_reduced = large;
   s64   last_prime_index                = -1;

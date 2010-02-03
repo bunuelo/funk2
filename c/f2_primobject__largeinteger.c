@@ -1053,10 +1053,12 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
     large__is_divisible = boolean__false;
     f2ptr small_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, small_reduced, f2integer__new(cause, last_prime_factor__largeinteger));
     f2ptr small_reduced__remainder              = f2__cons__cdr(cause, small_reduced__quotient_and_remainder);
+    f2ptr large_reduced__quotient_and_remainder = nil;
+    f2ptr large_reduced__remainder              = nil;
     if (raw__largeinteger__is_zero(cause, small_reduced__remainder)) {
       small__is_divisible = boolean__true;
-      f2ptr large_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, large_reduced, f2integer__new(cause, last_prime_factor));
-      f2ptr large_reduced__remainder              = f2__cons__cdr(cause, large_reduced__quotient_and_remainder);
+      large_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, large_reduced, f2integer__new(cause, last_prime_factor));
+      large_reduced__remainder              = f2__cons__cdr(cause, large_reduced__quotient_and_remainder);
       if (raw__largeinteger__is_zero(cause, large_reduced__remainder)) {
 	large__is_divisible = boolean__true;
       }

@@ -179,7 +179,6 @@ f2ptr f2__prime(f2ptr cause, f2ptr prime_index) {
 }
 def_pcfunk1(prime, prime_index, return f2__prime(this_cause, prime_index));
 
-
 // **
 
 void f2__primes__reinitialize_globalvars() {

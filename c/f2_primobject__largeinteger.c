@@ -996,6 +996,81 @@ double raw__largeinteger__to_double(f2ptr cause, f2ptr this) {
   return value;
 }
 
+boolean_t raw__largeinteger__is_zero(f2ptr cause, f2ptr this) {
+  f2ptr integer_array         = f2__largeinteger__integer_array(cause, this);
+  u64   integer_array__length = raw__array__length(cause, integer_array);
+  if (integer_array__length == 0) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+boolean_t raw__largeinteger__is_one(f2ptr cause, f2ptr this) {
+  f2ptr integer_array         = f2__largeinteger__integer_array(cause, this);
+  u64   integer_array__length = raw__array__length(cause, integer_array);
+  if (integer_array__length == 1) {
+    f2ptr elt        = raw__array__elt(cause, integer_array, 0);
+    u64   elt__value = f2integer__i(elt, cause);
+    if (elt__value == 1) {
+      f2ptr is_negative = f2__largeinteger__is_negative(cause, this);
+      if (is_negative == nil) {
+	return boolean__true;
+      }
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__largeinteger__is_type(cause, this)) ||
+      (! raw__largeinteger__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr small;
+  f2ptr large;
+  if (raw__largeinteger__less_than(cause, this, that)) {
+    small = this;
+    large = that;
+  } else {
+    small = that;
+    large = this;
+  }
+  f2ptr common_factor = raw__largeinteger__new(cause, 1);
+  f2ptr small_reduced = small;
+  f2ptr large_reduced = large;
+  s64   last_prime_index                = -1;
+  f2ptr last_prime_factor               = nil;
+  f2ptr last_prime_factor__largeinteger = nil;
+  while (! raw__largeinteger__is_one(cause, small_reduced)) {
+    if (! (small__is_divisible && large__is_divisible)) {
+      last_prime_index ++;
+      last_prime_factor               = raw__prime(cause, last_prime_index);
+      last_prime_factor__largeinteger = f2__largeinteger__new(cause, last_prime_factor);
+    }
+    f2ptr small_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, small_reduced, f2integer__new(cause, last_prime_factor__largeinteger));
+    f2ptr small_reduced__remainder              = f2__cons__cdr(cause, small_reduced__quotient_and_remainder);
+    boolean_t small__is_divisible = boolean__false;
+    boolean_t large__is_divisible = boolean__false;
+    if (raw__largeinteger__is_zero(cause, small_reduced__remainder)) {
+      small__is_divisible = boolean__true;
+      f2ptr large_reduced__quotient_and_remainder = f2__largeinteger__quotient_and_remainder(cause, large_reduced, f2integer__new(cause, last_prime_factor));
+      f2ptr large_reduced__remainder              = f2__cons__cdr(cause, large_reduced__quotient_and_remainder);
+      if (raw__largeinteger__is_zero(cause, large_reduced__remainder)) {
+	large__is_divisible = boolean__true;
+      }
+    }
+    if (small__is_divisible && large__is_divisible) {
+      f2ptr small_reduced__quotient = f2__cons__car(cause, small_reduced__quotient_and_remainder);
+      f2ptr large_reduced__quotient = f2__cons__car(cause, large_reduced__quotient_and_remainder);
+      small_reduced = small__reduced_quotient;
+      large_reduced = large__reduced_quotient;
+      common_factor = f2__largeinteger__multiply(cause, common_factor, last_prime_factor__largeinteger);
+    }
+  }
+  return common_factor;
+}
+def_pcfunk2(largeinteger__greatest_common_factor, this, that, return f2__largeinteger__greatest_common_factor(this_cause, this, that));
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
@@ -1025,6 +1100,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
   f2__primcfunk__init__2(largeinteger__modulo, this, that, "returns the result of the modulo of two largeintegers.");
   f2__primcfunk__init__1(largeinteger__print, this, "prints a large integer in decimal format to the standard output.");
+  f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that, "returns the greatest common factor of this and that.");
   
 }
 

@@ -31,5 +31,6 @@
 [globalize-funk largeinteger-divide                 &primfunk:largeinteger__divide]
 [globalize-funk largeinteger-modulo                 &primfunk:largeinteger__modulo]
 [globalize-funk largeinteger-print                  &primfunk:largeinteger__print]
+[globalize-funk largeinteger-greatest_common_factor &primfunk:largeinteger__greatest_common_factor]
 
 

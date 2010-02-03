@@ -1111,7 +1111,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   printf("\nmultiplication: "); f2__print(cause, multiplication);
   f2ptr subtraction    = f2__largeinteger__subtract(cause, large, multiplication);
   printf("\nsubtraction: "); f2__print(cause, subtraction);
-  return f2__largeinteger__greatest_common_factor(  cause, large, subtraction);
+  return f2__largeinteger__greatest_common_factor(  cause, small, subtraction);
 }
 def_pcfunk2(largeinteger__greatest_common_factor, this, that, return f2__largeinteger__greatest_common_factor(this_cause, this, that));
 

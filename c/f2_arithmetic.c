@@ -715,6 +715,36 @@ f2ptr f2__number__equals_number(f2ptr cause, f2ptr this, f2ptr number) {
 }
 def_pcfunk2(number__equals_number, this, number, return f2__number__equals_number(this_cause, this, number));
 
+// number square_root
+
+f2ptr f2__number__square_root(f2ptr cause, f2ptr this) {
+  if (raw__integer__is_type(cause, this)) {
+    s64 i = f2integer__i(this, cause);
+    if (i < 0) {
+      return f2larva__new(cause, 5);
+    }
+    return f2integer__new(cause, u64__sqrt(i));
+  } else if (raw__double__is_type(cause, this)) {
+    double d = f2double__d(this, cause);
+    if (d < 0) {
+      return f2larva__new(cause, 5);
+    }
+    return f2double__new(cause, sqrt(d));
+  } else if (raw__float__is_type(cause, this)) {
+    float f = f2float__f(this, cause);
+    if (f < 0) {
+      return f2larva__new(cause, 5);
+    }
+    return f2float__new(cause, sqrtf(f));
+  } else if (raw__largeinteger__is_type(cause, this)) {
+    if (raw__largeinteger__is_negative(cause, this) != nil) {
+      return f2larva__new(cause, 5);
+    }
+    return f2__largeinteger__square_root(cause, this);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk1(number__square_root, this, return f2__number__square_root(this_cause, this));
 
 // **
 
@@ -735,5 +765,6 @@ void f2__arithmetic__initialize() {
   f2__primcfunk__init__2(number__greater_than_number, this, number, "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__2(number__less_than_number,    this, number, "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__2(number__equals_number,       this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__1(number__square_root,         this,         "(cfunk defined in f2_arithmetic.c)");
   
 }

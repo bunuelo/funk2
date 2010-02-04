@@ -111,4 +111,7 @@
   [or [> x y]
       [== x y]]]
 
+[defunk sqrt [x]
+  [number-square_root x]]
+
 

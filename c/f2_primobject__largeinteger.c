@@ -1116,10 +1116,10 @@ f2ptr f2__largeinteger__square_root(f2ptr cause, f2ptr this) {
   while (! raw__largeinteger__is_zero(cause, place)) {
     f2ptr root_plus_place = f2__largeinteger__add(cause, root, place);
     if (! raw__largeinteger__less_than(cause, remainder, root_plus_place)) {
-      f2ptr remainder_minus_root   = f2__largeinteger__subtract(cause, remainder, root);
-      remainder                    = f2__largeinteger__subtract(cause, remainder_minus_root, place);
+      f2ptr remainder_minus_root   =  f2__largeinteger__subtract(     cause, remainder, root);
+      remainder                    =  f2__largeinteger__subtract(     cause, remainder_minus_root, place);
       f2ptr place_shifted_left_one = raw__largeinteger__bitshift_left(cause, place, 1);
-      root                         = f2__largeinteger__add(cause, root, place_shifted_left_one);
+      root                         =  f2__largeinteger__add(          cause, root, place_shifted_left_one);
     }
     root  = raw__largeinteger__bitshift_right(cause, root,  1);
     place = raw__largeinteger__bitshift_right(cause, place, 2);
@@ -1127,6 +1127,33 @@ f2ptr f2__largeinteger__square_root(f2ptr cause, f2ptr this) {
   return root;
 }
 def_pcfunk1(largeinteger__square_root, this, return f2__largeinteger__square_root(this_cause, this));
+
+f2ptr f2__largeinteger__prime_factors(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr     factors            = nil;
+  f2ptr     this_reduced       = this;
+  s64       prime_factor_index = -1;
+  f2ptr     prime_factor_guess = nil;
+  boolean_t remainder_is_zero  = boolean__false;
+  while (! raw__largeinteger__is_one(cause, this_reduced)) {
+    if (! remainder_is_zero) {
+      prime_factor_index ++;
+      prime_factor_guess = f2__largeinteger__new(cause, raw__prime(cause, prime_factor_index));
+    }
+    f2ptr division    = f2__largeinteger__divide(cause, this, prime_factor_guess);
+    f2ptr quotient    = f2__cons__car(cause, division);
+    f2ptr remainder   = f2__cons__cdr(cause, division);
+    remainder_is_zero = raw__largeinteger__is_zero(cause, remainder);
+    if (remainder_is_zero) {
+      this_reduced = quotient;
+      factors      = f2cons__new(cause, f2integer__new(cause, prime_factor_index), factors);
+    }
+  }
+  return factors;
+}
+def_pcfunk1(largeinteger__prime_factors, this, return f2__largeinteger__prime_factors(this_cause, this));
 
 // **
 
@@ -1159,6 +1186,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__1(largeinteger__print, this, "prints a large integer in decimal format to the standard output.");
   f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that, "returns the greatest common factor of this and that.");
   f2__primcfunk__init__1(largeinteger__square_root, this, "returns the square root of this.");
+  f2__primcfunk__init__1(largeinteger__prime_factors, this, "returns the indices (i.e. [prime index]) of the prime factors of this.");
   
 }
 

@@ -1142,7 +1142,7 @@ f2ptr f2__largeinteger__prime_factors(f2ptr cause, f2ptr this) {
       prime_factor_index ++;
       prime_factor_guess = f2__largeinteger__new(cause, raw__prime(cause, prime_factor_index));
     }
-    f2ptr division    = f2__largeinteger__divide(cause, this, prime_factor_guess);
+    f2ptr division    = f2__largeinteger__quotient_and_remainder(cause, this_reduced, prime_factor_guess);
     f2ptr quotient    = f2__cons__car(cause, division);
     f2ptr remainder   = f2__cons__cdr(cause, division);
     remainder_is_zero = raw__largeinteger__is_zero(cause, remainder);

@@ -737,7 +737,7 @@ f2ptr f2__number__square_root(f2ptr cause, f2ptr this) {
     }
     return f2float__new(cause, sqrtf(f));
   } else if (raw__largeinteger__is_type(cause, this)) {
-    if (raw__largeinteger__is_negative(cause, this) != nil) {
+    if (f2__largeinteger__is_negative(cause, this) != nil) {
       return f2larva__new(cause, 5);
     }
     return f2__largeinteger__square_root(cause, this);

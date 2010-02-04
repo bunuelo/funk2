@@ -28,4 +28,5 @@
 [globalize-funk number-greater_than_number &primfunk:number__greater_than_number]
 [globalize-funk number-less_than_number    &primfunk:number__less_than_number]
 [globalize-funk number-equals_number       &primfunk:number__equals_number]
+[globalize-funk number-square_root         &primfunk:number__square_root]
 

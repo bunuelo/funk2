@@ -30,6 +30,7 @@
 [deftypefunk largeinteger execute modulo                 [that] [largeinteger-modulo                 this that]]
 [deftypefunk largeinteger execute print                  []     [largeinteger-print                  this]]
 [deftypefunk largeinteger execute greatest_common_factor [that] [largeinteger-greatest_common_factor this that]]
+[deftypefunk largeinteger execute square_root            []     [largeinteger-square_root            this]]
 
 [defunk gcf [x y]
   [largeinteger-greatest_common_factor [new largeinteger x] [new largeinteger y]]]

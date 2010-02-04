@@ -1055,6 +1055,79 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
 }
 def_pcfunk2(largeinteger__greatest_common_factor, this, that, return f2__largeinteger__greatest_common_factor(this_cause, this, that));
 
+/*
+u64 u64__sqrt(u64 this) {
+  register u64 root;
+  register u64 remainder;
+  register u64 place;
+  
+  root = 0;
+  remainder = this;
+  place = 0x4000000000000000;
+  
+  while (place > remainder) {
+    place = place >> 2;
+  }
+  
+  while (place) {
+    if (remainder >= root + place) {
+      remainder = remainder - root - place;
+      root = root + (place << 1);
+    }
+    root = root >> 1;
+    place = place >> 2;
+  }
+  return root;
+}
+*/
+
+f2ptr raw__largeinteger__square_root__initial_place(f2ptr cause, f2ptr this) {
+  f2ptr this__integer_array          = f2__largeinteger__integer_array(cause, this);
+  u64   this__integer_array__length  = raw__array__length(cause, this__integer_array);
+  u64   place__integer_array__length = (this__integer_array__length == 0) ? 1 : this__integer_array__length;
+  f2ptr place__integer_array         = raw__array__new(cause, this__integer_array__length);
+  {
+    s64 index;
+    for (index = this__integer_array__length - 2; index >= 0; index --) {
+      raw__array__elt__set(cause, this__integer_array, index, f2integer__new(cause, 0));
+    }
+  }
+  raw__array__elt__set(cause, this__integer_array, this__integer_array__length - 1, f2integer__new(cause, 0x4000000000000000));
+  return f2largeinteger__new(cause, nil, place__integer_array);
+}
+
+f2ptr f2__largeinteger__square_root(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr is_negative = f2__largeinteger__is_negative(cause, this);
+  if (is_negative) {
+    return f2larva__new(cause, 5);
+  }
+  
+  f2ptr root      = raw__largeinteger__new_from_s64(cause, 0);
+  f2ptr remainder = this;
+  f2ptr place     = raw__largeinteger__square_root__initial_place(cause, this);
+  
+  while (raw__largeinteger__greater_than(cause, place, remainder)) {
+    place = raw__largeinteger__bitshift_right(cause, place, 2);
+  }
+  
+  while (! raw__largeinteger__is_zero(cause, place)) {
+    f2ptr root_plus_place = f2__largeinteger__add(cause, root, place);
+    if (! raw__largeinteger__less_than(cause, remainder, root_plus_place)) {
+      f2ptr remainder_minus_root   = f2__largeinteger__subtract(cause, remainder, root);
+      remainder                    = f2__largeinteger__subtract(cause, remainder_minus_root, place);
+      f2ptr place_shifted_left_one = raw__largeinteger__bitshift_left(cause, place, 1);
+      root                         = f2__largeinteger__add(cause, root, place_shifted_left_one);
+    }
+    root  = raw__largeinteger__bitshift_right(cause, root,  1);
+    place = raw__largeinteger__bitshift_right(cause, place, 2);
+  }
+  return root;
+}
+def_pcfunk1(largeinteger__square_root, this, return f2__largeinteger__square_root(this_cause, this));
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
@@ -1085,6 +1158,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__modulo, this, that, "returns the result of the modulo of two largeintegers.");
   f2__primcfunk__init__1(largeinteger__print, this, "prints a large integer in decimal format to the standard output.");
   f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that, "returns the greatest common factor of this and that.");
+  f2__primcfunk__init__1(largeinteger__square_root, this, "returns the square root of this.");
   
 }
 

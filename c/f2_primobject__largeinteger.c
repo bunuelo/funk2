@@ -1085,14 +1085,14 @@ f2ptr raw__largeinteger__square_root__initial_place(f2ptr cause, f2ptr this) {
   f2ptr this__integer_array          = f2__largeinteger__integer_array(cause, this);
   u64   this__integer_array__length  = raw__array__length(cause, this__integer_array);
   u64   place__integer_array__length = (this__integer_array__length == 0) ? 1 : this__integer_array__length;
-  f2ptr place__integer_array         = raw__array__new(cause, this__integer_array__length);
+  f2ptr place__integer_array         = raw__array__new(cause, place__integer_array__length);
   {
     s64 index;
-    for (index = this__integer_array__length - 2; index >= 0; index --) {
-      raw__array__elt__set(cause, this__integer_array, index, f2integer__new(cause, 0));
+    for (index = place__integer_array__length - 2; index >= 0; index --) {
+      raw__array__elt__set(cause, place__integer_array, index, f2integer__new(cause, 0));
     }
   }
-  raw__array__elt__set(cause, this__integer_array, this__integer_array__length - 1, f2integer__new(cause, 0x4000000000000000));
+  raw__array__elt__set(cause, place__integer_array, place__integer_array__length - 1, f2integer__new(cause, 0x4000000000000000));
   return f2largeinteger__new(cause, nil, place__integer_array);
 }
 

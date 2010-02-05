@@ -254,7 +254,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	    for (index = 0; index < node_indices__length; index ++) {
 	      f2ptr node = node_indices[index];
 	      f2__perception_graph__add_node(cause, graph, node);
-	      f2ptr outs = f2__perception_graph__node_outs(cause, graph, node);
+	      f2ptr outs = f2__perception_graph__node__outs(cause, graph, node);
 	      {
 		f2ptr iter = outs;
 		while (! iter) {

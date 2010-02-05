@@ -242,7 +242,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	{
 	  u64 index;
 	  for (index = 0; index < node_indices__length; index ++) {
-	    f2ptr node = node_indices[index];
+	    f2ptr node = nodes_array[node_indices[index]];
 	    f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
 	  }
 	}
@@ -252,7 +252,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  {
 	    u64 index;
 	    for (index = 0; index < node_indices__length; index ++) {
-	      f2ptr node = node_indices[index];
+	      f2ptr node = nodes_array[node_indices[index]];
 	      f2__perception_graph__add_node(cause, graph, node);
 	      f2ptr outs = f2__perception_graph__node__outs(cause, graph, node);
 	      {

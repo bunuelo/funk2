@@ -242,7 +242,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  printf("\nnode_indices: (");
 	  u64 index;
 	  for (index = 0; index < node_indices__length; index ++) {
-	    printf(" %d", node_indices[index]);
+	    printf(" " u64__fstr, node_indices[index]);
 	  }
 	  printf(")\n");
 	}

@@ -263,6 +263,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 		  if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
 		    graph__edges = f2cons__new(cause, edge, graph__edges);
 		  }
+		  iter = f2__cons__cdr(cause, iter);
 		}
 	      }
 	    }

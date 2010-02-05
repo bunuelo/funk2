@@ -329,7 +329,7 @@ void f2__perception_lattice__initialize() {
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
-  f2__primcfunk__init__1(perception_graph__subgraphs_of_node_count, this, node_count, "returns all subgraphs with node_count nodes.");
+  f2__primcfunk__init__2(perception_graph__subgraphs_of_node_count, this, node_count, "returns all subgraphs with node_count nodes.");
   
 }
 

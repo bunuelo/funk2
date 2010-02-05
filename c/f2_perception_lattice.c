@@ -214,10 +214,11 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
       index ++;
     }
   }
-  u64* node_indices = (u64*)alloca(sizeof(u64) * node_count);
+  u64  node_indices__length = node_count;
+  u64* node_indices         = (u64*)alloca(sizeof(u64) * node_count);
   {
     u64 index;
-    for (index = 0; index < node_indices; index ++) {
+    for (index = 0; index < node_indices__length; index ++) {
       node_indices[index] = index;
     }
   }
@@ -226,10 +227,10 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
   while (! done) {
     {
       boolean_t done_with_increment = boolean__false;
-      s64       index               = node_count - 1;
+      s64       index               = node_indices__length - 1;
       while ((! done_with_increment) && (index >= 0)) {
 	node_indices[index] ++;
-	if (node_indices[index] >= ((nodes__length - 1) + index - (node_count - 1))) {
+	if (node_indices[index] >= ((nodes__length - 1) + index - (node_indices__length - 1))) {
 	  index --;
 	} else {
 	  done_with_increment = boolean__true;
@@ -241,7 +242,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	f2ptr node_hash = f2__ptypehash__new(cause);
 	{
 	  u64 index;
-	  for (index = 0; index < node_count; index ++) {
+	  for (index = 0; index < node_indices__length; index ++) {
 	    f2ptr node = node_indices[index];
 	    f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
 	  }
@@ -251,7 +252,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  f2ptr graph__edges = nil;
 	  {
 	    u64 index;
-	    for (index = 0; index < node_count; index ++) {
+	    for (index = 0; index < node_indices__length; index ++) {
 	      f2ptr node = node_indices[index];
 	      f2__perception_graph__add_node(cause, graph, node);
 	      f2ptr outs = f2__perception_graph__node_outs(cause, graph, node);

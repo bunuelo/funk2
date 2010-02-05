@@ -203,7 +203,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
   if (nodes__length < node_count) {
     return nil;
   }
-  f2ptr* nodes_array = (f2ptr*)alloca(sizeof(f2ptr) * node__length);
+  f2ptr* nodes_array = (f2ptr*)alloca(sizeof(f2ptr) * nodes__length);
   {
     u64   index = 0;
     f2ptr iter  = nodes;

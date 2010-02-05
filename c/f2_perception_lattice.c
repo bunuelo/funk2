@@ -229,7 +229,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
       s64       index               = node_count - 1;
       while ((! done_with_increment) && (index >= 0)) {
 	node_indices[index] ++;
-	if (node_indices[index] >= ((node__length - 1) + index - (node_count - 1))) {
+	if (node_indices[index] >= ((nodes__length - 1) + index - (node_count - 1))) {
 	  index --;
 	} else {
 	  done_with_increment = boolean__true;

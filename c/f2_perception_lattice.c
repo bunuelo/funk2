@@ -229,7 +229,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
       s64       index               = node_indices__length - 1;
       while ((! done_with_increment) && (index >= 0)) {
 	node_indices[index] ++;
-	if (node_indices[index] > ((nodes__length - 1) + index - (node_indices__length - 1))) {
+	if (node_indices[index] >= ((nodes__length - 1) + index - (node_indices__length - 1))) {
 	  index --;
 	} else {
 	  done_with_increment = boolean__true;
@@ -238,6 +238,15 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
       if (! done_with_increment) {
 	done = boolean__true;
       } else {
+	{
+	  printf("\nnode_indices: (");
+	  u64 index;
+	  for (index = 0; index < node_indices__length; index ++) {
+	    printf(" %d", node_indices[index]);
+	  }
+	  printf(")\n");
+	}
+	
 	f2ptr node_hash = f2__ptypehash__new(cause);
 	{
 	  u64 index;

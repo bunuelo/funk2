@@ -290,7 +290,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 
 f2ptr f2__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, f2ptr node_count) {
   if ((! raw__perception_graph__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, this))) {
+      (! raw__integer__is_type(cause, node_count))) {
     return f2larva__new(cause, 1);
   }
   s64 node_count__i = f2integer__i(node_count, cause);

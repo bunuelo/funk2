@@ -19,9 +19,9 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk perception_graph-new             &primfunk:perception_graph__new]
-[globalize-funk perception_graph-new_from_string &primfunk:perception_graph__new_from_string]
-[globalize-funk perception_graph-to_string       &primfunk:perception_graph__to_string]
+[globalize-funk perception_graph-new                     &primfunk:perception_graph__new]
+[globalize-funk perception_graph-new_from_string         &primfunk:perception_graph__new_from_string]
+[globalize-funk perception_graph-to_string               &primfunk:perception_graph__to_string]
+[globalize-funk perception_graph-subgraphs_of_node_count &primfunk:perception_graph__subgraphs_of_node_count]
 
-[globalize-funk perception_graphs-largest_duplicated_subgraph &primfunk:perception_graphs__largest_duplicated_subgraph]
 

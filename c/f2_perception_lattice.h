@@ -28,7 +28,7 @@ declare_object_type_3_slot(perception_graph_edge, label, left_node, right_node, 
 
 // perception_graph
 typedef struct funk2_object_type__perception_graph__slot_s funk2_object_type__perception_graph__slot_t;
-declare_object_type_3_slot(perception_graph, nodes, edges_node_hash, edge_structure_hash_value,
+declare_object_type_4_slot(perception_graph, nodes, edges, edges_node_hash, edge_structure_hash_value,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
 			   f2ptr equals_hash_value__symbol;
@@ -46,7 +46,7 @@ declare_object_type_3_slot(perception_graph, nodes, edges_node_hash, edge_struct
 declare_primobject_3_slot(perception_graph_edge, label, left_node, right_node);
 
 // perception_graph
-declare_primobject_3_slot(perception_graph, nodes, edges_node_hash, edge_structure_hash_value);
+declare_primobject_4_slot(perception_graph, nodes, edges, edges_node_hash, edge_structure_hash_value);
 
 f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause);
 

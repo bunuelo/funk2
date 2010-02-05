@@ -1128,11 +1128,11 @@ f2ptr f2__largeinteger__square_root(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(largeinteger__square_root, this, return f2__largeinteger__square_root(this_cause, this));
 
-f2ptr f2__largeinteger__prime_factors(f2ptr cause, f2ptr this) {
+f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
   if (! raw__largeinteger__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr     factors            = nil;
+  f2ptr     factor_indices     = nil;
   f2ptr     this_reduced       = this;
   s64       prime_factor_index = -1;
   f2ptr     prime_factor_guess = nil;
@@ -1147,13 +1147,13 @@ f2ptr f2__largeinteger__prime_factors(f2ptr cause, f2ptr this) {
     f2ptr remainder   = f2__cons__cdr(cause, division);
     remainder_is_zero = raw__largeinteger__is_zero(cause, remainder);
     if (remainder_is_zero) {
-      this_reduced = quotient;
-      factors      = f2cons__new(cause, f2integer__new(cause, prime_factor_index), factors);
+      this_reduced   = quotient;
+      factor_indices = f2cons__new(cause, f2integer__new(cause, prime_factor_index), factor_indices);
     }
   }
-  return factors;
+  return factor_indices;
 }
-def_pcfunk1(largeinteger__prime_factors, this, return f2__largeinteger__prime_factors(this_cause, this));
+def_pcfunk1(largeinteger__prime_factor_indices, this, return f2__largeinteger__prime_factor_indices(this_cause, this));
 
 // **
 
@@ -1186,7 +1186,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__1(largeinteger__print, this, "prints a large integer in decimal format to the standard output.");
   f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that, "returns the greatest common factor of this and that.");
   f2__primcfunk__init__1(largeinteger__square_root, this, "returns the square root of this.");
-  f2__primcfunk__init__1(largeinteger__prime_factors, this, "returns the indices (i.e. [prime index]) of the prime factors of this.");
+  f2__primcfunk__init__1(largeinteger__prime_factor_indices, this, "returns the indices (i.e. [prime index]) of the prime factors of this.");
   
 }
 

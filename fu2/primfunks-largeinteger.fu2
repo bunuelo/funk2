@@ -33,6 +33,6 @@
 [globalize-funk largeinteger-print                  &primfunk:largeinteger__print]
 [globalize-funk largeinteger-greatest_common_factor &primfunk:largeinteger__greatest_common_factor]
 [globalize-funk largeinteger-square_root            &primfunk:largeinteger__square_root]
-[globalize-funk largeinteger-prime_factors          &primfunk:largeinteger__prime_factors]
+[globalize-funk largeinteger-prime_factor_indices   &primfunk:largeinteger__prime_factor_indices]
 
 

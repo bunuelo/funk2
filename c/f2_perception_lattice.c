@@ -260,7 +260,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 		while (! iter) {
 		  f2ptr edge       = f2__cons__car(cause, iter);
 		  f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
-		  if (raw__ptypehash__lookup(cause, node_hash, right_node)) {
+		  if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
 		    graph__edges = f2cons__new(cause, edge, graph__edges);
 		  }
 		}

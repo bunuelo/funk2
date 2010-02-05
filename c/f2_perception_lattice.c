@@ -197,7 +197,6 @@ f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
 }
 
 f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u64 node_count) {
-  f2ptr  subgraphs     = nil;
   f2ptr  nodes         = f2__perception_graph__nodes(cause, this);
   u64    nodes__length = raw__array__length(cause, nodes);
   if (nodes__length < node_count) {

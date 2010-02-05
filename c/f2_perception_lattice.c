@@ -225,72 +225,73 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
   boolean_t done      = boolean__false;
   while (! done) {
     {
-      boolean_t done_with_increment = boolean__false;
-      s64       index               = node_indices__length - 1;
-      while ((! done_with_increment) && (index >= 0)) {
-	node_indices[index] ++;
-	if (node_indices[index] >= ((nodes__length - 1) + index - (node_indices__length - 1))) {
-	  index --;
-	} else {
-	  done_with_increment = boolean__true;
+      {
+	printf("\nnode_indices: (");
+	u64 index;
+	for (index = 0; index < node_indices__length; index ++) {
+	  printf(" " u64__fstr, node_indices[index]);
+	}
+	printf(")\n");
+      }
+      
+      f2ptr node_hash = f2__ptypehash__new(cause);
+      {
+	u64 index;
+	for (index = 0; index < node_indices__length; index ++) {
+	  f2ptr node = nodes_array[node_indices[index]];
+	  f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
 	}
       }
-      if (! done_with_increment) {
-	done = boolean__true;
-      } else {
-	{
-	  printf("\nnode_indices: (");
-	  u64 index;
-	  for (index = 0; index < node_indices__length; index ++) {
-	    printf(" " u64__fstr, node_indices[index]);
-	  }
-	  printf(")\n");
-	}
-	
-	f2ptr node_hash = f2__ptypehash__new(cause);
+      {
+	f2ptr graph        = f2__perception_graph__new(cause);
+	f2ptr graph__edges = nil;
 	{
 	  u64 index;
 	  for (index = 0; index < node_indices__length; index ++) {
 	    f2ptr node = nodes_array[node_indices[index]];
-	    f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
+	    f2__perception_graph__add_node(cause, graph, node);
+	    f2ptr outs = f2__perception_graph__node__outs(cause, graph, node);
+	    {
+	      f2ptr iter = outs;
+	      while (! iter) {
+		f2ptr edge       = f2__cons__car(cause, iter);
+		f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
+		if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
+		  graph__edges = f2cons__new(cause, edge, graph__edges);
+		}
+		iter = f2__cons__cdr(cause, iter);
+	      }
+	    }
 	  }
 	}
 	{
-	  f2ptr graph        = f2__perception_graph__new(cause);
-	  f2ptr graph__edges = nil;
-	  {
-	    u64 index;
-	    for (index = 0; index < node_indices__length; index ++) {
-	      f2ptr node = nodes_array[node_indices[index]];
-	      f2__perception_graph__add_node(cause, graph, node);
-	      f2ptr outs = f2__perception_graph__node__outs(cause, graph, node);
-	      {
-		f2ptr iter = outs;
-		while (! iter) {
-		  f2ptr edge       = f2__cons__car(cause, iter);
-		  f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
-		  if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
-		    graph__edges = f2cons__new(cause, edge, graph__edges);
-		  }
-		  iter = f2__cons__cdr(cause, iter);
-		}
-	      }
+	  f2ptr iter = graph__edges;
+	  while (iter) {
+	    f2ptr edge = f2__cons__car(cause, iter);
+	    {
+	      f2ptr edge__label      = f2__perception_graph_edge__label(cause, edge);
+	      f2ptr edge__left_node  = f2__perception_graph_edge__label(cause, edge);
+	      f2ptr edge__right_node = f2__perception_graph_edge__label(cause, edge);
+	      f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
 	    }
+	    iter = f2__cons__cdr(cause, iter);
 	  }
-	  {
-	    f2ptr iter = graph__edges;
-	    while (iter) {
-	      f2ptr edge = f2__cons__car(cause, iter);
-	      {
-		f2ptr edge__label      = f2__perception_graph_edge__label(cause, edge);
-		f2ptr edge__left_node  = f2__perception_graph_edge__label(cause, edge);
-		f2ptr edge__right_node = f2__perception_graph_edge__label(cause, edge);
-		f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
-	      }
-	      iter = f2__cons__cdr(cause, iter);
-	    }
+	}
+	subgraphs = f2cons__new(cause, graph, subgraphs);
+      }
+      {
+	boolean_t done_with_increment = boolean__false;
+	s64       index               = node_indices__length - 1;
+	while ((! done_with_increment) && (index >= 0)) {
+	  node_indices[index] ++;
+	  if (node_indices[index] >= ((nodes__length - 1) + index - (node_indices__length - 1))) {
+	    index --;
+	  } else {
+	    done_with_increment = boolean__true;
 	  }
-	  subgraphs = f2cons__new(cause, graph, subgraphs);
+	}
+	if (! done_with_increment) {
+	  done = boolean__true;
 	}
       }
     }

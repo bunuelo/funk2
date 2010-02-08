@@ -229,10 +229,10 @@ void funk2_n_choose_k_indices__print(funk2_n_choose_k_indices_t* this) {
 boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) {
   boolean_t done                = boolean__false;
   boolean_t done_with_increment = boolean__false;
-  s64       index               = node_choose.k - 1;
+  s64       index               = this->k - 1;
   while ((! done_with_increment) && (index >= 0)) {
-    node_choose.indices[index] ++;
-    if (node_choose.indices[index] >= ((nodes__length - 1) + index - (node_choose.k - 1))) {
+    this->indices[index] ++;
+    if (this->indices[index] >= ((nodes__length - 1) + index - (this->k - 1))) {
       index --;
     } else {
       done_with_increment = boolean__true;
@@ -242,8 +242,8 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
     done = boolean__true;
   } else {
     index ++;
-    for (; index < node_choose.k; index ++) {
-      node_choose.indices[index] = node_choose.indices[index - 1] + 1;
+    for (; index < this->k; index ++) {
+      this->indices[index] = this->indices[index - 1] + 1;
     }
   }
   return done;

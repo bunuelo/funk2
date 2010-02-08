@@ -259,11 +259,17 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
   return done;
 }
 
-f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u64 node_count) {
-  f2ptr  nodes         = f2__perception_graph__nodes(cause, this);
-  u64    nodes__length = raw__simple_length(cause, nodes);
-  if (nodes__length < node_count) {
+f2ptr raw__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, u64 min_node_count, u64 max_node_count) {
+  f2ptr nodes         = f2__perception_graph__nodes(cause, this);
+  u64   nodes__length = raw__simple_length(cause, nodes);
+  if (min_node_count > max_node_count) {
     return nil;
+  }
+  if (nodes__length < min_node_count) {
+    return nil;
+  }
+  if (nodes__length < max_node_count) {
+    max_node_count = nodes__length;
   }
   f2ptr* nodes_array = (f2ptr*)alloca(sizeof(f2ptr) * nodes__length);
   {
@@ -276,113 +282,135 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
       index ++;
     }
   }
-  funk2_n_choose_k_indices_t node_choose;
-  funk2_n_choose_k_indices__init(&node_choose, nodes__length, node_count);
-  f2ptr     subgraphs = nil;
-  boolean_t done      = boolean__false;
-  while (! done) {
-    {
-      printf("\nnode_choose: "); funk2_n_choose_k_indices__print(&node_choose);
-      
-      f2ptr node_hash = f2__ptypehash__new(cause);
-      {
-	u64 index;
-	for (index = 0; index < node_choose.k; index ++) {
-	  f2ptr node = nodes_array[node_choose.indices[index]];
-	  f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
-	}
-      }
-      {
-	f2ptr graph__edges = nil;
+  {
+    u64 node_count;
+    for (node_count = min_node_count; node_count <= max_node_count; node_count ++) {
+      funk2_n_choose_k_indices_t node_choose;
+      funk2_n_choose_k_indices__init(&node_choose, nodes__length, node_count);
+      f2ptr     subgraphs = nil;
+      boolean_t done      = boolean__false;
+      while (! done) {
 	{
-	  u64 index;
-	  for (index = 0; index < node_choose.k; index ++) {
-	    f2ptr node = nodes_array[node_choose.indices[index]];
-	    f2ptr outs = f2__perception_graph__node__outs(cause, this, node);
+	  printf("\nnode_choose: "); funk2_n_choose_k_indices__print(&node_choose);
+	  
+	  f2ptr node_hash = f2__ptypehash__new(cause);
+	  {
+	    u64 index;
+	    for (index = 0; index < node_choose.k; index ++) {
+	      f2ptr node = nodes_array[node_choose.indices[index]];
+	      f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
+	    }
+	  }
+	  {
+	    f2ptr graph__edges = nil;
 	    {
-	      f2ptr iter = outs;
-	      while (iter) {
-		f2ptr edge       = f2__cons__car(cause, iter);
-		f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
-		if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
-		  graph__edges = f2cons__new(cause, edge, graph__edges);
-		}
-		iter = f2__cons__cdr(cause, iter);
-	      }
-	    }
-	  }
-	}
-	{
-	  u64    graph__edges__length = raw__simple_length(cause, graph__edges);
-	  u64    edges_array__length  = graph__edges__length;
-	  f2ptr* edges_array          = (f2ptr*)alloca(sizeof(f2ptr) * edges_array__length);
-	  {
-	    u64   index = 0;
-	    f2ptr iter  = graph__edges;
-	    while (iter) {
-	      f2ptr edge         = f2__cons__car(cause, iter);
-	      edges_array[index] = edge;
-	      index ++;
-	      iter = f2__cons__cdr(cause, iter);
-	    }
-	  }
-	  {
-	    u64 edge_choose_k;
-	    for (edge_choose_k = 0; edge_choose_k <= edges_array__length; edge_choose_k ++) {
-	      funk2_n_choose_k_indices_t edge_choose;
-	      funk2_n_choose_k_indices__init(&edge_choose, edges_array__length, edge_choose_k);
-	      boolean_t edges_done = boolean__false;
-	      while (! edges_done) {
-		printf("\nedge_choose: "); funk2_n_choose_k_indices__print(&edge_choose);
+	      u64 index;
+	      for (index = 0; index < node_choose.k; index ++) {
+		f2ptr node = nodes_array[node_choose.indices[index]];
+		f2ptr outs = f2__perception_graph__node__outs(cause, this, node);
 		{
-		  f2ptr graph = f2__perception_graph__new(cause);
-		  {
-		    u64 index;
-		    for (index = 0; index < node_choose.k; index ++) {
-		      f2ptr node = nodes_array[node_choose.indices[index]];
-		      f2__perception_graph__add_node(cause, graph, node);
+		  f2ptr iter = outs;
+		  while (iter) {
+		    f2ptr edge       = f2__cons__car(cause, iter);
+		    f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
+		    if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
+		      graph__edges = f2cons__new(cause, edge, graph__edges);
 		    }
+		    iter = f2__cons__cdr(cause, iter);
 		  }
-		  {
-		    u64 index;
-		    for (index = 0; index < edge_choose.k; index ++) {
-		      f2ptr edge = edges_array[edge_choose.indices[index]];
-		      {
-			f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
-			f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
-			f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
-			f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
-		      }
-		    }
-		  }
-		  subgraphs = f2cons__new(cause, graph, subgraphs);
 		}
-		edges_done = funk2_n_choose_k_indices__increment(&edge_choose);
 	      }
-	      funk2_n_choose_k_indices__destroy(&edge_choose);
+	    }
+	    {
+	      u64    graph__edges__length = raw__simple_length(cause, graph__edges);
+	      u64    edges_array__length  = graph__edges__length;
+	      f2ptr* edges_array          = (f2ptr*)alloca(sizeof(f2ptr) * edges_array__length);
+	      {
+		u64   index = 0;
+		f2ptr iter  = graph__edges;
+		while (iter) {
+		  f2ptr edge         = f2__cons__car(cause, iter);
+		  edges_array[index] = edge;
+		  index ++;
+		  iter = f2__cons__cdr(cause, iter);
+		}
+	      }
+	      {
+		u64 edge_choose_k;
+		for (edge_choose_k = 0; edge_choose_k <= edges_array__length; edge_choose_k ++) {
+		  funk2_n_choose_k_indices_t edge_choose;
+		  funk2_n_choose_k_indices__init(&edge_choose, edges_array__length, edge_choose_k);
+		  boolean_t edges_done = boolean__false;
+		  while (! edges_done) {
+		    printf("\nedge_choose: "); funk2_n_choose_k_indices__print(&edge_choose);
+		    {
+		      f2ptr graph = f2__perception_graph__new(cause);
+		      {
+			u64 index;
+			for (index = 0; index < node_choose.k; index ++) {
+			  f2ptr node = nodes_array[node_choose.indices[index]];
+			  f2__perception_graph__add_node(cause, graph, node);
+			}
+		      }
+		      {
+			u64 index;
+			for (index = 0; index < edge_choose.k; index ++) {
+			  f2ptr edge = edges_array[edge_choose.indices[index]];
+			  {
+			    f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+			    f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
+			    f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+			    f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
+			  }
+			}
+		      }
+		      subgraphs = f2cons__new(cause, graph, subgraphs);
+		    }
+		    edges_done = funk2_n_choose_k_indices__increment(&edge_choose);
+		  }
+		  funk2_n_choose_k_indices__destroy(&edge_choose);
+		}
+	      }
 	    }
 	  }
+	  done = funk2_n_choose_k_indices__increment(&node_choose);
 	}
       }
-      done = funk2_n_choose_k_indices__increment(&node_choose);
+      funk2_n_choose_k_indices__destroy(&node_choose);
     }
   }
-  funk2_n_choose_k_indices__destroy(&node_choose);
   return subgraphs;
 }
 
-f2ptr f2__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, f2ptr node_count) {
+f2ptr f2__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, f2ptr min_node_count, f2ptr max_node_count) {
   if ((! raw__perception_graph__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, node_count))) {
+      (! raw__integer__is_type(cause, min_node_count)) ||
+      (! raw__integer__is_type(cause, max_node_count))) {
     return f2larva__new(cause, 1);
   }
-  s64 node_count__i = f2integer__i(node_count, cause);
-  if (node_count__i < 0) {
+  s64 min_node_count__i = f2integer__i(min_node_count, cause);
+  s64 max_node_count__i = f2integer__i(max_node_count, cause);
+  if ((min_node_count__i < 0) ||
+      (max_node_count__i < 0)) {
     return f2larva__new(cause, 5);
   }
-  return raw__perception_graph__subgraphs_of_node_count(cause, this, node_count__i);
+  return raw__perception_graph__subgraphs_of_node_range(cause, this, min_node_count__i, max_node_count__i);
 }
-def_pcfunk2(perception_graph__subgraphs_of_node_count, this, node_count, return f2__perception_graph__subgraphs_of_node_count(this_cause, this, node_count));
+def_pcfunk2(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, return f2__perception_graph__subgraphs_of_node_range(this_cause, this, min_node_count, max_node_count));
+
+f2ptr raw__perception_graph__subgraphs(f2ptr cause, f2ptr this) {
+  f2ptr nodes         = f2__perception_graph__nodes(cause, this);
+  u64   nodes__length = raw__simple_length(cause, nodes);
+  return raw__perception_graph__subgraphs(cause, this, 0, nodes__length);
+}
+
+f2ptr f2__perception_graph__subgraphs(f2ptr cause, f2ptr this) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__subgraphs(cause, this);
+}
+def_pcfunk1(perception_graph__subgraphs, this, return f2__perception_graph__subgraphs(this_cause, this));
 
 // **
 
@@ -412,7 +440,8 @@ void f2__perception_lattice__initialize() {
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
-  f2__primcfunk__init__2(perception_graph__subgraphs_of_node_count, this, node_count, "returns all subgraphs with node_count nodes.");
+  f2__primcfunk__init__3(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, "returns all subgraphs with min_node_count to max_node_count nodes.");
+  f2__primcfunk__init__1(perception_graph__subgraphs, this, "returns all subgraphs of graph.");
   
 }
 

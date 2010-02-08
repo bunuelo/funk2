@@ -202,7 +202,7 @@ typedef struct funk2_n_choose_k_indices_s {
   u64* indices;
 } funk2_n_choose_k_indices_t;
 
-u64* funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64 k) {
+void funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64 k) {
   if (! (n >= k)) {
     error(nil, "raw__n_choose_k_indices__new error: assertion failed (n >= k).");
   }
@@ -215,7 +215,6 @@ u64* funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64
       this->indices[index] = index;
     }
   }
-  return this;
 }
 
 void funk2_n_choose_k_indices__print(funk2_n_choose_k_indices_t* this) {

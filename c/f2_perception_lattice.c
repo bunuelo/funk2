@@ -396,7 +396,7 @@ f2ptr f2__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, f2p
   }
   return raw__perception_graph__subgraphs_of_node_range(cause, this, min_node_count__i, max_node_count__i);
 }
-def_pcfunk2(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, return f2__perception_graph__subgraphs_of_node_range(this_cause, this, min_node_count, max_node_count));
+def_pcfunk3(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, return f2__perception_graph__subgraphs_of_node_range(this_cause, this, min_node_count, max_node_count));
 
 f2ptr raw__perception_graph__subgraphs(f2ptr cause, f2ptr this) {
   f2ptr nodes         = f2__perception_graph__nodes(cause, this);

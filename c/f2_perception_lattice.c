@@ -256,7 +256,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	    printf("\nouts: "); f2__print(cause, outs);
 	    {
 	      f2ptr iter = outs;
-	      while (! iter) {
+	      while (iter) {
 		f2ptr edge       = f2__cons__car(cause, iter);
 		printf("\nedge: "); f2__print(cause, edge);
 		f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);

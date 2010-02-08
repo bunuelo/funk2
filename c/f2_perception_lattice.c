@@ -282,12 +282,12 @@ f2ptr raw__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, u6
       index ++;
     }
   }
+  f2ptr subgraphs = nil;
   {
     u64 node_count;
     for (node_count = min_node_count; node_count <= max_node_count; node_count ++) {
       funk2_n_choose_k_indices_t node_choose;
       funk2_n_choose_k_indices__init(&node_choose, nodes__length, node_count);
-      f2ptr     subgraphs = nil;
       boolean_t done      = boolean__false;
       while (! done) {
 	{

@@ -232,7 +232,7 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
   s64       index               = this->k - 1;
   while ((! done_with_increment) && (index >= 0)) {
     this->indices[index] ++;
-    if (this->indices[index] >= ((nodes__length - 1) + index - (this->k - 1))) {
+    if (this->indices[index] >= ((this->k - 1) + index - (this->k - 1))) {
       index --;
     } else {
       done_with_increment = boolean__true;

@@ -225,14 +225,14 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
   boolean_t done      = boolean__false;
   while (! done) {
     {
-      {
-	printf("\nnode_indices: (");
-	u64 index;
-	for (index = 0; index < node_indices__length; index ++) {
-	  printf(" " u64__fstr, node_indices[index]);
-	}
-	printf(")\n");
-      }
+      //{
+      //	printf("\nnode_indices: (");
+      //	u64 index;
+      //	for (index = 0; index < node_indices__length; index ++) {
+      //	  printf(" " u64__fstr, node_indices[index]);
+      //	}
+      //	printf(")\n");
+      //}
       
       f2ptr node_hash = f2__ptypehash__new(cause);
       {
@@ -242,7 +242,6 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
 	}
       }
-      printf("\nnode_hash: "); f2__print(cause, node_hash);
       {
 	f2ptr graph        = f2__perception_graph__new(cause);
 	f2ptr graph__edges = nil;
@@ -252,17 +251,12 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	    f2ptr node = nodes_array[node_indices[index]];
 	    f2__perception_graph__add_node(cause, graph, node);
 	    f2ptr outs = f2__perception_graph__node__outs(cause, this, node);
-	    printf("\nnode: "); f2__print(cause, node);
-	    printf("\nouts: "); f2__print(cause, outs);
 	    {
 	      f2ptr iter = outs;
 	      while (iter) {
 		f2ptr edge       = f2__cons__car(cause, iter);
-		printf("\nedge: "); f2__print(cause, edge);
 		f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
-		printf("\nright_node: "); f2__print(cause, right_node);
 		if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
-		  printf("\n  right node found!");
 		  graph__edges = f2cons__new(cause, edge, graph__edges);
 		}
 		iter = f2__cons__cdr(cause, iter);

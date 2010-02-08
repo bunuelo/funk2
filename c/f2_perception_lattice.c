@@ -272,7 +272,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
   boolean_t done      = boolean__false;
   while (! done) {
     {
-      funk2_n_choose_k_indices__print(&node_choose);
+      //funk2_n_choose_k_indices__print(&node_choose);
       
       f2ptr node_hash = f2__ptypehash__new(cause);
       {
@@ -283,13 +283,11 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	}
       }
       {
-	f2ptr graph        = f2__perception_graph__new(cause);
 	f2ptr graph__edges = nil;
 	{
 	  u64 index;
 	  for (index = 0; index < node_choose.k; index ++) {
 	    f2ptr node = nodes_array[node_choose.indices[index]];
-	    f2__perception_graph__add_node(cause, graph, node);
 	    f2ptr outs = f2__perception_graph__node__outs(cause, this, node);
 	    {
 	      f2ptr iter = outs;
@@ -305,19 +303,54 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  }
 	}
 	{
-	  f2ptr iter = graph__edges;
-	  while (iter) {
-	    f2ptr edge = f2__cons__car(cause, iter);
-	    {
-	      f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
-	      f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
-	      f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
-	      f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
+	  u64    graph__edges__length = raw__simple_length(cause, graph__edges);
+	  u64    edges_array__length  = graph__edges__length;
+	  f2ptr* edges_array          = (f2ptr*)alloca(sizeof(f2ptr) * edges_array__length);
+	  {
+	    u64   index = 0;
+	    f2ptr iter  = graph__edges;
+	    while (iter) {
+	      f2ptr edge         = f2__cons__car(cause, iter);
+	      edges_array[index] = edge;
+	      index ++;
+	      iter = f2__cons__cdr(cause, iter);
 	    }
-	    iter = f2__cons__cdr(cause, iter);
+	  }
+	  {
+	    u64 edge_choose_k;
+	    for (edge_choose_k = 1; edge_choose_k <= edges_array__length; edge_choose_k ++) {
+	      funk2_n_choose_k_indices_t edge_choose;
+	      funk2_n_choose_k_indices__init(&edge_choose, edges_array__length, edge_choose_k);
+	      boolean_t edges_done = boolean__false;
+	      while (! edges_done) {
+		{
+		  f2ptr graph = f2__perception_graph__new(cause);
+		  {
+		    u64 index;
+		    for (index = 0; index < node_choose.k; index ++) {
+		      f2ptr node = nodes_array[node_choose.indices[index]];
+		      f2__perception_graph__add_node(cause, graph, node);
+		    }
+		  }
+		  {
+		    u64 index;
+		    for (index = 0; index < edge_choose_k; index ++) {
+		      f2ptr edge = edges_array[edge_choose.indices[index]];
+		      {
+			f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+			f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
+			f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+			f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
+		      }
+		    }
+		  }
+		  subgraphs = f2cons__new(cause, graph, subgraphs);
+		}
+		edges_done = funk2_n_choose_k_indices__increment(&edge_choose);
+	      }
+	    }
 	  }
 	}
-	subgraphs = f2cons__new(cause, graph, subgraphs);
       }
       done = funk2_n_choose_k_indices__increment(&node_choose);
     }

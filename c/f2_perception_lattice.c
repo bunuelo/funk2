@@ -242,7 +242,7 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
   s64       index               = this->k - 1;
   while ((! done_with_increment) && (index >= 0)) {
     this->indices[index] ++;
-    if (this->indices[index] >= ((this->n - 1) + index - (this->k - 1))) {
+    if (this->indices[index] > ((this->n - 1) + index - (this->k - 1))) {
       index --;
     } else {
       done_with_increment = boolean__true;
@@ -261,7 +261,7 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
 
 f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u64 node_count) {
   f2ptr  nodes         = f2__perception_graph__nodes(cause, this);
-  u64    nodes__length = raw__array__length(cause, nodes);
+  u64    nodes__length = raw__simple_length(cause, nodes);
   if (nodes__length < node_count) {
     return nil;
   }

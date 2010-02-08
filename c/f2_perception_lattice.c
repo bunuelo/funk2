@@ -291,7 +291,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, u6
       boolean_t done      = boolean__false;
       while (! done) {
 	{
-	  printf("\nnode_choose: "); funk2_n_choose_k_indices__print(&node_choose);
+	  //printf("\nnode_choose: "); funk2_n_choose_k_indices__print(&node_choose);
 	  
 	  f2ptr node_hash = f2__ptypehash__new(cause);
 	  {
@@ -342,7 +342,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, u6
 		  funk2_n_choose_k_indices__init(&edge_choose, edges_array__length, edge_choose_k);
 		  boolean_t edges_done = boolean__false;
 		  while (! edges_done) {
-		    printf("\nedge_choose: "); funk2_n_choose_k_indices__print(&edge_choose);
+		    //printf("\nedge_choose: "); funk2_n_choose_k_indices__print(&edge_choose);
 		    {
 		      f2ptr graph = f2__perception_graph__new(cause);
 		      {

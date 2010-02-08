@@ -242,6 +242,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
 	}
       }
+      printf("\node_hash: "); f2__print(cause, node_hash);
       {
 	f2ptr graph        = f2__perception_graph__new(cause);
 	f2ptr graph__edges = nil;
@@ -258,7 +259,9 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	      while (! iter) {
 		f2ptr edge       = f2__cons__car(cause, iter);
 		f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
+		printf("\nright_node: "); f2__print(cause, right_node);
 		if (f2__ptypehash__lookup(cause, node_hash, right_node)) {
+		  printf("\n  right node found!");
 		  graph__edges = f2cons__new(cause, edge, graph__edges);
 		}
 		iter = f2__cons__cdr(cause, iter);

@@ -228,7 +228,7 @@ void funk2_n_choose_k_indices__destroy(funk2_n_choose_k_indices_t* this) {
 }
 
 void funk2_n_choose_k_indices__print(funk2_n_choose_k_indices_t* this) {
-  printf("\n  (");
+  printf("\n  n = " u64__fstr ", k = " u64__fstr " (", this->n, this->k);
   u64 index;
   for (index = 0; index < this->k; index ++) {
     printf(" " u64__fstr, this->indices[index]);
@@ -242,7 +242,7 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
   s64       index               = this->k - 1;
   while ((! done_with_increment) && (index >= 0)) {
     this->indices[index] ++;
-    if (this->indices[index] > ((this->n - 1) + index - (this->k - 1))) {
+    if (this->indices[index] >= ((this->n - 1) + index - (this->k - 1))) {
       index --;
     } else {
       done_with_increment = boolean__true;

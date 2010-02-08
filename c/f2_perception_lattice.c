@@ -401,7 +401,7 @@ def_pcfunk3(perception_graph__subgraphs_of_node_range, this, min_node_count, max
 f2ptr raw__perception_graph__subgraphs(f2ptr cause, f2ptr this) {
   f2ptr nodes         = f2__perception_graph__nodes(cause, this);
   u64   nodes__length = raw__simple_length(cause, nodes);
-  return raw__perception_graph__subgraphs(cause, this, 0, nodes__length);
+  return raw__perception_graph__subgraphs_of_node_range(cause, this, 0, nodes__length);
 }
 
 f2ptr f2__perception_graph__subgraphs(f2ptr cause, f2ptr this) {

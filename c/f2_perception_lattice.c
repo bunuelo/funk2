@@ -208,7 +208,11 @@ void funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64
   }
   this->n       = n;
   this->k       = k;
-  this->indices = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->k)));
+  if (this->k != 0) {
+    this->indices = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->k)));
+  } else {
+    this->indices = (u64*)NULL;
+  }
   {
     u64 index;
     for (index = 0; index < this->k; index ++) {
@@ -218,7 +222,9 @@ void funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64
 }
 
 void funk2_n_choose_k_indices__destroy(funk2_n_choose_k_indices_t* this) {
-  f2__free(to_ptr(this->k));
+  if (this->indices != NULL) {
+    f2__free(to_ptr(this->indices));
+  }
 }
 
 void funk2_n_choose_k_indices__print(funk2_n_choose_k_indices_t* this) {

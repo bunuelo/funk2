@@ -196,6 +196,61 @@ f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
   return this;
 }
 
+typedef struct funk2_n_choose_k_indices_s {
+  u64  n;
+  u64  k;
+  u64* indices;
+} funk2_n_choose_k_indices_t;
+
+u64* funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64 k) {
+  if (! (n >= k)) {
+    error(nil, "raw__n_choose_k_indices__new error: assertion failed (n >= k).");
+  }
+   = (funk2_n_choose_k_indices_t*)from_ptr(f2__malloc(sizeof(funk2_n_choose_k_indices_t)));
+  this->n       = n;
+  this->k       = k;
+  this->indices = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->k)));
+  {
+    u64 index;
+    for (index = 0; index < this->k; index ++) {
+      this->indices[index] = index;
+    }
+  }
+  return this;
+}
+
+void funk2_n_choose_k_indices__print(funk2_n_choose_k_indices_t* this) {
+  printf("\nnode_choose: (");
+  u64 index;
+  for (index = 0; index < this->k; index ++) {
+    printf(" " u64__fstr, this->indices[index]);
+  }
+  printf(")\n");
+}
+
+boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) {
+  boolean_t done                = boolean__false;
+  boolean_t done_with_increment = boolean__false;
+  s64       index               = node_choose.k - 1;
+  while ((! done_with_increment) && (index >= 0)) {
+    node_choose.indices[index] ++;
+    if (node_choose.indices[index] >= ((nodes__length - 1) + index - (node_choose.k - 1))) {
+      index --;
+    } else {
+      done_with_increment = boolean__true;
+    }
+  }
+  if (! done_with_increment) {
+    done = boolean__true;
+  } else {
+    index ++;
+    for (; index < node_choose.k; index ++) {
+      node_choose.indices[index] = node_choose.indices[index - 1] + 1;
+    }
+  }
+  return done;
+}
+
 f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u64 node_count) {
   f2ptr  nodes         = f2__perception_graph__nodes(cause, this);
   u64    nodes__length = raw__array__length(cause, nodes);
@@ -213,32 +268,19 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
       index ++;
     }
   }
-  u64  node_indices__length = node_count;
-  u64* node_indices         = (u64*)alloca(sizeof(u64) * node_count);
-  {
-    u64 index;
-    for (index = 0; index < node_indices__length; index ++) {
-      node_indices[index] = index;
-    }
-  }
+  funk2_n_choose_k_indices_t node_choose;
+  funk2_n_choose_k_indices__init(&node_choose, nodes__length, node_count);
   f2ptr     subgraphs = nil;
   boolean_t done      = boolean__false;
   while (! done) {
     {
-      //{
-      //	printf("\nnode_indices: (");
-      //	u64 index;
-      //	for (index = 0; index < node_indices__length; index ++) {
-      //	  printf(" " u64__fstr, node_indices[index]);
-      //	}
-      //	printf(")\n");
-      //}
+      funk2_n_choose_k_indices__print(&node_choose);
       
       f2ptr node_hash = f2__ptypehash__new(cause);
       {
 	u64 index;
-	for (index = 0; index < node_indices__length; index ++) {
-	  f2ptr node = nodes_array[node_indices[index]];
+	for (index = 0; index < node_choose.k; index ++) {
+	  f2ptr node = nodes_array[node_choose.indices[index]];
 	  f2__ptypehash__add(cause, node_hash, node, __funk2.globalenv.true__symbol);
 	}
       }
@@ -247,8 +289,8 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	f2ptr graph__edges = nil;
 	{
 	  u64 index;
-	  for (index = 0; index < node_indices__length; index ++) {
-	    f2ptr node = nodes_array[node_indices[index]];
+	  for (index = 0; index < node_choose.k; index ++) {
+	    f2ptr node = nodes_array[node_choose.indices[index]];
 	    f2__perception_graph__add_node(cause, graph, node);
 	    f2ptr outs = f2__perception_graph__node__outs(cause, this, node);
 	    {
@@ -279,26 +321,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	}
 	subgraphs = f2cons__new(cause, graph, subgraphs);
       }
-      {
-	boolean_t done_with_increment = boolean__false;
-	s64       index               = node_indices__length - 1;
-	while ((! done_with_increment) && (index >= 0)) {
-	  node_indices[index] ++;
-	  if (node_indices[index] >= ((nodes__length - 1) + index - (node_indices__length - 1))) {
-	    index --;
-	  } else {
-	    done_with_increment = boolean__true;
-	  }
-	}
-	if (! done_with_increment) {
-	  done = boolean__true;
-	} else {
-	  index ++;
-	  for (; index < node_indices__length; index ++) {
-	    node_indices[index] = node_indices[index - 1] + 1;
-	  }
-	}
-      }
+      done = funk2_n_choose_k_indices__increment(&node_choose);
     }
   }
   return subgraphs;

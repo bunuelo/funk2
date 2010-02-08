@@ -222,7 +222,7 @@ void funk2_n_choose_k_indices__destroy(funk2_n_choose_k_indices_t* this) {
 }
 
 void funk2_n_choose_k_indices__print(funk2_n_choose_k_indices_t* this) {
-  printf("\nnode_choose: (");
+  printf("\n  (");
   u64 index;
   for (index = 0; index < this->k; index ++) {
     printf(" " u64__fstr, this->indices[index]);

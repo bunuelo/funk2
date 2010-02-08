@@ -251,6 +251,8 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	    f2ptr node = nodes_array[node_indices[index]];
 	    f2__perception_graph__add_node(cause, graph, node);
 	    f2ptr outs = f2__perception_graph__node__outs(cause, graph, node);
+	    printf("\nnode: "); f2__print(cause, node);
+	    printf("\nouts: "); f2__print(cause, outs);
 	    {
 	      f2ptr iter = outs;
 	      while (! iter) {
@@ -269,9 +271,9 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	  while (iter) {
 	    f2ptr edge = f2__cons__car(cause, iter);
 	    {
-	      f2ptr edge__label      = f2__perception_graph_edge__label(cause, edge);
-	      f2ptr edge__left_node  = f2__perception_graph_edge__label(cause, edge);
-	      f2ptr edge__right_node = f2__perception_graph_edge__label(cause, edge);
+	      f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+	      f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	      f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
 	      f2__perception_graph__add_edge(cause, graph, edge__label, edge__left_node, edge__right_node);
 	    }
 	    iter = f2__cons__cdr(cause, iter);

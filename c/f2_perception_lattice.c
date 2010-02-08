@@ -206,7 +206,6 @@ u64* funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64
   if (! (n >= k)) {
     error(nil, "raw__n_choose_k_indices__new error: assertion failed (n >= k).");
   }
-   = (funk2_n_choose_k_indices_t*)from_ptr(f2__malloc(sizeof(funk2_n_choose_k_indices_t)));
   this->n       = n;
   this->k       = k;
   this->indices = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->k)));

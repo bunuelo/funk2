@@ -206,8 +206,8 @@ void funk2_n_choose_k_indices__init(funk2_n_choose_k_indices_t* this, u64 n, u64
   if (! (n >= k)) {
     error(nil, "raw__n_choose_k_indices__new error: assertion failed (n >= k).");
   }
-  this->n       = n;
-  this->k       = k;
+  this->n = n;
+  this->k = k;
   if (this->k != 0) {
     this->indices = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->k)));
   } else {
@@ -242,7 +242,7 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
   s64       index               = this->k - 1;
   while ((! done_with_increment) && (index >= 0)) {
     this->indices[index] ++;
-    if (this->indices[index] >= ((this->n - 1) + index - (this->k - 1))) {
+    if (this->indices[index] > ((this->n - 1) + index - (this->k - 1))) {
       index --;
     } else {
       done_with_increment = boolean__true;
@@ -333,7 +333,6 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	      funk2_n_choose_k_indices__init(&edge_choose, edges_array__length, edge_choose_k);
 	      boolean_t edges_done = boolean__false;
 	      while (! edges_done) {
-		
 		printf("\nedge_choose: "); funk2_n_choose_k_indices__print(&edge_choose);
 		{
 		  f2ptr graph = f2__perception_graph__new(cause);

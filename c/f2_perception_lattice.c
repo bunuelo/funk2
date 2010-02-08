@@ -292,6 +292,11 @@ f2ptr raw__perception_graph__subgraphs_of_node_count(f2ptr cause, f2ptr this, u6
 	}
 	if (! done_with_increment) {
 	  done = boolean__true;
+	} else {
+	  index ++;
+	  for (; index < node_indices__length; index ++) {
+	    node_indices[index] = node_indices[index - 1] + 1;
+	  }
 	}
       }
     }

@@ -455,13 +455,13 @@ f2ptr raw__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
       while (iter) {
 	f2ptr small__edge = f2__cons__car(cause, iter);
 	{
-	  f2ptr small__left_node = f2__perception_graph_edge__left_node( cause, edge);
+	  f2ptr small__left_node = f2__perception_graph_edge__left_node(cause, small__edge);
 	  if (f2__perception_graph__contains_node(cause, large, small__left_node)) {
 	    f2ptr shared__left_node = small__left_node;
-	    f2ptr small__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	    f2ptr small__right_node = f2__perception_graph_edge__right_node(cause, small__edge);
 	    if (f2__perception_graph__contains_node(cause, large, small__right_node)) {
 	      f2ptr shared__right_node = small__right_node;
-	      f2ptr small__label = f2__perception_graph_edge__label(cause, edge);
+	      f2ptr small__label = f2__perception_graph_edge__label(cause, small__edge);
 	      f2ptr large__left_node__outs = f2__perception_graph__node__outs(cause, large, shared__left_node);
 	      {
 		f2ptr large_outs_iter = large__left_node__outs;

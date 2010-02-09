@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2009 Bo Morgan.
+'Copyright (c) 2007-2009 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defunk show [object]
   [format stdout '\n[' [type object]]
@@ -78,3 +76,7 @@
 				       ]]]
   [format stdout ']']]
 
+[defunk graph [object]
+  [let [[new_graph [new perception_graph]]]
+    [object-property_scan object [funk [type_name name value]
+				       

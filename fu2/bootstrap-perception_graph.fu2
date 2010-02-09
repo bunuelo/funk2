@@ -1,0 +1,30 @@
+'Copyright (c) 2007-2009 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deftypefunk perception_graph execute add_node                [node]                          [perception_graph-add_node                this node]]
+[deftypefunk perception_graph execute add_edge                [label left_node right_node]    [perception_graph-add_edge                this label left_node right_node]]
+[deftypefunk perception_graph get     node-ins_and_outs       [node]                          [perception_graph-node-ins_and_outs       this node]]
+[deftypefunk perception_graph get     contains_node           [node]                          [perception_graph-contains_node           this node]]
+[deftypefunk perception_graph get     node-ins                [node]                          [perception_graph-node-ins                this node]]
+[deftypefunk perception_graph get     node-outs               [node]                          [perception_graph-node-outs               this node]]
+[deftypefunk perception_graph execute to_string               []                              [perception_graph-to_string               this]]
+[deftypefunk perception_graph get     subgraphs_of_node_range [min_node_count max_node_count] [perception_graph-subgraphs_of_node_range this min_node_count max_node_count]]
+[deftypefunk perception_graph get     subgraphs               []                              [perception_graph-subgraphs               this]]
+[deftypefunk perception_graph execute intersect               [that]                          [perception_graph-intersect               this that]]
+

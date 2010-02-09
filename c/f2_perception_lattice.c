@@ -84,6 +84,10 @@ f2ptr f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr no
   return f2__ptypehash__lookup(cause, edges_node_hash, node);
 }
 
+f2ptr f2__perception_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  return f2bool__new(f2__perception_graph__node__ins_and_outs(cause, this, node));
+}
+
 f2ptr f2__perception_graph__node__ins(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
   return f2__cons__car(cause, ins_and_outs);
@@ -288,7 +292,7 @@ f2ptr raw__perception_graph__subgraphs_of_node_range(f2ptr cause, f2ptr this, u6
     for (node_count = min_node_count; node_count <= max_node_count; node_count ++) {
       funk2_n_choose_k_indices_t node_choose;
       funk2_n_choose_k_indices__init(&node_choose, nodes__length, node_count);
-      boolean_t done      = boolean__false;
+      boolean_t done = boolean__false;
       while (! done) {
 	{
 	  //printf("\nnode_choose: "); funk2_n_choose_k_indices__print(&node_choose);
@@ -411,6 +415,79 @@ f2ptr f2__perception_graph__subgraphs(f2ptr cause, f2ptr this) {
   return raw__perception_graph__subgraphs(cause, this);
 }
 def_pcfunk1(perception_graph__subgraphs, this, return f2__perception_graph__subgraphs(this_cause, this));
+
+f2ptr raw__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__nodes         = f2__perception_graph__nodes(cause, this);
+  f2ptr that__nodes         = f2__perception_graph__nodes(cause, that);
+  u64   this__nodes__length = raw__simple_length(cause, this__nodes);
+  u64   that__nodes__length = raw__simple_length(cause, that__nodes);
+  f2ptr small;
+  f2ptr large;
+  u64   small__nodes__length;
+  u64   large__nodes__length;
+  if (this__nodes__length < that__nodes__length) {
+    small                = this;
+    large                = that;
+    small__nodes__length = this__nodes__length;
+    large__nodes__length = that__nodes__length;
+  } else {
+    small                = that;
+    large                = this;
+    small__nodes__length = that__nodes__length;
+    large__nodes__length = this__nodes__length;
+  }
+  f2ptr new_graph = f2__perception_graph__new(cause);
+  {
+    f2ptr small__nodes = f2__perception_graph__nodes(cause, small);
+    f2ptr small__edges = f2__perception_graph__edges(cause, small);
+    {
+      f2ptr iter = small__nodes;
+      while (iter) {
+	f2ptr node = f2__cons__car(cause, iter);
+	if (f2__perception_graph__node__contains_node(cause, large, node)) {
+	  f2__perception_graph__add_node(cause, new_graph, node);
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+    {
+      f2ptr iter = small__edges;
+      while (iter) {
+	f2ptr small__edge = f2__cons__car(cause, iter);
+	{
+	  f2ptr small__left_node = f2__perception_graph_edge__left_node( cause, edge);
+	  if (f2__perception_graph__contains_node(cause, large, small__left_node)) {
+	    f2ptr shared__left_node = small__left_node;
+	    f2ptr small__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	    if (f2__perception_graph__contains_node(cause, large, small__right_node)) {
+	      f2ptr shared__right_node = small__right_node;
+	      f2ptr small__label = f2__perception_graph_edge__label(cause, edge);
+	      f2ptr large__left_node__outs = f2__perception_graph__node__outs(cause, large, shared__left_node);
+	      {
+		f2ptr large_outs_iter = large__left_node__outs;
+		while (large_outs_iter) {
+		  f2ptr large__left_node__out_edge             = f2__cons__car(cause, large_outs_iter);
+		  f2ptr large__left_node__out_edge__right_node = f2__perception_graph_edge__right_node(cause, small__left_node__out_edge);
+		  if (raw__eq(cause, shared__right_node, large__left_node__out_edge__right_node)) {
+		    f2ptr large__label = f2__perception_graph_edge__label(cause, large__left_node__out_edge);
+		    if (raw__eq(cause, small__label, large__label)) {
+		      f2ptr shared__label = small__label;
+		      f2__perception_graph__add_edge(cause, new_graph, shared__label, shared__left_node, shared__right_node);
+		    }
+		  }
+		  outs_iter = f2__cons__cdr(cause, large_outs_iter);
+		}
+	      }
+	    }
+	  }
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return new_graph;
+}
+
 
 // **
 

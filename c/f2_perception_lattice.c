@@ -488,6 +488,14 @@ f2ptr raw__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
   return new_graph;
 }
 
+f2ptr f2__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__perception_graph__is_type(cause, this)) ||
+      (! raw__perception_graph__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__intersect(cause, this, that);
+}
+def_pcfunk2(perception_graph__intersect, this, that, return f2__perception_graph__intersect(this_cause, this, that));
 
 // **
 
@@ -519,6 +527,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__3(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, "returns all subgraphs with min_node_count to max_node_count nodes.");
   f2__primcfunk__init__1(perception_graph__subgraphs, this, "returns all subgraphs of graph.");
+  f2__primcfunk__init__2(perception_graph__intersect, this, that, "returns the intersection of two graphs.");
   
 }
 

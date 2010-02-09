@@ -475,7 +475,7 @@ f2ptr raw__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
 		      f2__perception_graph__add_edge(cause, new_graph, shared__label, shared__left_node, shared__right_node);
 		    }
 		  }
-		  outs_iter = f2__cons__cdr(cause, large_outs_iter);
+		  large_outs_iter = f2__cons__cdr(cause, large_outs_iter);
 		}
 	      }
 	    }

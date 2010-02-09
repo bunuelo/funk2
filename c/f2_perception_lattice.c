@@ -444,7 +444,7 @@ f2ptr raw__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
       f2ptr iter = small__nodes;
       while (iter) {
 	f2ptr node = f2__cons__car(cause, iter);
-	if (f2__perception_graph__node__contains_node(cause, large, node)) {
+	if (f2__perception_graph__contains_node(cause, large, node)) {
 	  f2__perception_graph__add_node(cause, new_graph, node);
 	}
 	iter = f2__cons__cdr(cause, iter);

@@ -648,7 +648,9 @@ f2ptr raw__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
 	    f2ptr label      = f2__perception_graph_edge__label(     cause, edge);
 	    f2ptr left_node  = f2__perception_graph_edge__left_node( cause, edge);
 	    f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
-	    f2__perception_graph__add_edge(cause, new_graph, label, left_node, right_node);
+	    if (! raw__perception_graph__contains_edge(cause, small, label, left_node, right_node)) {
+	      f2__perception_graph__add_edge(cause, new_graph, label, left_node, right_node);
+	    }
 	  }
 	  iter = f2__cons__cdr(cause, iter);
 	}

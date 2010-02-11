@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2009 Bo Morgan.
+// Copyright (c) 2007-2010 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -108,17 +108,49 @@ f2ptr f2__perception_graph__node__ins_and_outs(f2ptr cause, f2ptr this, f2ptr no
 }
 def_pcfunk2(perception_graph__node__ins_and_outs, this, node, return f2__perception_graph__node__ins_and_outs(this_cause, this, node));
 
-f2ptr raw__perception_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
-  return f2bool__new(f2__perception_graph__node__ins_and_outs(cause, this, node));
+boolean_t raw__perception_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  return (f2__perception_graph__node__ins_and_outs(cause, this, node) != nil);
 }
 
 f2ptr f2__perception_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (! raw__perception_graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return raw__perception_graph__contains_node(cause, this, node);
+  return f2bool__new(raw__perception_graph__contains_node(cause, this, node));
 }
 def_pcfunk2(perception_graph__contains_node, this, node, return f2__perception_graph__contains_node(this_cause, this, node));
+
+boolean_t raw__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  if ((! raw__perception_graph__contains_node(cause, this, left_node)) ||
+      (! raw__perception_graph__contains_node(cause, this, right_node))) {
+    return boolean__false;
+  }
+  f2ptr left_node__outs = raw__perception_graph__node__outs(cause, this, left_node);
+  {
+    f2ptr iter = left_node__outs;
+    while (iter) {
+      f2ptr edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	if (raw__eq(cause, label,      edge__label) &&
+	    raw__eq(cause, right_node, edge__right_node)) {
+	  return boolean__true;
+	}
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr f2__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__contains_edge(cause, this, label, left_node, right_node);
+}
+def_pcfunk4(perception_graph__contains_edge, this, label, left_node, right_node, return f2__perception_graph__contains_edge(this_cause, this, label, left_node, right_node));
 
 f2ptr raw__perception_graph__node__ins(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
@@ -545,6 +577,96 @@ f2ptr f2__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(perception_graph__intersect, this, that, return f2__perception_graph__intersect(this_cause, this, that));
 
+f2ptr raw__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr new_graph = f2__perception_graph__new(cause);
+  {
+    f2ptr this__nodes         = f2__perception_graph__nodes(cause, this);
+    f2ptr that__nodes         = f2__perception_graph__nodes(cause, that);
+    u64   this__nodes__length = raw__simple_length(cause, this__nodes);
+    u64   that__nodes__length = raw__simple_length(cause, that__nodes);
+    {
+      f2ptr small__nodes;
+      f2ptr large__nodes;
+      if (this__nodes__length < that__nodes__length) {
+	small__nodes = this__nodes;
+	large__nodes = that__nodes;
+      } else {
+	small__nodes = that__nodes;
+	large__nodes = this__nodes;
+      }
+      {
+	f2ptr iter = large__nodes;
+	while (iter) {
+	  f2ptr node = f2__cons__car(cause, iter);
+	  f2__perception_graph__add_node(cause, new_graph, node);
+	  iter = f2__cons__cdr(cause, iter);
+	}
+      }
+      {
+	f2ptr iter = small__nodes;
+	while (iter) {
+	  f2ptr node = f2__cons__car(cause, iter);
+	  if (! f2__perception_graph__contains_node(cause, new_graph, node)) {
+	    f2__perception_graph__add_node(cause, new_graph, node);
+	  }
+	  iter = f2__cons__cdr(cause, iter);
+	}
+      }
+    }
+    f2ptr this__edges         = f2__perception_graph__edges(cause, this);
+    f2ptr that__edges         = f2__perception_graph__edges(cause, that);
+    u64   this__edges__length = raw__simple_length(cause, this__edges);
+    u64   that__edges__length = raw__simple_length(cause, that__edges);
+    {
+      f2ptr small__edges;
+      f2ptr large__edges;
+      if (this__edges__length < that__edges__length) {
+	small__edges = this__edges;
+	large__edges = that__edges;
+      } else {
+	small__edges = that__edges;
+	large__edges = this__edges;
+      }
+      {
+	f2ptr iter = large__edges;
+	while (iter) {
+	  f2ptr edge = f2__cons__car(cause, iter);
+	  {
+	    f2ptr label      = f2__perception_graph_edge__label(     cause, edge);
+	    f2ptr left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	    f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
+	    f2__perception_graph__add_edge(cause, new_graph, label, left_node, right_node);
+	  }
+	  iter = f2__cons__cdr(cause, iter);
+	}
+      }
+      {
+	f2ptr iter = small__edges;
+	while (iter) {
+	  f2ptr edge = f2__cons__car(cause, iter);
+	  {
+	    f2ptr label      = f2__perception_graph_edge__label(     cause, edge);
+	    f2ptr left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	    f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
+	    f2__perception_graph__add_edge(cause, new_graph, label, left_node, right_node);
+	  }
+	  iter = f2__cons__cdr(cause, iter);
+	}
+      }
+    }
+  }
+  return new_graph;
+}
+
+f2ptr f2__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__perception_graph__is_type(cause, this)) ||
+      (! raw__perception_graph__is_type(cause, that)) ||) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__union(cause, this, that);
+}
+def_pcfunk2(perception_graph__union, this, that, return f2__perception_graph__union(this_cause, this, that));
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -583,6 +705,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, "returns all subgraphs with min_node_count to max_node_count nodes.");
   f2__primcfunk__init__1(perception_graph__subgraphs, this, "returns all subgraphs of graph.");
   f2__primcfunk__init__2(perception_graph__intersect, this, that, "returns the intersection of two graphs.");
+  f2__primcfunk__init__2(perception_graph__union, this, that, "returns the union of two graphs.");
   
 }
 

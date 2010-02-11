@@ -22,6 +22,7 @@
 [globalize-funk perception_graph-add_edge                &primfunk:perception_graph__add_edge]
 [globalize-funk perception_graph-node-ins_and_outs       &primfunk:perception_graph__node__ins_and_outs]
 [globalize-funk perception_graph-contains_node           &primfunk:perception_graph__contains_node]
+[globalize-funk perception_graph-contains_edge           &primfunk:perception_graph__contains_edge]
 [globalize-funk perception_graph-node-ins                &primfunk:perception_graph__node__ins]
 [globalize-funk perception_graph-node-outs               &primfunk:perception_graph__node__outs]
 [globalize-funk perception_graph-new_from_string         &primfunk:perception_graph__new_from_string]
@@ -29,5 +30,6 @@
 [globalize-funk perception_graph-subgraphs_of_node_range &primfunk:perception_graph__subgraphs_of_node_range]
 [globalize-funk perception_graph-subgraphs               &primfunk:perception_graph__subgraphs]
 [globalize-funk perception_graph-intersect               &primfunk:perception_graph__intersect]
+[globalize-funk perception_graph-union                   &primfunk:perception_graph__union]
 
 

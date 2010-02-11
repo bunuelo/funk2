@@ -272,8 +272,10 @@
 [globalize-funk type &object-type]
 
 [globalize-funk cons &primfunk:cons__new]
-[defmetro car [x] `[object-get ,x `car]]
-[defmetro cdr [x] `[object-get ,x `cdr]]
+[defmetro car     [x]   `[object-get ,x `car]]
+[defmetro cdr     [x]   `[object-get ,x `cdr]]
+[defmetro car-set [x y] `[object-set ,x `car ,y]]
+[defmetro cdr-set [x y] `[object-set ,x `cdr ,y]]
 
 [defunk conslist [:rest seq]
   [if [null seq]

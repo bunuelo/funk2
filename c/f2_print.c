@@ -1172,28 +1172,30 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		f2ptr slot_iter = get_slot_names;
 		while (slot_iter) {
 		  f2ptr slot_name  = f2cons__car(slot_iter, cause);
-		  if (raw__symbol__is_type(cause, slot_name)) {
-		    u64 slot_name__length = f2symbol__length(slot_name, cause);
-		    if (slot_name__length > max_slot_name_length) {
-		      max_slot_name_length = slot_name__length;
+		  if (! raw__eq(cause, slot_name, __funk2.globalenv.type__symbol)) {
+		    if (raw__symbol__is_type(cause, slot_name)) {
+		      u64 slot_name__length = f2symbol__length(slot_name, cause);
+		      if (slot_name__length > max_slot_name_length) {
+			max_slot_name_length = slot_name__length;
+		      }
 		    }
-		  }
-		  f2ptr slot_funk = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, __funk2.globalenv.get__symbol, slot_name);
-		  f2ptr args = nil;
-		  if (f2__cfunk__is_type(cause, slot_funk)) {
-		    args = f2cfunk__args(slot_funk, cause);
-		  } else if (f2__funk__is_type(cause, slot_funk)) {
-		    args = f2funk__args(slot_funk, cause);
-		  }
-		  f2ptr slot_value = nil;
-		  if (raw__simple_length(cause, args) == 1) {
-		    if (fiber) {
-		      slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2list1__new(cause, exp));
-		    } else {
-		      slot_value = f2symbol__new(cause, strlen("<>"), (u8*)"<>");
+		    f2ptr slot_funk = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, __funk2.globalenv.get__symbol, slot_name);
+		    f2ptr args = nil;
+		    if (f2__cfunk__is_type(cause, slot_funk)) {
+		      args = f2cfunk__args(slot_funk, cause);
+		    } else if (f2__funk__is_type(cause, slot_funk)) {
+		      args = f2funk__args(slot_funk, cause);
 		    }
+		    f2ptr slot_value = nil;
+		    if (raw__simple_length(cause, args) == 1) {
+		      if (fiber) {
+			slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2list1__new(cause, exp));
+		      } else {
+			slot_value = f2symbol__new(cause, strlen("<>"), (u8*)"<>");
+		      }
+		    }
+		    keyvalue_pairs = f2cons__new(cause, f2cons__new(cause, slot_name, slot_value), keyvalue_pairs);
 		  }
-		  keyvalue_pairs = f2cons__new(cause, f2cons__new(cause, slot_name, slot_value), keyvalue_pairs);
 		  slot_iter = f2cons__cdr(slot_iter, cause);
 		}
 	      }

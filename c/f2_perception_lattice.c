@@ -125,7 +125,7 @@ boolean_t raw__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr la
       (! raw__perception_graph__contains_node(cause, this, right_node))) {
     return boolean__false;
   }
-  f2ptr left_node__outs = raw__perception_graph__node__outs(cause, this, left_node);
+  f2ptr left_node__outs = f2__perception_graph__node__outs(cause, this, left_node);
   {
     f2ptr iter = left_node__outs;
     while (iter) {

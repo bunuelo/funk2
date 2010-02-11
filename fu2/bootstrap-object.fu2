@@ -79,8 +79,8 @@
 [defunk graph [object]
   [let [[new_graph [new perception_graph]]]
     [object-property_scan object [funk [type_name name value]
-				       [have new_graph add_edge `[,type ,name] type_name [type value]]
-				       [have new_graph add_edge          name  type_name value]
+				       [have new_graph add_edge `[type ,name] type_name [type value]]
+				       [have new_graph add_edge         name  object    value]
 				       ]]
     new_graph]]
 

@@ -84,7 +84,12 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
   if (cons_cells == nil || length__i == 0) {
     return f2larva__new(cause, 44);
   }
-  return f2list__new(cause, f2mutex__new(cause), f2integer__new(cause, length__i - 1), f2cons__cdr(cons_cells, cause));
+  f2ptr new_cons_cells = f2cons__cdr(cons_cells, cause);
+  if (new_cons_cells) {
+    return f2list__new(cause, f2mutex__new(cause), f2integer__new(cause, length__i - 1), new_cons_cells);
+  } else {
+    return nil;
+  }
 }
 def_pcfunk1(list__cdr, this, return f2__list__cdr(this_cause, this));
 

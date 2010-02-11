@@ -1,0 +1,73 @@
+'Copyright (c) 2007-2010 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deftypefunk perception_graph to_dot_code []
+  [let [[nodes [get this nodes]]
+	[edges [get this edges]]]
+    [stringlist-intersperse [list 'digraph G {'
+				  '    node [fillcolor = white, color = "#000000", style = filled];'
+				  '    edge [color = "#000000"];'
+				  '  the_mud [label = "the-mud"];'
+				  '  the_bucket [label = "the-bucket"];'
+				  '  my_clothes [label = "my-clothes"];'
+				  '    the_bucket_contains_the_mud [shape=box,style=filled,label="contains",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; the_bucket -> the_bucket_contains_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   the_bucket_contains_the_mud -> the_mud;'
+				  '    my_clothes_are_made_dirty_by_the_mud [shape=box,style=filled,label="are-made-dirty-by",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; my_clothes -> my_clothes_are_made_dirty_by_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   my_clothes_are_made_dirty_by_the_mud -> the_mud;'
+				  '  node [fillcolor = white, color = "#0000CC", style = filled];'
+				  '  edge [color = "#0000CC"];'
+				  '  i_deliberative [label = "I\\n(deliberative)"]'
+				  '    i_deliberative_want_the_bucket_contains_the_mud [shape=box,style=filled,label="want\\n(deliberative)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; i_deliberative -> i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   i_deliberative_want_the_bucket_contains_the_mud -> the_bucket_contains_the_mud;'
+				  '    i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud [shape=box,style=filled,label="avoid\\n(deliberative)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; i_deliberative -> i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud -> my_clothes_are_made_dirty_by_the_mud;'
+				  '    node [fillcolor = white, color = "#008800", style = filled];'
+				  '    edge [color = "#008800"];'
+				  '  i_reflective [label = "I\\n(reflective)"];'
+				  '    i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud [shape=box,style=filled,label="focus-on\\n(reflective)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; i_reflective -> i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud -> i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud [shape=box,style=filled,label="ignore\\n(reflective)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; i_reflective -> i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud -> i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '    node [fillcolor = white, color = "#CC0000", style = filled];'
+				  '    edge [color = "#CC0000"];'
+				  '  i_self_reflective [label = "I\\n(self-reflective)"];'
+				  '    i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud [shape=box,style=filled,label="would\\n(self-reflective)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; i_self_reflective -> i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud -> i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud [shape=box,style=filled,label="would\\n(self-reflective)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; i_self_reflective -> i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud -> i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '    node [fillcolor = white, color = "#CC00CC", style = filled];'
+				  '    edge [color = "#CC00CC"];'
+				  '  my_mother_self_conscious [label = "my-mother\\n(self-conscious)"]; '
+				  '    my_mother_self_conscious_praises_i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud [shape=box,style=filled,label="praises\\n(self-conscious)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; my_mother_self_conscious -> my_mother_self_conscious_praises_i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   my_mother_self_conscious_praises_i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud -> i_self_reflective_would_i_reflective_focus_on_i_deliberative_want_the_bucket_contains_the_mud;'
+				  '    my_mother_self_conscious_scolds_i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud [shape=box,style=filled,label="scolds\\n(self-conscious)",height=.1,width=.1];'
+				  '    edge [arrowtail = crow,   arrowhead = none]; my_mother_self_conscious -> my_mother_self_conscious_scolds_i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '    edge [arrowtail = none, arrowhead = normal];   my_mother_self_conscious_scolds_i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud -> i_self_reflective_would_i_reflective_ignore_i_deliberative_avoid_my_clothes_are_made_dirty_by_the_mud;'
+				  '}']
+			    '\n']]]
+

@@ -120,38 +120,6 @@ f2ptr f2__perception_graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(perception_graph__contains_node, this, node, return f2__perception_graph__contains_node(this_cause, this, node));
 
-boolean_t raw__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
-  if ((! raw__perception_graph__contains_node(cause, this, left_node)) ||
-      (! raw__perception_graph__contains_node(cause, this, right_node))) {
-    return boolean__false;
-  }
-  f2ptr left_node__outs = f2__perception_graph__node__outs(cause, this, left_node);
-  {
-    f2ptr iter = left_node__outs;
-    while (iter) {
-      f2ptr edge = f2__cons__car(cause, iter);
-      {
-	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
-	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
-	if (raw__eq(cause, label,      edge__label) &&
-	    raw__eq(cause, right_node, edge__right_node)) {
-	  return boolean__true;
-	}
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
-  return boolean__false;
-}
-
-f2ptr f2__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
-  if (! raw__perception_graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
-  }
-  return raw__perception_graph__contains_edge(cause, this, label, left_node, right_node);
-}
-def_pcfunk4(perception_graph__contains_edge, this, label, left_node, right_node, return f2__perception_graph__contains_edge(this_cause, this, label, left_node, right_node));
-
 f2ptr raw__perception_graph__node__ins(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
   return f2__cons__car(cause, ins_and_outs);
@@ -177,6 +145,38 @@ f2ptr f2__perception_graph__node__outs(f2ptr cause, f2ptr this, f2ptr node) {
   return raw__perception_graph__node__outs(cause, this, node);
 }
 def_pcfunk2(perception_graph__node__outs, this, node, return f2__perception_graph__node__outs(this_cause, this, node));
+
+boolean_t raw__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  if ((! raw__perception_graph__contains_node(cause, this, left_node)) ||
+      (! raw__perception_graph__contains_node(cause, this, right_node))) {
+    return boolean__false;
+  }
+  f2ptr left_node__outs = raw__perception_graph__node__outs(cause, this, left_node);
+  {
+    f2ptr iter = left_node__outs;
+    while (iter) {
+      f2ptr edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	if (raw__eq(cause, label,      edge__label) &&
+	    raw__eq(cause, right_node, edge__right_node)) {
+	  return boolean__true;
+	}
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr f2__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__contains_edge(cause, this, label, left_node, right_node);
+}
+def_pcfunk4(perception_graph__contains_edge, this, label, left_node, right_node, return f2__perception_graph__contains_edge(this_cause, this, label, left_node, right_node));
 
 f2ptr f2__perception_graph__new_from_string(f2ptr cause, f2ptr string) {
   if (! raw__string__is_type(cause, string)) {

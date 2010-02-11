@@ -620,12 +620,18 @@ f2ptr raw__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
     {
       f2ptr small__edges;
       f2ptr large__edges;
+      f2ptr small;
+      f2ptr large;
       if (this__edges__length < that__edges__length) {
 	small__edges = this__edges;
 	large__edges = that__edges;
+	small        = this;
+	large        = that;
       } else {
 	small__edges = that__edges;
 	large__edges = this__edges;
+	small        = that;
+	large        = this;
       }
       {
 	f2ptr iter = large__edges;

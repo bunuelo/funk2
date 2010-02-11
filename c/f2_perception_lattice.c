@@ -159,7 +159,7 @@ boolean_t raw__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr la
       {
 	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
 	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
-	if (raw__object__equals(cause, label,      edge__label) &&
+	if (f2__object__equals(cause, label,      edge__label) &&
 	    raw__eq(cause, right_node, edge__right_node)) {
 	  return boolean__true;
 	}
@@ -550,7 +550,7 @@ f2ptr raw__perception_graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
 		  f2ptr large__left_node__out_edge__right_node = f2__perception_graph_edge__right_node(cause, large__left_node__out_edge);
 		  if (raw__eq(cause, shared__right_node, large__left_node__out_edge__right_node)) {
 		    f2ptr large__label = f2__perception_graph_edge__label(cause, large__left_node__out_edge);
-		    if (raw__object__equals(cause, small__label, large__label)) {
+		    if (f2__object__equals(cause, small__label, large__label)) {
 		      f2ptr shared__label = small__label;
 		      f2__perception_graph__add_edge(cause, new_graph, shared__label, shared__left_node, shared__right_node);
 		    }

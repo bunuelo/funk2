@@ -221,57 +221,12 @@
 [defmetro chunk-write_16bit [x y z] `[chunk-write_16bit_integer ,x ,y [coerce-to-int ,z]]]
 [defmetro chunk-write_32bit [x y z] `[chunk-write_32bit_integer ,x ,y [coerce-to-int ,z]]]
 
-[defmetro car     [x]   `[first     ,x]]
-[defmetro car-set [x y] `[first-set ,x ,y]]
-[defmetro cdr     [x]   `[next      ,x]]
-[defmetro cdr-set [x y] `[next-set  ,x ,y]]
-[defmetro cir     [x]   `[prev      ,x]]
-[defmetro cir-set [x y] `[prev-set  ,x ,y]]
-
-[defunk conslist [:rest seq]
-  [if [null seq]
-      nil
-    [cons [car seq]
-	  [apply &conslist
-		 [cdr seq]]]]]
-
-[defmetro label [name args :rest body]
-  `[define-funk ,name
-     [funk-unlabeled label ,args
-		     @body]]]
-
-[defunk mapc [proc seq]
-  [while seq
-    [apply proc [cons [car seq] nil]]
-    [mutate seq [cdr seq]]]]
-
-[defunk parseq [proc seq]
-  [if [null seq]
-      nil
-    [cons [fiber proc [cons [car seq] nil]]
-	  [parseq proc [cdr seq]]]]]
-
-[defunk mapcar [proc seq]
-  [if [null seq]
-      nil
-    [prog [define result [apply proc [cons [car seq] nil]]]
-	  [define cons_result [cons result nil]]
-	  [define iter   cons_result]
-	  [mapc [funk [elt]
-		      [define new_cons [cons [apply proc [cons elt nil]] nil]]
-		      [cdr-set iter new_cons]
-		      [mutate iter [cdr iter]]]
-		[cdr seq]]
-	  cons_result]]]
-
-[defunk filter [cond_proc seq]
-  [if [null seq]
-      nil
-    [prog [define exp    [car seq]]
-	  [define result [apply cond_proc [cons exp nil]]]
-	  [if result
-	      [cons result [filter cond_proc [cdr seq]]]
-	    [filter cond_proc [cdr seq]]]]]]
+`[defmetro car     [x]   `[first     ,x]]
+`[defmetro car-set [x y] `[first-set ,x ,y]]
+`[defmetro cdr     [x]   `[next      ,x]]
+`[defmetro cdr-set [x y] `[next-set  ,x ,y]]
+`[defmetro cir     [x]   `[prev      ,x]]
+`[defmetro cir-set [x y] `[prev-set  ,x ,y]]
 
 [defmetro object_type-type-funk    [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name ,slot_name]]
 [defmetro object_type-get-funk     [name slot_name]                `[object_type-type-funk                              ,name  `get            ,slot_name]]
@@ -319,6 +274,51 @@
 [globalize-funk cons &primfunk:cons__new]
 [defmetro car [x] `[object-get ,x `car]]
 [defmetro cdr [x] `[object-get ,x `cdr]]
+
+[defunk conslist [:rest seq]
+  [if [null seq]
+      nil
+    [cons [car seq]
+	  [apply &conslist
+		 [cdr seq]]]]]
+
+[defmetro label [name args :rest body]
+  `[define-funk ,name
+     [funk-unlabeled label ,args
+		     @body]]]
+
+[defunk mapc [proc seq]
+  [while seq
+    [apply proc [cons [car seq] nil]]
+    [mutate seq [cdr seq]]]]
+
+[defunk parseq [proc seq]
+  [if [null seq]
+      nil
+    [cons [fiber proc [cons [car seq] nil]]
+	  [parseq proc [cdr seq]]]]]
+
+[defunk mapcar [proc seq]
+  [if [null seq]
+      nil
+    [prog [define result [apply proc [cons [car seq] nil]]]
+	  [define cons_result [cons result nil]]
+	  [define iter   cons_result]
+	  [mapc [funk [elt]
+		      [define new_cons [cons [apply proc [cons elt nil]] nil]]
+		      [cdr-set iter new_cons]
+		      [mutate iter [cdr iter]]]
+		[cdr seq]]
+	  cons_result]]]
+
+[defunk filter [cond_proc seq]
+  [if [null seq]
+      nil
+    [prog [define exp    [car seq]]
+	  [define result [apply cond_proc [cons exp nil]]]
+	  [if result
+	      [cons result [filter cond_proc [cdr seq]]]
+	    [filter cond_proc [cdr seq]]]]]]
 
 [defunk is-type [type_name exp]
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]

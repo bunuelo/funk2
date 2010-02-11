@@ -660,7 +660,7 @@ f2ptr raw__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
 
 f2ptr f2__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__perception_graph__is_type(cause, this)) ||
-      (! raw__perception_graph__is_type(cause, that)) ||) {
+      (! raw__perception_graph__is_type(cause, that))) {
     return f2larva__new(cause, 1);
   }
   return raw__perception_graph__union(cause, this, that);

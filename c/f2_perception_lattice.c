@@ -699,6 +699,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__2(perception_graph__contains_node,      this, node, "returns boolean true if this graph contains node.");
   f2__primcfunk__init__2(perception_graph__node__ins,          this, node, "returns node in edges.");
   f2__primcfunk__init__2(perception_graph__node__outs,         this, node, "returns node out edges.");
+  f2__primcfunk__init__4(perception_graph__contains_edge,      this, label, left_node, right_node, "returns boolean true if this graph contains edge.");
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");

@@ -355,10 +355,10 @@ def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_
 
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);
-  {char* slot_name = "as-symbol"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.as__symbol__funk);}
-  {char* slot_name = "save";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.save__funk);}
-  {char* slot_name = "split";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.split__funk);}
-  {char* slot_name = "contains";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.contains__funk);}
+  {char* slot_name = "as-symbol"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
+  {char* slot_name = "save";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.save__funk);}
+  {char* slot_name = "split";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.split__funk);}
+  {char* slot_name = "contains";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.contains__funk);}
   return this;
 }
 

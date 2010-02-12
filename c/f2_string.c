@@ -380,7 +380,7 @@ void f2__string__initialize() {
   f2__primcfunk__init__1(string__load, filename, "load a string from a filename");
   
   {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk, 1, "convert a string to a symbol."); __funk2.globalenv.object_type.ptype.ptype_string.as__string__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk, 1, "convert a string to a symbol."); __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk = never_gc(cfunk);}
   {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_string.save__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__save, this, filename, cfunk, 1, "save this string to a file of filename."); __funk2.globalenv.object_type.ptype.ptype_string.save__funk = never_gc(cfunk);}
   {char* str = "split"; __funk2.globalenv.object_type.ptype.ptype_string.split__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

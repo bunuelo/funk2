@@ -640,6 +640,15 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  // defined in f2_string.c
+  f2ptr as__symbol__symbol;
+  f2ptr as__symbol__funk;
+  f2ptr save__symbol;
+  f2ptr save__funk;
+  f2ptr split__symbol;
+  f2ptr split__funk;
+  f2ptr contains__symbol;
+  f2ptr contains__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol

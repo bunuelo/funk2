@@ -211,7 +211,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
 
-f2ptr f2__string__to_symbol(f2ptr cause, f2ptr this) {
+f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
   if (! raw__string__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -221,7 +221,7 @@ f2ptr f2__string__to_symbol(f2ptr cause, f2ptr this) {
   f2ptr new_symbol = f2symbol__new(cause, this__length, temp_str);
   return new_symbol;
 }
-def_pcfunk1(string__to_symbol, this, return f2__string__to_symbol(this_cause, this));
+def_pcfunk1(string__as__symbol, this, return f2__string__as__symbol(this_cause, this));
 
 f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   if ((! raw__string__is_type(cause, this)) ||
@@ -353,6 +353,15 @@ f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
 }
 def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_cause, this, substring));
 
+f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2string__primobject_type__new(cause);
+  {char* slot_name = "as-symbol"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.as__symbol__funk);}
+  {char* slot_name = "save";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.save__funk);}
+  {char* slot_name = "split";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.split__funk);}
+  {char* slot_name = "contains";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_string.contains__funk);}
+  return this;
+}
+
 // **
 
 void f2__string__reinitialize_globalvars() {
@@ -366,10 +375,20 @@ void f2__string__initialize() {
   f2__primcfunk__init__1(stringlist__concat, this, "concatenate a list of strings together into a new resultant string.");
   f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string, "concatenate a list of strings together into a new resultant string with a extra token string placed between each of the strings.");
   f2__primcfunk__init__1(exp__to_string, exp, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
-  f2__primcfunk__init__1(string__to_symbol, this, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
-  f2__primcfunk__init__2(string__save, this, filename, "save a string to a filename");
   f2__primcfunk__init__1(string__load, filename, "load a string from a filename");
-  f2__primcfunk__init__2(string__split, this, token, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse.");
-  f2__primcfunk__init__2(string__contains, this, substring, "returns true when the string contains the specified substring.");
+  
+  {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk, 1, "convert a string to a symbol."); __funk2.globalenv.object_type.ptype.ptype_string.as__string__funk = never_gc(cfunk);}
+  {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_string.save__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__save, this, filename, cfunk, 1, "save this string to a file of filename."); __funk2.globalenv.object_type.ptype.ptype_string.save__funk = never_gc(cfunk);}
+  {char* str = "split"; __funk2.globalenv.object_type.ptype.ptype_string.split__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__split, this, token, cfunk, 1, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse."); __funk2.globalenv.object_type.ptype.ptype_string.split__funk = never_gc(cfunk);}
+  {char* str = "contains"; __funk2.globalenv.object_type.ptype.ptype_string.contains__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__contains, this, substring, cfunk, 1, "returns true when the string contains the specified substring."); __funk2.globalenv.object_type.ptype.ptype_string.contains__funk = never_gc(cfunk);}
+  
+  //f2__primcfunk__init__1(string__to_symbol, this, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
+  //f2__primcfunk__init__2(string__save, this, filename, "save a string to a filename");
+  //f2__primcfunk__init__2(string__split, this, token, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse.");
+  //f2__primcfunk__init__2(string__contains, this, substring, "returns true when the string contains the specified substring.");
 }
 

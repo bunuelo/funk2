@@ -343,6 +343,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	    f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__escape, cause),       subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	    f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__string_quote, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
+	  } else if(ch == '\n') {
+	    f2__fwrite__raw_char(cause, stream, '\n', subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else if(ch < 28) {
 	    f2__fwrite__raw_char(cause, stream, '?', subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  } else {

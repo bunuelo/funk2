@@ -20,7 +20,7 @@
 [defunk strings-prog [:rest these]
   [stringlist-intersperse these '\n']]
 
-[deftypefunk perception_graph execute to_dot_code []
+[deftypefunk perception_graph execute as-dot_code []
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
     [strings-prog 'digraph G {'

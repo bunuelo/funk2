@@ -85,8 +85,6 @@ void f2__number__reinitialize_globalvars() {
 }
 
 void f2__number__initialize() {
-  f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "number", "", &f2__number__reinitialize_globalvars);
   
   f2__number__reinitialize_globalvars();

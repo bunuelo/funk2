@@ -23,10 +23,10 @@
 [globalize pi      math:pi]
 
 [defunk > [x y]
-  [number-greater_than_number x y]]
+  [number-is_greater_than x y]]
 
 [defunk < [x y]
-  [number-less_than_number x y]]
+  [number-is_less_than x y]]
 
 
 'addition'
@@ -34,18 +34,18 @@
 [defmetro + [x :rest rest]
   [if [null rest]
       x
-    `[number-add_number ,x ,[apply &+ rest]]]]
+    `[number-plus ,x ,[apply &+ rest]]]]
 
 
 'subtraction'
 
 [defunk negative [x]
-  [number-subtract_number 0 x]]
+  [number-minus 0 x]]
 
 [defmetro - [x :rest rest]
   [if [null rest]
       `[negative ,x]
-    `[number-subtract_number ,x ,[apply &+ rest]]]]
+    `[number-minus ,x ,[apply &+ rest]]]]
 
 
 'multiplication'
@@ -59,17 +59,17 @@
 'division'
 
 [defunk inverse [x]
-  [number-divide_by_number 1 x]]
+  [number-divided_by 1 x]]
 
 [defmetro / [x :rest rest]
   [if [null rest]
       `[inverse ,x]
-    `[number-divide_by_number ,x ,[apply &* rest]]]]
+    `[number-divided_by ,x ,[apply &* rest]]]]
 
 'equals'
 
 [defunk == [x y]
-  [number-equals_number x y]]
+  [number-equals x y]]
 
 [defunk != [x y]
   [not [== x y]]]

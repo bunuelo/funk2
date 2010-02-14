@@ -105,7 +105,14 @@ f2ptr      f2__integer__equals(f2ptr cause, f2ptr this, f2ptr that);
 double raw__integer__as__double(f2ptr cause, f2ptr this);
 f2ptr   f2__integer__as__double(f2ptr cause, f2ptr this);
 
-f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__multiplied_by(          f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__divided_by(             f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__plus(                   f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__minus(                  f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__square_root(            f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
 // double
 
@@ -131,6 +138,15 @@ f2ptr   f2__double__as__double(f2ptr cause, f2ptr this);
 
 f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number);
 
+f2ptr f2__double__multiplied_by(          f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__divided_by(             f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__plus(                   f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__minus(                  f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__square_root(            f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
+
 // float
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f);
@@ -155,6 +171,15 @@ f2ptr   f2__float__as__double(f2ptr cause, f2ptr this);
 
 f2ptr f2__float__multiplied_by(f2ptr cause, f2ptr this, f2ptr number);
 
+f2ptr f2__float__multiplied_by(          f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__divided_by(             f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__plus(                   f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__minus(                  f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__square_root(            f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
+
 // pointer
 
 f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p);
@@ -173,6 +198,12 @@ f2ptr  f2__pointer__eq_hash_value(f2ptr cause, f2ptr this);
 
 boolean_t raw__pointer__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__pointer__equals(f2ptr cause, f2ptr this, f2ptr that);
+
+f2ptr f2__pointer__plus(                   f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__pointer__minus(                  f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__pointer__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__pointer__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
+f2ptr f2__pointer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
 // gfunkptr
 

@@ -23,10 +23,10 @@
 [globalize pi      math:pi]
 
 [defunk > [x y]
-  [number-is_greater_than x y]]
+  [get x is_greater_than y]]
 
 [defunk < [x y]
-  [number-is_less_than x y]]
+  [get x is_less_than y]]
 
 
 'addition'
@@ -34,18 +34,18 @@
 [defmetro + [x :rest rest]
   [if [null rest]
       x
-    `[number-plus ,x ,[apply &+ rest]]]]
+    `[get ,x plus ,[apply &+ rest]]]]
 
 
 'subtraction'
 
 [defunk negative [x]
-  [number-minus 0 x]]
+  [get 0 minus x]]
 
 [defmetro - [x :rest rest]
   [if [null rest]
       `[negative ,x]
-    `[number-minus ,x ,[apply &+ rest]]]]
+    `[get ,x minus ,[apply &+ rest]]]]
 
 
 'multiplication'
@@ -53,23 +53,23 @@
 [defmetro * [x :rest rest]
   [if [null rest]
       x
-    `[number-multiplied_by ,x ,[apply &* rest]]]]
+    `[get ,x multiplied_by ,[apply &* rest]]]]
 
 
 'division'
 
 [defunk inverse [x]
-  [number-divided_by 1 x]]
+  [get 1 divided_by x]]
 
 [defmetro / [x :rest rest]
   [if [null rest]
       `[inverse ,x]
-    `[number-divided_by ,x ,[apply &* rest]]]]
+    `[get ,x divided_by ,[apply &* rest]]]]
 
 'equals'
 
 [defunk == [x y]
-  [number-is_numerically_equal_to x y]]
+  [get x is_numerically_equal_to y]]
 
 [defunk != [x y]
   [not [== x y]]]
@@ -112,6 +112,5 @@
       [== x y]]]
 
 [defunk sqrt [x]
-  [number-square_root x]]
-
+  [get x square_root]]
 

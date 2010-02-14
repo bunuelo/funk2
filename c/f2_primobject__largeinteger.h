@@ -97,6 +97,7 @@ f2ptr      f2__largeinteger__plus(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr      f2__largeinteger__minus(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr      f2__largeinteger__is_greater_than(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr      f2__largeinteger__is_less_than(f2ptr cause, f2ptr this, f2ptr number);
+f2ptr      f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
 // **
 

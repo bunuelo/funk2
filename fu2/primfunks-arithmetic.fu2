@@ -19,14 +19,14 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk number-is_type             &primfunk:number__is_type]
-[globalize-funk number-as-double           &primfunk:number__as__double]
-[globalize-funk number-multiplied_by       &primfunk:number__multiplied_by]
-[globalize-funk number-dividied_by         &primfunk:number__divided_by]
-[globalize-funk number-plus                &primfunk:number__plus]
-[globalize-funk number-minus               &primfunk:number__minus]
-[globalize-funk number-is_greater_than     &primfunk:number__is_greater_than]
-[globalize-funk number-is_less_than_number &primfunk:number__is_less_than]
-[globalize-funk number-is_equal_to         &primfunk:number__is_equal_to]
-[globalize-funk number-square_root         &primfunk:number__square_root]
+[globalize-funk number-is_type                 &primfunk:number__is_type]
+[globalize-funk number-as-double               &primfunk:number__as__double]
+[globalize-funk number-multiplied_by           &primfunk:number__multiplied_by]
+[globalize-funk number-dividied_by             &primfunk:number__divided_by]
+[globalize-funk number-plus                    &primfunk:number__plus]
+[globalize-funk number-minus                   &primfunk:number__minus]
+[globalize-funk number-is_greater_than         &primfunk:number__is_greater_than]
+[globalize-funk number-is_less_than_number     &primfunk:number__is_less_than]
+[globalize-funk number-is_numerically_equal_to &primfunk:number__is_numerically_equal_to]
+[globalize-funk number-square_root             &primfunk:number__square_root]
 

@@ -626,7 +626,7 @@ def_pcfunk2(number__is_less_than, this, number, return f2__number__is_less_than(
 
 // number equals
 
-f2ptr f2__integer__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -643,7 +643,7 @@ f2ptr f2__integer__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__double__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -660,7 +660,7 @@ f2ptr f2__double__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__float__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -685,7 +685,7 @@ f2ptr f2__pointer__equals_pointer(f2ptr cause, f2ptr this, f2ptr integer) {
   return f2bool__new(f2pointer__p(this, cause) == f2pointer__p(integer, cause));
 }
 
-f2ptr f2__largeinteger__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__largeinteger__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -701,23 +701,23 @@ f2ptr f2__largeinteger__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__number__is_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__number__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (raw__integer__is_type(cause, this)) {
-    return f2__integer__is_equal_to(cause, this, number);
+    return f2__integer__is_numerically_equal_to(cause, this, number);
   } else if (raw__double__is_type(cause, this)) {
-    return f2__double__is_equal_to(cause, this, number);
+    return f2__double__is_numerically_equal_to(cause, this, number);
   } else if (raw__float__is_type(cause, this)) {
-    return f2__float__is_equal_to(cause, this, number);
+    return f2__float__is_numerically_equal_to(cause, this, number);
   } else if (raw__pointer__is_type(cause, this)) {
     if (raw__pointer__is_type(cause, number)) {
       return f2__pointer__equals_pointer(cause, this, number);
     }
   } else if (raw__largeinteger__is_type(cause, this)) {
-    return f2__largeinteger__is_equal_to(cause, this, number);
+    return f2__largeinteger__is_numerically_equal_to(cause, this, number);
   }
   return f2larva__new(cause, 1);
 }
-def_pcfunk2(number__is_equal_to, this, number, return f2__number__is_equal_to(this_cause, this, number));
+def_pcfunk2(number__is_numerically_equal_to, this, number, return f2__number__is_numerically_equal_to(this_cause, this, number));
 
 // number square_root
 
@@ -760,15 +760,15 @@ void f2__arithmetic__initialize() {
   
   f2__arithmetic__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(number__is_type,         exp,          "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__1(number__as__double,      this,         "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__multiplied_by,   this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__divided_by,      this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__plus,            this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__minus,           this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__is_greater_than, this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__is_less_than,    this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__is_equal_to,     this, number, "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__1(number__square_root,     this,         "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__1(number__is_type,                 exp,          "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__1(number__as__double,              this,         "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__multiplied_by,           this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__divided_by,              this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__plus,                    this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__minus,                   this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__is_greater_than,         this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__is_less_than,            this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__is_numerically_equal_to, this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__1(number__square_root,             this,         "(cfunk defined in f2_arithmetic.c)");
   
 }

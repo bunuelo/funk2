@@ -53,7 +53,7 @@ f2ptr f2__number__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.number_globalvars.is_greater_than__symbol, that);
 }
 
-f2ptr f2__number__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__number__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.number_globalvars.is_less_than__symbol, that);
 }
 

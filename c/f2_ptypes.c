@@ -1320,7 +1320,7 @@ f2ptr f2__pointer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr intege
   }
   return f2bool__new(f2pointer__p(this, cause) == f2pointer__p(integer, cause));
 }
-def_pcfunk2(pointere__is_numerically_equal_to, this, that, return f2__pointer__is_numerically_equal_to(this_cause, this, that));
+def_pcfunk2(pointer__is_numerically_equal_to, this, that, return f2__pointer__is_numerically_equal_to(this_cause, this, that));
 
 f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {

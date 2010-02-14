@@ -895,7 +895,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       {
 	s64 index;
 	for (index = 1; index < whole_decimal_length; index ++) {
-	  ten_power__largeintegers[index] = raw__largeinteger__multiply(cause, ten_power__largeintegers[index - 1], ten__largeinteger);
+	  ten_power__largeintegers[index] = f2__largeinteger__multiplied_by(cause, ten_power__largeintegers[index - 1], ten__largeinteger);
 	}
       }
       s64 whole_decimal_digit = whole_decimal_length - 1;
@@ -903,7 +903,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       while (whole_decimal_digit >= 0) {
 	f2ptr read_ch = f2cons__car(iter, cause);
 	f2ptr char_value__largeinteger = raw__largeinteger__new_from_s64(cause, (s64)raw__char__decimal_digit_value(cause, read_ch));
-	whole_decimal_value__largeinteger = raw__largeinteger__add(cause, whole_decimal_value__largeinteger, (raw__largeinteger__multiply(cause, char_value__largeinteger, ten_power__largeintegers[whole_decimal_digit])));
+	whole_decimal_value__largeinteger = raw__largeinteger__add(cause, whole_decimal_value__largeinteger, (f2__largeinteger__multiplied_by(cause, char_value__largeinteger, ten_power__largeintegers[whole_decimal_digit])));
 	iter = f2cons__cdr(iter, cause);
 	whole_decimal_digit --;
       }

@@ -782,6 +782,10 @@ f2ptr      f2__null(f2ptr cause, f2ptr x);
 boolean_t raw__not(f2ptr x);
 f2ptr     f2__not(f2ptr cause, f2ptr x);
 
+// s64
+
+boolean_t s64__add_overflows(s64 this, s64 that);
+
 // u64
 
 u64 u64__sqrt(u64 this);

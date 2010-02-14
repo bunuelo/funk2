@@ -34,6 +34,7 @@
 [deftypefunk largeinteger get     prime_factor_indices   []     [largeinteger-prime_factor_indices   this]]
 [deftypefunk largeinteger get     as-double              []     [largeinteger-as-double              this]]
 [deftypefunk largeinteger get     multiplied_by          [that] [largeinteger-multiplied_by          this that]]
+[deftypefunk largeinteger get     divided_by             [that] [largeinteger-divided_by             this that]]
 
 [defunk gcf [x y]
   [largeinteger-greatest_common_factor [new largeinteger x] [new largeinteger y]]]

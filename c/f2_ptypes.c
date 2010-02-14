@@ -339,6 +339,147 @@ f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
 def_pcfunk2(integer__multiplied_by, this, that, return f2__integer__multiplied_by(this_cause, this, that));
 
 
+f2ptr f2__integer__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2integer__new(cause, value / f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value / f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2float__new(cause, value / f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__divide(cause, raw__largeinteger__new_from_s64(cause, value), number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(integer__divided_by, this, that, return f2__integer__divided_by(this_cause, this, that));
+
+
+f2ptr f2__integer__plus(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    s64 number_value = f2integer__i(number, cause);
+    if (! s64__add_overflows(value, number_value)) {
+      return f2integer__new(cause, value + number_value);
+    } else {
+      return f2__largeinteger__add(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
+    }
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value + f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2float__new(cause, value + f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__add(cause, raw__largeinteger__new_from_s64(cause, value), number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(integer__plus, this, that, return f2__integer__plus(this_cause, this, that));
+
+
+f2ptr f2__integer__minus(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    s64 number_value = f2integer__i(number, cause);
+    if (! s64__add_overflows(value, -number_value) && ((number_value == 0) || (-number_value != number_value))) {
+      return f2integer__new(cause, value - f2integer__i(number, cause));
+    } else {
+      return f2__largeinteger__subtract(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
+    }
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value - f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2float__new(cause, value - f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__subtract(cause, raw__largeinteger__new_from_s64(cause, value), number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(integer__minus, this, that, return f2__integer__minus(this_cause, this, that));
+
+
+f2ptr f2__integer__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value > f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value > f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value > f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__greater_than(cause, raw__largeinteger__new_from_s64(cause, value), number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(integer__is_greater_than, this, that, return f2__integer__is_greater_than(this_cause, this, that));
+
+
+f2ptr f2__integer__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value < f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value < f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value < f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__less_than(cause, raw__largeinteger__new_from_s64(cause, value), number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(integer__is_less_than, this, that, return f2__integer__is_less_than(this_cause, this, that));
+
+
+f2ptr f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__integer__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  s64 value = f2integer__i(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value == f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value == f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value == f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__equals(cause, raw__largeinteger__new_from_s64(cause, value), number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(integer__is_numerically_equal_to, this, that, return f2__integer__is_numerically_equal_to(this_cause, this, that));
+
+
+f2ptr raw__integer__square_root(f2ptr cause, f2ptr this) {
+  s64 i = f2integer__i(this, cause);
+  if (i < 0) {
+    return f2larva__new(cause, 5);
+  }
+  return f2integer__new(cause, u64__sqrt(i));
+}
+
+f2ptr f2__integer__square_root(f2ptr cause, f2ptr this) {
+  if (! raw__integer__square_root(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__integer__square_root(cause, this);
+}
+def_pcfunk1(integer__square_root, this, return f2__integer__square_root(this_cause, this));
+
+
 f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol)) {
@@ -355,6 +496,20 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
       return __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.plus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.plus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.minus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.minus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_integer.square_root__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -367,19 +522,25 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
 
 f2ptr f2integer__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.type__funk);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.new__funk);}
-  {char* slot_name = "i";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.i__funk);}
-  {char* slot_name = "eq";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk);}
-  {char* slot_name = "eq_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk);}
-  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk);}
-  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk);}
-  {char* slot_name = "as-double";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk);}
-  {char* slot_name = "multiplied_by";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk);}
+  {char* slot_name = "is_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);}
+  {char* slot_name = "type";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.type__funk);}
+  {char* slot_name = "new";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.new__funk);}
+  {char* slot_name = "i";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.i__funk);}
+  {char* slot_name = "eq";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk);}
+  {char* slot_name = "eq_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk);}
+  {char* slot_name = "equals";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk);}
+  {char* slot_name = "equals_hash_value";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk);}
+  {char* slot_name = "as-double";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk);}
+  {char* slot_name = "multiplied_by";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk);}
+  {char* slot_name = "divided_by";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk);}
+  {char* slot_name = "plus";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.plus__funk);}
+  {char* slot_name = "minus";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.minus__funk);}
+  {char* slot_name = "is_greater_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__funk);}
+  {char* slot_name = "is_less_than";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__funk);}
+  {char* slot_name = "is_numerically_equal_to"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk);}
+  {char* slot_name = "square_root";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk);}
   return this;
 }
-
 
 
 // double
@@ -511,6 +672,137 @@ f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
 def_pcfunk2(double__multiplied_by, this, that, return f2__double__multiplied_by(this_cause, this, that));
 
 
+f2ptr f2__double__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2double__new(cause, value / f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value / f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2double__new(cause, value / f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2double__new(cause, value / raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(double__divided_by, this, that, return f2__double__divided_by(this_cause, this, that));
+
+
+f2ptr f2__double__plus(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2double__new(cause, value + f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value + f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2double__new(cause, value + f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2double__new(cause, value + raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(double__plus, this, that, return f2__double__plus(this_cause, this, that));
+
+
+f2ptr f2__double__minus(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2double__new(cause, value - f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value - f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2double__new(cause, value - f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2double__new(cause, value - raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(double__minus, this, that, return f2__double__minus(this_cause, this, that));
+
+
+f2ptr f2__double__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value > f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value > f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value > f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2bool__new(value > raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(double__is_greater_than, this, that, return f2__double__is_greater_than(this_cause, this, that));
+
+
+f2ptr f2__double__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value < f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value < f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value < f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2bool__new(value < raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(double__is_less_than, this, that, return f2__double__is_less_than(this_cause, this, that));
+
+
+f2ptr f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  double value = f2double__d(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value == f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value == f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value == f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2bool__new(value == raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(double__is_numerically_equal_to, this, that, return f2__double__is_numerically_equal_to(this_cause, this, that));
+
+
+f2ptr raw__double__square_root(f2ptr cause, f2ptr this) {
+  double d = f2double__d(this, cause);
+  if (d < 0) {
+    return f2larva__new(cause, 5);
+  }
+  return f2double__new(cause, sqrt(d));
+}
+
+f2ptr f2__double__square_root(f2ptr cause, f2ptr this) {
+  if (! raw__double__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__double__square_root(cause, this);
+}
+def_pcfunk1(double__square_root, this, return f2__double__square_root(this_cause, this));
+
+
 f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.d__symbol)) {
@@ -527,6 +819,20 @@ f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       return __funk2.globalenv.object_type.ptype.ptype_double.as__double__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.divided_by__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.divided_by__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.plus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.plus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.minus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.minus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_double.square_root__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_double.square_root__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -543,16 +849,23 @@ f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 
 f2ptr f2double__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.type__funk);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.new__funk);}
-  {char* slot_name = "d";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.d__funk);}
-  {char* slot_name = "eq";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.eq__funk);}
-  {char* slot_name = "eq_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk);}
-  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals__funk);}
-  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk);}
-  {char* slot_name = "as-double";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.as__double__funk);}
-  {char* slot_name = "multiplied_by";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk);}
+  {char* slot_name = "is_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);}
+  {char* slot_name = "type";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.type__funk);}
+  {char* slot_name = "new";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.new__funk);}
+  {char* slot_name = "d";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.d__funk);}
+  {char* slot_name = "eq";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.eq__funk);}
+  {char* slot_name = "eq_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk);}
+  {char* slot_name = "equals";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals__funk);}
+  {char* slot_name = "equals_hash_value";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk);}
+  {char* slot_name = "as-double";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.as__double__funk);}
+  {char* slot_name = "multiplied_by";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk);}
+  {char* slot_name = "divided_by";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.divided_by__funk);}
+  {char* slot_name = "plus";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.plus__funk);}
+  {char* slot_name = "minus";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.minus__funk);}
+  {char* slot_name = "is_greater_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__funk);}
+  {char* slot_name = "is_less_than";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__funk);}
+  {char* slot_name = "is_numerically_equal_to"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk);}
+  {char* slot_name = "square_root";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_double.square_root__funk);}
   return this;
 }
 
@@ -688,6 +1001,137 @@ f2ptr f2__float__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
 def_pcfunk2(float__multiplied_by, this, that, return f2__float__multiplied_by(this_cause, this, that));
 
 
+f2ptr f2__float__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2float__new(cause, value / f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value / f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2float__new(cause, value / f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2float__new(cause, value / raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(float__divided_by, this, that, return f2__float__divided_by(this_cause, this, that));
+
+
+f2ptr f2__float__plus(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2float__new(cause, value + f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value + f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2float__new(cause, value + f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2float__new(cause, value + (float)raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(float__plus, this, that, return f2__float__plus(this_cause, this, that));
+
+
+f2ptr f2__float__minus(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2float__new(cause, value - f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2double__new(cause, value - f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2float__new(cause, value - f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2float__new(cause, value - (float)raw__largeinteger__as__double(cause, number));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(float__minus, this, that, return f2__float__minus(this_cause, this, that));
+
+
+f2ptr f2__float__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value > f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value > f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value > f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2bool__new(value > ((float)raw__largeinteger__as__double(cause, number)));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(float__is_greater_than, this, that, return f2__float__is_greater_than(this_cause, this, that));
+
+
+f2ptr f2__float__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value < f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value < f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value < f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2bool__new(value < ((float)raw__largeinteger__as__double(cause, number)));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(float__is_less_than, this, that, return f2__float__is_less_than(this_cause, this, that));
+
+
+f2ptr f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  float value = f2float__f(this, cause);
+  if (raw__integer__is_type(cause, number)) {
+    return f2bool__new(value == f2integer__i(number, cause));
+  } else if (raw__double__is_type(cause, number)) {
+    return f2bool__new(value == f2double__d(number, cause));
+  } else if (raw__float__is_type(cause, number)) {
+    return f2bool__new(value == f2float__f(number, cause));
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2bool__new(value == ((float)raw__largeinteger__as__double(cause, number)));
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(float__is_numerically_equal_to, this, that, return f2__float__is_numerically_equal_to(this_cause, this, that));
+
+
+f2ptr raw__float__square_root(f2ptr cause, f2ptr this) {
+  float f = f2float__f(this, cause);
+  if (f < 0) {
+    return f2larva__new(cause, 5);
+  }
+  return f2float__new(cause, sqrtf(f));
+}
+
+f2ptr f2__float__square_root(f2ptr cause, f2ptr this) {
+  if (! raw__float__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__float__square_root(cause, this);
+}
+def_pcfunk1(float__square_root, this, return f2__float__square_root(this_cause, this));
+
+
 f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.f__symbol)) {
@@ -704,6 +1148,20 @@ f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
       return __funk2.globalenv.object_type.ptype.ptype_float.as__double__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.divided_by__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.divided_by__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.plus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.plus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.minus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.minus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.is_less_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.is_less_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_float.square_root__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_float.square_root__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -716,16 +1174,23 @@ f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 
 f2ptr f2float__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.type__funk);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.new__funk);}
-  {char* slot_name = "f";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.f__funk);}
-  {char* slot_name = "eq";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.eq__funk);}
-  {char* slot_name = "eq_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__funk);}
-  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.equals__funk);}
-  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__funk);}
-  {char* slot_name = "as-double";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.as__double__funk);}
-  {char* slot_name = "multiplied_by";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__funk);}
+  {char* slot_name = "is_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.is_type__funk);}
+  {char* slot_name = "type";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.type__funk);}
+  {char* slot_name = "new";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.new__funk);}
+  {char* slot_name = "f";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.f__funk);}
+  {char* slot_name = "eq";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.eq__funk);}
+  {char* slot_name = "eq_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__funk);}
+  {char* slot_name = "equals";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.equals__funk);}
+  {char* slot_name = "equals_hash_value";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__funk);}
+  {char* slot_name = "as-double";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.as__double__funk);}
+  {char* slot_name = "multiplied_by";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__funk);}
+  {char* slot_name = "divided_by";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.divided_by__funk);}
+  {char* slot_name = "plus";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.plus__funk);}
+  {char* slot_name = "minus";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.minus__funk);}
+  {char* slot_name = "is_greater_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__funk);}
+  {char* slot_name = "is_less_than";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.is_less_than__funk);}
+  {char* slot_name = "is_numerically_equal_to"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__funk);}
+  {char* slot_name = "square_root";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_float.square_root__funk);}
   return this;
 }
 
@@ -812,6 +1277,51 @@ f2ptr f2__pointer__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(pointer__equals_hash_value, this, return f2__pointer__equals_hash_value(this_cause, this));
 
+f2ptr f2__pointer__plus(f2ptr cause, f2ptr this, f2ptr integer) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2pointer__new(cause, f2pointer__p(this, cause) + f2integer__i(integer, cause));
+}
+def_pcfunk2(pointer__plus, this, that, return f2__pointer__plus(this_cause, this, that));
+
+f2ptr f2__pointer__subtract_integer(f2ptr cause, f2ptr this, f2ptr integer) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__integer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2pointer__new(cause, f2pointer__p(this, cause) - f2integer__i(integer, cause));
+}
+def_pcfunk2(pointer__minus, this, that, return f2__pointer__minus(this_cause, this, that));
+
+f2ptr f2__pointer__is_greater_than(f2ptr cause, f2ptr this, f2ptr integer) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__pointer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(f2pointer__p(this, cause) > f2pointer__p(integer, cause));
+}
+def_pcfunk2(pointer__is_greater_than, this, that, return f2__pointer__is_greater_than(this_cause, this, that));
+
+f2ptr f2__pointer__is_less_than(f2ptr cause, f2ptr this, f2ptr integer) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__pointer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(f2pointer__p(this, cause) < f2pointer__p(integer, cause));
+}
+def_pcfunk2(pointer__is_less_than, this, that, return f2__pointer__is_less_than(this_cause, this, that));
+
+f2ptr f2__pointer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr integer) {
+  if ((! raw__pointer__is_type(cause, this)) ||
+      (! raw__pointer__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(f2pointer__p(this, cause) == f2pointer__p(integer, cause));
+}
+def_pcfunk2(pointere__is_numerically_equal_to, this, that, return f2__pointer__is_numerically_equal_to(this_cause, this, that));
+
 f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
   if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol)) {
@@ -824,6 +1334,16 @@ f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
       return __funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.plus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.plus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.minus__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.minus__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__funk;
     }
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
@@ -836,14 +1356,19 @@ f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
 
 f2ptr f2pointer__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.is_type__funk);}
-  {char* slot_name = "type";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.type__funk);}
-  {char* slot_name = "new";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk);}
-  {char* slot_name = "p";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk);}
-  {char* slot_name = "eq";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.eq__funk);}
-  {char* slot_name = "eq_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__funk);}
-  {char* slot_name = "equals";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk);}
-  {char* slot_name = "equals_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__funk);}
+  {char* slot_name = "is_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.is_type__funk);}
+  {char* slot_name = "type";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.type__funk);}
+  {char* slot_name = "new";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk);}
+  {char* slot_name = "p";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk);}
+  {char* slot_name = "eq";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.eq__funk);}
+  {char* slot_name = "eq_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__funk);}
+  {char* slot_name = "equals";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk);}
+  {char* slot_name = "equals_hash_value";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__funk);}
+  {char* slot_name = "plus";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.plus__funk);}
+  {char* slot_name = "minus";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.minus__funk);}
+  {char* slot_name = "is_greater_than";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__funk);}
+  {char* slot_name = "is_less_than";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__funk);}
+  {char* slot_name = "is_numerically_equal_to"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__funk);}
   return this;
 }
 
@@ -3188,17 +3713,31 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "i"; __funk2.globalenv.object_type.ptype.ptype_integer.i__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__i, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.i__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_integer.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_integer.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "as-double"; __funk2.globalenv.object_type.ptype.ptype_integer.as__double__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__as__double, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk = never_gc(cfunk);}
   {char* str = "multiplied_by"; __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__multiplied_by, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__multiplied_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk = never_gc(cfunk);}
+  {char* str = "divided_by"; __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__divided_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk = never_gc(cfunk);}
+  {char* str = "plus"; __funk2.globalenv.object_type.ptype.ptype_integer.plus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__plus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.plus__funk = never_gc(cfunk);}
+  {char* str = "minus"; __funk2.globalenv.object_type.ptype.ptype_integer.minus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__minus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.minus__funk = never_gc(cfunk);}
+  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__is_greater_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__funk = never_gc(cfunk);}
+  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__is_less_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__funk = never_gc(cfunk);}
+  {char* str = "is_numerically_equal_to"; __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(integer__is_numerically_equal_to, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk = never_gc(cfunk);}
+  {char* str = "square_root"; __funk2.globalenv.object_type.ptype.ptype_integer.square_root__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(integer__square_root, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk = never_gc(cfunk);}
   
   // double
   
@@ -3211,17 +3750,31 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "d"; __funk2.globalenv.object_type.ptype.ptype_double.d__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__d, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.d__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_double.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_double.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "as-double"; __funk2.globalenv.object_type.ptype.ptype_double.as__double__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__as__double, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.as__double__funk = never_gc(cfunk);}
   {char* str = "multiplied_by"; __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__multiplied_by, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__multiplied_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk = never_gc(cfunk);}
+  {char* str = "divided_by"; __funk2.globalenv.object_type.ptype.ptype_double.divided_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__divided_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.divided_by__funk = never_gc(cfunk);}
+  {char* str = "plus"; __funk2.globalenv.object_type.ptype.ptype_double.plus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__plus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.plus__funk = never_gc(cfunk);}
+  {char* str = "minus"; __funk2.globalenv.object_type.ptype.ptype_double.minus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__minus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.minus__funk = never_gc(cfunk);}
+  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__is_greater_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__funk = never_gc(cfunk);}
+  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__is_less_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.is_less_than__funk = never_gc(cfunk);}
+  {char* str = "is_numerically_equal_to"; __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(double__is_numerically_equal_to, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk = never_gc(cfunk);}
+  {char* str = "square_root"; __funk2.globalenv.object_type.ptype.ptype_double.square_root__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(double__square_root, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_double.square_root__funk = never_gc(cfunk);}
   
   // float
   
@@ -3234,17 +3787,31 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "f"; __funk2.globalenv.object_type.ptype.ptype_float.f__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__f, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.f__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_float.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_float.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "as-double"; __funk2.globalenv.object_type.ptype.ptype_float.as__double__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__as__double, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.as__double__funk = never_gc(cfunk);}
   {char* str = "multiplied_by"; __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__multiplied_by, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__multiplied_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__funk = never_gc(cfunk);}
+  {char* str = "divided_by"; __funk2.globalenv.object_type.ptype.ptype_float.divided_by__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__divided_by, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.divided_by__funk = never_gc(cfunk);}
+  {char* str = "plus"; __funk2.globalenv.object_type.ptype.ptype_float.plus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__plus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.plus__funk = never_gc(cfunk);}
+  {char* str = "minus"; __funk2.globalenv.object_type.ptype.ptype_float.minus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__minus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.minus__funk = never_gc(cfunk);}
+  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__is_greater_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__funk = never_gc(cfunk);}
+  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_float.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__is_less_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.is_less_than__funk = never_gc(cfunk);}
+  {char* str = "is_numerically_equal_to"; __funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(float__is_numerically_equal_to, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__funk = never_gc(cfunk);}
+  {char* str = "square_root"; __funk2.globalenv.object_type.ptype.ptype_float.square_root__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(float__square_root, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_float.square_root__funk = never_gc(cfunk);}
   
   // pointer
   
@@ -3257,13 +3824,23 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "p"; __funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__p, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.p__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_pointer.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_pointer.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(pointer__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "plus"; __funk2.globalenv.object_type.ptype.ptype_pointer.plus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__plus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.plus__funk = never_gc(cfunk);}
+  {char* str = "minus"; __funk2.globalenv.object_type.ptype.ptype_pointer.minus__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__minus, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.minus__funk = never_gc(cfunk);}
+  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__is_greater_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__funk = never_gc(cfunk);}
+  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__is_less_than, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__funk = never_gc(cfunk);}
+  {char* str = "is_numerically_equal_to"; __funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__is_numerically_equal_to, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__funk = never_gc(cfunk);}
   
   // gfunkptr
   
@@ -3282,11 +3859,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "pool_index"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__pool_index, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.pool_index__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(gfunkptr__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(gfunkptr__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(gfunkptr__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_gfunkptr.equals_hash_value__funk = never_gc(cfunk);}
   
@@ -3309,11 +3886,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "is_locked"; __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__is_locked, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.is_locked__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_mutex.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutex__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_mutex.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.eq_hash_value__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutex__eq_hash_value, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_mutex.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutex__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_mutex.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutex__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_mutex.equals_hash_value__funk = never_gc(cfunk);}
   
@@ -3328,11 +3905,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "ch"; __funk2.globalenv.object_type.ptype.ptype_char.ch__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__ch, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.ch__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_char.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(char__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_char.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(char__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk = never_gc(cfunk);}
   
@@ -3349,11 +3926,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_string.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__elt, this, index, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.elt__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_string.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_string.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__funk = never_gc(cfunk);}
   
@@ -3370,11 +3947,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_symbol.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(symbol__elt, this, index, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_symbol.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(symbol__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_symbol.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_symbol.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(symbol__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(symbol__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__funk = never_gc(cfunk);}
   
@@ -3389,11 +3966,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.length__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_chunk.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_chunk.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "bit8-elt"; __funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -3428,11 +4005,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_simple_array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -3451,11 +4028,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__length, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_traced_array.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_traced_array.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_traced_array.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -3494,11 +4071,11 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "larva_type"; __funk2.globalenv.object_type.ptype.ptype_larva.larva_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__larva_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.larva_type__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_larva.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__eq, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.eq__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__eq_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_larva.equals__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__equals, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__funk = never_gc(cfunk);}
   

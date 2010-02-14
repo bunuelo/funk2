@@ -31,6 +31,21 @@ boolean_t raw__null(f2ptr x) {return !x;}
 f2ptr f2__null(f2ptr cause, f2ptr x) {return f2bool__new(raw__null(x));}
 def_pcfunk1(null, x, return f2__null(this_cause, x));
 
+// s64
+
+boolean_t s64__add_overflows(s64 this, s64 that) {
+  if (that == 0) {
+    return boolean__false;
+  }
+  s64 result = this + that;
+  if (that > 0) {
+    return (result < this);
+  } else {
+    return (result > this);
+  }
+}
+
+
 // u64
 
 u64 u64__sqrt(u64 this) {

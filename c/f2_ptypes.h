@@ -496,6 +496,20 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr as__double__funk;
   f2ptr multiplied_by__symbol;
   f2ptr multiplied_by__funk;
+  f2ptr divided_by__symbol;
+  f2ptr divided_by__funk;
+  f2ptr plus__symbol;
+  f2ptr plus__funk;
+  f2ptr minus__symbol;
+  f2ptr minus__funk;
+  f2ptr is_greater_than__symbol;
+  f2ptr is_greater_than__funk;
+  f2ptr is_less_than__symbol;
+  f2ptr is_less_than__funk;
+  f2ptr is_numerically_equal_to__symbol;
+  f2ptr is_numerically_equal_to__funk;
+  f2ptr square_root__symbol;
+  f2ptr square_root__funk;
 } funk2_object_type__integer__slot_t;
 
 // double
@@ -521,6 +535,20 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr as__double__funk;
   f2ptr multiplied_by__symbol;
   f2ptr multiplied_by__funk;
+  f2ptr divided_by__symbol;
+  f2ptr divided_by__funk;
+  f2ptr plus__symbol;
+  f2ptr plus__funk;
+  f2ptr minus__symbol;
+  f2ptr minus__funk;
+  f2ptr is_greater_than__symbol;
+  f2ptr is_greater_than__funk;
+  f2ptr is_less_than__symbol;
+  f2ptr is_less_than__funk;
+  f2ptr is_numerically_equal_to__symbol;
+  f2ptr is_numerically_equal_to__funk;
+  f2ptr square_root__symbol;
+  f2ptr square_root__funk;
 } funk2_object_type__double__slot_t;
 
 // float
@@ -546,6 +574,20 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr as__double__funk;
   f2ptr multiplied_by__symbol;
   f2ptr multiplied_by__funk;
+  f2ptr divided_by__symbol;
+  f2ptr divided_by__funk;
+  f2ptr plus__symbol;
+  f2ptr plus__funk;
+  f2ptr minus__symbol;
+  f2ptr minus__funk;
+  f2ptr is_greater_than__symbol;
+  f2ptr is_greater_than__funk;
+  f2ptr is_less_than__symbol;
+  f2ptr is_less_than__funk;
+  f2ptr is_numerically_equal_to__symbol;
+  f2ptr is_numerically_equal_to__funk;
+  f2ptr square_root__symbol;
+  f2ptr square_root__funk;
 } funk2_object_type__float__slot_t;
 
 // pointer
@@ -567,6 +609,16 @@ typedef struct funk2_object_type__pointer__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr plus__symbol;
+  f2ptr plus__funk;
+  f2ptr minus__symbol;
+  f2ptr minus__funk;
+  f2ptr is_greater_than__symbol;
+  f2ptr is_greater_than__funk;
+  f2ptr is_less_than__symbol;
+  f2ptr is_less_than__funk;
+  f2ptr is_numerically_equal_to__symbol;
+  f2ptr is_numerically_equal_to__funk;
 } funk2_object_type__pointer__slot_t;
 
 // gfunkptr

@@ -21,7 +21,7 @@
 
 [globalize-funk number-is_type             &primfunk:number__is_type]
 [globalize-funk number-as-double           &primfunk:number__as__double]
-[globalize-funk number-multiply_by_number  &primfunk:number__multiply_by_number]
+[globalize-funk number-multiplied_by       &primfunk:number__multiplied_by]
 [globalize-funk number-divide_by_number    &primfunk:number__divide_by_number]
 [globalize-funk number-add_number          &primfunk:number__add_number]
 [globalize-funk number-subtract_number     &primfunk:number__subtract_number]

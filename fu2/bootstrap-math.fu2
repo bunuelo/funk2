@@ -53,7 +53,7 @@
 [defmetro * [x :rest rest]
   [if [null rest]
       x
-    `[number-multiply_by_number ,x ,[apply &* rest]]]]
+    `[number-multiplied_by ,x ,[apply &* rest]]]]
 
 
 'division'

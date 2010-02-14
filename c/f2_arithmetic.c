@@ -52,7 +52,7 @@ def_pcfunk1(number__as__double, this, return f2__number__as__double(this_cause, 
 
 // number multiply
 
-f2ptr f2__integer__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -74,7 +74,7 @@ f2ptr f2__integer__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__double__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -91,7 +91,7 @@ f2ptr f2__double__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__float__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__float__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
@@ -108,36 +108,36 @@ f2ptr f2__float__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__largeinteger__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__largeinteger__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__largeinteger__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   if (raw__integer__is_type(cause, number)) {
-    return f2__integer__multiply_by_number(cause, number, this);
+    return f2__integer__multiplied_by(cause, number, this);
   } else if (raw__double__is_type(cause, number)) {
-    return f2__double__multiply_by_number(cause, number, this);
+    return f2__double__multiplied_by(cause, number, this);
   } else if (raw__float__is_type(cause, number)) {
-    return f2__float__multiply_by_number(cause, number, this);
+    return f2__float__multiplied_by(cause, number, this);
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__multiply(cause, this, number);
   }
   return f2larva__new(cause, 1);
 }
 
-f2ptr f2__number__multiply_by_number(f2ptr cause, f2ptr this, f2ptr number) {
+f2ptr f2__number__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (raw__integer__is_type(cause, this)) {
-    return f2__integer__multiply_by_number(cause, this, number);
+    return f2__integer__multiplied_by(cause, this, number);
   } else if (raw__double__is_type(cause, this)) {
-    return f2__double__multiply_by_number(cause, this, number);
+    return f2__double__multiplied_by(cause, this, number);
   } else if (raw__float__is_type(cause, this)) {
-    return f2__float__multiply_by_number(cause, this, number);
+    return f2__float__multiplied_by(cause, this, number);
   } else if (raw__largeinteger__is_type(cause, this)) {
-    return f2__largeinteger__multiply_by_number(cause, this, number);
+    return f2__largeinteger__multiplied_by(cause, this, number);
   } else {
     return f2larva__new(cause, 1);
   }
 }
-def_pcfunk2(number__multiply_by_number, this, number, return f2__number__multiply_by_number(this_cause, this, number));
+def_pcfunk2(number__multiplied_by, this, number, return f2__number__multiplied_by(this_cause, this, number));
 
 // number divide
 
@@ -762,7 +762,7 @@ void f2__arithmetic__initialize() {
   
   f2__primcfunk__init__1(number__is_type,             exp,          "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__1(number__as__double,          this,         "(cfunk defined in f2_arithmetic.c)");
-  f2__primcfunk__init__2(number__multiply_by_number,  this, number, "(cfunk defined in f2_arithmetic.c)");
+  f2__primcfunk__init__2(number__multiplied_by,       this, number, "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__2(number__divide_by_number,    this, number, "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__2(number__add_number,          this, number, "(cfunk defined in f2_arithmetic.c)");
   f2__primcfunk__init__2(number__subtract_number,     this, number, "(cfunk defined in f2_arithmetic.c)");

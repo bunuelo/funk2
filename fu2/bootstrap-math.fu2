@@ -69,7 +69,7 @@
 'equals'
 
 [defunk == [x y]
-  [number-equals x y]]
+  [number-is_equal_to x y]]
 
 [defunk != [x y]
   [not [== x y]]]

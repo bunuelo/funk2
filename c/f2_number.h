@@ -19,17 +19,10 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__ARITHMETIC__H
-#define F2__ARITHMETIC__H
+#ifndef F2__NUMBER__H
+#define F2__NUMBER__H
 
-boolean_t raw__number__is_type(f2ptr cause, f2ptr exp);
-f2ptr      f2__number__is_type(f2ptr cause, f2ptr exp);
-double    raw__number__as__double(f2ptr cause, f2ptr this);
-f2ptr      f2__number__as__double(f2ptr cause, f2ptr this);
 
-// **
 
-void f2__arithmetic__initialize();
-
-#endif // F2__ARITHMETIC__H
+#endif // F2__NUMBER__H
 

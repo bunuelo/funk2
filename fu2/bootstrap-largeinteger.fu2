@@ -32,6 +32,7 @@
 [deftypefunk largeinteger get     greatest_common_factor [that] [largeinteger-greatest_common_factor this that]]
 [deftypefunk largeinteger get     square_root            []     [largeinteger-square_root            this]]
 [deftypefunk largeinteger get     prime_factor_indices   []     [largeinteger-prime_factor_indices   this]]
+[deftypefunk largeinteger get     as-double              []     [largeinteger-as-double              this]]
 
 [defunk gcf [x y]
   [largeinteger-greatest_common_factor [new largeinteger x] [new largeinteger y]]]

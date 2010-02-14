@@ -984,9 +984,6 @@ double raw__largeinteger__unsigned_array__as__double(f2ptr cause, f2ptr this) {
 }
 
 double raw__largeinteger__as__double(f2ptr cause, f2ptr this) {
-  if (! raw__largeinteger__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
-  }
   f2ptr is_negative   = f2__largeinteger__is_negative(cause, this);
   f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
   double value = raw__largeinteger__unsigned_array__as__double(cause, integer_array);
@@ -995,6 +992,14 @@ double raw__largeinteger__as__double(f2ptr cause, f2ptr this) {
   }
   return value;
 }
+
+f2ptr f2__largeinteger__as__double(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2double__new(cause, raw__largeinteger__as__double(cause, this));
+}
+def_pcfunk1(largeinteger__as__double, this, return f2__largeinteger__as__double(this_cause, this));
 
 boolean_t raw__largeinteger__is_zero(f2ptr cause, f2ptr this) {
   f2ptr integer_array         = f2__largeinteger__integer_array(cause, this);
@@ -1187,6 +1192,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that, "returns the greatest common factor of this and that.");
   f2__primcfunk__init__1(largeinteger__square_root, this, "returns the square root of this.");
   f2__primcfunk__init__1(largeinteger__prime_factor_indices, this, "returns the indices (i.e. [prime index]) of the prime factors of this.");
+  f2__primcfunk__init__1(largeinteger__as__double, this, "returns this as a double.");
   
 }
 

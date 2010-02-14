@@ -325,14 +325,14 @@ f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
     if (! s64__multiply_overflows(value, number_value)) {
       return f2integer__new(cause, value * number_value);
     } else {
-      return f2__largeinteger__multiply(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
+      return f2__largeinteger__multiplied_by(cause, raw__largeinteger__new_from_s64(cause, value), raw__largeinteger__new_from_s64(cause, number_value));
     }
   } else if (raw__double__is_type(cause, number)) {
     return f2double__new(cause, value * f2double__d(number, cause));
   } else if (raw__float__is_type(cause, number)) {
     return f2float__new(cause, value * f2float__f(number, cause));
   } else if (raw__largeinteger__is_type(cause, number)) {
-    return f2__largeinteger__multiply(cause, raw__largeinteger__new_from_s64(cause, value), number);
+    return f2__largeinteger__multiplied_by(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
   return f2larva__new(cause, 1);
 }

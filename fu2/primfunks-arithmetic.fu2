@@ -26,7 +26,7 @@
 [globalize-funk number-plus                    &primfunk:number__plus]
 [globalize-funk number-minus                   &primfunk:number__minus]
 [globalize-funk number-is_greater_than         &primfunk:number__is_greater_than]
-[globalize-funk number-is_less_than_number     &primfunk:number__is_less_than]
+[globalize-funk number-is_less_than            &primfunk:number__is_less_than]
 [globalize-funk number-is_numerically_equal_to &primfunk:number__is_numerically_equal_to]
 [globalize-funk number-square_root             &primfunk:number__square_root]
 

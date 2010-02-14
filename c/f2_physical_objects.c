@@ -42,7 +42,7 @@ void raw__physical_rotation__to_c_double_array(f2ptr cause, f2ptr this, double* 
   int i;
   for (i = 0; i < 9; i ++) {
     f2ptr elt = raw__array__elt(cause, this__array, i);
-    array[i] = raw__number__to_double(cause, elt);
+    array[i] = raw__number__as__double(cause, elt);
   }
 }
 
@@ -69,7 +69,7 @@ f2ptr raw__physical_rotation__new_rotation_around_z_axis(f2ptr cause, double rad
 }
 
 f2ptr f2__physical_rotation__new_rotation_around_z_axis(f2ptr cause, f2ptr radians) {
-  double c_radians = raw__number__to_double(cause, radians);
+  double c_radians = raw__number__as__double(cause, radians);
   return raw__physical_rotation__new_rotation_around_z_axis(cause, c_radians);
 }
 def_pcfunk1(physical_rotation__new_rotation_around_z_axis, radians, return f2__physical_rotation__new_rotation_around_z_axis(this_cause, radians));
@@ -89,7 +89,7 @@ f2ptr raw__physical_rotation__new_rotation_around_y_axis(f2ptr cause, double rad
 }
 
 f2ptr f2__physical_rotation__new_rotation_around_y_axis(f2ptr cause, f2ptr radians) {
-  double c_radians = raw__number__to_double(cause, radians);
+  double c_radians = raw__number__as__double(cause, radians);
   return raw__physical_rotation__new_rotation_around_y_axis(cause, c_radians);
 }
 def_pcfunk1(physical_rotation__new_rotation_around_y_axis, radians, return f2__physical_rotation__new_rotation_around_y_axis(this_cause, radians));
@@ -109,7 +109,7 @@ f2ptr raw__physical_rotation__new_rotation_around_x_axis(f2ptr cause, double rad
 }
 
 f2ptr f2__physical_rotation__new_rotation_around_x_axis(f2ptr cause, f2ptr radians) {
-  double c_radians = raw__number__to_double(cause, radians);
+  double c_radians = raw__number__as__double(cause, radians);
   return raw__physical_rotation__new_rotation_around_x_axis(cause, c_radians);
 }
 def_pcfunk1(physical_rotation__new_rotation_around_x_axis, radians, return f2__physical_rotation__new_rotation_around_x_axis(this_cause, radians));
@@ -149,9 +149,9 @@ f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
       (! raw__number__is_type(cause, z))) {
     return f2larva__new(cause, 1);
   }
-  double x__d = raw__number__to_double(cause, x);
-  double y__d = raw__number__to_double(cause, y);
-  double z__d = raw__number__to_double(cause, z);
+  double x__d = raw__number__as__double(cause, x);
+  double y__d = raw__number__as__double(cause, y);
+  double z__d = raw__number__as__double(cause, z);
   return f2physical_position__new(cause, f2double__new(cause, x__d), f2double__new(cause, y__d), f2double__new(cause, z__d));
 }
 def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));

@@ -1286,7 +1286,7 @@ f2ptr f2__pointer__plus(f2ptr cause, f2ptr this, f2ptr integer) {
 }
 def_pcfunk2(pointer__plus, this, that, return f2__pointer__plus(this_cause, this, that));
 
-f2ptr f2__pointer__subtract_integer(f2ptr cause, f2ptr this, f2ptr integer) {
+f2ptr f2__pointer__minus(f2ptr cause, f2ptr this, f2ptr integer) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__integer__is_type(cause, this))) {
     return f2larva__new(cause, 1);

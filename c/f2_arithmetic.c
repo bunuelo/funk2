@@ -114,7 +114,7 @@ f2ptr f2__number__minus(f2ptr cause, f2ptr this, f2ptr number) {
     return f2__float__minus(cause, this, number);
   } else if (raw__pointer__is_type(cause, this)) {
     if (raw__integer__is_type(cause, number)) {
-      return f2__pointer__subtract_integer(cause, this, number);
+      return f2__pointer__minus(cause, this, number);
     }
   } else if (raw__largeinteger__is_type(cause, this)) {
     return f2__largeinteger__minus(cause, this, number);

@@ -105,6 +105,8 @@ f2ptr      f2__integer__equals(f2ptr cause, f2ptr this, f2ptr that);
 double raw__integer__as__double(f2ptr cause, f2ptr this);
 f2ptr   f2__integer__as__double(f2ptr cause, f2ptr this);
 
+f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number);
+
 // double
 
 f2ptr  pfunk2__f2double__new(f2ptr cause, double d);
@@ -127,6 +129,8 @@ f2ptr      f2__double__equals(f2ptr cause, f2ptr this, f2ptr that);
 double raw__double__as__double(f2ptr cause, f2ptr this);
 f2ptr   f2__double__as__double(f2ptr cause, f2ptr this);
 
+f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number);
+
 // float
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f);
@@ -148,6 +152,8 @@ f2ptr      f2__float__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 double raw__float__as__double(f2ptr cause, f2ptr this);
 f2ptr   f2__float__as__double(f2ptr cause, f2ptr this);
+
+f2ptr f2__float__multiplied_by(f2ptr cause, f2ptr this, f2ptr number);
 
 // pointer
 

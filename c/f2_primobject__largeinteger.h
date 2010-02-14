@@ -81,8 +81,8 @@ f2ptr     raw__largeinteger__bitshift_left(f2ptr cause, f2ptr this, s64 bit_dist
 f2ptr      f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distance);
 f2ptr     raw__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance);
 f2ptr      f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance);
-f2ptr     raw__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__print(f2ptr cause, f2ptr this);

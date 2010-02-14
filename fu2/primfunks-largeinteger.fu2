@@ -35,5 +35,6 @@
 [globalize-funk largeinteger-square_root            &primfunk:largeinteger__square_root]
 [globalize-funk largeinteger-prime_factor_indices   &primfunk:largeinteger__prime_factor_indices]
 [globalize-funk largeinteger-as-double              &primfunk:largeinteger__as__double]
+[globalize-funk largeinteger-multiplied_by          &primfunk:largeinteger__multiplied_by]
 
 

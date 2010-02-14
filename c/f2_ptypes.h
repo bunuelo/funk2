@@ -488,6 +488,8 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr equals_hash_value__funk;
   f2ptr as__double__symbol;
   f2ptr as__double__funk;
+  f2ptr multiplied_by__symbol;
+  f2ptr multiplied_by__funk;
 } funk2_object_type__integer__slot_t;
 
 // double
@@ -511,6 +513,8 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr equals_hash_value__funk;
   f2ptr as__double__symbol;
   f2ptr as__double__funk;
+  f2ptr multiplied_by__symbol;
+  f2ptr multiplied_by__funk;
 } funk2_object_type__double__slot_t;
 
 // float
@@ -534,6 +538,8 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr equals_hash_value__funk;
   f2ptr as__double__symbol;
   f2ptr as__double__funk;
+  f2ptr multiplied_by__symbol;
+  f2ptr multiplied_by__funk;
 } funk2_object_type__float__slot_t;
 
 // pointer

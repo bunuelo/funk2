@@ -841,7 +841,7 @@ f2ptr f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distan
 }
 def_pcfunk2(largeinteger__bitshift_right, this, bit_distance, return f2__largeinteger__bitshift_right(this_cause, this, bit_distance));
 
-f2ptr raw__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative   = f2__largeinteger__is_negative(  cause, this);
   f2ptr that__is_negative   = f2__largeinteger__is_negative(  cause, that);
   f2ptr this__array         = f2__largeinteger__integer_array(cause, this);
@@ -851,14 +851,14 @@ f2ptr raw__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   return f2largeinteger__new(cause, result__is_negative, result__array);
 }
 
-f2ptr f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__largeinteger__is_type(cause, this)) ||
       (! raw__largeinteger__is_type(cause, that))) {
     return f2larva__new(cause, 1);
   }
-  return raw__largeinteger__multiply(cause, this, that);
+  return raw__largeinteger__multiply_largeinteger(cause, this, that);
 }
-def_pcfunk2(largeinteger__multiply, this, that, return f2__largeinteger__multiply(this_cause, this, that));
+def_pcfunk2(largeinteger__multiply_largeinteger, this, that, return f2__largeinteger__multiply_largeinteger(this_cause, this, that));
 
 f2ptr raw__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative       = f2__largeinteger__is_negative(  cause, this);
@@ -1052,7 +1052,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   if (raw__largeinteger__is_zero(cause, remainder)) {
     return small;
   }
-  f2ptr multiplication = f2__largeinteger__multiply(cause, small, quotient);
+  f2ptr multiplication = f2__largeinteger__multiply_largeinteger(cause, small, quotient);
   //printf("\nmultiplication: "); f2__print(cause, multiplication);
   f2ptr subtraction    = f2__largeinteger__subtract(cause, large, multiplication);
   //printf("\nsubtraction: "); f2__print(cause, subtraction);
@@ -1160,6 +1160,23 @@ f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(largeinteger__prime_factor_indices, this, return f2__largeinteger__prime_factor_indices(this_cause, this));
 
+f2ptr f2__largeinteger__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  if (raw__integer__is_type(cause, number)) {
+    return f2__integer__multiplied_by(cause, number, this);
+  } else if (raw__double__is_type(cause, number)) {
+    return f2__double__multiplied_by(cause, number, this);
+  } else if (raw__float__is_type(cause, number)) {
+    return f2__float__multiplied_by(cause, number, this);
+  } else if (raw__largeinteger__is_type(cause, number)) {
+    return f2__largeinteger__multiply_largeinteger(cause, this, number);
+  }
+  return f2larva__new(cause, 1);
+}
+def_pcfunk2(largeinteger__multiplied_by, this, that, return f2__largeinteger__multiplied_by(this_cause, this, that));
+
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
@@ -1184,7 +1201,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__subtract, this, that, "returns the result of subtracting two largeintegers.");
   f2__primcfunk__init__2(largeinteger__bitshift_left, this, bit_distance, "returns the result of bitshifting one largeinteger to the left by an integer bit distance.");
   f2__primcfunk__init__2(largeinteger__bitshift_right, this, bit_distance, "returns the result of bitshifting one largeinteger to the right by an integer bit distance.");
-  f2__primcfunk__init__2(largeinteger__multiply, this, that, "returns the result of multiplying two largeintegers.");
+  f2__primcfunk__init__2(largeinteger__multiply_largeinteger, this, that, "returns the result of multiplying two largeintegers.");
   f2__primcfunk__init__2(largeinteger__quotient_and_remainder, this, that, "returns the quotient and remainder of a largeinteger division in a cons cell.");
   f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
   f2__primcfunk__init__2(largeinteger__modulo, this, that, "returns the result of the modulo of two largeintegers.");
@@ -1193,6 +1210,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__1(largeinteger__square_root, this, "returns the square root of this.");
   f2__primcfunk__init__1(largeinteger__prime_factor_indices, this, "returns the indices (i.e. [prime index]) of the prime factors of this.");
   f2__primcfunk__init__1(largeinteger__as__double, this, "returns this as a double.");
+  f2__primcfunk__init__2(largeinteger__multiplied_by, this, that, "returns the result of multiplying a largeinteger by any other type of number.");
   
 }
 

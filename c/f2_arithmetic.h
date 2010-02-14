@@ -24,8 +24,8 @@
 
 boolean_t raw__number__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__number__is_type(f2ptr cause, f2ptr exp);
-double    raw__number__to_double(f2ptr cause, f2ptr this);
-f2ptr      f2__number__to_double(f2ptr cause, f2ptr this);
+double    raw__number__as__double(f2ptr cause, f2ptr this);
+f2ptr      f2__number__as__double(f2ptr cause, f2ptr this);
 
 // **
 

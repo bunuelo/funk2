@@ -460,7 +460,7 @@ f2ptr f2__double__as__double(f2ptr cause, f2ptr this) {
   if (! raw__double__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2double__new(cause, f2__double__as__double(cause, this));
+  return f2double__new(cause, raw__double__as__double(cause, this));
 }
 def_pcfunk1(double__as__double, this, return f2__double__as__double(this_cause, this));
 

@@ -111,8 +111,8 @@ f2ptr  f2__integer__plus(                   f2ptr cause, f2ptr this, f2ptr numbe
 f2ptr  f2__integer__minus(                  f2ptr cause, f2ptr this, f2ptr number);
 f2ptr  f2__integer__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
 f2ptr  f2__integer__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
-f2ptr raw__integer__square_root(            f2ptr cause, f2ptr this, f2ptr number);
-f2ptr  f2__integer__square_root(            f2ptr cause, f2ptr this, f2ptr number);
+f2ptr raw__integer__square_root(            f2ptr cause, f2ptr this);
+f2ptr  f2__integer__square_root(            f2ptr cause, f2ptr this);
 f2ptr  f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
 // double
@@ -145,8 +145,8 @@ f2ptr  f2__double__plus(                   f2ptr cause, f2ptr this, f2ptr number
 f2ptr  f2__double__minus(                  f2ptr cause, f2ptr this, f2ptr number);
 f2ptr  f2__double__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
 f2ptr  f2__double__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
-f2ptr raw__double__square_root(            f2ptr cause, f2ptr this, f2ptr number);
-f2ptr  f2__double__square_root(            f2ptr cause, f2ptr this, f2ptr number);
+f2ptr raw__double__square_root(            f2ptr cause, f2ptr this);
+f2ptr  f2__double__square_root(            f2ptr cause, f2ptr this);
 f2ptr  f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
 // float
@@ -179,8 +179,8 @@ f2ptr  f2__float__plus(                   f2ptr cause, f2ptr this, f2ptr number)
 f2ptr  f2__float__minus(                  f2ptr cause, f2ptr this, f2ptr number);
 f2ptr  f2__float__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number);
 f2ptr  f2__float__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
-f2ptr raw__float__square_root(            f2ptr cause, f2ptr this, f2ptr number);
-f2ptr  f2__float__square_root(            f2ptr cause, f2ptr this, f2ptr number);
+f2ptr raw__float__square_root(            f2ptr cause, f2ptr this);
+f2ptr  f2__float__square_root(            f2ptr cause, f2ptr this);
 f2ptr  f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
 // pointer

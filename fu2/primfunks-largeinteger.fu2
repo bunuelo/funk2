@@ -40,6 +40,8 @@
 [globalize-funk largeinteger-plus                    &primfunk:largeinteger__plus]
 [globalize-funk largeinteger-minus                   &primfunk:largeinteger__minus]
 [globalize-funk largeinteger-is_greater_than         &primfunk:largeinteger__is_greater_than]
+[globalize-funk largeinteger-is_less_than            &primfunk:largeinteger__is_less_than]
 [globalize-funk largeinteger-is_numerically_equal_to &primfunk:largeinteger__is_numerically_equal_to]
+
 
 

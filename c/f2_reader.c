@@ -924,7 +924,8 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
       }
     }
     if (part_decimal_start) {
-      double d = ((is_negative ? -1.0 : 1.0) * (((double)whole_decimal_value) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
+      double whole_decimal_value__d = raw__largeinteger__as__double(cause, whole_decimal_value__largeinteger);
+      double d = ((is_negative ? -1.0 : 1.0) * (((double)whole_decimal_value__d) + (((double)part_decimal_value) / ((double)part_decimal_denomenator))));
       return f2double__new(cause, d);
     } else {
       f2ptr sup_integer_value__largeinteger =                                    raw__largeinteger__bitshift_left(cause, raw__largeinteger__new_from_s64(cause, 1), 63);

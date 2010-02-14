@@ -22,7 +22,34 @@
 #ifndef F2__NUMBER__H
 #define F2__NUMBER__H
 
+#include "f2_global.h"
 
+typedef funk2_number_globalvars_s {
+  f2ptr as__double__symbol;
+  f2ptr multiplied_by__symbol;
+  f2ptr divided_by__symbol;
+  f2ptr plus__symbol;
+  f2ptr minus__symbol;
+  f2ptr is_greater_than__symbol;
+  f2ptr is_less_than__symbol;
+  f2ptr is_numerically_equal_to__symbol;
+  f2ptr square_root__symbol;
+} funk2_number_globalvars_t;
+
+f2ptr f2__number__as__double(f2ptr this);
+f2ptr f2__number__multiplied_by(f2ptr this, f2ptr that);
+f2ptr f2__number__divided_by(f2ptr this, f2ptr that);
+f2ptr f2__number__plus(f2ptr this, f2ptr that);
+f2ptr f2__number__minus(f2ptr this, f2ptr that);
+f2ptr f2__number__is_greater_than(f2ptr this, f2ptr that);
+f2ptr f2__number__is_less_than(f2ptr this, f2ptr number);
+f2ptr f2__number__is_numerically_equal_to( f2ptr this, f2ptr that);
+f2ptr f2__number__square_root(f2ptr this);
+
+// **
+
+void f2__number__reinitialize_globalvars();
+void f2__number__initialize();
 
 #endif // F2__NUMBER__H
 

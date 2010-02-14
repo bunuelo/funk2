@@ -63,6 +63,7 @@
 #include "f2_memory.h"
 #include "f2_memorypool.h"
 #include "f2_module_registration.h"
+#include "f2_number.h"
 #include "f2_object.h"
 #include "f2_object_lattice.h"
 #include "f2_opengl.h"
@@ -169,6 +170,7 @@ typedef struct funk2_s {
   funk2_cpu_t                         cpu;
   funk2_primes_t                      primes;
   funk2_object_t                      object;
+  funk2_number_globalvars_t           number_globalvars;
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

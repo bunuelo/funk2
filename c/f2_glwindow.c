@@ -1036,9 +1036,9 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
     double position__x__d = 0.0;
     double position__y__d = 0.0;
     double position__z__d = 0.0;
-    if (raw__number__is_type(cause, position__x)) {position__x__d = raw__number__to_double(cause, position__x);} else {status("warning: expected number.");}
-    if (raw__number__is_type(cause, position__y)) {position__y__d = raw__number__to_double(cause, position__y);} else {status("warning: expected number.");}
-    if (raw__number__is_type(cause, position__z)) {position__z__d = raw__number__to_double(cause, position__z);} else {status("warning: expected number.");}
+    if (raw__number__is_type(cause, position__x)) {position__x__d = raw__number__as__double(cause, position__x);} else {status("warning: expected number.");}
+    if (raw__number__is_type(cause, position__y)) {position__y__d = raw__number__as__double(cause, position__y);} else {status("warning: expected number.");}
+    if (raw__number__is_type(cause, position__z)) {position__z__d = raw__number__as__double(cause, position__z);} else {status("warning: expected number.");}
     raw__opengl__glTranslatef(cause, position__x__d, position__y__d, position__z__d);
   }
   
@@ -1055,7 +1055,7 @@ void opengl__render_physical_transform(f2ptr cause, f2ptr this) {
     f2ptr scale = f2__physical_transform__scale(cause, this);
     double scale__d = 1.0;
     if (raw__number__is_type(cause, scale)) {
-      scale__d = raw__number__to_double(cause, scale);
+      scale__d = raw__number__as__double(cause, scale);
     } else {
       status("warning: expected number.");
     }

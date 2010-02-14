@@ -508,7 +508,7 @@ f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   }
   return f2larva__new(cause, 1);
 }
-def_pcfunk2(double__multiplied_by, this, that, return f2__double__multiply_by(this_cause, this, that));
+def_pcfunk2(double__multiplied_by, this, that, return f2__double__multiplied_by(this_cause, this, that));
 
 
 f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {

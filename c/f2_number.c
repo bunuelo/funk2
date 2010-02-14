@@ -25,6 +25,14 @@ f2ptr f2__number__as__double(f2ptr this) {
   return f2__object__get_0(cause, this, __funk2.number_globalvars.as__double__symbol);
 }
 
+double raw__number__as__raw_double(f2ptr this) {
+  f2ptr value = f2__number__as__double(this);
+  if (! raw__double__is_type(cause, value)) {
+    return 0.0;
+  }
+  return f2double__d(value, cause);
+}
+
 f2ptr f2__number__multiplied_by(f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.number_globalvars.multiplied_by__symbol, that);
 }

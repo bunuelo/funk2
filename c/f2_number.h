@@ -24,7 +24,7 @@
 
 #include "f2_global.h"
 
-typedef funk2_number_globalvars_s {
+typedef struct funk2_number_globalvars_s {
   f2ptr as__double__symbol;
   f2ptr multiplied_by__symbol;
   f2ptr divided_by__symbol;

@@ -26,7 +26,7 @@
 [globalize-funk largeinteger-bitshift_left          &primfunk:largeinteger__bitshift_left]
 [globalize-funk largeinteger-bitshift_right         &primfunk:largeinteger__bitshift_right]
 [globalize-funk largeinteger-subtract               &primfunk:largeinteger__subtract]
-[globalize-funk largeinteger-multiply               &primfunk:largeinteger__multiply]
+[globalize-funk largeinteger-multiply_largeinteger  &primfunk:largeinteger__multiply_largeinteger]
 [globalize-funk largeinteger-quotient_and_remainder &primfunk:largeinteger__quotient_and_remainder]
 [globalize-funk largeinteger-divide                 &primfunk:largeinteger__divide]
 [globalize-funk largeinteger-modulo                 &primfunk:largeinteger__modulo]

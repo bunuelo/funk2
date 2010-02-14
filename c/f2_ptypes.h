@@ -102,6 +102,9 @@ f2ptr  f2__integer__eq_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__integer__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__integer__equals(f2ptr cause, f2ptr this, f2ptr that);
 
+double raw__integer__as__double(f2ptr cause, f2ptr this);
+f2ptr   f2__integer__as__double(f2ptr cause, f2ptr this);
+
 // double
 
 f2ptr  pfunk2__f2double__new(f2ptr cause, double d);
@@ -121,6 +124,9 @@ f2ptr  f2__double__eq_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__double__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__double__equals(f2ptr cause, f2ptr this, f2ptr that);
 
+double raw__double__as__double(f2ptr cause, f2ptr this);
+f2ptr   f2__double__as__double(f2ptr cause, f2ptr this);
+
 // float
 
 f2ptr pfunk2__f2float__new(f2ptr cause, float f);
@@ -139,6 +145,9 @@ f2ptr  f2__float__eq_hash_value(f2ptr cause, f2ptr this);
 
 boolean_t raw__float__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__float__equals(f2ptr cause, f2ptr this, f2ptr that);
+
+double raw__float__as__double(f2ptr cause, f2ptr this);
+f2ptr   f2__float__as__double(f2ptr cause, f2ptr this);
 
 // pointer
 
@@ -477,6 +486,8 @@ typedef struct funk2_object_type__integer__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr as__double__symbol;
+  f2ptr as__double__funk;
 } funk2_object_type__integer__slot_t;
 
 // double
@@ -498,6 +509,8 @@ typedef struct funk2_object_type__double__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr as__double__symbol;
+  f2ptr as__double__funk;
 } funk2_object_type__double__slot_t;
 
 // float
@@ -519,6 +532,8 @@ typedef struct funk2_object_type__float__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr as__double__symbol;
+  f2ptr as__double__funk;
 } funk2_object_type__float__slot_t;
 
 // pointer

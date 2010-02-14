@@ -86,7 +86,7 @@ f2ptr      f2__largeinteger__multiply(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__print(f2ptr cause, f2ptr this);
-double    raw__largeinteger__to_double(f2ptr cause, f2ptr this);
+double    raw__largeinteger__as__double(f2ptr cause, f2ptr this);
 boolean_t raw__largeinteger__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__largeinteger__square_root(f2ptr cause, f2ptr this);

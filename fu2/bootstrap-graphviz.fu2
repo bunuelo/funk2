@@ -38,7 +38,7 @@
   [format nil name ' [label = "' label '"];']]
 
 [defunk graphviz-box_node [name label]
-  [format nil name ' [shape=box,style=filled,label="' label '",height=.1,width=.1];']]
+  [format nil name ' [shape=box,fillcolor=white,style=filled,label="' label '",height=.1,width=.1];']]
 
 [defunk graphviz-edge_tail_head [tail head]
   [format nil 'edge [arrowtail = ' tail ', arrowhead = ' head '];']]
@@ -46,7 +46,7 @@
 [defunk graphviz-edge [from_node to_node]
   [format nil from_node ' -> ' to_node ';']]
 
-[deftypefunk perception_graph execute as-dot_code []
+[deftypefunk perception_graph get as-dot_code []
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
     [strings-prog [graphviz-digraph [graphviz-node_color '#000000']
@@ -64,7 +64,10 @@
 				    [graphviz-edge 'my_clothes' 'my_clothes_are_made_dirty_by_the_mud']
 				    [graphviz-edge_tail_head 'none' 'normal']
 				    [graphviz-edge 'my_clothes_are_made_dirty_by_the_mud' 'the_mud']
-				    [graphviz-node_color '#0000CC']
+				    ]]]]
+
+`[[[[
+    [graphviz-node_color '#0000CC']
 				    [graphviz-edge_color '#0000CC']
 				    [graphviz-node 'i_deliberative' 'I\\n(deliberative)']
 				    [graphviz-box_node 'i_deliberative_want_the_bucket_contains_the_mud' 'want\\n(deliberative)']

@@ -967,7 +967,7 @@ f2ptr f2__largeinteger__equals(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__largeinteger__equals(cause, this, that));
 }
 
-double raw__largeinteger__unsigned_array__to_double(f2ptr cause, f2ptr this) {
+double raw__largeinteger__unsigned_array__as__double(f2ptr cause, f2ptr this) {
   u64 this__length = raw__array__length(cause, this);
   double result      = 0.0;
   double digit_power = 1.0;
@@ -983,13 +983,13 @@ double raw__largeinteger__unsigned_array__to_double(f2ptr cause, f2ptr this) {
   return result;
 }
 
-double raw__largeinteger__to_double(f2ptr cause, f2ptr this) {
+double raw__largeinteger__as__double(f2ptr cause, f2ptr this) {
   if (! raw__largeinteger__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
   f2ptr is_negative   = f2__largeinteger__is_negative(cause, this);
   f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
-  double value = raw__largeinteger__unsigned_array__to_double(cause, integer_array);
+  double value = raw__largeinteger__unsigned_array__as__double(cause, integer_array);
   if (is_negative) {
     value = -value;
   }

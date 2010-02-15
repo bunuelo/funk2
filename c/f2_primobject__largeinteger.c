@@ -1097,7 +1097,7 @@ f2ptr raw__largeinteger__square_root__initial_place(f2ptr cause, f2ptr this) {
       raw__array__elt__set(cause, place__integer_array, index, f2integer__new(cause, 0));
     }
   }
-  raw__array__elt__set(cause, place__integer_array, place__integer_array__length - 1, f2integer__new(cause, 0x4000000000000000));
+  raw__array__elt__set(cause, place__integer_array, place__integer_array__length - 1, f2integer__new(cause, 0x4000000000000000ull));
   return f2largeinteger__new(cause, nil, place__integer_array);
 }
 

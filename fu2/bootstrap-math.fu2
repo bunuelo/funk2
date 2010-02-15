@@ -114,3 +114,6 @@
 [defunk sqrt [x]
   [get x square_root]]
 
+[defunk double [x]
+  [get x as-double]]
+

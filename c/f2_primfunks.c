@@ -55,7 +55,7 @@ u64 u64__sqrt(u64 this) {
   
   root = 0;
   remainder = this;
-  place = 0x4000000000000000;
+  place = 0x4000000000000000ull;
   
   while (place > remainder) {
     place = place >> 2;

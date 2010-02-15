@@ -445,7 +445,7 @@ u64 raw__largeinteger__unsigned_array__u32_digit_length(f2ptr cause, f2ptr this)
   }
   f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
   u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
-  if (high_u64_value__i & 0xffffffff00000000) {
+  if (high_u64_value__i & 0xffffffff00000000ull) {
     return (this__length << 1);
   } else {
     return (this__length << 1) - 1;

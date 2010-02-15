@@ -203,7 +203,9 @@ void funk2_user_thread_controller__start_child_process__signal_execute(funk2_use
     raw__fast_spin_sleep_yield();
   }
   // vvv - all processes are paused, so start child here.
-  
+  {
+    
+  }
   // ^^^
   this->start         = boolean__false;
   this->everyone_done = boolean__true;

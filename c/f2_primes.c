@@ -105,7 +105,7 @@ f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_coun
   f2ptr prime_array         = raw__array__new(cause, prime_array__length);
   {
     u64   u64_prime_array__length = prime_count;
-    u64*  u64_prime_array         = (u64*)f2__malloc(sizeof(u64) * u64_prime_array__length);
+    u64*  u64_prime_array         = (u64*)from_ptr(f2__malloc(sizeof(u64) * u64_prime_array__length));
     {
       u64 index;
       for (index = 0; index < this__length; index ++) {

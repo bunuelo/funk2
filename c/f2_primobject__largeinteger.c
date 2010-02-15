@@ -630,7 +630,7 @@ void raw__largeinteger__unsigned_array__print(f2ptr cause, f2ptr this, boolean_t
     }
     char temp_str[32];
     snprintf(temp_str, 32, pad_front_with_zeros ? ("%09" u64__fstr_without_percent) : u64__fstr, this__elt__value);
-    safe_write(1, temp_str, bytes_to_write);
+    safe_write(1, temp_str, strlen(temp_str));
   } else {
     f2ptr remaining_decimals_to_print;
     f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);

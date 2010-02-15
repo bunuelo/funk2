@@ -341,10 +341,10 @@ f2ptr raw__largeinteger__unsigned_array__mask_bitrange(f2ptr cause, f2ptr this, 
       } else {
 	value = this__elt__value;
 	if (index == zero_count) {
-	  value = value & u64__bitshift_left(0xffffffffffffffff, (low_bit_num - (zero_count << 6)));
+	  value = value & u64__bitshift_left(0xffffffffffffffffull, (low_bit_num - (zero_count << 6)));
 	}
 	if (index == mask__length - 1) {
-	  value = value & u64__bitshift_right(0xffffffffffffffff, 63 - (high_bit_num - ((mask__length - 1) << 6)));
+	  value = value & u64__bitshift_right(0xffffffffffffffffull, 63 - (high_bit_num - ((mask__length - 1) << 6)));
 	}
       }
       result_array[index] = value;

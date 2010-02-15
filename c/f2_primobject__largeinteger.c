@@ -460,7 +460,7 @@ u64 raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(f2ptr
   }
   f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
   u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
-  if (high_u64_value__i & 0xffffffff00000000) {
+  if (high_u64_value__i & 0xffffffff00000000ull) {
     return high_u64_value__i;
   } else {
     if (this__length == 1) {
@@ -481,10 +481,10 @@ u64 raw__largeinteger__unsigned_array__top_most_significant_u32_digits(f2ptr cau
   }
   f2ptr high_u64_value    = raw__array__elt(cause, this, this__length - 1);
   u64   high_u64_value__i = f2integer__i(high_u64_value, cause);
-  if (high_u64_value__i & 0xffffffff00000000) {
+  if (high_u64_value__i & 0xffffffff00000000ull) {
     return (high_u64_value__i >> 32);
   } else {
-    return (high_u64_value__i & 0x00000000ffffffff);
+    return (high_u64_value__i & 0x00000000ffffffffull);
   }
 }
 
@@ -506,8 +506,8 @@ f2ptr raw__largeinteger__unsigned_array__divide_n_plus_one_by_n__that_high_bit_a
     u64   two_digit_numerator   = raw__largeinteger__unsigned_array__top_two_most_significant_u32_digits(cause, this);
     u64   one_digit_denomenator = raw__largeinteger__unsigned_array__top_most_significant_u32_digits(cause, that);
     u64   test_quotient         = two_digit_numerator / one_digit_denomenator;
-    if (test_quotient > 0x00000000ffffffff) {
-      test_quotient = 0x00000000ffffffff;
+    if (test_quotient > 0x00000000ffffffffull) {
+      test_quotient = 0x00000000ffffffffull;
     }
     quotient = raw__largeinteger__unsigned_array__new(cause, test_quotient);
     f2ptr test_result = raw__largeinteger__unsigned_array__multiply(cause, that, quotient);

@@ -211,7 +211,7 @@ pid_t funk2_user_thread_controller__start_child_process__signal_execute(funk2_us
 }
 
 void funk2_user_thread_controller__start_child_process__user_process(funk2_user_thread_controller__start_child_process_t* this) {
-  int pool_index = this_processor_thread__pool_index();
+  //int pool_index = this_processor_thread__pool_index();
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));

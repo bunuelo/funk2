@@ -195,7 +195,7 @@ void funk2_user_thread_controller__start_child_process__init(funk2_user_thread_c
 void funk2_user_thread_controller__start_child_process__destroy(funk2_user_thread_controller__start_child_process_t* this) {
 }
 
-void funk2_user_thread_controller__start_child_process__signal_execute(funk2_user_thread_controller__start_child_process_t* this, char** argv, char** envp) {
+pid_t funk2_user_thread_controller__start_child_process__signal_execute(funk2_user_thread_controller__start_child_process_t* this, char** argv, char** envp) {
   this->done_count    = 0;
   this->everyone_done = boolean__false;
   this->start         = boolean__true;
@@ -203,12 +203,11 @@ void funk2_user_thread_controller__start_child_process__signal_execute(funk2_use
     raw__fast_spin_sleep_yield();
   }
   // vvv - all processes are paused, so start child here.
-  {
-    
-  }
+  pid_t child_pid = funk2_child_process_handler__management_add_new_child_process(&(__funk2.child_process_handler), argv, envp);
   // ^^^
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
+  return child_pid;
 }
 
 void funk2_user_thread_controller__start_child_process__user_process(funk2_user_thread_controller__start_child_process_t* this) {
@@ -297,8 +296,8 @@ void funk2_user_thread_controller__exit(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__exit__signal_execute(&(this->exit));
 }
 
-void funk2_user_thread_controller__start_child_process(funk2_user_thread_controller_t* this, char** argv, char** envp) {
-  funk2_user_thread_controller__start_child_process__signal_execute(&(this->start_child_process), argv, envp);
+pid_t funk2_user_thread_controller__start_child_process(funk2_user_thread_controller_t* this, char** argv, char** envp) {
+  return funk2_user_thread_controller__start_child_process__signal_execute(&(this->start_child_process), argv, envp);
 }
 
 

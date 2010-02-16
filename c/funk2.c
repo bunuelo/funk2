@@ -40,17 +40,28 @@ void funk2_fork_child__handle(funk2_fork_child_t* this) {
     funk2_processor_mutex__lock(&(this->mutex));
     this->command_waiting = boolean__false;
     {    
-      char** argv = this->argv;
-      char** envp = this->envp;
-      funk2_user_thread_controller__start_child_process(&(__funk2.user_thread_controller), argv, envp);
+      char** argv      = this->argv;
+      char** envp      = this->envp;
+      pid_t  child_pid = funk2_user_thread_controller__start_child_process(&(__funk2.user_thread_controller), argv, envp);
+      this->child_pid  = child_pid;
     }
-    this->command_done = boolean__true;
     funk2_processor_mutex__unlock(&(this->mutex));
+    // wait for return value to be read by user thread.
+    {
+      boolean_t done = boolean__false;
+      while (! done) {
+	funk2_processor_mutex__lock(&(this->mutex));
+	if (this->pid_return_done) {
+	  done = boolean__true;
+	}
+	funk2_processor_mutex__unlock(&(this->mutex));
+      }
+    }
   }
 }
 
 // signals and waits for management thread to fork child process (calls user_lock, i.e. cannot be called by management thread)
-void funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** argv, char** envp) {
+pid_t funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** argv, char** envp) {
   // signal management thread to start fork.
   {
     boolean_t done = boolean__false;
@@ -61,6 +72,7 @@ void funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** a
 	this->argv            = argv;
 	this->envp            = envp;
 	this->command_done    = boolean__false;
+	this->pid_return_done = boolean__false;
 	done = boolean__false;
       }
       funk2_processor_mutex__unlock(&(this->mutex));
@@ -77,7 +89,16 @@ void funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** a
       funk2_processor_mutex__unlock(&(this->mutex));
     }
   }
+  pid_t child_pid = this->child_pid;
+  // signal that we've read return value (allowing another fork to occur if necessary).
+  funk2_processor_mutex__user_lock(&(this->mutex));
+  this->pid_return_done = boolean__true;
+  funk2_processor_mutex__unlock(&(this->mutex));
+  return child_pid;
 }
+
+
+
 
 // funk2
 

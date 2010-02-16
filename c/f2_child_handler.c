@@ -39,9 +39,10 @@ void funk2_child_process_handler__destroy(funk2_child_process_handler_t* this) {
   }
 }
 
-// user function (calls user_lock)
-pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
-  funk2_processor_mutex__user_lock(&(this->access_mutex));
+// management thread function (doesn't call user_lock, calls regular lock).
+// all forks are done from management thread through funk2_fork_child in funk2.[ch].
+pid_t funk2_child_process_handler__management_add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
+  funk2_processor_mutex__lock(&(this->access_mutex));
   funk2_child_process_list_t* child_process_node = (funk2_child_process_list_t*)malloc(sizeof(funk2_child_process_list_t));
   funk2_child_process_init_t  result             = funk2_child_process__init(&(child_process_node->child_process), argv, envp);
   if (result != funk2_child_process_init__success) {
@@ -53,6 +54,12 @@ pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_han
   this->child_process_list = child_process_node;
   funk2_processor_mutex__unlock(&(this->access_mutex));
   return child_process_node->child_process.pid;
+}
+
+// user thread function (calls user_lock, cannot be called by management thread)
+pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
+  pid_t child_pid = funk2_fork_child__user_thread_fork_child(&(__funk.fork_child), argv, envp);
+  return child_pid;
 }
 
 // manager processor_thread function (calls lock)
@@ -80,6 +87,8 @@ void funk2_child_process_handler__handle_child_processes(funk2_child_process_han
   }
   funk2_processor_mutex__unlock(&(this->access_mutex));
 }
+
+
 
 // user function (calls user_lock)
 boolean_t funk2_child_process_handler__process_exists(funk2_child_process_handler_t* this, pid_t pid) {

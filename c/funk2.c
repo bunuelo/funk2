@@ -42,7 +42,7 @@ void funk2_fork_child__handle(funk2_fork_child_t* this) {
     {    
       char** argv = this->argv;
       char** envp = this->envp;
-      funk2_user_thread_controller__start_child_process(this, argv, envp);
+      funk2_user_thread_controller__start_child_process(&(__funk2.user_thread_controller), argv, envp);
     }
     this->command_done = boolean__true;
     funk2_processor_mutex__unlock(&(this->mutex));

@@ -49,6 +49,36 @@ void funk2_fork_child__handle(funk2_fork_child_t* this) {
   }
 }
 
+// signals and waits for management thread to fork child process (calls user_lock, i.e. cannot be called by management thread)
+void funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** argv, char** envp) {
+  // signal management thread to start fork.
+  {
+    boolean_t done = boolean__false;
+    while (! done) {
+      funk2_processor_mutex__user_lock(&(this->mutex));
+      if ((! this->command_waiting) && this->command_done) {
+	this->command_waiting = boolean__true;
+	this->argv            = argv;
+	this->envp            = envp;
+	this->command_done    = boolean__false;
+	done = boolean__false;
+      }
+      funk2_processor_mutex__unlock(&(this->mutex));
+    }
+  }
+  // wait for management thread to finish fork.
+  {
+    boolean_t done = boolean__false;
+    while (! done) {
+      funk2_processor_mutex__user_lock(&(this->mutex));
+      if (this->command_done) {
+	done = boolean__true;
+      }
+      funk2_processor_mutex__unlock(&(this->mutex));
+    }
+  }
+}
+
 // funk2
 
 void f2__initialize() {

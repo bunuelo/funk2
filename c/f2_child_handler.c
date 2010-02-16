@@ -58,7 +58,7 @@ pid_t funk2_child_process_handler__management_add_new_child_process(funk2_child_
 
 // user thread function (calls user_lock, cannot be called by management thread)
 pid_t funk2_child_process_handler__add_new_child_process(funk2_child_process_handler_t* this, char** argv, char** envp) {
-  pid_t child_pid = funk2_fork_child__user_thread_fork_child(&(__funk.fork_child), argv, envp);
+  pid_t child_pid = funk2_fork_child__user_thread_fork_child(&(__funk2.fork_child), argv, envp);
   return child_pid;
 }
 

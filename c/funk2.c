@@ -21,6 +21,36 @@
 
 #include "funk2.h"
 
+// funk2_fork_child
+
+void funk2_fork_child__init(funk2_fork_child_t* this) {
+  funk2_processor_mutex__init(&(this->mutex));
+  this->command_waiting = boolean__false;
+  this->argv            = NULL;
+  this->envp            = NULL;
+  this->command_done    = boolean__true;
+}
+
+void funk2_fork_child__destroy(funk2_fork_child_t* this) {
+  funk2_processor_mutex__destroy(&(this->mutex));
+}
+
+void funk2_fork_child__handle(funk2_fork_child_t* this) {
+  if (this->command_waiting) {
+    funk2_processor_mutex__lock(&(this->mutex));
+    this->command_waiting = boolean__false;
+    {    
+      char** argv = this->argv;
+      char** envp = this->envp;
+      funk2_user_thread_controller__start_child_process(this, argv, envp);
+    }
+    this->command_done = boolean__true;
+    funk2_processor_mutex__unlock(&(this->mutex));
+  }
+}
+
+// funk2
+
 void f2__initialize() {
   f2__module_registration__initialize();
   f2__redblacktree__initialize();
@@ -126,6 +156,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_mutex));
+  
+  funk2_fork_child__init(&(this->fork_child));
   
   status("");
   status("*******************************************************************");
@@ -329,6 +361,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
   funk2_cpu__destroy(&(this->cpu));
+  funk2_fork_child__destroy(&(this->fork_child));
 }
 
 boolean_t funk2__handle(funk2_t* this) {
@@ -340,6 +373,7 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_garbage_collector__handle(&(this->garbage_collector));
   funk2_management_thread__handle_user_threads(&(this->management_thread));
   funk2_cpu__handle(&(this->cpu));
+  funk2_fork_child__handle(&(this->fork_child));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)

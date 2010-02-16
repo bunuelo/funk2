@@ -100,11 +100,14 @@ typedef struct funk2_user_thread_controller__start_child_process_s {
   funk2_processor_mutex_t done_mutex;
   s64                     done_count;
   boolean_t               everyone_done;
+  // arguments
+  char**                  argv;
+  char**                  envp;
 } funk2_user_thread_controller__start_child_process_t;
 
 void funk2_user_thread_controller__start_child_process__init(funk2_user_thread_controller__start_child_process_t* this);
 void funk2_user_thread_controller__start_child_process__destroy(funk2_user_thread_controller__start_child_process_t* this);
-void funk2_user_thread_controller__start_child_process__signal_execute(funk2_user_thread_controller__start_child_process_t* this);
+void funk2_user_thread_controller__start_child_process__signal_execute(funk2_user_thread_controller__start_child_process_t* this, char** argv, char** envp);
 void funk2_user_thread_controller__start_child_process__user_process(funk2_user_thread_controller__start_child_process_t* this);
 
 
@@ -123,17 +126,17 @@ typedef struct funk2_user_thread_controller_s {
   funk2_user_thread_controller__start_child_process_t                          start_child_process;
 } funk2_user_thread_controller_t;
 
-void      funk2_user_thread_controller__init(                             funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__destroy(                          funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__user_wait_politely(               funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__user_check_wait_politely(         funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__touch_all_protected_alloc_arrays( funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__blacken_grey_nodes(               funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__grey_from_other_nodes(            funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__free_white_exps(                  funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__exit(                             funk2_user_thread_controller_t* this);
-void      funk2_user_thread_controller__start_child_process(              funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__init(                             funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__destroy(                          funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__user_wait_politely(               funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__user_check_wait_politely(         funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__touch_all_protected_alloc_arrays( funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__blacken_grey_nodes(               funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__grey_from_other_nodes(            funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__free_white_exps(                  funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__exit(                             funk2_user_thread_controller_t* this);
+void funk2_user_thread_controller__start_child_process(              funk2_user_thread_controller_t* this, char** argv, char** envp);
 
 #endif // F2__USER_THREAD_CONTROLLER__H
 

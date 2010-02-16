@@ -136,6 +136,7 @@ typedef struct funk2_fork_child_s {
   boolean_t               command_waiting;
   char**                  argv;
   char**                  envp;
+  pid_t                   child_pid;
   boolean_t               command_done;
   boolean_t               pid_return_done;
 } funk2_fork_child_t;

@@ -140,9 +140,10 @@ typedef struct funk2_fork_child_s {
   boolean_t               pid_return_done;
 } funk2_fork_child_t;
 
-void funk2_fork_child__init(funk2_fork_child_t* this);
-void funk2_fork_child__destroy(funk2_fork_child_t* this);
-void funk2_fork_child__handle(funk2_fork_child_t* this);
+void  funk2_fork_child__init(funk2_fork_child_t* this);
+void  funk2_fork_child__destroy(funk2_fork_child_t* this);
+void  funk2_fork_child__handle(funk2_fork_child_t* this);
+pid_t funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** argv, char** envp);
 
 typedef struct funk2_s {
   boolean_t                           exit_now;

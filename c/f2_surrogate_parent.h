@@ -34,11 +34,28 @@ typedef struct funk2_pipe_s {
 void funk2_pipe__init(funk2_pipe_t* this);
 void funk2_pipe__destroy(funk2_pipe_t* this);
 
+// funk2_return_result
+
+typedef struct funk2_return_result_s {
+  f2ptr thread;
+  u64   return_value;
+} funk2_return_result_t;
+
+// funk2_return_value_node
+
+typedef struct funk2_return_value_node_s funk2_return_value_node_t;
+struct funk2_return_value_node_s {
+  funk2_return_result_t      result;
+  funk2_return_value_node_t* next;
+};
+
 // funk2_surrogate_parent
 
 typedef struct funk2_surrogate_parent_s {
-  funk2_pipe_t parent_to_child_pipe;
-  funk2_pipe_t child_to_parent_pipe;
+  funk2_pipe_t               parent_to_child_pipe;
+  funk2_pipe_t               child_to_parent_pipe;
+  funk2_processor_mutex_t    return_values__mutex;
+  funk2_return_value_node_t* return_values;
 } funk2_surrogate_parent_t;
 
 void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this);

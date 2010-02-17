@@ -96,7 +96,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
   } else if (surrogate_parent_pid == 0) {
     u64 read_buffer__length = 128 * 1024;
     u8* read_buffer         = malloc(read_buffer__length);
-    while (boolean__true) {
+    while (getppid() != 1) {
       waitpid_reap_children();
       f2ptr fiber; funk2_pipe__read(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
       u64 read_buffer__strlen;
@@ -129,6 +129,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	exit(0);
       }
     }
+    exit(0);
   }
   funk2_processor_mutex__init(&(this->return_values__mutex));
   this->return_values = NULL;

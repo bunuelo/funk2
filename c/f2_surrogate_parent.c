@@ -23,7 +23,7 @@
 
 // funk2_pipe
 
-void funk2_pipe__init(funk2_pipe_t* this) {
+void funk2_pipe__init(funk2_pipe_t* this, boolean_t nonblocking_read, boolean_t nonblocking_write) {
   int file_descriptors[2];
   if (pipe(file_descriptors) == -1) {
     perror("pipe");
@@ -31,6 +31,8 @@ void funk2_pipe__init(funk2_pipe_t* this) {
   }
   this->read_file_descriptor  = file_descriptors[0];
   this->write_file_descriptor = file_descriptors[1];
+  file_descriptor__set_nonblocking(this->read_file_descriptor,  nonblocking_read);
+  file_descriptor__set_nonblocking(this->write_file_descriptor, nonblocking_write);
 }
 
 void funk2_pipe__destroy(funk2_pipe_t* this) {
@@ -64,8 +66,9 @@ void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
 // funk2_surrogate_parent
 
 void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
-  funk2_pipe__init(&(this->parent_to_child_pipe));
-  funk2_pipe__init(&(this->child_to_parent_pipe));
+  funk2_pipe__init(&(this->parent_to_child_pipe), boolean__false, boolean__false);
+  funk2_pipe__init(&(this->child_to_parent_pipe), boolean__true,  boolean__false);
+  
   pid_t surrogate_parent_pid = fork();
   if (surrogate_parent_pid == -1) {
     const char* error_message = "funk2_surrogate_parent__init error: couldn't read data.";
@@ -76,12 +79,12 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     u64 read_buffer__length = 128 * 1024;
     u8* read_buffer         = malloc(read_buffer__length);
     while (boolean__true) {
-      f2ptr thread; funk2_pipe__read(&(this->child_to_parent_pipe), &thread, sizeof(f2ptr));
+      f2ptr thread; funk2_pipe__read(&(this->parent_to_child_pipe), &thread, sizeof(f2ptr));
       u64 read_buffer__strlen;
       {
 	u64 index;
 	for (index = 0; index < (read_buffer__length - 1); index ++) {
-	  u8 ch; funk2_pipe__read(&(this->child_to_parent_pipe), &ch, sizeof(u8));
+	  u8 ch; funk2_pipe__read(&(this->parent_to_child_pipe), &ch, sizeof(u8));
 	  if (ch == 0) {
 	    break;
 	  }

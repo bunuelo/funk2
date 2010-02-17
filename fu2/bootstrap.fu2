@@ -38,7 +38,6 @@
 [load 'fu2/bootstrap-critics-reactive.fu2']
 [load 'fu2/bootstrap-action.fu2']
 [load 'fu2/bootstrap-string.fu2']
-[load 'fu2/bootstrap-child_handler.fu2']
 [load 'fu2/bootstrap-apropos.fu2']
 [load 'fu2/bootstrap-sort.fu2']
 [load 'fu2/bootstrap-garbage_collector.fu2']

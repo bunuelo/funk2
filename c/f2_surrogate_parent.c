@@ -22,12 +22,13 @@
 #include "funk2.h"
 
 void waitpid_reap_children() {
-  int status;
-  pid_t wait_pid = waitpid(-1, &status, WNOHANG);
-  if (wait_pid != -1 && wait_pid != 0) {
-    pid_t this_pid = getpid();
-    printf("\nfunk2 pid = %d: wait_pid = %d, status = %d\n", (int)this_pid, (int)wait_pid, (int)status);
-  }
+  waitpid(-1, NULL, WNOHANG);
+  //int status;
+  //pid_t wait_pid = waitpid(-1, &status, WNOHANG);
+  //if (wait_pid != -1 && wait_pid != 0) {
+  //pid_t this_pid = getpid();
+  //printf("\nfunk2 pid = %d: wait_pid = %d, status = %d\n", (int)this_pid, (int)wait_pid, (int)status);
+  //}
 }
 
 // funk2_pipe

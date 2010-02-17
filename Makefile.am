@@ -281,6 +281,7 @@ bin_funk2_SOURCES = \
   c/f2_sort.c \
   c/f2_status.c \
   c/f2_string.c \
+  c/f2_surrogate_parent.c \
   c/f2_dynamic_memory.c \
   c/f2_termios.c \
   c/f2_thought_process.c \

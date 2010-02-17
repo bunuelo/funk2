@@ -121,6 +121,7 @@
 #include "f2_sort.h"
 #include "f2_status.h"
 #include "f2_string.h"
+#include "f2_surrogate_parent.h"
 #include "f2_termios.h"
 #include "f2_thought_process.h"
 #include "f2_time.h"

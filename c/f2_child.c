@@ -54,9 +54,7 @@ funk2_child_process_init_t funk2_child_process__init(funk2_child_process_t* this
   this->killed           = boolean__false;
   this->stopped          = boolean__false;
   this->no_longer_exists = boolean__false;
-  system("/bin/ls");
-  //this->pid              = fork(); // FORK PROCESS HERE!!!
-  this->pid = 1;
+  this->pid              = fork(); // FORK PROCESS HERE!!!
   if (this->pid == -1) {
     printf("\nfork() error.\n"); fflush(stdout);
     perror("fork");

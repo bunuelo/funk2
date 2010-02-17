@@ -108,6 +108,9 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	  if (getppid() == 1) {
 	    exit(0);
 	  }
+	  if (bytes_in_buffer == 0) {
+	    f2__sleep(100);
+	  }
 	}
 	memcpy(&fiber, f2ptr_buffer, sizeof(f2ptr));
       }
@@ -124,6 +127,9 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	      bytes_in_buffer += bytes_read;
 	      if (getppid() == 1) {
 		exit(0);
+	      }
+	      if (bytes_in_buffer == 0) {
+		f2__sleep(100);
 	      }
 	    }
 	    memcpy(&ch, ch_buffer, sizeof(u8));

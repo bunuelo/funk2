@@ -31,7 +31,7 @@ typedef struct funk2_pipe_s {
   int write_file_descriptor;
 } funk2_pipe_t;
 
-void funk2_pipe__init(funk2_pipe_t* this);
+void funk2_pipe__init(funk2_pipe_t* this, boolean_t nonblocking_read, boolean_t nonblocking_write);
 void funk2_pipe__destroy(funk2_pipe_t* this);
 
 // funk2_return_result

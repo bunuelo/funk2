@@ -151,7 +151,7 @@ void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t*
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
   {
     int status;
-    waitpid(-1, &status, WNOHANG);
+    waitpid(-1, &status, WNOHANG | WEXITED);
   }
   u64 read_byte_num = 0;
   do {

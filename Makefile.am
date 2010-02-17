@@ -195,8 +195,6 @@ bin_funk2_SOURCES = \
   c/f2_bug.c \
   c/f2_bytecodes.c \
   c/f2_cause.c \
-  c/f2_child.c \
-  c/f2_child_handler.c \
   c/f2_circular_buffer.c \
   c/f2_command_line.c \
   c/f2_compile.c \

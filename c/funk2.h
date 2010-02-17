@@ -36,8 +36,6 @@
 #include "f2_bug.h"
 #include "f2_bytecodes.h"
 #include "f2_cause.h"
-#include "f2_child.h"
-#include "f2_child_handler.h"
 #include "f2_circular_buffer.h"
 #include "f2_command_line.h"
 #include "f2_compile.h"
@@ -132,27 +130,11 @@
 
 void f2__destroy();
 
-typedef struct funk2_fork_child_s {
-  funk2_processor_mutex_t mutex;
-  boolean_t               command_waiting;
-  char**                  argv;
-  char**                  envp;
-  pid_t                   child_pid;
-  boolean_t               command_done;
-  boolean_t               pid_return_done;
-} funk2_fork_child_t;
-
-void  funk2_fork_child__init(funk2_fork_child_t* this);
-void  funk2_fork_child__destroy(funk2_fork_child_t* this);
-void  funk2_fork_child__handle(funk2_fork_child_t* this);
-pid_t funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** argv, char** envp);
-
 typedef struct funk2_s {
   boolean_t                           exit_now;
   node_id_t                           node_id;
   event_id_t                          event_id;
   funk2_processor_mutex_t             event_id_mutex;
-  funk2_fork_child_t                  fork_child;
   // global variables in other source files
   funk2_module_registration_t         module_registration;
   funk2_command_line_t                command_line;
@@ -167,7 +149,6 @@ typedef struct funk2_s {
   funk2_locale_t                      locale;
   funk2_event_router_t                event_router;
   funk2_primobject_circular_buffer_t  primobject__circular_buffer;
-  funk2_child_process_handler_t       child_process_handler;
   funk2_processor_thread_handler_t    processor_thread_handler;
   funk2_primobject_type_handler_t     primobject_type_handler;
   funk2_primobject__frame_t           primobject__frame;

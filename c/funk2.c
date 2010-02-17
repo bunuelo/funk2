@@ -21,89 +21,6 @@
 
 #include "funk2.h"
 
-// funk2_fork_child
-
-void funk2_fork_child__init(funk2_fork_child_t* this) {
-  funk2_processor_mutex__init(&(this->mutex));
-  this->command_waiting = boolean__false;
-  this->argv            = NULL;
-  this->envp            = NULL;
-  this->command_done    = boolean__true;
-}
-
-void funk2_fork_child__destroy(funk2_fork_child_t* this) {
-  funk2_processor_mutex__destroy(&(this->mutex));
-}
-
-void funk2_fork_child__handle(funk2_fork_child_t* this) {
-  if (this->command_waiting) {
-    funk2_processor_mutex__lock(&(this->mutex));
-    this->command_waiting = boolean__false;
-    {    
-      char** argv      = this->argv;
-      char** envp      = this->envp;
-      
-      __funk2.user_thread_controller.please_wait = boolean__true;
-      pid_t  child_pid = funk2_user_thread_controller__start_child_process(&(__funk2.user_thread_controller), argv, envp);
-      __funk2.user_thread_controller.please_wait = boolean__false;
-      
-      this->child_pid  = child_pid;
-    }
-    funk2_processor_mutex__unlock(&(this->mutex));
-    // wait for return value to be read by user thread.
-    {
-      boolean_t done = boolean__false;
-      while (! done) {
-	funk2_processor_mutex__lock(&(this->mutex));
-	if (this->pid_return_done) {
-	  done = boolean__true;
-	}
-	funk2_processor_mutex__unlock(&(this->mutex));
-      }
-    }
-  }
-}
-
-// signals and waits for management thread to fork child process (calls user_lock, i.e. cannot be called by management thread)
-pid_t funk2_fork_child__user_thread_fork_child(funk2_fork_child_t* this, char** argv, char** envp) {
-  // signal management thread to start fork.
-  {
-    boolean_t done = boolean__false;
-    while (! done) {
-      funk2_processor_mutex__user_lock(&(this->mutex));
-      if ((! this->command_waiting) && this->command_done) {
-	this->command_waiting = boolean__true;
-	this->argv            = argv;
-	this->envp            = envp;
-	this->command_done    = boolean__false;
-	this->pid_return_done = boolean__false;
-	done = boolean__false;
-      }
-      funk2_processor_mutex__unlock(&(this->mutex));
-    }
-  }
-  // wait for management thread to finish fork.
-  {
-    boolean_t done = boolean__false;
-    while (! done) {
-      funk2_processor_mutex__user_lock(&(this->mutex));
-      if (this->command_done) {
-	done = boolean__true;
-      }
-      funk2_processor_mutex__unlock(&(this->mutex));
-    }
-  }
-  pid_t child_pid = this->child_pid;
-  // signal that we've read return value (allowing another fork to occur if necessary).
-  funk2_processor_mutex__user_lock(&(this->mutex));
-  this->pid_return_done = boolean__true;
-  funk2_processor_mutex__unlock(&(this->mutex));
-  return child_pid;
-}
-
-
-
-
 // funk2
 
 void f2__initialize() {
@@ -213,7 +130,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_mutex));
   
-  funk2_fork_child__init(&(this->fork_child));
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   
   status("");
@@ -250,7 +166,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_locale__init(&(this->locale));
   int event_buffer__byte_num = 32768;
   funk2_event_router__init(&(this->event_router), event_buffer__byte_num);
-  funk2_child_process_handler__init(&(this->child_process_handler));
   funk2_processor_thread_handler__init(&(this->processor_thread_handler));
   funk2_primobject_type_handler__init(&(this->primobject_type_handler));
   funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
@@ -406,7 +321,6 @@ void funk2__destroy(funk2_t* this) {
   funk2_command_line__destroy(&(this->command_line));
   funk2_node_handler__destroy(&(this->node_handler));
   funk2_peer_command_server__destroy(&(this->peer_command_server));
-  funk2_child_process_handler__destroy(&(this->child_process_handler));
   funk2_processor_thread_handler__destroy(&(this->processor_thread_handler));
   funk2_scheduler_thread_controller__destroy(&(this->scheduler_thread_controller));
   funk2_management_thread__destroy(&(this->management_thread));
@@ -418,7 +332,6 @@ void funk2__destroy(funk2_t* this) {
   funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
   funk2_cpu__destroy(&(this->cpu));
-  funk2_fork_child__destroy(&(this->fork_child));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
 }
 
@@ -426,12 +339,10 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
   funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
   funk2_node_handler__handle_nodes(&(this->node_handler));
-  funk2_child_process_handler__handle_child_processes(&(this->child_process_handler));
   funk2_memory__handle(&(this->memory));
   funk2_garbage_collector__handle(&(this->garbage_collector));
   funk2_management_thread__handle_user_threads(&(this->management_thread));
   funk2_cpu__handle(&(this->cpu));
-  funk2_fork_child__handle(&(this->fork_child));
   funk2_surrogate_parent__handle(&(this->surrogate_parent));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);

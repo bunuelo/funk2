@@ -185,41 +185,6 @@ void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controll
 }
 
 
-// funk2_user_thread_controller__start_child_process
-
-void funk2_user_thread_controller__start_child_process__init(funk2_user_thread_controller__start_child_process_t* this) {
-  this->start = boolean__false;
-  funk2_processor_mutex__init(&(this->done_mutex));
-}
-
-void funk2_user_thread_controller__start_child_process__destroy(funk2_user_thread_controller__start_child_process_t* this) {
-}
-
-pid_t funk2_user_thread_controller__start_child_process__signal_execute(funk2_user_thread_controller__start_child_process_t* this, char** argv, char** envp) {
-  this->done_count    = 0;
-  this->everyone_done = boolean__false;
-  this->start         = boolean__true;
-  while (this->done_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
-  }
-  // vvv - all processes are paused, so start child here.
-  pid_t child_pid = funk2_child_process_handler__management_add_new_child_process(&(__funk2.child_process_handler), argv, envp);
-  // ^^^
-  this->start         = boolean__false;
-  this->everyone_done = boolean__true;
-  return child_pid;
-}
-
-void funk2_user_thread_controller__start_child_process__user_process(funk2_user_thread_controller__start_child_process_t* this) {
-  //int pool_index = this_processor_thread__pool_index();
-  funk2_processor_mutex__lock(&(this->done_mutex));
-  this->done_count ++;
-  funk2_processor_mutex__unlock(&(this->done_mutex));
-  while (! (this->everyone_done)) {
-    raw__fast_spin_sleep_yield();
-  }
-}
-
 
 // funk2_user_thread_controller
 
@@ -233,7 +198,6 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
   funk2_user_thread_controller__free_white_exps__init(&(this->free_white_exps));
   funk2_user_thread_controller__exit__init(&(this->exit));
-  funk2_user_thread_controller__start_child_process__init(&(this->start_child_process));
 }
 
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
@@ -244,7 +208,6 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_user_thread_controller__grey_from_other_nodes__destroy(&(this->grey_from_other_nodes));
   funk2_user_thread_controller__free_white_exps__destroy(&(this->free_white_exps));
   funk2_user_thread_controller__exit__destroy(&(this->exit));
-  funk2_user_thread_controller__start_child_process__destroy(&(this->start_child_process));
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
@@ -263,7 +226,6 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
     else if                         (this->grey_from_other_nodes.start) {funk2_user_thread_controller__grey_from_other_nodes__user_process(           &(this->grey_from_other_nodes));}
     else if                               (this->free_white_exps.start) {funk2_user_thread_controller__free_white_exps__user_process(                 &(this->free_white_exps));}
     else if                                          (this->exit.start) {funk2_user_thread_controller__exit__user_process(                            &(this->exit));}
-    else if                           (this->start_child_process.start) {funk2_user_thread_controller__start_child_process__user_process(             &(this->start_child_process));}
     raw__fast_spin_sleep_yield();
   }
   this->waiting_count --;
@@ -294,10 +256,6 @@ void funk2_user_thread_controller__free_white_exps(funk2_user_thread_controller_
 
 void funk2_user_thread_controller__exit(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__exit__signal_execute(&(this->exit));
-}
-
-pid_t funk2_user_thread_controller__start_child_process(funk2_user_thread_controller_t* this, char** argv, char** envp) {
-  return funk2_user_thread_controller__start_child_process__signal_execute(&(this->start_child_process), argv, envp);
 }
 
 

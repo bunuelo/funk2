@@ -124,9 +124,9 @@ void funk2_surrogate_parent__start_system_command(funk2_surrogate_parent_t* this
 }
 
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
+  u64 read_byte_num = 0;
   do {
     u8  buffer[sizeof(funk2_return_result_t)];
-    u64 read_byte_num   = 0;
     u64 bytes_available = funk2_pipe__try_read(&(this->child_to_parent_pipe), buffer + read_byte_num, sizeof(funk2_return_result_t) - read_byte_num);
     read_byte_num += bytes_available;
     if (read_byte_num == sizeof(funk2_return_result_t)) {

@@ -24,8 +24,25 @@
 
 #include "f2_global.h"
 
+// funk2_pipe
 
+typedef struct funk2_pipe_s {
+  int read_file_descriptor;
+  int write_file_descriptor;
+} funk2_pipe_t;
 
+void funk2_pipe__init(funk2_pipe_t* this);
+void funk2_pipe__destroy(funk2_pipe_t* this);
+
+// funk2_surrogate_parent
+
+typedef struct funk2_surrogate_parent_s {
+  funk2_pipe_t parent_to_child_pipe;
+  funk2_pipe_t child_to_parent_pipe;
+} funk2_surrogate_parent_t;
+
+void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this);
+void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this);
 
 #endif // F2__SURROGATE_PARENT__H
 

@@ -21,3 +21,50 @@
 
 #include "funk2.h"
 
+// funk2_pipe
+
+void funk2_pipe__init(funk2_pipe_t* this) {
+  int file_descriptors[2];
+  if (pipe(file_descriptors) == -1) {
+    perror("pipe");
+    exit(1);
+  }
+  this->read_file_descritor  = file_descriptors[0];
+  this->write_file_descritor = file_descriptors[1];
+}
+
+void funk2_pipe__destroy(funk2_pipe_t* this) {
+  close(this->read_file_descritor);
+  close(this->write_file_descritor);
+}
+
+void funk2_pipe__write(funk2_pipe_t* this, void* data, f2size_t byte_count) {
+  f2size_t bytes_written_count = write(this->write_file_descriptor, data, byte_count);
+  if (bytes_written_count != byte_count) {
+    const char* error_message = "funk2_pipe__write error: couldn't write data.";
+    printf("\n" error_message "\n");
+    error(nil, error_message);
+  }
+}
+
+void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
+  f2size_t bytes_read_count = read(this->read_file_descriptor, data, byte_count);
+  if (bytes_read_count != byte_count) {
+    const char* error_message = "funk2_pipe__read error: couldn't read data.";
+    printf("\n" error_message "\n");
+    error(nil, error_message);
+  }
+}
+
+// funk2_surrogate_parent
+
+void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
+  funk2_pipe__init(&(this->parent_to_child_pipe));
+  funk2_pipe__init(&(this->child_to_parent_pipe));
+}
+
+void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this) {
+  funk2_pipe__destroy(&(this->parent_to_child_pipe));
+  funk2_pipe__destroy(&(this->child_to_parent_pipe));
+}
+

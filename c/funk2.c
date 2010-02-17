@@ -213,6 +213,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_processor_mutex__init(&(this->event_id_mutex));
   
   funk2_fork_child__init(&(this->fork_child));
+  funk2_surrogate_parent__init(&(this->surrogate_parent));
   
   status("");
   status("*******************************************************************");
@@ -417,6 +418,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_processor_mutex__destroy(&(this->event_id_mutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_fork_child__destroy(&(this->fork_child));
+  funk2_surrogate_parent__destroy(&(this->surrogate_parent));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

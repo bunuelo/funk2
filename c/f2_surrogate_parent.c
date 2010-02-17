@@ -51,8 +51,8 @@ void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
   f2size_t bytes_read_count = read(this->read_file_descriptor, data, byte_count);
   if (bytes_read_count != byte_count) {
     const char* error_message = "funk2_pipe__read error: couldn't read data.";
-    printf("\n" error_message "\n");
-    error(nil, error_message);
+    printf("\n%s\n", (char*)error_message);
+    error(nil, (char*)error_message);
   }
 }
 

@@ -110,7 +110,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this) {
   funk2_pipe__destroy(&(this->parent_to_child_pipe));
   funk2_pipe__destroy(&(this->child_to_parent_pipe));
-  funk2_processor_mutex__destroy(&(this->return_value_mutex));
+  funk2_processor_mutex__destroy(&(this->return_values__mutex));
 }
 
 void funk2_surrogate_parent__start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
@@ -127,21 +127,21 @@ void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
     if (read_byte_num == sizeof(funk2_return_result_t)) {
       funk2_return_result_t result;
       memcpy(&result, buffer, sizeof(funk2_return_result_t));
-      funk2_processor_mutex__lock(&(this->return_value_mutex));
+      funk2_processor_mutex__lock(&(this->return_values__mutex));
       {
 	funk2_return_value_node_t* new_node = (funk2_return_value_node_t*)malloc(sizeof(funk2_return_value_node_t));
 	memcpy(&(new_node->result), result, sizeof(funk2_return_result_t));
 	new_node->next = this->return_values;
 	this->return_values = new_node;
       }
-      funk2_processor_mutex__unlock(&(this->return_value_mutex));
+      funk2_processor_mutex__unlock(&(this->return_values__mutex));
     }
   } while ((read_byte_num > 0) && (read_byte_num < sizeof(u64)));
 }
 
 boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr thread, funk2_return_result_t* result) {
   boolean_t return_value_available = boolean__false;
-  funk2_processor_mutex__user_lock(&(this->return_value_mutex));
+  funk2_processor_mutex__user_lock(&(this->return_values__mutex));
   funk2_return_value_node_t* prev = NULL;
   funk2_return_value_node_t* iter = this->return_values;
   while (iter) {
@@ -160,7 +160,7 @@ boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent
     prev = iter;
     iter = next;
   }
-  funk2_processor_mutex__unlock(&(this->return_value_mutex));
+  funk2_processor_mutex__unlock(&(this->return_values__mutex));
   return return_value_available;
 }
 

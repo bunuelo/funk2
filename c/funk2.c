@@ -431,6 +431,7 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_management_thread__handle_user_threads(&(this->management_thread));
   funk2_cpu__handle(&(this->cpu));
   funk2_fork_child__handle(&(this->fork_child));
+  funk2_surrogate_parent__handle(&(this->surrogate_parent));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)

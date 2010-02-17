@@ -52,6 +52,7 @@ struct funk2_return_value_node_s {
 // funk2_surrogate_parent
 
 typedef struct funk2_surrogate_parent_s {
+  funk2_processor_mutex_t    write_to_child__mutex;
   funk2_pipe_t               parent_to_child_pipe;
   funk2_pipe_t               child_to_parent_pipe;
   funk2_processor_mutex_t    return_values__mutex;

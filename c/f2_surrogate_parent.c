@@ -66,6 +66,7 @@ void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
 // funk2_surrogate_parent
 
 void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
+  funk2_processor_mutex__init(&(this->write_to_child__mutex));
   funk2_pipe__init(&(this->parent_to_child_pipe), boolean__false, boolean__false);
   funk2_pipe__init(&(this->child_to_parent_pipe), boolean__true,  boolean__false);
   
@@ -116,14 +117,27 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 }
 
 void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this) {
+  funk2_processor_mutex__destroy(&(this->write_to_child__mutex));
   funk2_pipe__destroy(&(this->parent_to_child_pipe));
   funk2_pipe__destroy(&(this->child_to_parent_pipe));
   funk2_processor_mutex__destroy(&(this->return_values__mutex));
 }
 
-void funk2_surrogate_parent__start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
+void funk2_surrogate_parent__unsafe_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
   funk2_pipe__write(&(this->parent_to_child_pipe), &thread, sizeof(f2ptr));
   funk2_pipe__write(&(this->parent_to_child_pipe), command, strlen((char*)command) + 1);
+}
+
+void funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
+  funk2_processor_mutex__lock(&(this->write_to_child__mutex));
+  funk2_surrogate_parent__unsafe_start_system_command(this, thread, command);
+  funk2_processor_mutex__unlock(&(this->write_to_child__mutex));
+}
+
+void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
+  funk2_processor_mutex__user_lock(&(this->write_to_child__mutex));
+  funk2_surrogate_parent__unsafe_start_system_command(this, thread, command);
+  funk2_processor_mutex__unlock(&(this->write_to_child__mutex));
 }
 
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {

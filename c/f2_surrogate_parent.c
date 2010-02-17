@@ -47,8 +47,13 @@ void funk2_pipe__write(funk2_pipe_t* this, void* data, f2size_t byte_count) {
   }
 }
 
-void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
+f2size_t funk2_pipe__try_read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
   f2size_t bytes_read_count = read(this->read_file_descriptor, data, byte_count);
+  return bytes_read_count;
+}
+
+void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
+  f2size_t bytes_read_count = funk2_pipe__try_read(this, data, byte_count);
   if (bytes_read_count != byte_count) {
     const char* error_message = "funk2_pipe__read error: couldn't read data.";
     printf("\n%s\n", (char*)error_message);
@@ -119,11 +124,11 @@ void funk2_surrogate_parent__start_system_command(funk2_surrogate_parent_t* this
 }
 
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
-  boolean_t return_value_available;
   do {
     u8  buffer[sizeof(funk2_return_result_t)];
     u64 read_byte_num   = 0;
-    u64 bytes_available = funk2_pipe__try_read(&(this->child_to_parent_pipe), buffer, sizeof(funk2_return_result_t) - read_byte_num);
+    u64 bytes_available = funk2_pipe__try_read(&(this->child_to_parent_pipe), buffer + read_byte_num, sizeof(funk2_return_result_t) - read_byte_num);
+    read_byte_num += bytes_available;
     if (read_byte_num == sizeof(funk2_return_result_t)) {
       funk2_return_result_t result;
       memcpy(&result, buffer, sizeof(funk2_return_result_t));

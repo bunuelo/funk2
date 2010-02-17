@@ -29,13 +29,13 @@ void funk2_pipe__init(funk2_pipe_t* this) {
     perror("pipe");
     exit(1);
   }
-  this->read_file_descritor  = file_descriptors[0];
-  this->write_file_descritor = file_descriptors[1];
+  this->read_file_descriptor  = file_descriptors[0];
+  this->write_file_descriptor = file_descriptors[1];
 }
 
 void funk2_pipe__destroy(funk2_pipe_t* this) {
-  close(this->read_file_descritor);
-  close(this->write_file_descritor);
+  close(this->read_file_descriptor);
+  close(this->write_file_descriptor);
 }
 
 void funk2_pipe__write(funk2_pipe_t* this, void* data, f2size_t byte_count) {

@@ -21,6 +21,19 @@
 
 #include "funk2.h"
 
+void waitpid_reap_children() {
+  int status;
+  pid_t wait_pid = waitpid(-1, &status, WNOHANG);
+  if (wait_pid == -1) {
+    perror("waitpid");
+    error(nil, "waitpid error.");
+  }
+  if (wait_pid != 0) {
+    pid_t this_pid = getpid();
+    printf("\nfunk2 pid = %d: wait_pid = %d, status = %d\n", (int)this_pid, (int)wait_pid, (int)status);
+  }
+}
+
 // funk2_pipe
 
 void funk2_pipe__init(funk2_pipe_t* this, boolean_t nonblocking_read, boolean_t nonblocking_write) {
@@ -88,13 +101,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     u64 read_buffer__length = 128 * 1024;
     u8* read_buffer         = malloc(read_buffer__length);
     while (boolean__true) {
-      {
-	int status;
-	pid_t wait_pid = waitpid(-1, &status, WNOHANG | WEXITED);
-	if (wait_pid != -1 && wait_pid != 0) {
-	  printf("\nsurrogate_parent: wait_pid = %d, status = %d\n", (int)wait_pid, (int)status);
-	}
-      }
+      waitpid_reap_children();
       f2ptr fiber; funk2_pipe__read(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
       u64 read_buffer__strlen;
       {
@@ -156,13 +163,7 @@ void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t*
 }
 
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
-  {
-    int status;
-    pid_t wait_pid = waitpid(-1, &status, WNOHANG | WEXITED);
-    if (wait_pid != -1 && wait_pid != 0) {
-      printf("\nfunk2 management thread: wait_pid = %d, status = %d\n", (int)wait_pid, (int)status);
-    }
-  }
+  waitpid_reap_children();
   u64 read_byte_num = 0;
   do {
     u8  buffer[sizeof(funk2_return_result_t)];

@@ -88,6 +88,10 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     u64 read_buffer__length = 128 * 1024;
     u8* read_buffer         = malloc(read_buffer__length);
     while (boolean__true) {
+      {
+	int status;
+	waitpid(-1, &status, WNOHANG | WEXITED);
+      }
       f2ptr fiber; funk2_pipe__read(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
       u64 read_buffer__strlen;
       {

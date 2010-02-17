@@ -195,7 +195,7 @@ boolean_t funk2_surrogate_parent__unsafe_check_return_value(funk2_surrogate_pare
 boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
   boolean_t return_value_available = boolean__false;
   funk2_processor_mutex__lock(&(this->return_values__mutex));
-  return_value_available = funk2_surrogate_parent__user_check_return_value(this, fiber, result);
+  return_value_available = funk2_surrogate_parent__unsafe_check_return_value(this, fiber, result);
   funk2_processor_mutex__unlock(&(this->return_values__mutex));
   return return_value_available;
 }
@@ -203,7 +203,7 @@ boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_
 boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
   boolean_t return_value_available = boolean__false;
   funk2_processor_mutex__user_lock(&(this->return_values__mutex));
-  return_value_available = funk2_surrogate_parent__user_check_return_value(this, fiber, result);
+  return_value_available = funk2_surrogate_parent__unsafe_check_return_value(this, fiber, result);
   funk2_processor_mutex__unlock(&(this->return_values__mutex));
   return return_value_available;
 }

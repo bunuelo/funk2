@@ -37,7 +37,7 @@ void funk2_pipe__destroy(funk2_pipe_t* this);
 // funk2_return_result
 
 typedef struct funk2_return_result_s {
-  f2ptr thread;
+  f2ptr fiber;
   u64   return_value;
 } funk2_return_result_t;
 
@@ -62,10 +62,10 @@ typedef struct funk2_surrogate_parent_s {
 void      funk2_surrogate_parent__init(funk2_surrogate_parent_t* this);
 void      funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this);
 void      funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this);
-void      funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command);
-void      funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command);
-boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_parent_t* this, f2ptr thread, funk2_return_result_t* result);
-boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr thread, funk2_return_result_t* result);
+void      funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command);
+void      funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command);
+boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result);
+boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result);
 
 // **
 

@@ -51,6 +51,14 @@ void funk2_pipe__write(funk2_pipe_t* this, void* data, f2size_t byte_count) {
 
 f2size_t funk2_pipe__try_read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
   f2size_t bytes_read_count = read(this->read_file_descriptor, data, byte_count);
+  if (bytes_read_count == -1) {
+    if (errno == EAGAIN) {
+      return 0;
+    } else {
+      perror("read");
+      error(nil, "funk2_pipe__try_read error.");
+    }
+  }
   return bytes_read_count;
 }
 
@@ -235,8 +243,6 @@ void f2__surrogate_parent__reinitialize_globalvars() {
 }
 
 void f2__surrogate_parent__initialize() {
-  f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "surrogate_parent", "", &f2__surrogate_parent__reinitialize_globalvars);
   
   f2__surrogate_parent__reinitialize_globalvars();

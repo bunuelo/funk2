@@ -24,11 +24,7 @@
 void waitpid_reap_children() {
   int status;
   pid_t wait_pid = waitpid(-1, &status, WNOHANG);
-  if (wait_pid == -1) {
-    perror("waitpid");
-    error(nil, "waitpid error.");
-  }
-  if (wait_pid != 0) {
+  if (wait_pid != -1 && wait_pid != 0) {
     pid_t this_pid = getpid();
     printf("\nfunk2 pid = %d: wait_pid = %d, status = %d\n", (int)this_pid, (int)wait_pid, (int)status);
   }

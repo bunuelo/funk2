@@ -90,7 +90,10 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     while (boolean__true) {
       {
 	int status;
-	waitpid(-1, &status, WNOHANG | WEXITED);
+	pid_t wait_pid = waitpid(-1, &status, WNOHANG | WEXITED);
+	if (wait_pid != -1 && wait_pid != 0) {
+	  printf("\nsurrogate_parent: wait_pid = %d, status = %d\n", (int)wait_pid, (int)status);
+	}
       }
       f2ptr fiber; funk2_pipe__read(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
       u64 read_buffer__strlen;
@@ -155,7 +158,10 @@ void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t*
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
   {
     int status;
-    waitpid(-1, &status, WNOHANG | WEXITED);
+    pid_t wait_pid = waitpid(-1, &status, WNOHANG | WEXITED);
+    if (wait_pid != -1 && wait_pid != 0) {
+      printf("\nfunk2 management thread: wait_pid = %d, status = %d\n", (int)wait_pid, (int)status);
+    }
   }
   u64 read_byte_num = 0;
   do {

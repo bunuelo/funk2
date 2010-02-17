@@ -43,7 +43,7 @@ void funk2_pipe__write(funk2_pipe_t* this, void* data, f2size_t byte_count) {
   if (bytes_written_count != byte_count) {
     const char* error_message = "funk2_pipe__write error: couldn't write data.";
     printf("\n%s\n", error_message);
-    error(nil, "%s", error_message);
+    error(nil, error_message);
   }
 }
 

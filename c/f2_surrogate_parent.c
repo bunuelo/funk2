@@ -84,8 +84,8 @@ void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
 
 void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
   funk2_processor_mutex__init(&(this->write_to_child__mutex));
-  funk2_pipe__init(&(this->parent_to_child_pipe), boolean__false, boolean__false);
-  funk2_pipe__init(&(this->child_to_parent_pipe), boolean__true,  boolean__false);
+  funk2_pipe__init(&(this->parent_to_child_pipe), boolean__true, boolean__false);
+  funk2_pipe__init(&(this->child_to_parent_pipe), boolean__true, boolean__false);
   
   pid_t surrogate_parent_pid = fork();
   if (surrogate_parent_pid == -1) {
@@ -98,12 +98,36 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     u8* read_buffer         = malloc(read_buffer__length);
     while (getppid() != 1) {
       waitpid_reap_children();
-      f2ptr fiber; funk2_pipe__read(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
+      f2ptr fiber;
+      {
+	u8 f2ptr_buffer[sizeof(f2ptr)];
+	u64 bytes_in_buffer = 0;
+	while (bytes_in_buffer <= sizeof(f2ptr)) {
+	  u64 bytes_read = funk2_pipe__try_read(&(this->parent_to_child_pipe), f2ptr_buffer + bytes_in_buffer, sizeof(f2ptr) - bytes_in_buffer);
+	  bytes_in_buffer += bytes_read;
+	  if (getppid() == 1) {
+	    exit(0);
+	  }
+	}
+	memcpy(&fiber, f2ptr_buffer, sizeof(f2ptr));
+      }
       u64 read_buffer__strlen;
       {
 	u64 index;
 	for (index = 0; index < (read_buffer__length - 1); index ++) {
-	  u8 ch; funk2_pipe__read(&(this->parent_to_child_pipe), &ch, sizeof(u8));
+	  u8 ch;
+	  {
+	    u8 ch_buffer[sizeof(u8)];
+	    u64 bytes_in_buffer = 0;
+	    while (bytes_in_buffer <= sizeof(u8)) {
+	      u64 bytes_read = funk2_pipe__try_read(&(this->parent_to_child_pipe), ch_buffer + bytes_in_buffer, sizeof(u8) - bytes_in_buffer);
+	      bytes_in_buffer += bytes_read;
+	      if (getppid() == 1) {
+		exit(0);
+	      }
+	    }
+	    memcpy(&ch, ch_buffer, sizeof(u8));
+	  }
 	  if (ch == 0) {
 	    break;
 	  }

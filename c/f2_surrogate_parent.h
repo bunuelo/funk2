@@ -59,8 +59,17 @@ typedef struct funk2_surrogate_parent_s {
   funk2_return_value_node_t* return_values;
 } funk2_surrogate_parent_t;
 
-void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this);
-void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this);
+void      funk2_surrogate_parent__init(funk2_surrogate_parent_t* this);
+void      funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this);
+void      funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this);
+void      funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command);
+void      funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command);
+boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_parent_t* this, f2ptr thread, funk2_return_result_t* result);
+boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr thread, funk2_return_result_t* result);
+
+// **
+
+void f2__surrogate_parent__initialize();
 
 #endif // F2__SURROGATE_PARENT__H
 

@@ -80,7 +80,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     u64 read_buffer__length = 128 * 1024;
     u8* read_buffer         = malloc(read_buffer__length);
     while (boolean__true) {
-      f2ptr thread; funk2_pipe__read(&(this->parent_to_child_pipe), &thread, sizeof(f2ptr));
+      f2ptr fiber; funk2_pipe__read(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
       u64 read_buffer__strlen;
       {
 	u64 index;
@@ -104,7 +104,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	u64 return_value = system((char*)read_buffer);
 	{
 	  funk2_return_result_t result;
-	  result.thread       = thread;
+	  result.fiber       = fiber;
 	  result.return_value = return_value;
 	  funk2_pipe__write(&(this->child_to_parent_pipe), &result, sizeof(funk2_return_result_t));
 	}
@@ -123,20 +123,20 @@ void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this) {
   funk2_processor_mutex__destroy(&(this->return_values__mutex));
 }
 
-void funk2_surrogate_parent__unsafe_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
-  funk2_pipe__write(&(this->parent_to_child_pipe), &thread, sizeof(f2ptr));
+void funk2_surrogate_parent__unsafe_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command) {
+  funk2_pipe__write(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
   funk2_pipe__write(&(this->parent_to_child_pipe), command, strlen((char*)command) + 1);
 }
 
-void funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
+void funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command) {
   funk2_processor_mutex__lock(&(this->write_to_child__mutex));
-  funk2_surrogate_parent__unsafe_start_system_command(this, thread, command);
+  funk2_surrogate_parent__unsafe_start_system_command(this, fiber, command);
   funk2_processor_mutex__unlock(&(this->write_to_child__mutex));
 }
 
-void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr thread, u8* command) {
+void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command) {
   funk2_processor_mutex__user_lock(&(this->write_to_child__mutex));
-  funk2_surrogate_parent__unsafe_start_system_command(this, thread, command);
+  funk2_surrogate_parent__unsafe_start_system_command(this, fiber, command);
   funk2_processor_mutex__unlock(&(this->write_to_child__mutex));
 }
 
@@ -161,15 +161,14 @@ void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
   } while ((read_byte_num > 0) && (read_byte_num < sizeof(u64)));
 }
 
-boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr thread, funk2_return_result_t* result) {
+boolean_t funk2_surrogate_parent__unsafe_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
   boolean_t return_value_available = boolean__false;
-  funk2_processor_mutex__user_lock(&(this->return_values__mutex));
   funk2_return_value_node_t* prev = NULL;
   funk2_return_value_node_t* iter = this->return_values;
   while (iter) {
     funk2_return_value_node_t* next        = iter->next;
     funk2_return_result_t*     iter_result = &(iter->result);
-    if (iter_result->thread == thread) {
+    if (iter_result->fiber == fiber) {
       memcpy(result, iter_result, sizeof(funk2_return_result_t));
       return_value_available = boolean__true;
       if (prev) {
@@ -182,7 +181,68 @@ boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent
     prev = iter;
     iter = next;
   }
+  return return_value_available;
+}
+
+boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
+  boolean_t return_value_available = boolean__false;
+  funk2_processor_mutex__lock(&(this->return_values__mutex));
+  return_value_available = funk2_surrogate_parent__user_check_return_value(this, fiber, result);
   funk2_processor_mutex__unlock(&(this->return_values__mutex));
   return return_value_available;
+}
+
+boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
+  boolean_t return_value_available = boolean__false;
+  funk2_processor_mutex__user_lock(&(this->return_values__mutex));
+  return_value_available = funk2_surrogate_parent__user_check_return_value(this, fiber, result);
+  funk2_processor_mutex__unlock(&(this->return_values__mutex));
+  return return_value_available;
+}
+
+void raw__surrogate_parent__start_system_command(f2ptr cause, u8* command) {
+  f2ptr fiber = f2__this__fiber(cause);
+  funk2_surrogate_parent__user_start_system_command(&(__funk2.surrogate_parent), fiber, command);
+}
+
+f2ptr f2__surrogate_parent__start_system_command(f2ptr cause, f2ptr command) {
+  if (! raw__string__is_type(cause, command)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 command__length = raw__string__length(cause, command);
+  u8* command__str    = alloca(command__length + 1);
+  raw__string__str_copy(cause, command, command__str);
+  command__str[command__length] = 0;
+  raw__surrogate_parent__start_system_command(cause, command__str);
+  return nil;
+}
+def_pcfunk1(surrogate_parent__start_system_command, command, return f2__surrogate_parent__start_system_command(this_cause, command));
+
+f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
+  f2ptr fiber = f2__this__fiber(cause);
+  funk2_return_result_t result;
+  boolean_t return_value_available = funk2_surrogate_parent__user_check_return_value(&(__funk2.surrogate_parent), fiber, &result);
+  if (return_value_available) {
+    return f2integer__new(cause, result.return_value);
+  }
+  return nil;
+}
+def_pcfunk0(surrogate_parent__check_return_value, return f2__surrogate_parent__check_return_value(this_cause));
+
+// **
+
+void f2__surrogate_parent__reinitialize_globalvars() {
+}
+
+void f2__surrogate_parent__initialize() {
+  f2ptr cause = initial_cause();
+  
+  funk2_module_registration__add_module(&(__funk2.module_registration), "surrogate_parent", "", &f2__surrogate_parent__reinitialize_globalvars);
+  
+  f2__surrogate_parent__reinitialize_globalvars();
+  
+  f2__primcfunk__init__1(surrogate_parent__start_system_command, command, "executes a system command as a new process.");
+  f2__primcfunk__init__0(surrogate_parent__check_return_value, "checks for the return value for a finished system command started by this fiber.");
+  
 }
 

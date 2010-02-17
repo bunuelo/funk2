@@ -135,7 +135,7 @@ void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
       funk2_processor_mutex__lock(&(this->return_values__mutex));
       {
 	funk2_return_value_node_t* new_node = (funk2_return_value_node_t*)malloc(sizeof(funk2_return_value_node_t));
-	memcpy(&(new_node->result), result, sizeof(funk2_return_result_t));
+	memcpy(&(new_node->result), &result, sizeof(funk2_return_result_t));
 	new_node->next = this->return_values;
 	this->return_values = new_node;
       }

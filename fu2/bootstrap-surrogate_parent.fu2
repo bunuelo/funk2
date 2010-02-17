@@ -17,12 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk system-command [command]
+[defunk system [command]
   [surrogate_parent-start_system_command command]
   [let [[result [surrogate_parent-check_return_value]]]
     [while [not result]
       [millisleep 100]
       [= result [surrogate_parent-check_return_value]]]
     result]]
-
 

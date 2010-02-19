@@ -106,7 +106,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	while (bytes_in_buffer < sizeof(f2ptr)) {
 	  u64 bytes_read = funk2_pipe__try_read(&(this->parent_to_child_pipe), f2ptr_buffer + bytes_in_buffer, sizeof(f2ptr) - bytes_in_buffer);
 	  bytes_in_buffer += bytes_read;
-	  if (getppid() == 1) {
+	  if (getppid() == 1) { // when parent has died, init takes over as parent.  init is process #1
 	    exit(0);
 	  }
 	  if (bytes_in_buffer == 0) {

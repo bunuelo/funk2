@@ -23,7 +23,7 @@
 [defunk strings-prog [:rest these]
   [strings-rawcode these]]
 
-[defunk graphviz-digraph [name :rest codes]
+[defunk graphviz-digraph [:rest codes]
   [strings-prog 'digraph G {'
 		[strings-rawcode codes]
 		'}']]
@@ -46,25 +46,59 @@
 [defunk graphviz-edge [from_node to_node]
   [format nil from_node ' -> ' to_node ';']]
 
+[defunk graphviz-to_string [exp]
+  [exp-to_string exp]]
+
+[defunk graphviz-labelize [exp]
+  [let [[result [graphviz-to_string exp]]]
+    [mapc [funk [replace_pair]
+		[let [[token       [first replace_pair]]
+		      [replacement [second replace_pair]]]
+		  [= result [have result replace_all token replacement]]]]
+	  `[[' ' '_SPACE_']
+	    ['-' '_DASH_']]]
+    result]]
+
+[defunk graphviz-edge_labelize [label left_node right_node]
+  [format nil 'LABEL__' [graphviz-labelize label] '__LEFT_NODE__' [graphviz-labelize left_node] '__RIGHT_NODE__' [graphviz-labelize right_node]]]
+
+[defunk graphviz-labelled_edge [label left_node right_node]
+  [let [[edge__labelized [graphviz-edge_labelize label left_node right_node]]]
+    [strings-rawcode `[,[graphviz-box_node edge__labelized label]
+			,[graphviz-edge_tail_head 'crow' 'none']
+			 ,[graphviz-edge [graphviz-labelize left_node] edge__labelized]
+			  ,[graphviz-edge_tail_head 'none' 'normal']
+			   ,[graphviz-edge edge__labelized [graphviz-labelize right_node]]]]]]
+
 [deftypefunk perception_graph get as-dot_code []
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
     [strings-prog [graphviz-digraph [graphviz-node_color '#000000']
 				    [graphviz-edge_color '#000000']
-				    [graphviz-node 'the_mud' 'the-mud']
-				    [graphviz-node 'the_bucket' 'the-bucket']
-				    [graphviz-node 'my_clothes' 'my-clothes']
-				    [graphviz-box_node 'the_bucket_contains_the_mud' 'contains']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'the_bucket' 'the_bucket_contains_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'the_bucket_contains_the_mud' 'the_mud']
-				    [graphviz-box_node 'my_clothes_are_made_dirty_by_the_mud' 'are-made-dirty-by']
-				    [graphviz-edge_tail_head 'crow' 'none']
-				    [graphviz-edge 'my_clothes' 'my_clothes_are_made_dirty_by_the_mud']
-				    [graphviz-edge_tail_head 'none' 'normal']
-				    [graphviz-edge 'my_clothes_are_made_dirty_by_the_mud' 'the_mud']
+				    [strings-rawcode [mapcar [funk [node]
+								   [graphviz-node [graphviz-labelize node] [graphviz-to_string node]]]
+							     [list `the-mud
+								    `the-bucket
+								     `my-clothes]]]
+				    [graphviz-labelled_edge `contains          `the-bucket `the-mud]
+				    [graphviz-labelled_edge `are-made-dirty-by `my-clothes `the-mud]
 				    ]]]]
+
+[defunk system-dot [dot_filename ps_filename]
+  [let [[command [string-concat 'dot -Tps -o' ps_filename ' ' dot_filename]]]
+    [if [!= 0 [system command]]
+	[error `runtime `[dot-command: ,command]]]]]
+
+[defunk system-gv [ps_filename]
+  [let [[command [string-concat 'gv ' ps_filename]]]
+    [if [!= 0 [system command]]
+	[error `runtime `[gv-command: ,command]]]]]
+
+
+[deftypefunk perception_graph execute gview []
+  [have [get this as-dot_code] save '/tmp/temp.dot']
+  [system-dot '/tmp/temp.dot' '/tmp/temp.ps']
+  [system-gv '/tmp/test.ps']]
 
 `[[[[
     [graphviz-node_color '#0000CC']

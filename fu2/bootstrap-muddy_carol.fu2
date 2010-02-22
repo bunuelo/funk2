@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2009 Bo Morgan.
+'Copyright (c) 2007-2009 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,8 +15,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
 [defunk muddy_carol-load_textures []
   [or [glwindow-load_texture `bucket_object               'data/bucket_object.bmp']
@@ -569,6 +567,7 @@
   [let [[perception glwindow_value]]
     `[print 'perceive_think_act: debug 0.']
      [have this handle_enable_random_move_goal]
+     
      [have this handle_put_object_at_goal]
      [have this handle_pick_up_object_goal]
      [have this handle_move_near_object_goal]

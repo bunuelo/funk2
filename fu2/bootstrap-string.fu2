@@ -50,6 +50,9 @@
 [defunk string-replace_all [this token replacement]
   [stringlist-intersperse [string-split this token] replacement]]
 
+[deftypefunk string execute replace_all [token replacement] [string-replace_all this token replacement]]
+[deftypefunk string execute read        []                  [string-read        this]]
+
 'tests'
 
 [defunk string_parse-test [exp]

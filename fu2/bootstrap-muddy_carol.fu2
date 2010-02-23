@@ -376,26 +376,29 @@
   [have this add `enable_random_move_goal enable_random_move_goal]
   nil]
 
+[deftypefunk female_child_agent execute choose_random_move_goal []
+  [let [[put_object_at_goal__object [have this lookup `put_object_at_goal__object]]]
+    [if [not put_object_at_goal__object]
+	[let [[random_object   [get carol_scene random_object]]
+	      [random_position [get carol_scene random_position]]]
+	  [if [and [is-type `physical_object random_object]
+		   [not [eq random_object carol]]
+		   [let [[transform [get random_object transform]]]
+		     [let [[object_position [get transform position]]
+			   [position        [get this      position]]]
+		       [let [[distance [get position distance object_position]]]
+			 [> distance arms_length]]]]]
+	      [prog [format stdout
+			    '\n'
+			    '\nenable_random_move_goal:'
+			    '\n  random_object = '   random_object
+			    '\n  random_position = ' random_position]
+		    [have this set_put_object_at_goal random_object random_position]]]]]]]  
+
 [deftypefunk female_child_agent execute handle_enable_random_move_goal []
   [let [[enable_random_move_goal [have this lookup `enable_random_move_goal]]]
     [if enable_random_move_goal
-	[let [[put_object_at_goal__object [have this lookup `put_object_at_goal__object]]]
-	  [if [not put_object_at_goal__object]
-	      [let [[random_object   [get carol_scene random_object]]
-		    [random_position [get carol_scene random_position]]]
-		[if [and [is-type `physical_object random_object]
-			 [not [eq random_object carol]]
-			 [let [[transform [get random_object transform]]]
-			   [let [[object_position [get transform position]]
-				 [position        [get this      position]]]
-			     [let [[distance [get position distance object_position]]]
-			       [> distance arms_length]]]]]
-		    [prog [format stdout
-				  '\n'
-				  '\nenable_random_move_goal:'
-				  '\n  random_object = '   random_object
-				  '\n  random_position = ' random_position]
-			  [have this set_put_object_at_goal random_object random_position]]]]]]]]
+	[have this choose_random_move_goal]]]
   nil]
 
 [deftypefunk female_child_agent execute set_put_object_at_goal [object position]
@@ -567,7 +570,7 @@
   [let [[perception glwindow_value]]
     `[print 'perceive_think_act: debug 0.']
      [have this handle_enable_random_move_goal]
-     
+
      [have this handle_put_object_at_goal]
      [have this handle_pick_up_object_goal]
      [have this handle_move_near_object_goal]

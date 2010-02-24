@@ -232,7 +232,7 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   u8* filename__str = alloca(filename__length + 1);
   f2string__str_copy(filename, cause, filename__str);
   filename__str[filename__length] = 0;
-  int fd = open((char*)filename__str, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+  int fd = open((char*)filename__str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
     return f2larva__new(cause, 89);
   }

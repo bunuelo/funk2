@@ -393,7 +393,7 @@
 			    '\nenable_random_move_goal:'
 			    '\n  random_object = '   random_object
 			    '\n  random_position = ' random_position]
-		    [have this set_put_object_at_goal random_object random_position]]]]]]]  
+		    [have this set_put_object_at_goal random_object random_position]]]]]]]
 
 [deftypefunk female_child_agent execute handle_enable_random_move_goal []
   [let [[enable_random_move_goal [have this lookup `enable_random_move_goal]]]

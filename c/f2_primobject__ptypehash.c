@@ -147,6 +147,14 @@ f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
 }
 def_pcfunk2(ptypehash__lookup, this, slot_name, return f2__ptypehash__lookup(this_cause, this, slot_name));
 
+boolean_t raw__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, this, key);
+  if (keyvalue_pair) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
 f2ptr f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
   f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
   {

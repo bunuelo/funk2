@@ -45,14 +45,15 @@ declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin
 
 declare_primobject_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array);
 
-f2ptr raw__ptypehash__new                       (f2ptr cause, s64 bin_num_power);
-f2ptr  f2__ptypehash__new                       (f2ptr cause);
-f2ptr  f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
-f2ptr  f2__ptypehash__lookup_keyvalue_pair      (f2ptr cause, f2ptr this, f2ptr key);
-f2ptr  f2__ptypehash__lookup                    (f2ptr cause, f2ptr this, f2ptr key);
-f2ptr  f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this);
-f2ptr  f2__ptypehash__an_arbitrary_key          (f2ptr cause, f2ptr this);
-f2ptr  f2__ptypehash__an_arbitrary_value        (f2ptr cause, f2ptr this);
+f2ptr     raw__ptypehash__new                       (f2ptr cause, s64 bin_num_power);
+f2ptr      f2__ptypehash__new                       (f2ptr cause);
+f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+f2ptr      f2__ptypehash__lookup_keyvalue_pair      (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__ptypehash__lookup                    (f2ptr cause, f2ptr this, f2ptr key);
+boolean_t raw__ptypehash__contains                  (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this);
+f2ptr      f2__ptypehash__an_arbitrary_key          (f2ptr cause, f2ptr this);
+f2ptr      f2__ptypehash__an_arbitrary_value        (f2ptr cause, f2ptr this);
 
 f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 

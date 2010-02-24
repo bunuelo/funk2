@@ -2777,10 +2777,6 @@ f2ptr f2__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(simple_array__equals, this, that, return f2__simple_array__equals(this_cause, this, that));
 
-u64 raw__simple_array__equals_hash_value(f2ptr cause, f2ptr this) {
-  return raw__simple_array__eq_hash_value(cause, this);
-}
-
 f2ptr f2__simple_array__equals_hash_value(f2ptr cause, f2ptr this) {
   return f2__array__equals_hash_value(cause, this);
 }

@@ -133,6 +133,21 @@ f2ptr f2__perception_graph__node__ins(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(perception_graph__node__ins, this, node, return f2__perception_graph__node__ins(this_cause, this, node));
 
+
+f2ptr raw__perception_graph__node__ins__set(f2ptr cause, f2ptr this, f2ptr node, f2ptr ins) {
+  f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
+  return f2__cons__car__set(cause, ins_and_outs, ins);
+}
+
+f2ptr f2__perception_graph__node__ins__set(f2ptr cause, f2ptr this, f2ptr node, f2ptr ins) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__node__ins__set(cause, this, node, ins);
+}
+def_pcfunk3(perception_graph__node__ins__set, this, node, ins, return f2__perception_graph__node__ins__set(this_cause, this, node, ins));
+
+
 f2ptr raw__perception_graph__node__outs(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
   return f2__cons__cdr(cause, ins_and_outs);
@@ -145,6 +160,21 @@ f2ptr f2__perception_graph__node__outs(f2ptr cause, f2ptr this, f2ptr node) {
   return raw__perception_graph__node__outs(cause, this, node);
 }
 def_pcfunk2(perception_graph__node__outs, this, node, return f2__perception_graph__node__outs(this_cause, this, node));
+
+
+f2ptr raw__perception_graph__node__outs__set(f2ptr cause, f2ptr this, f2ptr node, f2ptr outs) {
+  f2ptr ins_and_outs = f2__perception_graph__node__ins_and_outs(cause, this, node);
+  return f2__cons__cdr__set(cause, ins_and_outs, outs);
+}
+
+f2ptr f2__perception_graph__node__outs__set(f2ptr cause, f2ptr this, f2ptr node, f2ptr outs) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__node__outs__set(cause, this, node, outs);
+}
+def_pcfunk3(perception_graph__node__outs__set, this, node, outs, return f2__perception_graph__node__outs__set(this_cause, this, node, outs));
+
 
 boolean_t raw__perception_graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   if ((! raw__perception_graph__contains_node(cause, this, left_node)) ||
@@ -675,6 +705,86 @@ f2ptr f2__perception_graph__union(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(perception_graph__union, this, that, return f2__perception_graph__union(this_cause, this, that));
 
+boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  boolean_t left_node__outs__was_removed = boolean__false;
+  f2ptr     left_node__outs              = raw__perception_graph__node__outs(cause, this, left_node);
+  {
+    f2ptr prev = nil;
+    f2ptr iter = left_node__outs;
+    while (iter) {
+      f2ptr next = f2__cons__cdr(cause, iter);
+      f2ptr edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+	f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	if (raw__eq(cause, edge__label,      label)     &&
+	    raw__eq(cause, edge__left_node,  left_node) &&
+	    raw__eq(cause, edge__right_node, right_node)) {
+	  if (prev) {
+	    f2__cons__cdr__set(cause, prev, next);
+	  } else {
+	    raw__perception_graph__node__outs__set(cause, this, left_node, next);
+	  }
+	  left_node__outs__was_removed = boolean__true;
+	}
+      }
+      prev = iter;
+      iter = next;
+    }
+  }
+  boolean_t right_node__ins__was_removed = boolean__false;
+  f2ptr     right_node__ins              = raw__perception_graph__node__ins(cause, this, right_node);
+  {
+    f2ptr prev = nil;
+    f2ptr iter = right_node__ins;
+    while (iter) {
+      f2ptr next = f2__cons__cdr(cause, iter);
+      f2ptr edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+	f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	if (raw__eq(cause, edge__label,      label)     &&
+	    raw__eq(cause, edge__left_node,  left_node) &&
+	    raw__eq(cause, edge__right_node, right_node)) {
+	  if (prev) {
+	    f2__cons__cdr__set(cause, prev, next);
+	  } else {
+	    raw__perception_graph__node__ins__set(cause, this, right_node, next);
+	  }
+	  right_node__ins__was_removed = boolean__true;
+	}
+      }
+      prev = iter;
+      iter = next;
+    }
+  }
+  release_assert(left_node__outs__was_removed == right_node__outs__was_removed, nil, "(left_node__outs__was_removed != right_node__outs__was_removed)");
+  return left_node__outs__was_removed;
+}
+
+f2ptr f2__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__perception_graph__subtract_edge(cause, this, label, left_node, right_node));
+}
+def_pcfunk4(perception_graph__subtract_edge, this, label, left_node, right_node, return f2__perception_graph__subtract_edge(this_cause, this, label, left_node, right_node));
+
+f2ptr raw__perception_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
+}
+
+f2ptr f2__perception_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__perception_graph__is_type(cause, this)) ||
+      (! raw__perception_graph__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__subtract(cause, this, that);
+}
+def_pcfunk2(perception_graph__subtract, this, that, return f2__perception_graph__subtract(this_cause, this, that));
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -701,12 +811,14 @@ void f2__perception_lattice__initialize() {
   {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(perception_graph__equals_hash_value, this, cfunk, 0, "calculates the equals_hash_value for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__2(perception_graph__add_node,           this, node, "add a node to a graph by mutation.");
+  f2__primcfunk__init__2(perception_graph__add_node,           this, node,                         "add a node to a graph by mutation.");
   f2__primcfunk__init__4(perception_graph__add_edge,           this, label, left_node, right_node, "add an edge to a graph by mutation.");
-  f2__primcfunk__init__2(perception_graph__node__ins_and_outs, this, node, "get in and out edges of a node.");
-  f2__primcfunk__init__2(perception_graph__contains_node,      this, node, "returns boolean true if this graph contains node.");
-  f2__primcfunk__init__2(perception_graph__node__ins,          this, node, "returns node in edges.");
-  f2__primcfunk__init__2(perception_graph__node__outs,         this, node, "returns node out edges.");
+  f2__primcfunk__init__2(perception_graph__node__ins_and_outs, this, node,                         "get in and out edges of a node.");
+  f2__primcfunk__init__2(perception_graph__contains_node,      this, node,                         "returns boolean true if this graph contains node.");
+  f2__primcfunk__init__2(perception_graph__node__ins,          this, node,                         "returns node in edges.");
+  f2__primcfunk__init__3(perception_graph__node__ins__set,     this, node, ins,                    "sets node in edges.");
+  f2__primcfunk__init__2(perception_graph__node__outs,         this, node,                         "returns node out edges.");
+  f2__primcfunk__init__3(perception_graph__node__outs__set,    this, node, outs,                   "sets node out edges.");
   f2__primcfunk__init__4(perception_graph__contains_edge,      this, label, left_node, right_node, "returns boolean true if this graph contains edge.");
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
@@ -715,6 +827,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__1(perception_graph__subgraphs, this, "returns all subgraphs of graph.");
   f2__primcfunk__init__2(perception_graph__intersect, this, that, "returns the intersection of two graphs.");
   f2__primcfunk__init__2(perception_graph__union, this, that, "returns the union of two graphs.");
-  
+  f2__primcfunk__init__4(perception_graph__subtract_edge, this, label, left_node, right_node, "subtract an edge from a perception graph.");
+  f2__primcfunk__init__2(perception_graph__subtract, this, that, "subtract edges in that graph from this graph.");
 }
 

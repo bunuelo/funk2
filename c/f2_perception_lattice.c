@@ -761,7 +761,7 @@ boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr la
     }
   }
   boolean_t edges__was_removed = boolean__false;
-  f2ptr edges = raw__perception_graph__edges(cause, this);
+  f2ptr edges = f2__perception_graph__edges(cause, this);
   {
     f2ptr prev = nil;
     f2ptr iter = edges;

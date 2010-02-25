@@ -760,7 +760,34 @@ boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr la
       iter = next;
     }
   }
-  release__assert(left_node__outs__was_removed == right_node__ins__was_removed, nil, "(left_node__outs__was_removed != right_node__ins__was_removed)");
+  boolean_t edges__was_removed = boolean__false;
+  f2ptr edges = raw__perception_graph__edges(cause, this);
+  {
+    f2ptr prev = nil;
+    f2ptr iter = edges;
+    while (iter) {
+      f2ptr next = f2__cons__cdr(cause, iter);
+      f2ptr edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label      = f2__perception_graph_edge__label(     cause, edge);
+	f2ptr edge__left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	f2ptr edge__right_node = f2__perception_graph_edge__right_node(cause, edge);
+	if (raw__eq(cause, edge__label,      label)     &&
+	    raw__eq(cause, edge__left_node,  left_node) &&
+	    raw__eq(cause, edge__right_node, right_node)) {
+	  if (prev) {
+	    f2__cons__cdr__set(cause, prev, next);
+	  } else {
+	    raw__perception_graph__edges__set(cause, this, next);
+	  }
+	  edges__was_removed = boolean__true;
+	}
+      }
+      prev = iter;
+      iter = next;
+    }
+  }
+  release__assert(left_node__outs__was_removed == right_node__ins__was_removed && right_node__ins__was_removed == edges__removed, nil, "!(left_node__outs__was_removed == right_node__ins__was_removed == edges__removed)");
   return left_node__outs__was_removed;
 }
 

@@ -778,7 +778,7 @@ boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr la
 	  if (prev) {
 	    f2__cons__cdr__set(cause, prev, next);
 	  } else {
-	    raw__perception_graph__edges__set(cause, this, next);
+	    f2__perception_graph__edges__set(cause, this, next);
 	  }
 	  edges__was_removed = boolean__true;
 	}

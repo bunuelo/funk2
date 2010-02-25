@@ -787,7 +787,7 @@ boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr la
       iter = next;
     }
   }
-  release__assert(left_node__outs__was_removed == right_node__ins__was_removed && right_node__ins__was_removed == edges__removed, nil, "!(left_node__outs__was_removed == right_node__ins__was_removed == edges__removed)");
+  release__assert(left_node__outs__was_removed == right_node__ins__was_removed && right_node__ins__was_removed == edges__was_removed, nil, "!(left_node__outs__was_removed == right_node__ins__was_removed == edges__was_removed)");
   return left_node__outs__was_removed;
 }
 

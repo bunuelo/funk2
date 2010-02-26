@@ -905,7 +905,8 @@ f2ptr f2__perception_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
       (! raw__perception_graph__is_type(cause, that))) {
     return f2larva__new(cause, 1);
   }
-  return raw__perception_graph__subtract(cause, this, that);
+  raw__perception_graph__subtract(cause, this, that);
+  return nil;
 }
 def_pcfunk2(perception_graph__subtract, this, that, return f2__perception_graph__subtract(this_cause, this, that));
 

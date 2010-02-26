@@ -63,6 +63,7 @@ def_pcfunk2(perception_graph__add_node, this, node, return f2__perception_graph_
 
 
 boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node) {
+  boolean_t node_was_removed = boolean__false;
   f2ptr edges_node_hash = f2__perception_graph__edges_node_hash(cause, this);
   f2ptr node_ins_and_outs = f2__ptypehash__lookup(cause, edges_node_hash, node);
   if (node_ins_and_outs) {
@@ -97,7 +98,9 @@ boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr no
       }
     }
     raw__ptypehash__remove(cause, edges_node_hash, node);
+    node_was_removed = boolean__true;
   }
+  return node_was_removed;
 }
 
 f2ptr f2__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node) {

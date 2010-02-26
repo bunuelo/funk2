@@ -72,7 +72,7 @@ void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptypehash__bin_array__set(    this, cause, f2ptypehash__bin_array(    temp_ptypehash, cause));
 }
 
-f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
   f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
@@ -110,7 +110,63 @@ f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
   return nil;
 }
+
+f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  if (! raw__ptypehash__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__ptypehash__add(cause, this, key, value);
+}
 def_pcfunk3(ptypehash__add, this, slot_name, value, return f2__ptypehash__add(this_cause, this, slot_name, value));
+
+boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
+  boolean_t key_was_removed = boolean__false;
+  f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
+  {
+    f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
+    u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
+    f2ptr bin_array        = f2ptypehash__bin_array(this, cause);
+    u64   key__hash_value  = raw__eq_hash_value(cause, key);
+    u64   hash_value       = (key__hash_value * PRIME_NUMBER__16_BIT);
+    u64   hash_value_mask  = (0xffffffffffffffffll >> (64 - bin_num_power__i));
+    u64   index            = hash_value & hash_value_mask;
+    {
+      f2ptr prev = nil;
+      f2ptr iter = raw__array__elt(cause, bin_array, index);
+      while(iter) {
+	f2ptr next               = f2cons__cdr(iter, cause);
+	f2ptr keyvalue_pair      = f2cons__car(iter, cause);
+	f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
+	if (raw__eq(cause, key, keyvalue_pair__key)) {
+	  if (prev) {
+	    f2cons__cdr__set(prev, cause, next);
+	  } else {
+	    raw__array__elt__set(cause, bin_array, index, next);
+	  }
+	  s64 key_count__i = f2integer__i(f2ptypehash__key_count(this, cause), cause);
+	  {
+	    key_count__i --;
+	    f2ptypehash__key_count__set(this, cause, f2integer__new(cause, key_count__i));
+	  }
+	  key_was_removed = boolean__true;
+	  break;
+	}
+	iter = next;
+      }
+    }
+  }
+  f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+  return key_was_removed;
+}
+
+f2ptr f2__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__ptypehash__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__ptypehash__remove(cause, this, key));
+}
+def_pcfunk2(ptypehash__remove, this, key, return f2__ptypehash__remove(this_cause, this, key));
 
 f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
@@ -214,6 +270,7 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2ptypehash__primobject_type__new(cause);
   {char* slot_name = "slot_names";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.slot_names__funk);}
   {char* slot_name = "add";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk);}
+  {char* slot_name = "remove";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk);}
   {char* slot_name = "lookup";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk);}
   return this;
 }
@@ -239,6 +296,8 @@ void f2__primobject_ptypehash__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__slot_names, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.slot_names__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk = never_gc(cfunk);}
+  {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__remove, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk = never_gc(cfunk);}
   

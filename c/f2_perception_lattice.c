@@ -61,6 +61,20 @@ f2ptr f2__perception_graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 def_pcfunk2(perception_graph__add_node, this, node, return f2__perception_graph__add_node(this_cause, this, node));
 
+
+//boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node) {
+//  f2ptr edges_node_hash = f2__perception_graph__edges_node_hash(cause, this);
+//  //f2__ptypehash__lookup(cause, edges_node_hash, node);
+//}
+
+//f2ptr f2__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node) {
+//  if (! raw__perception_graph__is_type(cause, this)) {
+//    return f2larva__new(cause, 1);
+//  }
+//  return raw__perception_graph__subtract_node(cause, this, node);
+//}
+
+
 f2ptr raw__perception_graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edge                    = f2perception_graph_edge__new(cause, label, left_node, right_node);
   f2ptr left_node_ins_and_outs  = f2__perception_graph__add_node(cause, this, left_node);
@@ -724,13 +738,21 @@ boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr la
 	  if (prev) {
 	    f2__cons__cdr__set(cause, prev, next);
 	  } else {
-	    raw__perception_graph__node__outs__set(cause, this, left_node, next);
+	    left_node__outs = next;
+	    raw__perception_graph__node__outs__set(cause, this, left_node, left_node__outs);
 	  }
 	  left_node__outs__was_removed = boolean__true;
 	}
       }
       prev = iter;
       iter = next;
+    }
+  }
+  if (left_node__outs == nil) {
+    f2ptr left_node__ins = raw__perception_graph__node__ins(cause, this, left_node);
+    if (left_node__ins == nil) {
+      
+      // remove left_node
     }
   }
   boolean_t right_node__ins__was_removed = boolean__false;
@@ -751,13 +773,20 @@ boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr la
 	  if (prev) {
 	    f2__cons__cdr__set(cause, prev, next);
 	  } else {
-	    raw__perception_graph__node__ins__set(cause, this, right_node, next);
+	    right_node__ins = next;
+	    raw__perception_graph__node__ins__set(cause, this, right_node, right_node__ins);
 	  }
 	  right_node__ins__was_removed = boolean__true;
 	}
       }
       prev = iter;
       iter = next;
+    }
+  }
+  if (right_node__ins == nil) {
+    f2ptr right_node__outs = raw__perception_graph__node__outs(cause, this, right_node);
+    if (right_node__outs == nil) {
+      // remove right_node
     }
   }
   boolean_t edges__was_removed = boolean__false;

@@ -30,6 +30,8 @@ declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin
 			   f2ptr slot_names__funk;
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
+			   f2ptr remove__symbol;
+			   f2ptr remove__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
 			   );
@@ -48,6 +50,8 @@ declare_primobject_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_
 f2ptr     raw__ptypehash__new                       (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__ptypehash__new                       (f2ptr cause);
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+boolean_t raw__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__lookup_keyvalue_pair      (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__lookup                    (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__ptypehash__contains                  (f2ptr cause, f2ptr this, f2ptr key);

@@ -883,7 +883,7 @@ f2ptr f2__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, 
 def_pcfunk4(perception_graph__subtract_edge, this, label, left_node, right_node, return f2__perception_graph__subtract_edge(this_cause, this, label, left_node, right_node));
 
 void raw__perception_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr edges = f2__perception_graph__edges(cause, this);
+  f2ptr edges = f2__perception_graph__edges(cause, that);
   {
     f2ptr iter = edges;
     while (iter) {
@@ -893,7 +893,7 @@ void raw__perception_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
 	f2ptr label      = f2__perception_graph_edge__label(     cause, edge);
 	f2ptr left_node  = f2__perception_graph_edge__left_node( cause, edge);
 	f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
-	raw__perception_graph__subtract_edge(cause, label, left_node, right_node);
+	raw__perception_graph__subtract_edge(cause, this, label, left_node, right_node);
       }
       iter = next;
     }

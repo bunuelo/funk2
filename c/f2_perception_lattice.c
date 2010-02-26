@@ -63,8 +63,8 @@ def_pcfunk2(perception_graph__add_node, this, node, return f2__perception_graph_
 
 
 boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node) {
-  boolean_t node_was_removed = boolean__false;
   f2ptr edges_node_hash = f2__perception_graph__edges_node_hash(cause, this);
+  boolean_t node_was_removed = raw__ptypehash__contains(cause, edges_node_hash, node);
   f2ptr node_ins_and_outs = f2__ptypehash__lookup(cause, edges_node_hash, node);
   if (node_ins_and_outs) {
     f2ptr ins  = f2__cons__car(cause, node_ins_and_outs);
@@ -97,9 +97,8 @@ boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr no
 	iter = next;
       }
     }
-    raw__ptypehash__remove(cause, edges_node_hash, node);
-    node_was_removed = boolean__true;
   }
+  raw__ptypehash__remove(cause, edges_node_hash, node);
   return node_was_removed;
 }
 
@@ -107,7 +106,7 @@ f2ptr f2__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (! raw__perception_graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return raw__perception_graph__subtract_node(cause, this, node);
+  return f2bool__new(raw__perception_graph__subtract_node(cause, this, node));
 }
 def_pcfunk2(perception_graph__subtract_node, this, node, return f2__perception_graph__subtract_node(this_cause, this, node));
 

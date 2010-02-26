@@ -99,6 +99,23 @@ boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr no
     }
   }
   raw__ptypehash__remove(cause, edges_node_hash, node);
+  f2ptr nodes = f2__perception_graph__nodes(cause, this);
+  {
+    f2ptr prev = nil;
+    f2ptr iter = nodes;
+    while (iter) {
+      f2ptr next = f2__cons__cdr(cause, iter);
+      f2ptr nodes__node = f2__cons__car(cause, iter);
+      if (raw__eq(cause, nodes__node, node)) {
+	if (prev) {
+	  f2__cons__cdr__set(cause, prev, next);
+	} else {
+	  f2__perception_graph__nodes__set(cause, this, next);
+	}
+      }
+      iter = next;
+    }
+  }
   return node_was_removed;
 }
 

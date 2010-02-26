@@ -33,6 +33,7 @@
 [globalize-funk perception_graph-union                   &primfunk:perception_graph__union]
 [globalize-funk perception_graph-subtract_node           &primfunk:perception_graph__subtract_node]
 [globalize-funk perception_graph-subtract_edge           &primfunk:perception_graph__subtract_edge]
+[globalize-funk perception_graph-copy                    &primfunk:perception_graph__copy]
 [globalize-funk perception_graph-subtract                &primfunk:perception_graph__subtract]
 
 

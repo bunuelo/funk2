@@ -31,5 +31,6 @@
 [deftypefunk perception_graph execute union                   [that]                            [perception_graph-union                   this that]]
 [deftypefunk perception_graph execute subtract_node           [node]                            [perception_graph-subtract_node           this node]]
 [deftypefunk perception_graph execute subtract_edge           [label left_node right_node]      [perception_graph-subtract_edge           this label left_node right_node]]
+[deftypefunk perception_graph execute copy                    []                                [perception_graph-copy                    this]]
 [deftypefunk perception_graph execute subtract                [that]                            [perception_graph-subtract                this that]]
 

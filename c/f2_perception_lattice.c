@@ -882,6 +882,43 @@ f2ptr f2__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, 
 }
 def_pcfunk4(perception_graph__subtract_edge, this, label, left_node, right_node, return f2__perception_graph__subtract_edge(this_cause, this, label, left_node, right_node));
 
+f2ptr raw__perception_graph__copy(f2ptr cause, f2ptr this) {
+  f2ptr new_graph = f2__perception_graph__new(cause);
+  f2ptr nodes = f2__perception_graph__nodes(cause, this);
+  {
+    f2ptr iter = nodes;
+    while (iter) {
+      f2ptr node = f2__cons__car(cause, iter);
+      raw__perception_graph__add_node(cause, new_graph, node);
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  f2ptr edges = f2__perception_graph__edges(cause, this);
+  {
+    f2ptr iter = edges;
+    while (iter) {
+      f2ptr edge = f2__cons__car(cause, iter);
+      {
+	f2ptr label      = f2__perception_graph_edge__label(     cause, edge);
+	f2ptr left_node  = f2__perception_graph_edge__left_node( cause, edge);
+	f2ptr right_node = f2__perception_graph_edge__right_node(cause, edge);
+	raw__perception_graph__add_edge(cause, new_graph, label, left_node, right_node);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return new_graph;
+}
+
+f2ptr f2__perception_graph__copy(f2ptr cause, f2ptr this) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__copy(cause, this);
+}
+def_pcfunk1(perception_graph__copy, this, return f2__perception_graph__copy(this_cause, this));
+
+
 void raw__perception_graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr edges = f2__perception_graph__edges(cause, that);
   {
@@ -954,6 +991,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__2(perception_graph__union, this, that, "returns the union of two graphs.");
   f2__primcfunk__init__2(perception_graph__subtract_node, this, node, "subtract node from this graph.");
   f2__primcfunk__init__4(perception_graph__subtract_edge, this, label, left_node, right_node, "subtract an edge from a perception graph.");
+  f2__primcfunk__init__1(perception_graph__copy, this, "returns a copy of this graph.");
   f2__primcfunk__init__2(perception_graph__subtract, this, that, "subtract edges in that graph from this graph.");
 }
 

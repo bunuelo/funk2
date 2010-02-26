@@ -113,6 +113,7 @@ boolean_t raw__perception_graph__subtract_node(f2ptr cause, f2ptr this, f2ptr no
 	  f2__perception_graph__nodes__set(cause, this, next);
 	}
       }
+      prev = iter;
       iter = next;
     }
   }

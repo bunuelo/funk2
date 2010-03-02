@@ -83,6 +83,8 @@ typedef struct funk2_object_type__array__slot_s {
   f2ptr equals__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
   f2ptr elt__symbol;
   f2ptr elt__funk;
   f2ptr elt__set__symbol;

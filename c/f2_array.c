@@ -167,7 +167,7 @@ def_pcfunk2(array__equals, this, that, return f2__array__equals(this_cause, this
 
 f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   u64 hash_value = 1;
-  if (! raw__ptypehash__contains(cause, node_hash, this__subexp)) {
+  if (! raw__ptypehash__contains(cause, node_hash, this)) {
     raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
     s64 this__length = raw__array__length(cause, this);
     hash_value += this__length;

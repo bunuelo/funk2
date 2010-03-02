@@ -165,25 +165,48 @@ f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(array__equals, this, that, return f2__array__equals(this_cause, this, that));
 
+f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  raw__ptypehash__add(cause, node_hash, this);
+  {
+    s64 this__length = raw__array__length(cause, this);
+    u64 hash_value   = 1 + this__length;
+    s64 index;
+    for (index = 0; index < this__length; index ++) {
+      f2ptr this__subexp = raw__array__elt(cause, this, index);
+      if (! raw__ptypehash__contains(cause, node_hash, this__subexp)) {
+	if (this__subexp) {
+	  f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, this__subexp, node_hash);
+	  if (! raw__integer__is_type(cause, subexp__hash_value)) {
+	    return f2larva__new(cause, 4);
+	  }
+	  u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+	  hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
+	}
+      }
+    }
+  }
+  return f2integer__new(cause, hash_value);
+}
+
+f2ptr f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  if ((! raw__array__is_type(cause, this)) ||
+      (! raw__ptypehash__is_type(cause, this))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
+}
+def_pcfunk2(array__equals_hash_value__loop_free, this, node_hash, return f2__array__equals_hash_value__loop_free(this_cause, this, node_hash));
+
+f2ptr raw__array__equals_hash_value(f2ptr cause, f2ptr this) {
+  f2ptr node_hash = f2__ptypehash__new(cause);
+  return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
+}
+
 f2ptr f2__array__equals_hash_value(f2ptr cause, f2ptr this) {
   if (! raw__array__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  s64 this__length = raw__array__length(cause, this);
-  u64 hash_value   = 1 + this__length;
-  s64 index;
-  for (index = 0; index < this__length; index ++) {
-    f2ptr this__subexp = raw__array__elt(cause, this, index);
-    if (this__subexp) {
-      f2ptr subexp__hash_value = f2__object__equals_hash_value(cause, this__subexp);
-      if (! raw__integer__is_type(cause, subexp__hash_value)) {
-	return f2larva__new(cause, 4);
-      }
-      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
-      hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
-    }
-  }
-  return f2integer__new(cause, hash_value);
+  return raw__array__equals_hash_value(cause, this);
 }
 def_pcfunk1(array__equals_hash_value, this, return f2__array__equals_hash_value(this_cause, this));
 

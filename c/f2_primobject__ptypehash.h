@@ -49,6 +49,7 @@ declare_primobject_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_
 
 f2ptr     raw__ptypehash__new                       (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__ptypehash__new                       (f2ptr cause);
+f2ptr     raw__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 boolean_t raw__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);

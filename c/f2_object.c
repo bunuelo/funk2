@@ -257,7 +257,7 @@ def_pcfunk2(object__equals, this, that, return f2__object__equals(this_cause, th
 f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   return f2__object__get_1(cause, this, __funk2.globalenv.equals_hash_value__loop_free__symbol, node_hash);
 }
-def_pcfunk1(object__equals_hash_value__loop_free, this, node_hash, return f2__object__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(object__equals_hash_value__loop_free, this, node_hash, return f2__object__equals_hash_value__loop_free(this_cause, this, node_hash));
 
 f2ptr f2__object__equals_hash_value(f2ptr cause, f2ptr this) {
   return f2__object__get_0(cause, this, __funk2.globalenv.equals_hash_value__symbol);

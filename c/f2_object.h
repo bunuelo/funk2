@@ -28,6 +28,7 @@ typedef struct funk2_object_s {
   f2ptr object__eq_hash_value__funk;
   f2ptr object__eq__funk;
   f2ptr object__equals_hash_value__funk;
+  f2ptr object__equals_hash_value__loop_free__funk;
   f2ptr object__equals__funk;
 } funk2_object_t;
 

@@ -117,6 +117,7 @@ void f2__initialize() {
   f2__primes__initialize();
   f2__number__initialize();
   f2__surrogate_parent__initialize();
+  f2__graphviz__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

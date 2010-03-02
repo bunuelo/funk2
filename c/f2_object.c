@@ -254,6 +254,11 @@ f2ptr f2__object__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(object__equals, this, that, return f2__object__equals(this_cause, this, that));
 
+f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  return f2__object__get_1(cause, this, __funk2.globalenv.equals_hash_value__loop_free__symbol, node_hash);
+}
+def_pcfunk1(object__equals_hash_value__loop_free, this, node_hash, return f2__object__equals_hash_value__loop_free(this_cause, this, node_hash));
+
 f2ptr f2__object__equals_hash_value(f2ptr cause, f2ptr this) {
   return f2__object__get_0(cause, this, __funk2.globalenv.equals_hash_value__symbol);
 }
@@ -352,10 +357,11 @@ void f2__object__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                this, that, cfunk, 2, "returns whether two objects are eq according to the source object eq function.");        __funk2.object.object__eq__funk                = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,     this,       cfunk, 1, "returns the eq_hash_value of the object.");                                              __funk2.object.object__eq_hash_value__funk     = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,            this, that, cfunk, 2, "returns whether two objects are equal according to the source object equals function."); __funk2.object.object__equals__funk            = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value, this,       cfunk, 1, "returns the equals_hash_value of the object.");                                          __funk2.object.object__equals_hash_value__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                           this, that, cfunk, 0, "returns whether two objects are eq according to the source object eq function.");        __funk2.object.object__eq__funk                           = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,       cfunk, 0, "returns the eq_hash_value of the object.");                                              __funk2.object.object__eq_hash_value__funk                = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,                       this, that, cfunk, 0, "returns whether two objects are equal according to the source object equals function."); __funk2.object.object__equals__funk                       = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value,            this,       cfunk, 0, "returns the equals_hash_value of the object.");                                          __funk2.object.object__equals_hash_value__funk            = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this,       cfunk, 0, "returns the equals_hash_value of the object when a node_hash is supplied.");             __funk2.object.object__equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__1(object__type,              this,                       "returns the symbolic type name of the object.");
   f2__primcfunk__init__3(object__slot__type_funk,   this, slot_type, slot_name, "returns the slot type funk for the object (e.g. types: get, set, execute).");

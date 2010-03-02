@@ -102,9 +102,9 @@
 
 
 [deftypefunk perception_graph execute gview []
-  [have [get this as-dot_code] save '/tmp/temp.dot']
-  [system-dot '/tmp/temp.dot' '/tmp/temp.ps']
-  [system-gv '/tmp/temp.ps']]
+  [have [get this as-dot_code] save 'graphviz-temp.dot']
+  [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
+  [system-gv 'graphviz-temp.ps']]
 
 [defunk perception_graph-test_gview []
   [let [[this [new perception_graph]]]

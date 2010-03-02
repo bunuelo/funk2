@@ -53,6 +53,7 @@
 #include "f2_garbage_collector_pool.h"
 #include "f2_globalenv.h"
 #include "f2_glwindow.h"
+#include "f2_graphviz.h"
 #include "f2_html.h"
 #include "f2_load.h"
 #include "f2_malloc.h"

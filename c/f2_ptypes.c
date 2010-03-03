@@ -4025,7 +4025,7 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__equals_hash_value__loop_free, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__equals_hash_value__loop_free, this, node_hash, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk = never_gc(cfunk);}
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
@@ -4050,7 +4050,7 @@ void f2__ptypes__initialize__object_slots() {
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_array__equals_hash_value__loop_free, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__equals_hash_value__loop_free, this, node_hash, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_array__elt, this, index, cfunk, 0, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk = never_gc(cfunk);}
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

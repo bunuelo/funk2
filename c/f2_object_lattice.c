@@ -48,7 +48,7 @@ void object_lattice__scan_and_incorporate_leafs__object_slot_helper(f2ptr cause,
     //printf("\nobject_slot:");
     //f2__print(cause, fiber, slot_name);
     f2ptr slot_funk = f2__object__slot__type_funk(cause, object, __funk2.globalenv.get__symbol, slot_name);
-    f2ptr slot_value = f2__force_funk_apply(cause, slot_funk, f2cons__new(cause, object, nil));
+    f2ptr slot_value = f2__force_funk_apply(cause, f2__this__fiber(cause), slot_funk, f2cons__new(cause, object, nil));
     //f2__print(cause, fiber, slot_value);
     f2__object_lattice__scan_and_incorporate_leafs(cause, this, slot_value, start_nanoseconds_since_1970);
   }

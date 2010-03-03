@@ -50,6 +50,7 @@ declare_primobject_3_slot(perception_graph_edge, label, left_node, right_node);
 // perception_graph
 declare_primobject_4_slot(perception_graph, nodes, edges, edges_node_hash, edge_structure_hash_value);
 
+f2ptr      f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__perception_graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
 
 f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause);

@@ -256,7 +256,7 @@ f2ptr raw__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
 
 f2ptr f2__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   if ((! raw__frame__is_type(cause, this)) ||
-      (! raw__pytypehash__is_type(cause, node_hash))) {
+      (! raw__ptypehash__is_type(cause, node_hash))) {
     return f2larva__new(cause, 1);
   }
   return raw__frame__equals_hash_value__loop_free(cause, this, node_hash);

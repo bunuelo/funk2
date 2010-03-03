@@ -3492,7 +3492,7 @@ u32 raw__larva__larva_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__larva__larva_type(f2ptr cause, f2ptr this) {
-  return f2integer__new(this_cause, raw__larva__larva_type(cause, this));
+  return f2integer__new(cause, raw__larva__larva_type(cause, this));
 }
 
 def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));

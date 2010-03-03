@@ -221,11 +221,13 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
+#define object__get__no_such_slot 789
+
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
-    return f2larva__new(cause, 789);
+    return f2larva__new(cause, object__get__no_such_slot);
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
 }
@@ -234,7 +236,7 @@ f2ptr f2__object__get_1(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {
-    return f2larva__new(cause, 789);
+    return f2larva__new(cause, object__get__no_such_slot);
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, nil)));
 }
@@ -256,7 +258,7 @@ def_pcfunk2(object__equals, this, that, return f2__object__equals(this_cause, th
 
 f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   f2ptr result = f2__object__get_1(cause, this, __funk2.globalenv.equals_hash_value__loop_free__symbol, node_hash);
-  if (raw__larva__is_type(cause, result)) {
+  if (raw__larva__is_type(cause, result) && raw__larva__type(cause, result) == object__get__no_such_slot) {
     result = f2__object__get_0(cause, this, __funk2.globalenv.equals_hash_value__symbol);
   }
   return result;

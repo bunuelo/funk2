@@ -250,8 +250,44 @@ f2ptr f2__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f
 }
 def_pcfunk3(frame__check_has_type_slot, this, type_name, slot_name, return f2__frame__check_has_type_slot(this_cause, this, type_name, slot_name));
 
+void raw__frame__equals_hash_value__loop_free__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr hash_value     = raw__array__elt(cause, aux_data, 2);
+  if (raw__larva__is_type(cause, hash_value)) {
+    return;
+  }
+  {
+    u64   hash_value__i      = f2integer__i(hash_value, cause);
+    f2ptr this               = raw__array__elt(cause, aux_data, 0);
+    f2ptr node_hash          = raw__array__elt(cause, aux_data, 1);
+    f2ptr subexp             = f2__frame__lookup_var_value(cause, this, slot_name);
+    f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, subexp, node_hash);
+    if (raw__larva__is_type(cause, subexp__hash_value)) {
+      raw__array__elt__set(cause, aux_data, 2, subexp__hash_value);
+      return;
+    }
+    {
+      u64 subexp__hash_value__i = f2integer__i(subexp__hash_value, cause);
+      u64 new_hash_value        = hash_value__i * subexp__hash_value__i;
+      raw__array__elt__set(cause, aux_data, 2, f2integer__new(cause, new_hash_value));
+    }
+  }
+}
+
 f2ptr raw__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  return f2integer__new(cause, 1);
+  if (raw__ptypehash__contains(cause, node_hash, this)) {
+    return f2integer__new(cause, 1);
+  }
+  raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
+  f2ptr aux_data = raw__array__new(cause, 3);
+  raw__array__elt__set(cause, aux_data, 0, this);
+  raw__array__elt__set(cause, aux_data, 1, node_hash);
+  raw__array__elt__set(cause, aux_data, 2, f2integer__new(cause, 1));
+  f2ptr result = raw__frame__type_var__mapc_slot_names(cause, this, __funk2.globalenv.get__symbol, raw__frame__equals_hash_value__loop_free__map_funk, aux_data);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  f2ptr hash_value = raw__array__elt(cause, aux_data, 2);
+  return hash_value;
 }
 
 f2ptr f2__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {

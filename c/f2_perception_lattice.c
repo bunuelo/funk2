@@ -365,6 +365,7 @@ f2ptr f2__perception_graph__equals_hash_value__loop_free(f2ptr cause, f2ptr this
   if (raw__ptypehash__contains(cause, node_hash, this)) {
     return f2integer__new(cause, 1);
   }
+  raw__ptypehash__add(cause, node_hash, this, __funk2.globalend.true__symbol);
   u64 hash_value = 1;
   f2ptr edges = f2__perception_graph__edges(cause, this);
   {

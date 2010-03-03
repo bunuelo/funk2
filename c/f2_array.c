@@ -192,7 +192,7 @@ f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
 
 f2ptr f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   if ((! raw__array__is_type(cause, this)) ||
-      (! raw__ptypehash__is_type(cause, this))) {
+      (! raw__ptypehash__is_type(cause, node_hash))) {
     return f2larva__new(cause, 1);
   }
   return raw__array__equals_hash_value__loop_free(cause, this, node_hash);

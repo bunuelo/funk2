@@ -33,6 +33,8 @@ declare_object_type_4_slot(perception_graph, nodes, edges, edges_node_hash, edge
 			   f2ptr equals__funk;
 			   f2ptr equals_hash_value__symbol;
 			   f2ptr equals_hash_value__funk;
+			   f2ptr equals_hash_value__loop_free__symbol;
+			   f2ptr equals_hash_value__loop_free__funk;
 			   );
 
 #endif // F2__PERCEPTION_LATTICE__TYPE__H

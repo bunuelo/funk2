@@ -282,7 +282,7 @@ f2ptr raw__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
   raw__array__elt__set(cause, aux_data, 0, this);
   raw__array__elt__set(cause, aux_data, 1, node_hash);
   raw__array__elt__set(cause, aux_data, 2, f2integer__new(cause, 1));
-  f2ptr result = raw__frame__type_var__mapc_slot_names(cause, this, __funk2.globalenv.get__symbol, raw__frame__equals_hash_value__loop_free__map_funk, aux_data);
+  f2ptr result = raw__frame__type_var__mapc_slot_names(cause, this, __funk2.globalenv.variable__symbol, raw__frame__equals_hash_value__loop_free__map_funk, aux_data);
   if (raw__larva__is_type(cause, result)) {
     return result;
   }

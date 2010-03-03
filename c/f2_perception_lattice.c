@@ -359,6 +359,13 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (this__nodes__length != that__nodes__length) {
     return boolean__false;
   }
+  f2ptr this__edges         = f2__perception_graph__edges(cause, this);
+  f2ptr that__edges         = f2__perception_graph__edges(cause, that);
+  u64   this__edges__length = raw__simple_length(cause, this__edges);
+  u64   that__edges__length = raw__simple_length(cause, that__edges);
+  if (this__edges__length != that__edges__length) {
+    return boolean__false;
+  }
   {
     f2ptr this__hash_value    = f2__perception_graph__equals_hash_value(cause, this);
     f2ptr that__hash_value    = f2__perception_graph__equals_hash_value(cause, that);

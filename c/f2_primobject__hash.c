@@ -70,7 +70,7 @@ void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) 
 	f2ptr iter__keyvalue_pair  = f2cons__car(keyvalue_pair_iter,  cause);
 	f2ptr keyvalue_pair__key   = f2cons__car(iter__keyvalue_pair, cause);
 	f2ptr keyvalue_pair__value = f2cons__cdr(iter__keyvalue_pair, cause);
-	f2__hash__add(cause, fiber, temp_hash, keyvalue_pair__key, keyvalue_pair__value);
+	f2__hash__add(cause, temp_hash, keyvalue_pair__key, keyvalue_pair__value);
 	keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
       }
     }
@@ -217,7 +217,6 @@ boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__hash__is_type(cause, that)) {
     return boolean__false;
   }
-  f2ptr fiber              = f2__this__fiber(cause);
   f2ptr this__key_count    = f2__hash__key_count(cause, this);
   f2ptr that__key_count    = f2__hash__key_count(cause, that);
   u64   this__key_count__i = f2integer__i(this__key_count, cause);
@@ -226,7 +225,7 @@ boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
     return boolean__false;
   }
   hash__iteration(cause, this, this__key, this__value,
-		  f2ptr that__value = f2__hash__lookup(cause, fiber, that, this__key);
+		  f2ptr that__value = f2__hash__lookup(cause, that, this__key);
 		  if (! f2__object__equals(cause, this__value, that__value)) {
 		    return boolean__false;
 		  }

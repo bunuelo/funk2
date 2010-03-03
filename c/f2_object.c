@@ -257,6 +257,9 @@ f2ptr f2__object__equals(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(object__equals, this, that, return f2__object__equals(this_cause, this, that));
 
 f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  if (this == __funk2.memory.global_environment_f2ptr) {
+    return f2integer__new(cause, 1);
+  }
   f2ptr result = f2__object__get_1(cause, this, __funk2.globalenv.equals_hash_value__loop_free__symbol, node_hash);
   if (raw__larva__is_type(cause, result) && raw__larva__larva_type(cause, result) == object__get__no_such_slot) {
     result = f2__object__get_0(cause, this, __funk2.globalenv.equals_hash_value__symbol);

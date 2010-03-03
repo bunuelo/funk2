@@ -386,7 +386,7 @@ f2ptr f2__perception_graph__equals_hash_value__loop_free(f2ptr cause, f2ptr this
 	  }
 	}
 	if (left_node) {
-	  f2__object__equals_hash_value__loop_free(cause, left_node, node_hash);
+	  f2ptr result = f2__object__equals_hash_value__loop_free(cause, left_node, node_hash);
 	  {
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;
@@ -396,7 +396,7 @@ f2ptr f2__perception_graph__equals_hash_value__loop_free(f2ptr cause, f2ptr this
 	  }
 	}
 	if (right_node) {
-	  f2__object__equals_hash_value__loop_free(cause, right_node, node_hash);
+	  f2ptr result = f2__object__equals_hash_value__loop_free(cause, right_node, node_hash);
 	  {
 	    if (raw__larva__is_type(cause, result)) {
 	      return result;

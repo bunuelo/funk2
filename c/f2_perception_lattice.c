@@ -359,32 +359,58 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (this__nodes__length != that__nodes__length) {
     return boolean__false;
   }
-  f2ptr this__hash_value    = f2__perception_graph__equals_hash_value(cause, this);
-  f2ptr that__hash_value    = f2__perception_graph__equals_hash_value(cause, that);
-  u64   this__hash_value__i = f2integer__i(this__hash_value, cause);
-  u64   that__hash_value__i = f2integer__i(that__hash_value, cause);
-  if (this__hash_value__i != that__hash_value__i) {
-    return boolean__false;
-  }
-  f2ptr this__equals_node_hash = f2__hash(cause);
   {
-    f2ptr iter = this__nodes;
-    while (iter) {
-      f2ptr this__node = f2__cons__car(cause, iter);
-      f2__hash__add(cause, this__equals_node_hash, this__node, __funk2.globalenv.true__symbol);
-      iter = f2__cons__cdr(cause, iter);
+    f2ptr this__hash_value    = f2__perception_graph__equals_hash_value(cause, this);
+    f2ptr that__hash_value    = f2__perception_graph__equals_hash_value(cause, that);
+    u64   this__hash_value__i = f2integer__i(this__hash_value, cause);
+    u64   that__hash_value__i = f2integer__i(that__hash_value, cause);
+    if (this__hash_value__i != that__hash_value__i) {
+      return boolean__false;
     }
   }
   {
-    f2ptr iter = that__nodes;
-    while (iter) {
-      f2ptr that__node = f2__cons__car(cause, iter);
-      // not completed.
-      iter = f2__cons__cdr(cause, iter);
+    f2ptr this__equals_node_hash = f2__hash(cause);
+    {
+      f2ptr iter = this__nodes;
+      while (iter) {
+	f2ptr this__node = f2__cons__car(cause, iter);
+	f2__hash__add(cause, this__equals_node_hash, this__node, __funk2.globalenv.true__symbol);
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+    {
+      f2ptr iter = that__nodes;
+      while (iter) {
+	f2ptr that__node = f2__cons__car(cause, iter);
+	if (! raw__hash__contains(cause, this__equals_node_hash, that__node)) {
+	  return boolean__false;
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
     }
   }
-  // not completed.
-  return boolean__false;
+  {
+    f2ptr this__equals_edge_hash = f2__hash(cause);
+    {
+      f2ptr iter = this__edges;
+      while (iter) {
+	f2ptr this__edge = f2__cons__car(cause, iter);
+	f2__hash__add(cause, this__equals_edge_hash, this__edge, __funk2.globalenv.true__symbol);
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+    {
+      f2ptr iter = that__edges;
+      while (iter) {
+	f2ptr that__edge = f2__cons__car(cause, iter);
+	if (! raw__hash__contains(cause, this__equals_edge_hash, that__edge)) {
+	  return boolean__false;
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return boolean__true;
 }
 
 f2ptr f2__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {

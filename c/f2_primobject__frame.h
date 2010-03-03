@@ -55,6 +55,10 @@ struct funk2_object_type__frame__slot_s {
   f2ptr copy_slots__funk;
   f2ptr check_has_type_slot__symbol;
   f2ptr check_has_type_slot__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
 };
 
 #endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H

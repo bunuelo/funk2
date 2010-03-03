@@ -259,7 +259,7 @@ void raw__frame__equals_hash_value__loop_free__map_funk(f2ptr cause, f2ptr slot_
     u64   hash_value__i      = f2integer__i(hash_value, cause);
     f2ptr this               = raw__array__elt(cause, aux_data, 0);
     f2ptr node_hash          = raw__array__elt(cause, aux_data, 1);
-    f2ptr subexp             = f2__frame__lookup_var_value(cause, this, slot_name);
+    f2ptr subexp             = f2__frame__lookup_var_value(cause, this, slot_name, nil);
     f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, subexp, node_hash);
     if (raw__larva__is_type(cause, subexp__hash_value)) {
       raw__array__elt__set(cause, aux_data, 2, subexp__hash_value);

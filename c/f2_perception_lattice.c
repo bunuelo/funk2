@@ -417,6 +417,19 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
       }
     }
   }
+  // still not complete.  consider:
+  // 
+  //      ()          ()
+  //     ^ |         ^ |
+  //    /  |        /  |
+  //  ()   |  !=  ()   |
+  //    ^  |        \  |
+  //     \ v         v v
+  //      ()          ()
+  //
+  // which the above still considers equal because all nodes and edges are contained in the other.
+  //
+  // this could/should be replaced by finding node bijection (mapping) if one exists (equal, otherwise not equal)
   return boolean__true;
 }
 
@@ -487,6 +500,11 @@ f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
   return f2__perception_graph__equals_hash_value__loop_free(cause, this, node_hash);
 }
 def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_graph__equals_hash_value(this_cause, this));
+
+f2ptr f2__perception_graph__bijection(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
+}
+def_pcfunk2(perception_graph__bijection, this, that, return f2__perception_graph__bijection(this_cause, this, that));
 
 f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2perception_graph__primobject_type__new(cause);
@@ -1105,6 +1123,7 @@ void f2__perception_lattice__initialize() {
   
   f2__primcfunk__init__1(perception_graph__new_from_string, string, "creates a perception_graph of characters from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__1(perception_graph__to_string, this, "creates a string from a perception_graph made from a string.  (function used for debugging graph matching)");
+  f2__primcfunk__init__2(perception_graph__bijection, this, that, "find a node bijection between two graph if one exists.");
   f2__primcfunk__init__3(perception_graph__subgraphs_of_node_range, this, min_node_count, max_node_count, "returns all subgraphs with min_node_count to max_node_count nodes.");
   f2__primcfunk__init__1(perception_graph__subgraphs, this, "returns all subgraphs of graph.");
   f2__primcfunk__init__2(perception_graph__intersect, this, that, "returns the intersection of two graphs.");

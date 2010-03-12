@@ -547,7 +547,7 @@ f2ptr raw__perception_graph__bijection(f2ptr cause, f2ptr this, f2ptr that) {
     search_possibilities = f2cons__new(cause, search_possibility, search_possibilities);
   }
   while (search_possibilities) {
-    f2ptr search_possibilties__next = f2__cons__cdr(cause, search_possibilities);
+    f2ptr search_possibilities__next = f2__cons__cdr(cause, search_possibilities);
     {
       f2ptr search_possibility = f2__cons__car(cause, search_possibilities);
       {

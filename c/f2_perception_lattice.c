@@ -501,8 +501,75 @@ f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_graph__equals_hash_value(this_cause, this));
 
-f2ptr f2__perception_graph__bijection(f2ptr cause, f2ptr this, f2ptr that) {
+// perception_graph__bijection__search_possitibility
+
+f2ptr f2__perception_graph__bijection__search_possitibility__new(f2ptr cause, f2ptr bijection, f2ptr this_graph_left, f2ptr that_graph_left) {
+  f2ptr this = raw__array__new(cause, 3);
+  raw__array__elt__set(cause, this, 0, bijection);
+  raw__array__elt__set(cause, this, 1, this_graph_left);
+  raw__array__elt__set(cause, this, 2, that_graph_left);
+  return this;
+}
+
+f2ptr raw__perception_graph__bijection__search_possitibility__bijection(      f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 0);}
+f2ptr raw__perception_graph__bijection__search_possitibility__this_graph_left(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 1);}
+f2ptr raw__perception_graph__bijection__search_possitibility__that_graph_left(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 2);}
+
+f2ptr raw__perception_graph__bijection(f2ptr cause, f2ptr this, f2ptr that) {
+  {
+    f2ptr this__nodes = f2__perception_graph__nodes(cause, this);
+    f2ptr that__nodes = f2__perception_graph__nodes(cause, that);
+    if ((this__nodes == nil) && (that__nodes == nil)) {
+      f2ptr bijection = f2__perception_graph__new(cause);
+      // return empty bijection graph.
+      return bijection;
+    }
+    u64 this__nodes__length = raw__simple_length(cause, this__nodes);
+    u64 that__nodes__length = raw__simple_length(cause, that__nodes);
+    if (this__nodes__length != that__nodes__length) {
+      // no bijection can be found.
+      return nil;
+    }
+  }
+  {
+    f2ptr this__edges         = f2__perception_graph__edges(cause, this);
+    f2ptr that__edges         = f2__perception_graph__edges(cause, that);
+    u64   this__edges__length = raw__simple_length(cause, this__edges);
+    u64   that__edges__length = raw__simple_length(cause, that__edges);
+    if (this__edges__length != that__edges__length) {
+      // no bijection can be found.
+      return nil;
+    }
+  }
+  f2ptr search_possibilities = nil;
+  {
+    f2ptr search_possibility = f2__perception_graph__bijection__search_possibility__new(cause, f2__perception_graph__new(cause), this, that);
+    search_possibilities = f2cons__new(cause, search_possibility, search_possibilities);
+  }
+  while (search_possibilities) {
+    f2ptr search_possibilties__next = f2__cons__cdr(cause, search_possibilties);
+    {
+      f2ptr search_possibility = f2__cons__car(cause, search_possibilities);
+      {
+	f2ptr bijection       = raw__perception_graph__bijection__search_possibility__bijection(      cause, search_possibility);
+	f2ptr this_graph_left = raw__perception_graph__bijection__search_possibility__this_graph_left(cause, search_possibility);
+	f2ptr that_graph_left = raw__perception_graph__bijection__search_possibility__that_graph_left(cause, search_possibility);
+	{
+	  
+	}
+      }
+    }
+    search_possibilities = search_possibilities__next;
+  }
   return nil;
+}
+
+f2ptr f2__perception_graph__bijection(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__perception_graph__is_type(cause, this)) ||
+      (! raw__perception_graph__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__bijection(cause, this, that);
 }
 def_pcfunk2(perception_graph__bijection, this, that, return f2__perception_graph__bijection(this_cause, this, that));
 

@@ -503,7 +503,7 @@ def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_gra
 
 // perception_graph__bijection__search_possitibility
 
-f2ptr f2__perception_graph__bijection__search_possitibility__new(f2ptr cause, f2ptr bijection, f2ptr this_graph_left, f2ptr that_graph_left) {
+f2ptr f2__perception_graph__bijection__search_possibility__new(f2ptr cause, f2ptr bijection, f2ptr this_graph_left, f2ptr that_graph_left) {
   f2ptr this = raw__array__new(cause, 3);
   raw__array__elt__set(cause, this, 0, bijection);
   raw__array__elt__set(cause, this, 1, this_graph_left);
@@ -511,9 +511,9 @@ f2ptr f2__perception_graph__bijection__search_possitibility__new(f2ptr cause, f2
   return this;
 }
 
-f2ptr raw__perception_graph__bijection__search_possitibility__bijection(      f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 0);}
-f2ptr raw__perception_graph__bijection__search_possitibility__this_graph_left(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 1);}
-f2ptr raw__perception_graph__bijection__search_possitibility__that_graph_left(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 2);}
+f2ptr raw__perception_graph__bijection__search_possibility__bijection(      f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 0);}
+f2ptr raw__perception_graph__bijection__search_possibility__this_graph_left(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 1);}
+f2ptr raw__perception_graph__bijection__search_possibility__that_graph_left(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 2);}
 
 f2ptr raw__perception_graph__bijection(f2ptr cause, f2ptr this, f2ptr that) {
   {

@@ -104,6 +104,7 @@ am_bin_funk2_OBJECTS = c/bin_funk2-f2_agent.$(OBJEXT) \
 	c/bin_funk2-f2_frame_objects.$(OBJEXT) \
 	c/bin_funk2-f2_funk2_node.$(OBJEXT) \
 	c/bin_funk2-f2_funktional.$(OBJEXT) \
+	c/bin_funk2-f2_graphviz.$(OBJEXT) \
 	c/bin_funk2-f2_html.$(OBJEXT) c/bin_funk2-f2_load.$(OBJEXT) \
 	c/bin_funk2-f2_malloc.$(OBJEXT) \
 	c/bin_funk2-f2_management_thread.$(OBJEXT) \
@@ -245,6 +246,7 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PTHREAD_CC = @PTHREAD_CC@
@@ -430,6 +432,7 @@ bin_funk2_SOURCES = \
   c/f2_frame_objects.c \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
+  c/f2_graphviz.c \
   c/f2_html.c \
   c/f2_load.c \
   c/f2_malloc.c \
@@ -653,6 +656,8 @@ c/bin_funk2-f2_funk2_node.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_funktional.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/bin_funk2-f2_graphviz.$(OBJEXT): c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_html.$(OBJEXT): c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/bin_funk2-f2_load.$(OBJEXT): c/$(am__dirstamp) \
@@ -847,6 +852,7 @@ mostlyclean-compile:
 	-rm -f c/bin_funk2-f2_globalenv.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_glwindow.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_gmodule.$(OBJEXT)
+	-rm -f c/bin_funk2-f2_graphviz.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_html.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_load.$(OBJEXT)
 	-rm -f c/bin_funk2-f2_malloc.$(OBJEXT)
@@ -956,6 +962,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_globalenv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_glwindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_gmodule.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_graphviz.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_html.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_load.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/bin_funk2-f2_malloc.Po@am__quote@
@@ -1426,6 +1433,20 @@ c/bin_funk2-f2_funktional.obj: c/f2_funktional.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_funktional.c' object='c/bin_funk2-f2_funktional.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_funktional.obj `if test -f 'c/f2_funktional.c'; then $(CYGPATH_W) 'c/f2_funktional.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_funktional.c'; fi`
+
+c/bin_funk2-f2_graphviz.o: c/f2_graphviz.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_graphviz.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_graphviz.Tpo" -c -o c/bin_funk2-f2_graphviz.o `test -f 'c/f2_graphviz.c' || echo '$(srcdir)/'`c/f2_graphviz.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_graphviz.Tpo" "c/$(DEPDIR)/bin_funk2-f2_graphviz.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_graphviz.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graphviz.c' object='c/bin_funk2-f2_graphviz.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_graphviz.o `test -f 'c/f2_graphviz.c' || echo '$(srcdir)/'`c/f2_graphviz.c
+
+c/bin_funk2-f2_graphviz.obj: c/f2_graphviz.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_graphviz.obj -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_graphviz.Tpo" -c -o c/bin_funk2-f2_graphviz.obj `if test -f 'c/f2_graphviz.c'; then $(CYGPATH_W) 'c/f2_graphviz.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_graphviz.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/bin_funk2-f2_graphviz.Tpo" "c/$(DEPDIR)/bin_funk2-f2_graphviz.Po"; else rm -f "c/$(DEPDIR)/bin_funk2-f2_graphviz.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_graphviz.c' object='c/bin_funk2-f2_graphviz.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -c -o c/bin_funk2-f2_graphviz.obj `if test -f 'c/f2_graphviz.c'; then $(CYGPATH_W) 'c/f2_graphviz.c'; else $(CYGPATH_W) '$(srcdir)/c/f2_graphviz.c'; fi`
 
 c/bin_funk2-f2_html.o: c/f2_html.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bin_funk2_CFLAGS) $(CFLAGS) -MT c/bin_funk2-f2_html.o -MD -MP -MF "c/$(DEPDIR)/bin_funk2-f2_html.Tpo" -c -o c/bin_funk2-f2_html.o `test -f 'c/f2_html.c' || echo '$(srcdir)/'`c/f2_html.c; \

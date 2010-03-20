@@ -583,7 +583,7 @@ f2ptr raw__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
 	    return hash_value;
 	  }
 	  u64 hash_value__i = f2integer__i(hash_value, cause);
-	  total_hash_value *= hash_value__i;
+	  total_hash_value *= ((hash_value__i != 0) ? hash_value__i : 1);
 	}
 	{
 	  f2ptr hash_value = f2__object__eq_hash_value(cause, left_node);
@@ -591,7 +591,7 @@ f2ptr raw__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
 	    return hash_value;
 	  }
 	  u64 hash_value__i = f2integer__i(hash_value, cause);
-	  total_hash_value *= hash_value__i;
+	  total_hash_value *= ((hash_value__i != 0) ? hash_value__i : 1);
 	}
 	{
 	  f2ptr hash_value = f2__object__eq_hash_value(cause, right_node);
@@ -599,7 +599,7 @@ f2ptr raw__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
 	    return hash_value;
 	  }
 	  u64 hash_value__i = f2integer__i(hash_value, cause);
-	  total_hash_value *= hash_value__i;
+	  total_hash_value *= ((hash_value__i != 0) ? hash_value__i : 1);
 	}
       }
       edges_iter = f2__cons__cdr(cause, edges_iter);

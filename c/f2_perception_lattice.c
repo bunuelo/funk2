@@ -1095,7 +1095,7 @@ f2ptr raw__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
 	  f2ptr that__edge__label      = f2__graph_edge__label(     cause, that__edge);
 	  f2ptr that__edge__left_node  = f2__graph_edge__left_node( cause, that__edge);
 	  f2ptr that__edge__right_node = f2__graph_edge__right_node(cause, that__edge);
-	  if (! raw__graph__contains_edge(cause, that, that__edge__label, that__edge__left_node, that__edge__right_node)) {
+	  if (! raw__graph__contains_edge(cause, this, that__edge__label, that__edge__left_node, that__edge__right_node)) {
 	    raw__graph__add_edge(cause, add_graph, that__edge__label, that__edge__left_node, that__edge__right_node);
 	  }
 	}

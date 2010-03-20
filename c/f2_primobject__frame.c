@@ -322,7 +322,7 @@ void raw__frame__part_not_contained_by__map_funk(f2ptr cause, f2ptr slot_name, f
   f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
   f2ptr this__var_value   = f2__frame__lookup_var_value(cause, this, slot_name, not_defined_value);
   f2ptr that__var_value   = f2__frame__lookup_var_value(cause, that, slot_name, not_defined_value);
-  if (! raw__eq(this__var_value, that__var_value)) {
+  if (! raw__eq(cause, this__var_value, that__var_value)) {
     f2__frame__add_var_value(cause, frame, slot_name, this__var_value);
   }
 }

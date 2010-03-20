@@ -514,7 +514,7 @@ boolean_t raw__perception_graph__nodes_equals(f2ptr cause, f2ptr this, f2ptr tha
   if (this__nodes__length != that__nodes__length) {
     return boolean__false;
   }
-  return raw__perception_graph__nodes_contains(cause, this, that);
+  return raw__perception_graph__nodes_contains(cause, this, that__nodes);
 }
 
 boolean_t raw__perception_graph__edges_contains(f2ptr cause, f2ptr this, f2ptr edges) {
@@ -542,7 +542,7 @@ boolean_t raw__perception_graph__edges_equals(f2ptr cause, f2ptr this, f2ptr tha
   if (this__edges__length != that__edges__length) {
     return boolean__false;
   }
-  return raw__perception_graph__edges_contains(cause, this, that);
+  return raw__perception_graph__edges_contains(cause, this, that__edges);
 }
 
 boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -566,7 +566,7 @@ def_pcfunk2(perception_graph__equals, this, that, return f2__perception_graph__e
 
 // perception_graph-equals_hash_value
 
-f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
+f2ptr raw__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
   u64   total_hash_value = 1;
   f2ptr edges            = f2__perception_graph__edges(cause, this);
   {
@@ -606,6 +606,13 @@ f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
     }
   }
   return f2integer__new(cause, total_hash_value);
+}
+
+f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__perception_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__perception_graph__equals_hash_value(cause, this);
 }
 def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_graph__equals_hash_value(this_cause, this));
 

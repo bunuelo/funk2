@@ -17,6 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[globalize-funk perception_graph-equals                  &primfunk:perception_graph__equals]
+[globalize-funk perception_graph-equals_hash_value       &primfunk:perception_graph__equals_hash_value]
 [globalize-funk perception_graph-new                     &primfunk:perception_graph__new]
 [globalize-funk perception_graph-add_node                &primfunk:perception_graph__add_node]
 [globalize-funk perception_graph-add_edge                &primfunk:perception_graph__add_edge]

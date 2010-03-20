@@ -116,6 +116,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__funk_event__slot_t          primobject_type_funk_event;
   funk2_object_type__graph_edge__slot_t          primobject_type_graph_edge;
   funk2_object_type__graph__slot_t               primobject_type_graph;
+  funk2_object_type__transgraph__slot_t          primobject_type_transgraph;
   funk2_object_type__largeinteger__slot_t        primobject_type_largeinteger;
 };
 

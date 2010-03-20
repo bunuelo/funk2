@@ -33,9 +33,11 @@ declare_object_type_4_slot(graph, nodes, edges, edges_node_hash, edge_structure_
 			   f2ptr equals__funk;
 			   f2ptr equals_hash_value__symbol;
 			   f2ptr equals_hash_value__funk;
-			   //f2ptr equals_hash_value__loop_free__symbol;
-			   //f2ptr equals_hash_value__loop_free__funk;
 			   );
+
+// transgraph
+typedef struct funk2_object_type__transgraph__slot_s funk2_object_type__transgraph__slot_t;
+declare_object_type_2_slot(transgraph, remove_graph, add_graph, );
 
 #endif // F2__PERCEPTION_LATTICE__TYPE__H
 
@@ -54,6 +56,10 @@ f2ptr      f2__graph__equals_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
+
+// transgraph
+declare_primobject_2_slot(transgraph, remove_graph, add_graph);
+
 
 // **
 

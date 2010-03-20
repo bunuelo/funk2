@@ -1311,6 +1311,9 @@ void f2__perception_lattice__initialize() {
   //{char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__equals_hash_value__loop_free, this, cfunk, 0, "calculates the equals_hash_value-loop_free for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
+  // transgraph
+  initialize_primobject_2_slot(transgraph, remove_graph, add_graph);
+  
   f2__primcfunk__init__2(graph__add_node,           this, node,                         "add a node to a graph by mutation.");
   f2__primcfunk__init__4(graph__add_edge,           this, label, left_node, right_node, "add an edge to a graph by mutation.");
   f2__primcfunk__init__2(graph__node__ins_and_outs, this, node,                         "get in and out edges of a node.");

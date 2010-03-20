@@ -418,9 +418,11 @@ void f2__primobject_frame__initialize() {
   {char* symbol_str = "check_has_type_slot"; __funk2.globalenv.object_type.primobject.primobject_type_frame.check_has_type_slot__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(frame__check_has_type_slot, this, type_name, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.check_has_type_slot__funk = never_gc(cfunk);}
   {char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(frame__equals_hash_value__loop_free, this, type_name, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__equals_hash_value__loop_free, this, node_hash, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(frame__equals_hash_value, this, type_name, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame__equals_hash_value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk = never_gc(cfunk);}
+  {char* symbol_str = "part_not_contained_by"; __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(frame__part_not_contained_by, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk = never_gc(cfunk);}
   
 }
 

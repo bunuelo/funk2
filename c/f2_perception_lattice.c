@@ -1103,7 +1103,7 @@ f2ptr raw__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
       }
     }
   }
-  return f2transframe__new(cause, remove_graph, add_graph);
+  return f2transgraph__new(cause, remove_graph, add_graph);
 }
 
 f2ptr f2__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {

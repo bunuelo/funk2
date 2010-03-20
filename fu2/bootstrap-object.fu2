@@ -81,5 +81,6 @@
     [object-property_scan object [funk [type_name name value]
 				       [if [not [eq [type value] `bug]]
 					   [have new_graph add_edge name object value]]]]
+    [have new_graph add_edge `-> `graph-root object]
     new_graph]]
 

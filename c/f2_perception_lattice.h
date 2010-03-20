@@ -39,7 +39,14 @@ declare_object_type_4_slot(graph, nodes, edges, edges_node_hash, edge_structure_
 
 // trans
 typedef struct funk2_object_type__trans__slot_s funk2_object_type__trans__slot_t;
-declare_object_type_2_slot(trans, remove, add, );
+declare_object_type_2_slot(trans, remove, add,
+			   f2ptr equals__symbol;
+			   f2ptr equals__funk;
+			   f2ptr equals_hash_value__symbol;
+			   f2ptr equals_hash_value__funk;
+			   f2ptr part_not_contained_by__symbol;
+			   f2ptr part_not_contained_by__funk;
+			   );
 
 #endif // F2__PERCEPTION_LATTICE__TYPE__H
 

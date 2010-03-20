@@ -29,7 +29,6 @@
 [globalize-funk graph-node-outs               &primfunk:graph__node__outs]
 [globalize-funk graph-new_from_string         &primfunk:graph__new_from_string]
 [globalize-funk graph-to_string               &primfunk:graph__to_string]
-[globalize-funk graph-bijection               &primfunk:graph__bijection]
 [globalize-funk graph-subgraphs_of_node_range &primfunk:graph__subgraphs_of_node_range]
 [globalize-funk graph-subgraphs               &primfunk:graph__subgraphs]
 [globalize-funk graph-intersect               &primfunk:graph__intersect]

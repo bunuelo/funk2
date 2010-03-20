@@ -351,7 +351,8 @@ f2ptr f2__perception_graph__to_string(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(perception_graph__to_string, this, return f2__perception_graph__to_string(this_cause, this));
 
-boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
+// equals_equals is ill-defined
+boolean_t raw__perception_graph__equals_equals(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__nodes         = f2__perception_graph__nodes(cause, this);
   f2ptr that__nodes         = f2__perception_graph__nodes(cause, that);
   u64   this__nodes__length = raw__simple_length(cause, this__nodes);
@@ -433,6 +434,10 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   return boolean__true;
 }
 
+boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return boolean__false;
+}
+
 f2ptr f2__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__perception_graph__is_type(cause, this)) ||
       (! raw__perception_graph__is_type(cause, that))) {
@@ -442,7 +447,7 @@ f2ptr f2__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(perception_graph__equals, this, that, return f2__perception_graph__equals(this_cause, this, that));
 
-f2ptr f2__perception_graph__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+f2ptr f2__perception_graph__equals_equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   if (raw__ptypehash__contains(cause, node_hash, this)) {
     return f2integer__new(cause, 1);
   }
@@ -493,11 +498,15 @@ f2ptr f2__perception_graph__equals_hash_value__loop_free(f2ptr cause, f2ptr this
   }
   return f2integer__new(cause, hash_value);
 }
-def_pcfunk2(perception_graph__equals_hash_value__loop_free, this, node_hash, return f2__perception_graph__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(perception_graph__equals_equals_hash_value__loop_free, this, node_hash, return f2__perception_graph__equals_equals_hash_value__loop_free(this_cause, this, node_hash));
 
-f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
+f2ptr f2__perception_graph__equals_equals_hash_value(f2ptr cause, f2ptr this) {
   f2ptr node_hash = f2__ptypehash__new(cause);
-  return f2__perception_graph__equals_hash_value__loop_free(cause, this, node_hash);
+  return f2__perception_graph__equals_equals_hash_value__loop_free(cause, this, node_hash);
+}
+
+f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
 }
 def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_graph__equals_hash_value(this_cause, this));
 

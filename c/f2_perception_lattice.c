@@ -1096,6 +1096,16 @@ f2ptr f2__trans__new(f2ptr cause) {
 }
 def_pcfunk0(trans__new, return f2__trans__new(this_cause));
 
+f2ptr f2__trans__equals_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, 1);
+}
+def_pcfunk1(trans__equals_hash_value, this, return f2__trans__equals_hash_value(this_cause, this));
+
+f2ptr f2__trans__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
+}
+def_pcfunk2(trans__equals, this, that, return f2__trans__equals(this_cause, this, that));
+
 f2ptr raw__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__remove   = f2__trans__add(cause, this);
   f2ptr that__remove   = f2__trans__add(cause, that);
@@ -1118,6 +1128,14 @@ f2ptr f2__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__trans__part_not_contained_by(cause, this, that);
 }
 def_pcfunk2(trans__part_not_contained_by, this, that, return f2__trans__part_not_contained_by(this_cause, this, that));
+
+f2ptr f2trans__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2trans__primobject_type__new(cause);
+  {char* slot_name = "equals";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.equals__funk);}
+  {char* slot_name = "equals_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.equals_hash_value__funk);}
+  {char* slot_name = "part_not_contained_by"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.part_not_contained_by__funk);}
+  return this;
+}
 
 
 // difference
@@ -1187,7 +1205,12 @@ void f2__perception_lattice__initialize() {
   // trans
   initialize_primobject_2_slot(trans, remove, add);
   
-  f2__primcfunk__init__2(trans__part_not_contained_by, this, that, "determines the maximal part of this trans that is not contained in that trans.");
+  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_trans.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(trans__equals, this, that, cfunk, 0, "checks for equality between two transs."); __funk2.globalenv.object_type.primobject.primobject_type_trans.equals__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_trans.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(trans__equals_hash_value, this, cfunk, 0, "calculates the equals_hash_value for a trans."); __funk2.globalenv.object_type.primobject.primobject_type_trans.equals_hash_value__funk = never_gc(cfunk);}
+  {char* symbol_str = "part_not_contained_by"; __funk2.globalenv.object_type.primobject.primobject_type_trans.part_not_contained_by__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(trans__part_not_contained_by, this, that, cfunk, 0, "determines the maximal part of this trans that is not contained in that trans."); __funk2.globalenv.object_type.primobject.primobject_type_trans.part_not_contained_by__funk = never_gc(cfunk);}
   
   // difference
   f2__primcfunk__init__2(difference, this, that, "returns a trans object representing the difference between two objects implementing the part_not_contained_by get type function.");

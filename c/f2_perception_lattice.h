@@ -62,6 +62,7 @@ f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 // trans
 declare_primobject_2_slot(trans, remove, add);
 
+f2ptr f2trans__primobject_type__new_aux(f2ptr cause);
 
 // **
 

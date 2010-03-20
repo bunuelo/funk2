@@ -1301,6 +1301,7 @@ void f2__perception_lattice__reinitialize_globalvars() {
   
   __graph_edge__symbol = new__symbol(cause, "graph_edge");
   __graph__symbol      = new__symbol(cause, "graph");
+  __transgraph__symbol = new__symbol(cause, "transgraph");
 }
 
 void f2__perception_lattice__initialize() {

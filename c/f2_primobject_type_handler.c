@@ -125,7 +125,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "funk_event";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2funk_event__primobject_type__new(cause));}
   {char* type_name = "graph_edge";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2graph_edge__primobject_type__new(cause));}
   {char* type_name = "graph";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2graph__primobject_type__new_aux(cause));}
-  {char* type_name = "transgraph";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2transgraph__primobject_type__new(cause));}
+  {char* type_name = "trans";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2trans__primobject_type__new(cause));}
   {char* type_name = "largeinteger";        funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),        f2largeinteger__primobject_type__new(cause));}
 }
 

@@ -1103,7 +1103,7 @@ f2ptr raw__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
       }
     }
   }
-  return f2transgraph__new(cause, remove_graph, add_graph);
+  return f2trans__new(cause, remove_graph, add_graph);
 }
 
 f2ptr f2__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
@@ -1115,14 +1115,14 @@ f2ptr f2__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(graph__difference, this, that, return f2__graph__difference(this_cause, this, that));
 
-// transgraph
+// trans
 
-def_primobject_2_slot(transgraph, remove_graph, add_graph);
+def_primobject_2_slot(trans, remove_graph, add_graph);
 
-f2ptr f2__transgraph__new(f2ptr cause) {
-  return f2transgraph__new(cause, nil, nil);
+f2ptr f2__trans__new(f2ptr cause) {
+  return f2trans__new(cause, nil, nil);
 }
-def_pcfunk0(transgraph__new, return f2__transgraph__new(this_cause));
+def_pcfunk0(trans__new, return f2__trans__new(this_cause));
 
 // **
 
@@ -1133,7 +1133,7 @@ void f2__perception_lattice__reinitialize_globalvars() {
   
   __graph_edge__symbol = new__symbol(cause, "graph_edge");
   __graph__symbol      = new__symbol(cause, "graph");
-  __transgraph__symbol = new__symbol(cause, "transgraph");
+  __trans__symbol      = new__symbol(cause, "trans");
 }
 
 void f2__perception_lattice__initialize() {
@@ -1153,8 +1153,8 @@ void f2__perception_lattice__initialize() {
   //{char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__equals_hash_value__loop_free, this, cfunk, 0, "calculates the equals_hash_value-loop_free for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
-  // transgraph
-  initialize_primobject_2_slot(transgraph, remove_graph, add_graph);
+  // trans
+  initialize_primobject_2_slot(trans, remove_graph, add_graph);
   
   f2__primcfunk__init__2(graph__add_node,           this, node,                         "add a node to a graph by mutation.");
   f2__primcfunk__init__4(graph__add_edge,           this, label, left_node, right_node, "add an edge to a graph by mutation.");

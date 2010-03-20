@@ -1189,5 +1189,8 @@ void f2__perception_lattice__initialize() {
   
   f2__primcfunk__init__2(trans__part_not_contained_by, this, that, "determines the maximal part of this trans that is not contained in that trans.");
   
+  // difference
+  f2__primcfunk__init__2(difference, this, that, "returns a trans object representing the difference between two objects implementing the part_not_contained_by get type function.");
+  
 }
 

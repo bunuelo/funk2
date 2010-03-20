@@ -1043,7 +1043,67 @@ def_pcfunk1(graph__copy, this, return f2__graph__copy(this_cause, this));
 
 
 f2ptr raw__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  f2ptr remove_graph = f2__graph__new(cause);
+  f2ptr add_graph    = f2__graph__new(cause);
+  {
+    f2ptr this__nodes = f2__graph__nodes(cause, this);
+    f2ptr that__nodes = f2__graph__nodes(cause, that);
+    {
+      f2ptr iter = this__nodes;
+      while (iter) {
+	f2ptr this__node = f2__cons__car(cause, iter);
+	if (! raw__graph__contains_node(cause, that, this__node)) {
+	  raw__graph__add_node(cause, remove_graph, this__node);
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+    {
+      f2ptr iter = that__nodes;
+      while (iter) {
+	f2ptr that__node = f2__cons__car(cause, iter);
+	if (! raw__graph__contains_node(cause, this, that__node)) {
+	  raw__graph__add_node(cause, add_graph, that__node);
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  {
+    f2ptr this__edges = f2__graph__edges(cause, this);
+    f2ptr that__edges = f2__graph__edges(cause, that);
+    {
+      f2ptr iter = this__edges;
+      while (iter) {
+	f2ptr this__edge = f2__cons__car(cause, iter);
+	{
+	  f2ptr this__edge__label      = f2__graph_edge__label(     cause, this__edge);
+	  f2ptr this__edge__left_node  = f2__graph_edge__left_node( cause, this__edge);
+	  f2ptr this__edge__right_node = f2__graph_edge__right_node(cause, this__edge);
+	  if (! raw__graph__contains_edge(cause, that, this__edge__label, this__edge__left_node, this__edge__right_node)) {
+	    raw__graph__add_edge(cause, remove_graph, this__edge__label, this__edge__left_node, this__edge__right_node);
+	  }
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+    {
+      f2ptr iter = that__edges;
+      while (iter) {
+	f2ptr that__edge = f2__cons__car(cause, iter);
+	{
+	  f2ptr that__edge__label      = f2__graph_edge__label(     cause, that__edge);
+	  f2ptr that__edge__left_node  = f2__graph_edge__left_node( cause, that__edge);
+	  f2ptr that__edge__right_node = f2__graph_edge__right_node(cause, that__edge);
+	  if (! raw__graph__contains_edge(cause, that, that__edge__label, that__edge__left_node, that__edge__right_node)) {
+	    raw__graph__add_edge(cause, add_graph, that__edge__label, that__edge__left_node, that__edge__right_node);
+	  }
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return f2transframe__new(cause, remove_graph, add_graph);
 }
 
 f2ptr f2__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {

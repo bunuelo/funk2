@@ -37,7 +37,7 @@ declare_object_type_4_slot(graph, nodes, edges, edges_node_hash, edge_structure_
 
 // trans
 typedef struct funk2_object_type__trans__slot_s funk2_object_type__trans__slot_t;
-declare_object_type_2_slot(trans, remove_graph, add_graph, );
+declare_object_type_2_slot(trans, remove, add, );
 
 #endif // F2__PERCEPTION_LATTICE__TYPE__H
 
@@ -58,7 +58,7 @@ boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 
 // trans
-declare_primobject_2_slot(trans, remove_graph, add_graph);
+declare_primobject_2_slot(trans, remove, add);
 
 
 // **

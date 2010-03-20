@@ -1117,7 +1117,7 @@ def_pcfunk2(graph__difference, this, that, return f2__graph__difference(this_cau
 
 // trans
 
-def_primobject_2_slot(trans, remove_graph, add_graph);
+def_primobject_2_slot(trans, remove, add);
 
 f2ptr f2__trans__new(f2ptr cause) {
   return f2trans__new(cause, nil, nil);
@@ -1154,7 +1154,7 @@ void f2__perception_lattice__initialize() {
   //{f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__equals_hash_value__loop_free, this, cfunk, 0, "calculates the equals_hash_value-loop_free for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
   // trans
-  initialize_primobject_2_slot(trans, remove_graph, add_graph);
+  initialize_primobject_2_slot(trans, remove, add);
   
   f2__primcfunk__init__2(graph__add_node,           this, node,                         "add a node to a graph by mutation.");
   f2__primcfunk__init__4(graph__add_edge,           this, label, left_node, right_node, "add an edge to a graph by mutation.");

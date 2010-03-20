@@ -30,7 +30,6 @@
 [load 'fu2/bootstrap-bugs.fu2']
 [load 'fu2/bootstrap-boot.fu2']
 [load 'fu2/bootstrap-math.fu2']
-[load 'fu2/bootstrap-set_theory.fu2']
 [load 'fu2/bootstrap-ansi.fu2']
 [load 'fu2/bootstrap-termios.fu2']
 [load 'fu2/bootstrap-blocks_world.fu2']
@@ -53,9 +52,10 @@
 [load 'fu2/bootstrap-graphviz.fu2']
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 
-`[load 'fu2/action.fu2']
 [load 'fu2/time.fu2']
 
+`[load 'fu2/bootstrap-set_theory.fu2']
+`[load 'fu2/action.fu2']
 `[load 'fu2/bootstrap-graph.fu2']
 `[load 'fu2/bootstrap-dlfcn.fu2']
 `[load 'fu2/bootstrap-gmodule.fu2']

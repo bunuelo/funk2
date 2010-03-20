@@ -77,7 +77,7 @@
   [format stdout ']']]
 
 [defunk graph [object]
-  [let [[new_graph [new perception_graph]]]
+  [let [[new_graph [new graph]]]
     [object-property_scan object [funk [type_name name value]
 				       [if [not [eq [type value] `bug]]
 					   [have new_graph add_edge name object value]]]]

@@ -49,7 +49,7 @@
 [load 'fu2/bootstrap-cause.fu2']
 [load 'fu2/bootstrap-zlib.fu2']
 [load 'fu2/bootstrap-largeinteger.fu2']
-[load 'fu2/bootstrap-perception_graph.fu2']
+[load 'fu2/bootstrap-perception_lattice.fu2']
 [load 'fu2/bootstrap-graphviz.fu2']
 [load 'fu2/bootstrap-surrogate_parent.fu2']
 

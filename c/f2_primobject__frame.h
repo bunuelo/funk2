@@ -59,6 +59,8 @@ struct funk2_object_type__frame__slot_s {
   f2ptr equals_hash_value__loop_free__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr part_not_contained_by__symbol;
+  f2ptr part_not_contained_by__funk;
 };
 
 #endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H

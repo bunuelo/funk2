@@ -315,6 +315,30 @@ f2ptr f2__frame__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(frame__equals_hash_value, this, return f2__frame__equals_hash_value(this_cause, this));
 
+void raw__frame__part_not_contained_by__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
+  f2ptr that              = raw__array__elt(cause, aux_data, 0);
+  f2ptr frame             = raw__array__elt(cause, aux_data, 1);
+  f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
+  f2ptr this__var_value   = f2__frame__lookup_var_value(cause, this, slot_name, not_defined_value);
+  f2ptr that__var_value   = f2__frame__lookup_var_value(cause, that, slot_name, not_defined_value);
+  if (! raw__eq(this__var_value, that__var_value)) {
+    f2__frame__add_var_value(cause, frame, slot_name, this__var_value);
+  }
+}
+
+f2ptr f2__frame__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr frame = f2__frame__new(cause);
+  f2ptr aux_data = raw__array__new(cause, 2);
+  raw__array__elt__set(cause, aux_data, 0, that);
+  raw__array__elt__set(cause, aux_data, 1, frame);
+  f2ptr result = raw__frame__type_var__mapc_slot_names(cause, this, __funk2.primobject__frame.variable__symbol, raw__frame__part_not_contained_by__map_funk, aux_data);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  return frame;
+}
+def_pcfunk2(frame__part_not_contained_by, this, that, return f2__frame__part_not_contained_by(this_cause, this, that));
+
 f2ptr f2frame__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "primobject"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.is_type__funk);}
@@ -333,6 +357,7 @@ f2ptr f2frame__primobject_type__new(f2ptr cause) {
   {char* slot_name = "check_has_type_slot";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.check_has_type_slot__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__loop_free__funk);}
   {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.equals_hash_value__funk);}
+  {char* slot_name = "part_not_contained_by";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_frame.part_not_contained_by__funk);}
   return this;
 }
 

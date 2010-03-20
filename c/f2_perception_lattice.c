@@ -1107,16 +1107,22 @@ f2ptr f2__trans__equals(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(trans__equals, this, that, return f2__trans__equals(this_cause, this, that));
 
 f2ptr raw__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__remove   = f2__trans__add(cause, this);
-  f2ptr that__remove   = f2__trans__add(cause, that);
-  f2ptr remove__remove = object__get_1(cause, this__remove, "part_not_contained_by", that__remove);
-  f2ptr remove__add    = object__get_1(cause, that__remove, "part_not_contained_by", this__remove);
-  f2ptr remove         = f2trans__new(cause, remove__remove, remove__add);
-  f2ptr this__add      = f2__trans__add(cause, this);
-  f2ptr that__add      = f2__trans__add(cause, that);
-  f2ptr add__remove    = object__get_1(cause, this__add, "part_not_contained_by", that__add);
-  f2ptr add__add       = object__get_1(cause, that__add, "part_not_contained_by", this__add);
-  f2ptr add            = f2trans__new(cause, add__remove, add__add);
+  f2ptr remove;
+  {
+    f2ptr this__remove   = f2__trans__remove(cause, this);
+    f2ptr that__remove   = f2__trans__remove(cause, that);
+    f2ptr remove__remove = object__get_1(cause, this__remove, "part_not_contained_by", that__remove);
+    f2ptr remove__add    = object__get_1(cause, that__remove, "part_not_contained_by", this__remove);
+    remove               = f2trans__new(cause, remove__remove, remove__add);
+  }
+  f2ptr add;
+  {
+    f2ptr this__add   = f2__trans__add(cause, this);
+    f2ptr that__add   = f2__trans__add(cause, that);
+    f2ptr add__remove = object__get_1(cause, this__add, "part_not_contained_by", that__add);
+    f2ptr add__add    = object__get_1(cause, that__add, "part_not_contained_by", this__add);
+    add               = f2trans__new(cause, add__remove, add__add);
+  }
   return f2trans__new(cause, remove, add);
 }
 

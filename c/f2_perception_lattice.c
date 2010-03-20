@@ -505,7 +505,7 @@ f2ptr f2__perception_graph__equals_equals_hash_value(f2ptr cause, f2ptr this) {
   return f2__perception_graph__equals_equals_hash_value__loop_free(cause, this, node_hash);
 }
 
-f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__perception_graph__equals_hash_value(f2ptr cause, f2ptr this) {
   return nil;
 }
 def_pcfunk1(perception_graph__equals_hash_value, this, return f2__perception_graph__equals_hash_value(this_cause, this));

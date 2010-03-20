@@ -1287,6 +1287,10 @@ def_pcfunk2(graph__subtract, this, that, return f2__graph__subtract(this_cause, 
 
 def_primobject_2_slot(transgraph, remove_graph, add_graph);
 
+f2ptr f2__transgraph__new(f2ptr cause) {
+  return f2transframe__new(cause, nil, nil);
+}
+def_pcfunk0(transgraph__new, return f2__transgraph(this_cause));
 
 // **
 

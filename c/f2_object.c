@@ -232,6 +232,10 @@ f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
 }
 
+f2ptr object__get_0(f2ptr cause, f2ptr this, char* slot_cstr) {
+  return f2__object__get_0(cause, this, new__symbol(cause, slot_cstr));
+}
+
 f2ptr f2__object__get_1(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
@@ -239,6 +243,23 @@ f2ptr f2__object__get_1(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0) {
     return f2larva__new(cause, object__get__no_such_slot);
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, nil)));
+}
+
+f2ptr object__get_1(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0) {
+  return f2__object__get_1(cause, this, new__symbol(cause, slot_cstr), arg0);
+}
+
+f2ptr f2__object__get_2(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0, f2ptr arg1) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
+  if (! raw__funkable__is_type(cause, funk)) {
+    return f2larva__new(cause, object__get__no_such_slot);
+  }
+  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, f2cons__new(cause, arg1, nil))));
+}
+
+f2ptr object__get_2(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0, f2ptr arg1) {
+  return f2__object__get_1(cause, this, new__symbol(cause, slot_cstr), arg0, arg1);
 }
 
 f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {

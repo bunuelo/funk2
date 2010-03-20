@@ -1078,20 +1078,14 @@ f2ptr raw__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   return part_not_contained_graph;
 }
 
-f2ptr raw__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr remove = raw__graph__part_not_contained_by(cause, this, that);
-  f2ptr add    = raw__graph__part_not_contained_by(cause, that, this);
-  return f2trans__new(cause, remove, add);
-}
-
-f2ptr f2__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__graph__is_type(cause, this)) ||
-      (! raw__graph__is_type(cause, that))) {
+      (! raw__graph__is_type(cause, this))) {
     return f2larva__new(cause, 1);
   }
-  return raw__graph__difference(cause, this, that);
+  return raw__graph__part_not_contained_by(cause, this, that);
 }
-def_pcfunk2(graph__difference, this, that, return f2__graph__difference(this_cause, this, that));
+def_pcfunk2(graph__part_not_contained_by, this, that, return f2__graph__part_not_contained_by(this_cause, this, that));
 
 // trans
 
@@ -1101,6 +1095,44 @@ f2ptr f2__trans__new(f2ptr cause) {
   return f2trans__new(cause, nil, nil);
 }
 def_pcfunk0(trans__new, return f2__trans__new(this_cause));
+
+f2ptr raw__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__remove   = f2__trans__add(cause, this);
+  f2ptr that__remove   = f2__trans__add(cause, that);
+  f2ptr remove__remove = object__get_1(cause, this__remove, "part_not_contained_by", that__remove);
+  f2ptr remove__add    = object__get_1(cause, that__remove, "part_not_contained_by", this__remove);
+  f2ptr remove         = f2trans__new(cause, remove__remove, remove__add);
+  f2ptr this__add      = f2__trans__add(cause, this);
+  f2ptr that__add      = f2__trans__add(cause, that);
+  f2ptr add__remove    = object__get_1(cause, this__add, "part_not_contained_by", that__add);
+  f2ptr add__add       = object__get_1(cause, that__add, "part_not_contained_by", this__add);
+  f2ptr add            = f2trans__new(cause, add__remove, add__add);
+  return f2trans__new(cause, remove, add);
+}
+
+f2ptr f2__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__trans__is_type(cause, this)) ||
+      (! raw__trans__is_type(cause, that))) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__trans__part_not_contained_by(cause, this, that);
+}
+def_pcfunk2(trans__part_not_contained_by, this, that, return f2__trans__part_not_contained_by(this_cause, this, that));
+
+
+// difference
+//
+//   Takes any two object of a type that implements the part_not_contained_by get function)
+//
+//   Returns a trans object representing the difference between this and that.
+//
+f2ptr f2__difference(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr remove = object__get_1(cause, this, "part_not_contained_by", that);
+  f2ptr add    = object__get_1(cause, that, "part_not_contained_by", this);
+  return f2trans__new(cause, remove, add);
+}
+def_pcfunk2(difference, this, that, return f2__difference(this_cause, this, that));
+
 
 // **
 
@@ -1131,9 +1163,6 @@ void f2__perception_lattice__initialize() {
   //{char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   //{f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__equals_hash_value__loop_free, this, cfunk, 0, "calculates the equals_hash_value-loop_free for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
-  // trans
-  initialize_primobject_2_slot(trans, remove, add);
-  
   f2__primcfunk__init__2(graph__add_node,           this, node,                         "add a node to a graph by mutation.");
   f2__primcfunk__init__4(graph__add_edge,           this, label, left_node, right_node, "add an edge to a graph by mutation.");
   f2__primcfunk__init__2(graph__node__ins_and_outs, this, node,                         "get in and out edges of a node.");
@@ -1144,15 +1173,21 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(graph__node__outs__set,    this, node, outs,                   "sets node out edges.");
   f2__primcfunk__init__4(graph__contains_edge,      this, label, left_node, right_node, "returns boolean true if this graph contains edge.");
   
-  f2__primcfunk__init__1(graph__new_from_string, string, "creates a graph of characters from a string.  (function used for debugging graph matching)");
-  f2__primcfunk__init__1(graph__to_string, this, "creates a string from a graph made from a string.  (function used for debugging graph matching)");
+  f2__primcfunk__init__1(graph__new_from_string,         string,                               "creates a graph of characters from a string.  (function used for debugging graph matching)");
+  f2__primcfunk__init__1(graph__to_string,               this,                                 "creates a string from a graph made from a string.  (function used for debugging graph matching)");
   f2__primcfunk__init__3(graph__subgraphs_of_node_range, this, min_node_count, max_node_count, "returns all subgraphs with min_node_count to max_node_count nodes.");
-  f2__primcfunk__init__1(graph__subgraphs, this, "returns all subgraphs of graph.");
-  f2__primcfunk__init__2(graph__intersect, this, that, "returns the intersection of two graphs.");
-  f2__primcfunk__init__2(graph__union, this, that, "returns the union of two graphs.");
-  f2__primcfunk__init__2(graph__subtract_node, this, node, "subtract node from this graph.");
-  f2__primcfunk__init__4(graph__subtract_edge, this, label, left_node, right_node, "subtract an edge from a perception graph.");
-  f2__primcfunk__init__1(graph__copy, this, "returns a copy of this graph.");
-  f2__primcfunk__init__2(graph__difference, this, that, "computes the transframe difference between two graphs.");
+  f2__primcfunk__init__1(graph__subgraphs,               this,                                 "returns all subgraphs of graph.");
+  f2__primcfunk__init__2(graph__intersect,               this, that,                           "returns the intersection of two graphs.");
+  f2__primcfunk__init__2(graph__union,                   this, that,                           "returns the union of two graphs.");
+  f2__primcfunk__init__2(graph__subtract_node,           this, node,                           "subtract node from this graph.");
+  f2__primcfunk__init__4(graph__subtract_edge,           this, label, left_node, right_node,   "subtract an edge from a perception graph.");
+  f2__primcfunk__init__1(graph__copy,                    this,                                 "returns a copy of this graph.");
+  f2__primcfunk__init__2(graph__part_not_contained_by,   this, that,                           "determines the maximal part of this graph that is not contained in that graph.");
+  
+  // trans
+  initialize_primobject_2_slot(trans, remove, add);
+  
+  f2__primcfunk__init__2(trans__part_not_contained_by, this, that, "determines the maximal part of this trans that is not contained in that trans.");
+  
 }
 

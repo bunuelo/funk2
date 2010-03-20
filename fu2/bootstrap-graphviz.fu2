@@ -74,7 +74,7 @@
 			  ,[graphviz-edge_tail_head 'none' 'normal']
 			   ,[graphviz-edge edge__labelized [graphviz-labelize right_node]]]]]]
 
-[deftypefunk perception_graph get as-dot_code []
+[deftypefunk graph get as-dot_code []
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
     [strings-prog [graphviz-digraph [graphviz-node_color '#000000']
@@ -101,13 +101,13 @@
 	[error `runtime `[gv-command: ,command]]]]]
 
 
-[deftypefunk perception_graph execute gview []
+[deftypefunk graph execute gview []
   [have [get this as-dot_code] save 'graphviz-temp.dot']
   [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
   [system-gv 'graphviz-temp.ps']]
 
-[defunk perception_graph-test_gview []
-  [let [[this [new perception_graph]]]
+[defunk graph-test_gview []
+  [let [[this [new graph]]]
     [have this add_edge `contains `the-bucket `the-mud]
     [have this add_edge `are-made-dirty-by `my-clothes `the-mud]
     [have this gview]]]

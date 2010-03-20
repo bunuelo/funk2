@@ -1283,6 +1283,11 @@ f2ptr f2__graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(graph__subtract, this, that, return f2__graph__subtract(this_cause, this, that));
 
+// transgraph
+
+def_primobject_2_slot(transgraph, remove_graph, add_graph);
+
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {

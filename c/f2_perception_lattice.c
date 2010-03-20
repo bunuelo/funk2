@@ -552,7 +552,7 @@ boolean_t raw__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__perception_graph__edges_equals(cause, this, that)) {
     return boolean__false;
   }
-  return boolean__false;
+  return boolean__true;
 }
 
 f2ptr f2__perception_graph__equals(f2ptr cause, f2ptr this, f2ptr that) {

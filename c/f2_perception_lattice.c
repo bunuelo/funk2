@@ -1042,33 +1042,18 @@ f2ptr f2__graph__copy(f2ptr cause, f2ptr this) {
 def_pcfunk1(graph__copy, this, return f2__graph__copy(this_cause, this));
 
 
-void raw__graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr edges = f2__graph__edges(cause, that);
-  {
-    f2ptr iter = edges;
-    while (iter) {
-      f2ptr next = f2__cons__cdr(cause, iter);
-      f2ptr edge = f2__cons__car(cause, iter);
-      {
-	f2ptr label      = f2__graph_edge__label(     cause, edge);
-	f2ptr left_node  = f2__graph_edge__left_node( cause, edge);
-	f2ptr right_node = f2__graph_edge__right_node(cause, edge);
-	raw__graph__subtract_edge(cause, this, label, left_node, right_node);
-      }
-      iter = next;
-    }
-  }
+f2ptr raw__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
+  return nil;
 }
 
-f2ptr f2__graph__subtract(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__graph__difference(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, that))) {
     return f2larva__new(cause, 1);
   }
-  raw__graph__subtract(cause, this, that);
-  return nil;
+  return raw__graph__difference(cause, this, that);
 }
-def_pcfunk2(graph__subtract, this, that, return f2__graph__subtract(this_cause, this, that));
+def_pcfunk2(graph__difference, this, that, return f2__graph__difference(this_cause, this, that));
 
 // transgraph
 
@@ -1130,6 +1115,6 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__2(graph__subtract_node, this, node, "subtract node from this graph.");
   f2__primcfunk__init__4(graph__subtract_edge, this, label, left_node, right_node, "subtract an edge from a perception graph.");
   f2__primcfunk__init__1(graph__copy, this, "returns a copy of this graph.");
-  f2__primcfunk__init__2(graph__subtract, this, that, "subtract edges in that graph from this graph.");
+  f2__primcfunk__init__2(graph__difference, this, that, "computes the transframe difference between two graphs.");
 }
 

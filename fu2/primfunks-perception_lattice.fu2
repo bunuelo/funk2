@@ -36,6 +36,6 @@
 [globalize-funk graph-subtract_node           &primfunk:graph__subtract_node]
 [globalize-funk graph-subtract_edge           &primfunk:graph__subtract_edge]
 [globalize-funk graph-copy                    &primfunk:graph__copy]
-[globalize-funk graph-subtract                &primfunk:graph__subtract]
+[globalize-funk graph-difference              &primfunk:graph__difference]
 
 

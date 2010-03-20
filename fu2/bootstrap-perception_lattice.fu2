@@ -32,5 +32,5 @@
 [deftypefunk graph execute subtract_node           [node]                            [graph-subtract_node           this node]]
 [deftypefunk graph execute subtract_edge           [label left_node right_node]      [graph-subtract_edge           this label left_node right_node]]
 [deftypefunk graph execute copy                    []                                [graph-copy                    this]]
-[deftypefunk graph execute subtract                [that]                            [graph-subtract                this that]]
+[deftypefunk graph get     difference              [that]                            [graph-difference              this that]]
 

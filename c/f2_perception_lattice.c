@@ -586,7 +586,7 @@ f2ptr f2perception_graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2perception_graph__primobject_type__new(cause);
   {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals__funk);}
   {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__funk);}
-  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__loop_free__funk);}
+  //{char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__loop_free__funk);}
   return this;
 }
 
@@ -1184,8 +1184,8 @@ void f2__perception_lattice__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(perception_graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals__funk = never_gc(cfunk);}
   {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(perception_graph__equals_hash_value, this, cfunk, 0, "calculates the equals_hash_value for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__funk = never_gc(cfunk);}
-  {char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(perception_graph__equals_hash_value__loop_free, this, cfunk, 0, "calculates the equals_hash_value-loop_free for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  //{char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  //{f2__primcfunk__init__with_c_cfunk_var__1_arg(perception_graph__equals_hash_value__loop_free, this, cfunk, 0, "calculates the equals_hash_value-loop_free for a graph."); __funk2.globalenv.object_type.primobject.primobject_type_perception_graph.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__2(perception_graph__add_node,           this, node,                         "add a node to a graph by mutation.");
   f2__primcfunk__init__4(perception_graph__add_edge,           this, label, left_node, right_node, "add an edge to a graph by mutation.");

@@ -1136,8 +1136,8 @@ f2ptr f2__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(trans__part_not_contained_by, this, that, return f2__trans__part_not_contained_by(this_cause, this, that));
 
 boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
-  if (raw__graph__is_type(  cause, this) &&
-      raw__graph__is_rooted(cause, this)) {
+  if (raw__graph__is_type( cause, this) &&
+      f2__graph__is_rooted(cause, this)) {
     return boolean__true;
   }
   return boolean__false;

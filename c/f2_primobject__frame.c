@@ -342,14 +342,13 @@ f2ptr f2__frame__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(frame__part_not_contained_by, this, that, return f2__frame__part_not_contained_by(this_cause, this, that));
 
 void raw__frame__as__graph__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
-  f2ptr this              = raw__array__elt(cause, aux_data, 0);
-  f2ptr graph             = raw__array__elt(cause, aux_data, 1);
-  f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
-  f2ptr var_value         = f2__frame__lookup_var_value(cause, this, slot_name, not_defined_value);
+  f2ptr this      = raw__array__elt(cause, aux_data, 0);
+  f2ptr graph     = raw__array__elt(cause, aux_data, 1);
+  f2ptr var_value = f2__frame__lookup_var_value(cause, this, slot_name, __funk2.primobject__frame.type_variable_not_defined__symbol);
   f2__graph__add_edge(cause, graph, slot_name, this, var_value);
 }
 
-f2ptr f2__frame__as__graph(f2ptr cause, f2ptr this) {
+f2ptr raw__frame__as__graph(f2ptr cause, f2ptr this) {
   f2ptr graph    = f2__graph__new(cause);
   f2ptr aux_data = raw__array__new(cause, 2);
   raw__array__elt__set(cause, aux_data, 0, this);
@@ -359,6 +358,13 @@ f2ptr f2__frame__as__graph(f2ptr cause, f2ptr this) {
     return result;
   }
   return graph;
+}
+
+f2ptr f2__frame__as__graph(f2ptr cause, f2ptr this) {
+  if (! raw__frame__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__frame__as_graph(cause, this);
 }
 def_pcfunk1(frame__as__graph, this, return f2__frame__as__graph(this_cause, this));
 

@@ -35,6 +35,8 @@ declare_object_type_6_slot(graph, is_rooted, root, nodes, edges, edges_node_hash
 			   f2ptr equals_hash_value__funk;
 			   f2ptr part_not_contained_by__symbol;
 			   f2ptr part_not_contained_by__funk;
+			   f2ptr as__frame__symbol;
+			   f2ptr as__frame__funk;
 			   );
 
 // trans

@@ -3702,6 +3702,7 @@ f2ptr f2__gensym(f2ptr cause) {
   int pool_index = this_processor_thread__pool_index();
   return funk2_symbol_hash__generate_new_random_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause);
 }
+def_pcfunk0(gensym, return f2__gensym(this_cause));
 
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
   status("funk2_garbage_collector: touch_all_symbols.");

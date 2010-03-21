@@ -364,7 +364,7 @@ f2ptr f2__frame__as__graph(f2ptr cause, f2ptr this) {
   if (! raw__frame__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return raw__frame__as_graph(cause, this);
+  return raw__frame__as__graph(cause, this);
 }
 def_pcfunk1(frame__as__graph, this, return f2__frame__as__graph(this_cause, this));
 

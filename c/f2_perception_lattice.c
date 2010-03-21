@@ -33,7 +33,7 @@ def_pcfunk3(graph_edge__new, label, left_node, right_node, return f2__graph_edge
 
 // graph
 
-def_primobject_6_slot(graph, is_rooted, root_node, nodes, edges, edges_node_hash, edge_structure_hash_value);
+def_primobject_6_slot(graph, is_rooted, root, nodes, edges, edges_node_hash, edge_structure_hash_value);
 
 f2ptr f2__graph__new(f2ptr cause) {
   return f2graph__new(cause, nil, nil, nil, nil, f2__ptypehash__new(cause), f2integer__new(cause, 1));
@@ -1178,7 +1178,7 @@ void f2__perception_lattice__initialize() {
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
   // graph
-  initialize_primobject_6_slot(graph, is_rooted, root_node, nodes, edges, edges_node_hash, edge_structure_hash_value);
+  initialize_primobject_6_slot(graph, is_rooted, root, nodes, edges, edges_node_hash, edge_structure_hash_value);
   
   {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__funk = never_gc(cfunk);}

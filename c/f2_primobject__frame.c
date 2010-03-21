@@ -384,7 +384,7 @@ void f2__primobject_frame__initialize() {
   f2__primcfunk__init(frame__funkvar__slot_names, "");
   
   funk2_primobject__frame__init(&(__funk2.primobject__frame));
-
+  
   f2ptr cause = initial_cause();
   
   // frame

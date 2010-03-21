@@ -63,6 +63,7 @@ declare_primobject_4_slot(graph, nodes, edges, edges_node_hash, edge_structure_h
 
 f2ptr      f2__graph__equals_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
+f2ptr      f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 

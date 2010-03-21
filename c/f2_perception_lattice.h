@@ -28,7 +28,7 @@ declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
 
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
-declare_object_type_4_slot(graph, nodes, edges, edges_node_hash, edge_structure_hash_value,
+declare_object_type_6_slot(graph, is_rooted, root_node, nodes, edges, edges_node_hash, edge_structure_hash_value,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
 			   f2ptr equals_hash_value__symbol;

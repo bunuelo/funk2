@@ -281,3 +281,5 @@
 [globalize-funk stream-nonblocking__set                     &primfunk:stream__nonblocking__set]
 [globalize-funk stream-try_read_character                   &primfunk:stream__try_read_character]
 
+[globalize-funk gensym                                      &primfunk:gensym]
+

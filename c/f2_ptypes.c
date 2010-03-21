@@ -3673,6 +3673,36 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int 
   return result;
 }
 
+#define gensym__length 12
+f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause) {
+  char gensym__name[gensym__length + 1];
+  gensym__name[0] = 'g';
+  gensym__name[1] = ':';
+  f2ptr symbol_exists;
+  do {
+    int index;
+    for (index = 0; index < gensym__length - 2; index ++) {
+      int random_num = random() % 26;
+      gensym__name[index + 2] = 'a' + random_num;
+    }
+    symbol_exists = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, gensym__length, gensym__name);
+  } while (symbol_exists);
+  f2ptr new_symbol = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, pool_index, cause, gensym__length, gensym__name);
+  return new_symbol;
+}
+
+f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause) {
+  funk2_processor_mutex__user_lock(&this->mutex);
+  f2ptr new_symbol = funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(this, pool_index, cause);
+  funk2_processor_mutex__unlock(&(this->mutex));
+  return new_symbol;
+}
+
+f2ptr f2__gensym(f2ptr cause) {
+  int pool_index = this_processor_thread__pool_index();
+  return funk2_symbol_hash__generate_new_random_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause);
+}
+
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
   status("funk2_garbage_collector: touch_all_symbols.");
   funk2_symbol_hash_node_t** array_iter = this->array;
@@ -4102,6 +4132,9 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__equals, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.equals__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__equals_hash_value, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__funk = never_gc(cfunk);}
+  
+  // gensym
+  f2__funktional_primcfunk__init__0(gensym, "generates a symbol that did not exist previously.");
   
 }
 

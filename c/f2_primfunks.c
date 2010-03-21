@@ -296,6 +296,23 @@ f2ptr new__symbol(f2ptr cause, char* str) {
   return f2symbol__new(cause, strlen(str), (u8*)(str));
 }
 
+#define gensym__length 32
+f2ptr f2__gensym(f2ptr cause) {
+  
+  char gensym_name[gensym__length + 1];
+  f2ptr symbol_exists;
+  do {
+    int index;
+    for (index = 0; index < gensym__length; index ++) {
+      int random_num = random() % 26;
+      gensym_name[index] = 'a' + random_num;
+    }
+    symbol_exists = funk2_symbol_hash__lookup_symbol(&(__funk2.symbol_hash), gensym__length, gensym_name);
+  } while (symbol_exists);
+  // symbol does not exist, so we create it.
+  return f2symbol__new(cause, gensym__length, gensym_name);
+}
+
 // simple_array
 
 

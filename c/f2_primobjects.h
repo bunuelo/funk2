@@ -943,11 +943,11 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
     def_primobject_add_20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20));
 
 
-
+#define stringify(x) #x
 
 #define initialize_primobject_funk(name, funk_name) \
   {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, thing, cfunk, 0, "automatically generated cfunk (defined by initialize_primobject_funk in " __FILE__ " on line " #__LINE__ ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, thing, cfunk, 0, "automatically generated cfunk (defined by initialize_primobject_funk in " __FILE__ " on line " stringify(__LINE__) ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
 
 #define initialize_primobject_common(name)   \
   initialize_primobject_funk(name, is_type); \

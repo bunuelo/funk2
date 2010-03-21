@@ -493,11 +493,51 @@ f2ptr f2__graph__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph__equals_hash_value, this, return f2__graph__equals_hash_value(this_cause, this));
 
+boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
+  if (raw__graph__is_type( cause, this) &&
+      f2__graph__is_rooted(cause, this)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
+  return f2bool__new(raw__rooted_graph__is_type(cause, this));
+}
+
+f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
+  f2ptr frame     = f2__frame__new(cause);
+  f2ptr root      = f2__graph__root(cause, this);
+  f2ptr out_edges = f2__graph__node__outs(cause, this, root);
+  {
+    f2ptr iter = out_edges;
+    while (iter) {
+      f2ptr out_edge = f2__cons__car(cause, iter);
+      {
+	f2ptr label      = f2__graph_edge__label(     cause, out_edge);
+	f2ptr right_node = f2__graph_edge__right_node(cause, out_edge);
+	f2__frame__add_var_value(cause, frame, label, right_node);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return frame;
+}
+
+f2ptr f2__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
+  if (! raw__rooted_graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__rooted_graph__as__frame(cause, this);
+}
+def_pcfunk1(rooted_graph__as__frame, this, return f2__rooted_graph__as__frame(this_cause, this));
+
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
   {char* slot_name = "equals";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__funk);}
   {char* slot_name = "equals_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.equals_hash_value__funk);}
   {char* slot_name = "part_not_contained_by"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.part_not_contained_by__funk);}
+  {char* slot_name = "as-frame";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__funk);}
   return this;
 }
 
@@ -1135,51 +1175,11 @@ f2ptr f2__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(trans__part_not_contained_by, this, that, return f2__trans__part_not_contained_by(this_cause, this, that));
 
-boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
-  if (raw__graph__is_type( cause, this) &&
-      f2__graph__is_rooted(cause, this)) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
-  return f2bool__new(raw__rooted_graph__is_type(cause, this));
-}
-
-f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
-  f2ptr frame     = f2__frame__new(cause);
-  f2ptr root      = f2__graph__root(cause, this);
-  f2ptr out_edges = f2__graph__node__outs(cause, this, root);
-  {
-    f2ptr iter = out_edges;
-    while (iter) {
-      f2ptr out_edge = f2__cons__car(cause, iter);
-      {
-	f2ptr label      = f2__graph_edge__label(     cause, out_edge);
-	f2ptr right_node = f2__graph_edge__right_node(cause, out_edge);
-	f2__frame__add_var_value(cause, frame, label, right_node);
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
-  return frame;
-}
-
-f2ptr f2__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
-  if (! raw__rooted_graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
-  }
-  return raw__rooted_graph__as__frame(cause, this);
-}
-def_pcfunk1(rooted_graph__as__frame, this, return f2__rooted_graph__as__frame(this_cause, this));
-
 f2ptr f2trans__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2trans__primobject_type__new(cause);
   {char* slot_name = "equals";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.equals__funk);}
   {char* slot_name = "equals_hash_value";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.equals_hash_value__funk);}
   {char* slot_name = "part_not_contained_by"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.part_not_contained_by__funk);}
-  {char* slot_name = "as-frame";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_trans.as__frame__funk);}
   return this;
 }
 

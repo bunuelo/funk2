@@ -3675,15 +3675,15 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int 
 
 #define gensym__length 12
 f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause) {
-  char gensym__name[gensym__length + 1];
-  gensym__name[0] = 'g';
-  gensym__name[1] = ':';
+  u8 gensym__name[gensym__length + 1];
+  gensym__name[0] = (u8)'g';
+  gensym__name[1] = (u8)':';
   f2ptr symbol_exists;
   do {
     int index;
     for (index = 0; index < gensym__length - 2; index ++) {
       int random_num = random() % 26;
-      gensym__name[index + 2] = 'a' + random_num;
+      gensym__name[index + 2] = ((u8)'a') + random_num;
     }
     symbol_exists = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, gensym__length, gensym__name);
   } while (symbol_exists);

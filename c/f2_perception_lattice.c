@@ -33,8 +33,8 @@ f2ptr f2__graph_node__new(f2ptr cause, f2ptr label, f2ptr in_edge_hash, f2ptr ou
 
 def_primobject_3_slot(graph_edge, label, left_node, right_node);
 
-f2ptr f2__graph_edge__new(f2ptr cause, f2ptr left_node, f2ptr right_node) {
-  return f2graph_edge__new(cause, left_node, right_node);
+f2ptr f2__graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  return f2graph_edge__new(cause, label, left_node, right_node);
 }
 
 // graph_edge_type

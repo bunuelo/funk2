@@ -58,21 +58,6 @@ def_pcfunk2(graph__subtract_node, this, node_label, return f2__graph__subtract_n
 
 
 void raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
-  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
-  {
-    f2ptr left_node           = f2__graph__add_node(cause, this, left_node_label);
-    f2ptr out_nodes_edge_hash = f2__graph_node__out_nodes_edge_hash(cause, left_node);
-    f2ptr out_nodes           = f2__ptypehash__lookup(cause, out_nodes_edge_hash, edge_label);
-    out_nodes                 = f2cons__new(cause, left_node, out_nodes);
-    f2__ptypehash__add(cause, out_nodes_edge_hash, edge_label, out_nodes);
-  }
-  {
-    f2ptr right_node         = f2__graph__add_node(cause, this, right_node_label);
-    f2ptr in_nodes_edge_hash = f2__graph_node__in_nodes_edge_hash(cause, left_node);
-    f2ptr in_nodes           = f2__ptypehash__lookup(cause, in_nodes_edge_hash, edge_label);
-    in_nodes                 = f2cons__new(cause, right_node, in_nodes);
-    f2__ptypehash__add(cause, in_nodes_edge_hash, edge_label, in_nodes);
-  }
 }
 
 f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
@@ -115,104 +100,7 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_
 def_pcfunk4(graph__contains_edge, this, label, left_node, right_node, return f2__graph__contains_edge(this_cause, this, label, left_node, right_node));
 
 boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
-  boolean_t left_node__outs__was_removed = boolean__false;
-  f2ptr     left_node__outs              = raw__graph__node__outs(cause, this, left_node);
-  {
-    f2ptr prev = nil;
-    f2ptr iter = left_node__outs;
-    while (iter) {
-      f2ptr next = f2__cons__cdr(cause, iter);
-      f2ptr edge = f2__cons__car(cause, iter);
-      {
-	f2ptr edge__label      = f2__graph_edge__label(     cause, edge);
-	f2ptr edge__left_node  = f2__graph_edge__left_node( cause, edge);
-	f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
-	if (raw__eq(cause, edge__label,      label)     &&
-	    raw__eq(cause, edge__left_node,  left_node) &&
-	    raw__eq(cause, edge__right_node, right_node)) {
-	  if (prev) {
-	    f2__cons__cdr__set(cause, prev, next);
-	  } else {
-	    left_node__outs = next;
-	    raw__graph__node__outs__set(cause, this, left_node, left_node__outs);
-	  }
-	  left_node__outs__was_removed = boolean__true;
-	}
-      }
-      prev = iter;
-      iter = next;
-    }
-  }
-  boolean_t right_node__ins__was_removed = boolean__false;
-  f2ptr     right_node__ins              = raw__graph__node__ins(cause, this, right_node);
-  {
-    f2ptr prev = nil;
-    f2ptr iter = right_node__ins;
-    while (iter) {
-      f2ptr next = f2__cons__cdr(cause, iter);
-      f2ptr edge = f2__cons__car(cause, iter);
-      {
-	f2ptr edge__label      = f2__graph_edge__label(     cause, edge);
-	f2ptr edge__left_node  = f2__graph_edge__left_node( cause, edge);
-	f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
-	if (raw__eq(cause, edge__label,      label)     &&
-	    raw__eq(cause, edge__left_node,  left_node) &&
-	    raw__eq(cause, edge__right_node, right_node)) {
-	  if (prev) {
-	    f2__cons__cdr__set(cause, prev, next);
-	  } else {
-	    right_node__ins = next;
-	    raw__graph__node__ins__set(cause, this, right_node, right_node__ins);
-	  }
-	  right_node__ins__was_removed = boolean__true;
-	}
-      }
-      prev = iter;
-      iter = next;
-    }
-  }
-  boolean_t edges__was_removed = boolean__false;
-  f2ptr edges = f2__graph__edges(cause, this);
-  {
-    f2ptr prev = nil;
-    f2ptr iter = edges;
-    while (iter) {
-      f2ptr next = f2__cons__cdr(cause, iter);
-      f2ptr edge = f2__cons__car(cause, iter);
-      {
-	f2ptr edge__label      = f2__graph_edge__label(     cause, edge);
-	f2ptr edge__left_node  = f2__graph_edge__left_node( cause, edge);
-	f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
-	if (raw__eq(cause, edge__label,      label)     &&
-	    raw__eq(cause, edge__left_node,  left_node) &&
-	    raw__eq(cause, edge__right_node, right_node)) {
-	  if (prev) {
-	    f2__cons__cdr__set(cause, prev, next);
-	  } else {
-	    f2__graph__edges__set(cause, this, next);
-	  }
-	  edges__was_removed = boolean__true;
-	}
-      }
-      prev = iter;
-      iter = next;
-    }
-  }
-  release__assert(left_node__outs__was_removed == right_node__ins__was_removed && right_node__ins__was_removed == edges__was_removed, nil, "!(left_node__outs__was_removed == right_node__ins__was_removed == edges__was_removed)");
-  // edges removed.  remove nodes if removed edge was last edge (node has no edges now).
-  if (right_node__ins == nil) {
-    f2ptr right_node__outs = raw__graph__node__outs(cause, this, right_node);
-    if (right_node__outs == nil) {
-      raw__graph__subtract_node(cause, this, right_node);
-    }
-  }
-  if (left_node__outs == nil) {
-    f2ptr left_node__ins = raw__graph__node__ins(cause, this, left_node);
-    if (left_node__ins == nil) {
-      raw__graph__subtract_node(cause, this, left_node);
-    }
-  }
-  return left_node__outs__was_removed;
+  return boolean__false;
 }
 
 f2ptr f2__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {

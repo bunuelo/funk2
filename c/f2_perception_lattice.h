@@ -65,15 +65,25 @@ declare_object_type_2_slot(trans, remove, add,
 
 #include "f2_primobjects.h"
 
+// graph_node
+declare_primobject_2_slot(graph_node, label, in_edge_hash, out_edge_hash);
+
+// graph_edge
+declare_primobject_2_slot(graph_edge, label, left_node, right_node);
+
+// graph_edge_type
+declare_primobject_2_slot(graph_edge_type, label, left_node, right_node);
+
 // graph
 declare_primobject_3_slot(graph, is_rooted, root, node_edge_hash_node_hash);
 
 f2ptr      f2__graph__new(f2ptr cause);
 f2ptr      f2__graph__equals_hash_value(f2ptr cause, f2ptr this);
-boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
-f2ptr      f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
+boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label);
+f2ptr      f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_label_node, f2ptr right_node_label);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
+
 
 // trans
 declare_primobject_2_slot(trans, remove, add);

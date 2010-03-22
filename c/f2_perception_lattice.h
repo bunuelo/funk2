@@ -22,13 +22,21 @@
 #ifndef F2__PERCEPTION_LATTICE__TYPE__H
 #define F2__PERCEPTION_LATTICE__TYPE__H
 
+// graph_node
+typedef struct funk2_object_type__graph_node__slot_s funk2_object_type__graph_node__slot_t;
+declare_object_type_2_slot(graph_node, label, in_edge_hash, out_edge_hash, );
+
 // graph_edge
 typedef struct funk2_object_type__graph_edge__slot_s funk2_object_type__graph_edge__slot_t;
-declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
+declare_object_type_2_slot(graph_node, label, left_node, right_node, );
+
+// graph_edge_type
+typedef struct funk2_object_type__graph_edge_type__slot_s funk2_object_type__graph_edge_type__slot_t;
+declare_object_type_2_slot(graph_edge_type, label, left_node_hash, right_node_hash, );
 
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
-declare_object_type_6_slot(graph, is_rooted, root, nodes, edges, edges_node_hash, edge_structure_hash_value,
+declare_object_type_4_slot(graph, is_rooted, root, node_label_hash, edge_label_hash, edge_type_label_hash
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
 			   f2ptr equals_hash_value__symbol;
@@ -57,11 +65,8 @@ declare_object_type_2_slot(trans, remove, add,
 
 #include "f2_primobjects.h"
 
-// graph_edge
-declare_primobject_3_slot(graph_edge, label, left_node, right_node);
-
 // graph
-declare_primobject_6_slot(graph, is_rooted, root, nodes, edges, edges_node_hash, edge_structure_hash_value);
+declare_primobject_3_slot(graph, is_rooted, root, node_edge_hash_node_hash);
 
 f2ptr      f2__graph__new(f2ptr cause);
 f2ptr      f2__graph__equals_hash_value(f2ptr cause, f2ptr this);

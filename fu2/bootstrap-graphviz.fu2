@@ -63,7 +63,12 @@
 		      [= result [have result replace_all token replacement]]]]
 	      `[[' ' '_SPACE_']
 		['-' '_DASH_']
-		['#' '_HASH_']]]
+		['#' '_HASH_']
+		['[' '_BSQPAREN_']
+		[']' '_ESQPAREN_']
+		['(' '_BPAREN_']
+		[')' '_EPAREN_']
+		]]
 	result]
     'nil']]
 

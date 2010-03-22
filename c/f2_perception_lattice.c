@@ -27,11 +27,11 @@ def_primobject_3_slot(graph_node, label, in_edge_hash, out_edge_hash);
 
 // graph_edge
 
-def_primobject_3_slot(graph_node, label, left_node, right_node);
+def_primobject_3_slot(graph_edge, label, left_node, right_node);
 
 // graph_edge_type
 
-def_primobject_3_slot(graph_node, label, left_node_hash, right_node_hash);
+def_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
 
 // graph
 

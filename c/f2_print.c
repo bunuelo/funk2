@@ -919,7 +919,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2ptypehash__bin_array(exp, cause),       f2ptypehash__bin_array__tracing_on(exp, cause), f2ptypehash__bin_array__trace(exp, cause), f2ptypehash__bin_array__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
-	    /*
 	  } else if (f2primobject__is__graph(exp, cause)) {
 	    int subexp_size[2];
 	    if (f2graph__is_rooted(exp, cause)) {
@@ -927,14 +926,14 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      {f2__write_pretty__slot_key_and_value("root", 5, cause, fiber, stream, f2graph__root(exp, cause), f2graph__root__tracing_on(exp, cause), f2graph__root__trace(exp, cause), f2graph__root__imagination_frame(exp, cause),
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
-	    f2ptr nodes = 
+	    // should iterate through nodes and for each node iterate through edges.  (and be cute about it)
+	    //   ...but for now print the hairy mess.
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("nodes", 5, cause, fiber, stream, f2graph__nodes(exp, cause), f2graph__nodes__tracing_on(exp, cause), f2graph__nodes__trace(exp, cause), f2graph__nodes__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("node_label_hash",      20, cause, fiber, stream, f2graph__node_label_hash(exp, cause), f2graph__node_label_hash__tracing_on(exp, cause), f2graph__node_label_hash__trace(exp, cause), f2graph__node_label_hash__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("edges", 5, cause, fiber, stream, f2graph__edges(exp, cause), f2graph__edges__tracing_on(exp, cause), f2graph__edges__trace(exp, cause), f2graph__edges__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("edge_type_label_hash", 20, cause, fiber, stream, f2graph__edge_type_label_hash(exp, cause), f2graph__edge_type_label_hash__tracing_on(exp, cause), f2graph__edge_type_label_hash__trace(exp, cause), f2graph__edge_type_label_hash__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
-	    */
 	  } else if (f2primobject__is__trans(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  

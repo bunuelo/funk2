@@ -50,7 +50,11 @@ f2ptr f2__graph_edge_type__new(f2ptr cause, f2ptr label, f2ptr left_node_hash, f
 def_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
 
 f2ptr f2__graph__new(f2ptr cause) {
-  return f2graph__new(cause, nil, nil, f2__ptypehash__new(cause));
+  f2ptr is_rooted            = nil;
+  f2ptr root                 = nil;
+  f2ptr node_label_hash      = f2__ptypehash__new(cause);
+  f2ptr edge_type_label_hash = f2__ptypehash__new(cause);
+  return f2graph__new(cause, nil, nil, node_label_hash, edge_type_label_hash);
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 

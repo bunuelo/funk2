@@ -75,7 +75,7 @@ declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 declare_primobject_3_slot(graph_edge_type, label, left_node, right_node);
 
 // graph
-declare_primobject_3_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
+declare_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
 
 f2ptr      f2__graph__new(f2ptr cause);
 f2ptr      f2__graph__equals_hash_value(f2ptr cause, f2ptr this);

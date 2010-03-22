@@ -54,7 +54,7 @@ f2ptr f2__graph__new(f2ptr cause) {
   f2ptr root                 = nil;
   f2ptr node_label_hash      = f2__ptypehash__new(cause);
   f2ptr edge_type_label_hash = f2__ptypehash__new(cause);
-  return f2graph__new(cause, nil, nil, node_label_hash, edge_type_label_hash);
+  return f2graph__new(cause, is_rooted, root, node_label_hash, edge_type_label_hash);
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 

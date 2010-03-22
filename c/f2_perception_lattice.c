@@ -388,11 +388,17 @@ void f2__perception_lattice__initialize() {
   f2__perception_lattice__reinitialize_globalvars();
   f2ptr cause = initial_cause();
   
+  // graph_node
+  initialize_primobject_3_slot(graph_node, label, in_edge_hash, out_edge_hash);
+  
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
+  // graph_edge_type
+  initialize_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
+  
   // graph
-  initialize_primobject_6_slot(graph, is_rooted, root, nodes, edges, edges_node_hash, edge_structure_hash_value);
+  initialize_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
   
   {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__funk = never_gc(cfunk);}

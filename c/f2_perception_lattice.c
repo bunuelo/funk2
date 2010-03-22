@@ -23,11 +23,19 @@
 
 // graph_node
 
-def_primobject_3_slot(graph_node, label, in_nodes_edge_hash, out_nodes_edge_hash);
+def_primobject_3_slot(graph_node, label, in_edge_hash, out_edge_hash);
+
+// graph_edge
+
+def_primobject_3_slot(graph_node, label, left_node, right_node);
+
+// graph_edge_type
+
+def_primobject_3_slot(graph_node, label, left_node_hash, right_node_hash);
 
 // graph
 
-def_primobject_3_slot(graph, is_rooted, root, node_label_hash);
+def_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
 
 f2ptr f2__graph__new(f2ptr cause) {
   return f2graph__new(cause, nil, nil, f2__ptypehash__new(cause));

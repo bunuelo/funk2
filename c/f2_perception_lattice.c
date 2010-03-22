@@ -25,13 +25,25 @@
 
 def_primobject_3_slot(graph_node, label, in_edge_hash, out_edge_hash);
 
+f2ptr f2__graph_node__new(f2ptr cause, f2ptr label, f2ptr in_edge_hash, f2ptr out_edge_hash) {
+  return f2graph_node__new(cause, label, in_edge_hash, out_edge_hash);
+}
+
 // graph_edge
 
 def_primobject_3_slot(graph_edge, label, left_node, right_node);
 
+f2ptr f2__graph_edge__new(f2ptr cause, f2ptr left_node, f2ptr right_node) {
+  return f2graph_edge__new(cause, left_node, right_node);
+}
+
 // graph_edge_type
 
 def_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
+
+f2ptr f2__graph_edge_type__new(f2ptr cause, f2ptr label, f2ptr left_node_hash, f2ptr right_node_hash) {
+  return f2graph_edge_type__new(cause, label, left_node_hash, right_node_hash);
+}
 
 // graph
 

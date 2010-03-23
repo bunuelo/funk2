@@ -137,8 +137,8 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left
       edges_left_node_hash = f2__ptypehash__new(cause);
       f2__ptypehash__add(cause, edges_left_node_hash_edge_hash, edge_label, edges_left_node_hash);
     }
-    f2__ptypehash__add(cause, edges_right_node_hash, right_node_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, edges_right_edge_hash, right_node_label)));
-    f2__ptypehash__add(cause, edges_left_node_hash,  left_node_label,  f2cons__new(cause, edge, f2__ptypehash__lookup(cause, edges_left_edge_hash,  left_node_label)));
+    f2__ptypehash__add(cause, edges_right_node_hash, right_node_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, edges_right_node_hash, right_node_label)));
+    f2__ptypehash__add(cause, edges_left_node_hash,  left_node_label,  f2cons__new(cause, edge, f2__ptypehash__lookup(cause, edges_left_node_hash,  left_node_label)));
   }
   return edge;
 }

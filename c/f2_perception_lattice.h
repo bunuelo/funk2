@@ -66,7 +66,7 @@ declare_object_type_2_slot(trans, remove, add,
 #include "f2_primobjects.h"
 
 // graph_node
-declare_primobject_3_slot(graph_node, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
+declare_primobject_3_slot(graph_node, label, edges_in_node_hash_edge_hash, edges_out_node_hash_edge_hash);
 
 // graph_edge
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);

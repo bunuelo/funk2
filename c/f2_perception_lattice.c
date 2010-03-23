@@ -121,7 +121,7 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 						  f2ptr right_node = f2__graph_edge__right_node(cause, edge);
 						  f2ptr left_node_label = f2__graph_node__label(cause, left_node);
 						  f2ptr right_node_label = f2__graph_node__label(cause, right_node);
-						  raw__graph__remove_edge(cause, edge_label, left_node_label, right_node_label);
+						  raw__graph__remove_edge(cause, this, edge_label, left_node_label, right_node_label);
 						  edges_iter = f2__cons__cdr(cause, edges_iter);
 						}
 					      }
@@ -149,7 +149,7 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 						  f2ptr right_node = f2__graph_edge__right_node(cause, edge);
 						  f2ptr left_node_label = f2__graph_node__label(cause, left_node);
 						  f2ptr right_node_label = f2__graph_node__label(cause, right_node);
-						  raw__graph__remove_edge(cause, edge_label, left_node_label, right_node_label);
+						  raw__graph__remove_edge(cause, this, edge_label, left_node_label, right_node_label);
 						  edges_iter = f2__cons__cdr(cause, edges_iter);
 						}
 					      }

@@ -190,7 +190,44 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_
 def_pcfunk4(graph__contains_edge, this, label, left_node, right_node, return f2__graph__contains_edge(this_cause, this, label, left_node, right_node));
 
 boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
-  return boolean__false;
+  {
+    f2ptr left_node = raw__graph__lookup_node(cause, this, left_node_label);
+    if (! left_node) {
+      return boolean__false;
+    }
+    f2ptr edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, left_node);
+    f2ptr edges_right_node_hash           = f2__ptypehash__lookup(cause, edges_right_node_hash_edge_hash, edge_label);
+    if (! edges_right_node_hash) {
+      return boolean__false;
+    }
+    f2ptr edges = f2__ptypehash__lookup(cause, edges_right_node_hash, right_node_label);
+    if (! edges) {
+      return boolean__false;
+    }
+    edges = f2__cons__cdr(cause, edges);
+    f2__ptypehash__add(cause, edges_right_node_hash, right_node_label, edges);
+  }
+  {
+    f2ptr right_node = raw__graph__lookup_node(cause, this, right_node_label);
+    if (! right_node) {
+      // we should never get here.
+      return boolean__false;
+    }
+    f2ptr edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, right_node);
+    f2ptr edges_left_node_hash           = f2__ptypehash__lookup(cause, edges_left_node_hash_edge_hash, edge_label);
+    if (! edges_left_node_hash) {
+      // we should never get here.
+      return boolean__false;
+    }
+    f2ptr edges = f2__ptypehash__lookup(cause, edges_left_node_hash, left_node_label);
+    if (! edges) {
+      // we should never get here.
+      return boolean__false;
+    }
+    edges = f2__cons__cdr(cause, edges);
+    f2__ptypehash__add(cause, edges_left_node_hash, left_node_label, edges);
+  }
+  return boolean__true;
 }
 
 f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {

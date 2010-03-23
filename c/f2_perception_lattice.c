@@ -447,13 +447,13 @@ void f2__perception_lattice__initialize() {
   f2ptr cause = initial_cause();
   
   // graph_node
-  initialize_primobject_3_slot(graph_node, label, in_edge_hash, out_edge_hash);
+  initialize_primobject_3_slot(graph_node, label, in_edges_hash, out_edges_hash);
   
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
   // graph_edge_type
-  initialize_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
+  initialize_primobject_3_slot(graph_edge_type, label, left_nodes_hash, right_nodes_hash);
   
   // graph
   initialize_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);

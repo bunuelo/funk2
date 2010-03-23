@@ -205,7 +205,16 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
       return boolean__false;
     }
     edges = f2__cons__cdr(cause, edges);
-    f2__ptypehash__add(cause, edges_right_node_hash, right_node_label, edges);
+    if (edges) {
+      f2__ptypehash__add(cause, edges_right_node_hash, right_node_label, edges);
+    } else {
+      f2__ptypehash__remove(cause, edges_right_node_hash, right_node_label);
+      f2ptr key_count    = f2__ptypehash__key_count(cause, edges_right_node_hash);
+      u64   key_count__i = f2integer__i(key_count, cause);
+      if (key_count__i == 0) {
+	f2__ptypehash__remove(cause, edges_right_node_hash_edge_hash, edge_label);
+      }
+    }
   }
   {
     f2ptr right_node = raw__graph__lookup_node(cause, this, right_node_label);
@@ -225,7 +234,16 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
       return boolean__false;
     }
     edges = f2__cons__cdr(cause, edges);
-    f2__ptypehash__add(cause, edges_left_node_hash, left_node_label, edges);
+    if (edges) {
+      f2__ptypehash__add(cause, edges_left_node_hash, left_node_label, edges);
+    } else {
+      f2__ptypehash__remove(cause, edges_left_node_hash, left_node_label);
+      f2ptr key_count    = f2__ptypehash__key_count(cause, edges_left_node_hash);
+      u64   key_count__i = f2integer__i(key_count, cause);
+      if (key_count__i == 0) {
+	f2__ptypehash__remove(cause, edges_left_node_hash_edge_hash, edge_label);
+      }
+    }
   }
   return boolean__true;
 }

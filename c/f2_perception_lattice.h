@@ -32,7 +32,7 @@ declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
 
 // graph_edge_type
 typedef struct funk2_object_type__graph_edge_type__slot_s funk2_object_type__graph_edge_type__slot_t;
-declare_object_type_3_slot(graph_edge_type, label, left_nodes_hash, right_nodes_hash, );
+declare_object_type_3_slot(graph_edge_type, label, left_node_hash, right_node_hash, );
 
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;

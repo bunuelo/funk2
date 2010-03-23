@@ -45,12 +45,12 @@ def_pcfunk3(graph_edge__new, label, left_node, right_node, return f2__graph_edge
 
 // graph_edge_type
 
-def_primobject_3_slot(graph_edge_type, label, left_nodes_hash, right_nodes_hash);
+def_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
 
 f2ptr f2__graph_edge_type__new(f2ptr cause, f2ptr label) {
-  f2ptr left_nodes_hash  = f2__ptypehash__new(cause);
-  f2ptr right_nodes_hash = f2__ptypehash__new(cause);
-  return f2graph_edge_type__new(cause, label, left_nodes_hash, right_nodes_hash);
+  f2ptr left_node_hash  = f2__ptypehash__new(cause);
+  f2ptr right_node_hash = f2__ptypehash__new(cause);
+  return f2graph_edge_type__new(cause, label, left_node_hash, right_node_hash);
 }
 def_pcfunk1(graph_edge_type__new, label, return f2__graph_edge_type__new(this_cause, label));
 
@@ -117,10 +117,10 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left
       f2__ptypehash__add(cause, edge_type_label_hash, edge_label, edge_type);
     }
     {
-      f2ptr left_nodes_hash  = f2__graph_edge_type__left_nodes_hash( cause, edge_type);
-      f2ptr right_nodes_hash = f2__graph_edge_type__right_nodes_hash(cause, edge_type);
-      f2__ptypehash__add(cause, left_nodes_hash,  left_node_label,  f2cons__new(cause, left_node,  f2__ptypehash__lookup(cause, left_nodes_hash,  left_node_label)));
-      f2__ptypehash__add(cause, right_nodes_hash, right_node_label, f2cons__new(cause, right_node, f2__ptypehash__lookup(cause, right_nodes_hash, right_node_label)));
+      f2ptr left_node_hash  = f2__graph_edge_type__left_node_hash( cause, edge_type);
+      f2ptr right_node_hash = f2__graph_edge_type__right_node_hash(cause, edge_type);
+      f2__ptypehash__add(cause, left_node_hash,  left_node_label,  left_node);
+      f2__ptypehash__add(cause, right_node_hash, right_node_label, right_node);
     }
   }
   f2ptr edge = f2__graph_edge__new(cause, edge_label, left_node, right_node);
@@ -479,7 +479,7 @@ void f2__perception_lattice__initialize() {
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
   // graph_edge_type
-  initialize_primobject_3_slot(graph_edge_type, label, left_nodes_hash, right_nodes_hash);
+  initialize_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
   
   // graph
   initialize_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);

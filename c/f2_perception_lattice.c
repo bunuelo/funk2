@@ -23,12 +23,12 @@
 
 // graph_node
 
-def_primobject_3_slot(graph_node, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
+def_primobject_3_slot(graph_node, label, edges_in_node_hash_edge_hash, edges_out_node_hash_edge_hash);
 
 f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
-  f2ptr in_node_hash_edge_hash  = f2__ptypehash__new(cause);
-  f2ptr out_node_hash_edge_hash = f2__ptypehash__new(cause);
-  return f2graph_node__new(cause, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
+  f2ptr edges_in_node_hash_edge_hash  = f2__ptypehash__new(cause);
+  f2ptr edges_out_node_hash_edge_hash = f2__ptypehash__new(cause);
+  return f2graph_node__new(cause, label, edges_in_node_hash_edge_hash, edges_out_node_hash_edge_hash);
 }
 def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
 
@@ -125,13 +125,20 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left
   }
   f2ptr edge = f2__graph_edge__new(cause, edge_label, left_node, right_node);
   {
-    f2ptr out_node_hash_edge_hash = f2__graph_node__out_node_hash_edge_hash(cause, left_node);
-    f2ptr in_node_hash_edge_hash  = f2__graph_node__in_node_hash_edge_hash( cause, right_node);
-    f2ptr out_node_hash           = f2__ptypehash__lookup(cause, out_node_hash_edge_hash, edge_label);
-    f2ptr in_node_hash            = f2__ptypehash__lookup(cause, in_node_hash_edge_hash,  edge_label);
-    
-    f2__ptypehash__add(cause, out_edges_hash, edge_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, out_edges_hash, edge_label)));
-    f2__ptypehash__add(cause, in_edges_hash,  edge_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, in_edges_hash,  edge_label)));
+    f2ptr edges_out_node_hash_edge_hash = f2__graph_node__edges_out_nodes_hash_edge_hash(cause, left_node);
+    f2ptr edges_in_node_hash_edge_hash  = f2__graph_node__edges_in_node_hash_edge_hash(  cause, right_node);
+    f2ptr edges_out_node_hash           = f2__ptypehash__lookup(cause, edges_out_node_hash_edge_hash, edge_label);
+    f2ptr edges_in_node_hash            = f2__ptypehash__lookup(cause, edges_in_node_hash_edge_hash,  edge_label);
+    if (edges_out_node_hash == nil) {
+      edges_out_node_hash = f2__ptypehash__new(cause);
+      f2__ptypehash__add(cause, edges_out_node_hash_edge_hash, edge_label, edges_out_node_hash);
+    }
+    if (edges_in_node_hash == nil) {
+      edges_in_node_hash = f2__ptypehash__new(cause);
+      f2__ptypehash__add(cause, edges_in_node_hash_edge_hash, edge_label, edges_in_node_hash);
+    }
+    f2__ptypehash__add(cause, edges_out_node_hash, out_node_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, edges_out_edge_hash, out_node_label)));
+    f2__ptypehash__add(cause, edges_in_node_hash,  in_node_label,  f2cons__new(cause, edge, f2__ptypehash__lookup(cause, edges_in_edge_hash,  in_node_label)));
   }
   return edge;
 }
@@ -466,7 +473,7 @@ void f2__perception_lattice__initialize() {
   f2ptr cause = initial_cause();
   
   // graph_node
-  initialize_primobject_3_slot(graph_node, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
+  initialize_primobject_3_slot(graph_node, label, edges_in_node_hash_edge_hash, edges_out_node_hash_edge_hash);
   
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);

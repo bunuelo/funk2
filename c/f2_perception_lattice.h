@@ -24,7 +24,7 @@
 
 // graph_node
 typedef struct funk2_object_type__graph_node__slot_s funk2_object_type__graph_node__slot_t;
-declare_object_type_3_slot(graph_node, label, in_node_hash_edge_hash, out_node_hash_edge_hash, );
+declare_object_type_3_slot(graph_node, label, edges_in_node_hash_edge_hash, edges_out_node_hash_edge_hash, );
 
 // graph_edge
 typedef struct funk2_object_type__graph_edge__slot_s funk2_object_type__graph_edge__slot_t;

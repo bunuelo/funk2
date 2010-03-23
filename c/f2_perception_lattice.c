@@ -94,7 +94,68 @@ def_pcfunk2(graph__add_node, this, node_label, return f2__graph__add_node(this_c
 
 
 boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
-  return boolean__false;
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
+  f2ptr node            = f2__ptypehash__lookup(cause, node_label_hash, node_label);
+  if (! node) {
+    return boolean__false;
+  }
+  {
+    f2ptr edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, node);
+    ptypehash__iteration(cause, edges_left_node_hash_edge_hash, edge_label, edges_left_node_hash,
+			 ptypehash__iteration(cause, edges_left_node_hash, left_node_label, edges,
+					      f2ptr edges_seq  = nil;
+					      {
+						f2ptr edges_iter = edges;
+						while (edges_iter) {
+						  f2ptr edge = f2__cons__car(cause, edges_iter);
+						  edges_seq = f2cons__new(cause, edge, edges_seq);
+						  edges_iter = f2__cons__cdr(cause, edges_iter);
+						}
+					      }
+					      {
+						f2ptr edges_iter = edges_seq;
+						while (edges_iter) {
+						  f2ptr edge = f2__cons__car(cause, edges_iter);
+						  f2ptr edge_label = f2__graph_edge__label(cause, edge);
+						  f2ptr left_node  = f2__graph_edge__left_node(cause, edge);
+						  f2ptr right_node = f2__graph_edge__right_node(cause, edge);
+						  f2ptr left_node_label = f2__graph_node__label(cause, left_node);
+						  f2ptr right_node_label = f2__graph_node__label(cause, right_node);
+						  f2__graph__remove_edge(cause, edge_label, left_node_label, right_node_label);
+						  edges_iter = f2__cons__cdr(cause, edges_iter);
+						}
+					      }
+					      ));
+  }
+  {
+    f2ptr edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, node);
+    ptypehash__iteration(cause, edges_right_node_hash_edge_hash, edge_label, edges_right_node_hash,
+			 ptypehash__iteration(cause, edges_right_node_hash, right_node_label, edges,
+					      f2ptr edges_seq  = nil;
+					      {
+						f2ptr edges_iter = edges;
+						while (edges_iter) {
+						  f2ptr edge = f2__cons__car(cause, edges_iter);
+						  edges_seq = f2cons__new(cause, edge, edges_seq);
+						  edges_iter = f2__cons__cdr(cause, edges_iter);
+						}
+					      }
+					      {
+						f2ptr edges_iter = edges_seq;
+						while (edges_iter) {
+						  f2ptr edge = f2__cons__car(cause, edges_iter);
+						  f2ptr edge_label = f2__graph_edge__label(cause, edge);
+						  f2ptr left_node  = f2__graph_edge__left_node(cause, edge);
+						  f2ptr right_node = f2__graph_edge__right_node(cause, edge);
+						  f2ptr left_node_label = f2__graph_node__label(cause, left_node);
+						  f2ptr right_node_label = f2__graph_node__label(cause, right_node);
+						  f2__graph__remove_edge(cause, edge_label, left_node_label, right_node_label);
+						  edges_iter = f2__cons__cdr(cause, edges_iter);
+						}
+					      }
+					      ));
+  }
+  return boolean__true;
 }
 
 f2ptr f2__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {

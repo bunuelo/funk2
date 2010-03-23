@@ -181,13 +181,13 @@ f2ptr raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr
   return f2integer__new(cause, raw__simple_length(cause, edges));
 }
 
-f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return raw__graph__contains_edge(cause, this, label, left_node, right_node);
+  return raw__graph__contains_edge(cause, this, edge_label, left_node_label, right_node_label);
 }
-def_pcfunk4(graph__contains_edge, this, label, left_node, right_node, return f2__graph__contains_edge(this_cause, this, label, left_node, right_node));
+def_pcfunk4(graph__contains_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__contains_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
 boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   {
@@ -230,13 +230,13 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
   return boolean__true;
 }
 
-f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2bool__new(raw__graph__remove_edge(cause, this, label, left_node, right_node));
+  return f2bool__new(raw__graph__remove_edge(cause, this, edge_label, left_node_label, right_node_label));
 }
-def_pcfunk4(graph__remove_edge, this, label, left_node, right_node, return f2__graph__remove_edge(this_cause, this, label, left_node, right_node));
+def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__remove_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
 // graph-equals
 

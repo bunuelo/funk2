@@ -17,14 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk graph execute add_node                [node]                          [graph-add_node                this node]]
-[deftypefunk graph execute add_edge                [label left_node right_node]    [graph-add_edge                this label left_node right_node]]
-[deftypefunk graph get     contains_node           [node]                          [graph-contains_node           this node]]
-[deftypefunk graph get     contains_edge           [label left_node right_node]    [graph-contains_edge           this label left_node right_node]]
-[deftypefunk graph execute intersect               [that]                          [graph-intersect               this that]]
-[deftypefunk graph execute union                   [that]                          [graph-union                   this that]]
-[deftypefunk graph execute subtract_node           [node]                          [graph-subtract_node           this node]]
-[deftypefunk graph execute subtract_edge           [label left_node right_node]    [graph-subtract_edge           this label left_node right_node]]
-[deftypefunk graph execute copy                    []                              [graph-copy                    this]]
-[deftypefunk graph get     difference              [that]                          [graph-difference              this that]]
+[deftypefunk graph execute add_node      [node]                       [graph-add_node      this node]]
+[deftypefunk graph execute add_edge      [label left_node right_node] [graph-add_edge      this label left_node right_node]]
+[deftypefunk graph get     contains_node [node]                       [graph-contains_node this node]]
+[deftypefunk graph get     contains_edge [label left_node right_node] [graph-contains_edge this label left_node right_node]]
+[deftypefunk graph execute intersect     [that]                       [graph-intersect     this that]]
+[deftypefunk graph execute union         [that]                       [graph-union         this that]]
+[deftypefunk graph execute remove_node   [node]                       [graph-remove_node   this node]]
+[deftypefunk graph execute remove_edge   [label left_node right_node] [graph-remove_edge   this label left_node right_node]]
+[deftypefunk graph execute copy          []                           [graph-copy          this]]
+[deftypefunk graph get     difference    [that]                       [graph-difference    this that]]
 

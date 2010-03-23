@@ -93,17 +93,17 @@ f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 def_pcfunk2(graph__add_node, this, node_label, return f2__graph__add_node(this_cause, this, node_label));
 
 
-boolean_t raw__graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   return boolean__false;
 }
 
-f2ptr f2__graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+f2ptr f2__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2bool__new(raw__graph__subtract_node(cause, this, node_label));
+  return f2bool__new(raw__graph__remove_node(cause, this, node_label));
 }
-def_pcfunk2(graph__subtract_node, this, node_label, return f2__graph__subtract_node(this_cause, this, node_label));
+def_pcfunk2(graph__remove_node, this, node_label, return f2__graph__remove_node(this_cause, this, node_label));
 
 
 f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
@@ -189,17 +189,17 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_
 }
 def_pcfunk4(graph__contains_edge, this, label, left_node, right_node, return f2__graph__contains_edge(this_cause, this, label, left_node, right_node));
 
-boolean_t raw__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   return boolean__false;
 }
 
-f2ptr f2__graph__subtract_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return f2bool__new(raw__graph__subtract_edge(cause, this, label, left_node, right_node));
+  return f2bool__new(raw__graph__remove_edge(cause, this, label, left_node, right_node));
 }
-def_pcfunk4(graph__subtract_edge, this, label, left_node, right_node, return f2__graph__subtract_edge(this_cause, this, label, left_node, right_node));
+def_pcfunk4(graph__remove_edge, this, label, left_node, right_node, return f2__graph__remove_edge(this_cause, this, label, left_node, right_node));
 
 // graph-equals
 
@@ -499,8 +499,8 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__4(graph__contains_edge,         this, label, left_node, right_node, "returns boolean true if this graph contains edge.");
   f2__primcfunk__init__2(graph__intersect,             this, that,                         "returns the intersection of two graphs.");
   f2__primcfunk__init__2(graph__union,                 this, that,                         "returns the union of two graphs.");
-  f2__primcfunk__init__2(graph__subtract_node,         this, node,                         "subtract node from this graph.");
-  f2__primcfunk__init__4(graph__subtract_edge,         this, label, left_node, right_node, "subtract an edge from a perception graph.");
+  f2__primcfunk__init__2(graph__remove_node,           this, node,                         "remove node from this graph.");
+  f2__primcfunk__init__4(graph__remove_edge,           this, label, left_node, right_node, "remove an edge from a perception graph.");
   f2__primcfunk__init__1(graph__copy,                  this,                               "returns a copy of this graph.");
   f2__primcfunk__init__2(graph__part_not_contained_by, this, that,                         "determines the maximal part of this graph that is not contained in that graph.");
   

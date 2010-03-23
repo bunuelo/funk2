@@ -26,8 +26,8 @@
 [globalize-funk graph-contains_edge           &primfunk:graph__contains_edge]
 [globalize-funk graph-intersect               &primfunk:graph__intersect]
 [globalize-funk graph-union                   &primfunk:graph__union]
-[globalize-funk graph-subtract_node           &primfunk:graph__subtract_node]
-[globalize-funk graph-subtract_edge           &primfunk:graph__subtract_edge]
+[globalize-funk graph-remove_node             &primfunk:graph__remove_node]
+[globalize-funk graph-remove_edge             &primfunk:graph__remove_edge]
 [globalize-funk graph-copy                    &primfunk:graph__copy]	
 [globalize-funk graph-part_not_contained_by   &primfunk:graph__part_not_contained_by]
 

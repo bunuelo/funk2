@@ -165,7 +165,7 @@ f2ptr f2__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 def_pcfunk2(graph__contains_node, this, node_label, return f2__graph__contains_node(this_cause, this, node_label));
 
 f2ptr raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
-  f2ptr left_node = f2__graph__lookup_node(cause, this, left_node_label);
+  f2ptr left_node = raw__graph__lookup_node(cause, this, left_node_label);
   if (! left_node) {
     return nil;
   }

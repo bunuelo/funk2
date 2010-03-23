@@ -96,16 +96,16 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   if (! keyvalue_pair) {
     keyvalue_pair = f2cons__new(cause, key, value);
     raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
+    { // increase key count only if didn't already have this key.
+      s64 key_count__i = f2integer__i(f2ptypehash__key_count(this, cause), cause);
+      key_count__i ++;
+      f2ptypehash__key_count__set(this, cause, f2integer__new(cause, key_count__i));
+      if ((key_count__i << 1) >= (1ll << bin_num_power__i)) {
+	f2__ptypehash__double_size__thread_unsafe(cause, this);
+      }
+    }
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
-  }
-  s64 key_count__i = f2integer__i(f2ptypehash__key_count(this, cause), cause);
-  {
-    key_count__i ++;
-    f2ptypehash__key_count__set(this, cause, f2integer__new(cause, key_count__i));
-  }
-  if ((key_count__i << 1) >= (1ll << bin_num_power__i)) {
-    f2__ptypehash__double_size__thread_unsafe(cause, this);
   }
   f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
   return nil;

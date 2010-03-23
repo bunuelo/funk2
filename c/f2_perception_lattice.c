@@ -23,12 +23,12 @@
 
 // graph_node
 
-def_primobject_3_slot(graph_node, label, in_edges_hash, out_edges_hash);
+def_primobject_3_slot(graph_node, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
 
 f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
-  f2ptr in_edges_hash  = f2__ptypehash__new(cause);
-  f2ptr out_edges_hash = f2__ptypehash__new(cause);
-  return f2graph_node__new(cause, label, in_edges_hash, out_edges_hash);
+  f2ptr in_node_hash_edge_hash  = f2__ptypehash__new(cause);
+  f2ptr out_node_hash_edge_hash = f2__ptypehash__new(cause);
+  return f2graph_node__new(cause, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
 }
 def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
 
@@ -67,6 +67,12 @@ f2ptr f2__graph__new(f2ptr cause) {
   return f2graph__new(cause, is_rooted, root, node_label_hash, edge_type_label_hash);
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
+
+f2ptr raw__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
+  f2ptr node            = f2__ptypehash__lookup(cause, node_label_hash, node_label);
+  return node;
+}
 
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
@@ -119,8 +125,11 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left
   }
   f2ptr edge = f2__graph_edge__new(cause, edge_label, left_node, right_node);
   {
-    f2ptr out_edges_hash = f2__graph_node__out_edges_hash(cause, left_node);
-    f2ptr in_edges_hash  = f2__graph_node__in_edges_hash( cause, right_node);
+    f2ptr out_node_hash_edge_hash = f2__graph_node__out_node_hash_edge_hash(cause, left_node);
+    f2ptr in_node_hash_edge_hash  = f2__graph_node__in_node_hash_edge_hash( cause, right_node);
+    f2ptr out_node_hash           = f2__ptypehash__lookup(cause, out_node_hash_edge_hash, edge_label);
+    f2ptr in_node_hash            = f2__ptypehash__lookup(cause, in_node_hash_edge_hash,  edge_label);
+    
     f2__ptypehash__add(cause, out_edges_hash, edge_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, out_edges_hash, edge_label)));
     f2__ptypehash__add(cause, in_edges_hash,  edge_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, in_edges_hash,  edge_label)));
   }
@@ -136,8 +145,7 @@ f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_
 def_pcfunk4(graph__add_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__add_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
 boolean_t raw__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node_label) {
-  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
-  f2ptr node            = f2__ptypehash__lookup(cause, node_label_hash, node_label);
+  f2ptr node = raw__graph__lookup_node(cause, this, node_label);
   return (node != nil);
 }
 
@@ -149,9 +157,18 @@ f2ptr f2__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 }
 def_pcfunk2(graph__contains_node, this, node_label, return f2__graph__contains_node(this_cause, this, node_label));
 
-boolean_t raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
+boolean_t raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if ((! raw__graph__contains_node(cause, this, left_node)) ||
       (! raw__graph__contains_node(cause, this, right_node))) {
+    return boolean__false;
+  }
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
+  f2ptr left_node       = f2__ptypehash__lookup(cause, node_label_hash, left_node_label);
+  if (left_node == nil) {
+    return boolean__false;
+  }
+  f2ptr right_node      = f2__ptypehash__lookup(cause, node_label_hash, right_node_label);
+  if (right_node == nil) {
     return boolean__false;
   }
   return boolean__false;
@@ -449,7 +466,7 @@ void f2__perception_lattice__initialize() {
   f2ptr cause = initial_cause();
   
   // graph_node
-  initialize_primobject_3_slot(graph_node, label, in_edges_hash, out_edges_hash);
+  initialize_primobject_3_slot(graph_node, label, in_node_hash_edge_hash, out_node_hash_edge_hash);
   
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);

@@ -72,7 +72,7 @@ declare_primobject_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edg
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);
 
 // graph_edge_type
-declare_primobject_3_slot(graph_edge_type, label, left_nodes_hash, right_nodes_hash);
+declare_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
 
 // graph
 declare_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);

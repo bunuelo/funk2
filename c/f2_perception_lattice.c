@@ -164,21 +164,21 @@ f2ptr f2__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 }
 def_pcfunk2(graph__contains_node, this, node_label, return f2__graph__contains_node(this_cause, this, node_label));
 
-boolean_t raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
-  if ((! raw__graph__contains_node(cause, this, left_node)) ||
-      (! raw__graph__contains_node(cause, this, right_node))) {
-    return boolean__false;
+f2ptr raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
+  f2ptr left_node = f2__graph__lookup_node(cause, this, left_node_label);
+  if (! left_node) {
+    return nil;
   }
-  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
-  f2ptr left_node       = f2__ptypehash__lookup(cause, node_label_hash, left_node_label);
-  if (left_node == nil) {
-    return boolean__false;
+  f2ptr edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, left_node);
+  f2ptr edges_right_node_hash           = f2__ptypehash__lookup(cause, edges_right_node_hash_edge_hash, edge_label);
+  if (! edges_right_node_hash) {
+    return nil;
   }
-  f2ptr right_node      = f2__ptypehash__lookup(cause, node_label_hash, right_node_label);
-  if (right_node == nil) {
-    return boolean__false;
+  f2ptr edges = f2__ptypehash__lookup(cause, edges_right_node_hash, right_node_label);
+  if (! edges) {
+    return nil;
   }
-  return boolean__false;
+  return f2integer__new(cause, raw__simple_length(cause, edges));
 }
 
 f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {

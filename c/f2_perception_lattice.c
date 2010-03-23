@@ -103,17 +103,17 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
     f2ptr edges_seq  = nil;
     {
       f2ptr edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, node);
-      ptypehash__iteration(cause, edges_left_node_hash_edge_hash, edge_label, edges_left_node_hash,
-			   ptypehash__iteration(cause, edges_left_node_hash, left_node_label, edges,
-						{
-						  f2ptr edges_iter = edges;
-						  while (edges_iter) {
-						    f2ptr edge = f2__cons__car(cause, edges_iter);
-						    edges_seq = f2cons__new(cause, edge, edges_seq);
-						    edges_iter = f2__cons__cdr(cause, edges_iter);
-						  }
-						}
-						));
+      ptypehash__value__iteration(cause, edges_left_node_hash_edge_hash, edges_left_node_hash,
+				  ptypehash__value__iteration(cause, edges_left_node_hash, edges,
+							      {
+								f2ptr edges_iter = edges;
+								while (edges_iter) {
+								  f2ptr edge = f2__cons__car(cause, edges_iter);
+								  edges_seq = f2cons__new(cause, edge, edges_seq);
+								  edges_iter = f2__cons__cdr(cause, edges_iter);
+								}
+							      }
+							      ));
     }
     {
       f2ptr edges_iter = edges_seq;
@@ -133,17 +133,17 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
     f2ptr edges_seq  = nil;
     {
       f2ptr edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, node);
-      ptypehash__iteration(cause, edges_right_node_hash_edge_hash, edge_label, edges_right_node_hash,
-			   ptypehash__iteration(cause, edges_right_node_hash, right_node_label, edges,
-						{
-						  f2ptr edges_iter = edges;
-						  while (edges_iter) {
-						    f2ptr edge = f2__cons__car(cause, edges_iter);
-						    edges_seq = f2cons__new(cause, edge, edges_seq);
-						    edges_iter = f2__cons__cdr(cause, edges_iter);
-						  }
-						}
-						));
+      ptypehash__value__iteration(cause, edges_right_node_hash_edge_hash, edges_right_node_hash,
+				  ptypehash__value__iteration(cause, edges_right_node_hash, edges,
+							      {
+								f2ptr edges_iter = edges;
+								while (edges_iter) {
+								  f2ptr edge = f2__cons__car(cause, edges_iter);
+								  edges_seq = f2cons__new(cause, edge, edges_seq);
+								  edges_iter = f2__cons__cdr(cause, edges_iter);
+								}
+							      }
+							      ));
     }
     {
       f2ptr edges_iter = edges_seq;

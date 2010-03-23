@@ -190,6 +190,11 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr 
 def_pcfunk4(graph__contains_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__contains_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
 boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
+  f2ptr edge_type_label_hash = f2__graph__edge_type_label_hash(cause, this);
+  f2ptr edge_type            = f2__ptypehash__lookup(cause, edge_type_label_hash, edge_label);
+  if (! edge_type) {
+    return boolean__false;
+  }
   {
     f2ptr left_node = raw__graph__lookup_node(cause, this, left_node_label);
     if (! left_node) {
@@ -213,6 +218,9 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
       u64   key_count__i = f2integer__i(key_count, cause);
       if (key_count__i == 0) {
 	f2__ptypehash__remove(cause, edges_right_node_hash_edge_hash, edge_label);
+	// remove left_node from edge_type because no more right_nodes are connected to the left_node
+	f2ptr left_node_hash = f2__graph_edge_type__left_node_hash(cause, edge_type);
+	f2__ptypehash__remove(cause, left_node_hash, left_node_label);
       }
     }
   }
@@ -242,6 +250,14 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
       u64   key_count__i = f2integer__i(key_count, cause);
       if (key_count__i == 0) {
 	f2__ptypehash__remove(cause, edges_left_node_hash_edge_hash, edge_label);
+	// remove right_node from edge_type because no more left_nodes are connected to the right_node
+	f2ptr right_node_hash = f2__graph_edge_type__right_node_hash(cause, edge_type);
+	f2__ptypehash__remove(cause, right_node_hash, right_node_label);
+	f2ptr right_node_hash__key_count    = f2__ptypehash__key_count(cause, right_node_hash);
+	u64   right_node_hash__key_count__i = f2integer__i(right_node_hash__key_count, cause);
+	if (right_node_hash__key_count__i == 0) {
+	  f2__ptypehash__remove(cause, edge_type_label_hash, edge_label);
+	}
       }
     }
   }

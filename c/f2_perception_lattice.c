@@ -437,9 +437,11 @@ void f2__perception_lattice__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
-  __graph_edge__symbol = new__symbol(cause, "graph_edge");
-  __graph__symbol      = new__symbol(cause, "graph");
-  __trans__symbol      = new__symbol(cause, "trans");
+  __graph_node__symbol      = new__symbol(cause, "graph_node");
+  __graph_edge__symbol      = new__symbol(cause, "graph_edge");
+  __graph_edge_type__symbol = new__symbol(cause, "graph_edge_type");
+  __graph__symbol           = new__symbol(cause, "graph");
+  __trans__symbol           = new__symbol(cause, "trans");
 }
 
 void f2__perception_lattice__initialize() {

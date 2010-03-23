@@ -23,12 +23,14 @@
 
 // graph_node
 
-def_primobject_3_slot(graph_node, label, in_edge_hash, out_edge_hash);
+def_primobject_3_slot(graph_node, label, in_edges_hash, out_edges_hash);
 
-f2ptr f2__graph_node__new(f2ptr cause, f2ptr label, f2ptr in_edge_hash, f2ptr out_edge_hash) {
-  return f2graph_node__new(cause, label, in_edge_hash, out_edge_hash);
+f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
+  f2ptr in_edges_hash  = f2__ptypehash__new(cause);
+  f2ptr out_edges_hash = f2__ptypehash__new(cause);
+  return f2graph_node__new(cause, label, in_edges_hash, out_edges_hash);
 }
-def_pcfunk3(graph_node__new, label, in_edge_hash, out_edge_hash, return f2__graph_node__new(this_cause, label, in_edge_hash, out_edge_hash));
+def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
 
 
 // graph_edge
@@ -43,12 +45,14 @@ def_pcfunk3(graph_edge__new, label, left_node, right_node, return f2__graph_edge
 
 // graph_edge_type
 
-def_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
+def_primobject_3_slot(graph_edge_type, label, left_nodes_hash, right_nodes_hash);
 
-f2ptr f2__graph_edge_type__new(f2ptr cause, f2ptr label, f2ptr left_node_hash, f2ptr right_node_hash) {
-  return f2graph_edge_type__new(cause, label, left_node_hash, right_node_hash);
+f2ptr f2__graph_edge_type__new(f2ptr cause, f2ptr label) {
+  f2ptr left_nodes_hash  = f2__ptypehash__new(cause);
+  f2ptr right_nodes_hash = f2__ptypehash__new(cause);
+  return f2graph_edge_type__new(cause, label, left_nodes_hash, right_nodes_hash);
 }
-def_pcfunk3(graph_edge_type__new, label, left_node_hash, right_node_hash, return f2__graph_edge_type__new(this_cause, label, left_node_hash, right_node_hash));
+def_pcfunk1(graph_edge_type__new, label, return f2__graph_edge_type__new(this_cause, label));
 
 
 // graph
@@ -65,13 +69,22 @@ f2ptr f2__graph__new(f2ptr cause) {
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
-  return nil;
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
+  f2ptr node            = f2__ptypehash__lookup(cause, node_label_hash, node_label);
+  if (node == nil) {
+    node = f2__graph_node__new(cause, node_label);
+    f2__ptypehash__add(cause, node_label_hash, node_label, node);
+  }
+  return node;
 }
 
-f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
-  return nil;
+f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__add_node(cause, this, node_label);
 }
-def_pcfunk2(graph__add_node, this, node, return f2__graph__add_node(this_cause, this, node));
+def_pcfunk2(graph__add_node, this, node_label, return f2__graph__add_node(this_cause, this, node_label));
 
 
 boolean_t raw__graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node_label) {
@@ -87,15 +100,38 @@ f2ptr f2__graph__subtract_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 def_pcfunk2(graph__subtract_node, this, node_label, return f2__graph__subtract_node(this_cause, this, node_label));
 
 
-void raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
+f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
+  f2ptr left_node  = raw__graph__add_node(cause, this, left_node_label);
+  f2ptr right_node = raw__graph__add_node(cause, this, right_node_label);
+  {
+    f2ptr edge_type_label_hash = f2__graph__edge_type_label_hash(cause, this);
+    f2ptr edge_type            = f2__ptypehash__lookup(cause, edge_type_label_hash, edge_label);
+    if (edge_type == nil) {
+      edge_type = f2__graph_edge_type__new(cause, edge_label);
+      f2__ptypehash__add(cause, edge_type_label_hash, edge_label, edge_type);
+    }
+    {
+      f2ptr left_nodes_hash  = f2__graph_edge_type__left_nodes_hash( cause, edge_type);
+      f2ptr right_nodes_hash = f2__graph_edge_type__right_nodes_hash(cause, edge_type);
+      f2__ptypehash__add(cause, left_nodes_hash,  left_node_label,  f2cons__new(cause, left_node,  f2__ptypehash__lookup(cause, left_nodes_hash,  left_node_label)));
+      f2__ptypehash__add(cause, right_nodes_hash, right_node_label, f2cons__new(cause, right_node, f2__ptypehash__lookup(cause, right_nodes_hash, right_node_label)));
+    }
+  }
+  f2ptr edge = f2__graph_edge__new(cause, edge_label, left_node, right_node);
+  {
+    f2ptr out_edges_hash = f2__graph_node__out_edges_hash(cause, left_node);
+    f2ptr in_edges_hash  = f2__graph_node__in_edges_hash( cause, right_node);
+    f2__ptypehash__add(cause, out_edges_hash, edge_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, out_edges_hash, edge_label)));
+    f2__ptypehash__add(cause, in_edges_hash,  edge_label, f2cons__new(cause, edge, f2__ptypehash__lookup(cause, in_edges_hash,  edge_label)));
+  }
+  return edge;
 }
 
 f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  raw__graph__add_edge(cause, this, edge_label, left_node_label, right_node_label);
-  return nil;
+  return raw__graph__add_edge(cause, this, edge_label, left_node_label, right_node_label);
 }
 def_pcfunk4(graph__add_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__add_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 

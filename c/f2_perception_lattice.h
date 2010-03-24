@@ -47,14 +47,6 @@ declare_object_type_4_slot(graph, is_rooted, root, node_label_hash, edge_type_la
 			   f2ptr as__frame__funk;
 			   );
 
-// pattern_graph_variable
-typedef struct funk2_object_type__pattern_graph_variable__slot_s funk2_object_type__pattern_graph_variable__slot_t;
-declare_object_type_1_slot(pattern_graph_variable, name, );
-
-// pattern_graph
-typedef struct funk2_object_type__pattern_graph__slot_s funk2_object_type__pattern_graph__slot_t;
-declare_object_type_1_slot(pattern_graph, graph, );
-
 #define graph__node__iteration(cause, this, node, code) {	   \
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
   ptypehash__value__iteration(cause, node_label_hash, node, code); \
@@ -78,6 +70,15 @@ declare_object_type_1_slot(pattern_graph, graph, );
                                                           ); \
 			      ); \
 }
+
+
+// pattern_graph
+typedef struct funk2_object_type__pattern_graph__slot_s funk2_object_type__pattern_graph__slot_t;
+declare_object_type_1_slot(pattern_graph, graph, );
+
+// pattern_graph_variable
+typedef struct funk2_object_type__pattern_graph_variable__slot_s funk2_object_type__pattern_graph_variable__slot_t;
+declare_object_type_1_slot(pattern_graph_variable, name, );
 
 // trans
 typedef struct funk2_object_type__trans__slot_s funk2_object_type__trans__slot_t;
@@ -123,11 +124,12 @@ declare_primobject_2_slot(trans, remove, add);
 
 f2ptr f2trans__primobject_type__new_aux(f2ptr cause);
 
+// pattern_graph
+declare_primobject_1_slot(pattern_graph, graph);
+
 // pattern_graph_variable
 declare_primobject_1_slot(pattern_graph_variable, name);
 
-// pattern_graph
-declare_primobject_1_slot(pattern_graph, graph);
 
 // **
 

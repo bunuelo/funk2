@@ -29,4 +29,5 @@
 [deftypefunk graph get     difference    [that]                       [graph-difference    this that]]
 [deftypefunk graph get     nodes         []                           [graph-nodes         this]]
 [deftypefunk graph get     edges         []                           [graph-edges         this]]
+[deftypefunk graph execute replace_node  [old_node new_node]          [graph-replace_node  this old_node new_node]]
 

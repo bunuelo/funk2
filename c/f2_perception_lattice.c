@@ -451,6 +451,76 @@ f2ptr f2__graph__equals_hash_value(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph__equals_hash_value, this, return f2__graph__equals_hash_value(this_cause, this));
 
+boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label, f2ptr new_node_label) {
+  f2ptr old_node                                  = raw__graph__lookup_node(cause, this, old_node_label);
+  if (! old_node) {
+    return boolean__false;
+  }
+  f2ptr old_left_edges                            = nil;
+  f2ptr old_right_edges                           = nil;
+  f2ptr old_node__edges_left_node_hash_edge_hash  = f2__graph_node__edges_left_node_hash_edge_hash( cause, old_node);
+  f2ptr old_node__edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, old_node);
+  ptypehash__value__iteration(cause, old_node__edges_left_node_hash_edge_hash, old_node__edges_left_node_hash,
+			      ptypehash__value__iteration(cause, old_node__edges_left_node_hash, old_node__edges,
+							  f2ptr iter = old_node__edges;
+							  while (iter) {
+							    f2ptr edge = f2__cons__car(cause, iter);
+							    old_left_edges = f2cons__new(cause, edge, old_left_edges);
+							    iter = f2__cons__cdr(cause, iter);
+							  }
+							  );
+			      );
+  ptypehash__value__iteration(cause, old_node__edges_right_node_hash_edge_hash, old_node__edges_right_node_hash,
+			      ptypehash__value__iteration(cause, old_node__edges_right_node_hash, old_node__edges,
+							  f2ptr iter = old_node__edges;
+							  while (iter) {
+							    f2ptr edge = f2__cons__car(cause, iter);
+							    old_right_edges = f2cons__new(cause, edge, old_right_edges);
+							    iter = f2__cons__cdr(cause, iter);
+							  }
+							  );
+			      );
+  raw__graph__remove_node(cause, this, old_node);
+  {
+    f2ptr iter = old_left_edges;
+    while (iter) {
+      f2ptr left_edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label      = f2__graph_edge__label(    cause, left_edge);
+	f2ptr left_node        = f2__graph_edge__left_node(cause, left_edge);
+	f2ptr left_node__label = f2__graph_node__label(    cause, left_node);
+	raw__graph__add_edge(cause, edge__label, left_node__label, new_node__label);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  {
+    f2ptr iter = old_right_edges;
+    while (iter) {
+      f2ptr right_edge = f2__cons__car(cause, iter);
+      {
+	f2ptr edge__label       = f2__graph_edge__label(    cause, right_edge);
+	f2ptr right_node        = f2__graph_edge__left_node(cause, right_edge);
+	f2ptr right_node__label = f2__graph_node__label(    cause, right_node);
+	raw__graph__add_edge(cause, edge__label, new_node__label, right_node__label);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return boolean__true;
+}
+
+f2ptr f2__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label, f2ptr new_node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__graph__replace_node(cause, this, old_node_label, new_node_label));
+}
+def_pcfunk3(graph__replace_node, this, old_node, new_node, return f2__graph__replace_node(this_cause, old_node, new_node));
+
+
+// rooted graph
+
 boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
   if (raw__graph__is_type( cause, this) &&
       f2__graph__is_rooted(cause, this)) {
@@ -780,15 +850,6 @@ f2ptr f2__difference(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(difference, this, that, return f2__difference(this_cause, this, that));
 
 
-// pattern_graph_variable
-
-def_primobject_1_slot(pattern_graph_variable, name);
-
-f2ptr f2__pattern_graph_variable__new(f2ptr cause, f2ptr name) {
-  return f2pattern_graph_variable__new(cause, name);
-}
-def_pcfunk1(pattern_graph_variable__new, name, return f2__pattern_graph_variable__new(this_cause, name));
-
 // pattern_graph
 
 def_primobject_1_slot(pattern_graph, graph);
@@ -798,6 +859,15 @@ f2ptr f2__pattern_graph__new(f2ptr cause) {
 }
 def_pcfunk0(pattern_graph__new, return f2__pattern_graph__new(this_cause));
 
+
+// pattern_graph_variable
+
+def_primobject_1_slot(pattern_graph_variable, name);
+
+f2ptr f2__pattern_graph_variable__new(f2ptr cause, f2ptr name) {
+  return f2pattern_graph_variable__new(cause, name);
+}
+def_pcfunk1(pattern_graph_variable__new, name, return f2__pattern_graph_variable__new(this_cause, name));
 
 
 // **
@@ -853,6 +923,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__2(graph__part_not_contained_by, this, that,                         "determines the maximal part of this graph that is not contained in that graph.");
   f2__primcfunk__init__1(graph__nodes,                 this,                               "returns a new list of all nodes in this graph.");
   f2__primcfunk__init__1(graph__edges,                 this,                               "returns a new list of all edges in this graph.");
+  f2__primcfunk__init__3(graph__replace_node,          this, old_node, new_node,           "replaces old node with new node.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);
@@ -867,11 +938,11 @@ void f2__perception_lattice__initialize() {
   // difference
   f2__primcfunk__init__2(difference, this, that, "returns a trans object representing the difference between two objects implementing the part_not_contained_by get type function.");
   
-  // pattern_graph_variable
-  initialize_primobject_1_slot(pattern_graph_variable, name);
-  
   // pattern_graph
   initialize_primobject_1_slot(pattern_graph, graph);
+  
+  // pattern_graph_variable
+  initialize_primobject_1_slot(pattern_graph_variable, name);
   
 }
 

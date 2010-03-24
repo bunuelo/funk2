@@ -489,7 +489,7 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 	f2ptr edge__label      = f2__graph_edge__label(    cause, left_edge);
 	f2ptr left_node        = f2__graph_edge__left_node(cause, left_edge);
 	f2ptr left_node__label = f2__graph_node__label(    cause, left_node);
-	raw__graph__add_edge(cause, edge__label, left_node__label, new_node__label);
+	raw__graph__add_edge(cause, this, edge__label, left_node__label, new_node__label);
       }
       iter = f2__cons__cdr(cause, iter);
     }
@@ -502,7 +502,7 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 	f2ptr edge__label       = f2__graph_edge__label(    cause, right_edge);
 	f2ptr right_node        = f2__graph_edge__left_node(cause, right_edge);
 	f2ptr right_node__label = f2__graph_node__label(    cause, right_node);
-	raw__graph__add_edge(cause, edge__label, new_node__label, right_node__label);
+	raw__graph__add_edge(cause, this, edge__label, new_node__label, right_node__label);
       }
       iter = f2__cons__cdr(cause, iter);
     }
@@ -516,7 +516,7 @@ f2ptr f2__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label, f2p
   }
   return f2bool__new(raw__graph__replace_node(cause, this, old_node_label, new_node_label));
 }
-def_pcfunk3(graph__replace_node, this, old_node, new_node, return f2__graph__replace_node(this_cause, old_node, new_node));
+def_pcfunk3(graph__replace_node, this, old_node, new_node, return f2__graph__replace_node(this_cause, this, old_node, new_node));
 
 
 // rooted graph

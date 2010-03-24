@@ -474,9 +474,23 @@ f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
-  f2ptr frame = f2__frame__new(cause);
-  
-  return frame;
+  f2ptr root_label = f2__graph__root(cause, this);
+  f2ptr root_frame = f2__frame__new(cause);
+  f2ptr frame_node_hash = f2__ptypehash__new(cause);
+  f2__ptypehash__add(cause, frame_node_hash, root_label, root_frame);
+  graph__edge__iteration(cause, this, edge,
+			 f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			 f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			 f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			 f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			 f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			 f2ptr frame = f2__ptypehash__lookup(cause, frame_node_hash, left_node__label);
+			 if (! frame) {
+			   frame = f2__frame__new(cause);
+			 }
+			 f2__ptypehash__add_var_value(cause, frame, edge__label, right_node__label);
+			 );
+  return root_frame;
 }
 
 f2ptr f2__rooted_graph__as__frame(f2ptr cause, f2ptr this) {

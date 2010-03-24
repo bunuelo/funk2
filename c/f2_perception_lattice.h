@@ -74,7 +74,7 @@ declare_object_type_3_slot(graph, root_node, node_label_hash, edge_type_label_ha
 
 // pattern_graph
 typedef struct funk2_object_type__pattern_graph__slot_s funk2_object_type__pattern_graph__slot_t;
-declare_object_type_1_slot(pattern_graph, graph, );
+declare_object_type_2_slot(pattern_graph, variable_label_hash, graph, );
 
 // pattern_graph_variable
 typedef struct funk2_object_type__pattern_graph_variable__slot_s funk2_object_type__pattern_graph_variable__slot_t;
@@ -130,7 +130,7 @@ declare_primobject_2_slot(trans, remove, add);
 f2ptr f2trans__primobject_type__new_aux(f2ptr cause);
 
 // pattern_graph
-declare_primobject_1_slot(pattern_graph, variable_label_hash, graph);
+declare_primobject_2_slot(pattern_graph, variable_label_hash, graph);
 
 // pattern_graph_variable
 declare_primobject_1_slot(pattern_graph_variable, name);

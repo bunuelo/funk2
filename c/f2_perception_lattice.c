@@ -903,10 +903,10 @@ def_pcfunk2(difference, this, that, return f2__difference(this_cause, this, that
 
 // pattern_graph
 
-def_primobject_1_slot(pattern_graph, graph);
+def_primobject_2_slot(pattern_graph, variable_label_hash, graph);
 
 f2ptr f2__pattern_graph__new(f2ptr cause) {
-  return f2pattern_graph__new(cause, f2__graph__new(cause));
+  return f2pattern_graph__new(cause, f2__ptypehash__new(cause), f2__graph__new(cause));
 }
 def_pcfunk0(pattern_graph__new, return f2__pattern_graph__new(this_cause));
 
@@ -993,7 +993,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__2(difference, this, that, "returns a trans object representing the difference between two objects implementing the part_not_contained_by get type function.");
   
   // pattern_graph
-  initialize_primobject_1_slot(pattern_graph, graph);
+  initialize_primobject_2_slot(pattern_graph, variable_label_hash, graph);
   
   // pattern_graph_variable
   initialize_primobject_1_slot(pattern_graph_variable, name);

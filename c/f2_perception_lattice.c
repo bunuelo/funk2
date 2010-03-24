@@ -355,7 +355,7 @@ boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
 		       if (! that__node) {
 			 return boolean__false;
 		       }
-		       f2ptr this__node__edges_left_node_hash_edge_hash = f2__node__edges_left_node_hash_edge_hash(cause, this__node);
+		       f2ptr this__node__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, this__node);
 		       ptypehash__value__iteration(cause, this__node__edges_left_node_hash_edge_hash, this__node__edges_left_node_hash,
 						   ptypehash__value__iteration(cause, this__node__edges_left_node_hash, this__node__edges,
 									       f2ptr iter = this__node__edges;

@@ -780,6 +780,14 @@ f2ptr f2__difference(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(difference, this, that, return f2__difference(this_cause, this, that));
 
 
+// pattern_graph
+
+def_primobject_1_slot(pattern_graph, graph);
+
+f2ptr f2__pattern_graph__new(f2ptr cause) {
+  return f2pattern_graph__new(cause, f2__graph__new(cause));
+}
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -792,6 +800,7 @@ void f2__perception_lattice__reinitialize_globalvars() {
   __graph_edge_type__symbol = new__symbol(cause, "graph_edge_type");
   __graph__symbol           = new__symbol(cause, "graph");
   __trans__symbol           = new__symbol(cause, "trans");
+  __pattern_graph__symbol   = new__symbol(cause, "pattern_graph");
 }
 
 void f2__perception_lattice__initialize() {
@@ -844,6 +853,9 @@ void f2__perception_lattice__initialize() {
   
   // difference
   f2__primcfunk__init__2(difference, this, that, "returns a trans object representing the difference between two objects implementing the part_not_contained_by get type function.");
+  
+  // pattern_graph
+  initialize_primobject_1_slot(pattern_graph, graph);
   
 }
 

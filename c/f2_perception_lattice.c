@@ -787,7 +787,7 @@ def_primobject_1_slot(pattern_graph, graph);
 f2ptr f2__pattern_graph__new(f2ptr cause) {
   return f2pattern_graph__new(cause, f2__graph__new(cause));
 }
-def_pcfunk1(pattern_graph__new, return f2__pattern_graph__new(this_cause));
+def_pcfunk0(pattern_graph__new, return f2__pattern_graph__new(this_cause));
 
 // **
 

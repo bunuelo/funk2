@@ -552,7 +552,7 @@ f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
 }
 def_pcfunk2(graph__make_rooted, this, root_node, return f2__graph__make_rooted(this_cause, this, root_node));
 
-f2ptr raw__graph__make_rootless(f2ptr cause, f2ptr this) {
+void raw__graph__make_rootless(f2ptr cause, f2ptr this) {
   f2__graph__is_rooted__set(cause, this, f2bool__new(boolean__false));
   f2__graph__root__set(     cause, this, nil);
 }
@@ -561,7 +561,8 @@ f2ptr f2__graph__make_rootless(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  return raw__graph__make_rootless(cause, this);
+  raw__graph__make_rootless(cause, this);
+  return nil;
 }
 def_pcfunk1(graph__make_rootless, this, return f2__graph__make_rooted(this_cause, this));
 

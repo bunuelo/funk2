@@ -30,6 +30,8 @@
 [globalize-funk graph-remove_edge             &primfunk:graph__remove_edge]
 [globalize-funk graph-copy                    &primfunk:graph__copy]	
 [globalize-funk graph-part_not_contained_by   &primfunk:graph__part_not_contained_by]
+[globalize-funk graph-nodes                   &primfunk:graph__nodes]
+[globalize-funk graph-edges                   &primfunk:graph__edges]
 
 [globalize-funk trans-part_not_contained_by   &primfunk:trans__part_not_contained_by]
 

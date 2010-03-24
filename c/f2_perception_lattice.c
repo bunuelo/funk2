@@ -159,7 +159,7 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
       }
     }
   }
-  f2__ptypehash__remove(cause, node_label_hash, node_label);
+  //f2__ptypehash__remove(cause, node_label_hash, node_label);
   return boolean__true;
 }
 

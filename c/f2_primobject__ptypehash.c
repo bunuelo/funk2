@@ -152,6 +152,7 @@ boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
 	  key_was_removed = boolean__true;
 	  break;
 	}
+	prev = iter;
 	iter = next;
       }
     }

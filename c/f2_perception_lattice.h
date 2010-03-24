@@ -47,7 +47,11 @@ declare_object_type_4_slot(graph, is_rooted, root, node_label_hash, edge_type_la
 			   f2ptr as__frame__funk;
 			   );
 
-#define graph__node__iteration(cause, this, node, code) { \
+// pattern_graph
+typedef struct funk2_object_type__pattern_graph__slot_s funk2_object_type__pattern_graph__slot_t;
+declare_object_type_1_slot(pattern_graph, graph, );
+
+#define graph__node__iteration(cause, this, node, code) {	   \
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
   ptypehash__value__iteration(cause, node_label_hash, node, code); \
 }

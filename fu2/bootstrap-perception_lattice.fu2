@@ -30,4 +30,6 @@
 [deftypefunk graph get     nodes         []                           [graph-nodes         this]]
 [deftypefunk graph get     edges         []                           [graph-edges         this]]
 [deftypefunk graph execute replace_node  [old_node new_node]          [graph-replace_node  this old_node new_node]]
+[deftypefunk graph execute make_rooted   [root_node]                  [graph-make_rooted   this root_node]]
+[deftypefunk graph execute make_rootless []                           [graph-make_rootless this]]
 

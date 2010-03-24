@@ -364,8 +364,7 @@ f2ptr raw__frame__as__graph(f2ptr cause, f2ptr this) {
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
-  f2__graph__is_rooted__set(cause, graph, f2bool__new(boolean__true));
-  f2__graph__root__set(     cause, graph, this);
+  f2__graph__make_rooted(cause, graph, this);
   return graph;
 }
 

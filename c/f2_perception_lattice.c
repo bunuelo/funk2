@@ -458,10 +458,10 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
   }
   f2ptr old_left_edges                            = nil;
   f2ptr old_right_edges                           = nil;
-  f2ptr old_node__edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, old_node);
   f2ptr old_node__edges_left_node_hash_edge_hash  = f2__graph_node__edges_left_node_hash_edge_hash( cause, old_node);
-  ptypehash__value__iteration(cause, old_node__edges_right_node_hash_edge_hash, old_node__edges_right_node_hash,
-			      ptypehash__value__iteration(cause, old_node__edges_right_node_hash, old_node__edges,
+  f2ptr old_node__edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, old_node);
+  ptypehash__value__iteration(cause, old_node__edges_left_node_hash_edge_hash, old_node__edges_left_node_hash,
+			      ptypehash__value__iteration(cause, old_node__edges_left_node_hash, old_node__edges,
 							  f2ptr iter = old_node__edges;
 							  while (iter) {
 							    f2ptr edge = f2__cons__car(cause, iter);
@@ -470,8 +470,8 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 							  }
 							  );
 			      );
-  ptypehash__value__iteration(cause, old_node__edges_left_node_hash_edge_hash, old_node__edges_left_node_hash,
-			      ptypehash__value__iteration(cause, old_node__edges_left_node_hash, old_node__edges,
+  ptypehash__value__iteration(cause, old_node__edges_right_node_hash_edge_hash, old_node__edges_right_node_hash,
+			      ptypehash__value__iteration(cause, old_node__edges_right_node_hash, old_node__edges,
 							  f2ptr iter = old_node__edges;
 							  while (iter) {
 							    f2ptr edge = f2__cons__car(cause, iter);
@@ -480,7 +480,7 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 							  }
 							  );
 			      );
-  raw__graph__remove_node(cause, this, old_node);
+  raw__graph__remove_node(cause, this, old_node_label);
   {
     f2ptr iter = old_left_edges;
     while (iter) {
@@ -507,6 +507,10 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
       iter = f2__cons__cdr(cause, iter);
     }
   }
+  f2ptr root = f2__graph__root(cause, this);
+  if (root == old_node_label) {
+    f2__graph__root__set(cause, this, new_node_label);
+  }
   return boolean__true;
 }
 
@@ -532,6 +536,34 @@ boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
 f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__rooted_graph__is_type(cause, this));
 }
+
+void raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
+  f2ptr root_node = f2__graph__add_node(cause, graph, root_node_label);
+  f2__graph__is_rooted__set(cause, graph, f2bool__new(boolean__true));
+  f2__graph__root__set(     cause, graph, root_node);
+}
+
+f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  raw__graph__make_rooted(cause, this, root_node_label);
+  return nil;
+}
+def_pcfunk2(graph__make_rooted, this, root_node, return f2__graph__make_rooted(this_cause, this, root_node));
+
+f2ptr raw__graph__make_rootless(f2ptr cause, f2ptr this) {
+  f2__graph__is_rooted__set(cause, graph, f2bool__new(boolean__false));
+  f2__graph__root__set(     cause, graph, nil);
+}
+
+f2ptr f2__graph__make_rootless(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__make_rootless(cause, this);
+}
+def_pcfunk1(graph__make_rootless, this, return f2__graph__make_rooted(this_cause, this));
 
 f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
   f2ptr root_label = f2__graph__root(cause, this);
@@ -924,6 +956,8 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__1(graph__nodes,                 this,                               "returns a new list of all nodes in this graph.");
   f2__primcfunk__init__1(graph__edges,                 this,                               "returns a new list of all edges in this graph.");
   f2__primcfunk__init__3(graph__replace_node,          this, old_node, new_node,           "replaces old node with new node.");
+  f2__primcfunk__init__2(graph__make_rooted,           this, root_node,                    "makes graph rooted with root node.");
+  f2__primcfunk__init__1(graph__make_rootless,         this,                               "makes graph rootless.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

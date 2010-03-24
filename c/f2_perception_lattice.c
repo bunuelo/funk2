@@ -522,9 +522,9 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
     while (iter) {
       f2ptr right_edge = f2__cons__car(cause, iter);
       {
-	f2ptr edge__label       = f2__graph_edge__label(    cause, right_edge);
-	f2ptr right_node        = f2__graph_edge__left_node(cause, right_edge);
-	f2ptr right_node__label = f2__graph_node__label(    cause, right_node);
+	f2ptr edge__label       = f2__graph_edge__label(     cause, right_edge);
+	f2ptr right_node        = f2__graph_edge__right_node(cause, right_edge);
+	f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
 	raw__graph__add_edge(cause, this, edge__label, new_node_label, right_node__label);
       }
       iter = f2__cons__cdr(cause, iter);

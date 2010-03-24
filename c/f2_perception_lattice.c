@@ -484,7 +484,7 @@ f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
 			 f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
 			 f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
 			 f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
-			 f2ptr frame = f2__ptypehash__lookup(cause, frame_node_hash, left_node__label);
+			 f2ptr frame             = f2__ptypehash__lookup(cause, frame_node_hash, left_node__label);
 			 if (! frame) {
 			   frame = f2__frame__new(cause);
 			 }

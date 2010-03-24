@@ -458,10 +458,10 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
   }
   f2ptr old_left_edges                            = nil;
   f2ptr old_right_edges                           = nil;
-  f2ptr old_node__edges_left_node_hash_edge_hash  = f2__graph_node__edges_left_node_hash_edge_hash( cause, old_node);
   f2ptr old_node__edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, old_node);
-  ptypehash__value__iteration(cause, old_node__edges_left_node_hash_edge_hash, old_node__edges_left_node_hash,
-			      ptypehash__value__iteration(cause, old_node__edges_left_node_hash, old_node__edges,
+  f2ptr old_node__edges_left_node_hash_edge_hash  = f2__graph_node__edges_left_node_hash_edge_hash( cause, old_node);
+  ptypehash__value__iteration(cause, old_node__edges_right_node_hash_edge_hash, old_node__edges_right_node_hash,
+			      ptypehash__value__iteration(cause, old_node__edges_right_node_hash, old_node__edges,
 							  f2ptr iter = old_node__edges;
 							  while (iter) {
 							    f2ptr edge = f2__cons__car(cause, iter);
@@ -470,8 +470,8 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 							  }
 							  );
 			      );
-  ptypehash__value__iteration(cause, old_node__edges_right_node_hash_edge_hash, old_node__edges_right_node_hash,
-			      ptypehash__value__iteration(cause, old_node__edges_right_node_hash, old_node__edges,
+  ptypehash__value__iteration(cause, old_node__edges_left_node_hash_edge_hash, old_node__edges_left_node_hash,
+			      ptypehash__value__iteration(cause, old_node__edges_left_node_hash, old_node__edges,
 							  f2ptr iter = old_node__edges;
 							  while (iter) {
 							    f2ptr edge = f2__cons__car(cause, iter);

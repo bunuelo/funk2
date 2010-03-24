@@ -564,7 +564,7 @@ f2ptr f2__graph__make_rootless(f2ptr cause, f2ptr this) {
   raw__graph__make_rootless(cause, this);
   return nil;
 }
-def_pcfunk1(graph__make_rootless, this, return f2__graph__make_rooted(this_cause, this));
+def_pcfunk1(graph__make_rootless, this, return f2__graph__make_rootless(this_cause, this));
 
 f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
   f2ptr root_label = f2__graph__root(cause, this);

@@ -73,6 +73,14 @@ f2ptr raw__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   return node;
 }
 
+f2ptr f2__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__lookup_node(cause, this, node_label);
+}
+def_pcfunk2(graph__lookup_node, this, node, return f2__graph__lookup_node(cause, this, node));
+
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
   f2ptr node            = f2__ptypehash__lookup(cause, node_label_hash, node_label);
@@ -955,6 +963,7 @@ void f2__perception_lattice__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(rooted_graph__as__frame, this, cfunk, 0, "returns a rooted graph as a frame."); __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__2(graph__add_node,              this, node,                         "add a node to a graph by mutation.");
+  f2__primcfunk__init__2(graph__lookup_node,           this, node,                         "lookup a node if it exists within this graph.");
   f2__primcfunk__init__4(graph__add_edge,              this, label, left_node, right_node, "add an edge to a graph by mutation.");
   f2__primcfunk__init__2(graph__contains_node,         this, node,                         "returns boolean true if this graph contains node.");
   f2__primcfunk__init__4(graph__contains_edge,         this, label, left_node, right_node, "returns boolean true if this graph contains edge.");

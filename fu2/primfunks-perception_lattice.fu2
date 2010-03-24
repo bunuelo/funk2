@@ -21,6 +21,7 @@
 [globalize-funk graph-equals_hash_value       &primfunk:graph__equals_hash_value]
 [globalize-funk graph-new                     &primfunk:graph__new]
 [globalize-funk graph-add_node                &primfunk:graph__add_node]
+[globalize-funk graph-lookup_node             &primfunk:graph__lookup_node]
 [globalize-funk graph-add_edge                &primfunk:graph__add_edge]
 [globalize-funk graph-contains_node           &primfunk:graph__contains_node]
 [globalize-funk graph-contains_edge           &primfunk:graph__contains_edge]

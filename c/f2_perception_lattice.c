@@ -487,6 +487,12 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 							  }
 							  );
 			      );
+  {
+    f2ptr root = f2__graph__root(cause, this);
+    if (root == old_node_label) {
+      f2__graph__root__set(cause, this, new_node_label);
+    }
+  }
   raw__graph__remove_node(cause, this, old_node_label);
   {
     f2ptr iter = old_left_edges;
@@ -513,10 +519,6 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
       }
       iter = f2__cons__cdr(cause, iter);
     }
-  }
-  f2ptr root = f2__graph__root(cause, this);
-  if (root == old_node_label) {
-    f2__graph__root__set(cause, this, new_node_label);
   }
   return boolean__true;
 }

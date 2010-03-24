@@ -338,6 +338,11 @@ f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr le
 }
 def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__remove_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
+#define graph__node__iteration(cause, this, node, code) { \
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
+  ptypehash__value__iteration(cause, node_label_hash, node, code); \
+}
+
 #define graph__edge__iteration(cause, this, edge, code) { \
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
   ptypehash__value__iteration(cause, node_label_hash, right_node,	\
@@ -369,6 +374,12 @@ boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (this__node_label_hash__key_count__i != that__node_label_hash__key_count__i) {
     return boolean__false;
   }
+  graph__node__iteration(cause, this, node,
+			 f2ptr node__label = f2__graph_node__label(cause, node);
+			 if (! raw__graph__contains_node(cause, that, node__label)) {
+			   return boolean__false;
+			 }
+			 );
   graph__edge__iteration(cause, this, edge,
 			 f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
 			 f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
@@ -400,6 +411,16 @@ f2ptr raw__graph__equals_hash_value(f2ptr cause, f2ptr this) {
     f2ptr node_label_hash__key_count    = f2__ptypehash__key_count(cause, node_label_hash);
     u64   node_label_hash__key_count__i = f2integer__i(node_label_hash__key_count, cause);
     hash_value__i *= (node_label_hash__key_count__i + 1);
+    graph__node__iteration(cause, this, node,
+			   f2ptr node__label = f2__graph_node__label(cause, node);
+			   {
+			     f2ptr eq_hash_value = f2__object__eq_hash_value(cause, node__label);
+			     if (raw__integer__is_type(cause, eq_hash_value)) {
+			       u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
+			       hash_value__i *= (eq_hash_value__i + 1);
+			     }
+			   }
+			   );
     graph__edge__iteration(cause, this, edge,
 			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
 			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);

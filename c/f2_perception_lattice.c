@@ -830,6 +830,21 @@ f2ptr f2__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 }
 def_pcfunk2(graph__part_not_contained_by, this, that, return f2__graph__part_not_contained_by(this_cause, this, that));
 
+f2ptr raw__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {
+  f2ptr variable = f2__graph_variable__new(cause, variable_name);
+  raw__graph__replace_node(cause, node_label, variable);
+  return 
+}
+
+f2ptr f2__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__make_node_variable(cause, this, node_label, variable_name);
+}
+def_pcfunk3(graph__make_node_variable, this, node_label, variable_name, return f2__graph__make_node_variable(this_cause, this, node_label, variable_name));
+
+
 // trans
 
 def_primobject_2_slot(trans, remove, add);
@@ -911,14 +926,18 @@ f2ptr f2__pattern_graph__new(f2ptr cause) {
 def_pcfunk0(pattern_graph__new, return f2__pattern_graph__new(this_cause));
 
 
-// pattern_graph_variable
 
-def_primobject_1_slot(pattern_graph_variable, name);
 
-f2ptr f2__pattern_graph_variable__new(f2ptr cause, f2ptr name) {
-  return f2pattern_graph_variable__new(cause, name);
+
+// graph_variable
+
+def_primobject_1_slot(graph_variable, name);
+
+f2ptr f2__graph_variable__new(f2ptr cause, f2ptr name) {
+  return f2graph_variable__new(cause, name);
 }
-def_pcfunk1(pattern_graph_variable__new, name, return f2__pattern_graph_variable__new(this_cause, name));
+def_pcfunk1(graph_variable__new, name, return f2__graph_variable__new(this_cause, name));
+
 
 
 // **
@@ -928,13 +947,13 @@ void f2__perception_lattice__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
-  __graph_node__symbol             = new__symbol(cause, "graph_node");
-  __graph_edge__symbol             = new__symbol(cause, "graph_edge");
-  __graph_edge_type__symbol        = new__symbol(cause, "graph_edge_type");
-  __graph__symbol                  = new__symbol(cause, "graph");
-  __trans__symbol                  = new__symbol(cause, "trans");
-  __pattern_graph__symbol          = new__symbol(cause, "pattern_graph");
-  __pattern_graph_variable__symbol = new__symbol(cause, "pattern_graph_variable");
+  __graph_node__symbol      = new__symbol(cause, "graph_node");
+  __graph_edge__symbol      = new__symbol(cause, "graph_edge");
+  __graph_edge_type__symbol = new__symbol(cause, "graph_edge_type");
+  __graph__symbol           = new__symbol(cause, "graph");
+  __trans__symbol           = new__symbol(cause, "trans");
+  __pattern_graph__symbol   = new__symbol(cause, "pattern_graph");
+  __graph_variable__symbol  = new__symbol(cause, "graph_variable");
 }
 
 void f2__perception_lattice__initialize() {
@@ -978,6 +997,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(graph__replace_node,          this, old_node, new_node,           "replaces old node with new node.");
   f2__primcfunk__init__2(graph__make_rooted,           this, root_node,                    "makes graph rooted with root node.");
   f2__primcfunk__init__1(graph__make_rootless,         this,                               "makes graph rootless.");
+  f2__primcfunk__init__1(graph__make_node_variable,    this,                               "makes a node in the graph a variable for matching.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);
@@ -995,8 +1015,8 @@ void f2__perception_lattice__initialize() {
   // pattern_graph
   initialize_primobject_2_slot(pattern_graph, variable_label_hash, graph);
   
-  // pattern_graph_variable
-  initialize_primobject_1_slot(pattern_graph_variable, name);
+  // graph_variable
+  initialize_primobject_1_slot(graph_variable, name);
   
 }
 

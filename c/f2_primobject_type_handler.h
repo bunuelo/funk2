@@ -119,7 +119,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__graph_edge_type__slot_t        primobject_type_graph_edge_type;
   funk2_object_type__graph__slot_t                  primobject_type_graph;
   funk2_object_type__trans__slot_t                  primobject_type_trans;
-  funk2_object_type__pattern_graph_variable__slot_t primobject_type_pattern_graph_variable;
+  funk2_object_type__graph_variable__slot_t         primobject_type_graph_variable;
   funk2_object_type__pattern_graph__slot_t          primobject_type_pattern_graph;
   funk2_object_type__largeinteger__slot_t           primobject_type_largeinteger;
 };

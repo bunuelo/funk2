@@ -538,9 +538,9 @@ f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
 }
 
 void raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
-  f2ptr root_node = f2__graph__add_node(cause, graph, root_node_label);
-  f2__graph__is_rooted__set(cause, graph, f2bool__new(boolean__true));
-  f2__graph__root__set(     cause, graph, root_node);
+  f2ptr root_node = f2__graph__add_node(cause, this, root_node_label);
+  f2__graph__is_rooted__set(cause, this, f2bool__new(boolean__true));
+  f2__graph__root__set(     cause, this, root_node);
 }
 
 f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
@@ -553,8 +553,8 @@ f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
 def_pcfunk2(graph__make_rooted, this, root_node, return f2__graph__make_rooted(this_cause, this, root_node));
 
 f2ptr raw__graph__make_rootless(f2ptr cause, f2ptr this) {
-  f2__graph__is_rooted__set(cause, graph, f2bool__new(boolean__false));
-  f2__graph__root__set(     cause, graph, nil);
+  f2__graph__is_rooted__set(cause, this, f2bool__new(boolean__false));
+  f2__graph__root__set(     cause, this, nil);
 }
 
 f2ptr f2__graph__make_rootless(f2ptr cause, f2ptr this) {

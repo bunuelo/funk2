@@ -341,7 +341,42 @@ def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_la
 // graph-equals
 
 boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  return boolean__false;
+  f2ptr this__node_label_hash               = f2__graph__node_label_hash(cause, this);
+  f2ptr this__node_label_hash__key_count    = f2__ptypehash__key_count(cause, this__node_label_hash);
+  u64   this__node_label_hash__key_count__i = f2integer__i(this__node_label_hash__key_count, cause);
+  f2ptr that__node_label_hash               = f2__graph__node_label_hash(cause, that);
+  f2ptr that__node_label_hash__key_count    = f2__ptypehash__key_count(cause, that__node_label_hash);
+  u64   that__node_label_hash__key_count__i = f2integer__i(that__node_label_hash__key_count, cause);
+  if (this__node_label_hash__key_count__i != that__node_label_hash__key_count__i) {
+    return boolean__false;
+  }
+  ptypehash__iteration(cause, this__node_label_hash, this__node_label, this__node,
+		       f2ptr that__node = f2__ptypehash__lookup(cause, that__node_label_hash, this__node_label);
+		       if (! that__node) {
+			 return boolean__false;
+		       }
+		       f2ptr this__node__edges_left_node_hash_edge_hash = f2__node__edges_left_node_hash_edge_hash(cause, this__node);
+		       ptypehash__value__iteration(cause, this__node__edges_left_node_hash_edge_hash, this__node__edges_left_node_hash,
+						   ptypehash__value__iteration(cause, this__node__edges_left_node_hash, this__node__edges,
+									       f2ptr iter = this__node__edges;
+									       while (iter) {
+										 f2ptr this__node__edge = f2__cons__car(cause, iter);
+										 {
+										   f2ptr edge__label       = f2__graph_edge__label(     cause, this__node__edge);
+										   f2ptr left_node         = f2__graph_edge__left_node( cause, this__node__edge);
+										   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+										   f2ptr right_node        = f2__graph_edge__right_node(cause, this__node__edge);
+										   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+										   if (! raw__graph__contains_edge(cause, that, edge__label, left_node__label, right_node__label)) {
+										     return boolean__false;
+										   }
+										 }
+										 iter = f2__cons__cdr(cause, iter);
+									       }
+									       );
+						   );
+		       );
+  return boolean__true;
 }
 
 f2ptr f2__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {

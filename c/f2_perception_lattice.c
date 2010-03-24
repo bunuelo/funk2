@@ -160,6 +160,13 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
     }
   }
   f2__ptypehash__remove(cause, node_label_hash, node_label);
+  f2ptr root_node = f2__graph__root(cause, this);
+  if (root_node != nil) {
+    f2ptr root_node__label = f2__graph_node__label(cause, root_node);
+    if (raw__eq(cause, root_node__label, node_label)) {
+      raw__graph__make_rootless(cause, this);
+    }
+  }
   return boolean__true;
 }
 

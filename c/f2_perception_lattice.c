@@ -586,6 +586,24 @@ boolean_t funk2_n_choose_k_indices__increment(funk2_n_choose_k_indices_t* this) 
 
 f2ptr raw__graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr graph = f2__graph__new(cause);
+  {
+    graph__node__iteration(cause, this, node,
+			   f2ptr node__label = f2__graph_node__label(cause, node);
+			   if (raw__graph__contains_node(cause, that, node__label)) {
+			     raw__graph__add_node(cause, graph, node__label);
+			   }
+			   );
+    graph__edge__iteration(cause, this, edge,
+			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			   f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			   if (raw__graph__contains_edge(cause, that, edge__label, left_node__label, right_node__label)) {
+			     raw__graph__add_edge(cause, graph, edge__label, left_node__label, right_node__label);
+			   }
+			   );
+  }
   return graph;
 }
 
@@ -600,6 +618,36 @@ def_pcfunk2(graph__intersect, this, that, return f2__graph__intersect(this_cause
 
 f2ptr raw__graph__union(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr graph = f2__graph__new(cause);
+  {
+    graph__node__iteration(cause, this, node,
+			   f2ptr node__label = f2__graph_node__label(cause, node);
+			   raw__graph__add_node(cause, graph, node__label);
+			   );
+    graph__node__iteration(cause, that, node,
+			   f2ptr node__label = f2__graph_node__label(cause, node);
+			   raw__graph__add_node(cause, graph, node__label);
+			   );
+    graph__edge__iteration(cause, this, edge,
+			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			   f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			   if (! raw__graph__contains_edge(cause, graph, edge__label, left_node__label, right_node__label)) {
+			     raw__graph__add_edge(cause, graph, edge__label, left_node__label, right_node__label);
+			   }
+			   );
+    graph__edge__iteration(cause, that, edge,
+			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			   f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			   if (! raw__graph__contains_edge(cause, graph, edge__label, left_node__label, right_node__label)) {
+			     raw__graph__add_edge(cause, graph, edge__label, left_node__label, right_node__label);
+			   }
+			   );
+  }
   return graph;
 }
 
@@ -614,6 +662,20 @@ def_pcfunk2(graph__union, this, that, return f2__graph__union(this_cause, this, 
 
 f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
   f2ptr graph = f2__graph__new(cause);
+  {
+    graph__node__iteration(cause, this, node,
+			   f2ptr node__label = f2__graph_node__label(cause, node);
+			   raw__graph__add_node(cause, graph, node__label);
+			   );
+    graph__edge__iteration(cause, this, edge,
+			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			   f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			   raw__graph__add_edge(cause, graph, edge__label, left_node__label, right_node__label);
+			   );
+  }
   return graph;
 }
 
@@ -628,6 +690,24 @@ def_pcfunk1(graph__copy, this, return f2__graph__copy(this_cause, this));
 
 f2ptr raw__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr graph = f2__graph__new(cause);
+  {
+    graph__node__iteration(cause, this, node,
+			   f2ptr node__label = f2__graph_node__label(cause, node);
+			   if (! raw__graph__contains_node(cause, that, node__label)) {
+			     raw__graph__add_node(cause, graph, node__label);
+			   }
+			   );
+    graph__edge__iteration(cause, this, edge,
+			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			   f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			   if (! raw__graph__contains_edge(cause, that, edge__label, left_node__label, right_node__label)) {
+			     raw__graph__add_edge(cause, graph, edge__label, left_node__label, right_node__label);
+			   }
+			   );
+  }
   return graph;
 }
 

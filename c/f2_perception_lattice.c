@@ -338,6 +338,20 @@ f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr le
 }
 def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__remove_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
+f2ptr f2__graph__nodes(f2ptr cause, f2ptr this) {
+  f2ptr nodes = nil;
+  graph__node__iteration(cause, this, node, nodes = f2cons__new(cause, node, nodes));
+  return nodes;
+}
+def_pcfunk1(graph__nodes, this, return f2__graph__nodes(this_cause, this));
+
+f2ptr f2__graph__edges(f2ptr cause, f2ptr this) {
+  f2ptr edges = nil;
+  graph__edge__iteration(cause, this, node, edges = f2cons__new(cause, node, edges));
+  return edges;
+}
+def_pcfunk1(graph__edges, this, return f2__graph__edges(this_cause, this));
+
 // graph-equals
 
 boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -815,6 +829,8 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__4(graph__remove_edge,           this, label, left_node, right_node, "remove an edge from a perception graph.");
   f2__primcfunk__init__1(graph__copy,                  this,                               "returns a copy of this graph.");
   f2__primcfunk__init__2(graph__part_not_contained_by, this, that,                         "determines the maximal part of this graph that is not contained in that graph.");
+  f2__primcfunk__init__1(graph__nodes,                 this,                               "returns a new list of all nodes in this graph.");
+  f2__primcfunk__init__1(graph__edges,                 this,                               "returns a new list of all edges in this graph.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

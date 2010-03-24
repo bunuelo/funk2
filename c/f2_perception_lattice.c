@@ -338,6 +338,25 @@ f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr le
 }
 def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__remove_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
+#define graph__edge__iteration(cause, this, edge, code) { \
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
+  ptypehash__value__iteration(cause, node_label_hash, right_node,	\
+                              f2ptr right_node__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, right_node); \
+                              ptypehash__value__iteration(cause, right_node__edges_left_node_hash_edge_hash, right_node__edges_left_node_hash, \
+						          ptypehash__value__iteration(cause, right_node__edges_left_node_hash, right_node__edges, \
+									              f2ptr iter = right_node__edges; \
+									              while (iter) { \
+										        f2ptr edge = f2__cons__car(cause, iter); \
+										        { \
+											  code; \
+											} \
+											iter = f2__cons__cdr(cause, iter); \
+										      } \
+										      ); \
+                                                          ); \
+			      ); \
+}
+
 // graph-equals
 
 boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -350,32 +369,16 @@ boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (this__node_label_hash__key_count__i != that__node_label_hash__key_count__i) {
     return boolean__false;
   }
-  ptypehash__iteration(cause, this__node_label_hash, this__node_label, this__node,
-		       f2ptr that__node = f2__ptypehash__lookup(cause, that__node_label_hash, this__node_label);
-		       if (! that__node) {
-			 return boolean__false;
-		       }
-		       f2ptr this__node__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, this__node);
-		       ptypehash__value__iteration(cause, this__node__edges_left_node_hash_edge_hash, this__node__edges_left_node_hash,
-						   ptypehash__value__iteration(cause, this__node__edges_left_node_hash, this__node__edges,
-									       f2ptr iter = this__node__edges;
-									       while (iter) {
-										 f2ptr this__node__edge = f2__cons__car(cause, iter);
-										 {
-										   f2ptr edge__label       = f2__graph_edge__label(     cause, this__node__edge);
-										   f2ptr left_node         = f2__graph_edge__left_node( cause, this__node__edge);
-										   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
-										   f2ptr right_node        = f2__graph_edge__right_node(cause, this__node__edge);
-										   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
-										   if (! raw__graph__contains_edge(cause, that, edge__label, left_node__label, right_node__label)) {
-										     return boolean__false;
-										   }
-										 }
-										 iter = f2__cons__cdr(cause, iter);
-									       }
-									       );
-						   );
-		       );
+  graph__edge__iteration(cause, this, edge,
+			 f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			 f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			 f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			 f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			 f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			 if (! raw__graph__contains_edge(cause, that, edge__label, left_node__label, right_node__label)) {
+			     return boolean__false;
+			 }
+			 );
   return boolean__true;
 }
 
@@ -396,55 +399,35 @@ f2ptr raw__graph__equals_hash_value(f2ptr cause, f2ptr this) {
     f2ptr node_label_hash               = f2__graph__node_label_hash(cause, this);
     f2ptr node_label_hash__key_count    = f2__ptypehash__key_count(cause, node_label_hash);
     u64   node_label_hash__key_count__i = f2integer__i(node_label_hash__key_count, cause);
-    
     hash_value__i *= (node_label_hash__key_count__i + 1);
-    ptypehash__iteration(cause, node_label_hash, node_label, this__node,
-			 {
-			   f2ptr eq_hash_value = f2__object__eq_hash_value(cause, node_label);
-			   if (raw__integer__is_type(cause, eq_hash_value)) {
-			     u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
-			     hash_value__i *= (eq_hash_value__i + 1);
+    graph__edge__iteration(cause, this, edge,
+			   f2ptr edge__label       = f2__graph_edge__label(     cause, edge);
+			   f2ptr left_node         = f2__graph_edge__left_node( cause, edge);
+			   f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
+			   f2ptr right_node        = f2__graph_edge__right_node(cause, edge);
+			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
+			   {
+			     f2ptr eq_hash_value = f2__object__eq_hash_value(cause, edge__label);
+			     if (raw__integer__is_type(cause, eq_hash_value)) {
+			       u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
+			       hash_value__i *= (eq_hash_value__i + 1);
+			     }
 			   }
-			 }
-			 f2ptr this__node__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, this__node);
-			 ptypehash__value__iteration(cause, this__node__edges_left_node_hash_edge_hash, this__node__edges_left_node_hash,
-						     ptypehash__value__iteration(cause, this__node__edges_left_node_hash, this__node__edges,
-										 f2ptr iter = this__node__edges;
-										 while (iter) {
-										   f2ptr this__node__edge = f2__cons__car(cause, iter);
-										   {
-										     f2ptr edge__label       = f2__graph_edge__label(     cause, this__node__edge);
-										     f2ptr left_node         = f2__graph_edge__left_node( cause, this__node__edge);
-										     f2ptr left_node__label  = f2__graph_node__label(     cause, left_node);
-										     f2ptr right_node        = f2__graph_edge__right_node(cause, this__node__edge);
-										     f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
-										     {
-										       f2ptr eq_hash_value = f2__object__eq_hash_value(cause, edge__label);
-										       if (raw__integer__is_type(cause, eq_hash_value)) {
-											 u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
-											 hash_value__i *= (eq_hash_value__i + 1);
-										       }
-										     }
-										     {
-										       f2ptr eq_hash_value = f2__object__eq_hash_value(cause, left_node__label);
-										       if (raw__integer__is_type(cause, eq_hash_value)) {
-											 u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
-											 hash_value__i *= (eq_hash_value__i + 1);
-										       }
-										     }
-										     {
-										       f2ptr eq_hash_value = f2__object__eq_hash_value(cause, right_node__label);
-										       if (raw__integer__is_type(cause, eq_hash_value)) {
-											 u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
-											 hash_value__i *= (eq_hash_value__i + 1);
-										       }
-										     }
-										   }
-										   iter = f2__cons__cdr(cause, iter);
-										 }
-										 );
-						     );
-			 );
+			   {
+			     f2ptr eq_hash_value = f2__object__eq_hash_value(cause, left_node__label);
+			     if (raw__integer__is_type(cause, eq_hash_value)) {
+			       u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
+			       hash_value__i *= (eq_hash_value__i + 1);
+			     }
+			   }
+			   {
+			     f2ptr eq_hash_value = f2__object__eq_hash_value(cause, right_node__label);
+			     if (raw__integer__is_type(cause, eq_hash_value)) {
+			       u64 eq_hash_value__i = f2integer__i(eq_hash_value, cause);
+			       hash_value__i *= (eq_hash_value__i + 1);
+			     }
+			   }
+			   );
   }
   return f2integer__new(cause, hash_value__i);
 }
@@ -471,6 +454,7 @@ f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
 
 f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
   f2ptr frame = f2__frame__new(cause);
+  
   return frame;
 }
 

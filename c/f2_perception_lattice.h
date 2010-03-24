@@ -119,7 +119,7 @@ f2ptr      f2__graph__edges(f2ptr cause, f2ptr this);
 
 void  raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label);
 f2ptr  f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label);
-f2ptr raw__graph__make_rootless(f2ptr cause, f2ptr this);
+void  raw__graph__make_rootless(f2ptr cause, f2ptr this);
 f2ptr  f2__graph__make_rootless(f2ptr cause, f2ptr this);
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);

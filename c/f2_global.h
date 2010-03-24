@@ -57,6 +57,8 @@ typedef unsigned char boolean_t;
 #define boolean__false ((boolean_t)0)
 #define boolean__true  (! boolean__false)
 
+#define max_equals_hash_value_recursion_depth 128
+
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
 // Single user 32 bit mode is only used for very old computers or those with very little (less than 1 gigabyte of usable disk space for a demo of the language).

@@ -919,6 +919,22 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {f2__write_pretty__slot_key_and_value("bin_array",     13, cause, fiber, stream, f2ptypehash__bin_array(exp, cause),       f2ptypehash__bin_array__tracing_on(exp, cause), f2ptypehash__bin_array__trace(exp, cause), f2ptypehash__bin_array__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    */
+	  } else if (f2primobject__is__graph_node(exp, cause)) {
+	    int subexp_size[2];
+	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+	    {f2__write_pretty__slot_key_and_value("label", 5, cause, fiber, stream, f2graph_node__label(exp, cause),   f2graph_node__label__tracing_on(exp, cause), f2graph_node__label__trace(exp, cause), f2graph_node__label__imagination_frame(exp, cause),
+						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+	  } else if (f2primobject__is__graph_edge(exp, cause)) {
+	    int subexp_size[2];
+	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+	    {f2__write_pretty__slot_key_and_value("label",      10, cause, fiber, stream, f2graph_edge__label(exp, cause),   f2graph_edge__label__tracing_on(exp, cause), f2graph_edge__label__trace(exp, cause), f2graph_edge__label__imagination_frame(exp, cause),
+						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+	    {f2__write_pretty__slot_key_and_value("left_node",  10, cause, fiber, stream, f2graph_edge__left_node(exp, cause),   f2graph_edge__left_node__tracing_on(exp, cause), f2graph_edge__left_node__trace(exp, cause), f2graph_edge__left_node__imagination_frame(exp, cause),
+						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
+	    {f2__write_pretty__slot_key_and_value("right_node", 10, cause, fiber, stream, f2graph_edge__right_node(exp, cause),   f2graph_edge__right_node__tracing_on(exp, cause), f2graph_edge__right_node__trace(exp, cause), f2graph_edge__right_node__imagination_frame(exp, cause),
+						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	  } else if (f2primobject__is__graph(exp, cause)) {
 	    int subexp_size[2];
 	    if (f2graph__is_rooted(exp, cause)) {

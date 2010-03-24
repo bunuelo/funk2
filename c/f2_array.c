@@ -166,26 +166,34 @@ f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(array__equals, this, that, return f2__array__equals(this_cause, this, that));
 
 f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  if (raw__ptypehash__contains(cause, node_hash, this)) {
+    return f2integer__new(cause, 1);
+  }
+  {
+    f2ptr node_hash__key_count    = f2__ptypehash__key_count(cause, node_hash);
+    u64   node_hash__key_count__i = f2integer__i(node_hash__key_count, cause);
+    if (node_hash__key_count__i > max_equals_hash_value_recursion_depth) {
+      return f2larva__new(cause, 334);
+    }
+  }
   u64 hash_value = 1;
-  if (! raw__ptypehash__contains(cause, node_hash, this)) {
-    raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
-    s64 this__length = raw__array__length(cause, this);
-    hash_value += this__length;
-    s64 index;
-    for (index = 0; index < this__length; index ++) {
-      f2ptr this__subexp = raw__array__elt(cause, this, index);
-      if (this__subexp) {
-	f2__print(cause, this__subexp);
-	f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, this__subexp, node_hash);
-	if (raw__larva__is_type(cause, subexp__hash_value)) {
-	  return subexp__hash_value;
-	}
-	if (! raw__integer__is_type(cause, subexp__hash_value)) {
-	  return f2larva__new(cause, 4);
-	}
-	u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
-	hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
+  raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
+  s64 this__length = raw__array__length(cause, this);
+  hash_value += this__length;
+  s64 index;
+  for (index = 0; index < this__length; index ++) {
+    f2ptr this__subexp = raw__array__elt(cause, this, index);
+    if (this__subexp) {
+      f2__print(cause, this__subexp);
+      f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, this__subexp, node_hash);
+      if (raw__larva__is_type(cause, subexp__hash_value)) {
+	return subexp__hash_value;
       }
+      if (! raw__integer__is_type(cause, subexp__hash_value)) {
+	return f2larva__new(cause, 4);
+      }
+      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+      hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
     }
   }
   return f2integer__new(cause, hash_value);

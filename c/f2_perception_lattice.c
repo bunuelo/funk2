@@ -338,30 +338,6 @@ f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr le
 }
 def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__remove_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
-#define graph__node__iteration(cause, this, node, code) { \
-  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
-  ptypehash__value__iteration(cause, node_label_hash, node, code); \
-}
-
-#define graph__edge__iteration(cause, this, edge, code) { \
-  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
-  ptypehash__value__iteration(cause, node_label_hash, right_node,	\
-                              f2ptr right_node__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, right_node); \
-                              ptypehash__value__iteration(cause, right_node__edges_left_node_hash_edge_hash, right_node__edges_left_node_hash, \
-						          ptypehash__value__iteration(cause, right_node__edges_left_node_hash, right_node__edges, \
-									              f2ptr iter = right_node__edges; \
-									              while (iter) { \
-										        f2ptr edge = f2__cons__car(cause, iter); \
-										        { \
-											  code; \
-											} \
-											iter = f2__cons__cdr(cause, iter); \
-										      } \
-										      ); \
-                                                          ); \
-			      ); \
-}
-
 // graph-equals
 
 boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {

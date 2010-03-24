@@ -47,6 +47,30 @@ declare_object_type_4_slot(graph, is_rooted, root, node_label_hash, edge_type_la
 			   f2ptr as__frame__funk;
 			   );
 
+#define graph__node__iteration(cause, this, node, code) { \
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
+  ptypehash__value__iteration(cause, node_label_hash, node, code); \
+}
+
+#define graph__edge__iteration(cause, this, edge, code) { \
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \
+  ptypehash__value__iteration(cause, node_label_hash, right_node,	\
+                              f2ptr right_node__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, right_node); \
+                              ptypehash__value__iteration(cause, right_node__edges_left_node_hash_edge_hash, right_node__edges_left_node_hash, \
+						          ptypehash__value__iteration(cause, right_node__edges_left_node_hash, right_node__edges, \
+									              f2ptr iter = right_node__edges; \
+									              while (iter) { \
+										        f2ptr edge = f2__cons__car(cause, iter); \
+										        { \
+											  code; \
+											} \
+											iter = f2__cons__cdr(cause, iter); \
+										      } \
+										      ); \
+                                                          ); \
+			      ); \
+}
+
 // trans
 typedef struct funk2_object_type__trans__slot_s funk2_object_type__trans__slot_t;
 declare_object_type_2_slot(trans, remove, add,

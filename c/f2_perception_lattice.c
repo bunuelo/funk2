@@ -79,7 +79,7 @@ f2ptr f2__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   }
   return raw__graph__lookup_node(cause, this, node_label);
 }
-def_pcfunk2(graph__lookup_node, this, node, return f2__graph__lookup_node(cause, this, node));
+def_pcfunk2(graph__lookup_node, this, node, return f2__graph__lookup_node(this_cause, this, node));
 
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);

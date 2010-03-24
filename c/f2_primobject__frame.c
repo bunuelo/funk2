@@ -280,6 +280,13 @@ f2ptr raw__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
   if (raw__ptypehash__contains(cause, node_hash, this)) {
     return f2integer__new(cause, 1);
   }
+  {
+    f2ptr node_hash__key_count    = f2__ptypehash__key_count(cause, node_hash);
+    u64   node_hash__key_count__i = f2integer__i(node_hash__key_count, cause);
+    if (node_hash__key_count__i > 1024) {
+      return f2larva__new(cause, 334);
+    }
+  }
   raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
   f2ptr aux_data = raw__array__new(cause, 3);
   raw__array__elt__set(cause, aux_data, 0, this);

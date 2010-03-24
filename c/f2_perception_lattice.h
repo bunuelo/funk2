@@ -135,6 +135,8 @@ declare_primobject_2_slot(pattern_graph, variable_label_hash, graph);
 // graph_variable
 declare_primobject_1_slot(graph_variable, name);
 
+f2ptr f2__graph_variable__new(f2ptr cause, f2ptr name);
+
 
 // **
 

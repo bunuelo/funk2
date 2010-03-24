@@ -57,14 +57,13 @@ def_pcfunk1(graph_edge_type__new, label, return f2__graph_edge_type__new(this_ca
 
 // graph
 
-def_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
+def_primobject_3_slot(graph, root_node, node_label_hash, edge_type_label_hash);
 
 f2ptr f2__graph__new(f2ptr cause) {
-  f2ptr is_rooted            = nil;
-  f2ptr root                 = nil;
+  f2ptr root_node            = nil;
   f2ptr node_label_hash      = f2__ptypehash__new(cause);
   f2ptr edge_type_label_hash = f2__ptypehash__new(cause);
-  return f2graph__new(cause, is_rooted, root, node_label_hash, edge_type_label_hash);
+  return f2graph__new(cause, root_node, node_label_hash, edge_type_label_hash);
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
@@ -159,7 +158,6 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
       }
     }
   }
-  f2__ptypehash__remove(cause, node_label_hash, node_label);
   f2ptr root_node = f2__graph__root(cause, this);
   if (root_node != nil) {
     f2ptr root_node__label = f2__graph_node__label(cause, root_node);
@@ -167,6 +165,7 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
       raw__graph__make_rootless(cause, this);
     }
   }
+  f2__ptypehash__remove(cause, node_label_hash, node_label);
   return boolean__true;
 }
 
@@ -488,9 +487,12 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 							  );
 			      );
   {
-    f2ptr root = f2__graph__root(cause, this);
-    if (root == old_node_label) {
-      f2__graph__root__set(cause, this, new_node_label);
+    f2ptr root_node = f2__graph__root(cause, this);
+    if (root_node) {
+      f2ptr root_node__label = f2__graph_node__label(cause, root_node);
+      if (raw__eq(cause, root_node__label, old_node_label)) {
+	f2__graph__make_rooted(cause, this, new_node_label);
+      }
     }
   }
   raw__graph__remove_node(cause, this, old_node_label);
@@ -536,7 +538,7 @@ def_pcfunk3(graph__replace_node, this, old_node, new_node, return f2__graph__rep
 
 boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
   if (raw__graph__is_type( cause, this) &&
-      f2__graph__is_rooted(cause, this)) {
+      f2__graph__root_node(cause, this)) {
     return boolean__true;
   }
   return boolean__false;
@@ -548,8 +550,7 @@ f2ptr f2__rooted_graph__is_type(f2ptr cause, f2ptr this) {
 
 void raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
   f2ptr root_node = f2__graph__add_node(cause, this, root_node_label);
-  f2__graph__is_rooted__set(cause, this, f2bool__new(boolean__true));
-  f2__graph__root__set(     cause, this, root_node);
+  f2__graph__root_node__set(cause, this, root_node);
 }
 
 f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
@@ -562,8 +563,7 @@ f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
 def_pcfunk2(graph__make_rooted, this, root_node, return f2__graph__make_rooted(this_cause, this, root_node));
 
 void raw__graph__make_rootless(f2ptr cause, f2ptr this) {
-  f2__graph__is_rooted__set(cause, this, f2bool__new(boolean__false));
-  f2__graph__root__set(     cause, this, nil);
+  f2__graph__root_node__set(cause, this, nil);
 }
 
 f2ptr f2__graph__make_rootless(f2ptr cause, f2ptr this) {
@@ -942,7 +942,7 @@ void f2__perception_lattice__initialize() {
   initialize_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
   
   // graph
-  initialize_primobject_4_slot(graph, is_rooted, root, node_label_hash, edge_type_label_hash);
+  initialize_primobject_3_slot(graph, root_node, node_label_hash, edge_type_label_hash);
   
   {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__funk = never_gc(cfunk);}

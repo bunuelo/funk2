@@ -487,7 +487,7 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 							  );
 			      );
   {
-    f2ptr root_node = f2__graph__root(cause, this);
+    f2ptr root_node = f2__graph__root_node(cause, this);
     if (root_node) {
       f2ptr root_node__label = f2__graph_node__label(cause, root_node);
       if (raw__eq(cause, root_node__label, old_node_label)) {

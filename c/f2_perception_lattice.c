@@ -488,7 +488,7 @@ f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
 			 if (! frame) {
 			   frame = f2__frame__new(cause);
 			 }
-			 f2__ptypehash__add_var_value(cause, frame, edge__label, right_node__label);
+			 f2__ptypehash__add(cause, frame, edge__label, right_node__label);
 			 );
   return root_frame;
 }

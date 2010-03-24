@@ -130,7 +130,7 @@ declare_primobject_2_slot(trans, remove, add);
 f2ptr f2trans__primobject_type__new_aux(f2ptr cause);
 
 // pattern_graph
-declare_primobject_1_slot(pattern_graph, graph);
+declare_primobject_1_slot(pattern_graph, variable_label_hash, graph);
 
 // pattern_graph_variable
 declare_primobject_1_slot(pattern_graph_variable, name);

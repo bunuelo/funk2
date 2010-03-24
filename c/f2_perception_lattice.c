@@ -780,6 +780,15 @@ f2ptr f2__difference(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(difference, this, that, return f2__difference(this_cause, this, that));
 
 
+// pattern_graph_variable
+
+def_primobject_1_slot(pattern_graph_variable, name);
+
+f2ptr f2__pattern_graph_variable__new(f2ptr cause, f2ptr name) {
+  return f2pattern_graph_variable__new(cause, name);
+}
+def_pcfunk1(pattern_graph_variable__new, name, return f2__pattern_graph_variable__new(this_cause, name));
+
 // pattern_graph
 
 def_primobject_1_slot(pattern_graph, graph);
@@ -789,6 +798,8 @@ f2ptr f2__pattern_graph__new(f2ptr cause) {
 }
 def_pcfunk0(pattern_graph__new, return f2__pattern_graph__new(this_cause));
 
+
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -796,12 +807,13 @@ void f2__perception_lattice__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
-  __graph_node__symbol      = new__symbol(cause, "graph_node");
-  __graph_edge__symbol      = new__symbol(cause, "graph_edge");
-  __graph_edge_type__symbol = new__symbol(cause, "graph_edge_type");
-  __graph__symbol           = new__symbol(cause, "graph");
-  __trans__symbol           = new__symbol(cause, "trans");
-  __pattern_graph__symbol   = new__symbol(cause, "pattern_graph");
+  __graph_node__symbol             = new__symbol(cause, "graph_node");
+  __graph_edge__symbol             = new__symbol(cause, "graph_edge");
+  __graph_edge_type__symbol        = new__symbol(cause, "graph_edge_type");
+  __graph__symbol                  = new__symbol(cause, "graph");
+  __trans__symbol                  = new__symbol(cause, "trans");
+  __pattern_graph__symbol          = new__symbol(cause, "pattern_graph");
+  __pattern_graph_variable__symbol = new__symbol(cause, "pattern_graph_variable");
 }
 
 void f2__perception_lattice__initialize() {
@@ -854,6 +866,9 @@ void f2__perception_lattice__initialize() {
   
   // difference
   f2__primcfunk__init__2(difference, this, that, "returns a trans object representing the difference between two objects implementing the part_not_contained_by get type function.");
+  
+  // pattern_graph_variable
+  initialize_primobject_1_slot(pattern_graph_variable, name);
   
   // pattern_graph
   initialize_primobject_1_slot(pattern_graph, graph);

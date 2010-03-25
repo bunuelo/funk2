@@ -43,3 +43,5 @@
 
 [globalize-funk difference                    &primfunk:difference]
 
+[globalize-funk graph_variable-is_wildcard    &primfunk:graph_variable__is_wildcard]
+

@@ -956,6 +956,16 @@ f2ptr f2__graph_variable__new_wildcard(f2ptr cause) {
   return f2__graph_variable__new(cause, __funk2.globalenv.astrisk__symbol);
 }
 
+boolean_t raw__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
+  f2ptr name = f2__graph_variable__name(cause, this);
+  return raw__eq(cause, name, __funk2.globalenv.astrisk__symbol);
+}
+
+f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
+  return f2bool__new(raw__graph_variable__is_wildcard(cause, this));
+}
+def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -1034,6 +1044,8 @@ void f2__perception_lattice__initialize() {
   
   // graph_variable
   initialize_primobject_1_slot(graph_variable, name);
+  
+  f2__primcfunk__init__1(graph_variable__is_wildcard, this, "returns true if this graph variable can take any value without restrictions.");
   
 }
 

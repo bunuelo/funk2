@@ -832,8 +832,8 @@ def_pcfunk2(graph__part_not_contained_by, this, that, return f2__graph__part_not
 
 f2ptr raw__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {
   f2ptr variable = f2__graph_variable__new(cause, variable_name);
-  raw__graph__replace_node(cause, node_label, variable);
-  return 
+  raw__graph__replace_node(cause, this, node_label, variable);
+  return variable;
 }
 
 f2ptr f2__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {

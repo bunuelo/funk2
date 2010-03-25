@@ -844,6 +844,18 @@ f2ptr f2__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f
 }
 def_pcfunk3(graph__make_node_variable, this, node_label, variable_name, return f2__graph__make_node_variable(this_cause, this, node_label, variable_name));
 
+f2ptr raw__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
+  return raw__graph__make_node_variable(cause, this, node_label, __funk2.globalenv.astrisk__symbol);
+}
+
+f2ptr f2__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__make_node_wildcard(cause, this, node_label);
+}
+def_pcfunk2(graph__make_node_wildcard, this, node_label, return f2__graph__make_node_wildcard(this_cause, this, node_label));
+
 
 // trans
 
@@ -997,7 +1009,8 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(graph__replace_node,          this, old_node, new_node,           "replaces old node with new node.");
   f2__primcfunk__init__2(graph__make_rooted,           this, root_node,                    "makes graph rooted with root node.");
   f2__primcfunk__init__1(graph__make_rootless,         this,                               "makes graph rootless.");
-  f2__primcfunk__init__1(graph__make_node_variable,    this,                               "makes a node in the graph a variable for matching.");
+  f2__primcfunk__init__3(graph__make_node_variable,    this, node, variable_name,          "makes a node in the graph a variable for matching.");
+  f2__primcfunk__init__2(graph__make_node_wildcard,    this, node,                         "makes a node in the graph a wildcard variable for matching.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

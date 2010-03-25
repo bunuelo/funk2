@@ -845,7 +845,9 @@ f2ptr f2__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f
 def_pcfunk3(graph__make_node_variable, this, node_label, variable_name, return f2__graph__make_node_variable(this_cause, this, node_label, variable_name));
 
 f2ptr raw__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
-  return raw__graph__make_node_variable(cause, this, node_label, __funk2.globalenv.astrisk__symbol);
+  f2ptr variable = f2__graph_variable__new_wildcard(cause);
+  raw__graph__replace_node(cause, this, node_label, variable);
+  return variable;
 }
 
 f2ptr f2__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
@@ -950,7 +952,9 @@ f2ptr f2__graph_variable__new(f2ptr cause, f2ptr name) {
 }
 def_pcfunk1(graph_variable__new, name, return f2__graph_variable__new(this_cause, name));
 
-
+f2ptr f2__graph_variable__new_wildcard(f2ptr cause) {
+  return f2__graph_variable__new(cause, __funk2.globalenv.astrisk__symbol);
+}
 
 // **
 

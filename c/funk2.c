@@ -246,33 +246,40 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
     } else {
       
-      // try to find a nice user-friendly repl
-      f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
-      if (raw__larva__is_type(cause, repl_funk)) {
-	// if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
-	repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:simple_repl"), (u8*)"primfunk:simple_repl"));
+      if (! this->command_line.no_repl) {
+	// unless the user has explicitely specified the "--no-repl" command-line option, try to find a nice user-friendly repl
+	f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
 	if (raw__larva__is_type(cause, repl_funk)) {
-	  error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
+	  // if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
+	  repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:simple_repl"), (u8*)"primfunk:simple_repl"));
+	  if (raw__larva__is_type(cause, repl_funk)) {
+	    error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
+	  }
 	}
+	
+	// start a fiber executing the user read-eval-print loop
+	f2__fiber(cause,
+		  cause,
+		  nil,
+		  global_environment(),
+		  repl_funk,
+		  nil);
       }
       
-      // start a fiber executing the user read-eval-print loop
+    }
+    
+  } else {
+    
+    if (! this->command_line.no_boot) {
+      // unless the user has specifically used the "--no-boot" command-line option, start a fiber executing the boot function
       f2__fiber(cause,
 		cause,
 		nil,
 		global_environment(),
-		repl_funk,
+		boot_funk,
 		nil);
     }
     
-  } else {
-    // start a fiber executing the boot function
-    f2__fiber(cause,
-	      cause,
-	      nil,
-	      global_environment(),
-	      boot_funk,
-	      nil);
   }
   
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
@@ -390,8 +397,8 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 }
 
 void* funk2__separate_thread_bootup(void* param) {
-  int   argc = 1;
-  char* argv[2] = {"funk2", (char*)NULL};
+  int   argc = 2;
+  char* argv[3] = {"funk2", "--no-boot", (char*)NULL};
   int result = funk2__main(&__funk2, argc, argv);
   printf("funk2__separate_thread_bootup note: funk2__main exited with result=%d.", result);
   return NULL;

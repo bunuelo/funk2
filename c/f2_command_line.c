@@ -111,6 +111,8 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->user_command                    = NULL;
   this->peer_command_server__port_num   = 22222;
   this->swap_directory                  = NULL;
+  this->no_repl                         = boolean__false;
+  this->no_boot                         = boolean__false;
   
   int index;
   boolean_t parse_error = boolean__false;
@@ -139,6 +141,10 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
 	break;
       }
       this->swap_directory = argv[index];
+    } else if (strcmp(argv[index], "--no-repl") == 0) {
+      this->no_repl = boolean__true;
+    } else if (strcmp(argv[index], "--no-boot") == 0) {
+      this->no_boot = boolean__true;
     } else {
       if (! string__filename_exists(argv[index])) {
 	printf("\n  error parsing <source.fu2>: filename does not exist, \"%s\".", argv[index]);

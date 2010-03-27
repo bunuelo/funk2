@@ -16,7 +16,7 @@ PyObject* raw__exp__as__python_object(f2ptr cause, f2ptr exp) {
   }
   if (raw__integer__is_type(cause, exp)) {
     f2ptr integer = exp;
-    return Py_BuildValue("i", f2integer__i(exp, cause));
+    return Py_BuildValue("i", f2integer__i(integer, cause));
   }
   printf("\nPython Funk2 warning: not handling type conversion of object.");
   f2__print(cause, exp);

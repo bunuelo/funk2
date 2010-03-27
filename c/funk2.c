@@ -423,7 +423,3 @@ void funk2__start_main_in_separate_thread() {
 // this should be the only global variable in funk2.
 funk2_t __funk2;
 
-int main(int argc, char** argv) {
-  return funk2__main(&__funk2, argc, argv);
-}
-

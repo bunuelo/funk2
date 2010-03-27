@@ -184,9 +184,12 @@ img/bootstrap.img: img/bootstrap-repl.img
 
 ACLOCAL_AMFLAGS = -I m4
 
+lib_LTLIBRARIES         = lib/libfunk2.la
 bin_PROGRAMS = bin/funk2
 
-bin_funk2_SOURCES = \
+bin_funk2_SOURCES = funk2_main.c
+
+lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
   c/f2_array.c \
   c/f2_ansi.c \
@@ -295,14 +298,11 @@ bin_funk2_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-bin_funk2_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
-bin_funk2_CFLAGS = -pg $(cc_flags)
+lib_libfunk2_la_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
+lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 
-lib_LTLIBRARIES         = lib/libfunk2.la
-lib_libfunk2_la_SOURCES = $(bin_funk2_SOURCES)
-lib_libfunk2_la_LDFLAGS = $(bin_funk2_LDFLAGS)
-lib_libfunk2_la_CFLAGS  = $(bin_funk2_CFLAGS)
-
+bin_funk2_LDFLAGS = -lfunk2
+bin_funk2_CFLAGS  = -pg
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h

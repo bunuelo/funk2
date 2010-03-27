@@ -296,7 +296,7 @@ bin_funk2_SOURCES = \
 bin_funk2_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 bin_funk2_CFLAGS = -pg $(cc_flags)
 
-lib_LTLIBRARIES         = lib/libfunk2.la
+lib_LTLIBRARIES         = lib/libfunk2.la lib/libfunk2.so
 lib_libfunk2_la_SOURCES = $(bin_funk2_SOURCES)
 lib_libfunk2_la_LDFLAGS = $(bin_funk2_LDFLAGS)
 lib_libfunk2_la_CFLAGS  = $(bin_funk2_CFLAGS)

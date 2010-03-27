@@ -888,9 +888,9 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 			 );
   // return no matches if edges don't match
   graph__edge__iteration(cause, this, this__edge,
-			 f2ptr this__edge__label             = f2__graph_edge__label(     cause, edge);
-			 f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, edge);
-			 f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, edge);
+			 f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
+			 f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
+			 f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
 			 f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
 			 f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
 			 if ((! raw__graph_variable__is_type(cause, this__edge__label)) &&
@@ -905,9 +905,9 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
   f2ptr that_unmatched_subgraph = f2__graph__copy(cause, that);
   // remove edges that don't contain variables.
   graph__edge__iteration(cause, this, this__edge,
-			 f2ptr this__edge__label             = f2__graph_edge__label(     cause, edge);
-			 f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, edge);
-			 f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, edge);
+			 f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
+			 f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
+			 f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
 			 f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
 			 f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
 			 if ((! raw__graph_variable__is_type(cause, this__edge__label)) &&

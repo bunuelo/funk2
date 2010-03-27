@@ -22,7 +22,9 @@
 #ifndef F2__SYSTEM_HEADERS__H
 #define F2__SYSTEM_HEADERS__H
 
-#define _GNU_SOURCE
+#ifndef _GNU_SOURCE
+#  define _GNU_SOURCE
+#endif
 
 //#define F2__GMODULE__SUPPORTED
 //#define F2__DLFCN__SUPPORTED

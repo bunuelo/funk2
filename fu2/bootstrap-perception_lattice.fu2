@@ -21,6 +21,7 @@
 [deftypefunk graph execute add_edge           [label left_node right_node] [graph-add_edge           this label left_node right_node]]
 [deftypefunk graph get     contains_node      [node]                       [graph-contains_node      this node]]
 [deftypefunk graph get     contains_edge      [label left_node right_node] [graph-contains_edge      this label left_node right_node]]
+[deftypefunk graph get     contains_edge_type [label]                      [graph-contains_edge_type this label]]
 [deftypefunk graph execute intersect          [that]                       [graph-intersect          this that]]
 [deftypefunk graph execute union              [that]                       [graph-union              this that]]
 [deftypefunk graph execute remove_node        [node]                       [graph-remove_node        this node]]

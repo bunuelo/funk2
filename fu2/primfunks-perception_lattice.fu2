@@ -25,6 +25,7 @@
 [globalize-funk graph-add_edge                &primfunk:graph__add_edge]
 [globalize-funk graph-contains_node           &primfunk:graph__contains_node]
 [globalize-funk graph-contains_edge           &primfunk:graph__contains_edge]
+[globalize-funk graph-contains_edge_type      &primfunk:graph__contains_edge_type]
 [globalize-funk graph-intersect               &primfunk:graph__intersect]
 [globalize-funk graph-union                   &primfunk:graph__union]
 [globalize-funk graph-remove_node             &primfunk:graph__remove_node]

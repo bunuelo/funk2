@@ -296,10 +296,10 @@ bin_funk2_SOURCES = \
 bin_funk2_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 bin_funk2_CFLAGS = -pg $(cc_flags)
 
-lib_LTLIBRARIES     = libfunk2.la
-libfunk2_la_SOURCES = $(bin_funk2_SOURCES)
-libfunk2_la_LDFLAGS = $(bin_funk2_LDFLAGS)
-libfunk2_la_CFLAGS  = $(bin_funk2_CFLAGS)
+lib_LTLIBRARIES         = lib/libfunk2.la
+lib_libfunk2_la_SOURCES = $(bin_funk2_SOURCES)
+lib_libfunk2_la_LDFLAGS = $(bin_funk2_LDFLAGS)
+lib_libfunk2_la_CFLAGS  = $(bin_funk2_CFLAGS)
 
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h

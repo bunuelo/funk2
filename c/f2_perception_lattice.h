@@ -26,6 +26,38 @@
 typedef struct funk2_object_type__graph_node__slot_s funk2_object_type__graph_node__slot_t;
 declare_object_type_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, );
 
+#define graph_node__in_edge__iteration(cause, this, edge, code) { \
+   f2ptr this__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, this); \
+   ptypehash__value__iteration(cause, this__edges_left_node_hash_edge_hash, this__edges_left_node_hash, \
+	                       ptypehash__value__iteration(cause, this__edges_left_node_hash, this__edges, \
+	                                                   f2ptr iter = this__edges; \
+			                                   while (iter) { \
+			                                     f2ptr edge = f2__cons__car(cause, iter); \
+			                                     { \
+			                                       code; \
+			                                     } \
+			                                     iter = f2__cons__cdr(cause, iter); \
+			                                   } \
+			                                   ); \
+                               ); \
+}
+
+#define graph_node__out_edge__iteration(cause, this, edge, code) { \
+   f2ptr this__edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, this); \
+   ptypehash__value__iteration(cause, this__edges_right_node_hash_edge_hash, this__edges_right_node_hash, \
+	                       ptypehash__value__iteration(cause, this__edges_right_node_hash, this__edges, \
+	                                                   f2ptr iter = this__edges; \
+			                                   while (iter) { \
+			                                     f2ptr edge = f2__cons__car(cause, iter); \
+			                                     { \
+			                                       code; \
+			                                     } \
+			                                     iter = f2__cons__cdr(cause, iter); \
+			                                   } \
+			                                   ); \
+                               ); \
+}
+
 // graph_edge
 typedef struct funk2_object_type__graph_edge__slot_s funk2_object_type__graph_edge__slot_t;
 declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
@@ -46,6 +78,8 @@ declare_object_type_3_slot(graph, root_node, node_label_hash, edge_type_label_ha
 			   f2ptr as__frame__symbol;
 			   f2ptr as__frame__funk;
 			   );
+
+#define graph__node_count(cause, this) f2integer__i(f2__ptypehash__key_count(cause, f2__graph__node_label_hash(cause, this)))
 
 #define graph__node__iteration(cause, this, node, code) {	   \
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \

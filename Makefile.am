@@ -185,9 +185,9 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la
-bin_PROGRAMS    = bin/funk2
+#bin_PROGRAMS    = bin/funk2
 
-bin_funk2_SOURCES = c/funk2_main.c lib/libfunk2.la
+#bin_funk2_SOURCES = c/funk2_main.c
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
@@ -301,8 +301,8 @@ lib_libfunk2_la_SOURCES = \
 lib_libfunk2_la_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 
-bin_funk2_LDFLAGS = -Llib/.libs/ -lfunk2
-bin_funk2_CFLAGS  = -pg
+#bin_funk2_LDFLAGS = -lfunk2
+#bin_funk2_CFLAGS  = -pg
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
@@ -337,6 +337,9 @@ make-install-sh:
 	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                  >> install-sh
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
+
+bin/funk2:
+	gcc -o bin/funk2 c/funk2_main.c -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

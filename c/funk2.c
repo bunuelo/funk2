@@ -415,7 +415,7 @@ void funk2__start_main_in_separate_thread() {
   while (! separate_thread__done_booting) {
     usleep(1);
   }
-  printf("\nfunk2: done booting up.");
+  printf("\nfunk2: done booting up.\n");
 }
 
 // this should be the only global variable in funk2.

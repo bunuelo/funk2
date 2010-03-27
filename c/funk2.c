@@ -390,8 +390,8 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 }
 
 void* funk2__separate_thread_bootup(void* param) {
-  int   argc = 1;
-  char* argv = {"funk2", NULL};
+  int    argc = 1;
+  char** argv = {"funk2", (char*)NULL};
   int result = funk2__main(&__funk2, argc, argv);
   printf("funk2__separate_thread_bootup note: funk2__main exited with result=%d.", result);
   return NULL;

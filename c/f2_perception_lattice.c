@@ -808,6 +808,11 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
       f2ptr root_node__label = f2__graph_node__label(cause, root_node);
       raw__graph__make_rooted(cause, graph, root_node__label);
     }
+    f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, this);
+    if (variable_name_hash) {
+      f2__graph__variable_name_hash__set(cause, graph, f2__ptypehash__new(cause));
+      ptypehash__iterator(cause, variable_name_hash, variable_name, variable, f2__ptypehash__add(cause, variable_name_hash, variable_name, variable));
+    }
   }
   return graph;
 }

@@ -30,11 +30,13 @@ static PyObject* funk2_read(PyObject* self, PyObject* args) {
     return NULL;
   }
   
+  PyObject* result;
+  
   f2ptr cause = nil;
   {
     pause_gc();
     f2ptr string = f2string__new(cause, strlen(raw_string), (u8*)raw_string);
-    PyObject* result = raw__exp__as__python_object(cause, f2__string__read(cause, string));
+    result       = raw__exp__as__python_object(cause, f2__string__read(cause, string));
     resume_gc();
   }
   

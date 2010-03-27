@@ -264,6 +264,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 		  global_environment(),
 		  repl_funk,
 		  nil);
+      } else {
+	printf("\nfunk2: skipping repl function because of --no-repl option.");
       }
       
     }
@@ -278,6 +280,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 		global_environment(),
 		boot_funk,
 		nil);
+    } else {
+      printf("\nfunk2: skipping boot function because of --no-boot option.");
     }
     
   }
@@ -398,7 +402,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
 
 void* funk2__separate_thread_bootup(void* param) {
   int   argc = 2;
-  char* argv[3] = {"funk2", "--no-boot", (char*)NULL};
+  char* argv[3] = {"libfunk2.la", "--no-boot", (char*)NULL};
   int result = funk2__main(&__funk2, argc, argv);
   printf("funk2__separate_thread_bootup note: funk2__main exited with result=%d.", result);
   return NULL;
@@ -406,10 +410,12 @@ void* funk2__separate_thread_bootup(void* param) {
 
 void funk2__start_main_in_separate_thread() {
   separate_thread__done_booting = boolean__false;
+  printf("\nfunk2: booting up funk2 in a separate thread.");
   pthread_create(&separate_thread__thread, NULL, funk2__separate_thread_bootup, NULL);
   while (! separate_thread__done_booting) {
     usleep(1);
   }
+  printf("\nfunk2: done booting up.");
 }
 
 // this should be the only global variable in funk2.

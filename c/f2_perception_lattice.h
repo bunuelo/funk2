@@ -79,7 +79,7 @@ declare_object_type_3_slot(graph, root_node, node_label_hash, edge_type_label_ha
 			   f2ptr as__frame__funk;
 			   );
 
-#define graph__node_count(cause, this) f2integer__i(f2__ptypehash__key_count(cause, f2__graph__node_label_hash(cause, this)))
+#define graph__node_count(cause, this) f2integer__i(f2__ptypehash__key_count(cause, f2__graph__node_label_hash(cause, this)), cause)
 
 #define graph__node__iteration(cause, this, node, code) {	   \
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this); \

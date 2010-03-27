@@ -867,7 +867,7 @@ f2ptr raw__graph__lookup_variable(f2ptr cause, f2ptr this, f2ptr variable_name) 
   if (! variable_name_hash) {
     return nil;
   }
-  return raw__ptypehash__lookup(cause, variable_name_hash, variable_name);
+  return f2__ptypehash__lookup(cause, variable_name_hash, variable_name);
 }
 
 f2ptr raw__graph__add_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
@@ -876,7 +876,7 @@ f2ptr raw__graph__add_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
     variable_name_hash = f2__ptypehash__new(cause);
     f2__graph__variable_name_hash__set(cause, this, variable_name_hash);
   }
-  f2ptr variable = raw__ptypehash__lookup(cause, variable_name_hash, variable_name);
+  f2ptr variable = f2__ptypehash__lookup(cause, variable_name_hash, variable_name);
   if (! variable) {
     variable = f2__graph_variable__new(cause, variable_name);
     raw__ptypehash__add(cause, variable_name_hash, variable_name, variable);

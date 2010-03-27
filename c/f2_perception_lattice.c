@@ -555,11 +555,15 @@ f2ptr f2__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label, f2p
 def_pcfunk3(graph__replace_node, this, old_node, new_node, return f2__graph__replace_node(this_cause, this, old_node, new_node));
 
 
+boolean_t raw__graph__is_rooted(f2ptr cause, f2ptr this) {
+  return (f2__graph__root_node(cause, this) != nil);
+}
+
 // rooted graph
 
 boolean_t raw__rooted_graph__is_type(f2ptr cause, f2ptr this) {
-  if (raw__graph__is_type( cause, this) &&
-      f2__graph__root_node(cause, this)) {
+  if (raw__graph__is_type(  cause, this) &&
+      raw__graph__is_rooted(cause, this)) {
     return boolean__true;
   }
   return boolean__false;
@@ -798,6 +802,11 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
 			   f2ptr right_node__label = f2__graph_node__label(     cause, right_node);
 			   raw__graph__add_edge(cause, graph, edge__label, left_node__label, right_node__label);
 			   );
+    if (raw__graph__is_rooted(cause, this)) {
+      f2ptr root_node        = f2__graph__root_node(cause, this);
+      f2ptr root_node__label = f2__graph_node__label(cause, root_node);
+      raw__graph__make_rooted(cause, graph, root_node__label);
+    }
   }
   return graph;
 }

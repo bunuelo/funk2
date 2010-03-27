@@ -35,7 +35,7 @@
 [deftypefunk graph execute make_rootless                []                           [graph-make_rootless                this]]
 [deftypefunk graph execute make_node_variable           [node variable_name]         [graph-make_node_variable           this node variable_name]]
 [deftypefunk graph execute make_node_wildcard           [node]                       [graph-make_node_wildcard           this node]]
-[deftypefunk graph get     contains_match_with_bindings [that bindings]              [graph-contains_match_with_bindings this that node]]
+[deftypefunk graph get     contains_match_with_bindings [that bindings]              [graph-contains_match_with_bindings this that bindings]]
 
 [deftypefunk graph_variable get is_wildcard [] [graph_variable-is_wildcard this]]
 

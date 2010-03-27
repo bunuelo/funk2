@@ -871,6 +871,8 @@ f2ptr f2__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
 }
 def_pcfunk2(graph__make_node_wildcard, this, node_label, return f2__graph__make_node_wildcard(this_cause, this, node_label));
 
+// this is a normal graph without variables.
+// that is a pattern graph with variables at nodes and edges
 f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr that, f2ptr bindings) {
   u64 this__node_count = graph__node_count(cause, this);
   u64 that__node_count = graph__node_count(cause, that);
@@ -886,17 +888,17 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 			   }
 			 }
 			 );
-  // return no matches if edges don't match
-  graph__edge__iteration(cause, this, this__edge,
-			 f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
-			 f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
-			 f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
-			 f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
-			 f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
-			 if ((! raw__graph_variable__is_type(cause, this__edge__label)) &&
-			     (! raw__graph_variable__is_type(cause, this__edge__left_node__label)) &&
-			     (! raw__graph_variable__is_type(cause, this__edge__right_node__label))) {
-			   if (! raw__graph__contains_edge(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
+  // return no matches if edges don't match.
+  graph__edge__iteration(cause, that, this__edge,
+			 f2ptr that__edge__label             = f2__graph_edge__label(     cause, that__edge);
+			 f2ptr that__edge__left_node         = f2__graph_edge__left_node( cause, that__edge);
+			 f2ptr that__edge__right_node        = f2__graph_edge__right_node(cause, that__edge);
+			 f2ptr that__edge__left_node__label  = f2__graph_node__label(     cause, that__edge__left_node);
+			 f2ptr that__edge__right_node__label = f2__graph_node__label(     cause, that__edge__right_node);
+			 if ((! raw__graph_variable__is_type(cause, that__edge__label)) &&
+			     (! raw__graph_variable__is_type(cause, that__edge__left_node__label)) &&
+			     (! raw__graph_variable__is_type(cause, that__edge__right_node__label))) {
+			   if (! raw__graph__contains_edge(cause, this, that__edge__label, that__edge__left_node__label, that__edge__right_node__label)) {
 			     return nil;
 			   }
 			 }

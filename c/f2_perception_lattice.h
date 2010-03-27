@@ -150,6 +150,8 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
 f2ptr      f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_label_node, f2ptr right_node_label);
 f2ptr      f2__graph__nodes(f2ptr cause, f2ptr this);
 f2ptr      f2__graph__edges(f2ptr cause, f2ptr this);
+f2ptr     raw__graph__variables(f2ptr cause, f2ptr this);
+f2ptr      f2__graph__variables(f2ptr cause, f2ptr this);
 
 boolean_t raw__graph__is_rooted(f2ptr cause, f2ptr this);
 void      raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label);

@@ -862,6 +862,13 @@ f2ptr raw__graph__variables(f2ptr cause, f2ptr this) {
   return variable_names;
 }
 
+f2ptr f2__graph__variables(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__variables(cause, this);
+}
+
 f2ptr raw__graph__lookup_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
   f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, this);
   if (! variable_name_hash) {

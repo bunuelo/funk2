@@ -970,7 +970,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 #else
 	    int max_char_length = 5;
 	    int subexp_size[2];
-	    f2ptr variables = raw__graph__variables(cause, exp);
+	    f2ptr variables = f2__graph__variables(cause, exp);
 	    if (variables) {
 	      max_char_length = 9;
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  

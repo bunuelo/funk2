@@ -338,8 +338,8 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-bin/funk2:
-	gcc -o bin/funk2 c/funk2_main.c -lfunk2
+bin/funk2: lib/libfunk2.la
+	gcc -o bin/funk2 c/funk2_main.c lib/.libs/libfunk2.so
 
 install: install-am make-install-sh
 	./install-sh

@@ -311,6 +311,7 @@ AM_MAKEFLAGS = img/bootstrap.img
 
 
 clean: clean-am
+	rm -f config_compile_time_id.h
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
 

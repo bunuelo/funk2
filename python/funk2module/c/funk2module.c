@@ -55,6 +55,8 @@ static PyObject *Funk2Error;
 PyMODINIT_FUNC initfunk2(void) {
   PyObject *m;
   
+  funk2__start_main_in_separate_thread();
+  
   m = Py_InitModule("funk2", Funk2Methods);
   if (m == NULL)
     return;

@@ -178,6 +178,8 @@ void      funk2__init(   funk2_t* this, int argc, char** argv);
 void      funk2__destroy(funk2_t* this);
 boolean_t funk2__handle( funk2_t* this);
 
+void funk2__start_main_in_separate_thread();
+
 extern funk2_t __funk2;
 
 #endif // FUNK2__H

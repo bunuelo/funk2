@@ -358,11 +358,16 @@ void funk2_test() {
   //funk2_gc_touch_circle_buffer__test();
 }
 
+pthread_t separate_thread__thread;
+boolean_t separate_thread__done_booting;
+
 int funk2__main(funk2_t* this, int argc, char** argv) {
 #ifdef TEST
   funk2_test();
 #endif // TEST
   funk2__init(this, argc, argv);
+  
+  separate_thread__done_booting = boolean__true;
   
   while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
     boolean_t did_something = funk2__handle(this);
@@ -382,6 +387,22 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   f2__destroy();
   
   return 0;
+}
+
+void* funk2__separate_thread_bootup(void*) {
+  int   argc = 1;
+  char* argv = {"funk2", NULL};
+  int result = funk2__main(&__funk2, argc, argv);
+  printf("funk2__separate_thread_bootup note: funk2__main exited with result=%d.", result);
+  return NULL;
+}
+
+void funk2__start_main_in_separate_thread() {
+  separate_thread__done_booting = boolean__false;
+  pthread_create(&separate_thread__thread, NULL, funk2__separate_thread_bootup, NULL);
+  while (! separate_thread__done_booting) {
+    usleep(1);
+  }
 }
 
 // this should be the only global variable in funk2.

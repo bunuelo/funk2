@@ -39,7 +39,7 @@
 [globalize-funk graph-make_rootless                &primfunk:graph__make_rootless]
 [globalize-funk graph-make_node_variable           &primfunk:graph__make_node_variable]
 [globalize-funk graph-make_node_wildcard           &primfunk:graph__make_node_wildcard]
-[globalize-funk graph-contains_match_with_bindinds &primfunk:graph__contains_match_with_bindings]
+[globalize-funk graph-contains_match_with_bindings &primfunk:graph__contains_match_with_bindings]
 
 [globalize-funk trans-part_not_contained_by &primfunk:trans__part_not_contained_by]
 

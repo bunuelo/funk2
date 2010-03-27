@@ -1,7 +1,9 @@
 from distutils.core import setup, Extension
 
 funk2module_extension = Extension('funk2',
-                                  sources = ['c/funk2module.c'])
+                                  sources = ['c/funk2module.c'],
+                                  libraries = ['funk2'],
+                                  library_dirs = ['../../lib/'])
 
 setup (name = 'Funk2',
        version = '2.10',

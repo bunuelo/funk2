@@ -1542,7 +1542,9 @@ def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fibe
 
 
 f2ptr raw__string__read(f2ptr cause, f2ptr this) {
-  f2ptr string_stream = f2__string_stream__new(cause, this, f2integer__new(cause, 0));
+  f2ptr string_stream = f2__string_stream(cause, this, f2integer__new(cause, 0));
+  // read here...
+  return nil;
 }
 
 f2ptr f2__string__read(f2ptr cause, f2ptr this) {

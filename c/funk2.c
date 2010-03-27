@@ -372,6 +372,7 @@ void funk2_test() {
 pthread_t separate_thread__thread;
 boolean_t separate_thread__done_booting;
 
+// see funk2_main.c for actual main function.
 int funk2__main(funk2_t* this, int argc, char** argv) {
   __funk2.funk2_main_code_position = (u64)(&funk2__main);
   //printf("\nfunk2__main: this function is at " u64__fstr "\n", __funk2.funk2_main_code_position);

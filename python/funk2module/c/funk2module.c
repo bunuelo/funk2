@@ -2,6 +2,9 @@
 #include "../../../c/funk2.h"
 
 PyObject* raw__exp__as__python_object(f2ptr cause, f2ptr exp) {
+  if (exp == nil) {
+    return NULL;
+  }
   if (raw__larva__is_type(cause, exp)) {
     f2ptr larva = exp;
     return Py_BuildValue("(s,i)", "larva", raw__larva__larva_type(cause, larva));
@@ -19,7 +22,6 @@ PyObject* raw__exp__as__python_object(f2ptr cause, f2ptr exp) {
     return Py_BuildValue("i", f2integer__i(integer, cause));
   }
   printf("\nPython Funk2 warning: not handling type conversion of object.");
-  f2__print(cause, exp);
   return NULL;
 }
 

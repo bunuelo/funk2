@@ -3,7 +3,7 @@
 
 PyObject* raw__exp__as__python_object(f2ptr cause, f2ptr exp) {
   if (exp == nil) {
-    return PyBuildValue("[]");
+    return Py_BuildValue("[]");
   }
   if (raw__larva__is_type(cause, exp)) {
     f2ptr larva = exp;

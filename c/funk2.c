@@ -191,10 +191,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_primobject_type_handler__add_builtin_primobjects(&(this->primobject_type_handler), cause);
   funk2_primobject_type_handler__add_builtin_frame_objects(&(this->primobject_type_handler), cause);
   
-  // try to load the default system-wide bootstrap image
-  if (funk2_memory__load_image_from_file(&(__funk2.memory), install__bootstrap_img__filename)) {
-    // try to load the local bootstrap image
-    if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_img__filename)) {
+  // try to load the local bootstrap image
+  if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_img__filename)) {
+    // try to load the default system-wide bootstrap image
+    if (funk2_memory__load_image_from_file(&(__funk2.memory), install__bootstrap_img__filename)) {
       // if we can't load the default system-wide bootstrap image or a local bootstrap image, then we are in the middle of compiling and depending on compiling progress we can load this intermediate image.
       if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_repl_img__filename)) {
 	// try to load the other bootstrap image
@@ -206,11 +206,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	  status("warning: starting a very simple hardcoded read-evaluate-print loop because no compiled images can be found.");
 	}
       } else {
-	status("warning: we must be in a compile process because couldn't load \"%s\" so reverted to loading \"%s\"", install__bootstrap_img__filename, compile__bootstrap_repl_img__filename);
+	status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
       }
-    } else {
-      status("warning: couldn't load system-wide installed bootstrap image, \"%s\", so reverted to loading local bootstrap image, \"%s\"", install__bootstrap_img__filename, compile__bootstrap_img__filename);
     }
+  } else {
+    status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
   }
   
   cause = f2__cause__new_with_inherited_properties(cause, nil);

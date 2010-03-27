@@ -26,18 +26,18 @@
 #include "f2_processor_mutex.h"
 
 #define def_pcfunk__funkvar(name)            pcfunk__##name
-#define def_pcfunk__prototype__declare(name) static f2ptr def_pcfunk__funkvar(name) (f2ptr simple_cause, f2ptr simple_fiber, f2ptr simple_env, f2ptr simple_args)
+#define def_pcfunk__prototype__declare(name) f2ptr def_pcfunk__funkvar(name) (f2ptr simple_cause, f2ptr simple_fiber, f2ptr simple_env, f2ptr simple_args)
 
 #define def_pcfunk__symbolvar(name)          __symbol__##name
 #define def_pcfunk__symbolvar_string(name)   "primfunk:" #name
-#define def_pcfunk__symbolvar__define(name)  static f2ptr def_pcfunk__symbolvar(name) = nil
+#define def_pcfunk__symbolvar__define(name)  f2ptr def_pcfunk__symbolvar(name) = nil
 #define def_pcfunk__symbolvar__init(name)    if(!def_pcfunk__symbolvar(name)) {def_pcfunk__symbolvar(name) = f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name));}
 #define def_pcfunk__this_symbol__define(name) \
    f2ptr this_symbol = def_pcfunk__symbolvar(name); \
    this_symbol = this_symbol;
 
 #define def_pcfunk__documentationvar(name)                   __documentation__##name
-#define def_pcfunk__documentationvar__define(name)           static f2ptr def_pcfunk__documentationvar(name) = nil
+#define def_pcfunk__documentationvar__define(name)           f2ptr def_pcfunk__documentationvar(name) = nil
 #define def_pcfunk__documentationvar__init(name, doc_string) if(!def_pcfunk__documentationvar(name)) {def_pcfunk__documentationvar(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
 #define def_pcfunk__this_documentation__define(name) \
    f2ptr this_documentation = def_pcfunk__documentationvar(name); \

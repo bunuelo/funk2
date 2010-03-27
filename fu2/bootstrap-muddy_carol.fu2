@@ -316,7 +316,7 @@
       [have this add `put_object_at_goal__position nil]
       [have this add `enable_random_move_goal      t]
       [have this add `paused                       t]
-      `[have this add `fiber                     [fiber [funk [] [while t
+      [have this add `fiber                     [fiber [funk [] [while t
 								  `[print 'female_child_agent construct: fiber here.']
 								   [let [[paused [have this lookup `paused]]]
 								     [if paused

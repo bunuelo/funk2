@@ -1558,14 +1558,7 @@ f2ptr f2__string__read(f2ptr cause, f2ptr this) {
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
-  
-}
-
-void f2__primcfunks__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__reinitialize_globalvars);
-  
-  f2__primcfunks__reinitialize_globalvars();
+  f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
   // system
   
@@ -1852,6 +1845,13 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(eq_hash_value, exp, "");
   f2__funktional_primcfunk__init__2(equals, x, y, "");
   //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
+  
+}
+
+void f2__primcfunks__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__reinitialize_globalvars);
+  
+  f2__primcfunks__reinitialize_globalvars();
   
 }
 

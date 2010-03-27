@@ -268,8 +268,6 @@ def_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documenta
 f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
 def_pcfunk6(cfunk__new, name, args, cfunkptr, env, is_funktional, documentation, return f2__cfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
 
-
-
 // metrocfunk
 
 def_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);

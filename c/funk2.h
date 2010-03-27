@@ -131,7 +131,11 @@
 
 void f2__destroy();
 
+#define relative_ptr__to__raw_executable(x) (x ? from_ptr(x + __funk2.funk2_main_code_position) : from_ptr(0))
+#define raw_executable__to__relative_ptr(x) (x ? (to_ptr(x) - __funk2.funk2_main_code_position) : to_ptr(0))
+
 typedef struct funk2_s {
+  ptr                                 funk2_main_code_position;
   boolean_t                           exit_now;
   node_id_t                           node_id;
   event_id_t                          event_id;

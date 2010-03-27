@@ -550,7 +550,7 @@
   { \
     f2ptr c_cfunk_args = cfunk_args_code; \
     def_pcfunk__documentationvar__init(name, doc_string); \
-    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), to_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil, def_pcfunk__documentationvar(name)); \
+    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil, def_pcfunk__documentationvar(name)); \
     never_gc(c_cfunk_var); \
     def_pcfunk__symbolvar__init(name); \
     never_gc(def_pcfunk__symbolvar(name)); \
@@ -730,7 +730,7 @@
 
 #define f2__primmetro__init(is_funktional, name) { \
   def_pcfunk__symbolvar__init(name); \
-  environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), f2metrocfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), f2pointer__new(initial_cause(), to_ptr(def_pcfunk__metrovar(name))), global_environment(), nil)); \
+  environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), f2metrocfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__metrovar(name))), global_environment(), nil)); \
 }
 
 #include "f2_memory.h"

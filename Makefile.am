@@ -187,7 +187,7 @@ ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES         = lib/libfunk2.la
 bin_PROGRAMS = bin/funk2
 
-bin_funk2_SOURCES = funk2_main.c
+bin_funk2_SOURCES = c/funk2_main.c
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \

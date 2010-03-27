@@ -301,7 +301,7 @@ lib_libfunk2_la_SOURCES = \
 lib_libfunk2_la_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 
-bin_funk2_LDFLAGS = lib/libfunk2.la
+bin_funk2_LDFLAGS = lib/.libs/libfunk2.so
 bin_funk2_CFLAGS  = -pg
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h

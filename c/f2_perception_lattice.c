@@ -57,13 +57,14 @@ def_pcfunk1(graph_edge_type__new, label, return f2__graph_edge_type__new(this_ca
 
 // graph
 
-def_primobject_3_slot(graph, root_node, node_label_hash, edge_type_label_hash);
+def_primobject_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash);
 
 f2ptr f2__graph__new(f2ptr cause) {
+  f2ptr variable_name_hash   = nil;
   f2ptr root_node            = nil;
   f2ptr node_label_hash      = f2__ptypehash__new(cause);
   f2ptr edge_type_label_hash = f2__ptypehash__new(cause);
-  return f2graph__new(cause, root_node, node_label_hash, edge_type_label_hash);
+  return f2graph__new(cause, variable_name_hash, root_node, node_label_hash, edge_type_label_hash);
 }
 def_pcfunk0(graph__new, return f2__graph__new(this_cause));
 
@@ -1099,7 +1100,7 @@ void f2__perception_lattice__initialize() {
   initialize_primobject_3_slot(graph_edge_type, label, left_node_hash, right_node_hash);
   
   // graph
-  initialize_primobject_3_slot(graph, root_node, node_label_hash, edge_type_label_hash);
+  initialize_primobject_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash);
   
   {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__equals, this, that, cfunk, 0, "checks for equality between two graphs."); __funk2.globalenv.object_type.primobject.primobject_type_graph.equals__funk = never_gc(cfunk);}

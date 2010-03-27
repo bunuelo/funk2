@@ -887,7 +887,7 @@ f2ptr raw__graph__add_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
 f2ptr raw__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {
   f2ptr variable = raw__graph__lookup_variable(cause, this, variable_name);
   if (! variable) {
-    variable = f2__graph__add_variable(cause, variable_name);
+    variable = raw__graph__add_variable(cause, variable_name);
   }
   raw__graph__replace_node(cause, this, node_label, variable);
   return variable;

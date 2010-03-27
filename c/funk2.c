@@ -389,7 +389,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   return 0;
 }
 
-void* funk2__separate_thread_bootup(void*) {
+void* funk2__separate_thread_bootup(void* param) {
   int   argc = 1;
   char* argv = {"funk2", NULL};
   int result = funk2__main(&__funk2, argc, argv);

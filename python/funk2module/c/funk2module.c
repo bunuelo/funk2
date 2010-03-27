@@ -33,7 +33,7 @@ static PyObject* funk2_eval(PyObject* self, PyObject* args) {
   f2ptr cause = nil;
   {
     pause_gc();
-    PyObject* result = raw__exp__as_python_object(cause, raw__eval_string_to_string(cause, command));
+    PyObject* result = raw__exp__as__python_object(cause, raw__eval_string_to_string(cause, command));
     resume_gc();
   }
   

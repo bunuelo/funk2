@@ -9,7 +9,7 @@ PyObject* raw__exp__as__python_object(f2ptr cause, f2ptr exp) {
   if (raw__string__is_type(cause, exp)) {
     f2ptr string         = exp;
     u64   string__length = raw__string__length(cause, string);
-    char* string__str    = (u8*)alloca(string__length + 1);
+    u8*   string__str    = (u8*)alloca(string__length + 1);
     raw__string__str_copy(cause, string, string__str);
     string__str[string__length] = 0;
     return Py_BuildValue("s", (char*)string__str);

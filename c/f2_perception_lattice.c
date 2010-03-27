@@ -906,30 +906,30 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
   f2ptr this_unmatched_subgraph = f2__graph__copy(cause, this);
   f2ptr that_unmatched_subgraph = f2__graph__copy(cause, that);
   // remove edges that don't contain variables.
-  graph__edge__iteration(cause, this, this__edge,
-			 f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
-			 f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
-			 f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
-			 f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
-			 f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
-			 if ((! raw__graph_variable__is_type(cause, this__edge__label)) &&
-			     (! raw__graph_variable__is_type(cause, this__edge__left_node__label)) &&
-			     (! raw__graph_variable__is_type(cause, this__edge__right_node__label))) {
-			   if (raw__graph__contains_edge(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
-			     raw__graph__remove_edge(cause, this_unmatched_subgraph, this__edge__label, this__edge__left_node__label, this__edge__right_node__label);
-			     raw__graph__remove_edge(cause, that_unmatched_subgraph, this__edge__label, this__edge__left_node__label, this__edge__right_node__label);
+  graph__edge__iteration(cause, this, that__edge,
+			 f2ptr that__edge__label             = f2__graph_edge__label(     cause, that__edge);
+			 f2ptr that__edge__left_node         = f2__graph_edge__left_node( cause, that__edge);
+			 f2ptr that__edge__right_node        = f2__graph_edge__right_node(cause, that__edge);
+			 f2ptr that__edge__left_node__label  = f2__graph_node__label(     cause, that__edge__left_node);
+			 f2ptr that__edge__right_node__label = f2__graph_node__label(     cause, that__edge__right_node);
+			 if ((! raw__graph_variable__is_type(cause, that__edge__label)) &&
+			     (! raw__graph_variable__is_type(cause, that__edge__left_node__label)) &&
+			     (! raw__graph_variable__is_type(cause, that__edge__right_node__label))) {
+			   if (raw__graph__contains_edge(cause, this, that__edge__label, that__edge__left_node__label, that__edge__right_node__label)) {
+			     raw__graph__remove_edge(cause, this_unmatched_subgraph, that__edge__label, that__edge__left_node__label, that__edge__right_node__label);
+			     raw__graph__remove_edge(cause, that_unmatched_subgraph, that__edge__label, that__edge__left_node__label, that__edge__right_node__label);
 			   }
 			 }
 			 );
   { // remove edgeless nodes
     f2ptr matched_edgeless_node_labels = nil;
-    graph__node__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__node,
-			   int this_unmatched_subgraph__node__edge_count = 0;
-			   graph_node__in_edge__iteration( cause, this_unmatched_subgraph__node, in_edge,  this_unmatched_subgraph__node__edge_count ++);
-			   graph_node__out_edge__iteration(cause, this_unmatched_subgraph__node, out_edge, this_unmatched_subgraph__node__edge_count ++);
-			   if (this_unmatched_subgraph__node__edge_count == 0) {
-			     f2ptr this_unmatched_subgraph__node__label = f2__graph_node__label(cause, this_unmatched_subgraph__node);
-			     matched_edgeless_node_labels = f2cons__new(cause, this_unmatched_subgraph__node__label, matched_edgeless_node_labels);
+    graph__node__iteration(cause, that_unmatched_subgraph, that_unmatched_subgraph__node,
+			   int that_unmatched_subgraph__node__edge_count = 0;
+			   graph_node__in_edge__iteration( cause, that_unmatched_subgraph__node, in_edge,  that_unmatched_subgraph__node__edge_count ++);
+			   graph_node__out_edge__iteration(cause, that_unmatched_subgraph__node, out_edge, that_unmatched_subgraph__node__edge_count ++);
+			   if (that_unmatched_subgraph__node__edge_count == 0) {
+			     f2ptr that_unmatched_subgraph__node__label = f2__graph_node__label(cause, that_unmatched_subgraph__node);
+			     matched_edgeless_node_labels = f2cons__new(cause, that_unmatched_subgraph__node__label, matched_edgeless_node_labels);
 			   }
 			   );
     {

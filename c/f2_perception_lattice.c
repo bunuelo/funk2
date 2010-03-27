@@ -858,6 +858,7 @@ f2ptr f2__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
 }
 def_pcfunk2(graph__make_node_wildcard, this, node_label, return f2__graph__make_node_wildcard(this_cause, this, node_label));
 
+/*
 f2ptr f2__graph__partial_match(f2ptr cause, f2ptr this, f2ptr that, f2ptr variable_frame) {
   u64 this__node_count = graph__node_count(cause, this);
   u64 that__node_count = graph__node_count(cause, that);
@@ -900,6 +901,7 @@ f2ptr f2__graph__partial_match(f2ptr cause, f2ptr this, f2ptr that, f2ptr variab
 			 );
   
 }
+*/
 
 // trans
 

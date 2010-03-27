@@ -1541,6 +1541,18 @@ f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
 def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fiber, exp));
 
 
+f2ptr raw__string__read(f2ptr cause, f2ptr this) {
+  f2ptr string_stream = f2__string_stream__new(cause, this, f2integer__new(cause, 0));
+}
+
+f2ptr f2__string__read(f2ptr cause, f2ptr this) {
+  if (! raw__string__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__string__read(cause, this);
+}
+
+
 // **
 
 void f2__primcfunks__reinitialize_globalvars() {

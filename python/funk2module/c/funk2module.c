@@ -23,17 +23,17 @@ PyObject* raw__exp__as__python_object(f2ptr cause, f2ptr exp) {
   return NULL;
 }
 
-static PyObject* funk2_eval(PyObject* self, PyObject* args) {
-  const char *command;
+static PyObject* funk2_read(PyObject* self, PyObject* args) {
+  const char *raw_string;
   
-  if (!PyArg_ParseTuple(args, "s", &command)) {
+  if (!PyArg_ParseTuple(args, "s", &raw_string)) {
     return NULL;
   }
   
   f2ptr cause = nil;
   {
     pause_gc();
-    PyObject* result = raw__exp__as__python_object(cause, raw__eval_string_to_string(cause, command));
+    PyObject* result = raw__exp__as__python_object(cause, f2__string__read(cause, raw_string));
     resume_gc();
   }
   
@@ -41,7 +41,7 @@ static PyObject* funk2_eval(PyObject* self, PyObject* args) {
 }
 
 static PyMethodDef Funk2Methods[] = {
-  {"eval",  funk2_eval, METH_VARARGS, "Read and evaluate a string in Funk2, returning the result as a Python object."},
+  {"read",  funk2_read, METH_VARARGS, "Read a string in Funk2, returning the result as a Python object."},
   {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 

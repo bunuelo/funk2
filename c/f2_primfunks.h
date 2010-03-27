@@ -948,6 +948,7 @@ f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr ar
 f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp);
 f2ptr f2__memory_image__save(f2ptr cause, f2ptr filename);
 f2ptr f2__memory_image__load(f2ptr cause, f2ptr filename);
+f2ptr f2__string__read(f2ptr cause, f2ptr this);
 void f2__primcfunks__reinitialize_globalvars();
 void f2__primcfunks__initialize();
 

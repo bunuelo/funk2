@@ -28,6 +28,7 @@
 [deftypefunk graph execute remove_edge                  [label left_node right_node] [graph-remove_edge                  this label left_node right_node]]
 [deftypefunk graph get     copy                         []                           [graph-copy                         this]]
 [deftypefunk graph get     difference                   [that]                       [graph-difference                   this that]]
+[deftypefunk graph get     variables                    []                           [graph-variables                    this]]
 [deftypefunk graph get     nodes                        []                           [graph-nodes                        this]]
 [deftypefunk graph get     edges                        []                           [graph-edges                        this]]
 [deftypefunk graph execute replace_node                 [old_node new_node]          [graph-replace_node                 this old_node new_node]]

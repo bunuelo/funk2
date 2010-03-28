@@ -1170,6 +1170,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__4(graph__remove_edge,                  this, label, left_node, right_node, "remove an edge from a perception graph.");
   f2__primcfunk__init__1(graph__copy,                         this,                               "returns a copy of this graph.");
   f2__primcfunk__init__2(graph__part_not_contained_by,        this, that,                         "determines the maximal part of this graph that is not contained in that graph.");
+  f2__primcfunk__init__1(graph__variables,                    this,                               "returns variable names in a new list.");
   f2__primcfunk__init__1(graph__nodes,                        this,                               "returns a new list of all nodes in this graph.");
   f2__primcfunk__init__1(graph__edges,                        this,                               "returns a new list of all edges in this graph.");
   f2__primcfunk__init__3(graph__replace_node,                 this, old_node, new_node,           "replaces old node with new node.");
@@ -1178,7 +1179,6 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,          "makes a node in the graph a variable for matching.");
   f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                         "makes a node in the graph a wildcard variable for matching.");
   f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,               "returns variable bindings for match.");
-  f2__primcfunk__init__1(graph__variables,                    this,                               "returns variable names in a new list.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

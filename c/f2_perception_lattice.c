@@ -860,12 +860,12 @@ f2ptr f2__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(graph__part_not_contained_by, this, that, return f2__graph__part_not_contained_by(this_cause, this, that));
 
 f2ptr raw__graph__variables(f2ptr cause, f2ptr this) {
-  f2ptr variable_names     = nil;
+  f2ptr variables          = nil;
   f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, this);
   if (variable_name_hash) {
-    ptypehash__key__iteration(cause, variable_name_hash, variable_name, variable_names = f2cons__new(cause, variable_name, variable_names));
+    ptypehash__value__iteration(cause, variable_name_hash, variable, variables = f2cons__new(cause, variable, variables));
   }
-  return variable_names;
+  return variables;
 }
 
 f2ptr f2__graph__variables(f2ptr cause, f2ptr this) {

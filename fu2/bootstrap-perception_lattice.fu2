@@ -26,7 +26,7 @@
 [deftypefunk graph execute union                        [that]                       [graph-union                        this that]]
 [deftypefunk graph execute remove_node                  [node]                       [graph-remove_node                  this node]]
 [deftypefunk graph execute remove_edge                  [label left_node right_node] [graph-remove_edge                  this label left_node right_node]]
-[deftypefunk graph execute copy                         []                           [graph-copy                         this]]
+[deftypefunk graph get     copy                         []                           [graph-copy                         this]]
 [deftypefunk graph get     difference                   [that]                       [graph-difference                   this that]]
 [deftypefunk graph get     nodes                        []                           [graph-nodes                        this]]
 [deftypefunk graph get     edges                        []                           [graph-edges                        this]]

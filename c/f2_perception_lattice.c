@@ -874,7 +874,7 @@ f2ptr f2__graph__variables(f2ptr cause, f2ptr this) {
   }
   return raw__graph__variables(cause, this);
 }
-def_pcfunk1(graph__variables, this, return f2__graph__variablas(this_cause, this));
+def_pcfunk1(graph__variables, this, return f2__graph__variables(this_cause, this));
 
 
 f2ptr raw__graph__lookup_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {

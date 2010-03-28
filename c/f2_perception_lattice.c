@@ -810,7 +810,7 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
     }
     f2ptr this__variable_name_hash = f2__graph__variable_name_hash(cause, this);
     if (this__variable_name_hash) {
-      graph__variable_name_hash = f2__ptypehash__new(cause);
+      f2ptr graph__variable_name_hash = f2__ptypehash__new(cause);
       f2__graph__variable_name_hash__set(cause, graph, graph__variable_name_hash);
       ptypehash__iteration(cause, this__variable_name_hash, variable_name, variable, f2__ptypehash__add(cause, graph__variable_name_hash, variable_name, variable));
     }

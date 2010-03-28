@@ -808,10 +808,11 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
       f2ptr root_node__label = f2__graph_node__label(cause, root_node);
       raw__graph__make_rooted(cause, graph, root_node__label);
     }
-    f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, this);
-    if (variable_name_hash) {
-      f2__graph__variable_name_hash__set(cause, graph, f2__ptypehash__new(cause));
-      ptypehash__iteration(cause, variable_name_hash, variable_name, variable, f2__ptypehash__add(cause, variable_name_hash, variable_name, variable));
+    f2ptr this__variable_name_hash = f2__graph__variable_name_hash(cause, this);
+    if (this__variable_name_hash) {
+      graph__variable_name_hash = f2__ptypehash__new(cause);
+      f2__graph__variable_name_hash__set(cause, graph, graph__variable_name_hash);
+      ptypehash__iteration(cause, this__variable_name_hash, variable_name, variable, f2__ptypehash__add(cause, graph__variable_name_hash, variable_name, variable));
     }
   }
   return graph;
@@ -873,6 +874,8 @@ f2ptr f2__graph__variables(f2ptr cause, f2ptr this) {
   }
   return raw__graph__variables(cause, this);
 }
+def_pcfunk1(graph__variables, this, return f2__graph__variablas(this_cause, this));
+
 
 f2ptr raw__graph__lookup_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
   f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, this);
@@ -1175,6 +1178,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,          "makes a node in the graph a variable for matching.");
   f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                         "makes a node in the graph a wildcard variable for matching.");
   f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,               "returns variable bindings for match.");
+  f2__primcfunk__init__1(graph__variables,                    this,                               "returns variable names in a new list.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

@@ -27,6 +27,7 @@ f2ptr f2__graphviz__digraph(f2ptr cause, f2ptr codes) {
 										     codes,
 										     f2cons__new(cause, new__string(cause, "}"), nil))));
 }
+def_pcfunk1(graphviz__digraph, codes, return f2__graphviz__digraph(this_cause, codes));
 
 // **
 

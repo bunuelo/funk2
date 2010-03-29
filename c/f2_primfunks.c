@@ -357,10 +357,10 @@ f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
 }
 def_pcfunk2(conslist__first_n, this, n, return f2__conslist__first_n(this_cause, this, n));
 
-f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these) {
+f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
   f2ptr new_list      = nil;
   f2ptr new_list_iter = nil;
-  f2ptr conslist_iter = these;
+  f2ptr conslist_iter = this;
   while (conslist_iter) {
     f2ptr conslist = f2__cons__car(cause, conslist_iter);
     {
@@ -381,6 +381,7 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these) {
   }
   return new_list;
 }
+def_pcfunk1(conslistlist__append, this, return f2__conslistlist__append(this_cause, this));
 
 // cause
 
@@ -1649,8 +1650,9 @@ void f2__primcfunks__initialize() {
   
   // cons
   
-  f2__primcfunk__init__1(cons__as_array, this, "returns a cons list represented as a new array.");
-  f2__primcfunk__init__2(conslist__first_n, this, n, "returns a new representation of the first n elements of the list, this.");
+  f2__primcfunk__init__1(cons__as_array,       this,    "returns a cons list represented as a new array.");
+  f2__primcfunk__init__2(conslist__first_n,    this, n, "returns a new representation of the first n elements of the list, this.");
+  f2__primcfunk__init__1(conslistlist__append, this,    "append a list of lists.");
   
   // cause
   
@@ -1661,6 +1663,8 @@ void f2__primcfunks__initialize() {
   // time
   
   f2__primcfunk__init__0(time, "returns the current time.");
+
+  
   
   // other complex functions
   

@@ -374,7 +374,7 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
 	  new_list = new_cons;
 	}
 	new_list_iter = new_cons;
-	iter = f2__cons__car(cause, iter);
+	iter = f2__cons__cdr(cause, iter);
       }
     }
     conslist_iter = f2__cons__cdr(cause, conslist_iter);

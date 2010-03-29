@@ -17,14 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk stringlist-concat      &primfunk:stringlist__concat]
-[globalize-funk stringlist-intersperse &primfunk:stringlist__intersperse]
-[globalize-funk stringlist-rawcode     &primfunk:stringlist__rawcode]
-[globalize-funk exp-to_string          &primfunk:exp__to_string]
-[globalize-funk string-as-symbol       &primfunk:string__as__symbol]
-[globalize-funk string-save            &primfunk:string__save]
-[globalize-funk string-load            &primfunk:string__load]
-[globalize-funk string-split           &primfunk:string__split]
-[globalize-funk string-contains        &primfunk:string__contains]
-
+[globalize-funk graphviz-digraph &primfunk:graphviz__digraph]
 

@@ -357,6 +357,31 @@ f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
 }
 def_pcfunk2(conslist__first_n, this, n, return f2__conslist__first_n(this_cause, this, n));
 
+f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these) {
+  f2ptr new_list      = nil;
+  f2ptr new_list_iter = nil;
+  f2ptr conslist_iter = these;
+  while (conslist_iter) {
+    f2ptr conslist = f2__cons__car(cause, conslist_iter);
+    {
+      f2ptr iter = conslist;
+      while (iter) {
+	f2ptr elt = f2__cons__car(cause, iter);
+	f2ptr new_cons = f2cons__new(cause, elt, nil);
+	if (new_list_iter) {
+	  f2__cons__cdr__set(cause, new_list_iter, new_cons);
+	} else {
+	  new_list = new_cons;
+	}
+	new_list_iter = new_cons;
+	iter = f2__cons__car(cause, iter);
+      }
+    }
+    conslist_iter = f2__cons__cdr(cause, conslist_iter);
+  }
+  return new_list;
+}
+
 // cause
 
 boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {

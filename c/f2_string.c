@@ -97,6 +97,11 @@ f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr
 }
 def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__new_string_from_intersperse(this_cause, this, intersperse_string));
 
+f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
+  return f2__stringlist__new_string_from_intersperse(cause, these, new_string(cause, "\n"));
+}
+def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause, this));
+
 f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   if (! exp) {
     return f2string__new(cause, strlen("[]"), (u8*)"[]");
@@ -374,9 +379,12 @@ void f2__string__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(stringlist__concat, this, "concatenate a list of strings together into a new resultant string.");
+  f2__primcfunk__init__1(stringlist__concat,      this,                     "concatenate a list of strings together into a new resultant string.");
   f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string, "concatenate a list of strings together into a new resultant string with a extra token string placed between each of the strings.");
+  f2__primcfunk__init__1(stringlist__rawcode,     this,                     "concatenate a list of strings separated by newlines ('\\n').");
+  
   f2__primcfunk__init__1(exp__to_string, exp, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
+  
   f2__primcfunk__init__1(string__load, filename, "load a string from a filename");
   
   {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

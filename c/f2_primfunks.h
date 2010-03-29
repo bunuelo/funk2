@@ -896,6 +896,10 @@ f2ptr f2__fiber__new_unscheduled(f2ptr cause, f2ptr execution_cause, f2ptr paren
 f2ptr f2__fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args);
 
+// cons
+
+f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these);
+
 // sequence (array, list, doublelist, etc.)
 
 f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index);

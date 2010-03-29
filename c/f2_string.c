@@ -98,7 +98,7 @@ f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr
 def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__new_string_from_intersperse(this_cause, this, intersperse_string));
 
 f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
-  return f2__stringlist__new_string_from_intersperse(cause, these, new__string(cause, "\n"));
+  return f2__stringlist__new_string_from_intersperse(cause, this, new__string(cause, "\n"));
 }
 def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause, this));
 

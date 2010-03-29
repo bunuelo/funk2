@@ -22,10 +22,10 @@
 #include "funk2.h"
 
 f2ptr f2__graphviz__digraph(f2ptr cause, f2ptr codes) {
-  return f2__stringlist__rawcode(cause, f2__conslistlist__append(cause,
-								 f2cons__new(cause, new__string(cause, "digraph G {"), nil),
-								 codes,
-								 f2cons__new(cause, new__string(cause, "}"), nil)));
+  return f2__stringlist__rawcode(cause, f2__conslistlist__append(cause, f2list3__new(cause,
+										     f2cons__new(cause, new__string(cause, "digraph G {"), nil),
+										     codes,
+										     f2cons__new(cause, new__string(cause, "}"), nil))));
 }
 
 // **

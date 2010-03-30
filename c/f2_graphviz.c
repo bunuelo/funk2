@@ -81,7 +81,12 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   if (exp == nil) {
     return new__string(cause, "nil");
   }
-  f2ptr string = f2__exp__as__string(cause, exp);
+  f2ptr string;
+  if (raw__string__is_type(cause, exp)) {
+    string = exp;
+  } else {
+    string = f2__exp__as__string(cause, exp);
+  }
   char* replacement_pairs[][2] = {{" ", "_SPACE_"},
 				  {"-", "_DASH_"},
 				  {"#", "_HASH_"},

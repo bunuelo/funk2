@@ -26,7 +26,7 @@
 
 f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this);
 f2ptr f2__stringlist__concat                       (f2ptr cause, f2ptr this);
-f2ptr f2__stringlist__new_string_from_intersperse  (f2ptr cause, f2ptr this, f2ptr intersperse_string);
+f2ptr f2__stringlist__intersperse                  (f2ptr cause, f2ptr this, f2ptr intersperse_string);
 f2ptr f2__stringlist__rawcode                      (f2ptr cause, f2ptr this);
 
 f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp);

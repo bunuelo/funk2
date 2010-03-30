@@ -56,7 +56,7 @@ f2ptr f2__stringlist__concat(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stringlist__concat, this, return f2__stringlist__concat(this_cause, this));
 
-f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
+f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
   if (! raw__string__is_type(cause, intersperse_string)) {
     return f2larva__new(cause, 1);
   }
@@ -99,10 +99,10 @@ f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr
   free(intersperse_string__str);
   return new_string;
 }
-def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__new_string_from_intersperse(this_cause, this, intersperse_string));
+def_pcfunk2(stringlist__intersperse, this, intersperse_string, return f2__stringlist__intersperse(this_cause, this, intersperse_string));
 
 f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
-  return f2__stringlist__new_string_from_intersperse(cause, this, new__string(cause, "\n"));
+  return f2__stringlist__intersperse(cause, this, new__string(cause, "\n"));
 }
 def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause, this));
 

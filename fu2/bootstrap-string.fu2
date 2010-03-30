@@ -32,7 +32,7 @@
   [stringlist-prog seq]]
 
 [defunk exp-to_symbol [exp]
-  [string-to_symbol [exp-to_string exp]]]
+  [string-to_symbol [exp-as-string exp]]]
 
 [defunk string-read [this]
   [read [string_stream-new [string-concat this ' '] 0]]]
@@ -44,7 +44,7 @@
   [stringlist-append [mapcar [funk [exp]
 				   [if [is-type `string exp]
 				       exp
-				     [exp-to_string exp]]]
+				     [exp-as-string exp]]]
 			     exps]]]
 
 [defunk string-replace_all [this token replacement]
@@ -56,7 +56,7 @@
 'tests'
 
 [defunk string_parse-test [exp]
-  [if [not [equals exp [string-read [exp-to_string exp]]]]
+  [if [not [equals exp [string-read [exp-as-string exp]]]]
       [error `compile-time `[string_parse-test ,exp]]]]
 
 [defunk string-split_intersperse_test [this token]

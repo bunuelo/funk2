@@ -106,7 +106,7 @@ f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause, this));
 
-f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
+f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
   if (! exp) {
     return f2string__new(cause, strlen("[]"), (u8*)"[]");
   }
@@ -218,7 +218,7 @@ f2ptr f2__exp__to_new_string(f2ptr cause, f2ptr exp) {
   }
   return f2larva__new(cause, 1);
 }
-def_pcfunk1(exp__to_string, exp, return f2__exp__to_new_string(this_cause, exp));
+def_pcfunk1(exp__as__string, exp, return f2__exp__as__string(this_cause, exp));
 
 f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
   if (! raw__string__is_type(cause, this)) {
@@ -387,7 +387,7 @@ void f2__string__initialize() {
   f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string, "concatenate a list of strings together into a new resultant string with a extra token string placed between each of the strings.");
   f2__primcfunk__init__1(stringlist__rawcode,     this,                     "concatenate a list of strings separated by newlines ('\\n').");
   
-  f2__primcfunk__init__1(exp__to_string, exp, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
+  f2__primcfunk__init__1(exp__as__string, exp, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
   
   f2__primcfunk__init__1(string__load, filename, "load a string from a filename");
   

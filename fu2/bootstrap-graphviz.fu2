@@ -17,38 +17,17 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk strings-prog [:rest these]
-  [stringlist-rawcode these]]
-
-`[defunk graphviz-node_color [color]
-   [format nil 'node [fillcolor = white, color = "' color '", style = filled];']]
-
-`[defunk graphviz-edge_color [color]
-   [format nil 'edge [color = "' color '"];']]
-
-`[defunk graphviz-node [name label]
-   [format nil name ' [label = "' label '"];']]
-
-`[defunk graphviz-box_node [name label]
-   [format nil name ' [shape=box,fillcolor=white,style=filled,label="' label '",height=.1,width=.1];']]
-
-`[defunk graphviz-edge_tail_head [tail head]
-   [format nil 'edge [arrowtail = ' tail ', arrowhead = ' head '];']]
-
-`[defunk graphviz-edge [from_node to_node]
-   [format nil from_node ' -> ' to_node ';']]
-
-[defunk graphviz-to_string [exp]
+[defunk graphviz-exp-as-label [exp]
   [if exp
       [let [[type [type exp]]]
-	[cond [[eq type `symbol] [exp-to_string exp]]
+	[cond [[eq type `symbol] [exp-as-string exp]]
 	      [[eq type `string] exp]
-	      [t                 [format nil [exp-to_string type] '_' [exp-to_string [pointer exp]]]]]]
+	      [t                 [format nil [exp-as-string type] '_' [exp-as-string [pointer exp]]]]]]
     '[]']]
 
-[defunk graphviz-labelize [exp]
+[defunk graphviz-exp-as-name [exp]
   [if exp
-      [let [[result [graphviz-to_string exp]]]
+      [let [[result [graphviz-exp-as-string exp]]]
 	[mapc [funk [replace_pair]
 		    [let [[token       [first replace_pair]]
 			  [replacement [second replace_pair]]]
@@ -65,31 +44,31 @@
     'nil']]
 
 [defunk graphviz-edge_labelize [label left_node right_node]
-  [format nil 'LABEL__' [graphviz-labelize label] '__LEFT_NODE__' [graphviz-labelize left_node] '__RIGHT_NODE__' [graphviz-labelize right_node]]]
+  [format nil 'LABEL__' [graphviz-exp-as-name label] '__LEFT_NODE__' [graphviz-exp-as-name left_node] '__RIGHT_NODE__' [graphviz-exp-as-name right_node]]]
 
 [defunk graphviz-labelled_edge [label left_node right_node]
   [let [[edge__labelized [graphviz-edge_labelize label left_node right_node]]]
     [stringlist-rawcode `[,[graphviz-box_node edge__labelized label]
 			,[graphviz-edge_tail_head 'crow' 'none']
-			 ,[graphviz-edge [graphviz-labelize left_node] edge__labelized]
+			 ,[graphviz-edge [graphviz-exp-as-name left_node] edge__labelized]
 			  ,[graphviz-edge_tail_head 'none' 'normal']
-			   ,[graphviz-edge edge__labelized [graphviz-labelize right_node]]]]]]
+			   ,[graphviz-edge edge__labelized [graphviz-exp-as-name right_node]]]]]]
 
 [deftypefunk graph get as-dot_code []
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
-    [strings-prog [graphviz-digraph [graphviz-node_color '#000000']
-				    [graphviz-edge_color '#000000']
-				    [stringlist-rawcode [mapcar [funk [node]
-								   [graphviz-node [graphviz-labelize node] [graphviz-to_string node]]]
-							     nodes]]
-				    [stringlist-rawcode [mapcar [funk [edge]
-								   [let [[label      [get edge label]]
-									 [left_node  [get edge left_node]]
-									 [right_node [get edge right_node]]]
-								     [graphviz-labelled_edge label left_node right_node]]]
-							     edges]]
-				    ]]]]
+    [graphviz-digraph [graphviz-node_color '#000000']
+		      [graphviz-edge_color '#000000']
+		      [stringlist-rawcode [mapcar [funk [node]
+							[graphviz-node [graphviz-exp-as-name node] [graphviz-exp-as-string node]]]
+						  nodes]]
+		      [stringlist-rawcode [mapcar [funk [edge]
+							[let [[label      [get edge label]]
+							      [left_node  [get edge left_node]]
+							      [right_node [get edge right_node]]]
+							  [graphviz-labelled_edge label left_node right_node]]]
+						  edges]]
+		      ]]]
 
 [defunk system-dot [dot_filename ps_filename]
   [let [[command [string-concat 'dot -Tps -o' ps_filename ' ' dot_filename]]]

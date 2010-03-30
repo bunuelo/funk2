@@ -59,6 +59,15 @@ f2ptr f2__graphviz__edge(f2ptr cause, f2ptr from_node, f2ptr to_node) {
 }
 def_pcfunk2(graphviz__edge, from_node, to_node, return f2__graphviz__edge(this_cause, from_node, to_node));
 
+f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
+  if (exp == nil) {
+    return new__string(cause, "[]");
+  }
+  if (raw__symbol__is_type(cause, exp)) {
+    
+  }
+}
+
 // **
 
 void f2__graphviz__reinitialize_globalvars() {

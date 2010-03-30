@@ -17,27 +17,22 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-`[defunk graphviz-labelled_edge [label left_node right_node]
-   [let [[edge__name [graphviz-edge_name label left_node right_node]]]
-     [stringlist-rawcode `[,[graphviz-box_node edge__name label]
-			    ,[graphviz-edge_tail_head 'crow' 'none']
-			     ,[graphviz-edge [graphviz-exp-as-name left_node] edge__name]
-			      ,[graphviz-edge_tail_head 'none' 'normal']
-			       ,[graphviz-edge edge__name [graphviz-exp-as-name right_node]]]]]]
-
 [deftypefunk graph get as-dot_code []
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
     [graphviz-digraph [graphviz-node_color '#000000']
 		      [graphviz-edge_color '#000000']
 		      [stringlist-rawcode [mapcar [funk [node]
-							[graphviz-node [graphviz-exp-as-name node] [graphviz-exp-as-string node]]]
+							[let [[node-label [get node label]]]
+							  [graphviz-node [graphviz-exp-as-name node-label] [graphviz-exp-as-label node-label]]]]
 						  nodes]]
 		      [stringlist-rawcode [mapcar [funk [edge]
 							[let [[label      [get edge label]]
 							      [left_node  [get edge left_node]]
 							      [right_node [get edge right_node]]]
-							  [graphviz-labelled_edge label left_node right_node]]]
+							  [let [[left_node-label  [get left_node  label]]
+								[right_node-label [get right_node label]]]
+							    [graphviz-labelled_edge [graphviz-exp-as-name label] [graphviz-exp-as-name left_node-label] [graphviz-exp-as-name right_node-label]]]]]
 						  edges]]
 		      ]]]
 

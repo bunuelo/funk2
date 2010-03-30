@@ -27,4 +27,5 @@
 [globalize-funk graphviz-exp-as-label   &primfunk:graphviz__exp__as__label]
 [globalize-funk graphviz-exp-as-name    &primfunk:graphviz__exp__as__name]
 [globalize-funk graphviz-edge_name      &primfunk:graphviz__edge_name]
+[globalize-funk graphviz-labelled_edge  &primfunk:graphviz__labelled_edge]
 

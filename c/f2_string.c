@@ -108,7 +108,7 @@ def_pcfunk1(stringlist__rawcode, this, return f2__stringlist__rawcode(this_cause
 
 f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
   if (! exp) {
-    return f2string__new(cause, strlen("[]"), (u8*)"[]");
+    return new__string(cause, "[]");
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
@@ -136,8 +136,11 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
   } break;
   case ptype_gfunkptr:
     return f2string__new(cause, strlen("<gfunkptr>"), (u8*)"<gfunkptr>");
-  case ptype_mutex:
-    return f2string__new(cause, strlen("[mutex]"), (u8*)"[mutex]");
+  case ptype_mutex: {
+    char temp_str[1024];
+    snprintf(temp_str, 1024, "<mutex " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+  }
   case ptype_char: {
     u8 temp_str[1024];
     u8 ch_value = f2char__ch(exp, cause);
@@ -203,12 +206,21 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
       return f2string__new(cause, new_index, temp_str);
     }
   } break;
-  case ptype_chunk:
-    return f2string__new(cause, strlen("<chunk>"), (u8*)"<chunk>");
-  case ptype_simple_array:
-    return f2string__new(cause, strlen("<simple_array>"), (u8*)"<simple_array>");
-  case ptype_traced_array:
-    return f2string__new(cause, strlen("<traced_array>"), (u8*)"<traced_array>");
+  case ptype_chunk: {
+    char temp_str[1024];
+    snprintf(temp_str, 1024, "<chunk " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+  }
+  case ptype_simple_array: {
+    char temp_str[1024];
+    snprintf(temp_str, 1024, "<simple_array " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+  }
+  case ptype_traced_array: {
+    char temp_str[1024];
+    snprintf(temp_str, 1024, "<traced_array " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+  }
   case ptype_larva: {
     u8 temp_str[1024];
     u32 larva_type = f2larva__larva_type(exp, cause);

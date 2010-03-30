@@ -46,7 +46,7 @@ f2ptr f2__environment__apropos(f2ptr cause, f2ptr this, f2ptr find_string) {
   frame__iteration(cause, frame, type_slot_name, slot_name, slot_value,
 		   boolean_t matches = boolean__false;
 		   
-		   f2ptr slot_name_string = f2__exp__to_new_string(cause, slot_name);
+		   f2ptr slot_name_string = f2__exp__as__string(cause, slot_name);
 		   if (f2__string__contains(cause, slot_name_string, find_string) != nil) {
 		     matches = boolean__true;
 		   }

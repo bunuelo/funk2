@@ -1014,9 +1014,9 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1);
   }
-  f2ptr nodes = f2__graph__nodes(cause, this);
   f2ptr node_codes = nil;
   {
+    f2ptr nodes = f2__graph__nodes(cause, this);
     f2ptr iter = nodes;
     while (iter) {
       f2ptr node        = f2__cons__car(cause, iter);
@@ -1026,7 +1026,9 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
       iter = f2__cons__cdr(cause, iter);
     }
   }
+  f2ptr edge_codes = nil;
   {
+    f2ptr edges = f2__graph__edges(cause, this);
     f2ptr iter = edges;
     while (iter) {
       f2ptr edge                    = f2__cons__car(cause, iter);
@@ -1040,7 +1042,6 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
       iter = f2__cons__cdr(cause, iter);
     }
   }
-  f2ptr edges = f2__graph__edges(cause, this);
   return f2__graphviz__digraph(cause, f2list4__new(cause,
 						   f2__graphviz__node_color(cause, new__string(cause, "#000000")),
 						   f2__graphviz__edge_color(cause, new__string(cause, "#000000")),

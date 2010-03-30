@@ -50,7 +50,7 @@ f2ptr f2__graphviz__box_node(f2ptr cause, f2ptr name, f2ptr label) {
 def_pcfunk2(graphviz__box_node, name, label, return f2__graphviz__box_node(this_cause, name, label));
 
 f2ptr f2__graphviz__edge_tail_head(f2ptr cause, f2ptr tail, f2ptr head) {
-  return f2__stringlist__concat(cause, f2list5__new(cause, new__string(cause, "edge [arrowtail = "), name, new__string(cause, ", arrowhead = "), label, new__string(cause, "];")));
+  return f2__stringlist__concat(cause, f2list5__new(cause, new__string(cause, "edge [arrowtail = "), tail, new__string(cause, ", arrowhead = "), head, new__string(cause, "];")));
 }
 def_pcfunk2(graphviz__edge_tail_head, tail, head, return f2__graphviz__edge_tail_head(this_cause, tail, head));
 

@@ -63,10 +63,19 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   if (exp == nil) {
     return new__string(cause, "[]");
   }
-  if (raw__symbol__is_type(cause, exp)) {
-    
+  if (raw__string__is_type(cause, exp)) {
+    return exp;
   }
+  if (raw__symbol__is_type(cause, exp)) {
+    return f2__exp__as__string(cause, exp);
+  }
+  f2ptr type = f2__object__type(cause, exp);
+  return f2__stringlist__concat(cause, f2list3__new(cause,
+						    f2__exp__as__string(cause, type),
+						    new__string(cause, "_"),
+						    f2__exp__as__string(cause, f2__pointer(cause, exp))));
 }
+def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
 // **
 
@@ -87,6 +96,7 @@ void f2__graphviz__initialize() {
   f2__primcfunk__init__2(graphviz__box_node,       name, label,        "compiles code for graphviz.");
   f2__primcfunk__init__2(graphviz__edge_tail_head, tail, head,         "compiles code for graphviz.");
   f2__primcfunk__init__2(graphviz__edge,           from_node, to_node, "compiles code for graphviz.");
+  f2__primcfunk__init__1(graphviz__exp__as__label, exp,                "compiles code for graphviz.");
   
   
 }

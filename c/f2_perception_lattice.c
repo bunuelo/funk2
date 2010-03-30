@@ -1047,7 +1047,7 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
 						   f2__stringlist__rawcode(cause, node_codes),
 						   f2__stringlist__rawcode(cause, edge_codes)));
 }
-
+def_pcfunk1(graph__as__dot_code, this, return f2__graph__as__dot_code(this_cause, this));
 
 // trans
 
@@ -1218,6 +1218,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,          "makes a node in the graph a variable for matching.");
   f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                         "makes a node in the graph a wildcard variable for matching.");
   f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,               "returns variable bindings for match.");
+  f2__primcfunk__init__1(graph__as__dot_code,                 this,                               "returns dot code in a string suitable for graphing with graphviz.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

@@ -108,6 +108,11 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(graphviz__exp__as__name, exp, return f2__graphviz__exp__as__name(this_cause, exp));
 
+f2ptr f2__graphviz__edge_name(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  return f2__stringlist__concat(cause, f2list6__new(cause, new__string(cause, "LABEL__"), f2__graphviz__exp__as__name(cause, label), new__string(cause, "__LEFT_NODE__"), f2__graphviz__exp__as__name(cause, left_node), new__string(cause, "__RIGHT_NODE__"), f2__graphviz__exp__as__name(cause, right_node)));
+}
+def_pcfunk3(graphviz__edge_name, label, left_node, right_node, return f2__graphviz__edge_name(this_cause, label, left_node, right_node));
+
 // **
 
 void f2__graphviz__reinitialize_globalvars() {

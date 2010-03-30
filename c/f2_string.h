@@ -37,6 +37,7 @@ f2ptr      f2__string__load     (f2ptr cause, f2ptr filename);
 f2ptr      f2__string__split    (f2ptr cause, f2ptr this, f2ptr token);
 boolean_t raw__string__contains (f2ptr cause, f2ptr this, f2ptr substring);
 f2ptr      f2__string__contains (f2ptr cause, f2ptr this, f2ptr substring);
+f2ptr      f2__string__replace_all(f2ptr cause, f2ptr this, f2ptr token, f2ptr replacement);
 
 
 f2ptr f2string__primobject_type__new_aux(f2ptr cause);

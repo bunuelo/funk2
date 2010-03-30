@@ -28,7 +28,7 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this);
 f2ptr f2__stringlist__concat                       (f2ptr cause, f2ptr this);
 f2ptr f2__stringlist__new_string_from_intersperse  (f2ptr cause, f2ptr this, f2ptr intersperse_string);
 f2ptr f2__stringlist__rawcode                      (f2ptr cause, f2ptr this);
-f2ptr f2__exp__to_new_string                       (f2ptr cause, f2ptr exp);
+f2ptr f2__exp__as__string                          (f2ptr cause, f2ptr exp);
 f2ptr f2__string__to_symbol                        (f2ptr cause, f2ptr this);
 f2ptr f2__string__save                             (f2ptr cause, f2ptr this, f2ptr filename);
 f2ptr f2__string__load                             (f2ptr cause, f2ptr filename);

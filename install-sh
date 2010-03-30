@@ -2,18 +2,18 @@
 echo ""
 echo "make: performing system-wide installation of funk2"
 echo ""
-echo "  install__bin__dir     = /usr/bin/"
-echo "  install__include__dir = /usr/include/funk2/"
+echo "  install__bin__dir     = /usr/local/bin/"
+echo "  install__include__dir = /usr/local/include/funk2/"
 echo ""
 install -d /usr/share/funk2/img/
-install -d /usr/bin/
-install -d /usr/include/funk2/
-install -d /usr/bin/
+install -d /usr/local/bin/
+install -d /usr/local/include/funk2/
+install -d /usr/local/bin/
 install -d /usr/share/funk2/icons/
 install -d /usr/share/man/man1/
-install -m755 ./bin/funk2 /usr/bin/funk2
+install -m755 ./bin/funk2 /usr/local/bin/funk2
 install -m644 ./img/bootstrap.img /usr/share/funk2/img/bootstrap.img
-install -m644 c/*.h /usr/include/funk2/
+install -m644 c/*.h /usr/local/include/funk2/
 install -m644 ./icons/* /usr/share/funk2/icons/
 gzip -c debian/funk2.1 > debian/funk2.1.gz
 install -m644 debian/funk2.1.gz /usr/share/man/man1/

@@ -113,6 +113,17 @@ f2ptr f2__graphviz__edge_name(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr r
 }
 def_pcfunk3(graphviz__edge_name, label, left_node, right_node, return f2__graphviz__edge_name(this_cause, label, left_node, right_node));
 
+f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
+  f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
+  return f2__stringlist__rawcode(cause, f2list5__new(cause,
+						     f2__graphviz__box_node(      cause, edge__name, label)
+						     f2__graphviz__edge_tail_head(cause, new__string(cause, "crow"), new__string(cause, "none")),
+						     f2__graphviz__edge(          cause, f2__graphviz__exp__as__name(cause, left_node), edge__name),
+						     f2__graphviz__edge_tail_head(cause, new__string(cause, "none"), new__string(cause, "normal")),
+						     f2__graphviz__edge(          cause, edge__name, f2__graphviz__exp__as__name(cause, left_node))));
+}
+def_pcfunk3(graphviz__labelled_edge, label, left_node, right_node, return f2__graphviz__labelled_edge(this_cause, label, left_node, right_node));
+
 // **
 
 void f2__graphviz__reinitialize_globalvars() {
@@ -135,6 +146,7 @@ void f2__graphviz__initialize() {
   f2__primcfunk__init__1(graphviz__exp__as__label, exp,                          "compiles code for graphviz.");
   f2__primcfunk__init__1(graphviz__exp__as__name,  exp,                          "compiles code for graphviz.");
   f2__primcfunk__init__3(graphviz__edge_name,      label, left_node, right_node, "compiles code for graphviz.");
+  f2__primcfunk__init__3(graphviz__labelled_edge,  label, left_node, right_node, "compiles code for graphviz.");
   
   
 }

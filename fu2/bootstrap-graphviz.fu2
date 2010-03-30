@@ -17,16 +17,13 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-`[defunk graphviz-edge_name [label left_node right_node]
-   [format nil 'LABEL__' [graphviz-exp-as-name label] '__LEFT_NODE__' [graphviz-exp-as-name left_node] '__RIGHT_NODE__' [graphviz-exp-as-name right_node]]]
-
-[defunk graphviz-labelled_edge [label left_node right_node]
-  [let [[edge__labelized [graphviz-edge_name label left_node right_node]]]
-    [stringlist-rawcode `[,[graphviz-box_node edge__labelized label]
-			,[graphviz-edge_tail_head 'crow' 'none']
-			 ,[graphviz-edge [graphviz-exp-as-name left_node] edge__labelized]
-			  ,[graphviz-edge_tail_head 'none' 'normal']
-			   ,[graphviz-edge edge__labelized [graphviz-exp-as-name right_node]]]]]]
+`[defunk graphviz-labelled_edge [label left_node right_node]
+   [let [[edge__name [graphviz-edge_name label left_node right_node]]]
+     [stringlist-rawcode `[,[graphviz-box_node edge__name label]
+			    ,[graphviz-edge_tail_head 'crow' 'none']
+			     ,[graphviz-edge [graphviz-exp-as-name left_node] edge__name]
+			      ,[graphviz-edge_tail_head 'none' 'normal']
+			       ,[graphviz-edge edge__name [graphviz-exp-as-name right_node]]]]]]
 
 [deftypefunk graph get as-dot_code []
   [let [[nodes [get this nodes]]

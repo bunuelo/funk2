@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk graph get as-dot_code []
+[defunk graph-as-dot_code [this]
   [let [[nodes [get this nodes]]
 	[edges [get this edges]]]
     [graphviz-digraph [graphviz-node_color '#000000']
@@ -32,9 +32,11 @@
 							      [right_node [get edge right_node]]]
 							  [let [[left_node-label  [get left_node  label]]
 								[right_node-label [get right_node label]]]
-							    [graphviz-labelled_edge [graphviz-exp-as-name label] [graphviz-exp-as-name left_node-label] [graphviz-exp-as-name right_node-label]]]]]
+							    [graphviz-labelled_edge [graphviz-exp-as-label label] [graphviz-exp-as-name left_node-label] [graphviz-exp-as-name right_node-label]]]]]
 						  edges]]
 		      ]]]
+
+[deftypefunk graph get as-dot_code [] [graph-as-dot_code this]]
 
 [defunk system-dot [dot_filename ps_filename]
   [let [[command [string-concat 'dot -Tps -o' ps_filename ' ' dot_filename]]]

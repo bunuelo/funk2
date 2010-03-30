@@ -1010,6 +1010,45 @@ f2ptr f2__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr tha
 }
 def_pcfunk3(graph__contains_match_with_bindings, this, that, bindings, return f2__graph__contains_match_with_bindings(this_cause, this, that, bindings));
 
+f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  f2ptr nodes = f2__graph__nodes(cause, this);
+  f2ptr node_codes = nil;
+  {
+    f2ptr iter = nodes;
+    while (iter) {
+      f2ptr node        = f2__cons__car(cause, iter);
+      f2ptr node__label = f2__graph_node__label(cause, node);
+      f2ptr node_code   = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, node__label), f2__graphviz__exp__as__label(cause, node__label));
+      node_codes = f2cons__new(cause, node_code, node_codes);
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  {
+    f2ptr iter = edges;
+    while (iter) {
+      f2ptr edge                    = f2__cons__car(cause, iter);
+      f2ptr edge__label             = f2__graph_edge__label(cause, edge);
+      f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
+      f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
+      f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
+      f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
+      f2ptr edge_code               = f2__graphviz__labelled_edge(cause, f2__graphviz__exp__as__label(cause, edge__label), f2__graphviz__exp__as__name(cause, edge__left_node__label), f2__graphviz__exp__as__name(cause, edge__right_node__label));
+      edge_codes = f2cons__new(cause, edge_code, edge_codes);
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  f2ptr edges = f2__graph__edges(cause, this);
+  return f2__graphviz__digraph(cause, f2list4__new(cause,
+						   f2__graphviz__node_color(cause, new__string(cause, "#000000")),
+						   f2__graphviz__edge_color(cause, new__string(cause, "#000000")),
+						   f2__stringlist__rawcode(cause, node_codes),
+						   f2__stringlist__rawcode(cause, edge_codes)));
+}
+
+
 // trans
 
 def_primobject_2_slot(trans, remove, add);

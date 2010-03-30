@@ -126,7 +126,6 @@ f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2p
 }
 def_pcfunk3(graphviz__labelled_edge, label, left_node, right_node, return f2__graphviz__labelled_edge(this_cause, label, left_node, right_node));
 
-
 // **
 
 void f2__graphviz__reinitialize_globalvars() {

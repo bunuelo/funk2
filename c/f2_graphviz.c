@@ -134,7 +134,7 @@ void f2__graphviz__initialize() {
   f2__primcfunk__init__2(graphviz__edge,           from_node, to_node,           "compiles code for graphviz.");
   f2__primcfunk__init__1(graphviz__exp__as__label, exp,                          "compiles code for graphviz.");
   f2__primcfunk__init__1(graphviz__exp__as__name,  exp,                          "compiles code for graphviz.");
-  f2__primcfunk__init__1(graphviz__edge_name,      label, left_node, right_node, "compiles code for graphviz.");
+  f2__primcfunk__init__3(graphviz__edge_name,      label, left_node, right_node, "compiles code for graphviz.");
   
   
 }

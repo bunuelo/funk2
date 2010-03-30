@@ -83,19 +83,24 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   }
   f2ptr string;
   if (raw__string__is_type(cause, exp)) {
+    if (f2string__length(exp, cause) == 0) {
+      return new__string(cause, "\'\'");
+    }
     string = exp;
   } else {
     string = f2__exp__as__string(cause, exp);
   }
-  char* replacement_pairs[][2] = {{" ", "_SPACE_"},
-				  {"-", "_DASH_"},
-				  {"#", "_HASH_"},
-				  {"[", "_BSQPAREN_"},
-				  {"]", "_ESQPAREN_"},
-				  {"(", "_BPAREN_"},
-				  {")", "_EPAREN_"},
-				  {"<", "_LTHAN_"},
-				  {">", "_GTHAN_"},
+  char* replacement_pairs[][2] = {{" ",  "_SPACE_"},
+				  {"-",  "_DASH_"},
+				  {"#",  "_HASH_"},
+				  {"[",  "_BSQPAREN_"},
+				  {"]",  "_ESQPAREN_"},
+				  {"(",  "_BPAREN_"},
+				  {")",  "_EPAREN_"},
+				  {"<",  "_LTHAN_"},
+				  {">",  "_GTHAN_"},
+				  {"'",  "_SQUOTE_"},
+				  {"\"", "_DQUOTE_"},
 				  {NULL, NULL}};
   {
     int index;

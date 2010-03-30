@@ -368,7 +368,7 @@ def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_
 f2ptr f2__string__replace_all(f2ptr cause, f2ptr this, f2ptr token, f2ptr replacement) {
   return f2__stringlist__intersperse(cause, f2__string__split(cause, this, token), replacement);
 }
-def_pcfunk3(string__replace_all, this, token, replacement, return f2__string__replace_all(this_cause, this, token_replacement));
+def_pcfunk3(string__replace_all, this, token, replacement, return f2__string__replace_all(this_cause, this, token, replacement));
 
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);

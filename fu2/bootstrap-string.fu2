@@ -47,8 +47,8 @@
 				     [exp-as-string exp]]]
 			     exps]]]
 
-[defunk string-replace_all [this token replacement]
-  [stringlist-intersperse [string-split this token] replacement]]
+`[defunk string-replace_all [this token replacement]
+   [stringlist-intersperse [string-split this token] replacement]]
 
 [deftypefunk string execute replace_all [token replacement] [string-replace_all this token replacement]]
 [deftypefunk string execute read        []                  [string-read        this]]

@@ -17,31 +17,23 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk graphviz-exp-as-label [exp]
-  [if exp
-      [let [[type [type exp]]]
-	[cond [[eq type `symbol] [exp-as-string exp]]
-	      [[eq type `string] exp]
-	      [t                 [format nil [exp-as-string type] '_' [exp-as-string [pointer exp]]]]]]
-    '[]']]
-
-[defunk graphviz-exp-as-name [exp]
-  [if exp
-      [let [[result [graphviz-exp-as-string exp]]]
-	[mapc [funk [replace_pair]
-		    [let [[token       [first replace_pair]]
-			  [replacement [second replace_pair]]]
-		      [= result [have result replace_all token replacement]]]]
-	      `[[' ' '_SPACE_']
-		['-' '_DASH_']
-		['#' '_HASH_']
-		['[' '_BSQPAREN_']
-		[']' '_ESQPAREN_']
-		['(' '_BPAREN_']
-		[')' '_EPAREN_']
-		]]
-	result]
-    'nil']]
+`[defunk graphviz-exp-as-name [exp]
+   [if exp
+       [let [[result [graphviz-exp-as-string exp]]]
+	 [mapc [funk [replace_pair]
+		     [let [[token       [first replace_pair]]
+			   [replacement [second replace_pair]]]
+		       [= result [have result replace_all token replacement]]]]
+	       `[[' ' '_SPACE_']
+		 ['-' '_DASH_']
+		 ['#' '_HASH_']
+		 ['[' '_BSQPAREN_']
+		 [']' '_ESQPAREN_']
+		 ['(' '_BPAREN_']
+		 [')' '_EPAREN_']
+		 ]]
+	 result]
+     'nil']]
 
 [defunk graphviz-edge_labelize [label left_node right_node]
   [format nil 'LABEL__' [graphviz-exp-as-name label] '__LEFT_NODE__' [graphviz-exp-as-name left_node] '__RIGHT_NODE__' [graphviz-exp-as-name right_node]]]

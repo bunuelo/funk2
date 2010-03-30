@@ -77,6 +77,32 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
 }
 def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
 
+f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
+  if (exp == nil) {
+    return new__string(cause, "nil");
+  }
+  f2ptr string = f2__exp__as__string(cause, exp);
+  char* replacement_pairs[][2] = {{" ", "_SPACE_"},
+				  {"-", "_DASH_"},
+				  {"#", "_HASH_"},
+				  {"[", "_BSQPAREN_"},
+				  {"]", "_ESQPAREN_"},
+				  {"(", "_BPAREN_"},
+				  {")", "_EPAREN_"},
+				  {NULL, NULL}};
+  {
+    int index;
+    for (index = 0; replacement_pairs[index][0] != NULL; index ++) {
+      f2ptr token = new__string(cause, replacement_pairs[index][0]);
+      if (raw__string__contains(cause, string, token)) {
+	string = f2__string__replace_all(cause, string, token, new__string(cause, replacement_pairs[index][1]));
+      }
+    }
+  }
+  return string;
+}
+def_pcfunk1(graphviz__exp__as__name, exp, return f2__graphviz__exp__as__name(this_cause, exp));
+
 // **
 
 void f2__graphviz__reinitialize_globalvars() {
@@ -97,6 +123,7 @@ void f2__graphviz__initialize() {
   f2__primcfunk__init__2(graphviz__edge_tail_head, tail, head,         "compiles code for graphviz.");
   f2__primcfunk__init__2(graphviz__edge,           from_node, to_node, "compiles code for graphviz.");
   f2__primcfunk__init__1(graphviz__exp__as__label, exp,                "compiles code for graphviz.");
+  f2__primcfunk__init__1(graphviz__exp__as__name,  exp,                "compiles code for graphviz.");
   
   
 }

@@ -26,5 +26,6 @@
 [globalize-funk string-load            &primfunk:string__load]
 [globalize-funk string-split           &primfunk:string__split]
 [globalize-funk string-contains        &primfunk:string__contains]
+[globalize-funk string-replace_all     &primfunk:string__replace_all]
 
 

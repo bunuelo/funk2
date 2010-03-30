@@ -331,19 +331,14 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
 }
 def_pcfunk2(string__split, this, token, return f2__string__split(this_cause, this, token));
 
-f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
-  if ((! raw__string__is_type(cause, this)) ||
-      (! raw__string__is_type(cause, substring))) {
-    return f2larva__new(cause, 1);
-  }
-  
+boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   u64 substring__length = f2string__length(substring, cause);
   u64 this__length      = f2string__length(this,      cause);
   if (substring__length == 0) {
-    return f2bool__new(boolean__true);
+    return boolean__true;
   }
   if (substring__length > this__length) {
-    return f2bool__new(boolean__false);
+    return boolean__false;
   }
   u8* substring__str = (u8*)malloc(substring__length);
   f2string__str_copy(substring, cause, substring__str);
@@ -355,12 +350,25 @@ f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   u64 sup_index = this__length - substring__length + 1;
   for (index = 0; index <= sup_index; index ++) {
     if (memcmp(this__str + index, substring__str, substring__length) == 0) {
-      return f2bool__new(boolean__true);
+      return boolean__true;
     }
   }
-  return f2bool__new(boolean__false);
+  return boolean__false;
+}
+
+f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
+  if ((! raw__string__is_type(cause, this)) ||
+      (! raw__string__is_type(cause, substring))) {
+    return f2larva__new(cause, 1);
+  }
+  return f2bool__new(raw__string__contains(cause, this, substring));
 }
 def_pcfunk2(string__contains, this, substring, return f2__string__contains(this_cause, this, substring));
+
+f2ptr f2__string__replace_all(f2ptr cause, f2ptr this, f2ptr token, f2ptr replacement) {
+  return f2__stringlist__intersperse(cause, f2__string__split(cause, this, token), replacement);
+}
+def_pcfunk3(string__replace_all, this, token, replacement, return f2__string__replace_all(this_cause, this, token_replacement);
 
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);
@@ -389,7 +397,8 @@ void f2__string__initialize() {
   
   f2__primcfunk__init__1(exp__as__string, exp, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
   
-  f2__primcfunk__init__1(string__load, filename, "load a string from a filename");
+  f2__primcfunk__init__1(string__load,        filename,                 "load a string from a filename");
+  f2__primcfunk__init__3(string__replace_all, this, token, replacement, "replaces all occurrances of token in this with replacement.");
   
   {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk, 1, "convert a string to a symbol."); __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk = never_gc(cfunk);}

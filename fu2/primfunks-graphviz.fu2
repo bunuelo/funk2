@@ -24,4 +24,6 @@
 [globalize-funk graphviz-box_node       &primfunk:graphviz__box_node]
 [globalize-funk graphviz-edge_tail_head &primfunk:graphviz__edge_tail_head]
 [globalize-funk graphviz-edge           &primfunk:graphviz__edge]
+[globalize-funk graphviz-exp-as-label   &primfunk:graphviz__exp__as__label]
+[globalize-funk graphviz-exp-as-name    &primfunk:graphviz__exp__as__name]
 

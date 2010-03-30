@@ -50,6 +50,10 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   free(temp_str);
   return new_string;
 }
+
+f2ptr f2__stringlist__concat(f2ptr cause, f2ptr this) {
+  return f2__stringlist__new_from_string_concatenation(cause, this);
+}
 def_pcfunk1(stringlist__concat, this, return f2__stringlist__new_string_from_concatenation(this_cause, this));
 
 f2ptr f2__stringlist__new_string_from_intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {

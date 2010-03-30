@@ -25,14 +25,15 @@
 #include "f2_primfunks.h"
 
 f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this);
-f2ptr f2__stringlist__new_string_from_intersperse(  f2ptr cause, f2ptr this, f2ptr intersperse_string);
-f2ptr f2__stringlist__rawcode(                      f2ptr cause, f2ptr this);
-f2ptr f2__exp__to_new_string(                       f2ptr cause, f2ptr exp);
-f2ptr f2__string__to_symbol(                        f2ptr cause, f2ptr this);
-f2ptr f2__string__save(                             f2ptr cause, f2ptr this, f2ptr filename);
-f2ptr f2__string__load(                             f2ptr cause, f2ptr filename);
-f2ptr f2__string__split(                            f2ptr cause, f2ptr this, f2ptr token);
-f2ptr f2__string__contains(                         f2ptr cause, f2ptr this, f2ptr substring);
+f2ptr f2__stringlist__concat                       (f2ptr cause, f2ptr this);
+f2ptr f2__stringlist__new_string_from_intersperse  (f2ptr cause, f2ptr this, f2ptr intersperse_string);
+f2ptr f2__stringlist__rawcode                      (f2ptr cause, f2ptr this);
+f2ptr f2__exp__to_new_string                       (f2ptr cause, f2ptr exp);
+f2ptr f2__string__to_symbol                        (f2ptr cause, f2ptr this);
+f2ptr f2__string__save                             (f2ptr cause, f2ptr this, f2ptr filename);
+f2ptr f2__string__load                             (f2ptr cause, f2ptr filename);
+f2ptr f2__string__split                            (f2ptr cause, f2ptr this, f2ptr token);
+f2ptr f2__string__contains                         (f2ptr cause, f2ptr this, f2ptr substring);
 
 f2ptr f2string__primobject_type__new_aux(f2ptr cause);
 

@@ -30,32 +30,32 @@ f2ptr f2__graphviz__digraph(f2ptr cause, f2ptr codes) {
 def_pcfunk0_and_rest(graphviz__digraph, codes, return f2__graphviz__digraph(this_cause, codes));
 
 f2ptr f2__graphviz__node_color(f2ptr cause, f2ptr color) {
-  return f2__stringlist__append(cause, f2list3__new(cause, new__string(cause, "node [fillcolor = white, color = \""), color, new__string(cause, "\", style = filled];")));
+  return f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "node [fillcolor = white, color = \""), color, new__string(cause, "\", style = filled];")));
 }
 def_pcfunk1(graphviz__node_color, color, return f2__graphviz__node_color(this_cause, color));
 
 f2ptr f2__graphviz__edge_color(f2ptr cause, f2ptr color) {
-  return f2__stringlist__append(cause, f2list3__new(cause, new__string(cause, "edge [color = \""), color, new__string(cause, "\"];")));
+  return f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "edge [color = \""), color, new__string(cause, "\"];")));
 }
 def_pcfunk1(graphviz__edge_color, color, return f2__graphviz__edge_color(this_cause, color));
 
 f2ptr f2__graphviz__node(f2ptr cause, f2ptr name, f2ptr label) {
-  return f2__stringlist__append(cause, f2list4__new(cause, name, new__string(cause, " [label = \""), label, new__string(cause, "\"];")));
+  return f2__stringlist__concat(cause, f2list4__new(cause, name, new__string(cause, " [label = \""), label, new__string(cause, "\"];")));
 }
 def_pcfunk2(graphviz__node, name, label, return f2__graphviz__node(this_cause, name, label));
 
 f2ptr f2__graphviz__box_node(f2ptr cause, f2ptr name, f2ptr label) {
-  return f2__stringlist__append(cause, f2list4__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=\""), label, new__string(cause, "\",height=.1,width=.1];")));
+  return f2__stringlist__concat(cause, f2list4__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=\""), label, new__string(cause, "\",height=.1,width=.1];")));
 }
 def_pcfunk2(graphviz__box_node, name, label, return f2__graphviz__box_node(this_cause, name, label));
 
 f2ptr f2__graphviz__edge_tail_head(f2ptr cause, f2ptr tail, f2ptr head) {
-  return f2__stringlist__append(cause, f2list5__new(cause, new__string(cause, "edge [arrowtail = "), name, new__string(cause, ", arrowhead = "), label, new__string(cause, "];")));
+  return f2__stringlist__concat(cause, f2list5__new(cause, new__string(cause, "edge [arrowtail = "), name, new__string(cause, ", arrowhead = "), label, new__string(cause, "];")));
 }
 def_pcfunk2(graphviz__edge_tail_head, tail, head, return f2__graphviz__edge_tail_head(this_cause, tail, head));
 
 f2ptr f2__graphviz__edge(f2ptr cause, f2ptr from_node, f2ptr to_node) {
-  return f2__stringlist__append(cause, f2list4__new(cause, from_node, new__string(cause, " -> "), to_node, new__string(cause, ";")));
+  return f2__stringlist__concat(cause, f2list4__new(cause, from_node, new__string(cause, " -> "), to_node, new__string(cause, ";")));
 }
 def_pcfunk2(graphviz__edge, from_node, to_node, return f2__graphviz__edge(this_cause, from_node, to_node));
 

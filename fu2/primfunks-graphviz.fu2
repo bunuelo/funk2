@@ -17,5 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk graphviz-digraph &primfunk:graphviz__digraph]
+[globalize-funk graphviz-digraph        &primfunk:graphviz__digraph]
+[globalize-funk graphviz-node_color     &primfunk:graphviz__node_color]
+[globalize-funk graphviz-edge_color     &primfunk:graphviz__edge_color]
+[globalize-funk graphviz-node           &primfunk:graphviz__node]
+[globalize-funk graphviz-box_node       &primfunk:graphviz__box_node]
+[globalize-funk graphviz-edge_tail_head &primfunk:graphviz__edge_tail_head]
+[globalize-funk graphviz-edge           &primfunk:graphviz__edge]
 

@@ -20,28 +20,23 @@
 [defunk strings-prog [:rest these]
   [stringlist-rawcode these]]
 
-[defunk graphviz-digraph [:rest codes]
-  [strings-prog 'digraph G {'
-		[stringlist-rawcode codes]
-		'}']]
+`[defunk graphviz-node_color [color]
+   [format nil 'node [fillcolor = white, color = "' color '", style = filled];']]
 
-[defunk graphviz-node_color [color]
-  [format nil 'node [fillcolor = white, color = "' color '", style = filled];']]
+`[defunk graphviz-edge_color [color]
+   [format nil 'edge [color = "' color '"];']]
 
-[defunk graphviz-edge_color [color]
-  [format nil 'edge [color = "' color '"];']]
+`[defunk graphviz-node [name label]
+   [format nil name ' [label = "' label '"];']]
 
-[defunk graphviz-node [name label]
-  [format nil name ' [label = "' label '"];']]
+`[defunk graphviz-box_node [name label]
+   [format nil name ' [shape=box,fillcolor=white,style=filled,label="' label '",height=.1,width=.1];']]
 
-[defunk graphviz-box_node [name label]
-  [format nil name ' [shape=box,fillcolor=white,style=filled,label="' label '",height=.1,width=.1];']]
+`[defunk graphviz-edge_tail_head [tail head]
+   [format nil 'edge [arrowtail = ' tail ', arrowhead = ' head '];']]
 
-[defunk graphviz-edge_tail_head [tail head]
-  [format nil 'edge [arrowtail = ' tail ', arrowhead = ' head '];']]
-
-[defunk graphviz-edge [from_node to_node]
-  [format nil from_node ' -> ' to_node ';']]
+`[defunk graphviz-edge [from_node to_node]
+   [format nil from_node ' -> ' to_node ';']]
 
 [defunk graphviz-to_string [exp]
   [if exp

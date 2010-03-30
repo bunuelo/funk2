@@ -84,7 +84,7 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   f2ptr string;
   if (raw__string__is_type(cause, exp)) {
     if (f2string__length(exp, cause) == 0) {
-      return new__string(cause, "\'\'");
+      return new__string(cause, "empty_string");
     }
     string = exp;
   } else {

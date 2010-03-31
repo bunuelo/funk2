@@ -34,7 +34,7 @@ void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code) {
 
 f2ptr f2__ansi__stream__print_code(f2ptr cause, f2ptr stream, f2ptr code) {
   if (! raw__integer__is_type(cause, code)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   int raw_code = f2integer__i(code, cause);
   raw__ansi__stream__print_code(cause, stream, raw_code);
@@ -263,7 +263,7 @@ void raw__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, int x, int y) {
 
 f2ptr f2__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, f2ptr x, f2ptr y) {
   if ((! raw__integer__is_type(cause, x)) || (! raw__integer__is_type(cause, y))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   int raw_x = f2integer__i(x, cause);
   int raw_y = f2integer__i(y, cause);
@@ -303,7 +303,7 @@ f2ptr raw__ansi__stream__foreground(f2ptr cause, f2ptr stream, ansi_color_t colo
 
 f2ptr f2__ansi__stream__foreground(f2ptr cause, f2ptr stream, f2ptr color) {
   if (! raw__integer__is_type(cause, color)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   ansi_color_t raw_color = (ansi_color_t)f2integer__i(color, cause);
   return raw__ansi__stream__foreground(cause, stream, raw_color);
@@ -334,7 +334,7 @@ f2ptr raw__ansi__stream__background(f2ptr cause, f2ptr stream, ansi_color_t colo
 
 f2ptr f2__ansi__stream__background(f2ptr cause, f2ptr stream, f2ptr color) {
   if (! raw__integer__is_type(cause, color)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   ansi_color_t raw_color = (ansi_color_t)f2integer__i(color, cause);
   return raw__ansi__stream__background(cause, stream, raw_color);
@@ -360,7 +360,7 @@ f2ptr f2__ansi__stream__rectangle(f2ptr cause, f2ptr stream, f2ptr x0, f2ptr y0,
       (! raw__integer__is_type(cause, y0)) ||
       (! raw__integer__is_type(cause, y1)) ||
       (! raw__char__is_type(cause, ch))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 raw_x0 = f2integer__i(x0, cause);
   s64 raw_y0 = f2integer__i(y0, cause);
@@ -398,7 +398,7 @@ f2ptr f2__ansi__stream__bordered_rectangle(f2ptr cause, f2ptr stream, f2ptr x0, 
       (! raw__integer__is_type(cause, x1)) ||
       (! raw__integer__is_type(cause, y1)) ||
       (! raw__char__is_type(cause, background_char))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 raw_x0              = f2integer__i(x0, cause);
   s64 raw_y0              = f2integer__i(y0, cause);

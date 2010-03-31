@@ -132,7 +132,7 @@ def_pcfunk1(file_stream__new, file_descriptor, return f2__file_stream__new(this_
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
-  return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__type(this, cause), __file_stream__symbol));
+  return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __file_stream__symbol));
 }
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__file_stream__is_type(cause, this));}
 
@@ -146,7 +146,7 @@ def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(thi
 
 boolean_t raw__string_stream__is_type(f2ptr cause, f2ptr this) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
-  return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__type(this, cause), __string_stream__symbol));
+  return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __string_stream__symbol));
 }
 f2ptr f2__string_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__string_stream__is_type(cause, this));}
 

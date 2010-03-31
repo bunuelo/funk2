@@ -22,10 +22,19 @@
 #ifndef F2__PRIMOBJECT__STREAM__TYPES__H
 #define F2__PRIMOBJECT__STREAM__TYPES__H
 
-typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
-
 // stream
 
+typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
+declare_object_type_8_slot(stream, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index,
+			   f2ptr try_read_character__symbol;
+			   f2ptr try_read_character__funk;
+			   f2ptr rewind__symbol;
+			   f2ptr rewind__funk;
+			   f2ptr rewind_to_length__symbol;
+			   f2ptr rewind_to_length__funk;
+			   );
+
+/*
 struct funk2_object_type__stream__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
@@ -70,6 +79,7 @@ struct funk2_object_type__stream__slot_s {
   f2ptr rewind_to_length__symbol;
   f2ptr rewind_to_length__funk;
 };
+*/
 
 #endif // F2__PRIMOBJECT__STREAM__TYPES__H
 
@@ -80,6 +90,9 @@ struct funk2_object_type__stream__slot_s {
 
 // stream
 
+declare_primobject_8_slot(stream, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);
+
+/*
 extern f2ptr __stream__symbol;
 boolean_t raw__stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__stream__is_type(f2ptr cause, f2ptr this);
@@ -141,6 +154,7 @@ defprimobject__static_slot__prototype(stream__index);
 #define      f2stream__index__tracing_on(       this, cause)        primobject__static_slot__tracing_on(       this, stream__index, cause)
 #define      f2stream__index__trace(            this, cause)        primobject__static_slot__trace(            this, stream__index, cause)
 #define      f2stream__index__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, stream__index, cause)
+*/
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);

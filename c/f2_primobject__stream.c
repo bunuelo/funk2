@@ -244,6 +244,11 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
     s64 rewind_length__i = f2integer__i(rewind_length, cause);
     f2stream__rewind_length__set(this, cause, f2integer__new(cause, rewind_length__i + 1));
   }
+  if (raw__eq(cause, character, __funk2.reader.char__newline)) {
+    f2ptr line_num    = f2__stream__line_number(cause, this);
+    u64   line_num__i = f2integer__i(line_num, cause);
+    f2__stream__line_number(cause, this, f2integer__new(cause, line_num__i + 1));
+  }
   return character;
 }
 def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_character(this_cause, stream));
@@ -286,6 +291,11 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   s64 rewind_length__i = f2integer__i(rewind_length, cause);
   f2ptr new_rewind_length = f2integer__new(cause, rewind_length__i - 1);
   f2stream__rewind_length__set(this, cause, new_rewind_length);
+  if (raw__eq(cause, character, __funk2.reader.char__newline)) {
+    f2ptr line_num    = f2__stream__line_number(cause, this);
+    u64   line_num__i = f2integer__i(line_num, cause);
+    f2__stream__line_number(cause, this, f2integer__new(cause, line_num__i - 1));
+  }
   return character;
 }
 def_pcfunk1(stream__rewind, stream, return f2__stream__getc(this_cause, stream));

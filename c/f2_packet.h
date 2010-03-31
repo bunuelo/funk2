@@ -3493,13 +3493,14 @@ void funk2_node__f2traced_array__elt__read_funks__set(funk2_node_t* funk2_node, 
 void f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
-//  funk2_packet_type__pcs_request__f2larva__new                               = 0x44, //f2ptr            (f2ptr cause, u32 type);
+//  funk2_packet_type__pcs_request__f2larva__new                               = 0x44, //f2ptr            (f2ptr cause, u32 type, f2ptr bug);
 
 // request f2larva__new
 
 struct pcs_packet_payload_request__f2larva__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   u32                                                type;
+  f2ptr                                              bug;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2larva__new_s pcs_packet_payload_request__f2larva__new_t;
 
@@ -3523,13 +3524,13 @@ struct pcs_respond__f2larva__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2larva__new_s pcs_respond__f2larva__new_t;
 
-void send_packet__request__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type);
+void send_packet__request__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type, f2ptr bug);
 void recv_packet__request__f2larva__new(funk2_node_t* funk2_node, pcs_request__f2larva__new_t* packet);
 void send_packet__respond__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2larva__new(funk2_node_t* funk2_node, pcs_respond__f2larva__new_t* packet);
 
-f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type);
-f2ptr f2larva__new(f2ptr cause, u32 type);
+f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type, f2ptr bug);
+f2ptr f2larva__new(f2ptr cause, u32 type, f2ptr bug);
 
 
 //  funk2_packet_type__pcs_request__f2larva__larva_type                              = 0x45, //u32              (f2ptr cause, f2ptr this);
@@ -3569,6 +3570,46 @@ void recv_packet__respond__f2larva__larva_type(funk2_node_t* funk2_node, pcs_res
 
 u32 funk2_node__f2larva__larva_type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 u32 f2larva__larva_type(f2ptr this, f2ptr cause);
+
+//  funk2_packet_type__pcs_request__f2larva__bug                              = 0x45, //u32              (f2ptr cause, f2ptr this);
+
+// request f2larva__bug
+
+struct pcs_packet_payload_request__f2larva__bug_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2larva__bug_s pcs_packet_payload_request__f2larva__bug_t;
+
+struct pcs_request__f2larva__bug_s {
+  funk2_packet_header_t                       header;
+  pcs_packet_payload_request__f2larva__bug_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2larva__bug_s pcs_request__f2larva__bug_t;
+
+// respond f2larva__bug
+
+struct pcs_packet_payload_respond__f2larva__bug_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              bug;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2larva__bug_s pcs_packet_payload_respond__f2larva__bug_t;
+
+struct pcs_respond__f2larva__bug_s {
+  funk2_packet_header_t                       header;
+  pcs_packet_payload_respond__f2larva__bug_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2larva__bug_s pcs_respond__f2larva__bug_t;
+
+void send_packet__request__f2larva__bug(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2larva__bug(funk2_node_t* funk2_node, pcs_request__f2larva__bug_t* packet);
+void send_packet__respond__f2larva__bug(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr bug);
+void recv_packet__respond__f2larva__bug(funk2_node_t* funk2_node, pcs_respond__f2larva__bug_t* packet);
+
+f2ptr funk2_node__f2larva__bug(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+f2ptr f2larva__bug(f2ptr this, f2ptr cause);
+
+
 
 #define rf2_to_lf2(rf2) (funk2_node__remote_f2ptr_to_local_f2ptr(funk2_node, rf2))
 

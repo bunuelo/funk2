@@ -5353,14 +5353,15 @@ void f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2
 // * 
 // * 
 
-void send_packet__request__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type) {
+void send_packet__request__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 larva_type, f2ptr bug) {
   packet_status("send_packet__request__f2larva__new: executing.");
   pcs_request__f2larva__new_t packet;
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
   packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2larva__new;
   packet.payload.action_payload_header.cause               = cause;
-  packet.payload.action_payload_header.fiber              = this_fiber;
-  packet.payload.type                                      = type;
+  packet.payload.action_payload_header.fiber               = this_fiber;
+  packet.payload.larva_type                                = larva_type;
+  packet.payload.bug                                       = bug;
   funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
 }
 
@@ -5379,7 +5380,7 @@ void send_packet__respond__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fib
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
   packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2larva__new;
   packet.payload.action_payload_header.cause               = cause;
-  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.action_payload_header.fiber               = this_fiber;
   packet.payload.new                                       = new;
   socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
 }
@@ -5390,16 +5391,16 @@ void recv_packet__respond__f2larva__new(funk2_node_t* funk2_node, pcs_respond__f
   funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
 }
 
-f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type) {
-  send_packet__request__f2larva__new(funk2_node, this_fiber, cause, type);
+f2ptr funk2_node__f2larva__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 larva_type, f2ptr bug) {
+  send_packet__request__f2larva__new(funk2_node, this_fiber, cause, larva_type, bug);
   pcs_respond__f2larva__new_t* packet = (pcs_respond__f2larva__new_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
   f2ptr new = rf2_to_lf2(packet->payload.new);
   f2__free(to_ptr(packet));
   return new;
 }
 
-f2ptr f2larva__new(f2ptr cause, u32 type) {
-  return pfunk2__f2larva__new(cause, type);
+f2ptr f2larva__new(f2ptr cause, u32 type, f2ptr bug) {
+  return pfunk2__f2larva__new(cause, type, bug);
 }
 
 // ******************************************************
@@ -5460,6 +5461,67 @@ u32 f2larva__larva_type(f2ptr this, f2ptr cause) {
     f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2larva__larva_type(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2larva__bug(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2larva__bug: executing.");
+  pcs_request__f2larva__bug_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2larva__bug;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2larva__bug(funk2_node_t* funk2_node, pcs_request__f2larva__bug_t* packet) {
+  packet_status("recv_packet__request__f2larva__bug: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  f2ptr bug = pfunk2__f2larva__bug(this, cause);
+  send_packet__respond__f2larva__bug(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, bug);
+}
+
+void send_packet__respond__f2larva__bug(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr bug) {
+  packet_status("send_packet__respond__f2larva__bug: executing.");
+  pcs_respond__f2larva__bug_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2larva__bug;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber               = this_fiber;
+  packet.payload.bug                                       = bug;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2larva__bug(funk2_node_t* funk2_node, pcs_respond__f2larva__bug_t* packet) {
+  packet_status("recv_packet__respond__f2larva__bug: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2larva__bug(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2larva__bug(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2larva__bug_t* packet = (pcs_respond__f2larva__bug_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2ptr bug = packet->payload.bug;
+  f2__free(to_ptr(packet));
+  return bug;
+}
+
+f2ptr f2larva__bug(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2larva__bug(this, cause);
+  } else {
+    f2ptr         fiber     = f2__scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2larva__bug(funk2_node, fiber, cause, this);
   }
 }
 

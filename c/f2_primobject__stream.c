@@ -247,7 +247,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
   if (raw__eq(cause, character, __funk2.reader.char__newline)) {
     f2ptr line_num    = f2__stream__line_number(cause, this);
     u64   line_num__i = f2integer__i(line_num, cause);
-    f2__stream__line_number(cause, this, f2integer__new(cause, line_num__i + 1));
+    f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i + 1));
   }
   return character;
 }
@@ -294,7 +294,7 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   if (raw__eq(cause, character, __funk2.reader.char__newline)) {
     f2ptr line_num    = f2__stream__line_number(cause, this);
     u64   line_num__i = f2integer__i(line_num, cause);
-    f2__stream__line_number(cause, this, f2integer__new(cause, line_num__i - 1));
+    f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i - 1));
   }
   return character;
 }

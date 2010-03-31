@@ -468,7 +468,12 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
       iter ++;
     }
   } return;
-  case ptype_larva:        return;
+  case ptype_larva: {
+    f2ptr bug = ((ptype_larva_block_t*)block)->bug;
+    if (bug) {
+      funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, bug);
+    }
+  } return;
   default:
     {
       char str[1024];

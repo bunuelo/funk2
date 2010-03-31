@@ -461,13 +461,17 @@ typedef enum larva_type_e {
   larva_type__invalid_type,
 } larva_type_t;
 
-f2ptr pfunk2__f2larva__new(f2ptr cause, u32 larva_type);
+f2ptr pfunk2__f2larva__new(f2ptr cause, u32 larva_type, f2ptr bug);
 u32   pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause);
+u32   pfunk2__f2larva__bug(f2ptr this, f2ptr cause);
 
 f2ptr f2larva__primobject_type__new(f2ptr cause);
 
 u32   raw__larva__larva_type(f2ptr cause, f2ptr this);
 f2ptr  f2__larva__larva_type(f2ptr cause, f2ptr this);
+
+u32   raw__larva__bug(f2ptr cause, f2ptr this);
+f2ptr  f2__larva__bug(f2ptr cause, f2ptr this);
 
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__larva__is_type(f2ptr cause, f2ptr exp);

@@ -3474,6 +3474,18 @@ u32 pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause) {
   return type;
 }
 
+f2ptr pfunk2__f2larva__bug(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_larva) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_larva__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  f2ptr bug = __pure__f2larva__bug(this);
+  return bug;
+}
+
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {
   check_wait_politely();
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -3492,11 +3504,26 @@ u32 raw__larva__larva_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__larva__larva_type(f2ptr cause, f2ptr this) {
+  if (! raw__larva__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
   return f2integer__new(cause, raw__larva__larva_type(cause, this));
+}
+
+f2ptr raw__larva__bug(f2ptr cause, f2ptr this) {
+  return f2larva__bug(this, cause);
+}
+
+f2ptr f2__larva__bug(f2ptr cause, f2ptr this) {
+  if (! raw__larva__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__larva__bug(cause, this);
 }
 
 def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
 def_pcfunk1(larva__larva_type, this, return f2__larva__larva_type(this_cause, this));
+def_pcfunk1(larva__bug, this, return f2__larva__bug(this_cause, this));
 
 boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__larva__is_type(cause, that)) {
@@ -4125,6 +4152,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__new, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.new__funk = never_gc(cfunk);}
   {char* str = "larva_type"; __funk2.globalenv.object_type.ptype.ptype_larva.larva_type__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__larva_type, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.larva_type__funk = never_gc(cfunk);}
+  {char* str = "bug"; __funk2.globalenv.object_type.ptype.ptype_larva.bug__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__bug, this, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.bug__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_larva.eq__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__eq, this, that, cfunk, 1, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.eq__funk = never_gc(cfunk);}
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

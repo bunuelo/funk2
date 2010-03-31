@@ -275,12 +275,15 @@ ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr 
 struct ptype_larva_block_s {
   ptype_block_t ptype;
   u32           larva_type;
+  f2ptr         bug;
 } __attribute__((__packed__));
 typedef struct ptype_larva_block_s ptype_larva_block_t;
 
-ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 larva_type);
+ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 larva_type, f2ptr bug);
 
-#define __pure__f2larva__new(pool_index, cause, type) ptype_larva__new(pool_index, cause, type)
-#define __pure__f2larva__larva_type(this)             (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->larva_type)
+#define __pure__f2larva__new(pool_index, cause, larva_type, bug) ptype_larva__new(pool_index, cause, larva_type, bug)
+#define __pure__f2larva__larva_type(this)                        (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->larva_type)
+#define __pure__f2larva__bug(this)                               (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bug)
 
 #endif // F2__PTYPES__MEMORY__H
+

@@ -183,7 +183,7 @@ f2ptr  f2__stream__rewind(f2ptr cause, f2ptr this);
 f2ptr raw__stream__rewind_to_length(f2ptr cause, f2ptr this, s64 length);
 f2ptr  f2__stream__rewind_to_length(f2ptr cause, f2ptr this, f2ptr length);
 
-f2ptr f2stream__primobject_type__new(f2ptr cause);
+f2ptr f2stream__primobject_type__new_aux(f2ptr cause);
 
 // **
 

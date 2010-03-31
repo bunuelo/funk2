@@ -23,7 +23,7 @@
 
 // stream
 
-def_primobject_8_slot(stream, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);
+def_primobject_8_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);
 
 /*
 defprimobject__static_slot(stream__type,            0);
@@ -67,8 +67,8 @@ f2ptr f2__stream__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__stream_
 def_pcfunk1(stream__is_type, x, return f2__stream__is_type(this_cause, x));
 */
 
-f2ptr f2__stream__new(f2ptr cause, f2ptr type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_descriptor, f2ptr string, f2ptr index) {return f2stream__new(cause, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);}
-def_pcfunk8(stream__new, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, return f2__stream__new(this_cause, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
+f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_descriptor, f2ptr string, f2ptr index) {return f2stream__new(cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);}
+def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
 
 /*
 f2ptr f2__stream__type(f2ptr cause, f2ptr this) {return f2stream__type(this, cause);}
@@ -463,7 +463,7 @@ void f2__primobject__stream__initialize() {
   
   // stream
   
-  initialize_primobject_8_slot(stream, type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);
+  initialize_primobject_8_slot(stream, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index);
   
   /*
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.primobject_type_stream.is_type__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

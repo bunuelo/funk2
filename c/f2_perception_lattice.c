@@ -376,7 +376,7 @@ f2ptr raw__graph__replace_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr 
 
 f2ptr f2__graph__replace_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label, f2ptr new_edge_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__replace_edge(cause, this, edge_label, left_node_label, right_node_label, new_edge_label);
 }

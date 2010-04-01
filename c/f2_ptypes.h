@@ -925,6 +925,8 @@ typedef struct funk2_object_type__larva__slot_s {
   f2ptr new__funk;
   f2ptr larva_type__symbol;
   f2ptr larva_type__funk;
+  f2ptr bug__symbol;
+  f2ptr bug__funk;
   f2ptr eq__symbol;
   f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;

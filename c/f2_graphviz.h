@@ -25,7 +25,7 @@
 f2ptr f2__graphviz__digraph       (f2ptr cause, f2ptr codes);
 f2ptr f2__graphviz__node_color    (f2ptr cause, f2ptr color);
 f2ptr f2__graphviz__edge_color    (f2ptr cause, f2ptr color);
-f2ptr f2__graphviz__node          (f2ptr cause, f2ptr name, f2ptr label);
+f2ptr f2__graphviz__node          (f2ptr cause, f2ptr name, f2ptr label, f2ptr color);
 f2ptr f2__graphviz__box_node      (f2ptr cause, f2ptr name, f2ptr label);
 f2ptr f2__graphviz__edge_tail_head(f2ptr cause, f2ptr tail, f2ptr head);
 f2ptr f2__graphviz__edge          (f2ptr cause, f2ptr from_node, f2ptr to_node);

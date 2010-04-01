@@ -272,7 +272,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       }
     } break;
     case ptype_larva: {
-      f2ptr             bug       = ((ptype_traced_larva_block_t*)ptype_block)->bug;
+      f2ptr             bug       = ((ptype_larva_block_t*)ptype_block)->bug;
       ptr               bug_ptr   = f2ptr_to_ptr(bug);
       funk2_memblock_t* bug_block = (funk2_memblock_t*)from_ptr(bug_ptr);
       funk2_memblock__decrement_reference_count(bug_block, bug, &(__funk2.garbage_collector));

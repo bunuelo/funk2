@@ -366,6 +366,22 @@ f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr le
 }
 def_pcfunk4(graph__remove_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__remove_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
+f2ptr raw__graph__replace_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label, f2ptr new_edge_label) {
+  boolean_t removed_edge = raw__graph__remove_edge(cause, this, edge_label, left_node_label, right_node_label);
+  if (! removed_edge) {
+    return nil;
+  }
+  return raw__graph__add_edge(cause, this, new_edge_label, left_node_label, right_node_label);
+}
+
+f2ptr f2__graph__replace_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label, f2ptr new_edge_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__graph__replace_edge(cause, this, edge_label, left_node_label, right_node_label, new_edge_label);
+}
+def_pcfunk5(graph__replace_edge, this, edge_label, left_node_label, right_node_label, new_edge_label, return f2__graph__replace_edge(this_cause, this, edge_label, left_node_label, right_node_label, new_edge_label));
+
 f2ptr f2__graph__nodes(f2ptr cause, f2ptr this) {
   f2ptr nodes = nil;
   graph__node__iteration(cause, this, node, nodes = f2cons__new(cause, node, nodes));

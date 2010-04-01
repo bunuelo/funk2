@@ -162,7 +162,11 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
   f2ptr critics = f2fiber__critics(fiber, cause);
   if (critics) {
     pause_gc();
-    f2fiber__value__set(fiber, cause, f2bug__new(cause, f2integer__new(cause, f2larva__larva_type(larva, cause))));
+    f2ptr bug = f2larva__bug(larva, cause);
+    if (! bug) {
+      bug = f2bug__new(cause, f2integer__new(cause, f2larva__larva_type(larva, cause)));
+    }
+    f2fiber__value__set(fiber, cause, bug);
     resume_gc();
   } else {
     f2fiber__program_counter__set(fiber, cause, nil);

@@ -1023,7 +1023,7 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
       f2ptr node__label = f2__graph_node__label(cause, node);
       f2ptr color       = nil;
       if (f2__graph_variable__is_type(cause, node__label)) {
-	color = new__string(cause, "#FF0000");
+	color = new__string(cause, "#CF0000");
       } else {
 	color = new__string(cause, "#000000");
       }

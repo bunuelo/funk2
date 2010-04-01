@@ -3527,7 +3527,7 @@ f2ptr f2__larva__new(f2ptr cause, f2ptr larva_type, f2ptr bug) {
   if (! raw__integer__is_type(cause, larva_type)) {
     return f2larva__new(cause, 1, nil);
   }
-  return f2larva__new(cause, f2integer__i(larva_type, this_cause), bug);
+  return f2larva__new(cause, f2integer__i(larva_type, cause), bug);
 }
 
 def_pcfunk2(larva__new,        larva_type, bug, return f2__larva__new(this_cause, larva_type, bug));

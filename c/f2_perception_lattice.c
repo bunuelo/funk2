@@ -957,7 +957,7 @@ f2ptr f2__graph__make_edge_variable(f2ptr cause, f2ptr this, f2ptr edge_label, f
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph__make_edge_variable(cause, this, edge_label, variable_name);
+  return raw__graph__make_edge_variable(cause, this, edge_label, left_node_label, right_node_label, variable_name);
 }
 def_pcfunk5(graph__make_edge_variable, this, edge_label, left_node_label, right_node_label, variable_name, return f2__graph__make_edge_variable(this_cause, this, edge_label, left_node_label, right_node_label, variable_name));
 

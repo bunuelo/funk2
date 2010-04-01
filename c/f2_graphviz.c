@@ -52,7 +52,7 @@ f2ptr f2__graphviz__box_node(f2ptr cause, f2ptr name, f2ptr label, f2ptr color) 
   if (! color) {
     return f2__stringlist__concat(cause, f2list4__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=<"), label, new__string(cause, ">,height=.1,width=.1];")));
   } else {
-    return f2__stringlist__concat(cause, f2list5__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=<"), label, new__string(cause, ">,height=.1,width=.1,color=\""), color, new__string(cause, "\"];")));
+    return f2__stringlist__concat(cause, f2list6__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=<"), label, new__string(cause, ">,height=.1,width=.1,color=\""), color, new__string(cause, "\"];")));
   }
 }
 def_pcfunk3(graphviz__box_node, name, label, color, return f2__graphviz__box_node(this_cause, name, label, color));

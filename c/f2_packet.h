@@ -3499,7 +3499,7 @@ void f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2
 
 struct pcs_packet_payload_request__f2larva__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u32                                                type;
+  u32                                                larva_type;
   f2ptr                                              bug;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2larva__new_s pcs_packet_payload_request__f2larva__new_t;

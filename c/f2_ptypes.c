@@ -3444,14 +3444,16 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
 
 // larva
 
-f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type) {
+f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type, f2ptr bug) {
   f2ptr larva_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_larva_block_t));
   ptype_larva_block_t* larva_block = (ptype_larva_block_t*)from_ptr(raw__f2ptr_to_ptr(larva_f2ptr));
   debug__assert(larva_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
+  if (bug)   {raw__exp__increment_reference_count(bug);}
   larva_block->ptype.ptype = ptype_larva;
   larva_block->ptype.cause = cause;
   larva_block->larva_type  = larva_type;
+  larva_block->bug         = bug;
   return larva_f2ptr;
 }
 

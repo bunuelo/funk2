@@ -205,6 +205,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2larva__new                               ,
   funk2_packet_type__pcs_request__f2larva__larva_type                        , //u32              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2larva__larva_type                        ,
+  funk2_packet_type__pcs_request__f2larva__bug                               , //f2ptr            (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2larva__bug                               ,
 } funk2_packet_type_t;
 
 // todo: event rate data queries, all network average

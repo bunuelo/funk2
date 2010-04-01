@@ -144,7 +144,7 @@ f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2p
     color = new__string(cause, "#CF0000");
   }
   return f2__stringlist__rawcode(cause, f2list5__new(cause,
-						     f2__graphviz__box_node(      cause, edge__name, label, color),
+						     f2__graphviz__box_node(      cause, edge__name, f2__graphviz__exp__as__label(cause, label), color),
 						     f2__graphviz__edge_tail_head(cause, new__string(cause, "crow"), new__string(cause, "none")),
 						     f2__graphviz__edge(          cause, f2__graphviz__exp__as__name(cause, left_node), edge__name),
 						     f2__graphviz__edge_tail_head(cause, new__string(cause, "none"), new__string(cause, "normal")),

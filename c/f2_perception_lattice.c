@@ -1270,8 +1270,8 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__1(graph__make_rootless,                this,                                                                "makes graph rootless.");
   f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,                                           "makes a node in the graph a variable for matching.");
   f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                                                          "makes a node in the graph a wildcard variable for matching.");
-  f2__primcfunk__init__3(graph__make_edge_variable,           this, edge_label, left_node_label, right_node_label, variable_name,  "makes a node in the graph a variable for matching.");
-  f2__primcfunk__init__2(graph__make_edge_wildcard,           this, edge_label, left_node_label, right_node_label,                 "makes a node in the graph a wildcard variable for matching.");
+  f2__primcfunk__init__5(graph__make_edge_variable,           this, edge_label, left_node_label, right_node_label, variable_name,  "makes a node in the graph a variable for matching.");
+  f2__primcfunk__init__4(graph__make_edge_wildcard,           this, edge_label, left_node_label, right_node_label,                 "makes a node in the graph a wildcard variable for matching.");
   f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,                                                "returns variable bindings for match.");
   f2__primcfunk__init__1(graph__as__dot_code,                 this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
   

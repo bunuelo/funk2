@@ -5428,14 +5428,14 @@ void recv_packet__request__f2larva__larva_type(funk2_node_t* funk2_node, pcs_req
   send_packet__respond__f2larva__larva_type(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, type);
 }
 
-void send_packet__respond__f2larva__larva_type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 type) {
+void send_packet__respond__f2larva__larva_type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u32 larva_type) {
   packet_status("send_packet__respond__f2larva__larva_type: executing.");
   pcs_respond__f2larva__larva_type_t packet;
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
   packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2larva__larva_type;
   packet.payload.action_payload_header.cause               = cause;
-  packet.payload.action_payload_header.fiber              = this_fiber;
-  packet.payload.type                                      = type;
+  packet.payload.action_payload_header.fiber               = this_fiber;
+  packet.payload.larva_type                                = larva_type;
   socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
 }
 
@@ -5448,9 +5448,9 @@ void recv_packet__respond__f2larva__larva_type(funk2_node_t* funk2_node, pcs_res
 u32 funk2_node__f2larva__larva_type(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
   send_packet__request__f2larva__larva_type(funk2_node, this_fiber, cause, this);
   pcs_respond__f2larva__larva_type_t* packet = (pcs_respond__f2larva__larva_type_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
-  u32 type = packet->payload.type;
+  u32 larva_type = packet->payload.larva_type;
   f2__free(to_ptr(packet));
-  return type;
+  return larva_type;
 }
 
 u32 f2larva__larva_type(f2ptr this, f2ptr cause) {

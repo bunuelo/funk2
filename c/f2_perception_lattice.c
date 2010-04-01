@@ -1265,7 +1265,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__1(graph__nodes,                        this,                                                                "returns a new list of all nodes in this graph.");
   f2__primcfunk__init__1(graph__edges,                        this,                                                                "returns a new list of all edges in this graph.");
   f2__primcfunk__init__3(graph__replace_node,                 this, old_node, new_node,                                            "replaces old node with new node.");
-  f2__primcfunk__init__3(graph__replace_edge,                 this, edge_label, left_node_label, right_node_label, new_edge_label, "replaces old node with new node.");
+  f2__primcfunk__init__5(graph__replace_edge,                 this, edge_label, left_node_label, right_node_label, new_edge_label, "replaces old node with new node.");
   f2__primcfunk__init__2(graph__make_rooted,                  this, root_node,                                                     "makes graph rooted with root node.");
   f2__primcfunk__init__1(graph__make_rootless,                this,                                                                "makes graph rootless.");
   f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,                                           "makes a node in the graph a variable for matching.");

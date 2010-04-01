@@ -925,6 +925,9 @@ f2ptr raw__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, 
 }
 
 f2ptr f2__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {
+  if (! raw__graph__contains_node(cause, this, node_label)) {
+    return nil;
+  }
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
@@ -945,6 +948,9 @@ f2ptr f2__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
 def_pcfunk2(graph__make_node_wildcard, this, node_label, return f2__graph__make_node_wildcard(this_cause, this, node_label));
 
 f2ptr raw__graph__make_edge_variable(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label, f2ptr variable_name) {
+  if (! raw__graph__contains_edge(cause, this, edge_label, left_node_label, right_node_label)) {
+    return nil;
+  }
   f2ptr variable = raw__graph__lookup_variable(cause, this, variable_name);
   if (! variable) {
     variable = raw__graph__add_variable(cause, this, variable_name);

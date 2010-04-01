@@ -1249,30 +1249,31 @@ void f2__perception_lattice__initialize() {
   {char* symbol_str = "as-frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(rooted_graph__as__frame, this, cfunk, 0, "returns a rooted graph as a frame."); __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__2(graph__add_node,                     this, node,                                                         "add a node to a graph by mutation.");
-  f2__primcfunk__init__2(graph__lookup_node,                  this, node,                                                         "lookup a node if it exists within this graph.");
-  f2__primcfunk__init__4(graph__add_edge,                     this, label, left_node, right_node,                                 "add an edge to a graph by mutation.");
-  f2__primcfunk__init__2(graph__contains_node,                this, node,                                                         "returns boolean true if this graph contains node.");
-  f2__primcfunk__init__4(graph__contains_edge,                this, label, left_node, right_node,                                 "returns boolean true if this graph contains edge.");
-  f2__primcfunk__init__2(graph__contains_edge_type,           this, edge_label,                                                   "returns boolean true if this graph contains at least one edge with the label.");
-  f2__primcfunk__init__2(graph__intersect,                    this, that,                                                         "returns the intersection of two graphs.");
-  f2__primcfunk__init__2(graph__union,                        this, that,                                                         "returns the union of two graphs.");
-  f2__primcfunk__init__2(graph__remove_node,                  this, node,                                                         "remove node from this graph.");
-  f2__primcfunk__init__4(graph__remove_edge,                  this, label, left_node, right_node,                                 "remove an edge from a perception graph.");
-  f2__primcfunk__init__1(graph__copy,                         this,                                                               "returns a copy of this graph.");
-  f2__primcfunk__init__2(graph__part_not_contained_by,        this, that,                                                         "determines the maximal part of this graph that is not contained in that graph.");
-  f2__primcfunk__init__1(graph__variables,                    this,                                                               "returns variable names in a new list.");
-  f2__primcfunk__init__1(graph__nodes,                        this,                                                               "returns a new list of all nodes in this graph.");
-  f2__primcfunk__init__1(graph__edges,                        this,                                                               "returns a new list of all edges in this graph.");
-  f2__primcfunk__init__3(graph__replace_node,                 this, old_node, new_node,                                           "replaces old node with new node.");
-  f2__primcfunk__init__2(graph__make_rooted,                  this, root_node,                                                    "makes graph rooted with root node.");
-  f2__primcfunk__init__1(graph__make_rootless,                this,                                                               "makes graph rootless.");
-  f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,                                          "makes a node in the graph a variable for matching.");
-  f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                                                         "makes a node in the graph a wildcard variable for matching.");
-  f2__primcfunk__init__3(graph__make_edge_variable,           this, edge_label, left_node_label, right_node_label, variable_name, "makes a node in the graph a variable for matching.");
-  f2__primcfunk__init__2(graph__make_edge_wildcard,           this, edge_label, left_node_label, right_node_label,                "makes a node in the graph a wildcard variable for matching.");
-  f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,                                               "returns variable bindings for match.");
-  f2__primcfunk__init__1(graph__as__dot_code,                 this,                                                               "returns dot code in a string suitable for graphing with graphviz.");
+  f2__primcfunk__init__2(graph__add_node,                     this, node,                                                          "add a node to a graph by mutation.");
+  f2__primcfunk__init__2(graph__lookup_node,                  this, node,                                                          "lookup a node if it exists within this graph.");
+  f2__primcfunk__init__4(graph__add_edge,                     this, label, left_node, right_node,                                  "add an edge to a graph by mutation.");
+  f2__primcfunk__init__2(graph__contains_node,                this, node,                                                          "returns boolean true if this graph contains node.");
+  f2__primcfunk__init__4(graph__contains_edge,                this, label, left_node, right_node,                                  "returns boolean true if this graph contains edge.");
+  f2__primcfunk__init__2(graph__contains_edge_type,           this, edge_label,                                                    "returns boolean true if this graph contains at least one edge with the label.");
+  f2__primcfunk__init__2(graph__intersect,                    this, that,                                                          "returns the intersection of two graphs.");
+  f2__primcfunk__init__2(graph__union,                        this, that,                                                          "returns the union of two graphs.");
+  f2__primcfunk__init__2(graph__remove_node,                  this, node,                                                          "remove node from this graph.");
+  f2__primcfunk__init__4(graph__remove_edge,                  this, label, left_node, right_node,                                  "remove an edge from a perception graph.");
+  f2__primcfunk__init__1(graph__copy,                         this,                                                                "returns a copy of this graph.");
+  f2__primcfunk__init__2(graph__part_not_contained_by,        this, that,                                                          "determines the maximal part of this graph that is not contained in that graph.");
+  f2__primcfunk__init__1(graph__variables,                    this,                                                                "returns variable names in a new list.");
+  f2__primcfunk__init__1(graph__nodes,                        this,                                                                "returns a new list of all nodes in this graph.");
+  f2__primcfunk__init__1(graph__edges,                        this,                                                                "returns a new list of all edges in this graph.");
+  f2__primcfunk__init__3(graph__replace_node,                 this, old_node, new_node,                                            "replaces old node with new node.");
+  f2__primcfunk__init__3(graph__replace_edge,                 this, edge_label, left_node_label, right_node_label, new_edge_label, "replaces old node with new node.");
+  f2__primcfunk__init__2(graph__make_rooted,                  this, root_node,                                                     "makes graph rooted with root node.");
+  f2__primcfunk__init__1(graph__make_rootless,                this,                                                                "makes graph rootless.");
+  f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,                                           "makes a node in the graph a variable for matching.");
+  f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                                                          "makes a node in the graph a wildcard variable for matching.");
+  f2__primcfunk__init__3(graph__make_edge_variable,           this, edge_label, left_node_label, right_node_label, variable_name,  "makes a node in the graph a variable for matching.");
+  f2__primcfunk__init__2(graph__make_edge_wildcard,           this, edge_label, left_node_label, right_node_label,                 "makes a node in the graph a wildcard variable for matching.");
+  f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,                                                "returns variable bindings for match.");
+  f2__primcfunk__init__1(graph__as__dot_code,                 this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

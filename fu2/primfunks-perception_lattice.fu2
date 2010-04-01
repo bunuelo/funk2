@@ -36,6 +36,7 @@
 [globalize-funk graph-nodes                        &primfunk:graph__nodes]
 [globalize-funk graph-edges                        &primfunk:graph__edges]
 [globalize-funk graph-replace_node                 &primfunk:graph__replace_node]
+[globalize-funk graph-replace_edge                 &primfunk:graph__replace_edge]
 [globalize-funk graph-make_rooted                  &primfunk:graph__make_rooted]
 [globalize-funk graph-make_rootless                &primfunk:graph__make_rootless]
 [globalize-funk graph-make_node_variable           &primfunk:graph__make_node_variable]

@@ -75,9 +75,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   }
   if (raw__graph_variable__is_type(cause, exp)) {
     return f2__stringlist__concat(cause, f2list3__new(cause,
-						      new__string(cause, "<font color=\"#CF0000\">"),
+						      new__string(cause, "<font color=\"#CF0000\">[variable "),
 						      f2__graphviz__exp__as__label(cause, f2__graph_variable__name(cause, exp)),
-						      new__string(cause, "</font>")));
+						      new__string(cause, "]</font>")));
   }
   f2ptr type = f2__object__type(cause, exp);
   return f2__stringlist__concat(cause, f2list3__new(cause,

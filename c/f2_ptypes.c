@@ -3523,9 +3523,16 @@ f2ptr f2__larva__bug(f2ptr cause, f2ptr this) {
   return raw__larva__bug(cause, this);
 }
 
-def_pcfunk1(larva__new, type, return f2larva__new(this_cause, f2integer__i(type, this_cause)));
+f2ptr f2__larva__new(f2ptr cause, f2ptr larva_type, f2ptr bug) {
+  if (! raw__integer__is_type(cause, larva_type)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2larva__new(this_cause, f2integer__i(larva_type, this_cause), bug);
+}
+
+def_pcfunk2(larva__new,        larva_type, bug, return f2__larva__new(cause, larva_type, bug));
 def_pcfunk1(larva__larva_type, this, return f2__larva__larva_type(this_cause, this));
-def_pcfunk1(larva__bug, this, return f2__larva__bug(this_cause, this));
+def_pcfunk1(larva__bug,        this, return f2__larva__bug(this_cause, this));
 
 boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__larva__is_type(cause, that)) {

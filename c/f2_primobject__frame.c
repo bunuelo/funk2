@@ -48,7 +48,7 @@ void funk2_primobject__frame__reinit(funk2_primobject__frame_t* this) {
   this->variable__symbol      = new__symbol(cause, "variable");
   this->funk_variable__symbol = new__symbol(cause, "funk_variable");
   
-  this->type_variable_not_defined__larva  = never_gc(f2larva__new(cause, 23));
+  this->type_variable_not_defined__larva  = never_gc(f2larva__new(cause, 23, nil));
   this->type_variable_not_defined__symbol = new__symbol(cause, "type_variable_not_defined");
 }
 
@@ -211,7 +211,7 @@ def_pcfunk1(frame__funkvar__slot_names, this, return f2__frame__funkvar__slot_na
 f2ptr f2__frame__copy(f2ptr cause, f2ptr this, f2ptr source) {
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__frame__is_type(cause, source))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 
 		   f2__frame__add_type_var_value(cause, this, type_slot_name, slot_name, slot_value));
@@ -223,7 +223,7 @@ f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_slo
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__frame__is_type(cause, source)) ||
       (! raw__cons__is_type( cause, map_slot_names))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   frame__iteration(cause, source, type_slot_name, slot_name, slot_value, 
 		   f2ptr map_slot_names_iter = map_slot_names;
@@ -284,7 +284,7 @@ f2ptr raw__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
     f2ptr node_hash__key_count    = f2__ptypehash__key_count(cause, node_hash);
     u64   node_hash__key_count__i = f2integer__i(node_hash__key_count, cause);
     if (node_hash__key_count__i > max_equals_hash_value_recursion_depth) {
-      return f2larva__new(cause, 334);
+      return f2larva__new(cause, 334, nil);
     }
   }
   raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
@@ -303,7 +303,7 @@ f2ptr raw__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
 f2ptr f2__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__ptypehash__is_type(cause, node_hash))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__frame__equals_hash_value__loop_free(cause, this, node_hash);
 }
@@ -316,7 +316,7 @@ f2ptr raw__frame__equals_hash_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__frame__equals_hash_value(f2ptr cause, f2ptr this) {
   if (! raw__frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__frame__equals_hash_value(cause, this);
 }
@@ -370,7 +370,7 @@ f2ptr raw__frame__as__graph(f2ptr cause, f2ptr this) {
 
 f2ptr f2__frame__as__graph(f2ptr cause, f2ptr this) {
   if (! raw__frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__frame__as__graph(cause, this);
 }

@@ -169,7 +169,7 @@ f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
 
 f2ptr f2__ptype__cause(f2ptr cause, f2ptr x) {
   if (! x) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2ptype__cause(x, cause);
 }
@@ -187,7 +187,7 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
 
 f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value) {
   if (! x) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2ptype__cause__set(x, cause, value);
   return nil;
@@ -286,7 +286,7 @@ boolean_t raw__integer__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw_
 
 f2ptr f2__integer__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__integer__equals(cause, this, that));
 }
@@ -308,7 +308,7 @@ double raw__integer__as__double(f2ptr cause, f2ptr this) {
 
 f2ptr f2__integer__as__double(f2ptr cause, f2ptr this) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2double__new(cause, raw__integer__as__double(cause, this));
 }
@@ -317,7 +317,7 @@ def_pcfunk1(integer__as__double, this, return f2__integer__as__double(this_cause
 
 f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -334,14 +334,14 @@ f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__multiplied_by(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__multiplied_by, this, that, return f2__integer__multiplied_by(this_cause, this, that));
 
 
 f2ptr f2__integer__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -353,14 +353,14 @@ f2ptr f2__integer__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__divide(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__divided_by, this, that, return f2__integer__divided_by(this_cause, this, that));
 
 
 f2ptr f2__integer__plus(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -377,14 +377,14 @@ f2ptr f2__integer__plus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__add(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__plus, this, that, return f2__integer__plus(this_cause, this, that));
 
 
 f2ptr f2__integer__minus(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -401,14 +401,14 @@ f2ptr f2__integer__minus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__subtract(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__minus, this, that, return f2__integer__minus(this_cause, this, that));
 
 
 f2ptr f2__integer__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -420,14 +420,14 @@ f2ptr f2__integer__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__greater_than(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__is_greater_than, this, that, return f2__integer__is_greater_than(this_cause, this, that));
 
 
 f2ptr f2__integer__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -439,14 +439,14 @@ f2ptr f2__integer__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__less_than(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__is_less_than, this, that, return f2__integer__is_less_than(this_cause, this, that));
 
 
 f2ptr f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__integer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -458,7 +458,7 @@ f2ptr f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__equals(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(integer__is_numerically_equal_to, this, that, return f2__integer__is_numerically_equal_to(this_cause, this, that));
 
@@ -466,14 +466,14 @@ def_pcfunk2(integer__is_numerically_equal_to, this, that, return f2__integer__is
 f2ptr raw__integer__square_root(f2ptr cause, f2ptr this) {
   s64 i = f2integer__i(this, cause);
   if (i < 0) {
-    return f2larva__new(cause, 5);
+    return f2larva__new(cause, 5, nil);
   }
   return f2integer__new(cause, u64__sqrt(i));
 }
 
 f2ptr f2__integer__square_root(f2ptr cause, f2ptr this) {
   if (! raw__integer__square_root(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__integer__square_root(cause, this);
 }
@@ -624,7 +624,7 @@ boolean_t raw__double__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__
 
 f2ptr f2__double__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__double__equals(cause, this, that));
 }
@@ -646,7 +646,7 @@ double raw__double__as__double(f2ptr cause, f2ptr this) {
 
 f2ptr f2__double__as__double(f2ptr cause, f2ptr this) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2double__new(cause, raw__double__as__double(cause, this));
 }
@@ -655,7 +655,7 @@ def_pcfunk1(double__as__double, this, return f2__double__as__double(this_cause, 
 
 f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -667,14 +667,14 @@ f2ptr f2__double__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2double__new(cause, value * raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__multiplied_by, this, that, return f2__double__multiplied_by(this_cause, this, that));
 
 
 f2ptr f2__double__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -686,14 +686,14 @@ f2ptr f2__double__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2double__new(cause, value / raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__divided_by, this, that, return f2__double__divided_by(this_cause, this, that));
 
 
 f2ptr f2__double__plus(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -705,14 +705,14 @@ f2ptr f2__double__plus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2double__new(cause, value + raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__plus, this, that, return f2__double__plus(this_cause, this, that));
 
 
 f2ptr f2__double__minus(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -724,14 +724,14 @@ f2ptr f2__double__minus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2double__new(cause, value - raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__minus, this, that, return f2__double__minus(this_cause, this, that));
 
 
 f2ptr f2__double__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -743,14 +743,14 @@ f2ptr f2__double__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2bool__new(value > raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__is_greater_than, this, that, return f2__double__is_greater_than(this_cause, this, that));
 
 
 f2ptr f2__double__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -762,14 +762,14 @@ f2ptr f2__double__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2bool__new(value < raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__is_less_than, this, that, return f2__double__is_less_than(this_cause, this, that));
 
 
 f2ptr f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   double value = f2double__d(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -781,7 +781,7 @@ f2ptr f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number)
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2bool__new(value == raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(double__is_numerically_equal_to, this, that, return f2__double__is_numerically_equal_to(this_cause, this, that));
 
@@ -789,14 +789,14 @@ def_pcfunk2(double__is_numerically_equal_to, this, that, return f2__double__is_n
 f2ptr raw__double__square_root(f2ptr cause, f2ptr this) {
   double d = f2double__d(this, cause);
   if (d < 0) {
-    return f2larva__new(cause, 5);
+    return f2larva__new(cause, 5, nil);
   }
   return f2double__new(cause, sqrt(d));
 }
 
 f2ptr f2__double__square_root(f2ptr cause, f2ptr this) {
   if (! raw__double__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__double__square_root(cause, this);
 }
@@ -953,7 +953,7 @@ boolean_t raw__float__equals(f2ptr cause, f2ptr this, f2ptr that) {
 
 f2ptr f2__float__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__float__equals(cause, this, that));
 }
@@ -975,7 +975,7 @@ double raw__float__as__double(f2ptr cause, f2ptr this) {
 
 f2ptr f2__float__as__double(f2ptr cause, f2ptr this) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__float__as__double(cause, this);
 }
@@ -984,7 +984,7 @@ def_pcfunk1(float__as__double, this, return f2__float__as__double(this_cause, th
 
 f2ptr f2__float__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -996,14 +996,14 @@ f2ptr f2__float__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2float__new(cause, value * (float)raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__multiplied_by, this, that, return f2__float__multiplied_by(this_cause, this, that));
 
 
 f2ptr f2__float__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -1015,14 +1015,14 @@ f2ptr f2__float__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2float__new(cause, value / raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__divided_by, this, that, return f2__float__divided_by(this_cause, this, that));
 
 
 f2ptr f2__float__plus(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -1034,14 +1034,14 @@ f2ptr f2__float__plus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2float__new(cause, value + (float)raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__plus, this, that, return f2__float__plus(this_cause, this, that));
 
 
 f2ptr f2__float__minus(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -1053,14 +1053,14 @@ f2ptr f2__float__minus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2float__new(cause, value - (float)raw__largeinteger__as__double(cause, number));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__minus, this, that, return f2__float__minus(this_cause, this, that));
 
 
 f2ptr f2__float__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -1072,14 +1072,14 @@ f2ptr f2__float__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2bool__new(value > ((float)raw__largeinteger__as__double(cause, number)));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__is_greater_than, this, that, return f2__float__is_greater_than(this_cause, this, that));
 
 
 f2ptr f2__float__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -1091,14 +1091,14 @@ f2ptr f2__float__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2bool__new(value < ((float)raw__largeinteger__as__double(cause, number)));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__is_less_than, this, that, return f2__float__is_less_than(this_cause, this, that));
 
 
 f2ptr f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   float value = f2float__f(this, cause);
   if (raw__integer__is_type(cause, number)) {
@@ -1110,7 +1110,7 @@ f2ptr f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) 
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2bool__new(value == ((float)raw__largeinteger__as__double(cause, number)));
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk2(float__is_numerically_equal_to, this, that, return f2__float__is_numerically_equal_to(this_cause, this, that));
 
@@ -1118,14 +1118,14 @@ def_pcfunk2(float__is_numerically_equal_to, this, that, return f2__float__is_num
 f2ptr raw__float__square_root(f2ptr cause, f2ptr this) {
   float f = f2float__f(this, cause);
   if (f < 0) {
-    return f2larva__new(cause, 5);
+    return f2larva__new(cause, 5, nil);
   }
   return f2float__new(cause, sqrtf(f));
 }
 
 f2ptr f2__float__square_root(f2ptr cause, f2ptr this) {
   if (! raw__float__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__float__square_root(cause, this);
 }
@@ -1262,7 +1262,7 @@ boolean_t raw__pointer__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw_
 
 f2ptr f2__pointer__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__pointer__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__pointer__equals(cause, this, that));
 }
@@ -1280,7 +1280,7 @@ def_pcfunk1(pointer__equals_hash_value, this, return f2__pointer__equals_hash_va
 f2ptr f2__pointer__plus(f2ptr cause, f2ptr this, f2ptr integer) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__integer__is_type(cause, this))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2pointer__new(cause, f2pointer__p(this, cause) + f2integer__i(integer, cause));
 }
@@ -1289,7 +1289,7 @@ def_pcfunk2(pointer__plus, this, that, return f2__pointer__plus(this_cause, this
 f2ptr f2__pointer__minus(f2ptr cause, f2ptr this, f2ptr integer) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__integer__is_type(cause, this))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2pointer__new(cause, f2pointer__p(this, cause) - f2integer__i(integer, cause));
 }
@@ -1298,7 +1298,7 @@ def_pcfunk2(pointer__minus, this, that, return f2__pointer__minus(this_cause, th
 f2ptr f2__pointer__is_greater_than(f2ptr cause, f2ptr this, f2ptr integer) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__pointer__is_type(cause, this))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(f2pointer__p(this, cause) > f2pointer__p(integer, cause));
 }
@@ -1307,7 +1307,7 @@ def_pcfunk2(pointer__is_greater_than, this, that, return f2__pointer__is_greater
 f2ptr f2__pointer__is_less_than(f2ptr cause, f2ptr this, f2ptr integer) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__pointer__is_type(cause, this))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(f2pointer__p(this, cause) < f2pointer__p(integer, cause));
 }
@@ -1316,7 +1316,7 @@ def_pcfunk2(pointer__is_less_than, this, that, return f2__pointer__is_less_than(
 f2ptr f2__pointer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr integer) {
   if ((! raw__pointer__is_type(cause, this)) ||
       (! raw__pointer__is_type(cause, this))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(f2pointer__p(this, cause) == f2pointer__p(integer, cause));
 }
@@ -1487,7 +1487,7 @@ boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw
 
 f2ptr f2__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__gfunkptr__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__gfunkptr__equals(cause, this, that));
 }
@@ -1672,7 +1672,7 @@ boolean_t raw__mutex__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__m
 
 f2ptr f2__mutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__mutex__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__mutex__equals(cause, this, that));
 }
@@ -1796,7 +1796,7 @@ boolean_t raw__char__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__ch
 
 f2ptr f2__char__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__char__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__char__equals(cause, this, that));
 }
@@ -1939,18 +1939,18 @@ f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause,
 u8 raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
   if ((! raw__string__is_type(cause, this)) ||
       index < 0) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 length = f2string__length(this, cause);
   if (index >= length) {
-    return f2larva__new(cause, 2);
+    return f2larva__new(cause, 2, nil);
   }
   return f2string__elt(this, index, cause);
 }
 
 f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
   if (! raw__integer__is_type(cause, index)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 raw_index = f2integer__i(index, cause);
   return f2char__new(cause, raw__string__elt(cause, this, raw_index));
@@ -1985,11 +1985,11 @@ def_pcfunk1(string__eq_hash_value, this, return f2__string__eq_hash_value(this_c
 
 f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   int str__length = f2string__length(str, cause);
   if (str__length < 0) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u8* str__bytes = (u8*)alloca(str__length);
   f2string__str_copy(str, cause, str__bytes);
@@ -2006,7 +2006,7 @@ boolean_t raw__string__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__
 
 f2ptr f2__string__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__string__equals(cause, this, that));
 }
@@ -2144,11 +2144,11 @@ def_pcfunk1(symbol__eq_hash_value, this, return f2__symbol__eq_hash_value(this_c
 
 f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   if (! raw__string__is_type(cause, str)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   int str__length = f2string__length(str, cause);
   if (str__length < 0) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u8* str__bytes = (u8*)alloca(str__length);
   f2string__str_copy(str, cause, str__bytes);
@@ -2188,7 +2188,7 @@ boolean_t raw__symbol__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__
 
 f2ptr f2__symbol__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__symbol__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__symbol__equals(cause, this, that));
 }
@@ -2488,11 +2488,11 @@ f2ptr raw__chunk__new(f2ptr cause, u64 length) {
 
 f2ptr f2__chunk__new(f2ptr cause, f2ptr length) {
   if (! raw__integer__is_type(cause, length)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 length__i = f2integer__i(length, cause);
   if (length__i < 0) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__chunk__new(cause, length__i);
 }
@@ -2525,7 +2525,7 @@ boolean_t raw__chunk__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__c
 
 f2ptr f2__chunk__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__chunk__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__chunk__equals(cause, this, that));
 }
@@ -2696,7 +2696,7 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   int length = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
     //error(nil, "f2array__elt error: index out of range.");
   }
   f2ptr rv = __pure__f2simple_array__elt(this, index);
@@ -2716,7 +2716,7 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length     = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
     //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
   }
   
@@ -2739,11 +2739,11 @@ f2ptr f2__simple_array__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, 
 
 f2ptr f2__simple_array__new(f2ptr cause, f2ptr length) {
   if (! raw__integer__is_type(cause, length)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 length__i = f2integer__i(length, cause);
   if (length__i < 0) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2simple_array__new(cause, length__i, to_ptr(NULL));
 }
@@ -2771,7 +2771,7 @@ def_pcfunk1(simple_array__eq_hash_value, this, return f2__simple_array__eq_hash_
 
 f2ptr f2__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__simple_array__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__array__equals(cause, this, that));
 }
@@ -2954,7 +2954,7 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
 #endif // F2__PTYPE__TYPE_CHECK
   int length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
     //error(nil, "f2traced_array__elt error: index out of range.");
   }
   f2ptr return_value = nil;
@@ -3013,7 +3013,7 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length     = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
     //error(nil, "f2traced_array__elt__set__trace_depth error: index out of range.");
   }
   if (! raw__cause__is_imaginary__trace_depth(cause, cause, trace_depth - 1)) {
@@ -3104,7 +3104,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__tracing_on(this, index);
   return rv;
@@ -3120,7 +3120,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr old_value = __pure__f2traced_array__elt__tracing_on(this, index);
   
@@ -3141,7 +3141,7 @@ f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__trace(this, index);
   return rv;
@@ -3157,7 +3157,7 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr old_value = __pure__f2traced_array__elt__trace(this, index);
   
@@ -3178,7 +3178,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2pt
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__imagination_frame(this, index);
   return rv;
@@ -3194,7 +3194,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr old_value = __pure__f2traced_array__elt__imagination_frame(this, index);
   
@@ -3215,7 +3215,7 @@ f2ptr pfunk2__f2traced_array__elt__mutate_funks(f2ptr this, u64 index, f2ptr cau
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__mutate_funks(this, index);
   return rv;
@@ -3231,7 +3231,7 @@ f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2pt
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr old_value = __pure__f2traced_array__elt__mutate_funks(this, index);
   
@@ -3252,7 +3252,7 @@ f2ptr pfunk2__f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__read_funks(this, index);
   return rv;
@@ -3268,7 +3268,7 @@ f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr 
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
   if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds);
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr old_value = __pure__f2traced_array__elt__read_funks(this, index);
   
@@ -3291,11 +3291,11 @@ f2ptr f2__traced_array__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, 
 
 f2ptr f2__traced_array__new(f2ptr cause, f2ptr length) {
   if (! raw__integer__is_type(cause, length)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 length__i = f2integer__i(length, cause);
   if (length__i < 0) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2traced_array__new(cause, length__i, to_ptr(NULL));
 }
@@ -3350,7 +3350,7 @@ def_pcfunk1(traced_array__eq_hash_value, this, return f2__traced_array__eq_hash_
 
 f2ptr f2__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__traced_array__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__array__equals(cause, this, that));
 }
@@ -3505,7 +3505,7 @@ u32 raw__larva__larva_type(f2ptr cause, f2ptr this) {
 
 f2ptr f2__larva__larva_type(f2ptr cause, f2ptr this) {
   if (! raw__larva__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2integer__new(cause, raw__larva__larva_type(cause, this));
 }
@@ -3516,7 +3516,7 @@ f2ptr raw__larva__bug(f2ptr cause, f2ptr this) {
 
 f2ptr f2__larva__bug(f2ptr cause, f2ptr this) {
   if (! raw__larva__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__larva__bug(cause, this);
 }
@@ -3534,7 +3534,7 @@ boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {
 
 f2ptr f2__larva__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__larva__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__larva__eq(cause, this, that));
 }
@@ -3549,7 +3549,7 @@ boolean_t raw__larva__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__l
 
 f2ptr f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__larva__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__larva__equals(cause, this, that));
 }

@@ -26,9 +26,9 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1);}
+      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1, nil);}
       f2ptr str = f2cons__car(iter, cause);
-      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1);}
+      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1, nil);}
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);
@@ -58,7 +58,7 @@ def_pcfunk1(stringlist__concat, this, return f2__stringlist__concat(this_cause, 
 
 f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
   if (! raw__string__is_type(cause, intersperse_string)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 intersperse_string__length = f2string__length(intersperse_string, cause);
   u8* intersperse_string__str    = malloc(intersperse_string__length + 1);
@@ -67,9 +67,9 @@ f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_str
   {
     f2ptr iter = this;
     while (iter) {
-      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1);}
+      if (! raw__cons__is_type(cause, iter)) {return f2larva__new(cause, 1, nil);}
       f2ptr str = f2cons__car(iter, cause);
-      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1);}
+      if (! raw__string__is_type(cause, str)) {return f2larva__new(cause, 1, nil);}
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);
@@ -112,8 +112,8 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_free_memory:     return f2larva__new(cause, 1);
-  case ptype_newly_allocated: return f2larva__new(cause, 1);
+  case ptype_free_memory:     return f2larva__new(cause, 1, nil);
+  case ptype_newly_allocated: return f2larva__new(cause, 1, nil);
   case ptype_integer: {
     u8 temp_str[1024];
     snprintf((char*)temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
@@ -228,13 +228,13 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
   }
-  return f2larva__new(cause, 1);
+  return f2larva__new(cause, 1, nil);
 }
 def_pcfunk1(exp__as__string, exp, return f2__exp__as__string(this_cause, exp));
 
 f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
   if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 this__length = f2string__length(this, cause);
   u8* temp_str = alloca(this__length);
@@ -247,7 +247,7 @@ def_pcfunk1(string__as__symbol, this, return f2__string__as__symbol(this_cause, 
 f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   if ((! raw__string__is_type(cause, this)) ||
       (! raw__string__is_type(cause, filename))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 filename__length = f2string__length(filename, cause);
   u8* filename__str = alloca(filename__length + 1);
@@ -255,7 +255,7 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   filename__str[filename__length] = 0;
   int fd = open((char*)filename__str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
-    return f2larva__new(cause, 89);
+    return f2larva__new(cause, 89, nil);
   }
   u64 this__length = f2string__length(this, cause);
   u8* this__str = alloca(this__length);
@@ -263,7 +263,7 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   u64 write_bytes = write(fd, this__str, this__length);
   f2ptr result = nil;
   if (write_bytes != this__length) {
-    result = f2larva__new(cause, 89);
+    result = f2larva__new(cause, 89, nil);
   }
   close(fd);
   return result;
@@ -272,7 +272,7 @@ def_pcfunk2(string__save, this, filename, return f2__string__save(this_cause, th
 
 f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 filename__length = f2string__length(filename, cause);
   u8* filename__str = alloca(filename__length + 1);
@@ -280,7 +280,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   filename__str[filename__length] = 0;
   int fd = open((char*)filename__str, O_RDONLY);
   if (fd == -1) {
-    return f2larva__new(cause, 90);
+    return f2larva__new(cause, 90, nil);
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
@@ -289,7 +289,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   if (read_length != file__length) {
     printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
     free(file__str);
-    return f2larva__new(cause, 91);
+    return f2larva__new(cause, 91, nil);
   }
   f2ptr new_string = f2string__new(cause, file__length, file__str);
   free(file__str);
@@ -301,15 +301,15 @@ def_pcfunk1(string__load, filename, return f2__string__load(this_cause, filename
 f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   if ((! raw__string__is_type(cause, this)) ||
       (! raw__string__is_type(cause, token))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 token__length = f2string__length(token, cause);
   u64 this__length  = f2string__length(this,  cause);
   if (token__length == 0) {
-    return f2larva__new(cause, 93);
+    return f2larva__new(cause, 93, nil);
   }
   if (token__length > this__length) {
-    return f2larva__new(cause, 94);
+    return f2larva__new(cause, 94, nil);
   }
   u8* token__str    = (u8*)malloc(token__length);
   f2string__str_copy(token, cause, token__str);
@@ -371,7 +371,7 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
 f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   if ((! raw__string__is_type(cause, this)) ||
       (! raw__string__is_type(cause, substring))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__string__contains(cause, this, substring));
 }

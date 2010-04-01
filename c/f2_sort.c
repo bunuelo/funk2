@@ -95,7 +95,7 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
   s64 i;
   for (i = 0; i < array__length; i ++) {
     if (! raw__integer__is_type(cause, raw__array__elt(cause, array, i))) {
-      return f2larva__new(cause, 1);
+      return f2larva__new(cause, 1, nil);
     }
   }
   return integer_array__quicksort(cause, array, 0, raw__array__length(cause, array) - 1);

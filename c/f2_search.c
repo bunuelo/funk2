@@ -37,7 +37,7 @@ f2ptr f2__search(f2ptr fiber, f2ptr cause, f2ptr start_states, f2ptr expand_funk
       (! raw__funkable__is_type(cause, expand_funk)) ||
       (! raw__integer__is_type( cause, beam_width)) ||
       (! raw__funkable__is_type(cause, heuristic_funk))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64   search_nodes__count = 0;
   f2ptr search_nodes        = nil;

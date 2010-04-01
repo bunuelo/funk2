@@ -113,7 +113,7 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 
 f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__ptypehash__add(cause, this, key, value);
 }
@@ -163,7 +163,7 @@ boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
 
 f2ptr f2__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   if (! raw__ptypehash__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__ptypehash__remove(cause, this, key));
 }

@@ -71,7 +71,7 @@ def_pcfunk2(doublelinklist__cons_cells__set, this, value, return f2__doublelinkl
 f2ptr f2__doublelinklist__car(f2ptr cause, f2ptr this) {
   f2ptr cons_cells = f2doublelinklist__cons_cells(this, cause);
   if (cons_cells == nil) {
-    return f2larva__new(cause, 44);
+    return f2larva__new(cause, 44, nil);
   }
   return f2cons__car(cons_cells, cause);
 }
@@ -82,7 +82,7 @@ f2ptr f2__doublelinklist__cdr(f2ptr cause, f2ptr this) {
   s64   length__i  = f2integer__i(length, cause);
   f2ptr cons_cells = f2doublelinklist__cons_cells(this, cause);
   if (cons_cells == nil || length__i == 0) {
-    return f2larva__new(cause, 44);
+    return f2larva__new(cause, 44, nil);
   }
   return f2doublelinklist__new(cause, f2mutex__new(cause), f2integer__new(cause, length__i - 1), f2cons__cdr(cons_cells, cause));
 }

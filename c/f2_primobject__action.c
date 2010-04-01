@@ -78,7 +78,7 @@ f2ptr f2__action__begin(f2ptr cause, f2ptr this) {
   if (cause) {
     f2ptr time = f2__time(cause);
     if (! raw__cause__is_type(cause, cause)) {
-      return f2larva__new(cause, 1);
+      return f2larva__new(cause, 1, nil);
     }
     f2ptr action_event         = f2action_event__new(cause, this, time, nil);
     f2ptr current_events_mutex = f2cause__current_events_mutex(cause, cause);
@@ -94,7 +94,7 @@ f2ptr f2__action__end(f2ptr cause, f2ptr this) {
   if (cause) {
     f2ptr time = f2__time(cause);
     if (! raw__cause__is_type(cause, cause)) {
-      return f2larva__new(cause, 1);
+      return f2larva__new(cause, 1, nil);
     }
     f2ptr finished_action_event = nil;
     {

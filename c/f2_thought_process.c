@@ -99,7 +99,7 @@ f2ptr f2__thought_process__real_value(f2ptr cause, f2ptr this) {
 // thought_process-read_write_execute
 
 f2ptr f2__thought_process__read_write_execute__lookup(f2ptr cause, f2ptr this, f2ptr slot) {
-  if (! raw__thought_process__is_type(cause, this)) {return f2larva__new(cause, larva_type__invalid_type);}
+  if (! raw__thought_process__is_type(cause, this)) {return f2larva__new(cause, larva_type__invalid_type, nil);}
   f2ptr this__read_write_execute = nil;
   if (raw__thought_process__is_type(cause, this)) {
     f2ptr thought_process__read_write_execute_hash = f2thought_process__read_write_execute_slot_hash(this, cause);

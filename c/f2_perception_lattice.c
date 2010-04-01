@@ -76,7 +76,7 @@ f2ptr raw__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 
 f2ptr f2__graph__lookup_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__lookup_node(cause, this, node_label);
 }
@@ -94,7 +94,7 @@ f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 
 f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__add_node(cause, this, node_label);
 }
@@ -180,7 +180,7 @@ boolean_t raw__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 
 f2ptr f2__graph__remove_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__graph__remove_node(cause, this, node_label));
 }
@@ -226,7 +226,7 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left
 
 f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__add_edge(cause, this, edge_label, left_node_label, right_node_label);
 }
@@ -239,7 +239,7 @@ boolean_t raw__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node_label) {
 
 f2ptr f2__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__graph__contains_node(cause, this, node_label));
 }
@@ -264,7 +264,7 @@ f2ptr raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr
 
 f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__contains_edge(cause, this, edge_label, left_node_label, right_node_label);
 }
@@ -277,7 +277,7 @@ boolean_t raw__graph__contains_edge_type(f2ptr cause, f2ptr this, f2ptr edge_lab
 
 f2ptr f2__graph__contains_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__graph__contains_edge_type(cause, this, edge_label));
 }
@@ -360,7 +360,7 @@ boolean_t raw__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2p
 
 f2ptr f2__graph__remove_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr left_node_label, f2ptr right_node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__graph__remove_edge(cause, this, edge_label, left_node_label, right_node_label));
 }
@@ -414,7 +414,7 @@ boolean_t raw__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__graph__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, that))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__graph__equals(cause, this, that));
 }
@@ -473,7 +473,7 @@ f2ptr raw__graph__equals_hash_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__graph__equals_hash_value(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__equals_hash_value(cause, this);
 }
@@ -549,7 +549,7 @@ boolean_t raw__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label
 
 f2ptr f2__graph__replace_node(f2ptr cause, f2ptr this, f2ptr old_node_label, f2ptr new_node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2bool__new(raw__graph__replace_node(cause, this, old_node_label, new_node_label));
 }
@@ -581,7 +581,7 @@ void raw__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
 
 f2ptr f2__graph__make_rooted(f2ptr cause, f2ptr this, f2ptr root_node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   raw__graph__make_rooted(cause, this, root_node_label);
   return nil;
@@ -594,7 +594,7 @@ void raw__graph__make_rootless(f2ptr cause, f2ptr this) {
 
 f2ptr f2__graph__make_rootless(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   raw__graph__make_rootless(cause, this);
   return nil;
@@ -634,7 +634,7 @@ f2ptr raw__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
 
 f2ptr f2__rooted_graph__as__frame(f2ptr cause, f2ptr this) {
   if (! raw__rooted_graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__rooted_graph__as__frame(cause, this);
 }
@@ -738,7 +738,7 @@ f2ptr raw__graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__graph__intersect(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, that))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__intersect(cause, this, that);
 }
@@ -782,7 +782,7 @@ f2ptr raw__graph__union(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__graph__union(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, that))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__union(cause, this, that);
 }
@@ -820,7 +820,7 @@ f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
 
 f2ptr f2__graph__copy(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__copy(cause, this);
 }
@@ -853,7 +853,7 @@ f2ptr raw__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__graph__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, this))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__part_not_contained_by(cause, this, that);
 }
@@ -870,7 +870,7 @@ f2ptr raw__graph__variables(f2ptr cause, f2ptr this) {
 
 f2ptr f2__graph__variables(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__variables(cause, this);
 }
@@ -910,7 +910,7 @@ f2ptr raw__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, 
 
 f2ptr f2__graph__make_node_variable(f2ptr cause, f2ptr this, f2ptr node_label, f2ptr variable_name) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__make_node_variable(cause, this, node_label, variable_name);
 }
@@ -922,7 +922,7 @@ f2ptr raw__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) 
 
 f2ptr f2__graph__make_node_wildcard(f2ptr cause, f2ptr this, f2ptr node_label) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__make_node_wildcard(cause, this, node_label);
 }
@@ -1004,7 +1004,7 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 f2ptr f2__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr that, f2ptr bindings) {
   if ((! raw__graph__is_type(cause, this)) ||
       (! raw__graph__is_type(cause, that))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__graph__contains_match_with_bindings(cause, this, that, bindings);
 }
@@ -1012,7 +1012,7 @@ def_pcfunk3(graph__contains_match_with_bindings, this, that, bindings, return f2
 
 f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
   if (! raw__graph__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2ptr node_codes = nil;
   {
@@ -1092,7 +1092,7 @@ f2ptr raw__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__trans__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__trans__is_type(cause, this)) ||
       (! raw__trans__is_type(cause, that))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__trans__part_not_contained_by(cause, this, that);
 }

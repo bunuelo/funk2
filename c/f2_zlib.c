@@ -74,7 +74,7 @@ boolean_t zlib__deflate_length(u8* src_data, int src_length, int* dest_length) {
 
 f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
   if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   
   int src_length = raw__string__length(cause, this);
@@ -161,7 +161,7 @@ boolean_t zlib__inflate_length(u8* src_data, int src_length, int* dest_length) {
 
 f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
   if (! raw__string__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   
   int src_length = raw__string__length(cause, this);

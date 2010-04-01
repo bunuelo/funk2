@@ -71,7 +71,7 @@ def_pcfunk2(list__cons_cells__set, this, value, return f2__list__cons_cells__set
 f2ptr f2__list__car(f2ptr cause, f2ptr this) {
   f2ptr cons_cells = f2list__cons_cells(this, cause);
   if (cons_cells == nil) {
-    return f2larva__new(cause, 44);
+    return f2larva__new(cause, 44, nil);
   }
   return f2cons__car(cons_cells, cause);
 }
@@ -82,7 +82,7 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
   s64   length__i  = f2integer__i(length, cause);
   f2ptr cons_cells = f2list__cons_cells(this, cause);
   if (cons_cells == nil || length__i == 0) {
-    return f2larva__new(cause, 44);
+    return f2larva__new(cause, 44, nil);
   }
   f2ptr new_cons_cells = f2cons__cdr(cons_cells, cause);
   if (new_cons_cells) {

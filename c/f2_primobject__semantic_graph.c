@@ -207,7 +207,7 @@ f2ptr raw__semantic_graph__load_conceptnet_r3_format(f2ptr cause, u8* filename) 
 
 f2ptr f2__semantic_graph__load_conceptnet_r3_format(f2ptr cause, f2ptr filename) {
   if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64   filename_length = f2string__length(filename, cause);
   u8* filename_str = (u8*)alloca(filename_length + 1);
@@ -219,7 +219,7 @@ def_pcfunk1(semantic_graph__load_conceptnet_r3_format, filename, return f2__sema
 
 f2ptr f2__semantic_graph__new_left_concept_relations_hash(f2ptr cause, f2ptr fiber, f2ptr this) {
   if (! raw__semantic_graphp(this, cause)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2ptr concept_relations_hash = raw__ptypehash__new(cause, 20);
   f2ptr relation_iter = f2semantic_graph__relations(this, cause);
@@ -237,7 +237,7 @@ def_pcfunk1(semantic_graph__new_left_concept_relations_hash, this, return f2__se
 
 f2ptr f2__semantic_graph__new_right_concept_relations_hash(f2ptr cause, f2ptr fiber, f2ptr this) {
   if (! raw__semantic_graphp(this, cause)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2ptr concept_relations_hash = raw__ptypehash__new(cause, 20);
   f2ptr relation_iter = f2semantic_graph__relations(this, cause);

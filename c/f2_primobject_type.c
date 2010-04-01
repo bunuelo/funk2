@@ -30,7 +30,7 @@ f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_typ
       (! raw__symbol__is_type(  cause, slot_type)) ||
       (! raw__symbol__is_type(  cause, slot_name)) ||
       (! raw__funkable__is_type(cause, funkable))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2__frame__add_type_var_value(cause, this, slot_type, slot_name, funkable);
   return nil;
@@ -43,7 +43,7 @@ f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr 
   if ((! raw__frame__is_type(cause, this)) ||
       (! raw__symbol__is_type(cause, slot_type)) ||
       (! raw__symbol__is_type(cause, slot_name))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2ptr this_binding = f2__frame__lookup_type_var_value(cause, this, slot_type, slot_name, nil);
   if (! this_binding) {
@@ -70,7 +70,7 @@ f2ptr raw__primobject_type__type_funk__mapc_slot_names(f2ptr cause, f2ptr this, 
   }
   if ((! raw__frame__is_type( cause, this)) ||
       (! raw__symbol__is_type(cause, type_name))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__frame__type_var__mapc_slot_names(cause, this, type_name, map_funk, aux_data);
 }
@@ -81,7 +81,7 @@ f2ptr f2__primobject_type__type_funk__slot_names(f2ptr cause, f2ptr this, f2ptr 
   }
   if ((! raw__frame__is_type( cause, this)) ||
       (! raw__symbol__is_type(cause, type_name))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2__frame__type_var__slot_names(cause, this, type_name);
 }

@@ -87,7 +87,7 @@ def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, ni
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
-    return f2larva__new(cause, 333);
+    return f2larva__new(cause, 333, nil);
   }
   f2ptr allocate_traced_arrays   = cause__allocate_traced_arrays__default_value; // default values
   f2ptr bytecode_tracing_on      = nil;
@@ -190,7 +190,7 @@ f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
       if (cause_iter) {
 	keep_looping = boolean__true;
       } else {
-	value = f2larva__new(cause, 23);
+	value = f2larva__new(cause, 23, nil);
       }
     }
   } while (keep_looping);

@@ -69,7 +69,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__machine_code__symbol)        {f2__fiber__bytecode__machine_code(       fiber, bytecode, f2bytecode__arg0(bytecode, cause));}
   else {
     f2__fiber__print(cause, fiber, bytecode);
-    f2fiber__value__set(fiber, cause, f2larva__new(cause, 21));
+    f2fiber__value__set(fiber, cause, f2larva__new(cause, 21, nil));
   }
   return boolean__false;
 }

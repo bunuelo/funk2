@@ -83,11 +83,11 @@ f2ptr raw__prime_array__new(f2ptr cause, u64 prime_count) {
 
 f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
   if (! raw__integer__is_type(cause, prime_count)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 prime_count__i = f2integer__i(prime_count, cause);
   if (prime_count__i < 0) {
-    return f2larva__new(cause, 2);
+    return f2larva__new(cause, 2, nil);
   }
   return raw__prime_array__new(cause, prime_count__i);
 }
@@ -95,11 +95,11 @@ def_pcfunk1(prime_array__new, prime_count, return f2__prime_array__new(this_caus
 
 f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_count) {
   if (! raw__array__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 this__length = raw__array__length(cause, this);
   if (this__length == 0) {
-    return f2larva__new(cause, 2);
+    return f2larva__new(cause, 2, nil);
   }
   u64   prime_array__length = prime_count;
   f2ptr prime_array         = raw__array__new(cause, prime_array__length);
@@ -112,7 +112,7 @@ f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_coun
 	f2ptr elt = raw__array__elt(cause, this, index);
 	if (! raw__integer__is_type(cause, elt)) {
 	  f2__free(to_ptr(prime_array));
-	  return f2larva__new(cause, 1);
+	  return f2larva__new(cause, 1, nil);
 	}
 	u64 elt__i = f2integer__i(elt, cause);
 	u64_prime_array[index] = elt__i;
@@ -131,7 +131,7 @@ f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_coun
 
 f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_count) {
   if (! raw__integer__is_type(cause, prime_count)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 prime_count__i = f2integer__i(prime_count, cause);
   return raw__prime_array__new_by_extension(cause, this, prime_count__i);
@@ -172,7 +172,7 @@ f2ptr raw__prime(f2ptr cause, u64 prime_index) {
 
 f2ptr f2__prime(f2ptr cause, f2ptr prime_index) {
   if (! raw__integer__is_type(cause, prime_index)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 prime_index__i = f2integer__i(prime_index, cause);
   return raw__prime(cause, prime_index__i);

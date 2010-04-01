@@ -147,7 +147,7 @@ f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
   //if ((! raw__number__is_type(cause, x)) ||
   //    (! raw__number__is_type(cause, y)) ||
   //    (! raw__number__is_type(cause, z))) {
-  //  return f2larva__new(cause, 1);
+  //  return f2larva__new(cause, 1, nil);
   //}
   double x__d = raw__number__as__raw_double(cause, x);
   double y__d = raw__number__as__raw_double(cause, y);

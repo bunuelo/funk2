@@ -212,7 +212,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       return 1;
     }
   }
-  f2ptr retval = f2larva__new(cause, 18);
+  f2ptr retval = f2larva__new(cause, 18, nil);
   //f2__expression_not_funkable__exception__new(cause, funktion);
   //printf("\n"); f2__print(nil, retval); fflush(stdout); printf("\n");
   //error(fiber, "error: expression not funkable");
@@ -1523,19 +1523,19 @@ int f2__fiber__bytecode__machine_code(f2ptr fiber, f2ptr bytecode, f2ptr chunk) 
 void raw__fiber__bytecode_helper__reg_array__elt(f2ptr cause, f2ptr bytecode, f2ptr fiber, f2ptr reg_value) {
   f2ptr elt       = nil;
   if (! raw__array__is_type(cause, reg_value)) {
-    elt = f2larva__new(cause, 1);
+    elt = f2larva__new(cause, 1, nil);
   } else {
     u64 length = f2__array__length(cause, reg_value);
     f2ptr index = f2bytecode__arg1(bytecode, cause);
     if (! raw__integer__is_type(cause, index)) {
-      elt =  f2larva__new(cause, 1);
+      elt =  f2larva__new(cause, 1, nil);
     } else {
       u64 raw_index = f2integer__i(index, cause);
       if (! raw__integer__is_type(cause, index)) {
-	elt =  f2larva__new(cause, 1);
+	elt =  f2larva__new(cause, 1, nil);
       } else {
 	if (raw_index < 0 || raw_index >= length) {
-	  elt =  f2larva__new(cause, 2);
+	  elt =  f2larva__new(cause, 2, nil);
 	} else {
 	  elt = raw__array__elt(cause, reg_value, raw_index);
 	}
@@ -1636,19 +1636,19 @@ int f2__fiber__bytecode__reg_array__elt(f2ptr fiber, f2ptr bytecode, f2ptr reg) 
 void raw__fiber__bytecode_helper__reg_array__elt__set(f2ptr cause, f2ptr bytecode, f2ptr fiber, f2ptr reg_value) {
   f2ptr elt = nil;
   if (! raw__array__is_type(cause, reg_value)) {
-    elt = f2larva__new(cause, 1);
+    elt = f2larva__new(cause, 1, nil);
   } else {
     u64 length = f2__array__length(cause, reg_value);
     f2ptr index = f2bytecode__arg1(bytecode, cause);
     if (! raw__integer__is_type(cause, index)) {
-      elt =  f2larva__new(cause, 1);
+      elt =  f2larva__new(cause, 1, nil);
     } else {
       u64 raw_index = f2integer__i(index, cause);
       if (! raw__integer__is_type(cause, index)) {
-	elt =  f2larva__new(cause, 1);
+	elt =  f2larva__new(cause, 1, nil);
       } else {
 	if (raw_index < 0 || raw_index >= length) {
-	  elt =  f2larva__new(cause, 2);
+	  elt =  f2larva__new(cause, 2, nil);
 	} else {
 	  raw__array__elt__set(cause, reg_value, raw_index, f2fiber__value(fiber, cause));
 	  //elt = nil;

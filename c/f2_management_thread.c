@@ -247,7 +247,7 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
 u64  raw__management_thread__add_save_memory_image_command(u8* filename) {return funk2_management_thread__add_save_memory_image_command(&(__funk2.management_thread), filename);}
 f2ptr f2__management_thread__add_save_memory_image_command(f2ptr cause, f2ptr filename) {
   if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 filename__length = f2string__length(filename, cause);
   u8* raw_filename = (u8*)alloca(filename__length + 1);
@@ -261,7 +261,7 @@ def_pcfunk1(management_thread__add_save_memory_image_command, filename, return f
 u64  raw__management_thread__add_load_memory_image_command(u8* filename) {return funk2_management_thread__add_load_memory_image_command(&(__funk2.management_thread), filename);}
 f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr filename) {
   if (! raw__string__is_type(cause, filename)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 filename__length = f2string__length(filename, cause);
   u8* raw_filename = (u8*)alloca(filename__length + 1);
@@ -275,7 +275,7 @@ def_pcfunk1(management_thread__add_load_memory_image_command, filename, return f
 u64  raw__management_thread__add_exit_command(s64 value) {return funk2_management_thread__add_exit_command(&(__funk2.management_thread), value);}
 f2ptr f2__management_thread__add_exit_command(f2ptr cause, f2ptr value) {
   if (! raw__integer__is_type(cause, value)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2ptr uid = f2integer__new(cause, raw__management_thread__add_exit_command(f2integer__i(value, cause)));
   return uid;
@@ -286,7 +286,7 @@ boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user
 f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr uid, f2ptr user_result_place) {
   if ((! raw__integer__is_type(cause, uid)) ||
       (user_result_place && (! raw__place__is_type(cause, user_result_place)))) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 raw_uid = (u64)f2integer__i(uid, cause);
   boolean_t result      = boolean__false;

@@ -324,7 +324,7 @@ f2ptr f2__stream__try_read_hex_digits(f2ptr cause, f2ptr stream) {
   }
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   if (! raw__char__is_type(cause, read_ch)) {
-    return f2larva__new(cause, 19);
+    return f2larva__new(cause, 19, nil);
   }
   if (raw__char__is_hex_digit(cause, read_ch)) {
     f2__stream__ungetc(cause, stream, read_ch);
@@ -354,7 +354,7 @@ s64 raw__char__decimal_digit_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__char__decimal_digit_value(f2ptr cause, f2ptr this) {
   if (! raw__char__is_decimal_digit(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2integer__new(cause, raw__char__decimal_digit_value(cause, this));
 }
@@ -378,7 +378,7 @@ s64 raw__char__hex_digit_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__char__hex_digit_value(f2ptr cause, f2ptr this) {
   if (! raw__char__is_hex_digit(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2integer__new(cause, raw__char__hex_digit_value(cause, this));
 }
@@ -404,7 +404,7 @@ f2ptr f2__stream__try_read_unescaped_hex_pointer(f2ptr cause, f2ptr stream) {
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_hex_digit(cause, read_ch))) {
-	return f2larva__new(cause, 19);
+	return f2larva__new(cause, 19, nil);
       }
       t = raw__char__hex_digit_value(cause, read_ch);
       i --;
@@ -444,7 +444,7 @@ f2ptr f2__stream__try_read_unescaped_hex_char(f2ptr cause, f2ptr stream) {
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_hex_digit(cause, read_ch))) {
-	return f2larva__new(cause, 19);
+	return f2larva__new(cause, 19, nil);
       }
       t = raw__char__hex_digit_value(cause, read_ch);
       i --;
@@ -469,7 +469,7 @@ f2ptr f2__stream__try_read_decimal_digits(f2ptr cause, f2ptr stream) {
   }
   if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
   if (! raw__char__is_type(cause, read_ch)) {
-    return f2larva__new(cause, 19);
+    return f2larva__new(cause, 19, nil);
   }
   if (! raw__char__is_decimal_digit(cause, read_ch)) {
     f2__stream__ungetc(cause, stream, read_ch);
@@ -505,7 +505,7 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
     while (iter) {
       f2ptr read_ch = f2cons__car(iter, cause);
       if ((! raw__char__is_type(cause, read_ch)) || (! raw__char__is_decimal_digit(cause, read_ch))) {
-	return f2larva__new(cause, 19);
+	return f2larva__new(cause, 19, nil);
       }
       t = raw__char__decimal_digit_value(cause, read_ch);
       i --;
@@ -517,7 +517,7 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
       iter = f2cons__cdr(iter, cause);
     }
     
-    f2ptr exp = f2larva__new(cause, type);
+    f2ptr exp = f2larva__new(cause, type, nil);
     return exp;
   } else {
     f2__stream__ungetc(cause, stream, read_ch);
@@ -661,7 +661,7 @@ f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
 	return __funk2.reader.end_of_file_exception;
       }
       if (! raw__char__is_type(cause, read_ch)) {
-	return f2larva__new(cause, 19);
+	return f2larva__new(cause, 19, nil);
       }
       char ch = f2char__ch(read_ch, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__string_quote)) {break;}
@@ -676,7 +676,7 @@ f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
 	  return __funk2.reader.end_of_file_exception;
 	}
 	if (! raw__char__is_type(cause, read_ch)) {
-	  return f2larva__new(cause, 19);
+	  return f2larva__new(cause, 19, nil);
 	}
 	if      (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_newline))   {read_ch = __funk2.reader.char__newline;}
 	else if (raw__eq(cause, read_ch, __funk2.reader.char__string_escape_return))    {read_ch = __funk2.reader.char__return;}
@@ -720,7 +720,7 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
       }
       if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
       if (! raw__char__is_type(cause, read_ch)) {
-	return f2larva__new(cause, 19);
+	return f2larva__new(cause, 19, nil);
       }
       char ch = f2char__ch(read_ch, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__symbol_quote)) {break;}
@@ -732,7 +732,7 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
 	}
 	if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {f2__free(to_ptr(str)); status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
 	if (! raw__char__is_type(cause, read_ch)) {
-	  return f2larva__new(cause, 19);
+	  return f2larva__new(cause, 19, nil);
 	}
 	ch = f2char__ch(read_ch, cause);
       }
@@ -1000,7 +1000,7 @@ f2ptr f2__stream__try_read(f2ptr cause, f2ptr stream) {
   
   f2ptr begin_rewind_length = f2stream__rewind_length(stream, cause);
   if (! raw__integer__is_type(cause, begin_rewind_length)) {
-    return f2larva__new(cause, 337);
+    return f2larva__new(cause, 337, nil);
   }
   s64 begin_rewind_length__i = f2integer__i(begin_rewind_length, cause);
   

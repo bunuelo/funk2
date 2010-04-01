@@ -141,7 +141,7 @@ def_pcfunk2(cons__new, x, y, return f2__cons__new(this_cause, x, y));
 
 u64 raw__cons__length(f2ptr cause, f2ptr this) {
   if (! raw__cons__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__simple_length(cause, this);
 }
@@ -350,7 +350,7 @@ def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, ret
 
 f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   if (! raw__time__is_type(cause, until_time)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   f2fiber__sleep_until_time__set(this, cause, until_time);
   return nil;
@@ -359,7 +359,7 @@ def_pcfunk2(fiber__do_sleep_until_time, this, until_time, return f2__fiber__do_s
 
 f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanoseconds) {
   if (! raw__integer__is_type(cause, nanoseconds)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   s64 nanoseconds__i = f2integer__i(nanoseconds, cause);
   return f2__fiber__do_sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds__i)));
@@ -368,7 +368,7 @@ def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__s
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   if (! raw__fiber__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return f2fiber__is_complete(this, cause);
 }

@@ -5370,7 +5370,7 @@ void recv_packet__request__f2larva__new(funk2_node_t* funk2_node, pcs_request__f
   f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
   f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
   funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
-  f2ptr new = pfunk2__f2larva__new(cause, packet->payload.type);
+  f2ptr new = pfunk2__f2larva__new(cause, packet->payload.larva_type, packet->payload.bug);
   send_packet__respond__f2larva__new(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, new);
 }
 

@@ -3455,10 +3455,10 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type) {
   return larva_f2ptr;
 }
 
-f2ptr pfunk2__f2larva__new(f2ptr cause, u32 larva_type) {
+f2ptr pfunk2__f2larva__new(f2ptr cause, u32 larva_type, f2ptr bug) {
   check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
-  f2ptr retval = __pure__f2larva__new(pool_index, cause, larva_type);
+  f2ptr retval = __pure__f2larva__new(pool_index, cause, larva_type, bug);
   return retval;
 }
 

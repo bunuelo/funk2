@@ -39,10 +39,14 @@ f2ptr f2__graphviz__edge_color(f2ptr cause, f2ptr color) {
 }
 def_pcfunk1(graphviz__edge_color, color, return f2__graphviz__edge_color(this_cause, color));
 
-f2ptr f2__graphviz__node(f2ptr cause, f2ptr name, f2ptr label) {
-  return f2__stringlist__concat(cause, f2list4__new(cause, name, new__string(cause, " [label = \""), label, new__string(cause, "\"];")));
+f2ptr f2__graphviz__node(f2ptr cause, f2ptr name, f2ptr label, f2ptr color) {
+  if (! color) {
+    return f2__stringlist__concat(cause, f2list4__new(cause, name, new__string(cause, " [label = \""), label, new__string(cause, "\"];")));
+  } else {
+    return f2__stringlist__concat(cause, f2list6__new(cause, name, new__string(cause, " [label = \""), label, new__string(cause, "\", color=\""), color, new__string(cause, "\"];")));
+  }
 }
-def_pcfunk2(graphviz__node, name, label, return f2__graphviz__node(this_cause, name, label));
+def_pcfunk3(graphviz__node, name, label, color, return f2__graphviz__node(this_cause, name, label, color));
 
 f2ptr f2__graphviz__box_node(f2ptr cause, f2ptr name, f2ptr label) {
   return f2__stringlist__concat(cause, f2list4__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=\""), label, new__string(cause, "\",height=.1,width=.1];")));
@@ -68,6 +72,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   }
   if (raw__symbol__is_type(cause, exp)) {
     return f2__exp__as__string(cause, exp);
+  }
+  if (raw__graph_variable__is_type(cause, exp)) {
+    return f2__graphviz__exp__as__label(cause, f2__graph_variable__name(cause, exp));
   }
   f2ptr type = f2__object__type(cause, exp);
   return f2__stringlist__concat(cause, f2list3__new(cause,
@@ -146,7 +153,7 @@ void f2__graphviz__initialize() {
   f2__primcfunk__init__1(graphviz__digraph,        codes,                        "compiles code for graphviz.");
   f2__primcfunk__init__1(graphviz__node_color,     color,                        "compiles code for graphviz.");
   f2__primcfunk__init__1(graphviz__edge_color,     color,                        "compiles code for graphviz.");
-  f2__primcfunk__init__2(graphviz__node,           name, label,                  "compiles code for graphviz.");
+  f2__primcfunk__init__3(graphviz__node,           name, label, color,           "compiles code for graphviz.");
   f2__primcfunk__init__2(graphviz__box_node,       name, label,                  "compiles code for graphviz.");
   f2__primcfunk__init__2(graphviz__edge_tail_head, tail, head,                   "compiles code for graphviz.");
   f2__primcfunk__init__2(graphviz__edge,           from_node, to_node,           "compiles code for graphviz.");

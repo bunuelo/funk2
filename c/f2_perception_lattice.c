@@ -1021,7 +1021,13 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
     while (iter) {
       f2ptr node        = f2__cons__car(cause, iter);
       f2ptr node__label = f2__graph_node__label(cause, node);
-      f2ptr node_code   = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, node__label), f2__graphviz__exp__as__label(cause, node__label));
+      f2ptr color       = nil;
+      if (f2__graph_variable__is_type(cause, node__label)) {
+	color = new__string(cause, "#FF0000");
+      } else {
+	color = new__string(cause, "#000000");
+      }
+      f2ptr node_code   = f2__graphviz__node(cause, f2__graphviz__exp__as__name(cause, node__label), f2__graphviz__exp__as__label(cause, node__label), color);
       node_codes = f2cons__new(cause, node_code, node_codes);
       iter = f2__cons__cdr(cause, iter);
     }

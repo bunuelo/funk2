@@ -3544,7 +3544,7 @@ struct pcs_packet_payload_request__f2larva__larva_type_s {
 typedef struct pcs_packet_payload_request__f2larva__larva_type_s pcs_packet_payload_request__f2larva__larva_type_t;
 
 struct pcs_request__f2larva__larva_type_s {
-  funk2_packet_header_t                       header;
+  funk2_packet_header_t                             header;
   pcs_packet_payload_request__f2larva__larva_type_t payload;
 } __attribute__((__packed__));
 typedef struct pcs_request__f2larva__larva_type_s pcs_request__f2larva__larva_type_t;
@@ -3553,12 +3553,12 @@ typedef struct pcs_request__f2larva__larva_type_s pcs_request__f2larva__larva_ty
 
 struct pcs_packet_payload_respond__f2larva__larva_type_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u32                                                type;
+  u32                                                larva_type;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_respond__f2larva__larva_type_s pcs_packet_payload_respond__f2larva__larva_type_t;
 
 struct pcs_respond__f2larva__larva_type_s {
-  funk2_packet_header_t                       header;
+  funk2_packet_header_t                              header;
   pcs_packet_payload_respond__f2larva__larva_type_t payload;
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2larva__larva_type_s pcs_respond__f2larva__larva_type_t;

@@ -1125,7 +1125,15 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
   }
   {
     f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, that);
-    f2ptr variable_name      = f2__ptypehash__an_arbitrary_key(cause, variable_name_hash);
+    if (! variable_name_hash) {
+      printf("\nsuccessful bind.");
+      return bindings;
+    }
+    f2ptr variable_name = f2__ptypehash__an_arbitrary_key(cause, variable_name_hash);
+    if (! variable_name) {
+      printf("\nsuccessful bind.");
+      return bindings;
+    }
     printf("\nattempting to bind variable: "); f2__print(cause, variable_name);
     f2ptr possible_labels = nil;
     graph__node__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__node,

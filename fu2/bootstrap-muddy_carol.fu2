@@ -341,6 +341,7 @@
   this]
 
 [deftypefunk female_child_agent execute add_reactive_trace [relation object value]
+  [print `[adding reactive trace: [,relation ,object ,value]]]
   [let [[reactive_trace_knowledge_base [get this reactive_trace_knowledge_base]]]
     [have reactive_trace_knowledge_base add_edge relation object value]]]
 
@@ -746,6 +747,8 @@
 		 
 		 carol
 		 ]]]
+
+[globalize knowledge [get carol reactive_trace_knowledge_base]]
 
 [globalize carol_scene [carol_playing_in_mud_scene-new]]
 

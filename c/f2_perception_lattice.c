@@ -1135,13 +1135,14 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 			     new_bindings = f2__ptypehash__new(cause);
 			   }
 			   f2__ptypehash__add(cause, new_bindings, variable_name, this_unmatched_subgraph__node__label);
+			   f2ptr this_unmatched_subgraph_copy  = f2__graph__copy(cause, this_unmatched_subgraph);
 			   f2ptr that_unmatched_subgraph_bound = f2__graph__copy(cause, that_unmatched_subgraph);
 			   printf("\nattempting to bind variable"); f2__print(cause, variable_name);
 			   printf("  to "); f2__print(cause, this_unmatched_subgraph__node__label);
 			   if (! raw__graph__bind_variable(cause, that_unmatched_subgraph_bound, variable_name, this_unmatched_subgraph__node__label)) {
 			     return f2larva__new(cause, 134, nil);
 			   }
-			   f2ptr successful_bindings = raw__graph__contains_match_with_bindings(cause, this_unmatched_subgraph, that_unmatched_subgraph_bound, new_bindings);
+			   f2ptr successful_bindings = raw__graph__contains_match_with_bindings(cause, this_unmatched_subgraph_copy, that_unmatched_subgraph_bound, new_bindings);
 			   if (successful_bindings) {
 			     printf("\nfound successful bindings.");
 			     return successful_bindings;

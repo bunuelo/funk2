@@ -122,6 +122,7 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
 				  {"=",  "_EQUALS_"},
 				  {"/",  "_SLASH_"},
 				  {"\\", "_BSLASH_"},
+				  {":",  "_COLON_"},
 				  {NULL, NULL}};
   {
     int index;

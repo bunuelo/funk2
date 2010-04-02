@@ -395,6 +395,18 @@ f2ptr f2__graph__replace_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr l
 }
 def_pcfunk5(graph__replace_edge, this, edge_label, left_node_label, right_node_label, new_edge_label, return f2__graph__replace_edge(this_cause, this, edge_label, left_node_label, right_node_label, new_edge_label));
 
+f2ptr raw__graph__replace_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr new_edge_label) {
+  return nil;
+}
+
+f2ptr f2__graph__replace_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr new_edge_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__replace_edge_type(cause, this, edge_label, new_edge_label);
+}
+def_pcfunk3(graph__replace_edge_type, this, edge_label, new_edge_label, return f2__graph__replace_edge_type(this_cause, this, edge_label, new_edge_label));
+
 f2ptr f2__graph__nodes(f2ptr cause, f2ptr this) {
   f2ptr nodes = nil;
   graph__node__iteration(cause, this, node, nodes = f2cons__new(cause, node, nodes));
@@ -1335,6 +1347,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__1(graph__edges,                        this,                                                                "returns a new list of all edges in this graph.");
   f2__primcfunk__init__3(graph__replace_node,                 this, old_node, new_node,                                            "replaces old node with new node.");
   f2__primcfunk__init__5(graph__replace_edge,                 this, edge_label, left_node_label, right_node_label, new_edge_label, "replaces old node with new node.");
+  f2__primcfunk__init__5(graph__replace_edge_type,            this, edge_label, new_edge_label,                                    "replaces old edge type with new edge type.");
   f2__primcfunk__init__2(graph__make_rooted,                  this, root_node,                                                     "makes graph rooted with root node.");
   f2__primcfunk__init__1(graph__make_rootless,                this,                                                                "makes graph rootless.");
   f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,                                           "makes a node in the graph a variable for matching.");

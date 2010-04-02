@@ -81,7 +81,7 @@ declare_object_type_3_slot(graph_edge_type, label, left_node_hash, right_node_ha
                                                             } \
     							    iter = f2__cons__cdr(cause, iter); \
                                                           } \
-							  ));
+							  )); \
 }
 
 // graph

@@ -1055,7 +1055,7 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
   {
     f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, that);
     f2ptr variable_name      = f2__ptypehash__an_arbitrary_key(cause, variable_name_hash);
-    f2ptr variable           = f2__ptypehash__lookup(cause, variable_name_hash);
+    f2ptr variable           = f2__ptypehash__lookup(cause, variable_name_hash, variable_name);
     graph__node__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__node,
 			   f2ptr this_unmatched_subgraph__node__label = f2__graph_node__label(cause, this_unmatched_subgraph__node);
 			   f2ptr new_bindings;
@@ -1064,7 +1064,7 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 			   } else {
 			     new_bindings = f2__ptypehash__new(cause);
 			   }
-			   f2__ptypehash__add(cause, variable_name, this_unmatched_subgraph__node__label);
+			   f2__ptypehash__add(cause, new_bindings, variable_name, this_unmatched_subgraph__node__label);
 			   f2ptr that_unmatched_subgraph_bound = f2__graph__copy(cause, that_unmatched_subgraph);
 			   f2__graph__replace_node(cause, that_unmatched_subgraph_bound, variable, this_unmatched_subgraph__node__label);
 			   f2ptr successful_bindings = raw__graph__contains_match_with_bindings(cause, this_unmatched_subgraph, that_unmatched_subgraph_bound, new_bindings);

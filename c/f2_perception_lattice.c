@@ -1142,11 +1142,11 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 	  } else {
 	    new_bindings = f2__ptypehash__new(cause);
 	  }
-	  f2__ptypehash__add(cause, new_bindings, variable_name, possible__label);
+	  f2__ptypehash__add(cause, new_bindings, variable_name, possible_label);
 	  f2ptr that_unmatched_subgraph_bound = f2__graph__copy(cause, that_unmatched_subgraph);
 	  printf("\nattempting to bind variable "); f2__print(cause, variable_name);
-	  printf("  to "); f2__print(cause, possible__label);
-	  if (! raw__graph__bind_variable(cause, that_unmatched_subgraph_bound, variable_name, possible__label)) {
+	  printf("  to "); f2__print(cause, possible_label);
+	  if (! raw__graph__bind_variable(cause, that_unmatched_subgraph_bound, variable_name, possible_label)) {
 	    return f2larva__new(cause, 134, nil);
 	  }
 	  printf("  and searching for match within bindings: "); f2__print(cause, new_bindings);
@@ -1156,7 +1156,7 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 	    return successful_bindings;
 	  }
 	  printf("\ndid not find successful bindings for "); f2__print(cause, variable_name);
-	  printf("    and "); f2__print(cause, possible__label);
+	  printf("    and "); f2__print(cause, possible_label);
 	}
 	iter = f2__cons__cdr(cause, iter);
       }

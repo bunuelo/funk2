@@ -255,7 +255,7 @@
 
 [deftypefunk physical_scene get contains_object [object]
   [let [[things [get this physical_things]]]
-    [is_member object things]]]
+    [contains things object]]]
 
 [deftypefunk physical_scene execute remove_object [object]
   [let [[things [get this physical_things]]]

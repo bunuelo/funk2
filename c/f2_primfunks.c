@@ -887,6 +887,23 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
 f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__eq(cause, x, y));}
 def_pcfunk2(eq, x, y, return f2__eq(this_cause, x, y));
 
+boolean_t raw__contains(f2ptr cause, f2ptr this, f2ptr element) {
+  f2ptr iter = this;
+  while (iter) {
+    f2ptr first = f2__first(cause, iter);
+    if (raw__eq(cause, first, element)) {
+      return boolean__true;
+    }
+    iter = f2__next(cause, iter);
+  }
+  return boolean__false;
+}
+
+f2ptr f2__contains(f2ptr cause, f2ptr this, f2ptr element) {
+  return f2bool__new(raw__contains(cause, this, element));
+}
+def_pcfunk2(contains, this, element, return f2__contains(this_cause, this, element));
+
 f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
   if (!raw__string__is_type(cause, filename) || !raw__string__is_type(cause, mode)) {
     error(nil, "fopen error: filename and mode must both be strings.");
@@ -1701,6 +1718,7 @@ void f2__primcfunks__initialize() {
   f2__funktional_primcfunk__init__1(not,                        x, "");
   
   f2__funktional_primcfunk__init__2(eq,                         x, y, "");
+  f2__primcfunk__init__2(contains, this, element, "");
   
   f2__primcfunk__init__1(exp__print, exp, "");
   f2__primcfunk__init(write, "");

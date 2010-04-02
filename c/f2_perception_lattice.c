@@ -1287,7 +1287,7 @@ f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__graph_variable__is_wildcard(cause, this));
 }
 def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
-ontains_edge_type
+
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {

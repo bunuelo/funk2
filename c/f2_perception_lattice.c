@@ -1140,6 +1140,10 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 			   f2ptr this_unmatched_subgraph__node__label = f2__graph_node__label(cause, this_unmatched_subgraph__node);
 			   possible_labels = f2cons__new(cause, this_unmatched_subgraph__node__label, possible_labels);
 			   );
+    graph__edge__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__edge,
+			   f2ptr this_unmatched_subgraph__edge__label = f2__graph_edge__label(cause, this_unmatched_subgraph__edge);
+			   possible_labels = f2cons__new(cause, this_unmatched_subgraph__edge__label, possible_labels);
+			   );
     {
       f2ptr iter = possible_labels;
       while (iter) {

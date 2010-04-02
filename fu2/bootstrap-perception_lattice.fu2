@@ -41,7 +41,7 @@
 [deftypefunk graph execute make_edge_variable           [edge_label left_node_label right_node_label variable_name]  [graph-make_edge_variable           this edge_label left_node_label right_node_label variable_name]]
 [deftypefunk graph execute make_edge_wildcard           [edge_label left_node_label right_node_label]                [graph-make_edge_wildcard           this edge_label left_node_label right_node_label]]
 [deftypefunk graph get     contains_match_with_bindings [that bindings]                                              [graph-contains_match_with_bindings this that bindings]]
-[deftypefunk graph execute bind_variable                [that variable_name value]                                   [graph-bind_variable                this variable_name value]]
+[deftypefunk graph execute bind_variable                [variable_name value]                                        [graph-bind_variable                this variable_name value]]
 
 [deftypefunk graph_variable get is_wildcard [] [graph_variable-is_wildcard this]]
 

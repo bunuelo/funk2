@@ -1037,6 +1037,7 @@ boolean_t raw__graph__bind_variable(f2ptr cause, f2ptr this, f2ptr variable_name
   if (variable_edge_type) {
     raw__graph__replace_edge_type(cause, this, variable, value);
   }
+  f2__ptypehash__remove(cause, variable_name_hash, variable_name);
   return boolean__true;
 }
 

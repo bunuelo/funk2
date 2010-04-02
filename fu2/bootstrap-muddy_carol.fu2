@@ -393,8 +393,10 @@
 	[eq right_hand_object object]]]]
 
 [deftypefunk female_child_agent execute set_enable_random_move_goal [enable_random_move_goal]
-  [have this add_reactive_trace `set_enable_random_move_goal [get this now] enable_random_move_goal]
-  [have this add `enable_random_move_goal enable_random_move_goal]
+  [let [[old_enable_random_move_goal [have this lookup `enable_random_move_goal]]]
+    [if [not [eq old_enable_random_move_goal enable_random_move_goal]]
+	[prog [have this add_reactive_trace `set_enable_random_move_goal [get this now] enable_random_move_goal]
+	      [have this add `enable_random_move_goal enable_random_move_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute choose_random_move_goal []
@@ -423,12 +425,16 @@
   nil]
 
 [deftypefunk female_child_agent execute set_put_object_at_goal [object position]
-  [let [[event_symbol [gensym]]]
-    [have this add_reactive_trace `set_put_object_at_goal [get this now] event_symbol]
-    [have this add_reactive_trace `object   event_symbol object]
-    [have this add_reactive_trace `position event_symbol position]]
-  [have this add `put_object_at_goal__object   object]
-  [have this add `put_object_at_goal__position position]
+  [let [[old_put_object_at_goal__object   [have this lookup `put_object_at_goal__object]]
+	[old_put_object_at_goal__position [have this lookup `put_object_at_goal__position]]]
+    [if [or [not [eq old_put_object_at_goal__object   object]]
+	    [not [eq old_put_object_at_goal__position position]]]
+	[prog [let [[event_symbol [gensym]]]
+		[have this add_reactive_trace `set_put_object_at_goal [get this now] event_symbol]
+		[have this add_reactive_trace `object   event_symbol object]
+		[have this add_reactive_trace `position event_symbol position]]
+	      [have this add `put_object_at_goal__object   object]
+	      [have this add `put_object_at_goal__position position]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_put_object_at_goal []
@@ -446,8 +452,10 @@
   nil]
 
 [deftypefunk female_child_agent execute set_drop_object_goal [drop_object_goal]
-  [have this add_reactive_trace `set_drop_object_goal [get this now] drop_object_goal]
-  [have this add `drop_object_goal drop_object_goal]
+  [let [[old_drop_object_goal [have this lookup `drop_object_goal]]]
+    [if [not [eq old_drop_object_goal drop_object_goal]]
+	[prog [have this add_reactive_trace `set_drop_object_goal [get this now] drop_object_goal]
+	      [have this add `drop_object_goal drop_object_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_drop_object_goal []
@@ -470,8 +478,10 @@
   nil]
 
 [deftypefunk female_child_agent execute set_pick_up_object_goal [pick_up_object_goal]
-  [have this add_reactive_trace `set_pick_up_object_goal [get this now] pick_up_object_goal]
-  [have this add `pick_up_object_goal pick_up_object_goal]
+  [let [[old_pick_up_object_goal [have this lookup `pick_up_object_goal]]]
+    [if [not [eq old_pick_up_object_goal pick_up_object_goal]]
+	[prog [have this add_reactive_trace `set_pick_up_object_goal [get this now] pick_up_object_goal]
+	      [have this add `pick_up_object_goal pick_up_object_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_pick_up_object_goal []
@@ -500,8 +510,10 @@
   nil]
 
 [deftypefunk female_child_agent execute set_move_near_object_goal [move_near_object_goal]
-  [have this add_reactive_trace `set_move_near_object_goal [get this now] move_near_object_goal]
-  [have this add `move_near_object_goal move_near_object_goal]
+  [let [[old_move_near_object_goal [have this lookup `move_near_object_goal]]]
+    [if [not [eq old_move_near_object_goal move_near_object_goal]]
+	[prog [have this add_reactive_trace `set_move_near_object_goal [get this now] move_near_object_goal]
+	      [have this add `move_near_object_goal move_near_object_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_move_near_object_goal []
@@ -518,8 +530,10 @@
   nil]
 
 [deftypefunk female_child_agent execute set_posture_goal [posture_goal]
-  [have this add_reactive_trace `set_posture_goal [get this now] posture_goal]
-  [have this add `posture_goal posture_goal]
+  [let [[old_posture_goal [have this lookup `posture_goal]]]
+    [if [not [eq old_posture_goal posture_goal]]
+	[prog [have this add_reactive_trace `set_posture_goal [get this now] posture_goal]
+	      [have this add `posture_goal posture_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_posture_goal []
@@ -531,8 +545,10 @@
   nil]
 
 [deftypefunk female_child_agent execute set_move_in_direction_goal [move_in_direction_goal]
-  [have this add_reactive_trace `set_move_in_direction_goal [get this now] move_in_direction_goal]
-  [have this add `move_in_direction_goal move_in_direction_goal]
+  [let [[old_move_in_direction_goal [have this lookup `move_in_direction_goal]]]
+    [if [not [eq old_move_in_direction_goal move_in_direction_goal]]
+	[prog [have this add_reactive_trace `set_move_in_direction_goal [get this now] move_in_direction_goal]
+	      [have this add `move_in_direction_goal move_in_direction_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_move_in_direction_goal []
@@ -555,8 +571,10 @@
   nil]
 
 [deftypefunk female_child_agent execute set_move_to_goal [move_to_goal]
-  [have this add_reactive_trace `set_move_to_goal [get this now] move_to_goal]
-  [have this add `move_to_goal move_to_goal]
+  [let [[old_move_to_goal [have this lookup `move_to_goal]]]
+    [if [not [eq old_move_to_goal move_to_goal]]
+	[prog [have this add_reactive_trace `set_move_to_goal [get this now] move_to_goal]
+	      [have this add `move_to_goal move_to_goal]]]]
   nil]
 
 [deftypefunk female_child_agent execute handle_move_to_goal []

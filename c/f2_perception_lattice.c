@@ -1044,7 +1044,7 @@ f2ptr f2__graph__bind_variable(f2ptr cause, f2ptr this, f2ptr variable_name, f2p
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph__bind_variable(cause, this, variable_name, value);
+  return f2bool__new(raw__graph__bind_variable(cause, this, variable_name, value));
 }
 def_pcfunk3(graph__bind_variable, this, variable_name, value, return f2__graph__bind_variable(this_cause, this, variable_name, value));
 
@@ -1124,7 +1124,6 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
   {
     f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, that);
     f2ptr variable_name      = f2__ptypehash__an_arbitrary_key(cause, variable_name_hash);
-    f2ptr variable           = f2__ptypehash__lookup(cause, variable_name_hash, variable_name);
     graph__node__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__node,
 			   f2ptr this_unmatched_subgraph__node__label = f2__graph_node__label(cause, this_unmatched_subgraph__node);
 			   f2ptr new_bindings;

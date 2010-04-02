@@ -1119,6 +1119,7 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 	f2ptr matched_edgeless_node_label = f2__cons__car(cause, iter);
 	raw__graph__remove_node(cause, this_unmatched_subgraph, matched_edgeless_node_label);
 	raw__graph__remove_node(cause, that_unmatched_subgraph, matched_edgeless_node_label);
+	iter = f2__cons__cdr(cause, iter);
       }
     }
   }

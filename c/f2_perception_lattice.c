@@ -272,7 +272,7 @@ def_pcfunk4(graph__contains_edge, this, edge_label, left_node_label, right_node_
 
 f2ptr raw__graph__lookup_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
   f2ptr edge_type_label_hash = f2__graph__edge_type_label_hash(cause, this);
-  return raw__ptypehash__lookup(cause, edge_type_label_hash, edge_label);
+  return f2__ptypehash__lookup(cause, edge_type_label_hash, edge_label);
 }
 
 f2ptr f2__graph__lookup_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {

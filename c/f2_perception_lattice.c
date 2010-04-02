@@ -270,9 +270,22 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr 
 }
 def_pcfunk4(graph__contains_edge, this, edge_label, left_node_label, right_node_label, return f2__graph__contains_edge(this_cause, this, edge_label, left_node_label, right_node_label));
 
-boolean_t raw__graph__contains_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
+f2ptr raw__graph__lookup_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
   f2ptr edge_type_label_hash = f2__graph__edge_type_label_hash(cause, this);
-  return raw__ptypehash__contains(cause, edge_type_label_hash, edge_label);
+  return raw__ptypehash__lookup(cause, edge_type_label_hash, edge_label);
+}
+
+f2ptr f2__graph__lookup_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__lookup_edge_type(cause, this, edge_label);
+}
+def_pcfunk2(graph__lookup_edge_type, this, edge_label, return f2__graph__lookup_edge_type(this_cause, this, edge_label));
+
+boolean_t raw__graph__contains_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
+  f2ptr edge_type = raw__graph__lookup_edge_type(cause, this, edge_label);
+  return (edge_type != nil);
 }
 
 f2ptr f2__graph__contains_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label) {
@@ -979,6 +992,31 @@ f2ptr f2__graph__make_edge_wildcard(f2ptr cause, f2ptr this, f2ptr edge_label, f
 }
 def_pcfunk4(graph__make_edge_wildcard, this, edge_label, left_node_label, right_node_label, return f2__graph__make_edge_wildcard(this_cause, this, edge_label, left_node_label, right_node_label));
 
+boolean_t raw__graph__bind_variable(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
+  f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, this);
+  f2ptr variable           = f2__ptypehash__lookup(cause, variable_name_hash, variable_name);
+  if (! variable) {
+    return boolean__false;
+  }
+  f2ptr variable_node      = raw__graph__lookup_node(cause, this, variable);
+  f2ptr variable_edge_type = raw__graph__lookup_edge_type(cause, this, variable);
+  if (variable_node) {
+    raw__graph__replace_node(cause, this, variable, value);
+  }
+  if (variable_edge_type) {
+    raw__graph__replace_edge_type(cause, this, variable, value);
+  }
+  return boolean__true;
+}
+
+f2ptr f2__graph__bind_variable(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__bind_variable(cause, this, variable_name, value);
+}
+def_pcfunk3(graph__bind_variable, this, variable_name, value, return f2__graph__bind_variable(this_cause, this, variable_name, value));
+
 // this is a normal graph without variables.
 // that is a pattern graph with variables at nodes and edges
 f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr that, f2ptr bindings) {
@@ -1237,7 +1275,7 @@ f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__graph_variable__is_wildcard(cause, this));
 }
 def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
-
+ontains_edge_type
 // **
 
 void f2__perception_lattice__reinitialize_globalvars() {
@@ -1284,6 +1322,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__4(graph__add_edge,                     this, label, left_node, right_node,                                  "add an edge to a graph by mutation.");
   f2__primcfunk__init__2(graph__contains_node,                this, node,                                                          "returns boolean true if this graph contains node.");
   f2__primcfunk__init__4(graph__contains_edge,                this, label, left_node, right_node,                                  "returns boolean true if this graph contains edge.");
+  f2__primcfunk__init__2(graph__lookup_edge_type,             this, edge_label,                                                    "returns edge type object if one exists for this edge label.");
   f2__primcfunk__init__2(graph__contains_edge_type,           this, edge_label,                                                    "returns boolean true if this graph contains at least one edge with the label.");
   f2__primcfunk__init__2(graph__intersect,                    this, that,                                                          "returns the intersection of two graphs.");
   f2__primcfunk__init__2(graph__union,                        this, that,                                                          "returns the union of two graphs.");
@@ -1303,6 +1342,7 @@ void f2__perception_lattice__initialize() {
   f2__primcfunk__init__5(graph__make_edge_variable,           this, edge_label, left_node_label, right_node_label, variable_name,  "makes an edge in the graph a variable for matching.");
   f2__primcfunk__init__4(graph__make_edge_wildcard,           this, edge_label, left_node_label, right_node_label,                 "makes an edge in the graph a wildcard variable for matching.");
   f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,                                                "returns variable bindings for match.");
+  f2__primcfunk__init__3(graph__bind_variable,                this, variable_name, value,                                          "returns true if variable is successfully bound, false otherwise.");
   f2__primcfunk__init__1(graph__as__dot_code,                 this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
   
   // trans

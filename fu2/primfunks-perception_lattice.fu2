@@ -44,6 +44,7 @@
 [globalize-funk graph-make_edge_variable           &primfunk:graph__make_edge_variable]
 [globalize-funk graph-make_edge_wildcard           &primfunk:graph__make_edge_wildcard]
 [globalize-funk graph-contains_match_with_bindings &primfunk:graph__contains_match_with_bindings]
+[globalize-funk graph-bind_variable                &primfunk:graph__bind_variable]
 [globalize-funk graph-as-dot_code                  &primfunk:graph__as__dot_code]
 
 [globalize-funk trans-part_not_contained_by &primfunk:trans__part_not_contained_by]

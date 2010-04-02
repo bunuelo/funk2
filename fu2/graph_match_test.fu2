@@ -35,5 +35,5 @@
 [have d make_node_variable b      `x]
 [have d make_node_variable `white `y]
 [have d make_node_variable `black `z]
-[have d make_node_variable `long  `w]
+[have d make_node_variable `short `w]
 

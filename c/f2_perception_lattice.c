@@ -1032,12 +1032,15 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
   { // remove edgeless nodes
     f2ptr matched_edgeless_node_labels = nil;
     graph__node__iteration(cause, that_unmatched_subgraph, that_unmatched_subgraph__node,
-			   int that_unmatched_subgraph__node__edge_count = 0;
-			   graph_node__in_edge__iteration( cause, that_unmatched_subgraph__node, in_edge,  that_unmatched_subgraph__node__edge_count ++);
-			   graph_node__out_edge__iteration(cause, that_unmatched_subgraph__node, out_edge, that_unmatched_subgraph__node__edge_count ++);
-			   if (that_unmatched_subgraph__node__edge_count == 0) {
-			     f2ptr that_unmatched_subgraph__node__label = f2__graph_node__label(cause, that_unmatched_subgraph__node);
-			     matched_edgeless_node_labels = f2cons__new(cause, that_unmatched_subgraph__node__label, matched_edgeless_node_labels);
+			   f2ptr that_unmatched_subgraph__node__label = f2__graph_node__label(cause, that_unmatched_subgraph__node);
+			   if (! raw__graph_variable__is_type(cause, that_unmatched_subgraph__node__label)) {
+			     int that_unmatched_subgraph__node__edge_count = 0;
+			     graph_node__in_edge__iteration( cause, that_unmatched_subgraph__node, in_edge,  that_unmatched_subgraph__node__edge_count ++);
+			     graph_node__out_edge__iteration(cause, that_unmatched_subgraph__node, out_edge, that_unmatched_subgraph__node__edge_count ++);
+			     if (that_unmatched_subgraph__node__edge_count == 0) {
+			       f2ptr that_unmatched_subgraph__node__label = f2__graph_node__label(cause, that_unmatched_subgraph__node);
+			       matched_edgeless_node_labels = f2cons__new(cause, that_unmatched_subgraph__node__label, matched_edgeless_node_labels);
+			     }
 			   }
 			   );
     {
@@ -1049,7 +1052,28 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
       }
     }
   }
-  return f2cons__new(cause, this_unmatched_subgraph, that_unmatched_subgraph);
+  {
+    f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, that);
+    f2ptr variable_name      = f2__ptypehash__an_arbitrary_key(cause, variable_name_hash);
+    f2ptr variable           = f2__ptypehash__lookup(cause, variable_name_hash);
+    graph__node__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__node,
+			   f2ptr this_unmatched_subgraph__node__label = f2__graph_node__label(cause, this_unmatched_subgraph__node);
+			   f2ptr new_bindings;
+			   if (bindings) {
+			     new_bindings = f2__ptypehash__copy(cause, bindings);
+			   } else {
+			     new_bindings = f2__ptypehash__new(cause);
+			   }
+			   f2__ptypehash__add(cause, variable_name, this_unmatched_subgraph__node__label);
+			   f2ptr that_unmatched_subgraph_bound = f2__graph__copy(cause, that_unmatched_subgraph);
+			   f2__graph__replace_node(cause, that_unmatched_subgraph_bound, variable, this_unmatched_subgraph__node__label);
+			   f2ptr successful_bindings = raw__graph__contains_match_with_bindings(cause, this_unmatched_subgraph, that_unmatched_subgraph_bound, new_bindings);
+			   if (successful_bindings) {
+			     return successful_bindings;
+			   }
+			   );
+  }
+  return nil;
 }
 
 f2ptr f2__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr that, f2ptr bindings) {

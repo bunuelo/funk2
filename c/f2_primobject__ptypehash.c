@@ -249,6 +249,19 @@ f2ptr f2__ptypehash__an_arbitrary_value(f2ptr cause, f2ptr this) {
   return value;
 }
 
+f2ptr raw__ptypehash__copy(f2ptr cause, f2ptr this) {
+  f2ptr new_hash = f2__ptypehash__new(cause);
+  ptypehash__iteration(cause, this, key, value, raw__ptypehash__add(cause, new_hash, key, value));
+  return new_hash;
+}
+
+f2ptr f2__ptypehash__copy(f2ptr cause, f2ptr this) {
+  if (! raw__ptypehash__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__ptypehash__copy(cause, this);
+}
+
 f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__mapc_slot_names assert failed: f2__ptypehash__valid(this)");
   ptypehash__key__iteration(cause, this, key,

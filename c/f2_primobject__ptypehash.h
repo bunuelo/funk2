@@ -59,6 +59,7 @@ boolean_t raw__ptypehash__contains                  (f2ptr cause, f2ptr this, f2
 f2ptr      f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__an_arbitrary_key          (f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__an_arbitrary_value        (f2ptr cause, f2ptr this);
+f2ptr      f2__ptypehash__copy                      (f2ptr cause, f2ptr this);
 
 f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 

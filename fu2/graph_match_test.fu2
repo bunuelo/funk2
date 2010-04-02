@@ -32,6 +32,7 @@
 [globalize c [get a as-graph]]
 [globalize d [get b as-graph]]
 
+[have d make_edge_variable `body  b `black `s]
 [have d make_node_variable b      `x]
 [have d make_node_variable `white `y]
 [have d make_node_variable `black `z]

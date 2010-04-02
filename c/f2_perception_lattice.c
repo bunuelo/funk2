@@ -1126,30 +1126,41 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
     f2ptr variable_name_hash = f2__graph__variable_name_hash(cause, that);
     f2ptr variable_name      = f2__ptypehash__an_arbitrary_key(cause, variable_name_hash);
     printf("\nattempting to bind variable: "); f2__print(cause, variable_name);
+    f2ptr possible_labels = nil;
     graph__node__iteration(cause, this_unmatched_subgraph, this_unmatched_subgraph__node,
 			   f2ptr this_unmatched_subgraph__node__label = f2__graph_node__label(cause, this_unmatched_subgraph__node);
-			   f2ptr new_bindings;
-			   if (bindings) {
-			     new_bindings = f2__ptypehash__copy(cause, bindings);
-			   } else {
-			     new_bindings = f2__ptypehash__new(cause);
-			   }
-			   f2__ptypehash__add(cause, new_bindings, variable_name, this_unmatched_subgraph__node__label);
-			   f2ptr this_unmatched_subgraph_copy  = f2__graph__copy(cause, this_unmatched_subgraph);
-			   f2ptr that_unmatched_subgraph_bound = f2__graph__copy(cause, that_unmatched_subgraph);
-			   printf("\nattempting to bind variable"); f2__print(cause, variable_name);
-			   printf("  to "); f2__print(cause, this_unmatched_subgraph__node__label);
-			   if (! raw__graph__bind_variable(cause, that_unmatched_subgraph_bound, variable_name, this_unmatched_subgraph__node__label)) {
-			     return f2larva__new(cause, 134, nil);
-			   }
-			   f2ptr successful_bindings = raw__graph__contains_match_with_bindings(cause, this_unmatched_subgraph_copy, that_unmatched_subgraph_bound, new_bindings);
-			   if (successful_bindings) {
-			     printf("\nfound successful bindings.");
-			     return successful_bindings;
-			   }
-			   printf("\ndid not find successful bindings for "); f2__print(cause, variable_name);
-			   printf("    and "); f2__print(cause, this_unmatched_subgraph__node__label);
+			   possible_labels = f2cons__new(cause, this_unmatched_subgraph__node__label, possible_labels);
 			   );
+    {
+      f2ptr iter = possible_labels;
+      while (iter) {
+	f2ptr possible_label = f2__cons__car(cause, iter);
+	{
+	  f2ptr new_bindings;
+	  if (bindings) {
+	    new_bindings = f2__ptypehash__copy(cause, bindings);
+	  } else {
+	    new_bindings = f2__ptypehash__new(cause);
+	  }
+	  f2__ptypehash__add(cause, new_bindings, variable_name, possible__label);
+	  f2ptr that_unmatched_subgraph_bound = f2__graph__copy(cause, that_unmatched_subgraph);
+	  printf("\nattempting to bind variable "); f2__print(cause, variable_name);
+	  printf("  to "); f2__print(cause, possible__label);
+	  if (! raw__graph__bind_variable(cause, that_unmatched_subgraph_bound, variable_name, possible__label)) {
+	    return f2larva__new(cause, 134, nil);
+	  }
+	  printf("  and searching for match within bindings: "); f2__print(cause, new_bindings);
+	  f2ptr successful_bindings = raw__graph__contains_match_with_bindings(cause, this_unmatched_subgraph, that_unmatched_subgraph_bound, new_bindings);
+	  if (successful_bindings) {
+	    printf("\nfound successful bindings.");
+	    return successful_bindings;
+	  }
+	  printf("\ndid not find successful bindings for "); f2__print(cause, variable_name);
+	  printf("    and "); f2__print(cause, possible__label);
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
   }
   return nil;
 }

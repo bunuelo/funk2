@@ -395,15 +395,34 @@ f2ptr f2__graph__replace_edge(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr l
 }
 def_pcfunk5(graph__replace_edge, this, edge_label, left_node_label, right_node_label, new_edge_label, return f2__graph__replace_edge(this_cause, this, edge_label, left_node_label, right_node_label, new_edge_label));
 
-f2ptr raw__graph__replace_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr new_edge_label) {
-  return nil;
+boolean_t raw__graph__replace_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr new_edge_label) {
+  f2ptr edge_type = raw__graph__lookup_edge_type(cause, this, edge_label);
+  if (! edge_type) {
+    return boolean__false;
+  }
+  f2ptr edges_to_replace = nil;
+  graph_edge_type__edge__iteration(cause, edge_type, edge, edges_to_replace = f2cons__new(cause, edge, edges_to_replace));
+  {
+    f2ptr iter = edges_to_replace;
+    while (iter) {
+      f2ptr edge = f2__cons__car(cause, iter);
+      f2ptr edge__label             = f2__graph_edge__label(cause, edge);
+      f2ptr edge__left_node         = f2__graph_edge__left_node(cause, edge);
+      f2ptr edge__left_node__label  = f2__graph_node__label(cause, edge__left_node);
+      f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
+      f2ptr edge__right_node__label = f2__graph_node__label(cause, edge__right_node);
+      raw__graph__replace_edge(cause, this, edge__label, edge__left_node__label, edge__right_node__label, new_edge_label);
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return boolean__true;
 }
 
 f2ptr f2__graph__replace_edge_type(f2ptr cause, f2ptr this, f2ptr edge_label, f2ptr new_edge_label) {
   if (! raw__graph__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph__replace_edge_type(cause, this, edge_label, new_edge_label);
+  return f2bool__new(raw__graph__replace_edge_type(cause, this, edge_label, new_edge_label));
 }
 def_pcfunk3(graph__replace_edge_type, this, edge_label, new_edge_label, return f2__graph__replace_edge_type(this_cause, this, edge_label, new_edge_label));
 

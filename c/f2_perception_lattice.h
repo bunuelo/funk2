@@ -66,6 +66,24 @@ declare_object_type_3_slot(graph_edge, label, left_node, right_node, );
 typedef struct funk2_object_type__graph_edge_type__slot_s funk2_object_type__graph_edge_type__slot_t;
 declare_object_type_3_slot(graph_edge_type, label, left_node_hash, right_node_hash, );
 
+#define graph_edge_type__edge__iteration(cause, this, edge, code) { \
+  f2ptr this__label    = f2__graph_edge_type__label(cause, this); \
+  f2ptr left_node_hash = f2__graph_edge_type__left_node_hash(cause, this); \
+  ptypehash__value__iteration(cause, left_node_hash, left_node, \
+                              f2ptr left_node__edges_right_node_hash_edge_hash = f2__graph_node__edges_right_node_hash_edge_hash(cause, left_node); \
+                              f2ptr left_node__edges_right_node_hash           = f2__ptypehash__lookup(cause, left_node__edges_right_node_hash_edge_hash, this__label); \
+                              ptypehash__value__iteration(cause, left_node__edges_right_node_hash, edges, \
+                                                          f2ptr iter = edges; \
+                                                          while(iter) { \
+  							    f2ptr edge = f2__cons__car(cause, iter); \
+							    { \
+                                                              code; \
+                                                            } \
+    							    iter = f2__cons__cdr(cause, iter); \
+                                                          } \
+							  ));
+}
+
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
 declare_object_type_4_slot(graph, variable_name_hash, root_node, node_label_hash, edge_type_label_hash,

@@ -99,6 +99,9 @@ f2ptr f2__list__new   (f2ptr cause, f2ptr elements);
 f2ptr f2__list__add   (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element);
 
+f2ptr f2__list__car(f2ptr cause, f2ptr this);
+f2ptr f2__list__cdr(f2ptr cause, f2ptr this);
+
 f2ptr f2list__primobject_type__new(f2ptr cause);
 
 // **

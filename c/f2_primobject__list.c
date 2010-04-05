@@ -124,7 +124,7 @@ boolean_t raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);
   if (raw__list__is_type(cause, that)) {
     f2ptr that__cons_cells = f2__list__cons_cells(cause, that);
-    return raw__equals(cause, cons_cells, that__cons_cells);
+    return f2__object__equals(cause, cons_cells, that__cons_cells);
   }
   return f2__object__equals(cause, cons_cells, that);
 }
@@ -226,11 +226,11 @@ void f2__primobject_list__initialize() {
   {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__cdr, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk = never_gc(cfunk);}
   {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals__funk = never_gc(cfunk);}
   {char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals_hash_value__loop_free, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals_hash_value__loop_free, this, node_hash, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals_hash_value, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(list__equals_hash_value, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk = never_gc(cfunk);}
   
 }
 

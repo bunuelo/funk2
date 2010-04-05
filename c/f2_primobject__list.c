@@ -120,20 +120,101 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
 }
 def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, this, element));
 
+boolean_t raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr cons_cells = f2__list__cons_cells(cause, this);
+  {
+    f2ptr this_iter = cons_cells;
+    f2ptr that_iter = that;
+    while (this_iter && that_iter) {
+      f2ptr this_element = f2__cons__car(cause, this_iter);
+      f2ptr that_element = f2__first(cause, that_iter);
+      if (! raw__equals(cause, this_element, that_element)) {
+	return boolean__false;
+      }
+      this_iter = f2__cons__cdr(cause, this_iter);
+      that_iter = f2__next(cause, that_iter);
+    }
+    if (this_iter != that_iter) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
+}
+
+f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__list__is_type(cause, this)) {
+    return f2larva__new(cause, 1);
+  }
+  return raw__list__equals(cause, this, that);
+}
+def_pcfunk2(list__equals, this, that, return f2__list__equals(this_cause, this, that));
+
+f2ptr raw__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  if (raw__ptypehash__contains(cause, node_hash, this)) {
+    return f2integer__new(cause, 1);
+  }
+  u64 hash_value = 1;
+  raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
+  s64 index;
+  f2ptr iter = f2__list__cons_cells(cause, this);
+  while (iter) {
+    f2ptr element = f2__cons__car(cause, iter);
+    if (element) {
+      f2ptr element__hash_value = f2__object__equals_hash_value__loop_free(cause, element, node_hash);
+      if (raw__larva__is_type(cause, element__hash_value)) {
+	return element__hash_value;
+      }
+      if (! raw__integer__is_type(cause, element__hash_value)) {
+	return f2larva__new(cause, 4, nil);
+      }
+      u64 element__hash_value__i = f2integer__i(element, cause);
+      hash_value *= ((element__hash_value__i == 0) ? 1 : element__hash_value__i);
+    }
+    iter = f2__cons__cdr(cause, iter);
+  }
+  return f2integer__new(cause, hash_value);
+}
+
+f2ptr f2__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
+  if ((! raw__list__is_type(cause, this)) ||
+      (! raw__ptypehash__is_type(cause, node_hash))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__list__equals_hash_value__loop_free(cause, this, node_hash);
+}
+def_pcfunk2(list__equals_hash_value__loop_free, this, node_hash, return f2__list__equals_hash_value__loop_free(this_cause, this, node_hash));
+
+f2ptr raw__list__equals_hash_value(f2ptr cause, f2ptr this) {
+  f2ptr node_hash = f2__ptypehash__new(cause);
+  return raw__list__equals_hash_value__loop_free(cause, this, node_hash);
+}
+
+f2ptr f2__list__equals_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__list__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__list__equals_hash_value(cause, this);
+}
+def_pcfunk1(list__equals_hash_value, this, return f2__list__equals_hash_value(this_cause, this));
+
+
 f2ptr f2list__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "primobject"), nil));
-  {char* slot_name = "is_type";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.is_type__funk);}
-  {char* slot_name = "new";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.new__funk);}
-  {char* slot_name = "write_mutex";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__funk);}
-  {char* slot_name = "write_mutex";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__set__funk);}
-  {char* slot_name = "length";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.length__funk);}
-  {char* slot_name = "length";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.length__set__funk);}
-  {char* slot_name = "cons_cells";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__funk);}
-  {char* slot_name = "cons_cells";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__set__funk);}
-  {char* slot_name = "add";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk);}
-  {char* slot_name = "lookup";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk);}
-  {char* slot_name = "car";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk);}
-  {char* slot_name = "cdr";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.is_type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.new__funk);}
+  {char* slot_name = "write_mutex";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__funk);}
+  {char* slot_name = "write_mutex";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.write_mutex__set__funk);}
+  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.length__funk);}
+  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.length__set__funk);}
+  {char* slot_name = "cons_cells";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__funk);}
+  {char* slot_name = "cons_cells";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cons_cells__set__funk);}
+  {char* slot_name = "add";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk);}
+  {char* slot_name = "lookup";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk);}
+  {char* slot_name = "car";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk);}
+  {char* slot_name = "cdr";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.equals__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk);}
   return this;
 }
 
@@ -177,6 +258,12 @@ void f2__primobject_list__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__car, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk = never_gc(cfunk);}
   {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__cdr, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals_hash_value__loop_free, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals_hash_value, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk = never_gc(cfunk);}
   
 }
 

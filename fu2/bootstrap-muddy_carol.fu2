@@ -291,6 +291,11 @@
 [deftypeframeslot female_child_agent reflective_trace_knowledge_base]
 [deftypeframeslot female_child_agent now]
 
+[defunk reset_knowledge []
+  [set carol reactive_trace_knowledge_base [new graph]]
+  [globalize knowledge [get carol reactive_trace_knowledge_base]]]
+
+
 [deftypeconstruct female_child_agent [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [have this add `posture         nil]
   [let [[torso_clothing_place      [new physical_place [physical_transform-new_identity] torso_clothing]]

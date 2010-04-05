@@ -1425,6 +1425,8 @@ f2ptr f2__first(f2ptr cause, f2ptr exp) {
     return f2cons__car(exp, cause);
   } else if (raw__doublelink__is_type(cause, exp)) {
     return f2doublelink__value(exp, cause);
+  } else if (raw__list__is_type(cause, exp)) {
+    return f2__list__car(cause, exp);
   } else {
     return f2larva__new(cause, 1, nil);
   }
@@ -1447,6 +1449,8 @@ f2ptr f2__next(f2ptr cause, f2ptr exp) {
     return f2cons__cdr(exp, cause);
   } else if (raw__doublelink__is_type(cause, exp)) {
     return f2doublelink__next(exp, cause);
+  } else if (raw__list__is_type(cause, exp)) {
+    return f2__list__cdr(cause, exp);
   } else {
     return f2larva__new(cause, 1, nil);
   }

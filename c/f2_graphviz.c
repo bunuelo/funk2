@@ -87,16 +87,18 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   if (raw__cons__is_type(cause, exp)) {
     f2ptr stringlist = nil;
     {
-      f2ptr iter = exp;
+      f2ptr stringlist_iter = nil;
+      f2ptr iter            = exp;
       while (iter) {
 	f2ptr element = f2__cons__car(cause, iter);
 	f2ptr new_cons = f2cons__new(cause, f2__graphviz__exp__as__label(cause, element), nil);
-	if (stringlist) {
-	  f2__cons__cdr__set(cause, stringlist, new_cons);
+	if (stringlist_iter) {
+	  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 	} else {
 	  stringlist = new_cons;
 	}
-	iter = f2__cons__cdr(cause, iter);
+	stringlist_iter = new_cons;
+	iter            = f2__cons__cdr(cause, iter);
       }
     }
     return f2__stringlist__concat(cause, f2list3__new(cause,

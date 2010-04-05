@@ -81,6 +81,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   if (raw__symbol__is_type(cause, exp)) {
     return f2__exp__as__string(cause, exp);
   }
+  if (raw__integer__is_type(cause, exp)) {
+    return f2__exp__as__string(cause, exp);
+  }
   if (raw__cons__is_type(cause, exp)) {
     f2ptr stringlist = nil;
     {

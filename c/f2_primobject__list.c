@@ -122,23 +122,11 @@ def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, thi
 
 boolean_t raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);
-  {
-    f2ptr this_iter = cons_cells;
-    f2ptr that_iter = that;
-    while (this_iter && that_iter) {
-      f2ptr this_element = f2__cons__car(cause, this_iter);
-      f2ptr that_element = f2__first(cause, that_iter);
-      if (! raw__equals(cause, this_element, that_element)) {
-	return boolean__false;
-      }
-      this_iter = f2__cons__cdr(cause, this_iter);
-      that_iter = f2__next(cause, that_iter);
-    }
-    if (this_iter != that_iter) {
-      return boolean__false;
-    }
+  if (raw__list__is_type(cause, that)) {
+    f2ptr that__cons_cells = f2__list__cons_cells(cause, that);
+    return raw__equals(cause, cons_cells, that__cons_cells);
   }
-  return boolean__true;
+  return raw__object__equals(cause, cons_cells, that);
 }
 
 f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -150,28 +138,8 @@ f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(list__equals, this, that, return f2__list__equals(this_cause, this, that));
 
 f2ptr raw__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  if (raw__ptypehash__contains(cause, node_hash, this)) {
-    return f2integer__new(cause, 1);
-  }
-  u64 hash_value = 1;
-  raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
-  f2ptr iter = f2__list__cons_cells(cause, this);
-  while (iter) {
-    f2ptr element = f2__cons__car(cause, iter);
-    if (element) {
-      f2ptr element__hash_value = f2__object__equals_hash_value__loop_free(cause, element, node_hash);
-      if (raw__larva__is_type(cause, element__hash_value)) {
-	return element__hash_value;
-      }
-      if (! raw__integer__is_type(cause, element__hash_value)) {
-	return f2larva__new(cause, 4, nil);
-      }
-      u64 element__hash_value__i = f2integer__i(element, cause);
-      hash_value *= ((element__hash_value__i == 0) ? 1 : element__hash_value__i);
-    }
-    iter = f2__cons__cdr(cause, iter);
-  }
-  return f2integer__new(cause, hash_value);
+  f2ptr cons_cells = f2__list__cons_cells(cause, this);
+  return f2__object__equals_hash_value__loop_free(cause, cons_cells, node_hash);
 }
 
 f2ptr f2__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {

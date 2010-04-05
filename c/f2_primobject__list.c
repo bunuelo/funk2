@@ -126,7 +126,7 @@ boolean_t raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
     f2ptr that__cons_cells = f2__list__cons_cells(cause, that);
     return raw__equals(cause, cons_cells, that__cons_cells);
   }
-  return raw__object__equals(cause, cons_cells, that);
+  return f2__object__equals(cause, cons_cells, that);
 }
 
 f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {

@@ -120,7 +120,7 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
 }
 def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, this, element));
 
-boolean_t raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);
   if (raw__list__is_type(cause, that)) {
     f2ptr that__cons_cells = f2__list__cons_cells(cause, that);

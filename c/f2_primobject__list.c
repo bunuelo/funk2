@@ -143,7 +143,7 @@ boolean_t raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
 
 f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__list__is_type(cause, this)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   return raw__list__equals(cause, this, that);
 }
@@ -155,7 +155,6 @@ f2ptr raw__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
   }
   u64 hash_value = 1;
   raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
-  s64 index;
   f2ptr iter = f2__list__cons_cells(cause, this);
   while (iter) {
     f2ptr element = f2__cons__car(cause, iter);

@@ -96,6 +96,7 @@ defprimobject__static_slot__prototype(list__cons_cells);
 #define f2list__cons_cells__imagination_frame(this, cause)        primobject__static_slot__imagination_frame(this, list__cons_cells, cause)
 
 f2ptr f2__list__new   (f2ptr cause, f2ptr elements);
+f2ptr f2__list__cons_cells(f2ptr cause, f2ptr this);
 f2ptr f2__list__add   (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element);
 

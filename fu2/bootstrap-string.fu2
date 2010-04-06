@@ -19,6 +19,8 @@
  rights to redistribute these changes.
 '
 
+[deftypefunk ptype get as-string [] [exp-as-string this]]
+
 [defunk string-concat [:rest seq]
   [stringlist-concat seq]]
 
@@ -37,11 +39,8 @@
 [defunk string-read [this]
   [read [string_stream-new [string-concat this ' '] 0]]]
 
-[defunk stringlist-append [this]
-  [stringlist-intersperse this '']]
-
 [defunk string-format [:rest exps]
-  [stringlist-append [mapcar [funk [exp]
+  [stringlist-concat [mapcar [funk [exp]
 				   [if [is-type `string exp]
 				       exp
 				     [exp-as-string exp]]]

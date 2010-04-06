@@ -211,15 +211,37 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
     snprintf(temp_str, 1024, "<chunk " pointer__fstr ">", to_ptr(exp));
     return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
   }
-  case ptype_simple_array: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, "<simple_array " pointer__fstr ">", to_ptr(exp));
-    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
-  }
+  case ptype_simple_array:
   case ptype_traced_array: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, "<traced_array " pointer__fstr ">", to_ptr(exp));
-    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+    if (raw__cons__is_type(cause, exp)) {
+      f2ptr stringlist = nil;
+      {
+	f2ptr stringlist_iter = nil;
+	f2ptr iter            = exp;
+	while (iter) {
+	  f2ptr element = f2__cons__car(cause, iter);
+	  f2ptr new_cons = f2cons__new(cause, f2__graphviz__exp__as__label(cause, element), nil);
+	  if (stringlist_iter) {
+	    f2__cons__cdr__set(cause, stringlist_iter, new_cons);
+	  } else {
+	    stringlist = new_cons;
+	  }
+	  stringlist_iter = new_cons;
+	  iter            = f2__cons__cdr(cause, iter);
+	}
+      }
+      return f2__stringlist__concat(cause, f2list3__new(cause,
+							new__string(cause, "["),
+							f2__stringlist__intersperse(cause, stringlist, new__string(cause, " ")),
+							new__string(cause, "]")));
+    } else if (raw__list__is_type(cause, exp)) {
+      f2ptr cons_cells = f2__list__cons_cells(cause, exp);
+      return f2__exp__as__string(cause, cons_cells);
+    } else {
+      char temp_str[1024];
+      snprintf(temp_str, 1024, "<array " pointer__fstr ">", to_ptr(exp));
+      return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+    }
   }
   case ptype_larva: {
     u8 temp_str[1024];

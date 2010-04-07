@@ -1183,7 +1183,9 @@ declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
 
 declare_primobject_1_slot(time, nanoseconds_since_1970);
 
+f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970);
 f2ptr f2time__primobject_type__new_aux(f2ptr cause);
+
 
 // size_2d
 

@@ -3017,7 +3017,6 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     //error(nil, "f2traced_array__elt__set__trace_depth error: index out of range.");
   }
   if (! raw__cause__is_imaginary__trace_depth(cause, cause, trace_depth - 1)) {
-    f2ptr old_elt    = __pure__f2traced_array__elt(this, index);
     f2ptr prev_elts  = __pure__f2traced_array__elt__trace(this, index);
     int   tracing_on = __pure__f2traced_array__elt__tracing_on(this, index);
     

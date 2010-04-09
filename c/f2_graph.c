@@ -42,7 +42,7 @@ boolean_t raw__graph_node__has_edges(f2ptr cause, f2ptr this) {
   return ((edges_left_node_hash_edge_hash__key_count__i != 0) || (edges_right_node_hash_edge_hash__key_count__i != 0));
 }
 
-f2ptr raw__graph_node__has_edges(f2ptr cause, f2ptr this) {
+f2ptr f2__graph_node__has_edges(f2ptr cause, f2ptr this) {
   if (! raw__graph_node__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }

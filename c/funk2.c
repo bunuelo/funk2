@@ -112,6 +112,7 @@ void f2__initialize() {
   f2__zlib__initialize();
   f2__cpu__initialize();
   f2__time__initialize();
+  f2__graph__initialize();
   f2__perception_lattice__initialize();
   f2__primobject_largeinteger__initialize();
   f2__primes__initialize();

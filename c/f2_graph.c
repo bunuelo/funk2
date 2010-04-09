@@ -1371,7 +1371,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			   f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
 			   f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
 			   f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
-			   if (raw__graph__contains_node(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
+			   if (raw__graph__contains_edge(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
 			     common_edges = f2cons__new(cause, this__edge, common_edges);
 			   }
 			   );

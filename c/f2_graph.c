@@ -1381,7 +1381,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
   // there are a lot of potential edge->edge mappings with different numbers of variables for each.
   // this should be an A* search with limited beam width.
   {
-    f2ptr this_map_candidates = nil;
+    f2ptr common_edges = nil;
     graph__edge__iteration(cause, this, this__edge,
 			   f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
 			   f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);

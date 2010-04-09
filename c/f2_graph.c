@@ -32,6 +32,23 @@ f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
 }
 def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
 
+boolean_t raw__graph_node__has_edges(f2ptr cause, f2ptr this) {
+  f2ptr edges_left_node_hash_edge_hash                = f2__node__edges_left_node_hash_edge_hash( cause, this);
+  f2ptr edges_right_node_hash_edge_hash               = f2__node__edges_right_node_hash_edge_hash(cause, this);
+  f2ptr edges_left_node_hash_edge_hash__key_count     = f2__ptypehash__key_count(cause, edges_left_node_hash_edge_hash);
+  f2ptr edges_right_node_hash_edge_hash__key_count    = f2__ptypehash__key_count(cause, edges_right_node_hash_edge_hash);
+  u64   edges_left_node_hash_edge_hash__key_count__i  = f2integer__i(edges_left_node_hash_edge_hash__key_count, cause);
+  u64   edges_right_node_hash_edge_hash__key_count__i = f2integer__i(edges_right_node_hash_edge_hash__key_count, cause);
+  return ((edges_left_node_hash_edge_hash__key_count__i != 0) || (edges_right_node_hash_edge_hash__key_count__i != 0));
+}
+
+f2ptr raw__graph_node__has_edges(f2ptr cause, f2ptr this) {
+  if (! raw__graph_node__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__graph_node__has_edges(cause, this));
+}
+def_pcfunk1(graph_node__has_edges, this, return f2__graph_node__has_edges(this_cause, this));
 
 // graph_edge
 
@@ -41,6 +58,7 @@ f2ptr f2__graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right
   return f2graph_edge__new(cause, label, left_node, right_node);
 }
 def_pcfunk3(graph_edge__new, label, left_node, right_node, return f2__graph_edge__new(this_cause, label, left_node, right_node));
+
 
 
 // graph_edge_type
@@ -1340,6 +1358,73 @@ f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
 
+
+f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr common_subgraph = f2__graph__new(cause);
+  f2ptr this_remaining  = f2__graph__copy(cause, this);
+  f2ptr that_remaining  = f2__graph__copy(cause, that);
+  {
+    f2ptr common_edges = nil;
+    graph__edge__iteration(cause, this, this__edge,
+			   f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
+			   f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
+			   f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
+			   f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
+			   f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
+			   if (raw__graph__contains_node(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
+			     common_edges = f2cons__new(cause, this__edge, common_edges);
+			   }
+			   );
+    {
+      f2ptr iter = common_edges;
+      while (iter) {
+	f2ptr edge = f2__cons__car(cause, iter);
+	{
+	  f2ptr edge__label             = f2__graph_edge__label(     cause, edge);
+	  f2ptr edge__left_node         = f2__graph_edge__left_node( cause, edge);
+	  f2ptr edge__left_node__label  = f2__graph_node__label(     cause, edge__left_node);
+	  f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
+	  f2ptr edge__right_node__label = f2__graph_node__label(     cause, edge__right_node);
+	  raw__graph__remove_edge(cause, this_remaining,  edge__label, edge__left_node__label, edge__right_node__label);
+	  raw__graph__remove_edge(cause, that_remaining,  edge__label, edge__left_node__label, edge__right_node__label);
+	  raw__graph__add_edge(   cause, common_subgraph, edge__label, edge__left_node__label, edge__right_node__label);
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+    f2ptr edgeless_common_node_labels = nil;
+    graph__node__iteration(cause, this_remaining, this__node,
+			   f2ptr this__node__label = f2__graph_node__label(cause, this__node);
+			   f2ptr that__node        = raw__graph__lookup_node(cause, that_remaining, this__node__label);
+			   if (that__node &&
+			       (! raw__graph_node__has_edges(cause, this__node)) &&
+			       (! raw__graph_node__has_edges(cause, that__node))) {
+			     edgeless_common_node_labels = f2cons__new(cause, this__node__label, edgeless_common_node_labels);
+			   }
+			   );
+    {
+      f2ptr iter = edgeless_common_node_labels;
+      while (iter) {
+	f2ptr node_label = f2__cons__car(cause, iter);
+	raw__graph__remove_node(cause, this_remaining,  node_label);
+	raw__graph__remove_node(cause, that_remaining,  node_label);
+	raw__graph__add_node(   cause, common_subgraph, node_label);
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return common_subgraph;
+}
+
+f2ptr f2__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__graph__is_type(cause, this)) ||
+      (! raw__graph__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__find_common_variable_subgraph(cause, this, that);
+}
+def_pcfunk2(graph__find_common_variable_subgraph, this, that, return f2__graph__find_common_variable_subgraph(this_cause, this, that));
+
 // **
 
 void f2__graph__reinitialize_globalvars() {
@@ -1363,6 +1448,8 @@ void f2__graph__initialize() {
   // graph_node
   initialize_primobject_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash);
   
+  f2__primcfunk__init__1(graph_node__has_edges, this, "returns true if node has at least one edge, false otherwise.");
+  
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
@@ -1381,34 +1468,35 @@ void f2__graph__initialize() {
   {char* symbol_str = "as-frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(rooted_graph__as__frame, this, cfunk, 0, "returns a rooted graph as a frame."); __funk2.globalenv.object_type.primobject.primobject_type_graph.as__frame__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__2(graph__add_node,                     this, node,                                                          "add a node to a graph by mutation.");
-  f2__primcfunk__init__2(graph__lookup_node,                  this, node,                                                          "lookup a node if it exists within this graph.");
-  f2__primcfunk__init__4(graph__add_edge,                     this, label, left_node, right_node,                                  "add an edge to a graph by mutation.");
-  f2__primcfunk__init__2(graph__contains_node,                this, node,                                                          "returns boolean true if this graph contains node.");
-  f2__primcfunk__init__4(graph__contains_edge,                this, label, left_node, right_node,                                  "returns boolean true if this graph contains edge.");
-  f2__primcfunk__init__2(graph__lookup_edge_type,             this, edge_label,                                                    "returns edge type object if one exists for this edge label.");
-  f2__primcfunk__init__2(graph__contains_edge_type,           this, edge_label,                                                    "returns boolean true if this graph contains at least one edge with the label.");
-  f2__primcfunk__init__2(graph__intersect,                    this, that,                                                          "returns the intersection of two graphs.");
-  f2__primcfunk__init__2(graph__union,                        this, that,                                                          "returns the union of two graphs.");
-  f2__primcfunk__init__2(graph__remove_node,                  this, node,                                                          "remove node from this graph.");
-  f2__primcfunk__init__4(graph__remove_edge,                  this, label, left_node, right_node,                                  "remove an edge from a perception graph.");
-  f2__primcfunk__init__1(graph__copy,                         this,                                                                "returns a copy of this graph.");
-  f2__primcfunk__init__2(graph__part_not_contained_by,        this, that,                                                          "determines the maximal part of this graph that is not contained in that graph.");
-  f2__primcfunk__init__1(graph__variables,                    this,                                                                "returns variable names in a new list.");
-  f2__primcfunk__init__1(graph__nodes,                        this,                                                                "returns a new list of all nodes in this graph.");
-  f2__primcfunk__init__1(graph__edges,                        this,                                                                "returns a new list of all edges in this graph.");
-  f2__primcfunk__init__3(graph__replace_node,                 this, old_node, new_node,                                            "replaces old node with new node.");
-  f2__primcfunk__init__5(graph__replace_edge,                 this, edge_label, left_node_label, right_node_label, new_edge_label, "replaces old node with new node.");
-  f2__primcfunk__init__3(graph__replace_edge_type,            this, edge_label, new_edge_label,                                    "replaces old edge type with new edge type.");
-  f2__primcfunk__init__2(graph__make_rooted,                  this, root_node,                                                     "makes graph rooted with root node.");
-  f2__primcfunk__init__1(graph__make_rootless,                this,                                                                "makes graph rootless.");
-  f2__primcfunk__init__3(graph__make_node_variable,           this, node, variable_name,                                           "makes a node in the graph a variable for matching.");
-  f2__primcfunk__init__2(graph__make_node_wildcard,           this, node,                                                          "makes a node in the graph a wildcard variable for matching.");
-  f2__primcfunk__init__5(graph__make_edge_variable,           this, edge_label, left_node_label, right_node_label, variable_name,  "makes an edge in the graph a variable for matching.");
-  f2__primcfunk__init__4(graph__make_edge_wildcard,           this, edge_label, left_node_label, right_node_label,                 "makes an edge in the graph a wildcard variable for matching.");
-  f2__primcfunk__init__3(graph__contains_match_with_bindings, this, that, bindings,                                                "returns variable bindings for match.");
-  f2__primcfunk__init__3(graph__bind_variable,                this, variable_name, value,                                          "returns true if variable is successfully bound, false otherwise.");
-  f2__primcfunk__init__1(graph__as__dot_code,                 this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
+  f2__primcfunk__init__2(graph__add_node,                      this, node,                                                          "add a node to a graph by mutation.");
+  f2__primcfunk__init__2(graph__lookup_node,                   this, node,                                                          "lookup a node if it exists within this graph.");
+  f2__primcfunk__init__4(graph__add_edge,                      this, label, left_node, right_node,                                  "add an edge to a graph by mutation.");
+  f2__primcfunk__init__2(graph__contains_node,                 this, node,                                                          "returns boolean true if this graph contains node.");
+  f2__primcfunk__init__4(graph__contains_edge,                 this, label, left_node, right_node,                                  "returns boolean true if this graph contains edge.");
+  f2__primcfunk__init__2(graph__lookup_edge_type,              this, edge_label,                                                    "returns edge type object if one exists for this edge label.");
+  f2__primcfunk__init__2(graph__contains_edge_type,            this, edge_label,                                                    "returns boolean true if this graph contains at least one edge with the label.");
+  f2__primcfunk__init__2(graph__intersect,                     this, that,                                                          "returns the intersection of two graphs.");
+  f2__primcfunk__init__2(graph__union,                         this, that,                                                          "returns the union of two graphs.");
+  f2__primcfunk__init__2(graph__remove_node,                   this, node,                                                          "remove node from this graph.");
+  f2__primcfunk__init__4(graph__remove_edge,                   this, label, left_node, right_node,                                  "remove an edge from a perception graph.");
+  f2__primcfunk__init__1(graph__copy,                          this,                                                                "returns a copy of this graph.");
+  f2__primcfunk__init__2(graph__part_not_contained_by,         this, that,                                                          "determines the maximal part of this graph that is not contained in that graph.");
+  f2__primcfunk__init__1(graph__variables,                     this,                                                                "returns variable names in a new list.");
+  f2__primcfunk__init__1(graph__nodes,                         this,                                                                "returns a new list of all nodes in this graph.");
+  f2__primcfunk__init__1(graph__edges,                         this,                                                                "returns a new list of all edges in this graph.");
+  f2__primcfunk__init__3(graph__replace_node,                  this, old_node, new_node,                                            "replaces old node with new node.");
+  f2__primcfunk__init__5(graph__replace_edge,                  this, edge_label, left_node_label, right_node_label, new_edge_label, "replaces old node with new node.");
+  f2__primcfunk__init__3(graph__replace_edge_type,             this, edge_label, new_edge_label,                                    "replaces old edge type with new edge type.");
+  f2__primcfunk__init__2(graph__make_rooted,                   this, root_node,                                                     "makes graph rooted with root node.");
+  f2__primcfunk__init__1(graph__make_rootless,                 this,                                                                "makes graph rootless.");
+  f2__primcfunk__init__3(graph__make_node_variable,            this, node, variable_name,                                           "makes a node in the graph a variable for matching.");
+  f2__primcfunk__init__2(graph__make_node_wildcard,            this, node,                                                          "makes a node in the graph a wildcard variable for matching.");
+  f2__primcfunk__init__5(graph__make_edge_variable,            this, edge_label, left_node_label, right_node_label, variable_name,  "makes an edge in the graph a variable for matching.");
+  f2__primcfunk__init__4(graph__make_edge_wildcard,            this, edge_label, left_node_label, right_node_label,                 "makes an edge in the graph a wildcard variable for matching.");
+  f2__primcfunk__init__3(graph__contains_match_with_bindings,  this, that, bindings,                                                "returns variable bindings for match.");
+  f2__primcfunk__init__3(graph__bind_variable,                 this, variable_name, value,                                          "returns true if variable is successfully bound, false otherwise.");
+  f2__primcfunk__init__1(graph__as__dot_code,                  this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
+  f2__primcfunk__init__2(graph__find_common_variable_subgraph, this, that,                                                          "return the largest common variable subgraph shared by two graphs.");
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

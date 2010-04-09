@@ -1,0 +1,76 @@
+                                                                     
+                                                                     
+                                              
+[defunk   graph?      [exp] [and exp [array? exp] [eq [array-elt exp 0] `graph]]]
+[defunk   graph-new   [name nodes edges]  [array `graph name nodes edges]]
+[defmetro graph-name  [this]             `[elt ,this 1]]
+[defmetro graph-nodes [this]             `[elt ,this 2]]
+[defmetro graph-edges [this]             `[elt ,this 3]]
+
+[defunk   graph_node?      [exp] [and exp [array? exp] [eq [array-elt exp 0] `graph_node]]]
+[defunk   graph_node-new   [name edges]  [array `graph_node name edges]]
+[defmetro graph_node-name  [this]       `[elt ,this 1]]
+[defmetro graph_node-edges [this]       `[elt ,this 2]]
+[defunk   graph_node-rank  [this]       [simple_length [graph_node-edges this]]]
+
+[defunk   graph_edge?      [exp]         [and exp [array? exp] [eq [array-elt exp 0] `graph_edge]]]
+[defunk   graph_edge-new   [name nodes]  [array `graph_edge name nodes]]
+[defmetro graph_edge-name  [this]       `[elt ,this 1]]
+[defmetro graph_edge-nodes [this]       `[elt ,this 2]]
+
+[defunk graph-new_empty [name :rest args]
+  [graph-new name nil nil]]
+
+[defunk graph-add_node [this node]
+  [push node [graph-nodes this]]
+  nil]
+
+
+
+[defunk graph-add_edge [this name :rest nodes]
+  [let [[edge [graph_edge-new name nodes]]]
+    [mapc [funk [node]
+		[push edge [graph_node-edges node]]]
+	  nodes]
+    [push edge [graph-edges this]]
+    nil]]
+
+[defunk graph-add_new_node [this name]
+  [graph-add_node this [graph_node-new name nil]]]
+
+[defunk graph-find_node [this name]
+  [find name [graph-nodes this]
+	[funk [node] [graph_node-name node]]
+	&eq]]
+
+[defunk graph-add_new_edge [this edge_name :rest node_names]
+  [apply &graph-add_edge `[,this
+			    ,edge_name
+			     @[mapcar [funk [node_name]
+					    [let [[node [graph-find_node this node_name]]]
+					      [if [null node]
+						  [prog [= node [graph_node-new node_name nil]]
+							[push node [graph-nodes this]]]]
+					      node]]
+				      node_names]]]]
+
+[defunk graph-brief [this]
+  [cons [graph-name this]
+        [mapcar [funk [edge]
+                  [cons [graph_edge-name edge] [mapcar [funk [node] [graph_node-name node]]
+                                                       [graph_edge-nodes edge]]]]
+                [graph-edges this]]]]
+
+[defunk test-graph []
+  [let [[g [graph-new_empty `my-graph]]]
+    [graph-add_new_edge g `my-edge-1 `my-node-1 `my-node-2 `my-node-3]
+    [graph-add_new_edge g `my-edge-2 `my-node-2 `my-node-3]
+    [format stdout '\nedges: ' [mapcar [funk [edge]
+					     [graph_edge-name edge]]
+				       [graph-edges g]]]
+    [format stdout '\nnodes: '[mapcar [funk [node]
+					    [graph_node-name node]]
+				      [graph-nodes g]]]
+    g
+    ]]
+

@@ -35,6 +35,7 @@
 #include "f2_object_lattice.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
+#include "f2_graph.h"
 #include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
 

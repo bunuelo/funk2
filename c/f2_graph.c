@@ -1378,8 +1378,10 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
   u64   common_subgraph__worth__i = 0;
   f2ptr this_remaining            = f2__graph__copy(cause, this);
   f2ptr that_remaining            = f2__graph__copy(cause, that);
+  // there are a lot of potential edge->edge mappings with different numbers of variables for each.
+  // this should be an A* search with limited beam width.
   {
-    f2ptr common_edges = nil;
+    f2ptr this_map_candidates = nil;
     graph__edge__iteration(cause, this, this__edge,
 			   f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
 			   f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
@@ -1415,7 +1417,6 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			   f2ptr this__node__label = f2__graph_node__label(cause, this__node);
 			   f2ptr that__node        = raw__graph__lookup_node(cause, that_remaining, this__node__label);
 			   if (that__node) {
-			     raw__graph__add_node(cause, common_subgraph, this__node__label);
 			     common_subgraph__worth__i ++;
 			     if ((! raw__graph_node__has_edges(cause, this__node)) &&
 				 (! raw__graph_node__has_edges(cause, that__node))) {
@@ -1427,14 +1428,16 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
       f2ptr iter = edgeless_common_node_labels;
       while (iter) {
 	f2ptr node_label = f2__cons__car(cause, iter);
-	raw__graph__remove_node(cause, this_remaining, node_label);
-	raw__graph__remove_node(cause, that_remaining, node_label);
+	raw__graph__remove_node(cause, this_remaining,  node_label);
+	raw__graph__remove_node(cause, that_remaining,  node_label);
+	raw__graph__add_node(   cause, common_subgraph, node_label);
 	iter = f2__cons__cdr(cause, iter);
       }
     }
   }
   f2ptr subgraph_possibility = f2__common_variable_subgraph_possibility__new(cause, common_subgraph, f2integer__new(cause, common_subgraph__worth__i));
   f2__print(cause, subgraph_possibility);
+  
   return common_subgraph;
 }
 

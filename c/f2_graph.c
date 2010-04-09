@@ -1358,11 +1358,26 @@ f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
 
+f2ptr f2__common_variable_subgraph_possibility__new(f2ptr cause, f2ptr variable_cost, f2ptr subgraph) {
+  f2ptr this = raw__array__new(cause, 2);
+  raw__array__elt__set(cause, this, 0, variable_cost);
+  raw__array__elt__set(cause, this, 1, subgraph);
+  return this;
+}
+
+f2ptr raw__common_variable_subgraph_possibility__variable_cost(f2ptr cause, f2ptr this) {
+  return raw__array__elt(cause, this, 0);
+}
+
+f2ptr raw__common_variable_subgraph_possibility__subgraph(f2ptr cause, f2ptr this) {
+  return raw__array__elt(cause, this, 1);
+}
 
 f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr common_subgraph = f2__graph__new(cause);
-  f2ptr this_remaining  = f2__graph__copy(cause, this);
-  f2ptr that_remaining  = f2__graph__copy(cause, that);
+  f2ptr common_subgraph           = f2__graph__new(cause);
+  u64   common_subgraph__worth__i = 0;
+  f2ptr this_remaining            = f2__graph__copy(cause, this);
+  f2ptr that_remaining            = f2__graph__copy(cause, that);
   {
     f2ptr common_edges = nil;
     graph__edge__iteration(cause, this, this__edge,
@@ -1388,16 +1403,20 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 	  raw__graph__remove_edge(cause, this_remaining,  edge__label, edge__left_node__label, edge__right_node__label);
 	  raw__graph__remove_edge(cause, that_remaining,  edge__label, edge__left_node__label, edge__right_node__label);
 	  raw__graph__add_edge(   cause, common_subgraph, edge__label, edge__left_node__label, edge__right_node__label);
+	  common_subgraph__worth__i ++;
 	}
 	iter = f2__cons__cdr(cause, iter);
       }
     }
+  }
+  {
     f2ptr edgeless_common_node_labels = nil;
     graph__node__iteration(cause, this_remaining, this__node,
 			   f2ptr this__node__label = f2__graph_node__label(cause, this__node);
 			   f2ptr that__node        = raw__graph__lookup_node(cause, that_remaining, this__node__label);
 			   if (that__node) {
 			     raw__graph__add_node(cause, common_subgraph, this__node__label);
+			     common_subgraph__worth__i ++;
 			     if ((! raw__graph_node__has_edges(cause, this__node)) &&
 				 (! raw__graph_node__has_edges(cause, that__node))) {
 			       edgeless_common_node_labels = f2cons__new(cause, this__node__label, edgeless_common_node_labels);
@@ -1408,12 +1427,14 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
       f2ptr iter = edgeless_common_node_labels;
       while (iter) {
 	f2ptr node_label = f2__cons__car(cause, iter);
-	raw__graph__remove_node(cause, this_remaining,  node_label);
-	raw__graph__remove_node(cause, that_remaining,  node_label);
+	raw__graph__remove_node(cause, this_remaining, node_label);
+	raw__graph__remove_node(cause, that_remaining, node_label);
 	iter = f2__cons__cdr(cause, iter);
       }
     }
   }
+  f2ptr subgraph_possibility = f2__common_variable_subgraph_possibility__new(cause, common_subgraph, f2integer__new(cause, common_subgraph__worth__i));
+  f2__print(cause, subgraph_possibility);
   return common_subgraph;
 }
 

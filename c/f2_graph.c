@@ -1417,7 +1417,6 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			   f2ptr this__node__label = f2__graph_node__label(cause, this__node);
 			   f2ptr that__node        = raw__graph__lookup_node(cause, that_remaining, this__node__label);
 			   if (that__node) {
-			     common_subgraph__worth__i ++;
 			     if ((! raw__graph_node__has_edges(cause, this__node)) &&
 				 (! raw__graph_node__has_edges(cause, that__node))) {
 			       edgeless_common_node_labels = f2cons__new(cause, this__node__label, edgeless_common_node_labels);
@@ -1431,6 +1430,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 	raw__graph__remove_node(cause, this_remaining,  node_label);
 	raw__graph__remove_node(cause, that_remaining,  node_label);
 	raw__graph__add_node(   cause, common_subgraph, node_label);
+	common_subgraph__worth__i ++;
 	iter = f2__cons__cdr(cause, iter);
       }
     }

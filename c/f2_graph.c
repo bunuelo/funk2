@@ -33,8 +33,8 @@ f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
 def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
 
 boolean_t raw__graph_node__has_edges(f2ptr cause, f2ptr this) {
-  f2ptr edges_left_node_hash_edge_hash                = f2__node__edges_left_node_hash_edge_hash( cause, this);
-  f2ptr edges_right_node_hash_edge_hash               = f2__node__edges_right_node_hash_edge_hash(cause, this);
+  f2ptr edges_left_node_hash_edge_hash                = f2__graph_node__edges_left_node_hash_edge_hash( cause, this);
+  f2ptr edges_right_node_hash_edge_hash               = f2__graph_node__edges_right_node_hash_edge_hash(cause, this);
   f2ptr edges_left_node_hash_edge_hash__key_count     = f2__ptypehash__key_count(cause, edges_left_node_hash_edge_hash);
   f2ptr edges_right_node_hash_edge_hash__key_count    = f2__ptypehash__key_count(cause, edges_right_node_hash_edge_hash);
   u64   edges_left_node_hash_edge_hash__key_count__i  = f2integer__i(edges_left_node_hash_edge_hash__key_count, cause);

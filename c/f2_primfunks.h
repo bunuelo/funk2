@@ -898,6 +898,11 @@ f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f
 
 // cons
 
+boolean_t raw__conslist__is_type(f2ptr cause, f2ptr this);
+f2ptr      f2__conslist__is_type(f2ptr cause, f2ptr this);
+f2ptr     raw__conslist__as__array(f2ptr cause, f2ptr this);
+f2ptr      f2__conslist__as__array(f2ptr cause, f2ptr this);
+
 f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these);
 
 // sequence (array, list, doublelist, etc.)

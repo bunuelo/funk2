@@ -157,9 +157,17 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr compa
   return array;
 }
 
-f2ptr f2__array__quicksort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
+f2ptr raw__array__quicksort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   f2ptr fiber = f2__this__fiber(cause);
-  return array__quicksort_helper(cause, fiber, this, comparison_funk, 0, raw__simple_length(cause, array) - 1);
+  return array__quicksort_helper(cause, fiber, this, comparison_funk, 0, raw__array__length(cause, this) - 1);
+}
+
+f2ptr f2__array__quicksort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
+  if ((! raw__array__is_type(cause, this)) ||
+      (! raw__funkable__is_type(cause, comparison_funk))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__array__quicksort(cause, this, comparison_funk);
 }
 def_pcfunk2(array__quicksort, this, comparison_funk, return f2__array__quicksort(this_cause, this, comparison_funk));
 

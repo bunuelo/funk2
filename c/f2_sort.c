@@ -102,8 +102,7 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
 }
 def_pcfunk1(sort_integer_array, integers, return f2__integer_array__quicksort(this_cause, integers));
 
-f2ptr array__quicksort_helper(f2ptr cause, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
-  f2ptr fiber = f2__this__fiber(cause);
+f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
   f2ptr key;
   s64   raw_key;
   s64   i, j, k;
@@ -159,7 +158,8 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr array, f2ptr comparison_funk, i
 }
 
 f2ptr f2__array__quicksort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
-  return array__quicksort_helper(cause, this, comparison_funk, 0, raw__simple_length(cause, array) - 1);
+  f2ptr fiber = f2__this__fiber(cause);
+  return array__quicksort_helper(cause, fiber, this, comparison_funk, 0, raw__simple_length(cause, array) - 1);
 }
 def_pcfunk2(array__quicksort, this, comparison_funk, return f2__array__quicksort(this_cause, this, comparison_funk));
 

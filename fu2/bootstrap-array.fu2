@@ -17,17 +17,15 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk simple_array execute as-conslist [] [array-as_conslist this]]
-[deftypefunk simple_array execute as-array    [] this]
-
-[deftypefunk simple_array execute sort [comparison_funk] [array-sort this comparison_funk]]
-
+[deftypefunk simple_array execute as-conslist []                [array-as-conslist this]]
+[deftypefunk simple_array execute as-array    []                this]
+[deftypefunk simple_array execute sort        [comparison_funk] [array-sort this comparison_funk]]
 
 
-[deftypefunk traced_array execute as-conslist [] [array-as_conslist this]]
-[deftypefunk traced_array execute as-array    [] this]
 
-[deftypefunk traced_array execute sort [comparison_funk] [array-sort this comparison_funk]]
+[deftypefunk traced_array execute as-conslist []                [array-as-conslist this]]
+[deftypefunk traced_array execute as-array    []                this]
+[deftypefunk traced_array execute sort        [comparison_funk] [array-sort this comparison_funk]]
 
 
 

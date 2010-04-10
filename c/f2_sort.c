@@ -102,7 +102,8 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr array) {
 }
 def_pcfunk1(sort_integer_array, integers, return f2__integer_array__quicksort(this_cause, integers));
 
-f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
+f2ptr array__quicksort_helper(f2ptr cause, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
+  f2ptr fiber = f2__this__fiber(cause);
   f2ptr key;
   s64   raw_key;
   s64   i, j, k;
@@ -157,13 +158,34 @@ f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr compa
   return array;
 }
 
-f2ptr f2__array__quicksort(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk) {
-  return array__quicksort_helper(cause, fiber, array, comparison_funk, 0, raw__simple_length(cause, array) - 1);
+f2ptr f2__array__quicksort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
+  return array__quicksort_helper(cause, this, comparison_funk, 0, raw__simple_length(cause, array) - 1);
 }
-def_pcfunk2(array__quicksort, array, comparison_funk, return f2__array__quicksort(this_cause, simple_fiber, array, comparison_funk));
+def_pcfunk2(array__quicksort, this, comparison_funk, return f2__array__quicksort(this_cause, this, comparison_funk));
 
+f2ptr f2__array__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
+  return f2__array__quicksort(cause, this, comparison_funk);
+}
+def_pcfunk2(array__sort, this, comparison_funk, return f2__array__sort(this_cause, this, comparison_funk));
 
+f2ptr raw__conslist__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
+  f2ptr array  = raw__conslist__as__array(cause, this);
+  f2ptr result = f2__array__sort(cause, array, comparison_funk);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  f2ptr new_conslist = f2__array__as__conslist(cause, array);
+  return new_conslist;
+}
 
+f2ptr f2__conslist__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
+  if ((! raw__conslist__is_type(cause, this)) ||
+      (! raw__funkable__is_type(cause, comparison_funk))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__conslist__sort(cause, this, comparison_funk);
+}
+def_pcfunk2(conslist__sort, this, comparison_funk, return f2__conslist__sort(this_cause, this, comparison_funk));
 
 // **
 
@@ -176,6 +198,8 @@ void f2__sort__initialize() {
   f2__sort__reinitialize_globalvars();
   
   f2__primcfunk__init__1(sort_integer_array, this, "sort an array of integers in place.");
-  f2__primcfunk__init__2(array__quicksort, array, comparison_funk, "sort an array of elements in place by user provided comparison_funk.");
+  f2__primcfunk__init__2(array__quicksort, this, comparison_funk, "sort an array of elements in place by user-provided comparison_funk.");
+  f2__primcfunk__init__2(array__sort, this, comparison_funk, "sort an array of elements in place by user-provided comparison_funk.");
+  f2__primcfunk__init__2(conslist__sort, this, comparison_funk, "returns a new conslist that is this conslist sorted by user-provided comparison_funk.");
 }
 

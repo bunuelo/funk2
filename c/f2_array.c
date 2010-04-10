@@ -387,10 +387,7 @@ f2ptr f2__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2pt
 def_pcfunk3(array__elt__read_funks__set, x, y, z, return f2__array__elt__read_funks__set(this_cause, x, y, z));
 
 
-f2ptr f2__array__as_conslist(f2ptr cause, f2ptr this) {
-  if (! raw__array__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+f2ptr raw__array__as__conslist(f2ptr cause, f2ptr this) {
   u64 length = raw__array__length(cause, this);
   f2ptr new_seq = nil;
   s64 index;
@@ -399,7 +396,14 @@ f2ptr f2__array__as_conslist(f2ptr cause, f2ptr this) {
   }
   return new_seq;
 }
-def_pcfunk1(array__as_conslist, this, return f2__array__as_conslist(this_cause, this));
+
+f2ptr f2__array__as__conslist(f2ptr cause, f2ptr this) {
+  if (! raw__array__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__array__as__conslist(cause, this);
+}
+def_pcfunk1(array__as__conslist, this, return f2__array__as__conslist(this_cause, this));
 
 
 f2ptr f2array__primobject_type__new(f2ptr cause) {
@@ -458,7 +462,7 @@ void f2__array__initialize() {
   //f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "(cfunk defined in f2_array.c)");
   //f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "(cfunk defined in f2_array.c)");
   //f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__1(           array__as_conslist,                 this, "returns an array represented as a new conslist.  (cfunk defined in f2_array.c)");
+  f2__primcfunk__init__1(           array__as__conslist,                 this, "returns an array represented as a new conslist.  (cfunk defined in f2_array.c)");
   
   // array
   

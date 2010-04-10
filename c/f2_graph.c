@@ -1435,9 +1435,16 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
       }
     }
   }
-  f2ptr subgraph_possibility = f2__common_variable_subgraph_possibility__new(cause, common_subgraph, f2integer__new(cause, common_subgraph__worth__i));
-  f2__print(cause, subgraph_possibility);
-  
+  f2ptr subgraph_possibilities = f2cons__new(cause, f2__common_variable_subgraph_possibility__new(cause, common_subgraph, f2integer__new(cause, common_subgraph__worth__i)), nil);
+  f2__print(cause, subgraph_possibilities);
+  {
+    f2ptr possibility_iter = subgraph_possibilities;
+    while (possibility_iter) {
+      f2ptr possibility = f2__cons__car(cause, possibility_iter);
+      
+      possibility_iter = f2__cons__cdr(cause, possibility_iter);
+    }
+  }
   return common_subgraph;
 }
 

@@ -19,4 +19,6 @@
 
 [globalize-funk sort_integer_array &primfunk:sort_integer_array]
 [globalize-funk array-quicksort    &primfunk:array__quicksort]
+[globalize-funk array-sort         &primfunk:array__sort]
+[globalize-funk conslist-sort      &primfunk:conslist__sort]
 

@@ -304,7 +304,22 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 
 // cons
 
-f2ptr f2__cons__as_array(f2ptr cause, f2ptr this) {
+boolean_t raw__conslist__is_type(f2ptr cause, f2ptr this) {
+  if (this == nil) {
+    return boolean__true;
+  }
+  if (! raw__cons__is_type(cause, this)) {
+    return boolean__false;
+  }
+  f2ptr this__cdr = f2__cons__cdr(cause, this);
+  return raw__conslist__is_type(cause, this__cdr);
+}
+
+f2ptr f2__conslist__is_type(f2ptr cause, f2ptr this) {
+  return f2bool__new(raw__conslist__is_type(cause, this));
+}
+
+f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   u64 length = 0;
   {
     f2ptr iter = this;
@@ -329,7 +344,14 @@ f2ptr f2__cons__as_array(f2ptr cause, f2ptr this) {
   }
   return new_array;
 }
-def_pcfunk1(cons__as_array, this, return f2__cons__as_array(this_cause, this));
+
+f2ptr f2__conslist__as__array(f2ptr cause, f2ptr this) {
+  if (! raw__conslist__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__conslist__as__array(cause, this);
+}
+def_pcfunk1(conslist__as__array, this, return f2__conslist__as__array(this_cause, this));
 
 f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   if (! raw__integer__is_type(cause, n)) {
@@ -840,9 +862,9 @@ def_pcfunk1(trace, value,
 	   return value);
 
 boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
-  if (x == y) {return 1;}
-  if (!x || !y) {return 0;}
-  if (f2ptype__raw(x, cause) != f2ptype__raw(y, cause)) {return 0;}
+  if (x == y) {return boolean__true;}
+  if (!x || !y) {return boolean__false;}
+  if (f2ptype__raw(x, cause) != f2ptype__raw(y, cause)) {return boolean__false;}
   switch(f2ptype__raw(x, cause)) {
   case ptype_symbol:
     return f2__symbol__eq(cause, x, y);
@@ -944,10 +966,6 @@ f2ptr f2__identity(f2ptr cause, f2ptr exp) {return exp;}
 def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
 
 f2ptr f2__make_funk(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  //f2__print_prompt("make-funk args: ", args);
-  //f2__print_prompt("  body        : ", body);
-  //f2__print_prompt("  env         : ", f2fiber__env(simple_fiber));
-  //f2__print_prompt("  tracewrap   : ", tracewrap);
   f2ptr funk = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
   f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
@@ -959,10 +977,6 @@ f2ptr f2__make_funk(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr deme
 def_pcfunk7(make_funk, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__make_funk(this_cause, simple_fiber, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
 f2ptr f2__make_metro(f2ptr cause, f2ptr fiber, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  //f2__print_prompt("make-metro args: ", args);
-  //f2__print_prompt("  body         : ", body);
-  //f2__print_prompt("  env          : ", f2fiber__env(simple_fiber));
-  //f2__print_prompt("  tracewrap    : ", tracewrap);
   f2ptr metro = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, f2fiber__env(fiber, cause), nil, is_funktional, documentation);
   f2ptr result = f2__compile__metro(cause, fiber, metro);
   if (raw__larva__is_type(cause, result)) {
@@ -1133,24 +1147,6 @@ f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp) {
   }
 }
 def_pcfunk1(coerce_to_int, exp, return f2__coerce_to_int(this_cause, exp));
-
-//f2ptr f2__memory_image__save(f2ptr cause, f2ptr filename) {
-//  char* str = (char*)from_ptr(f2__malloc(f2string__length(filename, cause)));
-//  f2string__str_copy(filename, cause, (u8*)str);
-//  f2ptr retval = f2bool__new(funk2_memory__save_image_to_file(&(__funk2.memory), str));
-//  f2__free(to_ptr(str));
-//  return retval;
-//}
-//def_pcfunk1(memory_image__save, filename, return f2__memory_image__save(this_cause, filename));
-
-//f2ptr f2__memory_image__load(f2ptr cause, f2ptr filename) {
-//  char* str = (char*)from_ptr(f2__malloc(f2string__length(filename, cause)));
-//  f2string__str_copy(filename, cause, (u8*)str);
-//  f2ptr retval = f2bool__new(funk2_memory__load_image_from_file(&(__funk2.memory), str));
-//  f2__free(to_ptr(str));
-//  return retval;
-//}
-//def_pcfunk1(memory_image__load, filename, return f2__memory_image__load(this_cause, filename));
 
 def_pcfunk1(funkall__raw_c_funk__v__v,      cfunk_ptr,                                                                  (* (void   (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(); return nil);
 def_pcfunk2(funkall__raw_c_funk__v__i,      cfunk_ptr, a0,                                                              (* (void   (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause)); return nil);
@@ -1671,7 +1667,7 @@ void f2__primcfunks__initialize() {
   
   // cons
   
-  f2__primcfunk__init__1(cons__as_array,       this,    "returns a cons list represented as a new array.");
+  f2__primcfunk__init__1(conslist__as__array,  this,    "returns a conslist represented as a new array.");
   f2__primcfunk__init__2(conslist__first_n,    this, n, "returns a new representation of the first n elements of the list, this.");
   f2__primcfunk__init__1(conslistlist__append, this,    "append a list of lists.");
   

@@ -78,7 +78,7 @@ void raw__redblacktree_node__rotate_left(f2ptr cause, f2ptr this) {
   }
   f2__redblacktree_node__parent__set(cause, that, f2__redblacktree_node__parent(cause, this)); // Link this's parent to that.
   if (f2__redblacktree_node__parent(cause, this) != nil) {
-    if (raw__eq(cause, this, f2__redblacktree_node__left(cause, f2__redblacktree__parent(cause, this)))) {
+    if (raw__eq(cause, this, f2__redblacktree_node__left(cause, f2__redblacktree_node__parent(cause, this)))) {
       f2__redblacktree_node__left__set(cause, f2__redblacktree_node__parent(cause, this), that);
     } else {
       f2__redblacktree_node__right__set(cause, f2__redblacktree__parent(cause, this), that);

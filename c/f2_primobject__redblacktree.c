@@ -163,12 +163,12 @@ void raw__redblacktree_node__insert_case5(f2ptr cause, f2ptr this) {
   //rbt_node__print(node__grandparent);
   f2__redblacktree_node__color__set(cause, this__grandparent, new__symbol(cause, "red"));
   if ((this == f2__redblacktree_node__left(cause, f2__redblacktree_node__parent(cause, this))) && (f2__redblacktree_node__parent(cause, this) == f2__redblacktree_node__left(cause, this__grandparent))) {
-    f2__redblacktree_node__rotate_right(cause, this__grandparent);
+    raw__redblacktree_node__rotate_right(cause, this__grandparent);
   } else {
     //
     // Here, (this == this->parent->right) && (this->parent == this__grandparent->right).
     //
-    f2__redblacktree_node__rotate_left(cause, this__grandparent);
+    raw__redblacktree_node__rotate_left(cause, this__grandparent);
   }
 }
 

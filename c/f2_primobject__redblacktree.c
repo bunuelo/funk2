@@ -39,7 +39,7 @@ def_pcfunk0(redblacktree__new, return f2__redblacktree__new(this_cause));
 def_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
 
 f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
-  return f2redblacktree__new(cause, parent, left, right, color, key);
+  return f2redblacktree_node__new(cause, parent, left, right, color, key);
 }
 
 f2ptr f2__redblacktree__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {

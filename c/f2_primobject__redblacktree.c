@@ -187,10 +187,10 @@ void raw__redblacktree_node__insert_case5(f2ptr cause, f2ptr this) {
 void raw__redblacktree_node__insert_case4(f2ptr cause, f2ptr this) {
   f2ptr this__grandparent = raw__redblacktree_node__grandparent(cause, this);
   if ((this == f2__redblacktree_node__right(cause, f2__redblacktree_node__parent(cause, this))) && (f2__redblacktree_node__parent(cause, this) == f2__redblacktree_node__left(cause, this__grandparent))) {
-    f2__redblacktree_node__rotate_left(cause, f2__redblacktree_node__parent(cause, this));
+    raw__redblacktree_node__rotate_left(cause, f2__redblacktree_node__parent(cause, this));
     this = f2__redblacktree_node__left(cause, this);
   } else if ((this == f2__redblacktree_node__left(cause, f2__redblacktree_node__parent(cause, this))) && (f2__redblacktree_node__parent(cause, this) == f2__redblacktree_node__right(cause, this__grandparent))) {
-    f2__redblacktree_node__rotate_right(cause, f2__redblacktree_node__parent(cause, this));
+    raw__redblacktree_node__rotate_right(cause, f2__redblacktree_node__parent(cause, this));
     this = f2__redblacktree_node__right(cause, this);
   }
   f2__redblacktree_node__insert_case5(cause, this);

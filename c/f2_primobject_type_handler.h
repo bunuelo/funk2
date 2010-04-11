@@ -38,6 +38,7 @@
 #include "f2_graph.h"
 #include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
+#include "f2_primobject__redblacktree.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_mutex;
@@ -123,6 +124,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__graph_variable__slot_t         primobject_type_graph_variable;
   funk2_object_type__pattern_graph__slot_t          primobject_type_pattern_graph;
   funk2_object_type__largeinteger__slot_t           primobject_type_largeinteger;
+  funk2_object_type__redblacktree__slot_t           primobject_type_redblacktree;
 };
 
 // **

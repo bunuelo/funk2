@@ -42,10 +42,10 @@ f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr r
   return f2redblacktree_node__new(cause, parent, left, right, color, key);
 }
 
-f2ptr f2__redblacktree__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
-  return raw__redblacktree__new(cause, parent, left, right, color, key);
+f2ptr f2__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
+  return raw__redblacktree_node__new(cause, parent, left, right, color, key);
 }
-def_pcfunk5(redblacktree__new, parent, left, right, color, key, return f2__redblacktree__new(this_cause, parent, left, right, color, key));
+def_pcfunk5(redblacktree_node__new, parent, left, right, color, key, return f2__redblacktree_node__new(this_cause, parent, left, right, color, key));
 
 // **
 

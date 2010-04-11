@@ -27,6 +27,11 @@
 typedef struct funk2_object_type__redblacktree__slot_s funk2_object_type__redblacktree__slot_t;
 declare_object_type_1_slot(redblacktree, head, );
 
+// redblacktree_node
+
+typedef struct funk2_object_type__redblacktree_node__slot_s funk2_object_type__redblacktree_node__slot_t;
+declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, );
+
 #endif // F2__PRIMOBJECT__REDBLACKTREE__TYPES__H
 
 #ifndef F2__PRIMOBJECT__REDBLACKTREE__H
@@ -41,7 +46,16 @@ declare_primobject_1_slot(redblacktree, head);
 f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head);
 f2ptr  f2__redblacktree__new(f2ptr cause);
 
-f2ptr f2hash__primobject_type__new(f2ptr cause);
+f2ptr f2redblacktree__primobject_type__new(f2ptr cause);
+
+// redblacktree_node
+
+declare_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
+
+f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key);
+f2ptr  f2__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key);
+
+f2ptr f2redblacktree_node__primobject_type__new(f2ptr cause);
 
 // **
 

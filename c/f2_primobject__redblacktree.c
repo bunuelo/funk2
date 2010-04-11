@@ -34,10 +34,24 @@ f2ptr f2__redblacktree__new(f2ptr cause) {
 }
 def_pcfunk0(redblacktree__new, return f2__redblacktree__new(this_cause));
 
+// redblacktree_node
+
+def_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
+
+f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
+  return f2redblacktree__new(cause, parent, left, right, color, key);
+}
+
+f2ptr f2__redblacktree__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
+  return raw__redblacktree__new(cause, parent, left, right, color, key);
+}
+def_pcfunk5(redblacktree__new, parent, left, right, color, key, return f2__redblacktree__new(this_cause, parent, left, right, color, key));
+
 // **
 
 void f2__primobject__redblacktree__reinitialize_globalvars() {
-  __redblacktree__symbol = f2symbol__new(initial_cause(), strlen("redblacktree"), (u8*)"redblacktree");
+  __redblacktree__symbol      = f2symbol__new(initial_cause(), strlen("redblacktree"),      (u8*)"redblacktree");
+  __redblacktree_node__symbol = f2symbol__new(initial_cause(), strlen("redblacktree_node"), (u8*)"redblacktree_node");
 }
 
 void f2__primobject__redblacktree__initialize() {
@@ -47,10 +61,19 @@ void f2__primobject__redblacktree__initialize() {
   
   f2__primobject__redblacktree__reinitialize_globalvars();
   
+  // redblacktree
+
   initialize_primobject_1_slot(redblacktree, head);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(redblacktree__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}
+  
+  // redblacktree_node
+  
+  initialize_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__5_arg(redblacktree_node__new, parent, left, right, color, key, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__funk = never_gc(cfunk);}
   
 }
 

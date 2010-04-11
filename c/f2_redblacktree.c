@@ -252,85 +252,6 @@ void rbt_node__insert_case1(rbt_node_t* node) {
   }
 }
 
-/*
-// Inserts the node pointed to by new_node into the subtree rooted at tree_node
-void rbt_node__insert(rbt_node_t** tree_node, rbt_node_t* new_node) {
-  // First, insert just as in a normal binary tree.
-  if (*tree_node == NULL)
-    *tree_node = new_node;
-  else if (new_node->key < (*tree_node)->key)
-    rbt_node__insert(&((*tree_node)->left), new_node);
-  else
-    rbt_node__insert(&((*tree_node)->right), new_node);
-  // Then, fix-up the tree so that rbt properties are maintained.
-  rbt_node__insert_case1(new_node);
-}
-
-void rbt_node__replace_node(rbt_node_t* node, rbt_node_t* replacement) {
-  rbt_node_t* parent = node->parent;
-  replacement->parent = parent;
-  if (parent) {
-    if (parent->left == node) {
-      parent->left = replacement;
-    } else {
-      parent->right = replacement;
-    }
-  }
-  replacement->left  = node->left;
-  replacement->right = node->right;
-}
-
-// Precondition: node has at most one non-null child.
-void rbt_node__delete_one_child(rbt_node_t* node) {
-  rbt_node_t* node__child = (node->right == NULL) ? node->left : node->right;
-  
-  rbt_node__replace_node(node, child);
-  if (n->color == BLACK) {
-    if (child->color == RED)
-      child->color = BLACK;
-    else
-      delete_case1(child);
-  }
-  free(n);
-}
-
-// Note: If N is a null leaf and we do not want to represent null
-// leaves as actual node objects, we can modify the algorithm by first
-// calling delete_case1() on its parent (the node that we delete, n in
-// the code above) and deleting it afterwards. We can do this because
-// the parent is black, so it behaves in the same way as a null leaf
-// (and is sometimes called a 'phantom' leaf). And we can safely
-// delete it at the end as n will remain a leaf after all operations,
-// as shown above.
-
-void DeleteNode(struct node * & node) {
-     if (node->left == NULL) { 
-         struct node *temp = node;
-         node = node->right;
-         delete temp;
-     } else if (node->right == NULL) {
-         struct node *temp = node;
-         node = node->left;
-         delete temp;
-     } else {
-         // In-order predecessor (rightmost child of left subtree) 
-         // Node has two children - get max of left subtree
-         struct node **temp = &node->left; // get left node of the original node
- 
-         // find the rightmost child of the subtree of the left node
-         while ((*temp)->right != NULL) {
-             temp = &(*temp)->right;
-         }
- 
-         // copy the value from the in-order predecessor to the original node
-         node->value = (*temp)->value;
- 
-         // then delete the predecessor
-         DeleteNode(*temp);
-     }
- }
-*/
-
 rbt_node_t* rbt_node__head(rbt_node_t* node) {
   if (node == NULL) {
     return NULL;
@@ -548,50 +469,38 @@ void rbt_tree__remove_with_at_most_one_child(rbt_tree_t* tree, rbt_node_t* node)
   if (node__left == NULL) { 
     if (node__parent) {
       if (node__parent->right == node) {
-	//printf("\nline %d", __LINE__);
 	node__parent->right = node__right;
 	if (node__right) {
-	  //printf("\nline %d", __LINE__);
 	  node__right->parent = node__parent;
 	}
       } else {
-	//printf("\nline %d", __LINE__);
 	node__parent->left = node__right;
 	if (node__right) {
-	  //printf("\nline %d", __LINE__);
 	  node__right->parent = node__parent;
 	}
       }
     } else {
-      //printf("\nline %d", __LINE__);
       tree->head = node__right;
       if (node__right) {
-	//printf("\nline %d", __LINE__);
 	node__right->parent = NULL;
       }
     }
   } else { // (node->right == NULL)
     if (node__parent) {
       if (node__parent->right == node) {
-	//printf("\nline %d", __LINE__);
 	node__parent->right = node__left;
 	if (node__left) {
-	  //printf("\nline %d", __LINE__);
 	  node__left->parent = node__parent;
 	}
       } else {
-	//printf("\nline %d", __LINE__);
 	node__parent->left = node__left;
 	if (node__left) {
-	  //printf("\nline %d", __LINE__);
 	  node__left->parent = node__parent;
 	}
       }
     } else {
-      //printf("\nline %d", __LINE__);
       tree->head = node__left;
       if (node__left) {
-	//printf("\nline %d", __LINE__);
 	node__left->parent = NULL;
       }
     }
@@ -606,13 +515,9 @@ void rbt_tree__remove_with_at_most_one_child(rbt_tree_t* tree, rbt_node_t* node)
       }
     }
   }
-  
-  //printf("\ndebug %d: ", __LINE__);
-  //rbt_tree__print(tree);
 }
 
 void rbt_node__replace_node(rbt_node_t* dest, rbt_node_t* src) {
-  //printf("\nline %d", __LINE__);
   rbt_node_t* src__parent = src->parent;
   rbt_node_t* src__left   = src->left;
   rbt_node_t* src__right  = src->right;
@@ -621,22 +526,18 @@ void rbt_node__replace_node(rbt_node_t* dest, rbt_node_t* src) {
   dest->right  = src__right;
   if (src__parent) {
     if (src__parent->left == src) {
-      //printf("\nline %d", __LINE__);
       src__parent->left = dest;
     } else { // (src__parent->right == src)
 #ifdef DEBUG_REDBLACKTREE
       debug__assert(src__parent->right == src, nil, "rbt_node__replace_node assertion failure: src__parent->right == src.");
 #endif
-      //printf("\nline %d", __LINE__);
       src__parent->right = dest;
     }
   }
   if (src__left) {
-    //printf("\nline %d", __LINE__);
     src__left->parent = dest;
   }
   if (src__right) {
-    //printf("\nline %d", __LINE__);
     src__right->parent = dest;
   }
 #ifdef DEBUG_REDBLACKTREE
@@ -658,43 +559,33 @@ void rbt_node__swap_nodes(rbt_node_t* node1, rbt_node_t* node2) {
   
   // copy values to node2
   if (node1__parent == node2) {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node2->parent = node1;
   } else {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node2->parent = node1__parent;
     if (node1__parent) {
       if (node1__parent__left == node1) {
-	//printf("\nline %d", __LINE__); fflush(stdout);
 	node1__parent->left = node2;
       } else { // (node1__parent->right == node1)
 #ifdef DEBUG_REDBLACKTREE
 	debug__assert(node1__parent->right == node1, nil, "rbt_node__replace_node assertion failure: node1__parent->right == node1.");
 #endif
-	//printf("\nline %d", __LINE__); fflush(stdout);
 	node1__parent->right = node2;
       }
     }
   }
   if (node1__left == node2) {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node2->left = node1;
   } else {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node2->left = node1__left;
     if (node1__left) {
-      //printf("\nline %d", __LINE__); fflush(stdout);
       node1__left->parent = node2;
     }
   }
   if (node1__right  == node2) {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node2->right = node1;
   } else {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node2->right = node1__right;
     if (node1__right) {
-      //printf("\nline %d", __LINE__); fflush(stdout);
       node1__right->parent = node2;
     }
   }
@@ -702,42 +593,33 @@ void rbt_node__swap_nodes(rbt_node_t* node1, rbt_node_t* node2) {
   
   // copy values to node1
   if (node2__parent == node1) {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node1->parent = node2;
   } else {
     node1->parent = node2__parent;
     if (node2__parent) {
       if (node2__parent__left == node2) {
-	//printf("\nline %d", __LINE__); fflush(stdout);
 	node2__parent->left = node1;
       } else { // (node1__parent->right == node1)
 #ifdef DEBUG_REDBLACKTREE
 	debug__assert(node2__parent->right == node2, nil, "rbt_node__replace_node assertion failure: node2__parent->right == node2.");
 #endif
-	//printf("\nline %d", __LINE__); fflush(stdout);
 	node2__parent->right = node1;
       }
     }
   }
   if (node2__left == node1) {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node1->left = node2;
   } else {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node1->left = node2__left;
     if (node2__left) {
-      //printf("\nline %d", __LINE__); fflush(stdout);
       node2__left->parent = node1;
     }
   }
   if (node2__right == node1) {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node1->right = node2;
   } else {
-    //printf("\nline %d", __LINE__); fflush(stdout);
     node1->right = node2__right;
     if (node2__right) {
-      //printf("\nline %d", __LINE__); fflush(stdout);
       node2__right->parent = node1;
     }
   }
@@ -750,26 +632,15 @@ void rbt_node__swap_nodes(rbt_node_t* node1, rbt_node_t* node2) {
 
 void rbt_tree__remove(rbt_tree_t* tree, rbt_node_t* node) {
   if (node->left == NULL || node->right == NULL) { 
-    //printf("\nline %d", __LINE__);
     rbt_tree__remove_with_at_most_one_child(tree, node);
   } else {
-    //printf("\nline %d", __LINE__);
     rbt_node_t* node__left__max = rbt_node__maximum(node->left);
     
     debug__assert(node__left__max->right == NULL, nil, "rbt_node__simple_binary_remove: (node__left__max->right == NULL) failed.");
     
-    //printf("\ndebug %d: ", __LINE__);
-    //rbt_tree__print(tree);
-    
     rbt_node__swap_nodes(node__left__max, node);
     
-    //printf("\ndebug %d: ", __LINE__);
-    //rbt_tree__print(tree);
-    
     rbt_tree__remove_with_at_most_one_child(tree, node);
-    
-    //printf("\ndebug %d: ", __LINE__);
-    //rbt_tree__print(tree);
     
     if (node__left__max->parent == NULL) {
       tree->head = node__left__max;
@@ -780,13 +651,9 @@ void rbt_tree__remove(rbt_tree_t* tree, rbt_node_t* node) {
   
   if (tree->head) {
     if (tree->head->color == rbt_color__red) {
-      //printf("\nline %d", __LINE__);
       tree->head->color = rbt_color__black;
     }
   }
-  
-  //printf("\ndebug %d: ", __LINE__);
-  //rbt_tree__print(tree);
   
 #ifdef DEBUG_REDBLACKTREE
   debug__assert(! rbt_tree__contains(tree, node), nil, "rbt_tree__remove failed: tree still contains node.");

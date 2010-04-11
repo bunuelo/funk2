@@ -193,7 +193,7 @@ void raw__redblacktree_node__insert_case4(f2ptr cause, f2ptr this) {
     raw__redblacktree_node__rotate_right(cause, f2__redblacktree_node__parent(cause, this));
     this = f2__redblacktree_node__right(cause, this);
   }
-  f2__redblacktree_node__insert_case5(cause, this);
+  raw__redblacktree_node__insert_case5(cause, this);
 }
 
 // Note: In the previous insert cases, it is assumed that the parent node P

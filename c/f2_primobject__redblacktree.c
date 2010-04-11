@@ -217,7 +217,7 @@ void raw__redblacktree_node__insert_case4(f2ptr cause, f2ptr this) {
 void raw__redblacktree_node__insert_case1(f2ptr cause, f2ptr this);
 
 void raw__redblacktree_node__insert_case3(f2ptr cause, f2ptr this) {
-  f2ptr this__uncle = f2__redblacktree_node__uncle(cause, this);
+  f2ptr this__uncle = raw__redblacktree_node__uncle(cause, this);
   f2ptr this__grandparent;
   if ((this__uncle != nil) && (f2__redblacktree_node__color(cause, this__uncle) == new__symbol(cause, "red"))) {
     f2__redblacktree_node__color__set(cause, f2__redblacktree_node__parent(cause, this), new__symbol(cause, "black"));

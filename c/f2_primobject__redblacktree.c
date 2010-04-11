@@ -155,7 +155,7 @@ f2ptr raw__redblacktree_node__sibling(f2ptr cause, f2ptr node) {
 // case, this is the only black node of the three.
 
 void raw__redblacktree_node__insert_case5(f2ptr cause, f2ptr this) {
-  f2ptr this__grandparent = f2__redblacktree_node__grandparent(cause, this);
+  f2ptr this__grandparent = raw__redblacktree_node__grandparent(cause, this);
   //printf("\ninsert_case5: setting to black...");
   //rbt_node__print(this->parent);
   f2__redblacktree_node__color__set(cause, f2__redblacktree_node__parent(cause, this), new__symbol(cause, "black"));

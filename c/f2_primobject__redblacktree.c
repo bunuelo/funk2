@@ -89,7 +89,7 @@ void raw__redblacktree_node__rotate_left(f2ptr cause, f2ptr this) {
 }
 
 void raw__redblacktree_node__rotate_right(f2ptr cause, f2ptr this) {
-  rbt_node_t* that = f2__redblacktree_node__left(cause, this);      // Set that.
+  f2ptr that = f2__redblacktree_node__left(cause, this);      // Set that.
   f2__redblacktree_node__left__set(cause, this, f2__redblacktree_node__right(cause, that));     // Turn that's right subtree into this's left subtree.
   if (f2__redblacktree_node__right(cause, that)) {
     f2__redblacktree_node__parent__set(cause, f2__redblacktree_node__right(cause, that), this);

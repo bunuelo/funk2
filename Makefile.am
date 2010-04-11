@@ -241,17 +241,18 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__action.c \
   c/f2_primobject__boolean.c \
   c/f2_primobject__char_pointer.c \
+  c/f2_primobject__circular_buffer.c \
+  c/f2_primobject__doublelinklist.c \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \
   c/f2_primobject__frame.c \
   c/f2_primobject__hash.c \
   c/f2_primobject__list.c \
-  c/f2_primobject__doublelinklist.c \
   c/f2_primobject__largeinteger.c \
   c/f2_primobject__object.c \
   c/f2_primobject__object_type.c \
   c/f2_primobject__ptypehash.c \
-  c/f2_primobject__circular_buffer.c \
+  c/f2_primobject__redblacktree.c \
   c/f2_primobject__semantic_graph.c \
   c/f2_primobject__set.c \
   c/f2_primobject__stream.c \

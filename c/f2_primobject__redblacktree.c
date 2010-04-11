@@ -115,7 +115,7 @@ f2ptr raw__redblacktree_node__grandparent(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__redblacktree_node__uncle(f2ptr cause, f2ptr this) {
-  f2ptr this__grandparent = f2__redblacktree_node__grandparent(cause, this);
+  f2ptr this__grandparent = raw__redblacktree_node__grandparent(cause, this);
   //
   // Here we blindly assume that this__grandparent != nil, i.e. we
   // suppose a rootless tree.  However, a real tree always have an

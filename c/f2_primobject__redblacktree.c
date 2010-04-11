@@ -81,7 +81,7 @@ void raw__redblacktree_node__rotate_left(f2ptr cause, f2ptr this) {
     if (raw__eq(cause, this, f2__redblacktree_node__left(cause, f2__redblacktree_node__parent(cause, this)))) {
       f2__redblacktree_node__left__set(cause, f2__redblacktree_node__parent(cause, this), that);
     } else {
-      f2__redblacktree_node__right__set(cause, f2__redblacktree__parent(cause, this), that);
+      f2__redblacktree_node__right__set(cause, f2__redblacktree_node__parent(cause, this), that);
     }
   }
   f2__redblacktree_node__left__set(cause, that, this); // Put this on that's left.

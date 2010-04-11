@@ -38,8 +38,8 @@ declare_object_type_1_slot(redblacktree, head, );
 
 declare_primobject_1_slot(redblacktree, head);
 
-f2ptr raw__hash__new(f2ptr cause, f2ptr head);
-f2ptr  f2__hash__new(f2ptr cause);
+f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head);
+f2ptr  f2__redblacktree__new(f2ptr cause);
 
 f2ptr f2hash__primobject_type__new(f2ptr cause);
 

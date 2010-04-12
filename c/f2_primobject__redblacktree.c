@@ -322,7 +322,7 @@ boolean_t raw__redblacktree_node__contains(f2ptr cause, f2ptr this, f2ptr node) 
   return boolean__false;
 }
 
-boolean_t raw__redblacktree__contains(f2ptr this, f2ptr node) {
+boolean_t raw__redblacktree__contains(f2ptr cause, f2ptr this, f2ptr node) {
   return raw__redblacktree_node__contains(cause, f2__redblacktree__head(cause, this), node);
 }
 

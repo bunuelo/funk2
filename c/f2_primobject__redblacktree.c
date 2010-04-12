@@ -330,7 +330,7 @@ void raw__redblacktree_node__simple_binary_insert(f2ptr this, f2ptr new_node) {
 #ifdef DEBUG_REDBLACKTREE
   debug__assert(!raw__redblacktree_node__contains(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif
-  f2ptr new_node__key     = f2__redblacktree_node__key(cause, node_node);
+  f2ptr new_node__key     = f2__redblacktree_node__key(cause, new_node);
   f2ptr this__key         = f2__redblacktree_node__key(cause, this);
   f2ptr comparison_result = object__get_1(cause, new_node__key, "is_less_than", this__key);
   if (comparison_result != nil) {

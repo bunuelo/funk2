@@ -1373,6 +1373,25 @@ f2ptr raw__common_variable_subgraph_possibility__subgraph(f2ptr cause, f2ptr thi
   return raw__array__elt(cause, this, 1);
 }
 
+f2ptr raw__common_variable_subgraph_possibility__compare(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__variable_cost    = f2__common_variable_subgraph_possibility__variable_cost(cause, this);
+  f2ptr that__variable_cost    = f2__common_variable_subgraph_possibility__variable_cost(cause, that);
+  s64   this__variable_cost__i = f2integer__i(this__variable_cost, cause);
+  s64   that__variable_cost__i = f2integer__i(that__variable_cost, cause);
+  return f2bool__new(cause, this__variable_cost__i < this__variable_cost__i);
+}
+// no type checking, not meant to be user-accessible
+def_pcfunk2(common_variable_subgraph_possibility__compare, this, that, return raw__common_variable_subgraph_possibility__compare(this_cause, this, that));
+
+f2ptr f2__common_variable_subgraph_possibility_redblacktree__new(f2ptr cause) {
+  f2ptr comparison_funk = __funk2.graph.common_variable_subgraph_possibility__compare__funk;
+  return f2__redblacktree__new(cause, comparison_funk);
+}
+
+f2ptr raw__common_variable_subgraph_possibility_redblacktree__insert(f2ptr cause, f2ptr this, f2ptr variable_cost, f2ptr subgraph) {
+  return f2__redblacktree__insert(cause, this, f2__common_variable_subgraph_possibility__new(cause, f2integer__new(cause, common_subgraph__worth__i), subgraph));
+}
+
 f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr common_subgraph           = f2__graph__new(cause);
   u64   common_subgraph__worth__i = 0;
@@ -1435,16 +1454,9 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
       }
     }
   }
-  f2ptr subgraph_possibilities = f2cons__new(cause, f2__common_variable_subgraph_possibility__new(cause, common_subgraph, f2integer__new(cause, common_subgraph__worth__i)), nil);
+  f2ptr subgraph_possibilities = f2__common_variable_subgraph_possibility_redblacktree__new(cause);
+  raw__common_variable_subgraph_possibility_redblacktree__insert(cause, subgraph_possibilities, f2integer__new(cause, common_subgraph__worth__i), common_subgraph);
   f2__print(cause, subgraph_possibilities);
-  {
-    f2ptr possibility_iter = subgraph_possibilities;
-    while (possibility_iter) {
-      f2ptr possibility = f2__cons__car(cause, possibility_iter);
-      
-      possibility_iter = f2__cons__cdr(cause, possibility_iter);
-    }
-  }
   return common_subgraph;
 }
 
@@ -1528,7 +1540,11 @@ void f2__graph__initialize() {
   f2__primcfunk__init__3(graph__contains_match_with_bindings,  this, that, bindings,                                                "returns variable bindings for match.");
   f2__primcfunk__init__3(graph__bind_variable,                 this, variable_name, value,                                          "returns true if variable is successfully bound, false otherwise.");
   f2__primcfunk__init__1(graph__as__dot_code,                  this,                                                                "returns dot code in a string suitable for graphing with graphviz.");
-  f2__primcfunk__init__2(graph__find_common_variable_subgraph, this, that,                                                          "return the largest common variable subgraph shared by two graphs.");
+  {
+    {char* str = "common_variable_subgraph_possibility-compare"; __funk2.graph.common_variable_subgraph_possibility__compare__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+    {f2__primcfunk__init__with_c_cfunk_var__2_arg(common_variable_subgraph_possibility__compare, this, that, cfunk, 0,              "Internal part of graph-find_common_variable_subgraph.  Should not be end-user-accessible."); __funk2.graph.common_variable_subgraph_possibility__compare__funk = never_gc(cfunk);}
+    f2__primcfunk__init__2(graph__find_common_variable_subgraph, this, that,                                                        "return the largest common variable subgraph shared by two graphs.");
+  }
   
   // trans
   initialize_primobject_2_slot(trans, remove, add);

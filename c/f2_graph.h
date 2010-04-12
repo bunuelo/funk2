@@ -143,6 +143,11 @@ declare_object_type_2_slot(trans, remove, add,
 			   f2ptr part_not_contained_by__funk;
 			   );
 
+typedef struct funk2_graph_s {
+  f2ptr common_variable_subgraph_possibility__compare__symbol;
+  f2ptr common_variable_subgraph_possibility__compare__funk;
+} funk2_graph_t;
+
 #endif // F2__GRAPH__TYPE__H
 
 #ifndef F2__GRAPH__H

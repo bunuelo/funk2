@@ -177,6 +177,7 @@ typedef struct funk2_s {
   funk2_object_t                      object;
   funk2_number_globalvars_t           number_globalvars;
   funk2_surrogate_parent_t            surrogate_parent;
+  funk2_graph_t                       graph;
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

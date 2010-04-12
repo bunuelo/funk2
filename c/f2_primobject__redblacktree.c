@@ -389,7 +389,7 @@ void raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr node) {
   raw__redblacktree__simple_binary_insert(cause, this, node);
   f2__redblacktree_node__color__set(cause, node, new__symbol(cause, "red"));
   raw__redblacktree_node__insert_case1(cause, node);
-  f2__redblacktree__head__set(cause, this, f2__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
+  f2__redblacktree__head__set(cause, this, raw__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
 }
 
 void raw__redblacktree_node__delete_case6(f2ptr cause, f2ptr this) {

@@ -381,7 +381,7 @@ void raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr node
   if (f2__redblacktree__head(cause, this) == nil) {
     f2__redblacktree__head__set(cause, this, node);
   } else {
-    raw__redblacktree_node__simple_binary_insert(f2__redblacktree__head(cause, this), node);
+    raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node);
   }
 }
 

@@ -77,6 +77,7 @@
 [primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-trace.fu2']
 [primfunk:load 'fu2/primfunks-reader.fu2']
+[primfunk:load 'fu2/primfunks-redblacktree.fu2']
 [primfunk:load 'fu2/primfunks-garbage_collector.fu2']
 [primfunk:load 'fu2/primfunks-glwindow.fu2']
 [primfunk:load 'fu2/primfunks-physical_objects.fu2']

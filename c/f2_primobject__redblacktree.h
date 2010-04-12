@@ -52,9 +52,6 @@ f2ptr f2redblacktree__primobject_type__new(f2ptr cause);
 
 declare_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
 
-f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key);
-f2ptr  f2__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key);
-
 f2ptr f2redblacktree_node__primobject_type__new(f2ptr cause);
 
 // **

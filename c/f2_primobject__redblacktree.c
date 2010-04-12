@@ -326,7 +326,7 @@ boolean_t raw__redblacktree__contains(f2ptr cause, f2ptr this, f2ptr node) {
   return raw__redblacktree_node__contains(cause, f2__redblacktree__head(cause, this), node);
 }
 
-void raw__redblacktree_node__simple_binary_insert(f2ptr this, f2ptr new_node) {
+void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr new_node) {
 #ifdef DEBUG_REDBLACKTREE
   debug__assert(!raw__redblacktree_node__contains(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif

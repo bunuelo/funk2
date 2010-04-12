@@ -816,11 +816,11 @@ f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this) {
 f2ptr raw__redblacktree__leaves(f2ptr cause, f2ptr this) {
   f2ptr leaves = nil;
   {
-    f2ptr iter = f2__redblacktree__maximum_node(cause, this);
+    f2ptr iter = raw__redblacktree__maximum_node(cause, this);
     while (iter) {
       f2ptr key = f2__redblacktree_node__key(cause, iter);
       leaves = f2cons__new(cause, key, leaves);
-      iter = f2__redblacktree_node__prev(cause, iter);
+      iter = raw__redblacktree_node__prev(cause, iter);
     }
   }
   return leaves;

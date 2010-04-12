@@ -403,7 +403,7 @@ void raw__redblacktree_node__delete_case6(f2ptr cause, f2ptr this) {
   } else {
     // Here, this__sibling->left->color == rbt_color__red.
     f2__redblacktree_node__color__set(cause, f2__redblacktree_node__left(cause, this__sibling), new__symbol(cause, "black"));
-    raw__redblacktree_node__rotate_right(cause, f2__redblacktree_nodee__parent(cause, this));
+    raw__redblacktree_node__rotate_right(cause, f2__redblacktree_node__parent(cause, this));
   }
 }
 

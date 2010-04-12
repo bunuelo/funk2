@@ -30,7 +30,7 @@ f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head, f2ptr comparison_funk) {
 }
 
 f2ptr f2__redblacktree__new(f2ptr cause, f2ptr comparison_funk) {
-  return raw__redblacktree__new(cause, nil);
+  return raw__redblacktree__new(cause, nil, comparison_funk);
 }
 def_pcfunk0(redblacktree__new, comparison_funk, return f2__redblacktree__new(this_cause, comparison_funk));
 

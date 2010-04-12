@@ -224,9 +224,9 @@ void raw__redblacktree_node__insert_case3(f2ptr cause, f2ptr this) {
     f2__redblacktree_node__color__set(cause, this__uncle, new__symbol(cause, "black"));
     this__grandparent = raw__redblacktree_node__grandparent(cause, this);
     f2__redblacktree_node__color__set(cause, this__grandparent, new__symbol(cause, "red"));
-    f2__redblacktree_node__insert_case1(cause, this__grandparent);
+    raw__redblacktree_node__insert_case1(cause, this__grandparent);
   } else {
-    f2__redblacktree_node__insert_case4(cause, this);
+    raw__redblacktree_node__insert_case4(cause, this);
   }
 }
 
@@ -243,7 +243,7 @@ void raw__redblacktree_node__insert_case2(f2ptr cause, f2ptr this) {
   if (raw__eq(cause, f2__redblacktree_node__color(cause, this->parent), new__symbol(cause, "black"))) {
     return; // Tree is still valid
   } else {
-    f2__redblacktree_node__insert_case3(cause, this);
+    raw__redblacktree_node__insert_case3(cause, this);
   }
 }
 
@@ -262,7 +262,7 @@ void raw__redblacktree_node__insert_case1(f2ptr cause, f2ptr this) {
   if (f2__redblacktree_node__parent(cause, this) == nil) {
     f2__redblacktree_node__color__set(cause, this, new__symbol(cause, "black"));
   } else {
-    f2__redblacktree_node__insert_case2(cause, this);
+    raw__redblacktree_node__insert_case2(cause, this);
   }
 }
 

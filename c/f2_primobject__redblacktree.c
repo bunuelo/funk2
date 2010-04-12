@@ -496,7 +496,7 @@ void raw__redblacktree__remove_with_at_most_one_child(f2ptr cause, f2ptr this, f
 	}
       }
     } else {
-      f2__redblacktree_node__head__set(cause, this, node__right);
+      f2__redblacktree__head__set(cause, this, node__right);
       if (node__right) {
 	f2__redblacktree_node__parent__set(cause, node__right, nil);
       }

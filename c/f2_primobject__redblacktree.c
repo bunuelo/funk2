@@ -533,7 +533,7 @@ void raw__redblacktree__remove_with_at_most_one_child(f2ptr cause, f2ptr this, f
   }
 }
 
-void raw__redblacktree_node__replace_node(f2ptr dest, f2ptr src) {
+void raw__redblacktree_node__replace_node(f2ptr cause, f2ptr dest, f2ptr src) {
   f2ptr src__parent = f2__redblacktree_node__parent(cause, src);
   f2ptr src__left   = f2__redblacktree_node__left(  cause, src);
   f2ptr src__right  = f2__redblacktree_node__right( cause, src);

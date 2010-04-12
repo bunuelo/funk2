@@ -332,6 +332,7 @@ void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr
 #endif
   f2ptr new_node__key     = f2__redblacktree_node__key(cause, new_node);
   f2ptr this__key         = f2__redblacktree_node__key(cause, this);
+  f2ptr fiber             = f2__this__fiber(cause);
   f2ptr comparison_result = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, new_node__key, this__key));
   if (comparison_result != nil) {
     if (f2__redblacktree_node__left(cause, this) == nil) {
@@ -356,6 +357,7 @@ void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr
 
 f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr comparison_funk) {
   f2ptr     this__key          = f2__redblacktree_node__key(cause, this);
+  f2ptr     fiber              = f2__this__fiber(cause);
   f2ptr     comparison_result  = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, this__key, key));
   f2ptr     comparison_result2 = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, key,       this__key));
   boolean_t equality_result    = (! comparison_result) && (! comparison_result2);

@@ -23,7 +23,7 @@
 
 // redblacktree
 
-def_primobject_1_slot(redblacktree, head);
+def_primobject_2_slot(redblacktree, head, comparison_funk);
 
 f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head, f2ptr comparison_funk) {
   return f2redblacktree__new(cause, head, comparison_funk);
@@ -871,7 +871,7 @@ void f2__primobject__redblacktree__initialize() {
   
   // redblacktree
 
-  initialize_primobject_1_slot(redblacktree, head);
+  initialize_primobject_2_slot(redblacktree, head, comparison_funk);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__new, comparison_funk, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}

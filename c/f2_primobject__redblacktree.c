@@ -684,16 +684,6 @@ f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__maximum(cause, f2__redblacktree__head(cause, this));
 }
 
-int raw__redblacktree__size(f2ptr cause, f2ptr this) {
-  int size = 0;
-  f2ptr iter = raw__redblacktree__minimum(cause, this);
-  while (iter) {
-    size ++;
-    iter = raw__redblacktree_node__next(cause, iter);
-  }
-  return size;
-}
-
 f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this) {
   if (f2__redblacktree_node__right(cause, this) != nil) {
     return raw__redblacktree_node__minimum(cause, f2__redblacktree_node__right(cause, this));
@@ -728,6 +718,16 @@ f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this) {
       return nil;
     }
   }
+}
+
+int raw__redblacktree__size(f2ptr cause, f2ptr this) {
+  int size = 0;
+  f2ptr iter = raw__redblacktree__minimum(cause, this);
+  while (iter) {
+    size ++;
+    iter = raw__redblacktree_node__next(cause, iter);
+  }
+  return size;
 }
 
 

@@ -428,7 +428,7 @@ void raw__redblacktree_node__delete_case5(f2ptr cause, f2ptr this) {
 }
 
 void raw__redblacktree_node__delete_case4(f2ptr cause, f2ptr this) {
-  f2ptr this__sibling = raw__redblacktree_node__sibling(this);
+  f2ptr this__sibling = raw__redblacktree_node__sibling(cause, this);
   if (raw__redblacktree_node__is_red(  cause, f2__redblacktree_node__parent(cause, this)) &&
       raw__redblacktree_node__is_black(cause, this__sibling) &&
       raw__redblacktree_node__is_black(cause, f2__redblacktree_node__left( cause, this__sibling)) &&

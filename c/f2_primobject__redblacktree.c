@@ -240,7 +240,7 @@ void raw__redblacktree_node__insert_case3(f2ptr cause, f2ptr this) {
 // replaced, which was black, and so this property remains satisfied.
 
 void raw__redblacktree_node__insert_case2(f2ptr cause, f2ptr this) {
-  if (raw__eq(cause, f2__redblacktree_node__color(cause, this->parent), new__symbol(cause, "black"))) {
+  if (raw__eq(cause, f2__redblacktree_node__color(cause, f2__redblacktree_node__parent(cause, this)), new__symbol(cause, "black"))) {
     return; // Tree is still valid
   } else {
     raw__redblacktree_node__insert_case3(cause, this);

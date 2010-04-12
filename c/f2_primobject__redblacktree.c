@@ -365,13 +365,13 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
     if (f2__redblacktree_node__left(cause, this) == nil) {
       return nil;
     } else {
-      raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__left(cause, this), key);
+      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__left(cause, this), key);
     }
   } else {
     if (f2__redblacktree_node__right(cause, this) == nil) {
       return nil;
     } else {
-      raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__right(cause, this), key);
+      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__right(cause, this), key);
     }
   }
 }

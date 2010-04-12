@@ -25,14 +25,14 @@
 
 def_primobject_1_slot(redblacktree, head);
 
-f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head) {
-  return f2redblacktree__new(cause, head);
+f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head, f2ptr comparison_funk) {
+  return f2redblacktree__new(cause, head, comparison_funk);
 }
 
-f2ptr f2__redblacktree__new(f2ptr cause) {
+f2ptr f2__redblacktree__new(f2ptr cause, f2ptr comparison_funk) {
   return raw__redblacktree__new(cause, nil);
 }
-def_pcfunk0(redblacktree__new, return f2__redblacktree__new(this_cause));
+def_pcfunk0(redblacktree__new, comparison_funk, return f2__redblacktree__new(this_cause, comparison_funk));
 
 // redblacktree_node
 
@@ -326,13 +326,13 @@ boolean_t raw__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) 
   return raw__redblacktree_node__contains_node(cause, f2__redblacktree__head(cause, this), node);
 }
 
-void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr new_node) {
+void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr new_node, f2ptr comparison_funk) {
 #ifdef DEBUG_REDBLACKTREE
   debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif
   f2ptr new_node__key     = f2__redblacktree_node__key(cause, new_node);
   f2ptr this__key         = f2__redblacktree_node__key(cause, this);
-  f2ptr comparison_result = object__get_1(cause, new_node__key, "is_less_than", this__key);
+  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, new_node__key, this__key));
   if (comparison_result != nil) {
     if (f2__redblacktree_node__left(cause, this) == nil) {
       f2__redblacktree_node__parent__set(cause, new_node, this);
@@ -340,7 +340,7 @@ void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr
       f2__redblacktree_node__right__set( cause, new_node, nil);
       f2__redblacktree_node__left__set(  cause, this,     new_node);
     } else {
-      raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__left(cause, this), new_node);
+      raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__left(cause, this), new_node, comparison_funk);
     }
   } else {
     if (f2__redblacktree_node__right(cause, this) == nil) {
@@ -349,29 +349,30 @@ void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr
       f2__redblacktree_node__right__set( cause, new_node, nil);
       f2__redblacktree_node__right__set( cause, this,     new_node);
     } else {
-      raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__right(cause, this), new_node);
+      raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__right(cause, this), new_node, comparison_funk);
     }
   }
 }
 
-f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key) {
-  f2ptr this__key       = f2__redblacktree_node__key(cause, this);
-  f2ptr equality_result = object__get_1(cause, key, "eq", this__key);
-  if (equality_result != nil) {
+f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr comparison_funk) {
+  f2ptr     this__key          = f2__redblacktree_node__key(cause, this);
+  f2ptr     comparison_result  = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, this__key, key));
+  f2ptr     comparison_result2 = f2__force_funk_apply(cause, fiber, comparison_funk, f2list2__new(cause, key,       this__key));
+  boolean_t equality_result    = (! comparison_result) && (! comparison_result2);
+  if (equality_result) {
     return this;
   }
-  f2ptr comparison_result = object__get_1(cause, key, "is_less_than", this__key);
   if (comparison_result != nil) {
     if (f2__redblacktree_node__left(cause, this) == nil) {
       return nil;
     } else {
-      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__left(cause, this), key);
+      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__left(cause, this), key, comparison_funk);
     }
   } else {
     if (f2__redblacktree_node__right(cause, this) == nil) {
       return nil;
     } else {
-      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__right(cause, this), key);
+      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__right(cause, this), key, comparison_funk);
     }
   }
 }
@@ -381,7 +382,8 @@ f2ptr raw__redblacktree__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key
   if (this__head == nil) {
     return nil;
   }
-  return raw__redblacktree_node__lookup_node_with_key(cause, this__head, key);
+  f2ptr comparison_funk = f2__redblacktree__comparison_funk(cause, this);
+  return raw__redblacktree_node__lookup_node_with_key(cause, this__head, key, comparison_funk);
 }
 
 //void rbt_node__print(rbt_node_t* node) {
@@ -411,7 +413,8 @@ void raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr node
   if (f2__redblacktree__head(cause, this) == nil) {
     f2__redblacktree__head__set(cause, this, node);
   } else {
-    raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node);
+    f2ptr comparison_funk = f2__redblacktree__comparison_funk(cause, this);
+    raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node, comparison_funk);
   }
 }
 
@@ -696,7 +699,7 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   } else {
     f2ptr node__left__max = raw__redblacktree_node__maximum_node(cause, f2__redblacktree_node__left(cause, node));
     
-    debug__assert(f2__redblacktree_node__right(cause, node__left__max) == nil, nil, "rbt_node__simple_binary_remove_node: (node__left__max->right == NULL) failed.");
+    debug__assert(f2__redblacktree_node__right(cause, node__left__max) == nil, nil, "rbt_node__remove_node: (node__left__max->right == NULL) failed.");
     
     raw__redblacktree_node__swap_nodes(cause, node__left__max, node);
     
@@ -871,7 +874,7 @@ void f2__primobject__redblacktree__initialize() {
   initialize_primobject_1_slot(redblacktree, head);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__0_arg(redblacktree__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__new, comparison_funk, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__2(redblacktree__insert,  this, key, "Insert one instance of a key into a red-black-tree.");
   f2__primcfunk__init__2(redblacktree__remove,  this, key, "Remove one instance of a key from a red-black-tree.");

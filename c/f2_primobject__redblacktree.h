@@ -25,7 +25,7 @@
 // redblacktree
 
 typedef struct funk2_object_type__redblacktree__slot_s funk2_object_type__redblacktree__slot_t;
-declare_object_type_1_slot(redblacktree, head, );
+declare_object_type_2_slot(redblacktree, head, comparison_funk, );
 
 // redblacktree_node
 
@@ -41,7 +41,7 @@ declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, )
 
 // redblacktree
 
-declare_primobject_1_slot(redblacktree, head);
+declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
 f2ptr raw__redblacktree__new(    f2ptr cause, f2ptr head);
 f2ptr  f2__redblacktree__new(    f2ptr cause);

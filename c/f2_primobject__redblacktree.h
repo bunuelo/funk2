@@ -45,6 +45,7 @@ declare_primobject_1_slot(redblacktree, head);
 
 f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head);
 f2ptr  f2__redblacktree__new(f2ptr cause);
+f2ptr  f2__redblacktree__leaves(f2ptr cause, f2ptr this);
 
 f2ptr f2redblacktree__primobject_type__new(f2ptr cause);
 

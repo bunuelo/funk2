@@ -349,7 +349,7 @@ void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr
       f2__redblacktree_node__right__set( cause, new_node, nil);
       f2__redblacktree_node__right__set( cause, this,     new_node);
     } else {
-      f2__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__right(cause, this), new_node);
+      raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__right(cause, this), new_node);
     }
   }
 }

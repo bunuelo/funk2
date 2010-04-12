@@ -296,7 +296,7 @@ f2ptr raw__redblacktree_node__maximum(f2ptr cause, f2ptr this) {
   if (this == nil) {
     return nil;
   }
-  f2ptr iter  = node;
+  f2ptr iter  = this;
   f2ptr right = f2__redblacktree_node__right(cause, this);
   while (right) {
     iter  = right;

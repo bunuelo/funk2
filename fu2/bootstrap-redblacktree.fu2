@@ -24,3 +24,5 @@
 [deftypefunk redblacktree get     leaves  []    [redblacktree-leaves  this]]
 [deftypefunk redblacktree get     size    []    [redblacktree-size    this]]
 
+[defunk redblacktree [] [new redblacktree &<]]
+

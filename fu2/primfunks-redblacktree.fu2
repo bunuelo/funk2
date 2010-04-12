@@ -17,6 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk redblacktree-new    &primfunks:redblacktree__new]
-[globalize-funk redblacktree-insert &primfunks:redblacktree__insert]
+[globalize-funk redblacktree-new    &primfunk:redblacktree__new]
+[globalize-funk redblacktree-insert &primfunk:redblacktree__insert]
 

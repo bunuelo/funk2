@@ -219,7 +219,7 @@ void raw__redblacktree_node__insert_case1(f2ptr cause, f2ptr this);
 void raw__redblacktree_node__insert_case3(f2ptr cause, f2ptr this) {
   f2ptr this__uncle = raw__redblacktree_node__uncle(cause, this);
   f2ptr this__grandparent;
-  if ((this__uncle != nil) && (f2__redblacktree_node__color(cause, this__uncle) == new__symbol(cause, "red"))) {
+  if ((this__uncle != nil) && (raw__eq(cause, f2__redblacktree_node__color(cause, this__uncle), new__symbol(cause, "red")))) {
     f2__redblacktree_node__color__set(cause, f2__redblacktree_node__parent(cause, this), new__symbol(cause, "black"));
     f2__redblacktree_node__color__set(cause, this__uncle, new__symbol(cause, "black"));
     this__grandparent = raw__redblacktree_node__grandparent(cause, this);
@@ -240,7 +240,7 @@ void raw__redblacktree_node__insert_case3(f2ptr cause, f2ptr this) {
 // replaced, which was black, and so this property remains satisfied.
 
 void raw__redblacktree_node__insert_case2(f2ptr cause, f2ptr this) {
-  if (f2__redblacktree_node__color(cause, this->parent) == new__symbol(cause, "black")) {
+  if (raw__eq(cause, f2__redblacktree_node__color(cause, this->parent), new__symbol(cause, "black"))) {
     return; // Tree is still valid
   } else {
     f2__redblacktree_node__insert_case3(cause, this);
@@ -523,8 +523,8 @@ void raw__redblacktree__remove_with_at_most_one_child(f2ptr cause, f2ptr this, f
   }
   
   if (node__child) {
-    if (f2__redblacktree_node__color(cause, node) == new__symbol(cause, "black")) {
-      if (f2__redblacktree_node__color(cause, node__child) == new__symbol(cause, "red")) {
+    if (raw__eq(cause, f2__redblacktree_node__color(cause, node), new__symbol(cause, "black"))) {
+      if (raw__eq(cause, f2__redblacktree_node__color(cause, node__child), new__symbol(cause, "red"))) {
 	f2__redblacktree_node__color__set(cause, node__child, new__symbol(cause, "black"));
       } else {
 	raw__redblacktree_node__delete_case1(cause, node__child);

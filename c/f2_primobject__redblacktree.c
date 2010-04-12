@@ -42,10 +42,10 @@ f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr r
   return f2redblacktree_node__new(cause, parent, left, right, color, key);
 }
 
-f2ptr f2__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
-  return raw__redblacktree_node__new(cause, parent, left, right, color, key);
+f2ptr f2__redblacktree_node__new(f2ptr cause, f2ptr key) {
+  return raw__redblacktree_node__new(cause, nil, nil, nil, nil, key);
 }
-def_pcfunk5(redblacktree_node__new, parent, left, right, color, key, return f2__redblacktree_node__new(this_cause, parent, left, right, color, key));
+def_pcfunk1(redblacktree_node__new, key, return f2__redblacktree_node__new(this_cause, key));
 
 
 // *****************************************************************
@@ -279,7 +279,7 @@ f2ptr raw__redblacktree_node__head(f2ptr cause, f2ptr this) {
   return iter;
 }
 
-f2ptr raw__redblacktree_node__minimum(f2ptr cause, f2ptr this) {
+f2ptr raw__redblacktree_node__minimum_node(f2ptr cause, f2ptr this) {
   if (this == nil) {
     return nil;
   }
@@ -292,7 +292,7 @@ f2ptr raw__redblacktree_node__minimum(f2ptr cause, f2ptr this) {
   return iter;
 }
 
-f2ptr raw__redblacktree_node__maximum(f2ptr cause, f2ptr this) {
+f2ptr raw__redblacktree_node__maximum_node(f2ptr cause, f2ptr this) {
   if (this == nil) {
     return nil;
   }
@@ -305,7 +305,7 @@ f2ptr raw__redblacktree_node__maximum(f2ptr cause, f2ptr this) {
   return iter;
 }
 
-boolean_t raw__redblacktree_node__contains(f2ptr cause, f2ptr this, f2ptr node) {
+boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (this == nil) {
     return boolean__false;
   }
@@ -322,13 +322,13 @@ boolean_t raw__redblacktree_node__contains(f2ptr cause, f2ptr this, f2ptr node) 
   return boolean__false;
 }
 
-boolean_t raw__redblacktree__contains(f2ptr cause, f2ptr this, f2ptr node) {
-  return raw__redblacktree_node__contains(cause, f2__redblacktree__head(cause, this), node);
+boolean_t raw__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  return raw__redblacktree_node__contains_node(cause, f2__redblacktree__head(cause, this), node);
 }
 
 void raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr new_node) {
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(!raw__redblacktree_node__contains(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
+  debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif
   f2ptr new_node__key     = f2__redblacktree_node__key(cause, new_node);
   f2ptr this__key         = f2__redblacktree_node__key(cause, this);
@@ -385,12 +385,26 @@ void raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr node
   }
 }
 
-void raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr node) {
+void raw__redblacktree__insert_node(f2ptr cause, f2ptr this, f2ptr node) {
   raw__redblacktree__simple_binary_insert(cause, this, node);
   f2__redblacktree_node__color__set(cause, node, new__symbol(cause, "red"));
   raw__redblacktree_node__insert_case1(cause, node);
   f2__redblacktree__head__set(cause, this, raw__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
 }
+
+f2ptr raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr node = f2__redblacktree_node__new(cause, key);
+  raw__redblacktree__insert_node(cause, this, node);
+  return nil;
+}
+
+f2ptr f2__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
+  if (! raw__redblacktree__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__redblacktree__insert(cause, this, key);
+}
+def_pcfunk2(redblacktree__insert, this, key, return f2__redblacktree__insert(this_cause, this, key));
 
 void raw__redblacktree_node__delete_case6(f2ptr cause, f2ptr this) {
   f2ptr this__sibling = raw__redblacktree_node__sibling(cause, this);
@@ -477,7 +491,7 @@ void raw__redblacktree_node__delete_case1(f2ptr cause, f2ptr this) {
   }
 }
 
-void raw__redblacktree__remove_with_at_most_one_child(f2ptr cause, f2ptr this, f2ptr node) {
+void raw__redblacktree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node__child  = (f2__redblacktree_node__left(cause, node) != nil) ? f2__redblacktree_node__left(cause, node) : f2__redblacktree_node__right(cause, node);
   f2ptr node__parent = f2__redblacktree_node__parent(cause, node);
   f2ptr node__left   = f2__redblacktree_node__left(  cause, node);
@@ -646,17 +660,17 @@ void raw__redblacktree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
 #endif
 }
 
-void raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr node) {
+void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (f2__redblacktree_node__left(cause, node) == nil || f2__redblacktree_node__right(cause, node) == nil) { 
-    raw__redblacktree__remove_with_at_most_one_child(cause, this, node);
+    raw__redblacktree__remove_node_with_at_most_one_child(cause, this, node);
   } else {
-    f2ptr node__left__max = raw__redblacktree_node__maximum(cause, f2__redblacktree_node__left(cause, node));
+    f2ptr node__left__max = raw__redblacktree_node__maximum_node(cause, f2__redblacktree_node__left(cause, node));
     
-    debug__assert(f2__redblacktree_node__right(cause, node__left__max) == nil, nil, "rbt_node__simple_binary_remove: (node__left__max->right == NULL) failed.");
+    debug__assert(f2__redblacktree_node__right(cause, node__left__max) == nil, nil, "rbt_node__simple_binary_remove_node: (node__left__max->right == NULL) failed.");
     
     raw__redblacktree_node__swap_nodes(cause, node__left__max, node);
     
-    raw__redblacktree__remove_with_at_most_one_child(cause, this, node);
+    raw__redblacktree__remove_node_with_at_most_one_child(cause, this, node);
     
     if (f2__redblacktree_node__parent(cause, node__left__max) == nil) {
       f2__redblacktree__head__set(cause, this, node__left__max);
@@ -672,21 +686,21 @@ void raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr node) {
   }
   
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(! raw__redblacktree__contains(this, node), nil, "raw__redblacktree__remove failed: tree still contains node.");
+  debug__assert(! raw__redblacktree__contains_node(this, node), nil, "raw__redblacktree__remove_node failed: tree still contains node.");
 #endif
 }
 
-f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
-  return raw__redblacktree_node__minimum(cause, f2__redblacktree__head(cause, this));
+f2ptr raw__redblacktree__minimum_node(f2ptr cause, f2ptr this) {
+  return raw__redblacktree_node__minimum_node(cause, f2__redblacktree__head(cause, this));
 }
 
-f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
-  return raw__redblacktree_node__maximum(cause, f2__redblacktree__head(cause, this));
+f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
+  return raw__redblacktree_node__maximum_node(cause, f2__redblacktree__head(cause, this));
 }
 
 f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this) {
   if (f2__redblacktree_node__right(cause, this) != nil) {
-    return raw__redblacktree_node__minimum(cause, f2__redblacktree_node__right(cause, this));
+    return raw__redblacktree_node__minimum_node(cause, f2__redblacktree_node__right(cause, this));
   } else {
     if (f2__redblacktree_node__parent(cause, this) == nil) {
       return nil;
@@ -704,7 +718,7 @@ f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this) {
 
 f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this) {
   if (f2__redblacktree_node__left(cause, this) != nil) {
-    return raw__redblacktree_node__maximum(cause, f2__redblacktree_node__left(cause, this));
+    return raw__redblacktree_node__maximum_node(cause, f2__redblacktree_node__left(cause, this));
   } else {
     if (f2__redblacktree_node__parent(cause, this) == nil) {
       return nil;
@@ -722,14 +736,13 @@ f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this) {
 
 int raw__redblacktree__size(f2ptr cause, f2ptr this) {
   int size = 0;
-  f2ptr iter = raw__redblacktree__minimum(cause, this);
+  f2ptr iter = raw__redblacktree__minimum_node(cause, this);
   while (iter) {
     size ++;
     iter = raw__redblacktree_node__next(cause, iter);
   }
   return size;
 }
-
 
 
 // **
@@ -752,6 +765,8 @@ void f2__primobject__redblacktree__initialize() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(redblacktree__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}
+  
+  f2__primcfunk__init__2(redblacktree__insert, this, key, "Insert a new key into a red-black-tree.");
   
   // redblacktree_node
   

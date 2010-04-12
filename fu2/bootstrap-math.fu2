@@ -22,12 +22,8 @@
 [globalize math:pi 3.141592653589793] `[23846264338327950288]
 [globalize pi      math:pi]
 
-[defunk > [x y]
-  [get x is_greater_than y]]
-
-[defunk < [x y]
-  [get x is_less_than y]]
-
+[globalize-funk > &is_greater_than]
+[globalize-funk < &is_less_than]
 
 'addition'
 

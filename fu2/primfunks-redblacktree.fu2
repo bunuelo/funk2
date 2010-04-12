@@ -23,4 +23,5 @@
 [globalize-funk redblacktree-minimum &primfunk:redblacktree__minimum]
 [globalize-funk redblacktree-maximum &primfunk:redblacktree__maximum]
 [globalize-funk redblacktree-leaves  &primfunk:redblacktree__leaves]
+[globalize-funk redblacktree-size    &primfunk:redblacktree__size]
 

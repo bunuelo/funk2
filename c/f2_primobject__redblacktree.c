@@ -834,8 +834,8 @@ f2ptr f2__redblacktree__leaves(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(redblacktree__leaves, this, return f2__redblacktree__leaves(this_cause, this));
 
-int raw__redblacktree__size(f2ptr cause, f2ptr this) {
-  int size = 0;
+u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
+  u64 size = 0;
   f2ptr iter = raw__redblacktree__minimum_node(cause, this);
   while (iter) {
     size ++;
@@ -844,6 +844,13 @@ int raw__redblacktree__size(f2ptr cause, f2ptr this) {
   return size;
 }
 
+f2ptr f2__redblacktree__size(f2ptr cause, f2ptr this) {
+  if (! raw__redblacktree__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2integer__new(cause, raw__redblacktree__size(cause, this));
+}
+def_pcfunk1(redblacktree__size, this, return f2__redblacktree__size(this_cause, this));
 
 // **
 
@@ -871,6 +878,7 @@ void f2__primobject__redblacktree__initialize() {
   f2__primcfunk__init__1(redblacktree__minimum, this,      "Returns the minimum key within a red-black-tree or nil if tree is empty.");
   f2__primcfunk__init__1(redblacktree__maximum, this,      "Returns the maximum key within a red-black-tree or nil if tree is empty.");
   f2__primcfunk__init__1(redblacktree__leaves,  this,      "Returns all leaves in this red-black-tree in order in a new list.");
+  f2__primcfunk__init__1(redblacktree__size,    this,      "Returns the number of leaves in this red-black-tree.");
   
   // redblacktree_node
   

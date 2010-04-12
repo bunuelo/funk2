@@ -43,9 +43,20 @@ declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, )
 
 declare_primobject_1_slot(redblacktree, head);
 
-f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head);
-f2ptr  f2__redblacktree__new(f2ptr cause);
-f2ptr  f2__redblacktree__leaves(f2ptr cause, f2ptr this);
+f2ptr raw__redblacktree__new(    f2ptr cause, f2ptr head);
+f2ptr  f2__redblacktree__new(    f2ptr cause);
+f2ptr raw__redblacktree__insert( f2ptr cause, f2ptr this, f2ptr key);
+f2ptr  f2__redblacktree__insert( f2ptr cause, f2ptr this, f2ptr key);
+f2ptr raw__redblacktree__remove( f2ptr cause, f2ptr this, f2ptr key);
+f2ptr  f2__redblacktree__remove( f2ptr cause, f2ptr this, f2ptr key);
+f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this);
+f2ptr  f2__redblacktree__minimum(f2ptr cause, f2ptr this);
+f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this);
+f2ptr  f2__redblacktree__maximum(f2ptr cause, f2ptr this);
+f2ptr raw__redblacktree__leaves( f2ptr cause, f2ptr this);
+f2ptr  f2__redblacktree__leaves( f2ptr cause, f2ptr this);
+u64   raw__redblacktree__size(   f2ptr cause, f2ptr this);
+f2ptr  f2__redblacktree__size(   f2ptr cause, f2ptr this);
 
 f2ptr f2redblacktree__primobject_type__new(f2ptr cause);
 

@@ -17,9 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk redblacktree-new     &primfunk:redblacktree__new]
-[globalize-funk redblacktree-insert  &primfunk:redblacktree__insert]
-[globalize-funk redblacktree-remove  &primfunk:redblacktree__remove]
-[globalize-funk redblacktree-minimum &primfunk:redblacktree__minimum]
-[globalize-funk redblacktree-maximum &primfunk:redblacktree__maximum]
-
+[deftypefunk redblacktree execute insert  [key] [redblacktree-insert  this key]]
+[deftypefunk redblacktree execute remove  [key] [redblacktree-remove  this key]]
+[deftypefunk redblacktree get     minimum []    [redblacktree-minimum this]]
+[deftypefunk redblacktree get     maximum []    [redblacktree-maximum this]]

@@ -732,7 +732,8 @@ f2ptr f2__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
   if (! raw__redblacktree__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__redblacktree__remove(cause, this, key);
+  f2ptr node = raw__redblacktree__remove(cause, this, key);
+  return f2bool__new(node != nil);
 }
 def_pcfunk2(redblacktree__remove, this, key, return f2__redblacktree__remove(this_cause, this, key));
 
@@ -740,9 +741,27 @@ f2ptr raw__redblacktree__minimum_node(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__minimum_node(cause, f2__redblacktree__head(cause, this));
 }
 
+f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
+  f2ptr minimum_node = raw__redblacktree__minimum_node(cause, this);
+  if (minimum_node == nil) {
+    return nil;
+  }
+  return f2__redblacktree_node__key(cause, minimum_node);
+}
+def_pcfunk1(redblacktree__minimum, this, return f2__redblacktree__minimum(this_cause, this));
+
 f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__maximum_node(cause, f2__redblacktree__head(cause, this));
 }
+
+f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
+  f2ptr maximum_node = raw__redblacktree__maximum_node(cause, this);
+  if (maximum_node == nil) {
+    return nil;
+  }
+  return f2__redblacktree_node__key(cause, maximum_node);
+}
+def_pcfunk1(redblacktree__maximum, this, return f2__redblacktree__maximum(this_cause, this));
 
 f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this) {
   if (f2__redblacktree_node__right(cause, this) != nil) {
@@ -812,8 +831,10 @@ void f2__primobject__redblacktree__initialize() {
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(redblacktree__new, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__2(redblacktree__insert, this, key, "Insert one instance of a key into a red-black-tree.");
-  f2__primcfunk__init__2(redblacktree__remove, this, key, "Remove one instance of a key from a red-black-tree.");
+  f2__primcfunk__init__2(redblacktree__insert,  this, key, "Insert one instance of a key into a red-black-tree.");
+  f2__primcfunk__init__2(redblacktree__remove,  this, key, "Remove one instance of a key from a red-black-tree.");
+  f2__primcfunk__init__1(redblacktree__minimum, this,      "Returns the minimum key within a red-black-tree or nil if tree is empty.");
+  f2__primcfunk__init__1(redblacktree__maximum, this,      "Returns the maximum key within a red-black-tree or nil if tree is empty.");
   
   // redblacktree_node
   

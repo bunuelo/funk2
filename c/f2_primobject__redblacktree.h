@@ -43,8 +43,8 @@ declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, )
 
 declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
-f2ptr raw__redblacktree__new(    f2ptr cause, f2ptr head);
-f2ptr  f2__redblacktree__new(    f2ptr cause);
+f2ptr raw__redblacktree__new(    f2ptr cause, f2ptr head, f2ptr comparison_funk);
+f2ptr  f2__redblacktree__new(    f2ptr cause, f2ptr comparison_funk);
 f2ptr raw__redblacktree__insert( f2ptr cause, f2ptr this, f2ptr key);
 f2ptr  f2__redblacktree__insert( f2ptr cause, f2ptr this, f2ptr key);
 f2ptr raw__redblacktree__remove( f2ptr cause, f2ptr this, f2ptr key);

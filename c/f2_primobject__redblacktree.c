@@ -748,6 +748,13 @@ f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
   }
   return f2__redblacktree_node__key(cause, minimum_node);
 }
+
+f2ptr f2__redblacktree__minimum(f2ptr cause, f2ptr this) {
+  if (! raw__redblacktree__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__redblacktree__minimum(cause, this);
+}
 def_pcfunk1(redblacktree__minimum, this, return f2__redblacktree__minimum(this_cause, this));
 
 f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
@@ -760,6 +767,13 @@ f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
     return nil;
   }
   return f2__redblacktree_node__key(cause, maximum_node);
+}
+
+f2ptr f2__redblacktree__maximum(f2ptr cause, f2ptr this) {
+  if (! raw__redblacktree__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__redblacktree__maximum(cause, this);
 }
 def_pcfunk1(redblacktree__maximum, this, return f2__redblacktree__maximum(this_cause, this));
 

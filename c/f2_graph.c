@@ -1392,7 +1392,7 @@ f2ptr f2__graph_variable__eq(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(graph_variable__eq, this, that, return f2__graph_variable__eq(this_cause, this, that));
 
 u64 raw__graph_variable__eq_hash_value(f2ptr cause, f2ptr this) {
-  return raw__eq_hash_value(cause, raw__graph_variable__name(cause, this));
+  return raw__eq_hash_value(cause, f2__graph_variable__name(cause, this));
 }
 
 f2ptr f2__graph_variable__eq_hash_value(f2ptr cause, f2ptr this) {

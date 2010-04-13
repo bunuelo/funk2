@@ -991,7 +991,7 @@ u64 raw__largeinteger__equals_hash_value(f2ptr cause, f2ptr this) {
     hash_value ++;
   }
   f2ptr this__integer_array = f2__largeinteger__integer_array(cause, this);
-  array__hash_value = raw__largeinteger__unsigned_array__equals_hash_value(cause, this__integer_array);
+  u64   array__hash_value   = raw__largeinteger__unsigned_array__equals_hash_value(cause, this__integer_array);
   hash_value *= ((array__hash_value == 0) ? 1 : array__hash_value);
   return hash_value;
 }

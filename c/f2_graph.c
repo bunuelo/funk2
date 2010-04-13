@@ -1393,7 +1393,7 @@ f2ptr raw__common_variable_subgraph_possibility__that_remaining_subgraph(f2ptr c
 f2ptr f2__common_variable_subgraph_possibility__new_with_compression(f2ptr cause, u64 worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
   {
     f2ptr common_edges = nil;
-    graph__edge__iteration(cause, this, this__edge,
+    graph__edge__iteration(cause, this_remaining_subgraph, this__edge,
 			   f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
 			   f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
 			   f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);

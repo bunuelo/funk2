@@ -273,7 +273,12 @@ f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(object__eq, this, that, return f2__object__eq(this_cause, this, that));
 
 f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr this) {
-  return f2__object__get_0(cause, this, __funk2.globalenv.eq_hash_value__symbol);
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.eq_hash_value__symbol);
+  if (! raw__funkable__is_type(cause, funk)) {
+    return ((this == 0) ? 1 : this);
+  }
+  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
 }
 def_pcfunk1(object__eq_hash_value, this, return f2__object__eq_hash_value(this_cause, this));
 

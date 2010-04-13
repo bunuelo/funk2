@@ -906,7 +906,7 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   //return f2__argument_type_check_failure__exception__new(nil, x);
 }
 
-f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__eq(cause, x, y));}
+f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw_eq(cause, x, y));}
 def_pcfunk2(eq, x, y, return f2__eq(this_cause, x, y));
 
 boolean_t raw__contains(f2ptr cause, f2ptr this, f2ptr element) {
@@ -1524,8 +1524,13 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_string:       return raw__string__eq_hash_value(      cause, exp);
   case ptype_symbol:       return raw__symbol__eq_hash_value(      cause, exp);
   case ptype_chunk:        return raw__chunk__eq_hash_value(       cause, exp);
-  case ptype_simple_array: return raw__simple_array__eq_hash_value(cause, exp);
-  case ptype_traced_array: return raw__traced_array__eq_hash_value(cause, exp);
+  case ptype_simple_array:
+  case ptype_traced_array:
+    if (raw__primobject__is_type(cause, exp) &&
+	f2primobject__is__largeinteger(exp, cause)) {
+      return raw__largeinteger__equals_hash_value(cause, exp);
+    }
+    return f2__object__eq_hash_value(cause, exp);
   case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
   case ptype_free_memory:
   case ptype_newly_allocated: 

@@ -967,6 +967,39 @@ f2ptr f2__largeinteger__equals(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__largeinteger__equals(cause, this, that));
 }
 
+u64 raw__largeinteger__unsigned_array__equals_hash_value(f2ptr cause, f2ptr this) {
+  u64 hash_value = 1;
+  {
+    u64 this__length = raw__array__length(cause, this);
+    u64 index;
+    for (index = 0; index < this__length; index ++) {
+      f2ptr this__elt   = raw__array__elt(cause, this, index);
+      u64   this__value = f2integer__i(this__elt, cause);
+      hash_value *= ((this_value == 0) ? 1 : this_value);
+    }
+  }
+  return hash_value;
+}
+
+u64 raw__largeinteger__equals_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__largeinteger__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
+  u64 hash_value = 1;
+  if (this__is_negative) {
+    hash_value ++;
+  }
+  f2ptr this__integer_array = f2__largeinteger__integer_array(cause, this);
+  array__hash_value = raw__largeinteger__unsigned_array__equals_hash_value(cause, this__integer_array);
+  hash_value *= ((array__hash_value == 0) ? 1 : array__hash_value);
+  return hash_value;
+}
+
+f2ptr f2__largeinteger__equals_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__largeinteger__equals_hash_value(cause, this));
+}
+
 double raw__largeinteger__unsigned_array__as__double(f2ptr cause, f2ptr this) {
   u64 this__length = raw__array__length(cause, this);
   double result      = 0.0;

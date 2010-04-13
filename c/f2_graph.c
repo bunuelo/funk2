@@ -1508,7 +1508,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			    f2ptr this_remaining_subgraph = raw__common_variable_subgraph_possibility__this_remaining_subgraph(cause, possibility);
 			    f2ptr that_remaining_subgraph = raw__common_variable_subgraph_possibility__that_remaining_subgraph(cause, possibility);
 			    { // make node in first graph a variable with a node in second graph.
-			      f2ptr new_common_subgraph         = f2__graph__new(cause);
+			      f2ptr new_common_subgraph         = f2__graph__copy(cause, common_subgraph);
 			      f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this_remaining_subgraph);
 			      f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that_remaining_subgraph);
 			      f2ptr this__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_this_remaining_subgraph);
@@ -1530,7 +1530,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			      raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(cause, new_subgraph_possibilities, new_possibility);
 			    }
 			    { // skip node in this graph.
-			      f2ptr new_common_subgraph         = f2__graph__new(cause);
+			      f2ptr new_common_subgraph         = f2__graph__copy(cause, common_subgraph);
 			      f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this_remaining_subgraph);
 			      f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that_remaining_subgraph);
 			      f2ptr this__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_this_remaining_subgraph);
@@ -1540,7 +1540,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			      raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(cause, new_subgraph_possibilities, new_possibility);
 			    }
 			    { // skip node in that graph.
-			      f2ptr new_common_subgraph         = f2__graph__new(cause);
+			      f2ptr new_common_subgraph         = f2__graph__copy(cause, common_subgraph);
 			      f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this_remaining_subgraph);
 			      f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that_remaining_subgraph);
 			      f2ptr that__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_that_remaining_subgraph);

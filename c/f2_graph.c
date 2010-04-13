@@ -1483,8 +1483,6 @@ f2ptr raw__common_variable_subgraph_possibility_redblacktree__consider_inserting
   return f2__redblacktree__insert(cause, this, possibility);
 }
 
-f2ptr 
-
 f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr best_possibility           = nil;
   u64   best_possibility__worth__i = 0;

@@ -1395,8 +1395,8 @@ f2ptr f2__common_variable_subgraph_possibility_redblacktree__new(f2ptr cause) {
   return f2__redblacktree__new(cause, comparison_funk);
 }
 
-f2ptr raw__common_variable_subgraph_possibility_redblacktree__insert(f2ptr cause, f2ptr this, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
-  return f2__redblacktree__insert(cause, this, f2__common_variable_subgraph_possibility__new(cause, worth, common_subgraph, this_remaining_subgraph, that_remaining_subgraph));
+f2ptr raw__common_variable_subgraph_possibility_redblacktree__insert(f2ptr cause, f2ptr this, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph, f2ptr this_remaining_nodes, f2ptr that_remaining_nodes, f2ptr this_remaining_edges, f2ptr that_remaining_edges) {
+  return f2__redblacktree__insert(cause, this, f2__common_variable_subgraph_possibility__new(cause, worth, common_subgraph, this_remaining_subgraph, that_remaining_subgraph, this_remaining_nodes, that_remaining_nodes, this_remaining_edges, that_remaining_edges));
 }
 
 f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {

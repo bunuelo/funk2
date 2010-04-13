@@ -45,7 +45,7 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
 #define redblacktree__iteration_forward_by_node(cause, this, node, code) \
   {									\
-    f2ptr node = f2__redblacktree__minimum_node(cause, this);		\
+    f2ptr node = raw__redblacktree__minimum_node(cause, this);		\
     while (node) {							\
       {									\
 	code;								\
@@ -67,7 +67,7 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
 #define redblacktree__iteration_backward_by_node(cause, this, node, code) \
   {									\
-    f2ptr node = f2__redblacktree__maximum_node(cause, this);		\
+    f2ptr node = raw__redblacktree__maximum_node(cause, this);		\
     while (node) {							\
       {									\
 	code;								\

@@ -34,6 +34,8 @@ declare_object_type_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin
 			   f2ptr remove__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
+			   f2ptr is_empty__symbol;
+			   f2ptr is_empty__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__PTYPEHASH__TYPES__H
@@ -60,6 +62,8 @@ f2ptr      f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__an_arbitrary_key          (f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__an_arbitrary_value        (f2ptr cause, f2ptr this);
 f2ptr      f2__ptypehash__copy                      (f2ptr cause, f2ptr this);
+boolean_t raw__ptypehash__is_empty                  (f2ptr cause, f2ptr this);
+f2ptr      f2__ptypehash__is_empty                  (f2ptr cause, f2ptr this);
 
 f2ptr raw__ptypehash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
 

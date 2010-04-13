@@ -1067,6 +1067,24 @@ f2ptr f2__graph__bind_variable(f2ptr cause, f2ptr this, f2ptr variable_name, f2p
 }
 def_pcfunk3(graph__bind_variable, this, variable_name, value, return f2__graph__bind_variable(this_cause, this, variable_name, value));
 
+f2ptr raw__graph__an_arbitrary_node(f2ptr cause, f2ptr this) {
+  f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
+  return f2__ptypehash__an_arbitrary_value(cause, node_label_hash);
+}
+
+f2ptr raw__graph__an_arbitrary_edge(f2ptr cause, f2ptr this) {
+  f2ptr edge_type_label_hash               = f2__graph__edge_type_label_hash(cause, this);
+  f2ptr an_arbitrary_edge_type             = f2__ptypehash__an_arbitrary_value(cause, edge_type_label_hash);
+  f2ptr left_node_hash                     = f2__graph_edge_type__left_node_hash(cause, an_arbitrary_edge_type);
+  f2ptr an_arbitrary_left_node             = f2__ptypehash__an_arbitrary_value(cause, left_node_hash);
+  f2ptr edges_right_node_hash_edge_hash    = f2__graph_node__edges_right_node_hash_edge_hash(cause, an_arbitrary_left_node);
+  f2ptr an_arbitrary_edges_right_node_hash = f2__ptypehash__an_arbitrary_value(cause, edges_right_node_hash_edge_hash);
+  f2ptr an_arbitrary_edges                 = f2__ptypehash__an_arbitrary_value(cause, an_arbitrary_edges_right_node_hash);
+  release__assert(an_arbitrary_edges, cause, "raw__graph__an_arbitrary_edge error: found nil set of edges.");
+  return f2__cons__car(cause, an_arbitary_edges);
+}
+
+
 // this is a normal graph without variables.
 // that is a pattern graph with variables at nodes and edges
 f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr that, f2ptr bindings) {
@@ -1358,16 +1376,12 @@ f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
 
-f2ptr f2__common_variable_subgraph_possibility__new(f2ptr cause, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph, f2ptr this_remaining_nodes, f2ptr that_remaining_nodes, f2ptr this_remaining_edges, f2ptr that_remaining_edges) {
-  f2ptr this = raw__array__new(cause, 8);
+f2ptr f2__common_variable_subgraph_possibility__new(f2ptr cause, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
+  f2ptr this = raw__array__new(cause, 4);
   raw__array__elt__set(cause, this, 0, worth);
   raw__array__elt__set(cause, this, 1, common_subgraph);
   raw__array__elt__set(cause, this, 2, this_remaining_subgraph);
   raw__array__elt__set(cause, this, 3, that_remaining_subgraph);
-  raw__array__elt__set(cause, this, 4, this_remaining_nodes);
-  raw__array__elt__set(cause, this, 5, that_remaining_nodes);
-  raw__array__elt__set(cause, this, 6, this_remaining_edges);
-  raw__array__elt__set(cause, this, 7, that_remaining_edges);
   return this;
 }
 
@@ -1375,10 +1389,65 @@ f2ptr raw__common_variable_subgraph_possibility__worth(                  f2ptr c
 f2ptr raw__common_variable_subgraph_possibility__common_subgraph(        f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 1);}
 f2ptr raw__common_variable_subgraph_possibility__this_remaining_subgraph(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 2);}
 f2ptr raw__common_variable_subgraph_possibility__that_remaining_subgraph(f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 3);}
-f2ptr raw__common_variable_subgraph_possibility__this_remaining_nodes(   f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 4);}
-f2ptr raw__common_variable_subgraph_possibility__that_remaining_nodes(   f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 5);}
-f2ptr raw__common_variable_subgraph_possibility__this_remaining_edges(   f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 6);}
-f2ptr raw__common_variable_subgraph_possibility__that_remaining_edges(   f2ptr cause, f2ptr this) {return raw__array__elt(cause, this, 7);}
+
+f2ptr f2__common_variable_subgraph_possibility__new_with_compression(f2ptr cause, u64 worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
+  {
+    f2ptr common_edges = nil;
+    graph__edge__iteration(cause, this, this__edge,
+			   f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
+			   f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
+			   f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
+			   f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
+			   f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
+			   if (raw__graph__contains_edge(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
+			     common_edges = f2cons__new(cause, this__edge, common_edges);
+			   }
+			   );
+    {
+      f2ptr iter = common_edges;
+      while (iter) {
+	f2ptr edge = f2__cons__car(cause, iter);
+	{
+	  f2ptr edge__label             = f2__graph_edge__label(     cause, edge);
+	  f2ptr edge__left_node         = f2__graph_edge__left_node( cause, edge);
+	  f2ptr edge__left_node__label  = f2__graph_node__label(     cause, edge__left_node);
+	  f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
+	  f2ptr edge__right_node__label = f2__graph_node__label(     cause, edge__right_node);
+	  raw__graph__remove_edge(cause, this_remaining_subgraph, edge__label, edge__left_node__label, edge__right_node__label);
+	  raw__graph__remove_edge(cause, that_remaining_subgraph, edge__label, edge__left_node__label, edge__right_node__label);
+	  raw__graph__add_edge(   cause, common_subgraph,         edge__label, edge__left_node__label, edge__right_node__label);
+	  worth ++;
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  {
+    f2ptr edgeless_common_node_labels = nil;
+    graph__node__iteration(cause, this_remaining_subgraph, this__node,
+			   f2ptr this__node__label = f2__graph_node__label(cause, this__node);
+			   f2ptr that__node        = raw__graph__lookup_node(cause, that_remaining_subgraph, this__node__label);
+			   if (that__node) {
+			     if ((! raw__graph_node__has_edges(cause, this__node)) &&
+				 (! raw__graph_node__has_edges(cause, that__node))) {
+			       edgeless_common_node_labels = f2cons__new(cause, this__node__label, edgeless_common_node_labels);
+			     }
+			   }
+			   );
+    {
+      f2ptr iter = edgeless_common_node_labels;
+      while (iter) {
+	f2ptr node_label = f2__cons__car(cause, iter);
+	raw__graph__remove_node(cause, this_remaining_subgraph, node_label);
+	raw__graph__remove_node(cause, that_remaining_subgraph, node_label);
+	raw__graph__add_node(   cause, common_subgraph,         node_label);
+	worth ++;
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return f2__common_variable_subgraph_possibility__new(cause, f2integer__new(cause, worth), common_subgraph, this_remaining_subgraph, that_remaining_subgraph);
+}
 
 f2ptr raw__common_variable_subgraph_possibility__compare(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__worth    = raw__common_variable_subgraph_possibility__worth(cause, this);
@@ -1395,102 +1464,97 @@ f2ptr f2__common_variable_subgraph_possibility_redblacktree__new(f2ptr cause) {
   return f2__redblacktree__new(cause, comparison_funk);
 }
 
-f2ptr raw__common_variable_subgraph_possibility_redblacktree__insert(f2ptr cause, f2ptr this, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph, f2ptr this_remaining_nodes, f2ptr that_remaining_nodes, f2ptr this_remaining_edges, f2ptr that_remaining_edges) {
-  return f2__redblacktree__insert(cause, this, f2__common_variable_subgraph_possibility__new(cause, worth, common_subgraph, this_remaining_subgraph, that_remaining_subgraph, this_remaining_nodes, that_remaining_nodes, this_remaining_edges, that_remaining_edges));
+f2ptr raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(f2ptr cause, f2ptr this, f2ptr possibility) {
+  boolean_t okay_to_insert = boolean__false;
+  u64       size           = raw__redblacktree__size(cause, this);
+  if (size < 100) {
+    okay_to_insert = boolean__true;
+  } else {
+    f2ptr worth            = raw__common_variable_subgraph_possibility__worth(cause, possibility);
+    u64   worth__i         = f2integer__i(worth, cause);
+    f2ptr minimum          = raw__redblacktree__minimum(cause, this);
+    f2ptr minimum_worth    = raw__common_variable_subgraph_possibility__worth(cause, minimum);
+    u64   minimum_worth__i = f2integer__i(minimum_worth, cause);
+    if (minimum_worth__i < worth__i) {
+      raw__redblacktree__remove(cause, this, minimum);
+    }
+    okay_to_insert = boolean__true;
+  }
+  return f2__redblacktree__insert(cause, this, possibility);
 }
 
+f2ptr 
+
 f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr subgraph_possibilities = f2__common_variable_subgraph_possibility_redblacktree__new(cause);
+  f2ptr best_possibility           = nil;
+  u64   best_possibility__worth__i = 0;
+  f2ptr subgraph_possibilities     = f2__common_variable_subgraph_possibility_redblacktree__new(cause);
   {
-    f2ptr common_subgraph           = f2__graph__new(cause);
-    u64   common_subgraph__worth__i = 0;
-    f2ptr this_remaining_subgraph   = f2__graph__copy(cause, this);
-    f2ptr that_remaining_subgraph   = f2__graph__copy(cause, that);
-    // there are a lot of potential edge->edge mappings with different numbers of variables for each.
-    // this should be an A* search with limited beam width.
-    {
-      f2ptr common_edges = nil;
-      graph__edge__iteration(cause, this, this__edge,
-			     f2ptr this__edge__label             = f2__graph_edge__label(     cause, this__edge);
-			     f2ptr this__edge__left_node         = f2__graph_edge__left_node( cause, this__edge);
-			     f2ptr this__edge__left_node__label  = f2__graph_node__label(     cause, this__edge__left_node);
-			     f2ptr this__edge__right_node        = f2__graph_edge__right_node(cause, this__edge);
-			     f2ptr this__edge__right_node__label = f2__graph_node__label(     cause, this__edge__right_node);
-			     if (raw__graph__contains_edge(cause, that, this__edge__label, this__edge__left_node__label, this__edge__right_node__label)) {
-			       common_edges = f2cons__new(cause, this__edge, common_edges);
-			     }
-			     );
-      {
-	f2ptr iter = common_edges;
-	while (iter) {
-	  f2ptr edge = f2__cons__car(cause, iter);
-	  {
-	    f2ptr edge__label             = f2__graph_edge__label(     cause, edge);
-	    f2ptr edge__left_node         = f2__graph_edge__left_node( cause, edge);
-	    f2ptr edge__left_node__label  = f2__graph_node__label(     cause, edge__left_node);
-	    f2ptr edge__right_node        = f2__graph_edge__right_node(cause, edge);
-	    f2ptr edge__right_node__label = f2__graph_node__label(     cause, edge__right_node);
-	    raw__graph__remove_edge(cause, this_remaining_subgraph, edge__label, edge__left_node__label, edge__right_node__label);
-	    raw__graph__remove_edge(cause, that_remaining_subgraph, edge__label, edge__left_node__label, edge__right_node__label);
-	    raw__graph__add_edge(   cause, common_subgraph,         edge__label, edge__left_node__label, edge__right_node__label);
-	    common_subgraph__worth__i ++;
-	  }
-	  iter = f2__cons__cdr(cause, iter);
-	}
-      }
-    }
-    {
-      f2ptr edgeless_common_node_labels = nil;
-      graph__node__iteration(cause, this_remaining_subgraph, this__node,
-			     f2ptr this__node__label = f2__graph_node__label(cause, this__node);
-			     f2ptr that__node        = raw__graph__lookup_node(cause, that_remaining_subgraph, this__node__label);
-			     if (that__node) {
-			       if ((! raw__graph_node__has_edges(cause, this__node)) &&
-				   (! raw__graph_node__has_edges(cause, that__node))) {
-				 edgeless_common_node_labels = f2cons__new(cause, this__node__label, edgeless_common_node_labels);
-			       }
-			     }
-			     );
-      {
-	f2ptr iter = edgeless_common_node_labels;
-	while (iter) {
-	  f2ptr node_label = f2__cons__car(cause, iter);
-	  raw__graph__remove_node(cause, this_remaining_subgraph, node_label);
-	  raw__graph__remove_node(cause, that_remaining_subgraph, node_label);
-	  raw__graph__add_node(   cause, common_subgraph,         node_label);
-	  common_subgraph__worth__i ++;
-	  iter = f2__cons__cdr(cause, iter);
-	}
-      }
-    }
-    {
-      f2ptr this_remaining_nodes = nil;
-      f2ptr that_remaining_nodes = nil;
-      f2ptr this_remaining_edges = nil;
-      f2ptr that_remaining_edges = nil;
-      graph__node__iteration(cause, this_remaining_subgraph, node, this_remaining_nodes = f2cons__new(cause, node, this_remaining_nodes));
-      graph__node__iteration(cause, that_remaining_subgraph, node, that_remaining_nodes = f2cons__new(cause, node, that_remaining_nodes));
-      graph__edge__iteration(cause, this_remaining_subgraph, edge, this_remaining_edges = f2cons__new(cause, edge, this_remaining_edges));
-      graph__edge__iteration(cause, that_remaining_subgraph, edge, that_remaining_edges = f2cons__new(cause, edge, that_remaining_edges));
-      raw__common_variable_subgraph_possibility_redblacktree__insert(cause, subgraph_possibilities, f2integer__new(cause, common_subgraph__worth__i), common_subgraph, this_remaining_subgraph, that_remaining_subgraph, this_remaining_nodes, that_remaining_nodes, this_remaining_edges, that_remaining_edges);
-    }
+    f2ptr new_common_subgraph         = f2__graph__new(cause);
+    f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this);
+    f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that);
+    f2ptr new_possibility             = f2__common_variable_subgraph_possibility__new_with_compression(cause, 0, new_common_subgraph, new_this_remaining_subgraph, new_that_remaining_subgraph);
+    f2__redblacktree__insert(cause, subgraph_possibilities, new_possibility);
+    best_possibility = new_possibility;
+    f2ptr new_possibility__worth = raw__common_variable_subgraph_possibility__worth(cause, new_possibility);
+    best_possibility__worth__i   = f2integer__i(new_possibility__worth, cause);
   }
   f2__print(cause, subgraph_possibilities);
-  f2ptr subgraph_possibilities_next = f2__common_variable_subgraph_possibility_redblacktree__new(cause);
-  redblacktree__iteration(cause, subgraph_possibilities, possibility,
-			  f2__print(cause, possibility);
-			  /*
-			  f2ptr worth                   = raw__common_variable_subgraph_possibility__worth(                  cause, possibility);
-			  f2ptr common_subgraph         = raw__common_variable_subgraph_possibility__common_subgraph(        cause, possibility);
-			  f2ptr this_remaining_subgraph = raw__common_variable_subgraph_possibility__this_remaining_subgraph(cause, possibility);
-			  f2ptr that_remaining_subgraph = raw__common_variable_subgraph_possibility__that_remaining_subgraph(cause, possibility);
-			  f2ptr this_remaining_nodes    = raw__common_variable_subgraph_possibility__this_remaining_nodes(   cause, possibility);
-			  f2ptr that_remaining_nodes    = raw__common_variable_subgraph_possibility__that_remaining_nodes(   cause, possibility);
-			  f2ptr this_remaining_edges    = raw__common_variable_subgraph_possibility__this_remaining_edges(   cause, possibility);
-			  f2ptr that_remaining_edges    = raw__common_variable_subgraph_possibility__that_remaining_edges(   cause, possibility);
-			  */
-			  );
-  return subgraph_possibilities;
+  while (f2__redblacktree__head(cause, subgraph_possibilities) != nil) {
+    f2ptr new_subgraph_possibilities = f2__common_variable_subgraph_possibility_redblacktree__new(cause);
+    redblacktree__iteration(cause, subgraph_possibilities, possibility,
+			    printf("\npossibility:"); f2__print(cause, possibility);
+			    f2ptr worth                   = raw__common_variable_subgraph_possibility__worth(                  cause, possibility);
+			    u64   worth__i                = f2integer__i(worth, cause);
+			    f2ptr common_subgraph         = raw__common_variable_subgraph_possibility__common_subgraph(        cause, possibility);
+			    f2ptr this_remaining_subgraph = raw__common_variable_subgraph_possibility__this_remaining_subgraph(cause, possibility);
+			    f2ptr that_remaining_subgraph = raw__common_variable_subgraph_possibility__that_remaining_subgraph(cause, possibility);
+			    { // make node in first graph a variable with a node in second graph.
+			      f2ptr new_common_subgraph         = f2__graph__new(cause);
+			      f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this_remaining_subgraph);
+			      f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that_remaining_subgraph);
+			      f2ptr this__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_this_remaining_subgraph);
+			      f2ptr that__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_that_remaining_subgraph);
+			      f2ptr this__arbitrary_node__label = f2__graph_node__label(cause, this__arbitrary_node);
+			      f2ptr that__arbitrary_node__label = f2__graph_node__label(cause, that__arbitrary_node);
+			      f2ptr gensym_variable_name        = f2__gensym(cause);
+			      raw__graph__make_node_variable(cause, new_this_remaining_subgraph, this__arbitrary_node__label, gensym_variable_name);
+			      raw__graph__make_node_variable(cause, new_that_remaining_subgraph, that__arbitrary_node__label, gensym_variable_name);
+			      f2ptr new_possibility = f2__common_variable_subgraph_possibility__new_with_compression(cause, worth__i, new_common_subgraph, new_this_remaining_subgraph, new_that_remaining_subgraph);
+			      {
+				f2ptr new_worth    = raw__common_variable_subgraph_possibility__worth(cause, new_possibility);
+				u64   new_worth__i = f2integer__i(new_worth, cause);
+				if (new_worth__i > best_possibility__worth__i) {
+				  best_possibility           = new_possibility;
+				  best_possibility__worth__i = new_worth__i;
+				}
+			      }
+			      raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(cause, new_subgraph_possibilities, new_possibility);
+			    }
+			    { // skip node in this graph.
+			      f2ptr new_common_subgraph         = f2__graph__new(cause);
+			      f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this_remaining_subgraph);
+			      f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that_remaining_subgraph);
+			      f2ptr this__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_this_remaining_subgraph);
+			      f2ptr this__arbitrary_node__label = f2__graph_node__label(cause, this__arbitrary_node);
+			      raw__graph__remove_node(cause, new_this_remaining_subgraph, this__arbitrary_node__label);
+			      f2ptr new_possibility = f2__common_variable_subgraph_possibility__new_with_compression(cause, worth__i, new_common_subgraph, new_this_remaining_subgraph, new_that_remaining_subgraph);
+			      raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(cause, new_subgraph_possibilities, new_possibility);
+			    }
+			    { // skip node in that graph.
+			      f2ptr new_common_subgraph         = f2__graph__new(cause);
+			      f2ptr new_this_remaining_subgraph = f2__graph__copy(cause, this_remaining_subgraph);
+			      f2ptr new_that_remaining_subgraph = f2__graph__copy(cause, that_remaining_subgraph);
+			      f2ptr that__arbitrary_node        = raw__graph__an_arbitrary_node(cause, new_that_remaining_subgraph);
+			      f2ptr that__arbitrary_node__label = f2__graph_node__label(cause, that__arbitrary_node);
+			      raw__graph__remove_node(cause, new_that_remaining_subgraph, that__arbitrary_node__label);
+			      f2ptr new_possibility = f2__common_variable_subgraph_possibility__new_with_compression(cause, worth__i, new_common_subgraph, new_this_remaining_subgraph, new_that_remaining_subgraph);
+			      raw__common_variable_subgraph_possibility_redblacktree__consider_inserting(cause, new_subgraph_possibilities, new_possibility);
+			    }
+			    );
+    subgraph_possibilities = new_subgraph_possibilities;
+  }
+  return best_possibility;
 }
 
 f2ptr f2__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {

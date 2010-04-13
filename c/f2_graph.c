@@ -1389,7 +1389,7 @@ f2ptr f2__common_variable_subgraph_possibility_redblacktree__new(f2ptr cause) {
 }
 
 f2ptr raw__common_variable_subgraph_possibility_redblacktree__insert(f2ptr cause, f2ptr this, f2ptr variable_cost, f2ptr subgraph) {
-  return f2__redblacktree__insert(cause, this, f2__common_variable_subgraph_possibility__new(cause, f2integer__new(cause, common_subgraph__worth__i), subgraph));
+  return f2__redblacktree__insert(cause, this, f2__common_variable_subgraph_possibility__new(cause, variable_cost, subgraph));
 }
 
 f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr that) {

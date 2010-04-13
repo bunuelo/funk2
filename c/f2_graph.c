@@ -1374,8 +1374,8 @@ f2ptr raw__common_variable_subgraph_possibility__subgraph(f2ptr cause, f2ptr thi
 }
 
 f2ptr raw__common_variable_subgraph_possibility__compare(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__variable_cost    = f2__common_variable_subgraph_possibility__variable_cost(cause, this);
-  f2ptr that__variable_cost    = f2__common_variable_subgraph_possibility__variable_cost(cause, that);
+  f2ptr this__variable_cost    = raw__common_variable_subgraph_possibility__variable_cost(cause, this);
+  f2ptr that__variable_cost    = raw__common_variable_subgraph_possibility__variable_cost(cause, that);
   s64   this__variable_cost__i = f2integer__i(this__variable_cost, cause);
   s64   that__variable_cost__i = f2integer__i(that__variable_cost, cause);
   return f2bool__new(this__variable_cost__i < that__variable_cost__i);

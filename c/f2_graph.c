@@ -1378,7 +1378,7 @@ f2ptr raw__common_variable_subgraph_possibility__compare(f2ptr cause, f2ptr this
   f2ptr that__variable_cost    = f2__common_variable_subgraph_possibility__variable_cost(cause, that);
   s64   this__variable_cost__i = f2integer__i(this__variable_cost, cause);
   s64   that__variable_cost__i = f2integer__i(that__variable_cost, cause);
-  return f2bool__new(cause, this__variable_cost__i < this__variable_cost__i);
+  return f2bool__new(this__variable_cost__i < this__variable_cost__i);
 }
 // no type checking, not meant to be user-accessible
 def_pcfunk2(common_variable_subgraph_possibility__compare, this, that, return raw__common_variable_subgraph_possibility__compare(this_cause, this, that));

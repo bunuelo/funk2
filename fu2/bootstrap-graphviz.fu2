@@ -30,8 +30,13 @@
 	[error `runtime `[gv-command: ,command]]]]]
 
 
+[defunk dot_code-gview [this]
+  [have this save 'graphviz-temp.dot']
+  [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
+  [system-gv 'graphviz-temp.ps']]
+
 [deftypefunk graph execute gview []
-  [have [get this as-dot_code] save 'graphviz-temp.dot']
+  [dot_code-gview [get this as-dot_code]]
   [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
   [system-gv 'graphviz-temp.ps']]
 

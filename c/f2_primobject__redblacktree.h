@@ -50,7 +50,7 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
       {									\
 	code;								\
       }									\
-      redblacktree_iter = f2__redblacktree_node__next(cause, node);	\
+      node = f2__redblacktree_node__next(cause, node);	\
     }									\
   }
 
@@ -72,7 +72,7 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
       {									\
 	code;								\
       }									\
-      redblacktree_iter = f2__redblacktree_node__prev(cause, node);	\
+      node = f2__redblacktree_node__prev(cause, node);	\
     }									\
   }
 

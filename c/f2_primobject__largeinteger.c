@@ -975,7 +975,7 @@ u64 raw__largeinteger__unsigned_array__equals_hash_value(f2ptr cause, f2ptr this
     for (index = 0; index < this__length; index ++) {
       f2ptr this__elt   = raw__array__elt(cause, this, index);
       u64   this__value = f2integer__i(this__elt, cause);
-      hash_value *= ((this_value == 0) ? 1 : this_value);
+      hash_value *= ((this__value == 0) ? 1 : this__value);
     }
   }
   return hash_value;

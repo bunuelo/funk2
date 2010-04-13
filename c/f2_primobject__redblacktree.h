@@ -43,6 +43,47 @@ declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, )
 
 declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
+#define redblacktree__iteration_forward_by_node(cause, this, node, code) \
+  {									\
+    f2ptr node = f2__redblacktree__minimum(cause, this);		\
+    while (node) {							\
+      {									\
+	code;								\
+      }									\
+      redblacktree_iter = f2__redblacktree_node__next(cause, node);	\
+    }									\
+  }
+
+#define redblacktree__iteration_forward(cause, this, key, code) \
+  redblacktree__iteration_forward_by_node(cause, this, redblacktree_node, \
+					  f2ptr key = f2__redblacktree_node__key(cause, redblaccktree_node); \
+					  {				\
+					    code;			\
+					  }				\
+					  )
+
+#define redblacktree__iteration(cause, this, key, code) \
+  redblacktree__iteration_forward(cause, this, key, code)
+
+#define redblacktree__iteration_backward_by_node(cause, this, node, code) \
+  {									\
+    f2ptr node = f2__redblacktree__maximum(cause, this);		\
+    while (node) {							\
+      {									\
+	code;								\
+      }									\
+      redblacktree_iter = f2__redblacktree_node__prev(cause, node);	\
+    }									\
+  }
+
+#define redblacktree__iteration_backward(cause, this, key, code)	\
+  redblacktree__iteration_backward_by_node(cause, this, redblacktree_node, \
+					   f2ptr key = f2__redblacktree_node__key(cause, redblaccktree_node); \
+					   {				\
+					     code;			\
+					   }				\
+					   )
+
 f2ptr raw__redblacktree__new(    f2ptr cause, f2ptr head, f2ptr comparison_funk);
 f2ptr  f2__redblacktree__new(    f2ptr cause, f2ptr comparison_funk);
 f2ptr raw__redblacktree__insert( f2ptr cause, f2ptr this, f2ptr key);

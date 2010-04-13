@@ -1081,7 +1081,7 @@ f2ptr raw__graph__an_arbitrary_edge(f2ptr cause, f2ptr this) {
   f2ptr an_arbitrary_edges_right_node_hash = f2__ptypehash__an_arbitrary_value(cause, edges_right_node_hash_edge_hash);
   f2ptr an_arbitrary_edges                 = f2__ptypehash__an_arbitrary_value(cause, an_arbitrary_edges_right_node_hash);
   release__assert(an_arbitrary_edges, cause, "raw__graph__an_arbitrary_edge error: found nil set of edges.");
-  return f2__cons__car(cause, an_arbitary_edges);
+  return f2__cons__car(cause, an_arbitrary_edges);
 }
 
 

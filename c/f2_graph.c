@@ -1406,10 +1406,6 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
     u64   common_subgraph__worth__i = 0;
     f2ptr this_remaining_subgraph   = f2__graph__copy(cause, this);
     f2ptr that_remaining_subgraph   = f2__graph__copy(cause, that);
-    f2ptr this_remaining_nodes      = nil;
-    f2ptr that_remaining_nodes      = nil;
-    f2ptr this_remaining_edges      = nil;
-    f2ptr that_remaining_edges      = nil;
     // there are a lot of potential edge->edge mappings with different numbers of variables for each.
     // this should be an A* search with limited beam width.
     {
@@ -1481,7 +1477,6 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
   }
   f2__print(cause, subgraph_possibilities);
   f2ptr subgraph_possibilities_next = f2__common_variable_subgraph_possibility_redblacktree__new(cause);
-  /*
   redblacktree__iteration(cause, subgraph_possibilities, possibility,
 			  f2ptr worth                   = raw__common_variable_subgraph_possibility__worth(                  cause, possibility);
 			  f2ptr common_subgraph         = raw__common_variable_subgraph_possibility__subgraph(               cause, possibility);
@@ -1493,7 +1488,6 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			  f2ptr that_remaining_edges    = raw__common_variable_subgraph_possibility__that_remaining_edges(   cause, possibility);
 			  
 			  );
-  */
   return subgraph_possibilities;
 }
 

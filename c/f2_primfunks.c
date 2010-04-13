@@ -906,7 +906,7 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   //return f2__argument_type_check_failure__exception__new(nil, x);
 }
 
-f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw_eq(cause, x, y));}
+f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__eq(cause, x, y));}
 def_pcfunk2(eq, x, y, return f2__eq(this_cause, x, y));
 
 boolean_t raw__contains(f2ptr cause, f2ptr this, f2ptr element) {

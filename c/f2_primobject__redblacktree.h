@@ -56,7 +56,7 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
 #define redblacktree__iteration_forward(cause, this, key, code) \
   redblacktree__iteration_forward_by_node(cause, this, redblacktree_node, \
-					  f2ptr key = f2__redblacktree_node__key(cause, redblaccktree_node); \
+					  f2ptr key = f2__redblacktree_node__key(cause, redblacktree_node); \
 					  {				\
 					    code;			\
 					  }				\
@@ -78,7 +78,7 @@ declare_primobject_2_slot(redblacktree, head, comparison_funk);
 
 #define redblacktree__iteration_backward(cause, this, key, code)	\
   redblacktree__iteration_backward_by_node(cause, this, redblacktree_node, \
-					   f2ptr key = f2__redblacktree_node__key(cause, redblaccktree_node); \
+					   f2ptr key = f2__redblacktree_node__key(cause, redblacktree_node); \
 					   {				\
 					     code;			\
 					   }				\

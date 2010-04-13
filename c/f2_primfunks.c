@@ -888,7 +888,7 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
 	f2primobject__is__largeinteger(y, cause)) {
       return raw__largeinteger__equals(cause, x, y);
     }
-    return (x == y);
+    return f2__object__eq(cause, x, y);
   case ptype_chunk:
     return (x == y);
   case ptype_free_memory:

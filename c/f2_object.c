@@ -263,7 +263,12 @@ f2ptr object__get_2(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0, f2ptr 
 }
 
 f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  return f2__object__get_1(cause, this, __funk2.globalenv.eq__symbol, that);
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, __funk2.globalenv.eq__symbol);
+  if (! raw__funkable__is_type(cause, funk)) {
+    return (this == that);
+  }
+  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, that, nil)));
 }
 def_pcfunk2(object__eq, this, that, return f2__object__eq(this_cause, this, that));
 

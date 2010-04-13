@@ -130,7 +130,12 @@ declare_object_type_2_slot(pattern_graph, variable_label_hash, graph, );
 
 // graph_variable
 typedef struct funk2_object_type__graph_variable__slot_s funk2_object_type__graph_variable__slot_t;
-declare_object_type_1_slot(graph_variable, name, );
+declare_object_type_1_slot(graph_variable, name,
+			   f2ptr eq__symbol;
+			   f2ptr eq__funk;
+			   f2ptr eq_hash_value__symbol;
+			   f2ptr eq_hash_value__funk;
+			   );
 
 // trans
 typedef struct funk2_object_type__trans__slot_s funk2_object_type__trans__slot_t;

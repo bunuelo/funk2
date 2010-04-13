@@ -1376,6 +1376,41 @@ f2ptr f2__graph_variable__is_wildcard(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph_variable__is_wildcard, this, return f2__graph_variable__is_wildcard(this_cause, this));
 
+boolean_t raw__graph_variable__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__graph_variable__is_type(cause, that)) {
+    return boolean__false;
+  }
+  return raw__eq(cause, f2__graph_variable__name(cause, this), f2__graph_variable__name(cause, that));
+}
+
+f2ptr f2__graph_variable__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__graph_variable__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2bool__new(raw__graph_variable__eq(cause, this, that));
+}
+def_pcfunk2(graph_variable__eq, this, that, return f2__graph_variable__eq(this_cause, this, that));
+
+u64 raw__graph_variable__eq_hash_value(f2ptr cause, f2ptr this) {
+  return raw__eq_hash_value(cause, raw__graph_variable__name(cause, this));
+}
+
+f2ptr f2__graph_variable__eq_hash_value(f2ptr cause, f2ptr this) {
+  if (! raw__graph_variable__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph_variable__eq_hash_value(cause, this);
+}
+def_pcfunk1(graph_variable__eq_hash_value, this, return f2__graph_variable__eq_hash_value(this_cause, this));
+
+f2ptr f2graph_variable__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2graph_variable__primobject_type__new(cause);
+  {char* slot_name = "eq";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph_variable.eq__funk);}
+  {char* slot_name = "eq_hash_value"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph_variable.eq_hash_value__funk);}
+  return this;
+}
+
+
 f2ptr f2__common_variable_subgraph_possibility__new(f2ptr cause, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
   f2ptr this = raw__array__new(cause, 4);
   raw__array__elt__set(cause, this, 0, worth);
@@ -1659,6 +1694,11 @@ void f2__graph__initialize() {
   
   // graph_variable
   initialize_primobject_1_slot(graph_variable, name);
+
+  {char* symbol_str = "eq"; __funk2.globalenv.object_type.primobject.primobject_type_graph_variable.eq__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_variable__eq, this, that, cfunk, 0, "checks for equality between two graph variables."); __funk2.globalenv.object_type.primobject.primobject_type_graph_variable.eq__funk = never_gc(cfunk);}
+  {char* symbol_str = "eq_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_graph_variable.eq_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph_variable__eq_hash_value, this, cfunk, 0, "returns hash value for graph variable."); __funk2.globalenv.object_type.primobject.primobject_type_graph_variable.eq_hash_value__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__1(graph_variable__is_wildcard, this, "returns true if this graph variable can take any value without restrictions.");
   

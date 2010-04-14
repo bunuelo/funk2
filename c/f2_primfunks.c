@@ -1525,12 +1525,18 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_symbol:       return raw__symbol__eq_hash_value(      cause, exp);
   case ptype_chunk:        return raw__chunk__eq_hash_value(       cause, exp);
   case ptype_simple_array:
-  case ptype_traced_array:
+  case ptype_traced_array: {
     if (raw__primobject__is_type(cause, exp) &&
 	f2primobject__is__largeinteger(exp, cause)) {
       return raw__largeinteger__equals_hash_value(cause, exp);
     }
-    return raw__object__eq_hash_value(cause, exp);
+    f2ptr hash_value = f2__object__eq_hash_value(cause, exp);
+    u64 hash_value__i = 0;
+    if (raw__integer__is_type(cause, hash_value)) {
+      hash_value__i = f2integer__i(hash_value, cause);
+    }
+    return hash_value__i;
+  }
   case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
   case ptype_free_memory:
   case ptype_newly_allocated: 

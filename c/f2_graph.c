@@ -1168,8 +1168,8 @@ f2ptr raw__graph__contains_match_with_bindings(f2ptr cause, f2ptr this, f2ptr th
 			   f2ptr that_unmatched_subgraph__node__label = f2__graph_node__label(cause, that_unmatched_subgraph__node);
 			   if (! raw__graph_variable__is_type(cause, that_unmatched_subgraph__node__label)) {
 			     int that_unmatched_subgraph__node__edge_count = 0;
-			     graph_node__in_edge__iteration( cause, that_unmatched_subgraph__node, in_edge,  that_unmatched_subgraph__node__edge_count ++);
-			     graph_node__out_edge__iteration(cause, that_unmatched_subgraph__node, out_edge, that_unmatched_subgraph__node__edge_count ++);
+			     graph_node__in_edge__iteration( cause, that_unmatched_subgraph__node, in_edge,  in_edge  = nil; that_unmatched_subgraph__node__edge_count ++);
+			     graph_node__out_edge__iteration(cause, that_unmatched_subgraph__node, out_edge, out_edge = nil; that_unmatched_subgraph__node__edge_count ++);
 			     if (that_unmatched_subgraph__node__edge_count == 0) {
 			       f2ptr that_unmatched_subgraph__node__label = f2__graph_node__label(cause, that_unmatched_subgraph__node);
 			       matched_edgeless_node_labels = f2cons__new(cause, that_unmatched_subgraph__node__label, matched_edgeless_node_labels);

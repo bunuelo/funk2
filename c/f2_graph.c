@@ -460,7 +460,7 @@ def_pcfunk1(graph__nodes, this, return f2__graph__nodes(this_cause, this));
 
 boolean_t raw__graph__has_nodes(f2ptr cause, f2ptr this) {
   f2ptr node_label_hash = f2__graph__node_label_hash(cause, this);
-  return raw__ptypehash__is_empty(cause, node_label_hash);
+  return (! raw__ptypehash__is_empty(cause, node_label_hash));
 }
 
 f2ptr f2__graph__has_nodes(f2ptr cause, f2ptr this) {

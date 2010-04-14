@@ -30,6 +30,7 @@
 [deftypefunk graph get     difference                    [that]                                                       [graph-difference                    this that]]
 [deftypefunk graph get     variables                     []                                                           [graph-variables                     this]]
 [deftypefunk graph get     nodes                         []                                                           [graph-nodes                         this]]
+[deftypefunk graph get     has_nodes                     []                                                           [graph-has_nodes                     this]]
 [deftypefunk graph get     edges                         []                                                           [graph-edges                         this]]
 [deftypefunk graph execute replace_node                  [old_node new_node]                                          [graph-replace_node                  this old_node new_node]]
 [deftypefunk graph execute replace_edge                  [edge_label left_node_label right_node_label new_edge_label] [graph-replace_edge                  this edge_label left_node_label right_node_label new_edge_label]]

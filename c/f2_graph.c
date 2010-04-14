@@ -1622,6 +1622,7 @@ f2ptr raw__graph__find_common_variable_subgraph(f2ptr cause, f2ptr this, f2ptr t
 			    );
     subgraph_possibilities = new_subgraph_possibilities;
   }
+  f2ptr best_possibility = f2__redblacktree__maximum(cause, best_possibilities);
   return best_possibility;
 }
 

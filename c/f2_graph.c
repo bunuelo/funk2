@@ -469,12 +469,19 @@ f2ptr f2__graph__has_nodes(f2ptr cause, f2ptr this) {
   }
   return f2bool__new(raw__graph__has_nodes(cause, this));
 }
-def_pcfunk1(graph__has_nodes, this, return f2__graph__has(this_cause, this));
+def_pcfunk1(graph__has_nodes, this, return f2__graph__has_nodes(this_cause, this));
 
-f2ptr f2__graph__edges(f2ptr cause, f2ptr this) {
+f2ptr raw__graph__edges(f2ptr cause, f2ptr this) {
   f2ptr edges = nil;
   graph__edge__iteration(cause, this, node, edges = f2cons__new(cause, node, edges));
   return edges;
+}
+
+f2ptr f2__graph__edges(f2ptr cause, f2ptr this) {
+  if (! raw__graph__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__graph__edges(cause, this);
 }
 def_pcfunk1(graph__edges, this, return f2__graph__edges(this_cause, this));
 

@@ -1530,7 +1530,7 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
 	f2primobject__is__largeinteger(exp, cause)) {
       return raw__largeinteger__equals_hash_value(cause, exp);
     }
-    return f2__object__eq_hash_value(cause, exp);
+    return raw__object__eq_hash_value(cause, exp);
   case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
   case ptype_free_memory:
   case ptype_newly_allocated: 

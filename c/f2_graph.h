@@ -208,6 +208,7 @@ declare_primobject_1_slot(graph_variable, name);
 f2ptr f2__graph_variable__new(f2ptr cause, f2ptr name);
 f2ptr f2__graph_variable__new_wildcard(f2ptr cause);
 
+f2ptr f2graph_variable__primobject_type__new_aux(f2ptr cause);
 
 // **
 

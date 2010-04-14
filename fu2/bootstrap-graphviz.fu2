@@ -36,9 +36,7 @@
   [system-gv 'graphviz-temp.ps']]
 
 [deftypefunk graph execute gview []
-  [dot_code-gview [get this as-dot_code]]
-  [system-dot 'graphviz-temp.dot' 'graphviz-temp.ps']
-  [system-gv 'graphviz-temp.ps']]
+  [dot_code-gview [get this as-dot_code]]]
 
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
 [deftypefunk frame get     as-dot_code [] [get [get this as-graph] as-dot_code]]

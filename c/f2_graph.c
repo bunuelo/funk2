@@ -1399,7 +1399,7 @@ f2ptr f2__graph_variable__eq_hash_value(f2ptr cause, f2ptr this) {
   if (! raw__graph_variable__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__graph_variable__eq_hash_value(cause, this);
+  return f2integer__new(cause, raw__graph_variable__eq_hash_value(cause, this));
 }
 def_pcfunk1(graph_variable__eq_hash_value, this, return f2__graph_variable__eq_hash_value(this_cause, this));
 

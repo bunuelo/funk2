@@ -137,6 +137,10 @@ declare_object_type_1_slot(graph_variable, name,
 			   f2ptr eq_hash_value__funk;
 			   );
 
+// graph_map
+typedef struct funk2_object_type__graph_map__slot_s funk2_object_type__graph_map__slot_t;
+declare_object_type_1_slot(graph_map, node_indices, );
+
 // trans
 typedef struct funk2_object_type__trans__slot_s funk2_object_type__trans__slot_t;
 declare_object_type_2_slot(trans, remove, add,
@@ -209,6 +213,9 @@ f2ptr f2__graph_variable__new(f2ptr cause, f2ptr name);
 f2ptr f2__graph_variable__new_wildcard(f2ptr cause);
 
 f2ptr f2graph_variable__primobject_type__new_aux(f2ptr cause);
+
+// graph_map
+declare_primobject_1_slot(graph_map, node_indices);
 
 // **
 

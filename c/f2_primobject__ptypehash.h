@@ -72,7 +72,7 @@ f2ptr f2__ptypehash__slot_names(f2ptr cause, f2ptr this);
 f2ptr f2ptypehash__primobject_type__new(f2ptr cause);
 f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause);
 
-#define ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) {\
+#define ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) { \
   f2ptr iteration__cause = (cause); \
   f2ptr iteration__this  = (this); \
   f2ptr iteration__bin_array          = f2ptypehash__bin_array(iteration__this, iteration__cause); \

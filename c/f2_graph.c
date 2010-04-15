@@ -1438,6 +1438,17 @@ f2ptr f2graph_variable__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// graph_map
+
+def_primobject_1_slot(graph_map, node_indices);
+
+f2ptr f2__graph_map__new(f2ptr cause, f2ptr node_indices) {
+  return f2graph_map__new(cause, node_indices);
+}
+def_pcfunk1(graph_map__new, node_indices, return f2__graph_map__new(this_cause, node_indices));
+
+
+
 f2ptr f2__common_variable_subgraph_possibility__new(f2ptr cause, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
   f2ptr this = raw__array__new(cause, 4);
   raw__array__elt__set(cause, this, 0, worth);
@@ -1743,5 +1754,7 @@ void f2__graph__initialize() {
   
   f2__primcfunk__init__1(graph_variable__is_wildcard, this, "returns true if this graph variable can take any value without restrictions.");
   
+  // graph_map
+  initialize_primobject_1_slot(graph_map, node_indices);
 }
 

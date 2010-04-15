@@ -1664,6 +1664,7 @@ void f2__graph__reinitialize_globalvars() {
   __trans__symbol           = new__symbol(cause, "trans");
   __pattern_graph__symbol   = new__symbol(cause, "pattern_graph");
   __graph_variable__symbol  = new__symbol(cause, "graph_variable");
+  __graph_map__symbol       = new__symbol(cause, "graph_map");
 }
 
 void f2__graph__initialize() {

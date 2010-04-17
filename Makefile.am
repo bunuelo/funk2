@@ -300,7 +300,7 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-lib_libfunk2_la_LDFLAGS = -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
+lib_libfunk2_la_LDFLAGS = -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 
 #bin_funk2_LDFLAGS = -lfunk2

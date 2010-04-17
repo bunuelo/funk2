@@ -49,7 +49,6 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/funk2.
-	./configure --prefix=/usr
 	$(MAKE) DESTDIR=$(CURDIR)/debian/funk2 install
 
 

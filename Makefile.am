@@ -36,19 +36,19 @@ compile__funk2                = $(compile__bin__dir)funk2
 compile__bootstrap__img       = $(compile__img__dir)bootstrap.img
 compile__bootstrap__repl__img = $(compile__img__dir)bootstrap-repl.img
 
-chroot__install__system_bin__dir     = $(chroot_install_root_dir)usr/local/bin/
-chroot__install__bin__dir            = $(chroot_install_root_dir)usr/local/bin/
-chroot__install__lib__dir            = $(chroot_install_root_dir)usr/local/lib/
-chroot__install__include__dir        = $(chroot_install_root_dir)usr/local/include/funk2/
+chroot__install__system_bin__dir     = $(chroot_install_root_dir)usr/bin/
+chroot__install__bin__dir            = $(chroot_install_root_dir)usr/bin/
+chroot__install__lib__dir            = $(chroot_install_root_dir)usr/lib/
+chroot__install__include__dir        = $(chroot_install_root_dir)usr/include/funk2/
 chroot__install__img__dir            = $(chroot_install_root_dir)usr/share/funk2/img/
 chroot__install__icons__dir          = $(chroot_install_root_dir)usr/share/funk2/icons/
 chroot__install__man__dir            = $(chroot_install_root_dir)usr/share/man/man1/
 chroot__install__funk2               = $(chroot__install__bin__dir)funk2
 chroot__install__bootstrap__img      = $(chroot__install__img__dir)bootstrap.img
 
-plain__install__system_bin__dir     = $(plain_install_root_dir)usr/local/bin/
-plain__install__bin__dir            = $(plain_install_root_dir)usr/local/bin/
-plain__install__include__dir        = $(plain_install_root_dir)usr/local/include/funk2/
+plain__install__system_bin__dir     = $(plain_install_root_dir)usr/bin/
+plain__install__bin__dir            = $(plain_install_root_dir)usr/bin/
+plain__install__include__dir        = $(plain_install_root_dir)usr/include/funk2/
 plain__install__img__dir            = $(plain_install_root_dir)usr/share/funk2/img/
 plain__install__icons__dir          = $(plain_install_root_dir)usr/share/funk2/icons/
 plain__install__man__dir            = $(plain_install_root_dir)usr/share/man/man1/

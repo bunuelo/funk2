@@ -24,7 +24,7 @@
 
 // graph_node
 typedef struct funk2_object_type__graph_node__slot_s funk2_object_type__graph_node__slot_t;
-declare_object_type_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, );
+declare_object_type_5_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash, );
 
 #define graph_node__in_edge__iteration(cause, this, edge, code) { \
    f2ptr this__edges_left_node_hash_edge_hash = f2__graph_node__edges_left_node_hash_edge_hash(cause, this); \
@@ -165,7 +165,7 @@ typedef struct funk2_graph_s {
 #include "f2_primobjects.h"
 
 // graph_node
-declare_primobject_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash);
+declare_primobject_5_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash);
 
 // graph_edge
 declare_primobject_3_slot(graph_edge, label, left_node, right_node);

@@ -23,12 +23,14 @@
 
 // graph_node
 
-def_primobject_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash);
+def_primobject_5_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash);
 
 f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
   f2ptr edges_left_node_hash_edge_hash  = f2__ptypehash__new(cause);
   f2ptr edges_right_node_hash_edge_hash = f2__ptypehash__new(cause);
-  return f2graph_node__new(cause, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash);
+  f2ptr edges_edge_hash_left_node_hash  = f2__ptypehash__new(cause);
+  f2ptr edges_edge_hash_right_node_hash = f2__ptypehash__new(cause);
+  return f2graph_node__new(cause, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash);
 }
 def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
 
@@ -1447,8 +1449,6 @@ f2ptr f2__graph_map__new(f2ptr cause, f2ptr node_indices) {
 }
 def_pcfunk1(graph_map__new, node_indices, return f2__graph_map__new(this_cause, node_indices));
 
-
-
 f2ptr f2__common_variable_subgraph_possibility__new(f2ptr cause, f2ptr worth, f2ptr common_subgraph, f2ptr this_remaining_subgraph, f2ptr that_remaining_subgraph) {
   f2ptr this = raw__array__new(cause, 4);
   raw__array__elt__set(cause, this, 0, worth);
@@ -1672,7 +1672,7 @@ void f2__graph__initialize() {
   f2ptr cause = initial_cause();
   
   // graph_node
-  initialize_primobject_3_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash);
+  initialize_primobject_5_slot(graph_node, label, edges_left_node_hash_edge_hash, edges_right_node_hash_edge_hash, edges_edge_hash_left_node_hash, edges_edge_hash_right_node_hash);
   
   f2__primcfunk__init__1(graph_node__has_edges, this, "returns true if node has at least one edge, false otherwise.");
   

@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH FUNK2 1 "Jun 23, 2009"
+.TH FUNK2 1 "Apr 17, 2010"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -19,7 +19,7 @@
 funk2 \- reflective programming language
 .SH SYNOPSIS
 .B funk2
-.RI [\-x " " <command>] " " [\-p " " <portnum>] " " [\-\-swap-directory " " <swap-directory>] " " [<source.fu2>]
+.RI [\-x " " <command>] " " [\-p " " <portnum>] " " [<source.fu2>]
 .br
 .SH DESCRIPTION
 This manual page documents briefly the
@@ -50,9 +50,6 @@ A user supplied command to execute after booting and before exiting.
 .TP
 .B \-p <portnum>  [:default 22222 :try anything from 22222 to 23221]
 The localhost peer-command-server port number.  Each copy of funk2 sharing a network interface must be able to allocate a unique peer-command-server port number.
-.TP
-.B \--swap-directory <swap-directory>  [:default ./f2swp/ :try /tmp/]
-local filesystem directory for storing swap files which should have an absolute minimum of 2 gigabytes of free space.
 .\" .SH SEE ALSO
 .\" .BR bar (1),
 .\" .BR baz (1).
@@ -62,4 +59,4 @@ This program is explained more fully in
 .SH AUTHOR
 funk2 was written by Bo Morgan.
 .PP
-This manual page was written by Bo Morgan <bo@mit.edu> for the Debian project (and may be used by others).
+This manual page was written by Bo Morgan <bo@mit.edu> for the Debian project (and may be freely used by others).

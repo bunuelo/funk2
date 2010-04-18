@@ -19,7 +19,7 @@
  rights to redistribute these changes.
 '
 
-[globalize-funk cause primfunk:cause]
+[globalize-funk cause &primfunk:cause]
 
 [globalize-funk bytecode_funk_callback-create_and_trace_event       &primfunk:bytecode_funk_callback__create_and_trace_event]
 [globalize-funk bytecode_endfunk_callback-finish_and_abstract_event &primfunk:bytecode_endfunk_callback__finish_and_abstract_event]

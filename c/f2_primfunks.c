@@ -545,6 +545,7 @@ f2ptr f2__fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr pa
   f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_parallel(cause, new_fiber);
   f2fiber__keep_undead__set(new_fiber, cause, nil);
+  f2__cause(cause); // branch cause for each new fiber
   return new_fiber;
 }
 def_pcfunk2(fiber, funk, args, return f2__fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
@@ -552,6 +553,7 @@ def_pcfunk2(fiber, funk, args, return f2__fiber(this_cause, this_cause, simple_f
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_serial(cause, new_fiber);
+  // note cause is not branched.
   return new_fiber;
 }
 

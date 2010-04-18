@@ -115,12 +115,16 @@
   [have this activate [this-cause]]
   this]
 
-[defunk test-tracers []
+[defunk start-tracers []
   [funktracer    [print [list [get [time] nanoseconds_since_1970] `funktracer----: [get funk name] [get funk args] [mapcar &what-to-print-safe args]]]]
   [endfunktracer [print [list [get [time] nanoseconds_since_1970] `endfunktracer-: [get funk name] [get funk args]         [what-to-print-safe value]]]]
   [branchtracer  [print [list [get [time] nanoseconds_since_1970] `branchtracer--: [what-to-print-safe value] [get bytecode command]]]]
   [valuetracer   [print [list [get [time] nanoseconds_since_1970] `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]
   nil]
+
+[defunk test-tracers []
+  [fiber [funk [] [cause] [test-tracers]] nil]
+  []]
 
 [deftypefunk cause execute trace []
   [print 'hi']

@@ -303,7 +303,7 @@ lib_libfunk2_la_SOURCES = \
 FUNK2_VERSION=`cat version`
 
 FUNK2_RELEASE=$(FUNK2_VERSION)
-FUNK2_LIBRARY_VERSION=$(FUNK2_VERSION)
+FUNK2_LIBRARY_VERSION=2:10:0
 #                     #.##.#
 #                     | |  |
 #              +------+ |  +---+

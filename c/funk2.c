@@ -239,12 +239,12 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
       
       // start a fiber executing the user read-eval-print loop
-      f2__fiber(cause,
-		cause,
-		nil,
-		global_environment(),
-		load_funk,
-		args);
+      f2__fiber_serial(cause,
+		       cause,
+		       nil,
+		       global_environment(),
+		       load_funk,
+		       args);
       
     } else {
       

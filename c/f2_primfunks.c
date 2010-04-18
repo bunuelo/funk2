@@ -558,7 +558,7 @@ f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f
 
 f2ptr f2__fiber__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr imaginary_cause = f2__cause__new_imaginary(cause, imagination_name);
-  f2ptr new_fiber = f2__fiber(cause, imaginary_cause, parent_fiber, parent_env, cfunkable, args);
+  f2ptr new_fiber = f2__fiber_parallel(cause, imaginary_cause, parent_fiber, parent_env, cfunkable, args);
   return new_fiber;
 }
 def_pcfunk3(fiber__imagine, imagination_name, funk, args, return f2__fiber__imagine(this_cause, imagination_name, simple_fiber, simple_env, funk, args));

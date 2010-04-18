@@ -440,6 +440,13 @@
 			      seq]]]
     [apply &join parc-fibers]]]
 
+[defmetro shelter [:rest codes]
+  `[let* [[result `sheltered]
+	  [fiber  [fiber [funk [] [= result [prog @codes]]] nil]]]
+     [while [not [get fiber is_complete]]
+       [millisleep 10]]
+     result]]
+
 [defunk parcar [proc seq]
   'run mapcar commands in parallel'
   [let [[parcar-fibers [mapcar [funk [exp]

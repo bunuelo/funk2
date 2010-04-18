@@ -106,6 +106,7 @@ f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name);
 f2ptr f2__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
 
+f2ptr  f2__cause(f2ptr cause);
 f2ptr  f2__cause__bytecode_tracing_on(f2ptr cause, f2ptr this);
 void  raw__cause__event_buffer__add(f2ptr cause, f2ptr event);
 f2ptr  f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var);

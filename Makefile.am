@@ -303,16 +303,16 @@ lib_libfunk2_la_SOURCES = \
 FUNK2_VERSION=`cat version`
 
 FUNK2_RELEASE=$(FUNK2_VERSION)
-FUNK2_LIBRARY_VERSION=2:10:0
-#                     #.##.#
-#                     | |  |
-#              +------+ |  +---+
-#              |        |      |
+FUNK2_LIBRARY_VERSION=0:0:0
+#                     #.#.#
+#                     | | |
+#              +------+ | +---+
+#              |        |     |
 #            current:revision:age
-#              |        |      |
-#              |        |      +- increment if interfaces have been added
-#              |        |         set to zero if interfaces have been removed
-#              |        |         or changed
+#              |        |     |
+#              |        |     +- increment if interfaces have been added
+#              |        |        set to zero if interfaces have been removed
+#              |        |        or changed
 #              |        +- increment if source code has changed
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed

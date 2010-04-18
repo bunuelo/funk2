@@ -207,7 +207,13 @@ f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr valu
 }
 def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
 
-
+f2ptr f2__cause(f2ptr cause) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
+  f2__fiber__cause_reg__set(cause, fiber, new_cause);
+  return new_cause;
+}
+def_pcfunk0(cause, return f2__cause(this_cause));
 
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
@@ -318,6 +324,8 @@ void f2__cause__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk = never_gc(cfunk);}
   {char* symbol_str = "define-funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__define__funk, this, var, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk = never_gc(cfunk);}
+  
+  f2__primcfunk__init__0(cause, "Sets the current cause to be a new cause.  Properties are inherited from the previous cause.");
   
   f2__primcfunk__init__5(bytecode_funk_callback__create_and_trace_event, object_cause, fiber, bytecode, funk, args, "(cfunk defined in f2_cause.c)");
   f2__primcfunk__init__5(bytecode_endfunk_callback__finish_and_abstract_event, object_cause, fiber, bytecode, value, funk, "(cfunk defined in f2_cause.c)");

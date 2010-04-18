@@ -260,12 +260,12 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	}
 	
 	// start a fiber executing the user read-eval-print loop
-	f2__fiber(cause,
-		  cause,
-		  nil,
-		  global_environment(),
-		  repl_funk,
-		  nil);
+	f2__fiber_serial(cause,
+			 cause,
+			 nil,
+			 global_environment(),
+			 repl_funk,
+			 nil);
       } else {
 	printf("\nfunk2: skipping repl function because of --no-repl option.");
       }
@@ -276,12 +276,12 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     
     if (! this->command_line.no_boot) {
       // unless the user has specifically used the "--no-boot" command-line option, start a fiber executing the boot function
-      f2__fiber(cause,
-		cause,
-		nil,
-		global_environment(),
-		boot_funk,
-		nil);
+      f2__fiber_serial(cause,
+		       cause,
+		       nil,
+		       global_environment(),
+		       boot_funk,
+		       nil);
     } else {
       printf("\nfunk2: skipping boot function because of --no-boot option.");
     }

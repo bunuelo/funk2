@@ -210,7 +210,11 @@ def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define_
 f2ptr f2__cause(f2ptr cause) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
-  f2__fiber__cause_reg__set(cause, fiber, new_cause);
+  { // should be atomic
+    f2__fiber__cause_reg__set(cause, fiber, new_cause);
+    f2__cause__add_fiber(   cause, new_cause, fiber);
+    f2__cause__remove_fiber(cause, cause,     fiber);
+  }
   return new_cause;
 }
 def_pcfunk0(cause, return f2__cause(this_cause));

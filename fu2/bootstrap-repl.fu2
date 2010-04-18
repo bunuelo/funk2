@@ -297,6 +297,12 @@
     [apply proc [cons [car seq] nil]]
     [mutate seq [cdr seq]]]]
 
+[defunk fiber [funk args]
+  [fiber_parallel [funk []
+			[cause]
+			[apply funk args]]
+		  nil]]
+
 [defunk parseq [proc seq]
   [if [null seq]
       nil

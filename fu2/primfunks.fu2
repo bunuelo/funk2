@@ -38,7 +38,7 @@
 
 [globalize-funk make-funk                                   &primfunk:make_funk]
 [globalize-funk make-metro                                  &primfunk:make_metro]
-[globalize-funk fiber                                       &primfunk:fiber]
+[globalize-funk fiber_parallel                              &primfunk:fiber_parallel]
 [globalize-funk fiber-imagine                               &primfunk:fiber__imagine]
 
 

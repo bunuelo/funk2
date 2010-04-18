@@ -300,6 +300,20 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
+FUNK2_RELEASE=2:09:0
+FUNK2_LIBRARY_VERSION=2:0:0
+#                     | | |
+#              +------+ | +---+
+#              |        |     |
+#            current:revision:age
+#              |        |     |
+#              |        |     +- increment if interfaces have been added
+#              |        |        set to zero if interfaces have been removed
+#              |        |        or changed
+#              |        +- increment if source code has changed
+#              |           set to zero if current is incremented
+#              +- increment if interfaces have been added, removed or changed
+
 lib_libfunk2_la_LDFLAGS = -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 

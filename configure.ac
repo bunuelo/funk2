@@ -7,20 +7,6 @@ AC_CONFIG_SRCDIR([c/funk2.c])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-FUNK2_RELEASE=2:09:0
-FUNK2_LIBRARY_VERSION=2:0:0
-#                     | | |
-#              +------+ | +---+
-#              |        |     |
-#            current:revision:age
-#              |        |     |
-#              |        |     +- increment if interfaces have been added
-#              |        |        set to zero if interfaces have been removed
-#              |        |        or changed
-#              |        +- increment if source code has changed
-#              |           set to zero if current is incremented
-#              +- increment if interfaces have been added, removed or changed
-
 # Checks for programs.
 AC_PROG_CC
 AM_PROG_CC_C_O

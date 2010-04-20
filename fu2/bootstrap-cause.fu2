@@ -122,6 +122,11 @@
   [valuetracer   [print [list [get [time] nanoseconds_since_1970] `valuetracer---: [type value] [get bytecode command] [get bytecode arg0] [get bytecode arg1]]]]
   nil]
 
+[defmetro test-funktracer [:rest codes]
+  `[shelter [funktracer [print [list `arg-num: [length args] [get funk name]]]]
+	    @codes]]
+
+
 [defmetro cause-defunk [name args :rest body]
   `[have [this-cause] define-funk [quote ,name] [funk ,args @body]]]
 

@@ -141,6 +141,12 @@ athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 cc_flags = $(release__cc_flags)
 #cc_flags = $(athena__cc_flags)
 
+
+# added to fix MacOS X compile
+install_sh = ./install-sh
+mkdir_p = ${INSTALL} -d
+
+
 bin/configurator: c/configurator.c
 	mkdir -p bin
 	gcc $(cc_flags) c/configurator.c -o $@

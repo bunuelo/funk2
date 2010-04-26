@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([funk2], [2.09], [bo@mit.edu])
+AC_INIT([funk2], [2.11], [bo@mit.edu])
 AC_CONFIG_SRCDIR([c/funk2.c])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])

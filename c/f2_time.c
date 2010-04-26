@@ -21,6 +21,19 @@
 
 #include "funk2.h"
 
+#ifdef __APPLE__
+
+//#include <sys/time.h>
+//#include <sys/resource.h>
+#include <mach/mach.h>
+//#include <mach/clock.h>
+//#include <mach/mach_time.h>
+//#include <errno.h>
+//#include <unistd.h>
+//#include <sched.h>
+
+#endif // __APPLE__
+
 void f2__sleep(int microseconds) {
   usleep(microseconds);
 }
@@ -37,9 +50,24 @@ void raw__fast_spin_sleep_yield() {
 
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
+#ifdef __APPLE__
+  {
+    clock_serv_t    clk;
+    mach_timespec_t tm;
+    if ((host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &clk) != KERN_SUCCESS) ||
+	(clock_get_time(clk, &tm)                                       != KERN_SUCCESS)) {
+      ts.tv_sec  = tm.tv_sec;
+      ts.tv_nsec = tm.tv_nsec;
+    } else {
+      error(nil, "raw__nanoseconds_since_1970 error: could not read calendar clock.");
+    }
+  }
+#else // __APPLE__
   clock_gettime(CLOCK_REALTIME, &ts);
+#endif // !__APPLE__
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 }
+
 
 f2ptr f2__nanoseconds_since_1970(f2ptr cause) {
   return f2integer__new(cause, raw__nanoseconds_since_1970());

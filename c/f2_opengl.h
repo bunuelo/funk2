@@ -185,7 +185,9 @@ void   raw__opengl__glRasterPos3f(f2ptr cause, GLfloat x, GLfloat y, GLfloat z);
 void   raw__opengl__glGetFloatv(f2ptr cause, GLenum pname, GLfloat *params);
 void   raw__opengl__glMultMatrixf(f2ptr cause, const GLfloat* m);
 void   raw__opengl__glLoadMatrixf(f2ptr cause, const GLfloat* m);
+#endif // F2__GL__H
 
+#if defined(F2__GLX__H)
 void         raw__opengl__glXSwapBuffers(f2ptr cause, Display* dpy, GLXDrawable drawable);
 Bool         raw__opengl__glXMakeCurrent(f2ptr cause, Display* dpy, GLXDrawable drawable, GLXContext ctx);
 void         raw__opengl__glXDestroyContext(f2ptr cause, Display* dpy, GLXContext ctx);
@@ -194,7 +196,7 @@ Bool         raw__opengl__glXQueryVersion(f2ptr cause, Display* dpy, int* Major,
 GLXContext   raw__opengl__glXCreateContext(f2ptr cause, Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct);
 Bool         raw__opengl__glXIsDirect(f2ptr cause, Display* dpy, GLXContext ctx);
 void         raw__opengl__glXUseXFont(f2ptr cause, Font font, int First, int Count, int ListBase);
-#endif // F2__GL__H
+#endif // F2__GLX__H
 
 
 void      funk2_openglu__init(funk2_openglu_t* this);

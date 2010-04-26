@@ -22,6 +22,8 @@
 #ifndef F2__STATUS__H
 #define F2__STATUS__H
 
+#include "f2_global.h"
+
 typedef struct funk2_status_s {
   funk2_processor_mutex_t trace_mutex;
 } funk2_status_t;

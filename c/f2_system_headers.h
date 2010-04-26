@@ -110,6 +110,7 @@
 #ifdef HAVE_X11_XLIB_H
 #  define  F2__XLIB__H
 #  include <X11/Xlib.h>
+#  include <X11/Xutil.h>
 #endif
 
 #ifdef HAVE_X11_KEYSYM_H

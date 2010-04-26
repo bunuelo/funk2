@@ -353,7 +353,10 @@ void raw__opengl__glLoadMatrixf(f2ptr cause, const GLfloat* m) {
   (*__funk2.opengl.glLoadMatrixf)(m);
 }
 
+#endif // F2__GL__H
 
+
+#if defined(F2__GLX__H)
 
 // glx extension functions
 
@@ -398,7 +401,7 @@ void raw__opengl__glXUseXFont(f2ptr cause, Font font, int First, int Count, int 
 }
 
 
-#endif // F2__GL__H
+#endif // F2__GLX__H
 
 // funk2_openglu
 

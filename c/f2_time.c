@@ -21,19 +21,6 @@
 
 #include "funk2.h"
 
-#ifdef __APPLE__
-
-//#include <sys/time.h>
-//#include <sys/resource.h>
-#include <mach/mach.h>
-//#include <mach/clock.h>
-//#include <mach/mach_time.h>
-//#include <errno.h>
-//#include <unistd.h>
-//#include <sched.h>
-
-#endif // __APPLE__
-
 void f2__sleep(int microseconds) {
   usleep(microseconds);
 }

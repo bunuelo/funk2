@@ -29,7 +29,10 @@
 #include "f2_debug_macros.h"
 
 typedef unsigned int  uint;
+
+#ifndef __APPLE__
 typedef unsigned char boolean_t;
+#endif // __APPLE__
 
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)

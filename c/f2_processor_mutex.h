@@ -22,7 +22,7 @@
 #ifndef F2__PROCESSOR_MUTEX__H
 #define F2__PROCESSOR_MUTEX__H
 
-#include <pthread.h>
+#include "f2_global.h"
 
 #define F2__PROCESSOR_MUTEX__DEBUG
 

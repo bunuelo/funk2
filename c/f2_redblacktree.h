@@ -24,7 +24,6 @@
 
 #include "f2_archconfig.h"
 #include "f2_global.h"
-//#include "f2_memory.h"
 
 typedef enum rbt_color_e {
   rbt_color__black = 0,

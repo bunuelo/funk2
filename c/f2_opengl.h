@@ -77,6 +77,8 @@ struct funk2_opengl_s {
   // The following functions are included in libGL.so, but are
   // probably not on non-X environments, so we'll need to deal with
   // this in a port to those environments.
+#endif // F2__GL__H
+#if defined(F2__GLX__H)
   void(*         glXSwapBuffers   )(Display* dpy, GLXDrawable drawable);
   Bool(*         glXMakeCurrent   )(Display* dpy, GLXDrawable drawable, GLXContext ctx);
   void(*         glXDestroyContext)(Display* dpy, GLXContext ctx);
@@ -86,7 +88,7 @@ struct funk2_opengl_s {
   Bool(*         glXIsDirect      )(Display* dpy, GLXContext ctx);
   void(*         glXUseXFont      )(Font font, int First, int Count, int ListBase);
   void(*         glGetFloatv      )(GLenum pname, GLfloat *params);
-#endif // F2__GL__H
+#endif // F2__GLX__H
 };
 
 struct funk2_openglu_s {

@@ -114,7 +114,9 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glGetFloatv       = (void(*)(GLenum pname, GLfloat *params))                                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glGetFloatv"));       if (! (this->glGetFloatv))       {status("funk2_opengl__load_library: failed symbol, glGetFloatv.");       return boolean__false;}
   this->glMultMatrixf     = (void(*)(const GLfloat* m))                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glMultMatrixf"));     if (! (this->glMultMatrixf))     {status("funk2_opengl__load_library: failed symbol, glMultMatrixf.");     return boolean__false;}
   this->glLoadMatrixf     = (void(*)(const GLfloat* m))                                                        from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glLoadMatrixf"));     if (! (this->glLoadMatrixf))     {status("funk2_opengl__load_library: failed symbol, glLoadMatrixf.");     return boolean__false;}
-  
+#endif // F2__GL__H
+
+#if defined(F2__GLX__H)  
   // glx extension functions here
   this->glXSwapBuffers    = (void(*)(Display* dpy, GLXDrawable drawable))                                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXSwapBuffers"));    if (! (this->glXSwapBuffers))    {status("funk2_opengl__load_library: failed symbol, glXSwapBuffers.");    return boolean__false;}
   this->glXMakeCurrent    = (Bool(*)(Display* dpy, GLXDrawable drawable, GLXContext ctx))                      from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXMakeCurrent"));    if (! (this->glXMakeCurrent))    {status("funk2_opengl__load_library: failed symbol, glXMakeCurrent.");    return boolean__false;}
@@ -124,8 +126,8 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
   this->glXCreateContext  = (GLXContext(*)(Display* dpy, XVisualInfo* vis, GLXContext shareList, Bool direct)) from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXCreateContext"));  if (! (this->glXCreateContext))  {status("funk2_opengl__load_library: failed symbol, glXCreateContext.");  return boolean__false;}
   this->glXIsDirect       = (Bool(*)(Display* dpy, GLXContext ctx))                                            from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXIsDirect"));       if (! (this->glXIsDirect))       {status("funk2_opengl__load_library: failed symbol, glXIsDirect.");       return boolean__false;}
   this->glXUseXFont       = (void(*)(Font font, int First, int Count, int ListBase))                           from_ptr(raw__dlfcn__dlsym(f2pointer__p(dlfcn_pointer, cause), (u8*)"glXUseXFont"));       if (! (this->glXUseXFont))       {status("funk2_opengl__load_library: failed symbol, glXUseXFont.");       return boolean__false;}
+#endif // F2__GLX__H
   
-#endif // F2__GL__H
   status("funk2_opengl__load_library: loaded opengl function symbols successfully.");
   this->initialized = boolean__true;
   return boolean__true;

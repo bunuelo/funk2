@@ -22,6 +22,16 @@
 #ifndef F2__ARCHCONFIG__H
 #define F2__ARCHCONFIG__H
 
+#if build_os == cygwin
+#  define F2__CYGWIN 1
+#elif build_os == linux-gnu
+#  define F2__LINUX 1
+#elif build_vendor == apple
+#  define F2__APPLE 1
+#else
+#  error Couldn't detect operating system.
+#endif
+
 #include <sys/types.h>
 
 #include "../config.h"
@@ -55,30 +65,57 @@ typedef u8 byte;
 
 typedef u64 f2size_t;
 
-#if int__bit_num == 64
-#  define s64__fstr                   "%d"
-#  define u64__fstr_without_percent    "u"
-#  define u64__fstr                   "%" u64__fstr_without_percent
-#  define x64__fstr                   "%X"
-#  define X64__fstr                   "%x"
-#  define nano_decimal_fraction__fstr "%09d"
-#elif long__bit_num == 64
-#  define s64__fstr                   "%ld"
-#  define u64__fstr_without_percent    "lu"
-#  define u64__fstr                   "%" u64__fstr_without_percent
-#  define x64__fstr                   "%lx"
-#  define X64__fstr                   "%lX"
-#  define nano_decimal_fraction__fstr "%09ld"
-#elif long_long__bit_num == 64
-#  define s64__fstr                   "%lld"
-#  define u64__fstr_without_percent    "llu"
-#  define u64__fstr                   "%" u64__fstr_without_percent
-#  define x64__fstr                   "%llx"
-#  define X64__fstr                   "%llX"
-#  define nano_decimal_fraction__fstr "%09lld"
+#ifdef F2__APPLE
+#  if long_long__bit_num == 64
+#    define s64__fstr                   "%lld"
+#    define u64__fstr_without_percent    "llu"
+#    define u64__fstr                   "%" u64__fstr_without_percent
+#    define x64__fstr                   "%llx"
+#    define X64__fstr                   "%llX"
+#    define nano_decimal_fraction__fstr "%09lld"
+#  elif long__bit_num == 64
+#    define s64__fstr                   "%ld"
+#    define u64__fstr_without_percent    "lu"
+#    define u64__fstr                   "%" u64__fstr_without_percent
+#    define x64__fstr                   "%lx"
+#    define X64__fstr                   "%lX"
+#    define nano_decimal_fraction__fstr "%09ld"
+#  elif int__bit_num == 64
+#    define s64__fstr                   "%d"
+#    define u64__fstr_without_percent    "u"
+#    define u64__fstr                   "%" u64__fstr_without_percent
+#    define x64__fstr                   "%X"
+#    define X64__fstr                   "%x"
+#    define nano_decimal_fraction__fstr "%09d"
+#  else
+#    error configuration not defined.  try: make clean; make configure; make
+#  endif
 #else
-#  error configuration not defined.  try: make clean; make configure; make
-#endif
+#  if int__bit_num == 64
+#    define s64__fstr                   "%d"
+#    define u64__fstr_without_percent    "u"
+#    define u64__fstr                   "%" u64__fstr_without_percent
+#    define x64__fstr                   "%X"
+#    define X64__fstr                   "%x"
+#    define nano_decimal_fraction__fstr "%09d"
+#  elif long__bit_num == 64
+#    define s64__fstr                   "%ld"
+#    define u64__fstr_without_percent    "lu"
+#    define u64__fstr                   "%" u64__fstr_without_percent
+#    define x64__fstr                   "%lx"
+#    define X64__fstr                   "%lX"
+#    define nano_decimal_fraction__fstr "%09ld"
+#  elif long_long__bit_num == 64
+#    define s64__fstr                   "%lld"
+#    define u64__fstr_without_percent    "llu"
+#    define u64__fstr                   "%" u64__fstr_without_percent
+#    define x64__fstr                   "%llx"
+#    define X64__fstr                   "%llX"
+#    define nano_decimal_fraction__fstr "%09lld"
+#  else
+#    error configuration not defined.  try: make clean; make configure; make
+#  endif
+#endif // F2__APPLE
 
 #if int__bit_num == 32
 #  define s32__fstr "%d"

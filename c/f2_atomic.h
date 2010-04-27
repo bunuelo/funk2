@@ -113,7 +113,7 @@ static inline void atomic_inc( atomic_t *v ) {
 #if GCC_ATOMIC_BUILTINS
   (void)__sync_fetch_and_add(&v->counter, 1);
 #else
-  c->counter ++;
+  v->counter ++;
 #endif
 }
  

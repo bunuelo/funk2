@@ -103,15 +103,21 @@ void f2__primfunks__fcntl__initialize() {
   f2__primcfunk__init(f2__fcntl__f_setlkw, "(as defined in fcntl.h)");
   
   f2__primcfunk__init(f2__fcntl__o_append, "(as defined in fcntl.h)");
-  f2__primcfunk__init(f2__fcntl__o_async, "(as defined in fcntl.h)");
   f2__primcfunk__init(f2__fcntl__o_creat, "(as defined in fcntl.h)");
-
+  
+#ifndef F2__CYGWIN
+  f2__primcfunk__init(f2__fcntl__o_async, "(as defined in fcntl.h)");
+#endif
+  
 #ifndef F2__APPLE
   f2__primcfunk__init(f2__fcntl__o_direct, "(as defined in fcntl.h)");	
+#endif
+  
+#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
   f2__primcfunk__init(f2__fcntl__o_largefile, "(as defined in fcntl.h)");
   f2__primcfunk__init(f2__fcntl__o_noatime, "(as defined in fcntl.h)");
 #endif
-
+  
   f2__primcfunk__init(f2__fcntl__o_directory, "(as defined in fcntl.h)");
   f2__primcfunk__init(f2__fcntl__o_excl, "(as defined in fcntl.h)");
   f2__primcfunk__init(f2__fcntl__o_noctty, "(as defined in fcntl.h)");

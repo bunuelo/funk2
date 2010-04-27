@@ -42,6 +42,9 @@ typedef struct {
 
 #define ATOMIC_INIT(i)  { (i) }
 
+//#define my_sync_sub_and_fetch(x, y) __sync_sub_and_fetch(x, y)
+#define my_sync_sub_and_fetch(x, y) __sync_add_and_fetch(x, -(y))
+
 /**
  * Read atomic variable
  * @param v pointer of type atomic_t
@@ -74,7 +77,7 @@ static inline void atomic_add( int i, atomic_t *v ) {
  * Atomically subtracts @i from @v.
  */
 static inline void atomic_sub( int i, atomic_t *v ) {
-  (void)__sync_sub_and_fetch(&v->counter, i);
+  (void)my_sync_sub_and_fetch(&v->counter, i);
 }
 
 /**
@@ -87,7 +90,7 @@ static inline void atomic_sub( int i, atomic_t *v ) {
  * other cases.
  */
 static inline int atomic_sub_and_test( int i, atomic_t *v ) {
-  return !(__sync_sub_and_fetch(&v->counter, i));
+  return !(my_sync_sub_and_fetch(&v->counter, i));
 }
  
 /**
@@ -120,7 +123,7 @@ static inline void atomic_dec( atomic_t *v ) {
  * cases.
  */
 static inline int atomic_dec_and_test( atomic_t *v ) {
-  return !(__sync_sub_and_fetch(&v->counter, 1));
+  return !(my_sync_sub_and_fetch(&v->counter, 1));
 }
  
 /**

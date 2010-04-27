@@ -180,7 +180,7 @@ static inline int atomic_add_negative( int i, atomic_t *v ) {
   return (__sync_add_and_fetch(&v->counter, i) < 0);
 #else
   v->counter ++;
-  return (v->counter < 0)
+  return (v->counter < 0);
 #endif
 }
  

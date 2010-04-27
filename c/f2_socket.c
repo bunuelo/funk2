@@ -98,7 +98,7 @@ def_pcfunk3(f2__socket, domain, type, protocol, return f2__socket(this_cause, do
 // int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
   struct sockaddr_in addr_in;
-  unsigned int       addr_len = sizeof(addr_in.sin_addr.s_addr);
+  socklen_t          addr_len = sizeof(addr_in.sin_addr.s_addr);
   f2ptr rv = f2integer__new(cause, accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len));
   // there is a bug here in getting the correct client address from accept.
   if (addr_array) {

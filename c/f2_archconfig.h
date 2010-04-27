@@ -22,14 +22,14 @@
 #ifndef F2__ARCHCONFIG__H
 #define F2__ARCHCONFIG__H
 
-#if build_os == "cygwin"
+#if defined(__CYGWIN__) || defined(__WIN32)
 #  define F2__CYGWIN 1
-#elif build_os == "linux-gnu"
+#elif defined(__linux__)
 #  define F2__LINUX 1
-#elif build_vendor == "apple"
+#elif defined(__APPLE__)
 #  define F2__APPLE 1
 #else
-#  error Couldn't detect operating system.
+#  error couldn't detect operating system.
 #endif
 
 #include <sys/types.h>

@@ -66,8 +66,27 @@ AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_n
 AX_CHECK_GL
 AX_CHECK_GLU
 
-#checks for pthread
+# checks for pthread
 ACX_PTHREAD
+
+# atomic builtins are required for threading support.
+AC_MSG_CHECKING(for GCC atomic builtins)
+AC_LINK_IFELSE(
+  AC_LANG_SOURCE(
+    [[int main() {
+        volatile unsigned long val = 1;
+        __sync_synchronize();
+        __sync_val_compare_and_swap(&val, 1, 0);
+        __sync_add_and_fetch(&val, 1);
+        __sync_sub_and_fetch(&val, 1);
+        return 0;
+      }
+    ]]),
+  AC_MSG_RESULT(yes)
+  AC_DEFINE(GCC_ATOMIC_BUILTINS, 1, Build multithreading support into Funk2),
+  AC_MSG_RESULT(no)
+  AC_DEFINE(GCC_ATOMIC_BUILTINS, 0, Build multithreading support into Funk2)
+  AC_MSG_WARN([Funk2 will not be built thread-unsafe because atomic builtins are missing]))
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

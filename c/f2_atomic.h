@@ -121,7 +121,6 @@ static inline void atomic_dec( atomic_t *v ) {
  */
 static inline int atomic_dec_and_test( atomic_t *v ) {
   return !(__sync_sub_and_fetch(&v->counter, 1));
-  return (int)v->counter;
 }
  
 /**

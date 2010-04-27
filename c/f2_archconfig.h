@@ -29,7 +29,7 @@
 #elif defined(__APPLE__)
 #  define F2__APPLE 1
 #else
-#  error couldn't detect operating system.
+#  error could not detect operating system.
 #endif
 
 #include <sys/types.h>

@@ -58,9 +58,15 @@ AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol])
 
+# checks for opengl
 AX_CHECK_GL
 AX_CHECK_GLU
+
+#checks for pthread
 ACX_PTHREAD
+
+#checks for operating system
+AC_CANONICAL_SYSTEM
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

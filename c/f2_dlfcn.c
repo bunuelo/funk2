@@ -163,7 +163,7 @@ def_pcfunk0(dlfcn__rtld_global, return f2__dlfcn__rtld_global(this_cause));
 
 u64 raw__dlfcn__rtld_local() {
 #ifdef F2__DLFCN__SUPPORTED
-#  ifndef __WIN32__
+#  ifndef WINDOWS
   return (u64)RTLD_LOCAL;
 #  endif
 #else

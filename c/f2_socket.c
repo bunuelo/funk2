@@ -36,7 +36,6 @@ def_pcfunk0(f2__socket__pf_inet6,     return f2__socket__pf_inet6(this_cause));
 f2ptr f2__socket__pf_ipx(f2ptr cause) {	return f2integer__new(cause, PF_IPX);}
 def_pcfunk0(f2__socket__pf_ipx,       return f2__socket__pf_ipx(this_cause));
 
-/*
 f2ptr f2__socket__pf_netlink(f2ptr cause) {return f2integer__new(cause, PF_NETLINK);}
 def_pcfunk0(f2__socket__pf_netlink,   return f2__socket__pf_netlink(this_cause));
 
@@ -55,11 +54,8 @@ def_pcfunk0(f2__socket__pf_packet,    return f2__socket__pf_packet(this_cause));
 f2ptr f2__socket__sock_packet(f2ptr cause) {return f2integer__new(cause, SOCK_PACKET);}
 def_pcfunk0(f2__socket__sock_packet,    return f2__socket__sock_packet(this_cause));
 
-*/
-
 f2ptr f2__socket__pf_appletalk(f2ptr cause) {return f2integer__new(cause, PF_APPLETALK);}
 def_pcfunk0(f2__socket__pf_appletalk, return f2__socket__pf_appletalk(this_cause));
-
 
 f2ptr f2__socket__sock_stream(f2ptr cause) {return f2integer__new(cause, SOCK_STREAM);}
 def_pcfunk0(f2__socket__sock_stream,    return f2__socket__sock_stream(this_cause));
@@ -320,14 +316,12 @@ void f2__socket__initialize() {
   f2__primcfunk__init(f2__socket__pf_inet, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_inet6, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_ipx, "(as defined in socket.h)");
-/*
-  f2__primcfunk__init(f2__socket__pf_netlink);
-  f2__primcfunk__init(f2__socket__pf_x25);
-  f2__primcfunk__init(f2__socket__pf_ax25);
-  f2__primcfunk__init(f2__socket__pf_atmpvc);
-  f2__primcfunk__init(f2__socket__pf_packet);
-  f2__primcfunk__init(f2__socket__sock_packet);
-*/
+  f2__primcfunk__init(f2__socket__pf_netlink, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_x25, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_ax25, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_atmpvc, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__pf_packet, "(as defined in socket.h)");
+  f2__primcfunk__init(f2__socket__sock_packet, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_appletalk, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__sock_dgram, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__sock_seqpacket, "(as defined in socket.h)");

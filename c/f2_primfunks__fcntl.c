@@ -49,14 +49,21 @@ f2ptr f2__fcntl__f_setlk(f2ptr cause)  {return f2integer__new(cause, F_SETLK);} 
 f2ptr f2__fcntl__f_setlkw(f2ptr cause) {return f2integer__new(cause, F_SETLKW);} def_pcfunk0(f2__fcntl__f_setlkw, return f2__fcntl__f_setlkw(this_cause));
 
 f2ptr f2__fcntl__o_append(f2ptr cause)    {return f2integer__new(cause, O_APPEND);}    def_pcfunk0(f2__fcntl__o_append,    return f2__fcntl__o_append(this_cause));
-f2ptr f2__fcntl__o_async(f2ptr cause)     {return f2integer__new(cause, O_ASYNC);}     def_pcfunk0(f2__fcntl__o_async,     return f2__fcntl__o_async(this_cause));
 f2ptr f2__fcntl__o_creat(f2ptr cause)     {return f2integer__new(cause, O_CREAT);}     def_pcfunk0(f2__fcntl__o_creat,     return f2__fcntl__o_creat(this_cause));
+
+#ifndef F2__CYGWIN
+f2ptr f2__fcntl__o_async(f2ptr cause)     {return f2integer__new(cause, O_ASYNC);}     def_pcfunk0(f2__fcntl__o_async,     return f2__fcntl__o_async(this_cause));
+#endif
 
 #ifndef F2__APPLE
 f2ptr f2__fcntl__o_direct(f2ptr cause)    {return f2integer__new(cause, O_DIRECT);}    def_pcfunk0(f2__fcntl__o_direct,    return f2__fcntl__o_direct(this_cause));
+#endif
+
+#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
 f2ptr f2__fcntl__o_largefile(f2ptr cause) {return f2integer__new(cause, O_LARGEFILE);} def_pcfunk0(f2__fcntl__o_largefile, return f2__fcntl__o_largefile(this_cause));
 f2ptr f2__fcntl__o_noatime(f2ptr cause)   {return f2integer__new(cause, O_NOATIME);}   def_pcfunk0(f2__fcntl__o_noatime,   return f2__fcntl__o_noatime(this_cause));
 #endif
+
 
 f2ptr f2__fcntl__o_directory(f2ptr cause) {return f2integer__new(cause, O_DIRECTORY);} def_pcfunk0(f2__fcntl__o_directory, return f2__fcntl__o_directory(this_cause));
 f2ptr f2__fcntl__o_excl(f2ptr cause)      {return f2integer__new(cause, O_EXCL);}      def_pcfunk0(f2__fcntl__o_excl,      return f2__fcntl__o_excl(this_cause));

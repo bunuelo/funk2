@@ -86,7 +86,7 @@ AC_LINK_IFELSE(
   AC_DEFINE(GCC_ATOMIC_BUILTINS, 1, Build multithreading support into Funk2),
   AC_MSG_RESULT(no)
   AC_DEFINE(GCC_ATOMIC_BUILTINS, 0, Build multithreading support into Funk2)
-  AC_MSG_WARN([Funk2 will not be built thread-unsafe because atomic builtins are missing]))
+  AC_MSG_WARN([Funk2 will be built thread-unsafe because atomic builtins are missing]))
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

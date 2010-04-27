@@ -42,9 +42,6 @@ typedef struct {
 
 #define ATOMIC_INIT(i)  { (i) }
 
-//#define my_sync_sub_and_fetch(x, y) __sync_sub_and_fetch(x, y)
-#define my_sync_sub_and_fetch(x, y) __sync_add_and_fetch(x, -(y))
-
 /**
  * Read atomic variable
  * @param v pointer of type atomic_t
@@ -66,7 +63,11 @@ typedef struct {
  * @param v pointer of type atomic_t
  */
 static inline void atomic_add( int i, atomic_t *v ) {
+#if GCC_ATOMIC_BUILTINS
   (void)__sync_add_and_fetch(&v->counter, i);
+#else
+  v->counter += i;
+#endif
 }
  
 /**
@@ -77,7 +78,11 @@ static inline void atomic_add( int i, atomic_t *v ) {
  * Atomically subtracts @i from @v.
  */
 static inline void atomic_sub( int i, atomic_t *v ) {
-  (void)my_sync_sub_and_fetch(&v->counter, i);
+#if GCC_ATOMIC_BUILTINS
+  (void)__sync_sub_and_fetch(&v->counter, i);
+#else
+  v->counter -= i;
+#endif
 }
 
 /**
@@ -90,7 +95,12 @@ static inline void atomic_sub( int i, atomic_t *v ) {
  * other cases.
  */
 static inline int atomic_sub_and_test( int i, atomic_t *v ) {
-  return !(my_sync_sub_and_fetch(&v->counter, i));
+#if GCC_ATOMIC_BUILTINS
+  return !(__sync_sub_and_fetch(&v->counter, i));
+#else
+  v->counter -= i;
+  return !(v->counter);
+#endif
 }
  
 /**
@@ -100,7 +110,11 @@ static inline int atomic_sub_and_test( int i, atomic_t *v ) {
  * Atomically increments @v by 1.
  */
 static inline void atomic_inc( atomic_t *v ) {
+#if GCC_ATOMIC_BUILTINS
   (void)__sync_fetch_and_add(&v->counter, 1);
+#else
+  c->counter ++;
+#endif
 }
  
 /**
@@ -111,7 +125,11 @@ static inline void atomic_inc( atomic_t *v ) {
  * useful range of an atomic_t is only 24 bits.
  */
 static inline void atomic_dec( atomic_t *v ) {
+#if GCC_ATOMIC_BUILTINS
   (void)__sync_fetch_and_sub(&v->counter, 1);
+#else
+  v->counter --;
+#endif
 }
  
 /**
@@ -123,7 +141,12 @@ static inline void atomic_dec( atomic_t *v ) {
  * cases.
  */
 static inline int atomic_dec_and_test( atomic_t *v ) {
-  return !(my_sync_sub_and_fetch(&v->counter, 1));
+#if GCC_ATOMIC_BUILTINS
+  return !(__sync_sub_and_fetch(&v->counter, 1));
+#else
+  v->counter --;
+  return !(v->counter);
+#endif
 }
  
 /**
@@ -135,7 +158,12 @@ static inline int atomic_dec_and_test( atomic_t *v ) {
  * other cases.
  */
 static inline int atomic_inc_and_test( atomic_t *v ) {
+#if GCC_ATOMIC_BUILTINS
   return !(__sync_add_and_fetch(&v->counter, 1));
+#else
+  v->counter ++;
+  return !(v->counter);
+#endif
 }
  
 /**
@@ -148,7 +176,12 @@ static inline int atomic_inc_and_test( atomic_t *v ) {
  * result is greater than or equal to zero.
  */
 static inline int atomic_add_negative( int i, atomic_t *v ) {
+#if GCC_ATOMIC_BUILTINS
   return (__sync_add_and_fetch(&v->counter, i) < 0);
+#else
+  v->counter ++;
+  return (v->counter < 0)
+#endif
 }
  
 #endif

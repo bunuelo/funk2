@@ -22,6 +22,8 @@
 #ifndef F2__SYSTEM_HEADERS__H
 #define F2__SYSTEM_HEADERS__H
 
+#include "f2_archconfig.h"
+
 #ifndef _GNU_SOURCE
 #  define _GNU_SOURCE
 #endif
@@ -29,7 +31,7 @@
 //#define F2__GMODULE__SUPPORTED
 //#define F2__DLFCN__SUPPORTED
 
-#ifdef __APPLE__
+#ifdef F2__APPLE
 #define MAP_ANONYMOUS MAP_ANON
 // see: http://www.osxfaq.com/man/4/tty.ws
 #define SIOCOUTQ TIOCOUTQ

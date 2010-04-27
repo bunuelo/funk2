@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 
-#ifdef __APPLE__
+#ifdef F2__APPLE
 
 // **
 // * This copyright notice is for the clock_gettime function below,
@@ -120,7 +120,7 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
   return retval;
 }
 
-#endif // __APPLE__
+#endif // F2__APPLE
 
 
 

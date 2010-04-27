@@ -22,7 +22,7 @@
 #ifndef F2__ARCHCONFIG__H
 #define F2__ARCHCONFIG__H
 
-#if defined(__CYGWIN__) || defined(__WIN32)
+#if defined(__CYGWIN__) || defined(__WIN32__)
 #  define F2__CYGWIN 1
 #elif defined(__linux__)
 #  define F2__LINUX 1

@@ -31,9 +31,9 @@
 
 typedef unsigned int  uint;
 
-#ifndef __APPLE__
+#ifndef F2__APPLE
 typedef unsigned char boolean_t;
-#endif // __APPLE__
+#endif // F2__APPLE
 
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)

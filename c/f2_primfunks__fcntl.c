@@ -21,12 +21,6 @@
 
 #include "funk2.h"
 
-//#define __USE_GNU
-//#define __USE_LARGEFILE64
-//#include <string.h>
-//#include <unistd.h>
-//#include <fcntl.h>
-
 f2ptr f2__fcntl(f2ptr cause, f2ptr fd, f2ptr cmd, f2ptr value) {return f2integer__new(cause, fcntl(f2integer__i(fd, cause), f2integer__i(cmd, cause), f2integer__i(value, cause)));}
 def_pcfunk3(f2__fcntl, fd, cmd, value, return f2__fcntl(this_cause, fd, cmd, value));
 
@@ -58,9 +52,7 @@ f2ptr f2__fcntl__o_append(f2ptr cause)    {return f2integer__new(cause, O_APPEND
 f2ptr f2__fcntl__o_async(f2ptr cause)     {return f2integer__new(cause, O_ASYNC);}     def_pcfunk0(f2__fcntl__o_async,     return f2__fcntl__o_async(this_cause));
 f2ptr f2__fcntl__o_creat(f2ptr cause)     {return f2integer__new(cause, O_CREAT);}     def_pcfunk0(f2__fcntl__o_creat,     return f2__fcntl__o_creat(this_cause));
 
-#ifdef __APPLE__
-
-#else
+#ifndef F2__APPLE
 f2ptr f2__fcntl__o_direct(f2ptr cause)    {return f2integer__new(cause, O_DIRECT);}    def_pcfunk0(f2__fcntl__o_direct,    return f2__fcntl__o_direct(this_cause));
 f2ptr f2__fcntl__o_largefile(f2ptr cause) {return f2integer__new(cause, O_LARGEFILE);} def_pcfunk0(f2__fcntl__o_largefile, return f2__fcntl__o_largefile(this_cause));
 f2ptr f2__fcntl__o_noatime(f2ptr cause)   {return f2integer__new(cause, O_NOATIME);}   def_pcfunk0(f2__fcntl__o_noatime,   return f2__fcntl__o_noatime(this_cause));
@@ -107,9 +99,7 @@ void f2__primfunks__fcntl__initialize() {
   f2__primcfunk__init(f2__fcntl__o_async, "(as defined in fcntl.h)");
   f2__primcfunk__init(f2__fcntl__o_creat, "(as defined in fcntl.h)");
 
-#ifdef __APPLE__
-
-#else
+#ifndef F2__APPLE
   f2__primcfunk__init(f2__fcntl__o_direct, "(as defined in fcntl.h)");	
   f2__primcfunk__init(f2__fcntl__o_largefile, "(as defined in fcntl.h)");
   f2__primcfunk__init(f2__fcntl__o_noatime, "(as defined in fcntl.h)");

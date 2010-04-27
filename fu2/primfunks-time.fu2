@@ -18,7 +18,9 @@
  rights to redistribute these changes.'
 
 [globalize-funk nanoseconds_since_1970                 &primfunk:nanoseconds_since_1970]
-[globalize-funk processor_thread-execution_nanoseconds &primfunk:processor_thread__execution_nanoseconds]
-[globalize-funk funk2-execution_nanoseconds            &primfunk:funk2__execution_nanoseconds]
+
+'these are not defined in cygwin (see f2_time.c)'
+`[globalize-funk processor_thread-execution_nanoseconds &primfunk:processor_thread__execution_nanoseconds]
+`[globalize-funk funk2-execution_nanoseconds            &primfunk:funk2__execution_nanoseconds]
 
 

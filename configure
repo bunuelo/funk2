@@ -21959,8 +21959,8 @@ cat >>confdefs.h <<\_ACEOF
 #define GCC_ATOMIC_BUILTINS 0
 _ACEOF
 
-  { $as_echo "$as_me:$LINENO: WARNING: Funk2 will not be built thread-unsafe because atomic builtins are missing" >&5
-$as_echo "$as_me: WARNING: Funk2 will not be built thread-unsafe because atomic builtins are missing" >&2;}
+  { $as_echo "$as_me:$LINENO: WARNING: Funk2 will be built thread-unsafe because atomic builtins are missing" >&5
+$as_echo "$as_me: WARNING: Funk2 will be built thread-unsafe because atomic builtins are missing" >&2;}
 fi
 
 rm -rf conftest.dSYM

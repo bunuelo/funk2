@@ -163,7 +163,9 @@ def_pcfunk0(dlfcn__rtld_global, return f2__dlfcn__rtld_global(this_cause));
 
 u64 raw__dlfcn__rtld_local() {
 #ifdef F2__DLFCN__SUPPORTED
+#  ifndef __WIN32__
   return (u64)RTLD_LOCAL;
+#  endif
 #else
   return 0;
 #endif
@@ -176,7 +178,9 @@ def_pcfunk0(dlfcn__rtld_local, return f2__dlfcn__rtld_local(this_cause));
 
 u64 raw__dlfcn__rtld_nodelete() {
 #ifdef F2__DLFCN__SUPPORTED
+#  ifndef __WIN32__
   return (u64)RTLD_NODELETE;
+#  endif
 #else
   return 0;
 #endif
@@ -189,7 +193,9 @@ def_pcfunk0(dlfcn__rtld_nodelete, return f2__dlfcn__rtld_nodelete(this_cause));
 
 u64 raw__dlfcn__rtld_noload() {
 #ifdef F2__DLFCN__SUPPORTED
+#  ifndef __WIN32__
   return (u64)RTLD_NOLOAD;
+#  endif
 #else
   return 0;
 #endif

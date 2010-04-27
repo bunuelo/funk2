@@ -119,8 +119,14 @@ math_linker_flags = -lm
 
 zlib_linker_flags = -lz
 
+#ifeq ($(build_vendor),apple)
+  realtime_linker_flags = 
+#else
+  realtime_linker_flags = -lrt
+#endif
+
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
-dynamic_library_linker_flags = $(dlfcn_linker_flags) -lrt
+dynamic_library_linker_flags = $(dlfcn_linker_flags) $(realtime_linker_flags)
 
 #dynamic_library_linker_flags = $(dlfcn_linker_flags) $(opengl_linker_flags) -lrt
 #dynamic_library_flags        = $(shell pkg-config --cflags gmodule-2.0) -DF2__GMODULE__SUPPORTED 

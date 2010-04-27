@@ -61,17 +61,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-//#pragma weak clock_gettime
-
-//#include <sys/time.h>
-//#include <sys/resource.h>
-//#include <mach/mach.h>
-//#include <mach/clock.h>
-//#include <mach/mach_time.h>
-//#include <errno.h>
-//#include <unistd.h>
-//#include <sched.h>
-
 typedef enum {
   CLOCK_REALTIME,
   CLOCK_MONOTONIC,

@@ -119,9 +119,7 @@ math_linker_flags = -lm
 
 zlib_linker_flags = -lz
 
-#ifeq ($(build_vendor),apple)
-  realtime_linker_flags = 
-#else
+#ifneq ($(build_vendor),apple)
   realtime_linker_flags = -lrt
 #endif
 

@@ -29,6 +29,7 @@ AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 #  include <GL/glx.h>
 #endif
 ]])
+AC_CHECK_LIB(rt,clock_gettime)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
 
@@ -60,8 +61,6 @@ AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_n
 AX_CHECK_GL
 AX_CHECK_GLU
 ACX_PTHREAD
-
-MK=''; AC_SUBST(MK)
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

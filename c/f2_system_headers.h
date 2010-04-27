@@ -35,19 +35,15 @@
 #define SIOCOUTQ TIOCOUTQ
 #define SIOCINQ TIOCSTI
 
-//#define O_NOFOLLOW 0
-//#define O_DIRECT 0
-//#define O_NOATIME 0
-//#define O_LARGEFILE 1
-
 #include <mach/mach.h>
 #include <mach/clock.h>
 #include <mach/mach_time.h>
 #include <sys/resource.h>
 #include <sys/sockio.h>
+#endif
 
-#else
-#include <linux/sockios.h>
+#if defined(HAVE_LINUX_SOCKIOS_H)
+#  include <linux/sockios.h>
 #endif
 
 #include <assert.h>

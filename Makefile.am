@@ -370,7 +370,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2: lib/libfunk2.la
-	gcc -o bin/funk2 c/funk2_main.c lib/.libs/libfunk2.so
+	gcc -o bin/funk2 c/funk2_main.c -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

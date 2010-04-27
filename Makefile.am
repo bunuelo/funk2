@@ -119,9 +119,9 @@ math_linker_flags = -lm
 
 zlib_linker_flags = -lz
 
-#ifneq ($(build_vendor),apple)
+ifneq ($(build_vendor),apple)
   realtime_linker_flags = -lrt
-#endif
+endif
 
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags) $(realtime_linker_flags)

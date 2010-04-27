@@ -33,6 +33,7 @@ def_pcfunk0(f2__socket__pf_inet,      return f2__socket__pf_inet(this_cause));
 f2ptr f2__socket__pf_inet6(f2ptr cause) {return f2integer__new(cause, PF_INET6);}
 def_pcfunk0(f2__socket__pf_inet6,     return f2__socket__pf_inet6(this_cause));
 
+#ifndef F2__CYGWIN
 f2ptr f2__socket__pf_ipx(f2ptr cause) {	return f2integer__new(cause, PF_IPX);}
 def_pcfunk0(f2__socket__pf_ipx,       return f2__socket__pf_ipx(this_cause));
 
@@ -53,6 +54,7 @@ def_pcfunk0(f2__socket__pf_packet,    return f2__socket__pf_packet(this_cause));
 
 f2ptr f2__socket__sock_packet(f2ptr cause) {return f2integer__new(cause, SOCK_PACKET);}
 def_pcfunk0(f2__socket__sock_packet,    return f2__socket__sock_packet(this_cause));
+#endif
 
 f2ptr f2__socket__pf_appletalk(f2ptr cause) {return f2integer__new(cause, PF_APPLETALK);}
 def_pcfunk0(f2__socket__pf_appletalk, return f2__socket__pf_appletalk(this_cause));
@@ -315,6 +317,8 @@ void f2__socket__initialize() {
   f2__primcfunk__init(f2__socket__pf_local, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_inet, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_inet6, "(as defined in socket.h)");
+
+#ifndef F2__CYGWIN
   f2__primcfunk__init(f2__socket__pf_ipx, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_netlink, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_x25, "(as defined in socket.h)");
@@ -322,6 +326,8 @@ void f2__socket__initialize() {
   f2__primcfunk__init(f2__socket__pf_atmpvc, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_packet, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__sock_packet, "(as defined in socket.h)");
+#endif
+
   f2__primcfunk__init(f2__socket__pf_appletalk, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__sock_dgram, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__sock_seqpacket, "(as defined in socket.h)");

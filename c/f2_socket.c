@@ -36,7 +36,9 @@ def_pcfunk0(f2__socket__pf_inet6,     return f2__socket__pf_inet6(this_cause));
 #ifndef F2__CYGWIN
 f2ptr f2__socket__pf_ipx(f2ptr cause) {	return f2integer__new(cause, PF_IPX);}
 def_pcfunk0(f2__socket__pf_ipx,       return f2__socket__pf_ipx(this_cause));
+#endif
 
+#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
 f2ptr f2__socket__pf_netlink(f2ptr cause) {return f2integer__new(cause, PF_NETLINK);}
 def_pcfunk0(f2__socket__pf_netlink,   return f2__socket__pf_netlink(this_cause));
 
@@ -320,6 +322,9 @@ void f2__socket__initialize() {
 
 #ifndef F2__CYGWIN
   f2__primcfunk__init(f2__socket__pf_ipx, "(as defined in socket.h)");
+#endif
+
+#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
   f2__primcfunk__init(f2__socket__pf_netlink, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_x25, "(as defined in socket.h)");
   f2__primcfunk__init(f2__socket__pf_ax25, "(as defined in socket.h)");

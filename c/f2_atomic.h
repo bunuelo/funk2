@@ -87,8 +87,7 @@ static inline void atomic_sub( int i, atomic_t *v ) {
  * other cases.
  */
 static inline int atomic_sub_and_test( int i, atomic_t *v ) {
-  int value = !(__sync_sub_and_fetch(&v->counter, i));
-  return value;
+  return !(__sync_sub_and_fetch(&v->counter, i));
 }
  
 /**
@@ -121,8 +120,8 @@ static inline void atomic_dec( atomic_t *v ) {
  * cases.
  */
 static inline int atomic_dec_and_test( atomic_t *v ) {
-  int value = !(__sync_sub_and_fetch(&v->counter, 1));
-  return value;
+  return !(__sync_sub_and_fetch(&v->counter, 1));
+  return (int)v->counter;
 }
  
 /**

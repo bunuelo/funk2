@@ -340,7 +340,7 @@ lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
 
-AM_MAKEFLAGS = img/bootstrap.img
+#-! AM_MAKEFLAGS = img/bootstrap.img
 
 
 clean: clean-am

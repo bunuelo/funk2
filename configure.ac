@@ -7,6 +7,9 @@ AC_CONFIG_SRCDIR([c/funk2.c])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
+#checks for operating system
+AC_CANONICAL_SYSTEM
+
 # Checks for programs.
 AC_PROG_CC
 AM_PROG_CC_C_O
@@ -64,9 +67,6 @@ AX_CHECK_GLU
 
 #checks for pthread
 ACX_PTHREAD
-
-#checks for operating system
-AC_CANONICAL_SYSTEM
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

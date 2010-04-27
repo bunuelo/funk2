@@ -199,9 +199,7 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la
-#bin_PROGRAMS    = bin/funk2
-
-#bin_funk2_SOURCES = c/funk2_main.c
+bin_PROGRAMS    = bin/funk2
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
@@ -314,6 +312,8 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
+bin_funk2_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
+
 FUNK2_VERSION=`cat version`
 
 FUNK2_RELEASE=$(FUNK2_VERSION)
@@ -334,8 +334,8 @@ FUNK2_LIBRARY_VERSION=0:0:0
 lib_libfunk2_la_LDFLAGS = -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
 
-#bin_funk2_LDFLAGS = -lfunk2
-#bin_funk2_CFLAGS  = -pg
+bin_funk2_LDFLAGS = -lfunk2 $(lib_libfunk2_la_LDFLAGS)
+bin_funk2_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
@@ -353,7 +353,7 @@ make-install-sh:
 	echo "echo \"\""                                                                   >> install-sh
 	echo "echo \"make: performing system-wide installation of funk2\""                 >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
-	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
+#	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""             >> install-sh
 	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
@@ -363,7 +363,7 @@ make-install-sh:
 	echo "install -d $(chroot__install__system_bin__dir)"                              >> install-sh
 	echo "install -d $(chroot__install__icons__dir)"                                   >> install-sh
 	echo "install -d $(chroot__install__man__dir)"                                     >> install-sh
-	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
+#	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
 	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh
@@ -371,8 +371,8 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-bin/funk2: lib/libfunk2.la
-	gcc -o bin/funk2 c/funk2_main.c -Llib/.libs -lfunk2
+#bin/funk2: lib/libfunk2.la
+#	gcc -o bin/funk2 c/funk2_main.c -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

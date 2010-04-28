@@ -36,7 +36,7 @@
 [globalize fcntl:fcntl-f_setlk  [primfunk:f2__fcntl__f_setlk]]
 [globalize fcntl:fcntl-f_setlkw [primfunk:f2__fcntl__f_setlkw]]
 
-[globalize fcntl:fcntl-o_append    [primfunk:f2__fcntl__o_append]]
+`[globalize fcntl:fcntl-o_append    [primfunk:f2__fcntl__o_append]]
 [globalize fcntl:fcntl-o_async     [primfunk:f2__fcntl__o_async]]
 [globalize fcntl:fcntl-o_creat     [primfunk:f2__fcntl__o_creat]]
 `[globalize fcntl:fcntl-o_direct    [primfunk:f2__fcntl__o_direct]]

@@ -349,9 +349,9 @@ void funk2__destroy(funk2_t* this) {
 }
 
 boolean_t funk2__handle(funk2_t* this) {
-  funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
-  funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
-  funk2_node_handler__handle_nodes(&(this->node_handler));
+  //funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
+  //funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
+  //funk2_node_handler__handle_nodes(&(this->node_handler));
   funk2_memory__handle(&(this->memory));
   funk2_garbage_collector__handle(&(this->garbage_collector));
   funk2_management_thread__handle_user_threads(&(this->management_thread));

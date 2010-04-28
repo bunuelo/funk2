@@ -145,8 +145,8 @@ debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_f
 release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
-#cc_flags = $(debug__cc_flags)
-cc_flags = $(release__cc_flags)
+cc_flags = $(debug__cc_flags)
+#cc_flags = $(release__cc_flags)
 #cc_flags = $(athena__cc_flags)
 
 
@@ -182,7 +182,7 @@ config_bit_num.h: bin/configurator
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
-img/bootstrap-repl.img: bin/funk2
+img/bootstrap-repl.img: $(bin_PROGRAMS)
 	mkdir -p img
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
@@ -331,8 +331,8 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) -pg $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
-lib_libfunk2_la_CFLAGS  = -pg $(cc_flags)
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
+lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2
 bin_funk2_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

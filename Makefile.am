@@ -350,7 +350,7 @@ clean: clean-am
 	rm -f img/bootstrap.img
 	mkdir -p lib/.libs
 
-funk2.$(OBJEXT): $(lib_LTLIBRARIES)
+funk2.%OBJEXT%: $(lib_LTLIBRARIES)
 
 make-install-sh:
 	echo "#!/bin/sh"                                                                    > install-sh

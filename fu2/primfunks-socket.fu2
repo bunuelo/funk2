@@ -32,8 +32,7 @@
 [globalize-funk socket:f2-socket-pf_local        &primfunk:f2__socket__pf_local]
 [globalize-funk socket:f2-socket-pf_inet         &primfunk:f2__socket__pf_inet]
 [globalize-funk socket:f2-socket-pf_inet6        &primfunk:f2__socket__pf_inet6]
-[globalize-funk socket:f2-socket-pf_ipx          &primfunk:f2__socket__pf_ipx]
-
+`[globalize-funk socket:f2-socket-pf_ipx          &primfunk:f2__socket__pf_ipx]
 `[globalize-funk socket:f2-socket-pf_netlink      &primfunk:f2__socket__pf_netlink]
 `[globalize-funk socket:f2-socket-pf_x25          &primfunk:f2__socket__pf_x25]
 `[globalize-funk socket:f2-socket-pf_ax25         &primfunk:f2__socket__pf_ax25]

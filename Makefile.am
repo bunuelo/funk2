@@ -183,7 +183,7 @@ config_bit_num.h: bin/configurator
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
-img/bootstrap-repl.img: $(bin_PROGRAMS)
+img/bootstrap-repl.img: funk2.$(OBJEXT)
 	mkdir -p img
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
@@ -349,6 +349,8 @@ clean: clean-am
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
 	mkdir -p lib/.libs
+
+funk2.$(OBJEXT): $(lib_LTLIBRARIES)
 
 make-install-sh:
 	echo "#!/bin/sh"                                                                    > install-sh

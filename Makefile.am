@@ -157,6 +157,7 @@ mkdir_p = ${INSTALL} -d
 
 bin/configurator: c/configurator.c
 	mkdir -p bin
+	mkdir -p lib/.libs
 	gcc $(cc_flags) c/configurator.c -o $@
 
 config_bit_num.h: bin/configurator

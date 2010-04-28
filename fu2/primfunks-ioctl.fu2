@@ -21,6 +21,6 @@
 
 [globalize-funk ioctl:f2-ioctl-int &primfunk:f2__ioctl__int]
 
-[globalize ioctl:ioctl-siocinq  [primfunk:f2__ioctl__siocinq]]
-[globalize ioctl:ioctl-siocoutq [primfunk:f2__ioctl__siocoutq]]
+`[globalize ioctl:ioctl-siocinq  [primfunk:f2__ioctl__siocinq]]
+`[globalize ioctl:ioctl-siocoutq [primfunk:f2__ioctl__siocoutq]]
 

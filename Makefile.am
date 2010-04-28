@@ -183,11 +183,10 @@ config_bit_num.h: bin/configurator
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
-img/bootstrap-repl.img: $(lib_LTLIBRARIES)
+img/bootstrap-repl.img: bin/funk2$(EXEEXT)
 	mkdir -p img
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
-	make bin/funk2$(EXEEXT)
 	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2 fu2/bootstrap-repl.fu2
 
 # bootstrap the funk2 processor from a basic repl-prompt.
@@ -201,7 +200,7 @@ img/bootstrap.img: img/bootstrap-repl.img
 ACLOCAL_AMFLAGS = -I m4
 
 lib_LTLIBRARIES = lib/libfunk2.la
-bin_PROGRAMS    = bin/funk2
+#bin_PROGRAMS    = bin/funk2
 
 lib_libfunk2_la_SOURCES = \
   c/f2_agent.c \
@@ -314,7 +313,7 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-bin_funk2_SOURCES = c/funk2_main.c
+#bin_funk2_SOURCES = c/funk2_main.c
 
 FUNK2_VERSION=`cat version`
 
@@ -336,14 +335,13 @@ FUNK2_LIBRARY_VERSION=0:0:0
 lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
-bin_funk2_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2
-bin_funk2_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+#bin_funk2_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2
+#bin_funk2_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
 
 AM_MAKEFLAGS = img/bootstrap.img
-
 
 clean: clean-am
 	rm -f config_compile_time_id.h
@@ -374,8 +372,8 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
 	chmod a+x install-sh
 
-#bin/funk2: lib/libfunk2.la
-#	gcc -o bin/funk2 c/funk2_main.c -Llib/.libs -lfunk2
+bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
+	$(COMPILE) -o $@ c/funk2_main.c -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

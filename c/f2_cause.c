@@ -63,25 +63,27 @@ f2ptr f2__cause__new(f2ptr cause,
   f2ptr subscribers_mutex    = f2mutex__new(cause);
   f2ptr current_events_mutex = f2mutex__new(cause);
   f2ptr event_trace          = nil;
-  return f2cause__new(cause,
-		      fibers_mutex,
-		      fibers,
-		      frame,
-		      allocate_traced_arrays,
-		      bytecode_tracing_on,
-		      memory_tracing_on,
-		      subscribers_mutex,
-		      subscribers,
-		      imagination_name,
-		      event_buffer_first,
-		      event_buffer_last,
-		      current_events_mutex,
-		      current_events,
-		      bytecode_branch_funks,
-		      bytecode_funk_funks,
-		      bytecode_tracer_funks,
-		      bytecode_endfunk_funks,
-		      event_trace);
+  f2ptr this                 = f2cause__new(cause,
+					    fibers_mutex,
+					    fibers,
+					    frame,
+					    allocate_traced_arrays,
+					    bytecode_tracing_on,
+					    memory_tracing_on,
+					    subscribers_mutex,
+					    subscribers,
+					    imagination_name,
+					    event_buffer_first,
+					    event_buffer_last,
+					    current_events_mutex,
+					    current_events,
+					    bytecode_branch_funks,
+					    bytecode_funk_funks,
+					    bytecode_tracer_funks,
+					    bytecode_endfunk_funks,
+					    event_trace);
+  printf("\nnew cause: " f2ptr__fstr ".", this);
+  return this;
 }
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 

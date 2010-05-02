@@ -235,12 +235,13 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   // remove from used list
   rbt_tree__remove(&(this->used_memory_tree), (rbt_node_t*)block);
   // set to free
+  debug__assert(block->used, nil, "attempting to free a block that is already free.");
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
   // add to free list
   funk2_memorypool__link_funk2_memblock_to_freelist(this, block);
   // remove reference counts
-  {  
+  {
     ptype_block_t* ptype_block = (ptype_block_t*)block;
     {
       f2ptr             cause       = ((ptype_larva_block_t*)ptype_block)->ptype.cause;

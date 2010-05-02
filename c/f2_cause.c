@@ -82,7 +82,7 @@ f2ptr f2__cause__new(f2ptr cause,
 					    bytecode_tracer_funks,
 					    bytecode_endfunk_funks,
 					    event_trace);
-  printf("\nnew cause: " f2ptr__fstr ".\n", this); fflush(stdout);
+  printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
 def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));

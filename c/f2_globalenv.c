@@ -143,7 +143,9 @@ void funk2_globalenv__destroy(funk2_globalenv_t* this) {
 
 f2ptr raw__c_source_file__cause__new(f2ptr cause, char* filename) {
   // we should use filename in a source-file cause type...
-  return f2__cause__new_with_inherited_properties(cause, cause);
+  f2ptr this = f2__cause__new_with_inherited_properties(cause, cause);
+  never_gc(this);
+  return this;
 }
 
 f2ptr              f2_globalenv_c__cause__new(f2ptr cause) {return raw__c_source_file__cause__new(cause, "f2_globalenv.c");}

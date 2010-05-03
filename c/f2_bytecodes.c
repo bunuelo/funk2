@@ -195,7 +195,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
 	str = (u8*)alloca(str_len + 1);
-	f2__symbol__str_copy(cause, name, str);
+	raw__symbol__str_copy(cause, name, str);
 	str[str_len] = 0;
       } else {
 	str = (u8*)alloca(strlen("<none>") + 1);

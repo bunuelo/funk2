@@ -55,6 +55,7 @@
 #ifdef F2__GMODULE__SUPPORTED
 #  include <gmodule.h>
 #endif
+#include <limits.h>
 #include <locale.h>
 #include <math.h>
 #include <net/if.h>

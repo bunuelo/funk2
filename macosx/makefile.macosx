@@ -19,3 +19,8 @@ funk2-2.11.0.pkg.tar.gz: dstroot
 	sudo chown -R root:staff funk2-2.11.0.pkg/Contents/Resource
 	tar -h funk2-2.11.0.pkg -cf funk2-2.11.0.pkg.tar
 	gzip -9 funk2-2.11.0.pkg.tar
+
+clean:
+	rm -Rf dstroot
+	rm -f funk2-2.11.0.pkg.tar.gz
+

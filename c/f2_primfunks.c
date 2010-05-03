@@ -552,7 +552,7 @@ def_pcfunk2(fiber_parallel, funk, args, return f2__fiber_parallel(this_cause, th
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_fiber = f2__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_serial(cause, new_fiber);
-  // note cause is not branched.
+  f2fiber__keep_undead__set(new_fiber, cause, nil);
   return new_fiber;
 }
 

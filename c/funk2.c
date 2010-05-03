@@ -225,16 +225,22 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     
     // load file specified by user on command line
     if (this->command_line.load_source_filename != NULL) {
+      status("load_source_filename = '%s'.", this->command_line.load_source_filename);
       
       // try to find a nice user-friendly load
       f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
       if (raw__larva__is_type(cause, load_funk)) {
+	status("couldn't find user-friendly load function, so trying to find primfunk:load.");
 	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
 	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
 	if (raw__larva__is_type(cause, load_funk)) {
 	  f2__fiber__print(cause, nil, global_environment());
 	  error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
+	} else {
+	  status("found primfunk:load.");
 	}
+      } else {
+	status("found user-friendly load.");
       }
       
       f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);

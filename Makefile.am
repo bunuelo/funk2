@@ -359,12 +359,12 @@ make-install-sh:
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""             >> install-sh
 	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__img__dir)"                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__include__dir)"                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                        >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__man__dir)"                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__include__dir)"                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                 >> install-sh
 	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
@@ -374,7 +374,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
-	$(COMPILE) -o $@ c/funk2_main.c -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

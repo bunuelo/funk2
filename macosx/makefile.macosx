@@ -25,12 +25,12 @@ dstroot:
 #	install -m 755 ../lib/.libs/libfunk2.dylib ./dstroot/usr/local/lib/
 #	install -m 755 ../lib/.libs/libfunk2.a ./dstroot/usr/local/lib/
 #	install -m 644 ../debian/funk2.1 ./dstroot/usr/local/share/man/man1/
-	export DESTDIR=`pwd`/dstroot; cd ..; sudo -E make install
+	cd ..; sudo sh -c "export DESTDIR=`pwd`/macosx/dstroot; make install"
 
 $(PKG_NAME).tar.gz: dstroot
 	find dstroot -name .DS_Store -delete
 	sudo chown -R root:staff dstroot
-	sudo packagemaker -r `pwd`/dstroot -v -n $(VERSION).$(DATE) -i de.neuromin.funk2 -o $(PKG_NAME)
+	sudo /Developer/usr/bin/packagemaker -r `pwd`/dstroot -v -n $(VERSION).$(DATE) -i de.neuromin.funk2 -o $(PKG_NAME)
 	rm -f 1
 	sudo install -m 644 ../README $(PKG_NAME)/Contents/Resources/ReadMe.txt
 	sudo install -m 644 ../debian/copyright $(PKG_NAME)/Contents/Resources/License.txt

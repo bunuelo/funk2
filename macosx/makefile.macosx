@@ -1,8 +1,10 @@
-ARCH    = $(shell uname -m)
-DATE    = $(shell date +"%Y.%m.%d")
-VERSION = $(shell cat ../version)
+ARCH           = $(shell uname -m)
+DATE           = $(shell date +"%Y.%m.%d")
+VERSION        = $(shell cat ../version)
+MACOSX_VERSION = $(shell sw_vers -productVersion)
+DARWIN_VERSION = $(shell uname -r)
 
-PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH).pkg
+PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH)_macosx_$(MACOSX_VERSION)_darwin_$(DARWIN_VERSION).pkg
 
 default: $(PKG_NAME).tar.gz
 

@@ -314,7 +314,6 @@ host_vendor = @host_vendor@
 htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
-#cc_flags = $(release__cc_flags)
 #cc_flags = $(athena__cc_flags)
 
 # added to fix MacOS X compile
@@ -442,7 +441,9 @@ optimize_flags =
 debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(debug_flags)
 release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(optimize_flags)
 athena__cc_flags = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
-cc_flags = $(debug__cc_flags)
+
+#cc_flags = $(debug__cc_flags)
+cc_flags = $(release__cc_flags)
 
 ###### Makefile.am specifics below here ######
 ACLOCAL_AMFLAGS = -I m4
@@ -2354,17 +2355,17 @@ make-install-sh:
 	echo "echo \"\""                                                                   >> install-sh
 	echo "echo \"make: performing system-wide installation of funk2\""                 >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
-#	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""             >> install-sh
 	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
-	echo "install -d $(chroot__install__img__dir)"                                     >> install-sh
-	echo "install -d $(chroot__install__bin__dir)"                                     >> install-sh
-	echo "install -d $(chroot__install__include__dir)"                                 >> install-sh
-	echo "install -d $(chroot__install__system_bin__dir)"                              >> install-sh
-	echo "install -d $(chroot__install__icons__dir)"                                   >> install-sh
-	echo "install -d $(chroot__install__man__dir)"                                     >> install-sh
-#	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__img__dir)"                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__include__dir)"                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__man__dir)"                               >> install-sh
+	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
 	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh

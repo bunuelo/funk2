@@ -7,7 +7,6 @@ dstroot:
 	mkdir -m755 -p dstroot/usr/include
 	mkdir -m755 -p dstroot/usr/include/funk2
 	mkdir -m755 -p dstroot/usr/local
-	mkdir -m755 -p dstroot/usr/local/bin/
 	mkdir -m755 -p dstroot/usr/local/lib/
 	mkdir -m755 -p dstroot/usr/local/share
 	mkdir -m755 -p dstroot/usr/local/share/man

@@ -190,8 +190,8 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
   } else if (raw__cfunk__is_type(cause, funktion)) {
     {
-      u8* str 
       f2ptr name = f2cfunk__name(funktion, cause);
+      u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
 	str = (u8*)alloca(str_len + 1);

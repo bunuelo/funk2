@@ -203,7 +203,7 @@
     [have part_place_frame add `right_hand_object_place   [new physical_place [new physical_transform [new physical_position -0.13  0.33  0] [physical_rotation-new_rotation_around_y_axis [* 0 pi]] 1] right_hand_object]]
     this]]
 
-`[defunk female_child_agent_sitting_right-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
+[defunk female_child_agent_sitting_right-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
 	 [this             [new physical_object [physical_transform-new_identity] 'Female Child Agent (Sitting Right)' [female_child_agent_sitting_right_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position  0.053 0.1   0] [physical_rotation-new_identity]                            1] torso_clothing]]
@@ -214,7 +214,7 @@
     [have part_place_frame add `right_hand_object_place   [new physical_place [new physical_transform [new physical_position -0.07  0.24  0] [physical_rotation-new_identity]                            1] right_hand_object]]
     this]]
 
-`[defunk female_child_agent_sitting_left-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
+[defunk female_child_agent_sitting_left-new [torso_clothing leg_clothing left_foot_clothing right_foot_clothing left_hand_object right_hand_object agent]
   [let* [[part_place_frame [new frame]]
 	 [this             [new physical_object [physical_transform-new_identity] 'Female Child Agent (Sitting Left)' [female_child_agent_sitting_left_texture-new] part_place_frame agent]]]
     [have part_place_frame add `torso_clothing_place      [new physical_place [new physical_transform [new physical_position -0.053 0.1   0] [have [physical_rotation-new_identity]                            multiply [physical_rotation-new_rotation_around_y_axis [* 1 pi]]] 1] torso_clothing]]

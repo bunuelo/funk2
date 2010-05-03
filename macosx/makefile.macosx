@@ -16,7 +16,7 @@ funk2-2.11.0.pkg.tar.gz: dstroot
 	rm -f 1
 	sudo install -m 644 ../README funk2-2.11.0.pkg/Contents/Resources/ReadMe.txt
 	sudo install -m 644 ../debian/copyright funk2-2.11.0.pkg/Contents/Resources/License.txt
-	sudo chown -R root:staff funk2-2.11.0.pkg/Contents/Resource
+	sudo chown -R root:staff funk2-2.11.0.pkg/Contents/Resources
 	tar -h funk2-2.11.0.pkg -cf funk2-2.11.0.pkg.tar
 	gzip -9 funk2-2.11.0.pkg.tar
 

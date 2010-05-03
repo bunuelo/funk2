@@ -12,7 +12,7 @@ dstroot:
 funk2-2.11.0.pkg.tar.gz: dstroot
 	find dstroot -name .DS_Store -delete
 	sudo chown -R root:staff dstroot
-	packagemaker -r dstroot -v -i de.neuromin.funk2 -o funk2-2.11.0.pkg
+	sudo packagemaker -r dstroot -v -i de.neuromin.funk2 -o funk2-2.11.0.pkg
 	rm -f 1
 	install -m 644 ../README funk2-2.11.0.pkg/Contents/Resources/ReadMe.txt
 	install -m 644 ../debian/copyright funk2-2.11.0.pkg/Contents/Resources/License.txt

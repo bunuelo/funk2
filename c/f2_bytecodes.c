@@ -199,7 +199,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 	str[str_len] = 0;
       } else {
 	str = (u8*)alloca(strlen("<none>") + 1);
-	strcpy(str, "<none>");
+	strcpy((char*)str, "<none>");
       }
       status("executing cfunk name=|%s|", str);
     }

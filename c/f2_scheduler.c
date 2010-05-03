@@ -381,9 +381,11 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 }
 
 void* processor__start_routine(void *ptr) {
+  status("processor here, waiting for bootstrap to complete before starting.");
   while (__funk2.memory.bootstrapping_mode) {
     raw__fast_spin_sleep_yield();
   }
+  status("processor starting.");
   f2ptr cause     = nil;
   f2ptr processor = f2__global_scheduler__this_processor(cause);
   int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);

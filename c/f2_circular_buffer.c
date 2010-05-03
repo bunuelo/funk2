@@ -134,7 +134,7 @@ select_read_result_t select_read(int fd) {
     }
     return select_read_result__select_failure;
   } else if (retval) {
-    status("select_read (fd=%d) success!  data is ready to read.", fd);
+    //status("select_read (fd=%d) success!  data is ready to read.", fd);
     return select_read_result__data_available;
   }
   return select_read_result__no_data;
@@ -180,7 +180,7 @@ select_read_result_t select_write(int fd) {
     }
     return select_write_result__select_failure;
   } else if (retval) {
-    status("select_write (fd=%d) success!  space is ready to be written.", fd);
+    //status("select_write (fd=%d) success!  space is ready to be written.", fd);
     return select_write_result__space_available;
   }
   return select_write_result__no_space;

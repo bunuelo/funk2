@@ -1,4 +1,4 @@
-default: funk2-2.11.0.pkg.tar.gz
+default: $(PKG_NAME).tar.gz
 
 dstroot:
 	mkdir -m755 dstroot

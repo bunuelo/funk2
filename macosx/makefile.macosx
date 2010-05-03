@@ -9,7 +9,7 @@ dstroot:
 #	install -m 755 ../lib/.libs/libfunk2.dylib ./dstroot/usr/local/lib/
 #	install -m 755 ../lib/.libs/libfunk2.a ./dstroot/usr/local/lib/
 #	install -m 644 ../debian/funk2.1 ./dstroot/usr/local/share/man/man1/
-	export DESTDIR=`pwd`/dstroot; cd ..; sudo make install
+	export DESTDIR=`pwd`/dstroot; cd ..; sudo -E make install
 
 funk2-2.11.0.pkg.tar.gz: dstroot
 	find dstroot -name .DS_Store -delete

@@ -359,12 +359,12 @@ make-install-sh:
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""             >> install-sh
 	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
-	echo "install -m644 -d $(chroot__install__img__dir)"                               >> install-sh
-	echo "install -m644 -d $(chroot__install__bin__dir)"                               >> install-sh
-	echo "install -m644 -d $(chroot__install__include__dir)"                           >> install-sh
-	echo "install -m644 -d $(chroot__install__system_bin__dir)"                        >> install-sh
-	echo "install -m644 -d $(chroot__install__icons__dir)"                             >> install-sh
-	echo "install -m644 -d $(chroot__install__man__dir)"                               >> install-sh
+	echo "install -m755 -d $(chroot__install__img__dir)"                               >> install-sh
+	echo "install -m755 -d $(chroot__install__bin__dir)"                               >> install-sh
+	echo "install -m755 -d $(chroot__install__include__dir)"                           >> install-sh
+	echo "install -m755 -d $(chroot__install__system_bin__dir)"                        >> install-sh
+	echo "install -m755 -d $(chroot__install__icons__dir)"                             >> install-sh
+	echo "install -m755 -d $(chroot__install__man__dir)"                               >> install-sh
 	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh

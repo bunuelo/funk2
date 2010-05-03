@@ -1,0 +1,19 @@
+default: funk2-2.11.0.pkg.tar.gz
+
+dstroot:
+	mkdir ./dstroot
+	mkdir -p ./dstroot/usr/local/bin/ dstroot/usr/local/share/man/man1/
+	install -m 755 ../bin/funk2 ./dstroot/usr/local/bin/
+	install -m 755 ../lib/.libs/libfunk2* ./dstroot/usr/local/lib/
+	install -m 644 ../debian/funk2.1 ./dstroot/usr/local/share/man/man1/
+
+funk2-2.11.0.pkg.tar.gz: dstroot
+	find dstroot -name .DS_Store -delete
+	sudo chown -R root:staff dstroot
+	package dstroot funk2-2.11.0.info -d . -ignoreDSStore
+	rm -f 1
+	install -m 644 ../README funk2-2.11.0.pkg/Contents/Resources/ReadMe.txt
+	install -m 644 ../debian/copyright funk2-2.11.0.pkg/Contents/Resources/License.txt
+	sudo chown -R root:staff funk2-2.11.0.pkg/Contents/Resource
+	tar -h funk2-2.11.0.pkg -cf funk2-2.11.0.pkg.tar
+	gzip -9 funk2-2.11.0.pkg.tar

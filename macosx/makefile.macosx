@@ -6,11 +6,10 @@ dstroot:
 	mkdir -m755 -p dstroot/usr/bin/
 	mkdir -m755 -p dstroot/usr/include
 	mkdir -m755 -p dstroot/usr/include/funk2
-	mkdir -m755 -p dstroot/usr/local
-	mkdir -m755 -p dstroot/usr/local/lib/
-	mkdir -m755 -p dstroot/usr/local/share
-	mkdir -m755 -p dstroot/usr/local/share/man
-	mkdir -m755 -p dstroot/usr/local/share/man/man1/ dstroot/usr/share/funk2/img dstroot/usr/share/funk2/icons
+	mkdir -m755 -p dstroot/usr/lib/
+	mkdir -m755 -p dstroot/usr/share
+	mkdir -m755 -p dstroot/usr/share/man
+	mkdir -m755 -p dstroot/usr/share/man/man1/ dstroot/usr/share/funk2/img dstroot/usr/share/funk2/icons
 	mkdir -m755 -p dstroot/usr/share/funk2
 	mkdir -m755 -p dstroot/usr/share/funk2/icons
 	mkdir -m755 -p dstroot/usr/share/funk2/img

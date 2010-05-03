@@ -25,12 +25,12 @@ VERSION = $(shell cat ../version)
 
 PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH).pkg
 
-default: $(PKG_NAME).tar.gz
+default: package.tar.gz
 
-$(PKG_NAME).tar.gz: dstroot
+package.tar.gz: dstroot
 	find dstroot -name .DS_Store -delete
 	sudo chown -R root:staff dstroot
-	sudo packagemaker -r `pwd`/dstroot -v -n 2.11.0 -i de.neuromin.funk2 -o $(PKG_NAME)
+	sudo packagemaker -r `pwd`/dstroot -v -n $(VERSION).$(DATE) -i de.neuromin.funk2 -o $(PKG_NAME)
 	rm -f 1
 	sudo install -m 644 ../README $(PKG_NAME)/Contents/Resources/ReadMe.txt
 	sudo install -m 644 ../debian/copyright $(PKG_NAME)/Contents/Resources/License.txt

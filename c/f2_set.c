@@ -37,11 +37,11 @@ void funk2_set__destroy(funk2_set_t* this) {
     funk2_set_node_t* iter = this->bin[i];
     while (iter) {
       funk2_set_node_t* next = iter->next;
-      free(iter);
+      f2__free(to_ptr(iter));
       iter = next;
     }
   }
-  free(this->bin);
+  f2__free(to_ptr(this->bin));
 }
 
 u64 funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element) {
@@ -70,7 +70,7 @@ void funk2_set__double_size(funk2_set_t* this) {
       iter = next;
     }
   }
-  free(old_bin);
+  f2__free(to_ptr(old_bin));
 }
 
 void funk2_set__add_node(funk2_set_t* this, funk2_set_node_t* node) {
@@ -111,7 +111,7 @@ funk2_set_node_t* funk2_set__remove_node(funk2_set_t* this, funk2_set_element_t 
 }
 
 void funk2_set__remove(funk2_set_t* this, funk2_set_element_t element) {
-  free(funk2_set__remove_node(this, element));
+  f2__free(to_ptr(funk2_set__remove_node(this, element)));
 }
 
 void funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element, funk2_set_t* to_set) {

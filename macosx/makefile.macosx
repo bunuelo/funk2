@@ -1,3 +1,11 @@
+ARCH    = $(shell uname -m)
+DATE    = $(shell date +"%Y.%m.%d")
+VERSION = $(shell cat ../version)
+
+PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH).pkg
+
+default: $(PKG_NAME).tar.gz
+
 dstroot:
 	mkdir -m755 dstroot
 	mkdir -m755 -p dstroot/usr
@@ -19,15 +27,7 @@ dstroot:
 #	install -m 644 ../debian/funk2.1 ./dstroot/usr/local/share/man/man1/
 	export DESTDIR=`pwd`/dstroot; cd ..; sudo -E make install
 
-ARCH    = $(shell uname -m)
-DATE    = $(shell date +"%Y.%m.%d")
-VERSION = $(shell cat ../version)
-
-PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH).pkg
-
-default: package.tar.gz
-
-package.tar.gz: dstroot
+$(PKG_NAME).tar.gz: dstroot
 	find dstroot -name .DS_Store -delete
 	sudo chown -R root:staff dstroot
 	sudo packagemaker -r `pwd`/dstroot -v -n $(VERSION).$(DATE) -i de.neuromin.funk2 -o $(PKG_NAME)

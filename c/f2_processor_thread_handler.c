@@ -39,6 +39,7 @@ void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* t
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
+  status("processor_thread_handler starting new processor thread.");
   funk2_processor_thread_list_t* new_processor_thread_node = (funk2_processor_thread_list_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_list_t)));
   funk2_processor_thread_t*      processor_thread          = &(new_processor_thread_node->processor_thread);
   funk2_processor_thread__init(processor_thread, this->processor_thread_next_index, start_function, args);

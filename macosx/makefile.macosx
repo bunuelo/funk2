@@ -1,5 +1,3 @@
-default: $(PKG_NAME).tar.gz
-
 dstroot:
 	mkdir -m755 dstroot
 	mkdir -m755 -p dstroot/usr
@@ -26,6 +24,8 @@ DATE    = $(shell date +"%Y.%m.%d")
 VERSION = $(shell cat ../version)
 
 PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH).pkg
+
+default: $(PKG_NAME).tar.gz
 
 $(PKG_NAME).tar.gz: dstroot
 	find dstroot -name .DS_Store -delete

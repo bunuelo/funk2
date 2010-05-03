@@ -2,7 +2,7 @@ default: funk2-2.11.0.pkg.tar.gz
 
 dstroot:
 	mkdir ./dstroot
-	mkdir -p ./dstroot/usr/local/bin/ dstroot/usr/local/share/man/man1/
+	mkdir -p ./dstroot/usr/local/bin/ ./dstroot/usr/local/lib/ dstroot/usr/local/share/man/man1/ 
 	install -m 755 ../bin/funk2 ./dstroot/usr/local/bin/
 	install -m 755 ../lib/.libs/libfunk2-*.dylib ./dstroot/usr/local/lib/
 	install -m 755 ../lib/.libs/libfunk2.dylib ./dstroot/usr/local/lib/

@@ -291,6 +291,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   // start pthreads for each processor (starts user repl once bootstrapping is done   this->memory.bootstrapping_mode = boolean__false;)
   f2__scheduler__start_processors();
+  status("bootstrapping complete.");
   this->memory.bootstrapping_mode = boolean__false;
 }
 
@@ -350,26 +351,26 @@ void funk2__destroy(funk2_t* this) {
 }
 
 boolean_t funk2__handle(funk2_t* this) {
-  status("funk2-handle: peer command server handling clients.");
+  //status("funk2-handle: peer command server handling clients.");
   funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
-  status("funk2-handle: peer command server flushing command input buffer.");
+  //status("funk2-handle: peer command server flushing command input buffer.");
   funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
-  status("funk2-handle: node handler handling nodes.");
+  //status("funk2-handle: node handler handling nodes.");
   funk2_node_handler__handle_nodes(&(this->node_handler));
-  status("funk2-handle: handling memory.");
+  //status("funk2-handle: handling memory.");
   funk2_memory__handle(&(this->memory));
-  status("funk2-handle: handling garbage collection.");
+  //status("funk2-handle: handling garbage collection.");
   funk2_garbage_collector__handle(&(this->garbage_collector));
-  status("funk2-handle: management thread handling user threads.");
+  //status("funk2-handle: management thread handling user threads.");
   funk2_management_thread__handle_user_threads(&(this->management_thread));
-  status("funk2-handle: handling cpu.");
+  //status("funk2-handle: handling cpu.");
   funk2_cpu__handle(&(this->cpu));
-  status("funk2-handle: handling surrogate parent.");
+  //status("funk2-handle: handling surrogate parent.");
   funk2_surrogate_parent__handle(&(this->surrogate_parent));
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
-  status("funk2-handle: done handling.");
+  //status("funk2-handle: done handling.");
   raw__fast_spin_sleep_yield();
   return boolean__false; // should return true if we did something.
 }

@@ -397,7 +397,7 @@ void* processor__start_routine(void *ptr) {
   int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
   release__assert(pool_index == this_processor_thread__pool_index(), nil, "pool_index does not match pthread_self() generated pool index.");
   
-  status("starting processor %d (%d)", this_processor_thread__pool_index(), processor);
+  status("starting processor " u64__fstr " (" u64__fstr ")", (u64)this_processor_thread__pool_index(), (u64)processor);
   while(1) {
     f2ptr did_something = nil;
     do {

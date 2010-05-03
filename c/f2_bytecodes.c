@@ -189,6 +189,20 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       return 1;
     }
   } else if (raw__cfunk__is_type(cause, funktion)) {
+    {
+      u8* str 
+      f2ptr name = f2cfunk__name(funktion, cause);
+      if (raw__symbol__is_type(cause, name)) {
+	u64 str_len = f2symbol__length(name, cause);
+	str = (u8*)alloca(str_len + 1);
+	f2__symbol__str_copy(cause, name, str);
+	str[str_len] = 0;
+      } else {
+	str = (u8*)alloca(strlen("<none>") + 1);
+	strcpy(str, "<none>");
+      }
+      status("executing cfunk name=|%s|", str);
+    }
     f2ptr args = f2fiber__args(fiber, cause);
     //trace2(bytecode__jump_funk, funktion, args);
     release__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");

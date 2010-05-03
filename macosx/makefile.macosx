@@ -14,8 +14,8 @@ funk2-2.11.0.pkg.tar.gz: dstroot
 	sudo chown -R root:staff dstroot
 	sudo packagemaker -r dstroot -v -i de.neuromin.funk2 -o funk2-2.11.0.pkg
 	rm -f 1
-	install -m 644 ../README funk2-2.11.0.pkg/Contents/Resources/ReadMe.txt
-	install -m 644 ../debian/copyright funk2-2.11.0.pkg/Contents/Resources/License.txt
+	sudo install -m 644 ../README funk2-2.11.0.pkg/Contents/Resources/ReadMe.txt
+	sudo install -m 644 ../debian/copyright funk2-2.11.0.pkg/Contents/Resources/License.txt
 	sudo chown -R root:staff funk2-2.11.0.pkg/Contents/Resource
 	tar -h funk2-2.11.0.pkg -cf funk2-2.11.0.pkg.tar
 	gzip -9 funk2-2.11.0.pkg.tar

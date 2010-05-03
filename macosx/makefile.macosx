@@ -21,19 +21,25 @@ dstroot:
 #	install -m 644 ../debian/funk2.1 ./dstroot/usr/local/share/man/man1/
 	export DESTDIR=`pwd`/dstroot; cd ..; sudo -E make install
 
-funk2-2.11.0.pkg.tar.gz: dstroot
+ARCH    = $(shell uname -m)
+DATE    = $(shell date +"%Y.%m.%d")
+VERSION = $(shell cat ../version)
+
+PKG_NAME = funk2_$(VERSION).$(DATE)_$(ARCH).pkg
+
+$(PKG_NAME).tar.gz: dstroot
 	find dstroot -name .DS_Store -delete
 	sudo chown -R root:staff dstroot
-	sudo packagemaker -r `pwd`/dstroot -v -n 2.11.0 -i de.neuromin.funk2 -o funk2-2.11.0.pkg
+	sudo packagemaker -r `pwd`/dstroot -v -n 2.11.0 -i de.neuromin.funk2 -o $(PKG_NAME)
 	rm -f 1
-	sudo install -m 644 ../README funk2-2.11.0.pkg/Contents/Resources/ReadMe.txt
-	sudo install -m 644 ../debian/copyright funk2-2.11.0.pkg/Contents/Resources/License.txt
-	sudo chown -R root:staff funk2-2.11.0.pkg/Contents/Resources
-	tar -cf funk2-2.11.0.pkg.tar funk2-2.11.0.pkg
-	gzip -9 funk2-2.11.0.pkg.tar
+	sudo install -m 644 ../README $(PKG_NAME)/Contents/Resources/ReadMe.txt
+	sudo install -m 644 ../debian/copyright $(PKG_NAME)/Contents/Resources/License.txt
+	sudo chown -R root:staff $(PKG_NAME)/Contents/Resources
+	tar -cf $(PKG_NAME).tar $(PKG_NAME)
+	gzip -9 $(PKG_NAME).tar
 
 clean:
 	sudo rm -Rf dstroot
-	sudo rm -Rf funk2-2.11.0.pkg
-	sudo rm -f funk2-2.11.0.pkg.tar.gz
+	sudo rm -Rf $(PKG_NAME)
+	sudo rm -f $(PKG_NAME).tar.gz
 

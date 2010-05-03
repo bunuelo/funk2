@@ -457,20 +457,12 @@ void f2__scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
 
 void f2processor__start_new_processor_thread(f2ptr cause, long processor_index) {
   funk2_processor_thread_t* new_processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), processor__start_routine, (void*)(long)processor_index);
-  //pthread_t raw_pthread;
-  //if(pthread_create(&raw_pthread, NULL, (pthread_start_routine)processor__start_routine, (void*)(long)processor_index)) {
-  //  error(nil, "couldn't create processor pthread.");
-  //}
   pause_gc();
   f2ptr processor_thread = f2pointer__new(cause, to_ptr(new_processor_thread));
   f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_index);
   f2processor__processor_thread__set(processor, cause, processor_thread);
   resume_gc();
 }
-
-//void f2__scheduler__exec_with_main_pthread(f2ptr cause) {
-//  processor__start_routine((void*)(long)this_pthread__pool_index());
-//}
 
 void f2__scheduler__start_processors() {
   pause_gc();
@@ -491,7 +483,6 @@ void f2__scheduler__reinitialize_globalvars() {
   
   __funk2.operating_system.scheduler__symbol = f2symbol__new(cause, strlen("scheduler:global_scheduler"), (u8*)"scheduler:global_scheduler");
   __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
-  
 }
 
 void f2__scheduler__initialize() {

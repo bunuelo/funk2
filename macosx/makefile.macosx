@@ -21,6 +21,6 @@ funk2-2.11.0.pkg.tar.gz: dstroot
 	gzip -9 funk2-2.11.0.pkg.tar
 
 clean:
-	rm -Rf dstroot
-	rm -f funk2-2.11.0.pkg.tar.gz
+	sudo rm -Rf dstroot
+	sudo rm -f funk2-2.11.0.pkg.tar.gz
 

@@ -191,6 +191,7 @@ typedef enum scheduler_fast_loop_exit_reason_e {
 } scheduler_fast_loop_exit_reason_t;
 
 scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr fiber) {
+  status("bytecode fast loop beginning.");
   scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
   
   int i = 1000;
@@ -211,7 +212,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     } 
     i --;
   }
-  //printf("\ndone with %d loop fast cycle", 1000-i); fflush(stdout);
+  status("bytecode fast loop done with %d loop fast cycles.", 1000-i);
   return exit_reason;
 }
 

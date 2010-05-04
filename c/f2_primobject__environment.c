@@ -85,7 +85,7 @@ f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, 
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
   f2ptr env = this;
   f2ptr value;
-  while (env) {
+  ile (env) {
     value = f2__frame__lookup_type_var_assignment_cons(cause, f2environment__frame(env, cause), type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
     if (! raw__larva__is_type(cause, value)) {
       return value;

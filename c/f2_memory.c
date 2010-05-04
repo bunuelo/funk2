@@ -457,9 +457,11 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	} break;
 	case ptype_mutex: {
-	  ptype_mutex_block_t mutex_block = (ptype_mutex_block_t*)block;
+	  ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)block;
 	  funk2_processor_mutex__init(mutex_block->m);
 	} break;
+	default:
+	  break;
 	}
 	iter = rbt_node__next(iter);
       }

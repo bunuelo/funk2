@@ -1297,7 +1297,8 @@ int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  f2ptr cause       = f2fiber__cause_reg(fiber, nil);
+  f2ptr env         = f2fiber__env(fiber, cause);
   {
     u64 var_len;
     u8* var_str;
@@ -1309,17 +1310,17 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
     } else {
       var_str = "<non-symbol>";
     }
-    status("bytecode lookup_type_var beginning.  var=%s", var_str);
+    status("bytecode lookup_type_var beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
   }
   
-  f2__fiber__increment_pc(fiber, cause);
-  
-  f2ptr env = f2fiber__env(fiber, cause);
   f2ptr fiber_value = f2__environment__lookup_type_var_value(cause, env, type, var);
   if (raw__larva__is_type(cause, fiber_value)) {
     fiber_value = f2__cause__lookup_type_var_value(cause, cause, type, var);
   }
+  
+  f2__fiber__increment_pc(fiber, cause);
   f2fiber__value__set(fiber, cause, fiber_value);
+  status("bytecode lookup_type_var ending.  fiber_value=%s", fiber_value ? "<non-nil>" : "nil");
   return 0;
 }
 

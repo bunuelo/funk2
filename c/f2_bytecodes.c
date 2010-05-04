@@ -174,6 +174,10 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
   }
   if (raw__funk__is_type(cause, funktion)) {
+    //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
+    f2ptr funk_env     = f2funk__env(funktion, cause);
+    f2ptr body_bcs     = f2funk__body_bytecodes(funktion, cause);
+    f2ptr machine_code = f2funk__machine_code(funktion, cause);
     {
       f2ptr name = f2funk__name(funktion, cause);
       u8*   str;
@@ -186,16 +190,14 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 	str = (u8*)alloca(strlen("<none>") + 1);
 	strcpy((char*)str, "<none>");
       }
-      status("executing funk name=|%s|", str);
+      status("executing funk name=|%s| body_bcs=%s machine_code=%s", str, body_bcs ? "<not nil>" : "nil", machine_code ? "<not nil>" : "nil");
     }
-    //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
-    f2fiber__env__set(fiber, cause, f2funk__env(funktion, cause));
-    f2ptr body_bcs           = f2funk__body_bytecodes(funktion, cause);
     if (raw__larva__is_type(cause, body_bcs)) {
+      status("body_bcs is larva!");
       f2fiber__value__set(fiber, cause, body_bcs);
       return 1;
     }
-    f2ptr machine_code = f2funk__machine_code(funktion, cause);
+    f2fiber__env__set(            fiber, cause, funk_env);
     f2fiber__program_counter__set(fiber, cause, body_bcs);
     if (machine_code) {
       return f2chunk__bytecode_jump(machine_code, cause, fiber);

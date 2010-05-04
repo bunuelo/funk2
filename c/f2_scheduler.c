@@ -191,7 +191,7 @@ typedef enum scheduler_fast_loop_exit_reason_e {
 } scheduler_fast_loop_exit_reason_t;
 
 scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr fiber) {
-  status("bytecode fast loop beginning.");
+  //status("bytecode fast loop beginning.");
   scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
   
   int i = 1000;
@@ -212,7 +212,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     } 
     i --;
   }
-  status("bytecode fast loop done with %d loop fast cycles.", 1000-i);
+  //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);
   return exit_reason;
 }
 
@@ -230,9 +230,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     f2ptr fiber = f2cons__car(f2processor__active_fibers_iter(processor, cause), cause);
     int       prev_fiber_iter__already_set = 0;
     boolean_t need_to_launch_larva_handling_critic_fiber = 0;
-    status("trying to lock execute mutex for thread.");
+    //status("trying to lock execute mutex for thread.");
     if (f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) { // successful lock
-      status("successfully locked execute mutex for thread.");
+      //status("successfully locked execute mutex for thread.");
       if (! f2fiber__paused(fiber, cause)) {
 	f2ptr sleep_until_time = f2fiber__sleep_until_time(fiber, cause);
 	boolean_t fiber_needs_sleep = boolean__false;

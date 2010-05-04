@@ -171,9 +171,9 @@ def_pcfunk2(ptypehash__remove, this, key, return f2__ptypehash__remove(this_caus
 
 f2ptr f2__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
-  status("ptypehash (" u64__fstr ") attempting to lock write mutex.", this);
+  //status("ptypehash (" u64__fstr ") attempting to lock write mutex.", this);
   f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
-  status("ptypehash (" u64__fstr ") successfully locked write mutex.", this);
+  //status("ptypehash (" u64__fstr ") successfully locked write mutex.", this);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2ptypehash__bin_array(this, cause);

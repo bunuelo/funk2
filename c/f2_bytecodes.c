@@ -1297,6 +1297,7 @@ int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
   {
     u64 var_len;
     u8* var_str;
@@ -1310,7 +1311,6 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
     }
     status("bytecode lookup_type_var beginning.  var=%s", var_str);
   }
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
   

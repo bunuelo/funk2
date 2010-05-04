@@ -1235,55 +1235,55 @@ int f2__fiber__bytecode__copy__args_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
 
 bytecode_jump_t f2__compile__bytecode__copy(f2ptr cause, f2ptr reg0, f2ptr reg1) {
   if        (reg0 == __fiber__return_reg__symbol)          {if      (reg1 == __fiber__return_reg__symbol)          {return &f2__fiber__bytecode__nop;}
-                                                             else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__return_reg__value_reg;}
-                                                             else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__return_reg__iter_reg;}
-                                                             else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__return_reg__program_counter_reg;}
-                                                             else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__return_reg__env_reg;}
-                                                             else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__return_reg__args_reg;}
-                                                             else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
-							                                                              return (bytecode_jump_t)NULL;}
+                                                            else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__return_reg__value_reg;}
+                                                            else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__return_reg__iter_reg;}
+                                                            else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__return_reg__program_counter_reg;}
+                                                            else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__return_reg__env_reg;}
+                                                            else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__return_reg__args_reg;}
+                                                            else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
+							                                                             return (bytecode_jump_t)NULL;}
   } else if (reg0 == __fiber__value_reg__symbol)           {if      (reg1 == __fiber__return_reg__symbol)          {return &f2__fiber__bytecode__copy__value_reg__return_reg;}
-                                                             else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__nop;}
-                                                             else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__value_reg__iter_reg;}
-                                                             else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__value_reg__program_counter_reg;}
-                                                             else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__value_reg__env_reg;}
-                                                             else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__value_reg__args_reg;}
-                                                             else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
-							                                                              return (bytecode_jump_t)NULL;}
+                                                            else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__nop;}
+                                                            else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__value_reg__iter_reg;}
+                                                            else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__value_reg__program_counter_reg;}
+                                                            else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__value_reg__env_reg;}
+                                                            else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__value_reg__args_reg;}
+                                                            else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
+							                                                             return (bytecode_jump_t)NULL;}
   } else if (reg0 == __fiber__iter_reg__symbol)            {if      (reg1 == __fiber__return_reg__symbol)          {return &f2__fiber__bytecode__copy__iter_reg__return_reg;}
-                                                             else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__iter_reg__value_reg;}
-                                                             else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__nop;}
-                                                             else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__iter_reg__program_counter_reg;}
-                                                             else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__iter_reg__env_reg;}
-                                                             else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__iter_reg__args_reg;}
-                                                             else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
-							                                                              return (bytecode_jump_t)NULL;}
+                                                            else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__iter_reg__value_reg;}
+                                                            else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__nop;}
+                                                            else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__iter_reg__program_counter_reg;}
+                                                            else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__iter_reg__env_reg;}
+                                                            else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__iter_reg__args_reg;}
+                                                            else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
+							                                                             return (bytecode_jump_t)NULL;}
   } else if (reg0 == __fiber__program_counter_reg__symbol) {if      (reg1 == __fiber__return_reg__symbol)          {return &f2__fiber__bytecode__copy__program_counter_reg__return_reg;}
-                                                             else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__program_counter_reg__value_reg;}
-                                                             else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__program_counter_reg__iter_reg;}
-                                                             else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__nop;}
-                                                             else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__program_counter_reg__env_reg;}
-                                                             else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__program_counter_reg__args_reg;}
-                                                             else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
-							                                                              return (bytecode_jump_t)NULL;}
+                                                            else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__program_counter_reg__value_reg;}
+                                                            else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__program_counter_reg__iter_reg;}
+                                                            else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__nop;}
+                                                            else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__program_counter_reg__env_reg;}
+                                                            else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__program_counter_reg__args_reg;}
+                                                            else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
+							                                                             return (bytecode_jump_t)NULL;}
   } else if (reg0 == __fiber__env_reg__symbol)             {if      (reg1 == __fiber__return_reg__symbol)          {return &f2__fiber__bytecode__copy__env_reg__return_reg;}
-                                                             else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__env_reg__value_reg;}
-                                                             else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__env_reg__iter_reg;}
-                                                             else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__env_reg__program_counter_reg;}
-                                                             else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__nop;}
-                                                             else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__env_reg__args_reg;}
-                                                             else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
-							                                                              return (bytecode_jump_t)NULL;}
+                                                            else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__env_reg__value_reg;}
+                                                            else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__env_reg__iter_reg;}
+                                                            else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__env_reg__program_counter_reg;}
+                                                            else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__nop;}
+                                                            else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__copy__env_reg__args_reg;}
+                                                            else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
+							                                                             return (bytecode_jump_t)NULL;}
   } else if (reg0 == __fiber__args_reg__symbol)            {if      (reg1 == __fiber__return_reg__symbol)          {return &f2__fiber__bytecode__copy__args_reg__return_reg;}
-                                                             else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__args_reg__value_reg;}
-                                                             else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__args_reg__iter_reg;}
-                                                             else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__args_reg__program_counter_reg;}
-                                                             else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__args_reg__env_reg;}
-                                                             else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__nop;}
-                                                             else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
-							                                                              return (bytecode_jump_t)NULL;}
-  } else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg0)", reg0);
-							     return (bytecode_jump_t)NULL;}
+                                                            else if (reg1 == __fiber__value_reg__symbol)           {return &f2__fiber__bytecode__copy__args_reg__value_reg;}
+                                                            else if (reg1 == __fiber__iter_reg__symbol)            {return &f2__fiber__bytecode__copy__args_reg__iter_reg;}
+                                                            else if (reg1 == __fiber__program_counter_reg__symbol) {return &f2__fiber__bytecode__copy__args_reg__program_counter_reg;}
+                                                            else if (reg1 == __fiber__env_reg__symbol)             {return &f2__fiber__bytecode__copy__args_reg__env_reg;}
+                                                            else if (reg1 == __fiber__args_reg__symbol)            {return &f2__fiber__bytecode__nop;}
+                                                            else                                                    {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg1)", reg1);
+							                                                             return (bytecode_jump_t)NULL;}
+  } else                                                   {unrecognized_bytecode_register__error(nil, cause, "fiber:bytecode-copy (reg0)", reg0);
+						            return (bytecode_jump_t)NULL;}
 }
 
 int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg) {
@@ -1297,7 +1297,19 @@ int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
-  status("bytecode lookup_type_var beginning.");
+  {
+    u64 var_len;
+    u8* var_str;
+    if (raw__symbol__is_type(cause, var)) {
+      var_len = raw__symbol__length(cause, var);
+      var_str = alloca(var_len + 1);
+      raw__symbol__str_copy(cause, var, var_str);
+      var_str[var_len] = 0;
+    } else {
+      var_str = "<non-symbol>";
+    }
+    status("bytecode lookup_type_var beginning.  var=%s", var_str);
+  }
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);

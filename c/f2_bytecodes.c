@@ -1319,7 +1319,7 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
     }
     bytecode_status("bytecode lookup_type_var beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
   }
-#endif DEBUG_BYTECODES  
+#endif // DEBUG_BYTECODES  
   f2ptr fiber_value = f2__environment__lookup_type_var_value(cause, env, type, var);
   if (raw__larva__is_type(cause, fiber_value)) {
     fiber_value = f2__cause__lookup_type_var_value(cause, cause, type, var);

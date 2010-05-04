@@ -1297,8 +1297,8 @@ int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
-  f2ptr cause       = f2fiber__cause_reg(fiber, nil);
-  f2ptr env         = f2fiber__env(fiber, cause);
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  f2ptr env   = f2fiber__env(fiber, cause);
   {
     u64 var_len;
     u8* var_str;
@@ -1308,7 +1308,7 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
       raw__symbol__str_copy(cause, var, var_str);
       var_str[var_len] = 0;
     } else {
-      var_str = "<non-symbol>";
+      var_str = (u8*)"<non-symbol>";
     }
     status("bytecode lookup_type_var beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
   }

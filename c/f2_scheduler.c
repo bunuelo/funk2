@@ -378,7 +378,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
     
     f2processor__active_fibers_iter__set(processor, cause, f2processor__active_fibers_next(processor, cause));
   }
-  status("fiber_num = %d", fiber_num);
+  //status("fiber_num = %d", fiber_num);
   //pool__resume_gc(this_processor_thread__pool_index());
   
   //if (did_something) {

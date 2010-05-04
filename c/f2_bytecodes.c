@@ -148,6 +148,7 @@ int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr by
 // bytecode jump_funk []
 
 int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
+  status("bytecode jump_funk beginning.");
   f2ptr funktion = f2fiber__value(fiber, cause);
   //assert(funktion != nil, fiber, "f2__fiber__bytecode__funk assertion failed: funktion is null.");
   
@@ -278,6 +279,7 @@ int f2__fiber__bytecode__jump_funk(f2ptr fiber, f2ptr bytecode) {
 //   note: this is where we set the return register (f2_compile.c assumes that this happens atomically with this bytecode).
 //
 int f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
+  status("bytecode funk beginning.");
   f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause)); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
   return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause, bytecode);
 }
@@ -293,6 +295,7 @@ int f2__fiber__bytecode__funk(f2ptr fiber, f2ptr bytecode) {
 // bytecode array [length]
 
 int f2__fiber__bytecode__array(f2ptr fiber, f2ptr bytecode, f2ptr length) {
+  status("bytecode array beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -309,6 +312,7 @@ int f2__fiber__bytecode__array(f2ptr fiber, f2ptr bytecode, f2ptr length) {
 // bytecode cons []
 
 int f2__fiber__bytecode__cons(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode cons beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -323,6 +327,7 @@ int f2__fiber__bytecode__cons(f2ptr fiber, f2ptr bytecode) {
 // bytecode consp []
 
 int f2__fiber__bytecode__consp(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode consp beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -336,6 +341,7 @@ int f2__fiber__bytecode__consp(f2ptr fiber, f2ptr bytecode) {
 // bytecode car []
 
 int f2__fiber__bytecode__car(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode car beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -348,6 +354,7 @@ int f2__fiber__bytecode__car(f2ptr fiber, f2ptr bytecode) {
 // bytecode cdr []
 
 int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode cdr beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -360,6 +367,7 @@ int f2__fiber__bytecode__cdr(f2ptr fiber, f2ptr bytecode) {
 // bytecode car__set []
 
 int f2__fiber__bytecode__car__set(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode car-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -372,6 +380,7 @@ int f2__fiber__bytecode__car__set(f2ptr fiber, f2ptr bytecode) {
 // bytecode cdr__set []
 
 int f2__fiber__bytecode__cdr__set(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode cdr-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -384,6 +393,7 @@ int f2__fiber__bytecode__cdr__set(f2ptr fiber, f2ptr bytecode) {
 // bytecode array_elt [array index]
 
 int f2__fiber__bytecode__array_elt(f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index) {
+  status("bytecode array_elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -396,6 +406,7 @@ int f2__fiber__bytecode__array_elt(f2ptr fiber, f2ptr bytecode, f2ptr array, f2p
 // bytecode set [reg f2ptr]
 
 int f2__fiber__bytecode__set__value_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -405,6 +416,7 @@ int f2__fiber__bytecode__set__value_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) 
 }
 
 int f2__fiber__bytecode__set__program_counter_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -418,6 +430,7 @@ int f2__fiber__bytecode__set__program_counter_reg(f2ptr fiber, f2ptr bytecode, f
 }
 
 int f2__fiber__bytecode__set__iter_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -427,6 +440,7 @@ int f2__fiber__bytecode__set__iter_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
 }
 
 int f2__fiber__bytecode__set__args_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -436,6 +450,7 @@ int f2__fiber__bytecode__set__args_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
 }
 
 int f2__fiber__bytecode__set__return_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -445,6 +460,7 @@ int f2__fiber__bytecode__set__return_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp)
 }
 
 int f2__fiber__bytecode__set__env_reg(f2ptr fiber, f2ptr bytecode, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -465,6 +481,7 @@ bytecode_jump__f2ptr_t f2__compile__bytecode__set(f2ptr cause, f2ptr reg) {
 }
 
 int f2__fiber__bytecode__set(f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp) {
+  status("bytecode set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__set(cause, reg))(fiber, bytecode, exp);
@@ -474,6 +491,7 @@ int f2__fiber__bytecode__set(f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp) 
 // bytecode nop []
 
 int f2__fiber__bytecode__nop(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode nop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -485,6 +503,7 @@ int f2__fiber__bytecode__nop(f2ptr fiber, f2ptr bytecode) {
 // bytecode swap [reg reg]
 
 int f2__fiber__bytecode__swap__return_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -496,6 +515,7 @@ int f2__fiber__bytecode__swap__return_reg__value_reg(f2ptr fiber, f2ptr bytecode
 }
 
 int f2__fiber__bytecode__swap__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -507,6 +527,7 @@ int f2__fiber__bytecode__swap__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode)
 }
 
 int f2__fiber__bytecode__swap__return_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -518,6 +539,7 @@ int f2__fiber__bytecode__swap__return_reg__program_counter_reg(f2ptr fiber, f2pt
 }
 
 int f2__fiber__bytecode__swap__return_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -529,6 +551,7 @@ int f2__fiber__bytecode__swap__return_reg__env_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__swap__return_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -541,6 +564,7 @@ int f2__fiber__bytecode__swap__return_reg__args_reg(f2ptr fiber, f2ptr bytecode)
 
 
 int f2__fiber__bytecode__swap__value_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -552,6 +576,7 @@ int f2__fiber__bytecode__swap__value_reg__iter_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__swap__value_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -563,6 +588,7 @@ int f2__fiber__bytecode__swap__value_reg__program_counter_reg(f2ptr fiber, f2ptr
 }
 
 int f2__fiber__bytecode__swap__value_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -574,6 +600,7 @@ int f2__fiber__bytecode__swap__value_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__swap__value_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -585,6 +612,7 @@ int f2__fiber__bytecode__swap__value_reg__args_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__swap__iter_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -596,6 +624,7 @@ int f2__fiber__bytecode__swap__iter_reg__program_counter_reg(f2ptr fiber, f2ptr 
 }
 
 int f2__fiber__bytecode__swap__iter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -607,6 +636,7 @@ int f2__fiber__bytecode__swap__iter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__swap__iter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -618,6 +648,7 @@ int f2__fiber__bytecode__swap__iter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__swap__program_counter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -629,6 +660,7 @@ int f2__fiber__bytecode__swap__program_counter_reg__env_reg(f2ptr fiber, f2ptr b
 }
 
 int f2__fiber__bytecode__swap__program_counter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -640,6 +672,7 @@ int f2__fiber__bytecode__swap__program_counter_reg__args_reg(f2ptr fiber, f2ptr 
 }
 
 int f2__fiber__bytecode__swap__env_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -705,6 +738,7 @@ bytecode_jump_t f2__compile__bytecode__swap(f2ptr cause, f2ptr reg0, f2ptr reg1)
 }
 
 int f2__fiber__bytecode__swap(f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg1) {
+  status("bytecode swap beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__swap(cause, reg0, reg1))(fiber, bytecode);
@@ -714,6 +748,7 @@ int f2__fiber__bytecode__swap(f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg
 // bytecode push [reg]
 
 int f2__fiber__bytecode__push__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -723,6 +758,7 @@ int f2__fiber__bytecode__push__return_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -732,6 +768,7 @@ int f2__fiber__bytecode__push__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -741,6 +778,7 @@ int f2__fiber__bytecode__push__value_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -750,6 +788,7 @@ int f2__fiber__bytecode__push__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -759,6 +798,7 @@ int f2__fiber__bytecode__push__args_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -781,6 +821,7 @@ bytecode_jump_t f2__compile__bytecode__push(f2ptr cause, f2ptr reg) {
 }
 
 int f2__fiber__bytecode__push(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
+  status("bytecode push beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__push(cause, reg))(fiber, bytecode);
@@ -789,6 +830,7 @@ int f2__fiber__bytecode__push(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
 // bytecode pop [reg]
 
 int f2__fiber__bytecode__pop__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -798,6 +840,7 @@ int f2__fiber__bytecode__pop__return_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -811,6 +854,7 @@ int f2__fiber__bytecode__pop__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -820,6 +864,7 @@ int f2__fiber__bytecode__pop__value_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -829,6 +874,7 @@ int f2__fiber__bytecode__pop__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -838,6 +884,7 @@ int f2__fiber__bytecode__pop__args_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -847,6 +894,7 @@ int f2__fiber__bytecode__pop__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__nil(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -870,6 +918,7 @@ bytecode_jump_t f2__compile__bytecode__pop(f2ptr cause, f2ptr reg) {
 }
 
 int f2__fiber__bytecode__pop(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
+  status("bytecode pop beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__pop(cause, reg))(fiber, bytecode);
@@ -879,6 +928,7 @@ int f2__fiber__bytecode__pop(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
 // bytecode copy [reg reg]
 
 int f2__fiber__bytecode__copy__return_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -888,6 +938,7 @@ int f2__fiber__bytecode__copy__return_reg__value_reg(f2ptr fiber, f2ptr bytecode
 }
 
 int f2__fiber__bytecode__copy__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -897,6 +948,7 @@ int f2__fiber__bytecode__copy__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode)
 }
 
 int f2__fiber__bytecode__copy__return_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -906,6 +958,7 @@ int f2__fiber__bytecode__copy__return_reg__program_counter_reg(f2ptr fiber, f2pt
 }
 
 int f2__fiber__bytecode__copy__return_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -915,6 +968,7 @@ int f2__fiber__bytecode__copy__return_reg__env_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__copy__return_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -925,6 +979,7 @@ int f2__fiber__bytecode__copy__return_reg__args_reg(f2ptr fiber, f2ptr bytecode)
 
 
 int f2__fiber__bytecode__copy__value_reg__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -934,6 +989,7 @@ int f2__fiber__bytecode__copy__value_reg__return_reg(f2ptr fiber, f2ptr bytecode
 }
 
 int f2__fiber__bytecode__copy__value_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -943,6 +999,7 @@ int f2__fiber__bytecode__copy__value_reg__iter_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__copy__value_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -952,6 +1009,7 @@ int f2__fiber__bytecode__copy__value_reg__program_counter_reg(f2ptr fiber, f2ptr
 }
 
 int f2__fiber__bytecode__copy__value_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -961,6 +1019,7 @@ int f2__fiber__bytecode__copy__value_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__copy__value_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -971,6 +1030,7 @@ int f2__fiber__bytecode__copy__value_reg__args_reg(f2ptr fiber, f2ptr bytecode) 
 
 
 int f2__fiber__bytecode__copy__iter_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -980,6 +1040,7 @@ int f2__fiber__bytecode__copy__iter_reg__value_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__copy__iter_reg__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -989,6 +1050,7 @@ int f2__fiber__bytecode__copy__iter_reg__return_reg(f2ptr fiber, f2ptr bytecode)
 }
 
 int f2__fiber__bytecode__copy__iter_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -998,6 +1060,7 @@ int f2__fiber__bytecode__copy__iter_reg__program_counter_reg(f2ptr fiber, f2ptr 
 }
 
 int f2__fiber__bytecode__copy__iter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1007,6 +1070,7 @@ int f2__fiber__bytecode__copy__iter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__copy__iter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1017,6 +1081,7 @@ int f2__fiber__bytecode__copy__iter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
 
 
 int f2__fiber__bytecode__copy__program_counter_reg__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1026,6 +1091,7 @@ int f2__fiber__bytecode__copy__program_counter_reg__return_reg(f2ptr fiber, f2pt
 }
 
 int f2__fiber__bytecode__copy__program_counter_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1035,6 +1101,7 @@ int f2__fiber__bytecode__copy__program_counter_reg__value_reg(f2ptr fiber, f2ptr
 }
 
 int f2__fiber__bytecode__copy__program_counter_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, nil);
@@ -1044,6 +1111,7 @@ int f2__fiber__bytecode__copy__program_counter_reg__iter_reg(f2ptr fiber, f2ptr 
 }
 
 int f2__fiber__bytecode__copy__program_counter_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1053,6 +1121,7 @@ int f2__fiber__bytecode__copy__program_counter_reg__env_reg(f2ptr fiber, f2ptr b
 }
 
 int f2__fiber__bytecode__copy__program_counter_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1063,6 +1132,7 @@ int f2__fiber__bytecode__copy__program_counter_reg__args_reg(f2ptr fiber, f2ptr 
 
 
 int f2__fiber__bytecode__copy__env_reg__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1072,6 +1142,7 @@ int f2__fiber__bytecode__copy__env_reg__return_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__copy__env_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1081,6 +1152,7 @@ int f2__fiber__bytecode__copy__env_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__copy__env_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1090,6 +1162,7 @@ int f2__fiber__bytecode__copy__env_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__copy__env_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1099,6 +1172,7 @@ int f2__fiber__bytecode__copy__env_reg__program_counter_reg(f2ptr fiber, f2ptr b
 }
 
 int f2__fiber__bytecode__copy__env_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1109,6 +1183,7 @@ int f2__fiber__bytecode__copy__env_reg__args_reg(f2ptr fiber, f2ptr bytecode) {
 
 
 int f2__fiber__bytecode__copy__args_reg__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1118,6 +1193,7 @@ int f2__fiber__bytecode__copy__args_reg__return_reg(f2ptr fiber, f2ptr bytecode)
 }
 
 int f2__fiber__bytecode__copy__args_reg__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1127,6 +1203,7 @@ int f2__fiber__bytecode__copy__args_reg__value_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__copy__args_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1136,6 +1213,7 @@ int f2__fiber__bytecode__copy__args_reg__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__copy__args_reg__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1145,6 +1223,7 @@ int f2__fiber__bytecode__copy__args_reg__program_counter_reg(f2ptr fiber, f2ptr 
 }
 
 int f2__fiber__bytecode__copy__args_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1208,6 +1287,7 @@ bytecode_jump_t f2__compile__bytecode__copy(f2ptr cause, f2ptr reg0, f2ptr reg1)
 }
 
 int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg) {
+  status("bytecode copy beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__copy(cause, src_reg, dest_reg))(fiber, bytecode);
@@ -1217,6 +1297,7 @@ int f2__fiber__bytecode__copy(f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr 
 // bytecode lookup_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
+  status("bytecode lookup_type_var beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1234,6 +1315,7 @@ int f2__fiber__bytecode__lookup_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
 // bytecode define_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__define_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
+  status("bytecode define_type_var beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1248,6 +1330,7 @@ int f2__fiber__bytecode__define_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type
 // bytecode type_var__mutate [f2ptr f2ptr]
 
 int f2__fiber__bytecode__type_var__mutate(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
+  status("bytecode type_var-mutate beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1263,6 +1346,7 @@ int f2__fiber__bytecode__type_var__mutate(f2ptr fiber, f2ptr bytecode, f2ptr typ
 // bytecode globalize_type_var [f2ptr f2ptr]
 
 int f2__fiber__bytecode__globalize_type_var(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
+  status("bytecode globalize_type_var beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1278,6 +1362,7 @@ int f2__fiber__bytecode__globalize_type_var(f2ptr fiber, f2ptr bytecode, f2ptr t
 // bytecode jump [f2ptr]
 
 int f2__fiber__bytecode__jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
+  status("bytecode jump beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1299,6 +1384,7 @@ f2ptr f2__bytecode_branch_funk__call_with_event(f2ptr cause, f2ptr bytecode_bran
 // bytecode if_jump [f2ptr]
 
 int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
+  status("bytecode if_jump beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1342,6 +1428,7 @@ int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_
 // bytecode else_jump [f2ptr]
 
 int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter) {
+  status("bytecode else_jump beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1393,6 +1480,7 @@ int f2__fiber__bytecode__else_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_progra
 // bytecode debug [f2ptr]
 
 int f2__fiber__bytecode__debug(f2ptr fiber, f2ptr bytecode, f2ptr value) {
+  status("bytecode debug beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1411,6 +1499,7 @@ f2ptr f2__bytecode_tracer_funk__call_with_event(f2ptr cause, f2ptr bytecode_trac
 // bytecode tracer [f2ptr f2ptr]
 
 int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args) {
+  status("bytecode tracer beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1479,6 +1568,7 @@ int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr by
 // bytecode endfunk [f2ptr]
 
 int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr funk) {
+  status("bytecode endfunk beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1490,6 +1580,7 @@ int f2__fiber__bytecode__endfunk(f2ptr fiber, f2ptr bytecode, f2ptr funk) {
 // bytecode compile [boolean_t]
 
 int f2__fiber__bytecode__compile__protect_environment(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode compile beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1501,6 +1592,7 @@ int f2__fiber__bytecode__compile__protect_environment(f2ptr fiber, f2ptr bytecod
 }
 
 int f2__fiber__bytecode__compile__nil(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode compile beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1512,6 +1604,7 @@ int f2__fiber__bytecode__compile__nil(f2ptr fiber, f2ptr bytecode) {
 }
 
 bytecode_jump_t f2__compile__bytecode__compile(f2ptr protect_environment) {
+  status("bytecode compile beginning.");
   if (protect_environment != nil) {
     return &f2__fiber__bytecode__compile__protect_environment;
   } else {
@@ -1520,6 +1613,7 @@ bytecode_jump_t f2__compile__bytecode__compile(f2ptr protect_environment) {
 }
 
 int f2__fiber__bytecode__compile(f2ptr fiber, f2ptr bytecode, f2ptr protect_environment) {
+  status("bytecode compile beginning.");
   return (f2__compile__bytecode__compile(protect_environment))(fiber, bytecode);
 }
 
@@ -1527,6 +1621,7 @@ int f2__fiber__bytecode__compile(f2ptr fiber, f2ptr bytecode, f2ptr protect_envi
 // bytecode yield []
 
 int f2__fiber__bytecode__yield(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode yield beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1537,6 +1632,7 @@ int f2__fiber__bytecode__yield(f2ptr fiber, f2ptr bytecode) {
 // bytecode newenv []
 
 int f2__fiber__bytecode__newenv(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode newenv beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1556,6 +1652,7 @@ int f2__fiber__bytecode__newenv(f2ptr fiber, f2ptr bytecode) {
 // bytecode machine_code [chunk]
 
 int f2__fiber__bytecode__machine_code(f2ptr fiber, f2ptr bytecode, f2ptr chunk) {
+  status("bytecode machine_code beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return f2chunk__bytecode_jump(chunk, cause, fiber);
@@ -1565,6 +1662,7 @@ int f2__fiber__bytecode__machine_code(f2ptr fiber, f2ptr bytecode, f2ptr chunk) 
 // bytecode reg_array__elt [reg]
 
 void raw__fiber__bytecode_helper__reg_array__elt(f2ptr cause, f2ptr bytecode, f2ptr fiber, f2ptr reg_value) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr elt       = nil;
   if (! raw__array__is_type(cause, reg_value)) {
     elt = f2larva__new(cause, 1, nil);
@@ -1590,6 +1688,7 @@ void raw__fiber__bytecode_helper__reg_array__elt(f2ptr cause, f2ptr bytecode, f2
 }
 
 int f2__fiber__bytecode__reg_array__elt__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1601,6 +1700,7 @@ int f2__fiber__bytecode__reg_array__elt__return_reg(f2ptr fiber, f2ptr bytecode)
 }
 
 int f2__fiber__bytecode__reg_array__elt__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1612,6 +1712,7 @@ int f2__fiber__bytecode__reg_array__elt__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__reg_array__elt__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1623,6 +1724,7 @@ int f2__fiber__bytecode__reg_array__elt__value_reg(f2ptr fiber, f2ptr bytecode) 
 }
 
 int f2__fiber__bytecode__reg_array__elt__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1634,6 +1736,7 @@ int f2__fiber__bytecode__reg_array__elt__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__reg_array__elt__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1645,6 +1748,7 @@ int f2__fiber__bytecode__reg_array__elt__args_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__reg_array__elt__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1669,6 +1773,7 @@ bytecode_jump_t f2__compile__bytecode__reg_array__elt(f2ptr cause, f2ptr reg) {
 }
 
 int f2__fiber__bytecode__reg_array__elt(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
+  status("bytecode reg_array-elt beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__reg_array__elt(cause, reg))(fiber, bytecode);
@@ -1704,6 +1809,7 @@ void raw__fiber__bytecode_helper__reg_array__elt__set(f2ptr cause, f2ptr bytecod
 }
 
 int f2__fiber__bytecode__reg_array__elt__set__return_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1715,6 +1821,7 @@ int f2__fiber__bytecode__reg_array__elt__set__return_reg(f2ptr fiber, f2ptr byte
 }
 
 int f2__fiber__bytecode__reg_array__elt__set__env_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1726,6 +1833,7 @@ int f2__fiber__bytecode__reg_array__elt__set__env_reg(f2ptr fiber, f2ptr bytecod
 }
 
 int f2__fiber__bytecode__reg_array__elt__set__value_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1737,6 +1845,7 @@ int f2__fiber__bytecode__reg_array__elt__set__value_reg(f2ptr fiber, f2ptr bytec
 }
 
 int f2__fiber__bytecode__reg_array__elt__set__iter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1748,6 +1857,7 @@ int f2__fiber__bytecode__reg_array__elt__set__iter_reg(f2ptr fiber, f2ptr byteco
 }
 
 int f2__fiber__bytecode__reg_array__elt__set__args_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1759,6 +1869,7 @@ int f2__fiber__bytecode__reg_array__elt__set__args_reg(f2ptr fiber, f2ptr byteco
 }
 
 int f2__fiber__bytecode__reg_array__elt__set__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   f2__fiber__increment_pc(fiber, cause);
@@ -1783,6 +1894,7 @@ bytecode_jump_t f2__compile__bytecode__reg_array__elt__set(f2ptr cause, f2ptr re
 }
 
 int f2__fiber__bytecode__reg_array__elt__set(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
+  status("bytecode reg_array-elt-set beginning.");
   f2ptr cause = f2fiber__cause_reg(fiber, nil);
   
   return (f2__compile__bytecode__reg_array__elt__set(cause, reg))(fiber, bytecode);

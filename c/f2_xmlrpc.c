@@ -99,7 +99,7 @@ main(int           const argc,
 
     ServerInit(&abyssServer);
 
-    setupSignalHandlers();
+    //setupSignalHandlers();
 
     terminationRequested = 0;
 

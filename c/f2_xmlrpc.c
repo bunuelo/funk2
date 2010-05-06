@@ -27,7 +27,7 @@
 static xmlrpc_value *
 sample_add(xmlrpc_env *   const envP, 
            xmlrpc_value * const paramArrayP,
-           void *         const userData ATTR_UNUSED) {
+           void *         const userData) {
     
     xmlrpc_int x, y, z;
 

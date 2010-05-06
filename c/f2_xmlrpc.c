@@ -41,7 +41,7 @@ xmlrpc_value* xmlrpc__sample_add(xmlrpc_env* envP, xmlrpc_value* paramArrayP, vo
 }
 
 xmlrpc_server_shutdown_fn xmlrpc__request_shutdown;
-static void               xmlrpc__request_shutdown(xmlrpc_env* const envP, void* const context, const char* const comment) {
+void               xmlrpc__request_shutdown(xmlrpc_env* const envP, void* const context, const char* const comment) {
   // You make this run by executing the system method
   // 'system.shutdown'.  This function is registered in the method
   // registry as the thing to call for that.

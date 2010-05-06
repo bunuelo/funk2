@@ -182,7 +182,8 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_fiber.lo c/lib_libfunk2_la-f2_time.lo \
 	c/lib_libfunk2_la-f2_trace.lo \
 	c/lib_libfunk2_la-f2_user_thread_controller.lo \
-	c/lib_libfunk2_la-f2_zlib.lo c/lib_libfunk2_la-funk2.lo
+	c/lib_libfunk2_la-f2_xmlrpc.lo c/lib_libfunk2_la-f2_zlib.lo \
+	c/lib_libfunk2_la-funk2.lo
 lib_libfunk2_la_OBJECTS = $(am_lib_libfunk2_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -269,7 +270,6 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
-PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PTHREAD_CC = @PTHREAD_CC@
@@ -434,12 +434,15 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags)
 #dynamic_library_linker_flags = $(gmodule_linker_flags)
 trace_flags = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
+xmlrpc_ldadd = $(shell xmlrpc-c-config abyss-server client --ldadd)
+xmlrpc_cflags = $(shell xmlrpc-c-config abyss-server client --cflags)
+xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 debug_flags = -pg -DDEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY=1 -DDEBUG_MEMORY_POINTERS -DDEBUG_BYTECODES -DDEBUG_LOAD #-DDEBUG_REDBLACKTREE -DDEBUG_COMPILE -DDEBUG_MEMORY_VALID_PTRS 
 optimize_flags = 
-debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(optimize_flags)
+debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(optimize_flags)
 athena__cc_flags = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)
@@ -556,6 +559,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_time.c \
   c/f2_trace.c \
   c/f2_user_thread_controller.c \
+  c/f2_xmlrpc.c \
   c/f2_zlib.c \
   c/funk2.c \
   config_bit_num.h
@@ -577,7 +581,7 @@ FUNK2_LIBRARY_VERSION = 0:0:0
 #              |        +- increment if source code has changed
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(zlib_linker_flags)
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags)
 lib_libfunk2_la_CFLAGS = $(cc_flags)
 
 #bin_funk2_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2
@@ -885,6 +889,8 @@ c/lib_libfunk2_la-f2_trace.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_user_thread_controller.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_xmlrpc.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_zlib.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-funk2.lo: c/$(am__dirstamp) \
@@ -1109,6 +1115,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_tricolor_set.lo
 	-rm -f c/lib_libfunk2_la-f2_user_thread_controller.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_user_thread_controller.lo
+	-rm -f c/lib_libfunk2_la-f2_xmlrpc.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_xmlrpc.lo
 	-rm -f c/lib_libfunk2_la-f2_zlib.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_zlib.lo
 	-rm -f c/lib_libfunk2_la-funk2.$(OBJEXT)
@@ -1223,6 +1231,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_trace.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_tricolor_set.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_user_thread_controller.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-funk2.Plo@am__quote@
 
@@ -1992,6 +2001,13 @@ c/lib_libfunk2_la-f2_user_thread_controller.lo: c/f2_user_thread_controller.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_user_thread_controller.lo `test -f 'c/f2_user_thread_controller.c' || echo '$(srcdir)/'`c/f2_user_thread_controller.c
 
+c/lib_libfunk2_la-f2_xmlrpc.lo: c/f2_xmlrpc.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_xmlrpc.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Tpo" -c -o c/lib_libfunk2_la-f2_xmlrpc.lo `test -f 'c/f2_xmlrpc.c' || echo '$(srcdir)/'`c/f2_xmlrpc.c; \
+@am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_xmlrpc.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_xmlrpc.c' object='c/lib_libfunk2_la-f2_xmlrpc.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_xmlrpc.lo `test -f 'c/f2_xmlrpc.c' || echo '$(srcdir)/'`c/f2_xmlrpc.c
+
 c/lib_libfunk2_la-f2_zlib.lo: c/f2_zlib.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_zlib.lo -MD -MP -MF "c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Tpo" -c -o c/lib_libfunk2_la-f2_zlib.lo `test -f 'c/f2_zlib.c' || echo '$(srcdir)/'`c/f2_zlib.c; \
 @am__fastdepCC_TRUE@	then mv -f "c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Tpo" "c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Plo"; else rm -f "c/$(DEPDIR)/lib_libfunk2_la-f2_zlib.Tpo"; exit 1; fi
@@ -2359,12 +2375,12 @@ make-install-sh:
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""             >> install-sh
 	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
 	echo "echo \"\""                                                                   >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__img__dir)"                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__include__dir)"                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                        >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__man__dir)"                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__include__dir)"                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                 >> install-sh
 	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
@@ -2374,7 +2390,7 @@ make-install-sh:
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): $(lib_LTLIBRARIES)
-	$(COMPILE) -o $@ c/funk2_main.c -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh
 	./install-sh

@@ -46,10 +46,11 @@
 #endif
 
 #if defined(F2__XMLRPC_SUPPORTED)
+#error testing.
 #  define _XOPEN_SOURCE 600
 #  include <xmlrpc-c/base.h>
 #  include <xmlrpc-c/abyss.h>
-//#  include <xmlrpc-c/client.h>
+#  include <xmlrpc-c/client.h>
 #  include <xmlrpc-c/server.h>
 #  include <xmlrpc-c/server_abyss.h>
 #endif

@@ -29,16 +29,16 @@
 #include "f2_archconfig.h"
 
 #ifdef F2__APPLE
-#define MAP_ANONYMOUS MAP_ANON
+#  define MAP_ANONYMOUS MAP_ANON
 // see: http://www.osxfaq.com/man/4/tty.ws
-#define SIOCOUTQ TIOCOUTQ
-#define SIOCINQ TIOCSTI
+#  define SIOCOUTQ TIOCOUTQ
+#  define SIOCINQ  TIOCSTI
 
-#include <mach/mach.h>
-#include <mach/clock.h>
-#include <mach/mach_time.h>
-#include <sys/resource.h>
-#include <sys/sockio.h>
+#  include <mach/mach.h>
+#  include <mach/clock.h>
+#  include <mach/mach_time.h>
+#  include <sys/resource.h>
+#  include <sys/sockio.h>
 #endif // F2__APPLE
 
 #if defined(HAVE_LINUX_SOCKIOS_H)
@@ -46,6 +46,7 @@
 #endif
 
 #if defined(F2__XMLRPC_SUPPORTED)
+#  define _XOPEN_SOURCE 600
 #  include <xmlrpc-c/base.h>
 #  include <xmlrpc-c/abyss.h>
 #  include <xmlrpc-c/client.h>

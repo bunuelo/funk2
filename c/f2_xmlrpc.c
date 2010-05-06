@@ -63,7 +63,7 @@ void funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   
   xmlrpc_registry_add_method(&(this->env), (this->registryP), NULL, "sample.add", &xmlrpc__sample_add, NULL);
   
-  xmlrpc_registry_set_shutdown(this->registryP, &xmlrpc__request_shutdown, &(this->terminationRequested));
+  xmlrpc_registry_set_shutdown(this->registryP, &xmlrpc__request_shutdown, &(this->termination_requested));
   
   ServerCreate(&(this->abyssServer), "XmlRpcServer", this->port_num, NULL, NULL);
   
@@ -73,7 +73,7 @@ void funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   
   //setupSignalHandlers();
   
-  this->terminationRequested = 0;
+  this->termination_requested = 0;
 }
 
 void funk2_xmlrpc_server__destroy(funk2_xmlrpc_server_t* this) {

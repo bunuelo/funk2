@@ -25,7 +25,7 @@
 #include "f2_global.h"
 
 typedef struct funk2_xmlrpc_server_s {
-  int                       port_num;
+  u64                       port_num;
 #if defined(F2__XMLRPC_SUPPORTED)
   TServer                   abyssServer;
   xmlrpc_registry*          registryP;

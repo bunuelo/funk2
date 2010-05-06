@@ -41,7 +41,7 @@ xmlrpc_value* xmlrpc__sample_add(xmlrpc_env* envP, xmlrpc_value* paramArrayP, vo
 }
 
 xmlrpc_server_shutdown_fn xmlrpc__request_shutdown;
-void               xmlrpc__request_shutdown(xmlrpc_env* const envP, void* const context, const char* const comment) {
+void                      xmlrpc__request_shutdown(xmlrpc_env* const envP, void* const context, const char* const comment) {
   // You make this run by executing the system method
   // 'system.shutdown'.  This function is registered in the method
   // registry as the thing to call for that.
@@ -91,18 +91,65 @@ boolean_t funk2_xmlrpc_server__termination_requested(funk2_xmlrpc_server_t* this
   return (this->termination_requested != 0);
 }
 
+void funk2_xmlrpc_server__handler_loop(funk2_xmlrpc_server_t* this) {
+  while (! funk2_xmlrpc_server__termination_requested(&this)) {
+    status("Waiting for next RPC...\n");
+    funk2_xmlrpc_server__handle(&this);
+  }
+}
+
 void funk2_xmlrpc_server__main() {
   int                   port_num = 4545;
   funk2_xmlrpc_server_t xmlrpc_server;
   funk2_xmlrpc_server__init(&xmlrpc_server, port_num);
-  while (! funk2_xmlrpc_server__termination_requested(&xmlrpc_server)) {
-    printf("Waiting for next RPC...\n");
-    funk2_xmlrpc_server__handle(&xmlrpc_server);
-  }
+  funk2_xmlrpc_server__handler_loop(&xmlrpc_server);
   funk2_xmlrpc_server__destroy(&xmlrpc_server);
 }
 
+void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
+  funk2_xmlrpc_server_t* this = (funk2_xmlrpc_server_t*)ptr;
+  status("Calling XMLRPC server handler loop in new thread.");
+  funk2_xmlrpc_server__handler_loop(this);
+  status("Finished XMLRPC server handler loop thread.");
+  return NULL;
+}
+
+void funk2_xmlrpc_server__start_handler_thread(funk2_xmlrpc_server_t* this) {
+  funk2_processor_thread__init(&(this->processor_thread), funk2_xmlrpc_server__start_handler_thread__helper, this);
+}
+
 #endif // F2__XMLRPC_SUPPORTED
+
+void funk2_xmlrpc__init(funk2_xmlrpc_t* this) {
+  this->servers = NULL;
+}
+
+void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
+  funk2_xmlrpc_server_list_t* next;
+  funk2_xmlrpc_server_list_t* iter = this->servers;
+  while (iter) {
+    next = iter->next;
+    funk2_xmlrpc_server_t* server = &(iter->server);
+    funk2_xmlrpc_server__destroy(server);
+    f2__free(to_ptr(iter));
+    iter = next;
+  }
+}
+
+funk2_xmlrpc_server_t* funk2_xmlrpc__create_new_server(funk2_xmlrpc_t* this, int port_num) {
+#if defined(F2__XMLRPC_SUPPORTED)
+  funk2_xmlrpc_server_list_t* new_server_node = (funk2_xmlrpc_server_list_t*)from_ptr(f2__malloc(sizeof(funk2_xmlrpc_server_list_t)));
+  funk2_xmlrpc_server__init(&(new_server_node->server), port_num);
+  funk2_xmlrpc_server__start_handler_thread(&(new_server_node->server));
+  new_server_node->next = this->servers;
+  this->servers = new_server_node;
+  return &(new_server_node->server);
+#else
+  status(  "funk2 warning: XMLRPC support is not compiled in this install of funk2.");
+  printf("\nfunk2 warning: XMLRPC support is not compiled in this install of funk2."); fflush(stdout);
+  return NULL;
+#endif // F2__XMLRPC_SUPPORTED
+}
 
 // **
 

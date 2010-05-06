@@ -155,6 +155,7 @@ void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {
 	this->servers = next;
       }
     }
+    prev = iter;
     iter = next;
   }
 }

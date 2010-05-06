@@ -45,7 +45,7 @@
 #  include <linux/sockios.h>
 #endif
 
-#if defined(HAVE_XMLRPC_C_BASE_H)
+#if defined(F2__XMLRPC_SUPPORTED)
 #  include <xmlrpc-c/base.h>
 #  include <xmlrpc-c/abyss.h>
 #  include <xmlrpc-c/client.h>
@@ -86,9 +86,12 @@
 #include <termios.h>
 #include <time.h>
 #include <unistd.h>
-#include "zlib.h"
 
-
+#if defined(HAVE_ZLIB_H)
+#  include "zlib.h"
+#else
+#  error Funk2 requires zlib for compressing and decompressing otherwise very large disk images.
+#endif
 
 #if defined(HAVE_GL_GL_H)
 #  define  F2__GL__H

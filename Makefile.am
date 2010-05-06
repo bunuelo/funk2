@@ -135,9 +135,11 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags)
 trace_flags           = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 
+if XMLRPC_SUPPORTED
 xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
 xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
+endif
 
 #system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
 

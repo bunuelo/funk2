@@ -8,6 +8,9 @@
 /* Define to 1 if using `alloca.c'. */
 #undef C_ALLOCA
 
+/* Build XML-RPC support into Funk2 */
+#undef F2__XMLRPC_SUPPORTED
+
 /* Build multithreading support into Funk2 */
 #undef GCC_ATOMIC_BUILTINS
 
@@ -62,6 +65,9 @@
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the `curl' library (-lcurl). */
+#undef HAVE_LIBCURL
 
 /* Define to 1 if you have the `gmon' library (-lgmon). */
 #undef HAVE_LIBGMON
@@ -203,6 +209,9 @@
 /* Define to 1 if you have the <xmlrpc-c/base.h> header file. */
 #undef HAVE_XMLRPC_C_BASE_H
 
+/* Define to 1 if you have the <zlib.h> header file. */
+#undef HAVE_ZLIB_H
+
 /* Define to 1 if the system has the type `_Bool'. */
 #undef HAVE__BOOL
 
@@ -227,6 +236,9 @@
 
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION

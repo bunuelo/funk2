@@ -36,7 +36,21 @@ AC_CHECK_LIB(rt,clock_gettime)
 AC_CHECK_LIB(gmon,_mcount)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
-AC_CHECK_HEADERS([xmlrpc-c/base.h])
+AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([Funk2 requires the zlib library in order to compress and decompress disk images.])])
+
+# Checking for xmlrpc-c and its requirements.
+have_xmlrpc_requirements=1
+AC_MSG_NOTICE([Checking for xmlrpc-c and its requirements.])
+AC_CHECK_LIB(curl,curl_easy_init, [],[have_xmlrpc_requirements=0])
+AC_CHECK_HEADERS([xmlrpc-c/base.h xmlrpc-c/abyss.h xmlrpc-c/client.h xmlrpc-c/server.h xmlrpc-c/server_abyss.h],[],[have_xmlrpc_requirements=0])
+AM_CONDITIONAL(XMLRPC_SUPPORTED, test $have_xmlrpc_requirements == 1)
+if test $have_xmlrpc_requirements == 1
+then
+  AC_MSG_NOTICE([Feature xmlrpc-c is fully supported.])
+  AC_DEFINE(F2__XMLRPC_SUPPORTED, 1, Build XML-RPC support into Funk2)
+else
+  AC_MSG_NOTICE([Feature xmlrpc-c is not fully supported.])
+fi
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

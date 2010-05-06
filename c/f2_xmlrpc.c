@@ -59,7 +59,7 @@ void funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   
   xmlrpc_env_init(&(this->env));
   
-  registryP = xmlrpc_registry_new(&(this->env));
+  this->registryP = xmlrpc_registry_new(&(this->env));
   
   xmlrpc_registry_add_method(&(this->env), (this->registryP), NULL, "sample.add", &xmlrpc__sample_add, NULL);
   

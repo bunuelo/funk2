@@ -45,5 +45,9 @@ typedef struct funk2_xmlrpc_s {
   funk2_xmlrpc_server_list_t* servers;
 } funk2_xmlrpc_t;
 
+// **
+
+void f2__xmlrpc__initialize();
+
 #endif // F2__XMLRPC__H
 

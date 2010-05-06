@@ -31,7 +31,7 @@ typedef struct funk2_xmlrpc_server_s {
   xmlrpc_registry* registryP;
   xmlrpc_env       env;
 #endif // F2__XMLRPC_SUPPORTED
-  int              terminationRequested;  // A boolean value
+  int              termination_requested;  // A boolean value
 } funk2_xmlrpc_server_t;
 
 typedef struct funk2_xmlrpc_server_list_s {

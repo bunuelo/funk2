@@ -25,14 +25,14 @@
 #include "f2_global.h"
 
 typedef struct funk2_xmlrpc_server_s {
-  int                      port_num;
+  int                       port_num;
 #if defined(F2__XMLRPC_SUPPORTED)
-  TServer                  abyssServer;
-  xmlrpc_registry*         registryP;
-  xmlrpc_env               env;
+  TServer                   abyssServer;
+  xmlrpc_registry*          registryP;
+  xmlrpc_env                env;
 #endif // F2__XMLRPC_SUPPORTED
-  int                      termination_requested; // a boolean value
-  funk2_processor_thread_t processor_thread;
+  int                       termination_requested; // a boolean value
+  funk2_processor_thread_t* processor_thread;
 } funk2_xmlrpc_server_t;
 
 typedef struct funk2_xmlrpc_server_list_s {

@@ -55,7 +55,8 @@ void                      xmlrpc__request_shutdown(xmlrpc_env* const envP, void*
 }
 
 void funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
-  this->port_num = port_num;
+  this->port_num         = port_num;
+  this->processor_thread = NULL;
   
   xmlrpc_env_init(&(this->env));
   
@@ -115,7 +116,7 @@ void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
 }
 
 void funk2_xmlrpc_server__start_handler_thread(funk2_xmlrpc_server_t* this) {
-  funk2_processor_thread__init(&(this->processor_thread), &funk2_xmlrpc_server__start_handler_thread__helper, (void*)this);
+  this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_xmlrpc_server__start_handler_thread__helper, (void*)this);
 }
 
 #endif // F2__XMLRPC_SUPPORTED

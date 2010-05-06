@@ -146,6 +146,7 @@ void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {
     next = iter->next;
     funk2_xmlrpc_server_t* server = &(iter->server);
     if (server->processor_thread == NULL) {
+      status("");
       funk2_xmlrpc_server__destroy(server);
       f2__free(to_ptr(iter));
       if (prev) {

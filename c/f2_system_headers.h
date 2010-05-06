@@ -39,10 +39,18 @@
 #include <mach/mach_time.h>
 #include <sys/resource.h>
 #include <sys/sockio.h>
-#endif
+#endif // F2__APPLE
 
 #if defined(HAVE_LINUX_SOCKIOS_H)
 #  include <linux/sockios.h>
+#endif
+
+#if defined(HAVE_XMLRPC_C_BASE_H)
+#  include <xmlrpc-c/base.h>
+#  include <xmlrpc-c/abyss.h>
+#  include <xmlrpc-c/client.h>
+#  include <xmlrpc-c/server.h>
+#  include <xmlrpc-c/server_abyss.h>
 #endif
 
 #include <assert.h>

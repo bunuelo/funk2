@@ -88,6 +88,7 @@
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__environment.h"
 #include "f2_primobject__frame.h"
+#include "f2_primobject__hash.h"
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__object.h"
 #include "f2_primobject__object_type.h"
@@ -127,7 +128,7 @@
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
-#include "f2_primobject__hash.h"
+#include "f2_xmlrpc.h"
 #include "f2_zlib.h"
 
 void f2__destroy();
@@ -178,6 +179,7 @@ typedef struct funk2_s {
   funk2_number_globalvars_t           number_globalvars;
   funk2_surrogate_parent_t            surrogate_parent;
   funk2_graph_t                       graph;
+  funk2_xmlrpc_t                      xmlrpc;
 } funk2_t;
 
 void      funk2__init(   funk2_t* this, int argc, char** argv);

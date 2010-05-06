@@ -36,6 +36,7 @@ AC_CHECK_LIB(rt,clock_gettime)
 AC_CHECK_LIB(gmon,_mcount)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
+AC_CHECK_HEADERS([xmlrpc-c/base.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

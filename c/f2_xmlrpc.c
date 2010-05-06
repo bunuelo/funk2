@@ -54,6 +54,33 @@ void                      xmlrpc__request_shutdown(xmlrpc_env* const envP, void*
   *terminationRequestedP = 1;
 }
 
+// This code is basically ServerInit from libabyss, but doesn't call exit(1) on failure.
+boolean_t my_abyss_server_init(TServer* const serverP) {
+  struct _TServer * const srvP = serverP->srvP;
+  abyss_bool success;
+  
+  if (!srvP->serverAcceptsConnections) {
+    TraceMsg("ServerInit() is not valid on a server that doesn't "
+	     "accept connections "
+	     "(i.e. created with ServerCreateNoAccept)");
+    success = FALSE;
+  } else {
+    if (!srvP->socketBound) {
+      createAndBindSocket(srvP);
+    }
+    if (srvP->socketBound) {
+      success = SocketListen(srvP->listenSocketP, MAX_CONN);
+      
+      if (!success) {
+	TraceMsg("Failed to listen on bound socket.");
+      }
+    } else {
+      success = FALSE;
+    }
+  }
+  return success ? boolean__true : boolean__false;
+}
+
 boolean_t funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   this->port_num         = port_num;
   this->processor_thread = NULL;
@@ -72,7 +99,9 @@ boolean_t funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   
   xmlrpc_server_abyss_set_handlers(&(this->abyssServer), this->registryP);
   
-  ServerInit(&(this->abyssServer));
+  if (! my_abyss_server_init(&(this->abyssServer))) {
+    return boolean__true; // failure
+  }
   
   this->termination_requested = 0;
   

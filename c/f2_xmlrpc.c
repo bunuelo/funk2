@@ -112,6 +112,7 @@ void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
   status("Calling XMLRPC server handler loop in new thread.");
   funk2_xmlrpc_server__handler_loop(this);
   status("Finished XMLRPC server handler loop thread.");
+  this->processor_thread = NULL;
   return NULL;
 }
 
@@ -135,6 +136,30 @@ void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
     f2__free(to_ptr(iter));
     iter = next;
   }
+}
+
+void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {
+  funk2_xmlrpc_server_list_t* prev = NULL;
+  funk2_xmlrpc_server_list_t* next;
+  funk2_xmlrpc_server_list_t* iter = this->servers;
+  while (iter) {
+    next = iter->next;
+    funk2_xmlrpc_server_t* server = &(iter->server);
+    if (server->processor_thread == NULL) {
+      funk2_xmlrpc_server__destroy(server);
+      f2__free(to_ptr(iter));
+      if (prev) {
+	prev->next    = next;
+      } else {
+	this->servers = next;
+      }
+    }
+    iter = next;
+  }
+}
+
+void funk2_xmlrpc__handle(funk2_xmlrpc_t* this) {
+  funk2_xmlrpc__handle_destroying_dead_servers(this);
 }
 
 funk2_xmlrpc_server_t* funk2_xmlrpc__create_new_server(funk2_xmlrpc_t* this, int port_num) {

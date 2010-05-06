@@ -374,6 +374,9 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_cpu__handle(&(this->cpu));
   //status("funk2-handle: handling surrogate parent.");
   funk2_surrogate_parent__handle(&(this->surrogate_parent));
+  //status("funk2-handle: handling xmlrpc interface.");
+  funk2_xmlrpc__handle(&(this->xmlrpc));
+  
   //funk2_event_router__handle_input_events(&(this->event_router));
   //printf("\nYour parent is here."); fflush(stdout);
   // very primitive global reflection might go here if necessary... (maybe handle global process signals?)

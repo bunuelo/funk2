@@ -158,7 +158,7 @@ boolean_t raw__xmlrpc__create_new_server(u64 port_num) {
 
 f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
   if (! raw__integer__is_type(cause, port_num)) {
-    return f2larva__new(cause, 1);
+    return f2larva__new(cause, 1, nil);
   }
   u64 port_num__i = f2integer__i(port_num, cause);
   return f2bool__new(raw__xmlrpc__create_new_server(port_num__i));

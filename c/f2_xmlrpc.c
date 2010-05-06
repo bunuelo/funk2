@@ -115,7 +115,7 @@ void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
 }
 
 void funk2_xmlrpc_server__start_handler_thread(funk2_xmlrpc_server_t* this) {
-  funk2_processor_thread__init(&(this->processor_thread), funk2_xmlrpc_server__start_handler_thread__helper, this);
+  funk2_processor_thread__init(&(this->processor_thread), &funk2_xmlrpc_server__start_handler_thread__helper, (void*)this);
 }
 
 #endif // F2__XMLRPC_SUPPORTED

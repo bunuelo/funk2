@@ -23,34 +23,13 @@
 
 #if defined(F2__XMLRPC_SUPPORTED)
 
-static void
-printPeerIpAddr(TSession * const abyssSessionP) {
-
-    struct abyss_unix_chaninfo * channelInfoP;
-    struct sockaddr_in * sockAddrInP;
-    unsigned char * ipAddr;  /* 4 byte array */
-
-    SessionGetChannelInfo(abyssSessionP, (void*)&channelInfoP);
-
-    sockAddrInP = (struct sockaddr_in *) &channelInfoP->peerAddr;
-
-    ipAddr = (unsigned char *)&sockAddrInP->sin_addr.s_addr;
-
-    printf("RPC is from IP address %u.%u.%u.%u\n",
-           ipAddr[0], ipAddr[1], ipAddr[2], ipAddr[3]);
-}
-
-
 
 static xmlrpc_value *
 sample_add(xmlrpc_env *   const envP, 
            xmlrpc_value * const paramArrayP,
-           void *         const serverInfo,
-           void *         const channelInfo) {
+           void *         const userData ATTR_UNUSED) {
     
     xmlrpc_int x, y, z;
-
-    printPeerIpAddr(channelInfo);
 
     /* Parse our argument array. */
     xmlrpc_decompose_value(envP, paramArrayP, "(ii)", &x, &y);
@@ -69,23 +48,19 @@ sample_add(xmlrpc_env *   const envP,
 static xmlrpc_server_shutdown_fn requestShutdown;
 
 static void
-requestShutdown(xmlrpc_env * const faultP,
+requestShutdown(xmlrpc_env * const envP,
                 void *       const context,
-                const char * const comment,
-                void *       const callInfo) {
+                const char * const comment) {
 
     /* You make this run by executing the system method
        'system.shutdown'.  This function is registered in the method
        registry as the thing to call for that.
     */
     int * const terminationRequestedP = context;
-    TSession * const abyssSessionP = callInfo;
 
-    xmlrpc_env_init(faultP);
+    xmlrpc_env_init(envP);
 
     fprintf(stderr, "Termination requested: %s\n", comment);
-
-    printPeerIpAddr(abyssSessionP);
     
     *terminationRequestedP = 1;
 }
@@ -93,19 +68,13 @@ requestShutdown(xmlrpc_env * const faultP,
 
 
 int 
-xmlrpc__main(int           const argc, 
-	     const char ** const argv) {
-  
-    struct xmlrpc_method_info3 const methodInfo = {
-        .methodName     = "sample.add",
-        .methodFunction = &sample_add,
-        .serverInfo = NULL
-    };
+main(int           const argc, 
+     const char ** const argv) {
+
     TServer abyssServer;
     xmlrpc_registry * registryP;
     xmlrpc_env env;
     int terminationRequested;  /* A boolean value */
-    const char * error;
 
     if (argc-1 != 1) {
         fprintf(stderr, "You must specify 1 argument:  The TCP port number "
@@ -113,21 +82,20 @@ xmlrpc__main(int           const argc,
                 "You specified %d.\n",  argc-1);
         exit(1);
     }
-
-    AbyssInit(&error);
     
     xmlrpc_env_init(&env);
 
     registryP = xmlrpc_registry_new(&env);
 
-    xmlrpc_registry_add_method3(&env, registryP, &methodInfo);
+    xmlrpc_registry_add_method(
+        &env, registryP, NULL, "sample.add", &sample_add, NULL);
 
     xmlrpc_registry_set_shutdown(registryP,
                                  &requestShutdown, &terminationRequested);
 
     ServerCreate(&abyssServer, "XmlRpcServer", atoi(argv[1]), NULL, NULL);
     
-    xmlrpc_server_abyss_set_handlers2(&abyssServer, "/RPC2", registryP);
+    xmlrpc_server_abyss_set_handlers(&abyssServer, registryP);
 
     ServerInit(&abyssServer);
 
@@ -146,11 +114,10 @@ xmlrpc__main(int           const argc,
     }
 
     ServerFree(&abyssServer);
-
-    AbyssTerm();
-
+    
     return 0;
 }
+
 
 #endif // F2__XMLRPC_SUPPORTED
 

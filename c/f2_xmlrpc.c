@@ -152,6 +152,21 @@ funk2_xmlrpc_server_t* funk2_xmlrpc__create_new_server(funk2_xmlrpc_t* this, int
 #endif // F2__XMLRPC_SUPPORTED
 }
 
+boolean_t raw__xmlrpc__create_new_server(u64 port_num) {
+  return (funk2_xmlrpc__create_new_server(&(__funk2.xmlrpc), port_num) != NULL);
+}
+
+f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
+  if (! raw__integer__is_type(cause, port_num)) {
+    return f2larva__new(cause, 1);
+  }
+  u64 port_num__i = f2integer__i(port_num, cause);
+  return f2bool__new(raw__xmlrpc__create_new_server(port_num__i));
+}
+def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_server(this_cause, port_num));
+
+
+
 // **
 
 void f2__xmlrpc__reinitialize_globalvars() {
@@ -164,5 +179,6 @@ void f2__xmlrpc__initialize() {
   
   f2__xmlrpc__reinitialize_globalvars();
   
+  f2__primcfunk__init__1(xmlrpc__create_new_server, port_num, "creates a test xmlrpc server with a sample.add RPC function that takes two integers as arguments.");
 }
 

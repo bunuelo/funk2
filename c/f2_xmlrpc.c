@@ -54,7 +54,7 @@ void                      xmlrpc__request_shutdown(xmlrpc_env* const envP, void*
   *terminationRequestedP = 1;
 }
 
-void funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
+boolean_t funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   this->port_num         = port_num;
   this->processor_thread = NULL;
   
@@ -66,15 +66,17 @@ void funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
   
   xmlrpc_registry_set_shutdown(this->registryP, &xmlrpc__request_shutdown, &(this->termination_requested));
   
-  ServerCreate(&(this->abyssServer), "XmlRpcServer", this->port_num, NULL, NULL);
+  if (! ServerCreate(&(this->abyssServer), "XmlRpcServer", this->port_num, NULL, NULL)) {
+    return boolean__true; // failure
+  }
   
   xmlrpc_server_abyss_set_handlers(&(this->abyssServer), this->registryP);
   
   ServerInit(&(this->abyssServer));
   
-  //setupSignalHandlers();
-  
   this->termination_requested = 0;
+  
+  return boolean__false; // success
 }
 
 void funk2_xmlrpc_server__destroy(funk2_xmlrpc_server_t* this) {
@@ -97,14 +99,6 @@ void funk2_xmlrpc_server__handler_loop(funk2_xmlrpc_server_t* this) {
     status("Waiting for next RPC...\n");
     funk2_xmlrpc_server__handle(this);
   }
-}
-
-void funk2_xmlrpc_server__main() {
-  int                   port_num = 4545;
-  funk2_xmlrpc_server_t xmlrpc_server;
-  funk2_xmlrpc_server__init(&xmlrpc_server, port_num);
-  funk2_xmlrpc_server__handler_loop(&xmlrpc_server);
-  funk2_xmlrpc_server__destroy(&xmlrpc_server);
 }
 
 void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
@@ -167,15 +161,18 @@ void funk2_xmlrpc__handle(funk2_xmlrpc_t* this) {
 funk2_xmlrpc_server_t* funk2_xmlrpc__create_new_server(funk2_xmlrpc_t* this, int port_num) {
 #if defined(F2__XMLRPC_SUPPORTED)
   funk2_xmlrpc_server_list_t* new_server_node = (funk2_xmlrpc_server_list_t*)from_ptr(f2__malloc(sizeof(funk2_xmlrpc_server_list_t)));
-  funk2_xmlrpc_server__init(&(new_server_node->server), port_num);
+  boolean_t server_initialization_failure = funk2_xmlrpc_server__init(&(new_server_node->server), port_num);
+  if (server_initialization_failure) {
+    return NULL; // failure
+  }
   funk2_xmlrpc_server__start_handler_thread(&(new_server_node->server));
   new_server_node->next = this->servers;
   this->servers = new_server_node;
-  return &(new_server_node->server);
+  return &(new_server_node->server); // success
 #else
   status(  "funk2 warning: XMLRPC support is not compiled in this install of funk2.");
   printf("\nfunk2 warning: XMLRPC support is not compiled in this install of funk2."); fflush(stdout);
-  return NULL;
+  return NULL; // failure
 #endif // F2__XMLRPC_SUPPORTED
 }
 

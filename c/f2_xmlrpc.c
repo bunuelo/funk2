@@ -92,9 +92,9 @@ boolean_t funk2_xmlrpc_server__termination_requested(funk2_xmlrpc_server_t* this
 }
 
 void funk2_xmlrpc_server__handler_loop(funk2_xmlrpc_server_t* this) {
-  while (! funk2_xmlrpc_server__termination_requested(&this)) {
+  while (! funk2_xmlrpc_server__termination_requested(this)) {
     status("Waiting for next RPC...\n");
-    funk2_xmlrpc_server__handle(&this);
+    funk2_xmlrpc_server__handle(this);
   }
 }
 

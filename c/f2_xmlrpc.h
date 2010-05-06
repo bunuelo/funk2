@@ -36,8 +36,8 @@ typedef struct funk2_xmlrpc_server_s {
 } funk2_xmlrpc_server_t;
 
 typedef struct funk2_xmlrpc_server_list_s {
-  funk2_xmlrpc_server_t         server;
-  struct funk2_xmlrpc_server_s* next;
+  funk2_xmlrpc_server_t              server;
+  struct funk2_xmlrpc_server_list_s* next;
 } funk2_xmlrpc_server_list_t;
 
 

@@ -22,8 +22,26 @@
 #ifndef F2__XMLRPC__H
 #define F2__XMLRPC__H
 
+#include "f2_global.h"
+
+typedef struct funk2_xmlrpc_server_s {
+  int              port_num;
+#if defined(F2__XMLRPC_SUPPORTED)
+  TServer          abyssServer;
+  xmlrpc_registry* registryP;
+  xmlrpc_env       env;
+#endif // F2__XMLRPC_SUPPORTED
+  int              terminationRequested;  // A boolean value
+} funk2_xmlrpc_server_t;
+
+typedef struct funk2_xmlrpc_server_list_s {
+  funk2_xmlrpc_server_t         server;
+  struct funk2_xmlrpc_server_s* next;
+} funk2_xmlrpc_server_list_t;
+
+
 typedef struct funk2_xmlrpc_s {
-  
+  funk2_xmlrpc_server_list_t* servers;
 } funk2_xmlrpc_t;
 
 #endif // F2__XMLRPC__H

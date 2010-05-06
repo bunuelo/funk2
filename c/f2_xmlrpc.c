@@ -94,12 +94,12 @@ boolean_t funk2_xmlrpc_server__termination_requested(funk2_xmlrpc_server_t* this
 void funk2_xmlrpc_server__main() {
   int                   port_num = 4545;
   funk2_xmlrpc_server_t xmlrpc_server;
-  funk2_xmlrpc__init(&xmlrpc_server, port_num);
-  while (! funk2_xmlrpc__termination_requested(&xmlrpc_server)) {
+  funk2_xmlrpc_server__init(&xmlrpc_server, port_num);
+  while (! funk2_xmlrpc_server__termination_requested(&xmlrpc_server)) {
     printf("Waiting for next RPC...\n");
-    funk2_xmlrpc__handle(&xmlrpc_server);
+    funk2_xmlrpc_server__handle(&xmlrpc_server);
   }
-  funk2_xmlrpc__destroy(&xmlrpc_server);
+  funk2_xmlrpc_server__destroy(&xmlrpc_server);
 }
 
 #endif // F2__XMLRPC_SUPPORTED

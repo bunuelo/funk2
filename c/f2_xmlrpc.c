@@ -301,6 +301,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   case XMLRPC_TYPE_C_PTR:
     return f2larva__new(cause, 12, nil);
   }
+  return f2larva__new(cause, 1, nil);
 }
 
 f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {

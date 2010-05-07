@@ -254,7 +254,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     size_t string__length;
     char*  string__str;
     xmlrpc_read_string_lp(env, value, &string__length, (const char**)&string__str);
-    f2ptr new_string = f2string__new(cause, string__length, string__str);
+    f2ptr new_string = f2string__new(cause, string__length, (u8*)string__str);
     free(string__str);
     return new_string;
   }

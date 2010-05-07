@@ -201,7 +201,7 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
   }
 }
 
-f2ptr funk2_xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
+f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
   if ((! raw__string__is_type(cause, url)) ||
       ((! raw__string__is_type(cause, funkname)) && (! raw__symbol__is_type(cause, funkname)))) {
     return f2larva__new(cause, 1, nil);
@@ -250,7 +250,7 @@ f2ptr funk2_xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr argument
       xmlrpc_server_info* serverInfoP;
       xmlrpc_value*       argument_array;
       
-      serverInfoP = xmlrpc_server_info_new(&env, url__str);
+      serverInfoP = xmlrpc_server_info_new(&env, (char*)url__str);
       
       argument_array = xmlrpc_array_new(&env);
       
@@ -271,7 +271,7 @@ f2ptr funk2_xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr argument
 	}
       }
       if (call_successful_so_far) {
-	xmlrpc_client_call2(&env, clientP, serverInfoP, funkname__str,
+	xmlrpc_client_call2(&env, clientP, serverInfoP, (char*)funkname__str,
 			    argument_array, &resultP);
 	
 	if (env.fault_occurred) {
@@ -383,27 +383,7 @@ f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
 def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_server(this_cause, port_num));
 
 
-boolean_t raw__xmlrpc__call_test(f2ptr cause, f2ptr url) {
-#if defined(F2__XMLRPC_SUPPORTED)
-  u64 url__length = raw__string__length(cause, url);
-  u8* url__str    = (u8*)alloca(url__length + 1);
-  raw__string__str_copy(cause, url, url__str);
-  url__str[url__length] = 0;
-  return funk2_xmlrpc__call_test((char*)url__str);
-#else
-  status(  "funk2 warning: XMLRPC support is not compiled in this install of funk2.");
-  printf("\nfunk2 warning: XMLRPC support is not compiled in this install of funk2."); fflush(stdout);
-  return boolean__false; // failure
-#endif // F2__XMLRPC_SUPPORTED
-}
-
-f2ptr f2__xmlrpc__call_test(f2ptr cause, f2ptr url) {
-  if (! raw__string__is_type(cause, url)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return f2bool__new(raw__xmlrpc__call_test(cause, url));
-}
-def_pcfunk1(xmlrpc__call_test, url, return f2__xmlrpc__call_test(this_cause, url));
+def_pcfunk1(xmlrpc__apply, url, funkname, arguments, return f2__xmlrpc__apply(this_cause, url, funkname, arguments));
 
 
 // **
@@ -418,7 +398,7 @@ void f2__xmlrpc__initialize() {
   
   f2__xmlrpc__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(xmlrpc__create_new_server, port_num, "creates a test xmlrpc server with a sample.add RPC function that takes two integers as arguments.");
-  f2__primcfunk__init__1(xmlrpc__call_test,         url,      "calls a test xmlrpc server with a sample.add RPC function that takes two integers as arguments.");
+  f2__primcfunk__init__1(xmlrpc__create_new_server, port_num,                 "creates a test xmlrpc server with a sample.add RPC function that takes two integers as arguments.");
+  f2__primcfunk__init__3(xmlrpc__apply,             url, funkname, arguments, "calls an xmlrpc server and returns the value.");
 }
 

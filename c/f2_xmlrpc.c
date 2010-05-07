@@ -148,8 +148,8 @@ void funk2_xmlrpc_client(char* url) {
 	xmlrpc_value* addend1P = xmlrpc_int_new(&env, 5);
 	xmlrpc_value* addend2P = xmlrpc_int_new(&env, 7);
 	
-	xmlrpc_array_append_item(&env, myArrayP, addend1P);
-	xmlrpc_array_append_item(&env, myArrayP, addend2P);
+	xmlrpc_array_append_item(&env, paramArrayP, addend1P);
+	xmlrpc_array_append_item(&env, paramArrayP, addend2P);
 	
 	xmlrpc_DECREF(addend1P);
 	xmlrpc_DECREF(addend2P);

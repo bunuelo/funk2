@@ -130,7 +130,11 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
       return xmlrpc_int_new(env, i32);
     } else {
       // requires full 64 bits precision.
+#if defined(XMLRPC_HAVE_I8)
       return xmlrpc_i8_new(env, i);
+#else
+      return NULL;
+#endif // XMLRPC_HAVE_I8
     }
   } else if (raw__double__is_type(cause, exp)) {
     double d = f2double__d(exp, cause);
